@@ -24,11 +24,23 @@ import studentRoutes from './routes/studentRoutes.js';
 
 const app = express();
 
+const allowedOrigins = env.clientUrl
+  .split(',')
+  .map((origin) => origin.trim().replace(/\/$/, ''))
+  .filter(Boolean);
+
 // Security & infrastructure middleware
 app.use(helmet());
 app.use(
   cors({
-    origin: env.clientUrl,
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      const normalized = origin.replace(/\/$/, '');
+      if (allowedOrigins.includes(normalized)) {
+        return callback(null, origin);
+      }
+      return callback(new Error(`CORS blocked for ${origin}`));
+    },
     credentials: true,
   })
 );
