@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1d4ed8"/>
+      <stop offset="1" stop-color="#1e3a8a"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <circle cx="520" cy="80" r="120" fill="#3b82f6" fill-opacity="0.35"/>
+  <circle cx="580" cy="280" r="90" fill="#60a5fa" fill-opacity="0.25"/>
+  <g transform="translate(420, 90)">
+    <circle cx="60" cy="60" r="48" stroke="white" stroke-width="3" fill="none" opacity="0.9"/>
+    <ellipse cx="60" cy="60" rx="48" ry="18" stroke="white" stroke-width="2.5" fill="none" opacity="0.7"/>
+    <ellipse cx="60" cy="60" rx="18" ry="48" stroke="white" stroke-width="2.5" fill="none" opacity="0.7"/>
+    <circle cx="60" cy="60" r="8" fill="white" opacity="0.95"/>
+  </g>
+  <text x="40" y="72" fill="white" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">JEE MAIN</text>
+  <text x="40" y="108" fill="#bfdbfe" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">Full Test Series</text>
+  <text x="40" y="300" fill="white" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800" opacity="0.15">PHYSICS</text>
+</svg>

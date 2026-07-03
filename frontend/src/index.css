@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-white font-sans text-[15px] leading-relaxed text-slate-800 antialiased;
+  }
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
+}
+
+@layer components {
+  .container-app {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  /* PRD §2.2 typography */
+  .text-display {
+    @apply text-4xl font-extrabold leading-[1.1] tracking-tight text-slate-900 sm:text-[2.75rem] lg:text-5xl dark:text-white;
+  }
+  .text-h2 {
+    @apply text-2xl font-bold tracking-tight text-slate-900 dark:text-white;
+  }
+  .text-caption {
+    @apply text-xs font-medium text-slate-500 dark:text-slate-400;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .dark .btn {
+    @apply focus:ring-offset-slate-900;
+  }
+  .btn-sm {
+    @apply px-3.5 py-2 text-sm;
+  }
+  .btn-primary {
+    @apply btn border-brand-600 bg-brand-600 text-white shadow-sm hover:border-brand-700 hover:bg-brand-700;
+  }
+  .btn-secondary {
+    @apply btn border-slate-200/80 bg-white text-slate-700 shadow-sm hover:bg-slate-50;
+  }
+  .dark .btn-secondary {
+    @apply border-slate-700/80 bg-slate-900 text-slate-200 hover:bg-slate-800;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-lg px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2;
+  }
+  .dark .btn-ghost {
+    @apply text-slate-400 hover:bg-slate-800 hover:text-white focus:ring-offset-slate-900;
+  }
+  .btn-danger {
+    @apply btn border-red-600 bg-red-600 text-white hover:bg-red-700;
+  }
+  .input {
+    @apply block w-full rounded-lg border border-slate-200/80 bg-white px-3.5 py-2.5 text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-brand-600 focus:outline-none focus:ring-2 focus:ring-brand-500/20 sm:text-sm;
+  }
+  .dark .input {
+    @apply border-slate-700/80 bg-slate-900 text-slate-100 placeholder:text-slate-500;
+  }
+  .label {
+    @apply mb-1.5 block text-sm font-medium text-slate-700;
+  }
+  .dark .label {
+    @apply text-slate-300;
+  }
+  /* PRD §2.3 — 12px cards */
+  .card {
+    @apply rounded-[12px] border border-slate-200/80 bg-white;
+  }
+  .dark .card {
+    @apply border-slate-700/80 bg-slate-900;
+  }
+  .badge {
+    @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full border border-slate-200/80 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm transition hover:border-brand-300 hover:bg-brand-50 hover:text-brand-700 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:border-brand-700 dark:hover:text-brand-300;
+  }
+  .chip-active {
+    @apply border-brand-600 bg-brand-600 text-white shadow-sm hover:bg-brand-700 hover:text-white;
+  }
+  .page-title {
+    @apply text-2xl font-bold tracking-tight text-slate-900 dark:text-white;
+  }
+  .page-subtitle {
+    @apply mt-1 text-sm text-slate-600 dark:text-slate-400;
+  }
+  .text-muted {
+    @apply text-slate-600;
+  }
+  .dark .text-muted {
+    @apply text-slate-400;
+  }
+  .surface-muted {
+    @apply bg-slate-50;
+  }
+  .dark .surface-muted {
+    @apply bg-slate-900/50;
+  }
+  .exam-surface {
+    @apply bg-white text-slate-900;
+  }
+
+  /* NTA CBT — PRD §5.5 */
+  .nta-bar {
+    @apply bg-[#1a4480] text-white;
+  }
+  .nta-bar-sub {
+    @apply border-b border-[#15386b] bg-[#f3f6fb] text-slate-800;
+  }
+  .nta-panel {
+    @apply border border-slate-400 bg-white;
+  }
+  .nta-btn {
+    @apply inline-flex items-center justify-center border border-slate-500 bg-[#e8ecf1] px-4 py-2 text-xs font-bold uppercase tracking-wide text-slate-800 transition hover:bg-[#dce3ec] disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .nta-btn-primary {
+    @apply border-[#1a4480] bg-[#1a4480] text-white hover:bg-[#15386b];
+  }
+  .nta-btn-danger {
+    @apply border-red-700 bg-red-700 text-white hover:bg-red-800;
+  }
+  .nta-section-tab {
+    @apply border border-slate-400 bg-[#e8ecf1] px-4 py-1.5 text-xs font-bold uppercase text-slate-700 hover:bg-[#dce3ec];
+  }
+  .nta-section-tab-active {
+    @apply border-[#1a4480] bg-[#1a4480] text-white;
+  }
+  .nta-timer-normal {
+    @apply border border-slate-500 bg-white font-mono text-lg font-bold text-slate-900;
+  }
+  .nta-timer-warn {
+    @apply border border-amber-500 bg-amber-50 font-mono text-lg font-bold text-amber-800;
+  }
+  .nta-timer-danger {
+    @apply border border-red-600 bg-red-600 font-mono text-lg font-bold text-white;
+  }
+  .nta-swatch-nv { @apply bg-[#d9d9d9] border border-slate-400; }
+  .nta-swatch-na { @apply bg-[#e74c3c]; }
+  .nta-swatch-a { @apply bg-[#27ae60]; }
+  .nta-swatch-r { @apply bg-[#8e44ad]; }
+  .nta-swatch-ar {
+    background: linear-gradient(135deg, #8e44ad 50%, #27ae60 50%);
+  }
+  .nta-palette-nv { @apply bg-[#d9d9d9] text-slate-800 border border-slate-400; }
+  .nta-palette-na { @apply bg-[#e74c3c] text-white; }
+  .nta-palette-a { @apply bg-[#27ae60] text-white; }
+  .nta-palette-r { @apply bg-[#8e44ad] text-white; }
+  .nta-palette-ar {
+    @apply relative overflow-hidden text-white;
+    background: #8e44ad;
+  }
+  .nta-palette-ar::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 45%;
+    height: 45%;
+    background: #27ae60;
+    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+  }
+  .nta-palette-current {
+    box-shadow: 0 0 0 2px #1a4480;
+  }
+  .nta-option {
+    @apply flex w-full items-start gap-3 border border-slate-400 bg-white px-4 py-3 text-left text-sm text-slate-900 transition hover:bg-slate-50;
+  }
+  .nta-option-selected {
+    @apply border-[#1a4480] bg-[#eef4fc] ring-1 ring-[#1a4480];
+  }
+  .nta-instructions-scroll {
+    @apply max-h-[420px] overflow-y-auto border border-slate-300 bg-white p-4 text-sm leading-relaxed text-slate-800;
+  }
+  .table-head {
+    @apply bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800/80 dark:text-slate-400;
+  }
+  /* PRD §2.3 — landing hero glass only */
+  .hero-glass {
+    @apply border border-slate-200/60 bg-white/70 shadow-sm backdrop-blur-md dark:border-slate-700/60 dark:bg-slate-900/70;
+  }
+
+  /* PRD shadows — use in @layer components (safe for @apply) */
+  .shadow-soft {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  .shadow-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+  .shadow-elevated {
+    box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+}
+
+@layer utilities {
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  .animate-float {
+    animation: float 4.5s ease-in-out infinite;
+  }
+  /* Landing hero — soft wash, not noisy */
+  .hero-wash {
+    background: linear-gradient(165deg, #dbeafe 0%, #eff6ff 38%, #ffffff 100%);
+  }
+  .dark .hero-wash {
+    background: linear-gradient(165deg, #1e3a5f 0%, #0f172a 45%, #020617 100%);
+  }
+  .landing-section {
+    @apply py-20 lg:py-24;
+  }
+  .catalog-hero {
+    background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 40%, #2563eb 70%, #3b82f6 100%);
+  }
+}

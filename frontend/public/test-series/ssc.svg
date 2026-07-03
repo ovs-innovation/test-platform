@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ea580c"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <circle cx="510" cy="90" r="115" fill="#fb923c" fill-opacity="0.35"/>
+  <circle cx="570" cy="280" r="85" fill="#fdba74" fill-opacity="0.25"/>
+  <g transform="translate(440, 85)" fill="white" opacity="0.92">
+    <rect x="0" y="30" width="120" height="90" rx="4" fill="none" stroke="white" stroke-width="3"/>
+    <line x1="20" y1="55" x2="100" y2="55" stroke="white" stroke-width="3"/>
+    <line x1="20" y1="75" x2="85" y2="75" stroke="white" stroke-width="3"/>
+    <line x1="20" y1="95" x2="95" y2="95" stroke="white" stroke-width="3"/>
+    <path d="M45 0 L75 0 L85 30 L35 30 Z" fill="white"/>
+  </g>
+  <text x="40" y="72" fill="white" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">SSC CGL</text>
+  <text x="40" y="108" fill="#fed7aa" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">Government Exam Pack</text>
+  <text x="40" y="300" fill="white" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800" opacity="0.15">TIER-1</text>
+</svg>

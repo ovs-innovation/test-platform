@@ -1,0 +1,46 @@
+# Render Blueprint — backend API only (frontend deploys to Vercel)
+# Dashboard: New > Blueprint > connect repo, or create Web Service manually with these settings.
+
+services:
+  - type: web
+    name: assesspro-api
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install && npm run db:migrate
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: CLIENT_URL
+        sync: false
+      - key: INVITE_BASE_URL
+        sync: false
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 2h
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: "587"
+      - key: SMTP_SECURE
+        value: "false"
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: SMTP_FROM
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+      - key: RAZORPAY_WEBHOOK_SECRET
+        sync: false
+      - key: SEED_ADMIN_EMAIL
+        value: admin@assess.io
+      - key: SEED_ADMIN_PASSWORD
+        sync: false
