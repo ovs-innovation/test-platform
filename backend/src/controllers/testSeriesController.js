@@ -1,9 +1,130 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 
 const slugify = (t) =>
   t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 200);
+
+const decodePdfBase64 = (raw) => {
+  const base64 = raw.replace(/^data:application\/pdf;base64,/, '').trim();
+  const buffer = Buffer.from(base64, 'base64');
+  if (!buffer.length) throw ApiError.badRequest('Invalid PDF file');
+  if (buffer.length > 8 * 1024 * 1024) throw ApiError.badRequest('PDF must be under 8 MB');
+  return buffer;
+};
+
+const DEFAULT_SECTIONS = [
+  { name: 'Aptitude', section_type: 'aptitude', position: 1 },
+  { name: 'Technical MCQ', section_type: 'technical_mcq', position: 2 },
+  { name: 'Coding', section_type: 'coding', position: 3 },
+  { name: 'Subjective', section_type: 'subjective', position: 4 },
+];
+
+export const parsePdfPreview = asyncHandler(async (req, res) => {
+  const buffer = decodePdfBase64(req.body.pdf_base64);
+  const parsed = await parseQuestionsFromPdf(buffer);
+  res.json({
+    question_count: parsed.question_count,
+    questions: parsed.rows.slice(0, 20),
+    errors: parsed.errors,
+    text_preview: parsed.text_preview,
+  });
+});
+
+export const importTestSeriesFromPdf = asyncHandler(async (req, res) => {
+  const {
+    pdf_base64,
+    title,
+    description,
+    price,
+    validity_days,
+    exam_type,
+    duration_minutes,
+    is_featured,
+    image_url,
+    publish,
+    assessment_label,
+  } = req.body;
+
+  const buffer = decodePdfBase64(pdf_base64);
+  const { rows, errors } = await parseQuestionsFromPdf(buffer);
+  if (!rows.length) {
+    throw ApiError.badRequest('Could not parse any questions from this PDF. Use Q1. … with (A)(B)(C)(D) options.', { errors });
+  }
+
+  const slug = `${slugify(title)}-${Date.now().toString(36)}`;
+  const passingMarks = Math.max(1, Math.round(rows.length * 4 * 0.4));
+
+  const result = await withTransaction(async (client) => {
+    const seriesRes = await client.query(
+      `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, test_count, is_featured, image_url)
+       VALUES ($1,$2,$3,$4,$5,$6,1,$7,$8) RETURNING *`,
+      [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, image_url || '']
+    );
+    const series = seriesRes.rows[0];
+
+    const assessmentRes = await client.query(
+      `INSERT INTO assessments
+         (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, is_published, created_by)
+       VALUES ($1,$2,$3,$4,$5,$6,true,$7,$8) RETURNING *`,
+      [
+        `${title} — ${assessment_label || 'Mock 1'}`,
+        description || `Imported from PDF (${rows.length} questions)`,
+        'NTA-style CBT. All questions are compulsory unless marked optional.',
+        duration_minutes ?? 180,
+        passingMarks,
+        5,
+        publish ? true : false,
+        req.user.id,
+      ]
+    );
+    const assessment = assessmentRes.rows[0];
+
+    let mcqSectionId = null;
+    for (const s of DEFAULT_SECTIONS) {
+      const sec = await client.query(
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,$3,$4) RETURNING id, section_type`,
+        [assessment.id, s.name, s.section_type, s.position]
+      );
+      if (s.section_type === 'technical_mcq') mcqSectionId = sec.rows[0].id;
+    }
+
+    let position = 0;
+    for (const row of rows) {
+      position += 1;
+      await client.query(
+        `INSERT INTO questions
+           (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices, marks, position)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        [
+          assessment.id,
+          mcqSectionId,
+          row.question_type,
+          row.question_text,
+          JSON.stringify(row.options),
+          row.correct_index,
+          JSON.stringify(row.correct_indices || []),
+          row.marks,
+          position,
+        ]
+      );
+    }
+
+    await client.query(
+      `INSERT INTO test_series_assessments (test_series_id, assessment_id, label, position)
+       VALUES ($1,$2,$3,1)`,
+      [series.id, assessment.id, assessment_label || 'Mock 1']
+    );
+
+    return { series, assessment, questions_created: rows.length, parse_errors: errors };
+  });
+
+  res.status(201).json({
+    message: `Test series created with ${result.questions_created} questions`,
+    ...result,
+  });
+});
 
 export const listTestSeries = asyncHandler(async (_req, res) => {
   const result = await query(

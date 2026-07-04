@@ -1,19 +1,47 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { testSeriesService, assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, Spinner, Badge } from '../../components/ui.jsx';
+import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { getTestSeriesCover } from '../../lib/testSeriesCover.js';
 
+const PDF_FORM_DEFAULT = {
+  title: '',
+  description: '',
+  price: 0,
+  exam_type: 'JEE Main',
+  duration_minutes: 180,
+  assessment_label: 'Mock 1',
+  publish: true,
+  image_url: '',
+};
+
+function readPdfAsBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function AdminTestSeries() {
   const toast = useToast();
+  const pdfInputRef = useRef(null);
   const [list, setList] = useState([]);
   const [assessments, setAssessments] = useState([]);
   const [state, setState] = useState('loading');
   const [modal, setModal] = useState(false);
+  const [pdfModal, setPdfModal] = useState(false);
   const [linkModal, setLinkModal] = useState(null);
   const [form, setForm] = useState({ title: '', description: '', price: 0, exam_type: 'JEE Main', test_count: 1, is_featured: false, image_url: '' });
+  const [pdfForm, setPdfForm] = useState(PDF_FORM_DEFAULT);
+  const [pdfBase64, setPdfBase64] = useState('');
+  const [pdfName, setPdfName] = useState('');
+  const [pdfPreview, setPdfPreview] = useState(null);
   const [linkForm, setLinkForm] = useState({ assessment_id: '', label: '' });
   const [saving, setSaving] = useState(false);
+  const [parsing, setParsing] = useState(false);
 
   const load = async () => {
     setState('loading');
@@ -28,6 +56,76 @@ export default function AdminTestSeries() {
   };
 
   useEffect(() => { load(); }, []);
+
+  const resetPdfModal = () => {
+    setPdfForm(PDF_FORM_DEFAULT);
+    setPdfBase64('');
+    setPdfName('');
+    setPdfPreview(null);
+  };
+
+  const openPdfModal = () => {
+    resetPdfModal();
+    setPdfModal(true);
+  };
+
+  const handlePdfFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+      toast.error('Please upload a PDF file');
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error('PDF must be under 8 MB');
+      return;
+    }
+    const base64 = await readPdfAsBase64(file);
+    setPdfBase64(base64);
+    setPdfName(file.name);
+    if (!pdfForm.title) {
+      const titleGuess = file.name.replace(/\.pdf$/i, '').replace(/[_-]+/g, ' ').trim();
+      setPdfForm((f) => ({ ...f, title: titleGuess }));
+    }
+  };
+
+  const previewPdf = async () => {
+    if (!pdfBase64) {
+      toast.error('Choose a PDF first');
+      return;
+    }
+    setParsing(true);
+    try {
+      const data = await testSeriesService.parsePdf(pdfBase64);
+      setPdfPreview(data);
+      if (!data.question_count) toast.error('No questions found in PDF — check format');
+      else toast.success(`Found ${data.question_count} questions`);
+    } catch (err) {
+      toast.error(err.message || 'Could not parse PDF');
+    } finally {
+      setParsing(false);
+    }
+  };
+
+  const importPdf = async (e) => {
+    e.preventDefault();
+    if (!pdfBase64) {
+      toast.error('Choose a PDF first');
+      return;
+    }
+    setSaving(true);
+    try {
+      const result = await testSeriesService.importFromPdf({ ...pdfForm, pdf_base64: pdfBase64 });
+      toast.success(result.message || 'Test series created from PDF');
+      setPdfModal(false);
+      resetPdfModal();
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Import failed');
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const create = async (e) => {
     e.preventDefault();
@@ -67,8 +165,16 @@ export default function AdminTestSeries() {
 
   return (
     <div>
-      <PageHeader title="Test Series" subtitle="Manage test packs, pricing and linked assessments."
-        actions={<button type="button" className="btn-primary" onClick={() => setModal(true)}>+ New series</button>} />
+      <PageHeader
+        title="Test Series"
+        subtitle="Manage test packs, pricing and linked assessments."
+        actions={(
+          <div className="flex flex-wrap gap-2">
+            <button type="button" className="btn-secondary" onClick={openPdfModal}>Import from PDF</button>
+            <button type="button" className="btn-primary" onClick={() => setModal(true)}>+ New series</button>
+          </div>
+        )}
+      />
 
       <div className="space-y-4">
         {list.map((s) => (
@@ -91,6 +197,70 @@ export default function AdminTestSeries() {
           </div>
         ))}
       </div>
+
+      <Modal open={pdfModal} onClose={() => setPdfModal(false)} title="Import test series from PDF" size="lg">
+        <p className="mb-4 text-sm text-slate-600">
+          Upload a text-based PDF with questions in this format:
+          <span className="mt-1 block rounded-lg bg-slate-50 p-3 font-mono text-xs text-slate-700">
+            Q1. What is 2+2?<br />
+            (A) 3<br />
+            (B) 4<br />
+            (C) 5<br />
+            (D) 6<br />
+            <br />
+            Answer Key<br />
+            1. B
+          </span>
+        </p>
+        <form onSubmit={importPdf} className="space-y-4">
+          <input ref={pdfInputRef} type="file" accept="application/pdf,.pdf" className="hidden" onChange={handlePdfFile} />
+          <div className="flex flex-wrap items-center gap-2">
+            <button type="button" className="btn-secondary text-sm" onClick={() => pdfInputRef.current?.click()}>
+              Choose PDF
+            </button>
+            {pdfName && <span className="text-sm text-slate-600">{pdfName}</span>}
+            <button type="button" className="btn-secondary text-sm" onClick={previewPdf} disabled={!pdfBase64 || parsing}>
+              {parsing ? <Spinner className="h-4 w-4" /> : 'Preview questions'}
+            </button>
+          </div>
+
+          <input className="input" placeholder="Series title" required value={pdfForm.title} onChange={(e) => setPdfForm((f) => ({ ...f, title: e.target.value }))} />
+          <textarea className="input" rows={2} placeholder="Description" value={pdfForm.description} onChange={(e) => setPdfForm((f) => ({ ...f, description: e.target.value }))} />
+          <div className="grid grid-cols-2 gap-3">
+            <input className="input" type="number" min={0} placeholder="Price ₹" value={pdfForm.price} onChange={(e) => setPdfForm((f) => ({ ...f, price: Number(e.target.value) }))} />
+            <input className="input" placeholder="Exam type" value={pdfForm.exam_type} onChange={(e) => setPdfForm((f) => ({ ...f, exam_type: e.target.value }))} />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <input className="input" type="number" min={5} placeholder="Duration (mins)" value={pdfForm.duration_minutes} onChange={(e) => setPdfForm((f) => ({ ...f, duration_minutes: Number(e.target.value) }))} />
+            <input className="input" placeholder="Mock label" value={pdfForm.assessment_label} onChange={(e) => setPdfForm((f) => ({ ...f, assessment_label: e.target.value }))} />
+          </div>
+          <label className="flex items-center gap-2 text-sm text-slate-700">
+            <input type="checkbox" checked={pdfForm.publish} onChange={(e) => setPdfForm((f) => ({ ...f, publish: e.target.checked }))} />
+            Publish mock immediately
+          </label>
+
+          {pdfPreview && (
+            <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <p className="text-sm font-medium text-slate-800">
+                Preview: {pdfPreview.question_count} questions found
+                {pdfPreview.errors?.length ? ` · ${pdfPreview.errors.length} skipped` : ''}
+              </p>
+              <ul className="mt-2 max-h-40 space-y-2 overflow-y-auto text-xs text-slate-600">
+                {(pdfPreview.questions || []).slice(0, 5).map((q, i) => (
+                  <li key={i}>
+                    <span className="font-medium text-slate-800">Q{q.line}.</span> {q.question_text}
+                    <span className="block text-slate-500">{q.options?.join(' · ')}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <button type="submit" className="btn-primary w-full" disabled={saving || !pdfBase64}>
+            {saving ? <Spinner className="h-4 w-4" /> : 'Create test series from PDF'}
+          </button>
+        </form>
+      </Modal>
 
       <Modal open={modal} onClose={() => setModal(false)} title="Create test series">
         <form onSubmit={create} className="space-y-4">

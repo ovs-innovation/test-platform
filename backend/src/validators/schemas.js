@@ -24,6 +24,24 @@ export const testSeriesSchema = z.object({
 
 export const testSeriesUpdateSchema = testSeriesSchema.partial();
 
+export const parsePdfSchema = z.object({
+  pdf_base64: z.string().min(100, 'PDF data is required'),
+});
+
+export const importPdfTestSeriesSchema = z.object({
+  pdf_base64: z.string().min(100, 'PDF data is required'),
+  title: z.string().trim().min(3).max(200),
+  description: z.string().max(5000).optional().default(''),
+  price: z.number().min(0).default(0),
+  validity_days: z.number().int().min(1).max(730).default(365),
+  exam_type: z.string().max(60).default('General'),
+  duration_minutes: z.number().int().min(5).max(600).default(180),
+  is_featured: z.boolean().optional().default(false),
+  image_url: z.string().max(2000).optional().default(''),
+  publish: z.boolean().optional().default(true),
+  assessment_label: z.string().max(120).optional().default('Mock 1'),
+});
+
 export const enrollSchema = z.object({
   test_series_id: z.number().int().positive(),
 });

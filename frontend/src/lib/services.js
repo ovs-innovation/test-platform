@@ -86,6 +86,8 @@ export const testSeriesService = {
   create: (data) => api.post('/test-series', data).then((r) => r.data.test_series),
   update: (id, data) => api.put(`/test-series/${id}`, data).then((r) => r.data.test_series),
   link: (id, data) => api.post(`/test-series/${id}/link`, data).then((r) => r.data),
+  parsePdf: (pdf_base64) => api.post('/test-series/parse-pdf', { pdf_base64 }).then((r) => r.data),
+  importFromPdf: (data) => api.post('/test-series/import-pdf', data).then((r) => r.data),
   myEnrollments: () => api.get('/test-series/my/enrollments').then((r) => r.data),
   mySeriesTests: (slug) => api.get(`/test-series/my/${slug}/tests`).then((r) => r.data),
   enroll: (test_series_id) => api.post('/test-series/enroll', { test_series_id }).then((r) => r.data),
