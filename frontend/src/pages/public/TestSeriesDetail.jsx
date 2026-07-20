@@ -66,7 +66,7 @@ export default function TestSeriesDetail() {
         key: order.keyId,
         amount: order.amount,
         currency: order.currency,
-        name: 'AssessPro CBT',
+        name: 'EDVEDUM ACADEMY',
         description: order.series.title,
         order_id: order.orderId,
         handler: async (response) => {

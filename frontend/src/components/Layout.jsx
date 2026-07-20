@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService } from '../lib/services.js';
 
 const candidateNav = [
@@ -149,14 +150,10 @@ export default function Layout({ children }) {
 function Brand() {
   return (
     <div className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5 dark:border-slate-800">
-      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white shadow-sm">
-        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-      </span>
+      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto object-contain" />
       <div>
-        <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">AssessPro</span>
-        <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">CBT Platform</p>
+        <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">EDVEDUM</span>
+        <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Academy</p>
       </div>
     </div>
   );

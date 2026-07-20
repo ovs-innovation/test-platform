@@ -1,4 +1,22 @@
-# AssessPro — Full-Stack Interview Assessment Platform
+# EDVEDUM ACADEMY — Full-Stack Online Test Platform
+
+**EDVEDUM ACADEMY** is a JEE / NEET / Foundation ed-tech platform built on a production-grade
+assessment engine: timed CBT mocks, test series, payments, admin console, and student portal.
+
+**Stack:** React + Vite + Tailwind CSS · Node.js + Express · PostgreSQL · JWT auth
+
+| Environment | URL |
+|-------------|-----|
+| **Frontend (Vercel)** | https://test-platform-umber-kappa.vercel.app |
+| **Backend API (Render)** | https://test-platform-cr9j.onrender.com/api |
+| **Local frontend** | http://localhost:5173 |
+| **Local backend** | http://localhost:5000/api |
+
+**Admin login (after seed):** `admin@assess.io` / `Admin@12345`
+
+---
+
+# AssessPro Engine — Full-Stack Interview Assessment Platform
 
 A production-grade, proctored online assessment platform with a candidate portal, an admin
 management console, a timed MCQ assessment engine, real-time autosave, and a configurable
@@ -190,6 +208,14 @@ finalize the attempt the same way.
 
 **Scoring:** On submission the server compares saved answers to `correct_index`, sums marks,
 computes the percentage, and stores a `scores` row with `passed = marks_obtained >= passing_marks`.
+
+---
+
+## Production (Vercel + Render)
+
+1. **Backend on Render** — set `DATABASE_URL`, `JWT_SECRET`, `CLIENT_URL` (include your Vercel domain), SMTP and Razorpay keys as needed. `render.yaml` runs migrations on deploy.
+2. **Frontend on Vercel** — deploy `frontend/`; **do not** set `VITE_API_URL`. `vercel.json` proxies `/api` to Render.
+3. **CORS** — `CLIENT_URL` on Render must include `https://test-platform-umber-kappa.vercel.app` (comma-separated if multiple origins).
 
 ---
 

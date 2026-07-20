@@ -58,7 +58,7 @@ export const register = asyncHandler(async (req, res) => {
 
   await query(
     `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
-    [user.id, 'Welcome to AssessPro CBT', 'Explore test series and start your preparation journey.']
+    [user.id, 'Welcome to EDVEDUM Academy', 'Explore test series and start your preparation journey.']
   );
 
   res.status(201).json({ token: issueToken(user), user: publicUser(user) });
@@ -359,7 +359,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   try {
     await sendEmail({
       to: user.email,
-      subject: 'Reset your AssessPro password',
+      subject: 'Reset your EDVEDUM Academy password',
       html: `<p>Hi ${user.name},</p><p><a href="${resetUrl}">Reset your password</a></p><p>Expires in 1 hour.</p>`,
       text: `Reset password: ${resetUrl}`,
     });

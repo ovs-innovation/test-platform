@@ -26,7 +26,7 @@ export default function Register() {
     setError('');
     try {
       await register(form);
-      toast.success('Account created! Welcome to AssessPro.');
+      toast.success('Account created! Welcome to EDVEDUM Academy.');
       navigate('/dashboard', { replace: true });
     } catch (err) {
       setError(err.message || 'Registration failed');

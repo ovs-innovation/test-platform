@@ -22,7 +22,7 @@ export default {
         warning: { DEFAULT: '#f59e0b', light: '#fef3c7', dark: '#b45309' },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+        sans: ['Poppins', 'Inter', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
       },
       borderRadius: {
         card: '12px',

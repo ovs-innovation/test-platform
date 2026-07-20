@@ -2,16 +2,20 @@ import { Skeleton } from '../ui.jsx';
 
 export default function TestSeriesCardSkeleton() {
   return (
-    <div className="card overflow-hidden shadow-soft">
-      <Skeleton className="aspect-[16/9] w-full rounded-none bg-slate-100 dark:bg-slate-800" />
-      <div className="space-y-3 p-5">
-        <Skeleton className="h-5 w-14 rounded-full" />
-        <Skeleton className="h-5 w-4/5" />
-        <Skeleton className="h-4 w-full" />
-        <div className="flex justify-between border-t border-slate-100 pt-4 dark:border-slate-800">
-          <Skeleton className="h-6 w-12" />
-          <Skeleton className="h-4 w-14" />
+    <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
+      <Skeleton className="h-[108px] w-full rounded-none bg-slate-200" />
+      <div className="space-y-4 p-5">
+        <Skeleton className="h-6 w-4/5" />
+        <div className="grid grid-cols-2 gap-2.5">
+          <Skeleton className="h-14 rounded-lg" />
+          <Skeleton className="h-14 rounded-lg" />
         </div>
+        <div className="space-y-2">
+          <Skeleton className="h-3.5 w-full" />
+          <Skeleton className="h-3.5 w-11/12" />
+          <Skeleton className="h-3.5 w-10/12" />
+        </div>
+        <Skeleton className="h-16 w-full rounded-xl" />
       </div>
     </div>
   );

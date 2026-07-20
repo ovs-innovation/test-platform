@@ -1,47 +1,38 @@
-import BrowserFrame from './BrowserFrame.jsx';
-import HeroExamPreview from './HeroExamPreview.jsx';
-
-const EXAM_COVERS = [
-  { src: '/test-series/jee.svg', label: 'JEE', rotate: '-rotate-6', x: 'left-0 top-6', z: 'z-0' },
-  { src: '/test-series/neet.svg', label: 'NEET', rotate: 'rotate-3', x: 'left-14 top-0', z: 'z-[1]' },
-  { src: '/test-series/neet-pg.svg', label: 'NEET PG', rotate: '-rotate-3', x: 'right-2 top-10', z: 'z-0' },
+const EXAM_BADGES = [
+  { label: 'JEE', className: 'left-3 top-4' },
+  { label: 'NEET', className: 'right-3 top-8' },
+  { label: 'Foundation', className: 'left-4 bottom-6' },
 ];
 
-/** Home hero — fanned series covers + live CBT product shot */
+/** Auth / marketing visual — students, not CBT mockup */
 export default function HomeHeroVisual() {
   return (
-    <div className="relative mx-auto w-full max-w-lg lg:max-w-xl">
-      <div
-        className="pointer-events-none absolute -right-6 top-1/4 h-48 w-48 rounded-full bg-brand-200/50 blur-3xl"
-        aria-hidden
-      />
-      <div
-        className="pointer-events-none absolute -left-4 bottom-1/4 h-36 w-36 rounded-full bg-sky-200/40 blur-2xl"
-        aria-hidden
-      />
-
-      <p className="mb-4 text-right text-caption font-semibold uppercase tracking-wide text-slate-500">
-        Live exam interface
+    <div className="relative mx-auto w-full max-w-sm">
+      <p className="mb-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-slate-500">
+        JEE · NEET · Foundation
       </p>
 
-      <div className="relative h-[300px] sm:h-[340px]">
-        {EXAM_COVERS.map((cover) => (
+      <div className="relative">
+        <div className="overflow-hidden rounded-2xl border border-slate-200/90 shadow-[0_24px_48px_-12px_rgba(15,23,42,0.18)]">
+          <img
+            src="/edvedum/student-hero.png"
+            alt="EDVEDUM student preparing for JEE and NEET"
+            className="aspect-[4/5] w-full object-cover object-top"
+          />
           <div
-            key={cover.label}
-            className={`absolute ${cover.x} ${cover.z} w-[40%] ${cover.rotate} overflow-hidden rounded-xl border border-slate-200/90 bg-white shadow-lg ring-1 ring-white/80`}
-          >
-            <img src={cover.src} alt="" className="aspect-[16/10] w-full object-cover" />
-            <span className="absolute bottom-2 left-2 rounded-md bg-slate-900/55 px-2 py-0.5 text-[10px] font-bold uppercase text-white backdrop-blur-sm">
-              {cover.label}
-            </span>
-          </div>
-        ))}
-
-        <div className="absolute bottom-0 left-1/2 z-20 w-[90%] -translate-x-1/2 sm:w-[88%]">
-          <BrowserFrame>
-            <HeroExamPreview />
-          </BrowserFrame>
+            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/25 via-transparent to-transparent"
+            aria-hidden
+          />
         </div>
+
+        {EXAM_BADGES.map((badge) => (
+          <span
+            key={badge.label}
+            className={`absolute ${badge.className} rounded-lg border border-white/80 bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-slate-700 shadow-md backdrop-blur-sm`}
+          >
+            {badge.label}
+          </span>
+        ))}
       </div>
     </div>
   );

@@ -143,7 +143,7 @@ export const verifyPayment = asyncHandler(async (req, res) => {
   if (user.rows[0]?.email) {
     sendEmail({
       to: user.rows[0].email,
-      subject: 'Payment confirmed — AssessPro CBT',
+      subject: 'Payment confirmed — EDVEDUM Academy',
       html: `<p>Hi ${user.rows[0].name},</p><p>Your payment for <strong>${result.series.title}</strong> was successful. Start practicing from your dashboard.</p>`,
       text: `Payment confirmed for ${result.series.title}`,
     }).catch(() => {});

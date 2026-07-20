@@ -67,7 +67,7 @@ const SERIES = [
     exam_type: 'General',
     is_featured: true,
     test_count: 1,
-    image_url: '/test-series/free-student-cover.jpg',
+    image_url: '/edvedum/students-group.png',
   },
 ];
 
@@ -124,6 +124,18 @@ export const seedPlatform = async (client) => {
       ELSE '/test-series/general.svg'
     END
     WHERE COALESCE(image_url, '') = '' OR image_url LIKE '%ssc%'
+  `);
+
+  await client.query(`
+    UPDATE test_series SET image_url = '/edvedum/students-group.png'
+    WHERE slug = 'free-diagnostic' OR (price = 0 AND exam_type = 'General')
+  `);
+
+  await client.query(`
+    INSERT INTO settings (key, value) VALUES
+      ('site_name', 'EDVEDUM ACADEMY'),
+      ('support_email', 'support@edvedum.com')
+    ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()
   `);
 
   // Link first published assessment to free diagnostic series if exists

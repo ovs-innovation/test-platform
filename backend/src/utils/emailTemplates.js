@@ -1,5 +1,7 @@
-const BRAND = '#2563eb';
+const BRAND = '#1B4FDB';
 const BG = '#f8fafc';
+const SITE_NAME = 'EDVEDUM ACADEMY';
+const SITE_TAGLINE = 'Empowering Future Doctors & Engineers';
 
 const layout = (content) => `
 <!DOCTYPE html>
@@ -10,13 +12,13 @@ const layout = (content) => `
     <tr><td align="center">
       <table width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
         <tr><td style="background:${BRAND};padding:28px 32px;">
-          <h1 style="margin:0;color:#fff;font-size:22px;font-weight:700;">AssessPro</h1>
-          <p style="margin:6px 0 0;color:rgba(255,255,255,.85);font-size:13px;">Professional Hiring Assessments</p>
+          <h1 style="margin:0;color:#fff;font-size:22px;font-weight:700;">${SITE_NAME}</h1>
+          <p style="margin:6px 0 0;color:rgba(255,255,255,.85);font-size:13px;">${SITE_TAGLINE}</p>
         </td></tr>
         <tr><td style="padding:32px;">${content}</td></tr>
         <tr><td style="padding:20px 32px;background:#f1f5f9;border-top:1px solid #e2e8f0;">
           <p style="margin:0;font-size:12px;color:#64748b;text-align:center;">
-            &copy; AssessPro &mdash; This is an automated message. Do not reply.
+            &copy; ${SITE_NAME} &mdash; This is an automated message. Do not reply.
           </p>
         </td></tr>
       </table>
@@ -31,7 +33,7 @@ export const inviteEmailTemplate = ({ name, assessmentTitle, inviteUrl, duration
     <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Assessment Invitation</h2>
     <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">Hello <strong>${name}</strong>,</p>
     <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">
-      You have been invited to complete <strong>${assessmentTitle}</strong> on AssessPro.
+      You have been invited to complete <strong>${assessmentTitle}</strong> on ${SITE_NAME}.
       ${durationMinutes ? `Estimated duration: <strong>${durationMinutes} minutes</strong>.` : ''}
     </p>
     <p style="margin:0 0 24px;color:#334155;font-size:15px;line-height:1.6;">
@@ -44,11 +46,11 @@ export const inviteEmailTemplate = ({ name, assessmentTitle, inviteUrl, duration
     </td></tr></table>
     <p style="margin:24px 0 0;color:#94a3b8;font-size:12px;word-break:break-all;">${inviteUrl}</p>
   `),
-  text: `Hello ${name},\n\nYou are invited to complete "${assessmentTitle}" on AssessPro.\n\nStart here: ${inviteUrl}\n\nThis link is unique to you.`,
+  text: `Hello ${name},\n\nYou are invited to complete "${assessmentTitle}" on ${SITE_NAME}.\n\nStart here: ${inviteUrl}\n\nThis link is unique to you.`,
 });
 
 export const otpEmailTemplate = ({ otp, expiresMinutes }) => ({
-  subject: 'Your AssessPro verification code',
+  subject: `Your ${SITE_NAME} verification code`,
   html: layout(`
     <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Email Verification</h2>
     <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">
@@ -61,7 +63,7 @@ export const otpEmailTemplate = ({ otp, expiresMinutes }) => ({
     <p style="margin:0 0 8px;color:#64748b;font-size:13px;">Expires in <strong>${expiresMinutes} minutes</strong>.</p>
     <p style="margin:0;color:#64748b;font-size:13px;">Never share this code with anyone.</p>
   `),
-  text: `Your AssessPro verification code is: ${otp}\n\nExpires in ${expiresMinutes} minutes. Do not share this code.`,
+  text: `Your ${SITE_NAME} verification code is: ${otp}\n\nExpires in ${expiresMinutes} minutes. Do not share this code.`,
 });
 
 export const completionEmailTemplate = ({
