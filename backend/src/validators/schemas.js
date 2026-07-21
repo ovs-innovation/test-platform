@@ -6,9 +6,30 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  name: z.string().trim().min(2).max(120),
-  email: z.string().trim().toLowerCase().email(),
+  name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
+  email: z.string().trim().toLowerCase().email('A valid email is required'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
+  class: z.string().trim().min(1, 'Class is required'),
+  target_exam: z.enum(['JEE', 'NEET'], { required_error: 'Target exam must be JEE or NEET' }),
+});
+
+export const adminCreateCandidateSchema = z.object({
+  name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
+  email: z.string().trim().toLowerCase().email('A valid email is required'),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().nullable(),
+  class: z.string().trim().min(1, 'Class is required').optional().nullable(),
+  target_exam: z.enum(['JEE', 'NEET'], { required_error: 'Target exam must be JEE or NEET' }).optional().nullable(),
+});
+
+export const adminUpdateCandidateSchema = z.object({
+  name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120).optional(),
+  email: z.string().trim().toLowerCase().email('A valid email is required').optional(),
+  password: z.string().min(6, 'Password must be at least 6 characters').optional().or(z.literal('')),
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().nullable(),
+  class: z.string().trim().min(1, 'Class is required').optional().nullable(),
+  target_exam: z.enum(['JEE', 'NEET']).optional().nullable(),
 });
 
 export const testSeriesSchema = z.object({
@@ -19,6 +40,7 @@ export const testSeriesSchema = z.object({
   exam_type: z.string().max(60).default('General'),
   test_count: z.number().int().min(0).default(0),
   is_featured: z.boolean().optional().default(false),
+  is_active: z.boolean().optional().default(true),
   image_url: z.string().max(2000).optional().default(''),
 });
 
@@ -102,6 +124,15 @@ export const otpVerifySchema = z.object({
   invite_token: z.string().uuid('Invalid invitation token'),
 });
 
+export const otpSendLoginSchema = z.object({
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
+});
+
+export const otpVerifyLoginSchema = z.object({
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
+  otp: z.string().length(6, 'OTP must be 6 digits'),
+});
+
 export const inviteSchema = z.object({
   assessment_id: z.number().int().positive(),
   candidate_name: z.string().trim().min(2).max(120),
@@ -133,6 +164,8 @@ const questionBaseSchema = z.object({
   test_cases: z.array(z.object({ input: z.string(), expected: z.string() })).optional(),
   language: z.string().max(30).optional(),
   bank_category: z.string().max(60).optional(),
+  solution: z.string().max(10000).optional().nullable(),
+  image_url: z.string().max(2000).optional().nullable(),
 });
 
 export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {
@@ -171,6 +204,8 @@ export const assessmentSchema = z.object({
   result_visible: z.boolean().default(true),
   negative_marking: z.boolean().default(false),
   negative_marks_per_wrong: z.number().min(0).max(10).default(0.25),
+  available_from: z.string().trim().optional().nullable(),
+  available_until: z.string().trim().optional().nullable(),
 });
 
 export const assessmentUpdateSchema = assessmentSchema.partial();

@@ -252,6 +252,14 @@ export const startAttempt = asyncHandler(async (req, res) => {
   if (!assessment) throw ApiError.notFound('Assessment not found');
   if (!assessment.is_published) throw ApiError.forbidden('This assessment is not available');
 
+  const now = new Date();
+  if (assessment.available_from && new Date(assessment.available_from) > now) {
+    throw ApiError.forbidden(`This assessment is scheduled to start at ${new Date(assessment.available_from).toLocaleString()}`);
+  }
+  if (assessment.available_until && new Date(assessment.available_until) < now) {
+    throw ApiError.forbidden('This assessment availability window has expired');
+  }
+
   const qCount = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [assessmentId]);
   if (qCount.rows[0].c === 0) throw ApiError.badRequest('This assessment has no questions');
 
@@ -502,7 +510,7 @@ export const getResult = asyncHandler(async (req, res) => {
   if (!isOwner && !isAdmin) throw ApiError.forbidden('Not allowed to view this result');
 
   const assessmentRes = await query(
-    'SELECT id, title, result_visible, passing_marks FROM assessments WHERE id = $1',
+    'SELECT id, title, result_visible, passing_marks, negative_marking, negative_marks_per_wrong FROM assessments WHERE id = $1',
     [attempt.assessment_id]
   );
   const assessment = assessmentRes.rows[0];
@@ -521,7 +529,14 @@ export const getResult = asyncHandler(async (req, res) => {
   const scoreRes = await query('SELECT * FROM scores WHERE attempt_id = $1', [id]);
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
-    query('SELECT id, question_type, question_text, options, correct_index, correct_indices, marks, position, solution FROM questions WHERE assessment_id = $1 ORDER BY position', [attempt.assessment_id]),
+    query(
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.marks, q.position, q.solution, q.test_cases, q.section_id, s.name AS section_name
+       FROM questions q
+       LEFT JOIN assessment_sections s ON s.id = q.section_id
+       WHERE q.assessment_id = $1
+       ORDER BY q.position ASC, q.id ASC`,
+      [attempt.assessment_id]
+    ),
     query('SELECT question_id, selected_index, selected_indices FROM answers WHERE attempt_id = $1', [id]),
     query('SELECT question_id, source_code FROM coding_answers WHERE attempt_id = $1', [id]),
     query('SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1', [id]),
@@ -531,23 +546,65 @@ export const getResult = asyncHandler(async (req, res) => {
   const codeMap = new Map(codingRes.rows.map((a) => [a.question_id, a.source_code]));
   const subjMap = new Map(subjectiveRes.rows.map((a) => [a.question_id, a.answer_text]));
 
+  const negEnabled = assessment.negative_marking === true;
+  const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
+
+  const arraysEqual = (a, b) => {
+    const sa = [...(a || [])].sort((x, y) => x - y);
+    const sb = [...(b || [])].sort((x, y) => x - y);
+    return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
+  };
+
   const solutions = questionsRes.rows.map((q) => {
     const ans = ansMap.get(q.id);
     let yourAnswer = null;
     let correct = false;
+    let questionMarksObtained = 0;
+
     if (q.question_type === 'mcq') {
       yourAnswer = ans?.selected_index;
       correct = yourAnswer === q.correct_index;
+      if (yourAnswer === undefined || yourAnswer === null) {
+        questionMarksObtained = 0;
+      } else if (correct) {
+        questionMarksObtained = q.marks;
+      } else {
+        questionMarksObtained = negEnabled ? -negPenalty : 0;
+      }
     } else if (q.question_type === 'multi_select') {
       yourAnswer = ans?.selected_indices;
       const ci = q.correct_indices || [];
       const si = yourAnswer || [];
-      correct = JSON.stringify([...ci].sort()) === JSON.stringify([...si].sort());
+      correct = arraysEqual(si, ci);
+      if (!si.length) {
+        questionMarksObtained = 0;
+      } else if (correct) {
+        questionMarksObtained = q.marks;
+      } else {
+        questionMarksObtained = negEnabled ? -negPenalty : 0;
+      }
     } else if (q.question_type === 'coding') {
       yourAnswer = codeMap.get(q.id) || '';
+      const tests = Array.isArray(q.test_cases) ? q.test_cases : [];
+      if (yourAnswer.trim()) {
+        const grade = gradeCodingAnswer(yourAnswer, tests);
+        if (grade.passed) {
+          correct = true;
+          questionMarksObtained = q.marks;
+        } else if (grade.total > 0) {
+          const partial = Math.round((grade.passedCount / grade.total) * q.marks);
+          questionMarksObtained = partial;
+          correct = partial > 0;
+        }
+      }
     } else if (q.question_type === 'subjective') {
       yourAnswer = subjMap.get(q.id) || '';
+      if (yourAnswer.trim().length >= 20) {
+        correct = true;
+        questionMarksObtained = q.marks;
+      }
     }
+
     return {
       id: q.id,
       question_type: q.question_type,
@@ -559,6 +616,8 @@ export const getResult = asyncHandler(async (req, res) => {
       correct_indices: q.correct_indices,
       is_correct: correct,
       solution: q.solution,
+      section_name: q.section_name || 'General',
+      marks_obtained: Number(questionMarksObtained.toFixed(2)),
     };
   });
 

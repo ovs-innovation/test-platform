@@ -65,6 +65,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
   const correctIndicesIdx = idx('correct_indices');
   const categoryIdx = idx('category');
   const solutionIdx = idx('solution');
+  const subjectIdIdx = idx('subject_id');
+  const chapterIdIdx = idx('chapter_id');
+  const difficultyIdx = idx('difficulty');
+  const imageUrlIdx = idx('image_url');
 
   if (textIdx === -1) throw new Error('CSV must include question_text column');
   if (optionsIdx === -1 && !header.includes('options')) {
@@ -92,6 +96,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
       : [];
     const category = categoryIdx >= 0 ? cols[categoryIdx] : null;
     const solution = solutionIdx >= 0 ? cols[solutionIdx] : '';
+    const subject_id = subjectIdIdx >= 0 ? (Number(cols[subjectIdIdx]) || null) : null;
+    const chapter_id = chapterIdIdx >= 0 ? (Number(cols[chapterIdIdx]) || null) : null;
+    const difficulty = difficultyIdx >= 0 ? (cols[difficultyIdx] || 'medium') : 'medium';
+    const image_url = imageUrlIdx >= 0 ? (cols[imageUrlIdx] || '') : '';
 
     if (requireCategory && !category) {
       errors.push({ line: i + 1, error: 'Missing category' });
@@ -112,6 +120,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
       correct_indices,
       category,
       solution,
+      subject_id,
+      chapter_id,
+      difficulty,
+      image_url,
     });
   }
 
@@ -119,7 +131,7 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
 };
 
 export const questionsToCsv = (questions, { includeCategory = false, includeSolution = false } = {}) => {
-  const headers = ['question_text', 'question_type', 'marks', 'options', 'correct_index', 'correct_indices'];
+  const headers = ['question_text', 'question_type', 'marks', 'options', 'correct_index', 'correct_indices', 'difficulty', 'image_url', 'subject_id', 'chapter_id'];
   if (includeCategory) headers.push('category');
   if (includeSolution) headers.push('solution');
   headers.push('section_name');
@@ -133,6 +145,10 @@ export const questionsToCsv = (questions, { includeCategory = false, includeSolu
       optionsToCsv(q.options),
       q.correct_index ?? 0,
       parseOptions(q.correct_indices).join('|'),
+      q.difficulty || 'medium',
+      q.image_url || '',
+      q.subject_id || '',
+      q.chapter_id || '',
     ];
     if (includeCategory) row.push(q.category || q.bank_category || '');
     if (includeSolution) row.push(q.solution || '');

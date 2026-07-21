@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService } from '../lib/services.js';
@@ -17,7 +17,7 @@ const candidateNav = [
   { to: '/assessments', label: 'Invited', icon: 'users' },
 ];
 
-const adminNav = [
+const adminNav = [  
   { to: '/admin', label: 'Overview', icon: 'grid' },
   { to: '/admin/test-series', label: 'Test Series', icon: 'chart' },
   { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
@@ -149,13 +149,13 @@ export default function Layout({ children }) {
 
 function Brand() {
   return (
-    <div className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5 dark:border-slate-800">
+    <Link to="/" className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5 dark:border-slate-800 hover:opacity-85 transition-opacity duration-200">
       <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto object-contain" />
       <div>
         <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">EDVEDUM</span>
         <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Academy</p>
       </div>
-    </div>
+    </Link>
   );
 }
 

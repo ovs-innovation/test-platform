@@ -9,7 +9,7 @@ function initials(name) {
 
 export default function Profile() {
   const toast = useToast();
-  const [form, setForm] = useState({ name: '', phone: '', city: '', state: '', target_exam: '' });
+  const [form, setForm] = useState({ name: '', phone: '', city: '', state: '', target_exam: '', class: '' });
   const [email, setEmail] = useState('');
   const [state, setState] = useState('loading');
   const [saving, setSaving] = useState(false);
@@ -23,6 +23,7 @@ export default function Profile() {
         city: d.profile?.city || '',
         state: d.profile?.state || '',
         target_exam: d.profile?.target_exam || '',
+        class: d.profile?.class || '',
       });
       setState('done');
     }).catch(() => setState('error'));
@@ -46,7 +47,7 @@ export default function Profile() {
 
   return (
     <div>
-      <PageHeader title="Profile" subtitle="Name, phone, and target exam — keep these accurate for certificates." />
+      <PageHeader title="Profile" subtitle="Name, phone, class, and target exam — keep these accurate for certificates." />
 
       <div className="mb-6 flex items-center gap-4 border border-slate-200 px-4 py-4 dark:border-slate-700">
         <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-slate-200 text-sm font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">
@@ -55,19 +56,45 @@ export default function Profile() {
         <div>
           <p className="text-lg font-semibold text-slate-900 dark:text-white">{form.name || 'Student'}</p>
           <p className="text-sm text-muted">{email}</p>
-          {form.target_exam && <p className="mt-1 text-xs font-medium text-brand-600">Preparing for {form.target_exam}</p>}
+          {(form.class || form.target_exam) && (
+            <p className="mt-1 text-xs font-medium text-brand-600">
+              {form.class && <span>{form.class}</span>}
+              {form.class && form.target_exam && <span> · </span>}
+              {form.target_exam && <span>Preparing for {form.target_exam}</span>}
+            </p>
+          )}
         </div>
       </div>
 
       <form onSubmit={save} className="card max-w-xl space-y-4 p-6">
         <div><label className="label">Email</label><input className="input bg-slate-50 dark:bg-slate-800/50" value={email} disabled /></div>
         <div><label className="label">Full name</label><input className="input" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
-        <div><label className="label">Phone</label><input className="input" placeholder="+91 98765 43210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
+        <div><label className="label">Phone</label><input className="input" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
         <div className="grid grid-cols-2 gap-4">
           <div><label className="label">City</label><input className="input" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} /></div>
           <div><label className="label">State</label><input className="input" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} /></div>
         </div>
-        <div><label className="label">Target exam</label><input className="input" placeholder="JEE Main, NEET UG, NEET PG…" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))} /></div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="label">Class</label>
+            <select className="input" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
+              <option value="">Select class</option>
+              <option value="Class 11">Class 11</option>
+              <option value="Class 12">Class 12</option>
+              <option value="Dropper (12th Pass)">Dropper (12th Pass)</option>
+              <option value="Class 10">Class 10</option>
+              <option value="Class 9">Class 9</option>
+            </select>
+          </div>
+          <div>
+            <label className="label">Target exam</label>
+            <select className="input" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
+              <option value="">Select exam</option>
+              <option value="JEE">JEE</option>
+              <option value="NEET">NEET</option>
+            </select>
+          </div>
+        </div>
         <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save profile'}</button>
       </form>
     </div>

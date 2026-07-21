@@ -34,7 +34,11 @@ export default function AdminTestSeries() {
   const [modal, setModal] = useState(false);
   const [pdfModal, setPdfModal] = useState(false);
   const [linkModal, setLinkModal] = useState(null);
-  const [form, setForm] = useState({ title: '', description: '', price: 0, exam_type: 'JEE Main', test_count: 1, is_featured: false, image_url: '' });
+  const [editing, setEditing] = useState(null);
+  const [form, setForm] = useState({ title: '', description: '', price: 0, exam_type: 'JEE Main', test_count: 1, is_featured: false, is_active: true, validity_days: 365, image_url: '' });
+  // Delete confirm modal states
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [seriesToDelete, setSeriesToDelete] = useState(null);
   const [pdfForm, setPdfForm] = useState(PDF_FORM_DEFAULT);
   const [pdfBase64, setPdfBase64] = useState('');
   const [pdfName, setPdfName] = useState('');
@@ -127,16 +131,22 @@ export default function AdminTestSeries() {
     }
   };
 
-  const create = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
-      await testSeriesService.create(form);
-      toast.success('Test series created');
+      if (editing) {
+        await testSeriesService.update(editing.id, form);
+        toast.success('Test series updated');
+      } else {
+        await testSeriesService.create(form);
+        toast.success('Test series created');
+      }
       setModal(false);
+      setEditing(null);
       load();
     } catch (err) {
-      toast.error(err.message);
+      toast.error(err.message || 'Operation failed');
     } finally {
       setSaving(false);
     }
@@ -171,7 +181,11 @@ export default function AdminTestSeries() {
         actions={(
           <div className="flex flex-wrap gap-2">
             <button type="button" className="btn-secondary" onClick={openPdfModal}>Import from PDF</button>
-            <button type="button" className="btn-primary" onClick={() => setModal(true)}>+ New series</button>
+            <button type="button" className="btn-primary" onClick={() => {
+              setEditing(null);
+              setForm({ title: '', description: '', price: 0, exam_type: 'JEE Main', test_count: 1, is_featured: false, is_active: true, validity_days: 365, image_url: '' });
+              setModal(true);
+            }}>+ New series</button>
           </div>
         )}
       />
@@ -191,9 +205,34 @@ export default function AdminTestSeries() {
               <h2 className="mt-2 font-semibold text-slate-900">{s.title}</h2>
               <p className="text-sm text-slate-500">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`} · {s.linked_tests} tests linked · {s.enrollment_count} enrollments</p>
             </div>
-            <button type="button" className="btn-secondary text-sm" onClick={() => { setLinkModal(s); setLinkForm({ assessment_id: '', label: '' }); }}>
-              Link assessment
-            </button>
+            <div className="flex gap-2">
+              <button type="button" className="btn-secondary text-sm" onClick={() => {
+                setEditing(s);
+                setForm({
+                  title: s.title,
+                  description: s.description || '',
+                  price: Number(s.price) || 0,
+                  exam_type: s.exam_type || 'JEE Main',
+                  test_count: s.test_count || 0,
+                  is_featured: s.is_featured || false,
+                  is_active: s.is_active !== false,
+                  validity_days: s.validity_days || 365,
+                  image_url: s.image_url || '',
+                });
+                setModal(true);
+              }}>
+                Edit
+              </button>
+              <button type="button" className="btn-secondary text-sm" onClick={() => { setLinkModal(s); setLinkForm({ assessment_id: '', label: '' }); }}>
+                Link assessment
+              </button>
+              <button type="button" className="btn-secondary text-sm text-red-600 hover:text-red-800" onClick={() => {
+                setSeriesToDelete(s);
+                setDeleteConfirmOpen(true);
+              }}>
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -262,22 +301,44 @@ export default function AdminTestSeries() {
         </form>
       </Modal>
 
-      <Modal open={modal} onClose={() => setModal(false)} title="Create test series">
-        <form onSubmit={create} className="space-y-4">
+      <Modal open={modal} onClose={() => setModal(false)} title={editing ? 'Edit test series' : 'Create test series'}>
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input className="input" placeholder="Title" required value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} />
           <textarea className="input" rows={3} placeholder="Description" value={form.description} onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))} />
           <div className="grid grid-cols-2 gap-3">
-            <input className="input" type="number" min={0} placeholder="Price ₹" value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} />
-            <input className="input" placeholder="Exam type" value={form.exam_type} onChange={(e) => setForm((f) => ({ ...f, exam_type: e.target.value }))} />
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Price (₹)</label>
+              <input className="input" type="number" min={0} required value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: Number(e.target.value) }))} />
+            </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Validity (Days)</label>
+              <input className="input" type="number" min={1} max={730} required value={form.validity_days} onChange={(e) => setForm((f) => ({ ...f, validity_days: Number(e.target.value) }))} />
+            </div>
           </div>
-          <input
-            className="input"
-            placeholder="Cover image URL (e.g. /test-series/jee.svg)"
-            value={form.image_url}
-            onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))}
-          />
-          <p className="text-xs text-slate-500">Leave blank to auto-pick cover: jee.svg, neet.svg, neet-pg.svg, general.svg</p>
-          <button type="submit" className="btn-primary w-full" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Create'}</button>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Exam type</label>
+              <input className="input" placeholder="Exam type" value={form.exam_type} onChange={(e) => setForm((f) => ({ ...f, exam_type: e.target.value }))} />
+            </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Cover image URL</label>
+              <input className="input" placeholder="/test-series/jee.svg" value={form.image_url} onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))} />
+            </div>
+          </div>
+          <p className="text-xs text-slate-400">Leave cover image URL blank to auto-pick based on exam type.</p>
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input type="checkbox" checked={form.is_active} onChange={(e) => setForm((f) => ({ ...f, is_active: e.target.checked }))} />
+              Active
+            </label>
+            <label className="flex items-center gap-2 text-sm text-slate-700">
+              <input type="checkbox" checked={form.is_featured} onChange={(e) => setForm((f) => ({ ...f, is_featured: e.target.checked }))} />
+              Featured
+            </label>
+          </div>
+          <button type="submit" className="btn-primary w-full" disabled={saving}>
+            {saving ? <Spinner className="h-4 w-4" /> : editing ? 'Save Changes' : 'Create'}
+          </button>
         </form>
       </Modal>
 
@@ -290,6 +351,56 @@ export default function AdminTestSeries() {
           <input className="input" placeholder="Label (e.g. Mock 1)" value={linkForm.label} onChange={(e) => setLinkForm((f) => ({ ...f, label: e.target.value }))} />
           <button type="submit" className="btn-primary w-full" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Link'}</button>
         </form>
+      </Modal>
+
+      <Modal
+        open={deleteConfirmOpen}
+        onClose={() => setDeleteConfirmOpen(false)}
+        title="Confirm Deletion"
+        size="sm"
+      >
+        <div className="text-center">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
+            <svg className="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+          </div>
+          <h3 className="mt-4 text-base font-semibold text-slate-900 dark:text-white">Delete Test Series?</h3>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Are you sure you want to delete test series <strong className="font-bold text-slate-800 dark:text-slate-200">"{seriesToDelete?.title}"</strong>?
+          </p>
+          <div className="mt-3 rounded-lg bg-red-50 p-3 text-left text-xs text-red-800 dark:bg-red-950/30 dark:text-red-300">
+            <strong>Warning:</strong> Deleting this test series will revoke active subscriptions/enrollments for students and unlink associated tests. This action cannot be undone.
+          </div>
+          <div className="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-4">
+            <button
+              type="button"
+              className="btn-secondary text-sm"
+              onClick={() => setDeleteConfirmOpen(false)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="btn-primary border-transparent bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium text-sm px-4 py-2 rounded-lg transition"
+              onClick={async () => {
+                if (!seriesToDelete) return;
+                try {
+                  await testSeriesService.remove(seriesToDelete.id);
+                  toast.success('Test series deleted successfully');
+                  load();
+                } catch (err) {
+                  toast.error(err.message || 'Failed to delete test series');
+                } finally {
+                  setDeleteConfirmOpen(false);
+                  setSeriesToDelete(null);
+                }
+              }}
+            >
+              Permanently Delete
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   );

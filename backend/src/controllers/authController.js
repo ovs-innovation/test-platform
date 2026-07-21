@@ -45,21 +45,35 @@ export const login = asyncHandler(async (req, res) => {
  * POST /api/auth/register  (student)
  */
 export const register = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
-  const existing = await query('SELECT id FROM users WHERE email = $1', [email]);
-  if (existing.rowCount) throw ApiError.conflict('An account with this email already exists');
+  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+
+  const existingEmail = await query('SELECT id FROM users WHERE email = $1', [email]);
+  if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
+
+  const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1', [phone]);
+  if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
 
   const password_hash = await hashPassword(password);
-  const result = await query(
-    `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role`,
-    [name, email, password_hash]
-  );
-  const user = result.rows[0];
 
-  await query(
-    `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
-    [user.id, 'Welcome to EDVEDUM Academy', 'Explore test series and start your preparation journey.']
-  );
+  const user = await withTransaction(async (client) => {
+    const result = await client.query(
+      `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role`,
+      [name, email, password_hash]
+    );
+    const u = result.rows[0];
+
+    await client.query(
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam) VALUES ($1, $2, $3, $4)`,
+      [u.id, phone, studentClass, target_exam]
+    );
+
+    await client.query(
+      `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
+      [u.id, 'Welcome to EDVEDUM Academy', 'Explore test series and start your preparation journey.']
+    );
+
+    return u;
+  });
 
   res.status(201).json({ token: issueToken(user), user: publicUser(user) });
 });
@@ -233,6 +247,106 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
 });
 
 /**
+ * POST /api/auth/otp/send-login
+ */
+export const sendLoginOtp = asyncHandler(async (req, res) => {
+  const { phone } = req.body;
+
+  const candidateRes = await query(
+    `SELECT u.id, u.name, u.email, u.role
+     FROM users u
+     JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE sp.phone = $1 AND u.role = 'candidate'`,
+    [phone]
+  );
+  const candidate = candidateRes.rows[0];
+  if (!candidate) {
+    throw ApiError.notFound('Mobile number is not registered');
+  }
+
+  const recentRes = await query(
+    `SELECT COUNT(*)::int AS c FROM otp_verifications
+     WHERE phone = $1 AND purpose = 'student_login'
+       AND created_at > NOW() - ($2 || ' minutes')::interval`,
+    [phone, env.otpResendWindowMinutes]
+  );
+  if (recentRes.rows[0].c >= env.otpResendLimit) {
+    throw ApiError.tooManyRequests(
+      `Too many OTP requests. Wait ${env.otpResendWindowMinutes} minutes before requesting again.`
+    );
+  }
+
+  const otp = generateOtp();
+  const otpHash = await hashOtp(otp);
+  const expiresAt = new Date(Date.now() + env.otpExpiresMinutes * 60 * 1000);
+
+  await query(
+    `INSERT INTO otp_verifications (phone, otp_hash, purpose, expires_at)
+     VALUES ($1, $2, 'student_login', $3)`,
+    [phone, otpHash, expiresAt]
+  );
+
+  // eslint-disable-next-line no-console
+  console.log(`[student login otp] Generated OTP for mobile ${phone}: ${otp}`);
+
+  res.json({
+    message: 'Verification code generated successfully',
+    expiresInMinutes: env.otpExpiresMinutes,
+    ...(!env.isProd ? { devOtp: otp } : {}),
+  });
+});
+
+/**
+ * POST /api/auth/otp/verify-login
+ */
+export const verifyLoginOtp = asyncHandler(async (req, res) => {
+  const { phone, otp } = req.body;
+
+  const otpRes = await query(
+    `SELECT * FROM otp_verifications
+     WHERE phone = $1 AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()
+     ORDER BY created_at DESC LIMIT 1`,
+    [phone]
+  );
+  const record = otpRes.rows[0];
+  if (!record) throw ApiError.badRequest('Invalid or expired verification code');
+
+  if (record.verify_attempts >= env.otpMaxVerifyAttempts) {
+    await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);
+    throw ApiError.tooManyRequests('Too many failed attempts. Request a new verification code.');
+  }
+
+  const valid = await verifyOtp(otp, record.otp_hash);
+  if (!valid) {
+    const attempts = record.verify_attempts + 1;
+    await query('UPDATE otp_verifications SET verify_attempts = $1 WHERE id = $2', [attempts, record.id]);
+    const remaining = env.otpMaxVerifyAttempts - attempts;
+    if (remaining <= 0) {
+      await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);
+      throw ApiError.tooManyRequests('Too many failed attempts. Request a new verification code.');
+    }
+    throw ApiError.badRequest(`Invalid verification code. ${remaining} attempt(s) remaining.`);
+  }
+
+  await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
+
+  const candidateRes = await query(
+    `SELECT u.id, u.name, u.email, u.role
+     FROM users u
+     JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE sp.phone = $1 AND u.role = 'candidate'`,
+    [phone]
+  );
+  const user = candidateRes.rows[0];
+  if (!user) throw ApiError.notFound('User not found');
+
+  res.json({
+    token: issueToken(user),
+    user: publicUser(user),
+  });
+});
+
+/**
  * GET /api/auth/me
  */
 export const me = asyncHandler(async (req, res) => {
@@ -255,6 +369,8 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
            a.passing_marks,
            a.result_visible,
            a.is_published,
+           a.available_from,
+           a.available_until,
            ci.status AS invite_status,
            'invite' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
@@ -287,6 +403,8 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
            a.passing_marks,
            a.result_visible,
            a.is_published,
+           a.available_from,
+           a.available_until,
            NULL AS invite_status,
            'enrollment' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
@@ -318,18 +436,24 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
     [req.user.email, req.user.id]
   );
 
+  const now = new Date();
   const rows = result.rows;
   const isDone = (r) => r.attempt_status === 'submitted' || r.attempt_status === 'auto_submitted';
-  const pending = rows.filter((r) => !isDone(r));
   const completed = rows.filter(isDone);
+  const activeOrUpcoming = rows.filter((r) => !isDone(r));
+
+  const upcoming = activeOrUpcoming.filter((r) => r.available_from && new Date(r.available_from) > now);
+  const pending = activeOrUpcoming.filter((r) => !r.available_from || new Date(r.available_from) <= now);
 
   res.json({
     invited: rows,
     pending,
+    upcoming,
     completed,
     stats: {
       totalInvited: rows.length,
       pending: pending.length,
+      upcoming: upcoming.length,
       completed: completed.length,
     },
   });

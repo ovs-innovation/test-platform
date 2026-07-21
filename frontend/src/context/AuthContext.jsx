@@ -50,6 +50,17 @@ export function AuthProvider({ children }) {
     return u;
   }, []);
 
+  const sendLoginOtp = useCallback(async (data) => {
+    return await authService.sendLoginOtp(data);
+  }, []);
+
+  const verifyLoginOtp = useCallback(async (data) => {
+    const { token, user: u } = await authService.verifyLoginOtp(data);
+    tokenStore.set(token);
+    setUser(u);
+    return u;
+  }, []);
+
   const logout = useCallback(() => {
     tokenStore.clear();
     setUser(null);
@@ -69,7 +80,7 @@ export function AuthProvider({ children }) {
     return u;
   }, []);
 
-  const value = { user, loading, login, register, studentLogin, verifyOtp, logout, isAuthenticated: !!user };
+  const value = { user, loading, login, register, studentLogin, verifyOtp, sendLoginOtp, verifyLoginOtp, logout, isAuthenticated: !!user };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

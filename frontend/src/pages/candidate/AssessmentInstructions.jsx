@@ -123,6 +123,10 @@ export default function AssessmentInstructions() {
     );
   }
 
+  const now = new Date();
+  const isFuture = assessment.available_from && new Date(assessment.available_from) > now;
+  const isExpired = assessment.available_until && new Date(assessment.available_until) < now;
+
   return (
     <div className="exam-surface min-h-screen">
       <header className="nta-bar px-4 py-2.5">
@@ -145,6 +149,26 @@ export default function AssessmentInstructions() {
 
         <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
           <div>
+            {isFuture && (
+              <div className="mb-5 rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
+                <p className="font-semibold">This test is scheduled for the future.</p>
+                <p className="mt-1">
+                  You will be able to start this exam starting on{' '}
+                  <strong className="font-bold">{new Date(assessment.available_from).toLocaleString()}</strong>.
+                </p>
+              </div>
+            )}
+
+            {isExpired && (
+              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+                <p className="font-semibold">This test slot has expired.</p>
+                <p className="mt-1">
+                  The availability window for this test closed on{' '}
+                  <strong className="font-bold">{new Date(assessment.available_until).toLocaleString()}</strong>. You can no longer start this assessment.
+                </p>
+              </div>
+            )}
+
             <h1 className="text-lg font-bold text-slate-900">{assessment.title}</h1>
             {assessment.description && (
               <p className="mt-1 text-sm text-slate-600">{assessment.description}</p>
@@ -168,6 +192,16 @@ export default function AssessmentInstructions() {
                   <tr className="border-t border-slate-300">
                     <td className="border-r border-slate-300 px-3 py-2 font-semibold">Violation limit</td>
                     <td className="px-3 py-2" colSpan={3}>{assessment.max_violations}</td>
+                  </tr>
+                )}
+                {(assessment.available_from || assessment.available_until) && (
+                  <tr className="border-t border-slate-300 bg-slate-50/50">
+                    <td className="border-r border-slate-300 px-3 py-2 font-semibold">Available window</td>
+                    <td className="px-3 py-2 text-xs" colSpan={3}>
+                      {assessment.available_from ? new Date(assessment.available_from).toLocaleString() : 'Open now'}
+                      {' — '}
+                      {assessment.available_until ? new Date(assessment.available_until).toLocaleString() : 'No end limit'}
+                    </td>
                   </tr>
                 )}
               </tbody>
@@ -234,10 +268,10 @@ export default function AssessmentInstructions() {
             <button
               type="button"
               onClick={onStart}
-              disabled={!agreed || starting}
+              disabled={!agreed || starting || isFuture || isExpired}
               className="nta-btn nta-btn-primary min-w-[200px] disabled:opacity-50"
             >
-              {starting ? 'Starting…' : 'I am ready to begin'}
+              {starting ? 'Starting…' : isFuture ? 'Not started yet' : isExpired ? 'Test Expired' : 'I am ready to begin'}
             </button>
             <Link to={backTo} className="nta-btn">Cancel</Link>
           </div>

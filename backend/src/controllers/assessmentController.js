@@ -31,7 +31,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
   const result = await query(
     `
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
-           a.passing_marks, a.max_violations, a.result_visible,
+           a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
            ci.id AS invite_id, ci.status AS invite_status, ci.token AS invite_token,
            'invite' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
@@ -51,7 +51,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
     UNION
 
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
-           a.passing_marks, a.max_violations, a.result_visible,
+           a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
            NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
            'enrollment' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
@@ -86,6 +86,7 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
     `
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
            a.passing_marks, a.max_violations, a.result_visible, a.is_published,
+           a.available_from, a.available_until,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
            at.status AS attempt_status, at.id AS attempt_id,
@@ -205,15 +206,15 @@ export const previewAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createAssessment = asyncHandler(async (req, res) => {
-  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible } =
+  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until } =
     req.body;
 
   const result = await query(
     `INSERT INTO assessments
-       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, created_by)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, created_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
      RETURNING *`,
-    [title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, req.user.id]
+    [title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from || null, available_until || null, req.user.id]
   );
 
   const assessment = result.rows[0];

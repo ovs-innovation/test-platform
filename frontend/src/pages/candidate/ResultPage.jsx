@@ -38,6 +38,71 @@ export default function ResultPage() {
     ];
   }, [data]);
 
+  const attempt = data?.attempt;
+  const assessment = data?.assessment;
+  const score = data?.score;
+  const resultVisible = data?.resultVisible;
+  const solutions = data?.solutions;
+
+  const accuracy = useMemo(() => {
+    if (!score) return null;
+    const attempted = score.correct_count + score.wrong_count;
+    if (attempted === 0) return '0%';
+    return `${Math.round((score.correct_count / attempted) * 100)}%`;
+  }, [score]);
+
+  const timeTakenStr = useMemo(() => {
+    const secs = attempt?.duration_seconds;
+    if (secs == null) return '—';
+    const mins = Math.floor(secs / 60);
+    const remainingSecs = secs % 60;
+    return `${mins}m ${remainingSecs}s`;
+  }, [attempt]);
+
+  const subjectScores = useMemo(() => {
+    if (!solutions || solutions.length === 0) return [];
+    const map = {};
+    for (const q of solutions) {
+      const sec = q.section_name || 'General';
+      if (!map[sec]) {
+        map[sec] = { name: sec, max: 0, obtained: 0, correct: 0, wrong: 0, unattempted: 0 };
+      }
+      map[sec].max += q.marks || 0;
+      map[sec].obtained += q.marks_obtained || 0;
+
+      // Classify attempts
+      if (q.question_type === 'mcq' || q.question_type === 'multi_select') {
+        const isAttempted = q.question_type === 'multi_select'
+          ? (q.your_answer && q.your_answer.length > 0)
+          : (q.your_answer !== null && q.your_answer !== undefined);
+        if (!isAttempted) {
+          map[sec].unattempted += 1;
+        } else if (q.is_correct) {
+          map[sec].correct += 1;
+        } else {
+          map[sec].wrong += 1;
+        }
+      } else if (q.question_type === 'coding') {
+        if (!q.your_answer || !q.your_answer.trim()) {
+          map[sec].unattempted += 1;
+        } else if (q.marks_obtained === q.marks) {
+          map[sec].correct += 1;
+        } else {
+          map[sec].wrong += 1;
+        }
+      } else if (q.question_type === 'subjective') {
+        if (!q.your_answer || !q.your_answer.trim()) {
+          map[sec].unattempted += 1;
+        } else if (q.is_correct) {
+          map[sec].correct += 1;
+        } else {
+          map[sec].wrong += 1;
+        }
+      }
+    }
+    return Object.values(map);
+  }, [solutions]);
+
   if (state === 'loading') {
     return (
       <div className="exam-surface min-h-screen">
@@ -51,7 +116,6 @@ export default function ResultPage() {
   }
   if (state === 'error') return <ErrorState onRetry={load} />;
 
-  const { attempt, assessment, score, resultVisible, solutions } = data;
   const backTo = sessionStorage.getItem('assessmentReturn') || '/assessments';
   const backLabel = backTo.startsWith('/my-tests') ? 'Back to my tests' : 'Back to invited assessments';
 
@@ -106,11 +170,16 @@ export default function ResultPage() {
               )}
             </div>
 
+            <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 sm:grid-cols-3">
+              <Stat label="Marks Obtained" value={score ? `${score.marks_obtained} / ${score.total_marks}` : '—'} />
+              <Stat label="Percentage" value={score ? `${score.percentage}%` : '—'} />
+              <Stat label="Accuracy" value={accuracy ?? '—'} />
+            </div>
             <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 sm:grid-cols-4">
-              <Stat label="Marks" value={score ? `${score.marks_obtained} / ${score.total_marks}` : '—'} />
               <Stat label="Correct" value={score?.correct_count ?? '—'} />
               <Stat label="Wrong" value={score?.wrong_count ?? '—'} />
               <Stat label="Unattempted" value={score?.unattempted_count ?? '—'} />
+              <Stat label="Time Taken" value={timeTakenStr} />
             </div>
             <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300">
               <Stat label="Status" value={attemptStatusLabel[attempt.status] || attempt.status} />
@@ -128,6 +197,34 @@ export default function ResultPage() {
                 {breakdown.map((b) => (
                   <SubjectBar key={b.label} label={b.label} value={b.value} variant={b.variant} />
                 ))}
+              </div>
+            </div>
+          )}
+
+          {subjectScores.length > 0 && (
+            <div className="mt-6 border border-slate-400 p-5">
+              <h3 className="text-sm font-semibold mb-3">Subject-wise Performance</h3>
+              <div className="grid gap-4 sm:grid-cols-2">
+                {subjectScores.map((subj) => {
+                  const pct = subj.max > 0 ? Math.max(0, Math.round((subj.obtained / subj.max) * 100)) : 0;
+                  return (
+                    <div key={subj.name} className="bg-slate-50 border border-slate-200 p-4 rounded">
+                      <p className="font-bold text-slate-800 text-sm">{subj.name}</p>
+                      <div className="mt-2 flex justify-between text-xs text-slate-600">
+                        <span>Score: <strong>{subj.obtained.toFixed(2)} / {subj.max}</strong></span>
+                        <span>Percentage: <strong>{pct}%</strong></span>
+                      </div>
+                      <div className="w-full bg-slate-200 h-2 mt-2 rounded overflow-hidden">
+                        <div className="bg-brand-500 h-full rounded" style={{ width: `${pct}%` }}></div>
+                      </div>
+                      <div className="mt-2 flex justify-between text-[11px] text-slate-500">
+                        <span>Correct: <strong>{subj.correct}</strong></span>
+                        <span>Wrong: <strong>{subj.wrong}</strong></span>
+                        <span>Unattempted: <strong>{subj.unattempted}</strong></span>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
