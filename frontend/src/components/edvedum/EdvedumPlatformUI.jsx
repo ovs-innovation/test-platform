@@ -236,49 +236,95 @@ export function EdvedumFeatureCard({ icon, title, desc, to }) {
   return <div className={cls}>{inner}</div>;
 }
 
-export function EdvedumCtaStrip({ title, desc, primary, secondary }) {
+export function EdvedumCtaStrip({
+  badge = "SUPPORT & ENQUIRIES",
+  title = "Have questions? We're here to help",
+  desc = "Reach out for admissions, technical support, or test series queries.",
+  primary = { to: "/contact", label: "Contact Us" },
+  secondary,
+  quickContact = {
+    email: "support@edvedum.com",
+    phone: "1800-EDVEDUM (3383386)",
+  },
+}) {
   return (
     <div className="relative bg-[#F5F6FA] text-[#1A1F2E]">
-      <section className="py-8 lg:py-12 border-t border-slate-200/80">
+      <section className="py-6 lg:py-8 border-t border-slate-200/80">
         <div className="edvedum-section-wrap">
-          <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white px-6 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-8 shadow-xl shadow-slate-200/70">
+          <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 bg-white px-6 py-5 sm:px-7 sm:py-6 lg:px-8 lg:py-6 shadow-lg shadow-slate-200/60">
             {/* Subtle Light Accent Glows */}
             <div
-              className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-cyan-500/8 blur-3xl"
+              className="pointer-events-none absolute -right-20 -top-20 h-48 w-48 rounded-full bg-cyan-500/8 blur-3xl"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-blue-500/8 blur-3xl"
+              className="pointer-events-none absolute -bottom-20 -left-20 h-48 w-48 rounded-full bg-blue-500/8 blur-3xl"
               aria-hidden="true"
             />
 
-            <div className="relative z-10 flex flex-col items-start gap-5 lg:flex-row lg:items-center lg:justify-between">
-              <div className="max-w-2xl">
-                <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-[10.5px] font-bold uppercase tracking-wider text-[#0D6EFD] shadow-2xs mb-3">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#0D6EFD] animate-pulse" />
-                  <span>Get Started</span>
-                </div>
-                <h2 className="text-xl font-extrabold text-[#1A1F2E] sm:text-2xl lg:text-3xl leading-tight">
+            <div className="relative z-10 flex flex-col items-start gap-4 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-xl">
+                {badge && (
+                  <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-[#0D6EFD] shadow-2xs mb-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#0D6EFD] animate-pulse" />
+                    <span>{badge}</span>
+                  </div>
+                )}
+                <h2 className="text-xl font-extrabold text-[#1A1F2E] sm:text-2xl lg:text-2xl leading-tight">
                   {title}
                 </h2>
                 {desc && (
-                  <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600">
+                  <p className="mt-1 text-xs sm:text-sm leading-relaxed text-slate-600">
                     {desc}
                   </p>
                 )}
+
+                {/* Quick Contact Info Row */}
+                {quickContact && (
+                  <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs sm:text-sm text-slate-600 font-semibold border-t border-slate-100 pt-2.5">
+                    {quickContact.email && (
+                      <a
+                        href={`mailto:${quickContact.email}`}
+                        className="inline-flex items-center gap-1.5 text-slate-700 transition-colors hover:text-[#0D6EFD]"
+                      >
+                        <svg className="h-3.5 w-3.5 text-[#0D6EFD]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>{quickContact.email}</span>
+                      </a>
+                    )}
+                    {quickContact.email && quickContact.phone && (
+                      <span className="hidden sm:inline text-slate-300">·</span>
+                    )}
+                    {quickContact.phone && (
+                      <a
+                        href={`tel:${quickContact.phone.replace(/[^0-9+]/g, '')}`}
+                        className="inline-flex items-center gap-1.5 text-slate-700 transition-colors hover:text-[#0D6EFD]"
+                      >
+                        <svg className="h-3.5 w-3.5 text-[#0D6EFD]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>{quickContact.phone}</span>
+                      </a>
+                    )}
+                  </div>
+                )}
               </div>
 
-              <div className="relative z-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center shrink-0">
-                <Link
-                  to={primary.to}
-                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#2563eb] to-[#06b6d4] px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/35 hover:scale-[1.03] active:scale-[0.98]"
-                >
-                  <span>{primary.label}</span>
-                </Link>
+              <div className="relative z-10 flex w-full flex-col gap-2.5 sm:w-auto sm:flex-row sm:items-center shrink-0">
+                {primary && (
+                  <Link
+                    to={primary.to}
+                    className="group relative inline-flex items-center justify-center gap-1.5 overflow-hidden rounded-full bg-gradient-to-r from-[#2563eb] to-[#06b6d4] px-6 py-2.5 sm:px-7 sm:py-2.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/30 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    <span>{primary.label}</span>
+                    <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+                  </Link>
+                )}
                 {secondary && (
                   <Link
                     to={secondary.to}
-                    className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#0D6EFD] bg-white px-7 py-3 text-sm sm:text-base font-bold text-[#0D6EFD] shadow-xs transition-all duration-300 hover:bg-blue-50 hover:shadow-md hover:scale-[1.03]"
+                    className="group inline-flex items-center justify-center gap-1.5 rounded-full border-2 border-[#0D6EFD] bg-white px-6 py-2.5 sm:px-7 sm:py-2.5 text-xs sm:text-sm font-bold text-[#0D6EFD] shadow-xs transition-all duration-300 hover:bg-blue-50 hover:shadow-md hover:scale-[1.02]"
                   >
                     <span>{secondary.label}</span>
                   </Link>

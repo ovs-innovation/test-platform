@@ -109,12 +109,12 @@ export default function TestSeriesCatalog() {
   const filterLabel = FILTERS.find((f) => f.id === filter)?.label || 'All';
 
   return (
-    <div className="bg-[#090d16] bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px] text-[#F5F6FA] min-h-screen">
+    <div className="bg-slate-50">
       <CatalogHero seriesCount={loading ? 0 : list.length} />
 
       {/* FILTER TAB BAR - Auto-scrolled target for filtered navbar links */}
       <div id="catalog-results" className="container-app relative z-20 -mt-10 sm:-mt-12 mb-8 pt-4">
-        <div className="mx-auto max-w-5xl rounded-2xl border border-slate-800/90 bg-[#0c1427]/95 p-3 sm:p-3.5 shadow-2xl backdrop-blur-xl shadow-blue-950/40">
+        <div className="mx-auto max-w-5xl rounded-2xl border border-slate-200/90 bg-[#F5F6FA] p-3 sm:p-3.5 shadow-xl shadow-slate-200/60">
           <div className="flex items-center justify-start sm:justify-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap px-1 py-0.5">
             {FILTERS.map((f) => {
               const isActive = filter === f.id;
@@ -126,8 +126,8 @@ export default function TestSeriesCatalog() {
                   onClick={() => setFilterAndUrl(f.id)}
                   className={`group inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold cursor-pointer transition-all duration-200 ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] text-white shadow-lg shadow-blue-500/25 scale-[1.02]'
-                      : 'border border-slate-700/80 bg-[#070c18] text-slate-300 shadow-xs hover:border-[#00F0FF]/50 hover:bg-[#0a1224] hover:text-[#00F0FF] hover:scale-[1.02]'
+                      ? 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                      : 'border border-slate-200/90 bg-white text-slate-700 shadow-xs hover:border-[#0D6EFD]/50 hover:bg-blue-50/70 hover:text-[#0D6EFD] hover:scale-[1.02]'
                   }`}
                 >
                   <span>{f.label}</span>
@@ -136,7 +136,7 @@ export default function TestSeriesCatalog() {
                       className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[11px] font-extrabold transition-colors ${
                         isActive
                           ? 'bg-white/20 text-white'
-                          : 'bg-slate-800 text-slate-400 group-hover:bg-cyan-500/20 group-hover:text-[#00F0FF]'
+                          : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-[#0D6EFD]'
                       }`}
                     >
                       {count}
@@ -152,14 +152,14 @@ export default function TestSeriesCatalog() {
       <div className="container-app pb-12 pt-4 lg:pb-16 lg:pt-6">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#F5F6FA]">
-              {filter === 'all' ? 'All Test Series' : `${filterLabel} Series`}
+            <h2 className="text-2xl font-bold text-slate-900">
+              {filter === 'all' ? 'All test series' : `${filterLabel} series`}
             </h2>
             {!loading && (
-              <p className="mt-1 text-sm text-[#94A3B8]">{filtered.length} test series available</p>
+              <p className="mt-1 text-sm text-slate-500">{filtered.length} series available</p>
             )}
           </div>
-          <Link to="/free-mock" className="text-sm font-bold text-[#00F0FF] hover:underline">
+          <Link to="/free-mock" className="text-sm font-semibold text-brand-600 hover:underline">
             Try a free mock first →
           </Link>
         </div>
@@ -171,9 +171,9 @@ export default function TestSeriesCatalog() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-slate-800 bg-[#0c1427]/80 p-12 text-center backdrop-blur-xl">
-            <p className="font-semibold text-slate-300">No series match this filter</p>
-            <button type="button" onClick={() => setFilterAndUrl('all')} className="mt-4 rounded-full border border-slate-700 bg-[#070c18] px-5 py-2 text-xs font-semibold text-white hover:border-[#00F0FF]">
+          <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
+            <p className="font-medium text-slate-700">No series match this filter</p>
+            <button type="button" onClick={() => setFilterAndUrl('all')} className="btn-secondary btn-sm mt-4">
               Show all
             </button>
           </div>
@@ -185,9 +185,9 @@ export default function TestSeriesCatalog() {
           </div>
         )}
 
-        <p className="mt-14 text-center text-sm text-[#94A3B8]">
+        <p className="mt-14 text-center text-sm text-slate-500">
           Already enrolled?{' '}
-          <Link to="/student-login" className="font-bold text-[#00F0FF] hover:underline">
+          <Link to="/student-login" className="font-semibold text-brand-600 hover:underline">
             Log in to your dashboard
           </Link>
         </p>
