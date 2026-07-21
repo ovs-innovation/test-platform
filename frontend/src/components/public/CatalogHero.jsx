@@ -13,58 +13,76 @@ const EXAM_TRACKS = [
     desc: 'PCM · full-length CBT mocks',
     src: '/test-series/jee.svg',
     to: '/test-series?filter=jee',
+    borderStyle: 'border-[#0D6EFD]/35 hover:border-[#0D6EFD] hover:shadow-lg hover:shadow-blue-500/10',
+    tagBg: 'bg-blue-500/15 text-[#38bdf8] border-blue-400/30',
   },
   {
     label: 'NEET UG',
     desc: 'PCB · NTA pattern tests',
     src: '/test-series/neet.svg',
     to: '/test-series?filter=neet',
+    borderStyle: 'border-[#00F0FF]/40 hover:border-[#00F0FF] hover:shadow-lg hover:shadow-cyan-500/10',
+    tagBg: 'bg-cyan-500/15 text-[#00F0FF] border-cyan-400/30',
   },
   {
     label: 'NEET PG',
     desc: 'Clinical · post-grad prep',
     src: '/test-series/neet-pg.svg',
     to: '/test-series?filter=neetpg',
+    borderStyle: 'border-[#7C3AED]/35 hover:border-[#7C3AED] hover:shadow-lg hover:shadow-purple-500/10',
+    tagBg: 'bg-purple-500/15 text-[#c084fc] border-purple-400/30',
+  },
+  {
+    label: 'Foundation',
+    desc: 'Class 6–10 · early entrance prep',
+    src: '/test-series/foundation.svg',
+    to: '/test-series?filter=foundation',
+    borderStyle: 'border-[#4F46E5]/45 hover:border-[#6366f1] hover:shadow-lg hover:shadow-indigo-500/15',
+    tagBg: 'bg-indigo-500/15 text-[#818cf8] border-indigo-400/30',
   },
 ];
 
 export default function CatalogHero({ seriesCount = 0 }) {
   return (
-    <section className="catalog-hero relative overflow-hidden text-white">
+    <section className="relative overflow-hidden bg-[#010d1f] text-white">
+      {/* Background Ambient Glow Effects */}
       <div className="pointer-events-none absolute inset-0" aria-hidden>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_70%_20%,rgba(96,165,250,0.35),transparent)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_50%_40%_at_10%_90%,rgba(129,140,248,0.25),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_75%_25%,rgba(0,240,255,0.15),transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_15%_85%,rgba(124,58,237,0.25),transparent)]" />
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
-            backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+            backgroundImage:
+              'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
           }}
         />
       </div>
 
-      <div className="container-app relative z-10 pb-28 pt-14 lg:pb-36 lg:pt-20">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="container-app relative z-10 pb-16 pt-10 lg:pb-20 lg:pt-14">
+        <div className="grid items-start gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold backdrop-blur-sm">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
-              NTA-style full-length mocks
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00F0FF] backdrop-blur-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
+              NTA-Style Full-Length Mocks
             </div>
 
-            <h1 className="mt-5 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl">
+            <h1 className="mt-4 text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-4xl text-[#F5F6FA]">
               Test series that feel like
-              <span className="mt-1 block text-sky-200">the real exam hall</span>
+              <span className="mt-1 block text-transparent bg-gradient-to-r from-[#38bdf8] via-[#818cf8] to-[#a855f7] bg-clip-text">
+                the real exam hall
+              </span>
             </h1>
 
-            <p className="mt-5 text-base leading-relaxed text-blue-100/90 sm:text-lg">
-              Enroll once, unlock every mock in the pack — proctored CBT, rank, and detailed solutions included.
+            <p className="mt-4 text-sm sm:text-base leading-relaxed text-[#94A3B8]">
+              Enroll once, unlock every mock in the pack — proctored CBT, rank prediction, and detailed solution explanations included.
             </p>
 
-            <div className="mt-7 flex flex-wrap gap-2">
+            <div className="mt-6 flex flex-wrap gap-2.5">
               {QUICK_LINKS.map((link) => (
                 <Link
                   key={link.label}
                   to={link.to}
-                  className="rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-sm transition hover:bg-white/20"
+                  className="rounded-full border border-white/20 bg-slate-900/80 px-4 py-2 text-xs sm:text-sm font-semibold text-[#F5F6FA] backdrop-blur-md transition-all duration-200 hover:border-[#00F0FF]/60 hover:bg-slate-800 hover:text-[#00F0FF] hover:shadow-[0_0_15px_rgba(0,240,255,0.25)]"
                 >
                   {link.label}
                 </Link>
@@ -72,43 +90,48 @@ export default function CatalogHero({ seriesCount = 0 }) {
             </div>
 
             {seriesCount > 0 && (
-              <div className="mt-8 flex flex-wrap gap-6 border-t border-white/15 pt-6">
+              <div className="mt-8 flex flex-wrap gap-6 border-t border-slate-800/80 pt-6">
                 <div>
-                  <p className="text-2xl font-bold">{seriesCount}</p>
-                  <p className="text-xs text-blue-200">Live series</p>
+                  <p className="text-2xl font-extrabold text-white">{seriesCount}</p>
+                  <p className="text-xs font-medium text-[#94A3B8]">Live series</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">₹0</p>
-                  <p className="text-xs text-blue-200">Free tier available</p>
+                  <p className="text-2xl font-extrabold text-[#00F0FF]">₹0</p>
+                  <p className="text-xs font-medium text-[#94A3B8]">Free tier available</p>
                 </div>
                 <div>
-                  <p className="text-2xl font-bold">CBT</p>
-                  <p className="text-xs text-blue-200">NTA interface</p>
+                  <p className="text-2xl font-extrabold text-white">CBT</p>
+                  <p className="text-xs font-medium text-[#94A3B8]">NTA interface</p>
                 </div>
               </div>
             )}
           </div>
 
           <div className="w-full max-w-md lg:max-w-lg lg:justify-self-end">
-            <p className="mb-4 text-sm font-semibold uppercase tracking-wider text-blue-200/90">
-              Browse by exam
+            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#94A3B8]">
+              Browse by Exam
             </p>
             <div className="space-y-3">
               {EXAM_TRACKS.map((track) => (
                 <Link
                   key={track.label}
                   to={track.to}
-                  className="group flex items-center gap-4 rounded-2xl border border-white/20 bg-white/10 p-3 backdrop-blur-md transition hover:border-white/35 hover:bg-white/15 sm:p-4"
+                  className={`group flex items-center gap-4 rounded-2xl border bg-slate-900/80 p-3.5 backdrop-blur-xl transition-all duration-300 ${track.borderStyle}`}
                 >
-                  <div className="h-14 w-24 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/25 sm:h-16 sm:w-28">
-                    <img src={track.src} alt="" className="h-full w-full object-cover" />
+                  <div className="h-14 w-24 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/15 sm:h-16 sm:w-28 bg-slate-950 flex items-center justify-center">
+                    <img src={track.src} alt={track.label} className="h-full w-full object-cover" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <p className="font-semibold text-white">{track.label}</p>
-                    <p className="text-sm text-blue-100/75">{track.desc}</p>
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-white text-base">{track.label}</p>
+                      <span className={`rounded-full border px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${track.tagBg}`}>
+                        Exam
+                      </span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-[#94A3B8]">{track.desc}</p>
                   </div>
                   <span
-                    className="shrink-0 text-lg text-white/50 transition group-hover:translate-x-0.5 group-hover:text-white/90"
+                    className="shrink-0 text-lg text-slate-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:text-white"
                     aria-hidden
                   >
                     →
@@ -118,12 +141,6 @@ export default function CatalogHero({ seriesCount = 0 }) {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 text-white" aria-hidden>
-        <svg viewBox="0 0 1440 80" fill="currentColor" className="block w-full text-white">
-          <path d="M0,40 C360,90 720,0 1440,50 L1440,80 L0,80 Z" />
-        </svg>
       </div>
     </section>
   );

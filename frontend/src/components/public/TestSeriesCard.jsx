@@ -45,7 +45,7 @@ export default function TestSeriesCard({ series }) {
               </span>
             )}
             {free && (
-              <span className="rounded-md bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-700">
+              <span className="rounded-md bg-white px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-[#0D6EFD]">
                 Free
               </span>
             )}
@@ -80,7 +80,7 @@ export default function TestSeriesCard({ series }) {
           <div className="flex items-center justify-between gap-3 rounded-xl border border-slate-100 bg-slate-50/80 px-4 py-3 transition group-hover:border-slate-200 group-hover:bg-white">
             <div>
               {free ? (
-                <p className="text-xl font-extrabold text-emerald-600">Free</p>
+                <p className={`text-xl font-extrabold ${theme.accent}`}>Free</p>
               ) : (
                 <>
                   <p className="text-[10px] font-semibold uppercase tracking-wide text-slate-400">Series fee</p>

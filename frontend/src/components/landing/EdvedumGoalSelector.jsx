@@ -125,7 +125,7 @@ export default function EdvedumGoalSelector() {
           <span className="text-slate-300">|</span>
           <Link to="/test-series?filter=neet" className="font-semibold text-[#2563eb] hover:underline">NEET Test Series</Link>
           <span className="text-slate-300">|</span>
-          <Link to="/free-mock" className="font-semibold text-emerald-600 hover:underline">Free diagnostic mock</Link>
+          <Link to="/free-mock" className="font-semibold text-[#0D6EFD] hover:underline">Free diagnostic mock</Link>
         </div>
       </div>
     </section>

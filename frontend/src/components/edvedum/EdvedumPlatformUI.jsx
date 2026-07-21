@@ -238,39 +238,57 @@ export function EdvedumFeatureCard({ icon, title, desc, to }) {
 
 export function EdvedumCtaStrip({ title, desc, primary, secondary }) {
   return (
-    <section className="edvedum-page-bg py-14 lg:py-16">
-      <div className="edvedum-section-wrap">
-        <div className="edvedum-cta-panel flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="edvedum-section-eyebrow text-cyan-400">Get started</p>
-            <h2 className="mt-2 text-2xl font-bold text-white lg:text-[1.75rem]">
-              {title}
-            </h2>
-            {desc && (
-              <p className="mt-2 max-w-lg text-[14px] leading-relaxed text-white/60">
-                {desc}
-              </p>
-            )}
-          </div>
-          <div className="flex shrink-0 flex-wrap gap-3">
-            <Link
-              to={primary.to}
-              className="edvedum-btn-gradient rounded-lg px-6 py-2.5 text-sm font-semibold text-white shadow-lg"
-            >
-              {primary.label}
-            </Link>
-            {secondary && (
-              <Link
-                to={secondary.to}
-                className="rounded-lg border border-white/25 bg-white/10 px-6 py-2.5 text-sm font-semibold text-white backdrop-blur-sm hover:bg-white/15"
-              >
-                {secondary.label}
-              </Link>
-            )}
+    <div className="relative bg-[#F5F6FA] text-[#1A1F2E]">
+      <section className="py-8 lg:py-12 border-t border-slate-200/80">
+        <div className="edvedum-section-wrap">
+          <div className="relative overflow-hidden rounded-3xl border border-slate-200/90 bg-white px-6 py-6 sm:px-8 sm:py-8 lg:px-10 lg:py-8 shadow-xl shadow-slate-200/70">
+            {/* Subtle Light Accent Glows */}
+            <div
+              className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-cyan-500/8 blur-3xl"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute -bottom-20 -left-20 h-56 w-56 rounded-full bg-blue-500/8 blur-3xl"
+              aria-hidden="true"
+            />
+
+            <div className="relative z-10 flex flex-col items-start gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="max-w-2xl">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1 text-[10.5px] font-bold uppercase tracking-wider text-[#0D6EFD] shadow-2xs mb-3">
+                  <span className="h-1.5 w-1.5 rounded-full bg-[#0D6EFD] animate-pulse" />
+                  <span>Get Started</span>
+                </div>
+                <h2 className="text-xl font-extrabold text-[#1A1F2E] sm:text-2xl lg:text-3xl leading-tight">
+                  {title}
+                </h2>
+                {desc && (
+                  <p className="mt-2 text-sm sm:text-base leading-relaxed text-slate-600">
+                    {desc}
+                  </p>
+                )}
+              </div>
+
+              <div className="relative z-10 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center shrink-0">
+                <Link
+                  to={primary.to}
+                  className="group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-[#2563eb] to-[#06b6d4] px-7 py-3 text-sm sm:text-base font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/35 hover:scale-[1.03] active:scale-[0.98]"
+                >
+                  <span>{primary.label}</span>
+                </Link>
+                {secondary && (
+                  <Link
+                    to={secondary.to}
+                    className="group inline-flex items-center justify-center gap-2 rounded-full border-2 border-[#0D6EFD] bg-white px-7 py-3 text-sm sm:text-base font-bold text-[#0D6EFD] shadow-xs transition-all duration-300 hover:bg-blue-50 hover:shadow-md hover:scale-[1.03]"
+                  >
+                    <span>{secondary.label}</span>
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
 

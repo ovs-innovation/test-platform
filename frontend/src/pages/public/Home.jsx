@@ -1,11 +1,8 @@
 import EdvedumHero from "../../components/landing/EdvedumHero.jsx";
 import EdvedumHeroBridge from "../../components/landing/EdvedumHeroBridge.jsx";
 import EdvedumHomeSections from "../../components/landing/EdvedumHomeSections.jsx";
-import EdvedumExamTracks from "../../components/landing/EdvedumExamTracks.jsx";
-import { EdvedumWhyChoose } from "../../components/landing/EdvedumContentSections.jsx";
 import { EdvedumCtaStrip } from "../../components/edvedum/EdvedumPlatformUI.jsx";
 import {
-  EdvedumFeaturedSeries,
   EdvedumHowItWorks,
   EdvedumMiniFaq,
 } from "../../components/landing/EdvedumHomeExtended.jsx";
@@ -16,9 +13,6 @@ export default function Home() {
       <EdvedumHero />
       <EdvedumHeroBridge />
       <EdvedumHomeSections />
-      <EdvedumFeaturedSeries />
-      <EdvedumExamTracks />
-      <EdvedumWhyChoose showMoreLink />
       <EdvedumHowItWorks />
       <EdvedumMiniFaq />
       <EdvedumCtaStrip

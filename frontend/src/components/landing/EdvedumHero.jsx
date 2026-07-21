@@ -1,164 +1,313 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, HERO } from '../../data/edvedumContent.js';
+import { motion } from 'framer-motion';
+import {
+  Sparkles,
+  Award,
+  ArrowRight,
+  Play,
+  Star,
+  CheckCircle2,
+  BrainCircuit,
+  Target,
+  TrendingUp,
+  Clock,
+  Zap,
+  BookOpen,
+  Lightbulb,
+  Trophy,
+  GraduationCap,
+  ShieldCheck,
+  Check
+} from 'lucide-react';
+import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
 
-const FEATURES = [
-  { icon: 'book', label: 'LEARN' },
-  { icon: 'target', label: 'PRACTICE' },
-  { icon: 'bulb', label: 'INNOVATE' },
-  { icon: 'rocket', label: 'SUCCEED' },
-];
-
-const WELCOME_ITEMS = [
-  { icon: 'monitor', text: 'Online Learning' },
-  { icon: 'faculty', text: 'Expert Faculty' },
-  { icon: 'practice', text: 'Smart Practice' },
-  { icon: 'chart', text: 'Performance Analysis' },
-];
-
-function FeatureIcon({ type }) {
-  const cls = 'h-[17px] w-[17px] text-cyan-300';
-  const paths = {
-    book: 'M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25',
-    target: 'M15.362 5.214A8.252 8.252 0 0112 21 8.25 8.25 0 016.038 7.047 8.287 8.287 0 009 9.601a8.983 8.983 0 013.361-6.867 8.21 8.21 0 003 2.48z',
-    bulb: 'M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.383a14.406 14.406 0 01-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 10-7.517 0c.85.493 1.509 1.333 1.509 2.316V18',
-    rocket: 'M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z',
-  };
-  return (
-    <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d={paths[type] || paths.book} />
-    </svg>
-  );
-}
-
-function WelcomeIcon({ type }) {
-  const cls = 'h-4 w-4 shrink-0 text-sky-400';
-  const paths = {
-    monitor: 'M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25',
-    faculty: 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
-    practice: 'M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z',
-    chart: 'M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z',
-  };
-  return (
-    <svg className={cls} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-      <path strokeLinecap="round" strokeLinejoin="round" d={paths[type]} />
-    </svg>
-  );
-}
+// Ambient stars/particles overlay - RESTRICTED TO LEFT SIDE ONLY (x: 0% to 45%)
+const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
+  id: i,
+  x: Math.random() * 45, // Strictly left side only
+  y: Math.random() * 88 + 5,
+  size: Math.random() * 2.8 + 2.2,
+  duration: Math.random() * 7 + 7,
+  delay: Math.random() * 5,
+  glowType: i % 3 === 0 ? 'purple' : i % 2 === 0 ? 'cyan' : 'sky',
+  isTwinkle: i % 4 === 0,
+}));
 
 export default function EdvedumHero() {
   return (
-    <section className="relative overflow-hidden bg-[#010d1f]">
-      {/* Generated hero background — building with EDVEDUM signage */}
+    <section className="relative overflow-hidden bg-[#010d1f] text-white selection:bg-cyan-500 selection:text-slate-900 min-h-[640px] lg:min-h-[690px] pb-14 sm:pb-16 lg:pb-24">
+
+      {/* 1. EDVEDUM BRANDED STUDENT HERO BACKGROUND (Desktop Only - lg:block) */}
       <div
-        className="absolute inset-0 bg-cover bg-no-repeat"
+        className="hidden lg:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none"
         style={{
-          backgroundImage: "url('/edvedum/hero-bg.png?v=5')",
-          backgroundPosition: '62% center',
+          backgroundImage: "url('/edvedum/fullwidth-hero-bg.png')",
+          backgroundPosition: 'right center',
+          backgroundSize: 'contain',
+          filter: 'drop-shadow(0 20px 35px rgba(1,13,31,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.18))',
+          maskImage: 'linear-gradient(to right, transparent 35%, black 65%), linear-gradient(to top, transparent 0%, black 25%)',
+          WebkitMaskImage: '-webkit-linear-gradient(left, transparent 35%, black 65%), -webkit-linear-gradient(bottom, transparent 0%, black 25%)',
+          maskComposite: 'intersect',
+          WebkitMaskComposite: 'destination-in',
         }}
-        aria-hidden
+        aria-hidden="true"
       />
-      {/* Left fade so text stays readable; center/right stays clear for building sign */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#010d1f]/90 via-[#010d1f]/35 to-transparent lg:from-[#010d1f]/82 lg:via-[#010d1f]/15" aria-hidden />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#010d1f]/60 via-transparent to-[#010d1f]/20" aria-hidden />
 
-      {/* Content layer */}
-      <div className="relative mx-auto flex min-h-[500px] max-w-[1280px] flex-col justify-center px-4 py-10 lg:min-h-[520px] lg:flex-row lg:items-center lg:justify-between lg:px-8 lg:py-12">
-        {/* Left branding */}
-        <div className="relative z-10 max-w-[420px] shrink-0">
-          <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="edvedum-logo-glow mb-4 h-24 w-auto object-contain lg:h-28" />
-          <h1 className="font-extrabold leading-[1.05] tracking-wide text-white">
-            <span className="block text-[2rem] lg:text-[2.4rem]">EDVEDUM</span>
-            <span className="mt-0.5 block text-[13px] font-semibold tracking-[0.34em] text-white/90 lg:text-sm">
-              — ACADEMY —
-            </span>
-          </h1>
+      {/* 2. MAIN LEFT-TO-RIGHT GRADIENT OVERLAY FOR ABSOLUTE SMOOTH TEXT BLENDING */}
+      <div
+        className="hidden lg:block absolute inset-y-0 left-0 w-[60%] bg-gradient-to-r from-[#010d1f] via-[#010d1f]/95 to-transparent pointer-events-none z-[2]"
+        aria-hidden="true"
+      />
 
-          <p className="mt-5 text-[11px] font-bold tracking-[0.24em] text-white/70 lg:text-xs">
-            EMPOWERING FUTURE
-          </p>
-          <p className="mt-1 font-extrabold leading-tight">
-            <span className="text-[1.55rem] text-[#38bdf8] lg:text-[1.85rem]">DOCTORS</span>
-            <span className="text-[1.55rem] text-white lg:text-[1.85rem]"> &amp; </span>
-            <span className="text-[1.55rem] text-[#a855f7] lg:text-[1.85rem]">ENGINEERS</span>
-          </p>
+      {/* 3. SOFT BOTTOM GRADIENT MASK FOR SMOOTH PHOTO BLENDING */}
+      <div
+        className="hidden lg:block absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#010d1f] via-[#010d1f]/85 to-transparent pointer-events-none z-[2]"
+        aria-hidden="true"
+      />
 
-          <p className="mt-4 text-[13px] font-semibold leading-snug text-sky-200/95 lg:text-sm">
-            {HERO.subtitle}
-          </p>
-          <p className="mt-3 max-w-[380px] text-[12px] leading-relaxed text-white/70 lg:text-[13px]">
-            {HERO.description}
-          </p>
+      {/* 4. SOFT RIGHT EDGE GRADIENT MASK */}
+      <div
+        className="hidden lg:block absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#010d1f] via-[#010d1f]/40 to-transparent pointer-events-none z-[2]"
+        aria-hidden="true"
+      />
 
-          <div className="mt-5 flex flex-wrap gap-2.5">
-            <Link
-              to={HERO.ctaPrimary.to}
-              className="edvedum-btn-gradient rounded-full px-5 py-2.5 text-[12px] font-semibold text-white shadow-lg lg:text-sm"
-            >
-              {HERO.ctaPrimary.label}
-            </Link>
-            <Link
-              to={HERO.ctaSecondary.to}
-              className="rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-[12px] font-semibold text-white backdrop-blur-sm hover:bg-white/15 lg:text-sm"
-            >
-              {HERO.ctaSecondary.label}
-            </Link>
-          </div>
+      {/* Aurora Lighting Streaks (Left side emphasis) */}
+      <motion.div
+        animate={{
+          opacity: [0.3, 0.45, 0.3],
+          scale: [1, 1.12, 1],
+        }}
+        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute -top-32 -left-20 h-[460px] w-[460px] rounded-full bg-cyan-500/15 blur-[130px] pointer-events-none"
+      />
 
-          <div className="mt-6 flex gap-5 lg:gap-6">
-            {FEATURES.map((f) => (
-              <div key={f.label} className="flex flex-col items-center gap-1">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full border border-cyan-400/20 bg-white/5 backdrop-blur-sm">
-                  <FeatureIcon type={f.icon} />
-                </div>
-                <span className="text-[8px] font-bold tracking-[0.18em] text-white/60 lg:text-[9px]">{f.label}</span>
-              </div>
-            ))}
-          </div>
+      {/* Floating Star Particles (Left Side Only) */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        {PARTICLES.map((p) => {
+          let glowClass = 'bg-cyan-300 shadow-[0_0_12px_#38bdf8]';
+          if (p.glowType === 'purple') glowClass = 'bg-purple-300 shadow-[0_0_14px_#c084fc]';
+          if (p.glowType === 'sky') glowClass = 'bg-sky-200 shadow-[0_0_10px_#7dd3fc]';
 
-          <div className="mt-6 flex items-end gap-2">
-            <p className="edvedum-tagline text-[15px] text-[#c4b5fd] lg:text-base">
-              Inspiring Minds. Building Futures.
-            </p>
-            <span className="mb-1 hidden h-px w-12 bg-purple-400/70 sm:block" aria-hidden />
-          </div>
-        </div>
-
-        {/* Spacer — building visible in bg through center */}
-        <div className="hidden flex-1 lg:block" aria-hidden />
-
-        {/* Welcome card — right side */}
-        <div className="relative z-10 mt-8 w-full max-w-[280px] shrink-0 lg:mt-0 lg:w-[270px]">
-          <div className="edvedum-welcome-card rounded-xl p-5">
-            <h2 className="text-center text-[12px] font-bold text-sky-300 lg:text-[13px]">
-              Welcome to EDVEDUM ACADEMY
-            </h2>
-            <ul className="mt-4 space-y-2.5">
-              {WELCOME_ITEMS.map((item) => (
-                <li key={item.text} className="flex items-center gap-2.5 text-[12px] text-white/90">
-                  <WelcomeIcon type={item.icon} />
-                  {item.text}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              <Link
-                to="/student-login"
-                className="rounded bg-[#2563eb] py-2 text-center text-[11px] font-semibold text-white hover:bg-[#1d4ed8]"
-              >
-                Login
-              </Link>
-              <Link
-                to="/signup"
-                className="rounded bg-[#7c3aed] py-2 text-center text-[11px] font-semibold text-white hover:bg-[#6d28d9]"
-              >
-                Sign Up
-              </Link>
-            </div>
-          </div>
-        </div>
+          return (
+            <motion.div
+              key={p.id}
+              initial={{ opacity: 0.2, y: 0, scale: 1 }}
+              animate={{
+                opacity: p.isTwinkle ? [0.2, 0.85, 0.3, 0.9, 0.2] : [0.2, 0.85, 0.2],
+                scale: p.isTwinkle ? [1, 1.35, 1, 1.2, 1] : [1, 1.15, 1],
+                y: [-10, -90],
+              }}
+              transition={{
+                duration: p.duration,
+                repeat: Infinity,
+                delay: p.delay,
+                ease: 'easeInOut',
+              }}
+              style={{
+                left: `${p.x}%`,
+                top: `${p.y}%`,
+                width: `${p.size}px`,
+                height: `${p.size}px`,
+              }}
+              className={`absolute rounded-full ${glowClass}`}
+            />
+          );
+        })}
       </div>
 
-      <div className="h-16 lg:h-20" aria-hidden />
+      {/* ================= HERO OVERLAY CONTENT ================= */}
+      <div className="relative mx-auto max-w-[1400px] px-4 pt-8 pb-12 sm:px-6 lg:px-8 lg:pt-14 lg:pb-20">
+
+        {/* Main Content Area */}
+        <div className="relative z-10 max-w-2xl lg:max-w-3xl">
+
+          {/* 1. BADGE ROW - Split into 2 Separate Pill Elements */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="flex flex-wrap items-center gap-2.5 sm:gap-3"
+          >
+            {/* Badge 1: AI-Powered CBT Ecosystem 2026 */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#00F0FF]/40 bg-slate-950/80 px-3.5 py-1.5 sm:px-4 backdrop-blur-xl shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-[#00F0FF] shadow-[0_0_8px_#00F0FF] animate-pulse" />
+              <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#00F0FF] uppercase">
+                AI-POWERED CBT ECOSYSTEM 2026
+              </span>
+            </div>
+
+            {/* Badge 2: NTA Pattern Live */}
+            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#7C3AED]/40 bg-slate-950/80 px-3.5 py-1.5 sm:px-4 backdrop-blur-xl shadow-sm">
+              <Sparkles className="h-3.5 w-3.5 text-[#7C3AED]" />
+              <span className="text-[10px] sm:text-[11px] font-semibold text-purple-300">
+                NTA Pattern Live
+              </span>
+            </div>
+          </motion.div>
+
+          {/* 2. HEADLINE - Snug Underline Offset & Bottom Margin */}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-5 sm:mt-6 text-2xl xs:text-3xl font-extrabold tracking-tight text-[#F5F6FA] sm:text-4xl lg:text-[2.85rem] xl:text-[3.1rem] leading-[1.25] sm:leading-[1.22]"
+          >
+            Where Future <br />
+            <span className="whitespace-nowrap inline-block mt-1 mb-2 sm:mb-2.5">
+              <span className="relative inline-block font-extrabold text-[#0D6EFD] after:absolute after:-bottom-0.5 after:left-0 after:h-[3px] after:w-full after:bg-[#0D6EFD]">
+                Doctors
+              </span>{' '}
+              <span className="text-[#F5F6FA]">&amp;</span>{' '}
+              <span className="relative inline-block font-extrabold text-[#7C3AED] after:absolute after:-bottom-0.5 after:left-0 after:h-[3px] after:w-full after:bg-[#7C3AED]">
+                Engineers
+              </span>
+            </span>
+            <br />
+            Master Rank Success.
+          </motion.h1>
+
+          {/* 3. SUBHEADING PARAGRAPH */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="mt-4 sm:mt-6 max-w-xl text-sm sm:text-base md:text-lg leading-relaxed text-[#94A3B8]"
+          >
+            Master <span className="font-bold text-[#0D6EFD]">JEE (Main &amp; Advanced)</span>,{' '}
+            <span className="font-bold text-[#7C3AED]">NEET-UG</span> &amp;{' '}
+            <span className="font-bold text-[#00F0FF]">Foundation</span> with India’s most authentic NTA CBT mock exam simulator, AI diagnostic analytics, and instant rank predictions.
+          </motion.p>
+
+          {/* 4. CTA BUTTONS */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="mt-5 sm:mt-6 flex flex-col gap-3 sm:flex-row sm:items-center"
+          >
+            {/* Primary Button */}
+            <Link
+              to="/free-mock"
+              className="group relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-full bg-gradient-to-r from-[#2563eb] to-[#06b6d4] px-6 py-3.5 sm:px-8 sm:py-3.5 text-base sm:text-lg font-bold text-white shadow-[0_0_28px_rgba(37,99,235,0.45)] transition-all duration-300 hover:shadow-[0_0_38px_rgba(6,182,212,0.65)] hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <span>Start Free Mock Test</span>
+              <ArrowRight className="h-4.5 w-4.5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+
+            {/* Secondary Button */}
+            <Link
+              to="/test-series"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#00F0FF]/60 bg-slate-900/70 px-6 py-3.5 sm:px-8 sm:py-3.5 text-base sm:text-lg font-bold text-[#F5F6FA] backdrop-blur-xl shadow-[0_0_20px_rgba(0,240,255,0.25)] transition-all duration-300 hover:border-[#00F0FF] hover:bg-slate-800/90 hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] hover:scale-[1.03]"
+            >
+              <Play className="h-4.5 w-4.5 fill-[#00F0FF] text-[#00F0FF] shrink-0 transition-transform group-hover:scale-110" />
+              <span>Explore Test Series</span>
+            </Link>
+          </motion.div>
+
+          {/* 5. ICON ROW */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="max-w-xl mx-auto sm:mx-0"
+          >
+            {/* Subtle Clean Slate Divider Line */}
+            <div className="h-[1px] w-full bg-slate-800/80 mt-4 mb-3.5 sm:mt-5 sm:mb-4 lg:mt-6 lg:mb-4" aria-hidden="true" />
+
+            {/* 4 Equally Spaced Brand Items (Centered 2x2 Grid on Mobile) */}
+            <div className="grid grid-cols-2 gap-3.5 sm:gap-4 sm:grid-cols-4">
+              {/* LEARN */}
+              <div className="group flex flex-col items-center text-center sm:items-start sm:text-left gap-1.5 sm:gap-2 cursor-default transition-all duration-250">
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-cyan-400/30 bg-cyan-500/10 text-cyan-300 shadow-[0_0_15px_rgba(56,189,248,0.15)] transition-all duration-250 group-hover:scale-[1.08]">
+                  <BookOpen className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-cyan-300" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <span className="block text-[11px] sm:text-xs font-bold tracking-wider text-slate-100 uppercase transition-colors duration-250 group-hover:text-white">
+                    LEARN
+                  </span>
+                  <p className="text-[10px] sm:text-[11px] text-[#94A3B8] font-medium leading-tight mt-0.5 transition-colors duration-250 group-hover:text-slate-300">
+                    Build Strong Concepts
+                  </p>
+                </div>
+              </div>
+
+              {/* PRACTICE */}
+              <div className="group flex flex-col items-center text-center sm:items-start sm:text-left gap-1.5 sm:gap-2 cursor-default transition-all duration-250">
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-sky-400/30 bg-sky-500/10 text-sky-300 shadow-[0_0_15px_rgba(56,189,248,0.15)] transition-all duration-250 group-hover:scale-[1.08]">
+                  <Zap className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-sky-300" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <span className="block text-[11px] sm:text-xs font-bold tracking-wider text-slate-100 uppercase transition-colors duration-250 group-hover:text-white">
+                    PRACTICE
+                  </span>
+                  <p className="text-[10px] sm:text-[11px] text-[#94A3B8] font-medium leading-tight mt-0.5 transition-colors duration-250 group-hover:text-slate-300">
+                    Daily CBT Tests
+                  </p>
+                </div>
+              </div>
+
+              {/* INNOVATE */}
+              <div className="group flex flex-col items-center text-center sm:items-start sm:text-left gap-1.5 sm:gap-2 cursor-default transition-all duration-250">
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-purple-400/30 bg-purple-500/10 text-purple-300 shadow-[0_0_15px_rgba(192,132,252,0.15)] transition-all duration-250 group-hover:scale-[1.08]">
+                  <Lightbulb className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-purple-300" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <span className="block text-[11px] sm:text-xs font-bold tracking-wider text-slate-100 uppercase transition-colors duration-250 group-hover:text-white">
+                    INNOVATE
+                  </span>
+                  <p className="text-[10px] sm:text-[11px] text-[#94A3B8] font-medium leading-tight mt-0.5 transition-colors duration-250 group-hover:text-slate-300">
+                    AI Performance Analytics
+                  </p>
+                </div>
+              </div>
+
+              {/* SUCCEED */}
+              <div className="group flex flex-col items-center text-center sm:items-start sm:text-left gap-1.5 sm:gap-2 cursor-default transition-all duration-250">
+                <div className="flex h-9 w-9 sm:h-10 sm:w-10 items-center justify-center rounded-xl border border-amber-400/30 bg-amber-500/10 text-amber-300 shadow-[0_0_15px_rgba(251,191,36,0.15)] transition-all duration-250 group-hover:scale-[1.08]">
+                  <Trophy className="h-4 w-4 sm:h-4.5 sm:w-4.5 text-amber-300" strokeWidth={1.8} />
+                </div>
+                <div>
+                  <span className="block text-[11px] sm:text-xs font-bold tracking-wider text-slate-100 uppercase transition-colors duration-250 group-hover:text-white">
+                    SUCCEED
+                  </span>
+                  <p className="text-[10px] sm:text-[11px] text-[#94A3B8] font-medium leading-tight mt-0.5 transition-colors duration-250 group-hover:text-slate-300">
+                    Achieve Top Ranks
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* 6. MOBILE STACKED HERO VISUAL - Seamlessly Floating directly on dark background with zero box border */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+            className="mt-8 block lg:hidden w-full max-w-sm sm:max-w-md mx-auto"
+          >
+            <div
+              className="relative overflow-hidden"
+              style={{
+                maskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 45%, transparent 98%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 45%, transparent 98%)',
+              }}
+            >
+              <img
+                src="/edvedum/fullwidth-hero-bg.png"
+                alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
+                className="w-full h-auto max-h-[280px] object-contain mx-auto"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#010d1f] to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#010d1f] to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#010d1f] to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#010d1f] to-transparent pointer-events-none" />
+            </div>
+          </motion.div>
+
+        </div>
+
+      </div>
     </section>
   );
 }

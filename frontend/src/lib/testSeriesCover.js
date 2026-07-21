@@ -27,51 +27,51 @@ const COVER_IMAGES = {
 
 const THEMES = {
   jee: {
-    label: 'JEE',
+    label: 'JEE Main',
     tagline: 'Main & Advanced full-length mocks',
-    header: 'bg-gradient-to-br from-[#1d4ed8] via-[#1e40af] to-[#172554]',
-    accent: 'text-blue-600',
+    header: 'bg-gradient-to-br from-[#0D6EFD] via-[#1d4ed8] to-[#1e40af] text-white',
+    accent: 'text-[#0D6EFD]',
     statBg: 'bg-blue-50',
     highlights: ['Physics, Chemistry & Maths', 'All India Rank', 'Step-by-step solutions'],
   },
   neet: {
     label: 'NEET UG',
     tagline: 'Medical entrance test series',
-    header: 'bg-gradient-to-br from-[#059669] via-[#047857] to-[#064e3b]',
-    accent: 'text-emerald-600',
-    statBg: 'bg-emerald-50',
+    header: 'bg-gradient-to-br from-[#0284c7] via-[#06b6d4] to-[#0891b2] text-white',
+    accent: 'text-[#0891b2]',
+    statBg: 'bg-cyan-50',
     highlights: ['Biology, Physics & Chemistry', 'NTA-style CBT screen', 'Rank after every mock'],
   },
   'neet-pg': {
     label: 'NEET PG',
     tagline: 'Postgraduate entrance mocks',
-    header: 'bg-gradient-to-br from-[#0d9488] via-[#0f766e] to-[#134e4a]',
-    accent: 'text-teal-600',
-    statBg: 'bg-teal-50',
+    header: 'bg-gradient-to-br from-[#7C3AED] via-[#6d28d9] to-[#5b21b6] text-white',
+    accent: 'text-[#7C3AED]',
+    statBg: 'bg-purple-50',
     highlights: ['Clinical & subject-wise tests', 'Detailed explanations', 'Performance tracking'],
   },
   foundation: {
     label: 'Foundation',
-    tagline: 'Class 5–10 preparation',
-    header: 'bg-gradient-to-br from-[#7c3aed] via-[#6d28d9] to-[#4c1d95]',
-    accent: 'text-violet-600',
-    statBg: 'bg-violet-50',
+    tagline: 'Class 6–12 preparation',
+    header: 'bg-gradient-to-br from-[#4F46E5] via-[#4338ca] to-[#3730a3] text-white',
+    accent: 'text-[#4F46E5]',
+    statBg: 'bg-indigo-50',
     highlights: ['Concept-building tests', 'Age-appropriate difficulty', 'Progress reports'],
   },
   general: {
     label: 'Test Series',
     tagline: 'Structured mock test program',
-    header: 'bg-gradient-to-br from-[#475569] via-[#334155] to-[#1e293b]',
-    accent: 'text-slate-600',
-    statBg: 'bg-slate-100',
+    header: 'bg-gradient-to-br from-[#0D6EFD] via-[#1d4ed8] to-[#2563eb] text-white',
+    accent: 'text-[#0D6EFD]',
+    statBg: 'bg-blue-50',
     highlights: ['Proctored online mocks', 'Score & rank reports', 'Solution review'],
   },
   free: {
     label: 'Free Mock',
     tagline: 'Try before you enroll',
-    header: 'bg-gradient-to-br from-[#10b981] via-[#059669] to-[#047857]',
-    accent: 'text-emerald-600',
-    statBg: 'bg-emerald-50',
+    header: 'bg-gradient-to-br from-[#00F0FF] via-[#06b6d4] to-[#0284c7] text-slate-950 font-bold',
+    accent: 'text-[#0891b2]',
+    statBg: 'bg-cyan-50',
     highlights: ['No payment required', 'Same CBT experience', 'Instant score report'],
   },
 };
@@ -80,10 +80,13 @@ const THEMES = {
 export function getExamTheme(series) {
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
   const free = Number(series?.price) === 0;
-  if (free) return THEMES.free;
 
-  const key = examCoverKey(text);
-  return THEMES[key] || THEMES.general;
+  if (isNeetPg(text)) return THEMES['neet-pg'];
+  if (isNeetUg(text)) return THEMES.neet;
+  if (/jee/i.test(text)) return THEMES.jee;
+  if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text)) return THEMES.foundation;
+  if (free) return THEMES.free;
+  return THEMES.general;
 }
 
 /** Cover image — used on detail page, not catalog cards. */

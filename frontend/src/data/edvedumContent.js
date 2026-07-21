@@ -263,24 +263,28 @@ export const NAV_MENUS = {
     label: `Class ${n}`,
     to: `/test-series?filter=foundation&class=${n}`,
   })),
-  liveTest: [
-    { label: 'JEE Live Tests', to: '/test-series?filter=jee' },
-    { label: 'NEET Live Tests', to: '/test-series?filter=neet' },
+  livetest: [
+    { label: 'JEE', to: '/test-series?filter=jee' },
+    { label: 'NEET', to: '/test-series?filter=neet' },
   ],
 };
 
 export const FOOTER_COMPANY = [
   { to: '/about', label: 'About Us' },
-  { to: '/about', label: 'Careers' },
+  { to: '/careers', label: 'Careers' },
   { to: '/blog', label: 'Blog' },
   { to: '/contact', label: 'Contact' },
+  { to: '/test-series', label: 'Courses' },
+  { to: '/pricing', label: 'Pricing' },
+  { to: '/faqs', label: 'FAQs' },
 ];
 
 export const FOOTER_STUDENT = [
   { to: '/test-series', label: 'Test Series' },
   { to: '/about', label: 'CBT Platform' },
-  { to: '/blog', label: 'Results' },
-  { to: '/student-login', label: 'Dashboard' },
+  { to: '/results', label: 'Results' },
+  { to: '/dashboard', label: 'Dashboard' },
+  { to: '/free-mock', label: 'Free Mock Test' },
 ];
 
 export const LEGAL_LINKS = [

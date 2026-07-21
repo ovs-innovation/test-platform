@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { publicService } from '../../lib/services.js';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
@@ -13,22 +13,41 @@ const FILTERS = [
   { id: 'jee', label: 'JEE' },
   { id: 'neet', label: 'NEET UG' },
   { id: 'neetpg', label: 'NEET PG' },
+  { id: 'foundation', label: 'Foundation' },
   { id: 'featured', label: 'Featured' },
 ];
 
 export default function TestSeriesCatalog() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialFilter = FILTERS.some((f) => f.id === searchParams.get('filter'))
-    ? searchParams.get('filter')
-    : 'all';
+  const rawParam = (searchParams.get('filter') || '').toLowerCase();
+  const initialFilter = FILTERS.some((f) => f.id === rawParam) ? rawParam : 'all';
 
   const [list, setList] = useState([]);
   const [state, setState] = useState('loading');
   const [filter, setFilter] = useState(initialFilter);
+  const skipScrollRef = useRef(false);
 
   useEffect(() => {
-    const q = searchParams.get('filter');
-    if (q && FILTERS.some((f) => f.id === q)) setFilter(q);
+    const q = (searchParams.get('filter') || '').toLowerCase();
+    if (skipScrollRef.current) {
+      skipScrollRef.current = false;
+      if (q && FILTERS.some((f) => f.id === q)) setFilter(q);
+      else if (!searchParams.get('filter')) setFilter('all');
+      return;
+    }
+
+    if (q && FILTERS.some((f) => f.id === q)) {
+      setFilter(q);
+      const timer = setTimeout(() => {
+        const target = document.getElementById('catalog-results');
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 150);
+      return () => clearTimeout(timer);
+    } else if (!searchParams.get('filter')) {
+      setFilter('all');
+    }
   }, [searchParams]);
 
   useEffect(() => {
@@ -38,6 +57,7 @@ export default function TestSeriesCatalog() {
   }, []);
 
   const setFilterAndUrl = (id) => {
+    skipScrollRef.current = true;
     setFilter(id);
     if (id === 'all') setSearchParams({});
     else setSearchParams({ filter: id });
@@ -50,9 +70,32 @@ export default function TestSeriesCatalog() {
     if (filter === 'jee') return /jee/i.test(text);
     if (filter === 'neet') return isNeetUg(text);
     if (filter === 'neetpg') return isNeetPg(text);
+    if (filter === 'foundation') return /foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text);
     if (filter === 'featured') return s.is_featured;
     return true;
   }), [list, filter]);
+
+  const filterCounts = useMemo(() => {
+    const counts = {
+      all: list.length,
+      free: 0,
+      jee: 0,
+      neet: 0,
+      neetpg: 0,
+      foundation: 0,
+      featured: 0,
+    };
+    list.forEach((s) => {
+      const text = `${s.exam_type || ''} ${s.title || ''}`;
+      if (Number(s.price) === 0) counts.free++;
+      if (/jee/i.test(text)) counts.jee++;
+      if (isNeetUg(text)) counts.neet++;
+      if (isNeetPg(text)) counts.neetpg++;
+      if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text)) counts.foundation++;
+      if (s.is_featured) counts.featured++;
+    });
+    return counts;
+  }, [list]);
 
   if (state === 'error') {
     return (
@@ -69,33 +112,44 @@ export default function TestSeriesCatalog() {
     <div className="bg-slate-50">
       <CatalogHero seriesCount={loading ? 0 : list.length} />
 
-      <div className="container-app relative z-20 -mt-14">
-        <div className="rounded-2xl border border-slate-200 bg-white p-3 shadow-elevated sm:p-4">
-          <div className="flex flex-wrap gap-2">
-            {FILTERS.map((f) => (
-              <button
-                key={f.id}
-                type="button"
-                onClick={() => setFilterAndUrl(f.id)}
-                className={`rounded-full px-4 py-2 text-sm font-medium transition ${
-                  filter === f.id
-                    ? 'bg-brand-600 text-white shadow-sm'
-                    : 'bg-slate-50 text-slate-600 ring-1 ring-slate-200 hover:bg-slate-100'
-                }`}
-              >
-                {f.label}
-                {f.id === 'all' && !loading && (
-                  <span className={`ml-1.5 ${filter === f.id ? 'text-brand-200' : 'text-slate-400'}`}>
-                    {list.length}
-                  </span>
-                )}
-              </button>
-            ))}
+      {/* FILTER TAB BAR - Auto-scrolled target for filtered navbar links */}
+      <div id="catalog-results" className="container-app relative z-20 -mt-10 sm:-mt-12 mb-8 pt-4">
+        <div className="mx-auto max-w-5xl rounded-2xl border border-slate-200/90 bg-[#F5F6FA] p-3 sm:p-3.5 shadow-xl shadow-slate-200/60">
+          <div className="flex items-center justify-start sm:justify-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar scroll-smooth whitespace-nowrap px-1 py-0.5">
+            {FILTERS.map((f) => {
+              const isActive = filter === f.id;
+              const count = filterCounts[f.id] ?? 0;
+              return (
+                <button
+                  key={f.id}
+                  type="button"
+                  onClick={() => setFilterAndUrl(f.id)}
+                  className={`group inline-flex shrink-0 items-center gap-2 rounded-full px-4 py-2 text-xs sm:text-sm font-semibold cursor-pointer transition-all duration-200 ${
+                    isActive
+                      ? 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/25 scale-[1.02]'
+                      : 'border border-slate-200/90 bg-white text-slate-700 shadow-xs hover:border-[#0D6EFD]/50 hover:bg-blue-50/70 hover:text-[#0D6EFD] hover:scale-[1.02]'
+                  }`}
+                >
+                  <span>{f.label}</span>
+                  {!loading && (
+                    <span
+                      className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[11px] font-extrabold transition-colors ${
+                        isActive
+                          ? 'bg-white/20 text-white'
+                          : 'bg-slate-100 text-slate-500 group-hover:bg-blue-100 group-hover:text-[#0D6EFD]'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
 
-      <div className="container-app py-12 lg:py-16">
+      <div className="container-app pb-12 pt-4 lg:pb-16 lg:pt-6">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="text-2xl font-bold text-slate-900">

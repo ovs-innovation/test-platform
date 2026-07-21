@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="640" y2="360" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F46E5"/>
+      <stop offset="0.5" stop-color="#6366f1"/>
+      <stop offset="1" stop-color="#7C3AED"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="360" fill="url(#bg)"/>
+  <circle cx="500" cy="100" r="110" fill="#818cf8" fill-opacity="0.35"/>
+  <circle cx="560" cy="290" r="80" fill="#a5b4fc" fill-opacity="0.25"/>
+  <g transform="translate(430, 70)" stroke="white" stroke-width="3" fill="none" opacity="0.9">
+    <path d="M100 20 L20 180 L180 180 Z" />
+    <circle cx="100" cy="100" r="30" fill="white" fill-opacity="0.2" />
+  </g>
+  <text x="40" y="72" fill="white" font-family="Inter, Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="2">FOUNDATION</text>
+  <text x="40" y="108" fill="#c7d2fe" font-family="Inter, Arial, sans-serif" font-size="14" font-weight="600">Class 6–10 Preparation</text>
+  <text x="40" y="300" fill="white" font-family="Inter, Arial, sans-serif" font-size="48" font-weight="800" opacity="0.15">CLASS 6-10</text>
+</svg>
