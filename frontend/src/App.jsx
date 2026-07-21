@@ -56,8 +56,6 @@ import AdminAttemptDetail from './pages/admin/AttemptDetail.jsx';
 const Shell = ({ children }) => <Layout>{children}</Layout>;
 
 function AppHome() {
-  const { user, loading } = useAuth();
-  if (!loading && user) return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace />;
   return <Home />;
 }
 

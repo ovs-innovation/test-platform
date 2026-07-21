@@ -1,7 +1,8 @@
-import { query } from '../config/db.js';
+import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { toCsvRow } from '../utils/csvQuestions.js';
+import { hashPassword } from '../utils/password.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations] = await Promise.all([
@@ -87,16 +88,18 @@ export const getStats = asyncHandler(async (_req, res) => {
 export const getCandidates = asyncHandler(async (_req, res) => {
   const result = await query(`
     SELECT u.id, u.name, u.email, u.created_at,
+           sp.phone, sp.class, sp.target_exam, sp.city, sp.state,
            COUNT(DISTINCT ci.id)::int AS invites,
            COUNT(DISTINCT a.id)::int AS attempts,
            COUNT(DISTINCT a.id) FILTER (WHERE a.status <> 'in_progress')::int AS completed,
            COALESCE(ROUND(AVG(s.percentage), 1), 0) AS avg_score
     FROM users u
+    LEFT JOIN student_profiles sp ON sp.user_id = u.id
     LEFT JOIN candidate_invites ci ON ci.candidate_email = u.email
     LEFT JOIN attempts a ON a.candidate_id = u.id
     LEFT JOIN scores s ON s.attempt_id = a.id
     WHERE u.role = 'candidate'
-    GROUP BY u.id
+    GROUP BY u.id, sp.phone, sp.class, sp.target_exam, sp.city, sp.state
     ORDER BY u.created_at DESC
   `);
   res.json({ candidates: result.rows });
@@ -273,4 +276,97 @@ export const getAnalytics = asyncHandler(async (_req, res) => {
     ORDER BY at.submitted_at DESC
   `);
   res.json({ analytics: result.rows });
+});
+
+export const createCandidate = asyncHandler(async (req, res) => {
+  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+
+  const existingEmail = await query('SELECT id FROM users WHERE email = $1', [email]);
+  if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
+
+  if (phone) {
+    const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1', [phone]);
+    if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
+  }
+
+  const password_hash = await hashPassword(password);
+
+  const user = await withTransaction(async (client) => {
+    const result = await client.query(
+      `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role, created_at`,
+      [name, email, password_hash]
+    );
+    const u = result.rows[0];
+
+    const profileRes = await client.query(
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam) VALUES ($1, $2, $3, $4) RETURNING phone, class, target_exam, city, state`,
+      [u.id, phone || null, studentClass || null, target_exam || null]
+    );
+    const profile = profileRes.rows[0];
+
+    await client.query(
+      `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
+      [u.id, 'Welcome to EDVEDUM Academy', 'Your student account has been created by the Admin.']
+    );
+
+    return { ...u, ...profile };
+  });
+
+  res.status(201).json({ candidate: user });
+});
+
+export const updateCandidate = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+
+  const userRes = await query('SELECT id, password_hash FROM users WHERE id = $1 AND role = $2', [id, 'candidate']);
+  if (userRes.rowCount === 0) throw ApiError.notFound('Candidate not found');
+
+  if (email) {
+    const existingEmail = await query('SELECT id FROM users WHERE email = $1 AND id <> $2', [email, id]);
+    if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
+  }
+
+  if (phone) {
+    const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1 AND user_id <> $2', [phone, id]);
+    if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
+  }
+
+  let password_hash = userRes.rows[0].password_hash;
+  if (password) {
+    password_hash = await hashPassword(password);
+  }
+
+  const updatedCandidate = await withTransaction(async (client) => {
+    const uRes = await client.query(
+      `UPDATE users SET name = COALESCE($1, name), email = COALESCE($2, email), password_hash = $3
+       WHERE id = $4 AND role = 'candidate' RETURNING id, name, email, role, created_at`,
+      [name, email, password_hash, id]
+    );
+    const u = uRes.rows[0];
+
+    const spRes = await client.query(
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (user_id) DO UPDATE SET
+         phone = EXCLUDED.phone,
+         class = EXCLUDED.class,
+         target_exam = EXCLUDED.target_exam,
+         updated_at = NOW()
+       RETURNING phone, class, target_exam, city, state`,
+      [id, phone || null, studentClass || null, target_exam || null]
+    );
+    const profile = spRes.rows[0];
+
+    return { ...u, ...profile };
+  });
+
+  res.json({ candidate: updatedCandidate });
+});
+
+export const deleteCandidate = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query('DELETE FROM users WHERE id = $1 AND role = $2 RETURNING id', [id, 'candidate']);
+  if (result.rowCount === 0) throw ApiError.notFound('Candidate not found');
+  res.json({ message: 'Candidate user deleted successfully', id: result.rows[0].id });
 });

@@ -8,6 +8,8 @@ export const authService = {
   resetPassword: (data) => api.post('/auth/reset-password', data).then((r) => r.data),
   sendOtp: (data) => api.post('/auth/otp/send', data).then((r) => r.data),
   verifyOtp: (data) => api.post('/auth/otp/verify', data).then((r) => r.data),
+  sendLoginOtp: (data) => api.post('/auth/otp/send-login', data).then((r) => r.data),
+  verifyLoginOtp: (data) => api.post('/auth/otp/verify-login', data).then((r) => r.data),
   me: () => api.get('/auth/me').then((r) => r.data),
   candidateDashboard: () => api.get('/auth/candidate/dashboard').then((r) => r.data),
 };
@@ -146,6 +148,9 @@ export const adminService = {
   stats: () => api.get('/admin/stats').then((r) => r.data),
   analytics: () => api.get('/admin/analytics').then((r) => r.data.analytics),
   candidates: () => api.get('/admin/candidates').then((r) => r.data.candidates),
+  createCandidate: (data) => api.post('/admin/candidates', data).then((r) => r.data.candidate),
+  updateCandidate: (id, data) => api.put(`/admin/candidates/${id}`, data).then((r) => r.data.candidate),
+  deleteCandidate: (id) => api.delete(`/admin/candidates/${id}`).then((r) => r.data),
   reports: () => api.get('/admin/reports').then((r) => r.data.reports),
   exportReports: () =>
     import('./csv.js').then(({ downloadFromApi }) =>

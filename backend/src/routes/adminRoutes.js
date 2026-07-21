@@ -2,6 +2,9 @@ import { Router } from 'express';
 import {
   getStats,
   getCandidates,
+  createCandidate,
+  updateCandidate,
+  deleteCandidate,
   getReports,
   exportReports,
   getAttemptReport,
@@ -17,7 +20,7 @@ import {
 import { createInvite, listInvites, resendInvite } from '../controllers/inviteController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { inviteSchema } from '../validators/schemas.js';
+import { inviteSchema, adminCreateCandidateSchema, adminUpdateCandidateSchema } from '../validators/schemas.js';
 
 const router = Router();
 
@@ -26,6 +29,9 @@ router.use(authenticate, authorize('admin'));
 router.get('/stats', getStats);
 router.get('/analytics', getAnalytics);
 router.get('/candidates', getCandidates);
+router.post('/candidates', validate(adminCreateCandidateSchema), createCandidate);
+router.put('/candidates/:id', validate(adminUpdateCandidateSchema), updateCandidate);
+router.delete('/candidates/:id', deleteCandidate);
 router.get('/reports/export', exportReports);
 router.get('/reports', getReports);
 router.get('/attempts/:id', getAttemptReport);

@@ -13,14 +13,14 @@ export const getProfile = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-  const { name, phone, city, state, target_exam } = req.body;
+  const { name, phone, city, state, target_exam, class: studentClass } = req.body;
   if (name) await query('UPDATE users SET name = $1 WHERE id = $2', [name, req.user.id]);
   await query(
-    `INSERT INTO student_profiles (user_id, phone, city, state, target_exam)
-     VALUES ($1,$2,$3,$4,$5)
+    `INSERT INTO student_profiles (user_id, phone, city, state, target_exam, class)
+     VALUES ($1,$2,$3,$4,$5,$6)
      ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, city = EXCLUDED.city,
-       state = EXCLUDED.state, target_exam = EXCLUDED.target_exam, updated_at = NOW()`,
-    [req.user.id, phone || null, city || null, state || null, target_exam || null]
+       state = EXCLUDED.state, target_exam = EXCLUDED.target_exam, class = EXCLUDED.class, updated_at = NOW()`,
+    [req.user.id, phone || null, city || null, state || null, target_exam || null, studentClass || null]
   );
   res.json({ message: 'Profile updated' });
 });

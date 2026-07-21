@@ -39,6 +39,11 @@ export const createQuestion = asyncHandler(async (req, res) => {
     test_cases,
     language,
     bank_category,
+    solution,
+    image_url,
+    subject_id,
+    chapter_id,
+    difficulty,
   } = req.body;
 
   let pos = position;
@@ -53,8 +58,8 @@ export const createQuestion = asyncHandler(async (req, res) => {
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
-        marks, position, starter_code, test_cases, language, bank_category)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
      RETURNING *`,
     [
       assessmentId,
@@ -70,6 +75,11 @@ export const createQuestion = asyncHandler(async (req, res) => {
       JSON.stringify(test_cases || []),
       language || 'javascript',
       bank_category || null,
+      solution || '',
+      image_url || '',
+      subject_id || null,
+      chapter_id || null,
+      difficulty || 'medium',
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -95,15 +105,20 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const test_cases = body.test_cases !== undefined ? JSON.stringify(body.test_cases) : q.test_cases;
   const language = body.language ?? q.language;
   const bank_category = body.bank_category !== undefined ? body.bank_category : q.bank_category;
+  const solution = body.solution !== undefined ? body.solution : q.solution;
+  const image_url = body.image_url !== undefined ? body.image_url : q.image_url;
+  const subject_id = body.subject_id !== undefined ? (body.subject_id || null) : q.subject_id;
+  const chapter_id = body.chapter_id !== undefined ? (body.chapter_id || null) : q.chapter_id;
+  const difficulty = body.difficulty !== undefined ? body.difficulty : q.difficulty;
 
   const result = await query(
     `UPDATE questions SET
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
        marks = $6, position = $7, section_id = $8, starter_code = $9, test_cases = $10, language = $11,
-       bank_category = $12
-     WHERE id = $13 RETURNING *`,
+       bank_category = $12, solution = $13, image_url = $14, subject_id = $15, chapter_id = $16, difficulty = $17
+     WHERE id = $18 RETURNING *`,
     [question_text, question_type, options, correct_index, correct_indices, marks, position,
-      section_id, starter_code, test_cases, language, bank_category, id]
+      section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, id]
   );
   res.json({ question: result.rows[0] });
 });
@@ -178,8 +193,8 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
     try {
       const result = await query(
         `INSERT INTO questions
-           (assessment_id, question_type, question_text, options, correct_index, correct_indices, marks, position)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING id, question_text`,
+           (assessment_id, question_type, question_text, options, correct_index, correct_indices, marks, position, solution, image_url)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id, question_text`,
         [
           assessmentId,
           row.question_type,
@@ -189,6 +204,8 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
           JSON.stringify(row.correct_indices),
           row.marks,
           position,
+          row.solution || '',
+          row.image_url || '',
         ]
       );
       created.push(result.rows[0]);

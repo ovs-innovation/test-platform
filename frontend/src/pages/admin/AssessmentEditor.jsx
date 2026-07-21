@@ -13,6 +13,14 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 
+const toDatetimeLocal = (isoString) => {
+  if (!isoString) return '';
+  const d = new Date(isoString);
+  if (isNaN(d.getTime())) return '';
+  const pad = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
 const TABS = [
   { id: 'general', label: 'General Settings' },
   { id: 'questions', label: 'Questions' },
@@ -45,6 +53,11 @@ const emptyForm = (type) => ({
   section_id: null,
   starter_code: 'function solution() {\n  \n}\n',
   test_cases: [{ input: '', expected: '' }],
+  solution: '',
+  image_url: '',
+  subject_id: null,
+  chapter_id: null,
+  difficulty: 'medium',
 });
 
 export default function AssessmentEditor() {
@@ -79,6 +92,8 @@ export default function AssessmentEditor() {
         result_visible: data.assessment.result_visible,
         negative_marking: data.assessment.negative_marking || false,
         negative_marks_per_wrong: Number(data.assessment.negative_marks_per_wrong) || 0.25,
+        available_from: data.assessment.available_from ? toDatetimeLocal(data.assessment.available_from) : '',
+        available_until: data.assessment.available_until ? toDatetimeLocal(data.assessment.available_until) : '',
       });
       setState('done');
     } catch {
@@ -164,7 +179,12 @@ export default function AssessmentEditor() {
             e.preventDefault();
             setSavingSettings(true);
             try {
-              setAssessment(await assessmentService.update(assessmentId, settings));
+              const payload = {
+                ...settings,
+                available_from: settings.available_from ? new Date(settings.available_from).toISOString() : null,
+                available_until: settings.available_until ? new Date(settings.available_until).toISOString() : null,
+              };
+              setAssessment(await assessmentService.update(assessmentId, payload));
               toast.success('Settings saved');
             } catch (err) {
               toast.error(err.message || 'Save failed');
@@ -234,6 +254,16 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
           <input name="max_violations" type="number" min={0} className="input" value={settings.max_violations} onChange={onChange} />
         </div>
       </div>
+      <div className="grid grid-cols-2 gap-4">
+        <div>
+          <label className="label">Available from (optional start time)</label>
+          <input name="available_from" type="datetime-local" className="input" value={settings.available_from || ''} onChange={onChange} />
+        </div>
+        <div>
+          <label className="label">Available until (optional end time)</label>
+          <input name="available_until" type="datetime-local" className="input" value={settings.available_until || ''} onChange={onChange} />
+        </div>
+      </div>
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" name="result_visible" checked={settings.result_visible} onChange={onChange} className="h-4 w-4 rounded" />
         Show results to candidates after submission
@@ -292,6 +322,11 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       section_id: q.section_id,
       starter_code: q.starter_code || '',
       test_cases: q.test_cases?.length ? q.test_cases : [{ input: '', expected: '' }],
+      solution: q.solution || '',
+      image_url: q.image_url || '',
+      subject_id: q.subject_id || null,
+      chapter_id: q.chapter_id || null,
+      difficulty: q.difficulty || 'medium',
     });
     setModalOpen(true);
   };
@@ -558,6 +593,26 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown })
 
 function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections, onSubmit, saving }) {
   const isChoice = form.question_type === 'mcq' || form.question_type === 'multi_select';
+  const [subjectsList, setSubjectsList] = useState([]);
+  const [chaptersList, setChaptersList] = useState([]);
+
+  useEffect(() => {
+    if (open) {
+      adminService.subjects().then((list) => {
+        setSubjectsList(list || []);
+      }).catch(() => {});
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (form.subject_id) {
+      adminService.chapters(form.subject_id).then((list) => {
+        setChaptersList(list || []);
+      }).catch(() => {});
+    } else {
+      setChaptersList([]);
+    }
+  }, [form.subject_id]);
 
   const toggleMulti = (i) => {
     setForm((f) => {
@@ -570,20 +625,48 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   return (
     <Modal open={open} onClose={onClose} title={editing ? 'Edit question' : 'Add question'} size="lg">
       <form onSubmit={onSubmit} className="space-y-4">
-        <div>
-          <label className="label">Question type</label>
-          <select className="input" value={form.question_type} disabled={!!editing}
-            onChange={(e) => setForm((f) => ({ ...emptyForm(e.target.value), question_text: f.question_text, section_id: f.section_id }))}>
-            {QUESTION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
-          </select>
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="label">Question type</label>
+            <select className="input" value={form.question_type} disabled={!!editing}
+              onChange={(e) => setForm((f) => ({ ...emptyForm(e.target.value), question_text: f.question_text, section_id: f.section_id }))}>
+              {QUESTION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="label">Section</label>
+            <select className="input" value={form.section_id || ''} onChange={(e) => setForm((f) => ({ ...f, section_id: Number(e.target.value) || null }))}>
+              <option value="">None</option>
+              {sections.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+          </div>
         </div>
-        <div>
-          <label className="label">Section</label>
-          <select className="input" value={form.section_id || ''} onChange={(e) => setForm((f) => ({ ...f, section_id: Number(e.target.value) || null }))}>
-            <option value="">None</option>
-            {sections.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-          </select>
+
+        <div className="grid grid-cols-3 gap-3">
+          <div>
+            <label className="label">Subject</label>
+            <select className="input" value={form.subject_id || ''} onChange={(e) => setForm((f) => ({ ...f, subject_id: Number(e.target.value) || null, chapter_id: null }))}>
+              <option value="">Select subject</option>
+              {subjectsList.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="label">Chapter</label>
+            <select className="input" value={form.chapter_id || ''} onChange={(e) => setForm((f) => ({ ...f, chapter_id: Number(e.target.value) || null }))} disabled={!form.subject_id}>
+              <option value="">Select chapter</option>
+              {chaptersList.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="label">Difficulty</label>
+            <select className="input" value={form.difficulty || 'medium'} onChange={(e) => setForm((f) => ({ ...f, difficulty: e.target.value }))}>
+              <option value="easy">Easy</option>
+              <option value="medium">Medium</option>
+              <option value="hard">Hard</option>
+            </select>
+          </div>
         </div>
+
         <div>
           <label className="label">Question text</label>
           <textarea rows={3} className="input" required value={form.question_text}
@@ -641,12 +724,23 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           <p className="text-sm text-slate-500">Candidates will provide a written answer. Graded when answer meets minimum length.</p>
         )}
 
-        <div className="w-32">
-          <label className="label">Marks</label>
-          <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="label">Marks</label>
+            <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
+          </div>
+          <div>
+            <label className="label">Image URL (optional)</label>
+            <input className="input" placeholder="e.g. /images/q1.png" value={form.image_url || ''} onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))} />
+          </div>
         </div>
 
-        <div className="flex justify-end gap-3 pt-2">
+        <div>
+          <label className="label">Detailed Solution Explanation (optional)</label>
+          <textarea rows={3} className="input" placeholder="Explain the step-by-step solution..." value={form.solution || ''} onChange={(e) => setForm((f) => ({ ...f, solution: e.target.value }))} />
+        </div>
+
+        <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-4">
           <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
           <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save question'}</button>
         </div>

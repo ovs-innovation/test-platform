@@ -9,7 +9,8 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
 
   const [attempts, enrollments, scores] = await Promise.all([
     query(
-      `SELECT a.id, a.title, at.submitted_at, at.violation_count,
+      `SELECT a.id, a.title, at.submitted_at, at.violation_count, at.duration_seconds,
+              (SELECT COUNT(*)::int FROM questions WHERE assessment_id = a.id) AS total_questions,
               s.marks_obtained, s.total_marks, s.percentage, s.passed, s.rank, s.percentile,
               s.correct_count, s.wrong_count, s.unattempted_count
        FROM attempts at
@@ -39,21 +40,51 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
   const trend = recent
     .slice()
     .reverse()
-    .map((a) => ({ date: a.submitted_at, percentage: Number(a.percentage) || 0, title: a.title }));
+    .map((a) => {
+      const attempted = (Number(a.correct_count) || 0) + (Number(a.wrong_count) || 0);
+      const accuracy = attempted > 0 ? Math.round(((Number(a.correct_count) || 0) / attempted) * 100) : 0;
+      return {
+        date: a.submitted_at,
+        percentage: Number(a.percentage) || 0,
+        title: a.title,
+        accuracy,
+        duration_seconds: a.duration_seconds || 0,
+        total_questions: a.total_questions || 0,
+      };
+    });
 
-  const subjectBreakdown = await query(
-    `SELECT COALESCE(q.bank_category, 'General') AS subject,
-            COUNT(*)::int AS total,
-            COUNT(*) FILTER (WHERE ans.selected_index = q.correct_index OR
-              (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text))::int AS correct
-     FROM questions q
-     JOIN attempts at ON at.assessment_id = q.assessment_id
-     LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
-     WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
-     GROUP BY COALESCE(q.bank_category, 'General')
-     ORDER BY subject`,
-    [userId]
-  );
+  const [subjectBreakdown, chapterBreakdown] = await Promise.all([
+    query(
+      `SELECT COALESCE(s.name, q.bank_category, 'General') AS subject,
+              COUNT(*)::int AS total,
+              COUNT(*) FILTER (WHERE ans.selected_index = q.correct_index OR
+                (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text))::int AS correct
+       FROM questions q
+       JOIN attempts at ON at.assessment_id = q.assessment_id
+       LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
+       LEFT JOIN subjects s ON s.id = q.subject_id
+       WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+       GROUP BY COALESCE(s.name, q.bank_category, 'General')
+       ORDER BY subject`,
+      [userId]
+    ),
+    query(
+      `SELECT COALESCE(c.name, 'General') AS chapter,
+              COALESCE(s.name, q.bank_category, 'General') AS subject,
+              COUNT(*)::int AS total,
+              COUNT(*) FILTER (WHERE ans.selected_index = q.correct_index OR
+                (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text))::int AS correct
+       FROM questions q
+       JOIN attempts at ON at.assessment_id = q.assessment_id
+       LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
+       LEFT JOIN chapters c ON c.id = q.chapter_id
+       LEFT JOIN subjects s ON s.id = q.subject_id
+       WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+       GROUP BY COALESCE(c.name, 'General'), COALESCE(s.name, q.bank_category, 'General')
+       ORDER BY chapter`,
+      [userId]
+    )
+  ]);
 
   res.json({
     summary: {
@@ -67,6 +98,13 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
     attempts: attempts.rows,
     trend,
     subject_breakdown: subjectBreakdown.rows.map((r) => ({
+      subject: r.subject,
+      total: r.total,
+      correct: r.correct,
+      accuracy: r.total > 0 ? Math.round((r.correct / r.total) * 100) : 0,
+    })),
+    chapter_breakdown: chapterBreakdown.rows.map((r) => ({
+      chapter: r.chapter,
       subject: r.subject,
       total: r.total,
       correct: r.correct,
