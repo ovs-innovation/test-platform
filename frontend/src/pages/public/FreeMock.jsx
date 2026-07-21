@@ -147,7 +147,7 @@ export default function FreeMock() {
       {/* 2. OVERLAPPING CONTENT CONTAINER (#F5F6FA Background) */}
       <div className="container-app relative z-10 -mt-10 lg:-mt-12 pb-16 pt-0">
         <div className="grid gap-8 items-start lg:grid-cols-5">
-          
+
           {/* LEFT COLUMN: How Free CBT Mocks Work */}
           <div className="lg:col-span-3">
             <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xl shadow-slate-200/60 sm:p-8">

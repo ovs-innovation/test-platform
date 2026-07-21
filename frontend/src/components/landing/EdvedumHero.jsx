@@ -146,6 +146,32 @@ export default function EdvedumHero() {
             </div>
           </motion.div>
 
+          {/* 2. MOBILE HERO VISUAL - Tight Circular Mask (100% Corner Elimination) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="mt-4 mb-2 block lg:hidden w-full max-w-sm sm:max-w-md mx-auto"
+          >
+            <div
+              className="relative overflow-hidden"
+              style={{
+                maskImage: 'radial-gradient(circle 50% at 50% 50%, black 10%, transparent 62%)',
+                WebkitMaskImage: 'radial-gradient(circle 50% at 50% 50%, black 10%, transparent 62%)',
+              }}
+            >
+              <img
+                src="/edvedum/fullwidth-hero-bg.png"
+                alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
+                className="w-full h-auto max-h-[300px] object-contain mx-auto scale-105"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
+            </div>
+          </motion.div>
+
           {/* 2. HEADLINE - Snug Underline Offset & Bottom Margin */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -276,32 +302,6 @@ export default function EdvedumHero() {
                   </p>
                 </div>
               </div>
-            </div>
-          </motion.div>
-
-          {/* 6. MOBILE STACKED HERO VISUAL - Seamlessly Floating directly on dark background with zero box border */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-8 block lg:hidden w-full max-w-sm sm:max-w-md mx-auto"
-          >
-            <div
-              className="relative overflow-hidden"
-              style={{
-                maskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 45%, transparent 98%)',
-                WebkitMaskImage: 'radial-gradient(ellipse 85% 85% at 50% 50%, black 45%, transparent 98%)',
-              }}
-            >
-              <img
-                src="/edvedum/fullwidth-hero-bg.png"
-                alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
-                className="w-full h-auto max-h-[280px] object-contain mx-auto"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-[#010d1f] to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-8 bg-gradient-to-b from-[#010d1f] to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#010d1f] to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#010d1f] to-transparent pointer-events-none" />
             </div>
           </motion.div>
 
