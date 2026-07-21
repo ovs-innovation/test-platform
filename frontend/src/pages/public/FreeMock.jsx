@@ -24,34 +24,34 @@ function seriesMatchesExam(series, examId) {
 
 const EXAM_THEMES = {
   jee: {
-    badge: 'text-[#0D6EFD] bg-blue-50 border-blue-200/80',
+    badge: 'text-[#38bdf8] bg-blue-500/20 border-blue-400/40',
     headingGradient: 'from-[#38bdf8] via-[#60a5fa] to-[#0D6EFD]',
-    cardBorder: 'border-blue-200/90 bg-gradient-to-b from-blue-50/40 via-white to-white',
-    accentText: 'text-[#0D6EFD]',
+    cardBorder: 'border-[#0D6EFD]/40 bg-[#0c1427]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(13,110,253,0.18)]',
+    accentText: 'text-[#38bdf8]',
     emptyBtn: 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/20 hover:scale-[1.02]',
     primaryBtn: 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] text-white shadow-md shadow-blue-500/25 hover:scale-[1.02]',
-    checkBg: 'bg-blue-100 text-[#0D6EFD]',
-    guideBadge: 'bg-blue-50 text-[#0D6EFD]',
+    checkBg: 'bg-blue-500/20 text-[#38bdf8] border border-blue-400/30',
+    guideBadge: 'bg-blue-500/20 text-[#38bdf8] border border-blue-400/30',
   },
   neet: {
-    badge: 'text-[#0891b2] bg-cyan-50 border-cyan-200/80',
+    badge: 'text-[#00F0FF] bg-cyan-500/20 border-cyan-400/40',
     headingGradient: 'from-[#00F0FF] via-[#22d3ee] to-[#0891b2]',
-    cardBorder: 'border-cyan-200/90 bg-gradient-to-b from-cyan-50/40 via-white to-white',
-    accentText: 'text-[#0891b2]',
+    cardBorder: 'border-[#00F0FF]/40 bg-[#0c1427]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,240,255,0.18)]',
+    accentText: 'text-[#00F0FF]',
     emptyBtn: 'bg-gradient-to-r from-[#00F0FF] via-[#06b6d4] to-[#0891b2] text-slate-950 font-bold shadow-md shadow-cyan-500/20 hover:scale-[1.02]',
     primaryBtn: 'bg-gradient-to-r from-[#00F0FF] via-[#06b6d4] to-[#0891b2] text-slate-950 font-bold shadow-md shadow-cyan-500/25 hover:scale-[1.02]',
-    checkBg: 'bg-cyan-100 text-[#0891b2]',
-    guideBadge: 'bg-cyan-50 text-[#0891b2]',
+    checkBg: 'bg-cyan-500/20 text-[#00F0FF] border border-cyan-400/30',
+    guideBadge: 'bg-cyan-500/20 text-[#00F0FF] border border-cyan-400/30',
   },
   neetpg: {
-    badge: 'text-[#7C3AED] bg-purple-50 border-purple-200/80',
+    badge: 'text-[#c084fc] bg-purple-500/20 border-purple-400/40',
     headingGradient: 'from-[#c084fc] via-[#a855f7] to-[#7C3AED]',
-    cardBorder: 'border-purple-200/90 bg-gradient-to-b from-purple-50/40 via-white to-white',
-    accentText: 'text-[#7C3AED]',
+    cardBorder: 'border-[#7C3AED]/40 bg-[#0c1427]/85 backdrop-blur-xl shadow-[0_8px_32px_rgba(124,58,237,0.18)]',
+    accentText: 'text-[#c084fc]',
     emptyBtn: 'bg-gradient-to-r from-[#7C3AED] to-purple-700 text-white shadow-md shadow-purple-500/20 hover:scale-[1.02]',
     primaryBtn: 'bg-gradient-to-r from-[#7C3AED] via-[#8b5cf6] to-[#6d28d9] text-white shadow-md shadow-purple-500/25 hover:scale-[1.02]',
-    checkBg: 'bg-purple-100 text-[#7C3AED]',
-    guideBadge: 'bg-purple-50 text-[#7C3AED]',
+    checkBg: 'bg-purple-500/20 text-[#c084fc] border border-purple-400/30',
+    guideBadge: 'bg-purple-500/20 text-[#c084fc] border border-purple-400/30',
   },
 };
 
@@ -84,7 +84,7 @@ export default function FreeMock() {
   const getTabStyle = (id) => {
     const isSelected = id === examId;
     if (!isSelected) {
-      return 'border border-white/20 bg-slate-900/80 text-slate-300 backdrop-blur-md hover:border-[#00F0FF]/50 hover:bg-slate-800 hover:text-white';
+      return 'border border-slate-700/80 bg-[#070c18] text-slate-400 backdrop-blur-md hover:border-[#00F0FF]/50 hover:bg-[#0a1224] hover:text-white';
     }
     if (id === 'jee') {
       return 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/25 border border-blue-400/40 scale-[1.02]';
@@ -99,9 +99,9 @@ export default function FreeMock() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA]">
+    <div className="min-h-screen bg-[#090d16] bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px] text-[#F5F6FA]">
       {/* 1. DARK NAVY HERO BANNER */}
-      <section className="relative overflow-hidden bg-[#010d1f] text-white pb-20 pt-8 sm:pt-10 lg:pb-24 lg:pt-12">
+      <section className="relative overflow-hidden bg-[#010d1f] text-white pb-20 pt-8 sm:pt-10 lg:pb-24 lg:pt-12 border-b border-slate-800/80">
         <div className="pointer-events-none absolute inset-0" aria-hidden>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_75%_55%_at_75%_25%,rgba(0,240,255,0.12),transparent)]" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_45%_at_15%_85%,rgba(13,110,253,0.18),transparent)]" />
@@ -144,21 +144,21 @@ export default function FreeMock() {
         </div>
       </section>
 
-      {/* 2. OVERLAPPING CONTENT CONTAINER (#F5F6FA Background) */}
+      {/* 2. OVERLAPPING CONTENT CONTAINER */}
       <div className="container-app relative z-10 -mt-10 lg:-mt-12 pb-16 pt-0">
         <div className="grid gap-8 items-start lg:grid-cols-5">
           
           {/* LEFT COLUMN: How Free CBT Mocks Work */}
           <div className="lg:col-span-3">
-            <div className="rounded-2xl border border-slate-200/90 bg-white p-6 shadow-xl shadow-slate-200/60 sm:p-8">
-              <div className="flex items-center justify-between gap-3 border-b border-slate-100 pb-5">
+            <div className="rounded-2xl border border-slate-800/90 bg-[#0c1427]/85 p-6 shadow-2xl backdrop-blur-xl sm:p-8">
+              <div className="flex items-center justify-between gap-3 border-b border-slate-800/80 pb-5">
                 <div>
-                  <h2 className="text-xl font-extrabold text-slate-900">How Free CBT Mocks Work</h2>
-                  <p className="mt-1 text-xs sm:text-sm text-slate-500">
+                  <h2 className="text-xl font-extrabold text-[#F5F6FA]">How Free CBT Mocks Work</h2>
+                  <p className="mt-1 text-xs sm:text-sm text-[#94A3B8]">
                     4-step process to attempt your {activeExam.label} diagnostic test.
                   </p>
                 </div>
-                <span className={`rounded-lg px-3 py-1 text-xs font-bold uppercase tracking-wider ${theme.guideBadge}`}>
+                <span className={`rounded-lg px-3 py-1 text-xs font-extrabold uppercase tracking-wider ${theme.guideBadge}`}>
                   Guide
                 </span>
               </div>
@@ -170,36 +170,36 @@ export default function FreeMock() {
                   'Instant All India Rank',
                   'Detailed step solutions',
                 ].map((item) => (
-                  <div key={item} className="flex items-center gap-2.5 rounded-xl border border-slate-100 bg-slate-50/80 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-800">
+                  <div key={item} className="flex items-center gap-2.5 rounded-xl border border-slate-800/80 bg-[#070c18]/80 px-3.5 py-2.5 text-xs sm:text-sm font-semibold text-slate-200 backdrop-blur-md">
                     <span className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[11px] font-bold ${theme.checkBg}`}>✓</span>
                     {item}
                   </div>
                 ))}
               </div>
 
-              <ol className="mt-8 space-y-4 border-t border-slate-100 pt-6">
+              <ol className="mt-8 space-y-4 border-t border-slate-800/80 pt-6">
                 {STEPS.map((step, i) => (
                   <li key={step} className="flex items-start gap-4">
-                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#010d1f] text-xs font-extrabold text-white">
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-xs font-extrabold text-white shadow-md shadow-blue-500/20">
                       {i + 1}
                     </span>
-                    <p className="pt-0.5 text-xs sm:text-sm font-medium text-slate-700">{step}</p>
+                    <p className="pt-0.5 text-xs sm:text-sm font-medium text-slate-300">{step}</p>
                   </li>
                 ))}
               </ol>
 
-              <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-slate-100 pt-6">
+              <div className="mt-8 flex flex-wrap items-center gap-3 border-t border-slate-800/80 pt-6">
                 {!user ? (
                   <>
                     <Link
                       to="/signup"
-                      className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ${theme.primaryBtn}`}
+                      className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 ${theme.primaryBtn}`}
                     >
                       Sign up free
                     </Link>
                     <Link
                       to="/student-login"
-                      className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                      className="rounded-full border border-slate-700 bg-[#070c18] px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
                     >
                       Log in
                     </Link>
@@ -208,13 +208,13 @@ export default function FreeMock() {
                   <>
                     <Link
                       to={`/test-series/${freeForExam[0].slug}`}
-                      className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ${theme.primaryBtn}`}
+                      className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 ${theme.primaryBtn}`}
                     >
                       Enroll in free mock
                     </Link>
                     <Link
                       to="/my-tests"
-                      className="rounded-full border border-slate-200 bg-white px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:bg-slate-50"
+                      className="rounded-full border border-slate-700 bg-[#070c18] px-5 py-2.5 text-xs sm:text-sm font-semibold text-slate-200 transition hover:border-slate-500 hover:bg-slate-800"
                     >
                       My Tests
                     </Link>
@@ -222,7 +222,7 @@ export default function FreeMock() {
                 ) : (
                   <Link
                     to={activeExam.catalogTo}
-                    className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-200 ${theme.primaryBtn}`}
+                    className={`rounded-full px-6 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 ${theme.primaryBtn}`}
                   >
                     Browse {activeExam.label} series
                   </Link>
@@ -234,10 +234,10 @@ export default function FreeMock() {
           {/* RIGHT COLUMN: Available Free Mock Series Product */}
           <div className="lg:col-span-2">
             <div className="mb-3 flex items-center justify-between">
-              <p className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              <p className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Available Free {activeExam.label} Series
               </p>
-              <span className={`text-xs font-bold ${theme.accentText}`}>₹0 Tier</span>
+              <span className={`text-xs font-extrabold ${theme.accentText}`}>₹0 Tier</span>
             </div>
 
             {loading ? (
@@ -249,12 +249,12 @@ export default function FreeMock() {
                 ))}
               </div>
             ) : (
-              <div className={`rounded-2xl border ${theme.cardBorder} p-6 text-center shadow-lg transition-all duration-300`}>
+              <div className={`rounded-2xl border ${theme.cardBorder} p-6 text-center shadow-2xl transition-all duration-300`}>
                 <div className={`mx-auto mb-3.5 flex h-10 w-10 items-center justify-center rounded-full border ${theme.badge}`}>
                   <span className="text-base font-extrabold">✦</span>
                 </div>
-                <p className="font-extrabold text-slate-900">No free {activeExam.label} mock series currently available</p>
-                <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">Try our general free diagnostic mock or explore paid series.</p>
+                <p className="font-extrabold text-[#F5F6FA]">No free {activeExam.label} mock series currently available</p>
+                <p className="mt-1.5 text-xs text-[#94A3B8] leading-relaxed">Try our general free diagnostic mock or explore paid series.</p>
                 <div className="mt-5 flex flex-col gap-2.5">
                   <Link
                     to="/test-series/free-diagnostic"
