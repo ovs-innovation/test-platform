@@ -43,6 +43,8 @@ const GOALS = [
     accent: 'border-violet-500 bg-violet-50/80',
     activeRing: 'ring-violet-500/30',
     iconBg: 'bg-violet-600 text-white',
+    disabled: true,
+    badge: 'Coming Soon',
     icon: 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
     classes: [5, 6, 7, 8, 9, 10].map((n) => ({ label: `Class ${n}`, value: String(n) })),
   },
@@ -72,18 +74,27 @@ export default function EdvedumGoalSelector() {
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {GOALS.map((goal) => {
             const isActive = active === goal.id;
+            const isDisabled = goal.disabled;
             return (
               <button
                 key={goal.id}
                 type="button"
-                onClick={() => setActive(goal.id)}
-                className={`rounded-2xl border-2 p-5 text-left transition ${
-                  isActive
-                    ? `${goal.accent} shadow-lg ring-4 ${goal.activeRing}`
-                    : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md'
+                onClick={() => !isDisabled && setActive(goal.id)}
+                disabled={isDisabled}
+                className={`relative rounded-2xl border-2 p-5 text-left transition ${
+                  isDisabled
+                    ? 'border-slate-200 bg-slate-50/70 opacity-80 cursor-not-allowed select-none'
+                    : isActive
+                    ? `${goal.accent} shadow-lg ring-4 ${goal.activeRing} cursor-pointer`
+                    : 'border-slate-200 bg-white hover:border-slate-300 hover:shadow-md cursor-pointer'
                 }`}
               >
-                <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl shadow-sm ${goal.iconBg}`}>
+                {goal.badge && (
+                  <span className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-white shadow-md">
+                    {goal.badge}
+                  </span>
+                )}
+                <span className={`inline-flex h-12 w-12 items-center justify-center rounded-xl shadow-sm ${isDisabled ? 'bg-slate-400 text-white' : goal.iconBg}`}>
                   <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
                     <path strokeLinecap="round" strokeLinejoin="round" d={goal.icon} />
                   </svg>

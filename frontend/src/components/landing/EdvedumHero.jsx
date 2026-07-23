@@ -42,7 +42,7 @@ export default function EdvedumHero() {
       <div
         className="hidden lg:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none"
         style={{
-          backgroundImage: "url('/edvedum/fullwidth-hero-bg.png')",
+          backgroundImage: "url('/edvedum/fullwidth-hero-bg.png?v=12')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
           filter: 'drop-shadow(0 20px 35px rgba(1,13,31,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.18))',
@@ -161,7 +161,7 @@ export default function EdvedumHero() {
               }}
             >
               <img
-                src="/edvedum/fullwidth-hero-bg.png"
+                src="/edvedum/fullwidth-hero-bg.png?v=12"
                 alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
                 className="w-full h-auto max-h-[300px] object-contain mx-auto scale-105"
               />

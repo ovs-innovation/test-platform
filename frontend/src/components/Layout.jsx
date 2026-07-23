@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { NavLink, useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect, useCallback } from 'react';
+import { NavLink, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService } from '../lib/services.js';
@@ -55,15 +55,24 @@ const Icon = ({ name }) => {
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [unread, setUnread] = useState(0);
   const nav = user?.role === 'admin' ? adminNav : candidateNav;
 
-  useEffect(() => {
+  const fetchUnread = useCallback(() => {
     if (user?.role === 'candidate') {
       notificationService.unreadCount().then((c) => setUnread(c)).catch(() => {});
     }
   }, [user]);
+
+  useEffect(() => {
+    fetchUnread();
+    window.addEventListener('notificationStatusChanged', fetchUnread);
+    return () => {
+      window.removeEventListener('notificationStatusChanged', fetchUnread);
+    };
+  }, [fetchUnread, location.pathname]);
 
   const handleLogout = () => {
     logout();
@@ -71,7 +80,7 @@ export default function Layout({ children }) {
   };
 
   const NavItems = () => (
-    <nav className="space-y-1.5 px-3 py-4">
+    <nav className="space-y-1 px-3 py-3">
       {nav.map((item) => (
         <NavLink
           key={item.to}
@@ -79,10 +88,10 @@ export default function Layout({ children }) {
           end={item.to === '/admin'}
           onClick={() => setMobileOpen(false)}
           className={({ isActive }) =>
-            `group flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-bold transition-all duration-200 ${
+            `group flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 ${
               isActive
-                ? 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/20 translate-x-1'
-                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:translate-x-0.5 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white'
+                ? 'bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white shadow-lg shadow-blue-500/25 translate-x-1'
+                : 'text-slate-300 hover:bg-slate-800/70 hover:text-white hover:translate-x-0.5'
             }`
           }
         >
@@ -99,20 +108,24 @@ export default function Layout({ children }) {
   );
 
   const sidebar = (
-    <div className="flex h-full flex-col justify-between">
-      <div>
+    <div className="flex h-full flex-col min-h-0">
+      <div className="shrink-0">
         <Brand />
+      </div>
+      <div className="flex-1 overflow-y-auto min-h-0 space-y-1">
         <NavItems />
       </div>
-      <UserCard user={user} onLogout={handleLogout} />
+      <div className="shrink-0 border-t border-slate-800/80 bg-[#081026]">
+        <UserCard user={user} onLogout={handleLogout} />
+      </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#F5F6FA] dark:bg-slate-950 lg:flex">
+    <div className="min-h-screen bg-gradient-to-br from-[#060a17] via-[#0d1527] to-[#182339] text-slate-100 lg:flex">
       {/* Desktop Floating Sidebar Container */}
       <aside className="hidden w-64 shrink-0 p-4 lg:block">
-        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-3xl border border-slate-200/90 bg-white shadow-xl shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-3xl border border-slate-800/90 bg-[#081026]/95 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden">
           {sidebar}
         </div>
       </aside>
@@ -120,8 +133,8 @@ export default function Layout({ children }) {
       {/* Mobile Drawer Navigation */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-3xl border border-slate-200/90 bg-white p-2 shadow-2xl dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-3xl border border-slate-800/90 bg-[#081026] p-2 shadow-2xl overflow-hidden">
             {sidebar}
           </aside>
         </div>
@@ -129,10 +142,10 @@ export default function Layout({ children }) {
 
       {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200/80 bg-white/85 px-4 sm:px-6 lg:px-8 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/85">
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-800/80 bg-[#070e24]/90 px-4 sm:px-6 lg:px-8 backdrop-blur-md">
           <div className="flex items-center gap-3">
             <button
-              className="rounded-xl border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:text-slate-300 lg:hidden"
+              className="rounded-xl border border-slate-800 p-2 text-slate-300 hover:bg-slate-800 lg:hidden"
               onClick={() => setMobileOpen(true)}
               aria-label="Open menu"
             >
@@ -140,7 +153,7 @@ export default function Layout({ children }) {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div className="hidden lg:block text-xs font-bold uppercase tracking-wider text-slate-400">
+            <div className="hidden lg:block text-xs font-extrabold uppercase tracking-wider text-slate-400">
               {user?.role === 'admin' ? 'Admin Portal' : 'Student Learning Portal'}
             </div>
           </div>
@@ -148,20 +161,20 @@ export default function Layout({ children }) {
           <div className="flex items-center gap-3">
             <Link
               to="/notifications"
-              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-800 bg-[#0b1430] text-slate-300 transition hover:bg-slate-800 hover:text-white"
             >
               <Icon name="bell" />
               {unread > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-rose-500 ring-2 ring-white" />
+                <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-rose-500 ring-2 ring-[#070e24]" />
               )}
             </Link>
-            <div className="h-6 w-px bg-slate-200 dark:bg-slate-800" />
+            <div className="h-6 w-px bg-slate-800" />
             <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-sm font-extrabold text-white shadow-md shadow-blue-500/20">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-sm font-extrabold text-white shadow-md shadow-blue-500/25">
                 {user?.name?.charAt(0)?.toUpperCase() || 'S'}
               </span>
               <div className="hidden sm:block text-left">
-                <p className="text-xs font-extrabold text-slate-900 dark:text-slate-100">{user?.name}</p>
+                <p className="text-xs font-extrabold text-white">{user?.name}</p>
                 <p className="text-[10px] font-semibold text-slate-400 truncate max-w-[140px]">{user?.email}</p>
               </div>
             </div>
@@ -176,11 +189,17 @@ export default function Layout({ children }) {
 
 function Brand() {
   return (
-    <Link to="/" className="flex h-20 items-center gap-3 border-b border-slate-100 px-5 dark:border-slate-800/80 hover:opacity-90 transition-opacity">
-      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto object-contain" />
-      <div>
-        <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">EDVEDUM</span>
-        <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D6EFD]">Student Portal</p>
+    <Link to="/" className="flex h-20 items-center gap-3.5 border-b border-slate-800/80 px-5 hover:opacity-90 transition-opacity">
+      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-12 w-auto shrink-0 object-contain" />
+      <div className="text-left leading-none space-y-1.5">
+        <span className="block font-serif font-black tracking-wider text-white text-base sm:text-lg uppercase">
+          EDVEDUM
+        </span>
+        <div className="flex items-center gap-1 text-[9.5px] font-bold tracking-[0.25em] text-[#60a5fa] uppercase">
+          <span>—</span>
+          <span>STUDENT PORTAL</span>
+          <span>—</span>
+        </div>
       </div>
     </Link>
   );
@@ -188,14 +207,14 @@ function Brand() {
 
 function UserCard({ user, onLogout }) {
   return (
-    <div className="border-t border-slate-100 p-4 dark:border-slate-800/80">
-      <div className="mb-3 rounded-2xl bg-slate-50 p-3.5 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
-        <p className="truncate text-xs font-black text-slate-900 dark:text-slate-100">{user?.name}</p>
+    <div className="p-3.5">
+      <div className="mb-2.5 rounded-2xl bg-[#0b1430] p-3 border border-slate-800">
+        <p className="truncate text-xs font-black text-white">{user?.name}</p>
         <p className="truncate text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Student'}</p>
       </div>
       <button
         onClick={onLogout}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 shadow-xs transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-red-950/40"
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700/80 bg-slate-900/80 py-2 text-xs font-bold text-slate-200 shadow-xs transition hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-400"
       >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />

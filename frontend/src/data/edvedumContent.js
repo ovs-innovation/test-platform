@@ -1,4 +1,4 @@
-export const EDVEDUM_LOGO = '/edvedum/logo.png';
+export const EDVEDUM_LOGO = '/Logo-icon-transparent.png';
 export const EDVEDUM_LOGO_ALT = 'EDVEDUM Academy';
 
 export const COMPANY = {

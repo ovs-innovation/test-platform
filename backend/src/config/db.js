@@ -1,16 +1,29 @@
+import dns from 'node:dns';
 import pg from 'pg';
 import { env } from './env.js';
 
+// Force IPv4 lookup first to prevent Windows getaddrinfo ENOTFOUND errors on Neon PostgreSQL hostnames
+if (dns.setDefaultResultOrder) {
+  dns.setDefaultResultOrder('ipv4first');
+}
+
 const { Pool } = pg;
 
+const customLookup = (hostname, options, callback) => {
+  const cb = typeof options === 'function' ? options : callback;
+  const opts = typeof options === 'object' && options !== null ? { ...options, family: 4 } : { family: 4 };
+  return dns.lookup(hostname, opts, cb);
+};
+
 const poolConfig = env.databaseUrl
-  ? { connectionString: env.databaseUrl }
+  ? { connectionString: env.databaseUrl, lookup: customLookup }
   : {
       host: env.pg.host,
       port: env.pg.port,
       user: env.pg.user,
       password: env.pg.password,
       database: env.pg.database,
+      lookup: customLookup,
     };
 
 // Enable SSL for hosted databases (Neon, RDS, etc.) that require it.

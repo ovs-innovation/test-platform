@@ -32,29 +32,49 @@ export default function Login() {
   };
 
   return (
-    <AuthShell title="Admin sign in" subtitle="Sign in to manage test series, assessments and candidates.">
+    <AuthShell variant="admin" title="Admin sign in" subtitle="Sign in to manage test series, assessments and candidates.">
       <form onSubmit={onSubmit} className="space-y-5">
         {error && (
-          <div className="rounded-lg bg-red-50 px-4 py-3 text-sm font-medium text-red-700">{error}</div>
+          <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm font-medium text-red-300">{error}</div>
         )}
         <div>
-          <label className="label" htmlFor="email">Email address</label>
-          <input id="email" name="email" type="email" autoComplete="email" required
-            className="input" placeholder="admin@company.com" value={form.email}
-            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5" htmlFor="email">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+            placeholder="admin@company.com"
+            value={form.email}
+            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+          />
         </div>
         <div>
-          <label className="label" htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" autoComplete="current-password" required
-            className="input" placeholder="••••••••" value={form.password}
-            onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} />
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5" htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autoComplete="current-password"
+            required
+            className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+            placeholder="••••••••"
+            value={form.password}
+            onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+          />
         </div>
-        <button type="submit" className="btn-primary w-full" disabled={submitting}>
-          {submitting ? <Spinner className="h-4 w-4 text-white" /> : 'Sign in'}
+        <button
+          type="submit"
+          className="w-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.02] disabled:opacity-50"
+          disabled={submitting}
+        >
+          {submitting ? <Spinner className="h-4 w-4 text-white" /> : 'Sign In as Administrator'}
         </button>
       </form>
-      <p className="mt-6 text-center text-sm text-slate-500">
-        Candidates access assessments via their unique invitation link.
+      <p className="mt-6 text-center text-xs text-slate-400">
+        Candidates access assessments via their unique invitation link or student portal login.
       </p>
     </AuthShell>
   );

@@ -195,79 +195,79 @@ export default function CandidateDashboard() {
       {/* 3. 6 METRIC DASHBOARD WIDGETS WITH Mini Charts & Gradients */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
         {/* Widget 1: Invited & Total Mocks */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-50 text-base text-[#0D6EFD] dark:bg-blue-950">📚</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/20 text-base text-[#60a5fa]">📚</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-slate-900 dark:text-white tabular-nums">{stats.totalInvited || 0}</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">Enrolled Tests</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-500 to-[#0D6EFD]" style={{ width: `${Math.min(100, ((stats.completed || 0) / (stats.totalInvited || 1)) * 100)}%` }} />
+          <p className="mt-3 text-2xl font-black text-white tabular-nums">{stats.totalInvited || 0}</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">Enrolled Tests</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-blue-500 to-[#2563eb]" style={{ width: `${Math.min(100, ((stats.completed || 0) / (stats.totalInvited || 1)) * 100)}%` }} />
           </div>
         </div>
 
         {/* Widget 2: Pending Action Mocks */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-amber-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-amber-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 text-base text-amber-600 dark:bg-amber-950">⏳</span>
-            <span className="rounded-full bg-amber-100 px-1.5 py-0.5 text-[9px] font-black text-amber-800 dark:bg-amber-900 dark:text-amber-200">Active</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-500/20 text-base text-amber-400">⏳</span>
+            <span className="rounded-full bg-amber-500/20 px-1.5 py-0.5 text-[9px] font-black text-amber-300 border border-amber-500/30">Active</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-slate-900 dark:text-white tabular-nums">{stats.pending || 0}</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">Pending Tests</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+          <p className="mt-3 text-2xl font-black text-white tabular-nums">{stats.pending || 0}</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">Pending Tests</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
             <div className="h-full bg-amber-400" style={{ width: '65%' }} />
           </div>
         </div>
 
         {/* Widget 3: Completed Mocks */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-emerald-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 text-base text-emerald-600 dark:bg-emerald-950">✅</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-500/20 text-base text-emerald-400">✅</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Done</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-slate-900 dark:text-white tabular-nums">{stats.completed || 0}</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">Completed</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+          <p className="mt-3 text-2xl font-black text-white tabular-nums">{stats.completed || 0}</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">Completed</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
             <div className="h-full bg-emerald-500" style={{ width: '100%' }} />
           </div>
         </div>
 
         {/* Widget 4: Pass Rate & Accuracy Ring */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-cyan-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-cyan-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-50 text-base text-cyan-600 dark:bg-cyan-950">🎯</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-500/20 text-base text-cyan-400">🎯</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Accuracy</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{passRate != null ? `${passRate}%` : '—'}</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">Pass Percentage</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-            <div className="h-full bg-cyan-500" style={{ width: `${passRate || 0}%` }} />
+          <p className="mt-3 text-2xl font-black text-cyan-400 tabular-nums">{passRate != null ? `${passRate}%` : '—'}</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">Pass Percentage</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
+            <div className="h-full bg-cyan-400" style={{ width: `${passRate || 0}%` }} />
           </div>
         </div>
 
         {/* Widget 5: Est. AIR Rank Predictor */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-purple-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-purple-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-50 text-base text-purple-600 dark:bg-purple-950">🏆</span>
-            <span className="rounded-full bg-purple-100 px-1.5 py-0.5 text-[9px] font-black text-purple-800 dark:bg-purple-900 dark:text-purple-200">AIR</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-purple-500/20 text-base text-purple-400">🏆</span>
+            <span className="rounded-full bg-purple-500/20 px-1.5 py-0.5 text-[9px] font-black text-purple-300 border border-purple-500/30">AIR</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-purple-600 dark:text-purple-400 tabular-nums">Top 2.5%</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">AIR Predictor</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
-            <div className="h-full bg-purple-500" style={{ width: '92%' }} />
+          <p className="mt-3 text-2xl font-black text-purple-400 tabular-nums">Top 2.5%</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">AIR Predictor</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
+            <div className="h-full bg-purple-400" style={{ width: '92%' }} />
           </div>
         </div>
 
         {/* Widget 6: Practice Streak */}
-        <div className="group rounded-2xl border border-slate-200/90 bg-white p-4 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-rose-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900">
+        <div className="group rounded-2xl border border-slate-800/80 bg-[#0b1430] p-4 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-rose-500/40 hover:bg-[#0e193c]">
           <div className="flex items-center justify-between">
-            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-rose-50 text-base text-rose-600 dark:bg-rose-950">🔥</span>
+            <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-rose-500/20 text-base text-rose-400">🔥</span>
             <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Streak</span>
           </div>
-          <p className="mt-3 text-2xl font-black text-rose-600 dark:text-rose-400 tabular-nums">7 Days</p>
-          <p className="mt-0.5 text-[11px] font-bold text-slate-500 dark:text-slate-400">Continuous Mocks</p>
-          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-100 dark:bg-slate-800 overflow-hidden">
+          <p className="mt-3 text-2xl font-black text-rose-400 tabular-nums">7 Days</p>
+          <p className="mt-0.5 text-[11px] font-bold text-slate-400">Continuous Mocks</p>
+          <div className="mt-2.5 h-1.5 w-full rounded-full bg-slate-800/90 overflow-hidden">
             <div className="h-full bg-rose-500" style={{ width: '85%' }} />
           </div>
         </div>
@@ -278,8 +278,8 @@ export default function CandidateDashboard() {
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <div>
-              <h2 className="text-xl font-black text-slate-900 dark:text-white">Upcoming Scheduled Tests</h2>
-              <p className="text-xs text-slate-500 font-medium">Proctored CBT mock exams scheduled for your enrolled series.</p>
+              <h2 className="text-xl font-black text-white">Upcoming Scheduled Tests</h2>
+              <p className="text-xs text-slate-400 font-medium">Proctored CBT mock exams scheduled for your enrolled series.</p>
             </div>
           </div>
 
@@ -287,32 +287,32 @@ export default function CandidateDashboard() {
             {upcoming.map((a) => (
               <div
                 key={a.id}
-                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-200/90 bg-white p-6 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
+                className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/50"
               >
-                <div className="absolute top-0 right-0 rounded-bl-2xl bg-blue-500/10 border-b border-l border-blue-500/20 px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-[#0D6EFD]">
+                <div className="absolute top-0 right-0 rounded-bl-2xl bg-blue-500/20 border-b border-l border-blue-500/30 px-3 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-[#60a5fa]">
                   Scheduled CBT
                 </div>
 
                 <div className="pr-16">
-                  <span className="inline-flex rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-[#0D6EFD] dark:bg-blue-950 dark:text-blue-300 mb-2">
+                  <span className="inline-flex rounded-full bg-blue-500/20 px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-blue-300 border border-blue-500/30 mb-2">
                     NTA Exam Mode
                   </span>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white group-hover:text-[#0D6EFD] transition-colors">{a.title}</h3>
+                  <h3 className="text-base font-extrabold text-white group-hover:text-[#60a5fa] transition-colors">{a.title}</h3>
                   {a.description && (
-                    <p className="mt-2 text-xs text-slate-500 line-clamp-2 leading-relaxed">{a.description}</p>
+                    <p className="mt-2 text-xs text-slate-400 line-clamp-2 leading-relaxed">{a.description}</p>
                   )}
                 </div>
 
-                <div className="mt-6 border-t border-slate-100 pt-4 dark:border-slate-800 flex items-center justify-between">
+                <div className="mt-6 border-t border-slate-800 pt-4 flex items-center justify-between">
                   <div>
                     <p className="text-[10px] uppercase font-bold text-slate-400">Available From</p>
-                    <p className="text-xs font-extrabold text-slate-800 dark:text-slate-200 mt-0.5">
+                    <p className="text-xs font-extrabold text-slate-200 mt-0.5">
                       {new Date(a.available_from).toLocaleString()}
                     </p>
                   </div>
                   <Link
                     to={`/assessments/${a.id}/instructions`}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-4 py-2 text-xs font-extrabold text-slate-700 transition hover:border-[#0D6EFD] hover:bg-[#0D6EFD] hover:text-white"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/40 bg-blue-500/20 px-4 py-2 text-xs font-extrabold text-blue-300 transition hover:bg-[#2563eb] hover:text-white"
                   >
                     <span>Instructions</span>
                     <span aria-hidden="true">→</span>
@@ -328,21 +328,21 @@ export default function CandidateDashboard() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Pending Mock Tests ({pending.length})</h2>
-            <p className="text-xs text-slate-500 font-medium">Attempt these diagnostic tests to evaluate your subject readiness.</p>
+            <h2 className="text-xl font-black text-white">Pending Mock Tests ({pending.length})</h2>
+            <p className="text-xs text-slate-400 font-medium">Attempt these diagnostic tests to evaluate your subject readiness.</p>
           </div>
           {pending.length > 3 && (
-            <Link to="/assessments" className="text-xs font-extrabold text-[#0D6EFD] hover:underline">
+            <Link to="/assessments" className="text-xs font-extrabold text-[#60a5fa] hover:underline">
               View All Invited Tests →
             </Link>
           )}
         </div>
 
         {pending.length === 0 ? (
-          <div className="rounded-3xl border border-dashed border-slate-200 bg-white p-8 text-center dark:border-slate-800 dark:bg-slate-900">
-            <p className="text-sm font-extrabold text-slate-800 dark:text-slate-200">No pending mock tests</p>
-            <p className="mt-1 text-xs text-slate-500">Enroll in a new test series or request an invite to practice.</p>
-            <Link to="/test-series" className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#0D6EFD] px-6 py-2.5 text-xs font-bold text-white shadow-md">
+          <div className="rounded-3xl border border-dashed border-slate-800 bg-[#0b1430] p-8 text-center">
+            <p className="text-sm font-extrabold text-slate-200">No pending mock tests</p>
+            <p className="mt-1 text-xs text-slate-400">Enroll in a new test series or request an invite to practice.</p>
+            <Link to="/test-series" className="mt-4 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25">
               Browse Test Series
             </Link>
           </div>
@@ -359,11 +359,11 @@ export default function CandidateDashboard() {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl font-black text-slate-900 dark:text-white">Recent Test Results</h2>
-            <p className="text-xs text-slate-500 font-medium">Review detailed solutions, percentile scores, and subject accuracy keys.</p>
+            <h2 className="text-xl font-black text-white">Recent Test Results</h2>
+            <p className="text-xs text-slate-400 font-medium">Review detailed solutions, percentile scores, and subject accuracy keys.</p>
           </div>
           {completed.length > 0 && (
-            <Link to="/analytics" className="text-xs font-extrabold text-[#0D6EFD] hover:underline">
+            <Link to="/analytics" className="text-xs font-extrabold text-[#60a5fa] hover:underline">
               Full Analytics Report →
             </Link>
           )}
@@ -380,7 +380,7 @@ export default function CandidateDashboard() {
             {completed.slice(0, 4).map((r) => (
               <div
                 key={r.attempt_id || r.id}
-                className="group flex flex-col justify-between rounded-3xl border border-slate-200/90 bg-white p-5 shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-slate-300 hover:shadow-md dark:border-slate-800 dark:bg-slate-900"
+                className="group flex flex-col justify-between rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/40"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
@@ -392,18 +392,18 @@ export default function CandidateDashboard() {
                     )}
                   </div>
 
-                  <h3 className="line-clamp-2 text-sm font-extrabold text-slate-900 dark:text-white group-hover:text-[#0D6EFD] transition-colors">
+                  <h3 className="line-clamp-2 text-sm font-extrabold text-white group-hover:text-[#60a5fa] transition-colors">
                     {r.title}
                   </h3>
 
-                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 p-3 dark:bg-slate-800/60">
+                  <div className="mt-4 flex items-center justify-between rounded-2xl bg-[#070e24] p-3 border border-slate-800">
                     <div>
                       <p className="text-[10px] font-bold uppercase tracking-wide text-slate-400">Score</p>
-                      <p className="text-xl font-black text-slate-900 dark:text-white tabular-nums">
+                      <p className="text-xl font-black text-white tabular-nums">
                         {r.percentage != null ? `${r.percentage}%` : '—'}
                       </p>
                     </div>
-                    <div className="h-10 w-10 shrink-0 rounded-full border-4 border-blue-500/20 border-t-[#0D6EFD] flex items-center justify-center text-[11px] font-extrabold text-[#0D6EFD]">
+                    <div className="h-10 w-10 shrink-0 rounded-full border-4 border-blue-500/30 border-t-[#2563eb] flex items-center justify-center text-[11px] font-extrabold text-[#60a5fa]">
                       {r.percentage || 0}%
                     </div>
                   </div>
@@ -412,7 +412,7 @@ export default function CandidateDashboard() {
                 {r.attempt_id && (
                   <Link
                     to={`/results/${r.attempt_id}`}
-                    className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-blue-200 bg-blue-50/70 py-2 text-xs font-bold text-[#0D6EFD] transition hover:bg-[#0D6EFD] hover:text-white dark:border-blue-900 dark:bg-blue-950/50"
+                    className="mt-4 inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-blue-500/30 bg-blue-500/15 py-2 text-xs font-bold text-blue-300 transition hover:bg-[#2563eb] hover:text-white"
                   >
                     <span>Detailed Solutions</span>
                     <span aria-hidden="true">→</span>

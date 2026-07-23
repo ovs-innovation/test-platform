@@ -167,18 +167,18 @@ export function CardLineArt({ className = 'h-full w-full' }) {
 export function EmptyLineArt({ className = 'mx-auto h-36 w-36' }) {
   return (
     <svg className={className} viewBox="0 0 200 200" fill="none" aria-hidden>
-      <circle cx="105" cy="105" r="75" fill={WASH} fillOpacity="0.45" />
+      <circle cx="105" cy="105" r="75" fill="#1e293b" fillOpacity="0.8" />
       <g transform="translate(20, 36) scale(0.55)">
-        <path d="M8 12 H108 V150 H20 C12 150 8 146 8 138 Z" fill="white" stroke={INK} strokeWidth="2.5" />
-        <Line d="M24 40 H88" strokeWidth="2" />
-        <Line d="M24 56 H80" strokeWidth="2" />
-        <Line d="M24 72 H72" strokeWidth="2" />
-        <path d="M40 100 L52 112 L76 88" stroke={ACCENT} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M8 12 H108 V150 H20 C12 150 8 146 8 138 Z" fill="#0b1430" stroke="#3b82f6" strokeWidth="2.5" />
+        <path d="M24 40 H88" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+        <path d="M24 56 H80" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+        <path d="M24 72 H72" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
+        <path d="M40 100 L52 112 L76 88" stroke="#38bdf8" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
       </g>
       <g transform="translate(88, 58) scale(0.45)">
-        <ellipse cx="50" cy="44" rx="20" ry="22" fill="white" stroke={INK} strokeWidth="2.5" />
-        <path d="M34 68 L66 68 L62 98 L38 98 Z" fill="white" stroke={INK} strokeWidth="2.5" />
-        <path d="M42 52 Q50 58 58 52" stroke={INK} strokeWidth="2" strokeLinecap="round" fill="none" />
+        <ellipse cx="50" cy="44" rx="20" ry="22" fill="#070c18" stroke="#60a5fa" strokeWidth="2.5" />
+        <path d="M34 68 L66 68 L62 98 L38 98 Z" fill="#070c18" stroke="#60a5fa" strokeWidth="2.5" />
+        <path d="M42 52 Q50 58 58 52" stroke="#38bdf8" strokeWidth="2" strokeLinecap="round" fill="none" />
       </g>
     </svg>
   );

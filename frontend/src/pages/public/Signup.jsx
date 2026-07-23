@@ -32,22 +32,22 @@ export default function Signup() {
       <form onSubmit={onSubmit} className="space-y-4">
         {error && <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
         <div>
-          <label className="label">Full name</label>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Full name</label>
           <input className="input" required placeholder="e.g. John Doe" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="label">Mobile number</label>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Mobile number</label>
             <input className="input" type="tel" required placeholder="e.g. 9876543210" minLength={10} maxLength={15} value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
           </div>
           <div>
-            <label className="label">Email</label>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Email</label>
             <input className="input" type="email" required placeholder="name@example.com" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} />
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="label">Class</label>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Class</label>
             <select className="input" required value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
               <option value="">Select class</option>
               <option value="Class 11">Class 11</option>
@@ -58,7 +58,7 @@ export default function Signup() {
             </select>
           </div>
           <div>
-            <label className="label">Target Exam</label>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Target Exam</label>
             <select className="input" required value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
               <option value="">Select exam</option>
               <option value="JEE">JEE</option>
@@ -67,7 +67,7 @@ export default function Signup() {
           </div>
         </div>
         <div>
-          <label className="label">Password</label>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-200 mb-1.5">Password</label>
           <input className="input" type="password" minLength={6} required placeholder="At least 6 characters" value={form.password} onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))} />
         </div>
         <button type="submit" className="btn-primary w-full" disabled={loading}>

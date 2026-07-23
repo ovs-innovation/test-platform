@@ -74,13 +74,24 @@ function attachShutdown(server) {
 }
 
 const start = async () => {
-  try {
-    await pool.query('SELECT 1');
+  let dbConnected = false;
+  for (let attempt = 1; attempt <= 5; attempt++) {
+    try {
+      await pool.query('SELECT 1');
+      // eslint-disable-next-line no-console
+      console.log('[db] Connected to PostgreSQL.');
+      dbConnected = true;
+      break;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn(`[db] PostgreSQL connection attempt ${attempt}/5 failed (${err.message}). Retrying in 1s...`);
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+  }
+
+  if (!dbConnected) {
     // eslint-disable-next-line no-console
-    console.log('[db] Connected to PostgreSQL.');
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error('[db] Could not connect to PostgreSQL:', err.message);
+    console.error('[db] Could not connect to PostgreSQL after 5 retries.');
     process.exit(1);
   }
 

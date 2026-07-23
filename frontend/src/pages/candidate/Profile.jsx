@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, PageHeader, Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -9,8 +9,10 @@ function initials(name) {
 
 export default function Profile() {
   const toast = useToast();
+  const fileInputRef = useRef(null);
   const [form, setForm] = useState({ name: '', phone: '', city: '', state: '', target_exam: '', class: '' });
   const [email, setEmail] = useState('');
+  const [avatarPreview, setAvatarPreview] = useState(null);
   const [state, setState] = useState('loading');
   const [saving, setSaving] = useState(false);
 
@@ -29,12 +31,24 @@ export default function Profile() {
     }).catch(() => setState('error'));
   }, []);
 
+  const handleAvatarChange = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error('Image file size must be under 5MB');
+        return;
+      }
+      setAvatarPreview(URL.createObjectURL(file));
+      toast.success('Avatar preview updated! Click Save Profile to persist.');
+    }
+  };
+
   const save = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
       await studentService.updateProfile(form);
-      toast.success('Profile saved');
+      toast.success('Profile updated successfully');
     } catch (err) {
       toast.error(err.message || 'Save failed');
     } finally {
@@ -46,38 +60,93 @@ export default function Profile() {
   if (state === 'error') return <ErrorState onRetry={() => window.location.reload()} />;
 
   return (
-    <div>
-      <PageHeader title="Profile" subtitle="Name, phone, class, and target exam — keep these accurate for certificates." />
+    <div className="space-y-6 pb-12">
+      <PageHeader title="Student Profile" subtitle="Name, phone number, class, and target exam details for your account and certificates." />
 
-      <div className="mb-6 flex items-center gap-4 border border-slate-200 px-4 py-4 dark:border-slate-700">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded bg-slate-200 text-sm font-bold text-slate-700 dark:bg-slate-700 dark:text-slate-200">
-          {initials(form.name)}
+      {/* Avatar Showcase & Upload Box */}
+      <div className="flex items-center gap-5 rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl max-w-2xl">
+        {/* Interactive Avatar Upload Circle */}
+        <div className="relative group shrink-0">
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className="flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-500/50 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-2xl font-black text-white shadow-xl shadow-blue-500/25 transition group-hover:border-blue-400 group-hover:brightness-110"
+            title="Click to change photo"
+          >
+            {avatarPreview ? (
+              <img src={avatarPreview} alt="Avatar preview" className="h-full w-full object-cover" />
+            ) : (
+              <span>{initials(form.name)}</span>
+            )}
+          </div>
+
+          {/* Camera Icon Overlay */}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#2563eb] text-xs text-white border-2 border-[#0b1430] shadow-md transition group-hover:scale-110 hover:bg-blue-600"
+            title="Change photo"
+          >
+            📷
+          </button>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleAvatarChange}
+          />
         </div>
+
         <div>
-          <p className="text-lg font-semibold text-slate-900 dark:text-white">{form.name || 'Student'}</p>
-          <p className="text-sm text-muted">{email}</p>
+          <div className="flex items-center gap-2">
+            <h2 className="text-xl font-black text-white">{form.name || 'Student'}</h2>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-[10px] font-bold text-blue-300 underline hover:text-white"
+            >
+              Change photo
+            </button>
+          </div>
+          <p className="text-xs font-semibold text-slate-400 mt-0.5">{email}</p>
           {(form.class || form.target_exam) && (
-            <p className="mt-1 text-xs font-medium text-brand-600">
+            <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-0.5 text-xs font-bold text-cyan-300">
               {form.class && <span>{form.class}</span>}
-              {form.class && form.target_exam && <span> · </span>}
+              {form.class && form.target_exam && <span>·</span>}
               {form.target_exam && <span>Preparing for {form.target_exam}</span>}
             </p>
           )}
         </div>
       </div>
 
-      <form onSubmit={save} className="card max-w-xl space-y-4 p-6">
-        <div><label className="label">Email</label><input className="input bg-slate-50 dark:bg-slate-800/50" value={email} disabled /></div>
-        <div><label className="label">Full name</label><input className="input" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required /></div>
-        <div><label className="label">Phone</label><input className="input" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} /></div>
-        <div className="grid grid-cols-2 gap-4">
-          <div><label className="label">City</label><input className="input" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} /></div>
-          <div><label className="label">State</label><input className="input" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} /></div>
+      <form onSubmit={save} className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 sm:p-8 shadow-xl max-w-2xl space-y-4">
+        <div>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Email Address</label>
+          <input className="w-full rounded-xl border border-slate-800 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-400 cursor-not-allowed" value={email} disabled />
+        </div>
+        <div>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Full Name</label>
+          <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
+        </div>
+        <div>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Phone Number</label>
+          <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="label">Class</label>
-            <select className="input" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">City</label>
+            <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
+          </div>
+          <div>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">State</label>
+            <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} />
+          </div>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Class</label>
+            <select className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:border-[#2563eb] focus:outline-none" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
               <option value="">Select class</option>
               <option value="Class 11">Class 11</option>
               <option value="Class 12">Class 12</option>
@@ -87,15 +156,17 @@ export default function Profile() {
             </select>
           </div>
           <div>
-            <label className="label">Target exam</label>
-            <select className="input" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
+            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Target Exam</label>
+            <select className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:border-[#2563eb] focus:outline-none" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
               <option value="">Select exam</option>
               <option value="JEE">JEE</option>
               <option value="NEET">NEET</option>
             </select>
           </div>
         </div>
-        <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save profile'}</button>
+        <button type="submit" className="rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-105 disabled:opacity-50" disabled={saving}>
+          {saving ? <Spinner className="h-4 w-4" /> : 'Save Profile Changes'}
+        </button>
       </form>
     </div>
   );

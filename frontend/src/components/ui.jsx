@@ -78,8 +78,8 @@ export function PageHeader({ title, subtitle, actions }) {
   return (
     <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
       <div>
-        <h1 className="page-title">{title}</h1>
-        {subtitle && <p className="page-subtitle">{subtitle}</p>}
+        <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-white opacity-100">{title}</h1>
+        {subtitle && <p className="mt-1 text-xs sm:text-sm font-medium text-slate-300 leading-relaxed opacity-100">{subtitle}</p>}
       </div>
       {actions && <div className="flex flex-wrap gap-2">{actions}</div>}
     </div>
@@ -97,18 +97,18 @@ export function StatCard({ label, value, accent = 'text-slate-900 dark:text-whit
 
 export function EmptyState({ title, message, action, illustration = true }) {
   return (
-    <div className="card flex flex-col items-center justify-center gap-2 p-12 text-center shadow-soft">
+    <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430]/95 backdrop-blur-xl flex flex-col items-center justify-center gap-3 p-8 sm:p-12 text-center shadow-2xl">
       {illustration ? (
-        <EmptyLineArt className="h-40 w-40" />
+        <EmptyLineArt className="h-36 w-36 sm:h-44 sm:w-44" />
       ) : (
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500">
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+        <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-blue-500/30 bg-blue-500/10 text-cyan-300 shadow-lg">
+          <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
           </svg>
         </div>
       )}
-      <h3 className="text-base font-semibold text-slate-800 dark:text-slate-100">{title}</h3>
-      {message && <p className="max-w-sm text-sm text-slate-500 dark:text-slate-400">{message}</p>}
+      <h3 className="text-lg sm:text-xl font-extrabold text-white">{title}</h3>
+      {message && <p className="max-w-md text-xs sm:text-sm text-slate-300 leading-relaxed">{message}</p>}
       {action && <div className="mt-3">{action}</div>}
     </div>
   );
@@ -116,18 +116,27 @@ export function EmptyState({ title, message, action, illustration = true }) {
 
 export function Badge({ children, color = 'slate' }) {
   const colors = {
-    slate: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
-    green: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300',
-    red: 'bg-red-100 text-red-700 dark:bg-red-950 dark:text-red-300',
-    blue: 'bg-brand-100 text-brand-700 dark:bg-brand-950 dark:text-brand-300',
-    amber: 'bg-amber-100 text-amber-700 dark:bg-amber-950 dark:text-amber-300',
+    slate: 'bg-slate-800 text-slate-300 border border-slate-700/60',
+    green: 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30',
+    red: 'bg-rose-500/20 text-rose-300 border border-rose-500/30',
+    blue: 'bg-blue-500/20 text-cyan-300 border border-blue-500/30',
+    amber: 'bg-amber-500/20 text-amber-300 border border-amber-500/30',
   };
-  return <span className={`badge ${colors[color]}`}>{children}</span>;
+  return <span className={`inline-flex items-center rounded-full px-3 py-0.5 text-xs font-bold ${colors[color] || colors.slate}`}>{children}</span>;
 }
 
-export function DataTable({ columns, rows, emptyMessage = 'No data.' }) {
+export function DataTable({ columns, rows, emptyMessage = 'No records available.' }) {
   if (!rows?.length) {
-    return <p className="p-6 text-center text-sm text-muted">{emptyMessage}</p>;
+    return (
+      <div className="p-10 text-center flex flex-col items-center justify-center gap-2.5">
+        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-800 bg-[#070e24] text-slate-400">
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+          </svg>
+        </div>
+        <p className="text-sm font-semibold text-slate-300 max-w-sm leading-relaxed">{emptyMessage}</p>
+      </div>
+    );
   }
   return (
     <div className="overflow-x-auto">

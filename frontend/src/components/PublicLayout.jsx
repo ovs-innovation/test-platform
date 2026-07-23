@@ -20,11 +20,17 @@ export default function PublicLayout() {
             
             {/* Column 1 & 2: Brand Info & Social Icons */}
             <div className="lg:col-span-2">
-              <div className="flex items-center gap-2">
-                <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto object-contain edvedum-logo-glow sm:h-11" />
-                <div>
-                  <p className="font-extrabold tracking-wide text-sm">EDVEDUM Academy</p>
-                  <p className="text-[10px] tracking-[0.2em] text-white/60">— ACADEMY —</p>
+              <div className="flex items-center gap-3">
+                <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto shrink-0 object-contain sm:h-11" />
+                <div className="text-left leading-none space-y-1">
+                  <span className="block font-serif font-black tracking-wider text-white text-base sm:text-lg uppercase">
+                    EDVEDUM
+                  </span>
+                  <div className="flex items-center gap-1 text-[9.5px] sm:text-[10px] font-bold tracking-[0.28em] text-[#C5A059] uppercase">
+                    <span>—</span>
+                    <span>ACADEMY</span>
+                    <span>—</span>
+                  </div>
                 </div>
               </div>
               <p className="mt-2.5 max-w-sm text-[12px] leading-relaxed text-white/60">

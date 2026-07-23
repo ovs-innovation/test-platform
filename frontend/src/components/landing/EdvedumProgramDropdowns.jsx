@@ -41,6 +41,8 @@ export const PROGRAM_SECTIONS = [
     desc: 'Early preparation for future doctors & engineers',
     filter: 'foundation',
     theme: 'foundation',
+    badge: 'Coming Soon',
+    disabled: true,
     icon: 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
   },
   {
@@ -122,30 +124,40 @@ function viewAllLink(section) {
 function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
   const theme = THEME_STYLES[section.theme];
   const options = getDropdownOptions(section);
+  const isDisabled = section.disabled;
 
   return (
     <div className="relative">
       {section.badge && (
-        <span className="absolute -top-3 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#06b6d4] px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-slate-950 shadow-md shadow-cyan-500/20">
-          <span className="h-1.5 w-1.5 rounded-full bg-slate-950 animate-pulse" />
+        <span
+          className={`absolute -top-3 right-4 z-10 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider shadow-md ${
+            isDisabled
+              ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-amber-500/20 border border-amber-400/40'
+              : 'bg-gradient-to-r from-[#00F0FF] to-[#06b6d4] text-slate-950 shadow-cyan-500/20'
+          }`}
+        >
+          <span className={`h-1.5 w-1.5 rounded-full ${isDisabled ? 'bg-white' : 'bg-slate-950'} animate-pulse`} />
           {section.badge}
         </span>
       )}
       <button
         type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-        className={`group relative flex w-full items-center gap-3.5 rounded-2xl border-2 bg-white px-4 py-4 text-left transition-all duration-300 cursor-pointer ${
-          theme.hover
-        } ${
-          isOpen
-            ? `ring-4 ${theme.ring} ${theme.active} scale-[1.02]`
-            : section.badge
-            ? 'border-[#00F0FF]/60 shadow-md shadow-cyan-500/5'
-            : 'border-slate-200/90'
+        onClick={isDisabled ? undefined : onToggle}
+        disabled={isDisabled}
+        aria-disabled={isDisabled}
+        className={`group relative flex w-full items-center gap-3.5 rounded-2xl border-2 bg-white px-4 py-4 text-left transition-all duration-300 ${
+          isDisabled
+            ? 'border-slate-200 bg-slate-50/70 cursor-not-allowed opacity-80 select-none'
+            : `${theme.hover} cursor-pointer ${
+                isOpen
+                  ? `ring-4 ${theme.ring} ${theme.active} scale-[1.02]`
+                  : section.badge
+                  ? 'border-[#00F0FF]/60 shadow-md shadow-cyan-500/5'
+                  : 'border-slate-200/90'
+              }`
         }`}
       >
-        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110 ${theme.icon}`}>
+        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-lg transition-transform duration-300 ${isDisabled ? 'bg-indigo-600/70' : `group-hover:scale-110 ${theme.icon}`}`}>
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d={section.icon} />
           </svg>
@@ -155,22 +167,30 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
           <span className="block text-[12px] text-slate-500">{section.subtitle}</span>
         </span>
         <span className="flex items-center gap-1">
-          <span className="hidden text-[10px] font-bold uppercase tracking-wider text-slate-400 xl:inline">
-            {isOpen ? 'Close' : 'Select'}
-          </span>
-          <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
-            isOpen ? `${theme.border} bg-white shadow-xs` : 'border-slate-200 bg-slate-50 group-hover:border-slate-300 group-hover:bg-white'
-          }`}>
-            <svg
-              className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-slate-900' : 'group-hover:text-slate-600'}`}
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-            </svg>
-          </span>
+          {isDisabled ? (
+            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 border border-amber-300/60">
+              Coming Soon
+            </span>
+          ) : (
+            <>
+              <span className="hidden text-[10px] font-bold uppercase tracking-wider text-slate-400 xl:inline">
+                {isOpen ? 'Close' : 'Select'}
+              </span>
+              <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+                isOpen ? `${theme.border} bg-white shadow-xs` : 'border-slate-200 bg-slate-50 group-hover:border-slate-300 group-hover:bg-white'
+              }`}>
+                <svg
+                  className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-slate-900' : 'group-hover:text-slate-600'}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </span>
+            </>
+          )}
         </span>
       </button>
 

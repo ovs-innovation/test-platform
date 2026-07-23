@@ -44,11 +44,17 @@ function SocialIcon({ type }) {
 
 function EdvedumLogo() {
   return (
-    <div className="flex items-center gap-2.5">
-      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-[3.25rem] w-auto shrink-0 object-contain edvedum-logo-glow sm:h-14" />
-      <div className="text-sm leading-tight">
-        <span className="block font-extrabold tracking-wide text-slate-900">EDVEDUM</span>
-        <span className="block text-[10px] font-medium tracking-[0.25em] text-slate-600">— ACADEMY —</span>
+    <div className="flex items-center gap-3">
+      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 sm:h-11 w-auto shrink-0 object-contain" />
+      <div className="text-left leading-none space-y-1">
+        <span className="block font-serif font-black tracking-wider text-[#0A1F2E] text-base sm:text-lg uppercase">
+          EDVEDUM
+        </span>
+        <div className="flex items-center gap-1 text-[9.5px] sm:text-[10px] font-bold tracking-[0.28em] text-[#C5A059] uppercase">
+          <span>—</span>
+          <span>ACADEMY</span>
+          <span>—</span>
+        </div>
       </div>
     </div>
   );
@@ -197,6 +203,8 @@ export default function PublicHeader() {
                 const links = NAV_MENUS[item.menuKey];
                 const open = openMenu === item.menuKey;
                 const theme = DROPDOWN_STYLES[item.menuKey] || DROPDOWN_STYLES.jee;
+                const isFoundation = item.menuKey === 'foundation';
+
                 return (
                   <div key={item.label} className="relative group">
                     <button
@@ -206,40 +214,58 @@ export default function PublicHeader() {
                         setOpenMenu(open ? null : item.menuKey);
                       }}
                       className={`inline-flex items-center gap-1 text-[13px] font-semibold transition-colors cursor-pointer ${
-                        open ? 'text-[#0D6EFD]' : 'text-slate-700 hover:text-[#0D6EFD]'
+                        isFoundation
+                          ? open
+                            ? 'text-slate-400'
+                            : 'text-slate-500 hover:text-slate-400'
+                          : open
+                          ? 'text-[#0D6EFD]'
+                          : 'text-slate-700 hover:text-[#0D6EFD]'
                       }`}
                     >
                       <span>{item.label}</span>
-                      <svg className={`h-3.5 w-3.5 transition-transform duration-200 text-slate-500 group-hover:text-[#0D6EFD] ${open ? 'rotate-180 text-[#0D6EFD]' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+                      <svg className={`h-3.5 w-3.5 transition-transform duration-200 ${isFoundation ? 'text-slate-400' : 'text-slate-500 group-hover:text-[#0D6EFD]'} ${open ? 'rotate-180 text-[#0D6EFD]' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
                       </svg>
                     </button>
                     {open && (
                       <div
-                        className={`absolute left-0 top-full z-50 mt-2.5 min-w-[210px] overflow-hidden rounded-xl border bg-[#0c1427]/95 p-1.5 shadow-xl backdrop-blur-xl animate-in fade-in slide-in-from-top-1.5 duration-200 ease-out ${theme.topBorder} ${theme.glow}`}
+                        className={`absolute left-0 top-full z-50 mt-2.5 min-w-[220px] overflow-hidden rounded-xl border bg-[#0c1427]/95 p-1.5 shadow-xl backdrop-blur-xl animate-in fade-in slide-in-from-top-1.5 duration-200 ease-out ${theme.topBorder} ${theme.glow}`}
                       >
                         <div className="mb-1.5 px-3 pt-2 pb-1.5 border-b border-[#2A303C]/50">
                           <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
                             {item.label} Target
                           </span>
                         </div>
-                        <div className="space-y-0.5">
-                          {links.map((link) => (
-                            <Link
-                              key={link.to + link.label}
-                              to={link.to}
-                              onClick={() => setOpenMenu(null)}
-                              className={`group/item flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-200 transition-all duration-200 ease-out ${theme.itemHover}`}
-                            >
-                              <svg className={`h-4 w-4 shrink-0 opacity-80 transition-transform duration-200 ease-out group-hover/item:scale-110 ${theme.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
-                              </svg>
-                              <span className="flex-1">{link.label}</span>
-                              <span className="text-slate-500 text-[10px] transition-transform duration-200 ease-out group-hover/item:translate-x-0.5">→</span>
-                            </Link>
-                          ))}
-                        </div>
+                        {isFoundation ? (
+                          <div className="px-3 py-3.5 text-center">
+                            <div className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 text-[10.5px] font-bold text-amber-400 mb-1.5">
+                              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+                              Program Inactive
+                            </div>
+                            <p className="text-[11.5px] leading-relaxed text-slate-400">
+                              Class 6–10 Foundation test series will be available soon.
+                            </p>
+                          </div>
+                        ) : (
+                          <div className="space-y-0.5">
+                            {links.map((link) => (
+                              <Link
+                                key={link.to + link.label}
+                                to={link.to}
+                                onClick={() => setOpenMenu(null)}
+                                className={`group/item flex items-center gap-2.5 rounded-lg px-3 py-2 text-xs font-semibold text-slate-200 transition-all duration-200 ease-out ${theme.itemHover}`}
+                              >
+                                <svg className={`h-4 w-4 shrink-0 opacity-80 transition-transform duration-200 ease-out group-hover/item:scale-110 ${theme.iconColor}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.75">
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5z" />
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0112 20.055a11.952 11.952 0 01-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                </svg>
+                                <span className="flex-1">{link.label}</span>
+                                <span className="text-slate-500 text-[10px] transition-transform duration-200 ease-out group-hover/item:translate-x-0.5">→</span>
+                              </Link>
+                            ))}
+                          </div>
+                        )}
                       </div>
                     )}
                   </div>
@@ -290,7 +316,19 @@ export default function PublicHeader() {
                 item.menuKey ? (
                   <div key={item.label}>
                     <p className="py-2 text-xs font-bold uppercase tracking-wide text-slate-400">{item.label}</p>
-                    {renderMobileLinks(item.menuKey)}
+                    {item.menuKey === 'foundation' ? (
+                      <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-3 my-1">
+                        <div className="flex items-center gap-1.5 text-amber-600 font-bold text-xs">
+                          <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse" />
+                          Coming Soon
+                        </div>
+                        <p className="mt-1 text-xs text-slate-500">
+                          Class 6–10 Foundation test series will be available soon.
+                        </p>
+                      </div>
+                    ) : (
+                      renderMobileLinks(item.menuKey)
+                    )}
                   </div>
                 ) : (
                   <Link

@@ -18,11 +18,20 @@ const seed = async () => {
       );
       const adminId = adminRes.rows[0].id;
 
+      const candidateHash = await hashPassword(env.seed.candidatePassword || 'Candidate@123');
+
       await client.query(
         `INSERT INTO users (name, email, password_hash, role)
-         VALUES ($1, $2, NULL, 'candidate')
-         ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name`,
-        ['Demo Candidate', env.seed.candidateEmail]
+         VALUES ($1, $2, $3, 'candidate')
+         ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, password_hash = EXCLUDED.password_hash`,
+        ['Demo Candidate', env.seed.candidateEmail, candidateHash]
+      );
+
+      await client.query(
+        `INSERT INTO users (name, email, password_hash, role)
+         VALUES ($1, $2, $3, 'candidate')
+         ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, password_hash = EXCLUDED.password_hash`,
+        ['Isha Sharma', 'isha@gmail.com', candidateHash]
       );
 
       const existing = await client.query('SELECT COUNT(*)::int AS c FROM assessments');

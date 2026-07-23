@@ -5,7 +5,7 @@ import { EdvedumSectionHeader } from '../edvedum/EdvedumPlatformUI.jsx';
 
 const STATS = [
   {
-    target: 150,
+    target: 25,
     suffix: '+',
     label: 'Expert faculty',
     icon: GraduationCap,
@@ -13,7 +13,7 @@ const STATS = [
     bgColor: 'bg-blue-50 border-blue-200/80 text-[#0D6EFD]',
   },
   {
-    target: 50000,
+    target: 1000,
     suffix: '+',
     label: 'Students trained',
     icon: Users,
@@ -21,7 +21,7 @@ const STATS = [
     bgColor: 'bg-purple-50 border-purple-200/80 text-[#7C3AED]',
   },
   {
-    target: 1000,
+    target: 50,
     suffix: '+',
     label: 'NEET 2024 selections',
     icon: Trophy,
@@ -29,7 +29,7 @@ const STATS = [
     bgColor: 'bg-cyan-50 border-cyan-200/80 text-[#0891b2]',
   },
   {
-    target: 800,
+    target: 40,
     suffix: '+',
     label: 'JEE 2024 selections',
     icon: Award,
@@ -37,7 +37,7 @@ const STATS = [
     bgColor: 'bg-blue-50 border-blue-200/80 text-[#0D6EFD]',
   },
   {
-    target: 100,
+    target: 5,
     suffix: '+',
     label: 'Study centers',
     icon: Building2,

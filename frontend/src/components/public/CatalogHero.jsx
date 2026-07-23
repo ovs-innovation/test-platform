@@ -32,14 +32,6 @@ const EXAM_TRACKS = [
     borderStyle: 'border-[#7C3AED]/35 hover:border-[#7C3AED] hover:shadow-lg hover:shadow-purple-500/10',
     tagBg: 'bg-purple-500/15 text-[#c084fc] border-purple-400/30',
   },
-  {
-    label: 'Foundation',
-    desc: 'Class 6–10 · early entrance prep',
-    src: '/test-series/foundation.svg',
-    to: '/test-series?filter=foundation',
-    borderStyle: 'border-[#4F46E5]/45 hover:border-[#6366f1] hover:shadow-lg hover:shadow-indigo-500/15',
-    tagBg: 'bg-indigo-500/15 text-[#818cf8] border-indigo-400/30',
-  },
 ];
 
 export default function CatalogHero({ seriesCount = 0 }) {

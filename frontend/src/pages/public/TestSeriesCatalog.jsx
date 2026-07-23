@@ -13,9 +13,10 @@ const FILTERS = [
   { id: 'jee', label: 'JEE' },
   { id: 'neet', label: 'NEET UG' },
   { id: 'neetpg', label: 'NEET PG' },
-  { id: 'foundation', label: 'Foundation' },
   { id: 'featured', label: 'Featured' },
 ];
+
+const isFoundation = (s) => /foundation/i.test(`${s.exam_type || ''} ${s.title || ''}`);
 
 export default function TestSeriesCatalog() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -52,7 +53,11 @@ export default function TestSeriesCatalog() {
 
   useEffect(() => {
     publicService.testSeries()
-      .then((d) => { setList(d.test_series); setState('done'); })
+      .then((d) => {
+        const activeSeries = (d.test_series || []).filter((s) => !isFoundation(s));
+        setList(activeSeries);
+        setState('done');
+      })
       .catch(() => setState('error'));
   }, []);
 
@@ -70,7 +75,6 @@ export default function TestSeriesCatalog() {
     if (filter === 'jee') return /jee/i.test(text);
     if (filter === 'neet') return isNeetUg(text);
     if (filter === 'neetpg') return isNeetPg(text);
-    if (filter === 'foundation') return /foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text);
     if (filter === 'featured') return s.is_featured;
     return true;
   }), [list, filter]);
@@ -82,7 +86,6 @@ export default function TestSeriesCatalog() {
       jee: 0,
       neet: 0,
       neetpg: 0,
-      foundation: 0,
       featured: 0,
     };
     list.forEach((s) => {
@@ -91,7 +94,6 @@ export default function TestSeriesCatalog() {
       if (/jee/i.test(text)) counts.jee++;
       if (isNeetUg(text)) counts.neet++;
       if (isNeetPg(text)) counts.neetpg++;
-      if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text)) counts.foundation++;
       if (s.is_featured) counts.featured++;
     });
     return counts;

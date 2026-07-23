@@ -18,10 +18,11 @@ const issueToken = (user, extra = {}) =>
  */
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  const normalizedEmail = (email || '').trim().toLowerCase();
 
   const result = await query(
-    'SELECT id, name, email, role, password_hash FROM users WHERE email = $1',
-    [email]
+    'SELECT id, name, email, role, password_hash FROM users WHERE LOWER(email) = $1',
+    [normalizedEmail]
   );
   const user = result.rows[0];
 
@@ -83,9 +84,13 @@ export const register = asyncHandler(async (req, res) => {
  */
 export const studentLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password || typeof password !== 'string') {
+    throw ApiError.unauthorized('Invalid email or password');
+  }
+  const normalizedEmail = (email || '').trim().toLowerCase();
   const result = await query(
-    'SELECT id, name, email, role, password_hash FROM users WHERE email = $1 AND role = $2',
-    [email, 'candidate']
+    'SELECT id, name, email, role, password_hash FROM users WHERE LOWER(email) = $1 AND role = $2',
+    [normalizedEmail, 'candidate']
   );
   const user = result.rows[0];
   if (!user?.password_hash) throw ApiError.unauthorized('Invalid email or password');
