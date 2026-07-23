@@ -10,31 +10,41 @@ let transporter;
 
 const getTransporter = () => {
   if (transporter) return transporter;
-  if (!env.smtp.host || !env.smtp.user || !env.smtp.pass) {
-    throw new Error('SMTP is not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS.');
+  const user = (env.smtp.user || '').trim();
+  const pass = (env.smtp.pass || '').trim();
+  if (!user || !pass) {
+    throw new Error('SMTP credentials not set. Ensure SMTP_USER and SMTP_PASS environment variables are configured.');
   }
+
   const host = (env.smtp.host || 'smtp.gmail.com').trim();
-  const isGmail = host === 'smtp.gmail.com' || host.includes('gmail');
-  const port = Number(env.smtp.port) || 465;
+  const isGmail = host === 'smtp.gmail.com' || host.includes('gmail') || user.endsWith('@gmail.com');
 
   const opts = {
-    host: isGmail ? 'smtp.gmail.com' : host,
-    port: isGmail ? 465 : port,
-    secure: isGmail ? true : (env.smtp.secure !== undefined ? env.smtp.secure : port === 465),
-    auth: {
-      user: env.smtp.user,
-      pass: env.smtp.pass,
-    },
+    service: isGmail ? 'gmail' : undefined,
+    host: isGmail ? undefined : host,
+    port: isGmail ? 465 : (Number(env.smtp.port) || 465),
+    secure: isGmail ? true : (env.smtp.secure !== undefined ? env.smtp.secure : true),
+    auth: { user, pass },
     tls: {
-      rejectUnauthorized: false, // Prevents TLS connection failure on cloud server environments
+      rejectUnauthorized: false,
     },
-    connectionTimeout: 8000,
-    greetingTimeout: 8000,
-    socketTimeout: 10000,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 15000,
   };
 
   transporter = nodemailer.createTransport(opts);
   return transporter;
+};
+
+const getFromAddress = () => {
+  if (env.smtp.from && !env.smtp.from.includes('noreply@edvedum.com')) {
+    return env.smtp.from;
+  }
+  if (env.smtp.user) {
+    return `EDVEDUM Academy <${env.smtp.user}>`;
+  }
+  return env.smtp.from || 'EDVEDUM Academy <noreply@edvedum.com>';
 };
 
 export const verifySmtpConnection = async () => {
@@ -50,8 +60,10 @@ export const verifySmtpConnection = async () => {
 
 export const sendEmail = async ({ to, subject, html, text }) => {
   const tx = getTransporter();
+  const from = getFromAddress();
+
   const sendMailPromise = tx.sendMail({
-    from: env.smtp.from,
+    from,
     to,
     subject,
     html,
@@ -59,7 +71,7 @@ export const sendEmail = async ({ to, subject, html, text }) => {
   });
 
   const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error('SMTP timeout: Mail server took longer than 8s to respond')), 8000)
+    setTimeout(() => reject(new Error('SMTP timeout: Mail server took longer than 10s to respond')), 10000)
   );
 
   const info = await Promise.race([sendMailPromise, timeoutPromise]);
