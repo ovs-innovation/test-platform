@@ -11,13 +11,9 @@ export default function StudentLogin() {
   const location = useLocation();
   const [loginMode, setLoginMode] = useState('email'); // 'email' or 'otp'
   const [form, setForm] = useState({ email: '', password: '' });
-<<<<<<< HEAD
   const [identifier, setIdentifier] = useState('');
-=======
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
-  const [phone, setPhone] = useState('');
->>>>>>> 7ea9fced40604bf0fa31347aa07bbbdcfa2424d9
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [sentToEmail, setSentToEmail] = useState('');
@@ -48,14 +44,10 @@ export default function StudentLogin() {
     try {
       const res = await sendLoginOtp({ identifier });
       setOtpSent(true);
-<<<<<<< HEAD
-      setSentToEmail(res.message || 'OTP sent to your email address!');
-      toast.success(res.message || 'OTP sent to your email address!');
-      if (res.devOtp) {
-=======
-      toast.success('OTP sent to your mobile number!');
+      const msg = res?.message || 'OTP sent successfully!';
+      setSentToEmail(msg);
+      toast.success(msg);
       if (res?.devOtp) {
->>>>>>> 7ea9fced40604bf0fa31347aa07bbbdcfa2424d9
         setDevOtp(res.devOtp);
       }
     } catch (err) {
@@ -100,18 +92,11 @@ export default function StudentLogin() {
         </button>
         <button
           type="button"
-<<<<<<< HEAD
-          className={`flex-1 pb-3 text-sm font-semibold border-b-2 text-center transition-all ${loginMode === 'otp'
-              ? 'border-brand-600 text-brand-600'
-              : 'border-transparent text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200'
-            }`}
-=======
           className={`flex-1 pb-3 text-xs sm:text-sm font-semibold border-b-2 text-center transition-all cursor-pointer ${
-            loginMode === 'mobile'
+            loginMode === 'otp'
               ? 'border-[#00F0FF] text-[#00F0FF]'
               : 'border-transparent text-slate-400 hover:text-slate-200'
           }`}
->>>>>>> 7ea9fced40604bf0fa31347aa07bbbdcfa2424d9
           onClick={() => {
             setLoginMode('otp');
             setError('');
@@ -209,34 +194,16 @@ export default function StudentLogin() {
           {!otpSent ? (
             <form onSubmit={onSendOtp} className="space-y-5">
               <div>
-<<<<<<< HEAD
-                <label className="label">Mobile number or Email</label>
-                <input className="input" type="text" required placeholder="e.g. 9876543210 or name@example.com" value={identifier} onChange={(e) => setIdentifier(e.target.value)} />
-                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">An OTP code will be sent to your registered email address.</p>
-              </div>
-              <button type="submit" className="btn-primary w-full" disabled={loading}>
-                {loading ? 'Sending OTP…' : 'Send OTP to Email'}
-              </button>
-            </form>
-          ) : (
-            <form onSubmit={onVerifyOtp} className="space-y-4">
-              <div className="rounded-lg bg-emerald-50 dark:bg-emerald-950/20 px-4 py-3 text-xs text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/40">
-                {sentToEmail || 'OTP code sent to your registered email address.'}
-              </div>
-
-=======
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
-                  Mobile Number
+                  Mobile Number or Email
                 </label>
                 <input
                   className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-                  type="tel"
+                  type="text"
                   required
-                  placeholder="e.g. 9876543210"
-                  minLength={10}
-                  maxLength={15}
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="e.g. 9876543210 or name@example.com"
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
                 />
               </div>
               <button
@@ -249,7 +216,10 @@ export default function StudentLogin() {
             </form>
           ) : (
             <form onSubmit={onVerifyOtp} className="space-y-5">
->>>>>>> 7ea9fced40604bf0fa31347aa07bbbdcfa2424d9
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-400">
+                {sentToEmail || 'OTP code sent successfully.'}
+              </div>
+
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
                   Enter 6-Digit OTP
@@ -266,15 +236,6 @@ export default function StudentLogin() {
                 />
               </div>
 
-<<<<<<< HEAD
-              <button type="submit" className="btn-primary w-full" disabled={loading}>
-                {loading ? 'Verifying OTP…' : 'Verify & Log in'}
-              </button>
-
-              <div className="text-center">
-                <button type="button" className="text-xs text-slate-500 hover:text-brand-600 hover:underline" onClick={() => { setOtpSent(false); setOtp(''); setSentToEmail(''); }}>
-                  Change Email or Mobile
-=======
               {devOtp && (
                 <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs text-blue-300">
                   <span className="font-bold text-blue-400">Testing code:</span> {devOtp}
@@ -297,10 +258,10 @@ export default function StudentLogin() {
                     setOtpSent(false);
                     setDevOtp('');
                     setOtp('');
+                    setSentToEmail('');
                   }}
                 >
-                  ← Change mobile number
->>>>>>> 7ea9fced40604bf0fa31347aa07bbbdcfa2424d9
+                  ← Change mobile number or email
                 </button>
               </div>
             </form>
@@ -326,3 +287,4 @@ export default function StudentLogin() {
     </AuthShell>
   );
 }
+
