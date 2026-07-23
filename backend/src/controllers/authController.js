@@ -90,12 +90,14 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
 
   let emailSent = true;
   let devOtpVal = null;
+  let emailErrorMsg = null;
   try {
     await sendOtpEmail(normalizedEmail, otp);
   } catch (err) {
     emailSent = false;
+    emailErrorMsg = err.message || String(err);
     // eslint-disable-next-line no-console
-    console.warn(`[email] Signup OTP email failed for ${normalizedEmail}: ${err.message}`);
+    console.warn(`[email] Signup OTP email failed for ${normalizedEmail}: ${emailErrorMsg}`);
     devOtpVal = otp;
   }
 
@@ -105,6 +107,7 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
       : 'Could not send verification email directly to your inbox. Please check your email address or try again.',
     emailSent,
     expiresInMinutes: env.otpExpiresMinutes,
+    ...(!emailSent ? { errorDetail: emailErrorMsg } : {}),
     ...(!emailSent && !env.isProd ? { devOtp: devOtpVal } : {}),
   });
 });

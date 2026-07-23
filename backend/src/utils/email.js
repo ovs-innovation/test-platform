@@ -24,6 +24,7 @@ const getTransporter = () => {
     host,
     port,
     secure,
+    requireTLS: port === 587,
     auth: { user, pass },
     tls: {
       rejectUnauthorized: false,
