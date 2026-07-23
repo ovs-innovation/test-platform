@@ -20,6 +20,11 @@ export default function AdminCandidates() {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [candidateToDelete, setCandidateToDelete] = useState(null);
   
+  // Block/Unblock confirm modal states
+  const [blockConfirmOpen, setBlockConfirmOpen] = useState(false);
+  const [candidateToBlock, setCandidateToBlock] = useState(null);
+  const [blockActionLoading, setBlockActionLoading] = useState(false);
+  
   // Form states
   const [form, setForm] = useState({
     name: '',
@@ -77,6 +82,33 @@ export default function AdminCandidates() {
   const handleDeleteClick = (c) => {
     setCandidateToDelete(c);
     setDeleteConfirmOpen(true);
+  };
+
+  const handleBlockClick = (c) => {
+    setCandidateToBlock(c);
+    setBlockConfirmOpen(true);
+  };
+
+  const handleConfirmToggleBlock = async () => {
+    if (!candidateToBlock) return;
+    setBlockActionLoading(true);
+    const newStatus = !candidateToBlock.is_blocked;
+    try {
+      await adminService.toggleBlockCandidate(candidateToBlock.id, newStatus);
+      toast.success(
+        newStatus
+          ? `Student "${candidateToBlock.name}" has been blocked.`
+          : `Student "${candidateToBlock.name}" has been unblocked.`
+      );
+      setCandidates((prev) =>
+        prev.map((c) => (c.id === candidateToBlock.id ? { ...c, is_blocked: newStatus } : c))
+      );
+      setBlockConfirmOpen(false);
+    } catch (err) {
+      toast.error(err.message || 'Failed to update student block status');
+    } finally {
+      setBlockActionLoading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -147,6 +179,7 @@ export default function AdminCandidates() {
               <thead className="bg-slate-50">
                 <tr>
                   <Th>Student</Th>
+                  <Th>Status</Th>
                   <Th>Contact Details</Th>
                   <Th>Academic Profile</Th>
                   <Th>Exam Attempts</Th>
@@ -167,6 +200,19 @@ export default function AdminCandidates() {
                           <p className="text-xs text-slate-400">ID: #{c.id}</p>
                         </div>
                       </div>
+                    </Td>
+                    <Td>
+                      {c.is_blocked ? (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">
+                          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                          Blocked
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                          Active
+                        </span>
+                      )}
                     </Td>
                     <Td>
                       <p className="text-slate-700 font-medium">{c.email}</p>
@@ -210,6 +256,26 @@ export default function AdminCandidates() {
                           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
                           </svg>
+                        </button>
+                        <button
+                          type="button"
+                          className={`btn-secondary !p-1.5 ${
+                            c.is_blocked
+                              ? 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50'
+                              : 'text-amber-600 hover:text-amber-700 hover:bg-amber-50'
+                          }`}
+                          onClick={() => handleBlockClick(c)}
+                          title={c.is_blocked ? 'Unblock Student' : 'Block Student'}
+                        >
+                          {c.is_blocked ? (
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                          ) : (
+                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                            </svg>
+                          )}
                         </button>
                         <button
                           type="button"
@@ -403,6 +469,54 @@ export default function AdminCandidates() {
               }}
             >
               Permanently Delete
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        open={blockConfirmOpen}
+        onClose={() => setBlockConfirmOpen(false)}
+        title={candidateToBlock?.is_blocked ? 'Unblock Student' : 'Block Student'}
+        size="sm"
+      >
+        <div className="text-center">
+          <div className={`mx-auto flex h-12 w-12 items-center justify-center rounded-full ${
+            candidateToBlock?.is_blocked ? 'bg-emerald-100 dark:bg-emerald-950' : 'bg-amber-100 dark:bg-amber-950'
+          }`}>
+            {candidateToBlock?.is_blocked ? (
+              <svg className="h-6 w-6 text-emerald-600 dark:text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            ) : (
+              <svg className="h-6 w-6 text-amber-600 dark:text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+            )}
+          </div>
+          <h3 className="mt-4 text-base font-semibold text-slate-900 dark:text-white">
+            {candidateToBlock?.is_blocked ? 'Unblock Student Account?' : 'Block Student Account?'}
+          </h3>
+          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+            Are you sure you want to {candidateToBlock?.is_blocked ? 'unblock' : 'block'} student{' '}
+            <strong className="font-bold text-slate-800 dark:text-slate-200">"{candidateToBlock?.name}"</strong>?
+          </p>
+          {!candidateToBlock?.is_blocked && (
+            <div className="mt-3 rounded-lg bg-amber-50 p-3 text-left text-xs text-amber-800 dark:bg-amber-950/30 dark:text-amber-300">
+              <strong>Impact:</strong> When blocked, this student will not be able to log in, request OTPs, or access any test assessments until unblocked.
+            </div>
+          )}
+          <div className="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-4">
+            <button type="button" className="btn-secondary text-sm" onClick={() => setBlockConfirmOpen(false)}>
+              Cancel
+            </button>
+            <button
+              type="button"
+              className={candidateToBlock?.is_blocked ? 'btn-primary border-transparent bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition' : 'btn-primary border-transparent bg-amber-600 hover:bg-amber-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition'}
+              onClick={handleConfirmToggleBlock}
+              disabled={blockActionLoading}
+            >
+              {blockActionLoading ? 'Processing…' : candidateToBlock?.is_blocked ? 'Unblock Student' : 'Block Student'}
             </button>
           </div>
         </div>

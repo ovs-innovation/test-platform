@@ -7,6 +7,7 @@ import { signToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
 import { sendOtpEmail, sendEmail } from '../utils/email.js';
 import { env } from '../config/env.js';
+import { getFirebaseAdminAuth } from '../utils/firebase.js';
 
 const publicUser = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role });
 
@@ -43,23 +44,127 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 /**
+ * POST /api/auth/otp/send-signup
+ */
+export const sendSignupOtp = asyncHandler(async (req, res) => {
+  const { email, phone } = req.body;
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  if (!normalizedEmail) throw ApiError.badRequest('Email is required');
+
+  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [normalizedEmail]);
+  if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
+
+  if (phone) {
+    const cleanPhone = phone.replace(/\D/g, '');
+    const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
+    const existingPhone = await query(
+      `SELECT user_id FROM student_profiles WHERE phone = $1 OR (phone IS NOT NULL AND length(phone) >= 10 AND RIGHT(phone, 10) = $2)`,
+      [phone, last10]
+    );
+    if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
+  }
+
+  const recentRes = await query(
+    `SELECT COUNT(*)::int AS c FROM otp_verifications
+     WHERE LOWER(email) = LOWER($1) AND purpose = 'student_signup'
+       AND created_at > NOW() - ($2 || ' minutes')::interval`,
+    [normalizedEmail, env.otpResendWindowMinutes]
+  );
+  const limitThreshold = env.isProd ? env.otpResendLimit : 50;
+  if (recentRes.rows[0].c >= limitThreshold) {
+    throw ApiError.tooManyRequests(
+      `Too many OTP requests. Wait ${env.otpResendWindowMinutes} minutes before requesting again.`
+    );
+  }
+
+  const otp = generateOtp();
+  const otpHash = await hashOtp(otp);
+  const expiresAt = new Date(Date.now() + env.otpExpiresMinutes * 60 * 1000);
+
+  await query(
+    `INSERT INTO otp_verifications (email, phone, otp_hash, purpose, expires_at)
+     VALUES ($1, $2, $3, 'student_signup', $4)`,
+    [normalizedEmail, phone || '', otpHash, expiresAt]
+  );
+
+  let emailSent = true;
+  let devOtpVal = null;
+  try {
+    await sendOtpEmail(normalizedEmail, otp);
+  } catch (err) {
+    emailSent = false;
+    // eslint-disable-next-line no-console
+    console.warn(`[email] Signup OTP email failed for ${normalizedEmail}: ${err.message}`);
+    devOtpVal = otp;
+  }
+
+  res.json({
+    message: emailSent
+      ? `Verification code sent to your email (${normalizedEmail})`
+      : 'Could not send email directly — use the code shown below to complete registration.',
+    emailSent,
+    expiresInMinutes: env.otpExpiresMinutes,
+    ...(devOtpVal ? { devOtp: devOtpVal } : {}),
+  });
+});
+
+/**
  * POST /api/auth/register  (student)
  */
 export const register = asyncHandler(async (req, res) => {
-  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+  const { name, email, password, phone, class: studentClass, target_exam, otp } = req.body;
+  const normalizedEmail = (email || '').trim().toLowerCase();
 
-  const existingEmail = await query('SELECT id FROM users WHERE email = $1', [email]);
+  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [normalizedEmail]);
   if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
 
-  const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1', [phone]);
+  const cleanPhone = (phone || '').replace(/\D/g, '');
+  const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
+  const existingPhone = await query(
+    `SELECT user_id FROM student_profiles WHERE phone = $1 OR (length(phone) >= 10 AND RIGHT(phone, 10) = $2)`,
+    [phone, last10]
+  );
   if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
 
-  const password_hash = await hashPassword(password);
+  // Verify OTP if provided
+  if (otp) {
+    const otpRes = await query(
+      `SELECT * FROM otp_verifications
+       WHERE LOWER(email) = LOWER($1) AND purpose = 'student_signup' AND verified_at IS NULL AND expires_at > NOW()
+       ORDER BY created_at DESC LIMIT 1`,
+      [normalizedEmail]
+    );
+    const record = otpRes.rows[0];
+    if (!record) {
+      throw ApiError.badRequest('Verification OTP code has expired or does not exist. Please request a new code.');
+    }
+
+    const valid = await verifyOtp(otp, record.otp_hash);
+    if (!valid) {
+      const attempts = record.verify_attempts + 1;
+      await query('UPDATE otp_verifications SET verify_attempts = $1 WHERE id = $2', [attempts, record.id]);
+      const remaining = env.otpMaxVerifyAttempts - attempts;
+      if (remaining <= 0) {
+        await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);
+        throw ApiError.tooManyRequests('Too many failed OTP attempts. Request a new verification code.');
+      }
+      throw ApiError.badRequest(`Invalid verification code. ${remaining} attempt(s) remaining.`);
+    }
+
+    await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
+  }
+
+  let password_hash = null;
+  if (password && password.trim().length >= 6) {
+    password_hash = await hashPassword(password);
+  } else {
+    password_hash = await hashPassword(crypto.randomBytes(16).toString('hex'));
+  }
 
   const user = await withTransaction(async (client) => {
     const result = await client.query(
       `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role`,
-      [name, email, password_hash]
+      [name, normalizedEmail, password_hash]
     );
     const u = result.rows[0];
 
@@ -89,11 +194,14 @@ export const studentLogin = asyncHandler(async (req, res) => {
   }
   const normalizedEmail = (email || '').trim().toLowerCase();
   const result = await query(
-    'SELECT id, name, email, role, password_hash FROM users WHERE LOWER(email) = $1 AND role = $2',
+    'SELECT id, name, email, role, password_hash, is_blocked FROM users WHERE LOWER(email) = $1 AND role = $2',
     [normalizedEmail, 'candidate']
   );
   const user = result.rows[0];
   if (!user?.password_hash) throw ApiError.unauthorized('Invalid email or password');
+  if (user.is_blocked) {
+    throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
+  }
   const ok = await comparePassword(password, user.password_hash);
   if (!ok) throw ApiError.unauthorized('Invalid email or password');
   res.json({ token: issueToken(user), user: publicUser(user) });
@@ -255,27 +363,51 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
  * POST /api/auth/otp/send-login
  */
 export const sendLoginOtp = asyncHandler(async (req, res) => {
-  const { phone } = req.body;
+  const inputVal = (req.body.identifier || req.body.phone || req.body.email || '').trim();
+  if (!inputVal) throw ApiError.badRequest('Mobile number or Email is required');
 
-  const candidateRes = await query(
-    `SELECT u.id, u.name, u.email, u.role
-     FROM users u
-     JOIN student_profiles sp ON sp.user_id = u.id
-     WHERE sp.phone = $1 AND u.role = 'candidate'`,
-    [phone]
-  );
+  const isEmail = inputVal.includes('@');
+  const cleanPhone = inputVal.replace(/\D/g, '');
+  const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
+
+  let candidateRes;
+  if (isEmail) {
+    candidateRes = await query(
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+       FROM users u
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE LOWER(u.email) = LOWER($1) AND u.role = 'candidate'`,
+      [inputVal]
+    );
+  } else {
+    candidateRes = await query(
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+       FROM users u
+       JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE (sp.phone = $1 OR (sp.phone IS NOT NULL AND length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = $2))
+         AND u.role = 'candidate'`,
+      [inputVal, last10]
+    );
+  }
+
   const candidate = candidateRes.rows[0];
   if (!candidate) {
-    throw ApiError.notFound('Mobile number is not registered');
+    throw ApiError.notFound('Account not found with this mobile number or email. Please sign up first.');
   }
+  if (candidate.is_blocked) {
+    throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
+  }
+
+  const targetPhone = candidate.profile_phone || (isEmail ? '' : inputVal);
 
   const recentRes = await query(
     `SELECT COUNT(*)::int AS c FROM otp_verifications
-     WHERE phone = $1 AND purpose = 'student_login'
-       AND created_at > NOW() - ($2 || ' minutes')::interval`,
-    [phone, env.otpResendWindowMinutes]
+     WHERE (email = $1 OR (phone <> '' AND phone = $2)) AND purpose = 'student_login'
+       AND created_at > NOW() - ($3 || ' minutes')::interval`,
+    [candidate.email, targetPhone, env.otpResendWindowMinutes]
   );
-  if (recentRes.rows[0].c >= env.otpResendLimit) {
+  const limitThreshold = env.isProd ? env.otpResendLimit : 50;
+  if (recentRes.rows[0].c >= limitThreshold) {
     throw ApiError.tooManyRequests(
       `Too many OTP requests. Wait ${env.otpResendWindowMinutes} minutes before requesting again.`
     );
@@ -286,18 +418,26 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
   const expiresAt = new Date(Date.now() + env.otpExpiresMinutes * 60 * 1000);
 
   await query(
-    `INSERT INTO otp_verifications (phone, otp_hash, purpose, expires_at)
-     VALUES ($1, $2, 'student_login', $3)`,
-    [phone, otpHash, expiresAt]
+    `INSERT INTO otp_verifications (email, phone, otp_hash, purpose, expires_at)
+     VALUES ($1, $2, $3, 'student_login', $4)`,
+    [candidate.email, targetPhone, otpHash, expiresAt]
   );
 
+  try {
+    await sendOtpEmail(candidate.email, otp);
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error(`[email] Failed to send OTP email to ${candidate.email}:`, err);
+    throw ApiError.internal(`Failed to send OTP to ${candidate.email}. ${err.message}`);
+  }
+
   // eslint-disable-next-line no-console
-  console.log(`[student login otp] Generated OTP for mobile ${phone}: ${otp}`);
+  console.log(`[student login otp] Sent OTP email to candidate ${candidate.email}`);
 
   res.json({
-    message: 'Verification code generated successfully',
+    message: `Verification code sent to your email (${candidate.email})`,
+    emailSent: true,
     expiresInMinutes: env.otpExpiresMinutes,
-    ...(!env.isProd ? { devOtp: otp } : {}),
   });
 });
 
@@ -305,13 +445,47 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
  * POST /api/auth/otp/verify-login
  */
 export const verifyLoginOtp = asyncHandler(async (req, res) => {
-  const { phone, otp } = req.body;
+  const { otp } = req.body;
+  const inputVal = (req.body.identifier || req.body.phone || req.body.email || '').trim();
+  if (!inputVal) throw ApiError.badRequest('Mobile number or Email is required');
+
+  const isEmail = inputVal.includes('@');
+  const cleanPhone = inputVal.replace(/\D/g, '');
+  const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
+
+  let candidateRes;
+  if (isEmail) {
+    candidateRes = await query(
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+       FROM users u
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE LOWER(u.email) = LOWER($1) AND u.role = 'candidate'`,
+      [inputVal]
+    );
+  } else {
+    candidateRes = await query(
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+       FROM users u
+       JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE (sp.phone = $1 OR (sp.phone IS NOT NULL AND length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = $2))
+         AND u.role = 'candidate'`,
+      [inputVal, last10]
+    );
+  }
+  const user = candidateRes.rows[0];
+  if (!user) throw ApiError.notFound('Account not found');
+  if (user.is_blocked) {
+    throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
+  }
+
+  const targetPhone = user.profile_phone || (isEmail ? '' : inputVal);
 
   const otpRes = await query(
     `SELECT * FROM otp_verifications
-     WHERE phone = $1 AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()
+     WHERE (email = $1 OR (phone <> '' AND phone = $2))
+       AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()
      ORDER BY created_at DESC LIMIT 1`,
-    [phone]
+    [user.email, targetPhone]
   );
   const record = otpRes.rows[0];
   if (!record) throw ApiError.badRequest('Invalid or expired verification code');
@@ -334,16 +508,6 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
   }
 
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
-
-  const candidateRes = await query(
-    `SELECT u.id, u.name, u.email, u.role
-     FROM users u
-     JOIN student_profiles sp ON sp.user_id = u.id
-     WHERE sp.phone = $1 AND u.role = 'candidate'`,
-    [phone]
-  );
-  const user = candidateRes.rows[0];
-  if (!user) throw ApiError.notFound('User not found');
 
   res.json({
     token: issueToken(user),
@@ -514,4 +678,77 @@ export const resetPassword = asyncHandler(async (req, res) => {
   await query('UPDATE users SET password_hash = $1 WHERE id = $2', [password_hash, resetRes.rows[0].user_id]);
   await query('UPDATE password_resets SET used_at = NOW() WHERE id = $1', [resetRes.rows[0].id]);
   res.json({ message: 'Password updated successfully' });
+});
+
+/**
+ * POST /api/auth/firebase-login
+ */
+export const firebaseLogin = asyncHandler(async (req, res) => {
+  const { idToken } = req.body;
+
+  const auth = getFirebaseAdminAuth();
+  if (!auth) {
+    throw ApiError.internal('Firebase Authentication is not configured on the server.');
+  }
+
+  let decodedToken;
+  try {
+    decodedToken = await auth.verifyIdToken(idToken);
+  } catch (err) {
+    throw ApiError.unauthorized(`Invalid Firebase ID token: ${err.message}`);
+  }
+
+  const phone_number = decodedToken.phone_number;
+  if (!phone_number) {
+    throw ApiError.badRequest('Only Phone authentication is supported via Firebase OTP login.');
+  }
+
+  const cleanPhone = phone_number.replace(/\D/g, '');
+
+  // Search candidate by full phone number or 10-digit suffix matching (ignoring country code prefix)
+  const candidateRes = await query(
+    `SELECT u.id, u.name, u.email, u.role
+     FROM users u
+     JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE (sp.phone = $1 OR (length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = RIGHT($1, 10)))
+       AND u.role = 'candidate'`,
+    [phone_number]
+  );
+
+  let user = candidateRes.rows[0];
+
+  if (!user) {
+    // Auto-register candidate
+    user = await withTransaction(async (client) => {
+      const randomSuffix = crypto.randomBytes(3).toString('hex');
+      const generatedEmail = `phone_${cleanPhone}_${randomSuffix}@temp-assess.io`;
+
+      const userRes = await client.query(
+        `INSERT INTO users (name, email, password_hash, role)
+         VALUES ($1, $2, NULL, 'candidate')
+         RETURNING id, name, email, role`,
+        ['Student', generatedEmail]
+      );
+      const u = userRes.rows[0];
+
+      await client.query(
+        `INSERT INTO student_profiles (user_id, phone)
+         VALUES ($1, $2)`,
+        [u.id, phone_number]
+      );
+
+      await client.query(
+        `INSERT INTO notifications (user_id, title, body, type)
+         VALUES ($1, $2, $3, 'welcome')`,
+        [u.id, 'Welcome to EDVEDUM Academy', 'Explore test series and start your preparation journey.']
+      );
+
+      return u;
+    });
+  }
+
+  res.json({
+    token: issueToken(user),
+    user: publicUser(user),
+  });
 });

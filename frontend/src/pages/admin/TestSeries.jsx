@@ -170,6 +170,17 @@ export default function AdminTestSeries() {
     }
   };
 
+  const handleToggleActive = async (s) => {
+    const newStatus = !s.is_active;
+    try {
+      await testSeriesService.toggleActive(s.id, newStatus);
+      toast.success(newStatus ? `"${s.title}" activated successfully` : `"${s.title}" deactivated successfully`);
+      setList((prev) => prev.map((item) => (item.id === s.id ? { ...item, is_active: newStatus } : item)));
+    } catch (err) {
+      toast.error(err.message || 'Failed to update test series status');
+    }
+  };
+
   if (state === 'loading') return <LoadingScreen />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 
@@ -177,7 +188,7 @@ export default function AdminTestSeries() {
     <div>
       <PageHeader
         title="Test Series"
-        subtitle="Manage test packs, pricing and linked assessments."
+        subtitle="Manage test packs, pricing, activation status, and linked assessments."
         actions={(
           <div className="flex flex-wrap gap-2">
             <button type="button" className="btn-secondary" onClick={openPdfModal}>Import from PDF</button>
@@ -197,15 +208,30 @@ export default function AdminTestSeries() {
               <img src={getTestSeriesCover(s)} alt="" className="h-full w-full object-cover" />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2 items-center">
                 <Badge color="blue">{s.exam_type}</Badge>
                 {s.is_featured && <Badge color="amber">Featured</Badge>}
-                {!s.is_active && <Badge color="slate">Inactive</Badge>}
+                {s.is_active ? (
+                  <Badge color="green">Active</Badge>
+                ) : (
+                  <Badge color="red">Inactive</Badge>
+                )}
               </div>
               <h2 className="mt-2 font-semibold text-slate-900">{s.title}</h2>
               <p className="text-sm text-slate-500">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`} · {s.linked_tests} tests linked · {s.enrollment_count} enrollments</p>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                className={`btn-secondary text-sm font-medium ${
+                  s.is_active
+                    ? 'text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30'
+                    : 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                }`}
+                onClick={() => handleToggleActive(s)}
+              >
+                {s.is_active ? 'Deactivate' : 'Activate'}
+              </button>
               <button type="button" className="btn-secondary text-sm" onClick={() => {
                 setEditing(s);
                 setForm({

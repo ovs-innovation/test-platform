@@ -38,5 +38,6 @@ export const CSV_TEMPLATE = `question_text,question_type,marks,options,correct_i
 `;
 
 export const BANK_CSV_TEMPLATE = `category,question_text,question_type,marks,options,correct_index,correct_indices,solution
-JavaScript,"What is typeof null?","mcq",1,"object|number|null|undefined",0,,"object"
+Physics,"A particle moves along a circular path of radius R. In one complete revolution, its displacement is:","mcq",4,"2πR|πR|Zero|2R",2,,"In one complete revolution, the initial and final positions coincide, so displacement is zero."
+Chemistry,"What is the pH value of a neutral aqueous solution at 25°C?","mcq",4,"0|7|14|1",1,,"At 25°C, pure water has [H+] = 10^-7 M, giving a pH of 7."
 `;

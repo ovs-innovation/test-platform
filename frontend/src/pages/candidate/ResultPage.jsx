@@ -71,11 +71,19 @@ export default function ResultPage() {
       map[sec].obtained += q.marks_obtained || 0;
 
       // Classify attempts
-      if (q.question_type === 'mcq' || q.question_type === 'multi_select') {
+      if (['mcq', 'single_choice', 'multi_select', 'assertion_reason'].includes(q.question_type)) {
         const isAttempted = q.question_type === 'multi_select'
           ? (q.your_answer && q.your_answer.length > 0)
           : (q.your_answer !== null && q.your_answer !== undefined);
         if (!isAttempted) {
+          map[sec].unattempted += 1;
+        } else if (q.is_correct) {
+          map[sec].correct += 1;
+        } else {
+          map[sec].wrong += 1;
+        }
+      } else if (['integer', 'numerical'].includes(q.question_type)) {
+        if (q.your_answer === null || q.your_answer === undefined || q.your_answer === '') {
           map[sec].unattempted += 1;
         } else if (q.is_correct) {
           map[sec].correct += 1;
@@ -278,6 +286,12 @@ export default function ResultPage() {
                               );
                             })}
                           </ul>
+                        )}
+                        {['integer', 'numerical'].includes(q.question_type) && (
+                          <div className="mt-3 rounded-md bg-slate-50 p-3 text-sm space-y-1">
+                            <p><span className="font-semibold text-slate-700">Your Answer:</span> {q.your_answer != null ? q.your_answer : <span className="text-slate-400">Unattempted</span>}</p>
+                            <p><span className="font-semibold text-emerald-700">Correct Answer:</span> {q.numeric_answer != null ? q.numeric_answer : 'N/A'} {q.question_type === 'numerical' && q.numerical_tolerance ? `(±${q.numerical_tolerance})` : ''}</p>
+                          </div>
                         )}
                         {['coding', 'subjective'].includes(q.question_type) && q.your_answer && (
                           <pre className="mt-3 overflow-x-auto rounded bg-slate-50 p-3 text-xs">{q.your_answer}</pre>

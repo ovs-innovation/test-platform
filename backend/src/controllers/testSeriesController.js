@@ -280,3 +280,17 @@ export const unlinkAssessment = asyncHandler(async (req, res) => {
   await query('DELETE FROM test_series_assessments WHERE test_series_id = $1 AND assessment_id = $2', [id, assessmentId]);
   res.json({ message: 'Test unlinked' });
 });
+
+export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { is_active } = req.body;
+  const result = await query(
+    'UPDATE test_series SET is_active = COALESCE($1, NOT is_active), updated_at = NOW() WHERE id = $2 RETURNING *',
+    [typeof is_active === 'boolean' ? is_active : null, id]
+  );
+  if (!result.rowCount) throw ApiError.notFound('Test series not found');
+  res.json({
+    message: `Test series ${result.rows[0].is_active ? 'activated' : 'deactivated'} successfully`,
+    test_series: result.rows[0],
+  });
+});

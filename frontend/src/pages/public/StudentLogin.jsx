@@ -1,66 +1,25 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AuthShell from '../../components/AuthShell.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
-
-const REMEMBERED_KEY = 'edvedum_remembered_student';
 
 export default function StudentLogin() {
   const { studentLogin, sendLoginOtp, verifyLoginOtp } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
   const location = useLocation();
-
-  const [savedUser, setSavedUser] = useState(() => {
-    try {
-      const raw = localStorage.getItem(REMEMBERED_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
-  });
-
-  const [loginMode, setLoginMode] = useState('email'); // 'email' or 'mobile'
-  const [form, setForm] = useState(() => ({
-    email: savedUser?.email || '',
-    password: '',
-  }));
+  const [loginMode, setLoginMode] = useState('email'); // 'email' or 'otp'
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [identifier, setIdentifier] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(true);
-  const [phone, setPhone] = useState('');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
+  const [sentToEmail, setSentToEmail] = useState('');
   const [devOtp, setDevOtp] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  // Dynamically calculate days until upcoming NEET exam (e.g. NEET 2027 if 2026 passed)
-  const countdownInfo = useMemo(() => {
-    const now = new Date();
-    let targetYear = now.getFullYear();
-    let target = new Date(`${targetYear}-05-03`); // Traditionally 1st Sunday of May
-
-    // If current year's May exam date has passed, target next year's exam
-    if (now > target) {
-      targetYear += 1;
-      target = new Date(`${targetYear}-05-02`);
-    }
-
-    const diff = target - now;
-    const days = Math.max(1, Math.ceil(diff / (1000 * 60 * 60 * 24)));
-    return { examLabel: `NEET ${targetYear}`, days };
-  }, []);
-
-  const onSwitchAccount = () => {
-    try {
-      localStorage.removeItem(REMEMBERED_KEY);
-    } catch {
-      // ignore
-    }
-    setSavedUser(null);
-    setForm({ email: '', password: '' });
-  };
 
   const onEmailSubmit = async (e) => {
     e.preventDefault();
@@ -68,21 +27,6 @@ export default function StudentLogin() {
     setError('');
     try {
       await studentLogin(form);
-
-      // Save user to localStorage if rememberMe is checked
-      if (rememberMe && form.email) {
-        const cleanName = form.email
-          .split('@')[0]
-          .replace(/[._-]/g, ' ')
-          .replace(/\b\w/g, (c) => c.toUpperCase());
-        localStorage.setItem(
-          REMEMBERED_KEY,
-          JSON.stringify({ email: form.email, name: cleanName })
-        );
-      } else if (!rememberMe) {
-        localStorage.removeItem(REMEMBERED_KEY);
-      }
-
       toast.success('Welcome back!');
       navigate(location.state?.from || '/dashboard', { replace: true });
     } catch (err) {
@@ -98,9 +42,11 @@ export default function StudentLogin() {
     setError('');
     setDevOtp('');
     try {
-      const res = await sendLoginOtp({ phone });
+      const res = await sendLoginOtp({ identifier });
       setOtpSent(true);
-      toast.success('OTP sent to your mobile number!');
+      const msg = res?.message || 'OTP sent successfully!';
+      setSentToEmail(msg);
+      toast.success(msg);
       if (res?.devOtp) {
         setDevOtp(res.devOtp);
       }
@@ -116,7 +62,7 @@ export default function StudentLogin() {
     setLoading(true);
     setError('');
     try {
-      await verifyLoginOtp({ phone, otp });
+      await verifyLoginOtp({ identifier, otp });
       toast.success('Welcome back!');
       navigate(location.state?.from || '/dashboard', { replace: true });
     } catch (err) {
@@ -126,83 +72,54 @@ export default function StudentLogin() {
     }
   };
 
-  const pageTitle = savedUser
-    ? `Welcome back, ${savedUser.name || savedUser.email.split('@')[0]} 👋`
-    : 'Student Login';
-
-  const pageSubtitle = savedUser
-    ? `Saved login found for ${savedUser.email}. Enter password to continue.`
-    : 'Access your online test series, mock test results, and rank analytics.';
-
   return (
-    <AuthShell title={pageTitle} subtitle={pageSubtitle}>
+    <AuthShell title="Student Login" subtitle="Access your online test series, mock test results, and rank analytics.">
       {/* Login Mode Switcher */}
-      <div className="grid grid-cols-2 gap-1 rounded-xl border border-slate-700/80 bg-[#070c18] p-1 mb-4">
+      <div className="flex border-b border-slate-700/80 mb-6">
         <button
           type="button"
-          className={`flex items-center justify-center gap-2 rounded-lg py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
+          className={`flex-1 pb-3 text-xs sm:text-sm font-semibold border-b-2 text-center transition-all cursor-pointer ${
             loginMode === 'email'
-              ? 'bg-[#2563eb] text-white shadow-md shadow-blue-500/25 font-bold'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+              ? 'border-[#00F0FF] text-[#00F0FF]'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
           }`}
           onClick={() => {
             setLoginMode('email');
             setError('');
           }}
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          <span>Email & Password</span>
+          Email & Password
         </button>
         <button
           type="button"
-          className={`flex items-center justify-center gap-2 rounded-lg py-2 text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-            loginMode === 'mobile'
-              ? 'bg-[#2563eb] text-white shadow-md shadow-blue-500/25 font-bold'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+          className={`flex-1 pb-3 text-xs sm:text-sm font-semibold border-b-2 text-center transition-all cursor-pointer ${
+            loginMode === 'otp'
+              ? 'border-[#00F0FF] text-[#00F0FF]'
+              : 'border-transparent text-slate-400 hover:text-slate-200'
           }`}
           onClick={() => {
-            setLoginMode('mobile');
+            setLoginMode('otp');
             setError('');
           }}
         >
-          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" />
-          </svg>
-          <span>Mobile & OTP</span>
+          OTP Login
         </button>
       </div>
 
       {error && (
-        <div className="mb-3.5 rounded-xl border border-[#EF4444]/40 bg-[#EF4444]/10 px-3.5 py-2.5 text-xs font-semibold text-[#EF4444]">
+        <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-semibold text-red-400">
           {error}
         </div>
       )}
 
       {loginMode === 'email' ? (
-        <form onSubmit={onEmailSubmit} className="space-y-4">
-          {savedUser && (
-            <div className="flex items-center justify-between rounded-xl border border-blue-500/30 bg-blue-500/10 px-3 py-1.5 text-xs">
-              <span className="text-blue-300 font-medium truncate">
-                Saved account: <strong className="text-white">{savedUser.email}</strong>
-              </span>
-              <button
-                type="button"
-                onClick={onSwitchAccount}
-                className="shrink-0 text-xs font-bold text-[#60a5fa] hover:text-[#2563eb] hover:underline cursor-pointer ml-2"
-              >
-                Switch account
-              </button>
-            </div>
-          )}
-
+        <form onSubmit={onEmailSubmit} className="space-y-6">
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
               Email Address
             </label>
             <input
-              className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/35"
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
               type="email"
               placeholder="student@example.com"
               required
@@ -212,17 +129,17 @@ export default function StudentLogin() {
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300">
+            <div className="flex items-center justify-between mb-2.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
                 Password
               </label>
-              <Link to="/forgot-password" className="text-xs font-semibold text-[#60a5fa] hover:text-[#2563eb] hover:underline">
+              <Link to="/forgot-password" className="text-xs font-semibold text-[#00F0FF] hover:underline">
                 Forgot password?
               </Link>
             </div>
             <div className="relative">
               <input
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] pl-3.5 pr-10 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/35"
+                className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] pl-4 pr-11 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="••••••••"
                 required
@@ -232,7 +149,7 @@ export default function StudentLogin() {
               <button
                 type="button"
                 onClick={() => setShowPassword((v) => !v)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-200 cursor-pointer p-1"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 transition hover:text-slate-200 cursor-pointer p-1"
                 title={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? (
@@ -250,90 +167,77 @@ export default function StudentLogin() {
           </div>
 
           {/* Remember Me Checkbox */}
-          <div className="flex items-center justify-between pt-0.5">
-            <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-semibold text-slate-300">
+          <div className="flex items-center justify-between pt-1.5">
+            <label className="flex items-center gap-2.5 cursor-pointer select-none text-xs font-semibold text-slate-300">
               <input
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="h-3.5 w-3.5 rounded border-slate-700 bg-[#070c18] text-[#2563eb] focus:ring-[#2563eb]/40 accent-[#2563eb]"
+                className="h-4 w-4 rounded border-[#2A354A] bg-[#070c18] text-[#0D6EFD] focus:ring-[#0D6EFD]/40 accent-[#0D6EFD]"
               />
               <span>Remember me on this device</span>
             </label>
           </div>
 
-          <div className="mt-4 pt-1">
+          <div className="mt-6 pt-1">
             <button
               type="submit"
               disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#1e40af] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.005] hover:shadow-blue-500/40 cursor-pointer disabled:opacity-50"
+              className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
             >
               {loading ? 'Signing in…' : 'Log in to Account'}
             </button>
           </div>
         </form>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-5">
           {!otpSent ? (
-            <form onSubmit={onSendOtp} className="space-y-4">
+            <form onSubmit={onSendOtp} className="space-y-5">
               <div>
-                <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                  Registered Mobile Number
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
+                  Mobile Number or Email
                 </label>
-                <div className="flex items-center rounded-xl border border-slate-700/90 bg-[#070c18] transition-all duration-200 focus-within:border-[#2563eb] focus-within:ring-2 focus-within:ring-[#2563eb]/35 overflow-hidden">
-                  <span className="flex items-center gap-1.5 bg-slate-800/60 px-3 py-2.5 text-xs font-bold text-slate-300 border-r border-slate-700/80 select-none shrink-0">
-                    <span>🇮🇳</span>
-                    <span>+91</span>
-                  </span>
-                  <input
-                    className="w-full bg-transparent px-3 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
-                    type="tel"
-                    required
-                    placeholder="Enter 10-digit mobile number"
-                    minLength={10}
-                    maxLength={10}
-                    value={phone}
-                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                  />
-                </div>
-                <p className="mt-1.5 text-[11px] text-slate-400">
-                  Instant passwordless login via 6-digit SMS verification.
-                </p>
+                <input
+                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+                  type="text"
+                  required
+                  placeholder="e.g. 9876543210 or name@example.com"
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
+                />
               </div>
-
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#1e40af] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.005] hover:shadow-blue-500/40 cursor-pointer disabled:opacity-50"
+                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
               >
                 {loading ? 'Sending OTP…' : 'Send Login OTP'}
               </button>
             </form>
           ) : (
-            <form onSubmit={onVerifyOtp} className="space-y-4">
+            <form onSubmit={onVerifyOtp} className="space-y-5">
+              <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-400">
+                {sentToEmail || 'OTP code sent successfully.'}
+              </div>
+
               <div>
-                <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300">
-                    Enter 6-Digit OTP
-                  </label>
-                  <span className="text-xs font-semibold text-[#60a5fa]">
-                    Sent to +91 {phone}
-                  </span>
-                </div>
+                <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
+                  Enter 6-Digit OTP
+                </label>
                 <input
-                  className="w-full rounded-xl border border-[#2563eb]/60 bg-[#070c18] px-3.5 py-2.5 text-center tracking-widest text-base font-extrabold text-white placeholder:text-slate-600 transition-all duration-200 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#2563eb]/40"
+                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-center tracking-widest text-lg font-bold text-white placeholder:text-slate-600 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
                   type="text"
                   required
                   placeholder="000000"
                   minLength={6}
                   maxLength={6}
                   value={otp}
-                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ''))}
+                  onChange={(e) => setOtp(e.target.value)}
                 />
               </div>
 
               {devOtp && (
-                <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-3.5 py-2 text-xs text-blue-300">
+                <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs text-blue-300">
                   <span className="font-bold text-blue-400">Testing code:</span> {devOtp}
                 </div>
               )}
@@ -341,22 +245,23 @@ export default function StudentLogin() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full rounded-xl bg-gradient-to-r from-[#2563eb] via-[#1d4ed8] to-[#1e40af] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.005] hover:shadow-blue-500/40 cursor-pointer disabled:opacity-50"
+                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
               >
                 {loading ? 'Verifying OTP…' : 'Verify & Log in'}
               </button>
 
-              <div className="text-center pt-0.5">
+              <div className="text-center pt-1">
                 <button
                   type="button"
-                  className="text-xs font-semibold text-slate-400 hover:text-[#60a5fa] hover:underline cursor-pointer"
+                  className="text-xs font-semibold text-slate-400 hover:text-[#00F0FF] hover:underline cursor-pointer"
                   onClick={() => {
                     setOtpSent(false);
                     setDevOtp('');
                     setOtp('');
+                    setSentToEmail('');
                   }}
                 >
-                  ← Change mobile number
+                  ← Change mobile number or email
                 </button>
               </div>
             </form>
@@ -364,30 +269,17 @@ export default function StudentLogin() {
         </div>
       )}
 
-      {/* EXAM COUNTDOWN WIDGET (DYNAMIC & CORRECTED) */}
-      <div className="mt-4 flex items-center justify-center">
-        <div className="inline-flex items-center gap-2 rounded-xl border border-blue-500/30 bg-[#070c18] px-3 py-1.5 text-xs font-medium text-slate-300 shadow-sm">
-          <span className="h-1.5 w-1.5 rounded-full bg-[#2563eb] animate-pulse" />
-          <span className="text-slate-400">Target Exam:</span>
-          <span className="font-bold text-[#60a5fa]">{countdownInfo.examLabel}</span>
-          <span className="text-slate-500">in</span>
-          <span className="rounded-md bg-blue-500/15 px-2 py-0.5 text-xs font-extrabold text-[#60a5fa] border border-blue-500/30">
-            {countdownInfo.days} Days
-          </span>
-        </div>
-      </div>
-
-      <div className="mt-4 space-y-2 border-t border-slate-800/80 pt-3.5 text-center">
-        <p className="text-xs text-slate-400">
+      <div className="mt-6 space-y-3 border-t border-[#2A354A]/60 pt-5 text-center">
+        <p className="text-xs sm:text-sm text-slate-400">
           New aspirant?{' '}
-          <Link to="/signup" className="font-bold text-[#60a5fa] hover:text-[#2563eb] hover:underline">
+          <Link to="/signup" className="font-bold text-[#00F0FF] hover:underline">
             Create free account
           </Link>
         </p>
 
         <p className="text-xs text-slate-500">
-          Are you an Administrator?{' '}
-          <Link to="/admin-login" className="font-semibold text-[#60a5fa] hover:text-[#2563eb] hover:underline">
+          Are you an Institute / Center Administrator?{' '}
+          <Link to="/admin-login" className="font-semibold text-[#38bdf8] hover:underline">
             Center Login →
           </Link>
         </p>
@@ -395,3 +287,4 @@ export default function StudentLogin() {
     </AuthShell>
   );
 }
+

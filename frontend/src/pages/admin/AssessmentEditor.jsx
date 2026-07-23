@@ -29,9 +29,19 @@ const TABS = [
   { id: 'invitations', label: 'Invitations' },
 ];
 
+const ASSERTION_REASON_OPTIONS = [
+  'Both Assertion (A) and Reason (R) are true and Reason (R) is the correct explanation of Assertion (A)',
+  'Both Assertion (A) and Reason (R) are true but Reason (R) is NOT the correct explanation of Assertion (A)',
+  'Assertion (A) is true but Reason (R) is false',
+  'Assertion (A) is false but Reason (R) is true',
+];
+
 const QUESTION_TYPES = [
-  { id: 'mcq', label: 'MCQ' },
-  { id: 'multi_select', label: 'Multiple Select' },
+  { id: 'mcq', label: 'Single correct MCQ' },
+  { id: 'multi_select', label: 'Multiple correct MCQ' },
+  { id: 'integer', label: 'Integer type' },
+  { id: 'numerical', label: 'Numerical answer type' },
+  { id: 'assertion_reason', label: 'Assertion-reason type' },
   { id: 'coding', label: 'Coding' },
   { id: 'subjective', label: 'Subjective' },
 ];
@@ -46,10 +56,14 @@ const SECTION_TYPES = [
 const emptyForm = (type) => ({
   question_type: type,
   question_text: '',
-  options: ['', ''],
+  options: type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', ''],
   correct_index: 0,
   correct_indices: [],
-  marks: type === 'coding' ? 4 : type === 'subjective' ? 2 : 1,
+  numeric_answer: type === 'integer' || type === 'numerical' ? 0 : null,
+  numerical_tolerance: type === 'numerical' ? 0.01 : 0,
+  assertion_text: '',
+  reason_text: '',
+  marks: type === 'coding' ? 4 : 4,
   section_id: null,
   starter_code: 'function solution() {\n  \n}\n',
   test_cases: [{ input: '', expected: '' }],
@@ -291,14 +305,22 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   const [form, setForm] = useState(emptyForm('mcq'));
   const [saving, setSaving] = useState(false);
   const [bankOpen, setBankOpen] = useState(false);
-  const [bankCategory, setBankCategory] = useState('JavaScript');
+  const [bankCategory, setBankCategory] = useState('Physics');
   const [bankQuestions, setBankQuestions] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology']);
   const [csvOpen, setCsvOpen] = useState(false);
   const [csvText, setCsvText] = useState(CSV_TEMPLATE);
   const [uploading, setUploading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const fileRef = useRef(null);
+
+  useEffect(() => {
+    questionBankService.categories().then((res) => {
+      if (res?.categories?.length) {
+        setCategories(res.categories.map((c) => c.name));
+      }
+    }).catch(() => {});
+  }, []);
 
   const openAdd = (type) => {
     setEditing(null);
@@ -315,10 +337,14 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text,
-      options: opts.length ? [...opts] : ['', ''],
+      options: opts.length ? [...opts] : (q.question_type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', '']),
       correct_index: q.correct_index ?? 0,
       correct_indices: indices,
-      marks: q.marks,
+      numeric_answer: q.numeric_answer ?? (q.question_type === 'integer' || q.question_type === 'numerical' ? 0 : null),
+      numerical_tolerance: q.numerical_tolerance ?? (q.question_type === 'numerical' ? 0.01 : 0),
+      assertion_text: q.assertion_text || '',
+      reason_text: q.reason_text || '',
+      marks: q.marks ?? 4,
       section_id: q.section_id,
       starter_code: q.starter_code || '',
       test_cases: q.test_cases?.length ? q.test_cases : [{ input: '', expected: '' }],
@@ -339,14 +365,21 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         ...form,
         section_id: form.section_id || null,
         options: form.options.map((o) => o.trim()).filter(Boolean),
+        numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
+        numerical_tolerance: form.numerical_tolerance != null && form.numerical_tolerance !== '' ? Number(form.numerical_tolerance) : 0,
       };
-      if (['mcq', 'multi_select'].includes(payload.question_type) && payload.options.length < 2) {
+      if (['mcq', 'single_choice', 'multi_select'].includes(payload.question_type) && payload.options.length < 2) {
         toast.error('Need at least 2 options');
         setSaving(false);
         return;
       }
       if (payload.question_type === 'multi_select' && (!payload.correct_indices?.length)) {
         toast.error('Select at least one correct answer');
+        setSaving(false);
+        return;
+      }
+      if ((payload.question_type === 'integer' || payload.question_type === 'numerical') && (payload.numeric_answer === null || Number.isNaN(payload.numeric_answer))) {
+        toast.error('Please enter a valid numeric answer');
         setSaving(false);
         return;
       }
@@ -487,7 +520,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         <h3 className="mb-3 font-semibold text-slate-900">Question bank</h3>
         <p className="mb-4 text-sm text-slate-500">Import pre-built questions by category.</p>
         <div className="space-y-2">
-          {['Aptitude', 'JavaScript', 'React', 'HTML', 'CSS', 'Node.js'].map((cat) => (
+          {(categories.length ? categories : ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology']).map((cat) => (
             <div key={cat} className="flex gap-2">
               <button type="button" className="btn-secondary flex-1 justify-start text-sm" onClick={() => loadBank(cat)}>
                 {cat}
@@ -695,6 +728,51 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
             {form.options.length < 6 && (
               <button type="button" className="mt-2 text-sm text-brand-600" onClick={() => setForm((f) => ({ ...f, options: [...f.options, ''] }))}>+ Add option</button>
             )}
+          </div>
+        )}
+
+        {form.question_type === 'assertion_reason' && (
+          <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div>
+              <label className="label">Assertion (A)</label>
+              <textarea rows={2} className="input" placeholder="e.g. Work done in a closed path in a conservative field is zero." value={form.assertion_text || ''} onChange={(e) => setForm((f) => ({ ...f, assertion_text: e.target.value }))} />
+            </div>
+            <div>
+              <label className="label">Reason (R)</label>
+              <textarea rows={2} className="input" placeholder="e.g. Electrostatic force is a conservative force." value={form.reason_text || ''} onChange={(e) => setForm((f) => ({ ...f, reason_text: e.target.value }))} />
+            </div>
+            <div>
+              <label className="label">Correct Option</label>
+              <div className="space-y-1.5 pt-1">
+                {ASSERTION_REASON_OPTIONS.map((opt, i) => (
+                  <label key={i} className="flex items-start gap-2 rounded p-1.5 hover:bg-white text-xs text-slate-800 cursor-pointer border border-transparent hover:border-slate-200">
+                    <input type="radio" name="ar_correct" checked={form.correct_index === i} onChange={() => setForm((f) => ({ ...f, correct_index: i, options: [...ASSERTION_REASON_OPTIONS] }))} />
+                    <span><strong>({String.fromCharCode(65 + i)})</strong> {opt}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {form.question_type === 'integer' && (
+          <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <label className="label">Correct Integer Answer</label>
+            <input type="number" step="1" className="input max-w-xs font-mono text-base" placeholder="e.g. 4" required value={form.numeric_answer ?? ''} onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? parseInt(e.target.value, 10) : '' }))} />
+            <p className="mt-1 text-xs text-slate-500">Candidate will type a whole integer during the test.</p>
+          </div>
+        )}
+
+        {form.question_type === 'numerical' && (
+          <div className="grid grid-cols-2 gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+            <div>
+              <label className="label">Correct Numerical Answer</label>
+              <input type="number" step="any" className="input font-mono text-base" placeholder="e.g. 12.5" required value={form.numeric_answer ?? ''} onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? parseFloat(e.target.value) : '' }))} />
+            </div>
+            <div>
+              <label className="label">Allowed Tolerance (±)</label>
+              <input type="number" step="any" min="0" className="input font-mono text-base" placeholder="e.g. 0.01" value={form.numerical_tolerance ?? 0.01} onChange={(e) => setForm((f) => ({ ...f, numerical_tolerance: parseFloat(e.target.value) || 0 }))} />
+            </div>
           </div>
         )}
 

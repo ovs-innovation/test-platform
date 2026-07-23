@@ -1,8 +1,10 @@
-export function isQuestionAnswered(question, answers, multiAnswers, codingAnswers, subjectiveAnswers) {
-  if (question.question_type === 'mcq') return answers[question.id] != null;
-  if (question.question_type === 'multi_select') return (multiAnswers[question.id]?.length > 0);
-  if (question.question_type === 'coding') return (codingAnswers[question.id]?.code || '').trim().length > 0;
-  if (question.question_type === 'subjective') return (subjectiveAnswers[question.id] || '').trim().length > 0;
+export function isQuestionAnswered(question, answers, multiAnswers, codingAnswers, subjectiveAnswers, numericAnswers = {}) {
+  const type = question.question_type;
+  if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') return answers[question.id] != null;
+  if (type === 'multi_select') return (multiAnswers[question.id]?.length > 0);
+  if (type === 'integer' || type === 'numerical') return (numericAnswers[question.id] != null && numericAnswers[question.id] !== '');
+  if (type === 'coding') return (codingAnswers[question.id]?.code || '').trim().length > 0;
+  if (type === 'subjective') return (subjectiveAnswers[question.id] || '').trim().length > 0;
   return false;
 }
 

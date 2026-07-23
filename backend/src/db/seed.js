@@ -48,10 +48,10 @@ const seed = async () => {
          VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
          RETURNING id`,
         [
-          'Full-Stack Hiring Assessment',
-          'A comprehensive hiring assessment covering aptitude, technical, coding, and subjective sections.',
+          'JEE & NEET Diagnostic Assessment',
+          'A comprehensive diagnostic assessment covering Physics, Chemistry, Mathematics, Botany, and Zoology for JEE and NEET aspirants.',
           'You must remain in fullscreen. Tab switches and copy/paste are logged. Exceeding the violation limit auto-submits your test.',
-          30,
+          60,
           8,
           3,
           true,
@@ -62,10 +62,9 @@ const seed = async () => {
       const assessmentId = assessmentRes.rows[0].id;
 
       const sections = [
-        { name: 'Aptitude', type: 'aptitude', pos: 1 },
-        { name: 'Technical MCQ', type: 'technical_mcq', pos: 2 },
-        { name: 'Coding', type: 'coding', pos: 3 },
-        { name: 'Subjective', type: 'subjective', pos: 4 },
+        { name: 'Physics & Chemistry', type: 'technical_mcq', pos: 1 },
+        { name: 'Mathematics', type: 'technical_mcq', pos: 2 },
+        { name: 'Botany & Zoology', type: 'technical_mcq', pos: 3 },
       ];
       const sectionIds = {};
       for (const s of sections) {
@@ -74,50 +73,42 @@ const seed = async () => {
            VALUES ($1,$2,$3,$4) RETURNING id`,
           [assessmentId, s.name, s.type, s.pos]
         );
-        sectionIds[s.type] = r.rows[0].id;
+        sectionIds[s.name] = r.rows[0].id;
       }
 
-      const mcqQuestions = [
-        { section: 'aptitude', q: 'If 3x + 5 = 20, what is x?', options: ['3', '5', '7', '15'], correct: 1, marks: 2 },
-        { section: 'technical_mcq', q: 'Which HTTP method is idempotent?', options: ['POST', 'PATCH', 'PUT', 'CONNECT'], correct: 2, marks: 2 },
-        { section: 'technical_mcq', q: 'What does SQL JOIN do?', options: ['Deletes rows', 'Combines rows from tables', 'Creates indexes', 'Rolls back'], correct: 1, marks: 2 },
+      const sampleQuestions = [
+        { section: 'Physics & Chemistry', type: 'mcq', q: 'If a body starts from rest and moves with a uniform acceleration of 2 m/s², what distance does it cover in 5 seconds?', options: ['10 m', '25 m', '50 m', '100 m'], correct: 1, marks: 4 },
+        { section: 'Physics & Chemistry', type: 'integer', q: 'A force of 10 N accelerates a mass of 2 kg. Calculate acceleration in m/s².', numeric_answer: 5, marks: 4 },
+        { section: 'Physics & Chemistry', type: 'numerical', q: 'Calculate the de Broglie wavelength (in Angstroms) for V = 100 V.', numeric_answer: 1.23, numerical_tolerance: 0.05, marks: 4 },
+        { section: 'Physics & Chemistry', type: 'assertion_reason', q: 'Electrostatic forces are conservative.', assertion_text: 'Electrostatic force field is conservative.', reason_text: 'Work done around any closed loop in electrostatic field is zero.', options: ['Both Assertion (A) and Reason (R) are true and Reason (R) is the correct explanation of Assertion (A)', 'Both Assertion (A) and Reason (R) are true but Reason (R) is NOT the correct explanation of Assertion (A)', 'Assertion (A) is true but Reason (R) is false', 'Assertion (A) is false but Reason (R) is true'], correct: 0, marks: 4 },
+        { section: 'Mathematics', type: 'mcq', q: 'What are the roots of the quadratic equation x² - 5x + 6 = 0?', options: ['2 and 3', '-2 and -3', '1 and 6', '-1 and -6'], correct: 0, marks: 4 },
+        { section: 'Mathematics', type: 'integer', q: 'Evaluate the limit: lim(x->0) (sin(4x) / x).', numeric_answer: 4, marks: 4 },
+        { section: 'Botany & Zoology', type: 'mcq', q: 'Which pigment is primarily responsible for light absorption during photosynthesis in green plants?', options: ['Hemoglobin', 'Chlorophyll a', 'Carotenoid', 'Melanin'], correct: 1, marks: 4 },
+        { section: 'Botany & Zoology', type: 'multi_select', q: 'Which of the following organelles contain their own DNA?', options: ['Mitochondria', 'Chloroplast', 'Ribosome', 'Lysosome'], correct_indices: [0, 1], marks: 4 },
       ];
 
       let position = 1;
-      for (const item of mcqQuestions) {
+      for (const item of sampleQuestions) {
         await client.query(
-          `INSERT INTO questions (assessment_id, section_id, question_type, question_text, options, correct_index, marks, position)
-           VALUES ($1,$2,'mcq',$3,$4,$5,$6,$7)`,
-          [assessmentId, sectionIds[item.section], item.q, JSON.stringify(item.options), item.correct, item.marks, position++]
+          `INSERT INTO questions (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, position)
+           VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)`,
+          [
+            assessmentId,
+            sectionIds[item.section],
+            item.type,
+            item.q,
+            JSON.stringify(item.options || []),
+            item.correct ?? 0,
+            JSON.stringify(item.correct_indices || []),
+            item.numeric_answer !== undefined ? item.numeric_answer : null,
+            item.numerical_tolerance || 0,
+            item.assertion_text || null,
+            item.reason_text || null,
+            item.marks,
+            position++,
+          ]
         );
       }
-
-      await client.query(
-        `INSERT INTO questions (assessment_id, section_id, question_type, question_text, options, correct_index, marks, position, starter_code, test_cases, language)
-         VALUES ($1,$2,'coding',$3,'[]',0,4,$4,$5,$6,'javascript')`,
-        [
-          assessmentId,
-          sectionIds.coding,
-          'Write a function add(a, b) that returns the sum of two numbers.',
-          position++,
-          'function add(a, b) {\n  // your code\n}\n',
-          JSON.stringify([
-            { input: 'add(2, 3)', expected: '5' },
-            { input: 'add(10, 15)', expected: '25' },
-          ]),
-        ]
-      );
-
-      await client.query(
-        `INSERT INTO questions (assessment_id, section_id, question_type, question_text, options, correct_index, marks, position)
-         VALUES ($1,$2,'subjective',$3,'[]',0,2,$4)`,
-        [
-          assessmentId,
-          sectionIds.subjective,
-          'Describe a challenging technical problem you solved and how you approached it.',
-          position++,
-        ]
-      );
 
       const inviteRes = await client.query(
         `INSERT INTO candidate_invites (assessment_id, candidate_name, candidate_email, created_by)

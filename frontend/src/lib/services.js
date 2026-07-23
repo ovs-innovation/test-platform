@@ -9,7 +9,9 @@ export const authService = {
   sendOtp: (data) => api.post('/auth/otp/send', data).then((r) => r.data),
   verifyOtp: (data) => api.post('/auth/otp/verify', data).then((r) => r.data),
   sendLoginOtp: (data) => api.post('/auth/otp/send-login', data).then((r) => r.data),
+  sendSignupOtp: (data) => api.post('/auth/otp/send-signup', data).then((r) => r.data),
   verifyLoginOtp: (data) => api.post('/auth/otp/verify-login', data).then((r) => r.data),
+  firebaseLogin: (data) => api.post('/auth/firebase-login', data).then((r) => r.data),
   me: () => api.get('/auth/me').then((r) => r.data),
   candidateDashboard: () => api.get('/auth/candidate/dashboard').then((r) => r.data),
 };
@@ -87,6 +89,7 @@ export const testSeriesService = {
   list: () => api.get('/test-series').then((r) => r.data.test_series),
   create: (data) => api.post('/test-series', data).then((r) => r.data.test_series),
   update: (id, data) => api.put(`/test-series/${id}`, data).then((r) => r.data.test_series),
+  toggleActive: (id, is_active) => api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => r.data),
   link: (id, data) => api.post(`/test-series/${id}/link`, data).then((r) => r.data),
   parsePdf: (pdf_base64) => api.post('/test-series/parse-pdf', { pdf_base64 }).then((r) => r.data),
   importFromPdf: (data) => api.post('/test-series/import-pdf', data).then((r) => r.data),
@@ -150,6 +153,7 @@ export const adminService = {
   candidates: () => api.get('/admin/candidates').then((r) => r.data.candidates),
   createCandidate: (data) => api.post('/admin/candidates', data).then((r) => r.data.candidate),
   updateCandidate: (id, data) => api.put(`/admin/candidates/${id}`, data).then((r) => r.data.candidate),
+  toggleBlockCandidate: (id, is_blocked) => api.patch(`/admin/candidates/${id}/block`, { is_blocked }).then((r) => r.data),
   deleteCandidate: (id) => api.delete(`/admin/candidates/${id}`).then((r) => r.data),
   reports: () => api.get('/admin/reports').then((r) => r.data.reports),
   exportReports: () =>

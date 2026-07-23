@@ -54,8 +54,19 @@ export function AuthProvider({ children }) {
     return await authService.sendLoginOtp(data);
   }, []);
 
+  const sendSignupOtp = useCallback(async (data) => {
+    return await authService.sendSignupOtp(data);
+  }, []);
+
   const verifyLoginOtp = useCallback(async (data) => {
     const { token, user: u } = await authService.verifyLoginOtp(data);
+    tokenStore.set(token);
+    setUser(u);
+    return u;
+  }, []);
+
+  const firebaseLogin = useCallback(async (data) => {
+    const { token, user: u } = await authService.firebaseLogin(data);
     tokenStore.set(token);
     setUser(u);
     return u;
@@ -80,7 +91,7 @@ export function AuthProvider({ children }) {
     return u;
   }, []);
 
-  const value = { user, loading, login, register, studentLogin, verifyOtp, sendLoginOtp, verifyLoginOtp, logout, isAuthenticated: !!user };
+  const value = { user, loading, login, register, studentLogin, verifyOtp, sendLoginOtp, sendSignupOtp, verifyLoginOtp, firebaseLogin, logout, isAuthenticated: !!user };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

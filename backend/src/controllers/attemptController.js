@@ -10,10 +10,13 @@ const sanitizeQuestion = (q) => {
     section_id: q.section_id,
     question_type: q.question_type,
     question_text: q.question_text,
+    assertion_text: q.assertion_text || null,
+    reason_text: q.reason_text || null,
+    image_url: q.image_url || '',
     marks: q.marks,
     position: q.position,
   };
-  if (q.question_type === 'mcq') {
+  if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'multi_select' || q.question_type === 'assertion_reason') {
     return { ...base, options: q.options };
   }
   if (q.question_type === 'coding') {
@@ -44,7 +47,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       [attempt.assessment_id]
     );
     const answersRes = await client.query(
-      'SELECT question_id, selected_index, selected_indices FROM answers WHERE attempt_id = $1',
+      'SELECT question_id, selected_index, selected_indices, numeric_answer FROM answers WHERE attempt_id = $1',
       [attemptId]
     );
     const codingRes = await client.query(
@@ -63,8 +66,8 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     const negEnabled = assessment.negative_marking === true;
     const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
 
-    let marksObtained = 0;
     let totalMarks = 0;
+    let marksObtained = 0;
     let correctCount = 0;
     let wrongCount = 0;
     let unattemptedCount = 0;
@@ -80,7 +83,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       const type = q.question_type || 'mcq';
       const ans = answerMap.get(q.id);
 
-      if (type === 'mcq') {
+      if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
         const sel = ans?.selected_index;
         if (sel === undefined || sel === null) unattemptedCount += 1;
         else if (sel === q.correct_index) {
@@ -95,6 +98,29 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
         const selected = Array.isArray(ans?.selected_indices) ? ans.selected_indices : [];
         if (!selected.length) unattemptedCount += 1;
         else if (arraysEqual(selected, correct)) {
+          correctCount += 1;
+          marksObtained += q.marks;
+        } else {
+          wrongCount += 1;
+          if (negEnabled) marksObtained -= negPenalty;
+        }
+      } else if (type === 'integer') {
+        const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
+        const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+        if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
+        else if (targetVal !== null && Math.round(userVal) === Math.round(targetVal)) {
+          correctCount += 1;
+          marksObtained += q.marks;
+        } else {
+          wrongCount += 1;
+          if (negEnabled) marksObtained -= negPenalty;
+        }
+      } else if (type === 'numerical') {
+        const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
+        const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+        const tol = Number(q.numerical_tolerance) || 0.01;
+        if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
+        else if (targetVal !== null && Math.abs(userVal - targetVal) <= tol) {
           correctCount += 1;
           marksObtained += q.marks;
         } else {
@@ -325,7 +351,7 @@ export const getAttemptState = asyncHandler(async (req, res) => {
     [attempt.assessment_id]
   );
   const answersRes = await query(
-    'SELECT question_id, selected_index, marked_for_review FROM answers WHERE attempt_id = $1',
+    'SELECT question_id, selected_index, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
     [id]
   );
   const codingRes = await query(
@@ -355,7 +381,7 @@ export const getAttemptState = asyncHandler(async (req, res) => {
 
 export const saveAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { question_id, selected_index, selected_indices } = req.body;
+  const { question_id, selected_index, selected_indices, numeric_answer } = req.body;
 
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
@@ -375,8 +401,8 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   if (qRes.rowCount === 0) throw ApiError.badRequest('Invalid question');
 
   const qType = qRes.rows[0].question_type;
-  if (qType === 'mcq') {
-    if (selected_index === undefined) throw ApiError.badRequest('selected_index required for MCQ');
+  if (qType === 'mcq' || qType === 'single_choice' || qType === 'assertion_reason') {
+    if (selected_index === undefined && selected_index !== null) throw ApiError.badRequest('selected_index required');
     await query(
       `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
        VALUES ($1,$2,$3, NOW())
@@ -392,6 +418,15 @@ export const saveAnswer = asyncHandler(async (req, res) => {
        ON CONFLICT (attempt_id, question_id)
        DO UPDATE SET selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`,
       [id, question_id, JSON.stringify(indices)]
+    );
+  } else if (qType === 'integer' || qType === 'numerical') {
+    const val = numeric_answer !== undefined && numeric_answer !== null && numeric_answer !== '' ? Number(numeric_answer) : null;
+    await query(
+      `INSERT INTO answers (attempt_id, question_id, numeric_answer, updated_at)
+       VALUES ($1,$2,$3, NOW())
+       ON CONFLICT (attempt_id, question_id)
+       DO UPDATE SET numeric_answer = EXCLUDED.numeric_answer, updated_at = NOW()`,
+      [id, question_id, val]
     );
   } else {
     throw ApiError.badRequest('Use coding or subjective endpoints for this question type');
@@ -409,26 +444,26 @@ export const markForReview = asyncHandler(async (req, res) => {
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
   await query(
-    `INSERT INTO answers (attempt_id, question_id, selected_index, marked_for_review, updated_at)
-     VALUES ($1,$2,NULL,$3,NOW())
+    `INSERT INTO answers (attempt_id, question_id, marked_for_review, updated_at)
+     VALUES ($1,$2,$3, NOW())
      ON CONFLICT (attempt_id, question_id)
      DO UPDATE SET marked_for_review = EXCLUDED.marked_for_review, updated_at = NOW()`,
     [id, question_id, marked_for_review]
   );
-  res.json({ saved: true });
+  res.json({ marked: marked_for_review });
 });
 
 export const clearAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { question_id } = req.body;
+  const { questionId } = req.params;
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
-  await query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, question_id]);
-  await query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, question_id]);
-  await query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, question_id]);
+  await query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
+  await query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
+  await query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
   res.json({ cleared: true });
 });
 
@@ -484,60 +519,52 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
 
 export const submitAttempt = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const reason = req.body?.reason;
-
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
   if (!attempt) throw ApiError.notFound('Attempt not found');
   if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
 
-  const status = reason === 'manual' ? 'submitted' : 'auto_submitted';
-  const score = await finalizeAttempt(id, status);
-
+  const score = await finalizeAttempt(id, 'submitted');
   const refreshed = await query('SELECT * FROM attempts WHERE id = $1', [id]);
-  res.json({ attempt: refreshed.rows[0], score });
+  const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
+  res.json({
+    attempt: refreshed.rows[0],
+    assessment: assessmentRes.rows[0],
+    score,
+  });
 });
 
-export const getResult = asyncHandler(async (req, res) => {
+export const getAttemptResult = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
   if (!attempt) throw ApiError.notFound('Attempt not found');
 
-  const isOwner = attempt.candidate_id === req.user.id;
-  const isAdmin = req.user.role === 'admin';
-  if (!isOwner && !isAdmin) throw ApiError.forbidden('Not allowed to view this result');
+  if (attempt.candidate_id !== req.user.id && req.user.role !== 'admin') {
+    throw ApiError.forbidden('You are not authorized to view these results');
+  }
 
-  const assessmentRes = await query(
-    'SELECT id, title, result_visible, passing_marks, negative_marking, negative_marks_per_wrong FROM assessments WHERE id = $1',
-    [attempt.assessment_id]
-  );
+  const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
   const assessment = assessmentRes.rows[0];
 
-  if (attempt.status === 'in_progress') {
-    throw ApiError.badRequest('This attempt has not been submitted yet');
-  }
-  if (!isAdmin && !assessment.result_visible) {
-    return res.json({
-      attempt: { id: attempt.id, status: attempt.status, submitted_at: attempt.submitted_at },
-      assessment: { id: assessment.id, title: assessment.title },
-      resultVisible: false,
-    });
+  if (!assessment.result_visible && req.user.role !== 'admin') {
+    throw ApiError.forbidden('Results for this assessment are hidden by the administrator.');
   }
 
   const scoreRes = await query('SELECT * FROM scores WHERE attempt_id = $1', [id]);
+  const score = scoreRes.rows[0] || null;
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.marks, q.position, q.solution, q.test_cases, q.section_id, s.name AS section_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, s.name AS section_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        WHERE q.assessment_id = $1
        ORDER BY q.position ASC, q.id ASC`,
       [attempt.assessment_id]
     ),
-    query('SELECT question_id, selected_index, selected_indices FROM answers WHERE attempt_id = $1', [id]),
+    query('SELECT question_id, selected_index, selected_indices, numeric_answer FROM answers WHERE attempt_id = $1', [id]),
     query('SELECT question_id, source_code FROM coding_answers WHERE attempt_id = $1', [id]),
     query('SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1', [id]),
   ]);
@@ -561,7 +588,7 @@ export const getResult = asyncHandler(async (req, res) => {
     let correct = false;
     let questionMarksObtained = 0;
 
-    if (q.question_type === 'mcq') {
+    if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'assertion_reason') {
       yourAnswer = ans?.selected_index;
       correct = yourAnswer === q.correct_index;
       if (yourAnswer === undefined || yourAnswer === null) {
@@ -579,6 +606,18 @@ export const getResult = asyncHandler(async (req, res) => {
       if (!si.length) {
         questionMarksObtained = 0;
       } else if (correct) {
+        questionMarksObtained = q.marks;
+      } else {
+        questionMarksObtained = negEnabled ? -negPenalty : 0;
+      }
+    } else if (q.question_type === 'integer' || q.question_type === 'numerical') {
+      yourAnswer = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
+      const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+      const tol = q.question_type === 'numerical' ? (Number(q.numerical_tolerance) || 0.01) : 0;
+      if (yourAnswer === null || Number.isNaN(yourAnswer)) {
+        questionMarksObtained = 0;
+      } else if (targetVal !== null && (q.question_type === 'integer' ? Math.round(yourAnswer) === Math.round(targetVal) : Math.abs(yourAnswer - targetVal) <= tol)) {
+        correct = true;
         questionMarksObtained = q.marks;
       } else {
         questionMarksObtained = negEnabled ? -negPenalty : 0;
@@ -609,11 +648,15 @@ export const getResult = asyncHandler(async (req, res) => {
       id: q.id,
       question_type: q.question_type,
       question_text: q.question_text,
+      assertion_text: q.assertion_text || null,
+      reason_text: q.reason_text || null,
       options: q.options,
-      marks: q.marks,
-      your_answer: yourAnswer,
       correct_index: q.correct_index,
       correct_indices: q.correct_indices,
+      numeric_answer: q.numeric_answer,
+      numerical_tolerance: q.numerical_tolerance,
+      marks: q.marks,
+      marks_obtained: questionMarksObtained,
       is_correct: correct,
       solution: q.solution,
       section_name: q.section_name || 'General',
@@ -637,4 +680,5 @@ export const getResult = asyncHandler(async (req, res) => {
   });
 });
 
+export const getResult = getAttemptResult;
 export { finalizeAttempt };

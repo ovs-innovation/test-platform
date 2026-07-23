@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, me, candidateDashboard, forgotPassword, resetPassword } from '../controllers/authController.js';
+import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, sendSignupOtp, firebaseLogin, me, candidateDashboard, forgotPassword, resetPassword } from '../controllers/authController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { authLimiter } from '../middleware/rateLimiter.js';
-import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema, otpSendSchema, otpVerifySchema, otpSendLoginSchema, otpVerifyLoginSchema } from '../validators/schemas.js';
+import { loginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema, otpSendSchema, otpVerifySchema, otpSendLoginSchema, otpVerifyLoginSchema, otpSendSignupSchema, firebaseLoginSchema } from '../validators/schemas.js';
 
 const router = Router();
 
@@ -15,7 +15,9 @@ router.post('/reset-password', authLimiter, validate(resetPasswordSchema), reset
 router.post('/otp/send', authLimiter, validate(otpSendSchema), sendOtp);
 router.post('/otp/verify', authLimiter, validate(otpVerifySchema), verifyOtpCode);
 router.post('/otp/send-login', authLimiter, validate(otpSendLoginSchema), sendLoginOtp);
+router.post('/otp/send-signup', authLimiter, validate(otpSendSignupSchema), sendSignupOtp);
 router.post('/otp/verify-login', authLimiter, validate(otpVerifyLoginSchema), verifyLoginOtp);
+router.post('/firebase-login', authLimiter, validate(firebaseLoginSchema), firebaseLogin);
 router.get('/me', authenticate, me);
 router.get('/candidate/dashboard', authenticate, authorize('candidate'), candidateDashboard);
 
