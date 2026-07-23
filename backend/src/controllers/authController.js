@@ -6,6 +6,7 @@ import { comparePassword, hashPassword } from '../utils/password.js';
 import { signToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
 import { sendOtpEmail, sendEmail } from '../utils/email.js';
+import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
 
@@ -630,54 +631,99 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
 
 export const forgotPassword = asyncHandler(async (req, res) => {
   const { email } = req.body;
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  if (!normalizedEmail) throw ApiError.badRequest('Email address is required');
+
   const userRes = await query(
-    "SELECT id, name, email FROM users WHERE email = $1 AND role = 'candidate' AND password_hash IS NOT NULL",
-    [email.toLowerCase()]
+    "SELECT id, name, email FROM users WHERE LOWER(email) = LOWER($1) AND role = 'candidate'",
+    [normalizedEmail]
   );
   if (!userRes.rowCount) {
-    return res.json({ message: 'If that email exists, a reset link has been sent.' });
+    return res.json({ message: 'If an account exists with that email, a password reset code has been sent.' });
   }
+
   const user = userRes.rows[0];
+
+  const otp = generateOtp(); // 6-digit OTP
   const token = crypto.randomBytes(32).toString('hex');
+  const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
-  const expires = new Date(Date.now() + 60 * 60 * 1000);
+  const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
+
+  // Delete previous unused reset records for this user
+  await query('DELETE FROM password_resets WHERE user_id = $1 AND used_at IS NULL', [user.id]);
 
   await query(`INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES ($1,$2,$3)`, [
     user.id,
     tokenHash,
     expires,
   ]);
+  await query(`INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES ($1,$2,$3)`, [
+    user.id,
+    otpHash,
+    expires,
+  ]);
 
-  const resetUrl = `${env.inviteBaseUrl}/reset-password?token=${token}&email=${encodeURIComponent(user.email)}`;
-  try {
-    await sendEmail({
-      to: user.email,
-      subject: 'Reset your EDVEDUM Academy password',
-      html: `<p>Hi ${user.name},</p><p><a href="${resetUrl}">Reset your password</a></p><p>Expires in 1 hour.</p>`,
-      text: `Reset password: ${resetUrl}`,
-    });
-  } catch (err) {
-    if (!env.isProd) console.log(`[dev] Reset link: ${resetUrl}`);
-    else throw err;
+  let baseUrl = req.headers.origin || env.inviteBaseUrl || env.clientUrl || 'http://localhost:5173';
+  if (baseUrl.includes(',')) {
+    baseUrl = baseUrl.split(',')[0].trim();
+  }
+  if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) {
+    baseUrl = `https://${baseUrl}`;
   }
 
-  res.json({ message: 'If that email exists, a reset link has been sent.', ...(!env.isProd ? { devResetUrl: resetUrl } : {}) });
+  const resetUrl = `${baseUrl}/reset-password?token=${otp}&email=${encodeURIComponent(user.email)}`;
+
+  let emailSent = true;
+  let devOtpVal = null;
+  try {
+    const tpl = passwordResetEmailTemplate({
+      name: user.name,
+      resetUrl,
+      otp,
+      expiresMinutes: 60,
+    });
+    await sendEmail({ to: user.email, ...tpl });
+  } catch (err) {
+    emailSent = false;
+    // eslint-disable-next-line no-console
+    console.warn(`[email] Password reset email failed for ${user.email}: ${err.message}`);
+    devOtpVal = otp;
+  }
+
+  res.json({
+    message: emailSent
+      ? 'A password reset code and link have been sent to your email.'
+      : 'Could not send email directly — use the reset code shown below to update your password.',
+    emailSent,
+    ...(!emailSent ? { devResetUrl: resetUrl, devOtp: devOtpVal || otp } : {}),
+  });
 });
 
 export const resetPassword = asyncHandler(async (req, res) => {
-  const { email, token, password } = req.body;
-  const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
+  const { email, token, otp, password } = req.body;
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  const rawCode = (token || otp || '').trim();
+
+  if (!rawCode) throw ApiError.badRequest('Reset token or 6-digit OTP code is required');
+  if (!password || password.length < 6) throw ApiError.badRequest('Password must be at least 6 characters');
+
+  const codeHash = crypto.createHash('sha256').update(rawCode).digest('hex');
+
   const resetRes = await query(
     `SELECT pr.* FROM password_resets pr JOIN users u ON u.id = pr.user_id
-     WHERE u.email = $1 AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
+     WHERE LOWER(u.email) = LOWER($1) AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
      ORDER BY pr.created_at DESC LIMIT 1`,
-    [email.toLowerCase(), tokenHash]
+    [normalizedEmail, codeHash]
   );
-  if (!resetRes.rowCount) throw ApiError.badRequest('Invalid or expired reset link');
+
+  if (!resetRes.rowCount) throw ApiError.badRequest('Invalid or expired reset code / token. Please request a new code.');
+
   const password_hash = await hashPassword(password);
   await query('UPDATE users SET password_hash = $1 WHERE id = $2', [password_hash, resetRes.rows[0].user_id]);
-  await query('UPDATE password_resets SET used_at = NOW() WHERE id = $1', [resetRes.rows[0].id]);
-  res.json({ message: 'Password updated successfully' });
+  await query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [resetRes.rows[0].user_id]);
+
+  res.json({ message: 'Password updated successfully. You can now log in with your new password.' });
 });
 
 /**

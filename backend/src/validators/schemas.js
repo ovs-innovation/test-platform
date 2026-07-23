@@ -87,8 +87,11 @@ export const forgotPasswordSchema = z.object({
 
 export const resetPasswordSchema = z.object({
   email: z.string().trim().toLowerCase().email(),
-  token: z.string().min(10),
-  password: z.string().min(6),
+  token: z.string().trim().optional(),
+  otp: z.string().trim().optional(),
+  password: z.string().min(6, 'Password must be at least 6 characters'),
+}).refine((d) => d.token || d.otp, {
+  message: 'Reset token or OTP code is required',
 });
 
 export const bulkUploadSchema = z.object({

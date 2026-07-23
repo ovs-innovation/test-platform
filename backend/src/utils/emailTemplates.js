@@ -66,6 +66,36 @@ export const otpEmailTemplate = ({ otp, expiresMinutes }) => ({
   text: `Your ${SITE_NAME} verification code is: ${otp}\n\nExpires in ${expiresMinutes} minutes. Do not share this code.`,
 });
 
+export const passwordResetEmailTemplate = ({ name, resetUrl, otp, expiresMinutes }) => ({
+  subject: `Reset your ${SITE_NAME} password`,
+  html: layout(`
+    <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Password Reset Request</h2>
+    <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">Hello <strong>${name}</strong>,</p>
+    <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">
+      We received a request to reset your password for your ${SITE_NAME} account.
+    </p>
+
+    <div style="margin:24px 0;padding:20px;background:#f1f5f9;border-radius:8px;text-align:center;">
+      <p style="margin:0 0 8px;color:#64748b;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Password Reset Code</p>
+      <p style="margin:0;font-size:36px;font-weight:700;letter-spacing:8px;color:${BRAND};">${otp}</p>
+    </div>
+
+    <p style="margin:0 0 20px;color:#334155;font-size:15px;line-height:1.6;">
+      Or click the button below to open the secure password reset page:
+    </p>
+
+    <table cellpadding="0" cellspacing="0" style="margin:0 0 24px;"><tr><td style="border-radius:8px;background:${BRAND};">
+      <a href="${resetUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:14px 28px;color:#fff;font-size:15px;font-weight:600;text-decoration:none;">
+        Reset Password Now &rarr;
+      </a>
+    </td></tr></table>
+
+    <p style="margin:0 0 8px;color:#64748b;font-size:13px;">This reset code and link will expire in <strong>${expiresMinutes} minutes</strong>.</p>
+    <p style="margin:0;color:#64748b;font-size:13px;">If you did not request a password reset, you can safely ignore this message.</p>
+  `),
+  text: `Hello ${name},\n\nYour ${SITE_NAME} password reset code is: ${otp}\n\nReset link: ${resetUrl}\n\nExpires in ${expiresMinutes} minutes.`,
+});
+
 export const completionEmailTemplate = ({
   name,
   assessmentTitle,
