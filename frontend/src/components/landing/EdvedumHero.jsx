@@ -200,9 +200,7 @@ export default function EdvedumHero() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-4 sm:mt-6 max-w-xl text-sm sm:text-base md:text-lg leading-relaxed text-[#94A3B8]"
           >
-            Master <span className="font-bold text-[#0D6EFD]">JEE (Main &amp; Advanced)</span>,{' '}
-            <span className="font-bold text-[#7C3AED]">NEET-UG</span> &amp;{' '}
-            <span className="font-bold text-[#00F0FF]">Foundation</span> with India’s most authentic NTA CBT mock exam simulator, AI diagnostic analytics, and instant rank predictions.
+            Not just another coaching platform — the future of competitive learning.
           </motion.p>
 
           {/* 4. CTA BUTTONS */}
