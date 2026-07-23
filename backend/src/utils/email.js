@@ -13,35 +13,55 @@ const getTransporter = () => {
   if (!env.smtp.host || !env.smtp.user || !env.smtp.pass) {
     throw new Error('SMTP is not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS.');
   }
+  const host = (env.smtp.host || '').trim();
+  const isGmail = host === 'smtp.gmail.com' || host.includes('gmail');
+
   const opts = {
     auth: { user: env.smtp.user, pass: env.smtp.pass },
+    // Strict connection timeouts so cloud servers (Render/Vercel) never hang or 502
+    connectionTimeout: 4000,
+    greetingTimeout: 4000,
+    socketTimeout: 5000,
+    dnsTimeout: 3000,
   };
-  if (env.smtp.host === 'smtp.gmail.com' || env.smtp.host.includes('gmail')) {
+
+  if (isGmail) {
     opts.service = 'gmail';
   } else {
-    opts.host = env.smtp.host;
-    opts.port = env.smtp.port;
-    opts.secure = env.smtp.secure;
+    opts.host = host;
+    opts.port = env.smtp.port || 465;
+    opts.secure = env.smtp.secure !== undefined ? env.smtp.secure : true;
   }
   transporter = nodemailer.createTransport(opts);
   return transporter;
 };
 
 export const verifySmtpConnection = async () => {
-  const tx = getTransporter();
-  await tx.verify();
-  return true;
+  try {
+    const tx = getTransporter();
+    await tx.verify();
+    return true;
+  } catch (err) {
+    console.warn(`[email] SMTP verification failed: ${err.message}`);
+    return false;
+  }
 };
 
 export const sendEmail = async ({ to, subject, html, text }) => {
   const tx = getTransporter();
-  const info = await tx.sendMail({
+  const sendMailPromise = tx.sendMail({
     from: env.smtp.from,
     to,
     subject,
     html,
     text,
   });
+
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('SMTP timeout: Mail server took longer than 4s to respond')), 4000)
+  );
+
+  const info = await Promise.race([sendMailPromise, timeoutPromise]);
   return { sent: true, messageId: info.messageId };
 };
 

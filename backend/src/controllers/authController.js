@@ -261,15 +261,14 @@ export const sendOtp = asyncHandler(async (req, res) => {
     await sendOtpEmail(normalizedEmail, otp);
   } catch (err) {
     emailSent = false;
-    if (env.isProd) throw err;
     // eslint-disable-next-line no-console
-    console.warn(`[email] OTP send failed, dev fallback: ${err.message}`);
+    console.warn(`[email] OTP send failed for ${normalizedEmail}: ${err.message}`);
   }
 
   res.json({
     message: emailSent
       ? 'Verification code sent to your email'
-      : 'Could not send email — use the code shown below',
+      : 'Could not send email directly — please check SMTP settings.',
     expiresInMinutes: env.otpExpiresMinutes,
     emailSent,
     ...(!emailSent && !env.isProd ? { devOtp: otp } : {}),
@@ -424,21 +423,22 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
     [candidate.email, targetPhone, otpHash, expiresAt]
   );
 
+  let emailSent = true;
   try {
     await sendOtpEmail(candidate.email, otp);
   } catch (err) {
+    emailSent = false;
     // eslint-disable-next-line no-console
-    console.error(`[email] Failed to send OTP email to ${candidate.email}:`, err);
-    throw ApiError.internal(`Failed to send OTP to ${candidate.email}. ${err.message}`);
+    console.warn(`[email] Failed to send OTP email to ${candidate.email}: ${err.message}`);
   }
 
-  // eslint-disable-next-line no-console
-  console.log(`[student login otp] Sent OTP email to candidate ${candidate.email}`);
-
   res.json({
-    message: `Verification code sent to your email (${candidate.email})`,
-    emailSent: true,
+    message: emailSent
+      ? `Verification code sent to your email (${candidate.email})`
+      : 'Could not send email directly to your inbox. Check server SMTP settings.',
+    emailSent,
     expiresInMinutes: env.otpExpiresMinutes,
+    ...(!emailSent && !env.isProd ? { devOtp: otp } : {}),
   });
 });
 
