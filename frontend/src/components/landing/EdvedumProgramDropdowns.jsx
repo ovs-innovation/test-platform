@@ -32,6 +32,7 @@ export const PROGRAM_SECTIONS = [
     desc: 'Medical entrance — Biology, Physics & Chemistry',
     filter: 'neet',
     theme: 'neet',
+    badge: 'Popular',
     icon: 'M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z',
   },
   {
@@ -54,48 +55,48 @@ export const PROGRAM_SECTIONS = [
 
 const THEME_STYLES = {
   jee: {
-    icon: 'bg-gradient-to-br from-orange-500 to-amber-600 shadow-orange-500/30',
-    ring: 'ring-orange-400/40',
-    border: 'border-orange-400',
-    header: 'bg-gradient-to-r from-orange-500 to-amber-500',
-    hover: 'hover:border-orange-300 hover:bg-orange-50/60',
-    active: 'border-orange-400 bg-orange-50/80 shadow-md shadow-orange-100',
-    link: 'hover:bg-orange-50 hover:text-orange-700',
-    chip: 'bg-orange-100 text-orange-800',
-    viewAll: 'text-orange-600 hover:text-orange-700',
+    icon: 'bg-gradient-to-br from-[#0D6EFD] to-[#2563eb] text-white shadow-blue-500/30',
+    ring: 'ring-[#0D6EFD]/40',
+    border: 'border-[#0D6EFD]',
+    header: 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb]',
+    hover: 'hover:border-[#0D6EFD] hover:bg-blue-50/70 hover:shadow-lg hover:shadow-blue-500/10 hover:scale-[1.025]',
+    active: 'border-[#0D6EFD] bg-blue-50/90 shadow-md shadow-blue-100',
+    link: 'hover:bg-blue-50 hover:text-[#0D6EFD]',
+    chip: 'bg-blue-100 text-[#0D6EFD]',
+    viewAll: 'text-[#0D6EFD] hover:text-blue-700',
   },
   neet: {
-    icon: 'bg-gradient-to-br from-emerald-500 to-teal-600 shadow-emerald-500/30',
-    ring: 'ring-emerald-400/40',
-    border: 'border-emerald-400',
-    header: 'bg-gradient-to-r from-emerald-500 to-teal-500',
-    hover: 'hover:border-emerald-300 hover:bg-emerald-50/60',
-    active: 'border-emerald-400 bg-emerald-50/80 shadow-md shadow-emerald-100',
-    link: 'hover:bg-emerald-50 hover:text-emerald-700',
-    chip: 'bg-emerald-100 text-emerald-800',
-    viewAll: 'text-emerald-600 hover:text-emerald-700',
+    icon: 'bg-gradient-to-br from-[#00F0FF] to-[#06b6d4] text-slate-950 shadow-cyan-500/30',
+    ring: 'ring-cyan-400/40',
+    border: 'border-[#00F0FF]',
+    header: 'bg-gradient-to-r from-[#00b4d8] to-[#06b6d4]',
+    hover: 'hover:border-[#00F0FF] hover:bg-cyan-50/70 hover:shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.025]',
+    active: 'border-[#00F0FF] bg-cyan-50/90 shadow-md shadow-cyan-100',
+    link: 'hover:bg-cyan-50 hover:text-cyan-800',
+    chip: 'bg-cyan-100 text-cyan-800',
+    viewAll: 'text-cyan-700 hover:text-cyan-800',
   },
   foundation: {
-    icon: 'bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/30',
-    ring: 'ring-violet-400/40',
-    border: 'border-violet-400',
-    header: 'bg-gradient-to-r from-violet-500 to-purple-500',
-    hover: 'hover:border-violet-300 hover:bg-violet-50/60',
-    active: 'border-violet-400 bg-violet-50/80 shadow-md shadow-violet-100',
-    link: 'hover:bg-violet-50 hover:text-violet-700',
-    chip: 'bg-violet-100 text-violet-800',
-    viewAll: 'text-violet-600 hover:text-violet-700',
+    icon: 'bg-gradient-to-br from-[#4F46E5] to-indigo-700 text-white shadow-indigo-500/30',
+    ring: 'ring-indigo-400/40',
+    border: 'border-[#4F46E5]',
+    header: 'bg-gradient-to-r from-[#4F46E5] to-indigo-700',
+    hover: 'hover:border-[#4F46E5] hover:bg-indigo-50/70 hover:shadow-lg hover:shadow-indigo-500/10 hover:scale-[1.025]',
+    active: 'border-[#4F46E5] bg-indigo-50/90 shadow-md shadow-indigo-100',
+    link: 'hover:bg-indigo-50 hover:text-[#4F46E5]',
+    chip: 'bg-indigo-100 text-[#4F46E5]',
+    viewAll: 'text-[#4F46E5] hover:text-indigo-700',
   },
   series: {
-    icon: 'bg-gradient-to-br from-blue-600 to-indigo-600 shadow-blue-500/30',
-    ring: 'ring-blue-400/40',
-    border: 'border-blue-400',
-    header: 'bg-gradient-to-r from-blue-600 to-indigo-600',
-    hover: 'hover:border-blue-300 hover:bg-blue-50/60',
-    active: 'border-blue-400 bg-blue-50/80 shadow-md shadow-blue-100',
-    link: 'hover:bg-blue-50 hover:text-blue-700',
-    chip: 'bg-blue-100 text-blue-800',
-    viewAll: 'text-blue-600 hover:text-blue-700',
+    icon: 'bg-gradient-to-br from-[#7C3AED] to-purple-700 text-white shadow-purple-500/30',
+    ring: 'ring-purple-400/40',
+    border: 'border-[#7C3AED]',
+    header: 'bg-gradient-to-r from-[#7C3AED] to-purple-700',
+    hover: 'hover:border-[#7C3AED] hover:bg-purple-50/70 hover:shadow-lg hover:shadow-purple-500/10 hover:scale-[1.025]',
+    active: 'border-[#7C3AED] bg-purple-50/90 shadow-md shadow-purple-100',
+    link: 'hover:bg-purple-50 hover:text-[#7C3AED]',
+    chip: 'bg-violet-100 text-[#7C3AED]',
+    viewAll: 'text-[#7C3AED] hover:text-purple-700',
   },
 };
 
@@ -124,15 +125,27 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
 
   return (
     <div className="relative">
+      {section.badge && (
+        <span className="absolute -top-3 right-4 z-10 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-[#00F0FF] to-[#06b6d4] px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider text-slate-950 shadow-md shadow-cyan-500/20">
+          <span className="h-1.5 w-1.5 rounded-full bg-slate-950 animate-pulse" />
+          {section.badge}
+        </span>
+      )}
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className={`group flex w-full items-center gap-3.5 rounded-2xl border-2 bg-white px-4 py-4 text-left transition-all duration-200 ${theme.hover} ${
-          isOpen ? `ring-4 ${theme.ring} ${theme.active}` : 'border-slate-200/90'
+        className={`group relative flex w-full items-center gap-3.5 rounded-2xl border-2 bg-white px-4 py-4 text-left transition-all duration-300 cursor-pointer ${
+          theme.hover
+        } ${
+          isOpen
+            ? `ring-4 ${theme.ring} ${theme.active} scale-[1.02]`
+            : section.badge
+            ? 'border-[#00F0FF]/60 shadow-md shadow-cyan-500/5'
+            : 'border-slate-200/90'
         }`}
       >
-        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-lg ${theme.icon}`}>
+        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-lg transition-transform duration-300 group-hover:scale-110 ${theme.icon}`}>
           <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
             <path strokeLinecap="round" strokeLinejoin="round" d={section.icon} />
           </svg>
@@ -141,62 +154,57 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
           <span className="block text-[15px] font-bold text-slate-900">{section.title}</span>
           <span className="block text-[12px] text-slate-500">{section.subtitle}</span>
         </span>
-        <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all ${
-          isOpen ? `${theme.border} bg-white` : 'border-slate-200 bg-slate-50 group-hover:border-slate-300'
-        }`}>
-          <svg
-            className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="2.5"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
+        <span className="flex items-center gap-1">
+          <span className="hidden text-[10px] font-bold uppercase tracking-wider text-slate-400 xl:inline">
+            {isOpen ? 'Close' : 'Select'}
+          </span>
+          <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
+            isOpen ? `${theme.border} bg-white shadow-xs` : 'border-slate-200 bg-slate-50 group-hover:border-slate-300 group-hover:bg-white'
+          }`}>
+            <svg
+              className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-slate-900' : 'group-hover:text-slate-600'}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
         </span>
       </button>
 
       {isOpen && (
-        <div className="program-dropdown-panel absolute left-0 right-0 top-[calc(100%+10px)] z-50 overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-2xl shadow-slate-300/40">
-          <div className={`px-4 py-3 ${theme.header}`}>
-            <p className="text-[13px] font-bold text-white">{section.title}</p>
-            <p className="mt-0.5 text-[11px] text-white/85">{section.desc}</p>
+        <div className="absolute left-0 right-0 top-full z-40 mt-2.5 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="mb-2 px-3 pt-2.5 pb-1 flex items-center justify-between border-b border-slate-100">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{section.title} Target Class</p>
+            <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${theme.chip}`}>
+              {options.length} Options
+            </span>
           </div>
-          <div className="p-2">
-            <p className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-widest text-slate-400">
-              {section.title === 'Test Series' ? 'Choose exam' : 'Select class'}
-            </p>
-            <ul className="space-y-0.5">
-              {options.map((option, i) => (
-                <li key={option.filter || option.value}>
-                  <Link
-                    to={dropdownLink(section, option)}
-                    onClick={onClose}
-                    className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13px] font-medium text-slate-700 transition ${theme.link}`}
-                  >
-                    <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-[11px] font-bold ${theme.chip}`}>
-                      {i + 1}
-                    </span>
-                    {option.label}
-                    <svg className="ml-auto h-4 w-4 opacity-40" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-1 border-t border-slate-100 px-2 pt-2">
+          <div className="space-y-0.5">
+            {options.map((opt) => (
               <Link
-                to={viewAllLink(section)}
+                key={opt.label}
+                to={dropdownLink(section, opt)}
                 onClick={onClose}
-                className={`flex items-center justify-center gap-1 rounded-xl py-2.5 text-[12px] font-semibold transition ${theme.viewAll}`}
+                className={`flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition duration-150 ${theme.link}`}
               >
-                View all {section.title} courses
-                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                </svg>
+                <span>{opt.label}</span>
+                <span className="text-slate-400 transition-transform duration-150 group-hover:translate-x-0.5">→</span>
               </Link>
-            </div>
+            ))}
+          </div>
+
+          <div className="mt-2 border-t border-slate-100 pt-2 px-1 pb-1">
+            <Link
+              to={viewAllLink(section)}
+              onClick={onClose}
+              className={`flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold transition duration-150 ${theme.viewAll}`}
+            >
+              <span>Explore all {section.title} tests</span>
+              <span>→</span>
+            </Link>
           </div>
         </div>
       )}
@@ -204,52 +212,36 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
   );
 }
 
-export function ProgramDropdownGrid({ className = '' }) {
-  const [openProgram, setOpenProgram] = useState(null);
-  const programsRef = useRef(null);
+export default function EdvedumProgramDropdowns() {
+  const [activeTitle, setActiveTitle] = useState(null);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (programsRef.current && !programsRef.current.contains(e.target)) {
-        setOpenProgram(null);
+    function handleClickOutside(e) {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setActiveTitle(null);
       }
-    };
+    }
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   return (
-    <div ref={programsRef} className={className}>
-      <div className="mb-5 flex flex-col items-center gap-1 sm:flex-row sm:justify-center sm:gap-3">
-        <span className="hidden h-px w-8 bg-slate-200 sm:block" aria-hidden />
-        <p className="text-center text-[13px] font-bold uppercase tracking-[0.2em] text-slate-700">
-          Choose your program
-        </p>
-        <span className="hidden h-px w-8 bg-slate-200 sm:block" aria-hidden />
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 lg:gap-4">
-        {PROGRAM_SECTIONS.map((section) => (
-          <ProgramDropdown
-            key={section.title}
-            section={section}
-            isOpen={openProgram === section.title}
-            onToggle={() => setOpenProgram((c) => (c === section.title ? null : section.title))}
-            onClose={() => setOpenProgram(null)}
-          />
-        ))}
-      </div>
+    <div ref={containerRef} className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+      {PROGRAM_SECTIONS.map((sec) => (
+        <ProgramDropdown
+          key={sec.title}
+          section={sec}
+          isOpen={activeTitle === sec.title}
+          onToggle={() => setActiveTitle((curr) => (curr === sec.title ? null : sec.title))}
+          onClose={() => setActiveTitle(null)}
+        />
+      ))}
     </div>
   );
 }
 
-export default function EdvedumProgramDropdowns() {
-  return (
-    <section className="relative z-20 px-4 lg:px-8">
-      <div className="edvedum-section-wrap !px-0">
-        <div className="edvedum-program-bar">
-          <ProgramDropdownGrid />
-        </div>
-      </div>
-    </section>
-  );
+export function ProgramDropdownGrid() {
+  return <EdvedumProgramDropdowns />;
 }
+

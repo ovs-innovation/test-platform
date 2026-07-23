@@ -27,63 +27,123 @@ const COVER_IMAGES = {
 
 const THEMES = {
   jee: {
-    label: 'JEE',
-    tagline: 'Main & Advanced full-length mocks',
-    header: 'bg-gradient-to-br from-[#1d4ed8] via-[#1e40af] to-[#172554]',
-    accent: 'text-blue-600',
-    statBg: 'bg-blue-50',
-    highlights: ['Physics, Chemistry & Maths', 'All India Rank', 'Step-by-step solutions'],
+    categoryKey: 'jee',
+    label: 'JEE MAIN & ADVANCED',
+    tagline: 'PCM CBT Mock Track',
+    badgeStyle: 'bg-[#0D6EFD]/10 text-[#0D6EFD] border border-[#0D6EFD]/20',
+    heroGradient: 'from-[#0D6EFD] via-[#2563eb] to-[#1e40af]',
+    fadeFromGradient: 'from-[#2563eb] to-transparent',
+    studentImage: '/edvedum/jee-student-ai.png',
+    glowColor: 'rgba(13, 110, 253, 0.25)',
+    accentText: 'text-[#0D6EFD]',
+    chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8] text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40',
+    tags: ['PCM Mocks', 'NTA Interface', 'AIR Rank'],
   },
   neet: {
-    label: 'NEET UG',
-    tagline: 'Medical entrance test series',
-    header: 'bg-gradient-to-br from-[#059669] via-[#047857] to-[#064e3b]',
-    accent: 'text-emerald-600',
-    statBg: 'bg-emerald-50',
-    highlights: ['Biology, Physics & Chemistry', 'NTA-style CBT screen', 'Rank after every mock'],
+    categoryKey: 'neet',
+    label: 'NEET UG MEDICAL',
+    tagline: 'PCB NCERT Mock Track',
+    badgeStyle: 'bg-[#0891b2]/10 text-[#0891b2] border border-[#0891b2]/20',
+    heroGradient: 'from-[#0284c7] via-[#06b6d4] to-[#0891b2]',
+    fadeFromGradient: 'from-[#06b6d4] to-transparent',
+    studentImage: '/edvedum/neet-student-ai.png',
+    glowColor: 'rgba(8, 145, 178, 0.25)',
+    accentText: 'text-[#0891b2]',
+    chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#06b6d4] via-[#0891b2] to-[#0e7490] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/40',
+    tags: ['Biology & Physics', 'NCERT Mocks', 'Step Keys'],
   },
   'neet-pg': {
-    label: 'NEET PG',
-    tagline: 'Postgraduate entrance mocks',
-    header: 'bg-gradient-to-br from-[#0d9488] via-[#0f766e] to-[#134e4a]',
-    accent: 'text-teal-600',
-    statBg: 'bg-teal-50',
-    highlights: ['Clinical & subject-wise tests', 'Detailed explanations', 'Performance tracking'],
+    categoryKey: 'neet-pg',
+    label: 'NEET PG CLINICAL',
+    tagline: 'Postgraduate Medical Mocks',
+    badgeStyle: 'bg-[#7C3AED]/10 text-[#7C3AED] border border-[#7C3AED]/20',
+    heroGradient: 'from-[#7C3AED] via-[#6d28d9] to-[#5b21b6]',
+    fadeFromGradient: 'from-[#6d28d9] to-transparent',
+    studentImage: '/edvedum/neetpg-student-ai.png',
+    glowColor: 'rgba(124, 58, 237, 0.25)',
+    accentText: 'text-[#7C3AED]',
+    chipBg: 'bg-purple-50 text-[#7C3AED] border border-purple-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#7C3AED] via-[#6d28d9] to-[#5b21b6] text-white shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40',
+    tags: ['Clinical Mocks', 'High-Yield Notes', 'Analytics'],
   },
   foundation: {
-    label: 'Foundation',
-    tagline: 'Class 5–10 preparation',
-    header: 'bg-gradient-to-br from-[#7c3aed] via-[#6d28d9] to-[#4c1d95]',
-    accent: 'text-violet-600',
-    statBg: 'bg-violet-50',
-    highlights: ['Concept-building tests', 'Age-appropriate difficulty', 'Progress reports'],
+    categoryKey: 'foundation',
+    label: 'FOUNDATION PROGRAM',
+    tagline: 'Class 6–10 Prep Track',
+    badgeStyle: 'bg-[#4F46E5]/10 text-[#4F46E5] border border-[#4F46E5]/20',
+    heroGradient: 'from-[#4F46E5] via-[#4338ca] to-[#3730a3]',
+    fadeFromGradient: 'from-[#4338ca] to-transparent',
+    studentImage: '/edvedum/foundation-student-ai.png',
+    glowColor: 'rgba(79, 70, 229, 0.25)',
+    accentText: 'text-[#4F46E5]',
+    chipBg: 'bg-indigo-50 text-[#4F46E5] border border-indigo-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#4F46E5] via-[#4338ca] to-[#3730a3] text-white shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/40',
+    tags: ['Class 6-10', 'Concept Mocks', 'Progress Rank'],
   },
   general: {
-    label: 'Test Series',
-    tagline: 'Structured mock test program',
-    header: 'bg-gradient-to-br from-[#475569] via-[#334155] to-[#1e293b]',
-    accent: 'text-slate-600',
-    statBg: 'bg-slate-100',
-    highlights: ['Proctored online mocks', 'Score & rank reports', 'Solution review'],
+    categoryKey: 'general',
+    label: 'TEST SERIES',
+    tagline: 'Structured Entrance Prep',
+    badgeStyle: 'bg-[#0D6EFD]/10 text-[#0D6EFD] border border-[#0D6EFD]/20',
+    heroGradient: 'from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8]',
+    fadeFromGradient: 'from-[#2563eb] to-transparent',
+    studentImage: '/edvedum/jee-student-ai.png',
+    glowColor: 'rgba(13, 110, 253, 0.25)',
+    accentText: 'text-[#0D6EFD]',
+    chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8] text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40',
+    tags: ['Proctored Mocks', 'Score Reports', 'Solution Keys'],
   },
   free: {
-    label: 'Free Mock',
-    tagline: 'Try before you enroll',
-    header: 'bg-gradient-to-br from-[#10b981] via-[#059669] to-[#047857]',
-    accent: 'text-emerald-600',
-    statBg: 'bg-emerald-50',
-    highlights: ['No payment required', 'Same CBT experience', 'Instant score report'],
+    categoryKey: 'free',
+    label: 'FREE MOCK TIER',
+    tagline: 'Full Diagnostic CBT Mock',
+    badgeStyle: 'bg-[#0891b2]/10 text-[#0891b2] border border-[#0891b2]/20',
+    heroGradient: 'from-[#0284c7] via-[#06b6d4] to-[#0891b2]',
+    fadeFromGradient: 'from-[#06b6d4] to-transparent',
+    studentImage: '/edvedum/neet-student-ai.png',
+    glowColor: 'rgba(8, 145, 178, 0.25)',
+    accentText: 'text-[#0891b2]',
+    chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
+    btnGradient: 'bg-gradient-to-r from-[#06b6d4] via-[#0891b2] to-[#0e7490] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/40',
+    tags: ['No Cost', 'NTA Screen', 'Instant AIR'],
   },
 };
+
+/** Map specific series to one of the 9 tailored hero banner images. */
+export function getSeriesBannerImage(series) {
+  const text = `${series?.slug || ''} ${series?.title || ''} ${series?.exam_type || ''}`.toLowerCase();
+  const free = Number(series?.price) === 0;
+
+  if (text.includes('physics')) return '/edvedum/banners/banner-jee-physics.png';
+  if (text.includes('biology') || text.includes('chemistry') || text.includes('ncert')) return '/edvedum/banners/banner-neet-bio.png';
+  if (isNeetPg(text)) return '/edvedum/banners/banner-neet-pg.png';
+  if (isNeetUg(text) && free) return '/edvedum/banners/banner-free-mock.png';
+  if (isNeetUg(text)) return '/edvedum/banners/banner-neet-mock.png';
+  if (text.includes('jee') && free) return '/edvedum/banners/banner-free-mock.png';
+  if (text.includes('jee')) return '/edvedum/banners/banner-jee-full.png';
+  if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/.test(text)) return '/edvedum/banners/banner-foundation.png';
+  if (text.includes('aptitude') || text.includes('reasoning') || text.includes('logic')) return '/edvedum/banners/banner-aptitude.png';
+  if (free) return '/edvedum/banners/banner-free-mock.png';
+  return '/edvedum/banners/banner-premium-series.png';
+}
 
 /** Exam-type styling for catalog cards. */
 export function getExamTheme(series) {
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
   const free = Number(series?.price) === 0;
-  if (free) return THEMES.free;
+  const bannerImage = getSeriesBannerImage(series);
 
-  const key = examCoverKey(text);
-  return THEMES[key] || THEMES.general;
+  let theme = THEMES.general;
+  if (isNeetPg(text)) theme = THEMES['neet-pg'];
+  else if (isNeetUg(text)) theme = THEMES.neet;
+  else if (/jee/i.test(text)) theme = THEMES.jee;
+  else if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text)) theme = THEMES.foundation;
+  else if (free) theme = THEMES.free;
+
+  return { ...theme, studentImage: bannerImage };
 }
 
 /** Cover image — used on detail page, not catalog cards. */

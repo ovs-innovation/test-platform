@@ -19,6 +19,7 @@ import FAQs from './pages/public/FAQs.jsx';
 import FreeMock from './pages/public/FreeMock.jsx';
 import About from './pages/public/About.jsx';
 import Contact from './pages/public/Contact.jsx';
+import Careers from './pages/public/Careers.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
 
@@ -53,6 +54,8 @@ import AdminCandidates from './pages/admin/Candidates.jsx';
 import AdminReports from './pages/admin/Reports.jsx';
 import AdminAttemptDetail from './pages/admin/AttemptDetail.jsx';
 
+import ScrollToTop from './components/ScrollToTop.jsx';
+
 const Shell = ({ children }) => <Layout>{children}</Layout>;
 
 function AppHome() {
@@ -61,7 +64,9 @@ function AppHome() {
 
 export default function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       <Route element={<PublicLayout />}>
         <Route path="/" element={<AppHome />} />
         <Route path="/test-series" element={<TestSeriesCatalog />} />
@@ -73,6 +78,7 @@ export default function App() {
         <Route path="/pricing" element={<EdvedumLegalPage title="Pricing"><p>Flexible plans for every aspirant. Free diagnostic mock available. Premium test series for JEE & NEET preparation.</p><p className="mt-4">Contact <a href={`mailto:${CONTACT.businessEmail}`} className="text-[#2563eb]">{CONTACT.businessEmail}</a> for institute & bulk pricing.</p></EdvedumLegalPage>} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/careers" element={<Careers />} />
         <Route path="/privacy" element={<EdvedumLegalPage title="Privacy Policy"><p>{COMPANY.name} is committed to protecting your personal data. Information collected during registration, test attempts, and payments is encrypted and used solely to deliver our educational services.</p><p className="mt-4">We do not sell or share student data with third parties without consent, except as required by law.</p></EdvedumLegalPage>} />
         <Route path="/terms" element={<EdvedumLegalPage title="Terms & Conditions"><p>By using {COMPANY.name} platform you agree to fair examination policies, honest attempt guidelines, and acceptable use of our CBT test interface.</p><p className="mt-4">Misuse of the platform, sharing of credentials, or attempt to circumvent proctoring may result in account suspension.</p></EdvedumLegalPage>} />
         <Route path="/refund" element={<EdvedumLegalPage title="Refund Policy"><p>Refunds are available within 7 days of purchase if no test has been attempted. Partial refunds may apply for unused portions of multi-test series at management discretion.</p></EdvedumLegalPage>} />
@@ -86,6 +92,8 @@ export default function App() {
       </Route>
 
       <Route path="/admin-login" element={<Login />} />
+      <Route path="/admin/login" element={<Navigate to="/admin-login" replace />} />
+      <Route path="/center-login" element={<Navigate to="/admin-login" replace />} />
       <Route path="/login" element={<Navigate to="/student-login" replace />} />
       <Route path="/student-login" element={<StudentLogin />} />
       <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -99,6 +107,7 @@ export default function App() {
       <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
       <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />
       <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
+      <Route path="/results" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
       <Route path="/leaderboard" element={<ProtectedRoute role="candidate"><Shell><Leaderboard /></Shell></ProtectedRoute>} />
       <Route path="/forum" element={<ProtectedRoute role="candidate"><Shell><Forum /></Shell></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute role="candidate"><Shell><Notifications /></Shell></ProtectedRoute>} />
@@ -127,5 +136,6 @@ export default function App() {
 
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
-  );
+  </>
+);
 }

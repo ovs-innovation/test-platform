@@ -1,11 +1,8 @@
 import EdvedumHero from "../../components/landing/EdvedumHero.jsx";
 import EdvedumHeroBridge from "../../components/landing/EdvedumHeroBridge.jsx";
 import EdvedumHomeSections from "../../components/landing/EdvedumHomeSections.jsx";
-import EdvedumExamTracks from "../../components/landing/EdvedumExamTracks.jsx";
-import { EdvedumWhyChoose } from "../../components/landing/EdvedumContentSections.jsx";
 import { EdvedumCtaStrip } from "../../components/edvedum/EdvedumPlatformUI.jsx";
 import {
-  EdvedumFeaturedSeries,
   EdvedumHowItWorks,
   EdvedumMiniFaq,
 } from "../../components/landing/EdvedumHomeExtended.jsx";
@@ -16,16 +13,17 @@ export default function Home() {
       <EdvedumHero />
       <EdvedumHeroBridge />
       <EdvedumHomeSections />
-      <EdvedumFeaturedSeries />
-      <EdvedumExamTracks />
-      <EdvedumWhyChoose showMoreLink />
       <EdvedumHowItWorks />
       <EdvedumMiniFaq />
       <EdvedumCtaStrip
-        title="Ready to attempt your first mock?"
-        desc="Enroll in a test series and practice on the NTA CBT interface."
-        primary={{ to: "/test-series", label: "Browse test series" }}
-        secondary={{ to: "/free-mock", label: "Start free test" }}
+        badge="SUPPORT & ENQUIRIES"
+        title="Have questions? We're here to help"
+        desc="Reach out for admissions, technical support, or test series queries."
+        primary={{ to: "/contact", label: "Contact Us" }}
+        quickContact={{
+          email: "support@edvedum.com",
+          phone: "1800-EDVEDUM (3383386)",
+        }}
       />
     </>
   );

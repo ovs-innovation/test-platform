@@ -71,7 +71,7 @@ export default function Layout({ children }) {
   };
 
   const NavItems = () => (
-    <nav className="space-y-0.5">
+    <nav className="space-y-1.5 px-3 py-4">
       {nav.map((item) => (
         <NavLink
           key={item.to}
@@ -79,17 +79,19 @@ export default function Layout({ children }) {
           end={item.to === '/admin'}
           onClick={() => setMobileOpen(false)}
           className={({ isActive }) =>
-            `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+            `group flex items-center gap-3.5 rounded-xl px-3.5 py-3 text-xs sm:text-sm font-bold transition-all duration-200 ${
               isActive
-                ? 'bg-brand-50 text-brand-700 dark:bg-brand-950/60 dark:text-brand-300'
-                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
+                ? 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-white shadow-md shadow-blue-500/20 translate-x-1'
+                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 hover:translate-x-0.5 dark:text-slate-300 dark:hover:bg-slate-800/80 dark:hover:text-white'
             }`
           }
         >
           <Icon name={item.icon} />
           <span className="truncate">{item.label}</span>
           {item.to === '/notifications' && unread > 0 && (
-            <span className="ml-auto rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white">{unread}</span>
+            <span className="ml-auto rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-black text-white shadow-xs animate-pulse">
+              {unread}
+            </span>
           )}
         </NavLink>
       ))}
@@ -97,51 +99,76 @@ export default function Layout({ children }) {
   );
 
   const sidebar = (
-    <>
-      <Brand />
-      <div className="flex-1 overflow-y-auto px-3 py-4">
+    <div className="flex h-full flex-col justify-between">
+      <div>
+        <Brand />
         <NavItems />
       </div>
       <UserCard user={user} onLogout={handleLogout} />
-    </>
+    </div>
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 lg:flex">
-      <aside className="hidden w-64 shrink-0 flex-col border-r border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900 lg:flex">
-        {sidebar}
+    <div className="min-h-screen bg-[#F5F6FA] dark:bg-slate-950 lg:flex">
+      {/* Desktop Floating Sidebar Container */}
+      <aside className="hidden w-64 shrink-0 p-4 lg:block">
+        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-3xl border border-slate-200/90 bg-white shadow-xl shadow-slate-200/60 dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
+          {sidebar}
+        </div>
       </aside>
 
+      {/* Mobile Drawer Navigation */}
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-0 top-0 flex h-full w-72 flex-col bg-white shadow-elevated dark:bg-slate-900">
+        <div className="fixed inset-0 z-50 lg:hidden">
+          <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-3xl border border-slate-200/90 bg-white p-2 shadow-2xl dark:border-slate-800 dark:bg-slate-900 overflow-hidden">
             {sidebar}
           </aside>
         </div>
       )}
 
+      {/* Main Content Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200 bg-white/90 px-4 backdrop-blur dark:border-slate-800 dark:bg-slate-900/90 lg:px-8">
-          <button
-            className="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden"
-            onClick={() => setMobileOpen(true)}
-            aria-label="Open menu"
-          >
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-          <div className="hidden lg:block" />
+        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200/80 bg-white/85 px-4 sm:px-6 lg:px-8 backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/85">
           <div className="flex items-center gap-3">
-            <span className="hidden text-sm text-slate-500 sm:inline">{user?.email}</span>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-600 text-sm font-semibold text-white ring-2 ring-brand-100 dark:ring-brand-900">
-              {user?.name?.charAt(0)?.toUpperCase()}
-            </span>
+            <button
+              className="rounded-xl border border-slate-200 p-2 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:text-slate-300 lg:hidden"
+              onClick={() => setMobileOpen(true)}
+              aria-label="Open menu"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div className="hidden lg:block text-xs font-bold uppercase tracking-wider text-slate-400">
+              {user?.role === 'admin' ? 'Admin Portal' : 'Student Learning Portal'}
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <Link
+              to="/notifications"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-200 bg-slate-50 text-slate-600 transition hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300"
+            >
+              <Icon name="bell" />
+              {unread > 0 && (
+                <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-rose-500 ring-2 ring-white" />
+              )}
+            </Link>
+            <div className="h-6 w-px bg-slate-200 dark:bg-slate-800" />
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-[#0D6EFD] to-[#2563eb] text-sm font-extrabold text-white shadow-md shadow-blue-500/20">
+                {user?.name?.charAt(0)?.toUpperCase() || 'S'}
+              </span>
+              <div className="hidden sm:block text-left">
+                <p className="text-xs font-extrabold text-slate-900 dark:text-slate-100">{user?.name}</p>
+                <p className="text-[10px] font-semibold text-slate-400 truncate max-w-[140px]">{user?.email}</p>
+              </div>
+            </div>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6 lg:px-8 lg:py-8">{children}</main>
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
       </div>
     </div>
   );
@@ -149,11 +176,11 @@ export default function Layout({ children }) {
 
 function Brand() {
   return (
-    <Link to="/" className="flex h-16 items-center gap-2.5 border-b border-slate-200 px-5 dark:border-slate-800 hover:opacity-85 transition-opacity duration-200">
+    <Link to="/" className="flex h-20 items-center gap-3 border-b border-slate-100 px-5 dark:border-slate-800/80 hover:opacity-90 transition-opacity">
       <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-10 w-auto object-contain" />
       <div>
-        <span className="text-lg font-bold tracking-tight text-slate-900 dark:text-white">EDVEDUM</span>
-        <p className="text-[10px] font-medium uppercase tracking-wider text-slate-400">Academy</p>
+        <span className="text-lg font-black tracking-tight text-slate-900 dark:text-white">EDVEDUM</span>
+        <p className="text-[10px] font-bold uppercase tracking-wider text-[#0D6EFD]">Student Portal</p>
       </div>
     </Link>
   );
@@ -161,16 +188,19 @@ function Brand() {
 
 function UserCard({ user, onLogout }) {
   return (
-    <div className="border-t border-slate-200 p-4 dark:border-slate-800">
-      <div className="mb-3 rounded-lg bg-slate-50 p-3 dark:bg-slate-800/60">
-        <p className="truncate text-sm font-semibold text-slate-800 dark:text-slate-100">{user?.name}</p>
-        <p className="truncate text-xs capitalize text-slate-500 dark:text-slate-400">{user?.role}</p>
+    <div className="border-t border-slate-100 p-4 dark:border-slate-800/80">
+      <div className="mb-3 rounded-2xl bg-slate-50 p-3.5 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800">
+        <p className="truncate text-xs font-black text-slate-900 dark:text-slate-100">{user?.name}</p>
+        <p className="truncate text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Student'}</p>
       </div>
-      <button onClick={onLogout} className="btn-secondary w-full text-sm">
+      <button
+        onClick={onLogout}
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white py-2.5 text-xs font-bold text-slate-700 shadow-xs transition hover:border-red-200 hover:bg-red-50 hover:text-red-600 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-red-950/40"
+      >
         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
           <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
         </svg>
-        Sign out
+        <span>Sign Out</span>
       </button>
     </div>
   );

@@ -139,11 +139,12 @@ export default function TestSeriesDetail() {
         </nav>
 
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-2 lg:gap-12">
-          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-card ring-1 ring-slate-900/5">
+          {/* Cover Card — Full cover image anchored left to avoid text cutoff and remove dark background bars */}
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-slate-100 shadow-card ring-1 ring-slate-900/5">
             <img
               src={getTestSeriesCover(series)}
-              alt={isFree ? 'Student preparing for competitive exams' : `${series.title} cover`}
-              className="aspect-[4/3] w-full object-cover object-center"
+              alt={`${series.title} cover`}
+              className="aspect-[4/3] w-full object-cover object-left sm:object-[12%_center]"
             />
           </div>
 
