@@ -9,7 +9,7 @@ export default function Signup() {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ name: '', email: '', phone: '', class: '', target_exam: '' });
+  const [form, setForm] = useState({ name: '', email: '', phone: '', class: '', target_exam: '', password: '' });
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [sentMessage, setSentMessage] = useState('');
@@ -152,6 +152,20 @@ export default function Signup() {
                 <option value="NEET">NEET</option>
               </select>
             </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Password <span className="text-slate-500 font-normal lowercase">(optional — to also log in via password)</span>
+            </label>
+            <input
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+              type="password"
+              minLength={6}
+              placeholder="At least 6 characters (optional)"
+              value={form.password}
+              onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+            />
           </div>
 
           <div className="pt-2">
