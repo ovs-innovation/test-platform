@@ -8,10 +8,16 @@ export const loginSchema = z.object({
 export const registerSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
   email: z.string().trim().toLowerCase().email('A valid email is required'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string().min(6, 'Password must be at least 6 characters').optional().or(z.literal('')),
   phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
   class: z.string().trim().min(1, 'Class is required'),
   target_exam: z.enum(['JEE', 'NEET'], { required_error: 'Target exam must be JEE or NEET' }),
+  otp: z.string().length(6, 'OTP must be 6 digits').optional().or(z.literal('')),
+});
+
+export const otpSendSignupSchema = z.object({
+  email: z.string().trim().toLowerCase().email('A valid email is required'),
+  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().or(z.literal('')),
 });
 
 export const adminCreateCandidateSchema = z.object({

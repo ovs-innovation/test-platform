@@ -9,6 +9,7 @@ export const authService = {
   sendOtp: (data) => api.post('/auth/otp/send', data).then((r) => r.data),
   verifyOtp: (data) => api.post('/auth/otp/verify', data).then((r) => r.data),
   sendLoginOtp: (data) => api.post('/auth/otp/send-login', data).then((r) => r.data),
+  sendSignupOtp: (data) => api.post('/auth/otp/send-signup', data).then((r) => r.data),
   verifyLoginOtp: (data) => api.post('/auth/otp/verify-login', data).then((r) => r.data),
   firebaseLogin: (data) => api.post('/auth/firebase-login', data).then((r) => r.data),
   me: () => api.get('/auth/me').then((r) => r.data),
