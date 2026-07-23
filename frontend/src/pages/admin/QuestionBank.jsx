@@ -5,11 +5,12 @@ import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 
-const CATEGORIES = ['Aptitude', 'JavaScript', 'React', 'HTML', 'CSS', 'Node.js'];
+const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
 
 export default function AdminQuestionBank() {
   const toast = useToast();
-  const [category, setCategory] = useState('JavaScript');
+  const [category, setCategory] = useState('Physics');
+  const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -44,6 +45,16 @@ export default function AdminQuestionBank() {
   };
 
   useEffect(() => { load(); }, [category]);
+
+  useEffect(() => {
+    questionBankService.categories().then((res) => {
+      if (res?.categories?.length) {
+        const names = res.categories.map((c) => c.name);
+        const merged = Array.from(new Set([...DEFAULT_CATEGORIES, ...names]));
+        setCategoriesList(merged);
+      }
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     adminService.subjects().then((list) => {
@@ -184,7 +195,7 @@ export default function AdminQuestionBank() {
       />
 
       <div className="mb-4 flex flex-wrap gap-2">
-        {CATEGORIES.map((c) => (
+        {categoriesList.map((c) => (
           <button key={c} type="button" className={category === c ? 'btn-primary' : 'btn-secondary'} onClick={() => setCategory(c)}>
             {c}
           </button>
@@ -240,8 +251,11 @@ export default function AdminQuestionBank() {
               <label className="label">Question type</label>
               <select className="input" value={form.question_type} disabled={!!editing}
                 onChange={(e) => setForm((f) => ({ ...f, question_type: e.target.value }))}>
-                <option value="mcq">MCQ</option>
-                <option value="multi_select">Multiple Select</option>
+                <option value="mcq">Single correct MCQ</option>
+                <option value="multi_select">Multiple correct MCQ</option>
+                <option value="integer">Integer type</option>
+                <option value="numerical">Numerical answer type</option>
+                <option value="assertion_reason">Assertion-reason type</option>
                 <option value="coding">Coding</option>
                 <option value="subjective">Subjective</option>
               </select>
@@ -282,7 +296,20 @@ export default function AdminQuestionBank() {
             <textarea rows={3} className="input" required value={form.question_text} onChange={(e) => setForm((f) => ({ ...f, question_text: e.target.value }))} />
           </div>
 
-          {(form.question_type === 'mcq' || form.question_type === 'multi_select') && (
+          {form.question_type === 'assertion_reason' && (
+            <div className="space-y-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div>
+                <label className="label">Assertion (A)</label>
+                <textarea rows={2} className="input" placeholder="Statement 1" value={form.assertion_text || ''} onChange={(e) => setForm((f) => ({ ...f, assertion_text: e.target.value }))} />
+              </div>
+              <div>
+                <label className="label">Reason (R)</label>
+                <textarea rows={2} className="input" placeholder="Statement 2" value={form.reason_text || ''} onChange={(e) => setForm((f) => ({ ...f, reason_text: e.target.value }))} />
+              </div>
+            </div>
+          )}
+
+          {(form.question_type === 'mcq' || form.question_type === 'single_choice' || form.question_type === 'multi_select' || form.question_type === 'assertion_reason') && (
             <>
               <div>
                 <label className="label">Options (pipe-separated e.g. Option A|Option B|Option C|Option D)</label>
@@ -293,6 +320,21 @@ export default function AdminQuestionBank() {
                 <input className="input" type="number" min={0} required value={form.correct_index} onChange={(e) => setForm((f) => ({ ...f, correct_index: Number(e.target.value) }))} />
               </div>
             </>
+          )}
+
+          {(form.question_type === 'integer' || form.question_type === 'numerical') && (
+            <div className="grid grid-cols-2 gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div>
+                <label className="label">Correct Numeric Answer</label>
+                <input className="input font-mono" type="number" step="any" required value={form.numeric_answer ?? ''} onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? Number(e.target.value) : '' }))} />
+              </div>
+              {form.question_type === 'numerical' && (
+                <div>
+                  <label className="label">Tolerance (±)</label>
+                  <input className="input font-mono" type="number" step="any" min={0} value={form.numerical_tolerance ?? 0.01} onChange={(e) => setForm((f) => ({ ...f, numerical_tolerance: Number(e.target.value) || 0 }))} />
+                </div>
+              )}
+            </div>
           )}
 
           <div>

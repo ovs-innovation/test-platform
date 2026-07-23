@@ -3,7 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 
-const CATEGORIES = ['Aptitude', 'JavaScript', 'React', 'HTML', 'CSS', 'Node.js'];
+const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
 
 const asJson = (value, fallback) => {
   if (value == null) return JSON.stringify(fallback);
@@ -19,8 +19,9 @@ export const listCategories = asyncHandler(async (_req, res) => {
     `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
   );
   const counts = Object.fromEntries(result.rows.map((r) => [r.category, r.count]));
+  const allCategoryNames = Array.from(new Set([...CATEGORIES, ...result.rows.map((r) => r.category)]));
   res.json({
-    categories: CATEGORIES.map((c) => ({ name: c, count: counts[c] || 0 })),
+    categories: allCategoryNames.map((c) => ({ name: c, count: counts[c] || 0 })),
   });
 });
 
@@ -62,8 +63,9 @@ export const importToAssessment = asyncHandler(async (req, res) => {
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
+        numeric_answer, numerical_tolerance, assertion_text, reason_text,
         marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
      RETURNING *`,
     [
       assessmentId,
@@ -73,6 +75,10 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       asJson(b.options, []),
       b.correct_index,
       asJson(b.correct_indices, []),
+      b.numeric_answer !== undefined ? b.numeric_answer : null,
+      b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
+      b.assertion_text || null,
+      b.reason_text || null,
       b.marks,
       maxRes.rows[0].next,
       b.starter_code || '',
@@ -90,10 +96,10 @@ export const importToAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createBankQuestion = asyncHandler(async (req, res) => {
-  const { category, question_type, question_text, options, correct_index, correct_indices, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
+  const { category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
   const result = await query(
-    `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, marks, solution, subject_id, chapter_id, difficulty, image_url)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12) RETURNING *`,
+    `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`,
     [
       category,
       question_type || 'mcq',
@@ -101,6 +107,10 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       asJson(options, []),
       correct_index ?? 0,
       asJson(correct_indices, []),
+      numeric_answer !== undefined ? numeric_answer : null,
+      numerical_tolerance !== undefined ? numerical_tolerance : 0,
+      assertion_text || null,
+      reason_text || null,
       marks ?? 1,
       solution || '',
       subject_id || null,
@@ -114,7 +124,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
 
 export const updateBankQuestion = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { question_text, options, correct_index, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
+  const { question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
   
   const existing = await query('SELECT * FROM question_bank WHERE id = $1', [id]);
   if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
@@ -125,17 +135,27 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        question_text = $1, 
        options = $2, 
        correct_index = $3, 
-       marks = $4, 
-       solution = $5,
-       subject_id = $6,
-       chapter_id = $7,
-       difficulty = $8,
-       image_url = $9
-     WHERE id = $10 RETURNING *`,
+       correct_indices = $4,
+       numeric_answer = $5,
+       numerical_tolerance = $6,
+       assertion_text = $7,
+       reason_text = $8,
+       marks = $9, 
+       solution = $10,
+       subject_id = $11,
+       chapter_id = $12,
+       difficulty = $13,
+       image_url = $14
+     WHERE id = $15 RETURNING *`,
     [
       question_text ?? q.question_text,
       options ? asJson(options, []) : q.options,
       correct_index ?? q.correct_index,
+      correct_indices ? asJson(correct_indices, []) : q.correct_indices,
+      numeric_answer !== undefined ? numeric_answer : q.numeric_answer,
+      numerical_tolerance !== undefined ? numerical_tolerance : q.numerical_tolerance,
+      assertion_text !== undefined ? assertion_text : q.assertion_text,
+      reason_text !== undefined ? reason_text : q.reason_text,
       marks ?? q.marks,
       solution ?? q.solution,
       subject_id !== undefined ? (subject_id || null) : q.subject_id,
@@ -253,8 +273,9 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     const result = await query(
       `INSERT INTO questions
          (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
-          marks, position, starter_code, test_cases, language, bank_category)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13)
+          numeric_answer, numerical_tolerance, assertion_text, reason_text,
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
        RETURNING id, question_text`,
       [
         assessmentId,
@@ -264,12 +285,21 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         asJson(b.options, []),
         b.correct_index,
         asJson(b.correct_indices, []),
+        b.numeric_answer !== undefined ? b.numeric_answer : null,
+        b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
+        b.assertion_text || null,
+        b.reason_text || null,
         b.marks,
         position,
         b.starter_code || '',
         asJson(b.test_cases, []),
         b.language || 'javascript',
         b.category,
+        b.solution || '',
+        b.image_url || '',
+        b.subject_id || null,
+        b.chapter_id || null,
+        b.difficulty || 'medium',
       ]
     );
     imported.push(result.rows[0]);

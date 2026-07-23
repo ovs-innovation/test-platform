@@ -5,6 +5,7 @@ import {
   createCandidate,
   updateCandidate,
   deleteCandidate,
+  toggleBlockCandidate,
   getReports,
   exportReports,
   getAttemptReport,
@@ -31,6 +32,7 @@ router.get('/analytics', getAnalytics);
 router.get('/candidates', getCandidates);
 router.post('/candidates', validate(adminCreateCandidateSchema), createCandidate);
 router.put('/candidates/:id', validate(adminUpdateCandidateSchema), updateCandidate);
+router.patch('/candidates/:id/block', toggleBlockCandidate);
 router.delete('/candidates/:id', deleteCandidate);
 router.get('/reports/export', exportReports);
 router.get('/reports', getReports);

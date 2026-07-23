@@ -125,12 +125,24 @@ export const otpVerifySchema = z.object({
 });
 
 export const otpSendLoginSchema = z.object({
-  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
+  identifier: z.string().trim().optional(),
+  phone: z.string().trim().optional(),
+  email: z.string().trim().optional(),
+}).refine((d) => d.identifier || d.phone || d.email, {
+  message: 'Mobile number or Email is required',
 });
 
 export const otpVerifyLoginSchema = z.object({
-  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15),
+  identifier: z.string().trim().optional(),
+  phone: z.string().trim().optional(),
+  email: z.string().trim().optional(),
   otp: z.string().length(6, 'OTP must be 6 digits'),
+}).refine((d) => d.identifier || d.phone || d.email, {
+  message: 'Mobile number or Email is required',
+});
+
+export const firebaseLoginSchema = z.object({
+  idToken: z.string().min(1, 'Firebase ID token is required'),
 });
 
 export const inviteSchema = z.object({
@@ -153,11 +165,17 @@ const optionsSchema = z
 
 const questionBaseSchema = z.object({
   question_text: z.string().trim().min(3),
-  question_type: z.enum(['mcq', 'multi_select', 'coding', 'subjective']).default('mcq'),
+  question_type: z
+    .enum(['mcq', 'single_choice', 'multi_select', 'integer', 'numerical', 'assertion_reason', 'coding', 'subjective'])
+    .default('mcq'),
   section_id: z.number().int().positive().nullable().optional(),
   options: optionsSchema.optional(),
   correct_index: z.number().int().min(0).optional(),
   correct_indices: z.array(z.number().int().min(0)).optional(),
+  numeric_answer: z.number().optional().nullable(),
+  numerical_tolerance: z.number().min(0).optional().nullable(),
+  assertion_text: z.string().optional().nullable(),
+  reason_text: z.string().optional().nullable(),
   marks: z.number().int().min(1).max(100).default(1),
   position: z.number().int().min(0).optional(),
   starter_code: z.string().max(20000).optional(),
@@ -169,8 +187,8 @@ const questionBaseSchema = z.object({
 });
 
 export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {
-  if (data.question_type === 'mcq') {
-    if (!data.options || data.options.length < 2) {
+  if (data.question_type === 'mcq' || data.question_type === 'single_choice' || data.question_type === 'assertion_reason') {
+    if ((data.question_type === 'mcq' || data.question_type === 'single_choice') && (!data.options || data.options.length < 2)) {
       ctx.addIssue({ code: 'custom', message: 'MCQ requires at least 2 options', path: ['options'] });
     }
     if (data.correct_index === undefined || (data.options && data.correct_index >= data.options.length)) {
@@ -184,6 +202,11 @@ export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {
     const indices = data.correct_indices || [];
     if (indices.length < 1) {
       ctx.addIssue({ code: 'custom', message: 'Select at least one correct option', path: ['correct_indices'] });
+    }
+  }
+  if (data.question_type === 'integer' || data.question_type === 'numerical') {
+    if (data.numeric_answer === undefined || data.numeric_answer === null || Number.isNaN(data.numeric_answer)) {
+      ctx.addIssue({ code: 'custom', message: 'Numeric answer is required', path: ['numeric_answer'] });
     }
   }
 });

@@ -13,12 +13,17 @@ const getTransporter = () => {
   if (!env.smtp.host || !env.smtp.user || !env.smtp.pass) {
     throw new Error('SMTP is not configured. Set SMTP_HOST, SMTP_USER, and SMTP_PASS.');
   }
-  transporter = nodemailer.createTransport({
-    host: env.smtp.host,
-    port: env.smtp.port,
-    secure: env.smtp.secure,
+  const opts = {
     auth: { user: env.smtp.user, pass: env.smtp.pass },
-  });
+  };
+  if (env.smtp.host === 'smtp.gmail.com' || env.smtp.host.includes('gmail')) {
+    opts.service = 'gmail';
+  } else {
+    opts.host = env.smtp.host;
+    opts.port = env.smtp.port;
+    opts.secure = env.smtp.secure;
+  }
+  transporter = nodemailer.createTransport(opts);
   return transporter;
 };
 

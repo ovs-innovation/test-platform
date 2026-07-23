@@ -36,6 +36,7 @@ export default function ExamScreen() {
   const [meta, setMeta] = useState(null);
   const [answers, setAnswers] = useState({});
   const [multiAnswers, setMultiAnswers] = useState({});
+  const [numericAnswers, setNumericAnswers] = useState({});
   const [visited, setVisited] = useState({});
   const [reviewed, setReviewed] = useState({});
   const [codingAnswers, setCodingAnswers] = useState({});
@@ -73,6 +74,7 @@ export default function ExamScreen() {
         setViolations(data.attempt.violation_count || 0);
         const mcq = {};
         const multi = {};
+        const num = {};
         const rev = {};
         const vis = {};
         for (const a of data.answers) {
@@ -82,6 +84,9 @@ export default function ExamScreen() {
           } else if (a.selected_index != null) {
             mcq[a.question_id] = a.selected_index;
           }
+          if (a.numeric_answer != null) {
+            num[a.question_id] = a.numeric_answer;
+          }
           if (a.marked_for_review) rev[a.question_id] = true;
           vis[a.question_id] = true;
         }
@@ -89,6 +94,7 @@ export default function ExamScreen() {
         for (const a of data.subjective_answers || []) vis[a.question_id] = true;
         setAnswers(mcq);
         setMultiAnswers(multi);
+        setNumericAnswers(num);
         setReviewed(rev);
         setVisited(vis);
         const code = {};
@@ -161,8 +167,8 @@ export default function ExamScreen() {
   }, [current, loading, questions]);
 
   const qAnswered = useCallback(
-    (item) => isQuestionAnswered(item, answers, multiAnswers, codingAnswers, subjectiveAnswers),
-    [answers, multiAnswers, codingAnswers, subjectiveAnswers],
+    (item) => isQuestionAnswered(item, answers, multiAnswers, codingAnswers, subjectiveAnswers, numericAnswers),
+    [answers, multiAnswers, codingAnswers, subjectiveAnswers, numericAnswers],
   );
 
   const getQStatus = (item) => getQuestionStatus(item, visited, reviewed, qAnswered(item));
@@ -180,6 +186,7 @@ export default function ExamScreen() {
     const qid = questions[current].id;
     setAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setMultiAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
+    setNumericAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setReviewed((r) => { const n = { ...r }; delete n[qid]; return n; });
     try {
       await attemptService.clearAnswer(attemptId, qid);
@@ -209,6 +216,17 @@ export default function ExamScreen() {
     } catch (err) {
       if (err.status === 409) finishExam('timeout');
       else toast.error('Failed to save answer');
+    } finally { setSavingId(null); }
+  };
+
+  const saveNumericAnswer = async (questionId, val) => {
+    setNumericAnswers((prev) => ({ ...prev, [questionId]: val }));
+    setSavingId(questionId);
+    try {
+      await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: val != null && val !== '' ? Number(val) : null });
+    } catch (err) {
+      if (err.status === 409) finishExam('timeout');
+      else toast.error('Failed to save numeric answer');
     } finally { setSavingId(null); }
   };
 
@@ -397,7 +415,7 @@ export default function ExamScreen() {
             </button>
           )}
 
-          {q.question_type === 'mcq' && (
+          {(q.question_type === 'mcq' || q.question_type === 'single_choice') && (
             <div className="mt-5 space-y-2">
               {(q.options || []).map((opt, idx) => (
                 <button
@@ -414,6 +432,75 @@ export default function ExamScreen() {
                   <span>{opt}</span>
                 </button>
               ))}
+            </div>
+          )}
+
+          {q.question_type === 'assertion_reason' && (
+            <div className="mt-5 space-y-4">
+              <div className="rounded-lg border border-slate-300 bg-slate-50 p-4 space-y-2">
+                {q.assertion_text && (
+                  <p className="text-sm font-semibold text-slate-800">
+                    <span className="text-brand-700">Assertion (A):</span> {q.assertion_text}
+                  </p>
+                )}
+                {q.reason_text && (
+                  <p className="text-sm font-semibold text-slate-800">
+                    <span className="text-brand-700">Reason (R):</span> {q.reason_text}
+                  </p>
+                )}
+              </div>
+              <div className="space-y-2">
+                {(q.options && q.options.length ? q.options : [
+                  'Both Assertion (A) and Reason (R) are true and Reason (R) is the correct explanation of Assertion (A)',
+                  'Both Assertion (A) and Reason (R) are true but Reason (R) is NOT the correct explanation of Assertion (A)',
+                  'Assertion (A) is true but Reason (R) is false',
+                  'Assertion (A) is false but Reason (R) is true',
+                ]).map((opt, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => selectAnswer(q.id, idx)}
+                    className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
+                  >
+                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-bold ${
+                      answers[q.id] === idx ? 'border-[#1a4480] bg-[#1a4480] text-white' : 'border-slate-500 bg-white'
+                    }`}>
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    <span>{opt}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {q.question_type === 'integer' && (
+            <div className="mt-5 max-w-xs space-y-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">Enter Integer Answer</label>
+              <input
+                type="number"
+                step="1"
+                className="input font-mono text-lg font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600"
+                placeholder="e.g. 5"
+                value={numericAnswers[q.id] ?? ''}
+                onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500">Your answer will be saved automatically as an integer.</p>
+            </div>
+          )}
+
+          {q.question_type === 'numerical' && (
+            <div className="mt-5 max-w-xs space-y-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">Enter Numerical Value</label>
+              <input
+                type="number"
+                step="any"
+                className="input font-mono text-lg font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600"
+                placeholder="e.g. 12.5"
+                value={numericAnswers[q.id] ?? ''}
+                onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
+              />
+              <p className="text-[11px] text-slate-500">Decimal values accepted. Saved automatically.</p>
             </div>
           )}
 

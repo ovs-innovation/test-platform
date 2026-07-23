@@ -88,14 +88,47 @@ async function req(method, path, body, token) {
     'POST',
     `/assessments/${id}/questions`,
     {
-      question_type: 'subjective',
-      question_text: 'Describe REST',
-      marks: 2,
-      section_id: detail.sections.find((s) => s.section_type === 'subjective')?.id,
+      question_type: 'integer',
+      question_text: 'What is 5 x 5?',
+      numeric_answer: 25,
+      marks: 4,
+      section_id: sectionId,
     },
     token
   );
-  console.log('7. Subjective added');
+  console.log('7. Integer question added');
+
+  await req(
+    'POST',
+    `/assessments/${id}/questions`,
+    {
+      question_type: 'numerical',
+      question_text: 'Calculate pi to 2 decimal places',
+      numeric_answer: 3.14,
+      numerical_tolerance: 0.01,
+      marks: 4,
+      section_id: sectionId,
+    },
+    token
+  );
+  console.log('8. Numerical question added');
+
+  await req(
+    'POST',
+    `/assessments/${id}/questions`,
+    {
+      question_type: 'assertion_reason',
+      question_text: 'Electrostatics assertion',
+      assertion_text: 'Work done in closed path in conservative field is 0',
+      reason_text: 'Electrostatic force is conservative',
+      options: ['Option A', 'Option B', 'Option C', 'Option D'],
+      correct_index: 0,
+      marks: 4,
+      section_id: sectionId,
+    },
+    token
+  );
+  console.log('9. Assertion-Reason question added');
 
   const after = await req('GET', `/assessments/${id}`, null, token);
   const qs = after.questions;
@@ -108,7 +141,7 @@ async function req(method, path, body, token) {
   const cats = await req('GET', '/question-bank/categories', null, token);
   console.log('10. Bank categories:', cats.categories.map((c) => `${c.name}(${c.count})`).join(', '));
 
-  const bank = await req('GET', '/question-bank?category=JavaScript', null, token);
+  const bank = await req('GET', '/question-bank?category=Physics', null, token);
   if (bank.questions.length) {
     await req('POST', `/question-bank/${bank.questions[0].id}/import/${id}`, { section_id: sectionId }, token);
     console.log('11. Bank import OK');

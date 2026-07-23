@@ -9,6 +9,7 @@ import {
   mySeriesTests,
   deleteTestSeries,
   unlinkAssessment,
+  toggleTestSeriesActive,
   parsePdfPreview,
   importTestSeriesFromPdf,
 } from '../controllers/testSeriesController.js';
@@ -36,6 +37,7 @@ router.post('/parse-pdf', authorize('admin'), validate(parsePdfSchema), parsePdf
 router.post('/import-pdf', authorize('admin'), validate(importPdfTestSeriesSchema), importTestSeriesFromPdf);
 router.post('/', authorize('admin'), validate(testSeriesSchema), createTestSeries);
 router.put('/:id', authorize('admin'), validate(testSeriesUpdateSchema), updateTestSeries);
+router.patch('/:id/toggle-active', authorize('admin'), toggleTestSeriesActive);
 router.delete('/:id', authorize('admin'), deleteTestSeries);
 router.post('/:id/link', authorize('admin'), validate(linkTestSchema), linkAssessment);
 router.delete('/:id/link/:assessmentId', authorize('admin'), unlinkAssessment);

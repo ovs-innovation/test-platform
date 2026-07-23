@@ -87,7 +87,7 @@ export const getStats = asyncHandler(async (_req, res) => {
 
 export const getCandidates = asyncHandler(async (_req, res) => {
   const result = await query(`
-    SELECT u.id, u.name, u.email, u.created_at,
+    SELECT u.id, u.name, u.email, u.created_at, COALESCE(u.is_blocked, false) AS is_blocked,
            sp.phone, sp.class, sp.target_exam, sp.city, sp.state,
            COUNT(DISTINCT ci.id)::int AS invites,
            COUNT(DISTINCT a.id)::int AS attempts,
@@ -99,7 +99,7 @@ export const getCandidates = asyncHandler(async (_req, res) => {
     LEFT JOIN attempts a ON a.candidate_id = u.id
     LEFT JOIN scores s ON s.attempt_id = a.id
     WHERE u.role = 'candidate'
-    GROUP BY u.id, sp.phone, sp.class, sp.target_exam, sp.city, sp.state
+    GROUP BY u.id, u.is_blocked, sp.phone, sp.class, sp.target_exam, sp.city, sp.state
     ORDER BY u.created_at DESC
   `);
   res.json({ candidates: result.rows });
@@ -369,4 +369,18 @@ export const deleteCandidate = asyncHandler(async (req, res) => {
   const result = await query('DELETE FROM users WHERE id = $1 AND role = $2 RETURNING id', [id, 'candidate']);
   if (result.rowCount === 0) throw ApiError.notFound('Candidate not found');
   res.json({ message: 'Candidate user deleted successfully', id: result.rows[0].id });
+});
+
+export const toggleBlockCandidate = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { is_blocked } = req.body;
+  const result = await query(
+    'UPDATE users SET is_blocked = $1 WHERE id = $2 AND role = $3 RETURNING id, name, email, is_blocked',
+    [Boolean(is_blocked), id, 'candidate']
+  );
+  if (result.rowCount === 0) throw ApiError.notFound('Candidate not found');
+  res.json({
+    message: `Candidate user has been ${result.rows[0].is_blocked ? 'blocked' : 'unblocked'} successfully.`,
+    candidate: result.rows[0],
+  });
 });

@@ -32,6 +32,10 @@ export const createQuestion = asyncHandler(async (req, res) => {
     options,
     correct_index,
     correct_indices,
+    numeric_answer,
+    numerical_tolerance,
+    assertion_text,
+    reason_text,
     marks,
     position,
     section_id,
@@ -58,8 +62,9 @@ export const createQuestion = asyncHandler(async (req, res) => {
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
+        numeric_answer, numerical_tolerance, assertion_text, reason_text,
         marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
      RETURNING *`,
     [
       assessmentId,
@@ -69,6 +74,10 @@ export const createQuestion = asyncHandler(async (req, res) => {
       options ? JSON.stringify(options) : JSON.stringify([]),
       correct_index ?? 0,
       JSON.stringify(correct_indices || []),
+      numeric_answer !== undefined ? numeric_answer : null,
+      numerical_tolerance !== undefined ? numerical_tolerance : 0,
+      assertion_text || null,
+      reason_text || null,
       marks,
       pos,
       starter_code || '',
@@ -98,6 +107,10 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const options = body.options !== undefined ? JSON.stringify(body.options) : q.options;
   const correct_index = body.correct_index ?? q.correct_index;
   const correct_indices = body.correct_indices !== undefined ? JSON.stringify(body.correct_indices) : q.correct_indices;
+  const numeric_answer = body.numeric_answer !== undefined ? body.numeric_answer : q.numeric_answer;
+  const numerical_tolerance = body.numerical_tolerance !== undefined ? body.numerical_tolerance : q.numerical_tolerance;
+  const assertion_text = body.assertion_text !== undefined ? body.assertion_text : q.assertion_text;
+  const reason_text = body.reason_text !== undefined ? body.reason_text : q.reason_text;
   const marks = body.marks ?? q.marks;
   const position = body.position ?? q.position;
   const section_id = body.section_id !== undefined ? body.section_id : q.section_id;
@@ -114,11 +127,13 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const result = await query(
     `UPDATE questions SET
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
-       marks = $6, position = $7, section_id = $8, starter_code = $9, test_cases = $10, language = $11,
-       bank_category = $12, solution = $13, image_url = $14, subject_id = $15, chapter_id = $16, difficulty = $17
-     WHERE id = $18 RETURNING *`,
-    [question_text, question_type, options, correct_index, correct_indices, marks, position,
-      section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, id]
+       numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
+       marks = $10, position = $11, section_id = $12, starter_code = $13, test_cases = $14, language = $15,
+       bank_category = $16, solution = $17, image_url = $18, subject_id = $19, chapter_id = $20, difficulty = $21
+     WHERE id = $22 RETURNING *`,
+    [question_text, question_type, options, correct_index, correct_indices,
+      numeric_answer, numerical_tolerance, assertion_text, reason_text,
+      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, id]
   );
   res.json({ question: result.rows[0] });
 });

@@ -63,6 +63,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
   const optionsIdx = idx('options');
   const correctIdx = idx('correct_index');
   const correctIndicesIdx = idx('correct_indices');
+  const numericAnswerIdx = idx('numeric_answer');
+  const numericalToleranceIdx = idx('numerical_tolerance');
+  const assertionTextIdx = idx('assertion_text');
+  const reasonTextIdx = idx('reason_text');
   const categoryIdx = idx('category');
   const solutionIdx = idx('solution');
   const subjectIdIdx = idx('subject_id');
@@ -71,9 +75,6 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
   const imageUrlIdx = idx('image_url');
 
   if (textIdx === -1) throw new Error('CSV must include question_text column');
-  if (optionsIdx === -1 && !header.includes('options')) {
-    /* coding/subjective may omit options */
-  }
 
   const rows = [];
   const errors = [];
@@ -94,6 +95,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
     const correct_indices = correctIndicesIdx >= 0
       ? (cols[correctIndicesIdx] || '').split('|').map((n) => Number(n.trim())).filter((n) => !Number.isNaN(n))
       : [];
+    const numeric_answer = numericAnswerIdx >= 0 && cols[numericAnswerIdx] !== '' ? Number(cols[numericAnswerIdx]) : null;
+    const numerical_tolerance = numericalToleranceIdx >= 0 && cols[numericalToleranceIdx] !== '' ? Number(cols[numericalToleranceIdx]) : 0;
+    const assertion_text = assertionTextIdx >= 0 ? cols[assertionTextIdx] : null;
+    const reason_text = reasonTextIdx >= 0 ? cols[reasonTextIdx] : null;
     const category = categoryIdx >= 0 ? cols[categoryIdx] : null;
     const solution = solutionIdx >= 0 ? cols[solutionIdx] : '';
     const subject_id = subjectIdIdx >= 0 ? (Number(cols[subjectIdIdx]) || null) : null;
@@ -105,7 +110,7 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
       errors.push({ line: i + 1, error: 'Missing category' });
       continue;
     }
-    if (options.length < 2 && ['mcq', 'multi_select'].includes(question_type)) {
+    if (options.length < 2 && ['mcq', 'single_choice', 'multi_select'].includes(question_type)) {
       errors.push({ line: i + 1, error: 'Need at least 2 options' });
       continue;
     }
@@ -118,6 +123,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
       options,
       correct_index,
       correct_indices,
+      numeric_answer,
+      numerical_tolerance,
+      assertion_text,
+      reason_text,
       category,
       solution,
       subject_id,
@@ -131,7 +140,7 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
 };
 
 export const questionsToCsv = (questions, { includeCategory = false, includeSolution = false } = {}) => {
-  const headers = ['question_text', 'question_type', 'marks', 'options', 'correct_index', 'correct_indices', 'difficulty', 'image_url', 'subject_id', 'chapter_id'];
+  const headers = ['question_text', 'question_type', 'marks', 'options', 'correct_index', 'correct_indices', 'numeric_answer', 'numerical_tolerance', 'assertion_text', 'reason_text', 'difficulty', 'image_url', 'subject_id', 'chapter_id'];
   if (includeCategory) headers.push('category');
   if (includeSolution) headers.push('solution');
   headers.push('section_name');
@@ -145,6 +154,10 @@ export const questionsToCsv = (questions, { includeCategory = false, includeSolu
       optionsToCsv(q.options),
       q.correct_index ?? 0,
       parseOptions(q.correct_indices).join('|'),
+      q.numeric_answer ?? '',
+      q.numerical_tolerance ?? 0,
+      q.assertion_text || '',
+      q.reason_text || '',
       q.difficulty || 'medium',
       q.image_url || '',
       q.subject_id || '',

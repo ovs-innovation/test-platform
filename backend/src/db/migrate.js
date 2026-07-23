@@ -17,8 +17,8 @@ const run = async () => {
         DROP VIEW IF EXISTS violation_logs;
         DROP TABLE IF EXISTS otp_verifications, coding_answers, subjective_answers,
           candidate_invites, assessment_sections, violations, scores, answers,
-          attempts, questions, assessments, users CASCADE;
-        DROP TYPE IF EXISTS invite_status, question_type, section_type, attempt_status, user_role;
+          attempts, questions, question_bank, chapters, subjects, assessments, users CASCADE;
+        DROP TYPE IF EXISTS invite_status, question_type, section_type, attempt_status, user_role CASCADE;
       `);
     }
 
@@ -42,6 +42,10 @@ const run = async () => {
     await pool.query(migration9);
     const migration10 = fs.readFileSync(path.join(__dirname, 'migration_v10.sql'), 'utf-8');
     await pool.query(migration10);
+    const migration11 = fs.readFileSync(path.join(__dirname, 'migration_v11.sql'), 'utf-8');
+    await pool.query(migration11);
+    const migration12 = fs.readFileSync(path.join(__dirname, 'migration_v12.sql'), 'utf-8');
+    await pool.query(migration12);
     // eslint-disable-next-line no-console
     console.log('[migrate] Schema applied successfully.');
   } catch (err) {

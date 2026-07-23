@@ -55,4 +55,5 @@ export const env = {
     keySecret: process.env.RAZORPAY_KEY_SECRET || '',
     webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || '',
   },
+  firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
 };
