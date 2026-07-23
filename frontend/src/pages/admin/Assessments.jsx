@@ -116,9 +116,9 @@ export default function AdminAssessments() {
           action={<button className="btn-primary" onClick={() => setModalOpen(true)}>Create assessment</button>}
         />
       ) : (
-        <div className="card overflow-hidden">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
+        <div className="card overflow-hidden border border-slate-800/90 bg-[#0b1430]">
+          <table className="min-w-full divide-y divide-slate-800/80">
+            <thead className="bg-[#070e24]">
               <tr>
                 <Th>Title</Th>
                 <Th>Questions</Th>
@@ -130,11 +130,11 @@ export default function AdminAssessments() {
                 <Th className="text-right">Actions</Th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100">
+            <tbody className="divide-y divide-slate-800/80">
               {assessments.map((a) => (
-                <tr key={a.id} className="hover:bg-slate-50">
+                <tr key={a.id} className="hover:bg-slate-800/50 transition-colors">
                   <Td>
-                    <Link to={`/admin/assessments/${a.id}`} className="font-semibold text-brand-700 hover:underline">
+                    <Link to={`/admin/assessments/${a.id}`} className="font-bold text-[#00F0FF] hover:underline">
                       {a.title}
                     </Link>
                   </Td>
@@ -143,21 +143,21 @@ export default function AdminAssessments() {
                   <Td>{a.passing_marks}</Td>
                   <Td>{a.attempt_count}</Td>
                   <Td>{a.is_published ? <Badge color="green">Published</Badge> : <Badge color="slate">Draft</Badge>}</Td>
-                  <Td className="text-slate-500">{formatDate(a.created_at)}</Td>
+                  <Td className="text-slate-400 text-xs">{formatDate(a.created_at)}</Td>
                   <Td className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      <Link to={`/admin/assessments/${a.id}`} className="text-sm font-medium text-slate-600 hover:text-brand-700">
+                    <div className="flex items-center justify-end gap-2.5">
+                      <Link to={`/admin/assessments/${a.id}`} className="text-xs font-bold text-cyan-300 hover:text-white hover:underline">
                         Edit
                       </Link>
                       <button
-                        className="text-sm font-medium text-slate-600 hover:text-brand-700 disabled:opacity-50"
+                        className="text-xs font-bold text-amber-300 hover:text-amber-200 hover:underline disabled:opacity-50"
                         onClick={() => togglePublish(a)}
                         disabled={busyId === a.id}
                       >
                         {a.is_published ? 'Unpublish' : 'Publish'}
                       </button>
                       <button
-                        className="text-sm font-medium text-red-600 hover:text-red-700 disabled:opacity-50"
+                        className="text-xs font-bold text-rose-400 hover:text-rose-300 hover:underline disabled:opacity-50"
                         onClick={() => remove(a)}
                         disabled={busyId === a.id}
                       >
@@ -200,8 +200,8 @@ export default function AdminAssessments() {
               <input name="max_violations" type="number" min={0} className="input" value={form.max_violations} onChange={onChange} />
             </div>
           </div>
-          <label className="flex items-center gap-2.5 text-sm text-slate-700">
-            <input type="checkbox" name="result_visible" checked={form.result_visible} onChange={onChange} className="h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500" />
+          <label className="flex items-center gap-2.5 text-sm text-slate-300">
+            <input type="checkbox" name="result_visible" checked={form.result_visible} onChange={onChange} className="h-4 w-4 rounded border-slate-700 bg-slate-900 text-brand-600 focus:ring-brand-500" />
             Allow candidates to view their result after submission
           </label>
           <div className="flex justify-end gap-3 pt-2">
@@ -217,10 +217,10 @@ export default function AdminAssessments() {
 }
 
 const Th = ({ children, className = '' }) => (
-  <th className={`px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 ${className}`}>
+  <th className={`px-4 py-3.5 text-left text-xs font-extrabold uppercase tracking-wider text-slate-300 ${className}`}>
     {children}
   </th>
 );
 const Td = ({ children, className = '' }) => (
-  <td className={`whitespace-nowrap px-4 py-3 text-sm text-slate-700 ${className}`}>{children}</td>
+  <td className={`whitespace-nowrap px-4 py-3.5 text-sm text-slate-200 font-medium ${className}`}>{children}</td>
 );

@@ -86,11 +86,11 @@ export function PageHeader({ title, subtitle, actions }) {
   );
 }
 
-export function StatCard({ label, value, accent = 'text-slate-900 dark:text-white' }) {
+export function StatCard({ label, value, accent = 'text-white' }) {
   return (
-    <div className="card p-5 shadow-card">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</p>
-      <p className={`mt-2 text-2xl font-bold ${accent}`}>{value}</p>
+    <div className="card p-5 shadow-xl border border-slate-800/90 bg-[#0b1430] hover:border-slate-700/80 transition-all">
+      <p className="text-[11px] font-extrabold uppercase tracking-wider text-slate-400">{label}</p>
+      <p className={`mt-2 text-2xl sm:text-3xl font-black ${accent}`}>{value}</p>
     </div>
   );
 }
@@ -140,19 +140,19 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
   }
   return (
     <div className="overflow-x-auto">
-      <table className="w-full text-sm">
-        <thead className="table-head">
+      <table className="w-full text-sm text-left">
+        <thead className="bg-[#070e24] text-slate-300 border-b border-slate-800">
           <tr>
             {columns.map((col) => (
-              <th key={col.key} className="px-4 py-3">{col.label}</th>
+              <th key={col.key} className="px-4 py-3.5 text-xs font-extrabold uppercase tracking-wider text-slate-300">{col.label}</th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+        <tbody className="divide-y divide-slate-800/80">
           {rows.map((row, i) => (
-            <tr key={row.id ?? i} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40">
+            <tr key={row.id ?? i} className="hover:bg-slate-800/50 transition-colors">
               {columns.map((col) => (
-                <td key={col.key} className="px-4 py-3 text-slate-700 dark:text-slate-300">
+                <td key={col.key} className="px-4 py-3.5 text-slate-200 font-medium">
                   {col.render ? col.render(row) : row[col.key]}
                 </td>
               ))}

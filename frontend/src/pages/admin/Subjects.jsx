@@ -41,34 +41,54 @@ export default function AdminSubjects() {
 
   return (
     <div>
-      <PageHeader title="Subjects & chapters" subtitle="Organize content hierarchy." />
+      <PageHeader title="Subjects & chapters" subtitle="Organize content hierarchy for JEE, NEET & Foundation exams." />
       <div className="grid gap-6 lg:grid-cols-2">
         <div>
-          <form onSubmit={addSubject} className="card mb-4 flex gap-2 p-4">
+          <form onSubmit={addSubject} className="card mb-4 flex gap-2.5 p-4 border border-slate-800/90 bg-[#0b1430]">
             <input className="input flex-1" placeholder="Subject name" value={subForm.name} onChange={(e) => setSubForm((f) => ({ ...f, name: e.target.value }))} required />
-            <input className="input w-24" placeholder="Exam" value={subForm.exam_type} onChange={(e) => setSubForm((f) => ({ ...f, exam_type: e.target.value }))} />
+            <select className="input w-32" value={subForm.exam_type} onChange={(e) => setSubForm((f) => ({ ...f, exam_type: e.target.value }))}>
+              <option value="JEE">JEE</option>
+              <option value="NEET">NEET</option>
+              <option value="Foundation">Foundation</option>
+            </select>
             <button type="submit" className="btn-primary">Add</button>
           </form>
-          <div className="space-y-2">
+          <div className="space-y-2.5">
             {subjects.map((s) => (
-              <button key={s.id} type="button" onClick={() => loadChapters(s.id)}
-                className={`card w-full p-4 text-left ${selected === s.id ? 'ring-2 ring-brand-500' : ''}`}>
-                <p className="font-medium">{s.name}</p>
-                <p className="text-xs text-slate-500">{s.exam_type} · {s.chapter_count} chapters</p>
+              <button
+                key={s.id}
+                type="button"
+                onClick={() => loadChapters(s.id)}
+                className={`w-full rounded-2xl p-4 text-left border transition-all duration-200 ${
+                  selected === s.id
+                    ? 'border-[#00F0FF] bg-blue-950/40 text-white shadow-lg shadow-cyan-500/10 ring-1 ring-[#00F0FF]'
+                    : 'border-slate-800/80 bg-[#0b1430] hover:border-slate-700/80 hover:bg-[#0d1838]'
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <p className="font-extrabold text-white text-base">{s.name}</p>
+                  <span className="rounded-full bg-blue-500/20 px-2.5 py-0.5 text-xs font-black text-cyan-300 border border-blue-500/30">
+                    {s.exam_type}
+                  </span>
+                </div>
+                <p className="mt-1 text-xs font-semibold text-slate-400">{s.chapter_count} chapters organized</p>
               </button>
             ))}
           </div>
         </div>
         <div>
           {selected && (
-            <form onSubmit={addChapter} className="card mb-4 flex gap-2 p-4">
+            <form onSubmit={addChapter} className="card mb-4 flex gap-2.5 p-4 border border-slate-800/90 bg-[#0b1430]">
               <input className="input flex-1" placeholder="Chapter name" value={chForm.name} onChange={(e) => setChForm({ name: e.target.value })} required />
               <button type="submit" className="btn-primary">Add chapter</button>
             </form>
           )}
           <div className="space-y-2">
             {chapters.map((c) => (
-              <div key={c.id} className="card p-3 text-sm">{c.name} <span className="text-slate-400">({c.topic_count} topics)</span></div>
+              <div key={c.id} className="rounded-2xl border border-slate-800/80 bg-[#0b1430] p-3.5 text-sm font-bold text-white flex items-center justify-between">
+                <span>{c.name}</span>
+                <span className="text-xs font-medium text-slate-400">({c.topic_count} topics)</span>
+              </div>
             ))}
           </div>
         </div>

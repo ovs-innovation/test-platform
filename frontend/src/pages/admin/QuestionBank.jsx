@@ -196,37 +196,46 @@ export default function AdminQuestionBank() {
 
       <div className="mb-4 flex flex-wrap gap-2">
         {categoriesList.map((c) => (
-          <button key={c} type="button" className={category === c ? 'btn-primary' : 'btn-secondary'} onClick={() => setCategory(c)}>
+          <button
+            key={c}
+            type="button"
+            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all ${
+              category === c
+                ? 'bg-[#00F0FF] text-slate-950 shadow-md shadow-cyan-500/20'
+                : 'border border-slate-800 bg-[#070c18] text-slate-300 hover:border-slate-700 hover:text-white'
+            }`}
+            onClick={() => setCategory(c)}
+          >
             {c}
           </button>
         ))}
       </div>
 
       {loading ? <LoadingScreen /> : (
-        <div className="card overflow-hidden">
+        <div className="card overflow-hidden border border-slate-800/90 bg-[#0b1430]">
           <DataTable
             columns={[
               { key: 'question_text', label: 'Question', render: (q) => (
                 <div className="flex flex-col gap-1 max-w-md">
-                  <span className="line-clamp-2 text-slate-800 font-medium">{q.question_text}</span>
+                  <span className="line-clamp-2 text-slate-100 font-bold leading-snug">{q.question_text}</span>
                   {q.solution && <span className="text-[11px] text-slate-400 truncate">Sol: {q.solution}</span>}
                 </div>
               ) },
               { key: 'question_type', label: 'Type', render: (q) => (
-                <span className="uppercase text-xs font-semibold tracking-wider text-slate-500">{q.question_type}</span>
+                <span className="uppercase text-xs font-bold tracking-wider text-cyan-300 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">{q.question_type}</span>
               ) },
               { key: 'difficulty', label: 'Difficulty', render: (q) => (
                 <Badge color={q.difficulty === 'hard' ? 'red' : q.difficulty === 'medium' ? 'amber' : 'green'}>
                   {q.difficulty || 'medium'}
                 </Badge>
               ) },
-              { key: 'marks', label: 'Marks' },
+              { key: 'marks', label: 'Marks', render: (q) => <span className="font-extrabold text-white">{q.marks}</span> },
               { key: 'actions', label: '', render: (q) => (
-                <div className="flex gap-2">
-                  <button type="button" className="text-xs font-medium text-brand-600 hover:underline" onClick={() => openEdit(q)}>
+                <div className="flex gap-2.5">
+                  <button type="button" className="text-xs font-bold text-cyan-300 hover:text-white hover:underline" onClick={() => openEdit(q)}>
                     Edit
                   </button>
-                  <button type="button" className="text-xs font-medium text-red-600 hover:underline" onClick={async () => {
+                  <button type="button" className="text-xs font-bold text-rose-400 hover:text-rose-300 hover:underline" onClick={async () => {
                     if (confirm('Are you sure you want to delete this question?')) {
                       await questionBankService.remove(q.id);
                       load();

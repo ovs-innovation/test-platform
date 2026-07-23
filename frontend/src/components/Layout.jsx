@@ -110,9 +110,9 @@ export default function Layout({ children }) {
   const sidebar = (
     <div className="flex h-full flex-col min-h-0">
       <div className="shrink-0">
-        <Brand />
+        <Brand role={user?.role} />
       </div>
-      <div className="flex-1 overflow-y-auto min-h-0 space-y-1">
+      <div className="flex-1 overflow-y-auto min-h-0 space-y-1 scrollbar-none">
         <NavItems />
       </div>
       <div className="shrink-0 border-t border-slate-800/80 bg-[#081026]">
@@ -187,7 +187,8 @@ export default function Layout({ children }) {
   );
 }
 
-function Brand() {
+function Brand({ role }) {
+  const isAdmin = role === 'admin';
   return (
     <Link to="/" className="flex h-20 items-center gap-3.5 border-b border-slate-800/80 px-5 hover:opacity-90 transition-opacity">
       <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-12 w-auto shrink-0 object-contain" />
@@ -195,9 +196,9 @@ function Brand() {
         <span className="block font-serif font-black tracking-wider text-white text-base sm:text-lg uppercase">
           EDVEDUM
         </span>
-        <div className="flex items-center gap-1 text-[9.5px] font-bold tracking-[0.25em] text-[#60a5fa] uppercase">
+        <div className={`flex items-center gap-1 text-[9.5px] font-bold tracking-[0.25em] uppercase ${isAdmin ? 'text-[#00F0FF]' : 'text-[#60a5fa]'}`}>
           <span>—</span>
-          <span>STUDENT PORTAL</span>
+          <span>{isAdmin ? 'ADMIN PORTAL' : 'STUDENT PORTAL'}</span>
           <span>—</span>
         </div>
       </div>

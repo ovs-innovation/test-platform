@@ -203,8 +203,8 @@ export default function AdminTestSeries() {
 
       <div className="space-y-4">
         {list.map((s) => (
-          <div key={s.id} className="card flex flex-wrap items-center gap-4 p-5">
-            <div className="h-16 w-28 shrink-0 overflow-hidden rounded-lg border border-slate-200 bg-slate-100">
+          <div key={s.id} className="card flex flex-wrap items-center gap-4 p-5 border border-slate-800/90 bg-[#0b1430] hover:border-slate-700/80 transition-all">
+            <div className="h-16 w-28 shrink-0 overflow-hidden rounded-xl border border-slate-800 bg-[#070e24]">
               <img src={getTestSeriesCover(s)} alt="" className="h-full w-full object-cover" />
             </div>
             <div className="min-w-0 flex-1">
@@ -217,45 +217,59 @@ export default function AdminTestSeries() {
                   <Badge color="red">Inactive</Badge>
                 )}
               </div>
-              <h2 className="mt-2 font-semibold text-slate-900">{s.title}</h2>
-              <p className="text-sm text-slate-500">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`} · {s.linked_tests} tests linked · {s.enrollment_count} enrollments</p>
+              <h2 className="mt-2 font-extrabold text-white text-base sm:text-lg tracking-tight">{s.title}</h2>
+              <p className="text-xs font-semibold text-slate-300 mt-1">
+                <span className="text-cyan-300 font-extrabold">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`}</span> · {s.linked_tests} tests linked · {s.enrollment_count} enrollments
+              </p>
             </div>
             <div className="flex flex-wrap gap-2">
               <button
                 type="button"
-                className={`btn-secondary text-sm font-medium ${
+                className={`rounded-xl px-3.5 py-2 text-xs font-extrabold border transition-all ${
                   s.is_active
-                    ? 'text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-950/30'
-                    : 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                    ? 'border-amber-500/30 bg-amber-500/10 text-amber-300 hover:bg-amber-500/20'
+                    : 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
                 }`}
                 onClick={() => handleToggleActive(s)}
               >
                 {s.is_active ? 'Deactivate' : 'Activate'}
               </button>
-              <button type="button" className="btn-secondary text-sm" onClick={() => {
-                setEditing(s);
-                setForm({
-                  title: s.title,
-                  description: s.description || '',
-                  price: Number(s.price) || 0,
-                  exam_type: s.exam_type || 'JEE Main',
-                  test_count: s.test_count || 0,
-                  is_featured: s.is_featured || false,
-                  is_active: s.is_active !== false,
-                  validity_days: s.validity_days || 365,
-                  image_url: s.image_url || '',
-                });
-                setModal(true);
-              }}>
+              <button
+                type="button"
+                className="rounded-xl px-3.5 py-2 text-xs font-extrabold border border-slate-700 bg-slate-800/80 text-slate-200 hover:bg-slate-700 hover:text-white transition-all"
+                onClick={() => {
+                  setEditing(s);
+                  setForm({
+                    title: s.title,
+                    description: s.description || '',
+                    price: Number(s.price) || 0,
+                    exam_type: s.exam_type || 'JEE Main',
+                    test_count: s.test_count || 0,
+                    is_featured: s.is_featured || false,
+                    is_active: s.is_active !== false,
+                    validity_days: s.validity_days || 365,
+                    image_url: s.image_url || '',
+                  });
+                  setModal(true);
+                }}
+              >
                 Edit
               </button>
-              <button type="button" className="btn-secondary text-sm" onClick={() => { setLinkModal(s); setLinkForm({ assessment_id: '', label: '' }); }}>
+              <button
+                type="button"
+                className="rounded-xl px-3.5 py-2 text-xs font-extrabold border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 hover:bg-cyan-500/20 transition-all"
+                onClick={() => { setLinkModal(s); setLinkForm({ assessment_id: '', label: '' }); }}
+              >
                 Link assessment
               </button>
-              <button type="button" className="btn-secondary text-sm text-red-600 hover:text-red-800" onClick={() => {
-                setSeriesToDelete(s);
-                setDeleteConfirmOpen(true);
-              }}>
+              <button
+                type="button"
+                className="rounded-xl px-3.5 py-2 text-xs font-extrabold border border-rose-500/30 bg-rose-500/10 text-rose-300 hover:bg-rose-500/20 transition-all"
+                onClick={() => {
+                  setSeriesToDelete(s);
+                  setDeleteConfirmOpen(true);
+                }}
+              >
                 Delete
               </button>
             </div>

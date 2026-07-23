@@ -206,7 +206,14 @@
     @apply max-h-[420px] overflow-y-auto border border-slate-300 bg-white p-4 text-sm leading-relaxed text-slate-800;
   }
   .table-head {
-    @apply bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 dark:bg-slate-800/80 dark:text-slate-400;
+    @apply bg-[#070e24] text-left text-xs font-bold uppercase tracking-wider text-slate-300 border-b border-slate-800;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
   /* PRD §2.3 — landing hero glass only */
   .hero-glass {
