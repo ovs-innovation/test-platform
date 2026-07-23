@@ -102,10 +102,10 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
   res.json({
     message: emailSent
       ? `Verification code sent to your email (${normalizedEmail})`
-      : 'Could not send email directly — use the code shown below to complete registration.',
+      : 'Could not send verification email directly to your inbox. Please check your email address or try again.',
     emailSent,
     expiresInMinutes: env.otpExpiresMinutes,
-    ...(devOtpVal ? { devOtp: devOtpVal } : {}),
+    ...(!emailSent && !env.isProd ? { devOtp: devOtpVal } : {}),
   });
 });
 
