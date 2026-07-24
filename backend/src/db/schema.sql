@@ -83,8 +83,8 @@ CREATE INDEX IF NOT EXISTS idx_answers_attempt ON answers(attempt_id);
 CREATE TABLE IF NOT EXISTS scores (
   id             SERIAL PRIMARY KEY,
   attempt_id     INTEGER NOT NULL UNIQUE REFERENCES attempts(id) ON DELETE CASCADE,
-  marks_obtained INTEGER NOT NULL DEFAULT 0,
-  total_marks    INTEGER NOT NULL DEFAULT 0,
+  marks_obtained NUMERIC(10,2) NOT NULL DEFAULT 0,
+  total_marks    NUMERIC(10,2) NOT NULL DEFAULT 0,
   percentage     NUMERIC(5,2) NOT NULL DEFAULT 0,
   passed         BOOLEAN NOT NULL DEFAULT FALSE,
   created_at     TIMESTAMPTZ NOT NULL DEFAULT NOW()

@@ -39,9 +39,9 @@ export default function AdminOverview() {
 
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Total revenue" value={`₹${Number(summary.total || 0).toLocaleString('en-IN')}`} accent="text-emerald-400" />
-        <StatCard label="Successful orders" value={summary.successful ?? 0} accent="text-cyan-400" />
+        <StatCard label="Successful enrollments" value={summary.successful ?? 0} accent="text-cyan-400" />
         <StatCard label="Total candidates" value={stats.totalCandidates} accent="text-slate-100" />
-        <StatCard label="Pass rate" value={`${stats.passRate}%`} accent="text-blue-400" />
+        <StatCard label="Passing percentage" value={`${stats.passRate}%`} accent="text-blue-400" />
       </div>
 
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

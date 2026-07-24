@@ -125,7 +125,7 @@ export default function MyTests() {
                 </div>
 
                 <span className="rounded-full bg-blue-600 group-hover:bg-blue-500 px-5 py-2 text-xs font-black text-white shadow-md shadow-blue-600/30 transition hover:scale-105">
-                  Open →
+                  Start Tests →
                 </span>
               </div>
             </Link>

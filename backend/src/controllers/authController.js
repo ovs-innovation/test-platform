@@ -52,7 +52,7 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
   const normalizedEmail = (email || '').trim().toLowerCase();
   if (!normalizedEmail) throw ApiError.badRequest('Email is required');
 
-  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [normalizedEmail]);
+  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
   if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
 
   if (phone) {
@@ -67,7 +67,7 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
 
   const recentRes = await query(
     `SELECT COUNT(*)::int AS c FROM otp_verifications
-     WHERE LOWER(email) = LOWER($1) AND purpose = 'student_signup'
+     WHERE LOWER(email) = $1 AND purpose = 'student_signup'
        AND created_at > NOW() - ($2 || ' minutes')::interval`,
     [normalizedEmail, env.otpResendWindowMinutes]
   );
@@ -119,7 +119,7 @@ export const register = asyncHandler(async (req, res) => {
   const { name, email, password, phone, class: studentClass, target_exam, otp } = req.body;
   const normalizedEmail = (email || '').trim().toLowerCase();
 
-  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [normalizedEmail]);
+  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = $1', [normalizedEmail]);
   if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
 
   const cleanPhone = (phone || '').replace(/\D/g, '');
@@ -134,7 +134,7 @@ export const register = asyncHandler(async (req, res) => {
   if (otp) {
     const otpRes = await query(
       `SELECT * FROM otp_verifications
-       WHERE LOWER(email) = LOWER($1) AND purpose = 'student_signup' AND verified_at IS NULL AND expires_at > NOW()
+       WHERE LOWER(email) = $1 AND purpose = 'student_signup' AND verified_at IS NULL AND expires_at > NOW()
        ORDER BY created_at DESC LIMIT 1`,
       [normalizedEmail]
     );
@@ -379,8 +379,8 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
       `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
-       WHERE LOWER(u.email) = LOWER($1) AND u.role = 'candidate'`,
-      [inputVal]
+       WHERE LOWER(u.email) = $1 AND u.role = 'candidate'`,
+      [inputVal.toLowerCase()]
     );
   } else {
     candidateRes = await query(
@@ -463,8 +463,8 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
       `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
-       WHERE LOWER(u.email) = LOWER($1) AND u.role = 'candidate'`,
-      [inputVal]
+       WHERE LOWER(u.email) = $1 AND u.role = 'candidate'`,
+      [inputVal.toLowerCase()]
     );
   } else {
     candidateRes = await query(
@@ -638,7 +638,7 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   if (!normalizedEmail) throw ApiError.badRequest('Email address is required');
 
   const userRes = await query(
-    "SELECT id, name, email FROM users WHERE LOWER(email) = LOWER($1) AND role = 'candidate'",
+    "SELECT id, name, email FROM users WHERE LOWER(email) = $1 AND role = 'candidate'",
     [normalizedEmail]
   );
   if (!userRes.rowCount) {
@@ -715,7 +715,7 @@ export const resetPassword = asyncHandler(async (req, res) => {
 
   const resetRes = await query(
     `SELECT pr.* FROM password_resets pr JOIN users u ON u.id = pr.user_id
-     WHERE LOWER(u.email) = LOWER($1) AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
+     WHERE LOWER(u.email) = $1 AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
      ORDER BY pr.created_at DESC LIMIT 1`,
     [normalizedEmail, codeHash]
   );

@@ -131,8 +131,12 @@ export const studentService = {
 export const attemptService = {
   start: (assessment_id) => api.post('/attempts/start', { assessment_id }).then((r) => r.data),
   getState: (id) => api.get(`/attempts/${id}`).then((r) => r.data),
-  saveAnswer: (id, question_id, selected_index, selected_indices) =>
-    api.put(`/attempts/${id}/answer`, { question_id, selected_index, selected_indices }).then((r) => r.data),
+  saveAnswer: (id, question_id, selected_index, selected_indices, numeric_answer) => {
+    const payload = typeof selected_index === 'object' && selected_index !== null && !Array.isArray(selected_index)
+      ? { question_id, ...selected_index }
+      : { question_id, selected_index, selected_indices, numeric_answer };
+    return api.put(`/attempts/${id}/answer`, payload).then((r) => r.data);
+  },
   markReview: (id, question_id, marked_for_review) =>
     api.put(`/attempts/${id}/review`, { question_id, marked_for_review }).then((r) => r.data),
   clearAnswer: (id, question_id) =>

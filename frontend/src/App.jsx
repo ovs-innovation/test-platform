@@ -109,7 +109,7 @@ export default function App() {
       <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
       <Route path="/results" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
       <Route path="/leaderboard" element={<ProtectedRoute role="candidate"><Shell><Leaderboard /></Shell></ProtectedRoute>} />
-      <Route path="/forum" element={<ProtectedRoute role="candidate"><Shell><Forum /></Shell></ProtectedRoute>} />
+      <Route path="/discussion-hub" element={<ProtectedRoute role="candidate"><Shell><Forum /></Shell></ProtectedRoute>} />
       <Route path="/notifications" element={<ProtectedRoute role="candidate"><Shell><Notifications /></Shell></ProtectedRoute>} />
       <Route path="/payments" element={<ProtectedRoute role="candidate"><Shell><PaymentHistory /></Shell></ProtectedRoute>} />
       <Route path="/profile" element={<ProtectedRoute role="candidate"><Shell><Profile /></Shell></ProtectedRoute>} />

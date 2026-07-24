@@ -127,13 +127,13 @@ export default function Notifications() {
             </Link>
 
             <Link
-              to="/forum"
+              to="/discussion-hub"
               className="group rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl transition hover:-translate-y-1 hover:border-blue-500/50 space-y-2"
             >
               <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-purple-500/20 text-purple-300 border border-purple-500/30">
                 💬
               </div>
-              <h3 className="font-extrabold text-white text-sm group-hover:text-purple-300">Student Forum Q&A →</h3>
+              <h3 className="font-extrabold text-white text-sm group-hover:text-purple-300">Discussion Hub Q&A →</h3>
               <p className="text-xs text-slate-400 leading-relaxed">Ask doubt questions and discuss mock test strategies with top aspirants.</p>
             </Link>
           </div>

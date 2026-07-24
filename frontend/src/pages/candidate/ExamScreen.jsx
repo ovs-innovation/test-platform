@@ -162,7 +162,11 @@ export default function ExamScreen() {
 
   useEffect(() => {
     if (!loading && questions[current]) {
-      setVisited((v) => ({ ...v, [questions[current].id]: true }));
+      const q = questions[current];
+      setVisited((v) => ({ ...v, [q.id]: true }));
+      if (q.section_id) {
+        setActiveSection(q.section_id);
+      }
     }
   }, [current, loading, questions]);
 
@@ -223,7 +227,8 @@ export default function ExamScreen() {
     setNumericAnswers((prev) => ({ ...prev, [questionId]: val }));
     setSavingId(questionId);
     try {
-      await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: val != null && val !== '' ? Number(val) : null });
+      const numVal = val != null && val !== '' ? Number(val) : null;
+      await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
     } catch (err) {
       if (err.status === 409) finishExam('timeout');
       else toast.error('Failed to save numeric answer');
@@ -387,7 +392,7 @@ export default function ExamScreen() {
             <div>
               {sec && (
                 <p className="text-[11px] font-bold uppercase text-[#1a4480]">
-                  {SECTION_LABELS[sec.section_type] || sec.name}
+                  {sec.name || SECTION_LABELS[sec.section_type] || 'Section'}
                 </p>
               )}
               <p className="text-sm font-bold text-slate-800">
@@ -549,8 +554,8 @@ export default function ExamScreen() {
           )}
         </div>
 
-        <aside className="border-b border-slate-400 bg-[#f3f6fb] p-3 lg:border-b-0">
-          <p className="text-center text-xs font-bold uppercase text-slate-800">Question Palette</p>
+        <aside className="border-b border-slate-400 bg-[#f3f6fb] p-3 lg:border-b-0 overflow-y-auto max-h-[calc(100vh-120px)]">
+          <p className="text-center text-xs font-bold uppercase text-slate-800 tracking-wide">Question Palette</p>
           <div className="mt-2 space-y-1">
             {PALETTE_LEGEND.map((item) => (
               <div key={item.key} className="flex items-center gap-2 text-[10px] text-slate-700">
@@ -559,21 +564,73 @@ export default function ExamScreen() {
               </div>
             ))}
           </div>
-          <div className="mt-3 grid grid-cols-5 gap-1.5">
-            {questions.map((item, idx) => {
-              const status = getQStatus(item);
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setCurrent(idx)}
-                  className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
-                >
-                  {idx + 1}
-                </button>
-              );
-            })}
+
+          <div className="mt-3 space-y-3">
+            {sections.length > 0 ? (
+              sections.map((secItem) => {
+                const secQuestions = questions
+                  .map((item, idx) => ({ item, idx }))
+                  .filter(({ item }) => item.section_id === secItem.id);
+
+                if (secQuestions.length === 0) return null;
+
+                const secAnswered = secQuestions.filter(({ item }) => qAnswered(item)).length;
+                const isCurrentSec = q.section_id === secItem.id;
+
+                return (
+                  <div
+                    key={secItem.id}
+                    className={`rounded-xl border p-2.5 transition-all ${
+                      isCurrentSec
+                        ? 'border-[#1a4480] bg-white shadow-sm ring-1 ring-[#1a4480]'
+                        : 'border-slate-300 bg-slate-50/70'
+                    }`}
+                  >
+                    <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-1.5">
+                      <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
+                        <span>📚</span> {secItem.name}
+                      </span>
+                      <span className="text-[10px] font-bold text-slate-600 bg-slate-200/80 px-1.5 py-0.5 rounded">
+                        {secAnswered}/{secQuestions.length} Answered
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-5 gap-1.5">
+                      {secQuestions.map(({ item, idx }) => {
+                        const status = getQStatus(item);
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => setCurrent(idx)}
+                            className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
+                          >
+                            {idx + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <div className="grid grid-cols-5 gap-1.5">
+                {questions.map((item, idx) => {
+                  const status = getQStatus(item);
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setCurrent(idx)}
+                      className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
+
           <div className="mt-3 border-t border-slate-300 pt-2 text-center text-[10px] text-slate-600">
             <p>Answered: <strong>{answeredCount}</strong> / {questions.length}</p>
             <p className="mt-0.5">{savingId === q.id ? 'Saving…' : 'Auto-saved'}</p>
@@ -640,6 +697,23 @@ export default function ExamScreen() {
             <li className="text-red-700">Unattempted: <strong>{unattemptedCount}</strong></li>
             <li>Marked for review: <strong>{Object.values(reviewed).filter(Boolean).length}</strong></li>
           </ul>
+
+          {sections.length > 0 && (
+            <div className="mt-3 space-y-1 rounded border border-slate-300 bg-blue-50/50 p-3 text-xs">
+              <p className="font-bold text-slate-800 uppercase tracking-wider mb-1.5">Subject Section Breakdown:</p>
+              {sections.map((s) => {
+                const secQs = questions.filter((item) => item.section_id === s.id);
+                const secAns = secQs.filter((item) => qAnswered(item)).length;
+                return (
+                  <div key={s.id} className="flex items-center justify-between text-slate-700">
+                    <span className="font-semibold">{s.name}:</span>
+                    <span><strong>{secAns}</strong> / {secQs.length} Answered</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
           <p className="mt-3 text-xs text-slate-500">You will not be able to change answers after submission.</p>
         </div>
         <div className="mt-6 flex justify-end gap-3">

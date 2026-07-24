@@ -50,7 +50,7 @@ export default function Forum() {
 
   return (
     <div className="space-y-6 pb-12">
-      <PageHeader title="Discussion Forum & Peer Q&A" subtitle="Ask doubts, share problem-solving strategies, and discuss mock test questions with aspirants." />
+      <PageHeader title="Discussion Hub & Peer Q&A" subtitle="Ask doubts, share problem-solving strategies, and discuss mock test questions with aspirants." />
       
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Left Column: Post Topic Form & Thread List (6 Cols) */}
