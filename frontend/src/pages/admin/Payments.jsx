@@ -34,30 +34,30 @@ export default function AdminPayments() {
         <StatCard label="Total orders" value={summary.total_orders} />
       </div>
 
-      <div className="card overflow-hidden">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
+      <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+        <table className="w-full text-xs">
+          <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
             <tr>
-              <th className="px-4 py-3">Student</th>
-              <th className="px-4 py-3">Series</th>
-              <th className="px-4 py-3">Amount</th>
-              <th className="px-4 py-3">Status</th>
-              <th className="px-4 py-3">Date</th>
+              <th className="px-4 py-3.5">Student</th>
+              <th className="px-4 py-3.5">Series</th>
+              <th className="px-4 py-3.5">Amount</th>
+              <th className="px-4 py-3.5">Status</th>
+              <th className="px-4 py-3.5">Date</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
             {payments.map((p) => (
-              <tr key={p.id}>
-                <td className="px-4 py-3">
-                  <p className="font-medium">{p.user_name}</p>
-                  <p className="text-xs text-slate-500">{p.user_email}</p>
+              <tr key={p.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                <td className="px-4 py-3.5">
+                  <p className="font-extrabold text-slate-900 dark:text-white">{p.user_name}</p>
+                  <p className="text-[11px] font-semibold text-slate-400">{p.user_email}</p>
                 </td>
-                <td className="px-4 py-3">{p.series_title}</td>
-                <td className="px-4 py-3">₹{Number(p.amount)}</td>
-                <td className="px-4 py-3">
+                <td className="px-4 py-3.5 font-bold text-slate-700 dark:text-slate-200">{p.series_title}</td>
+                <td className="px-4 py-3.5 font-black text-emerald-600 dark:text-emerald-400">₹{Number(p.amount)}</td>
+                <td className="px-4 py-3.5">
                   <Badge color={p.status === 'success' ? 'green' : p.status === 'pending' ? 'amber' : 'red'}>{p.status}</Badge>
                 </td>
-                <td className="px-4 py-3 text-slate-500">{formatDateTime(p.created_at)}</td>
+                <td className="px-4 py-3.5 text-slate-400 font-semibold">{formatDateTime(p.created_at)}</td>
               </tr>
             ))}
           </tbody>

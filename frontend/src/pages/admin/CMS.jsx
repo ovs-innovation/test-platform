@@ -29,29 +29,38 @@ export default function AdminCMS() {
 
   return (
     <div>
-      <PageHeader title="CMS" subtitle="Blog posts, FAQs and static pages." />
-      <form onSubmit={save} className="card mb-6 space-y-3 p-4">
+      <PageHeader title="Content Management System (CMS)" subtitle="Manage blog posts, FAQs, announcements, and static landing pages." />
+      <form onSubmit={save} className="card mb-6 space-y-3 p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
         <div className="grid gap-3 sm:grid-cols-3">
           <input className="input" placeholder="slug-url" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} required />
           <input className="input" placeholder="Title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} required />
           <select className="input" value={form.page_type} onChange={(e) => setForm((f) => ({ ...f, page_type: e.target.value }))}>
-            <option value="blog">Blog</option>
+            <option value="blog">Blog Post</option>
             <option value="faq">FAQ</option>
-            <option value="page">Page</option>
+            <option value="page">Static Page</option>
           </select>
         </div>
-        <input className="input" placeholder="Excerpt" value={form.excerpt} onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))} />
-        <textarea className="input" rows={5} placeholder="HTML content" value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} />
-        <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save page'}</button>
+        <input className="input" placeholder="Excerpt / Short Summary" value={form.excerpt} onChange={(e) => setForm((f) => ({ ...f, excerpt: e.target.value }))} />
+        <textarea className="input font-mono text-xs" rows={5} placeholder="Content (HTML or Markdown supported)" value={form.content} onChange={(e) => setForm((f) => ({ ...f, content: e.target.value }))} />
+        <div className="flex justify-end pt-2">
+          <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Publish / Save Page'}</button>
+        </div>
       </form>
-      <div className="space-y-2">
+      <div className="space-y-2.5">
         {pages.map((p) => (
-          <div key={p.id} className="card flex items-center justify-between p-4 text-sm">
-            <div><span className="badge bg-slate-100">{p.page_type}</span> <strong className="ml-2">{p.title}</strong> <span className="text-slate-400">/{p.slug}</span></div>
-            <button type="button" className="text-red-600" onClick={async () => { await adminService.deleteCms(p.id); load(); }}>Delete</button>
+          <div key={p.id} className="card flex items-center justify-between p-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+            <div className="flex items-center gap-3">
+              <span className="rounded-full bg-blue-500/10 dark:bg-blue-500/20 px-2.5 py-0.5 text-xs font-black text-blue-600 dark:text-blue-400 border border-blue-500/20 uppercase">{p.page_type}</span>
+              <strong className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm">{p.title}</strong>
+              <span className="text-xs font-semibold text-slate-400 font-mono">/{p.slug}</span>
+            </div>
+            <button type="button" className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400" onClick={async () => { await adminService.deleteCms(p.id); load(); }}>
+              Delete 🗑️
+            </button>
           </div>
         ))}
       </div>
     </div>
   );
 }
+

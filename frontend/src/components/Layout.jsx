@@ -1,6 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { NavLink, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
+import { useTheme } from '../context/ThemeContext.jsx';
+import ThemeToggle from './ThemeToggle.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService } from '../lib/services.js';
 
@@ -17,22 +19,22 @@ const candidateNav = [
   { to: '/assessments', label: 'Invited', icon: 'users' },
 ];
 
-const adminNav = [  
-  { to: '/admin', label: 'Overview', icon: 'grid' },
-  { to: '/admin/test-series', label: 'Test Series', icon: 'chart' },
+const adminNav = [
+  { to: '/admin', label: 'Dashboard', icon: 'grid' },
+  { to: '/admin/candidates', label: 'Students', icon: 'users' },
   { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
-  { to: '/admin/question-bank', label: 'Question Bank', icon: 'doc' },
-  { to: '/admin/subjects', label: 'Subjects', icon: 'chart' },
-  { to: '/admin/coupons', label: 'Coupons', icon: 'wallet' },
-  { to: '/admin/cms', label: 'CMS', icon: 'doc' },
-  { to: '/admin/faculty', label: 'Faculty', icon: 'users' },
+  { to: '/admin/question-bank', label: 'Question Bank', icon: 'bank' },
+  { to: '/admin/subjects', label: 'Subjects', icon: 'book' },
+  { to: '/admin/faculty', label: 'Faculty', icon: 'badge' },
   { to: '/admin/payments', label: 'Revenue', icon: 'wallet' },
+  { to: '/admin/coupons', label: 'Coupons', icon: 'ticket' },
+  { to: '/admin/cms', label: 'CMS', icon: 'cms' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
-  { to: '/admin/candidates', label: 'Candidates', icon: 'users' },
-  { to: '/admin/reports', label: 'Reports', icon: 'chart' },
+  { to: '/admin/reports', label: 'Audit Logs', icon: 'chart' },
+  { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
 ];
 
-const Icon = ({ name }) => {
+const Icon = ({ name, className = 'h-5 w-5' }) => {
   const paths = {
     grid: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 9a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1v-5zm9-9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V5zm0 10a1 1 0 011-1h5a1 1 0 011 1v4a1 1 0 01-1 1h-5a1 1 0 01-1-1v-4z',
     doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
@@ -44,21 +46,94 @@ const Icon = ({ name }) => {
     chat: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z',
     user: 'M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2M12 11a4 4 0 100-8 4 4 0 000 8z',
     cog: 'M12 15a3 3 0 100-6 3 3 0 000 6zm8.94-1.06a1 1 0 00.06-.94l-1-1.73a1 1 0 00-.76-.49l-2-.29a6.97 6.97 0 00-.64-1.54l1.22-1.68a1 1 0 00-.12-1.24l-1.22-1.22a1 1 0 00-1.24-.12l-1.68 1.22a6.97 6.97 0 00-1.54-.64l-.29-2a1 1 0 00-.49-.76l-1.73-1a1 1 0 00-.94.06l-1.5 1a1 1 0 00-.37 1.06l.45 2a6.97 6.97 0 00-1.08 1.08l-2 .45a1 1 0 00-1.06.37l-1 1.5a1 1 0 00.06.94l1 1.73a1 1 0 00.76.49l2 .29c.2.54.4 1.05.64 1.54l-1.22 1.68a1 1 0 00.12 1.24l1.22 1.22a1 1 0 001.24.12l1.68-1.22c.49.24 1 .44 1.54.64l.29 2a1 1 0 00.49.76l1.73 1a1 1 0 00.94-.06l1.5-1a1 1 0 00.37-1.06l-.45-2a6.97 6.97 0 001.08-1.08l2-.45a1 1 0 001.06-.37l1-1.5z',
+    bank: 'M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z',
+    book: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+    badge: 'M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z',
+    ticket: 'M15 5v2m0 4v2m0 4v2M5 5a2 2 0 00-2 2v3a2 2 0 110 4v3a2 2 0 002 2h14a2 2 0 002-2v-3a2 2 0 110-4V7a2 2 0 00-2-2H5z',
+    cms: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+    layers: 'M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10',
+    health: 'M13 10V3L4 14h7v7l9-11h-7z',
   };
   return (
-    <svg className="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
-      <path strokeLinecap="round" strokeLinejoin="round" d={paths[name]} />
+    <svg className={`shrink-0 ${className}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+      <path strokeLinecap="round" strokeLinejoin="round" d={paths[name] || paths.grid} />
     </svg>
   );
 };
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Sidebar collapse & mobile state
+  const [collapsed, setCollapsed] = useState(() => localStorage.getItem('sidebar_collapsed') === 'true');
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  // Overlay states
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [notifPanelOpen, setNotifPanelOpen] = useState(false);
+  const [healthModalOpen, setHealthModalOpen] = useState(false);
+  const [quickCreateOpen, setQuickCreateOpen] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+
   const [unread, setUnread] = useState(0);
+  const [currentTime, setCurrentTime] = useState('');
+
+  const quickCreateRef = useRef(null);
+  const profileRef = useRef(null);
+
   const nav = user?.role === 'admin' ? adminNav : candidateNav;
+
+  // Toggle collapse
+  const toggleCollapse = () => {
+    const next = !collapsed;
+    setCollapsed(next);
+    localStorage.setItem('sidebar_collapsed', String(next));
+  };
+
+  // Clock tick
+  useEffect(() => {
+    const updateClock = () => {
+      const now = new Date();
+      setCurrentTime(
+        now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) +
+          ' • ' +
+          now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      );
+    };
+    updateClock();
+    const interval = setInterval(updateClock, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Keyboard shortcut Ctrl+K / Cmd+K
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setCommandPaletteOpen((prev) => !prev);
+      }
+      if (e.key === 'Escape') {
+        setCommandPaletteOpen(false);
+        setNotifPanelOpen(false);
+        setHealthModalOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Click outside handlers
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (quickCreateRef.current && !quickCreateRef.current.contains(e.target)) setQuickCreateOpen(false);
+      if (profileRef.current && !profileRef.current.contains(e.target)) setProfileDropdownOpen(false);
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const fetchUnread = useCallback(() => {
     if (user?.role === 'candidate') {
@@ -69,9 +144,7 @@ export default function Layout({ children }) {
   useEffect(() => {
     fetchUnread();
     window.addEventListener('notificationStatusChanged', fetchUnread);
-    return () => {
-      window.removeEventListener('notificationStatusChanged', fetchUnread);
-    };
+    return () => window.removeEventListener('notificationStatusChanged', fetchUnread);
   }, [fetchUnread, location.pathname]);
 
   const handleLogout = () => {
@@ -79,149 +152,551 @@ export default function Layout({ children }) {
     navigate('/student-login');
   };
 
-  const NavItems = () => (
-    <nav className="space-y-1 px-3 py-3">
-      {nav.map((item) => (
-        <NavLink
-          key={item.to}
-          to={item.to}
-          end={item.to === '/admin'}
-          onClick={() => setMobileOpen(false)}
-          className={({ isActive }) =>
-            `group flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold transition-all duration-200 ${
-              isActive
-                ? 'bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-white shadow-lg shadow-blue-500/25 translate-x-1'
-                : 'text-slate-300 hover:bg-slate-800/70 hover:text-white hover:translate-x-0.5'
-            }`
-          }
-        >
-          <Icon name={item.icon} />
-          <span className="truncate">{item.label}</span>
-          {item.to === '/notifications' && unread > 0 && (
-            <span className="ml-auto rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-black text-white shadow-xs animate-pulse">
-              {unread}
-            </span>
-          )}
-        </NavLink>
-      ))}
-    </nav>
-  );
-
-  const sidebar = (
-    <div className="flex h-full flex-col min-h-0">
-      <div className="shrink-0">
-        <Brand role={user?.role} />
-      </div>
-      <div className="flex-1 overflow-y-auto min-h-0 space-y-1 scrollbar-none">
-        <NavItems />
-      </div>
-      <div className="shrink-0 border-t border-slate-800/80 bg-[#081026]">
-        <UserCard user={user} onLogout={handleLogout} />
-      </div>
-    </div>
-  );
+  const getBreadcrumbs = () => {
+    const path = location.pathname;
+    if (path === '/admin') return 'Overview';
+    const match = adminNav.find((n) => n.to === path);
+    if (match) return match.label;
+    if (path.includes('/admin/assessments')) return 'Assessments';
+    if (path.includes('/admin/attempts')) return 'Attempt Details';
+    return 'Dashboard';
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#060a17] via-[#0d1527] to-[#182339] text-slate-100 lg:flex">
-      {/* Desktop Floating Sidebar Container */}
-      <aside className="hidden w-64 shrink-0 p-4 lg:block">
-        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-3xl border border-slate-800/90 bg-[#081026]/95 backdrop-blur-2xl shadow-2xl shadow-black/80 overflow-hidden">
-          {sidebar}
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 flex transition-colors duration-200">
+      {/* Sidebar Navigation */}      <aside
+        className={`hidden lg:flex flex-col shrink-0 p-4 transition-all duration-300 ease-in-out ${
+          collapsed ? 'w-24' : 'w-[290px]'
+        }`}
+      >
+        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-[24px] border border-slate-200/80 bg-white/90 shadow-xl backdrop-blur-2xl dark:border-slate-800/80 dark:bg-[#111827]/95 transition-all duration-300 relative">
+          {/* Floating Toggle Button attached to STICKY container (Locked in place, never shifts on scroll!) */}
+          <button
+            type="button"
+            onClick={toggleCollapse}
+            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            aria-label={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            className="absolute -right-3.5 top-6 z-50 flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md hover:border-blue-500/50 hover:bg-slate-50 hover:text-blue-600 dark:border-slate-700/80 dark:bg-[#0f172a] dark:text-slate-300 dark:shadow-slate-950/40 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+          >
+            <svg
+              className={`h-4 w-4 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth="2.2"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          {/* Logo Header */}
+          <div className={`flex h-20 shrink-0 items-center border-b border-slate-200/60 dark:border-slate-800/60 rounded-t-[24px] transition-all duration-300 ${
+            collapsed ? 'justify-center px-2' : 'justify-between px-5'
+          }`}>
+            <Link to="/" className="flex items-center gap-3 overflow-hidden transition-all duration-300 mx-auto" title="EDVEDUM Academy">
+              <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-9 w-auto shrink-0 object-contain drop-shadow-sm" />
+              {!collapsed && (
+                <div className="leading-none space-y-1">
+                  <span className="block font-serif font-black tracking-wider text-slate-900 dark:text-white text-base uppercase">
+                    EDVEDUM
+                  </span>
+                  <div className="flex items-center gap-0.5 text-[9px] font-bold tracking-[0.24em] text-[#C5A059] uppercase">
+                    <span>—</span>
+                    <span>ACADEMY</span>
+                    <span>—</span>
+                  </div>
+                </div>
+              )}
+            </Link>
+          </div>
+
+          {/* Navigation Items (The ONLY scrollable section, centered 44px icons in collapsed mode) */}
+          <nav className={`flex-1 overflow-y-auto pt-5 pb-4 scrollbar-thin transition-all duration-300 ${
+            collapsed ? 'px-2 space-y-3 flex flex-col items-center' : 'px-3 space-y-2'
+          }`}>
+            {nav.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.to === '/admin'}
+                className={({ isActive }) =>
+                  `relative group flex items-center transition-all duration-200 ${
+                    collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px]'
+                  } ${
+                    isActive
+                      ? collapsed
+                        ? 'text-white'
+                        : 'saas-active-pill shadow-md shadow-blue-500/20'
+                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${
+                      collapsed && isActive
+                        ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
+                        : 'group-hover:scale-105'
+                    }`}>
+                      <Icon name={item.icon} className="h-5 w-5 shrink-0" />
+                    </div>
+
+                    {!collapsed && <span className="truncate text-[14.5px] font-semibold">{item.label}</span>}
+
+                    {/* Collapsed Hover Tooltip */}
+                    {collapsed && (
+                      <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
+                        {item.label}
+                      </div>
+                    )}
+                  </>
+                )}
+              </NavLink>
+            ))}
+
+            {/* Quick Utility Actions */}
+            <div className={`pt-3 border-t border-slate-200/60 dark:border-slate-800/60 transition-all duration-300 ${
+              collapsed ? 'w-full flex flex-col items-center space-y-3' : 'space-y-2'
+            }`}>
+              <button
+                type="button"
+                onClick={() => setNotifPanelOpen(true)}
+                className={`relative group flex items-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5 transition-all duration-200 ${
+                  collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px] w-full'
+                }`}
+              >
+                <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl group-hover:scale-105 transition-transform">
+                  <Icon name="bell" className="h-5 w-5 text-amber-500 dark:text-amber-400 shrink-0" />
+                </div>
+                {!collapsed && <span className="truncate text-[14.5px] font-semibold">Notifications</span>}
+                {unread > 0 && !collapsed && (
+                  <span className="ml-auto rounded-full bg-rose-500 px-2.5 py-0.5 text-[10px] font-black text-white">
+                    {unread}
+                  </span>
+                )}
+                {collapsed && (
+                  <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap">
+                    Notifications {unread > 0 && `(${unread})`}
+                  </div>
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setHealthModalOpen(true)}
+                className={`relative group flex items-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5 transition-all duration-200 ${
+                  collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px] w-full'
+                }`}
+              >
+                <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl group-hover:scale-105 transition-transform">
+                  <Icon name="health" className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                </div>
+                {!collapsed && (
+                  <div className="flex items-center justify-between w-full">
+                    <span className="truncate text-[14.5px] font-semibold">System Health</span>
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
+                  </div>
+                )}
+                {collapsed && (
+                  <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap">
+                    System Health
+                  </div>
+                )}
+              </button>
+            </div>
+          </nav>
+
+          {/* Sticky User Profile Card (Centered Avatar, Fixed Bottom Padding) */}
+          <div className="shrink-0 border-t border-slate-200/80 dark:border-slate-800/80 p-3 pb-5 bg-slate-50/80 dark:bg-slate-900/60 transition-all duration-300">
+            {collapsed ? (
+              <div className="relative group flex justify-center py-1">
+                <span
+                  title={user?.name}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/30 border-2 border-blue-400/40 cursor-pointer hover:scale-105 transition"
+                >
+                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                </span>
+                <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-2 text-xs font-extrabold shadow-2xl group-hover:flex flex-col z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
+                  <span>{user?.name}</span>
+                  <span className="text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Admin'}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3.5 p-3 rounded-[16px] bg-white border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/20">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
+                  <p className="truncate text-[10px] font-semibold text-slate-500 dark:text-slate-400 capitalize">{user?.role || 'Admin'}</p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </aside>
 
-      {/* Mobile Drawer Navigation */}
+      {/* Mobile Drawer */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-3xl border border-slate-800/90 bg-[#081026] p-2 shadow-2xl overflow-hidden">
-            {sidebar}
+          <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
+          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-[24px] border border-slate-200 bg-white p-4 shadow-2xl overflow-y-auto dark:border-slate-800 dark:bg-[#111827]">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
+              <span className="font-extrabold text-slate-900 dark:text-white text-base">Navigation</span>
+              <button type="button" onClick={() => setMobileOpen(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">
+                ✕
+              </button>
+            </div>
+            <nav className="space-y-2">
+              {nav.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold ${
+                      isActive ? 'saas-active-pill' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`
+                  }
+                >
+                  <Icon name={item.icon} />
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+            </nav>
           </aside>
         </div>
       )}
 
-      {/* Main Content Area */}
+      {/* Main Layout Area */}
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-800/80 bg-[#070e24]/90 px-4 sm:px-6 lg:px-8 backdrop-blur-md">
-          <div className="flex items-center gap-3">
+        {/* Top Navbar */}
+        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white/80 px-4 sm:px-6 lg:px-8 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#111827]/80 transition-colors duration-200">
+          {/* Left: Mobile Toggle & Breadcrumb */}
+          <div className="flex items-center gap-4">
             <button
-              className="rounded-xl border border-slate-800 p-2 text-slate-300 hover:bg-slate-800 lg:hidden"
+              className="rounded-2xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden"
               onClick={() => setMobileOpen(true)}
-              aria-label="Open menu"
+              aria-label="Open navigation menu"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
-            <div className="hidden lg:block text-xs font-extrabold uppercase tracking-wider text-slate-400">
-              {user?.role === 'admin' ? 'Admin Portal' : 'Student Learning Portal'}
+
+            <div className="hidden sm:flex flex-col">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                <span>{user?.role === 'admin' ? 'Admin Portal' : 'Student Portal'}</span>
+                <span>/</span>
+                <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbs()}</span>
+              </div>
+              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">{currentTime}</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Link
-              to="/notifications"
-              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-slate-800 bg-[#0b1430] text-slate-300 transition hover:bg-slate-800 hover:text-white"
+          {/* Center: Global Search Bar */}
+          <div className="flex-1 max-w-md mx-4 hidden md:block">
+            <button
+              type="button"
+              onClick={() => setCommandPaletteOpen(true)}
+              className="w-full flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-100/80 px-4 py-2 text-xs font-semibold text-slate-500 backdrop-blur-md transition hover:border-blue-500/50 hover:bg-white hover:text-slate-800 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
             >
-              <Icon name="bell" />
-              {unread > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-rose-500 ring-2 ring-[#070e24]" />
-              )}
-            </Link>
-            <div className="h-6 w-px bg-slate-800" />
-            <div className="flex items-center gap-2.5">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] text-sm font-extrabold text-white shadow-md shadow-blue-500/25">
-                {user?.name?.charAt(0)?.toUpperCase() || 'S'}
-              </span>
-              <div className="hidden sm:block text-left">
-                <p className="text-xs font-extrabold text-white">{user?.name}</p>
-                <p className="text-[10px] font-semibold text-slate-400 truncate max-w-[140px]">{user?.email}</p>
+              <div className="flex items-center gap-2.5">
+                <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <span>Search students, assessments, questions...</span>
               </div>
+              <kbd className="rounded-lg border border-slate-300 bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
+                Ctrl K
+              </kbd>
+            </button>
+          </div>
+
+          {/* Right Controls */}
+          <div className="flex items-center gap-3">
+            {/* Quick Create Dropdown */}
+            <div className="relative" ref={quickCreateRef}>
+              <button
+                type="button"
+                onClick={() => setQuickCreateOpen((prev) => !prev)}
+                className="hidden sm:flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 transition"
+              >
+                <span>+ Quick Create</span>
+              </button>
+              {quickCreateOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl backdrop-blur-xl dark:border-slate-800 dark:bg-[#0f172a]">
+                  <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quick Actions</div>
+                  <button
+                    onClick={() => { navigate('/admin/assessments'); setQuickCreateOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    📝 Create Assessment
+                  </button>
+                  <button
+                    onClick={() => { navigate('/admin/candidates'); setQuickCreateOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    👤 Register Student
+                  </button>
+                  <button
+                    onClick={() => { navigate('/admin/coupons'); setQuickCreateOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    🏷️ Create Coupon
+                  </button>
+                  <button
+                    onClick={() => { navigate('/admin/question-bank'); setQuickCreateOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    📚 Upload Questions
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Notification Bell */}
+            <button
+              type="button"
+              onClick={() => setNotifPanelOpen(true)}
+              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 transition"
+              aria-label="Open notifications"
+            >
+              <Icon name="bell" className="h-4 w-4" />
+              {unread > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500" />
+                </span>
+              )}
+            </button>
+
+            {/* Theme Toggle Component */}
+            <ThemeToggle />
+
+            {/* User Profile Dropdown */}
+            <div className="relative" ref={profileRef}>
+              <button
+                type="button"
+                onClick={() => setProfileDropdownOpen((prev) => !prev)}
+                className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 p-1.5 pr-3 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:hover:bg-slate-800 transition"
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-black text-white shadow-md">
+                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                </span>
+                <span className="hidden md:block text-xs font-bold text-slate-900 dark:text-white max-w-[100px] truncate">{user?.name}</span>
+              </button>
+
+              {profileDropdownOpen && (
+                <div className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
+                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800/60 mb-1">
+                    <p className="text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
+                    <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
+                  </div>
+                  <button
+                    onClick={() => { navigate('/admin/settings'); setProfileDropdownOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    👤 Account Settings
+                  </button>
+                  <button
+                    onClick={() => { navigate('/admin/payments'); setProfileDropdownOpen(false); }}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    💳 Revenue & Billing
+                  </button>
+                  <button
+                    onClick={() => setHealthModalOpen(true)}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                  >
+                    ⚡ System Health
+                  </button>
+                  <div className="my-1 border-t border-slate-200 dark:border-slate-800" />
+                  <button
+                    onClick={handleLogout}
+                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition"
+                  >
+                    🚪 Sign Out
+                  </button>
+                </div>
+              )}
             </div>
           </div>
         </header>
 
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8">{children}</main>
+
+        {/* Main Content Viewport */}
+        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8 pb-24">{children}</main>
       </div>
+
+      {/* Floating Quick Action Button */}
+      <button
+        type="button"
+        onClick={() => setCommandPaletteOpen(true)}
+        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-2xl shadow-blue-500/50 hover:scale-110 active:scale-95 transition"
+        title="Open Command Palette (Ctrl + K)"
+      >
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+        </svg>
+      </button>
+
+      {/* Command Palette Modal (Ctrl + K) */}
+      {commandPaletteOpen && (
+        <CommandPaletteModal
+          onClose={() => setCommandPaletteOpen(false)}
+          navigate={navigate}
+          nav={nav}
+        />
+      )}
+
+      {/* Sliding Notification Panel */}
+      {notifPanelOpen && (
+        <NotificationPanelDrawer onClose={() => setNotifPanelOpen(false)} />
+      )}
+
+      {/* System Health Status Modal */}
+      {healthModalOpen && (
+        <SystemHealthModal onClose={() => setHealthModalOpen(false)} />
+      )}
     </div>
   );
 }
 
-function Brand({ role }) {
-  const isAdmin = role === 'admin';
+function CommandPaletteModal({ onClose, navigate, nav }) {
+  const [query, setQuery] = useState('');
+
+  const filtered = nav.filter((n) => n.label.toLowerCase().includes(query.toLowerCase()));
+
   return (
-    <Link to="/" className="flex h-20 items-center gap-3.5 border-b border-slate-800/80 px-5 hover:opacity-90 transition-opacity">
-      <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-12 w-auto shrink-0 object-contain" />
-      <div className="text-left leading-none space-y-1.5">
-        <span className="block font-serif font-black tracking-wider text-white text-base sm:text-lg uppercase">
-          EDVEDUM
-        </span>
-        <div className={`flex items-center gap-1 text-[9.5px] font-bold tracking-[0.25em] uppercase ${isAdmin ? 'text-[#00F0FF]' : 'text-[#60a5fa]'}`}>
-          <span>—</span>
-          <span>{isAdmin ? 'ADMIN PORTAL' : 'STUDENT PORTAL'}</span>
-          <span>—</span>
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-150">
+      <div className="w-full max-w-xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-[#0f172a] animate-in zoom-in-95 duration-150">
+        <div className="flex items-center border-b border-slate-200 dark:border-slate-800 px-4 py-3 bg-slate-50/50 dark:bg-slate-900/50">
+          <svg className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            type="text"
+            autoFocus
+            placeholder="Type a command or search section..."
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full bg-transparent text-sm font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none"
+          />
+          <button type="button" onClick={onClose} className="text-xs font-bold text-slate-400 hover:text-slate-700 dark:hover:text-slate-300">
+            ESC
+          </button>
+        </div>
+
+        <div className="p-3 max-h-80 overflow-y-auto space-y-1">
+          <p className="px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">Navigation Shortcuts</p>
+          {filtered.length === 0 ? (
+            <p className="p-4 text-xs text-slate-500 dark:text-slate-400 text-center">No matching pages found.</p>
+          ) : (
+            filtered.map((item) => (
+              <button
+                key={item.to}
+                onClick={() => {
+                  navigate(item.to);
+                  onClose();
+                }}
+                className="flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-xs font-bold text-slate-700 hover:bg-blue-50 hover:text-blue-600 dark:text-slate-200 dark:hover:bg-blue-600/20 dark:hover:text-blue-400 transition"
+              >
+                <div className="flex items-center gap-3">
+                  <Icon name={item.icon} className="h-4 w-4" />
+                  <span>{item.label}</span>
+                </div>
+                <span className="text-[10px] text-slate-400">Jump to →</span>
+              </button>
+            ))
+          )}
         </div>
       </div>
-    </Link>
-  );
-}
-
-function UserCard({ user, onLogout }) {
-  return (
-    <div className="p-3.5">
-      <div className="mb-2.5 rounded-2xl bg-[#0b1430] p-3 border border-slate-800">
-        <p className="truncate text-xs font-black text-white">{user?.name}</p>
-        <p className="truncate text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Student'}</p>
-      </div>
-      <button
-        onClick={onLogout}
-        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-700/80 bg-slate-900/80 py-2 text-xs font-bold text-slate-200 shadow-xs transition hover:border-red-500/50 hover:bg-red-950/40 hover:text-red-400"
-      >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-        </svg>
-        <span>Sign Out</span>
-      </button>
     </div>
   );
 }
+
+function NotificationPanelDrawer({ onClose }) {
+  const notifications = [
+    { id: 1, title: 'New Student Registered', time: '10 mins ago', type: 'today', group: 'Today' },
+    { id: 2, title: 'Payment of ₹1,499 Received', time: '1 hour ago', type: 'today', group: 'Today' },
+    { id: 3, title: 'JEE Mock Exam Published', time: 'Yesterday', type: 'yesterday', group: 'Yesterday' },
+    { id: 4, title: 'System Backup Completed', time: '3 days ago', type: 'earlier', group: 'Earlier' },
+  ];
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-end">
+      <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs" onClick={onClose} />
+      <div className="relative w-full max-w-md bg-white dark:bg-[#0f172a] h-full shadow-2xl border-l border-slate-200 dark:border-slate-800 p-6 flex flex-col z-10 animate-in slide-in-from-right duration-200">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
+          <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Notifications</h3>
+          <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">✕</button>
+        </div>
+
+        <div className="flex-1 overflow-y-auto py-4 space-y-4">
+          {notifications.map((n) => (
+            <div key={n.id} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 dark:bg-slate-800/50 dark:border-slate-800 space-y-1">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-900 dark:text-white">{n.title}</span>
+                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">{n.time}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-extrabold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+        >
+          Mark all as read
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function SystemHealthModal({ onClose }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-150">
+      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0f172a] p-6 shadow-2xl space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-full bg-emerald-500 animate-ping" />
+            <h3 className="font-extrabold text-slate-900 dark:text-white text-base">System Health & Status</h3>
+          </div>
+          <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">✕</button>
+        </div>
+
+        <div className="space-y-3 text-xs">
+          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
+            <span className="text-slate-500 dark:text-slate-400">Server Uptime</span>
+            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">99.98%</span>
+          </div>
+          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
+            <span className="text-slate-500 dark:text-slate-400">API Latency</span>
+            <span className="font-extrabold text-blue-600 dark:text-blue-400">24ms</span>
+          </div>
+          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
+            <span className="text-slate-500 dark:text-slate-400">Database Cluster</span>
+            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">Healthy</span>
+          </div>
+          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
+            <span className="text-slate-500 dark:text-slate-400">Redis Cache</span>
+            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">Connected</span>
+          </div>
+        </div>
+
+        <button
+          type="button"
+          onClick={onClose}
+          className="w-full py-2.5 rounded-xl bg-blue-600 text-xs font-extrabold text-white shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition"
+        >
+          Close Health Monitor
+        </button>
+      </div>
+    </div>
+  );
+}
+
+

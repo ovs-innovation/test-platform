@@ -38,21 +38,32 @@ export default function AdminSettings() {
   return (
     <div className="space-y-8">
       <div>
-        <PageHeader title="Site settings" subtitle="Global platform configuration." />
-        <form onSubmit={saveSettings} className="card max-w-lg space-y-4 p-6">
-          <div><label className="label">Site name</label><input className="input" value={settings.site_name || ''} onChange={(e) => setSettings((s) => ({ ...s, site_name: e.target.value }))} /></div>
-          <div><label className="label">Support email</label><input className="input" type="email" value={settings.support_email || ''} onChange={(e) => setSettings((s) => ({ ...s, support_email: e.target.value }))} /></div>
-          <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save'}</button>
+        <PageHeader title="Platform Settings" subtitle="Global configuration and contact settings." />
+        <form onSubmit={saveSettings} className="card max-w-lg space-y-4 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <div><label className="label">Site Name</label><input className="input" value={settings.site_name || ''} onChange={(e) => setSettings((s) => ({ ...s, site_name: e.target.value }))} /></div>
+          <div><label className="label">Support Email</label><input className="input" type="email" value={settings.support_email || ''} onChange={(e) => setSettings((s) => ({ ...s, support_email: e.target.value }))} /></div>
+          <div className="flex justify-end pt-2">
+            <button type="submit" className="btn-primary" disabled={saving}>{saving ? <Spinner className="h-4 w-4" /> : 'Save Settings'}</button>
+          </div>
         </form>
       </div>
       <div>
-        <PageHeader title="Broadcast notification" subtitle="Send to all students." />
-        <form onSubmit={sendBroadcast} className="card max-w-lg space-y-4 p-6">
-          <input className="input" placeholder="Title" value={broadcast.title} onChange={(e) => setBroadcast((b) => ({ ...b, title: e.target.value }))} required />
-          <textarea className="input" rows={3} placeholder="Message" value={broadcast.body} onChange={(e) => setBroadcast((b) => ({ ...b, body: e.target.value }))} required />
-          <button type="submit" className="btn-primary">Send broadcast</button>
+        <PageHeader title="Broadcast Notification" subtitle="Send an instant notification announcement to all registered students." />
+        <form onSubmit={sendBroadcast} className="card max-w-lg space-y-4 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <div>
+            <label className="label">Announcement Title</label>
+            <input className="input" placeholder="Title" value={broadcast.title} onChange={(e) => setBroadcast((b) => ({ ...b, title: e.target.value }))} required />
+          </div>
+          <div>
+            <label className="label">Message Body</label>
+            <textarea className="input" rows={3} placeholder="Message content..." value={broadcast.body} onChange={(e) => setBroadcast((b) => ({ ...b, body: e.target.value }))} required />
+          </div>
+          <div className="flex justify-end pt-2">
+            <button type="submit" className="btn-primary">📢 Send Broadcast</button>
+          </div>
         </form>
       </div>
     </div>
   );
 }
+

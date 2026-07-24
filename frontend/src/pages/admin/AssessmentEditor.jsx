@@ -149,37 +149,41 @@ export default function AssessmentEditor() {
 
   return (
     <div>
-      <Link to="/admin/assessments" className="mb-4 inline-flex text-sm text-slate-500 hover:text-slate-700">← Back to assessments</Link>
+      <Link to="/admin/assessments" className="mb-4 inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition">
+        ← Back to Assessments
+      </Link>
 
       <div className="mb-6 flex flex-wrap items-start justify-between gap-4">
         <div>
           <div className="flex flex-wrap items-center gap-3">
-            <h1 className="text-2xl font-bold text-slate-900">{assessment.title}</h1>
+            <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">{assessment.title}</h1>
             {assessment.is_published ? <Badge color="green">Published</Badge> : <Badge color="slate">Draft</Badge>}
           </div>
-          <p className="mt-1 text-sm text-slate-500">
+          <p className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
             {questions.length} questions · {totalMarks} marks · {invites.length} invitations
           </p>
           {!canPublish && !assessment.is_published && (
-            <p className="mt-2 text-sm font-medium text-amber-600">Add at least one question to publish this assessment.</p>
+            <p className="mt-2 text-xs font-bold text-amber-500">Add at least one question to publish this assessment.</p>
           )}
         </div>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className="btn-secondary" onClick={openPreview}>Preview</button>
-          <button type="button" className={assessment.is_published ? 'btn-secondary' : 'btn-primary'} onClick={handlePublish}>
+          <button type="button" className="btn-secondary" onClick={openPreview}>👁️ Preview</button>
+          <button type="button" className={assessment.is_published ? 'btn-secondary text-amber-600 dark:text-amber-400' : 'btn-primary'} onClick={handlePublish}>
             {assessment.is_published ? 'Unpublish' : 'Publish'}
           </button>
         </div>
       </div>
 
-      <nav className="mb-6 flex flex-wrap gap-1 border-b border-slate-200">
+      <nav className="mb-6 flex flex-wrap gap-1 border-b border-slate-200 dark:border-slate-800">
         {TABS.map((t) => (
           <button
             key={t.id}
             type="button"
             onClick={() => setTab(t.id)}
-            className={`border-b-2 px-4 py-2.5 text-sm font-medium transition ${
-              tab === t.id ? 'border-brand-600 text-brand-700' : 'border-transparent text-slate-500 hover:text-slate-800'
+            className={`border-b-2 px-4 py-2.5 text-xs sm:text-sm font-extrabold transition-all duration-150 ${
+              tab === t.id
+                ? 'border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400'
+                : 'border-transparent text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white'
             }`}
           >
             {t.label}
@@ -194,7 +198,14 @@ export default function AssessmentEditor() {
             setSavingSettings(true);
             try {
               const payload = {
-                ...settings,
+                title: settings.title,
+                description: settings.description,
+                instructions: settings.instructions,
+                duration_minutes: settings.duration_minutes,
+                passing_marks: settings.passing_marks,
+                max_violations: settings.max_violations,
+                negative_marks_per_wrong: settings.negative_marks_per_wrong,
+                result_visible: settings.result_visible,
                 available_from: settings.available_from ? new Date(settings.available_from).toISOString() : null,
                 available_until: settings.available_until ? new Date(settings.available_until).toISOString() : null,
               };
@@ -240,8 +251,8 @@ export default function AssessmentEditor() {
 
 function GeneralTab({ settings, onChange, onSave, saving }) {
   return (
-    <form onSubmit={onSave} className="card max-w-2xl space-y-5 p-6">
-      <h2 className="text-lg font-semibold text-slate-900">General settings</h2>
+    <form onSubmit={onSave} className="card max-w-2xl space-y-5 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+      <h2 className="text-base font-extrabold text-slate-900 dark:text-white">General Settings</h2>
       <div>
         <label className="label">Title</label>
         <input name="title" className="input" value={settings.title} onChange={onChange} required />

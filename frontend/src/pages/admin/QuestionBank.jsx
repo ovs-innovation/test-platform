@@ -199,10 +199,10 @@ export default function AdminQuestionBank() {
           <button
             key={c}
             type="button"
-            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all ${
+            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 ${
               category === c
-                ? 'bg-[#00F0FF] text-slate-950 shadow-md shadow-cyan-500/20'
-                : 'border border-slate-800 bg-[#070c18] text-slate-300 hover:border-slate-700 hover:text-white'
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
             }`}
             onClick={() => setCategory(c)}
           >
@@ -212,36 +212,36 @@ export default function AdminQuestionBank() {
       </div>
 
       {loading ? <LoadingScreen /> : (
-        <div className="card overflow-hidden border border-slate-800/90 bg-[#0b1430]">
+        <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
             columns={[
               { key: 'question_text', label: 'Question', render: (q) => (
                 <div className="flex flex-col gap-1 max-w-md">
-                  <span className="line-clamp-2 text-slate-100 font-bold leading-snug">{q.question_text}</span>
-                  {q.solution && <span className="text-[11px] text-slate-400 truncate">Sol: {q.solution}</span>}
+                  <span className="line-clamp-2 text-slate-900 dark:text-slate-100 font-extrabold leading-snug">{q.question_text}</span>
+                  {q.solution && <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Sol: {q.solution}</span>}
                 </div>
               ) },
               { key: 'question_type', label: 'Type', render: (q) => (
-                <span className="uppercase text-xs font-bold tracking-wider text-cyan-300 bg-blue-500/20 px-2 py-0.5 rounded-full border border-blue-500/30">{q.question_type}</span>
+                <span className="uppercase text-[10px] font-black tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">{q.question_type}</span>
               ) },
               { key: 'difficulty', label: 'Difficulty', render: (q) => (
                 <Badge color={q.difficulty === 'hard' ? 'red' : q.difficulty === 'medium' ? 'amber' : 'green'}>
                   {q.difficulty || 'medium'}
                 </Badge>
               ) },
-              { key: 'marks', label: 'Marks', render: (q) => <span className="font-extrabold text-white">{q.marks}</span> },
+              { key: 'marks', label: 'Marks', render: (q) => <span className="font-black text-slate-900 dark:text-white text-xs">{q.marks}</span> },
               { key: 'actions', label: '', render: (q) => (
-                <div className="flex gap-2.5">
-                  <button type="button" className="text-xs font-bold text-cyan-300 hover:text-white hover:underline" onClick={() => openEdit(q)}>
-                    Edit
+                <div className="flex justify-end gap-2">
+                  <button type="button" className="btn-secondary !p-1.5 text-blue-600 dark:text-blue-400" onClick={() => openEdit(q)}>
+                    Edit ✏️
                   </button>
-                  <button type="button" className="text-xs font-bold text-rose-400 hover:text-rose-300 hover:underline" onClick={async () => {
+                  <button type="button" className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400" onClick={async () => {
                     if (confirm('Are you sure you want to delete this question?')) {
                       await questionBankService.remove(q.id);
                       load();
                     }
                   }}>
-                    Delete
+                    Delete 🗑️
                   </button>
                 </div>
               ) },

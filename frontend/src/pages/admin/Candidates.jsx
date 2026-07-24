@@ -173,10 +173,10 @@ export default function AdminCandidates() {
       {filtered.length === 0 ? (
         <EmptyState title="No candidates found" message="Candidates appear here once they register." />
       ) : (
-        <div className="card overflow-hidden">
+        <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-slate-200">
-              <thead className="bg-slate-50">
+            <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800/80">
+              <thead className="bg-slate-100/80 dark:bg-slate-900/80">
                 <tr>
                   <Th>Student</Th>
                   <Th>Status</Th>
@@ -187,48 +187,48 @@ export default function AdminCandidates() {
                   <Th className="text-right">Actions</Th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100 bg-white">
+              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
                 {filtered.map((c) => (
-                  <tr key={c.id} className="hover:bg-slate-50/80 transition-colors">
+                  <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                     <Td>
                       <div className="flex items-center gap-3">
-                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-brand-100 font-semibold text-brand-700 text-sm">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 dark:bg-blue-600/20 font-bold text-blue-600 dark:text-blue-400 border border-blue-500/20 text-xs">
                           {c.name.charAt(0).toUpperCase()}
                         </span>
                         <div>
-                          <p className="font-semibold text-slate-900 leading-none mb-1">{c.name}</p>
-                          <p className="text-xs text-slate-400">ID: #{c.id}</p>
+                          <p className="font-extrabold text-slate-900 dark:text-white leading-none mb-1">{c.name}</p>
+                          <p className="text-[11px] font-semibold text-slate-400">ID: #{c.id}</p>
                         </div>
                       </div>
                     </Td>
                     <Td>
                       {c.is_blocked ? (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700 dark:bg-red-950 dark:text-red-300">
-                          <span className="h-1.5 w-1.5 rounded-full bg-red-500" />
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/15 border border-rose-500/30 px-2.5 py-0.5 text-xs font-bold text-rose-600 dark:text-rose-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-rose-500" />
                           Blocked
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                           Active
                         </span>
                       )}
                     </Td>
                     <Td>
-                      <p className="text-slate-700 font-medium">{c.email}</p>
-                      <p className="text-xs text-slate-500 mt-0.5">{c.phone || 'No mobile'}</p>
+                      <p className="text-slate-800 dark:text-slate-200 font-semibold text-xs">{c.email}</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">{c.phone || 'No mobile'}</p>
                     </Td>
                     <Td>
                       <div className="flex flex-col gap-1">
-                        <span className="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded w-max">
+                        <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md w-max border border-slate-200 dark:border-slate-700">
                           Class: {c.class || 'N/A'}
                         </span>
-                        <span className={`text-xs font-semibold px-2 py-0.5 rounded w-max ${
+                        <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md w-max border ${
                           c.target_exam === 'JEE' 
-                            ? 'bg-blue-50 text-blue-700' 
+                            ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30' 
                             : c.target_exam === 'NEET' 
-                              ? 'bg-pink-50 text-pink-700' 
-                              : 'bg-slate-100 text-slate-600'
+                              ? 'bg-pink-500/15 text-pink-600 dark:text-pink-400 border-pink-500/30' 
+                              : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700'
                         }`}>
                           Target: {c.target_exam || 'N/A'}
                         </span>
@@ -236,20 +236,20 @@ export default function AdminCandidates() {
                     </Td>
                     <Td>
                       <div className="flex flex-col">
-                        <span className="text-slate-700 font-medium">Attempts: {c.attempts}</span>
-                        <span className="text-xs text-slate-500">
-                          Completed: {c.completed} | Avg Score: {c.avg_score}%
+                        <span className="text-slate-800 dark:text-slate-200 font-bold text-xs">Attempts: {c.attempts}</span>
+                        <span className="text-[11px] text-slate-400 font-medium">
+                          Completed: {c.completed} | Avg: {c.avg_score}%
                         </span>
                       </div>
                     </Td>
-                    <Td className="text-slate-500 text-xs">
+                    <Td className="text-slate-400 text-xs font-semibold">
                       {formatDate(c.created_at)}
                     </Td>
                     <Td className="text-right">
                       <div className="flex justify-end gap-2">
                         <button
                           type="button"
-                          className="btn-secondary !p-1.5 text-blue-600 hover:text-blue-700"
+                          className="btn-secondary !p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/20"
                           onClick={() => handleOpenEdit(c)}
                           title="Edit Profile"
                         >
@@ -261,8 +261,8 @@ export default function AdminCandidates() {
                           type="button"
                           className={`btn-secondary !p-1.5 ${
                             c.is_blocked
-                              ? 'text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50'
-                              : 'text-amber-600 hover:text-amber-700 hover:bg-amber-50'
+                              ? 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/20'
+                              : 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-500/20'
                           }`}
                           onClick={() => handleBlockClick(c)}
                           title={c.is_blocked ? 'Unblock Student' : 'Block Student'}
@@ -279,7 +279,7 @@ export default function AdminCandidates() {
                         </button>
                         <button
                           type="button"
-                          className="btn-secondary !p-1.5 text-red-600 hover:text-red-700"
+                          className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/20"
                           onClick={() => handleDeleteClick(c)}
                           title="Delete Student"
                         >
@@ -299,15 +299,15 @@ export default function AdminCandidates() {
 
       {/* Modal Dialog for Create/Edit */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-md overflow-hidden transform transition-all border border-slate-100">
-            <div className="px-6 py-4 bg-slate-50 border-b border-slate-150 flex items-center justify-between">
-              <h3 className="font-semibold text-slate-800 text-lg">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs transition-opacity">
+          <div className="bg-white dark:bg-[#111827] rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800">
+            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
                 {modalMode === 'create' ? 'Register New Student' : 'Edit Student Profile'}
               </h3>
               <button
                 type="button"
-                className="text-slate-400 hover:text-slate-600 transition"
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white transition"
                 onClick={() => setModalOpen(false)}
               >
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -319,8 +319,8 @@ export default function AdminCandidates() {
             <form onSubmit={handleSubmit}>
               <div className="p-6 space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
-                    Full Name <span className="text-red-500">*</span>
+                  <label className="label">
+                    Full Name <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="text"
@@ -333,8 +333,8 @@ export default function AdminCandidates() {
                 </div>
                 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
-                    Email Address <span className="text-red-500">*</span>
+                  <label className="label">
+                    Email Address <span className="text-rose-500">*</span>
                   </label>
                   <input
                     type="email"
@@ -347,8 +347,8 @@ export default function AdminCandidates() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
-                    Password {modalMode === 'create' ? <span className="text-red-500">*</span> : <span className="text-slate-400 font-normal">(Leave blank to keep current)</span>}
+                  <label className="label">
+                    Password {modalMode === 'create' ? <span className="text-rose-500">*</span> : <span className="text-slate-400 font-normal">(Leave blank to keep current)</span>}
                   </label>
                   <input
                     type="password"
@@ -361,7 +361,7 @@ export default function AdminCandidates() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+                  <label className="label">
                     Mobile Number
                   </label>
                   <input
@@ -375,7 +375,7 @@ export default function AdminCandidates() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+                    <label className="label">
                       Class
                     </label>
                     <input
@@ -388,7 +388,7 @@ export default function AdminCandidates() {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">
+                    <label className="label">
                       Target Exam
                     </label>
                     <select
@@ -403,7 +403,7 @@ export default function AdminCandidates() {
                 </div>
               </div>
 
-              <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
+              <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
                 <button
                   type="button"
                   className="btn-secondary"
@@ -431,29 +431,29 @@ export default function AdminCandidates() {
         size="sm"
       >
         <div className="text-center">
-          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 dark:bg-red-950">
-            <svg className="h-6 w-6 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose-100 dark:bg-rose-950">
+            <svg className="h-6 w-6 text-rose-600 dark:text-rose-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
           </div>
-          <h3 className="mt-4 text-base font-semibold text-slate-900 dark:text-white">Delete Student Profile?</h3>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-            Are you sure you want to delete student <strong className="font-bold text-slate-800 dark:text-slate-200">"{candidateToDelete?.name}"</strong>?
+          <h3 className="mt-4 text-base font-extrabold text-slate-900 dark:text-white">Delete Student Profile?</h3>
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
+            Are you sure you want to delete student <strong className="font-bold text-slate-900 dark:text-white">"{candidateToDelete?.name}"</strong>?
           </p>
-          <div className="mt-3 rounded-lg bg-red-50 p-3 text-left text-xs text-red-800 dark:bg-red-950/30 dark:text-red-300">
-            <strong>Warning:</strong> This will delete all of their test scores, attempts, payments, and academic history permanently. This action cannot be undone.
+          <div className="mt-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 p-3 text-left text-xs text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-900/50">
+            <strong>Warning:</strong> This will delete all of their test scores, attempts, payments, and academic history permanently.
           </div>
-          <div className="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-4">
+          <div className="mt-6 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
             <button
               type="button"
-              className="btn-secondary text-sm"
+              className="btn-secondary text-xs"
               onClick={() => setDeleteConfirmOpen(false)}
             >
               Cancel
             </button>
             <button
               type="button"
-              className="btn-primary border-transparent bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium text-sm px-4 py-2 rounded-lg transition"
+              className="btn-danger text-xs"
               onClick={async () => {
                 if (!candidateToDelete) return;
                 try {
@@ -494,25 +494,25 @@ export default function AdminCandidates() {
               </svg>
             )}
           </div>
-          <h3 className="mt-4 text-base font-semibold text-slate-900 dark:text-white">
+          <h3 className="mt-4 text-base font-extrabold text-slate-900 dark:text-white">
             {candidateToBlock?.is_blocked ? 'Unblock Student Account?' : 'Block Student Account?'}
           </h3>
-          <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+          <p className="mt-2 text-xs text-slate-500 dark:text-slate-400 font-medium">
             Are you sure you want to {candidateToBlock?.is_blocked ? 'unblock' : 'block'} student{' '}
-            <strong className="font-bold text-slate-800 dark:text-slate-200">"{candidateToBlock?.name}"</strong>?
+            <strong className="font-bold text-slate-900 dark:text-white">"{candidateToBlock?.name}"</strong>?
           </p>
           {!candidateToBlock?.is_blocked && (
-            <div className="mt-3 rounded-lg bg-amber-50 p-3 text-left text-xs text-amber-800 dark:bg-amber-950/30 dark:text-amber-300">
-              <strong>Impact:</strong> When blocked, this student will not be able to log in, request OTPs, or access any test assessments until unblocked.
+            <div className="mt-3 rounded-2xl bg-amber-50 dark:bg-amber-950/30 p-3 text-left text-xs text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900/50">
+              <strong>Impact:</strong> When blocked, this student will not be able to log in or take assessments until unblocked.
             </div>
           )}
-          <div className="mt-6 flex justify-end gap-3 border-t border-slate-100 pt-4">
-            <button type="button" className="btn-secondary text-sm" onClick={() => setBlockConfirmOpen(false)}>
+          <div className="mt-6 flex justify-end gap-3 border-t border-slate-200 dark:border-slate-800 pt-4">
+            <button type="button" className="btn-secondary text-xs" onClick={() => setBlockConfirmOpen(false)}>
               Cancel
             </button>
             <button
               type="button"
-              className={candidateToBlock?.is_blocked ? 'btn-primary border-transparent bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition' : 'btn-primary border-transparent bg-amber-600 hover:bg-amber-700 text-white font-medium text-sm px-4 py-2 rounded-lg transition'}
+              className={candidateToBlock?.is_blocked ? 'btn-primary bg-emerald-600 hover:bg-emerald-500 text-xs' : 'btn-primary bg-amber-600 hover:bg-amber-500 text-xs'}
               onClick={handleConfirmToggleBlock}
               disabled={blockActionLoading}
             >
@@ -526,13 +526,14 @@ export default function AdminCandidates() {
 }
 
 const Th = ({ children, className = '' }) => (
-  <th className={`px-4 py-3.5 text-left text-xs font-semibold uppercase tracking-wider text-slate-500 ${className}`}>
+  <th className={`px-4 py-3.5 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 ${className}`}>
     {children}
   </th>
 );
 
 const Td = ({ children, className = '' }) => (
-  <td className={`whitespace-nowrap px-4 py-3.5 text-sm text-slate-700 ${className}`}>
+  <td className={`whitespace-nowrap px-4 py-3.5 text-xs text-slate-700 dark:text-slate-300 font-medium ${className}`}>
     {children}
   </td>
 );
+
