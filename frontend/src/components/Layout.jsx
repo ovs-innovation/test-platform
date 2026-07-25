@@ -30,7 +30,7 @@ const adminNav = [
   { to: '/admin/coupons', label: 'Coupons', icon: 'ticket' },
   { to: '/admin/cms', label: 'CMS', icon: 'cms' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
-  { to: '/admin/reports', label: 'Audit Logs', icon: 'chart' },
+  { to: '/admin/reports', label: 'Reports', icon: 'chart' },
   { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
 ];
 
@@ -74,7 +74,6 @@ export default function Layout({ children }) {
   // Overlay states
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notifPanelOpen, setNotifPanelOpen] = useState(false);
-  const [healthModalOpen, setHealthModalOpen] = useState(false);
   const [quickCreateOpen, setQuickCreateOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
@@ -280,29 +279,6 @@ export default function Layout({ children }) {
                   </div>
                 )}
               </button>
-
-              <button
-                type="button"
-                onClick={() => setHealthModalOpen(true)}
-                className={`relative group flex items-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5 transition-all duration-200 ${
-                  collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px] w-full'
-                }`}
-              >
-                <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl group-hover:scale-105 transition-transform">
-                  <Icon name="health" className="h-5 w-5 text-emerald-600 dark:text-emerald-400 shrink-0" />
-                </div>
-                {!collapsed && (
-                  <div className="flex items-center justify-between w-full">
-                    <span className="truncate text-[14.5px] font-semibold">System Health</span>
-                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-ping" />
-                  </div>
-                )}
-                {collapsed && (
-                  <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap">
-                    System Health
-                  </div>
-                )}
-              </button>
             </div>
           </nav>
 
@@ -505,12 +481,6 @@ export default function Layout({ children }) {
                   >
                     💳 Revenue & Billing
                   </button>
-                  <button
-                    onClick={() => setHealthModalOpen(true)}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    ⚡ System Health
-                  </button>
                   <div className="my-1 border-t border-slate-200 dark:border-slate-800" />
                   <button
                     onClick={handleLogout}
@@ -553,11 +523,6 @@ export default function Layout({ children }) {
       {/* Sliding Notification Panel */}
       {notifPanelOpen && (
         <NotificationPanelDrawer onClose={() => setNotifPanelOpen(false)} />
-      )}
-
-      {/* System Health Status Modal */}
-      {healthModalOpen && (
-        <SystemHealthModal onClose={() => setHealthModalOpen(false)} />
       )}
     </div>
   );
@@ -650,49 +615,6 @@ function NotificationPanelDrawer({ onClose }) {
           className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-extrabold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
         >
           Mark all as read
-        </button>
-      </div>
-    </div>
-  );
-}
-
-function SystemHealthModal({ onClose }) {
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-150">
-      <div className="w-full max-w-md rounded-3xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0f172a] p-6 shadow-2xl space-y-4">
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
-          <div className="flex items-center gap-2">
-            <span className="h-3 w-3 rounded-full bg-emerald-500 animate-ping" />
-            <h3 className="font-extrabold text-slate-900 dark:text-white text-base">System Health & Status</h3>
-          </div>
-          <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">✕</button>
-        </div>
-
-        <div className="space-y-3 text-xs">
-          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400">Server Uptime</span>
-            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">99.98%</span>
-          </div>
-          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400">API Latency</span>
-            <span className="font-extrabold text-blue-600 dark:text-blue-400">24ms</span>
-          </div>
-          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400">Database Cluster</span>
-            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">Healthy</span>
-          </div>
-          <div className="flex justify-between p-3 rounded-xl bg-slate-50 border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-            <span className="text-slate-500 dark:text-slate-400">Redis Cache</span>
-            <span className="font-extrabold text-emerald-600 dark:text-emerald-400">Connected</span>
-          </div>
-        </div>
-
-        <button
-          type="button"
-          onClick={onClose}
-          className="w-full py-2.5 rounded-xl bg-blue-600 text-xs font-extrabold text-white shadow-lg shadow-blue-500/20 hover:bg-blue-500 transition"
-        >
-          Close Health Monitor
         </button>
       </div>
     </div>

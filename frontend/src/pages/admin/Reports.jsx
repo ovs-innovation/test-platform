@@ -128,7 +128,7 @@ export default function AdminReports() {
     }
   };
 
-  if (state === 'loading') return <LoadingScreen label="Loading audit logs…" />;
+  if (state === 'loading') return <LoadingScreen label="Loading reports…" />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 
   return (
@@ -136,7 +136,7 @@ export default function AdminReports() {
       {/* Page Title Header with reduced vertical spacing */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-2.5 dark:border-slate-800/80">
         <div>
-          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Admin Audit Logs</h1>
+          <h1 className="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">Admin Reports</h1>
           <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400">
             Complete record of candidate attempts, test performance, and proctoring violation logs.
           </p>
@@ -148,7 +148,7 @@ export default function AdminReports() {
           disabled={exporting || !reports.length}
         >
           <Download className="h-3.5 w-3.5" />
-          {exporting ? 'Exporting...' : 'Export Audit CSV'}
+          {exporting ? 'Exporting...' : 'Export Reports CSV'}
         </button>
       </div>
 
