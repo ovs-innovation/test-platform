@@ -14,8 +14,7 @@ import {
   Zap,
   Brain,
   Filter,
-  Layers,
-  Sparkles,
+  Layers
 } from 'lucide-react';
 
 export default function Analytics() {
@@ -103,15 +102,9 @@ export default function Analytics() {
     const first = trend[0].percentage;
     const diff = Math.round((latest - first) * 10) / 10;
     if (diff > 0) {
-<<<<<<< HEAD
-      return `🎉 Great progress! Your score has improved by +${diff}% since your first test.`;
-    } else if (diff < 0) {
-      return `📉 Focus warning: Your average score dropped by ${Math.abs(diff)}% recently. Revise weak topics!`;
-=======
       return `🎉 Score Growth: Your test score improved by +${diff}% from your first test (${first}%) to your latest test (${latest}%).`;
     } else if (diff < 0) {
       return `📉 Focus Required: Your score dropped by ${Math.abs(diff)}% recently. Focus on revising weak chapters below.`;
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
     } else {
       return '📊 Steady Performance: Your scores have stayed consistent across recent tests.';
     }
@@ -125,50 +118,12 @@ export default function Analytics() {
   const ringOffset = ringCircumference - (ringCircumference * Math.min(100, Math.max(0, avgAccuracy))) / 100;
 
   return (
-<<<<<<< HEAD
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-=======
     <div className="space-y-10 pb-16">
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
       <PageHeader
         title="Performance Analytics"
         subtitle="Comprehensive analysis of your exam metrics, subject mastery, chapter accuracy, score trend, and time management."
       />
 
-<<<<<<< HEAD
-      {/* 1. SAAS METRIC SCORECARDS */}
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        {/* Card 1 */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Tests Taken</p>
-            <p className="mt-1 text-2xl font-black text-blue-600 dark:text-blue-400 tabular-nums">{summary.tests_taken || 0}</p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">submitted attempts</p>
-          </div>
-          <div className="p-2 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
-            <BookOpen className="h-5 w-5" />
-          </div>
-        </div>
-
-        {/* Card 2 */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Average Score</p>
-            <p className="mt-1 text-2xl font-black text-cyan-600 dark:text-cyan-400 tabular-nums">{summary.avg_score || 0}%</p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">across all attempts</p>
-          </div>
-          <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-600 dark:text-cyan-400">
-            <TrendingUp className="h-5 w-5" />
-          </div>
-        </div>
-
-        {/* Card 3: Overall Accuracy with Ring */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Overall Accuracy</p>
-            <p className="mt-1 text-2xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums">{avgAccuracy}%</p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">correct / attempted</p>
-=======
       {/* ------------------------------------------------------------- */}
       {/* 1. OVERVIEW METRICS SCORECARDS GRID                           */}
       {/* ------------------------------------------------------------- */}
@@ -207,16 +162,15 @@ export default function Analytics() {
             <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Overall Accuracy</p>
             <p className="mt-2 text-3xl font-black text-emerald-400 tabular-nums">{avgAccuracy}%</p>
             <p className="mt-1 text-xs text-slate-400">correct / attempted</p>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
           </div>
-          <div className="relative flex h-12 w-12 shrink-0 items-center justify-center">
+          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center">
             <svg className="h-full w-full -rotate-90" viewBox="0 0 48 48">
-              <circle cx="24" cy="24" r="20" className="stroke-slate-100 dark:stroke-slate-800" strokeWidth="4" fill="none" />
+              <circle cx="24" cy="24" r="20" className="stroke-slate-800" strokeWidth="4" fill="none" />
               <circle
                 cx="24"
                 cy="24"
                 r="20"
-                className="stroke-emerald-500 transition-all duration-700 ease-out"
+                className="stroke-emerald-400 transition-all duration-700 ease-out"
                 strokeWidth="4"
                 fill="none"
                 strokeDasharray={ringCircumference}
@@ -224,21 +178,10 @@ export default function Analytics() {
                 strokeLinecap="round"
               />
             </svg>
-            <span className="absolute text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400">{avgAccuracy}%</span>
+            <span className="absolute text-[10px] font-extrabold text-emerald-300">{avgAccuracy}%</span>
           </div>
         </div>
 
-<<<<<<< HEAD
-        {/* Card 4 */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl flex items-center justify-between">
-          <div>
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Average Speed</p>
-            <p className="mt-1 text-2xl font-black text-amber-600 dark:text-amber-400 tabular-nums">{avgSpeed}</p>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">time per question</p>
-          </div>
-          <div className="p-2 rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400">
-            <Clock className="h-5 w-5" />
-=======
         {/* Average Speed */}
         <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl flex flex-col justify-between hover:border-amber-500/40 transition-colors">
           <div className="flex items-center justify-between">
@@ -252,47 +195,10 @@ export default function Analytics() {
               {time_management.avg_seconds_per_question ? `${time_management.avg_seconds_per_question}s` : '—'}
             </p>
             <p className="mt-1 text-xs text-slate-400">{time_management.speed_rating || 'time per question'}</p>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
           </div>
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* 2. INTERACTIVE TREND GRAPHS */}
-      <div className="grid gap-3 lg:grid-cols-2">
-        {/* Score Improvement Trends */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3 relative">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
-            <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Score Improvement Trajectory</h3>
-            <span className="text-[10px] font-bold text-blue-600 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
-              Interactive Bar Chart
-            </span>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{scoreImprovementSummary}</p>
-          
-          {trend.length > 0 ? (
-            <div className="mt-4 flex items-end gap-2.5 overflow-x-auto border-b border-slate-100 dark:border-slate-800/60 pb-3 pt-2">
-              {trend.map((t, i) => (
-                <div
-                  key={i}
-                  className="group relative flex min-w-[50px] flex-col items-center gap-1 cursor-pointer"
-                  onMouseEnter={() => setHoveredScoreTrend(t)}
-                  onMouseLeave={() => setHoveredScoreTrend(null)}
-                >
-                  {hoveredScoreTrend === t && (
-                    <div className="absolute -top-12 z-30 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 text-center shadow-xl backdrop-blur-md pointer-events-none min-w-[90px]">
-                      <p className="text-[9.5px] font-bold text-slate-300 truncate max-w-[110px]">{t.title}</p>
-                      <p className="text-xs font-black text-blue-400">{t.percentage}% Score</p>
-                    </div>
-                  )}
-
-                  <span className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform">{t.percentage}%</span>
-                  <div
-                    className="w-8 bg-gradient-to-t from-blue-600 to-blue-400 hover:brightness-125 transition-all duration-200 rounded-t-lg shadow-sm"
-                    style={{ height: `${Math.max(16, t.percentage * 1.4)}px` }}
-                  />
-                  <span className="text-[9.5px] font-medium text-slate-400 mt-1 text-center truncate w-12">
-=======
       {/* ------------------------------------------------------------- */}
       {/* 2. DYNAMIC TREND GRAPHS (SCORE & ACCURACY)                    */}
       {/* ------------------------------------------------------------- */}
@@ -311,77 +217,39 @@ export default function Analytics() {
           <p className="text-xs text-slate-400 leading-relaxed">{scoreImprovementSummary}</p>
 
           {trend.length > 0 ? (
-            <div className="mt-2 pt-16 pb-4 flex items-end gap-3.5 overflow-x-auto border-b border-slate-800/80 min-h-[220px]">
+            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-800 pb-4 pt-2 min-h-[160px]">
               {trend.map((t, i) => (
                 <div
                   key={i}
-                  className="group relative flex min-w-[60px] flex-col items-center gap-1.5 cursor-pointer z-10 hover:z-30"
+                  className="group relative flex min-w-[56px] flex-col items-center gap-1.5 cursor-pointer"
                   onMouseEnter={() => setHoveredScoreTrend(t)}
                   onMouseLeave={() => setHoveredScoreTrend(null)}
                 >
-                  {/* Floating Hover Tooltip - always on top */}
+                  {/* Floating Hover Tooltip */}
                   {hoveredScoreTrend === t && (
-                    <div className="absolute -top-14 z-50 rounded-xl border border-slate-700 bg-[#070c18] px-3.5 py-2 text-center shadow-2xl backdrop-blur-md pointer-events-none whitespace-nowrap">
-                      <p className="text-[10px] font-bold text-slate-300 truncate max-w-[150px]">{t.title}</p>
+                    <div className="absolute -top-14 z-30 rounded-xl border border-slate-700 bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none min-w-[110px]">
+                      <p className="text-[10px] font-bold text-slate-300 truncate max-w-[130px]">{t.title}</p>
                       <p className="text-xs font-black text-[#60a5fa]">{t.percentage}% Score</p>
                     </div>
                   )}
 
-                  <span className="text-xs font-black text-[#60a5fa] group-hover:scale-110 transition-transform tabular-nums">{t.percentage}%</span>
+                  <span className="text-xs font-extrabold text-[#60a5fa] group-hover:scale-110 transition-transform">{t.percentage}%</span>
                   <div
-                    className="w-10 bg-gradient-to-t from-[#1d4ed8] to-[#2563eb] hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/50"
-                    style={{ height: `${Math.max(20, (t.percentage / 100) * 110)}px` }}
+                    className="w-10 bg-gradient-to-t from-[#1d4ed8] to-[#2563eb] hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40"
+                    style={{ height: `${Math.max(24, t.percentage * 1.5)}px` }}
                   />
-                  <span className="text-[10px] font-semibold text-slate-400 mt-1 text-center truncate w-16">
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
+                  <span className="text-[10px] font-semibold text-slate-400 mt-1 text-center truncate w-14">
                     {new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
-<<<<<<< HEAD
-            <p className="text-xs text-slate-400 mt-4 text-center">No score trend data recorded yet.</p>
-=======
             <div className="py-10 text-center text-xs text-slate-500">No score trend data recorded yet.</div>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
           )}
         </div>
 
         {/* Accuracy Trend Graph */}
-<<<<<<< HEAD
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3 relative">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
-            <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Accuracy Breakdown</h3>
-            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
-              Accuracy Trend
-            </span>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400">Percentage of correct answers out of total questions attempted.</p>
-          
-          {trend.length > 0 ? (
-            <div className="mt-4 flex items-end gap-2.5 overflow-x-auto border-b border-slate-100 dark:border-slate-800/60 pb-3 pt-2">
-              {trend.map((t, i) => (
-                <div
-                  key={i}
-                  className="group relative flex min-w-[50px] flex-col items-center gap-1 cursor-pointer"
-                  onMouseEnter={() => setHoveredAccuracyTrend(t)}
-                  onMouseLeave={() => setHoveredAccuracyTrend(null)}
-                >
-                  {hoveredAccuracyTrend === t && (
-                    <div className="absolute -top-12 z-30 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1 text-center shadow-xl backdrop-blur-md pointer-events-none min-w-[90px]">
-                      <p className="text-[9.5px] font-bold text-slate-300 truncate max-w-[110px]">{t.title}</p>
-                      <p className="text-xs font-black text-emerald-400">{t.accuracy}% Accuracy</p>
-                    </div>
-                  )}
-
-                  <span className="text-[11px] font-extrabold text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">{t.accuracy}%</span>
-                  <div
-                    className="w-8 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-lg shadow-sm"
-                    style={{ height: `${Math.max(16, t.accuracy * 1.4)}px` }}
-                  />
-                  <span className="text-[9.5px] font-medium text-slate-400 mt-1 text-center truncate w-12">
-=======
         <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl space-y-4 relative">
           <div className="flex items-center justify-between border-b border-slate-800 pb-3">
             <div className="flex items-center gap-2">
@@ -395,65 +263,39 @@ export default function Analytics() {
           <p className="text-xs text-slate-400 leading-relaxed">Percentage of correct answers vs total attempted questions per test.</p>
 
           {trend.length > 0 ? (
-            <div className="mt-2 pt-16 pb-4 flex items-end gap-3.5 overflow-x-auto border-b border-slate-800/80 min-h-[220px]">
+            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-800 pb-4 pt-2 min-h-[160px]">
               {trend.map((t, i) => (
                 <div
                   key={i}
-                  className="group relative flex min-w-[60px] flex-col items-center gap-1.5 cursor-pointer z-10 hover:z-30"
+                  className="group relative flex min-w-[56px] flex-col items-center gap-1.5 cursor-pointer"
                   onMouseEnter={() => setHoveredAccuracyTrend(t)}
                   onMouseLeave={() => setHoveredAccuracyTrend(null)}
                 >
-                  {/* Floating Hover Tooltip - always on top */}
+                  {/* Floating Hover Tooltip */}
                   {hoveredAccuracyTrend === t && (
-                    <div className="absolute -top-14 z-50 rounded-xl border border-slate-700 bg-[#070c18] px-3.5 py-2 text-center shadow-2xl backdrop-blur-md pointer-events-none whitespace-nowrap">
-                      <p className="text-[10px] font-bold text-slate-300 truncate max-w-[150px]">{t.title}</p>
+                    <div className="absolute -top-14 z-30 rounded-xl border border-slate-700 bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none min-w-[110px]">
+                      <p className="text-[10px] font-bold text-slate-300 truncate max-w-[130px]">{t.title}</p>
                       <p className="text-xs font-black text-emerald-400">{t.accuracy}% Accuracy ({t.correct_count || 0}C / {t.wrong_count || 0}W)</p>
                     </div>
                   )}
 
-                  <span className="text-xs font-black text-emerald-400 group-hover:scale-110 transition-transform tabular-nums">{t.accuracy}%</span>
+                  <span className="text-xs font-extrabold text-emerald-400 group-hover:scale-110 transition-transform">{t.accuracy}%</span>
                   <div
-                    className="w-10 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/50"
-                    style={{ height: `${Math.max(20, (t.accuracy / 100) * 110)}px` }}
+                    className="w-10 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40"
+                    style={{ height: `${Math.max(24, t.accuracy * 1.5)}px` }}
                   />
-                  <span className="text-[10px] font-semibold text-slate-400 mt-1 text-center truncate w-16">
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
+                  <span className="text-[10px] font-semibold text-slate-400 mt-1 text-center truncate w-14">
                     {new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
-<<<<<<< HEAD
-            <p className="text-xs text-slate-400 mt-4 text-center">No accuracy trend data recorded yet.</p>
-=======
             <div className="py-10 text-center text-xs text-slate-500">No accuracy trend data recorded yet.</div>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
           )}
         </div>
       </div>
 
-<<<<<<< HEAD
-      {/* 3. WEAK & STRONG CHAPTER BREAKDOWN */}
-      <div className="grid gap-3 lg:grid-cols-2">
-        {/* Weak Chapters */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
-            <div className="flex items-center gap-1.5 text-rose-600 dark:text-rose-400">
-              <AlertTriangle className="h-4 w-4" />
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Weak Chapters (&lt;60% Accuracy)</h3>
-            </div>
-            <span className="text-[10px] font-bold text-rose-600 bg-rose-500/10 px-2 py-0.5 rounded">Action Needed</span>
-          </div>
-          
-          {chapters.weak.length > 0 ? (
-            <div className="space-y-2.5">
-              {chapters.weak.map((c, idx) => (
-                <div key={idx} className="space-y-1">
-                  <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-slate-800 dark:text-slate-200">{c.chapter} <span className="text-slate-400 font-normal">({c.subject})</span></span>
-                    <span className="text-rose-600 dark:text-rose-400 font-bold">{c.accuracy}% Accuracy</span>
-=======
       {/* ------------------------------------------------------------- */}
       {/* 3. SUBJECT-WISE PERFORMANCE                                   */}
       {/* ------------------------------------------------------------- */}
@@ -646,51 +488,24 @@ export default function Analytics() {
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-200">{c.chapter} <span className="text-slate-400">({c.subject})</span></span>
                     <span className="text-red-400 font-bold">{c.accuracy}% Accuracy</span>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
                   </div>
-                  <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-rose-500 h-full rounded-full" style={{ width: `${c.accuracy}%` }} />
+                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className="bg-red-500 h-full rounded-full" style={{ width: `${c.accuracy}%` }} />
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-<<<<<<< HEAD
-            <div className="py-6 text-center">
-              <Sparkles className="h-8 w-8 text-emerald-500 mx-auto mb-1" />
-              <p className="text-xs font-bold text-slate-900 dark:text-white">No Weak Chapters Identified</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">All attempted chapters are above 60% accuracy!</p>
-=======
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-2xl text-emerald-400 border border-emerald-500/30 mb-2">
                 🎉
               </span>
               <p className="text-xs font-bold text-white">No Weak Chapters Identified</p>
               <p className="mt-1 text-[11px] text-slate-400">Great job! All attempted chapters are above 60% accuracy threshold.</p>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
             </div>
           )}
         </div>
 
-<<<<<<< HEAD
-        {/* Strong Chapters */}
-        <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
-            <div className="flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
-              <Award className="h-4 w-4" />
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">Strong Chapters (&ge;60% Accuracy)</h3>
-            </div>
-            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded">Mastered</span>
-          </div>
-
-          {chapters.strong.length > 0 ? (
-            <div className="space-y-2.5">
-              {chapters.strong.map((c, idx) => (
-                <div key={idx} className="space-y-1">
-                  <div className="flex justify-between text-xs font-semibold">
-                    <span className="text-slate-800 dark:text-slate-200">{c.chapter} <span className="text-slate-400 font-normal">({c.subject})</span></span>
-                    <span className="text-emerald-600 dark:text-emerald-400 font-bold">{c.accuracy}% Accuracy</span>
-=======
         {/* Strong Chapters (>=60% Accuracy) */}
         <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl border-t-4 border-t-emerald-500 space-y-4">
           <div className="flex items-center justify-between">
@@ -711,21 +526,14 @@ export default function Analytics() {
                   <div className="flex justify-between text-xs font-semibold">
                     <span className="text-slate-200">{c.chapter} <span className="text-slate-400">({c.subject})</span></span>
                     <span className="text-emerald-400 font-bold">{c.accuracy}% Accuracy</span>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
                   </div>
-                  <div className="w-full bg-slate-100 dark:bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${c.accuracy}%` }} />
+                  <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className="bg-emerald-400 h-full rounded-full" style={{ width: `${c.accuracy}%` }} />
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-<<<<<<< HEAD
-            <div className="py-6 text-center">
-              <Award className="h-8 w-8 text-blue-500 mx-auto mb-1" />
-              <p className="text-xs font-bold text-slate-900 dark:text-white">Strong Chapters Locked</p>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Complete more mock tests with ≥60% accuracy to unlock analysis.</p>
-=======
             <div className="flex flex-col items-center justify-center py-8 text-center">
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 text-2xl text-emerald-400 border border-emerald-500/30 mb-2">
                 🏆
@@ -734,7 +542,6 @@ export default function Analytics() {
               <p className="mt-1 max-w-xs text-[11px] text-slate-400 leading-relaxed">
                 Complete more CBT diagnostic mock tests with &ge;60% accuracy to unlock your strong chapters analysis.
               </p>
->>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
             </div>
           )}
         </div>
