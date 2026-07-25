@@ -280,6 +280,68 @@ export default function ExamScreen() {
     return m;
   }, [sections]);
 
+  const getSubjectIcon = (name = '') => {
+    const n = name.toLowerCase();
+    if (n.includes('physic')) return '⚛️';
+    if (n.includes('chem')) return '🧪';
+    if (n.includes('math')) return '📐';
+    if (n.includes('bio') || n.includes('botany') || n.includes('zoology')) return '🧬';
+    return '🧠';
+  };
+
+  // Compute subject-based sections dynamically from questions
+  const effectiveSections = useMemo(() => {
+    const categoryMap = new Map();
+    questions.forEach((q, idx) => {
+      const cat = q.bank_category && !['General', 'Technical MCQ', ''].includes(q.bank_category)
+        ? q.bank_category
+        : (q.section_id && sectionMap.get(q.section_id)?.name) || 'General';
+      if (!categoryMap.has(cat)) {
+        categoryMap.set(cat, {
+          id: `cat-${cat}`,
+          name: cat,
+          categoryKey: cat,
+          icon: getSubjectIcon(cat),
+          startIndex: idx,
+        });
+      }
+    });
+
+    const categories = Array.from(categoryMap.values());
+    if (categories.length > 0) return categories;
+
+    if (sections && sections.length > 0) {
+      return sections.map((s) => ({
+        id: s.id,
+        name: s.name,
+        sectionId: s.id,
+        icon: getSubjectIcon(s.name),
+      }));
+    }
+
+    return [{ id: 'sec-all', name: 'All Questions', icon: '📚' }];
+  }, [questions, sections, sectionMap]);
+
+  const getSecQuestions = useCallback(
+    (secItem) => {
+      return questions
+        .map((item, idx) => ({ item, idx }))
+        .filter(({ item }) => {
+          if (secItem.categoryKey) {
+            const cat = item.bank_category && !['General', 'Technical MCQ', ''].includes(item.bank_category)
+              ? item.bank_category
+              : (item.section_id && sectionMap.get(item.section_id)?.name) || 'General';
+            return cat === secItem.categoryKey;
+          }
+          if (secItem.sectionId) {
+            return item.section_id === secItem.sectionId;
+          }
+          return true;
+        });
+    },
+    [questions, sectionMap]
+  );
+
   const answeredCount = useMemo(
     () => questions.filter((item) => qAnswered(item)).length,
     [questions, qAnswered],
@@ -287,10 +349,12 @@ export default function ExamScreen() {
 
   const unattemptedCount = questions.length - answeredCount;
 
-  const jumpToSection = (sectionId) => {
-    setActiveSection(sectionId);
-    const idx = questions.findIndex((item) => item.section_id === sectionId);
-    if (idx >= 0) setCurrent(idx);
+  const jumpToSection = (secItem) => {
+    setActiveSection(secItem.id);
+    const secQs = getSecQuestions(secItem);
+    if (secQs.length > 0) {
+      setCurrent(secQs[0].idx);
+    }
   };
 
   const rollNo = String(user?.id || '0').padStart(6, '0');
@@ -324,8 +388,8 @@ export default function ExamScreen() {
   }
 
   const q = questions[current];
-  const sec = q.section_id ? sectionMap.get(q.section_id) : null;
-  const activeSecName = activeSection ? sectionMap.get(activeSection)?.name : sec?.name;
+  const qCategory = q?.bank_category || (q?.section_id && sectionMap.get(q.section_id)?.name) || 'General';
+  const activeSecItem = effectiveSections.find((s) => s.id === activeSection);
 
   return (
     <div className="exam-surface flex min-h-screen flex-col select-none">
@@ -335,7 +399,7 @@ export default function ExamScreen() {
             <p className="truncate text-sm font-bold">{meta?.title}</p>
             <p className="text-xs text-blue-100">
               {user?.name} · Roll No: {rollNo}
-              {activeSecName ? ` · Section: ${activeSecName}` : ''}
+              {qCategory ? ` · Subject: ${qCategory}` : ''}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
@@ -357,25 +421,29 @@ export default function ExamScreen() {
         </div>
       </header>
 
-      {sections.length > 0 && (
-        <div className="nta-bar-sub flex flex-wrap gap-1 px-4 py-2">
+      {effectiveSections.length > 0 && (
+        <div className="nta-bar-sub flex flex-wrap gap-1.5 px-4 py-2">
           <button
             type="button"
             className={`nta-section-tab ${!activeSection ? 'nta-section-tab-active' : ''}`}
             onClick={() => setActiveSection(null)}
           >
-            All sections
+            All Sections ({questions.length})
           </button>
-          {sections.map((s) => (
-            <button
-              key={s.id}
-              type="button"
-              className={`nta-section-tab ${activeSection === s.id ? 'nta-section-tab-active' : ''}`}
-              onClick={() => jumpToSection(s.id)}
-            >
-              {s.name}
-            </button>
-          ))}
+          {effectiveSections.map((s) => {
+            const count = getSecQuestions(s).length;
+            return (
+              <button
+                key={s.id}
+                type="button"
+                className={`nta-section-tab flex items-center gap-1.5 ${activeSection === s.id ? 'nta-section-tab-active' : ''}`}
+                onClick={() => jumpToSection(s)}
+              >
+                <span>{s.icon}</span>
+                <span>{s.name} ({count} Qs)</span>
+              </button>
+            );
+          })}
         </div>
       )}
 
@@ -390,11 +458,10 @@ export default function ExamScreen() {
         <div className="border-b border-r border-slate-400 bg-white p-5 lg:border-b-0">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
             <div>
-              {sec && (
-                <p className="text-[11px] font-bold uppercase text-[#1a4480]">
-                  {sec.name || SECTION_LABELS[sec.section_type] || 'Section'}
-                </p>
-              )}
+              <p className="text-[11px] font-bold uppercase text-[#1a4480] flex items-center gap-1.5">
+                <span>{getSubjectIcon(qCategory)}</span>
+                <span>Subject: {qCategory}</span>
+              </p>
               <p className="text-sm font-bold text-slate-800">
                 Question No. {current + 1} of {questions.length}
               </p>
@@ -480,23 +547,38 @@ export default function ExamScreen() {
           )}
 
           {q.question_type === 'integer' && (
-            <div className="mt-5 max-w-xs space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">Enter Integer Answer</label>
+            <div className="mt-5 space-y-3">
+              <p className="text-xs font-semibold text-slate-700">Enter integer answer (0-9):</p>
+              <div className="flex flex-wrap gap-2">
+                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                  <button
+                    key={num}
+                    type="button"
+                    onClick={() => saveNumericAnswer(q.id, String(num))}
+                    className={`h-10 w-10 text-sm font-bold rounded border transition-all ${
+                      String(answers[q.id] ?? numericAnswers[q.id]) === String(num)
+                        ? 'border-[#1a4480] bg-[#1a4480] text-white shadow'
+                        : 'border-slate-400 bg-white text-slate-800 hover:bg-slate-100'
+                    }`}
+                  >
+                    {num}
+                  </button>
+                ))}
+              </div>
               <input
                 type="number"
                 step="1"
-                className="input font-mono text-lg font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600"
-                placeholder="e.g. 5"
+                className="input max-w-xs font-mono text-base font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600 mt-2"
+                placeholder="Or type integer value"
                 value={numericAnswers[q.id] ?? ''}
                 onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
               />
-              <p className="text-[11px] text-slate-500">Your answer will be saved automatically as an integer.</p>
             </div>
           )}
 
           {q.question_type === 'numerical' && (
-            <div className="mt-5 max-w-xs space-y-2">
-              <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">Enter Numerical Value</label>
+            <div className="mt-5 space-y-3">
+              <p className="text-xs font-semibold text-slate-700">Enter numerical answer (up to 2 decimal places):</p>
               <input
                 type="number"
                 step="any"
@@ -566,69 +648,48 @@ export default function ExamScreen() {
           </div>
 
           <div className="mt-3 space-y-3">
-            {sections.length > 0 ? (
-              sections.map((secItem) => {
-                const secQuestions = questions
-                  .map((item, idx) => ({ item, idx }))
-                  .filter(({ item }) => item.section_id === secItem.id);
+            {effectiveSections.map((secItem) => {
+              const secQuestions = getSecQuestions(secItem);
+              if (secQuestions.length === 0) return null;
 
-                if (secQuestions.length === 0) return null;
+              const secAnswered = secQuestions.filter(({ item }) => qAnswered(item)).length;
+              const isCurrentSec = (q?.bank_category && q.bank_category === secItem.categoryKey) || q?.section_id === secItem.sectionId;
 
-                const secAnswered = secQuestions.filter(({ item }) => qAnswered(item)).length;
-                const isCurrentSec = q.section_id === secItem.id;
-
-                return (
-                  <div
-                    key={secItem.id}
-                    className={`rounded-xl border p-2.5 transition-all ${
-                      isCurrentSec
-                        ? 'border-[#1a4480] bg-white shadow-sm ring-1 ring-[#1a4480]'
-                        : 'border-slate-300 bg-slate-50/70'
-                    }`}
-                  >
-                    <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-1.5">
-                      <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
-                        <span>📚</span> {secItem.name}
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-600 bg-slate-200/80 px-1.5 py-0.5 rounded">
-                        {secAnswered}/{secQuestions.length} Answered
-                      </span>
-                    </div>
-                    <div className="grid grid-cols-5 gap-1.5">
-                      {secQuestions.map(({ item, idx }) => {
-                        const status = getQStatus(item);
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => setCurrent(idx)}
-                            className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
-                          >
-                            {idx + 1}
-                          </button>
-                        );
-                      })}
-                    </div>
+              return (
+                <div
+                  key={secItem.id}
+                  className={`rounded-xl border p-2.5 transition-all ${
+                    isCurrentSec
+                      ? 'border-[#1a4480] bg-white shadow-sm ring-1 ring-[#1a4480]'
+                      : 'border-slate-300 bg-slate-50/70'
+                  }`}
+                >
+                  <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-1.5">
+                    <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
+                      <span>{secItem.icon}</span> {secItem.name}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-600 bg-slate-200/80 px-1.5 py-0.5 rounded">
+                      {secAnswered}/{secQuestions.length} Answered
+                    </span>
                   </div>
-                );
-              })
-            ) : (
-              <div className="grid grid-cols-5 gap-1.5">
-                {questions.map((item, idx) => {
-                  const status = getQStatus(item);
-                  return (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => setCurrent(idx)}
-                      className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
-                    >
-                      {idx + 1}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+                  <div className="grid grid-cols-5 gap-1.5">
+                    {secQuestions.map(({ item, idx }) => {
+                      const status = getQStatus(item);
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => setCurrent(idx)}
+                          className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
+                        >
+                          {idx + 1}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              );
+            })}
           </div>
 
           <div className="mt-3 border-t border-slate-300 pt-2 text-center text-[10px] text-slate-600">

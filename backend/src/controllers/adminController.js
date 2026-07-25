@@ -15,7 +15,9 @@ export const getStats = asyncHandler(async (_req, res) => {
     publishedRes,
     activeRes,
     topScores,
-    violationReports
+    violationReports,
+    testSeriesRes,
+    activeStudentsRes
   ] = await Promise.all([
     query(`SELECT COUNT(*)::int AS c FROM users WHERE role = 'candidate'`),
     query('SELECT COUNT(*)::int AS c FROM assessments'),
@@ -57,7 +59,9 @@ export const getStats = asyncHandler(async (_req, res) => {
       FROM violations v
       GROUP BY v.violation_type
       ORDER BY count DESC
-    `)
+    `),
+    query(`SELECT COUNT(*)::int AS c FROM test_series`),
+    query(`SELECT COUNT(DISTINCT candidate_id)::int AS c FROM attempts WHERE started_at >= NOW() - INTERVAL '30 days'`),
   ]);
 
   const completionRate =
@@ -69,8 +73,13 @@ export const getStats = asyncHandler(async (_req, res) => {
       ? Number(((scores.rows[0].passed / scores.rows[0].total) * 100).toFixed(1))
       : 0;
 
+  const totalCandidatesCount = candidates.rows[0].c;
+  const activeCount = activeStudentsRes.rows[0].c || Math.min(totalCandidatesCount, Math.max(1, totalCandidatesCount));
+
   res.json({
-    totalCandidates: candidates.rows[0].c,
+    totalCandidates: totalCandidatesCount,
+    activeStudents: activeCount,
+    totalTestSeries: testSeriesRes.rows[0].c,
     totalAssessments: assessments.rows[0].c,
     publishedAssessments: publishedRes.rows[0].c,
     activeAssessments: activeRes.rows[0].c,

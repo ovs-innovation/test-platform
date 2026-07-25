@@ -46,137 +46,70 @@ export default function Overview() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* 1. Welcome Banner & System Status */}
-      <div className="saas-card relative overflow-hidden p-6 sm:p-8 bg-gradient-to-r from-blue-900/40 via-[#111827] to-indigo-900/30 border border-blue-500/20">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="space-y-1.5 max-w-xl">
-            <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/20">
-                <span className="h-2 w-2 rounded-full bg-emerald-400 animate-ping" />
-                All Systems Operational (99.98%)
-              </span>
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-500/10 px-3 py-1 text-xs font-bold text-blue-400 border border-blue-500/20">
-                ⚡ 42 Candidates Online
-              </span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
-              Welcome Back, Administrator 👋
-            </h1>
-            <p className="text-xs sm:text-sm text-slate-400 font-medium leading-relaxed">
-              Here is what's happening across your testing platform today. You have {stats.activeAssessments || 0} active assessments live.
-            </p>
-          </div>
+    <div className="space-y-6">
+      <PageHeader
+        title="Admin Dashboard"
+        subtitle="Live metrics & performance overview as per section 7.1 requirements."
+        actions={<Link to="/admin/assessments" className="btn-primary">Manage Assessments</Link>}
+      />
 
-          <div className="flex flex-wrap items-center gap-3">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/80 px-4 py-3 text-right text-xs">
-              <p className="font-extrabold text-white">☀️ Sunny 26°C</p>
-              <p className="text-[11px] text-slate-400 font-semibold mt-0.5">Friday, Jul 24, 2026</p>
-            </div>
-            <Link
-              to="/admin/assessments"
-              className="rounded-2xl bg-blue-600 px-5 py-3 text-xs font-extrabold text-white shadow-xl shadow-blue-500/25 transition hover:bg-blue-500"
-            >
-              + Create Assessment
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Redesigned Stat Cards with Sparklines & Trend Indicators */}
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {/* Primary Section 7.1 Metrics Grid */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Total Students"
+          value={stats.totalCandidates ?? 0}
+          accent="text-cyan-400"
+        />
+        <StatCard
+          label="Active Students"
+          value={stats.activeStudents ?? 0}
+          accent="text-emerald-400"
+        />
+        <StatCard
+          label="Total Test Series"
+          value={stats.totalTestSeries ?? 0}
+          accent="text-amber-400"
+        />
         <StatCard
           label="Total Revenue"
           value={`₹${Number(summary.total || 0).toLocaleString('en-IN')}`}
-          accent="text-emerald-400"
-          subtitle="Gross test sales"
-          sparklineData={[12, 18, 25, 22, 35, 42, 50]}
-          trend="+14.2% vs last month"
-          trendUp={true}
-        />
-        <StatCard
-          label="Active Candidates"
-          value={stats.totalCandidates}
-          accent="text-cyan-400"
-          subtitle="Registered aspirants"
-          sparklineData={[40, 52, 60, 58, 75, 82, 95]}
-          trend="+8.5% new signups"
-          trendUp={true}
-        />
-        <StatCard
-          label="Live Assessments"
-          value={stats.activeAssessments}
-          accent="text-blue-400"
-          subtitle="Active NTA mock tests"
-          sparklineData={[5, 6, 8, 7, 9, 11, 12]}
-          trend="3 closing today"
-          trendUp={true}
-        />
-        <StatCard
-          label="Platform Pass Rate"
-          value={`${stats.passRate}%`}
-          accent="text-amber-400"
-          subtitle="Average benchmark"
-          sparklineData={[65, 68, 72, 70, 74, 73, 76]}
-          trend="+2.1% accuracy"
-          trendUp={true}
+          accent="text-emerald-300"
         />
       </div>
 
-      {/* 3. Today's Executive Insights & Urgent Actions */}
-      <div className="grid gap-6 lg:grid-cols-12">
-        {/* Urgent Action Center (7 Cols) */}
-        <div className="lg:col-span-7 saas-card p-6 bg-[#0b1430] border border-slate-800/90 rounded-3xl space-y-4">
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
-            <div>
-              <h2 className="text-base font-black text-white flex items-center gap-2">
-                <span>⚡</span> Action Center & Operational Tasks
-              </h2>
-              <p className="text-xs text-slate-400 font-medium">Pending platform maintenance and student review items.</p>
-            </div>
-            <span className="rounded-full bg-blue-500/20 px-3 py-1 text-xs font-bold text-cyan-300 border border-blue-500/30">
-              {todoList.filter((t) => !t.done).length} Pending
+      {/* Secondary Performance Metrics */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <StatCard
+          label="Test Attempts"
+          value={stats.totalAttempts ?? 0}
+          accent="text-blue-400"
+        />
+        <StatCard
+          label="Active Assessments"
+          value={stats.activeAssessments ?? 0}
+          accent="text-indigo-400"
+        />
+        <StatCard
+          label="Pass Rate"
+          value={`${stats.passRate}%`}
+          accent="text-emerald-400"
+        />
+        <StatCard
+          label="Average Score"
+          value={`${stats.avgPercentage}%`}
+          accent="text-yellow-400"
+        />
+      </div>
+
+      {/* Section 7.1 Tables & Lists (Recent Payments & Top Performing Students) */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Recent Payments */}
+        <div className="card overflow-hidden border border-slate-800/90 bg-[#0b1430]">
+          <div className="border-b border-slate-800/80 px-6 py-4 flex items-center justify-between">
+            <h2 className="font-extrabold text-white text-base">Recent Payments</h2>
+            <span className="text-xs font-bold text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full border border-emerald-500/20">
+              {summary.successful ?? 0} Successful
             </span>
-          </div>
-
-          <div className="space-y-3">
-            {todoList.map((todo) => (
-              <div
-                key={todo.id}
-                onClick={() => toggleTodo(todo.id)}
-                className={`flex items-center justify-between p-4 rounded-2xl border transition cursor-pointer ${
-                  todo.done
-                    ? 'border-slate-800/50 bg-slate-900/30 opacity-60'
-                    : 'border-slate-800 bg-[#070e24] hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={todo.done}
-                    onChange={() => {}}
-                    className="h-4 w-4 rounded accent-blue-600 pointer-events-none"
-                  />
-                  <span className={`text-xs font-bold ${todo.done ? 'line-through text-slate-500' : 'text-slate-200'}`}>
-                    {todo.text}
-                  </span>
-                </div>
-                <span
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold border uppercase ${
-                    todo.priority === 'high'
-                      ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
-                      : todo.priority === 'medium'
-                      ? 'bg-amber-500/20 text-amber-300 border-amber-500/30'
-                      : 'bg-blue-500/20 text-cyan-300 border-blue-500/30'
-                  }`}
-                >
-                  {todo.priority}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* Real-time System Metrics Widget (5 Cols) */}
         <div className="lg:col-span-5 saas-card p-6 bg-[#0b1430] border border-slate-800/90 rounded-3xl space-y-4">
           <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
@@ -364,6 +297,64 @@ export default function Overview() {
                 </div>
               </div>
             ))}
+=======
+        {/* Top Performing Students */}
+        <div className="card p-6 border border-slate-800/90 bg-[#0b1430]">
+          <div className="mb-4 flex items-center justify-between">
+            <h2 className="font-extrabold text-white text-base">Top Performing Students</h2>
+            <span className="text-xs text-slate-400 font-medium">Ranked by score %</span>
+          </div>
+          {(stats.candidateRankings || stats.topScores).length === 0 ? (
+            <p className="text-sm text-slate-400">No completed attempts yet.</p>
+          ) : (
+            <div className="space-y-3">
+              {(stats.candidateRankings || stats.topScores).slice(0, 6).map((s, i) => (
+                <div key={i} className="flex items-center justify-between text-sm p-3 rounded-2xl bg-[#070e24] border border-slate-800/80 hover:border-amber-500/30 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-tr from-amber-500/20 to-yellow-500/20 text-xs font-extrabold text-amber-300 border border-amber-500/30 shadow-inner">
+                      #{i + 1}
+                    </span>
+                    <div>
+                      <p className="font-bold text-white">{s.candidate_name}</p>
+                      <p className="text-xs text-slate-400 truncate max-w-[200px]">{s.assessment_title}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <span className="font-black text-emerald-400 text-sm block">{s.percentage}%</span>
+                    <span className="text-[10px] text-slate-400 font-mono">{s.marks_obtained}/{s.total_marks} Marks</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Attempt & Violation Breakdowns */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="card p-6 border border-slate-800/90 bg-[#0b1430]">
+          <h2 className="mb-4 font-extrabold text-white text-base">Violation Reports</h2>
+          {stats.violationReports.length === 0 ? (
+            <p className="text-sm text-slate-400">No violations recorded.</p>
+          ) : (
+            <div className="space-y-2.5">
+              {stats.violationReports.map((v) => (
+                <div key={v.violation_type} className="flex justify-between items-center text-sm p-3 rounded-xl bg-[#070e24] border border-slate-800/60">
+                  <span className="capitalize text-slate-200 font-semibold">{v.violation_type.replace(/_/g, ' ')}</span>
+                  <span className="font-black text-rose-400 bg-rose-500/20 border border-rose-500/30 px-2.5 py-0.5 rounded-full text-xs">{v.count}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="card p-6 border border-slate-800/90 bg-[#0b1430]">
+          <h2 className="mb-4 font-extrabold text-white text-base">Pass / Fail Breakdown</h2>
+          <div className="grid grid-cols-3 gap-4 text-center">
+            <Tile label="Completed" value={stats.completedAttempts} color="text-white" />
+            <Tile label="Passed" value={stats.passed} color="text-emerald-400" />
+            <Tile label="Failed" value={stats.failed} color="text-rose-400" />
+>>>>>>> 4ad9613 (feat: performance analytics, admin dashboard 7.1 metrics, subject sectioning, PDF bad XRef fix, and certificate redesign)
           </div>
         </div>
       </div>

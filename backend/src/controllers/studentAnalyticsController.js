@@ -3,6 +3,14 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 
 /**
  * GET /api/student/analytics
+ * Returns comprehensive performance analytics including:
+ * 1. Subject-wise performance
+ * 2. Chapter-wise performance
+ * 3. Accuracy graph data
+ * 4. Score improvement graph data
+ * 5. Time management analysis
+ * 6. Weak chapters (<60% accuracy)
+ * 7. Strong chapters (>=60% accuracy)
  */
 export const studentAnalytics = asyncHandler(async (req, res) => {
   const userId = req.user.id;
@@ -41,8 +49,10 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
     .slice()
     .reverse()
     .map((a) => {
-      const attempted = (Number(a.correct_count) || 0) + (Number(a.wrong_count) || 0);
-      const accuracy = attempted > 0 ? Math.round(((Number(a.correct_count) || 0) / attempted) * 100) : 0;
+      const correct = Number(a.correct_count) || 0;
+      const wrong = Number(a.wrong_count) || 0;
+      const attempted = correct + wrong;
+      const accuracy = attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
       return {
         date: a.submitted_at,
         percentage: Number(a.percentage) || 0,
@@ -50,41 +60,150 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
         accuracy,
         duration_seconds: a.duration_seconds || 0,
         total_questions: a.total_questions || 0,
+        correct_count: correct,
+        wrong_count: wrong,
+        unattempted_count: Number(a.unattempted_count) || 0,
       };
     });
 
   const [subjectBreakdown, chapterBreakdown] = await Promise.all([
     query(
-      `SELECT COALESCE(s.name, q.bank_category, 'General') AS subject,
+      `WITH normalized_data AS (
+         SELECT 
+           q.id AS question_id,
+           at.candidate_id,
+           ans.id AS answer_id,
+           ans.selected_index,
+           ans.selected_indices,
+           q.correct_index,
+           q.correct_indices,
+           q.question_type,
+           CASE 
+             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             WHEN cs.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN cs.name
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
+             ELSE COALESCE(s.name, cs.name, 'Physics')
+           END AS subject
+         FROM questions q
+         JOIN attempts at ON at.assessment_id = q.assessment_id
+         LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
+         LEFT JOIN subjects s ON s.id = q.subject_id
+         LEFT JOIN chapters c ON c.id = q.chapter_id
+         LEFT JOIN subjects cs ON cs.id = c.subject_id
+         LEFT JOIN assessment_sections sec ON sec.id = q.section_id
+         WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+       )
+       SELECT subject,
               COUNT(*)::int AS total,
-              COUNT(*) FILTER (WHERE ans.selected_index = q.correct_index OR
-                (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text))::int AS correct
-       FROM questions q
-       JOIN attempts at ON at.assessment_id = q.assessment_id
-       LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
-       LEFT JOIN subjects s ON s.id = q.subject_id
-       WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
-       GROUP BY COALESCE(s.name, q.bank_category, 'General')
+              COUNT(*) FILTER (WHERE (selected_index IS NOT NULL AND selected_index = correct_index) OR
+                (question_type = 'multi_select' AND selected_indices::text = correct_indices::text) OR
+                (question_type IN ('integer', 'numerical') AND selected_index::text = correct_index::text))::int AS correct,
+              COUNT(*) FILTER (WHERE answer_id IS NOT NULL AND (selected_index IS NOT NULL OR selected_indices IS NOT NULL) AND NOT (
+                (selected_index = correct_index) OR
+                (question_type = 'multi_select' AND selected_indices::text = correct_indices::text) OR
+                (question_type IN ('integer', 'numerical') AND selected_index::text = correct_index::text)
+              ))::int AS wrong
+       FROM normalized_data
+       GROUP BY subject
        ORDER BY subject`,
       [userId]
     ),
     query(
-      `SELECT COALESCE(c.name, 'General') AS chapter,
-              COALESCE(s.name, q.bank_category, 'General') AS subject,
+      `WITH normalized_data AS (
+         SELECT 
+           q.id AS question_id,
+           at.candidate_id,
+           ans.id AS answer_id,
+           ans.selected_index,
+           ans.selected_indices,
+           q.correct_index,
+           q.correct_indices,
+           q.question_type,
+           COALESCE(c.name, NULLIF(q.bank_category, ''), 'General Topics') AS chapter,
+           CASE 
+             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             WHEN cs.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN cs.name
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
+             ELSE COALESCE(s.name, cs.name, 'Physics')
+           END AS subject
+         FROM questions q
+         JOIN attempts at ON at.assessment_id = q.assessment_id
+         LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
+         LEFT JOIN subjects s ON s.id = q.subject_id
+         LEFT JOIN chapters c ON c.id = q.chapter_id
+         LEFT JOIN subjects cs ON cs.id = c.subject_id
+         LEFT JOIN assessment_sections sec ON sec.id = q.section_id
+         WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
+       )
+       SELECT chapter,
+              subject,
               COUNT(*)::int AS total,
-              COUNT(*) FILTER (WHERE ans.selected_index = q.correct_index OR
-                (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text))::int AS correct
-       FROM questions q
-       JOIN attempts at ON at.assessment_id = q.assessment_id
-       LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
-       LEFT JOIN chapters c ON c.id = q.chapter_id
-       LEFT JOIN subjects s ON s.id = q.subject_id
-       WHERE at.candidate_id = $1 AND at.status IN ('submitted', 'auto_submitted')
-       GROUP BY COALESCE(c.name, 'General'), COALESCE(s.name, q.bank_category, 'General')
+              COUNT(*) FILTER (WHERE (selected_index IS NOT NULL AND selected_index = correct_index) OR
+                (question_type = 'multi_select' AND selected_indices::text = correct_indices::text) OR
+                (question_type IN ('integer', 'numerical') AND selected_index::text = correct_index::text))::int AS correct,
+              COUNT(*) FILTER (WHERE answer_id IS NOT NULL AND (selected_index IS NOT NULL OR selected_indices IS NOT NULL) AND NOT (
+                (selected_index = correct_index) OR
+                (question_type = 'multi_select' AND selected_indices::text = correct_indices::text) OR
+                (question_type IN ('integer', 'numerical') AND selected_index::text = correct_index::text)
+              ))::int AS wrong
+       FROM normalized_data
+       GROUP BY chapter, subject
        ORDER BY chapter`,
       [userId]
-    )
+    ),
   ]);
+
+  // Compute Time Management Metrics
+  let totalTimeSecs = 0;
+  let totalQCount = 0;
+  let totalAttemptedCount = 0;
+
+  for (const a of attempts.rows) {
+    totalTimeSecs += Number(a.duration_seconds) || 0;
+    totalQCount += Number(a.total_questions) || 0;
+    totalAttemptedCount += (Number(a.correct_count) || 0) + (Number(a.wrong_count) || 0);
+  }
+
+  const avgSecsPerQ = totalQCount > 0 ? Math.round(totalTimeSecs / totalQCount) : 0;
+  const avgSecsPerAttemptedQ = totalAttemptedCount > 0 ? Math.round(totalTimeSecs / totalAttemptedCount) : 0;
+  const avgSecsPerTest = attempts.rows.length > 0 ? Math.round(totalTimeSecs / attempts.rows.length) : 0;
+
+  let speedRating = 'Optimal Pace';
+  if (avgSecsPerQ > 0 && avgSecsPerQ < 45) {
+    speedRating = 'Swift Pace';
+  } else if (avgSecsPerQ > 90) {
+    speedRating = 'Thoughtful / Careful Pace';
+  }
+
+  const timeManagement = {
+    total_time_seconds: totalTimeSecs,
+    total_questions: totalQCount,
+    total_attempted: totalAttemptedCount,
+    avg_seconds_per_question: avgSecsPerQ,
+    avg_seconds_per_attempted_question: avgSecsPerAttemptedQ,
+    avg_seconds_per_test: avgSecsPerTest,
+    speed_rating: speedRating,
+    test_breakdown: attempts.rows.map((a) => {
+      const qCount = Number(a.total_questions) || 0;
+      const dur = Number(a.duration_seconds) || 0;
+      return {
+        id: a.id,
+        title: a.title,
+        date: a.submitted_at,
+        duration_seconds: dur,
+        total_questions: qCount,
+        seconds_per_question: qCount > 0 ? Math.round(dur / qCount) : 0,
+      };
+    }),
+  };
 
   res.json({
     summary: {
@@ -97,18 +216,38 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
     },
     attempts: attempts.rows,
     trend,
-    subject_breakdown: subjectBreakdown.rows.map((r) => ({
-      subject: r.subject,
-      total: r.total,
-      correct: r.correct,
-      accuracy: r.total > 0 ? Math.round((r.correct / r.total) * 100) : 0,
-    })),
-    chapter_breakdown: chapterBreakdown.rows.map((r) => ({
-      chapter: r.chapter,
-      subject: r.subject,
-      total: r.total,
-      correct: r.correct,
-      accuracy: r.total > 0 ? Math.round((r.correct / r.total) * 100) : 0,
-    })),
+    subject_breakdown: subjectBreakdown.rows.map((r) => {
+      const wrong = Number(r.wrong) || 0;
+      const correct = Number(r.correct) || 0;
+      const total = Number(r.total) || 0;
+      const unattempted = Math.max(0, total - (correct + wrong));
+      const attempted = correct + wrong;
+      return {
+        subject: r.subject,
+        total,
+        correct,
+        wrong,
+        unattempted,
+        accuracy: attempted > 0 ? Math.round((correct / attempted) * 100) : (total > 0 ? Math.round((correct / total) * 100) : 0),
+      };
+    }),
+    chapter_breakdown: chapterBreakdown.rows.map((r) => {
+      const wrong = Number(r.wrong) || 0;
+      const correct = Number(r.correct) || 0;
+      const total = Number(r.total) || 0;
+      const unattempted = Math.max(0, total - (correct + wrong));
+      const attempted = correct + wrong;
+      return {
+        chapter: r.chapter,
+        subject: r.subject,
+        total,
+        correct,
+        wrong,
+        unattempted,
+        accuracy: attempted > 0 ? Math.round((correct / attempted) * 100) : (total > 0 ? Math.round((correct / total) * 100) : 0),
+      };
+    }),
+    time_management: timeManagement,
   });
 });
+

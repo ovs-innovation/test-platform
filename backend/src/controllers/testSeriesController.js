@@ -81,25 +81,35 @@ export const importTestSeriesFromPdf = asyncHandler(async (req, res) => {
     );
     const assessment = assessmentRes.rows[0];
 
-    let mcqSectionId = null;
-    for (const s of DEFAULT_SECTIONS) {
-      const sec = await client.query(
-        `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,$3,$4) RETURNING id, section_type`,
-        [assessment.id, s.name, s.section_type, s.position]
-      );
-      if (s.section_type === 'technical_mcq') mcqSectionId = sec.rows[0].id;
+    const subjectSectionsMap = new Map();
+    let secPos = 0;
+
+    for (const row of rows) {
+      const cat = row.bank_category || 'General';
+      if (!subjectSectionsMap.has(cat)) {
+        secPos += 1;
+        const secRes = await client.query(
+          `INSERT INTO assessment_sections (assessment_id, name, section_type, position)
+           VALUES ($1, $2, 'technical_mcq', $3) RETURNING id`,
+          [assessment.id, cat, secPos]
+        );
+        subjectSectionsMap.set(cat, secRes.rows[0].id);
+      }
     }
 
     let position = 0;
     for (const row of rows) {
       position += 1;
+      const cat = row.bank_category || 'General';
+      const sectionId = subjectSectionsMap.get(cat);
+
       await client.query(
         `INSERT INTO questions
-           (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices, marks, position)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+           (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices, marks, position, bank_category)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)`,
         [
           assessment.id,
-          mcqSectionId,
+          sectionId,
           row.question_type,
           row.question_text,
           JSON.stringify(row.options),
@@ -107,6 +117,7 @@ export const importTestSeriesFromPdf = asyncHandler(async (req, res) => {
           JSON.stringify(row.correct_indices || []),
           row.marks,
           position,
+          cat,
         ]
       );
     }
@@ -277,9 +288,9 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
 
 export const deleteTestSeries = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const result = await query('UPDATE test_series SET is_active = false WHERE id = $1 RETURNING id', [id]);
+  const result = await query('DELETE FROM test_series WHERE id = $1 RETURNING id', [id]);
   if (!result.rowCount) throw ApiError.notFound('Test series not found');
-  res.json({ message: 'Test series deactivated' });
+  res.json({ message: 'Test series permanently deleted' });
 });
 
 export const unlinkAssessment = asyncHandler(async (req, res) => {
