@@ -25,3 +25,14 @@ export const attemptStatusLabel = {
   submitted: 'Submitted',
   auto_submitted: 'Auto-submitted',
 };
+
+export const formatCompactDateTime = (value) => {
+  if (!value) return '—';
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return '—';
+  const day = d.getDate();
+  const month = d.toLocaleString('en-US', { month: 'short' });
+  const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+  return `${day} ${month} • ${time}`;
+};
+

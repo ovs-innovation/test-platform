@@ -3,6 +3,7 @@ import { studentService } from '../../lib/services.js';
 import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
 import { formatDateTime } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
+import { MessageSquare, Send, User, Sparkles } from 'lucide-react';
 
 export default function Forum() {
   const toast = useToast();
@@ -46,24 +47,25 @@ export default function Forum() {
     finally { setPosting(false); }
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading forum..." />;
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
       <PageHeader title="Discussion Forum & Peer Q&A" subtitle="Ask doubts, share problem-solving strategies, and discuss mock test questions with aspirants." />
       
-      <div className="grid gap-6 lg:grid-cols-12">
+      <div className="grid gap-4 lg:grid-cols-12">
         {/* Left Column: Post Topic Form & Thread List (6 Cols) */}
-        <div className="lg:col-span-6 space-y-4">
-          <form onSubmit={create} className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl space-y-4">
-            <h2 className="text-sm font-extrabold text-white flex items-center gap-2">
-              <span>✍️</span> Post a New Question Topic
+        <div className="lg:col-span-6 space-y-3">
+          <form onSubmit={create} className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
+            <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <span>Post a New Question Topic</span>
             </h2>
             
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Topic Title</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Topic Title</label>
               <input
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                 placeholder="e.g. How to solve Integration by parts in JEE Math?"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -72,9 +74,9 @@ export default function Forum() {
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Question Description</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Question Description</label>
               <textarea
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                 rows={3}
                 placeholder="Describe your question or difficulty in detail..."
                 value={body}
@@ -85,7 +87,7 @@ export default function Forum() {
 
             <button
               type="submit"
-              className="rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-105 disabled:opacity-50"
+              className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-black text-white shadow-2xs hover:bg-blue-500 transition disabled:opacity-50"
               disabled={posting}
             >
               {posting ? <Spinner className="h-4 w-4" /> : 'Post Question Topic'}
@@ -93,10 +95,10 @@ export default function Forum() {
           </form>
 
           {/* Topics List Cards */}
-          <div className="space-y-2.5">
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 px-1">Active Discussions</h3>
+          <div className="space-y-2">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Discussions</h3>
             {topics.length === 0 ? (
-              <div className="rounded-2xl border border-slate-800 bg-[#0b1430] p-6 text-center text-xs text-slate-400">
+              <div className="saas-card p-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl">
                 No discussion topics created yet. Be the first to ask a question above!
               </div>
             ) : (
@@ -105,17 +107,17 @@ export default function Forum() {
                   key={t.id}
                   type="button"
                   onClick={() => openTopic(t.id)}
-                  className={`w-full rounded-2xl border p-4 text-left transition-all duration-200 ${
+                  className={`w-full rounded-xl border p-3.5 text-left transition-all duration-200 ${
                     active === t.id
-                      ? 'border-blue-500 bg-[#0e193c] text-white shadow-md ring-1 ring-blue-500/50'
-                      : 'border-slate-800/80 bg-[#0b1430] text-slate-300 hover:border-slate-700 hover:bg-[#0e193c]'
+                      ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/40 text-slate-900 dark:text-white shadow-xs'
+                      : 'border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#111827] text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
-                  <p className="font-extrabold text-white text-sm leading-snug">{t.title}</p>
-                  <div className="mt-2.5 flex items-center justify-between text-xs font-medium text-slate-400">
-                    <span className="flex items-center gap-1.5">👤 <strong className="text-slate-300">{t.author_name}</strong></span>
-                    <span className="rounded-full bg-blue-500/20 px-2.5 py-0.5 text-[10px] font-bold text-cyan-300 border border-blue-500/30">
-                      💬 {t.reply_count} Replies
+                  <p className="font-extrabold text-slate-900 dark:text-white text-xs leading-snug">{t.title}</p>
+                  <div className="mt-2 flex items-center justify-between text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                    <span>Asked by <strong className="text-slate-700 dark:text-slate-300">{t.author_name}</strong></span>
+                    <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:text-cyan-300 border border-blue-500/20">
+                      {t.reply_count} Replies
                     </span>
                   </div>
                 </button>
@@ -124,65 +126,63 @@ export default function Forum() {
           </div>
         </div>
 
-        {/* Right Column: Discussion Details or Structured Empty State (6 Cols) */}
-        <div className="lg:col-span-6 rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl flex flex-col justify-between min-h-[460px]">
+        {/* Right Column: Discussion Details (6 Cols) */}
+        <div className="lg:col-span-6 saas-card p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl flex flex-col justify-between min-h-[440px]">
           {!detail ? (
-            <div className="my-auto flex flex-col items-center justify-center py-16 px-4 text-center">
-              <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-500/20 text-3xl text-blue-400 border border-blue-500/30 mb-4 shadow-lg shadow-blue-500/10">
-                💬
+            <div className="my-auto flex flex-col items-center justify-center py-12 px-4 text-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60 mb-3">
+                <MessageSquare className="h-6 w-6" />
               </div>
-              <h3 className="text-base font-extrabold text-white">Select a Topic to View Discussion</h3>
-              <p className="mt-2 max-w-xs text-xs font-medium text-slate-400 leading-relaxed">
-                Select a topic from the list on the left to view the discussion, or post a new question to get started.
+              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Select a Topic to View Discussion</h3>
+              <p className="mt-1 max-w-xs text-xs font-medium text-slate-500 dark:text-slate-400 leading-relaxed">
+                Select a topic from the list on the left to view the discussion, or post a new question.
               </p>
             </div>
           ) : (
-            <div className="space-y-4 flex-1 flex flex-col justify-between">
+            <div className="space-y-3 flex-1 flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-300">Discussion Thread</span>
-                  <span className="text-[11px] font-semibold text-slate-400">{formatDateTime(detail.topic.created_at)}</span>
+                <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-cyan-300">Discussion Thread</span>
+                  <span className="text-[10.5px] text-slate-400">{formatDateTime(detail.topic.created_at)}</span>
                 </div>
 
-                <h2 className="text-lg font-black text-white mt-3">{detail.topic.title}</h2>
-                <div className="mt-2 text-xs sm:text-sm text-slate-200 leading-relaxed bg-[#070c18] p-4 rounded-2xl border border-slate-800">
+                <h2 className="text-sm font-extrabold text-slate-900 dark:text-white mt-2">{detail.topic.title}</h2>
+                <div className="mt-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-800">
                   {detail.topic.body}
                 </div>
-                <p className="mt-2 text-[11px] font-semibold text-slate-400">
-                  Asked by <strong className="text-slate-200">{detail.topic.author_name}</strong>
+                <p className="mt-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                  Asked by <strong className="text-slate-900 dark:text-slate-200">{detail.topic.author_name}</strong>
                 </p>
 
-                <div className="mt-6 space-y-3 border-t border-slate-800 pt-4">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-400">Student & Faculty Replies ({detail.replies.length})</h4>
+                <div className="mt-4 space-y-2 border-t border-slate-100 dark:border-slate-800/60 pt-3">
+                  <h4 className="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Replies ({detail.replies.length})</h4>
                   {detail.replies.length === 0 ? (
-                    <p className="text-xs text-slate-500 italic py-2">No replies yet. Be the first to answer!</p>
+                    <p className="text-xs text-slate-400 italic py-1">No replies yet. Be the first to answer!</p>
                   ) : (
                     detail.replies.map((r) => (
-                      <div key={r.id} className="rounded-2xl border border-slate-800/80 bg-[#070e24] p-3.5 text-xs text-slate-200">
-                        <div className="flex items-center justify-between mb-1">
-                          <span className="font-extrabold text-cyan-300">{r.author_name}</span>
-                        </div>
-                        <p className="leading-relaxed text-slate-300">{r.body}</p>
+                      <div key={r.id} className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50/80 dark:bg-slate-900/40 p-3 text-xs text-slate-800 dark:text-slate-200">
+                        <span className="font-bold text-blue-600 dark:text-cyan-300 block mb-0.5">{r.author_name}</span>
+                        <p className="leading-relaxed">{r.body}</p>
                       </div>
                     ))
                   )}
                 </div>
               </div>
 
-              <div className="mt-4 flex gap-2 pt-4 border-t border-slate-800">
+              <div className="mt-3 flex gap-2 pt-3 border-t border-slate-100 dark:border-slate-800/60">
                 <input
-                  className="flex-1 rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                  className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                   placeholder="Write your answer or explanation..."
                   value={reply}
                   onChange={(e) => setReply(e.target.value)}
                 />
                 <button
                   type="button"
-                  className="rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-5 py-2.5 text-xs font-bold text-white shadow-md hover:scale-105 transition"
+                  className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-500 transition"
                   onClick={sendReply}
                   disabled={posting}
                 >
-                  Reply
+                  <Send className="h-3.5 w-3.5" />
                 </button>
               </div>
             </div>

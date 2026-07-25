@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
+import { ChevronRight, ShieldCheck, BarChart3, Zap } from 'lucide-react';
 
 export function AssessmentCard({ a }) {
   const assessmentId = a.assessment_id || a.id;
@@ -10,10 +11,12 @@ export function AssessmentCard({ a }) {
   const pending = a.invite_status === 'pending' || a.invite_status === 'accessed';
 
   return (
-    <div className="group flex flex-col justify-between rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/50">
+    <div className="group flex flex-col justify-between rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#111827] p-4 shadow-2xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-500/50">
       <div>
-        <div className="flex items-start justify-between gap-3">
-          <h3 className="text-base font-extrabold text-white group-hover:text-[#60a5fa] transition-colors">{a.title}</h3>
+        <div className="flex items-start justify-between gap-2.5">
+          <h3 className="text-xs font-bold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-1">
+            {a.title}
+          </h3>
           {completed ? (
             <Badge color="green">Completed</Badge>
           ) : inProgress ? (
@@ -24,31 +27,43 @@ export function AssessmentCard({ a }) {
             <Badge color="blue">Available</Badge>
           )}
         </div>
-        <p className="mt-2 line-clamp-2 text-xs text-slate-400 leading-relaxed">{a.description || 'Proctored NTA CBT format diagnostic mock exam.'}</p>
+        <p className="mt-1.5 line-clamp-2 text-[11px] text-slate-500 dark:text-slate-400 font-normal">
+          {a.description || 'Proctored NTA CBT format diagnostic mock exam.'}
+        </p>
 
-        <div className="mt-5 grid grid-cols-3 gap-2 text-center">
+        <div className="mt-3.5 grid grid-cols-3 gap-1.5 text-center">
           <Meta label="Questions" value={a.question_count || '—'} />
           <Meta label="Minutes" value={a.duration_minutes || '—'} />
           <Meta label="Pass Mark" value={a.passing_marks || '—'} />
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-slate-800">
+      <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60">
         {completed ? (
           a.attempt_id ? (
-            <Link to={`/results/${a.attempt_id}`} className="inline-flex w-full items-center justify-center rounded-full border border-blue-500/30 bg-blue-500/15 py-2.5 text-xs font-bold text-blue-300 transition hover:bg-[#2563eb] hover:text-white">
-              View Detailed Result →
+            <Link
+              to={`/results/${a.attempt_id}`}
+              className="inline-flex w-full items-center justify-center gap-1 rounded-xl border border-blue-200 bg-blue-50 py-2 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white dark:hover:bg-blue-600 transition"
+            >
+              <span>View Result</span>
+              <ChevronRight className="h-3.5 w-3.5" />
             </Link>
           ) : (
-            <button className="w-full rounded-full border border-slate-800 bg-slate-900 py-2.5 text-xs font-bold text-slate-400 cursor-not-allowed" disabled>Completed</button>
+            <button
+              className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 py-2 text-xs font-bold text-slate-400 cursor-not-allowed"
+              disabled
+            >
+              Completed
+            </button>
           )
         ) : (
           <Link
             to={`/assessments/${assessmentId}/instructions`}
-            className="inline-flex w-full items-center justify-center rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] py-2.5 text-xs font-extrabold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.02]"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-blue-600 py-2 text-xs font-extrabold text-white shadow-2xs hover:bg-blue-500 transition"
             onClick={() => sessionStorage.setItem('assessmentReturn', '/assessments')}
           >
-            {inProgress ? 'Resume Assessment →' : 'Start Assessment →'}
+            <span>{inProgress ? 'Resume Assessment' : 'Start Assessment'}</span>
+            <ChevronRight className="h-3.5 w-3.5" />
           </Link>
         )}
       </div>
@@ -58,9 +73,9 @@ export function AssessmentCard({ a }) {
 
 function Meta({ label, value }) {
   return (
-    <div className="rounded-xl border border-slate-800 bg-[#070c18] px-2 py-2">
-      <p className="text-sm font-extrabold text-white">{value}</p>
-      <p className="text-[10px] font-semibold uppercase text-slate-400 mt-0.5">{label}</p>
+    <div className="rounded-lg border border-slate-100 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 px-2 py-1.5">
+      <p className="text-xs font-black text-slate-900 dark:text-white">{value}</p>
+      <p className="text-[9px] font-semibold uppercase text-slate-400 mt-0.5">{label}</p>
     </div>
   );
 }
@@ -87,55 +102,55 @@ export default function AssessmentList() {
   if (state === 'error') return <ErrorState onRetry={load} />;
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
       <PageHeader title="Invited Assessments" subtitle="Proctored test invitations assigned to your student profile." />
       {assessments.length === 0 ? (
-        <div className="space-y-6">
+        <div className="space-y-4">
           <EmptyState
             title="No Assessment Invitations Pending"
             message="You have no private proctored test invitations assigned at the moment. Explore available open test series to start practicing right away."
             action={
               <Link
                 to="/test-series"
-                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-6 py-2.5 text-xs font-extrabold text-white shadow-lg shadow-blue-500/25 transition hover:scale-105"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-extrabold text-white shadow-md hover:bg-blue-500 transition"
               >
-                Browse Test Series Packs →
+                <span>Browse Test Series Packs →</span>
               </Link>
             }
           />
 
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl space-y-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-blue-500/20 text-cyan-300 border border-blue-500/30">
-                🛡️
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-1.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-300">
+                <ShieldCheck className="h-4 w-4" />
               </div>
-              <h3 className="font-extrabold text-white text-sm">Real NTA CBT Simulation</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-xs">Real NTA CBT Simulation</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                 Full-screen proctored environment with live timer, question palette grid, and violation logging.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl space-y-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                📊
+            <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-1.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-300">
+                <BarChart3 className="h-4 w-4" />
               </div>
-              <h3 className="font-extrabold text-white text-sm">AI Score & AIR Analytics</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-xs">AI Score & AIR Analytics</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                 Instant subject-wise mark calculation, accuracy percentage, and All India Rank standing.
               </p>
             </div>
-            <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-5 shadow-xl space-y-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-amber-500/20 text-amber-300 border border-amber-500/30">
-                ⚡
+            <div className="saas-card p-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-1.5">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-300">
+                <Zap className="h-4 w-4" />
               </div>
-              <h3 className="font-extrabold text-white text-sm">Step-by-Step Solutions</h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-xs">Step-by-Step Solutions</h3>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                 Detailed explanations and chapter tags for every question immediately after test submission.
               </p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {assessments.map((a) => (
             <AssessmentCard key={a.id} a={a} />
           ))}

@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, PageHeader, Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import { Camera, User, CheckCircle2 } from 'lucide-react';
 
 function initials(name) {
   return (name || 'U').split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase();
@@ -56,20 +57,19 @@ export default function Profile() {
     }
   };
 
-  if (state === 'loading') return <LoadingScreen />;
+  if (state === 'loading') return <LoadingScreen label="Loading profile..." />;
   if (state === 'error') return <ErrorState onRetry={() => window.location.reload()} />;
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
       <PageHeader title="Student Profile" subtitle="Name, phone number, class, and target exam details for your account and certificates." />
 
       {/* Avatar Showcase & Upload Box */}
-      <div className="flex items-center gap-5 rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl max-w-2xl">
-        {/* Interactive Avatar Upload Circle */}
+      <div className="saas-card p-4 sm:p-5 flex items-center gap-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl max-w-2xl">
         <div className="relative group shrink-0">
           <div
             onClick={() => fileInputRef.current?.click()}
-            className="flex h-20 w-20 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-500/50 bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] text-2xl font-black text-white shadow-xl shadow-blue-500/25 transition group-hover:border-blue-400 group-hover:brightness-110"
+            className="flex h-16 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-500/40 bg-gradient-to-r from-blue-600 to-indigo-600 text-xl font-black text-white shadow-2xs transition hover:scale-105"
             title="Click to change photo"
           >
             {avatarPreview ? (
@@ -79,14 +79,13 @@ export default function Profile() {
             )}
           </div>
 
-          {/* Camera Icon Overlay */}
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-full bg-[#2563eb] text-xs text-white border-2 border-[#0b1430] shadow-md transition group-hover:scale-110 hover:bg-blue-600"
+            className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white border-2 border-white dark:border-[#111827] shadow-xs"
             title="Change photo"
           >
-            📷
+            <Camera className="h-3 w-3" />
           </button>
 
           <input
@@ -100,18 +99,18 @@ export default function Profile() {
 
         <div>
           <div className="flex items-center gap-2">
-            <h2 className="text-xl font-black text-white">{form.name || 'Student'}</h2>
+            <h2 className="text-base font-extrabold text-slate-900 dark:text-white">{form.name || 'Student'}</h2>
             <button
               type="button"
               onClick={() => fileInputRef.current?.click()}
-              className="text-[10px] font-bold text-blue-300 underline hover:text-white"
+              className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline"
             >
               Change photo
             </button>
           </div>
-          <p className="text-xs font-semibold text-slate-400 mt-0.5">{email}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{email}</p>
           {(form.class || form.target_exam) && (
-            <p className="mt-2 inline-flex items-center gap-2 rounded-full border border-blue-500/30 bg-blue-500/15 px-3 py-0.5 text-xs font-bold text-cyan-300">
+            <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-md bg-blue-500/10 px-2.5 py-0.5 text-xs font-bold text-blue-600 dark:text-cyan-300 border border-blue-500/20">
               {form.class && <span>{form.class}</span>}
               {form.class && form.target_exam && <span>·</span>}
               {form.target_exam && <span>Preparing for {form.target_exam}</span>}
@@ -120,33 +119,33 @@ export default function Profile() {
         </div>
       </div>
 
-      <form onSubmit={save} className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 sm:p-8 shadow-xl max-w-2xl space-y-4">
+      <form onSubmit={save} className="saas-card p-5 sm:p-6 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl max-w-2xl space-y-3.5">
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Email Address</label>
-          <input className="w-full rounded-xl border border-slate-800 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-400 cursor-not-allowed" value={email} disabled />
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Email Address</label>
+          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 cursor-not-allowed" value={email} disabled />
         </div>
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Full Name</label>
-          <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Full Name</label>
+          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
         </div>
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Phone Number</label>
-          <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
+          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Phone Number</label>
+          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">City</label>
-            <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">City</label>
+            <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
           </div>
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">State</label>
-            <input className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:outline-none" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} />
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">State</label>
+            <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Class</label>
-            <select className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:border-[#2563eb] focus:outline-none" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Class</label>
+            <select className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
               <option value="">Select class</option>
               <option value="Class 11">Class 11</option>
               <option value="Class 12">Class 12</option>
@@ -156,15 +155,15 @@ export default function Profile() {
             </select>
           </div>
           <div>
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Target Exam</label>
-            <select className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 focus:border-[#2563eb] focus:outline-none" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Target Exam</label>
+            <select className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
               <option value="">Select exam</option>
               <option value="JEE">JEE</option>
               <option value="NEET">NEET</option>
             </select>
           </div>
         </div>
-        <button type="submit" className="rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-105 disabled:opacity-50" disabled={saving}>
+        <button type="submit" className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-black text-white shadow-2xs hover:bg-blue-500 transition disabled:opacity-50" disabled={saving}>
           {saving ? <Spinner className="h-4 w-4" /> : 'Save Profile Changes'}
         </button>
       </form>

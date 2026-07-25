@@ -457,15 +457,14 @@ export default function AdminOverview() {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className={`flex h-8 w-8 items-center justify-center rounded-xl font-black text-xs ${
-                        i === 0
+                      className={`flex h-8 w-8 items-center justify-center rounded-xl font-black text-xs ${i === 0
                           ? 'bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 shadow-sm'
                           : i === 1
-                          ? 'bg-slate-200 text-slate-700 dark:bg-slate-300/20 dark:text-slate-200 border border-slate-300 dark:border-slate-400/40'
-                          : i === 2
-                          ? 'bg-amber-700/20 text-amber-800 dark:text-amber-500 border border-amber-600/40'
-                          : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
-                      }`}
+                            ? 'bg-slate-200 text-slate-700 dark:bg-slate-300/20 dark:text-slate-200 border border-slate-300 dark:border-slate-400/40'
+                            : i === 2
+                              ? 'bg-amber-700/20 text-amber-800 dark:text-amber-500 border border-amber-600/40'
+                              : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+                        }`}
                     >
                       {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : `#${i + 1}`}
                     </span>
@@ -498,16 +497,15 @@ export default function AdminOverview() {
               <div
                 key={todo.id}
                 onClick={() => toggleTodo(todo.id)}
-                className={`flex items-center gap-3 p-3 rounded-2xl cursor-pointer transition border ${
-                  todo.done
+                className={`flex items-center gap-3 p-3 rounded-2xl cursor-pointer transition border ${todo.done
                     ? 'bg-slate-100/60 dark:bg-slate-900/30 border-slate-200 dark:border-slate-800/40 line-through opacity-60'
                     : 'bg-slate-50 dark:bg-slate-900/60 border-slate-200 dark:border-slate-800 hover:border-blue-500/30'
-                }`}
+                  }`}
               >
                 <input
                   type="checkbox"
                   checked={todo.done}
-                  onChange={() => {}}
+                  onChange={() => { }}
                   className="h-4 w-4 rounded border-slate-300 bg-white text-blue-600 focus:ring-0 dark:border-slate-700 dark:bg-slate-800"
                 />
                 <span className="text-xs font-semibold text-slate-800 dark:text-slate-200">{todo.text}</span>

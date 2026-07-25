@@ -5,7 +5,18 @@ import { toCsvRow } from '../utils/csvQuestions.js';
 import { hashPassword } from '../utils/password.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
-  const [candidates, assessments, attempts, scores, invites, violations] = await Promise.all([
+  const [
+    candidates,
+    assessments,
+    attempts,
+    scores,
+    invites,
+    violations,
+    publishedRes,
+    activeRes,
+    topScores,
+    violationReports
+  ] = await Promise.all([
     query(`SELECT COUNT(*)::int AS c FROM users WHERE role = 'candidate'`),
     query('SELECT COUNT(*)::int AS c FROM assessments'),
     query('SELECT COUNT(*)::int AS c FROM attempts'),
@@ -29,12 +40,26 @@ export const getStats = asyncHandler(async (_req, res) => {
              COUNT(DISTINCT attempt_id)::int AS attempts_with_violations
       FROM violations
     `),
+    query('SELECT COUNT(*)::int AS c FROM assessments WHERE is_published'),
+    query(`SELECT COUNT(*)::int AS c FROM attempts WHERE status = 'in_progress'`),
+    query(`
+      SELECT u.name AS candidate_name, a.title AS assessment_title,
+             s.percentage, s.marks_obtained, s.total_marks, s.passed, at.submitted_at
+      FROM scores s
+      JOIN attempts at ON at.id = s.attempt_id
+      JOIN users u ON u.id = at.candidate_id
+      JOIN assessments a ON a.id = at.assessment_id
+      ORDER BY s.percentage DESC, s.marks_obtained DESC
+      LIMIT 10
+    `),
+    query(`
+      SELECT v.violation_type, COUNT(*)::int AS count
+      FROM violations v
+      GROUP BY v.violation_type
+      ORDER BY count DESC
+    `)
   ]);
 
-  const publishedRes = await query('SELECT COUNT(*)::int AS c FROM assessments WHERE is_published');
-  const activeRes = await query(`
-    SELECT COUNT(*)::int AS c FROM attempts WHERE status = 'in_progress'
-  `);
   const completionRate =
     invites.rows[0].total > 0
       ? Number(((invites.rows[0].completed / invites.rows[0].total) * 100).toFixed(1))
@@ -43,24 +68,6 @@ export const getStats = asyncHandler(async (_req, res) => {
     scores.rows[0].total > 0
       ? Number(((scores.rows[0].passed / scores.rows[0].total) * 100).toFixed(1))
       : 0;
-
-  const topScores = await query(`
-    SELECT u.name AS candidate_name, a.title AS assessment_title,
-           s.percentage, s.marks_obtained, s.total_marks, s.passed, at.submitted_at
-    FROM scores s
-    JOIN attempts at ON at.id = s.attempt_id
-    JOIN users u ON u.id = at.candidate_id
-    JOIN assessments a ON a.id = at.assessment_id
-    ORDER BY s.percentage DESC, s.marks_obtained DESC
-    LIMIT 10
-  `);
-
-  const violationReports = await query(`
-    SELECT v.violation_type, COUNT(*)::int AS count
-    FROM violations v
-    GROUP BY v.violation_type
-    ORDER BY count DESC
-  `);
 
   res.json({
     totalCandidates: candidates.rows[0].c,

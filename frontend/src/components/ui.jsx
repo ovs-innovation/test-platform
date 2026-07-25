@@ -167,21 +167,21 @@ export function StatCard({
 
 export function EmptyState({ title, message, action, illustration = true }) {
   return (
-    <div className="saas-card flex flex-col items-center justify-center gap-4 p-8 sm:p-12 text-center bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800">
+    <div className="saas-card flex flex-col items-center justify-center gap-3 p-6 sm:p-10 text-center bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-2xl">
       {illustration ? (
-        <EmptyLineArt className="h-32 w-32 sm:h-40 sm:w-40 opacity-90" />
+        <EmptyLineArt className="h-28 w-28 sm:h-36 sm:w-36 opacity-90" />
       ) : (
-        <div className="flex h-16 w-16 items-center justify-center rounded-3xl border border-blue-500/30 bg-blue-500/10 text-blue-600 dark:text-blue-400 shadow-lg">
-          <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-blue-200 bg-blue-50 text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400">
+          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
           </svg>
         </div>
       )}
-      <div className="max-w-md space-y-1.5">
-        <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white">{title}</h3>
-        {message && <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">{message}</p>}
+      <div className="max-w-md space-y-1">
+        <h3 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white">{title}</h3>
+        {message && <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 leading-relaxed">{message}</p>}
       </div>
-      {action && <div className="mt-2">{action}</div>}
+      {action && <div className="mt-1">{action}</div>}
     </div>
   );
 }

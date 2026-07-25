@@ -202,8 +202,8 @@ export const adminPayments = asyncHandler(async (_req, res) => {
     query(
       `SELECT p.*, ts.title AS series_title, u.name AS user_name, u.email AS user_email
        FROM payments p
-       JOIN test_series ts ON ts.id = p.test_series_id
-       JOIN users u ON u.id = p.user_id
+       LEFT JOIN test_series ts ON ts.id = p.test_series_id
+       LEFT JOIN users u ON u.id = p.user_id
        ORDER BY p.created_at DESC LIMIT 100`
     ),
     query(

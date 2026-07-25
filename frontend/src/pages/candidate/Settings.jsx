@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { studentService } from '../../lib/services.js';
 import { PageHeader, Spinner } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import { Lock, Laptop, Bell } from 'lucide-react';
 
 export default function Settings() {
   const toast = useToast();
@@ -28,26 +29,27 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
       <PageHeader title="Account Settings & Preferences" subtitle="Manage your login security, notification alerts, and active login sessions." />
       
-      <div className="grid gap-6 lg:grid-cols-12">
+      <div className="grid gap-4 lg:grid-cols-12">
         {/* Left Column: Account Security & Change Password (6 Cols) */}
-        <div className="lg:col-span-6 space-y-6">
+        <div className="lg:col-span-6 space-y-4">
           {/* Change Password Form Card */}
-          <form onSubmit={submit} className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 sm:p-8 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-base font-extrabold text-white flex items-center gap-2">
-                <span>🔒</span> Change Password
+          <form onSubmit={submit} className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
+              <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Lock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <span>Change Password</span>
               </h2>
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Security</span>
             </div>
             
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Current Password</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Current Password</label>
               <input
                 type="password"
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
                 value={form.current_password}
                 onChange={(e) => setForm((f) => ({ ...f, current_password: e.target.value }))}
@@ -55,10 +57,10 @@ export default function Settings() {
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">New Password</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">New Password</label>
               <input
                 type="password"
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
                 minLength={6}
                 value={form.new_password}
@@ -67,10 +69,10 @@ export default function Settings() {
             </div>
 
             <div>
-              <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5">Confirm New Password</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Confirm New Password</label>
               <input
                 type="password"
-                className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
                 value={form.confirm}
                 onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}
@@ -79,31 +81,32 @@ export default function Settings() {
 
             <button
               type="submit"
-              className="rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-105 disabled:opacity-50"
+              className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-black text-white shadow-2xs hover:bg-blue-500 transition disabled:opacity-50"
               disabled={loading}
             >
               {loading ? <Spinner className="h-4 w-4" /> : 'Update Password'}
             </button>
           </form>
 
-          {/* Active Sessions & Device Management Card */}
-          <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-base font-extrabold text-white flex items-center gap-2">
-                <span>💻</span> Active Login Sessions
+          {/* Active Sessions Card */}
+          <div className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
+              <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Laptop className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                <span>Active Login Sessions</span>
               </h2>
-              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400">1 Device Connected</span>
+              <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">1 Active</span>
             </div>
 
-            <div className="flex items-center justify-between p-3.5 rounded-2xl bg-[#070e24] border border-slate-800">
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-500/20 text-cyan-300 text-sm">🖥️</span>
+            <div className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2.5">
+                <Laptop className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
                 <div>
-                  <p className="text-xs font-bold text-white">Current Web Session (Windows / Chrome)</p>
-                  <p className="text-[10.5px] text-slate-400">IP: 103.21.124.x · Active Now</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">Current Web Session (Windows / Chrome)</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">IP: 103.21.124.x · Active Now</p>
                 </div>
               </div>
-              <span className="rounded-full bg-emerald-500/20 px-2.5 py-0.5 text-[10px] font-extrabold text-emerald-300 border border-emerald-500/30">
+              <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                 This Device
               </span>
             </div>
@@ -111,66 +114,66 @@ export default function Settings() {
         </div>
 
         {/* Right Column: Notification Preferences (6 Cols) */}
-        <div className="lg:col-span-6 space-y-6">
-          {/* Notification Preferences Card */}
-          <div className="rounded-3xl border border-slate-800/90 bg-[#0b1430] p-6 sm:p-8 shadow-xl space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h2 className="text-base font-extrabold text-white flex items-center gap-2">
-                <span>🔔</span> Notification Preferences
+        <div className="lg:col-span-6 space-y-4">
+          <div className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
+              <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Bell className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+                <span>Notification Preferences</span>
               </h2>
               <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Alert System</span>
             </div>
 
-            <div className="space-y-3 pt-1">
-              <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#070e24] border border-slate-800 cursor-pointer hover:border-slate-700">
+            <div className="space-y-2 pt-1">
+              <label className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer">
                 <div>
-                  <p className="text-xs font-bold text-white">Email Score Reports</p>
-                  <p className="text-[10.5px] text-slate-400">Receive rank and percentile breakdown after mock tests.</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">Email Score Reports</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Receive rank and percentile breakdown after mock tests.</p>
                 </div>
                 <input
                   type="checkbox"
                   checked={emailAlerts}
                   onChange={(e) => setEmailAlerts(e.target.checked)}
-                  className="h-4 w-4 rounded accent-[#2563eb]"
+                  className="h-4 w-4 rounded accent-blue-600"
                 />
               </label>
 
-              <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#070e24] border border-slate-800 cursor-pointer hover:border-slate-700">
+              <label className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer">
                 <div>
-                  <p className="text-xs font-bold text-white">SMS Alerts & Invites</p>
-                  <p className="text-[10.5px] text-slate-400">Get instant SMS when invited to new diagnostic tests.</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">SMS Alerts & Invites</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Get instant SMS when invited to new diagnostic tests.</p>
                 </div>
                 <input
                   type="checkbox"
                   checked={smsAlerts}
                   onChange={(e) => setSmsAlerts(e.target.checked)}
-                  className="h-4 w-4 rounded accent-[#2563eb]"
+                  className="h-4 w-4 rounded accent-blue-600"
                 />
               </label>
 
-              <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#070e24] border border-slate-800 cursor-pointer hover:border-slate-700">
+              <label className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer">
                 <div>
-                  <p className="text-xs font-bold text-white">CBT Test Schedule Reminders</p>
-                  <p className="text-[10.5px] text-slate-400">Get alerts 1 hour before scheduled NTA mock tests start.</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">CBT Test Schedule Reminders</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Get alerts 1 hour before scheduled NTA mock tests start.</p>
                 </div>
                 <input
                   type="checkbox"
                   checked={cbtReminders}
                   onChange={(e) => setCbtReminders(e.target.checked)}
-                  className="h-4 w-4 rounded accent-[#2563eb]"
+                  className="h-4 w-4 rounded accent-blue-600"
                 />
               </label>
 
-              <label className="flex items-center justify-between p-3.5 rounded-2xl bg-[#070e24] border border-slate-800 cursor-pointer hover:border-slate-700">
+              <label className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer">
                 <div>
-                  <p className="text-xs font-bold text-white">Result & Rank Announcements</p>
-                  <p className="text-[10.5px] text-slate-400">Notifications when All India Leaderboard is published.</p>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">Result & Rank Announcements</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Notifications when All India Leaderboard is published.</p>
                 </div>
                 <input
                   type="checkbox"
                   checked={resultAlerts}
                   onChange={(e) => setResultAlerts(e.target.checked)}
-                  className="h-4 w-4 rounded accent-[#2563eb]"
+                  className="h-4 w-4 rounded accent-blue-600"
                 />
               </label>
             </div>
