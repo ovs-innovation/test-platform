@@ -30,10 +30,23 @@ api.interceptors.response.use(
     const status = error.response?.status;
     const url = error.config?.url || '';
     const isAuthAttempt = /\/auth\/(login|student-login|register|otp|me)(\/|$)/.test(url);
-    const message =
-      error.response?.data?.message ||
-      error.message ||
-      'Something went wrong. Please try again.';
+
+    const rawData = error.response?.data;
+    let message = 'Something went wrong. Please try again.';
+
+    if (typeof rawData === 'string') {
+      message = status >= 500
+        ? 'A server error occurred. Please try again later or contact support.'
+        : rawData;
+    } else if (rawData && typeof rawData === 'object') {
+      message = rawData.message || rawData.error || message;
+    } else if (error.message) {
+      if (error.message.includes('500') || error.message.includes('status code 500')) {
+        message = 'A server error occurred. Please try again later or contact support.';
+      } else {
+        message = error.message;
+      }
+    }
 
     if (status === 401 && !isAuthAttempt) {
       tokenStore.clear();

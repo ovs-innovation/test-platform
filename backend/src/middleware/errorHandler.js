@@ -12,17 +12,19 @@ export const errorHandler = (err, _req, res, _next) => {
     return res.status(409).json({ message: 'A record with these values already exists.' });
   }
 
-  if (err instanceof ApiError) {
-    return res.status(err.statusCode).json({
-      message: err.message,
+  const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
+
+  if (statusCode < 500 || err instanceof ApiError) {
+    return res.status(statusCode).json({
+      message: err.message || 'Request failed',
       ...(err.details ? { details: err.details } : {}),
     });
   }
 
   // eslint-disable-next-line no-console
-  console.error('[error]', err);
+  console.error('[Unhandled Server Error]', err);
   return res.status(500).json({
-    message: 'Internal server error',
-    ...(env.isProd ? {} : { error: err.message }),
+    message: err?.message || 'Internal server error',
+    ...(env.isProd ? {} : { error: err?.stack || err?.message }),
   });
 };

@@ -4,6 +4,27 @@ import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
 
+const ensureArray = (val) => {
+  if (Array.isArray(val)) return val;
+  if (typeof val === 'string') {
+    try {
+      const parsed = JSON.parse(val);
+      if (Array.isArray(parsed)) return parsed;
+    } catch (_) {
+      return [];
+    }
+  }
+  return [];
+};
+
+const arraysEqual = (a, b) => {
+  const arrA = ensureArray(a).map(Number);
+  const arrB = ensureArray(b).map(Number);
+  const sa = [...arrA].sort((x, y) => x - y);
+  const sb = [...arrB].sort((x, y) => x - y);
+  return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
+};
+
 const sanitizeQuestion = (q) => {
   const base = {
     id: q.id,
@@ -72,12 +93,6 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     let wrongCount = 0;
     let unattemptedCount = 0;
 
-    const arraysEqual = (a, b) => {
-      const sa = [...(a || [])].sort((x, y) => x - y);
-      const sb = [...(b || [])].sort((x, y) => x - y);
-      return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
-    };
-
     for (const q of questionsRes.rows) {
       totalMarks += q.marks;
       const type = q.question_type || 'mcq';
@@ -94,8 +109,8 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
           if (negEnabled) marksObtained -= negPenalty;
         }
       } else if (type === 'multi_select') {
-        const correct = Array.isArray(q.correct_indices) ? q.correct_indices : [];
-        const selected = Array.isArray(ans?.selected_indices) ? ans.selected_indices : [];
+        const correct = ensureArray(q.correct_indices);
+        const selected = ensureArray(ans?.selected_indices);
         if (!selected.length) unattemptedCount += 1;
         else if (arraysEqual(selected, correct)) {
           correctCount += 1;
@@ -576,12 +591,6 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   const negEnabled = assessment.negative_marking === true;
   const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
 
-  const arraysEqual = (a, b) => {
-    const sa = [...(a || [])].sort((x, y) => x - y);
-    const sb = [...(b || [])].sort((x, y) => x - y);
-    return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
-  };
-
   const solutions = questionsRes.rows.map((q) => {
     const ans = ansMap.get(q.id);
     let yourAnswer = null;
@@ -599,9 +608,9 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
         questionMarksObtained = negEnabled ? -negPenalty : 0;
       }
     } else if (q.question_type === 'multi_select') {
-      yourAnswer = ans?.selected_indices;
-      const ci = q.correct_indices || [];
-      const si = yourAnswer || [];
+      yourAnswer = ensureArray(ans?.selected_indices);
+      const ci = ensureArray(q.correct_indices);
+      const si = yourAnswer;
       correct = arraysEqual(si, ci);
       if (!si.length) {
         questionMarksObtained = 0;

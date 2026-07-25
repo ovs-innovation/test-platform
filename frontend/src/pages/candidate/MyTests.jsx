@@ -62,34 +62,34 @@ export default function MyTests() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/30 to-transparent" />
 
                   {/* Top-Left Category Badge */}
-                  <span className="absolute left-3 top-3 rounded-full border border-blue-400/40 bg-blue-500/30 px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-cyan-300 backdrop-blur-md shadow-md">
+                  <span className="absolute left-3.5 top-3.5 rounded-md border border-blue-400/40 bg-blue-500/25 px-2.5 py-0.5 text-[10px] font-black uppercase text-cyan-300 backdrop-blur-md">
                     {e.exam_type || 'GENERAL'}
                   </span>
 
                   {/* Top-Right Enrolled Status Pill */}
-                  <span className="absolute right-3 top-3 rounded-full border border-emerald-400/40 bg-emerald-500/30 px-2.5 py-0.5 text-[10px] font-extrabold uppercase text-emerald-300 backdrop-blur-md shadow-md">
-                    Enrolled
+                  <span className="absolute right-3.5 top-3.5 rounded-md border border-emerald-400/40 bg-emerald-500/25 px-2.5 py-0.5 text-[10px] font-black uppercase text-emerald-300 backdrop-blur-md flex items-center gap-1">
+                    <CheckCircle2 className="h-3 w-3" /> Enrolled
                   </span>
 
                   {/* Banner Title */}
-                  <h3 className="absolute bottom-3 left-4 right-4 text-sm font-black text-white leading-tight line-clamp-1">
+                  <h3 className="absolute bottom-3 left-3.5 right-3.5 text-sm font-black text-white leading-tight line-clamp-1">
                     {e.title}
                   </h3>
                 </div>
 
                 {/* Footer Container */}
-                <div className="p-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 bg-slate-50/50 dark:bg-slate-900/40 text-xs">
+                <div className="p-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 text-xs">
                   <div>
-                    <p className="font-extrabold text-slate-800 dark:text-slate-200">
-                      {e.available_tests} {e.available_tests === 1 ? 'Test' : 'Tests'} Available
+                    <p className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
+                      <span>📚</span> {e.available_tests} {e.available_tests === 1 ? 'Test' : 'Tests'} Available
                     </p>
-                    <p className="mt-0.5 text-[10.5px] text-slate-400">
+                    <p className="mt-0.5 text-[10.5px] font-semibold text-slate-500 dark:text-slate-400">
                       Expires {new Date(e.expires_at).toLocaleDateString('en-GB')}
                     </p>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-600 group-hover:bg-blue-500 px-3.5 py-1.5 text-xs font-bold text-white shadow-2xs transition">
-                    <span>Open</span>
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-600 group-hover:bg-blue-500 px-3.5 py-1.5 text-xs font-black text-white shadow-2xs transition">
+                    <span>Start Tests</span>
                     <ChevronRight className="h-3.5 w-3.5" />
                   </span>
                 </div>
@@ -99,15 +99,15 @@ export default function MyTests() {
         </section>
       )}
 
-      {/* 2. DIRECTLY ASSIGNED CBT MOCK TESTS */}
+      {/* 2. INDIVIDUALLY ASSIGNED CBT MOCK TESTS */}
       {availableTests.length > 0 && (
         <section className="space-y-3">
           <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
-            <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-            <span>Assigned CBT Mock Tests ({availableTests.length})</span>
+            <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+            <span>Assigned CBT Mock Assessments ({availableTests.length})</span>
           </h2>
 
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {availableTests.map((a) => (
               <AssessmentCard key={a.id} a={a} />
             ))}
@@ -115,47 +115,45 @@ export default function MyTests() {
         </section>
       )}
 
-      {/* 3. EMPTY STATE & CATALOG EXPLORER */}
+      {/* 3. EMPTY STATE */}
       {!hasContent && (
         <div className="space-y-6">
           <EmptyState
-            title="No Tests Enrolled Yet"
-            message="Explore structured NTA CBT test series packages tailored for JEE Main, NEET UG, and Foundation exam tracks."
+            title="No Active Test Packages or Assigned Mocks"
+            message="You are not enrolled in any test series yet, and no custom diagnostic CBT mock tests are assigned to your account."
             action={
               <Link
                 to="/test-series"
-                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-extrabold text-white shadow-md transition hover:bg-blue-500"
+                className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-2.5 text-xs font-extrabold text-white shadow-md hover:bg-blue-500 transition"
               >
                 <Compass className="h-4 w-4" />
-                <span>Browse Test Series Catalog →</span>
+                <span>Explore Full Test Series Catalog →</span>
               </Link>
             }
           />
 
-          <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#111827] p-5 shadow-2xs space-y-3">
-            <h3 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center justify-between">
-              <span>🎯 Available Exam Preparation Tracks</span>
-              <Link to="/test-series" className="text-xs text-blue-600 dark:text-blue-400 hover:underline font-bold">
-                View All Catalog →
-              </Link>
+          <div className="saas-card p-6 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-2xl space-y-4">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+              Explore Popular Entrance Preparation Packs
             </h3>
+
             <div className="grid gap-3 sm:grid-cols-3">
               <Link
                 to="/test-series"
                 className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 p-3.5 transition hover:border-blue-500/40 space-y-1"
               >
                 <span className="rounded bg-blue-500/10 px-2 py-0.5 text-[10px] font-black text-blue-600 dark:text-cyan-300 border border-blue-500/20">
-                  NEET UG MEDICAL
+                  NEET MEDICAL PREP
                 </span>
-                <p className="font-extrabold text-slate-900 dark:text-white text-xs mt-1">NCERT-Aligned Biology & Physics</p>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400">720 marks NTA CBT Mocks with solutions.</p>
+                <p className="font-extrabold text-slate-900 dark:text-white text-xs mt-1">Full-Length NCERT Mock Tests</p>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400">Physics, Chemistry, Botany & Zoology.</p>
               </Link>
 
               <Link
                 to="/test-series"
                 className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/50 p-3.5 transition hover:border-blue-500/40 space-y-1"
               >
-                <span className="rounded bg-indigo-500/10 px-2 py-0.5 text-[10px] font-black text-indigo-600 dark:text-indigo-300 border border-indigo-500/20">
+                <span className="rounded bg-emerald-500/10 px-2 py-0.5 text-[10px] font-black text-emerald-600 dark:text-emerald-300 border border-emerald-500/20">
                   JEE MAIN & ADVANCED
                 </span>
                 <p className="font-extrabold text-slate-900 dark:text-white text-xs mt-1">Physics, Chemistry & Maths CBT</p>

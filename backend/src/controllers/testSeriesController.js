@@ -182,10 +182,11 @@ export const linkAssessment = asyncHandler(async (req, res) => {
 export const myEnrollments = asyncHandler(async (req, res) => {
   const result = await query(
     `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.test_count, ts.image_url,
-            COUNT(DISTINCT tsa.assessment_id)::int AS available_tests
+            COUNT(DISTINCT a.id)::int AS available_tests
      FROM student_enrollments se
      JOIN test_series ts ON ts.id = se.test_series_id
      LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+     LEFT JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
      WHERE se.user_id = $1 AND se.status = 'active' AND se.expires_at > NOW()
      GROUP BY se.id, ts.id ORDER BY se.purchased_at DESC`,
     [req.user.id]
@@ -254,15 +255,21 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
   const tests = await query(
     `SELECT a.id, a.title, a.description, a.duration_minutes, a.passing_marks,
             tsa.label, tsa.position,
-            at.id AS attempt_id, at.status AS attempt_status,
-            s.percentage, s.passed
+            lat.id AS attempt_id, lat.status AS attempt_status,
+            lat.percentage, lat.passed
      FROM test_series ts
      JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
      JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
-     LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
-     LEFT JOIN scores s ON s.attempt_id = at.id
+     LEFT JOIN LATERAL (
+       SELECT at.id, at.status, s.percentage, s.passed
+       FROM attempts at
+       LEFT JOIN scores s ON s.attempt_id = at.id
+       WHERE at.assessment_id = a.id AND at.candidate_id = $2
+       ORDER BY at.started_at DESC
+       LIMIT 1
+     ) lat ON true
      WHERE ts.slug = $1
-     ORDER BY tsa.position`,
+     ORDER BY tsa.position, a.id`,
     [slug, req.user.id]
   );
   res.json({ tests: tests.rows });

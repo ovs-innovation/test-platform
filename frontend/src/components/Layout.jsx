@@ -11,7 +11,7 @@ const candidateNav = [
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
   { to: '/leaderboard', label: 'Leaderboard', icon: 'trophy' },
-  { to: '/forum', label: 'Forum', icon: 'chat' },
+  { to: '/discussion-hub', label: 'Discussion Hub', icon: 'chat' },
   { to: '/notifications', label: 'Notifications', icon: 'bell' },
   { to: '/payments', label: 'Payments', icon: 'wallet' },
   { to: '/profile', label: 'Profile', icon: 'user' },
