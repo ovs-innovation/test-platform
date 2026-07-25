@@ -253,33 +253,6 @@ export default function Layout({ children }) {
               </NavLink>
             ))}
 
-            {/* Quick Utility Actions */}
-            <div className={`pt-3 border-t border-slate-200/60 dark:border-slate-800/60 transition-all duration-300 ${
-              collapsed ? 'w-full flex flex-col items-center space-y-3' : 'space-y-2'
-            }`}>
-              <button
-                type="button"
-                onClick={() => setNotifPanelOpen(true)}
-                className={`relative group flex items-center text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5 transition-all duration-200 ${
-                  collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px] w-full'
-                }`}
-              >
-                <div className="flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl group-hover:scale-105 transition-transform">
-                  <Icon name="bell" className="h-5 w-5 text-amber-500 dark:text-amber-400 shrink-0" />
-                </div>
-                {!collapsed && <span className="truncate text-[14.5px] font-semibold">Notifications</span>}
-                {unread > 0 && !collapsed && (
-                  <span className="ml-auto rounded-full bg-rose-500 px-2.5 py-0.5 text-[10px] font-black text-white">
-                    {unread}
-                  </span>
-                )}
-                {collapsed && (
-                  <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap">
-                    Notifications {unread > 0 && `(${unread})`}
-                  </div>
-                )}
-              </button>
-            </div>
           </nav>
 
           {/* Sticky User Profile Card (Centered Avatar, Fixed Bottom Padding) */}
@@ -469,19 +442,6 @@ export default function Layout({ children }) {
                     <p className="text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
                     <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
                   </div>
-                  <button
-                    onClick={() => { navigate('/admin/settings'); setProfileDropdownOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    👤 Account Settings
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/payments'); setProfileDropdownOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    💳 Revenue & Billing
-                  </button>
-                  <div className="my-1 border-t border-slate-200 dark:border-slate-800" />
                   <button
                     onClick={handleLogout}
                     className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition"
