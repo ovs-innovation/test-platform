@@ -7,6 +7,7 @@ import { formatDuration } from '../../lib/format.js';
 import {
   getQuestionStatus,
   isQuestionAnswered,
+  isMultiSelectQuestion,
   paletteCellClass,
   PALETTE_LEGEND,
   timerClass,
@@ -78,11 +79,22 @@ export default function ExamScreen() {
         const rev = {};
         const vis = {};
         for (const a of data.answers) {
+          const targetQ = (data.questions || []).find((item) => item.id === a.question_id);
+          const isMulti = isMultiSelectQuestion(targetQ);
           const indices = a.selected_indices;
-          if (indices && (Array.isArray(indices) ? indices.length : JSON.parse(indices || '[]').length)) {
-            multi[a.question_id] = Array.isArray(indices) ? indices : JSON.parse(indices);
-          } else if (a.selected_index != null) {
-            mcq[a.question_id] = a.selected_index;
+          const parsedIndices = indices ? (Array.isArray(indices) ? indices : JSON.parse(indices || '[]')) : [];
+          if (isMulti) {
+            if (parsedIndices.length > 0) {
+              multi[a.question_id] = parsedIndices;
+            } else if (a.selected_index != null) {
+              multi[a.question_id] = [a.selected_index];
+            }
+          } else {
+            if (parsedIndices.length > 0) {
+              multi[a.question_id] = parsedIndices;
+            } else if (a.selected_index != null) {
+              mcq[a.question_id] = a.selected_index;
+            }
           }
           if (a.numeric_answer != null) {
             num[a.question_id] = a.numeric_answer;
@@ -487,7 +499,7 @@ export default function ExamScreen() {
             </button>
           )}
 
-          {(q.question_type === 'mcq' || q.question_type === 'single_choice') && (
+          {(!isMultiSelectQuestion(q) && (q.question_type === 'mcq' || q.question_type === 'single_choice')) && (
             <div className="mt-5 space-y-2">
               {(q.options || []).map((opt, idx) => (
                 <button
@@ -591,7 +603,7 @@ export default function ExamScreen() {
             </div>
           )}
 
-          {q.question_type === 'multi_select' && (
+          {isMultiSelectQuestion(q) && (
             <div className="mt-5 space-y-2">
               <p className="text-xs font-semibold text-slate-600">Select all that apply</p>
               {(q.options || []).map((opt, idx) => {

@@ -79,14 +79,27 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
            q.correct_indices,
            q.question_type,
            CASE 
-             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('general aptitude', 'aptitude', 'reasoning') THEN 'General Aptitude'
+
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(physic)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(chem)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(bio|botany|zoology)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(math)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(aptitude|reasoning)%' THEN 'General Aptitude'
+
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement|velocity|collide|collision|acceleration|force|pascal|watt|joule|newton|coulomb|ohm|light|diffraction|refraction|reflection|planck|escape velocity)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem|iupac|ph|redox|gas|reaction|noble gas|hydrochloric|electronegativity|fluorine|covalent|ionic)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate|equation|polynomial)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity|mitochondria|ribosome|nephron|kidney|photosynthesis|chloroplast|hormone|insulin|dna|rna|protein)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
+
              WHEN cs.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN cs.name
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement)%' THEN 'Physics'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem)%' THEN 'Chemistry'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate)%' THEN 'Mathematics'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity)%' THEN 'Biology'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
-             ELSE COALESCE(s.name, cs.name, 'Physics')
+             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             ELSE COALESCE(NULLIF(q.bank_category, ''), s.name, cs.name, 'General Topics')
            END AS subject
          FROM questions q
          JOIN attempts at ON at.assessment_id = q.assessment_id
@@ -125,14 +138,27 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
            q.question_type,
            COALESCE(c.name, NULLIF(q.bank_category, ''), 'General Topics') AS chapter,
            CASE 
-             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('general aptitude', 'aptitude', 'reasoning') THEN 'General Aptitude'
+
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(physic)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(chem)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(bio|botany|zoology)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(math)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(sec.name, '')) SIMILAR TO '%(aptitude|reasoning)%' THEN 'General Aptitude'
+
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement|velocity|collide|collision|acceleration|force|pascal|watt|joule|newton|coulomb|ohm|light|diffraction|refraction|reflection|planck|escape velocity)%' THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem|iupac|ph|redox|gas|reaction|noble gas|hydrochloric|electronegativity|fluorine|covalent|ionic)%' THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate|equation|polynomial)%' THEN 'Mathematics'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity|mitochondria|ribosome|nephron|kidney|photosynthesis|chloroplast|hormone|insulin|dna|rna|protein)%' THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, q.question_text, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
+
              WHEN cs.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN cs.name
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(mechanic|thermo|optic|electro|magnet|physic|kinematic|gravitat|wave|fluid|work energy|motion|rotation|unit|measurement)%' THEN 'Physics'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(chem|organic|inorganic|acid|base|element|bond|atom|mole|solution|equilibrium|period|biomolecule|kinetics|electrochem)%' THEN 'Chemistry'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(math|algebra|calculus|trigonomet|geometr|matrix|determinant|vector|integral|derivative|limit|function|probability|stat|coordinate)%' THEN 'Mathematics'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(bio|botany|zoology|physiol|genetics|cell|plant|human|ecolog|evolution|anatomy|reproduction|diversity)%' THEN 'Biology'
-             WHEN LOWER(COALESCE(q.bank_category, c.name, sec.name, s.name, '')) SIMILAR TO '%(aptitude|reasoning|logic|verbal|english|mental|data interpretation)%' THEN 'General Aptitude'
-             ELSE COALESCE(s.name, cs.name, 'Physics')
+             WHEN s.name IN ('Physics', 'Chemistry', 'Mathematics', 'Biology', 'General Aptitude') THEN s.name
+             ELSE COALESCE(NULLIF(q.bank_category, ''), s.name, cs.name, 'General Topics')
            END AS subject
          FROM questions q
          JOIN attempts at ON at.assessment_id = q.assessment_id

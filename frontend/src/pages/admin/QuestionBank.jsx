@@ -7,6 +7,15 @@ import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 
+const tryParseArray = (val) => {
+  if (Array.isArray(val)) return val;
+  try {
+    const parsed = JSON.parse(val);
+    if (Array.isArray(parsed)) return parsed;
+  } catch { /* ignore */ }
+  return [];
+};
+
 const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
 
 export default function AdminQuestionBank() {
@@ -81,6 +90,7 @@ export default function AdminQuestionBank() {
       question_text: '',
       options: 'A|B|C|D',
       correct_index: 0,
+      correct_indices_str: '',
       marks: 1,
       solution: '',
       image_url: '',
@@ -94,11 +104,14 @@ export default function AdminQuestionBank() {
   const openEdit = (q) => {
     setEditing(q);
     const opts = Array.isArray(q.options) ? q.options.join('|') : (q.options || 'A|B|C|D');
+    const idxs = Array.isArray(q.correct_indices) ? q.correct_indices : (typeof q.correct_indices === 'string' ? (tryParseArray(q.correct_indices)) : []);
+    const indicesStr = idxs.length > 0 ? idxs.join(',') : (q.correct_index != null ? String(q.correct_index) : '0');
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text || '',
       options: opts,
       correct_index: q.correct_index ?? 0,
+      correct_indices_str: indicesStr,
       marks: q.marks ?? 1,
       solution: q.solution || '',
       image_url: q.image_url || '',
@@ -113,10 +126,16 @@ export default function AdminQuestionBank() {
     e.preventDefault();
     setSaving(true);
     try {
+      const isMulti = form.question_type === 'multi_select';
+      const parsedIndices = (form.correct_indices_str || '')
+        .split(/[,|\s]+/)
+        .map((s) => Number(s.trim()))
+        .filter((n) => !Number.isNaN(n));
       const payload = {
         ...form,
         options: form.options.split('|').map((o) => o.trim()).filter(Boolean),
-        correct_index: Number(form.correct_index),
+        correct_index: isMulti ? (parsedIndices[0] ?? 0) : Number(form.correct_index),
+        correct_indices: isMulti ? parsedIndices : (form.correct_index != null ? [Number(form.correct_index)] : []),
         marks: Number(form.marks),
       };
       if (editing) {
@@ -336,10 +355,23 @@ export default function AdminQuestionBank() {
                 <label className="label">Options (pipe-separated e.g. Option A|Option B|Option C|Option D)</label>
                 <input className="input" required value={form.options} onChange={(e) => setForm((f) => ({ ...f, options: e.target.value }))} />
               </div>
-              <div>
-                <label className="label">Correct Option Index (0-based, e.g. 0 for A, 1 for B)</label>
-                <input className="input" type="number" min={0} required value={form.correct_index} onChange={(e) => setForm((f) => ({ ...f, correct_index: Number(e.target.value) }))} />
-              </div>
+              {form.question_type === 'multi_select' ? (
+                <div>
+                  <label className="label">Correct Option Indices (0-based, comma-separated e.g. 0,2 for A and C)</label>
+                  <input
+                    className="input"
+                    placeholder="e.g. 0,2"
+                    required
+                    value={form.correct_indices_str || ''}
+                    onChange={(e) => setForm((f) => ({ ...f, correct_indices_str: e.target.value }))}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <label className="label">Correct Option Index (0-based, e.g. 0 for A, 1 for B)</label>
+                  <input className="input" type="number" min={0} required value={form.correct_index} onChange={(e) => setForm((f) => ({ ...f, correct_index: Number(e.target.value) }))} />
+                </div>
+              )}
             </>
           )}
 

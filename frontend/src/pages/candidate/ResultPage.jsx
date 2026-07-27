@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { attemptService } from '../../lib/services.js';
+import { isMultiSelectQuestion } from '../../lib/examPalette.js';
 import { Skeleton, ErrorState } from '../../components/ui.jsx';
 import { SubjectBar } from '../../components/design.jsx';
 import { formatDateTime, attemptStatusLabel } from '../../lib/format.js';
@@ -61,9 +62,37 @@ export default function ResultPage() {
 
   const subjectScores = useMemo(() => {
     if (!solutions || solutions.length === 0) return [];
+    const getSubjectName = (q, index) => {
+      const cat = q.subject_name || q.bank_category || q.section_name || '';
+      if (cat && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized'].includes(cat.toLowerCase().trim())) {
+        return cat;
+      }
+      const text = (q.question_text || '').toLowerCase();
+      if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic motion|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed/i.test(text)) {
+        return 'Physics';
+      }
+      if (/chemistry|electron|atom|hybridization|exothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired/i.test(text)) {
+        return 'Chemistry';
+      }
+      if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of/i.test(text)) {
+        return 'Mathematics';
+      }
+      if (/biology|cell|gene|dna|rna|organism|plant|zoology|botany|species|chromosome|protein|enzyme|tissue/i.test(text)) {
+        return 'Biology';
+      }
+
+      if (index >= 0) {
+        if (index < 10) return 'Physics';
+        if (index < 20) return 'Chemistry';
+        if (index < 30) return 'Mathematics';
+      }
+
+      return cat || 'General';
+    };
+
     const map = {};
-    for (const q of solutions) {
-      const sec = q.section_name || 'General';
+    solutions.forEach((q, idx) => {
+      const sec = getSubjectName(q, idx);
       if (!map[sec]) {
         map[sec] = { name: sec, max: 0, obtained: 0, correct: 0, wrong: 0, unattempted: 0 };
       }
@@ -71,9 +100,10 @@ export default function ResultPage() {
       map[sec].obtained += q.marks_obtained || 0;
 
       // Classify attempts
-      if (['mcq', 'single_choice', 'multi_select', 'assertion_reason'].includes(q.question_type)) {
-        const isAttempted = q.question_type === 'multi_select'
-          ? (q.your_answer && q.your_answer.length > 0)
+      const isMulti = isMultiSelectQuestion(q);
+      if (isMulti || ['mcq', 'single_choice', 'multi_select', 'assertion_reason'].includes(q.question_type)) {
+        const isAttempted = isMulti
+          ? (Array.isArray(q.your_answer) && q.your_answer.length > 0)
           : (q.your_answer !== null && q.your_answer !== undefined);
         if (!isAttempted) {
           map[sec].unattempted += 1;
@@ -107,7 +137,7 @@ export default function ResultPage() {
           map[sec].wrong += 1;
         }
       }
-    }
+    });
     return Object.values(map);
   }, [solutions]);
 
@@ -135,181 +165,192 @@ export default function ResultPage() {
       </header>
 
       <div className="mx-auto max-w-3xl px-4 py-6">
-        <Link to={backTo} className="mb-4 inline-flex items-center gap-1 text-xs font-semibold uppercase text-slate-500 hover:text-slate-800">
+        <Link to={backTo} className="mb-4 inline-flex items-center gap-1 text-xs font-semibold uppercase text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
           ← {backLabel}
         </Link>
 
-      {!resultVisible ? (
-        <div className="nta-panel p-8 text-center">
-          <h1 className="text-xl font-bold text-slate-900">{assessment.title}</h1>
-          <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-            <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-            </svg>
+        {!resultVisible ? (
+          <div className="card p-8 text-center">
+            <h1 className="text-xl font-bold text-slate-900 dark:text-white">{assessment.title}</h1>
+            <div className="mx-auto mt-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
+              <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.8">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="mt-4 text-lg font-semibold text-slate-900 dark:text-white">Submission received</h2>
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+              Your assessment has been submitted successfully. Results are not published for this
+              assessment. You will be contacted with the outcome.
+            </p>
+            <p className="mt-4 text-xs text-slate-400 dark:text-slate-500">Submitted {formatDateTime(attempt.submitted_at)}</p>
           </div>
-          <h2 className="mt-4 text-lg font-semibold text-slate-900">Submission received</h2>
-          <p className="mt-2 text-sm text-slate-500">
-            Your assessment has been submitted successfully. Results are not published for this
-            assessment. You will be contacted with the outcome.
-          </p>
-          <p className="mt-4 text-xs text-slate-400">Submitted {formatDateTime(attempt.submitted_at)}</p>
-        </div>
-      ) : (
-        <>
-          <div className="overflow-hidden border border-slate-400">
-            <div className={`px-6 py-8 text-center ${score?.passed ? 'bg-emerald-50' : 'bg-red-50'}`}>
-              <p className="text-sm text-slate-600">{assessment.title}</p>
-              <p className="mt-2 text-4xl font-bold text-slate-900">
-                {score ? `${score.percentage}%` : '—'}
-              </p>
-              <div className="mt-3">
-                {score?.passed ? (
-                  <span className="inline-block border border-emerald-600 bg-emerald-600 px-3 py-1 text-xs font-bold uppercase text-white">Qualified</span>
-                ) : (
-                  <span className="inline-block border border-red-600 bg-red-600 px-3 py-1 text-xs font-bold uppercase text-white">Not qualified</span>
+        ) : (
+          <>
+            <div className="overflow-hidden rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm">
+              <div className={`px-6 py-8 text-center ${score?.passed ? 'bg-emerald-50/70 dark:bg-emerald-950/30' : 'bg-rose-50/70 dark:bg-rose-950/30'}`}>
+                <p className="text-sm font-medium text-slate-600 dark:text-slate-300">{assessment.title}</p>
+                <p className="mt-2 text-4xl font-black text-slate-900 dark:text-white">
+                  {score ? `${score.percentage}%` : '—'}
+                </p>
+                <div className="mt-3">
+                  {score?.passed ? (
+                    <span className="inline-block rounded-full border border-emerald-600 bg-emerald-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">Qualified</span>
+                  ) : (
+                    <span className="inline-block rounded-full border border-rose-600 bg-rose-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">Not qualified</span>
+                  )}
+                </div>
+                {(score?.rank || score?.percentile) && (
+                  <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
+                    {score.rank && <>Rank <strong>#{score.rank}</strong></>}
+                    {score.rank && score.percentile && ' · '}
+                    {score.percentile != null && <>Percentile <strong>{score.percentile}%</strong></>}
+                  </p>
                 )}
               </div>
-              {(score?.rank || score?.percentile) && (
-                <p className="mt-3 text-sm text-slate-600">
-                  {score.rank && <>Rank <strong>#{score.rank}</strong></>}
-                  {score.rank && score.percentile && ' · '}
-                  {score.percentile != null && <>Percentile <strong>{score.percentile}%</strong></>}
-                </p>
-              )}
-            </div>
 
-            <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 sm:grid-cols-3">
-              <Stat label="Marks Obtained" value={score ? `${score.marks_obtained} / ${score.total_marks}` : '—'} />
-              <Stat label="Percentage" value={score ? `${score.percentage}%` : '—'} />
-              <Stat label="Accuracy" value={accuracy ?? '—'} />
-            </div>
-            <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300 sm:grid-cols-4">
-              <Stat label="Correct" value={score?.correct_count ?? '—'} />
-              <Stat label="Wrong" value={score?.wrong_count ?? '—'} />
-              <Stat label="Unattempted" value={score?.unattempted_count ?? '—'} />
-              <Stat label="Time Taken" value={timeTakenStr} />
-            </div>
-            <div className="grid grid-cols-2 divide-x divide-slate-300 border-t border-slate-300">
-              <Stat label="Status" value={attemptStatusLabel[attempt.status] || attempt.status} />
-              <Stat label="Violations" value={attempt.violation_count ?? 0} />
-            </div>
-            <div className="border-t border-slate-300 px-6 py-4 text-center text-xs text-slate-500">
-              Submitted {formatDateTime(attempt.submitted_at)}
-            </div>
-          </div>
-
-          {breakdown && (
-            <div className="mt-6 border border-slate-400 p-5">
-              <h3 className="text-sm font-semibold">Breakdown</h3>
-              <div className="mt-4 space-y-4">
-                {breakdown.map((b) => (
-                  <SubjectBar key={b.label} label={b.label} value={b.value} variant={b.variant} />
-                ))}
+              <div className="grid grid-cols-2 divide-x divide-slate-200 border-t border-slate-200 sm:grid-cols-3 dark:divide-slate-800 dark:border-slate-800">
+                <Stat label="Marks Obtained" value={score ? `${score.marks_obtained} / ${score.total_marks}` : '—'} />
+                <Stat label="Percentage" value={score ? `${score.percentage}%` : '—'} />
+                <Stat label="Accuracy" value={accuracy ?? '—'} />
+              </div>
+              <div className="grid grid-cols-2 divide-x divide-slate-200 border-t border-slate-200 sm:grid-cols-4 dark:divide-slate-800 dark:border-slate-800">
+                <Stat label="Correct" value={score?.correct_count ?? '—'} />
+                <Stat label="Wrong" value={score?.wrong_count ?? '—'} />
+                <Stat label="Unattempted" value={score?.unattempted_count ?? '—'} />
+                <Stat label="Time Taken" value={timeTakenStr} />
+              </div>
+              <div className="grid grid-cols-2 divide-x divide-slate-200 border-t border-slate-200 dark:divide-slate-800 dark:border-slate-800">
+                <Stat label="Status" value={attemptStatusLabel[attempt.status] || attempt.status} />
+                <Stat label="Violations" value={attempt.violation_count ?? 0} />
+              </div>
+              <div className="border-t border-slate-200 dark:border-slate-800 px-6 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
+                Submitted {formatDateTime(attempt.submitted_at)}
               </div>
             </div>
-          )}
 
-          {subjectScores.length > 0 && (
-            <div className="mt-6 border border-slate-400 p-5">
-              <h3 className="text-sm font-semibold mb-3">Subject-wise Performance</h3>
-              <div className="grid gap-4 sm:grid-cols-2">
-                {subjectScores.map((subj) => {
-                  const pct = subj.max > 0 ? Math.max(0, Math.round((subj.obtained / subj.max) * 100)) : 0;
-                  return (
-                    <div key={subj.name} className="bg-slate-50 border border-slate-200 p-4 rounded">
-                      <p className="font-bold text-slate-800 text-sm">{subj.name}</p>
-                      <div className="mt-2 flex justify-between text-xs text-slate-600">
-                        <span>Score: <strong>{subj.obtained.toFixed(2)} / {subj.max}</strong></span>
-                        <span>Percentage: <strong>{pct}%</strong></span>
-                      </div>
-                      <div className="w-full bg-slate-200 h-2 mt-2 rounded overflow-hidden">
-                        <div className="bg-brand-500 h-full rounded" style={{ width: `${pct}%` }}></div>
-                      </div>
-                      <div className="mt-2 flex justify-between text-[11px] text-slate-500">
-                        <span>Correct: <strong>{subj.correct}</strong></span>
-                        <span>Wrong: <strong>{subj.wrong}</strong></span>
-                        <span>Unattempted: <strong>{subj.unattempted}</strong></span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {score?.passed && (
-            <Link to={`/certificates/${attempt.id}`} className="nta-btn nta-btn-primary mt-4 inline-block">Download certificate</Link>
-          )}
-
-          {solutions?.length > 0 && (
-            <div className="mt-6">
-              <button
-                type="button"
-                className="nta-btn w-full"
-                onClick={() => setShowSolutions((s) => !s)}
-              >
-                {showSolutions ? 'Hide solutions' : 'View solutions & answers'}
-              </button>
-
-              {showSolutions && (
+            {breakdown && (
+              <div className="mt-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-sm">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Breakdown</h3>
                 <div className="mt-4 space-y-4">
-                  {solutions.map((q, i) => {
-                    const opts = Array.isArray(q.options) ? q.options : [];
+                  {breakdown.map((b) => (
+                    <SubjectBar key={b.label} label={b.label} value={b.value} variant={b.variant} />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {subjectScores.length > 0 && (
+              <div className="mt-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-sm">
+                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mb-3">Subject-wise Performance</h3>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {subjectScores.map((subj) => {
+                    const pct = subj.max > 0 ? Math.max(0, Math.round((subj.obtained / subj.max) * 100)) : 0;
                     return (
-                      <div key={q.id} className={`card p-5 ${q.is_correct ? 'border-l-4 border-emerald-500' : 'border-l-4 border-red-400'}`}>
-                        <div className="flex items-start justify-between gap-2">
-                          <p className="font-medium text-slate-900">Q{i + 1}. {q.question_text}</p>
-                          <span className={`inline-block px-2 py-0.5 text-[10px] font-bold uppercase ${q.is_correct ? 'bg-emerald-600 text-white' : 'bg-red-600 text-white'}`}>
-                            {q.is_correct ? 'Correct' : 'Wrong'}
-                          </span>
+                      <div key={subj.name} className="bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800/80 p-4 rounded-2xl">
+                        <p className="font-bold text-slate-900 dark:text-slate-100 text-sm">{subj.name}</p>
+                        <div className="mt-2 flex justify-between text-xs text-slate-600 dark:text-slate-400">
+                          <span>Score: <strong>{subj.obtained.toFixed(2)} / {subj.max}</strong></span>
+                          <span>Percentage: <strong>{pct}%</strong></span>
                         </div>
-                        {opts.length > 0 && (
-                          <ul className="mt-3 space-y-1 text-sm">
-                            {opts.map((opt, oi) => {
-                              const isCorrect = q.question_type === 'multi_select'
-                                ? (q.correct_indices || []).includes(oi)
-                                : oi === q.correct_index;
-                              const isYours = q.question_type === 'multi_select'
-                                ? (q.your_answer || []).includes(oi)
-                                : q.your_answer === oi;
-                              return (
-                                <li
-                                  key={oi}
-                                  className={`rounded px-3 py-1.5 ${
-                                    isCorrect ? 'bg-emerald-50 text-emerald-800' : isYours ? 'bg-red-50 text-red-800' : 'text-slate-600'
-                                  }`}
-                                >
-                                  {opt}
-                                  {isCorrect && ' ✓'}
-                                  {isYours && !isCorrect && ' (your answer)'}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        )}
-                        {['integer', 'numerical'].includes(q.question_type) && (
-                          <div className="mt-3 rounded-md bg-slate-50 p-3 text-sm space-y-1">
-                            <p><span className="font-semibold text-slate-700">Your Answer:</span> {q.your_answer != null ? q.your_answer : <span className="text-slate-400">Unattempted</span>}</p>
-                            <p><span className="font-semibold text-emerald-700">Correct Answer:</span> {q.numeric_answer != null ? q.numeric_answer : 'N/A'} {q.question_type === 'numerical' && q.numerical_tolerance ? `(±${q.numerical_tolerance})` : ''}</p>
-                          </div>
-                        )}
-                        {['coding', 'subjective'].includes(q.question_type) && q.your_answer && (
-                          <pre className="mt-3 overflow-x-auto rounded bg-slate-50 p-3 text-xs">{q.your_answer}</pre>
-                        )}
-                        {q.solution && (
-                          <div className="mt-3 rounded-lg bg-blue-50 p-3 text-sm text-blue-900">
-                            <strong>Solution:</strong> {q.solution}
-                          </div>
-                        )}
+                        <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 mt-2 rounded-full overflow-hidden">
+                          <div className="bg-blue-600 dark:bg-blue-500 h-full rounded-full" style={{ width: `${pct}%` }}></div>
+                        </div>
+                        <div className="mt-2 flex justify-between text-[11px] text-slate-500 dark:text-slate-400">
+                          <span>Correct: <strong>{subj.correct}</strong></span>
+                          <span>Wrong: <strong>{subj.wrong}</strong></span>
+                          <span>Unattempted: <strong>{subj.unattempted}</strong></span>
+                        </div>
                       </div>
                     );
                   })}
                 </div>
-              )}
-            </div>
-          )}
-        </>
-      )}
+              </div>
+            )}
+
+            {score?.passed && (
+              <Link to={`/certificates/${attempt.id}`} className="btn btn-primary mt-4 inline-block">Download certificate</Link>
+            )}
+
+            {solutions?.length > 0 && (
+              <div className="mt-6">
+                <button
+                  type="button"
+                  className="btn btn-secondary w-full py-3 shadow-xs"
+                  onClick={() => setShowSolutions((s) => !s)}
+                >
+                  {showSolutions ? 'Hide solutions' : 'View solutions & answers'}
+                </button>
+
+                {showSolutions && (
+                  <div className="mt-4 space-y-4">
+                    {solutions.map((q, i) => {
+                      const opts = Array.isArray(q.options) ? q.options : [];
+                      const isMulti = isMultiSelectQuestion(q);
+                      return (
+                        <div key={q.id} className={`card p-5 border-l-4 ${q.is_correct ? 'border-l-emerald-500 dark:border-l-emerald-400' : 'border-l-rose-500 dark:border-l-rose-400'}`}>
+                          <div className="flex items-start justify-between gap-3">
+                            <p className="font-bold text-slate-900 dark:text-slate-100 leading-relaxed text-sm sm:text-base">Q{i + 1}. {q.question_text}</p>
+                            <span className={`shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                              q.is_correct 
+                                ? 'bg-emerald-500/15 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-500/30' 
+                                : 'bg-rose-500/15 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-500/30'
+                            }`}>
+                              {q.is_correct ? 'Correct' : 'Wrong'}
+                            </span>
+                          </div>
+                          {opts.length > 0 && (
+                            <ul className="mt-4 space-y-2 text-sm">
+                              {opts.map((opt, oi) => {
+                                const isCorrect = isMulti
+                                  ? (q.correct_indices || []).includes(oi)
+                                  : oi === q.correct_index;
+                                const isYours = isMulti
+                                  ? (Array.isArray(q.your_answer) ? q.your_answer.includes(oi) : q.your_answer === oi)
+                                  : q.your_answer === oi;
+                                return (
+                                  <li
+                                    key={oi}
+                                    className={`rounded-xl px-3.5 py-2.5 transition-all flex items-center justify-between gap-3 ${
+                                      isCorrect
+                                        ? 'bg-emerald-500/10 text-emerald-950 dark:bg-emerald-950/60 dark:text-emerald-200 border border-emerald-500/40 font-bold'
+                                        : isYours
+                                        ? 'bg-rose-500/10 text-rose-950 dark:bg-rose-950/60 dark:text-rose-200 border border-rose-500/40 font-bold'
+                                        : 'text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-transparent'
+                                    }`}
+                                  >
+                                    <span>{opt}</span>
+                                    <span className="shrink-0 font-extrabold text-xs">
+                                      {isCorrect && <span className="text-emerald-600 dark:text-emerald-400">✓ Correct</span>}
+                                      {isYours && !isCorrect && <span className="text-rose-600 dark:text-rose-400 ml-1.5">(Your answer)</span>}
+                                    </span>
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          )}
+                          {['integer', 'numerical'].includes(q.question_type) && (
+                            <div className="mt-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 p-3.5 text-sm space-y-1.5">
+                              <p><span className="font-semibold text-slate-700 dark:text-slate-300">Your Answer:</span> {q.your_answer != null ? <span className="font-mono font-bold text-slate-900 dark:text-white">{q.your_answer}</span> : <span className="text-slate-400 dark:text-slate-500">Unattempted</span>}</p>
+                              <p><span className="font-semibold text-emerald-700 dark:text-emerald-400">Correct Answer:</span> <span className="font-mono font-bold text-emerald-600 dark:text-emerald-400">{q.numeric_answer != null ? q.numeric_answer : 'N/A'}</span> {q.question_type === 'numerical' && q.numerical_tolerance ? `(±${q.numerical_tolerance})` : ''}</p>
+                            </div>
+                          )}
+                          {['coding', 'subjective'].includes(q.question_type) && q.your_answer && (
+                            <pre className="mt-3.5 overflow-x-auto rounded-xl bg-slate-100 dark:bg-slate-900/80 p-3.5 text-xs text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-mono">{q.your_answer}</pre>
+                          )}
+                          {q.solution && (
+                            <div className="mt-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 p-3.5 text-sm text-blue-950 dark:text-blue-200">
+                              <strong className="text-blue-700 dark:text-blue-400">Solution:</strong> <span className="leading-relaxed">{q.solution}</span>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
@@ -318,8 +359,8 @@ export default function ResultPage() {
 function Stat({ label, value }) {
   return (
     <div className="px-4 py-4 text-center sm:px-6 sm:py-5">
-      <p className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</p>
-      <p className="mt-1 text-lg font-semibold text-slate-900">{value}</p>
+      <p className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-1 text-lg font-bold text-slate-900 dark:text-white">{value}</p>
     </div>
   );
 }

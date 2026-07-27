@@ -26,6 +26,16 @@ const arraysEqual = (a, b) => {
   return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
 };
 
+const isMultiSelectQuestion = (q) => {
+  if (!q) return false;
+  const t = (q.question_type || '').toLowerCase();
+  if (['multi_select', 'multiple_correct', 'multiple_select', 'multiple_choice', 'multiple'].includes(t)) return true;
+  const idxs = ensureArray(q.correct_indices);
+  if (idxs.length > 1) return true;
+  const text = q.question_text || '';
+  return /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct|select\s*all\s*that\s*apply/i.test(text);
+};
+
 const sanitizeQuestion = (q) => {
   const base = {
     id: q.id,
@@ -99,21 +109,24 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       const type = q.question_type || 'mcq';
       const ans = answerMap.get(q.id);
 
-      if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
-        const sel = ans?.selected_index;
-        if (sel === undefined || sel === null) unattemptedCount += 1;
-        else if (sel === q.correct_index) {
+      if (isMultiSelectQuestion(q)) {
+        const correct = ensureArray(q.correct_indices);
+        let selected = ensureArray(ans?.selected_indices);
+        if (!selected.length && ans?.selected_index != null) {
+          selected = [ans.selected_index];
+        }
+        if (!selected.length) unattemptedCount += 1;
+        else if (arraysEqual(selected, correct)) {
           correctCount += 1;
           marksObtained += q.marks;
         } else {
           wrongCount += 1;
           if (negEnabled) marksObtained -= negPenalty;
         }
-      } else if (type === 'multi_select') {
-        const correct = ensureArray(q.correct_indices);
-        const selected = ensureArray(ans?.selected_indices);
-        if (!selected.length) unattemptedCount += 1;
-        else if (arraysEqual(selected, correct)) {
+      } else if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
+        const sel = ans?.selected_index;
+        if (sel === undefined || sel === null) unattemptedCount += 1;
+        else if (sel === q.correct_index) {
           correctCount += 1;
           marksObtained += q.marks;
         } else {
@@ -381,7 +394,7 @@ export const getAttemptState = asyncHandler(async (req, res) => {
     [attempt.assessment_id]
   );
   const answersRes = await query(
-    'SELECT question_id, selected_index, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
+    'SELECT question_id, selected_index, selected_indices, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
     [id]
   );
   const codingRes = await query(
@@ -425,13 +438,29 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   }
 
   const qRes = await query(
-    'SELECT id, question_type FROM questions WHERE id = $1 AND assessment_id = $2',
+    'SELECT id, question_type, question_text, correct_indices FROM questions WHERE id = $1 AND assessment_id = $2',
     [question_id, attempt.assessment_id]
   );
   if (qRes.rowCount === 0) throw ApiError.badRequest('Invalid question');
 
-  const qType = qRes.rows[0].question_type;
-  if (qType === 'mcq' || qType === 'single_choice' || qType === 'assertion_reason') {
+  const targetQ = qRes.rows[0];
+  const qType = targetQ.question_type;
+  const isMulti = isMultiSelectQuestion(targetQ);
+
+  if (isMulti) {
+    let indices = Array.isArray(selected_indices) ? selected_indices : [];
+    if (!indices.length && selected_index != null) {
+      indices = [Number(selected_index)];
+    }
+    const firstIndex = indices[0] ?? 0;
+    await query(
+      `INSERT INTO answers (attempt_id, question_id, selected_index, selected_indices, updated_at)
+       VALUES ($1,$2,$3,$4, NOW())
+       ON CONFLICT (attempt_id, question_id)
+       DO UPDATE SET selected_index = EXCLUDED.selected_index, selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`,
+      [id, question_id, firstIndex, JSON.stringify(indices)]
+    );
+  } else if (qType === 'mcq' || qType === 'single_choice' || qType === 'assertion_reason') {
     if (selected_index === undefined && selected_index !== null) throw ApiError.badRequest('selected_index required');
     await query(
       `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
@@ -439,15 +468,6 @@ export const saveAnswer = asyncHandler(async (req, res) => {
        ON CONFLICT (attempt_id, question_id)
        DO UPDATE SET selected_index = EXCLUDED.selected_index, updated_at = NOW()`,
       [id, question_id, selected_index]
-    );
-  } else if (qType === 'multi_select') {
-    const indices = Array.isArray(selected_indices) ? selected_indices : [];
-    await query(
-      `INSERT INTO answers (attempt_id, question_id, selected_index, selected_indices, updated_at)
-       VALUES ($1,$2,0,$3, NOW())
-       ON CONFLICT (attempt_id, question_id)
-       DO UPDATE SET selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`,
-      [id, question_id, JSON.stringify(indices)]
     );
   } else if (qType === 'integer' || qType === 'numerical') {
     const val = numeric_answer !== undefined && numeric_answer !== null && numeric_answer !== '' ? Number(numeric_answer) : null;
@@ -587,9 +607,10 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, s.name AS section_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, s.name AS section_name, subj.name AS subject_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
+       LEFT JOIN subjects subj ON subj.id = q.subject_id
        WHERE q.assessment_id = $1
        ORDER BY q.position ASC, q.id ASC`,
       [attempt.assessment_id]
@@ -612,22 +633,26 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     let correct = false;
     let questionMarksObtained = 0;
 
-    if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'assertion_reason') {
-      yourAnswer = ans?.selected_index;
-      correct = yourAnswer === q.correct_index;
-      if (yourAnswer === undefined || yourAnswer === null) {
+    if (isMultiSelectQuestion(q)) {
+      let selected = ensureArray(ans?.selected_indices);
+      if (!selected.length && ans?.selected_index != null) {
+        selected = [ans.selected_index];
+      }
+      yourAnswer = selected;
+      const ci = ensureArray(q.correct_indices);
+      const si = yourAnswer;
+      correct = arraysEqual(si, ci);
+      if (!si.length) {
         questionMarksObtained = 0;
       } else if (correct) {
         questionMarksObtained = q.marks;
       } else {
         questionMarksObtained = negEnabled ? -negPenalty : 0;
       }
-    } else if (q.question_type === 'multi_select') {
-      yourAnswer = ensureArray(ans?.selected_indices);
-      const ci = ensureArray(q.correct_indices);
-      const si = yourAnswer;
-      correct = arraysEqual(si, ci);
-      if (!si.length) {
+    } else if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'assertion_reason') {
+      yourAnswer = ans?.selected_index;
+      correct = yourAnswer === q.correct_index;
+      if (yourAnswer === undefined || yourAnswer === null) {
         questionMarksObtained = 0;
       } else if (correct) {
         questionMarksObtained = q.marks;
@@ -683,7 +708,9 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       marks_obtained: questionMarksObtained,
       is_correct: correct,
       solution: q.solution,
-      section_name: q.section_name || 'General',
+      subject_name: q.subject_name || null,
+      bank_category: q.subject_name || q.bank_category || null,
+      section_name: q.subject_name || q.bank_category || q.section_name || 'General',
       marks_obtained: Number(questionMarksObtained.toFixed(2)),
     };
   });

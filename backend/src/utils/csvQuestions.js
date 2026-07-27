@@ -86,15 +86,22 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
       errors.push({ line: i + 1, error: 'Missing question_text' });
       continue;
     }
-    const question_type = (cols[typeIdx] || 'mcq').toLowerCase();
+    let question_type = (cols[typeIdx] || 'mcq').toLowerCase();
     const marks = Number(cols[marksIdx]) || 1;
     const options = optionsIdx >= 0
       ? (cols[optionsIdx] || '').split('|').map((o) => o.trim()).filter(Boolean)
       : [];
     const correct_index = correctIdx >= 0 ? Number(cols[correctIdx]) || 0 : 0;
-    const correct_indices = correctIndicesIdx >= 0
-      ? (cols[correctIndicesIdx] || '').split('|').map((n) => Number(n.trim())).filter((n) => !Number.isNaN(n))
+    let correct_indices = correctIndicesIdx >= 0
+      ? (cols[correctIndicesIdx] || '').split(/[,|\s]+/).map((n) => Number(n.trim())).filter((n) => !Number.isNaN(n))
       : [];
+    
+    if (correct_indices.length > 1 || ['multi_select', 'multiple_correct', 'multiple_select', 'multiple_choice', 'multiple'].includes(question_type)) {
+      question_type = 'multi_select';
+      if (!correct_indices.length && correct_index != null) {
+        correct_indices = [correct_index];
+      }
+    }
     const numeric_answer = numericAnswerIdx >= 0 && cols[numericAnswerIdx] !== '' ? Number(cols[numericAnswerIdx]) : null;
     const numerical_tolerance = numericalToleranceIdx >= 0 && cols[numericalToleranceIdx] !== '' ? Number(cols[numericalToleranceIdx]) : 0;
     const assertion_text = assertionTextIdx >= 0 ? cols[assertionTextIdx] : null;

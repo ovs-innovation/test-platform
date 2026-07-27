@@ -181,6 +181,12 @@ export default function AdminTestSeries() {
     }
   };
 
+  const handleDeleteSeriesClick = (s) => {
+    setSeriesToDelete(s);
+    setDeleteConfirmOpen(true);
+  };
+
+
   if (state === 'loading') return <LoadingScreen />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 

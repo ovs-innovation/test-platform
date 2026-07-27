@@ -1,7 +1,17 @@
+export function isMultiSelectQuestion(question) {
+  if (!question) return false;
+  const type = (question.question_type || '').toLowerCase();
+  if (['multi_select', 'multiple_correct', 'multiple_select', 'multiple_choice', 'multiple'].includes(type)) return true;
+  const idxs = Array.isArray(question.correct_indices) ? question.correct_indices : (typeof question.correct_indices === 'string' ? JSON.parse(question.correct_indices || '[]') : []);
+  if (idxs.length > 1) return true;
+  const text = question.question_text || '';
+  return /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct|select\s*all\s*that\s*apply/i.test(text);
+}
+
 export function isQuestionAnswered(question, answers, multiAnswers, codingAnswers, subjectiveAnswers, numericAnswers = {}) {
   const type = question.question_type;
+  if (isMultiSelectQuestion(question)) return (multiAnswers[question.id]?.length > 0) || (answers[question.id] != null);
   if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') return answers[question.id] != null;
-  if (type === 'multi_select') return (multiAnswers[question.id]?.length > 0);
   if (type === 'integer' || type === 'numerical') return (numericAnswers[question.id] != null && numericAnswers[question.id] !== '');
   if (type === 'coding') return (codingAnswers[question.id]?.code || '').trim().length > 0;
   if (type === 'subjective') return (subjectiveAnswers[question.id] || '').trim().length > 0;

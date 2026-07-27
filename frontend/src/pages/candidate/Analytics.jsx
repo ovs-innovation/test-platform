@@ -216,7 +216,7 @@ export default function Analytics() {
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{scoreImprovementSummary}</p>
 
           {trend.length > 0 ? (
-            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-2 min-h-[160px]">
+            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-14 min-h-[210px]">
               {trend.map((t, i) => (
                 <div
                   key={i}
@@ -226,8 +226,8 @@ export default function Analytics() {
                 >
                   {/* Floating Hover Tooltip */}
                   {hoveredScoreTrend === t && (
-                    <div className="absolute -top-14 z-30 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none min-w-[110px]">
-                      <p className="text-[10px] font-bold text-slate-800 dark:text-slate-300 truncate max-w-[130px]">{t.title}</p>
+                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-40 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none whitespace-nowrap min-w-[110px]">
+                      <p className="text-[10px] font-bold text-slate-800 dark:text-slate-300 truncate max-w-[150px]">{t.title}</p>
                       <p className="text-xs font-black text-blue-600 dark:text-[#60a5fa]">{t.percentage}% Score</p>
                     </div>
                   )}
@@ -235,7 +235,7 @@ export default function Analytics() {
                   <span className="text-xs font-extrabold text-blue-600 dark:text-[#60a5fa] group-hover:scale-110 transition-transform">{t.percentage}%</span>
                   <div
                     className="w-10 bg-gradient-to-t from-[#1d4ed8] to-[#2563eb] hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40"
-                    style={{ height: `${Math.max(24, t.percentage * 1.5)}px` }}
+                    style={{ height: `${Math.max(24, Math.round(t.percentage * 1.1))}px` }}
                   />
                   <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-1 text-center truncate w-14">
                     {new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
@@ -262,7 +262,7 @@ export default function Analytics() {
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">Percentage of correct answers vs total attempted questions per test.</p>
 
           {trend.length > 0 ? (
-            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-2 min-h-[160px]">
+            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-14 min-h-[210px]">
               {trend.map((t, i) => (
                 <div
                   key={i}
@@ -272,8 +272,8 @@ export default function Analytics() {
                 >
                   {/* Floating Hover Tooltip */}
                   {hoveredAccuracyTrend === t && (
-                    <div className="absolute -top-14 z-30 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none min-w-[110px]">
-                      <p className="text-[10px] font-bold text-slate-800 dark:text-slate-300 truncate max-w-[130px]">{t.title}</p>
+                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 z-40 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-[#070c18] px-3 py-1.5 text-center shadow-2xl backdrop-blur-md pointer-events-none whitespace-nowrap min-w-[110px]">
+                      <p className="text-[10px] font-bold text-slate-800 dark:text-slate-300 truncate max-w-[150px]">{t.title}</p>
                       <p className="text-xs font-black text-emerald-600 dark:text-emerald-400">{t.accuracy}% Accuracy ({t.correct_count || 0}C / {t.wrong_count || 0}W)</p>
                     </div>
                   )}
@@ -281,7 +281,7 @@ export default function Analytics() {
                   <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">{t.accuracy}%</span>
                   <div
                     className="w-10 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40"
-                    style={{ height: `${Math.max(24, t.accuracy * 1.5)}px` }}
+                    style={{ height: `${Math.max(24, Math.round(t.accuracy * 1.1))}px` }}
                   />
                   <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-1 text-center truncate w-14">
                     {new Date(t.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })}
