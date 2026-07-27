@@ -93,73 +93,28 @@ export function PageHeader({ title, subtitle, actions }) {
 export function StatCard({
   label,
   value,
-  accent = 'text-blue-600 dark:text-blue-400',
-  icon,
-  trend = '+12.5%',
+  accent = 'text-slate-900 dark:text-white',
+  trend,
   trendUp = true,
-  subtitle = 'vs last 30 days',
-  sparkline = [35, 42, 38, 55, 62, 58, 70, 85],
+  subtitle,
 }) {
-  const points = useMemo(() => {
-    const min = Math.min(...sparkline);
-    const max = Math.max(...sparkline) || 1;
-    return sparkline
-      .map((val, idx) => {
-        const x = (idx / (sparkline.length - 1)) * 90 + 5;
-        const y = 35 - ((val - min) / (max - min || 1)) * 25 - 5;
-        return `${x},${y}`;
-      })
-      .join(' ');
-  }, [sparkline]);
-
   return (
-    <div className="saas-card relative overflow-hidden p-6 hover:-translate-y-1 hover:shadow-2xl hover:border-blue-500/30 group bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800">
-      <div className="flex items-start justify-between">
-        <p className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400">{label}</p>
-        <div className="flex h-10 w-10 items-center justify-center rounded-2xl border border-blue-500/20 bg-blue-500/10 text-blue-600 dark:text-blue-400 shadow-sm transition group-hover:scale-110 group-hover:bg-blue-500/20">
-          {icon || (
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-          )}
-        </div>
-      </div>
+    <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-xs transition hover:border-slate-300 dark:hover:border-slate-700">
+      <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">{label}</p>
 
-      <div className="mt-4 flex items-baseline justify-between gap-2">
+      <div className="mt-3 flex items-baseline justify-between gap-2">
         <h3 className={`text-2xl sm:text-3xl font-black tracking-tight ${accent}`}>{value}</h3>
-
-        {/* Mini Sparkline Chart */}
-        <div className="h-9 w-24 shrink-0 opacity-80 group-hover:opacity-100 transition-opacity">
-          <svg className="h-full w-full overflow-visible" viewBox="0 0 100 40">
-            <defs>
-              <linearGradient id={`grad-${label.replace(/\s+/g, '-')}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.4" />
-                <stop offset="100%" stopColor="#3B82F6" stopOpacity="0.0" />
-              </linearGradient>
-            </defs>
-            <polyline
-              fill="none"
-              stroke="#3B82F6"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              points={points}
-            />
-          </svg>
-        </div>
       </div>
 
-      <div className="mt-3 flex items-center gap-2 text-xs font-bold">
-        <span
-          className={`inline-flex items-center gap-0.5 rounded-full px-2 py-0.5 text-[11px] ${
-            trendUp
-              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/20'
-              : 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/20'
-          }`}
-        >
-          {trendUp ? '↑' : '↓'} {trend}
-        </span>
-        <span className="text-slate-500 dark:text-slate-400 font-medium truncate">{subtitle}</span>
+      <div className="mt-2.5 flex items-center gap-1.5 text-xs font-semibold">
+        {trend && (
+          <span className={`font-bold ${trendUp ? 'text-emerald-600 dark:text-emerald-400' : 'text-rose-600 dark:text-rose-400'}`}>
+            {trendUp ? '↑' : '↓'} {trend}
+          </span>
+        )}
+        {subtitle && (
+          <span className="text-slate-400 dark:text-slate-500 font-medium truncate">{subtitle}</span>
+        )}
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Pencil, ShieldAlert, Trash2 } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState } from '../../components/ui.jsx';
+import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { formatDate } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
@@ -246,47 +248,30 @@ export default function AdminCandidates() {
                       {formatDate(c.created_at)}
                     </Td>
                     <Td className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <button
-                          type="button"
-                          className="btn-secondary !p-1.5 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/20"
-                          onClick={() => handleOpenEdit(c)}
-                          title="Edit Profile"
-                        >
-                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                          </svg>
-                        </button>
-                        <button
-                          type="button"
-                          className={`btn-secondary !p-1.5 ${
-                            c.is_blocked
-                              ? 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-500/20'
-                              : 'text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-500/20'
-                          }`}
-                          onClick={() => handleBlockClick(c)}
-                          title={c.is_blocked ? 'Unblock Student' : 'Block Student'}
-                        >
-                          {c.is_blocked ? (
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                            </svg>
-                          ) : (
-                            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-                            </svg>
-                          )}
-                        </button>
-                        <button
-                          type="button"
-                          className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/20"
-                          onClick={() => handleDeleteClick(c)}
-                          title="Delete Student"
-                        >
-                          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg>
-                        </button>
+                      <div className="flex justify-end pr-1">
+                        <ActionDropdown
+                          items={[
+                            {
+                              label: 'Edit Profile',
+                              icon: Pencil,
+                              onClick: () => handleOpenEdit(c),
+                              color: 'text-blue-600 dark:text-blue-400',
+                            },
+                            {
+                              label: c.is_blocked ? 'Unblock Student' : 'Block Student',
+                              icon: ShieldAlert,
+                              onClick: () => handleBlockClick(c),
+                              warning: !c.is_blocked,
+                              color: c.is_blocked ? 'text-emerald-600 dark:text-emerald-400' : undefined,
+                            },
+                            {
+                              label: 'Delete Student',
+                              icon: Trash2,
+                              onClick: () => handleDeleteClick(c),
+                              danger: true,
+                            },
+                          ]}
+                        />
                       </div>
                     </Td>
                   </tr>

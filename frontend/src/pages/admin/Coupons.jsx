@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Ticket } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, PageHeader, Badge } from '../../components/ui.jsx';
+import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
 export default function AdminCoupons() {
@@ -55,9 +57,20 @@ export default function AdminCoupons() {
                 <td className="px-4 py-3.5 font-semibold text-slate-700 dark:text-slate-300">{c.used_count}/{c.max_uses ?? '∞'}</td>
                 <td className="px-4 py-3.5"><Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge></td>
                 <td className="px-4 py-3.5 text-right">
-                  <button type="button" className="btn-secondary !p-1.5 text-blue-600 dark:text-blue-400" onClick={async () => { await adminService.toggleCoupon(c.id); load(); }}>
-                    {c.is_active ? 'Deactivate' : 'Activate'}
-                  </button>
+                  <ActionDropdown
+                    items={[
+                      {
+                        label: c.is_active ? 'Deactivate Coupon' : 'Activate Coupon',
+                        icon: Ticket,
+                        onClick: async () => {
+                          await adminService.toggleCoupon(c.id);
+                          load();
+                        },
+                        warning: c.is_active,
+                        color: !c.is_active ? 'text-emerald-600 dark:text-emerald-400' : undefined,
+                      },
+                    ]}
+                  />
                 </td>
               </tr>
             ))}

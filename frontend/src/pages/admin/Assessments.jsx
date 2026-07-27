@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Pencil, CheckCircle2, PauseCircle, Trash2, MoreVertical } from 'lucide-react';
 import { assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState, Badge, Spinner } from '../../components/ui.jsx';
 import Modal from '../../components/Modal.jsx';
+import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 
@@ -19,6 +20,7 @@ const emptyForm = {
 
 export default function AdminAssessments() {
   const toast = useToast();
+  const navigate = useNavigate();
   const [assessments, setAssessments] = useState([]);
   const [state, setState] = useState('loading');
   const [modalOpen, setModalOpen] = useState(false);
@@ -118,142 +120,142 @@ export default function AdminAssessments() {
           action={<button className="btn-primary" onClick={() => setModalOpen(true)}>Create assessment</button>}
         />
       ) : (
-        <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-lg">
-          <div className="w-full overflow-x-auto scrollbar-none">
-            <table className="w-full text-left border-collapse">
-              <thead className="sticky top-0 z-20 bg-slate-100/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-                <tr>
-                  <th className="px-5 py-4 text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[28%]">Title</th>
-                  <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[8%]">Questions</th>
-                  <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[10%]">Duration</th>
-                  <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[8%]">Pass Mark</th>
-                  <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[8%]">Attempts</th>
-                  <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[10%]">Status</th>
-                  <th className="px-4 py-4 text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 w-[11%]">Created</th>
-                  <th className="sticky right-0 z-20 bg-slate-100 dark:bg-slate-900 px-6 py-4 text-right text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 shadow-md">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
-                {assessments.map((a) => (
-                  <tr key={a.id} className="group odd:bg-white even:bg-slate-50/50 dark:odd:bg-[#111827] dark:even:bg-slate-900/30 hover:bg-blue-50/40 dark:hover:bg-slate-800/50 transition-colors">
-                    <td className="px-5 py-4 min-w-[200px]">
-                      <Link to={`/admin/assessments/${a.id}`} className="font-extrabold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition line-clamp-2">
-                        {a.title}
-                      </Link>
-                    </td>
-                    <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.question_count}</td>
-                    <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.duration_minutes} min</td>
-                    <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.passing_marks}</td>
-                    <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.attempt_count}</td>
-                    <td className="px-3 py-4 text-center">
-                      {a.is_published ? <Badge color="green">Published</Badge> : <Badge color="slate">Draft</Badge>}
-                    </td>
-                    <td className="px-4 py-4 text-xs font-semibold text-slate-400 whitespace-nowrap">{formatDate(a.created_at)}</td>
-                    <td className="sticky right-0 z-10 bg-white dark:bg-[#111827] group-hover:bg-slate-50 dark:group-hover:bg-slate-800/80 px-6 py-4 text-right whitespace-nowrap shadow-md">
-                      {/* Desktop Inline Actions (md+) */}
-                      <div className="hidden md:flex items-center justify-end gap-2">
-                        {/* Edit Button */}
-                        <Link
-                          to={`/admin/assessments/${a.id}`}
-                          className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-500/5 px-3 text-xs font-extrabold text-blue-600 dark:text-[#60A5FA] hover:bg-blue-500/15 hover:border-blue-500/50 transition-all duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-95 shadow-xs whitespace-nowrap"
-                          title="Edit Assessment"
-                        >
-                          <Pencil className="h-3.5 w-3.5 shrink-0" />
-                          <span>Edit</span>
-                        </Link>
+        <div className="space-y-4">
+          {/* Mobile Card List (<md) */}
+          <div className="space-y-3 md:hidden">
+            {assessments.map((a) => (
+              <div key={a.id} className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 shadow-xs space-y-3">
+                <div className="flex items-start justify-between gap-3">
+                  <Link to={`/admin/assessments/${a.id}`} className="font-extrabold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 text-sm leading-snug line-clamp-2">
+                    {a.title}
+                  </Link>
+                  <ActionDropdown
+                    items={[
+                      {
+                        label: 'Edit',
+                        icon: Pencil,
+                        onClick: () => navigate(`/admin/assessments/${a.id}`),
+                        color: 'text-blue-600 dark:text-blue-400',
+                      },
+                      {
+                        label: a.is_published ? 'Unpublish' : 'Publish',
+                        icon: a.is_published ? PauseCircle : CheckCircle2,
+                        onClick: () => togglePublish(a),
+                        warning: a.is_published,
+                        color: !a.is_published ? 'text-emerald-600 dark:text-emerald-400' : undefined,
+                      },
+                      {
+                        label: 'Delete',
+                        icon: Trash2,
+                        onClick: () => remove(a),
+                        danger: true,
+                      },
+                    ]}
+                  />
+                </div>
 
-                        {/* Publish / Unpublish Button */}
-                        <button
-                          type="button"
-                          disabled={busyId === a.id}
-                          onClick={() => togglePublish(a)}
-                          className={`inline-flex h-9 items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-all duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-95 shadow-xs whitespace-nowrap disabled:opacity-50 ${
-                            a.is_published
-                              ? 'border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 hover:border-amber-500/50'
-                              : 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/50'
-                          }`}
-                          title={a.is_published ? 'Unpublish Assessment' : 'Publish Assessment'}
-                        >
-                          {a.is_published ? (
-                            <>
-                              <PauseCircle className="h-3.5 w-3.5 shrink-0" />
-                              <span>Unpublish</span>
-                            </>
-                          ) : (
-                            <>
-                              <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
-                              <span>Publish</span>
-                            </>
-                          )}
-                        </button>
+                <div className="flex flex-wrap items-center gap-2 text-xs font-semibold text-slate-500 dark:text-slate-400 pt-2 border-t border-slate-100 dark:border-slate-800/60">
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 px-2 py-1 font-bold text-slate-700 dark:text-slate-300">
+                    ❓ {a.question_count} Qs
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 px-2 py-1 font-bold text-slate-700 dark:text-slate-300">
+                    ⏱️ {a.duration_minutes}m
+                  </span>
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-slate-100 dark:bg-slate-800/80 px-2 py-1 font-bold text-slate-700 dark:text-slate-300">
+                    🎯 {a.attempt_count} attempts
+                  </span>
+                  <div className="ml-auto">
+                    {a.is_published ? <Badge color="green">Published</Badge> : <Badge color="slate">Draft</Badge>}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
-                        {/* Delete Button */}
-                        <button
-                          type="button"
-                          disabled={busyId === a.id}
-                          onClick={() => remove(a)}
-                          className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 text-xs font-extrabold text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 hover:border-rose-500/50 transition-all duration-200 ease-out hover:-translate-y-0.5 active:translate-y-0 active:scale-95 shadow-xs whitespace-nowrap disabled:opacity-50"
-                          title="Delete Assessment"
-                        >
-                          <Trash2 className="h-3.5 w-3.5 shrink-0" />
-                          <span>Delete</span>
-                        </button>
-                      </div>
-
-                      {/* Mobile/Tablet Dropdown Menu (<md) */}
-                      <div className="relative md:hidden flex justify-end">
-                        <button
-                          type="button"
-                          onClick={() => setActiveDropdownId(activeDropdownId === a.id ? null : a.id)}
-                          className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700 transition"
-                          aria-label="More actions"
-                        >
-                          <MoreVertical className="h-4 w-4" />
-                        </button>
-                        {activeDropdownId === a.id && (
-                          <div className="absolute right-0 top-11 z-30 w-36 overflow-hidden rounded-2xl border border-slate-200 bg-white p-1.5 shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
-                            <Link
-                              to={`/admin/assessments/${a.id}`}
-                              onClick={() => setActiveDropdownId(null)}
-                              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-extrabold text-blue-600 dark:text-blue-400 hover:bg-blue-500/10 transition"
-                            >
-                              <Pencil className="h-3.5 w-3.5" />
-                              <span>Edit</span>
-                            </Link>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setActiveDropdownId(null);
-                                togglePublish(a);
-                              }}
-                              className={`flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-extrabold transition ${
-                                a.is_published
-                                  ? 'text-amber-600 dark:text-amber-400 hover:bg-amber-500/10'
-                                  : 'text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/10'
-                              }`}
-                            >
-                              {a.is_published ? <PauseCircle className="h-3.5 w-3.5" /> : <CheckCircle2 className="h-3.5 w-3.5" />}
-                              <span>{a.is_published ? 'Unpublish' : 'Publish'}</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setActiveDropdownId(null);
-                                remove(a);
-                              }}
-                              className="flex w-full items-center gap-2 rounded-xl px-3 py-2 text-xs font-extrabold text-rose-600 dark:text-rose-400 hover:bg-rose-500/10 transition"
-                            >
-                              <Trash2 className="h-3.5 w-3.5" />
-                              <span>Delete</span>
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    </td>
+          {/* Desktop Table View (md+) */}
+          <div className="hidden md:block card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
+            <div className="w-full overflow-x-auto scrollbar-thin">
+              <table className="w-full text-left border-collapse min-w-[750px]">
+                <thead className="bg-slate-100/90 dark:bg-slate-900/90 border-b border-slate-200 dark:border-slate-800">
+                  <tr>
+                    <th className="px-5 py-4 text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Title</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Questions</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Duration</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Pass Mark</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Attempts</th>
+                    <th className="px-3 py-4 text-center text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Status</th>
+                    <th className="px-4 py-4 text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Created</th>
+                    <th className="px-6 py-4 text-right text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Actions</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
+                  {assessments.map((a) => (
+                    <tr key={a.id} className="group odd:bg-white even:bg-slate-50/50 dark:odd:bg-[#111827] dark:even:bg-slate-900/30 hover:bg-blue-50/40 dark:hover:bg-slate-800/50 transition-colors">
+                      <td className="px-5 py-4 max-w-xs">
+                        <Link to={`/admin/assessments/${a.id}`} className="font-extrabold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition line-clamp-2">
+                          {a.title}
+                        </Link>
+                      </td>
+                      <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.question_count}</td>
+                      <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.duration_minutes} min</td>
+                      <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.passing_marks}</td>
+                      <td className="px-3 py-4 text-center text-xs font-bold text-slate-700 dark:text-slate-300">{a.attempt_count}</td>
+                      <td className="px-3 py-4 text-center">
+                        {a.is_published ? <Badge color="green">Published</Badge> : <Badge color="slate">Draft</Badge>}
+                      </td>
+                      <td className="px-4 py-4 text-xs font-semibold text-slate-400 whitespace-nowrap">{formatDate(a.created_at)}</td>
+                      <td className="px-6 py-4 text-right whitespace-nowrap">
+                        <div className="flex items-center justify-end gap-2">
+                          <Link
+                            to={`/admin/assessments/${a.id}`}
+                            className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-500/5 px-3 text-xs font-extrabold text-blue-600 dark:text-[#60A5FA] hover:bg-blue-500/15 hover:border-blue-500/50 transition-all duration-200"
+                            title="Edit Assessment"
+                          >
+                            <Pencil className="h-3.5 w-3.5 shrink-0" />
+                            <span>Edit</span>
+                          </Link>
+
+                          <button
+                            type="button"
+                            disabled={busyId === a.id}
+                            onClick={() => togglePublish(a)}
+                            className={`inline-flex h-9 items-center gap-1.5 rounded-xl px-3 text-xs font-extrabold transition-all duration-200 disabled:opacity-50 ${
+                              a.is_published
+                                ? 'border border-amber-500/30 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500/20 hover:border-amber-500/50'
+                                : 'border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500/20 hover:border-emerald-500/50'
+                            }`}
+                            title={a.is_published ? 'Unpublish Assessment' : 'Publish Assessment'}
+                          >
+                            {a.is_published ? (
+                              <>
+                                <PauseCircle className="h-3.5 w-3.5 shrink-0" />
+                                <span>Unpublish</span>
+                              </>
+                            ) : (
+                              <>
+                                <CheckCircle2 className="h-3.5 w-3.5 shrink-0" />
+                                <span>Publish</span>
+                              </>
+                            )}
+                          </button>
+
+                          <button
+                            type="button"
+                            disabled={busyId === a.id}
+                            onClick={() => remove(a)}
+                            className="inline-flex h-9 items-center gap-1.5 rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 text-xs font-extrabold text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 hover:border-rose-500/50 transition-all duration-200 disabled:opacity-50"
+                            title="Delete Assessment"
+                          >
+                            <Trash2 className="h-3.5 w-3.5 shrink-0" />
+                            <span>Delete</span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       )}

@@ -1,6 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
+import { Pencil, Trash2 } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, PageHeader, Spinner, DataTable, Badge } from '../../components/ui.jsx';
+import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
@@ -231,18 +233,28 @@ export default function AdminQuestionBank() {
               ) },
               { key: 'marks', label: 'Marks', render: (q) => <span className="font-black text-slate-900 dark:text-white text-xs">{q.marks}</span> },
               { key: 'actions', label: '', render: (q) => (
-                <div className="flex justify-end gap-2">
-                  <button type="button" className="btn-secondary !p-1.5 text-blue-600 dark:text-blue-400" onClick={() => openEdit(q)}>
-                    Edit ✏️
-                  </button>
-                  <button type="button" className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400" onClick={async () => {
-                    if (confirm('Are you sure you want to delete this question?')) {
-                      await questionBankService.remove(q.id);
-                      load();
-                    }
-                  }}>
-                    Delete 🗑️
-                  </button>
+                <div className="flex justify-end pr-2">
+                  <ActionDropdown
+                    items={[
+                      {
+                        label: 'Edit Question',
+                        icon: Pencil,
+                        onClick: () => openEdit(q),
+                        color: 'text-blue-600 dark:text-blue-400',
+                      },
+                      {
+                        label: 'Delete Question',
+                        icon: Trash2,
+                        onClick: async () => {
+                          if (confirm('Are you sure you want to delete this question?')) {
+                            await questionBankService.remove(q.id);
+                            load();
+                          }
+                        },
+                        danger: true,
+                      },
+                    ]}
+                  />
                 </div>
               ) },
             ]}

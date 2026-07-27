@@ -202,15 +202,17 @@ export const adminPayments = asyncHandler(async (_req, res) => {
     query(
       `SELECT p.*, ts.title AS series_title, u.name AS user_name, u.email AS user_email
        FROM payments p
+       JOIN users u ON u.id = p.user_id
        LEFT JOIN test_series ts ON ts.id = p.test_series_id
-       LEFT JOIN users u ON u.id = p.user_id
+       WHERE u.name IS NOT NULL
        ORDER BY p.created_at DESC LIMIT 100`
     ),
     query(
-      `SELECT COALESCE(SUM(amount),0)::numeric AS total,
-              COUNT(*) FILTER (WHERE status = 'success')::int AS successful,
+      `SELECT COALESCE(SUM(p.amount),0)::numeric AS total,
+              COUNT(*) FILTER (WHERE p.status = 'success')::int AS successful,
               COUNT(*)::int AS total_orders
-       FROM payments`
+       FROM payments p
+       JOIN users u ON u.id = p.user_id`
     ),
   ]);
   res.json({ payments: payments.rows, summary: revenue.rows[0] });

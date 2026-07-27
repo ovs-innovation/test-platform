@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
-import { notificationService } from '../lib/services.js';
+import { notificationService, adminService } from '../lib/services.js';
 
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
@@ -23,6 +23,8 @@ const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
   { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
+  { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
+  { to: '/admin/reports', label: 'Reports', icon: 'chart' },
   { to: '/admin/question-bank', label: 'Question Bank', icon: 'bank' },
   { to: '/admin/subjects', label: 'Subjects', icon: 'book' },
   { to: '/admin/faculty', label: 'Faculty', icon: 'badge' },
@@ -30,8 +32,6 @@ const adminNav = [
   { to: '/admin/coupons', label: 'Coupons', icon: 'ticket' },
   { to: '/admin/cms', label: 'CMS', icon: 'cms' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
-  { to: '/admin/reports', label: 'Reports', icon: 'chart' },
-  { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
 ];
 
 const Icon = ({ name, className = 'h-5 w-5' }) => {
@@ -59,6 +59,16 @@ const Icon = ({ name, className = 'h-5 w-5' }) => {
       <path strokeLinecap="round" strokeLinejoin="round" d={paths[name] || paths.grid} />
     </svg>
   );
+};
+
+const checkIsActive = (itemTo, currentPathname) => {
+  if (itemTo === '/admin' || itemTo === '/dashboard') {
+    return currentPathname === itemTo;
+  }
+  if (itemTo === '/admin/reports' && currentPathname.startsWith('/admin/attempts')) {
+    return true;
+  }
+  return currentPathname === itemTo || currentPathname.startsWith(itemTo + '/');
 };
 
 export default function Layout({ children }) {
@@ -117,7 +127,6 @@ export default function Layout({ children }) {
       if (e.key === 'Escape') {
         setCommandPaletteOpen(false);
         setNotifPanelOpen(false);
-        setHealthModalOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -163,7 +172,8 @@ export default function Layout({ children }) {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 flex transition-colors duration-200">
-      {/* Sidebar Navigation */}      <aside
+      {/* Sidebar Navigation */}
+      <aside
         className={`hidden lg:flex flex-col shrink-0 p-4 transition-all duration-300 ease-in-out ${
           collapsed ? 'w-24' : 'w-[290px]'
         }`}
@@ -213,13 +223,14 @@ export default function Layout({ children }) {
           <nav className={`flex-1 overflow-y-auto pt-5 pb-4 scrollbar-thin transition-all duration-300 ${
             collapsed ? 'px-2 space-y-3 flex flex-col items-center' : 'px-3 space-y-2'
           }`}>
-            {nav.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.to === '/admin'}
-                className={({ isActive }) =>
-                  `relative group flex items-center transition-all duration-200 ${
+            {nav.map((item) => {
+              const isActive = checkIsActive(item.to, location.pathname);
+              return (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === '/admin' || item.to === '/dashboard'}
+                  className={`relative group flex items-center transition-all duration-200 ${
                     collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px]'
                   } ${
                     isActive
@@ -227,32 +238,27 @@ export default function Layout({ children }) {
                         ? 'text-white'
                         : 'saas-active-pill shadow-md shadow-blue-500/20'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5'
-                  }`
-                }
-              >
-                {({ isActive }) => (
-                  <>
-                    <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${
-                      collapsed && isActive
-                        ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
-                        : 'group-hover:scale-105'
-                    }`}>
-                      <Icon name={item.icon} className="h-5 w-5 shrink-0" />
+                  }`}
+                >
+                  <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${
+                    collapsed && isActive
+                      ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
+                      : 'group-hover:scale-105'
+                  }`}>
+                    <Icon name={item.icon} className="h-5 w-5 shrink-0" />
+                  </div>
+
+                  {!collapsed && <span className="truncate text-[14.5px] font-semibold">{item.label}</span>}
+
+                  {/* Collapsed Hover Tooltip */}
+                  {collapsed && (
+                    <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
+                      {item.label}
                     </div>
-
-                    {!collapsed && <span className="truncate text-[14.5px] font-semibold">{item.label}</span>}
-
-                    {/* Collapsed Hover Tooltip */}
-                    {collapsed && (
-                      <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
-                        {item.label}
-                      </div>
-                    )}
-                  </>
-                )}
-              </NavLink>
-            ))}
-
+                  )}
+                </NavLink>
+              );
+            })}
           </nav>
 
           {/* Sticky User Profile Card (Centered Avatar, Fixed Bottom Padding) */}
@@ -297,21 +303,23 @@ export default function Layout({ children }) {
               </button>
             </div>
             <nav className="space-y-2">
-              {nav.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold ${
-                      isActive ? 'saas-active-pill' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                    }`
-                  }
-                >
-                  <Icon name={item.icon} />
-                  <span>{item.label}</span>
-                </NavLink>
-              ))}
+              {nav.map((item) => {
+                const isActive = checkIsActive(item.to, location.pathname);
+                return (
+                  <NavLink
+                    key={item.to}
+                    to={item.to}
+                    end={item.to === '/admin' || item.to === '/dashboard'}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-150 ${
+                      isActive ? 'saas-active-pill shadow-md shadow-blue-500/20' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                    }`}
+                  >
+                    <Icon name={item.icon} />
+                    <span>{item.label}</span>
+                  </NavLink>
+                );
+              })}
             </nav>
           </aside>
         </div>
@@ -456,17 +464,17 @@ export default function Layout({ children }) {
 
 
         {/* Main Content Viewport */}
-        <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8 lg:py-8 pb-24">{children}</main>
+        <main className="w-full max-w-7xl mx-auto flex-1 px-4 py-5 sm:px-6 lg:px-8 lg:py-8 pb-20 min-w-0">{children}</main>
       </div>
 
       {/* Floating Quick Action Button */}
       <button
         type="button"
         onClick={() => setCommandPaletteOpen(true)}
-        className="fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-2xl shadow-blue-500/50 hover:scale-110 active:scale-95 transition"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/40 hover:scale-105 active:scale-95 transition"
         title="Open Command Palette (Ctrl + K)"
       >
-        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+        <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
           <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
         </svg>
       </button>

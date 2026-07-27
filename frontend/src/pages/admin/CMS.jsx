@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { Trash2 } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
+import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
 export default function AdminCMS() {
@@ -54,9 +56,19 @@ export default function AdminCMS() {
               <strong className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm">{p.title}</strong>
               <span className="text-xs font-semibold text-slate-400 font-mono">/{p.slug}</span>
             </div>
-            <button type="button" className="btn-secondary !p-1.5 text-rose-600 dark:text-rose-400" onClick={async () => { await adminService.deleteCms(p.id); load(); }}>
-              Delete 🗑️
-            </button>
+            <ActionDropdown
+              items={[
+                {
+                  label: 'Delete Page',
+                  icon: Trash2,
+                  onClick: async () => {
+                    await adminService.deleteCms(p.id);
+                    load();
+                  },
+                  danger: true,
+                },
+              ]}
+            />
           </div>
         ))}
       </div>
