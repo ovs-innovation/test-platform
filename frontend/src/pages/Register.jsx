@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthShell from '../components/AuthShell.jsx';
-import { Spinner } from '../components/ui.jsx';
+import { Spinner, PasswordInput } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 
@@ -53,7 +53,7 @@ export default function Register() {
         </div>
         <div>
           <label className="label" htmlFor="password">Password</label>
-          <input id="password" name="password" type="password" autoComplete="new-password" required
+          <PasswordInput id="password" name="password" autoComplete="new-password" required
             className="input" placeholder="At least 8 characters" value={form.password} onChange={onChange} />
         </div>
         <button type="submit" className="btn-primary w-full" disabled={submitting}>

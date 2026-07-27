@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pencil, ShieldAlert, Trash2 } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
-import { PageHeader, LoadingScreen, ErrorState, EmptyState } from '../../components/ui.jsx';
+import { PageHeader, LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { formatDate } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -335,10 +335,9 @@ export default function AdminCandidates() {
                   <label className="label">
                     Password {modalMode === 'create' ? <span className="text-rose-500">*</span> : <span className="text-slate-400 font-normal">(Leave blank to keep current)</span>}
                   </label>
-                  <input
-                    type="password"
+                  <PasswordInput
                     required={modalMode === 'create'}
-                    className="input w-full"
+                    className="input"
                     placeholder={modalMode === 'create' ? "Min 6 characters" : "Enter new password if changing"}
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}

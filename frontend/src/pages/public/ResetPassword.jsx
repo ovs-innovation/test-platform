@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import AuthShell from '../../components/AuthShell.jsx';
+import { PasswordInput } from '../../components/ui.jsx';
 import { authService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -106,11 +107,11 @@ export default function ResetPassword() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
             New Password
           </label>
-          <input
-            className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-            type="password"
+          <PasswordInput
+            className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
             required
             minLength={6}
+            autoComplete="new-password"
             placeholder="At least 6 characters"
             value={form.password}
             onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
@@ -121,10 +122,10 @@ export default function ResetPassword() {
           <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
             Confirm New Password
           </label>
-          <input
-            className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-            type="password"
+          <PasswordInput
+            className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
             required
+            autoComplete="new-password"
             placeholder="Re-enter new password"
             value={form.confirm}
             onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}

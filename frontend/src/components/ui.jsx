@@ -1,5 +1,53 @@
 import { useState, useMemo } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { EmptyLineArt } from './landing/LineArtIllustrations.jsx';
+
+export function PasswordInput({
+  id,
+  name,
+  value,
+  onChange,
+  placeholder = '••••••••',
+  required = false,
+  autoComplete = 'current-password',
+  className = '',
+  disabled = false,
+  ...props
+}) {
+  const [show, setShow] = useState(false);
+
+  return (
+    <div className="relative w-full">
+      <input
+        id={id}
+        name={name}
+        type={show ? 'text' : 'password'}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        required={required}
+        autoComplete={autoComplete}
+        disabled={disabled}
+        className={`w-full pr-12 ${className}`}
+        {...props}
+      />
+      <button
+        type="button"
+        onClick={() => setShow((prev) => !prev)}
+        tabIndex={-1}
+        className="absolute right-1 top-1/2 -translate-y-1/2 flex h-10 w-10 items-center justify-center rounded-lg text-slate-400 hover:text-slate-200 dark:text-slate-400 dark:hover:text-white transition-colors cursor-pointer focus:outline-none"
+        aria-label={show ? 'Hide password' : 'Show password'}
+        title={show ? 'Hide password' : 'Show password'}
+      >
+        {show ? (
+          <EyeOff className="h-4 w-4 shrink-0 text-slate-400 hover:text-slate-200 dark:text-slate-400 dark:hover:text-white" />
+        ) : (
+          <Eye className="h-4 w-4 shrink-0 text-slate-400 hover:text-slate-200 dark:text-slate-400 dark:hover:text-white" />
+        )}
+      </button>
+    </div>
+  );
+}
 
 export function Skeleton({ className = '' }) {
   return <div className={`animate-shimmer rounded-xl bg-slate-200/80 dark:bg-slate-800/80 ${className}`} aria-hidden />;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import AuthShell from '../components/AuthShell.jsx';
-import { Spinner } from '../components/ui.jsx';
+import { Spinner, PasswordInput } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 
@@ -53,13 +53,12 @@ export default function Login() {
         </div>
         <div>
           <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5" htmlFor="password">Password</label>
-          <input
+          <PasswordInput
             id="password"
             name="password"
-            type="password"
             autoComplete="current-password"
             required
-            className="w-full rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
+            className="rounded-xl border border-slate-700/90 bg-[#070c18] px-3.5 py-2.5 text-xs sm:text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-[#0a1224] focus:outline-none"
             placeholder="••••••••"
             value={form.password}
             onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { studentService } from '../../lib/services.js';
-import { PageHeader, Spinner } from '../../components/ui.jsx';
+import { PageHeader, Spinner, PasswordInput } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Lock, Laptop, Bell } from 'lucide-react';
 
@@ -47,10 +47,10 @@ export default function Settings() {
             
             <div>
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Current Password</label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
+              <PasswordInput
+                className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
+                autoComplete="current-password"
                 value={form.current_password}
                 onChange={(e) => setForm((f) => ({ ...f, current_password: e.target.value }))}
               />
@@ -58,11 +58,11 @@ export default function Settings() {
 
             <div>
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">New Password</label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
+              <PasswordInput
+                className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
                 minLength={6}
+                autoComplete="new-password"
                 value={form.new_password}
                 onChange={(e) => setForm((f) => ({ ...f, new_password: e.target.value }))}
               />
@@ -70,10 +70,10 @@ export default function Settings() {
 
             <div>
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Confirm New Password</label>
-              <input
-                type="password"
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
+              <PasswordInput
+                className="rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none"
                 required
+                autoComplete="new-password"
                 value={form.confirm}
                 onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}
               />
