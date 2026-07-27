@@ -5,6 +5,9 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService, adminService } from '../lib/services.js';
+import { Spinner } from './ui.jsx';
+import { formatDateTime } from '../lib/format.js';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight } from 'lucide-react';
 
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
@@ -144,15 +147,19 @@ export default function Layout({ children }) {
   }, []);
 
   const fetchUnread = useCallback(() => {
-    if (user?.role === 'candidate') {
+    if (user?.id) {
       notificationService.unreadCount().then((c) => setUnread(c)).catch(() => {});
     }
   }, [user]);
 
   useEffect(() => {
     fetchUnread();
+    const interval = setInterval(fetchUnread, 10000);
     window.addEventListener('notificationStatusChanged', fetchUnread);
-    return () => window.removeEventListener('notificationStatusChanged', fetchUnread);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('notificationStatusChanged', fetchUnread);
+    };
   }, [fetchUnread, location.pathname]);
 
   const handleLogout = () => {
@@ -416,14 +423,13 @@ export default function Layout({ children }) {
             <button
               type="button"
               onClick={() => setNotifPanelOpen(true)}
-              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 transition"
+              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 transition cursor-pointer"
               aria-label="Open notifications"
             >
               <Icon name="bell" className="h-4 w-4" />
               {unread > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-3 w-3">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-3 w-3 bg-rose-500" />
+                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white shadow-xs animate-pulse">
+                  {unread > 9 ? '9+' : unread}
                 </span>
               )}
             </button>
@@ -549,41 +555,230 @@ function CommandPaletteModal({ onClose, navigate, nav }) {
   );
 }
 
+function getNotificationConfig(type = '', title = '') {
+  const lowerType = (type || '').toLowerCase();
+  const lowerTitle = (title || '').toLowerCase();
+
+  if (lowerType === 'violation_submitted' || lowerTitle.includes('violation') || lowerTitle.includes('proctoring') || lowerTitle.includes('urgent')) {
+    return {
+      IconComponent: ShieldAlert,
+      iconClass: 'text-rose-500 bg-rose-500/10 border-rose-500/20',
+      borderClass: 'border-l-4 border-l-rose-500 bg-rose-500/5 dark:bg-rose-950/20',
+      badge: 'Urgent',
+      target: '/admin/reports'
+    };
+  }
+  if (lowerType === 'payment_success' || lowerType === 'purchase' || lowerTitle.includes('payment') || lowerTitle.includes('received')) {
+    return {
+      IconComponent: DollarSign,
+      iconClass: 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20',
+      borderClass: 'border-l-4 border-l-emerald-500',
+      badge: 'Payment',
+      target: '/admin/payments'
+    };
+  }
+  if (lowerType === 'payment_failed' || lowerTitle.includes('failed')) {
+    return {
+      IconComponent: AlertTriangle,
+      iconClass: 'text-rose-500 bg-rose-500/10 border-rose-500/20',
+      borderClass: 'border-l-4 border-l-rose-500',
+      badge: 'Failed',
+      target: '/admin/payments'
+    };
+  }
+  if (lowerType === 'signup' || lowerType === 'pending_approval' || lowerTitle.includes('signup') || lowerTitle.includes('student')) {
+    return {
+      IconComponent: UserPlus,
+      iconClass: 'text-blue-500 bg-blue-500/10 border-blue-500/20',
+      borderClass: 'border-l-4 border-l-blue-500',
+      badge: 'Signup',
+      target: '/admin/candidates'
+    };
+  }
+  if (lowerType === 'question_flagged' || lowerTitle.includes('flagged') || lowerTitle.includes('reported')) {
+    return {
+      IconComponent: Flag,
+      iconClass: 'text-amber-500 bg-amber-500/10 border-amber-500/20',
+      borderClass: 'border-l-4 border-l-amber-500',
+      badge: 'Review',
+      target: '/admin/question-bank'
+    };
+  }
+  if (lowerType === 'assessment_submitted' || lowerTitle.includes('assessment') || lowerTitle.includes('submitted')) {
+    return {
+      IconComponent: CheckCircle2,
+      iconClass: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
+      borderClass: 'border-l-4 border-l-cyan-500',
+      badge: 'Attempt',
+      target: '/admin/reports'
+    };
+  }
+
+  return {
+    IconComponent: Bell,
+    iconClass: 'text-blue-500 bg-blue-500/10 border-blue-500/20',
+    borderClass: 'border-l-4 border-l-blue-500',
+    badge: 'Notification',
+    target: '/notifications'
+  };
+}
+
 function NotificationPanelDrawer({ onClose }) {
-  const notifications = [
-    { id: 1, title: 'New Student Registered', time: '10 mins ago', type: 'today', group: 'Today' },
-    { id: 2, title: 'Payment of ₹1,499 Received', time: '1 hour ago', type: 'today', group: 'Today' },
-    { id: 3, title: 'JEE Mock Exam Published', time: 'Yesterday', type: 'yesterday', group: 'Yesterday' },
-    { id: 4, title: 'System Backup Completed', time: '3 days ago', type: 'earlier', group: 'Earlier' },
-  ];
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [marking, setMarking] = useState(false);
+
+  const loadNotifications = async () => {
+    setLoading(true);
+    try {
+      const list = await notificationService.list();
+      setNotifications(list || []);
+    } catch {
+      setNotifications([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadNotifications();
+  }, []);
+
+  const handleMarkAllRead = async () => {
+    setMarking(true);
+    try {
+      await notificationService.markAllRead();
+      setNotifications((prev) => prev.map((n) => ({ ...n, read_at: new Date().toISOString() })));
+      window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+    } catch {
+      // Fallback
+    } finally {
+      setMarking(false);
+    }
+  };
+
+  const handleItemClick = async (n) => {
+    if (!n.read_at) {
+      try {
+        await notificationService.markRead(n.id);
+        setNotifications((prev) => prev.map((item) => (item.id === n.id ? { ...item, read_at: new Date().toISOString() } : item)));
+        window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+      } catch {
+        // Fallback
+      }
+    }
+    onClose();
+    const config = getNotificationConfig(n.type, n.title);
+    if (user?.role === 'admin') {
+      navigate(config.target);
+    } else {
+      navigate('/notifications');
+    }
+  };
+
+  const unreadCount = notifications.filter((n) => !n.read_at).length;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs" onClick={onClose} />
-      <div className="relative w-full max-w-md bg-white dark:bg-[#0f172a] h-full shadow-2xl border-l border-slate-200 dark:border-slate-800 p-6 flex flex-col z-10 animate-in slide-in-from-right duration-200">
+      <div className="relative w-full max-w-md bg-white dark:bg-[#0f172a] h-full shadow-2xl border-l border-slate-200 dark:border-slate-800 p-5 sm:p-6 flex flex-col z-10 animate-in slide-in-from-right duration-200">
+        {/* Header */}
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
-          <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Notifications</h3>
-          <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">✕</button>
+          <div className="flex items-center gap-2">
+            <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Notifications</h3>
+            {unreadCount > 0 ? (
+              <span className="rounded-full bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-black text-rose-600 dark:text-rose-400 border border-rose-500/20">
+                {unreadCount} unread
+              </span>
+            ) : (
+              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                All caught up
+              </span>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            {unreadCount > 0 && (
+              <button
+                type="button"
+                disabled={marking}
+                onClick={handleMarkAllRead}
+                className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer disabled:opacity-50"
+              >
+                {marking ? 'Marking…' : 'Mark all read'}
+              </button>
+            )}
+            <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm font-bold p-1 cursor-pointer">✕</button>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-4 space-y-4">
-          {notifications.map((n) => (
-            <div key={n.id} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 dark:bg-slate-800/50 dark:border-slate-800 space-y-1">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-900 dark:text-white">{n.title}</span>
-                <span className="text-[10px] text-blue-600 dark:text-blue-400 font-semibold">{n.time}</span>
-              </div>
+        {/* List */}
+        <div className="flex-1 overflow-y-auto py-4 space-y-3">
+          {loading ? (
+            <div className="flex items-center justify-center py-12 text-slate-400 text-xs font-bold gap-2">
+              <Spinner className="h-4 w-4 text-blue-600" /> Loading notifications...
             </div>
-          ))}
+          ) : notifications.length === 0 ? (
+            <div className="text-center py-16 space-y-2">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-400">
+                <Bell className="h-6 w-6" />
+              </div>
+              <p className="text-sm font-bold text-slate-700 dark:text-slate-200">You're all caught up!</p>
+              <p className="text-xs text-slate-400 max-w-xs mx-auto">No unread notifications at this time. Important updates will appear here automatically.</p>
+            </div>
+          ) : (
+            notifications.map((n) => {
+              const isUnread = !n.read_at;
+              const { IconComponent, iconClass, borderClass } = getNotificationConfig(n.type, n.title);
+              return (
+                <div
+                  key={n.id}
+                  onClick={() => handleItemClick(n)}
+                  className={`p-3.5 rounded-2xl border transition hover:shadow-xs cursor-pointer ${borderClass} ${
+                    isUnread
+                      ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/80'
+                      : 'bg-slate-50/80 border-slate-200 dark:bg-slate-800/40 dark:border-slate-800'
+                  }`}
+                >
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-xl border shrink-0 mt-0.5 ${iconClass}`}>
+                      <IconComponent className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{n.title}</span>
+                        {isUnread && <span className="h-2 w-2 rounded-full bg-rose-500 shrink-0" />}
+                      </div>
+                      {n.body && <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">{n.body}</p>}
+                      <div className="flex items-center justify-between mt-2 pt-1 border-t border-slate-200/50 dark:border-slate-800/50">
+                        <span className="text-[10px] font-bold text-slate-400">{formatDateTime(n.created_at)}</span>
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400 flex items-center gap-0.5">
+                          View details <ArrowRight className="h-3 w-3" />
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
         </div>
 
-        <button
-          type="button"
-          onClick={onClose}
-          className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-extrabold text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
-        >
-          Mark all as read
-        </button>
+        {/* Footer Link */}
+        <div className="pt-3 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <button
+            type="button"
+            onClick={() => {
+              onClose();
+              navigate(user?.role === 'admin' ? '/admin/reports' : '/notifications');
+            }}
+            className="w-full py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition flex items-center justify-center gap-1.5 cursor-pointer"
+          >
+            <span>View All Notifications & Reports</span>
+            <ArrowRight className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+          </button>
+        </div>
       </div>
     </div>
   );

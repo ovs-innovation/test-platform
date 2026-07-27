@@ -9,6 +9,7 @@ import { sendOtpEmail, sendEmail } from '../utils/email.js';
 import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
+import { createAdminNotification } from '../utils/createAdminNotification.js';
 
 const publicUser = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role });
 
@@ -181,6 +182,12 @@ export const register = asyncHandler(async (req, res) => {
       `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
       [u.id, 'Welcome to EDVEDUM Academy', 'Explore test series and start your preparation journey.']
     );
+
+    await createAdminNotification({
+      title: 'New Student Signup',
+      body: `${u.name} (${u.email}) registered a candidate account.`,
+      type: 'signup'
+    });
 
     return u;
   });

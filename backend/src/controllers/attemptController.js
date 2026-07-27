@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
+import { createAdminNotification } from '../utils/createAdminNotification.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -184,6 +185,20 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
         `UPDATE candidate_invites SET status = 'completed', completed_at = NOW() WHERE id = $1`,
         [attempt.invite_id]
       );
+    }
+
+    if (status === 'violation_submitted') {
+      await createAdminNotification({
+        title: 'URGENT: Proctoring Auto-Submit',
+        body: `Test "${assessment.title}" auto-submitted due to proctoring violation limit.`,
+        type: 'violation_submitted'
+      });
+    } else {
+      await createAdminNotification({
+        title: 'Assessment Submitted',
+        body: `Candidate completed "${assessment.title}". Score: ${marksObtained}/${totalMarks} (${percentage}%).`,
+        type: 'assessment_submitted'
+      });
     }
 
     const scoreRes = await client.query(

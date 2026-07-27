@@ -5,6 +5,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { env } from '../config/env.js';
 import { sendEmail } from '../utils/email.js';
+import { createAdminNotification } from '../utils/createAdminNotification.js';
 
 const getRazorpay = () => {
   if (!env.razorpay.keyId || !env.razorpay.keySecret) return null;
@@ -33,6 +34,12 @@ const enrollUser = async (userId, testSeriesId, paymentId) => {
     `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'purchase')`,
     [userId, 'Test series unlocked', `You now have access to "${series.title}"`]
   );
+
+  await createAdminNotification({
+    title: 'Payment Received',
+    body: `New successful purchase for "${series.title}" (₹${series.price}).`,
+    type: 'payment_success'
+  });
 
   return { enrollment: enroll.rows[0], series };
 };
