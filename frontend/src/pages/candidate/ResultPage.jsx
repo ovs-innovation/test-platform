@@ -302,11 +302,16 @@ export default function ResultPage() {
                             <ul className="mt-4 space-y-2 text-sm">
                               {opts.map((opt, oi) => {
                                 const isCorrect = isMulti
-                                  ? (q.correct_indices || []).includes(oi)
-                                  : oi === q.correct_index;
-                                const isYours = isMulti
-                                  ? (Array.isArray(q.your_answer) ? q.your_answer.includes(oi) : q.your_answer === oi)
-                                  : q.your_answer === oi;
+                                  ? (Array.isArray(q.correct_indices) ? q.correct_indices.map(Number).includes(oi) : Number(q.correct_index) === oi)
+                                  : (q.correct_index != null && Number(q.correct_index) === oi);
+                                let isYours = false;
+                                if (isMulti) {
+                                  const arr = Array.isArray(q.your_answer) ? q.your_answer.map(Number) : (q.your_answer != null ? [Number(q.your_answer)] : []);
+                                  isYours = arr.includes(oi);
+                                } else {
+                                  isYours = q.your_answer !== null && q.your_answer !== undefined && Number(q.your_answer) === oi;
+                                }
+
                                 return (
                                   <li
                                     key={oi}
@@ -315,13 +320,26 @@ export default function ResultPage() {
                                         ? 'bg-emerald-500/10 text-emerald-950 dark:bg-emerald-950/60 dark:text-emerald-200 border border-emerald-500/40 font-bold'
                                         : isYours
                                         ? 'bg-rose-500/10 text-rose-950 dark:bg-rose-950/60 dark:text-rose-200 border border-rose-500/40 font-bold'
-                                        : 'text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-transparent'
+                                        : 'text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/60'
                                     }`}
                                   >
-                                    <span>{opt}</span>
-                                    <span className="shrink-0 font-extrabold text-xs">
+                                    <span className="flex items-center gap-2">
+                                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-slate-200 dark:bg-slate-800 text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                                        {String.fromCharCode(65 + oi)}
+                                      </span>
+                                      <span>{opt}</span>
+                                    </span>
+                                    <span className="shrink-0 font-extrabold text-xs flex items-center gap-2">
                                       {isCorrect && <span className="text-emerald-600 dark:text-emerald-400">✓ Correct</span>}
-                                      {isYours && !isCorrect && <span className="text-rose-600 dark:text-rose-400 ml-1.5">(Your answer)</span>}
+                                      {isYours && (
+                                        <span className={`px-2 py-0.5 rounded-md text-[11px] font-extrabold uppercase border ${
+                                          isCorrect
+                                            ? 'bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30'
+                                            : 'bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/30'
+                                        }`}>
+                                          Your Choice
+                                        </span>
+                                      )}
                                     </span>
                                   </li>
                                 );

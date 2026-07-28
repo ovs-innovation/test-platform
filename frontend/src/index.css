@@ -151,19 +151,30 @@
     @apply border border-red-600 bg-red-600 font-mono text-lg font-bold text-white;
   }
   .nta-swatch-nv {
-    @apply bg-[#d9d9d9] border border-slate-400 dark:bg-slate-700 dark:border-slate-600;
+    @apply bg-[#e2e8f0] text-slate-800 border border-slate-400 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600 font-bold text-[11px] flex items-center justify-center rounded-sm shrink-0;
   }
   .nta-swatch-na {
-    @apply bg-[#e74c3c];
+    @apply bg-[#e74c3c] text-white font-bold text-[11px] flex items-center justify-center rounded-t-md rounded-b-sm shrink-0 shadow-sm;
   }
   .nta-swatch-a {
-    @apply bg-[#27ae60];
+    @apply bg-[#27ae60] text-white font-bold text-[11px] flex items-center justify-center rounded-b-md rounded-t-sm shrink-0 shadow-sm;
   }
   .nta-swatch-r {
-    @apply bg-[#8e44ad];
+    @apply bg-[#8e44ad] text-white font-bold text-[11px] flex items-center justify-center rounded-full shrink-0 shadow-sm;
   }
   .nta-swatch-ar {
-    background: linear-gradient(135deg, #8e44ad 50%, #27ae60 50%);
+    @apply relative bg-[#8e44ad] text-white font-bold text-[11px] flex items-center justify-center rounded-full shrink-0 shadow-sm;
+  }
+  .nta-swatch-ar::after {
+    content: "";
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    width: 8px;
+    height: 8px;
+    background-color: #27ae60;
+    border-radius: 9999px;
+    border: 1.5px solid white;
   }
   .nta-palette-nv {
     @apply bg-[#d9d9d9] text-slate-800 border border-slate-400 dark:bg-slate-700 dark:text-slate-200 dark:border-slate-600;
@@ -184,12 +195,13 @@
   .nta-palette-ar::after {
     content: "";
     position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 45%;
-    height: 45%;
+    right: 2px;
+    bottom: 2px;
+    width: 10px;
+    height: 10px;
     background: #27ae60;
-    clip-path: polygon(100% 0, 100% 100%, 0 100%);
+    border-radius: 9999px;
+    border: 1.5px solid white;
   }
   .nta-palette-current {
     box-shadow: 0 0 0 2px #1a4480;

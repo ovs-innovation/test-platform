@@ -30,8 +30,8 @@ export default function AdminPayments() {
 
       <div className="mb-8 grid gap-4 sm:grid-cols-3">
         <StatCard label="Total revenue" value={`₹${Number(summary.total).toLocaleString('en-IN')}`} accent="text-emerald-600" />
-        <StatCard label="Successful orders" value={summary.successful} />
-        <StatCard label="Total orders" value={summary.total_orders} />
+        <StatCard label="Successful enrollments" value={summary.successful} />
+        <StatCard label="Total enrollments" value={summary.total_orders} />
       </div>
 
       {/* Mobile Card List (<md) */}

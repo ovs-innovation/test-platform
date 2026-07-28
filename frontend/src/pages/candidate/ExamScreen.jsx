@@ -652,8 +652,10 @@ export default function ExamScreen() {
           <p className="text-center text-xs font-bold uppercase text-slate-800 tracking-wide">Question Palette</p>
           <div className="mt-2 space-y-1">
             {PALETTE_LEGEND.map((item) => (
-              <div key={item.key} className="flex items-center gap-2 text-[10px] text-slate-700">
-                <span className={`h-3.5 w-3.5 shrink-0 ${item.swatch}`} />
+              <div key={item.key} className="flex items-center gap-2 text-[10px] font-semibold text-slate-700 dark:text-slate-200">
+                <span className={`h-4 w-4 shrink-0 ${item.swatch}`}>
+                  {item.num}
+                </span>
                 <span>{item.label}</span>
               </div>
             ))}

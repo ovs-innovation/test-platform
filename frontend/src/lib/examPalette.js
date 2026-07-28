@@ -27,11 +27,11 @@ export function getQuestionStatus(question, visited, reviewed, answered) {
 }
 
 export const PALETTE_LEGEND = [
-  { key: 'not_visited', label: 'Not Visited', swatch: 'nta-swatch-nv' },
-  { key: 'unanswered', label: 'Not Answered', swatch: 'nta-swatch-na' },
-  { key: 'answered', label: 'Answered', swatch: 'nta-swatch-a' },
-  { key: 'review', label: 'Marked for Review', swatch: 'nta-swatch-r' },
-  { key: 'answered_review', label: 'Answered & Marked for Review', swatch: 'nta-swatch-ar' },
+  { key: 'not_visited', num: '1', label: 'Not Visited', desc: 'You have not visited the question yet.', swatch: 'nta-swatch-nv' },
+  { key: 'unanswered', num: '2', label: 'Not Answered', desc: 'You have not answered the question.', swatch: 'nta-swatch-na' },
+  { key: 'answered', num: '3', label: 'Answered', desc: 'You have answered the question.', swatch: 'nta-swatch-a' },
+  { key: 'review', num: '4', label: 'Marked for Review', desc: 'You have NOT answered the question, but marked for review.', swatch: 'nta-swatch-r' },
+  { key: 'answered_review', num: '5', label: 'Answered & Marked for Review', desc: 'The question WILL be evaluated.', swatch: 'nta-swatch-ar' },
 ];
 
 export function paletteCellClass(status, isCurrent) {

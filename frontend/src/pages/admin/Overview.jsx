@@ -266,7 +266,7 @@ export default function Overview() {
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-4">
             <div>
               <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Recent Student Purchases</h2>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Live payment orders verified on Razorpay.</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Live payment enrollments verified on Razorpay.</p>
             </div>
             <Link to="/admin/payments" className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline shrink-0">
               View All →

@@ -234,7 +234,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
          SELECT s.attempt_id,
                 RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) AS rk,
                 CASE WHEN cnt.total <= 1 THEN 100
-                     ELSE ROUND((below.c::numeric / (cnt.total - 1)) * 100, 2)
+                     ELSE ROUND((below.c::numeric / cnt.total) * 100, 2)
                 END AS pct
          FROM scores s
          JOIN attempts a ON a.id = s.attempt_id
@@ -242,7 +242,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
          LEFT JOIN LATERAL (
            SELECT COUNT(*)::int AS c FROM scores s3
            JOIN attempts a3 ON a3.id = s3.attempt_id
-           WHERE a3.assessment_id = $1 AND s3.marks_obtained < s.marks_obtained
+           WHERE a3.assessment_id = $1 AND s3.marks_obtained <= s.marks_obtained
          ) below ON true
          WHERE a.assessment_id = $1
        )
@@ -707,11 +707,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       marks: q.marks,
       marks_obtained: questionMarksObtained,
       is_correct: correct,
+      your_answer: yourAnswer,
       solution: q.solution,
       subject_name: q.subject_name || null,
       bank_category: q.subject_name || q.bank_category || null,
       section_name: q.subject_name || q.bank_category || q.section_name || 'General',
-      marks_obtained: Number(questionMarksObtained.toFixed(2)),
     };
   });
 

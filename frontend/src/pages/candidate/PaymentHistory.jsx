@@ -30,7 +30,7 @@ export default function PaymentHistory() {
 
   return (
     <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Payment History" subtitle="All your test series purchases, receipts, and order invoices." />
+      <PageHeader title="Payment History" subtitle="All your test series purchases, receipts, and enrollment invoices." />
 
       {/* Summary Stats Cards */}
       <div className="grid gap-2.5 sm:grid-cols-3">
@@ -39,7 +39,7 @@ export default function PaymentHistory() {
           <p className="text-xl font-black text-[#2563eb] dark:text-cyan-300 tabular-nums">₹{totalSpent.toLocaleString('en-IN')}</p>
         </div>
         <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Orders</p>
+          <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Enrollments</p>
           <p className="text-xl font-black text-slate-900 dark:text-white tabular-nums">{payments.length}</p>
         </div>
         <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
@@ -52,7 +52,7 @@ export default function PaymentHistory() {
         <div className="space-y-4">
           <EmptyState
             title="No Payment Invoices Recorded Yet"
-            message="Your official receipts, GST invoices, and test pack subscription orders will appear here once you purchase a test series."
+            message="Your official receipts, GST invoices, and test pack subscription enrollments will appear here once you purchase a test series."
             action={
               <Link
                 to="/test-series"

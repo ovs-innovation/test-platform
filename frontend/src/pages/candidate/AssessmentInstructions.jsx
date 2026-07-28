@@ -37,9 +37,10 @@ export default function AssessmentInstructions() {
     try {
       const found = await assessmentService.getStudent(assessmentId);
       setAssessment(found);
-      const returnPath = found.access_type === 'enrollment' && found.series_slug
-        ? `/my-tests/${found.series_slug}`
-        : found.access_type === 'enrollment'
+      const returnPath =
+        found.access_type === 'enrollment' && found.series_slug
+          ? `/my-tests/${found.series_slug}`
+          : found.access_type === 'enrollment'
           ? '/my-tests'
           : '/assessments';
       setBackTo(returnPath);
@@ -99,9 +100,9 @@ export default function AssessmentInstructions() {
   if (assessment.attempt_status === 'submitted' || assessment.attempt_status === 'auto_submitted') {
     return (
       <div className="exam-surface flex min-h-screen items-center justify-center p-6">
-        <div className="nta-panel max-w-md p-8 text-center">
-          <h1 className="text-lg font-bold text-slate-900">Already completed</h1>
-          <p className="mt-2 text-sm text-slate-600">You have already submitted this assessment.</p>
+        <div className="nta-panel max-w-md p-8 text-center rounded-xl shadow-lg border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">Already completed</h1>
+          <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">You have already submitted this assessment.</p>
           {assessment.attempt_id && (
             <Link to={`/results/${assessment.attempt_id}`} className="nta-btn nta-btn-primary mt-4 inline-block">View result</Link>
           )}
@@ -114,9 +115,9 @@ export default function AssessmentInstructions() {
   if (assessment.attempt_status === 'in_progress' && assessment.attempt_id) {
     return (
       <div className="exam-surface flex min-h-screen items-center justify-center p-6">
-        <div className="nta-panel max-w-md p-8 text-center">
-          <h1 className="text-lg font-bold text-slate-900">Test in progress</h1>
-          <p className="mt-2 text-sm text-slate-600">Resume your ongoing attempt.</p>
+        <div className="nta-panel max-w-md p-8 text-center rounded-xl shadow-lg border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827]">
+          <h1 className="text-lg font-extrabold text-slate-900 dark:text-white">Test in progress</h1>
+          <p className="mt-2 text-sm font-medium text-slate-600 dark:text-slate-400">Resume your ongoing attempt.</p>
           <Link to={`/exam/${assessment.attempt_id}`} className="nta-btn nta-btn-primary mt-4 inline-block">Resume exam</Link>
         </div>
       </div>
@@ -128,31 +129,36 @@ export default function AssessmentInstructions() {
   const isExpired = assessment.available_until && new Date(assessment.available_until) < now;
 
   return (
-    <div className="exam-surface min-h-screen">
+    <div className="exam-surface min-h-screen bg-slate-50 text-slate-900 dark:bg-[#070c18] dark:text-slate-100 font-sans">
+      {/* Top NTA Blue Header */}
       <header className="nta-bar px-4 py-2.5">
-        <p className="text-sm font-bold uppercase tracking-wide">Computer Based Test — General Instructions</p>
-        <p className="mt-0.5 text-xs text-blue-100">Read all instructions carefully before proceeding</p>
+        <p className="text-sm font-black uppercase tracking-wide text-white">Computer Based Test — General Instructions</p>
+        <p className="mt-0.5 text-xs font-medium text-blue-100 dark:text-blue-200">Read all instructions carefully before proceeding</p>
       </header>
 
-      <div className="nta-bar-sub px-4 py-2 text-xs">
-        <span className="font-semibold">Candidate:</span> {user?.name || 'Student'}
-        {' · '}
-        <span className="font-semibold">Roll No:</span> {rollNo}
-        {' · '}
-        <span className="font-semibold">Test:</span> {assessment.title}
+      {/* Candidate Metadata Sub-Bar */}
+      <div className="nta-bar-sub px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-200 flex flex-wrap items-center gap-x-2 gap-y-1">
+        <span className="font-semibold text-slate-500 dark:text-slate-400">Candidate:</span>
+        <span className="font-bold text-slate-900 dark:text-white">{user?.name || 'Student'}</span>
+        <span className="text-slate-400 font-normal">·</span>
+        <span className="font-semibold text-slate-500 dark:text-slate-400">Roll No:</span>
+        <span className="font-mono font-bold text-blue-600 dark:text-cyan-300">{rollNo}</span>
+        <span className="text-slate-400 font-normal">·</span>
+        <span className="font-semibold text-slate-500 dark:text-slate-400">Test:</span>
+        <span className="font-bold text-slate-900 dark:text-amber-300">{assessment.title}</span>
       </div>
 
       <div className="mx-auto max-w-5xl px-4 py-6">
-        <Link to={backTo} className="mb-4 inline-flex items-center gap-1 text-xs font-semibold uppercase text-slate-500 hover:text-slate-800">
+        <Link to={backTo} className="mb-4 inline-flex items-center gap-1 text-xs font-bold uppercase text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white transition">
           ← Back
         </Link>
 
         <div className="grid gap-6 lg:grid-cols-[1fr_280px]">
           <div>
             {isFuture && (
-              <div className="mb-5 rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-800">
-                <p className="font-semibold">This test is scheduled for the future.</p>
-                <p className="mt-1">
+              <div className="mb-5 rounded-xl border border-blue-300 bg-blue-50 dark:border-blue-800 dark:bg-blue-950/40 p-4 text-sm text-blue-900 dark:text-blue-200">
+                <p className="font-bold">This test is scheduled for the future.</p>
+                <p className="mt-1 font-medium">
                   You will be able to start this exam starting on{' '}
                   <strong className="font-bold">{new Date(assessment.available_from).toLocaleString()}</strong>.
                 </p>
@@ -160,63 +166,68 @@ export default function AssessmentInstructions() {
             )}
 
             {isExpired && (
-              <div className="mb-5 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
-                <p className="font-semibold">This test slot has expired.</p>
-                <p className="mt-1">
+              <div className="mb-5 rounded-xl border border-red-300 bg-red-50 dark:border-red-800 dark:bg-red-950/40 p-4 text-sm text-red-900 dark:text-red-200">
+                <p className="font-bold">This test slot has expired.</p>
+                <p className="mt-1 font-medium">
                   The availability window for this test closed on{' '}
                   <strong className="font-bold">{new Date(assessment.available_until).toLocaleString()}</strong>. You can no longer start this assessment.
                 </p>
               </div>
             )}
 
-            <h1 className="text-lg font-bold text-slate-900">{assessment.title}</h1>
+            <h1 className="text-xl font-extrabold text-slate-900 dark:text-white tracking-tight">{assessment.title}</h1>
             {assessment.description && (
-              <p className="mt-1 text-sm text-slate-600">{assessment.description}</p>
+              <p className="mt-1 text-sm text-slate-600 dark:text-slate-300 font-medium leading-relaxed">{assessment.description}</p>
             )}
 
-            <table className="mt-5 w-full border border-slate-400 text-sm">
-              <tbody>
-                <tr className="border-b border-slate-300 bg-[#f3f6fb]">
-                  <td className="border-r border-slate-300 px-3 py-2 font-semibold">Duration</td>
-                  <td className="px-3 py-2">{assessment.duration_minutes} minutes</td>
-                  <td className="border-l border-r border-slate-300 px-3 py-2 font-semibold">Questions</td>
-                  <td className="px-3 py-2">{assessment.question_count}</td>
-                </tr>
-                <tr>
-                  <td className="border-r border-slate-300 px-3 py-2 font-semibold">Total marks</td>
-                  <td className="px-3 py-2">{assessment.total_marks}</td>
-                  <td className="border-l border-r border-slate-300 px-3 py-2 font-semibold">Passing marks</td>
-                  <td className="px-3 py-2">{assessment.passing_marks}</td>
-                </tr>
-                {assessment.max_violations > 0 && (
-                  <tr className="border-t border-slate-300">
-                    <td className="border-r border-slate-300 px-3 py-2 font-semibold">Violation limit</td>
-                    <td className="px-3 py-2" colSpan={3}>{assessment.max_violations}</td>
+            {/* Test Details Table */}
+            <div className="mt-5 overflow-hidden rounded-xl border border-slate-300 dark:border-slate-700 shadow-xs">
+              <table className="w-full text-sm">
+                <tbody>
+                  <tr className="border-b border-slate-300 dark:border-slate-700 bg-[#f3f6fb] dark:bg-slate-800/80">
+                    <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Duration</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-blue-600 dark:text-blue-400">{assessment.duration_minutes} minutes</td>
+                    <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Questions</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-slate-900 dark:text-slate-100">{assessment.question_count}</td>
                   </tr>
-                )}
-                {(assessment.available_from || assessment.available_until) && (
-                  <tr className="border-t border-slate-300 bg-slate-50/50">
-                    <td className="border-r border-slate-300 px-3 py-2 font-semibold">Available window</td>
-                    <td className="px-3 py-2 text-xs" colSpan={3}>
-                      {assessment.available_from ? new Date(assessment.available_from).toLocaleString() : 'Open now'}
-                      {' — '}
-                      {assessment.available_until ? new Date(assessment.available_until).toLocaleString() : 'No end limit'}
-                    </td>
+                  <tr className="bg-white dark:bg-[#111827]">
+                    <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Total marks</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-emerald-600 dark:text-emerald-400">{assessment.total_marks}</td>
+                    <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Passing marks</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-amber-600 dark:text-amber-400">{assessment.passing_marks}</td>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                  {assessment.max_violations > 0 && (
+                    <tr className="border-t border-slate-300 dark:border-slate-700 bg-white dark:bg-[#111827]">
+                      <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Violation limit</td>
+                      <td className="px-3.5 py-2.5 font-extrabold text-rose-600 dark:text-rose-400" colSpan={3}>{assessment.max_violations}</td>
+                    </tr>
+                  )}
+                  {(assessment.available_from || assessment.available_until) && (
+                    <tr className="border-t border-slate-300 dark:border-slate-700 bg-slate-50/80 dark:bg-slate-900/60">
+                      <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Available window</td>
+                      <td className="px-3.5 py-2.5 text-xs font-semibold text-slate-700 dark:text-slate-300" colSpan={3}>
+                        {assessment.available_from ? new Date(assessment.available_from).toLocaleString() : 'Open now'}
+                        {' — '}
+                        {assessment.available_until ? new Date(assessment.available_until).toLocaleString() : 'No end limit'}
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
 
+            {/* Exam-Specific Instructions Box */}
             {assessment.instructions && (
-              <div className="mt-5 border border-amber-400 bg-amber-50 p-4 text-sm text-amber-950">
-                <p className="mb-1 text-xs font-bold uppercase">Exam-specific instructions</p>
-                {assessment.instructions}
+              <div className="mt-5 rounded-xl border border-amber-400/80 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-500/40 p-4 text-sm text-amber-950 dark:text-amber-200 shadow-xs">
+                <p className="mb-1 text-xs font-black uppercase text-amber-900 dark:text-amber-300 tracking-wider">Exam-specific instructions</p>
+                <div className="font-medium leading-relaxed whitespace-pre-line">{assessment.instructions}</div>
               </div>
             )}
 
-            <p className="mt-5 text-xs font-bold uppercase text-slate-700">General instructions</p>
-            <div className="nta-instructions-scroll mt-2">
-              <ol className="list-decimal space-y-2.5 pl-5">
+            {/* General Instructions Section */}
+            <p className="mt-6 text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">General instructions</p>
+            <div className="nta-instructions-scroll mt-2 text-xs sm:text-sm text-slate-800 dark:text-slate-200 leading-relaxed font-medium">
+              <ol className="list-decimal space-y-2.5 pl-5 text-slate-800 dark:text-slate-200">
                 {GENERAL_RULES.map((rule) => (
                   <li key={rule}>{rule}</li>
                 ))}
@@ -224,41 +235,47 @@ export default function AssessmentInstructions() {
             </div>
           </div>
 
-          <aside className="h-fit">
-            <div className="nta-panel p-4">
-              <p className="text-xs font-bold uppercase text-slate-700">Question palette legend</p>
-              <p className="mt-1 text-[11px] text-slate-500">Colours used during the exam</p>
-              <ul className="mt-3 space-y-2">
+          {/* Right Sidebar */}
+          <aside className="h-fit space-y-4">
+            {/* Question Palette Legend Panel */}
+            <div className="nta-panel p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
+              <p className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Question palette legend</p>
+              <p className="mt-0.5 text-[11px] text-slate-500 dark:text-slate-400 font-medium">Colours used during the exam</p>
+              <ul className="mt-3 space-y-2.5">
                 {PALETTE_LEGEND.map((item) => (
-                  <li key={item.key} className="flex items-center gap-2 text-xs text-slate-700">
-                    <span className={`h-5 w-5 shrink-0 ${item.swatch}`} />
-                    {item.label}
+                  <li key={item.key} className="flex items-center gap-2.5 text-xs font-bold text-slate-800 dark:text-slate-200">
+                    <span className={`h-6 w-6 ${item.swatch}`}>
+                      {item.num}
+                    </span>
+                    <span>{item.label}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="nta-panel mt-4 p-4">
-              <p className="text-xs font-bold uppercase text-slate-700">Navigation buttons</p>
-              <ul className="mt-2 space-y-1.5 text-[11px] text-slate-600">
-                <li><strong>Save &amp; Next</strong> — save answer, go to next</li>
-                <li><strong>Save &amp; Mark for Review</strong> — flag and move on</li>
-                <li><strong>Clear Response</strong> — remove selection</li>
-                <li><strong>Submit</strong> — end the test (confirmation shown)</li>
+            {/* Navigation Buttons Panel */}
+            <div className="nta-panel p-4 rounded-xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
+              <p className="text-xs font-black uppercase tracking-wider text-slate-900 dark:text-white">Navigation buttons</p>
+              <ul className="mt-2.5 space-y-2 text-[11px] text-slate-700 dark:text-slate-300 font-medium">
+                <li><strong className="text-slate-900 dark:text-white font-extrabold">Save &amp; Next</strong> — save answer, go to next</li>
+                <li><strong className="text-slate-900 dark:text-white font-extrabold">Save &amp; Mark for Review</strong> — flag and move on</li>
+                <li><strong className="text-slate-900 dark:text-white font-extrabold">Clear Response</strong> — remove selection</li>
+                <li><strong className="text-slate-900 dark:text-white font-extrabold">Submit</strong> — end the test (confirmation shown)</li>
               </ul>
             </div>
           </aside>
         </div>
 
-        <div className="mt-6 border border-slate-400 bg-[#f3f6fb] p-4">
+        {/* Bottom Declaration Box */}
+        <div className="mt-6 rounded-xl border border-slate-300 dark:border-slate-800 bg-[#f3f6fb] dark:bg-[#111827] p-5 shadow-xs">
           <label className="flex cursor-pointer items-start gap-3">
             <input
               type="checkbox"
               checked={agreed}
               onChange={(e) => setAgreed(e.target.checked)}
-              className="mt-0.5 h-4 w-4 border-slate-400 text-[#1a4480] focus:ring-[#1a4480]"
+              className="mt-0.5 h-4 w-4 rounded border-slate-400 dark:border-slate-600 text-[#1a4480] dark:text-blue-600 focus:ring-[#1a4480] accent-blue-600 cursor-pointer"
             />
-            <span className="text-sm text-slate-800">
+            <span className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-200 leading-relaxed">
               I have read and understood the instructions. I agree that in case of not adhering to the
               instructions, I shall be liable to be debarred from this test and/or disciplinary action.
             </span>
@@ -269,11 +286,11 @@ export default function AssessmentInstructions() {
               type="button"
               onClick={onStart}
               disabled={!agreed || starting || isFuture || isExpired}
-              className="nta-btn nta-btn-primary min-w-[200px] disabled:opacity-50"
+              className="nta-btn nta-btn-primary min-w-[200px] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed font-extrabold shadow-md"
             >
               {starting ? 'Starting…' : isFuture ? 'Not started yet' : isExpired ? 'Test Expired' : 'I am ready to begin'}
             </button>
-            <Link to={backTo} className="nta-btn">Cancel</Link>
+            <Link to={backTo} className="nta-btn font-bold">Cancel</Link>
           </div>
         </div>
       </div>
