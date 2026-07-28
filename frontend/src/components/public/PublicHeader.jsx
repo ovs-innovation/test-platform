@@ -5,12 +5,16 @@ import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, NAV_MENUS } from '../../data/edvedumCon
 
 const MAIN_NAV = [
   { to: '/', label: 'Home', exact: true },
-  { to: '/test-series', label: 'Test Series' },
   { label: 'JEE', menuKey: 'jee' },
   { label: 'NEET', menuKey: 'neet' },
   { label: 'Foundation', menuKey: 'foundation' },
   { label: 'Live Test', menuKey: 'livetest' },
+  { to: '/for-schools', label: 'B2B Solutions' },
 ];
+
+
+
+
 
 function SocialIcon({ type }) {
   const cls = 'h-3.5 w-3.5 text-white/80 transition hover:text-white';
@@ -129,8 +133,12 @@ export default function PublicHeader() {
       </Link>
     ));
 
+  const isSchoolsPage = pathname.startsWith('/for-schools') || pathname.startsWith('/schools');
+  const showDashboardLogout = isSchoolsPage ? false : !!user;
+
   return (
-    <header className="sticky top-0 z-50">
+    <header className="sticky top-0 z-40 bg-white">
+
       <div className="bg-[#0a1628] text-white">
         <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-4 py-2 text-[11px] sm:px-6 sm:text-xs">
           <div className="flex flex-wrap items-center gap-4">
@@ -142,7 +150,8 @@ export default function PublicHeader() {
             </a>
           </div>
           <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5">
-            {user ? (
+            {showDashboardLogout ? (
+
               <>
                 <Link
                   to={user.role === 'admin' ? '/admin' : '/dashboard'}
@@ -191,7 +200,8 @@ export default function PublicHeader() {
         </div>
       </div>
 
-      <div className="border-b border-slate-200/80 bg-white/95 backdrop-blur-md">
+      <div className="border-b border-slate-200/80 bg-white">
+
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3 sm:px-6">
           <Link to="/" onClick={() => setOpenMenu(null)}>
             <EdvedumLogo />
@@ -213,15 +223,14 @@ export default function PublicHeader() {
                         e.stopPropagation();
                         setOpenMenu(open ? null : item.menuKey);
                       }}
-                      className={`inline-flex items-center gap-1 text-[13px] font-semibold transition-colors cursor-pointer ${
-                        isFoundation
+                      className={`inline-flex items-center gap-1 text-[13px] font-semibold transition-colors cursor-pointer ${isFoundation
                           ? open
                             ? 'text-slate-400'
                             : 'text-slate-500 hover:text-slate-400'
                           : open
-                          ? 'text-[#0D6EFD]'
-                          : 'text-slate-700 hover:text-[#0D6EFD]'
-                      }`}
+                            ? 'text-[#0D6EFD]'
+                            : 'text-slate-700 hover:text-[#0D6EFD]'
+                        }`}
                     >
                       <span>{item.label}</span>
                       <svg className={`h-3.5 w-3.5 transition-transform duration-200 ${isFoundation ? 'text-slate-400' : 'text-slate-500 group-hover:text-[#0D6EFD]'} ${open ? 'rotate-180 text-[#0D6EFD]' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">

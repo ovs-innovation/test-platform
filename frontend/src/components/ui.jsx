@@ -269,11 +269,11 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
   }
 
   return (
-    <div className="saas-card overflow-hidden bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800">
+    <div className="saas-card overflow-hidden bg-white dark:bg-[#111827] border border-slate-200 dark:border-slate-800 w-full max-w-full min-w-0">
       {/* Table Controls Header */}
       {searchable && (
-        <div className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-[#0f172a]/60">
-          <div className="relative w-full sm:w-72">
+        <div className="flex flex-col gap-3 p-3.5 sm:p-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800/60 bg-slate-50 dark:bg-[#0f172a]/60 min-w-0">
+          <div className="relative w-full sm:w-72 min-w-0">
             <svg className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400 dark:text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
               <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -305,8 +305,9 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
       )}
 
       {/* Table Content */}
-      <div className="overflow-x-auto">
+      <div className="w-full max-w-full min-w-0 overflow-x-auto">
         <table className="w-full text-left text-sm">
+
           <thead className="sticky top-0 z-10 border-b border-slate-200 bg-slate-100/90 text-xs font-extrabold uppercase tracking-wider text-slate-600 backdrop-blur-md dark:border-slate-800/60 dark:bg-[#0b1120]/90 dark:text-slate-400">
             <tr>
               {columns.map((col) => (

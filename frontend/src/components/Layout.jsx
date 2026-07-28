@@ -7,7 +7,15 @@ import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService, adminService } from '../lib/services.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight } from 'lucide-react';
+import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead } from '../lib/schoolStore.js';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School } from 'lucide-react';
+
+
+
+
+
+
+
 
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
@@ -24,6 +32,7 @@ const candidateNav = [
 
 const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
+  { to: '/admin/schools', label: 'Partner Schools', icon: 'bank' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
   { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
   { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
@@ -36,6 +45,7 @@ const adminNav = [
   { to: '/admin/cms', label: 'CMS', icon: 'cms' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
 ];
+
 
 const Icon = ({ name, className = 'h-5 w-5' }) => {
   const paths = {
@@ -111,8 +121,8 @@ export default function Layout({ children }) {
       const now = new Date();
       setCurrentTime(
         now.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) +
-          ' • ' +
-          now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+        ' • ' +
+        now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
       );
     };
     updateClock();
@@ -147,20 +157,27 @@ export default function Layout({ children }) {
   }, []);
 
   const fetchUnread = useCallback(() => {
-    if (user?.id) {
-      notificationService.unreadCount().then((c) => setUnread(c)).catch(() => {});
-    }
-  }, [user]);
+    notificationService.unreadCount().then((c) => {
+      const adminNotifs = getAdminNotifications();
+      const unreadAdmin = adminNotifs.filter((n) => !n.read_at).length;
+      setUnread((c || 0) + unreadAdmin);
+    }).catch(() => {
+      const adminNotifs = getAdminNotifications();
+      const unreadAdmin = adminNotifs.filter((n) => !n.read_at).length;
+      setUnread(unreadAdmin);
+    });
+  }, []);
 
   useEffect(() => {
     fetchUnread();
-    const interval = setInterval(fetchUnread, 10000);
+    const interval = setInterval(fetchUnread, 5000);
     window.addEventListener('notificationStatusChanged', fetchUnread);
     return () => {
       clearInterval(interval);
       window.removeEventListener('notificationStatusChanged', fetchUnread);
     };
   }, [fetchUnread, location.pathname]);
+
 
   const handleLogout = () => {
     logout();
@@ -178,12 +195,11 @@ export default function Layout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 flex transition-colors duration-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 flex transition-colors duration-200 w-full max-w-full overflow-x-hidden">
       {/* Sidebar Navigation */}
       <aside
-        className={`hidden lg:flex flex-col shrink-0 p-4 transition-all duration-300 ease-in-out ${
-          collapsed ? 'w-24' : 'w-[290px]'
-        }`}
+        className={`hidden lg:flex flex-col shrink-0 p-4 transition-all duration-300 ease-in-out ${collapsed ? 'w-24' : 'w-[290px]'
+          }`}
       >
         <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-[24px] border border-slate-200/80 bg-white/90 shadow-xl backdrop-blur-2xl dark:border-slate-800/80 dark:bg-[#111827]/95 transition-all duration-300 relative">
           {/* Floating Toggle Button attached to STICKY container (Locked in place, never shifts on scroll!) */}
@@ -206,9 +222,8 @@ export default function Layout({ children }) {
           </button>
 
           {/* Logo Header */}
-          <div className={`flex h-20 shrink-0 items-center border-b border-slate-200/60 dark:border-slate-800/60 rounded-t-[24px] transition-all duration-300 ${
-            collapsed ? 'justify-center px-2' : 'justify-between px-5'
-          }`}>
+          <div className={`flex h-20 shrink-0 items-center border-b border-slate-200/60 dark:border-slate-800/60 rounded-t-[24px] transition-all duration-300 ${collapsed ? 'justify-center px-2' : 'justify-between px-5'
+            }`}>
             <Link to="/" className="flex items-center gap-3 overflow-hidden transition-all duration-300 mx-auto" title="EDVEDUM Academy">
               <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-9 w-auto shrink-0 object-contain drop-shadow-sm" />
               {!collapsed && (
@@ -227,9 +242,8 @@ export default function Layout({ children }) {
           </div>
 
           {/* Navigation Items (The ONLY scrollable section, centered 44px icons in collapsed mode) */}
-          <nav className={`flex-1 overflow-y-auto pt-5 pb-4 scrollbar-thin transition-all duration-300 ${
-            collapsed ? 'px-2 space-y-3 flex flex-col items-center' : 'px-3 space-y-2'
-          }`}>
+          <nav className={`flex-1 overflow-y-auto pt-5 pb-4 scrollbar-thin transition-all duration-300 ${collapsed ? 'px-2 space-y-3 flex flex-col items-center' : 'px-3 space-y-2'
+            }`}>
             {nav.map((item) => {
               const isActive = checkIsActive(item.to, location.pathname);
               return (
@@ -237,21 +251,18 @@ export default function Layout({ children }) {
                   key={item.to}
                   to={item.to}
                   end={item.to === '/admin' || item.to === '/dashboard'}
-                  className={`relative group flex items-center transition-all duration-200 ${
-                    collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px]'
-                  } ${
-                    isActive
+                  className={`relative group flex items-center transition-all duration-200 ${collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px]'
+                    } ${isActive
                       ? collapsed
                         ? 'text-white'
                         : 'saas-active-pill shadow-md shadow-blue-500/20'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5'
-                  }`}
+                    }`}
                 >
-                  <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${
-                    collapsed && isActive
+                  <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${collapsed && isActive
                       ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
                       : 'group-hover:scale-105'
-                  }`}>
+                    }`}>
                     <Icon name={item.icon} className="h-5 w-5 shrink-0" />
                   </div>
 
@@ -318,9 +329,8 @@ export default function Layout({ children }) {
                     to={item.to}
                     end={item.to === '/admin' || item.to === '/dashboard'}
                     onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-150 ${
-                      isActive ? 'saas-active-pill shadow-md shadow-blue-500/20' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                    }`}
+                    className={`flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-150 ${isActive ? 'saas-active-pill shadow-md shadow-blue-500/20' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                      }`}
                   >
                     <Icon name={item.icon} />
                     <span>{item.label}</span>
@@ -333,7 +343,7 @@ export default function Layout({ children }) {
       )}
 
       {/* Main Layout Area */}
-      <div className="flex min-w-0 flex-1 flex-col">
+      <div className="flex min-w-0 flex-1 flex-col w-full max-w-full overflow-x-hidden">
         {/* Top Navbar */}
         <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white/80 px-4 sm:px-6 lg:px-8 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#111827]/80 transition-colors duration-200">
           {/* Left: Mobile Toggle & Breadcrumb */}
@@ -470,7 +480,7 @@ export default function Layout({ children }) {
 
 
         {/* Main Content Viewport */}
-        <main className="w-full max-w-7xl mx-auto flex-1 px-4 py-5 sm:px-6 lg:px-8 lg:py-8 pb-20 min-w-0">{children}</main>
+        <main className="w-full max-w-7xl mx-auto flex-1 px-3 py-4 sm:px-6 lg:px-8 sm:py-6 lg:py-8 pb-20 min-w-0 overflow-x-hidden">{children}</main>
       </div>
 
       {/* Floating Quick Action Button */}
@@ -559,7 +569,18 @@ function getNotificationConfig(type = '', title = '') {
   const lowerType = (type || '').toLowerCase();
   const lowerTitle = (title || '').toLowerCase();
 
+  if (lowerType === 'b2b_demo_request' || lowerTitle.includes('b2b') || lowerTitle.includes('school demo') || lowerTitle.includes('institution')) {
+    return {
+      IconComponent: Flag,
+      iconClass: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
+      borderClass: 'border-l-4 border-l-cyan-500 bg-cyan-500/5 dark:bg-cyan-950/20',
+      badge: 'B2B Demo',
+      target: '/admin/schools'
+    };
+  }
+
   if (lowerType === 'violation_submitted' || lowerTitle.includes('violation') || lowerTitle.includes('proctoring') || lowerTitle.includes('urgent')) {
+
     return {
       IconComponent: ShieldAlert,
       iconClass: 'text-rose-500 bg-rose-500/10 border-rose-500/20',
@@ -604,6 +625,15 @@ function getNotificationConfig(type = '', title = '') {
       target: '/admin/question-bank'
     };
   }
+  if (lowerType === 'b2b_demo_request' || lowerTitle.includes('b2b') || lowerTitle.includes('demo') || lowerTitle.includes('school')) {
+    return {
+      IconComponent: School,
+      iconClass: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
+      borderClass: 'border-l-4 border-l-purple-500',
+      badge: 'B2B Demo',
+      target: '/admin/schools'
+    };
+  }
   if (lowerType === 'assessment_submitted' || lowerTitle.includes('assessment') || lowerTitle.includes('submitted')) {
     return {
       IconComponent: CheckCircle2,
@@ -634,9 +664,13 @@ function NotificationPanelDrawer({ onClose }) {
     setLoading(true);
     try {
       const list = await notificationService.list();
-      setNotifications(list || []);
+      const adminNotifs = getAdminNotifications();
+      // Combine B2B demo notifications with mock list
+      const combined = [...adminNotifs, ...(list || [])];
+      setNotifications(combined);
     } catch {
-      setNotifications([]);
+      const adminNotifs = getAdminNotifications();
+      setNotifications(adminNotifs || []);
     } finally {
       setLoading(false);
     }
@@ -644,39 +678,40 @@ function NotificationPanelDrawer({ onClose }) {
 
   useEffect(() => {
     loadNotifications();
+    window.addEventListener('notificationStatusChanged', loadNotifications);
+    return () => window.removeEventListener('notificationStatusChanged', loadNotifications);
   }, []);
+
 
   const handleMarkAllRead = async () => {
     setMarking(true);
     try {
       await notificationService.markAllRead();
-      setNotifications((prev) => prev.map((n) => ({ ...n, read_at: new Date().toISOString() })));
-      window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
     } catch {
-      // Fallback
-    } finally {
-      setMarking(false);
+      // Fallback API failure
     }
+    markAllAdminNotificationsRead();
+    setNotifications((prev) => prev.map((n) => ({ ...n, read_at: new Date().toISOString() })));
+    setMarking(false);
   };
 
   const handleItemClick = async (n) => {
     if (!n.read_at) {
       try {
         await notificationService.markRead(n.id);
-        setNotifications((prev) => prev.map((item) => (item.id === n.id ? { ...item, read_at: new Date().toISOString() } : item)));
-        window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
       } catch {
-        // Fallback
+        // Fallback for local notifications
       }
+      markAdminNotificationRead(n.id);
+      setNotifications((prev) => prev.map((item) => (item.id === n.id ? { ...item, read_at: new Date().toISOString() } : item)));
     }
     onClose();
     const config = getNotificationConfig(n.type, n.title);
-    if (user?.role === 'admin') {
-      navigate(config.target);
-    } else {
-      navigate('/notifications');
-    }
+    const targetUrl = n.target || config.target || (user?.role === 'admin' ? '/admin' : '/dashboard');
+    navigate(targetUrl);
   };
+
+
 
   const unreadCount = notifications.filter((n) => !n.read_at).length;
 
@@ -735,11 +770,10 @@ function NotificationPanelDrawer({ onClose }) {
                 <div
                   key={n.id}
                   onClick={() => handleItemClick(n)}
-                  className={`p-3.5 rounded-2xl border transition hover:shadow-xs cursor-pointer ${borderClass} ${
-                    isUnread
+                  className={`p-3.5 rounded-2xl border transition hover:shadow-xs cursor-pointer ${borderClass} ${isUnread
                       ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/80'
                       : 'bg-slate-50/80 border-slate-200 dark:bg-slate-800/40 dark:border-slate-800'
-                  }`}
+                    }`}
                 >
                   <div className="flex items-start gap-3">
                     <div className={`p-2 rounded-xl border shrink-0 mt-0.5 ${iconClass}`}>
