@@ -465,10 +465,10 @@ export default function SchoolsB2B() {
                         {/* Course */}
                         <td className="py-3.5 px-4">
                           <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10px] font-bold border ${student.course.includes('JEE')
-                              ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
-                              : student.course.includes('NEET')
-                                ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
-                                : 'bg-purple-500/10 text-purple-400 border-purple-500/20'
+                            ? 'bg-blue-500/10 text-blue-400 border-blue-500/20'
+                            : student.course.includes('NEET')
+                              ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+                              : 'bg-purple-500/10 text-purple-400 border-purple-500/20'
                             }`}>
                             {student.course}
                           </span>
@@ -511,8 +511,8 @@ export default function SchoolsB2B() {
                         {/* Status */}
                         <td className="py-3.5 px-4">
                           <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold border ${student.status === 'Active'
-                              ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                              : 'bg-slate-800 text-slate-400 border-slate-700'
+                            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            : 'bg-slate-800 text-slate-400 border-slate-700'
                             }`}>
                             <span className={`h-1.5 w-1.5 rounded-full ${student.status === 'Active' ? 'bg-emerald-400 animate-pulse' : 'bg-slate-500'}`} />
                             {student.status}

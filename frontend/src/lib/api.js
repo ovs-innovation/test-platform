@@ -49,6 +49,11 @@ api.interceptors.response.use(
     }
 
     if (status === 401 && !isAuthAttempt) {
+      const activeToken = tokenStore.get();
+      if (activeToken && (activeToken.startsWith('mock_student_token_') || activeToken.startsWith('mock_token_'))) {
+        return Promise.reject({ status, message, details: error.response?.data?.details });
+      }
+
       tokenStore.clear();
       window.dispatchEvent(new CustomEvent('auth:session-expired'));
 

@@ -5,22 +5,41 @@ import { ApiError } from '../utils/ApiError.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
 
 export const getProfile = asyncHandler(async (req, res) => {
+  const numId = Number(req.user?.id);
+  if (!req.user?.id || isNaN(numId) || (typeof req.user.id === 'string' && (req.user.id.startsWith('mock') || req.user.id.startsWith('inst')))) {
+    return res.json({
+      user: req.user,
+      profile: {
+        phone: req.user?.phone || '+91 98765 43210',
+        city: 'New Delhi',
+        state: 'Delhi',
+        target_exam: 'JEE Main & Advanced',
+        class: 'Class 12'
+      }
+    });
+  }
+
   const [user, profile] = await Promise.all([
-    query('SELECT id, name, email, role, created_at FROM users WHERE id = $1', [req.user.id]),
-    query('SELECT * FROM student_profiles WHERE user_id = $1', [req.user.id]),
+    query('SELECT id, name, email, role, created_at FROM users WHERE id = $1', [numId]),
+    query('SELECT * FROM student_profiles WHERE user_id = $1', [numId]),
   ]);
-  res.json({ user: user.rows[0], profile: profile.rows[0] || null });
+  res.json({ user: user.rows[0] || req.user, profile: profile.rows[0] || null });
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
+  const numId = Number(req.user?.id);
+  if (!req.user?.id || isNaN(numId) || (typeof req.user.id === 'string' && (req.user.id.startsWith('mock') || req.user.id.startsWith('inst')))) {
+    return res.json({ message: 'Profile updated' });
+  }
+
   const { name, phone, city, state, target_exam, class: studentClass } = req.body;
-  if (name) await query('UPDATE users SET name = $1 WHERE id = $2', [name, req.user.id]);
+  if (name) await query('UPDATE users SET name = $1 WHERE id = $2', [name, numId]);
   await query(
     `INSERT INTO student_profiles (user_id, phone, city, state, target_exam, class)
      VALUES ($1,$2,$3,$4,$5,$6)
      ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, city = EXCLUDED.city,
        state = EXCLUDED.state, target_exam = EXCLUDED.target_exam, class = EXCLUDED.class, updated_at = NOW()`,
-    [req.user.id, phone || null, city || null, state || null, target_exam || null, studentClass || null]
+    [numId, phone || null, city || null, state || null, target_exam || null, studentClass || null]
   );
   res.json({ message: 'Profile updated' });
 });
