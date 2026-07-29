@@ -42,10 +42,30 @@ export default function Schools() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
   const [selectedSchoolInvoice, setSelectedSchoolInvoice] = useState(null);
+  const [invoiceLicenses, setInvoiceLicenses] = useState(200);
+  const [invoiceCustomPrice, setInvoiceCustomPrice] = useState(1999);
+  const [couponCodeInput, setCouponCodeInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
   const [leadNotes, setLeadNotes] = useState({});
   const [newNote, setNewNote] = useState('');
   const [showPasswords, setShowPasswords] = useState({});
   const [copiedId, setCopiedId] = useState(null);
+
+  // Sync invoice defaults when modal opens
+  useEffect(() => {
+    if (selectedSchoolInvoice) {
+      const defaultLic = selectedSchoolInvoice.totalLicenses || 200;
+      setInvoiceLicenses(defaultLic);
+      // Auto apply volume tier pricing if custom rate is standard
+      let defaultRate = 1999;
+      if (defaultLic >= 1000) defaultRate = 999;
+      else if (defaultLic >= 500) defaultRate = 1199;
+      else if (defaultLic >= 200) defaultRate = 1499;
+      setInvoiceCustomPrice(selectedSchoolInvoice.customPrice || defaultRate);
+      setAppliedCoupon(null);
+      setCouponCodeInput('');
+    }
+  }, [selectedSchoolInvoice]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -58,6 +78,7 @@ export default function Schools() {
       document.body.style.overflow = '';
     };
   }, [showAddModal, selectedLead, selectedSchoolInvoice]);
+
 
 
 
@@ -387,6 +408,7 @@ export default function Schools() {
                 <th className="py-3.5 px-4">Admin Email</th>
                 <th className="py-3.5 px-4">Password</th>
                 <th className="py-3.5 px-4">License Capacity</th>
+                <th className="py-3.5 px-4">Payment Status</th>
                 <th className="py-3.5 px-4 text-right">Actions</th>
               </tr>
             </thead>
@@ -483,6 +505,29 @@ export default function Schools() {
                         </div>
                       </div>
                     </td>
+
+                    {/* Payment Status */}
+                    <td className="py-4 px-4">
+                      <select
+                        value={school.paymentStatus || 'Paid'}
+                        onChange={(e) => {
+                          const updated = schools.map((s) => s.id === school.id ? { ...s, paymentStatus: e.target.value } : s);
+                          setSchools(updated);
+                        }}
+                        className={`rounded-lg border px-2 py-1 text-[11px] font-extrabold cursor-pointer focus:outline-none ${
+                          (school.paymentStatus || 'Paid') === 'Paid'
+                            ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
+                            : (school.paymentStatus || 'Paid') === 'Pending'
+                            ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/30'
+                            : 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/20 dark:text-purple-300 dark:border-purple-500/30'
+                        }`}
+                      >
+                        <option value="Paid">🟢 Paid</option>
+                        <option value="Pending">🟡 Pending</option>
+                        <option value="Partial">🟣 Partial</option>
+                      </select>
+                    </td>
+
 
                     {/* Actions */}
                     <td className="py-4 px-4 text-right">
@@ -876,19 +921,34 @@ export default function Schools() {
               </button>
             </div>
 
-            <div className="space-y-3 text-xs">
+            <div className="space-y-4 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
                 <div className="flex justify-between font-mono"><span className="text-slate-400">Invoice No:</span> <strong className="text-slate-900 dark:text-white">EDV-B2B-2026-089</strong></div>
                 <div className="flex justify-between font-mono"><span className="text-slate-400">School Code:</span> <strong className="text-blue-600">{selectedSchoolInvoice.schoolId}</strong></div>
                 <div className="flex justify-between"><span className="text-slate-400">Target Package:</span> <strong className="text-slate-900 dark:text-white">{selectedSchoolInvoice.packageType || 'NEET-UG 2027 AIETS (1-Year)'}</strong></div>
               </div>
 
+              {/* Volume Pricing & Rate Controller */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">Total Student Licenses</label>
+                  <div className="flex justify-between items-center mb-1">
+                    <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300">Total Licenses</label>
+                    <span className="text-[10px] text-cyan-600 dark:text-cyan-400 font-extrabold">
+                      {invoiceLicenses >= 1000 ? '50% Tier' : invoiceLicenses >= 500 ? '40% Tier' : invoiceLicenses >= 200 ? '25% Tier' : 'Standard'}
+                    </span>
+                  </div>
                   <input
                     type="number"
-                    defaultValue={selectedSchoolInvoice.totalLicenses || 200}
+                    value={invoiceLicenses}
+                    onChange={(e) => {
+                      const count = parseInt(e.target.value) || 0;
+                      setInvoiceLicenses(count);
+                      // Auto update rate based on volume tiers if not custom edited
+                      if (count >= 1000) setInvoiceCustomPrice(999);
+                      else if (count >= 500) setInvoiceCustomPrice(1199);
+                      else if (count >= 200) setInvoiceCustomPrice(1499);
+                      else setInvoiceCustomPrice(1999);
+                    }}
                     className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-2 font-bold text-slate-900 dark:text-white"
                   />
                 </div>
@@ -896,22 +956,77 @@ export default function Schools() {
                   <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">Custom Rate / Student (₹)</label>
                   <input
                     type="number"
-                    defaultValue={selectedSchoolInvoice.customPrice || 1999}
+                    value={invoiceCustomPrice}
+                    onChange={(e) => setInvoiceCustomPrice(parseInt(e.target.value) || 0)}
                     className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-2 font-bold text-emerald-600 dark:text-emerald-400"
                   />
                 </div>
               </div>
 
-              {/* GST Calculation Table */}
-              <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 space-y-1.5 font-mono text-xs">
-                <div className="flex justify-between"><span className="text-slate-500">Subtotal (200 x ₹1,999):</span> <span>₹3,99,800.00</span></div>
-                <div className="flex justify-between"><span className="text-slate-500">GST (18% HSN 9992):</span> <span>₹71,964.00</span></div>
-                <div className="flex justify-between text-sm font-black pt-1.5 border-t border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
-                  <span>Grand Total (Incl. GST):</span>
-                  <span className="text-emerald-600 dark:text-emerald-400">₹4,71,764.00</span>
+              {/* Promotional Offer / Coupon Code Engine */}
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300">Apply Promo / Coupon Code</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    placeholder="Try EDVEDUM20 or EARLYBIRD15..."
+                    value={couponCodeInput}
+                    onChange={(e) => setCouponCodeInput(e.target.value.toUpperCase())}
+                    className="flex-1 uppercase font-mono rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-white focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const code = couponCodeInput.trim().toUpperCase();
+                      if (code === 'EDVEDUM20') {
+                        setAppliedCoupon({ code: 'EDVEDUM20', type: 'percent', value: 20, label: '20% Special B2B Discount' });
+                      } else if (code === 'EARLYBIRD15') {
+                        setAppliedCoupon({ code: 'EARLYBIRD15', type: 'percent', value: 15, label: '15% Early Bird Offer' });
+                      } else if (code === 'SCHOOL5000') {
+                        setAppliedCoupon({ code: 'SCHOOL5000', type: 'flat', value: 5000, label: '₹5,000 Flat Grant Discount' });
+                      } else {
+                        alert('Invalid Coupon Code! Try EDVEDUM20, EARLYBIRD15, or SCHOOL5000');
+                      }
+                    }}
+                    className="rounded-xl bg-slate-800 dark:bg-slate-700 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-slate-700 cursor-pointer"
+                  >
+                    Apply Code
+                  </button>
                 </div>
+                {appliedCoupon && (
+                  <div className="flex items-center justify-between text-[11px] p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold">
+                    <span>🎟️ Coupon Applied: {appliedCoupon.label} ({appliedCoupon.code})</span>
+                    <button onClick={() => setAppliedCoupon(null)} className="text-rose-400 hover:underline">Remove</button>
+                  </div>
+                )}
               </div>
+
+              {/* Dynamic GST & Billing Calculation Table */}
+              {(() => {
+                const subtotal = invoiceLicenses * invoiceCustomPrice;
+                const discount = appliedCoupon
+                  ? (appliedCoupon.type === 'percent' ? Math.round(subtotal * (appliedCoupon.value / 100)) : appliedCoupon.value)
+                  : 0;
+                const netSubtotal = Math.max(0, subtotal - discount);
+                const gst = Math.round(netSubtotal * 0.18);
+                const grandTotal = netSubtotal + gst;
+
+                return (
+                  <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 space-y-1.5 font-mono text-xs">
+                    <div className="flex justify-between"><span className="text-slate-500">Subtotal ({invoiceLicenses} x ₹{invoiceCustomPrice.toLocaleString()}):</span> <span>₹{subtotal.toLocaleString()}.00</span></div>
+                    {discount > 0 && (
+                      <div className="flex justify-between text-emerald-500"><span className="text-emerald-500 font-bold">Coupon Discount ({appliedCoupon?.code}):</span> <span>- ₹{discount.toLocaleString()}.00</span></div>
+                    )}
+                    <div className="flex justify-between"><span className="text-slate-500">GST (18% HSN 9992):</span> <span>₹{gst.toLocaleString()}.00</span></div>
+                    <div className="flex justify-between text-sm font-black pt-1.5 border-t border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
+                      <span>Grand Total Payable:</span>
+                      <span className="text-emerald-600 dark:text-emerald-400">₹{grandTotal.toLocaleString()}.00</span>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
+
 
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
               <button

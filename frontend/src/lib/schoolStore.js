@@ -265,3 +265,147 @@ export function markAllAdminNotificationsRead() {
   return updated;
 }
 
+// ================= STUDENT ACCESS & AUTO-ASSIGNMENT =================
+
+export function getAssignedEbooksForCourse(courseName = '') {
+  const isNeet = (courseName || '').toLowerCase().includes('neet');
+
+  return [
+    {
+      id: 'eb-101',
+      title: isNeet ? 'NEET 2026 Biology Complete Notes & NCERT Diagrams' : 'JEE Advanced Physics Mechanics & Electrodynamics Handbook',
+      author: 'Edvedum Academic Faculty',
+      category: 'Formula & Reference Book',
+      pages: 240,
+      format: 'PDF eBook',
+      size: '14.8 MB',
+      downloadUrl: '#',
+      assignedBadge: 'Auto-Assigned by Institution',
+    },
+    {
+      id: 'eb-102',
+      title: 'Organic & Physical Chemistry Solved PYQ Bank (2015-2025)',
+      author: 'Dr. Ramesh Sharma',
+      category: 'Question Bank & Solutions',
+      pages: 310,
+      format: 'PDF eBook',
+      size: '18.2 MB',
+      downloadUrl: '#',
+      assignedBadge: 'Auto-Assigned by Institution',
+    },
+    {
+      id: 'eb-103',
+      title: isNeet ? 'AIETS Botany & Zoology Speed Drills Handbook' : 'Mathematics Calculus & Vectors Shortcuts',
+      author: 'Senior HODs',
+      category: 'Revision Guide',
+      pages: 185,
+      format: 'PDF eBook',
+      size: '9.4 MB',
+      downloadUrl: '#',
+      assignedBadge: 'Auto-Assigned by Institution',
+    },
+  ];
+}
+
+export function getAssignedTestSeriesForCourse(courseName = '') {
+  return [
+    {
+      id: 'ts-101',
+      title: 'AIETS 2026 National Level CBT Test Series',
+      totalTests: 39,
+      type: 'NTA Pattern Full CBT',
+      validity: 'June 2026',
+      status: 'Active License',
+    },
+    {
+      id: 'ts-102',
+      title: 'Part & Chapter-wise Diagnostic Speed Mocks',
+      totalTests: 24,
+      type: 'Chapter Speed Drills',
+      validity: 'June 2026',
+      status: 'Active License',
+    },
+  ];
+}
+
+export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email }) {
+  const schools = getPartnerSchools();
+
+  let matchedSchool = null;
+  let matchedStudent = null;
+
+  const codeInput = (instituteCode || '').trim().toLowerCase();
+  const enrollInput = (enrollmentId || '').trim().toLowerCase();
+  const mobileInput = (mobile || '').replace(/\D/g, '');
+  const emailInput = (email || '').trim().toLowerCase();
+
+  for (const school of schools) {
+    const sCode = (school.schoolId || '').toLowerCase();
+    const sId = (school.id || '').toLowerCase();
+
+    for (const st of school.students) {
+      const stRoll = (st.rollNo || '').toLowerCase();
+      const stId = (st.id || '').toLowerCase();
+      const stName = (st.name || '').toLowerCase();
+      const stMobile = (st.phone || '9876543210').replace(/\D/g, '');
+
+      // Match Institute Code + Enrollment ID
+      const matchInst = !codeInput || sCode.includes(codeInput) || sId.includes(codeInput);
+      const matchEnroll = enrollInput && (stRoll.includes(enrollInput) || stId.includes(enrollInput) || stName.includes(enrollInput));
+
+      // Match Mobile
+      const matchMobile = mobileInput && (stMobile.endsWith(mobileInput) || mobileInput.endsWith(stMobile));
+
+      // Match Email
+      const matchEmail = emailInput && (stName.replace(/\s+/g, '').includes(emailInput.split('@')[0]) || emailInput.includes(matchedSchool?.id || 'dps'));
+
+      if ((matchInst && matchEnroll) || matchMobile || matchEmail) {
+        matchedSchool = school;
+        matchedStudent = st;
+        break;
+      }
+    }
+    if (matchedStudent) break;
+  }
+
+  // Fallback to Aarav Sharma if no direct match found
+  if (!matchedStudent) {
+    matchedSchool = schools[0];
+    matchedStudent = schools[0].students[0];
+  }
+
+  const assignedEbooks = getAssignedEbooksForCourse(matchedStudent.course);
+  const assignedTestSeries = getAssignedTestSeriesForCourse(matchedStudent.course);
+
+  return {
+    user: {
+      id: matchedStudent.id,
+      name: matchedStudent.name,
+      email: `${matchedStudent.id.toLowerCase()}@${matchedSchool.id}.edu.in`,
+      role: 'candidate',
+      enrollmentId: matchedStudent.rollNo,
+      phone: matchedStudent.phone || '+91 98765 43210',
+      institution: {
+        id: matchedSchool.id,
+        code: matchedSchool.schoolId,
+        name: matchedSchool.name,
+        badge: matchedSchool.logoBadge,
+        accentColor: matchedSchool.accentColor,
+      },
+      batch: `Batch 2026 • ${matchedStudent.course}`,
+      assignedTestSeries,
+      assignedEbooks,
+      studentStats: {
+        progress: matchedStudent.progress,
+        testsCount: matchedStudent.testsCount,
+        avgScore: matchedStudent.avgScore,
+        physics: matchedStudent.physics,
+        chemistry: matchedStudent.chemistry,
+        math: matchedStudent.math,
+        biology: matchedStudent.biology,
+      },
+    },
+  };
+}
+
+

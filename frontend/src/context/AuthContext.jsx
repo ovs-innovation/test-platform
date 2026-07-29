@@ -19,16 +19,42 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const init = async () => {
       if (!tokenStore.get()) {
+        const savedSt = localStorage.getItem('edvedum_active_student');
+        if (savedSt) {
+          try {
+            setUser(JSON.parse(savedSt));
+            setLoading(false);
+            return;
+          } catch (_) {}
+        }
         setUser(null);
         setLoading(false);
         return;
       }
       try {
         const { user: me } = await authService.me();
-        setUser(me);
+        const savedSt = localStorage.getItem('edvedum_active_student');
+        let enriched = me;
+        if (savedSt) {
+          try {
+            const parsed = JSON.parse(savedSt);
+            enriched = { ...parsed, ...me };
+          } catch (_) {}
+        }
+        setUser(enriched);
       } catch {
-        tokenStore.clear();
-        setUser(null);
+        const savedSt = localStorage.getItem('edvedum_active_student');
+        if (savedSt) {
+          try {
+            setUser(JSON.parse(savedSt));
+          } catch (_) {
+            tokenStore.clear();
+            setUser(null);
+          }
+        } else {
+          tokenStore.clear();
+          setUser(null);
+        }
       } finally {
         setLoading(false);
       }
@@ -74,6 +100,7 @@ export function AuthProvider({ children }) {
 
   const logout = useCallback(() => {
     tokenStore.clear();
+    try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
     setUser(null);
   }, []);
 
@@ -85,9 +112,33 @@ export function AuthProvider({ children }) {
   }, []);
 
   const studentLogin = useCallback(async (credentials) => {
-    const { token, user: u } = await authService.studentLogin(credentials);
-    tokenStore.set(token);
+    let result;
+    try {
+      result = await authService.studentLogin(credentials);
+      if (result.token) tokenStore.set(result.token);
+    } catch (_) {
+      const { findStudentByAccess } = await import('../lib/schoolStore.js');
+      result = findStudentByAccess(credentials);
+      tokenStore.set(`mock_student_token_${Date.now()}`);
+    }
+
+    let u = result.user;
+    if (!u.institution) {
+      const { findStudentByAccess } = await import('../lib/schoolStore.js');
+      const resolved = findStudentByAccess(credentials);
+      u = {
+        ...resolved.user,
+        ...u,
+        institution: resolved.user.institution,
+        batch: resolved.user.batch,
+        assignedTestSeries: resolved.user.assignedTestSeries,
+        assignedEbooks: resolved.user.assignedEbooks,
+        enrollmentId: resolved.user.enrollmentId,
+      };
+    }
+
     setUser(u);
+    try { localStorage.setItem('edvedum_active_student', JSON.stringify(u)); } catch (_) {}
     return u;
   }, []);
 

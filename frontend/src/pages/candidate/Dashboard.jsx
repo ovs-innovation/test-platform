@@ -17,7 +17,11 @@ import {
   Compass,
   Zap,
   BarChart3,
-  Brain
+  Brain,
+  Building2,
+  Download,
+  FileText,
+  School
 } from 'lucide-react';
 
 export default function CandidateDashboard() {
@@ -88,21 +92,28 @@ export default function CandidateDashboard() {
 
   return (
     <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      {/* 1. COMPACT 35% REDUCED HIGH-IMPACT HERO BANNER */}
+      {/* 1. INSTITUTIONAL STUDENT ACCESS HERO BANNER */}
       <div className="relative overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800/90 bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 dark:from-[#010d1f] dark:via-[#081b38] dark:to-[#112a52] p-5 sm:p-6 text-slate-900 dark:text-white shadow-2xs">
         {/* Ambient Glowing Orbs */}
         <div className="pointer-events-none absolute -right-12 -top-12 h-64 w-64 rounded-full bg-blue-400/10 dark:bg-cyan-400/15 blur-3xl" aria-hidden="true" />
         <div className="pointer-events-none absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-indigo-500/10 dark:bg-blue-500/20 blur-3xl" aria-hidden="true" />
 
         <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="space-y-2 max-w-2xl">
+          <div className="space-y-3 max-w-2xl">
+            {/* Auto-Assigned Institution & Batch Badge */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-blue-500/20 bg-blue-500/10 px-3 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-blue-700 dark:text-cyan-300 backdrop-blur-md">
-                <span className="h-1.5 w-1.5 rounded-full bg-blue-600 dark:bg-cyan-400 animate-pulse" />
-                NTA CBT Preparation Portal
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 backdrop-blur-md">
+                <Building2 className="h-3.5 w-3.5 text-emerald-500" />
+                <span>{user?.institution?.name || 'Delhi Public School (R.K. Puram)'}</span>
               </span>
-              <span className="inline-flex items-center gap-1 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 backdrop-blur-md">
-                🎯 Target Exam 2026
+
+              <span className="inline-flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-blue-700 dark:text-cyan-300 backdrop-blur-md">
+                <School className="h-3.5 w-3.5" />
+                <span>{user?.batch || 'Batch 2026 • JEE Main & Advanced'}</span>
+              </span>
+
+              <span className="inline-flex items-center gap-1 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-extrabold font-mono text-purple-700 dark:text-purple-300 backdrop-blur-md">
+                ID: {user?.enrollmentId || '2026-DPS-01'}
               </span>
             </div>
 
@@ -111,7 +122,7 @@ export default function CandidateDashboard() {
             </h1>
 
             <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              Keep up your test discipline. Practice full-length CBT mock tests regularly to boost your All India Percentile!
+              Your institution has automatically assigned your <strong>AIETS Test Series</strong> and <strong>Digital eBooks</strong>. Practice full-length CBT mock tests to maximize your All India Rank!
             </p>
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
@@ -407,6 +418,58 @@ export default function CandidateDashboard() {
             ))}
           </div>
         )}
+      </section>
+
+      {/* 6.5 AUTO-ASSIGNED EBOOKS LIBRARY */}
+      <section className="space-y-3">
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+              <FileText className="h-4 w-4 text-emerald-500" />
+              <span>Assigned eBooks & Digital Study Material</span>
+              <span className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400">
+                Auto-Assigned
+              </span>
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">
+              Formula reference guides, chapter revision notes, and solved PYQ eBooks assigned to your batch.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          {(user?.assignedEbooks || [
+            { id: 'eb1', title: 'Physics Formula Book & Mechanics Cheat-Sheet', category: 'Formula Guide', size: '14.8 MB', pages: 240 },
+            { id: 'eb2', title: 'Organic & Physical Chemistry Solved PYQs (2015-2025)', category: 'Question Bank', size: '18.2 MB', pages: 310 },
+            { id: 'eb3', title: 'AIETS Mathematics & Speed Drills Handbook', category: 'Revision Guide', size: '9.4 MB', pages: 185 }
+          ]).map((eb) => (
+            <div key={eb.id} className="p-4 rounded-xl bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 flex flex-col justify-between hover:border-cyan-500/40 transition">
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                    {eb.category || 'eBook'}
+                  </span>
+                  <span className="text-[10px] text-slate-400 font-mono">{eb.size || 'PDF'}</span>
+                </div>
+                <h3 className="text-xs font-bold text-slate-900 dark:text-white leading-snug line-clamp-2">{eb.title}</h3>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400">Assigned by {user?.institution?.name || 'Institution'}</p>
+              </div>
+
+              <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-center justify-between">
+                <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                  <CheckCircle2 className="h-3 w-3" /> Ready to Read
+                </span>
+                <button
+                  onClick={() => alert(`Downloading ${eb.title} PDF eBook for offline study...`)}
+                  className="inline-flex items-center gap-1 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-300 border border-cyan-500/30 px-2.5 py-1 text-xs font-bold transition cursor-pointer"
+                >
+                  <Download className="h-3 w-3" />
+                  <span>Download</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* 7. RECENT RESULTS & MILESTONE ACTIVITY */}

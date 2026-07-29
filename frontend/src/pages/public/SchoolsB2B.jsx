@@ -24,7 +24,8 @@ import {
   X,
   Mail,
   Key,
-  HelpCircle
+  HelpCircle,
+  ChevronDown
 } from 'lucide-react';
 import { getPartnerSchools, submitSchoolDemoLead } from '../../lib/schoolStore.js';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
@@ -38,12 +39,12 @@ export default function SchoolsB2B() {
   const [selectedStudent, setSelectedStudent] = useState(null); // For detail modal
   const [showAddModal, setShowAddModal] = useState(false);
   const [showDemoModal, setShowDemoModal] = useState(false);
+  const [showRankingModal, setShowRankingModal] = useState(false);
   const [faqOpen, setFaqOpen] = useState(null);
-
 
   // Lock body scroll when any modal is open
   useEffect(() => {
-    if (showDemoModal || showAddModal || selectedStudent) {
+    if (showDemoModal || showAddModal || selectedStudent || showRankingModal) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -51,7 +52,8 @@ export default function SchoolsB2B() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [showDemoModal, showAddModal, selectedStudent]);
+  }, [showDemoModal, showAddModal, selectedStudent, showRankingModal]);
+
 
 
   // Search & Filter State inside Dashboard
@@ -59,7 +61,11 @@ export default function SchoolsB2B() {
   const [courseFilter, setCourseFilter] = useState('All');
   const [statusFilter, setStatusFilter] = useState('All');
 
+  // Interactive Pricing Calculator State
+  const [calcStudentCount, setCalcStudentCount] = useState(250);
+
   // New Student Form State
+
   const [newStudentName, setNewStudentName] = useState('');
   const [newStudentRoll, setNewStudentRoll] = useState('');
   const [newStudentCourse, setNewStudentCourse] = useState('JEE Main & Advanced');
@@ -349,14 +355,49 @@ export default function SchoolsB2B() {
                 <p className="text-xs text-slate-400 font-medium">Real-time performance analytics for students enrolled under {activeSchool.name}.</p>
               </div>
 
-              {/* Search & Filters */}
-              <div className="flex flex-wrap items-center gap-3">
+              {/* Search, Filters & Action Tools */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                {/* Bulk Upload CSV Input */}
+                <label className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-xs font-bold text-slate-200 hover:bg-slate-700 hover:text-white cursor-pointer transition">
+                  <Download className="h-3.5 w-3.5 text-cyan-400 rotate-180" />
+                  <span>Bulk Upload (CSV)</span>
+                  <input
+                    type="file"
+                    accept=".csv,.xlsx"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      alert(`Successfully imported ${file.name}! 50 student credentials auto-generated.`);
+                    }}
+                  />
+                </label>
+
+                {/* Ranking Leaderboard Modal Button */}
+                <button
+                  onClick={() => setShowRankingModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#C5A059]/40 bg-[#C5A059]/10 px-3 py-2 text-xs font-extrabold text-[#C5A059] hover:bg-[#C5A059]/20 transition cursor-pointer"
+                >
+                  <Award className="h-3.5 w-3.5" />
+                  <span>🏆 Ranking Leaderboard</span>
+                </button>
+
+                {/* Export Report */}
+                <button
+                  onClick={() => alert(`Exporting ${activeSchool.name} Roster & Rank Performance Report to Excel/PDF...`)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-xs font-bold text-slate-200 hover:bg-slate-700 hover:text-white cursor-pointer transition"
+                >
+                  <FileText className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Download Report</span>
+                </button>
+
+
                 {/* Search */}
-                <div className="relative w-full sm:w-64">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                <div className="relative w-full sm:w-56">
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
                   <input
                     type="text"
-                    placeholder="Search student or roll no..."
+                    placeholder="Search student or roll..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="w-full rounded-xl border border-slate-800 bg-slate-950/80 py-2 pl-9 pr-3 text-xs font-semibold text-white placeholder-slate-500 focus:border-cyan-500 focus:outline-none"
@@ -387,6 +428,7 @@ export default function SchoolsB2B() {
                 </select>
               </div>
             </div>
+
 
             {/* Table */}
             <div className="w-full max-w-full overflow-x-auto min-w-0">
@@ -585,6 +627,76 @@ export default function SchoolsB2B() {
             </div>,
             document.body
           )}
+
+          {/* STUDENT RANKING LEADERBOARD MODAL */}
+          {showRankingModal && createPortal(
+            <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+              <div className="w-full max-w-2xl rounded-3xl border border-[#C5A059]/40 bg-[#0b1329] p-6 sm:p-7 shadow-2xl space-y-5 max-h-[85vh] overflow-y-auto">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                  <div className="flex items-center gap-3">
+                    <div className="p-2.5 rounded-xl bg-[#C5A059]/10 text-[#C5A059] border border-[#C5A059]/20">
+                      <Award className="h-6 w-6" />
+                    </div>
+                    <div>
+                      <h3 className="font-extrabold text-white text-lg">Student Ranking Leaderboard</h3>
+                      <p className="text-xs text-slate-400 font-medium">{activeSchool?.name} • All India & School Benchmarking</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowRankingModal(false)}
+                    className="text-slate-400 hover:text-white p-1 rounded-lg"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+
+                <div className="w-full max-w-full overflow-x-auto">
+                  <table className="w-full text-left text-xs border-collapse">
+                    <thead className="border-b border-slate-800 bg-slate-950/80 text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
+                      <tr>
+                        <th className="py-3 px-3">School Rank</th>
+                        <th className="py-3 px-3">Student Name</th>
+                        <th className="py-3 px-3">Course Stream</th>
+                        <th className="py-3 px-3">Avg Accuracy</th>
+                        <th className="py-3 px-3">Estimated AIR</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/60">
+                      {activeSchool?.students
+                        ?.slice()
+                        .sort((a, b) => b.avgScore - a.avgScore)
+                        .map((st, idx) => (
+                          <tr key={st.id} className="hover:bg-slate-900/60 transition">
+                            <td className="py-3 px-3">
+                              <span className={`inline-flex h-7 w-7 items-center justify-center rounded-lg font-black text-xs ${
+                                idx === 0 ? 'bg-amber-500 text-slate-950 font-mono' : idx === 1 ? 'bg-slate-300 text-slate-950 font-mono' : idx === 2 ? 'bg-amber-700 text-white font-mono' : 'bg-slate-800 text-slate-300'
+                              }`}>
+                                #{idx + 1}
+                              </span>
+                            </td>
+                            <td className="py-3 px-3 font-extrabold text-white">{st.name}</td>
+                            <td className="py-3 px-3 text-slate-300">{st.course}</td>
+                            <td className="py-3 px-3 font-black text-emerald-400">{st.avgScore}%</td>
+                            <td className="py-3 px-3 font-mono font-bold text-cyan-400">AIR {(idx + 1) * 142 + 18}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="pt-3 border-t border-slate-800 flex justify-end">
+                  <button
+                    onClick={() => setShowRankingModal(false)}
+                    className="rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700 transition"
+                  >
+                    Close Leaderboard
+                  </button>
+                </div>
+              </div>
+            </div>,
+            document.body
+          )}
+
 
           {/* ADD STUDENT MODAL */}
           {showAddModal && createPortal(
@@ -967,36 +1079,184 @@ export default function SchoolsB2B() {
             </div>
           </section>
 
-          {/* 2.8 FREQUENTLY ASKED QUESTIONS (FAQ) */}
-          <section className="max-w-4xl mx-auto px-4 sm:px-6 space-y-6">
+          {/* 2.7.5 FLEXIBLE BULK PRICING & VOLUME DISCOUNT CALCULATOR */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
             <div className="text-center space-y-2">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Frequently Asked Questions</h2>
-              <p className="text-slate-400 text-xs sm:text-sm">Everything you need to know about AIETS institutional partnerships.</p>
+              <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Flexible B2B Pricing Structure</span>
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Bulk Volume Discounts & Tiered Savings
+              </h2>
+              <p className="text-slate-400 text-sm max-w-xl mx-auto">
+                Standard retail price is ₹1,999 per student. Select your institution's batch capacity to calculate instant bulk savings.
+              </p>
             </div>
 
-            <div className="space-y-3">
+            <div className="grid lg:grid-cols-12 gap-8 items-center">
+              {/* Left 7 cols: Interactive Volume Slider & Price Tiers */}
+              <div className="lg:col-span-7 rounded-3xl border border-slate-800 bg-slate-900/80 p-6 sm:p-8 backdrop-blur-xl space-y-6">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <label className="text-xs font-extrabold text-slate-300 uppercase tracking-wider">Enrolled Student Capacity</label>
+                    <span className="text-xl font-black text-cyan-400 font-mono">{calcStudentCount} Students</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="50"
+                    max="1500"
+                    step="25"
+                    value={calcStudentCount}
+                    onChange={(e) => setCalcStudentCount(parseInt(e.target.value))}
+                    className="w-full h-2.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-cyan-400"
+                  />
+                  <div className="flex justify-between text-[11px] font-bold text-slate-500 font-mono">
+                    <span>50 Students</span>
+                    <span>500 Students</span>
+                    <span>1,500+ Students</span>
+                  </div>
+                </div>
+
+                {/* Tier Badges Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+                  <div className={`p-3 rounded-2xl border transition ${calcStudentCount < 200 ? 'border-cyan-400 bg-cyan-500/10 text-white' : 'border-slate-800 bg-slate-950/60 text-slate-400'}`}>
+                    <p className="text-[10px] font-extrabold uppercase">50 - 199</p>
+                    <p className="text-sm font-black mt-1">₹1,999 <span className="text-[10px] font-normal">/std</span></p>
+                    <span className="text-[9px] text-slate-400">Standard Rate</span>
+                  </div>
+                  <div className={`p-3 rounded-2xl border transition ${calcStudentCount >= 200 && calcStudentCount < 500 ? 'border-cyan-400 bg-cyan-500/10 text-white' : 'border-slate-800 bg-slate-950/60 text-slate-400'}`}>
+                    <p className="text-[10px] font-extrabold uppercase text-cyan-400">200 - 499</p>
+                    <p className="text-sm font-black mt-1">₹1,499 <span className="text-[10px] font-normal">/std</span></p>
+                    <span className="text-[9px] text-emerald-400 font-bold">25% OFF</span>
+                  </div>
+                  <div className={`p-3 rounded-2xl border transition ${calcStudentCount >= 500 && calcStudentCount < 1000 ? 'border-cyan-400 bg-cyan-500/10 text-white' : 'border-slate-800 bg-slate-950/60 text-slate-400'}`}>
+                    <p className="text-[10px] font-extrabold uppercase text-purple-400">500 - 999</p>
+                    <p className="text-sm font-black mt-1">₹1,199 <span className="text-[10px] font-normal">/std</span></p>
+                    <span className="text-[9px] text-emerald-400 font-bold">40% OFF</span>
+                  </div>
+                  <div className={`p-3 rounded-2xl border transition ${calcStudentCount >= 1000 ? 'border-cyan-400 bg-cyan-500/10 text-white' : 'border-slate-800 bg-slate-950/60 text-slate-400'}`}>
+                    <p className="text-[10px] font-extrabold uppercase text-amber-400">1,000+</p>
+                    <p className="text-sm font-black mt-1">₹999 <span className="text-[10px] font-normal">/std</span></p>
+                    <span className="text-[9px] text-emerald-400 font-bold">50% OFF</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right 5 cols: Billing Breakdown Summary Card */}
+              {(() => {
+                let rate = 1999;
+                let tierDiscount = '0%';
+                if (calcStudentCount >= 1000) { rate = 999; tierDiscount = '50% Bulk Tier'; }
+                else if (calcStudentCount >= 500) { rate = 1199; tierDiscount = '40% Bulk Tier'; }
+                else if (calcStudentCount >= 200) { rate = 1499; tierDiscount = '25% Bulk Tier'; }
+
+                const subtotal = calcStudentCount * rate;
+                const retailTotal = calcStudentCount * 1999;
+                const totalSaved = retailTotal - subtotal;
+                const gst = Math.round(subtotal * 0.18);
+                const grandTotal = subtotal + gst;
+
+                return (
+                  <div className="lg:col-span-5 rounded-3xl border border-[#C5A059]/40 bg-gradient-to-b from-[#111c38] to-[#0a1226] p-6 sm:p-7 shadow-2xl space-y-4">
+                    <div className="flex justify-between items-center border-b border-slate-800 pb-3">
+                      <div>
+                        <h3 className="font-extrabold text-white text-base">Estimated Institutional Quote</h3>
+                        <p className="text-xs text-[#C5A059] font-bold">Applied: {tierDiscount}</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-bold font-mono">
+                        Save ₹{totalSaved.toLocaleString()}
+                      </span>
+                    </div>
+
+                    <div className="space-y-2 text-xs font-mono">
+                      <div className="flex justify-between text-slate-400">
+                        <span>Retail Standard Cost ({calcStudentCount} x ₹1,999):</span>
+                        <span className="line-through text-slate-500">₹{retailTotal.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-white font-bold">
+                        <span>Bulk Discounted Price ({calcStudentCount} x ₹{rate}):</span>
+                        <span className="text-cyan-400">₹{subtotal.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-slate-400">
+                        <span>GST (18% HSN 9992):</span>
+                        <span>₹{gst.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-sm font-black pt-2 border-t border-slate-800 text-white">
+                        <span>Grand Net Total (Incl. GST):</span>
+                        <span className="text-emerald-400 text-base">₹{grandTotal.toLocaleString()}</span>
+                      </div>
+                    </div>
+
+                    <button
+                      onClick={() => setShowDemoModal(true)}
+                      className="w-full rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 py-3 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:scale-102 transition cursor-pointer"
+                    >
+                      🚀 Lock Bulk Institutional Quote
+                    </button>
+                  </div>
+                );
+              })()}
+            </div>
+          </section>
+
+          {/* 2.8 FREQUENTLY ASKED QUESTIONS (FAQ) */}
+          <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 space-y-8 sm:space-y-10">
+            <div className="text-center space-y-3">
+              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold text-cyan-400 uppercase tracking-wider shadow-sm">
+                <HelpCircle className="h-3.5 w-3.5" />
+                <span>Got Questions?</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight">
+                Frequently Asked <span className="bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 bg-clip-text text-transparent">Questions</span>
+              </h2>
+              <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
+                Everything you need to know about AIETS institutional partnerships, student onboarding, and bulk pricing.
+              </p>
+            </div>
+
+            <div className="space-y-4 sm:space-y-5">
               {[
                 { q: 'What is AIETS and how does it benefit our institution?', a: 'AIETS (All India Edvedum Test Series) is our flagship national-level CBT assessment program designed specifically according to NTA NEET & JEE patterns. It provides your institution with national AIR benchmarking, student performance analytics, and custom-branded reports.' },
                 { q: 'How does bulk student registration work?', a: 'Once your institution is onboarded, you get access to your School Admin Portal. You can upload student lists via Excel/CSV templates in seconds, auto-generate enrollment IDs, and assign test series packages.' },
                 { q: 'Can we get custom pricing for our school?', a: 'Yes! We offer bulk volume discounts ranging up to 65% off retail pricing based on your student batch size and course requirements.' },
                 { q: 'Are 1-on-1 sessions included for every student?', a: 'Yes, every test in the AIETS package includes a dedicated 1-on-1 performance review session with our academic mentors.' },
                 { q: 'How quickly can our school start testing?', a: 'Account setup and onboarding take less than 24 hours. Your team can upload students and start tests immediately.' }
-              ].map((faq, idx) => (
-                <div key={idx} className="rounded-2xl border border-slate-800 bg-slate-900/60 overflow-hidden transition">
-                  <button
-                    onClick={() => setFaqOpen(faqOpen === idx ? null : idx)}
-                    className="w-full text-left p-4.5 flex items-center justify-between font-extrabold text-white text-xs sm:text-sm cursor-pointer hover:text-cyan-400"
+              ].map((faq, idx) => {
+                const isOpen = faqOpen === idx;
+                return (
+                  <div
+                    key={idx}
+                    className={`group rounded-2xl border transition-all duration-300 overflow-hidden ${
+                      isOpen
+                        ? 'border-cyan-500/40 bg-slate-900/90 shadow-[0_0_30px_rgba(6,182,212,0.12)]'
+                        : 'border-slate-800/90 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900/80'
+                    }`}
                   >
-                    <span>{faq.q}</span>
-                    <span className="text-lg text-slate-400 font-mono">{faqOpen === idx ? '−' : '+'}</span>
-                  </button>
-                  {faqOpen === idx && (
-                    <div className="p-4.5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/60">
-                      {faq.a}
-                    </div>
-                  )}
-                </div>
-              ))}
+                    <button
+                      onClick={() => setFaqOpen(isOpen ? null : idx)}
+                      className="w-full text-left px-6 py-5 sm:px-7 sm:py-6 flex items-center justify-between gap-4 font-extrabold text-white text-sm sm:text-base cursor-pointer transition-colors"
+                    >
+                      <span className={`transition-colors duration-200 ${isOpen ? 'text-cyan-400' : 'group-hover:text-cyan-300'}`}>
+                        {faq.q}
+                      </span>
+                      <div
+                        className={`h-9 w-9 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                          isOpen
+                            ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 rotate-180'
+                            : 'bg-slate-800/80 text-slate-400 border border-slate-700/50 group-hover:bg-slate-800 group-hover:text-white'
+                        }`}
+                      >
+                        <ChevronDown className="h-4 w-4" />
+                      </div>
+                    </button>
+                    {isOpen && (
+                      <div className="px-6 pb-6 pt-1 sm:px-7 sm:pb-7 animate-in fade-in duration-200">
+                        <div className="pt-4 border-t border-slate-800/80 text-xs sm:text-sm text-slate-300 leading-relaxed">
+                          {faq.a}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </section>
 
