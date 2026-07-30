@@ -65,7 +65,7 @@ export default function TestSeriesCard({ series }) {
           <div className="flex flex-wrap items-center gap-2">
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
               <span>⚡</span>
-              <span>{series.test_count || 0} Full Mocks</span>
+              <span>{series.planned_tests || series.test_count || 0} CBT Tests</span>
             </span>
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
               <span>⏳</span>

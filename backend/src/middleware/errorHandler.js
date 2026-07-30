@@ -12,6 +12,25 @@ export const errorHandler = (err, _req, res, _next) => {
     return res.status(409).json({ message: 'A record with these values already exists.' });
   }
 
+  // Database Connection / Infrastructure Error -> 503 Service Unavailable
+  const isDbConnectionError =
+    err &&
+    (err.code === 'ENOTFOUND' ||
+      err.code === 'ETIMEDOUT' ||
+      err.code === 'ECONNRESET' ||
+      err.code === '57P01' ||
+      (err.message && (err.message.includes('getaddrinfo') || err.message.includes('connection terminated'))));
+
+  if (isDbConnectionError) {
+    // eslint-disable-next-line no-console
+    console.error('[Database Connection Error]', err?.message || err);
+    return res.status(503).json({
+      success: false,
+      code: 'SERVICE_TEMPORARILY_UNAVAILABLE',
+      message: 'The service is temporarily unavailable. Please try again.',
+    });
+  }
+
   const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
 
   if (statusCode < 500 || err instanceof ApiError) {
@@ -24,7 +43,8 @@ export const errorHandler = (err, _req, res, _next) => {
   // eslint-disable-next-line no-console
   console.error('[Unhandled Server Error]', err);
   return res.status(500).json({
-    message: err?.message || 'Internal server error',
-    ...(env.isProd ? {} : { error: err?.stack || err?.message }),
+    success: false,
+    code: 'INTERNAL_SERVER_ERROR',
+    message: 'A server error occurred. Please try again later or contact support.',
   });
 };

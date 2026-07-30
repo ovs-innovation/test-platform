@@ -151,4 +151,7 @@ export const seedPlatform = async (client) => {
       [freeSeries.rows[0].id, assessment.rows[0].id]
     );
   }
+
+  const { importAietsRecords } = await import('./importAiets.js');
+  await importAietsRecords(client);
 };

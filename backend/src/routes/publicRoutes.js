@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getPublicStats, listPublicTestSeries, getPublicTestSeries, listSubjects } from '../controllers/publicController.js';
 import { getCmsPage, listPublicCms, validateCoupon } from '../controllers/platformController.js';
+import { createB2bEnquiry } from '../controllers/b2bController.js';
 
 const router = Router();
 
@@ -11,5 +12,7 @@ router.get('/subjects', listSubjects);
 router.get('/cms', listPublicCms);
 router.get('/cms/:slug', getCmsPage);
 router.post('/coupons/validate', validateCoupon);
+router.post('/b2b-enquiry', createB2bEnquiry);
 
 export default router;
+

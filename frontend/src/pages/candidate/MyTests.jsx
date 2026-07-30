@@ -80,16 +80,44 @@ export default function MyTests() {
                 {/* Footer Container */}
                 <div className="p-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/60 text-xs">
                   <div>
-                    <p className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
-                      <span>📚</span> {e.available_tests} {e.available_tests === 1 ? 'Test' : 'Tests'} Available
+                    {/* Primary Package Count */}
+                    <p className="font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5 text-sm">
+                      <span>📚</span>
+                      <span>
+                        {e.program_type === 'Two Year' || e.planned_tests === 60
+                          ? '60 Tests Planned'
+                          : e.planned_tests > 0
+                          ? `${e.planned_tests} Tests Included`
+                          : `${e.linked_tests || 0} Tests Included`}
+                      </span>
                     </p>
+
+                    {/* Secondary Status & Schedule Note */}
                     <p className="mt-0.5 text-[10.5px] font-semibold text-slate-500 dark:text-slate-400">
-                      Expires {new Date(e.expires_at).toLocaleDateString('en-GB')}
+                      {e.program_type === 'Two Year' || e.planned_tests === 60
+                        ? 'Detailed schedule will be published by Admin'
+                        : e.scheduled_tests > 0
+                        ? 'Schedule available'
+                        : 'Schedule being prepared'}
                     </p>
+                    {e.live_tests === 0 && e.planned_tests > 0 && (
+                      <p className="text-[10px] font-bold text-[#0D6EFD] mt-0.5">
+                        0 currently live
+                      </p>
+                    )}
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-600 group-hover:bg-blue-500 px-3.5 py-1.5 text-xs font-black text-white shadow-2xs transition">
-                    <span>Start Tests</span>
+                  {/* Dynamic Button Action */}
+                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-600 group-hover:bg-blue-500 px-3.5 py-1.5 text-xs font-black text-white shadow-2xs transition shrink-0 ml-2">
+                    <span>
+                      {e.live_tests > 0
+                        ? 'Start Test'
+                        : e.program_type === 'Two Year' || e.planned_tests === 60
+                        ? 'Program Details'
+                        : e.scheduled_tests > 0
+                        ? 'View Schedule'
+                        : 'View Program'}
+                    </span>
                     <ChevronRight className="h-3.5 w-3.5" />
                   </span>
                 </div>

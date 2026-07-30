@@ -20,6 +20,7 @@ import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCirc
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
+  { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
   { to: '/leaderboard', label: 'Leaderboard', icon: 'trophy' },
   { to: '/discussion-hub', label: 'Discussion Hub', icon: 'chat' },
@@ -51,6 +52,7 @@ const Icon = ({ name, className = 'h-5 w-5' }) => {
   const paths = {
     grid: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 9a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1v-5zm9-9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V5zm0 10a1 1 0 011-1h5a1 1 0 011 1v4a1 1 0 01-1 1h-5a1 1 0 01-1-1v-4z',
     doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+    calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
     users: 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a3 3 0 10-2.83-4',
     chart: 'M3 3v18h18M7 14l3-3 3 3 5-5',
     bell: 'M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9',
@@ -106,7 +108,8 @@ export default function Layout({ children }) {
   const quickCreateRef = useRef(null);
   const profileRef = useRef(null);
 
-  const nav = user?.role === 'admin' ? adminNav : candidateNav;
+  const isAdmin = user?.role === 'admin' || user?.role === 'superadmin';
+  const nav = isAdmin ? adminNav : candidateNav;
 
   // Toggle collapse
   const toggleCollapse = () => {
@@ -373,13 +376,13 @@ export default function Layout({ children }) {
             <button
               type="button"
               onClick={() => setCommandPaletteOpen(true)}
-              className="w-full flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-100/80 px-4 py-2 text-xs font-semibold text-slate-500 backdrop-blur-md transition hover:border-blue-500/50 hover:bg-white hover:text-slate-800 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-200"
+              className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-slate-100/80 px-4 py-2 text-xs font-semibold text-slate-500 hover:border-blue-500/50 hover:bg-slate-200 dark:border-slate-800/80 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 transition cursor-pointer"
             >
               <div className="flex items-center gap-2.5">
                 <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
-                <span>Search students, assessments, questions...</span>
+                <span>{isAdmin ? 'Search students, assessments, questions...' : 'Search tests, results and eBooks…'}</span>
               </div>
               <kbd className="rounded-lg border border-slate-300 bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
                 Ctrl K
@@ -389,45 +392,47 @@ export default function Layout({ children }) {
 
           {/* Right Controls */}
           <div className="flex items-center gap-3">
-            {/* Quick Create Dropdown */}
-            <div className="relative" ref={quickCreateRef}>
-              <button
-                type="button"
-                onClick={() => setQuickCreateOpen((prev) => !prev)}
-                className="hidden sm:flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 transition"
-              >
-                <span>+ Quick Create</span>
-              </button>
-              {quickCreateOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl backdrop-blur-xl dark:border-slate-800 dark:bg-[#0f172a]">
-                  <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quick Actions</div>
-                  <button
-                    onClick={() => { navigate('/admin/assessments'); setQuickCreateOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    📝 Create Assessment
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/candidates'); setQuickCreateOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    👤 Register Student
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/coupons'); setQuickCreateOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    🏷️ Create Coupon
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/question-bank'); setQuickCreateOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                  >
-                    📚 Upload Questions
-                  </button>
-                </div>
-              )}
-            </div>
+            {/* Quick Create Dropdown (Admin Only) */}
+            {isAdmin && (
+              <div className="relative" ref={quickCreateRef}>
+                <button
+                  type="button"
+                  onClick={() => setQuickCreateOpen((prev) => !prev)}
+                  className="hidden sm:flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 transition"
+                >
+                  <span>+ Quick Create</span>
+                </button>
+                {quickCreateOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl backdrop-blur-xl dark:border-slate-800 dark:bg-[#0f172a]">
+                    <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quick Actions</div>
+                    <button
+                      onClick={() => { navigate('/admin/assessments'); setQuickCreateOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    >
+                      📝 Create Assessment
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/candidates'); setQuickCreateOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    >
+                      👤 Register Student
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/coupons'); setQuickCreateOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    >
+                      🏷️ Create Coupon
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/question-bank'); setQuickCreateOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
+                    >
+                      📚 Upload Questions
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Notification Bell */}
             <button
@@ -483,17 +488,19 @@ export default function Layout({ children }) {
         <main className="w-full max-w-7xl mx-auto flex-1 px-3 py-4 sm:px-6 lg:px-8 sm:py-6 lg:py-8 pb-20 min-w-0 overflow-x-hidden">{children}</main>
       </div>
 
-      {/* Floating Quick Action Button */}
-      <button
-        type="button"
-        onClick={() => setCommandPaletteOpen(true)}
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/40 hover:scale-105 active:scale-95 transition"
-        title="Open Command Palette (Ctrl + K)"
-      >
-        <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-        </svg>
-      </button>
+      {/* Floating Quick Action Button (Admin Only) */}
+      {isAdmin && (
+        <button
+          type="button"
+          onClick={() => setCommandPaletteOpen(true)}
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/40 hover:scale-105 active:scale-95 transition"
+          title="Open Command Palette (Ctrl + K)"
+        >
+          <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
+      )}
 
       {/* Command Palette Modal (Ctrl + K) */}
       {commandPaletteOpen && (

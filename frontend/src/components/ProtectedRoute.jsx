@@ -12,9 +12,15 @@ export default function ProtectedRoute({ children, role }) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
-  if (role && user.role !== role) {
-    // Send users to their own home if they hit the wrong area.
-    return <Navigate to={user.role === 'admin' ? '/admin' : '/dashboard'} replace />;
+  if (role) {
+    const requested = String(role).toLowerCase();
+    const userRole = String(user.role || 'candidate').toLowerCase();
+    const isCandidateMatch = (requested === 'candidate' || requested === 'student') && (userRole === 'candidate' || userRole === 'student');
+    const isExactMatch = userRole === requested;
+
+    if (!isCandidateMatch && !isExactMatch) {
+      return <Navigate to={userRole === 'admin' ? '/admin' : '/dashboard'} replace />;
+    }
   }
 
   return children;

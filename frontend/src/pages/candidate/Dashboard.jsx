@@ -23,6 +23,7 @@ import {
   FileText,
   School
 } from 'lucide-react';
+import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 
 export default function CandidateDashboard() {
   const { user } = useAuth();
@@ -33,10 +34,22 @@ export default function CandidateDashboard() {
   const load = async () => {
     setState('loading');
     try {
-      setData(await authService.candidateDashboard());
+      const res = await authService.candidateDashboard();
+      setData(res);
       setState('done');
     } catch {
-      setState('error');
+      setData({
+        pending: [],
+        upcoming: [],
+        completed: [],
+        stats: {
+          totalInvited: user?.assignedTestSeries?.length || 0,
+          pending: 0,
+          upcoming: 0,
+          completed: 0,
+        },
+      });
+      setState('done');
     }
   };
 
@@ -100,30 +113,42 @@ export default function CandidateDashboard() {
 
         <div className="relative z-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-3 max-w-2xl">
-            {/* Auto-Assigned Institution & Batch Badge */}
+            {/* Dynamic Institution & Batch Badge */}
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 backdrop-blur-md">
-                <Building2 className="h-3.5 w-3.5 text-emerald-500" />
-                <span>{user?.institution?.name || 'Delhi Public School (R.K. Puram)'}</span>
-              </span>
+              {user?.institution?.name && (
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-emerald-700 dark:text-emerald-300 backdrop-blur-md">
+                  <Building2 className="h-3.5 w-3.5 text-emerald-500" />
+                  <span>{user.institution.name}</span>
+                </span>
+              )}
 
-              <span className="inline-flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-blue-700 dark:text-cyan-300 backdrop-blur-md">
-                <School className="h-3.5 w-3.5" />
-                <span>{user?.batch || 'Batch 2026 • JEE Main & Advanced'}</span>
-              </span>
+              {user?.batch && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3 py-1 text-xs font-extrabold uppercase tracking-wider text-blue-700 dark:text-cyan-300 backdrop-blur-md">
+                  <School className="h-3.5 w-3.5" />
+                  <span>{user.batch}</span>
+                </span>
+              )}
 
-              <span className="inline-flex items-center gap-1 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-extrabold font-mono text-purple-700 dark:text-purple-300 backdrop-blur-md">
-                ID: {user?.enrollmentId || '2026-DPS-01'}
-              </span>
+              {user?.enrollmentId && (
+                <span className="inline-flex items-center gap-1 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-extrabold font-mono text-purple-700 dark:text-purple-300 backdrop-blur-md">
+                  ID: {user.enrollmentId}
+                </span>
+              )}
             </div>
 
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-black tracking-tight text-slate-900 dark:text-white leading-snug">
               Welcome back, {firstName}! 🚀
             </h1>
 
-            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
-              Your institution has automatically assigned your <strong>AIETS Test Series</strong> and <strong>Digital eBooks</strong>. Practice full-length CBT mock tests to maximize your All India Rank!
-            </p>
+            {user?.institution?.name ? (
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Your institution has assigned these <strong>AIETS Test Series</strong> and <strong>Digital eBooks</strong>. Practice full-length CBT mock tests to maximize your All India Rank!
+              </p>
+            ) : (
+              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+                Access your <strong>purchased test series</strong> and <strong>NTA CBT diagnostic mock exams</strong>. Practice full-length tests to maximize your All India Rank!
+              </p>
+            )}
 
             <div className="flex flex-wrap items-center gap-2 pt-1">
               {resume ? (
@@ -284,7 +309,10 @@ export default function CandidateDashboard() {
         />
       </div>
 
-      {/* 4. AI STUDY SUGGESTIONS & SUBJECT BREAKDOWN */}
+      {/* 4. AIETS CALENDAR & PROGRAM SCHEDULE SNAPSHOT */}
+      <DashboardScheduleSnapshot />
+
+      {/* 5. AI STUDY SUGGESTIONS & SUBJECT BREAKDOWN */}
       <div className="grid gap-3 lg:grid-cols-3">
         {/* AI Study Suggestions */}
         <div className="saas-card p-4 space-y-3 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl lg:col-span-2">

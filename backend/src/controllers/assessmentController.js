@@ -279,3 +279,65 @@ export const deleteAssessment = asyncHandler(async (req, res) => {
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
   res.json({ message: 'Assessment deleted', id: result.rows[0].id });
 });
+
+export const importScheduleCsv = asyncHandler(async (req, res) => {
+  const { test_series_id, items } = req.body; // items: array of { sequence, type, name, date, phase }
+  if (!Array.isArray(items) || !items.length) {
+    throw ApiError.badRequest('Schedule items array is required');
+  }
+
+  const created = [];
+  const errors = [];
+
+  for (const item of items) {
+    if (!item.name || !item.date || !item.type) {
+      errors.push({ row: item, error: 'Missing required fields (name, date, type)' });
+      continue;
+    }
+
+    const title = `AIETS 2027: ${item.name}`;
+    const startTime = new Date(`${item.date}T09:00:00+05:30`).toISOString();
+    const endTime = new Date(`${item.date}T12:00:00+05:30`).toISOString();
+
+    try {
+      const assessRes = await query(
+        `INSERT INTO assessments (
+          title, description, instructions, duration_minutes, passing_marks, max_violations,
+          result_visible, is_published, sequence_number, test_type, preparation_phase, start_time, end_time, created_by
+        ) VALUES ($1,$2,$3,180,180,3,true,false,$4,$5,$6,$7,$8,$9)
+        RETURNING *`,
+        [
+          title,
+          `${item.phase || 'CONCEPT_BUILDING'} Phase - NTA Pattern ${item.type}`,
+          'Authentic NTA-pattern CBT test.',
+          item.sequence || 0,
+          item.type,
+          item.phase || 'CONCEPT_BUILDING',
+          startTime,
+          endTime,
+          req.user.id
+        ]
+      );
+      const newAssessment = assessRes.rows[0];
+      created.push(newAssessment);
+
+      if (test_series_id) {
+        await query(
+          `INSERT INTO test_series_assessments (test_series_id, assessment_id, label, position)
+           VALUES ($1,$2,$3,$4)
+           ON CONFLICT (test_series_id, assessment_id) DO UPDATE SET position = EXCLUDED.position, label = EXCLUDED.label`,
+          [test_series_id, newAssessment.id, item.name, item.sequence || 0]
+        );
+      }
+    } catch (err) {
+      errors.push({ row: item, error: err.message });
+    }
+  }
+
+  res.status(201).json({
+    message: `Imported ${created.length} scheduled assessment placeholders`,
+    imported_count: created.length,
+    failed_count: errors.length,
+    errors,
+  });
+});

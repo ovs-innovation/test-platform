@@ -21,6 +21,7 @@ import About from './pages/public/About.jsx';
 import Contact from './pages/public/Contact.jsx';
 import Careers from './pages/public/Careers.jsx';
 import SchoolsB2B from './pages/public/SchoolsB2B.jsx';
+import InstitutionLogin from './pages/public/InstitutionLogin.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
@@ -28,6 +29,7 @@ import { COMPANY, CONTACT } from './data/edvedumContent.js';
 import CandidateDashboard from './pages/candidate/Dashboard.jsx';
 import MyTests from './pages/candidate/MyTests.jsx';
 import MySeriesTests from './pages/candidate/MySeriesTests.jsx';
+import AietsCalendarPage from './pages/candidate/AietsCalendarPage.jsx';
 import Analytics from './pages/candidate/Analytics.jsx';
 import Notifications from './pages/candidate/Notifications.jsx';
 import PaymentHistory from './pages/candidate/PaymentHistory.jsx';
@@ -84,7 +86,9 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/for-schools" element={<SchoolsB2B />} />
+          <Route path="/for-institutions" element={<SchoolsB2B />} />
           <Route path="/schools" element={<SchoolsB2B />} />
+          <Route path="/institution-login" element={<InstitutionLogin />} />
 
           <Route path="/privacy" element={<EdvedumLegalPage title="Privacy Policy"><p>{COMPANY.name} is committed to protecting your personal data. Information collected during registration, test attempts, and payments is encrypted and used solely to deliver our educational services.</p><p className="mt-4">We do not sell or share student data with third parties without consent, except as required by law.</p></EdvedumLegalPage>} />
           <Route path="/terms" element={<EdvedumLegalPage title="Terms & Conditions"><p>By using {COMPANY.name} platform you agree to fair examination policies, honest attempt guidelines, and acceptable use of our CBT test interface.</p><p className="mt-4">Misuse of the platform, sharing of credentials, or attempt to circumvent proctoring may result in account suspension.</p></EdvedumLegalPage>} />
@@ -113,6 +117,7 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedRoute role="candidate"><Shell><CandidateDashboard /></Shell></ProtectedRoute>} />
         <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
         <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />
+        <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AietsCalendarPage /></Shell></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
         <Route path="/results" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute role="candidate"><Shell><Leaderboard /></Shell></ProtectedRoute>} />

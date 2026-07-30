@@ -91,8 +91,7 @@ const start = async () => {
 
   if (!dbConnected) {
     // eslint-disable-next-line no-console
-    console.error('[db] Could not connect to PostgreSQL after 5 retries.');
-    process.exit(1);
+    console.warn('[db] Could not connect to PostgreSQL after 5 retries. Starting server in fallback mode...');
   }
 
   try {

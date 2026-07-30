@@ -22,10 +22,10 @@ import {
 } from 'lucide-react';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
 
-// Ambient stars/particles overlay - RESTRICTED TO LEFT SIDE ONLY (x: 0% to 45%)
-const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
+// Ambient stars/particles overlay spread seamlessly across the entire hero width
+const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
   id: i,
-  x: Math.random() * 45, // Strictly left side only
+  x: Math.random() * 92 + 3, // Full canvas width (3% to 95%)
   y: Math.random() * 88 + 5,
   size: Math.random() * 2.8 + 2.2,
   duration: Math.random() * 7 + 7,
@@ -36,54 +36,56 @@ const PARTICLES = Array.from({ length: 18 }, (_, i) => ({
 
 export default function EdvedumHero() {
   return (
-    <section className="relative overflow-hidden bg-[#010d1f] text-white selection:bg-cyan-500 selection:text-slate-900 min-h-[640px] lg:min-h-[690px] pb-14 sm:pb-16 lg:pb-24">
-
-      {/* 1. EDVEDUM BRANDED STUDENT HERO BACKGROUND (Desktop Only - lg:block) */}
+    <section
+      className="relative overflow-hidden text-white selection:bg-cyan-500 selection:text-slate-900 min-h-[640px] lg:min-h-[690px] pb-14 sm:pb-16 lg:pb-24"
+      style={{
+        background: `
+          radial-gradient(circle at 75% 45%, rgba(6, 182, 212, 0.14), transparent 38%),
+          radial-gradient(circle at 88% 70%, rgba(124, 58, 237, 0.14), transparent 40%),
+          radial-gradient(circle at 30% 50%, rgba(37, 99, 235, 0.09), transparent 45%),
+          linear-gradient(110deg, #020b18 0%, #020b18 45%, #010915 100%)
+        `,
+      }}
+    >
+      {/* 1. EDVEDUM BRANDED STUDENT HERO ARTWORK LAYER (Desktop Only - lg:block) */}
+      {/* Spans 100% full width (inset-0) with ultra-wide mask transition (35% to 78%) for 0% visible seam */}
       <div
-        className="hidden lg:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none"
+        className="hidden lg:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none z-[1]"
         style={{
           backgroundImage: "url('/edvedum/fullwidth-hero-bg.png?v=12')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
-          filter: 'drop-shadow(0 20px 35px rgba(1,13,31,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.18))',
-          maskImage: 'linear-gradient(to right, transparent 35%, black 65%), linear-gradient(to top, transparent 0%, black 25%)',
-          WebkitMaskImage: '-webkit-linear-gradient(left, transparent 35%, black 65%), -webkit-linear-gradient(bottom, transparent 0%, black 25%)',
+          filter: 'drop-shadow(0 20px 35px rgba(2,11,24,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.14))',
+          maskImage: 'linear-gradient(to right, transparent 0%, transparent 35%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.65) 65%, black 82%, black 100%), linear-gradient(to top, transparent 0%, black 20%)',
+          WebkitMaskImage: '-webkit-linear-gradient(left, transparent 0%, transparent 35%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.65) 65%, black 82%, black 100%), -webkit-linear-gradient(bottom, transparent 0%, black 20%)',
           maskComposite: 'intersect',
           WebkitMaskComposite: 'destination-in',
         }}
         aria-hidden="true"
       />
 
-      {/* 2. MAIN LEFT-TO-RIGHT GRADIENT OVERLAY FOR ABSOLUTE SMOOTH TEXT BLENDING */}
+      {/* 2. SOFT BOTTOM & RIGHT EDGE MASKS FOR SMOOTH SEAMLESS BOUNDARIES */}
       <div
-        className="hidden lg:block absolute inset-y-0 left-0 w-[60%] bg-gradient-to-r from-[#010d1f] via-[#010d1f]/95 to-transparent pointer-events-none z-[2]"
+        className="hidden lg:block absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#020b18] via-[#020b18]/85 to-transparent pointer-events-none z-[2]"
+        aria-hidden="true"
+      />
+      <div
+        className="hidden lg:block absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#010915] via-[#010915]/40 to-transparent pointer-events-none z-[2]"
         aria-hidden="true"
       />
 
-      {/* 3. SOFT BOTTOM GRADIENT MASK FOR SMOOTH PHOTO BLENDING */}
-      <div
-        className="hidden lg:block absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#010d1f] via-[#010d1f]/85 to-transparent pointer-events-none z-[2]"
-        aria-hidden="true"
-      />
-
-      {/* 4. SOFT RIGHT EDGE GRADIENT MASK */}
-      <div
-        className="hidden lg:block absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#010d1f] via-[#010d1f]/40 to-transparent pointer-events-none z-[2]"
-        aria-hidden="true"
-      />
-
-      {/* Aurora Lighting Streaks (Left side emphasis) */}
+      {/* 3. AURORA LIGHTING STREAKS (Ambient Glows) */}
       <motion.div
         animate={{
           opacity: [0.3, 0.45, 0.3],
           scale: [1, 1.12, 1],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute -top-32 -left-20 h-[460px] w-[460px] rounded-full bg-cyan-500/15 blur-[130px] pointer-events-none"
+        className="absolute -top-32 -left-20 h-[460px] w-[460px] rounded-full bg-cyan-500/15 blur-[130px] pointer-events-none z-0"
       />
 
-      {/* Floating Star Particles (Left Side Only) */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      {/* 4. FLOATING STAR PARTICLES (Spread across full canvas) */}
+      <div className="absolute inset-0 pointer-events-none z-0" aria-hidden="true">
         {PARTICLES.map((p) => {
           let glowClass = 'bg-cyan-300 shadow-[0_0_12px_#38bdf8]';
           if (p.glowType === 'purple') glowClass = 'bg-purple-300 shadow-[0_0_14px_#c084fc]';
@@ -165,10 +167,10 @@ export default function EdvedumHero() {
                 alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
                 className="w-full h-auto max-h-[300px] object-contain mx-auto scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#010d1f] via-[#010d1f]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#020d1d] via-[#020d1d]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#020d1d] via-[#020d1d]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 left-0 w-14 bg-gradient-to-r from-[#020d1d] via-[#020d1d]/80 to-transparent pointer-events-none" />
+              <div className="absolute inset-y-0 right-0 w-14 bg-gradient-to-l from-[#020d1d] via-[#020d1d]/80 to-transparent pointer-events-none" />
             </div>
           </motion.div>
 

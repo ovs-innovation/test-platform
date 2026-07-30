@@ -9,7 +9,7 @@ const MAIN_NAV = [
   { label: 'NEET', menuKey: 'neet' },
   { label: 'Foundation', menuKey: 'foundation' },
   { label: 'Live Test', menuKey: 'livetest' },
-  { to: '/for-schools', label: 'B2B Solutions' },
+  { to: '/for-schools', label: 'For Institutions' },
 ];
 
 

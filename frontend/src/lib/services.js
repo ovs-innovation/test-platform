@@ -220,6 +220,10 @@ export const testSeriesService = {
     return api.delete(`/test-series/${id}`).then((r) => r.data);
   },
   unlink: (id, assessmentId) => api.delete(`/test-series/${id}/link/${assessmentId}`).then((r) => r.data),
+  generateTwoYearSkeleton: (id) => {
+    clearCache();
+    return api.post(`/test-series/${id}/generate-two-year-skeleton`).then((r) => r.data);
+  },
 };
 
 export const paymentService = {

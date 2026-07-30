@@ -21,7 +21,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Normalize error messages and handle global 401s.
+// Normalize error messages and handle global 401s without crashing on server/network 503s
 let sessionRedirecting = false;
 
 api.interceptors.response.use(
@@ -34,20 +34,23 @@ api.interceptors.response.use(
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
 
-    if (typeof rawData === 'string') {
-      message = status >= 500
-        ? 'A server error occurred. Please try again later or contact support.'
-        : rawData;
+    const isInfrastructureError =
+      !error.response ||
+      status >= 500 ||
+      status === 503 ||
+      (error.message && (error.message.includes('getaddrinfo') || error.message.includes('Network Error')));
+
+    if (isInfrastructureError) {
+      message = 'The service is temporarily unavailable. Please try again.';
+    } else if (typeof rawData === 'string') {
+      message = rawData;
     } else if (rawData && typeof rawData === 'object') {
       message = rawData.message || rawData.error || message;
     } else if (error.message) {
-      if (error.message.includes('500') || error.message.includes('status code 500')) {
-        message = 'A server error occurred. Please try again later or contact support.';
-      } else {
-        message = error.message;
-      }
+      message = error.message;
     }
 
+    // Never logout or redirect on 500/503/server or network errors!
     if (status === 401 && !isAuthAttempt) {
       const activeToken = tokenStore.get();
       if (activeToken && (activeToken.startsWith('mock_student_token_') || activeToken.startsWith('mock_token_'))) {
@@ -58,19 +61,19 @@ api.interceptors.response.use(
       window.dispatchEvent(new CustomEvent('auth:session-expired'));
 
       const path = window.location.pathname;
-      const onAuthPage = path.startsWith('/student-login')
-        || path.startsWith('/admin-login')
-        || path.startsWith('/signup')
-        || path.startsWith('/invite/');
+      const onAuthPage =
+        path.startsWith('/student-login') ||
+        path.startsWith('/admin-login') ||
+        path.startsWith('/signup') ||
+        path.startsWith('/invite/');
 
-      // Only hard-redirect when a protected page was active (not during /auth/me bootstrap).
       if (!onAuthPage && !sessionRedirecting) {
         sessionRedirecting = true;
         window.location.replace(path.startsWith('/admin') ? '/admin-login' : '/student-login');
       }
     }
 
-    return Promise.reject({ status, message, details: error.response?.data?.details });
+    return Promise.reject({ status: status || 503, message, details: error.response?.data?.details });
   }
 );
 

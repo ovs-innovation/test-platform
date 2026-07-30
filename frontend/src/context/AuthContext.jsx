@@ -18,42 +18,27 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const init = async () => {
-      if (!tokenStore.get()) {
-        const savedSt = localStorage.getItem('edvedum_active_student');
-        if (savedSt) {
-          try {
-            setUser(JSON.parse(savedSt));
-            setLoading(false);
-            return;
-          } catch (_) {}
-        }
+      const token = tokenStore.get();
+      if (!token) {
+        tokenStore.clear();
+        try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
         setUser(null);
         setLoading(false);
         return;
       }
       try {
         const { user: me } = await authService.me();
-        const savedSt = localStorage.getItem('edvedum_active_student');
-        let enriched = me;
-        if (savedSt) {
-          try {
-            const parsed = JSON.parse(savedSt);
-            enriched = { ...parsed, ...me };
-          } catch (_) {}
-        }
-        setUser(enriched);
-      } catch {
-        const savedSt = localStorage.getItem('edvedum_active_student');
-        if (savedSt) {
-          try {
-            setUser(JSON.parse(savedSt));
-          } catch (_) {
-            tokenStore.clear();
-            setUser(null);
-          }
-        } else {
+        setUser(me);
+      } catch (err) {
+        if (err?.status === 401) {
           tokenStore.clear();
+          try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
           setUser(null);
+        } else {
+          const savedSt = localStorage.getItem('edvedum_active_student');
+          if (savedSt) {
+            try { setUser(JSON.parse(savedSt)); } catch (_) {}
+          }
         }
       } finally {
         setLoading(false);
@@ -112,37 +97,42 @@ export function AuthProvider({ children }) {
   }, []);
 
   const studentLogin = useCallback(async (credentials) => {
-    let result;
-    try {
-      result = await authService.studentLogin(credentials);
-      if (result.token) tokenStore.set(result.token);
-    } catch (_) {
-      const { findStudentByAccess } = await import('../lib/schoolStore.js');
-      result = findStudentByAccess(credentials);
-      tokenStore.set(`mock_student_token_${Date.now()}`);
+    const result = await authService.studentLogin(credentials);
+    if (!result || !result.user) {
+      throw new Error('Invalid login response from server');
     }
-
-    let u = result.user;
-    if (!u.institution) {
-      const { findStudentByAccess } = await import('../lib/schoolStore.js');
-      const resolved = findStudentByAccess(credentials);
-      u = {
-        ...resolved.user,
-        ...u,
-        institution: resolved.user.institution,
-        batch: resolved.user.batch,
-        assignedTestSeries: resolved.user.assignedTestSeries,
-        assignedEbooks: resolved.user.assignedEbooks,
-        enrollmentId: resolved.user.enrollmentId,
-      };
+    if (result.token) {
+      tokenStore.set(result.token);
     }
-
+    const u = result.user;
     setUser(u);
     try { localStorage.setItem('edvedum_active_student', JSON.stringify(u)); } catch (_) {}
     return u;
   }, []);
 
-  const value = { user, loading, login, register, studentLogin, verifyOtp, sendLoginOtp, sendSignupOtp, verifyLoginOtp, firebaseLogin, logout, isAuthenticated: !!user };
+  const getDashboardRoute = useCallback((role) => {
+    if (!role) return '/dashboard';
+    const r = String(role).toLowerCase();
+    if (r === 'admin') return '/admin';
+    if (r === 'institution' || r === 'school') return '/for-institutions';
+    return '/dashboard';
+  }, []);
+
+  const value = {
+    user,
+    loading,
+    login,
+    register,
+    studentLogin,
+    verifyOtp,
+    sendLoginOtp,
+    sendSignupOtp,
+    verifyLoginOtp,
+    firebaseLogin,
+    logout,
+    getDashboardRoute,
+    isAuthenticated: !!user,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

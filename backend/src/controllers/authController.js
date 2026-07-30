@@ -199,64 +199,102 @@ export const register = asyncHandler(async (req, res) => {
  * POST /api/auth/student-login
  */
 export const studentLogin = asyncHandler(async (req, res) => {
-  const { email, password, instituteCode, enrollmentId, phone, mobile } = req.body;
-  const inputEmail = (email || '').trim().toLowerCase();
-  const inputPhone = (phone || mobile || '').trim();
-  const inputCode = (instituteCode || '').trim();
-  const inputEnroll = (enrollmentId || '').trim();
+  const { email, mobile, phone, instituteCode, enrollmentId, password } = req.body;
 
   let user = null;
 
-  if (inputEmail) {
+  // 1. Email + Password Mode
+  if (email && password) {
+    const normalizedEmail = (email || '').trim().toLowerCase();
     const result = await query(
       'SELECT id, name, email, role, password_hash, is_blocked FROM users WHERE LOWER(email) = $1 AND role = $2',
-      [inputEmail, 'candidate']
+      [normalizedEmail, 'candidate']
     );
     user = result.rows[0];
-  } else if (inputPhone) {
-    const cleanPhone = inputPhone.replace(/\D/g, '');
-    const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
-    const result = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked
-       FROM users u
-       JOIN student_profiles sp ON sp.user_id = u.id
-       WHERE (sp.phone = $1 OR (sp.phone IS NOT NULL AND length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = $2))
-         AND u.role = 'candidate'`,
-      [inputPhone, last10]
-    );
-    user = result.rows[0];
-  } else if (inputEnroll || inputCode) {
+    if (!user?.password_hash) throw ApiError.unauthorized('Invalid email or password');
+    if (user.is_blocked) {
+      throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
+    }
+    const ok = await comparePassword(password, user.password_hash);
+    if (!ok) throw ApiError.unauthorized('Invalid email or password');
+  } 
+  // 2. Mobile Mode
+  else if (mobile || phone) {
+    const cleanMobile = String(mobile || phone).replace(/\D/g, '');
+    if (cleanMobile.length < 10) throw ApiError.badRequest('Please enter a valid 10-digit Indian mobile number');
+    
     const result = await query(
       `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
-       WHERE (sp.enrollment_id = $1 OR sp.institution_code = $2 OR LOWER(u.email) LIKE $3)
-         AND u.role = 'candidate'`,
-      [inputEnroll, inputCode, `%${(inputEnroll || inputCode).toLowerCase()}%`]
+       WHERE (sp.phone LIKE $1 OR u.email LIKE $1 OR u.name ILIKE $2) AND u.role = 'candidate'`,
+      [`%${cleanMobile.slice(-10)}%`, `%${cleanMobile}%`]
     );
     user = result.rows[0];
-  }
 
-  if (user) {
-    if (user.is_blocked) {
-      throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
-    }
-    if (password && user.password_hash) {
+    if (password && user?.password_hash) {
       const ok = await comparePassword(password, user.password_hash);
-      if (!ok) throw ApiError.unauthorized('Invalid access password');
+      if (!ok) throw ApiError.unauthorized('Invalid mobile number or password');
+    } else if (!user) {
+      const dummyEmail = `student_${cleanMobile.slice(-10)}@edvedum.ac.in`;
+      const passHash = await hashPassword('password123');
+      const newCandidate = await query(
+        `INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, 'candidate') RETURNING id, name, email, role`,
+        [`Student ${cleanMobile.slice(-4)}`, dummyEmail, passHash]
+      );
+      user = newCandidate.rows[0];
     }
-    return res.json({ token: issueToken(user), user: publicUser(user) });
+  }
+  // 3. Institute Code + Enrollment ID Mode
+  else if (instituteCode || enrollmentId) {
+    const codeClean = (instituteCode || '').trim().toLowerCase();
+    const enrollClean = (enrollmentId || '').trim().toLowerCase();
+
+    const result = await query(
+      `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked
+       FROM users u
+       WHERE (LOWER(u.email) LIKE $1 OR LOWER(u.name) LIKE $2 OR u.id::text LIKE $2) AND u.role = 'candidate'`,
+      [`%${enrollClean}%`, `%${enrollClean}%`]
+    );
+    user = result.rows[0];
+
+    if (!user) {
+      const dummyEmail = `${enrollClean.replace(/[^a-z0-9]/g, '') || 'student'}@${codeClean.replace(/[^a-z0-9]/g, '') || 'inst'}.edu.in`;
+      const existing = await query('SELECT id, name, email, role FROM users WHERE LOWER(email) = $1', [dummyEmail]);
+      if (existing.rowCount > 0) {
+        user = existing.rows[0];
+      } else {
+        const passHash = await hashPassword(password || 'password123');
+        const newCandidate = await query(
+          `INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, 'candidate') RETURNING id, name, email, role`,
+          [`Student ${enrollmentId || 'Access'}`, dummyEmail, passHash]
+        );
+        user = newCandidate.rows[0];
+      }
+    } else if (password && user.password_hash) {
+      const ok = await comparePassword(password, user.password_hash);
+      if (!ok) throw ApiError.unauthorized('Invalid Enrollment ID or Password');
+    }
+  } else {
+    throw ApiError.badRequest('Please provide valid login credentials.');
   }
 
-  // Fallback for institutional or demo students if user not present in DB
-  const pseudoUser = {
-    id: `inst_${Date.now()}`,
-    name: inputEnroll ? `Student (${inputEnroll})` : 'Institutional Student',
-    email: inputEmail || `${(inputEnroll || 'student').toLowerCase().replace(/[^a-z0-9]/g, '')}@institution.edu`,
-    role: 'candidate'
-  };
+  if (user && user.is_blocked) {
+    throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
+  }
 
-  res.json({ token: issueToken(pseudoUser), user: publicUser(pseudoUser) });
+  const token = issueToken(user);
+  res.json({
+    success: true,
+    token,
+    user: {
+      ...publicUser(user),
+      role: 'candidate',
+      ...(enrollmentId ? { enrollmentId } : {}),
+      ...(instituteCode ? { institution: { code: instituteCode } } : {}),
+    },
+    redirectTo: '/dashboard',
+  });
 });
 
 /**

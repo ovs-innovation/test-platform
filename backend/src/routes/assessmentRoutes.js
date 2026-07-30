@@ -9,6 +9,7 @@ import {
   updateAssessment,
   togglePublish,
   deleteAssessment,
+  importScheduleCsv,
 } from '../controllers/assessmentController.js';
 import { listQuestions, createQuestion, reorderQuestions, bulkUploadQuestions, exportQuestions } from '../controllers/questionController.js';
 import { listSections, createSection } from '../controllers/sectionController.js';
@@ -25,6 +26,7 @@ router.get('/available/:id', authorize('candidate'), getStudentAssessment);
 
 router.get('/', authorize('admin'), listAllAssessments);
 router.post('/', authorize('admin'), validate(assessmentSchema), createAssessment);
+router.post('/import-schedule', authorize('admin'), importScheduleCsv);
 
 router.get('/:assessmentId/sections', authorize('admin'), listSections);
 router.post('/:assessmentId/sections', authorize('admin'), validate(sectionSchema), createSection);

@@ -48,13 +48,14 @@ app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), raz
 app.use(express.json({ limit: '2mb' }));
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
+import { checkHealth, checkReadiness } from './controllers/healthController.js';
+
 // Global rate limiting
 app.use('/api', apiLimiter);
 
-// Health check
-app.get('/api/health', (_req, res) => {
-  res.json({ status: 'ok', time: new Date().toISOString() });
-});
+// Health & Database Readiness check
+app.get('/api/health', checkHealth);
+app.get('/api/health/ready', checkReadiness);
 
 // Routes
 app.use('/api/auth', authRoutes);

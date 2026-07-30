@@ -186,6 +186,20 @@ export default function AdminTestSeries() {
     setDeleteConfirmOpen(true);
   };
 
+  const handleGenerateSkeleton = async (s) => {
+    if (!window.confirm(`Generate 60 draft assessment skeletons for "${s.title}"?`)) return;
+    setSaving(true);
+    try {
+      const res = await testSeriesService.generateTwoYearSkeleton(s.id);
+      toast.success(res.message || 'Generated 60 draft assessment skeletons');
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Generation failed');
+    } finally {
+      setSaving(false);
+    }
+  };
+
 
   if (state === 'loading') return <LoadingScreen />;
   if (state === 'error') return <ErrorState onRetry={load} />;
@@ -222,13 +236,38 @@ export default function AdminTestSeries() {
                 ) : (
                   <Badge color="red">Inactive</Badge>
                 )}
+                {s.is_active && Number(s.linked_tests || 0) === 0 && (
+                  <span className="rounded-md bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 text-[11px] font-bold text-amber-600 dark:text-amber-400">
+                    ⚠️ Active package — 0 tests currently available to students
+                  </span>
+                )}
               </div>
               <h2 className="mt-2 font-extrabold text-slate-900 dark:text-white text-base sm:text-lg tracking-tight">{s.title}</h2>
               <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">
-                <span className="text-blue-600 dark:text-blue-400 font-black">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`}</span> · {s.linked_tests} tests linked · {s.enrollment_count} enrollments
+                <span className="text-blue-600 dark:text-blue-400 font-black">{Number(s.price) === 0 ? 'FREE' : `₹${s.price}`}</span>
+                {' · '}
+                <span className="font-bold text-slate-700 dark:text-slate-300">
+                  {s.planned_tests || s.test_count || 0} planned
+                </span>
+                {' · '}
+                <span>{s.linked_tests || 0} linked</span>
+                {s.planned_tests > 0 && s.linked_tests > 0 && s.linked_tests === s.planned_tests && (
+                  <span className="text-emerald-600 font-extrabold ml-1">({s.linked_tests} draft scheduled)</span>
+                )}
+                {' · '}
+                {s.enrollment_count || 0} enrollments
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
+              {(s.planned_tests === 60 || s.code === 'AIETS-NEET-2028-2Y') && Number(s.linked_tests || 0) === 0 && (
+                <button
+                  type="button"
+                  className="btn-secondary !py-1.5 !px-3 text-xs text-purple-600 dark:text-purple-400 border-purple-300 hover:bg-purple-50"
+                  onClick={() => handleGenerateSkeleton(s)}
+                >
+                  ⚡ Generate 60 Drafts
+                </button>
+              )}
               <button
                 type="button"
                 className={`btn-secondary !py-1.5 !px-3 text-xs ${

@@ -3,13 +3,13 @@
 
 const DEFAULT_SCHOOLS = [
   {
-    id: 'dps',
-    schoolId: 'DPS-DELHI-2026',
-    email: 'principal@dpsrkpuram.ac.in',
+    id: 'apex',
+    schoolId: 'APEX-DELHI-INST',
+    email: 'principal@apexacademy.edu.in',
     password: 'password123',
-    name: 'Delhi Public School (R.K. Puram)',
-    tagline: 'Premier Educational Institution • New Delhi',
-    logoBadge: 'DPS',
+    name: 'Apex Educational Academy',
+    tagline: 'Premier Partner Institution • New Delhi',
+    logoBadge: 'APX',
     logoBg: 'bg-emerald-600',
     logoUrl: '',
     accentColor: '#10b981',
@@ -20,21 +20,21 @@ const DEFAULT_SCHOOLS = [
     activeCount: 205,
     inactiveCount: 13,
     students: [
-      { id: 'DPS-101', name: 'Aarav Sharma', rollNo: '2026-DPS-01', course: 'JEE Main & Advanced', progress: 88, testsCount: 22, avgScore: 84.5, lastActive: 'Today, 10:15 AM', status: 'Active', physics: 88, chemistry: 82, math: 83.5 },
-      { id: 'DPS-102', name: 'Ananya Verma', rollNo: '2026-DPS-02', course: 'NEET UG', progress: 92, testsCount: 26, avgScore: 91.0, lastActive: 'Today, 09:40 AM', status: 'Active', physics: 90, chemistry: 94, math: null, biology: 92 },
-      { id: 'DPS-103', name: 'Rohan Gupta', rollNo: '2026-DPS-03', course: 'JEE Main & Advanced', progress: 74, testsCount: 15, avgScore: 71.2, lastActive: 'Yesterday, 06:20 PM', status: 'Active', physics: 72, chemistry: 75, math: 68 },
-      { id: 'DPS-104', name: 'Priya Iyer', rollNo: '2026-DPS-04', course: 'NEET UG', progress: 85, testsCount: 19, avgScore: 83.0, lastActive: 'Today, 08:10 AM', status: 'Active', physics: 80, chemistry: 85, biology: 84 },
-      { id: 'DPS-105', name: 'Siddharth Nair', rollNo: '2026-DPS-05', course: 'Foundation (Class 10)', progress: 68, testsCount: 12, avgScore: 66.5, lastActive: '3 days ago', status: 'Inactive', physics: 65, chemistry: 68, math: 66.5 },
+      { id: 'APX-101', name: 'Aarav Sharma', rollNo: 'APX-2026-01', course: 'JEE Main & Advanced', progress: 88, testsCount: 22, avgScore: 84.5, lastActive: 'Today, 10:15 AM', status: 'Active', physics: 88, chemistry: 82, math: 83.5 },
+      { id: 'APX-102', name: 'Ananya Verma', rollNo: 'APX-2026-02', course: 'NEET UG', progress: 92, testsCount: 26, avgScore: 91.0, lastActive: 'Today, 09:40 AM', status: 'Active', physics: 90, chemistry: 94, math: null, biology: 92 },
+      { id: 'APX-103', name: 'Rohan Gupta', rollNo: 'APX-2026-03', course: 'JEE Main & Advanced', progress: 74, testsCount: 15, avgScore: 71.2, lastActive: 'Yesterday, 06:20 PM', status: 'Active', physics: 72, chemistry: 75, math: 68 },
+      { id: 'APX-104', name: 'Priya Iyer', rollNo: 'APX-2026-04', course: 'NEET UG', progress: 85, testsCount: 19, avgScore: 83.0, lastActive: 'Today, 08:10 AM', status: 'Active', physics: 80, chemistry: 85, biology: 84 },
+      { id: 'APX-105', name: 'Siddharth Nair', rollNo: 'APX-2026-05', course: 'Foundation (Class 10)', progress: 68, testsCount: 12, avgScore: 66.5, lastActive: '3 days ago', status: 'Inactive', physics: 65, chemistry: 68, math: 66.5 },
     ],
   },
   {
-    id: 'allen',
-    schoolId: 'ALLEN-KOTA-2026',
-    email: 'admin@allen.ac.in',
+    id: 'zenith',
+    schoolId: 'ZENITH-KOTA-INST',
+    email: 'admin@zenithinstitute.ac.in',
     password: 'password123',
-    name: 'Allen Career Institute (Kota Campus)',
-    tagline: 'Path to Success • Kota, Rajasthan',
-    logoBadge: 'ALLEN',
+    name: 'Zenith Career Institute',
+    tagline: 'Excellence in CBT Practice • Kota',
+    logoBadge: 'ZCI',
     logoBg: 'bg-[#2563eb]',
     logoUrl: '',
     accentColor: '#2563eb',
@@ -45,19 +45,19 @@ const DEFAULT_SCHOOLS = [
     activeCount: 468,
     inactiveCount: 14,
     students: [
-      { id: 'ALN-501', name: 'Vikramaditya Sen', rollNo: 'KOTA-JEE-01', course: 'JEE Main & Advanced', progress: 96, testsCount: 35, avgScore: 95.8, lastActive: 'Today, 11:30 AM', status: 'Active', physics: 98, chemistry: 94, math: 95.5 },
-      { id: 'ALN-502', name: 'Devanshi Mehta', rollNo: 'KOTA-NEET-02', course: 'NEET UG', progress: 91, testsCount: 29, avgScore: 89.5, lastActive: 'Today, 10:50 AM', status: 'Active', physics: 88, chemistry: 91, biology: 90 },
-      { id: 'ALN-503', name: 'Harsh Vardhan', rollNo: 'KOTA-JEE-03', course: 'JEE Main & Advanced', progress: 82, testsCount: 21, avgScore: 80.2, lastActive: 'Yesterday', status: 'Active', physics: 81, chemistry: 83, math: 77 },
+      { id: 'ZCI-501', name: 'Vikramaditya Sen', rollNo: 'ZCI-JEE-01', course: 'JEE Main & Advanced', progress: 96, testsCount: 35, avgScore: 95.8, lastActive: 'Today, 11:30 AM', status: 'Active', physics: 98, chemistry: 94, math: 95.5 },
+      { id: 'ZCI-502', name: 'Devanshi Mehta', rollNo: 'ZCI-NEET-02', course: 'NEET UG', progress: 91, testsCount: 29, avgScore: 89.5, lastActive: 'Today, 10:50 AM', status: 'Active', physics: 88, chemistry: 91, biology: 90 },
+      { id: 'ZCI-503', name: 'Harsh Vardhan', rollNo: 'ZCI-JEE-03', course: 'JEE Main & Advanced', progress: 82, testsCount: 21, avgScore: 80.2, lastActive: 'Yesterday', status: 'Active', physics: 81, chemistry: 83, math: 77 },
     ],
   },
   {
-    id: 'xaviers',
-    schoolId: 'XAVIERS-2026',
-    email: 'info@xaviers.edu.in',
+    id: 'horizon',
+    schoolId: 'HORIZON-COLLEGE',
+    email: 'info@horizoncollege.edu.in',
     password: 'password123',
-    name: "St. Xavier's Senior Secondary School",
-    tagline: 'Excellence & Service • Jaipur',
-    logoBadge: 'SXS',
+    name: 'Horizon Senior Secondary College',
+    tagline: 'Empowering Student Results • Jaipur',
+    logoBadge: 'HSC',
     logoBg: 'bg-purple-600',
     logoUrl: '',
     accentColor: '#7c3aed',
@@ -68,8 +68,8 @@ const DEFAULT_SCHOOLS = [
     activeCount: 124,
     inactiveCount: 8,
     students: [
-      { id: 'SXS-201', name: 'Ishita Kapoor', rollNo: 'SXS-2026-11', course: 'NEET UG', progress: 86, testsCount: 18, avgScore: 83.4, lastActive: 'Today, 08:45 AM', status: 'Active', physics: 80, chemistry: 85, biology: 85 },
-      { id: 'SXS-202', name: 'Kabir Bansal', rollNo: 'SXS-2026-12', course: 'JEE Main & Advanced', progress: 79, testsCount: 16, avgScore: 76.0, lastActive: 'Yesterday', status: 'Active', physics: 78, chemistry: 77, math: 73 },
+      { id: 'HSC-201', name: 'Ishita Kapoor', rollNo: 'HSC-2026-11', course: 'NEET UG', progress: 86, testsCount: 18, avgScore: 83.4, lastActive: 'Today, 08:45 AM', status: 'Active', physics: 80, chemistry: 85, biology: 85 },
+      { id: 'HSC-202', name: 'Kabir Bansal', rollNo: 'HSC-2026-12', course: 'JEE Main & Advanced', progress: 79, testsCount: 16, avgScore: 76.0, lastActive: 'Yesterday', status: 'Active', physics: 78, chemistry: 77, math: 73 },
     ],
   },
 ];
@@ -173,16 +173,26 @@ export function saveDemoLeads(leads) {
   }
 }
 
-export function submitSchoolDemoLead(leadData) {
+export async function submitSchoolDemoLead(leadData) {
   const currentLeads = getDemoLeads();
+  const refCode = `ENQ-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+
   const newLead = {
-    id: `lead_${Date.now()}`,
-    schoolName: leadData.schoolName,
-    contactName: leadData.contactName || 'School Admin',
+    id: leadData.id || `lead_${Date.now()}`,
+    referenceCode: leadData.referenceCode || refCode,
+    schoolName: leadData.institutionName || leadData.schoolName,
+    contactName: leadData.contactName || 'Institution Admin',
+    designation: leadData.designation || 'Principal',
     email: leadData.email,
-    phone: leadData.phone,
-    studentCount: leadData.studentCount || '200',
-    preferredCourse: leadData.preferredCourse || 'JEE / NEET / Foundation',
+    phone: leadData.phone || leadData.mobileNumber,
+    city: leadData.city || '',
+    state: leadData.state || '',
+    institutionType: leadData.institutionType || 'School',
+    studentCount: leadData.studentCount || '100-300',
+    targetExam: leadData.targetExam || leadData.preferredCourse || 'NEET',
+    interestedPackage: leadData.interestedPackage || 'NEET-UG 2027 One-Year Program',
+    message: leadData.message || '',
+    estimatedPrice: leadData.estimatedPrice || leadData.estimatedGrandTotal || 0,
     status: 'New Request',
     createdAt: new Date().toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' }),
   };
@@ -190,18 +200,61 @@ export function submitSchoolDemoLead(leadData) {
   const updatedLeads = [newLead, ...currentLeads];
   saveDemoLeads(updatedLeads);
 
+  let finalRefCode = refCode;
+
+  // Send to backend API
+  try {
+    const res = await fetch('/api/public/b2b-enquiry', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        institutionName: newLead.schoolName,
+        contactPerson: newLead.contactName,
+        designation: newLead.designation,
+        mobileNumber: newLead.phone,
+        email: newLead.email,
+        city: newLead.city,
+        state: newLead.state,
+        institutionType: newLead.institutionType,
+        studentCount: newLead.studentCount,
+        targetExam: newLead.targetExam,
+        interestedPackage: newLead.interestedPackage,
+        message: newLead.message,
+        estimatedPrice: newLead.estimatedPrice,
+        testSeriesId: leadData.testSeriesId,
+        programSlug: leadData.programSlug,
+        programName: leadData.programName,
+        programYear: leadData.programYear,
+        studentCountNum: leadData.studentCountNum,
+        standardRetailRate: leadData.standardRetailRate,
+        discountTier: leadData.discountTier,
+        estimatedDiscountedRate: leadData.estimatedDiscountedRate,
+        estimatedSubtotal: leadData.estimatedSubtotal,
+        gstEstimate: leadData.gstEstimate,
+        estimatedGrandTotal: leadData.estimatedGrandTotal,
+        leadSource: leadData.leadSource || 'b2b_program_card',
+      }),
+    });
+    const data = await res.json();
+    if (data && data.referenceCode) {
+      finalRefCode = data.referenceCode;
+    }
+  } catch (err) {
+    console.warn('Backend B2B enquiry sync warning (using local store fallback):', err);
+  }
+
   // Add Notification for Master Admin Bell 🔔
   addAdminNotification({
     id: `notif_${Date.now()}`,
     type: 'b2b_demo_request',
-    title: `🏫 New B2B School Demo Request: ${newLead.schoolName}`,
-    message: `${newLead.contactName} (${newLead.phone}) requested a demo for ${newLead.studentCount} students.`,
+    title: `🏫 New B2B Institutional Demo Request: ${newLead.schoolName}`,
+    message: `${newLead.contactName} (${newLead.phone}) requested a demo for ${newLead.studentCount} students. [Ref: ${finalRefCode}]`,
     created_at: new Date().toISOString(),
     read_at: null,
     target: '/admin/schools',
   });
 
-  return newLead;
+  return { ...newLead, referenceCode: finalRefCode };
 }
 
 export function updateLeadStatus(id, newStatus) {
@@ -328,8 +381,8 @@ export function getAssignedTestSeriesForCourse(courseName = '') {
   ];
 }
 
-export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email }) {
-  const schools = getPartnerSchools();
+export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email } = {}) {
+  const schools = getPartnerSchools() || [];
 
   let matchedSchool = null;
   let matchedStudent = null;
@@ -340,10 +393,12 @@ export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email
   const emailInput = (email || '').trim().toLowerCase();
 
   for (const school of schools) {
+    if (!school || !Array.isArray(school.students)) continue;
     const sCode = (school.schoolId || '').toLowerCase();
     const sId = (school.id || '').toLowerCase();
 
     for (const st of school.students) {
+      if (!st) continue;
       const stRoll = (st.rollNo || '').toLowerCase();
       const stId = (st.id || '').toLowerCase();
       const stName = (st.name || '').toLowerCase();
@@ -357,7 +412,7 @@ export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email
       const matchMobile = mobileInput && (stMobile.endsWith(mobileInput) || mobileInput.endsWith(stMobile));
 
       // Match Email
-      const matchEmail = emailInput && (stName.replace(/\s+/g, '').includes(emailInput.split('@')[0]) || emailInput.includes(matchedSchool?.id || 'dps'));
+      const matchEmail = emailInput && (stName.replace(/\s+/g, '').includes(emailInput.split('@')[0]) || emailInput.includes(sId) || emailInput.length > 3);
 
       if ((matchInst && matchEnroll) || matchMobile || matchEmail) {
         matchedSchool = school;
@@ -368,41 +423,47 @@ export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email
     if (matchedStudent) break;
   }
 
-  // Fallback to Aarav Sharma if no direct match found
-  if (!matchedStudent) {
-    matchedSchool = schools[0];
-    matchedStudent = schools[0].students[0];
+  // Fallback to primary default student if no direct match found
+  if (!matchedSchool || !matchedStudent) {
+    if (schools.length > 0 && Array.isArray(schools[0]?.students) && schools[0].students.length > 0) {
+      matchedSchool = schools[0];
+      matchedStudent = schools[0].students[0];
+    } else {
+      matchedSchool = { id: 'apex', name: 'Apex Senior Secondary School', schoolId: 'DPS-DELHI-2026', logoBadge: 'Apex', accentColor: 'blue' };
+      matchedStudent = { id: 'APX-101', name: 'Aarav Sharma', rollNo: 'APX-2026-01', course: 'JEE Main & Advanced', progress: 88, testsCount: 22, avgScore: 84.5 };
+    }
   }
 
-  const assignedEbooks = getAssignedEbooksForCourse(matchedStudent.course);
-  const assignedTestSeries = getAssignedTestSeriesForCourse(matchedStudent.course);
+  const courseName = matchedStudent?.course || 'JEE Main & Advanced';
+  const assignedEbooks = getAssignedEbooksForCourse(courseName);
+  const assignedTestSeries = getAssignedTestSeriesForCourse(courseName);
 
   return {
     user: {
-      id: matchedStudent.id,
-      name: matchedStudent.name,
-      email: `${matchedStudent.id.toLowerCase()}@${matchedSchool.id}.edu.in`,
+      id: matchedStudent?.id || 'APX-101',
+      name: matchedStudent?.name || 'Aarav Sharma',
+      email: emailInput || `${(matchedStudent?.id || 'student').toLowerCase()}@${matchedSchool?.id || 'apex'}.edu.in`,
       role: 'candidate',
-      enrollmentId: matchedStudent.rollNo,
-      phone: matchedStudent.phone || '+91 98765 43210',
+      enrollmentId: matchedStudent?.rollNo || 'APX-2026-01',
+      phone: matchedStudent?.phone || '+91 98765 43210',
       institution: {
-        id: matchedSchool.id,
-        code: matchedSchool.schoolId,
-        name: matchedSchool.name,
-        badge: matchedSchool.logoBadge,
-        accentColor: matchedSchool.accentColor,
+        id: matchedSchool?.id || 'apex',
+        code: matchedSchool?.schoolId || 'DPS-DELHI-2026',
+        name: matchedSchool?.name || 'Apex Senior Secondary School',
+        badge: matchedSchool?.logoBadge || 'Apex',
+        accentColor: matchedSchool?.accentColor || 'blue',
       },
-      batch: `Batch 2026 • ${matchedStudent.course}`,
+      batch: `Batch 2026 • ${courseName}`,
       assignedTestSeries,
       assignedEbooks,
       studentStats: {
-        progress: matchedStudent.progress,
-        testsCount: matchedStudent.testsCount,
-        avgScore: matchedStudent.avgScore,
-        physics: matchedStudent.physics,
-        chemistry: matchedStudent.chemistry,
-        math: matchedStudent.math,
-        biology: matchedStudent.biology,
+        progress: matchedStudent?.progress || 85,
+        testsCount: matchedStudent?.testsCount || 20,
+        avgScore: matchedStudent?.avgScore || 82,
+        physics: matchedStudent?.physics || 80,
+        chemistry: matchedStudent?.chemistry || 84,
+        math: matchedStudent?.math || 82,
+        biology: matchedStudent?.biology || 85,
       },
     },
   };

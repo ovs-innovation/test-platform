@@ -12,6 +12,9 @@ import {
   toggleTestSeriesActive,
   parsePdfPreview,
   importTestSeriesFromPdf,
+  bulkLinkAssessments,
+  generateDraftStructure,
+  generateTwoYearDraftSkeleton,
 } from '../controllers/testSeriesController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -40,6 +43,9 @@ router.put('/:id', authorize('admin'), validate(testSeriesUpdateSchema), updateT
 router.patch('/:id/toggle-active', authorize('admin'), toggleTestSeriesActive);
 router.delete('/:id', authorize('admin'), deleteTestSeries);
 router.post('/:id/link', authorize('admin'), validate(linkTestSchema), linkAssessment);
+router.post('/:id/bulk-link', authorize('admin'), bulkLinkAssessments);
+router.post('/:id/generate-draft', authorize('admin'), generateDraftStructure);
+router.post('/:id/generate-two-year-skeleton', authorize('admin'), generateTwoYearDraftSkeleton);
 router.delete('/:id/link/:assessmentId', authorize('admin'), unlinkAssessment);
 
 export default router;

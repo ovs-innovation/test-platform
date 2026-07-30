@@ -189,15 +189,116 @@ export const linkAssessment = asyncHandler(async (req, res) => {
   res.json({ message: 'Test linked' });
 });
 
+export const bulkLinkAssessments = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { assessment_ids } = req.body; // array of assessment IDs
+  if (!Array.isArray(assessment_ids) || !assessment_ids.length) {
+    throw ApiError.badRequest('assessment_ids array is required');
+  }
+
+  await withTransaction(async (client) => {
+    let pos = 1;
+    for (const aId of assessment_ids) {
+      await client.query(
+        `INSERT INTO test_series_assessments (test_series_id, assessment_id, label, position)
+         VALUES ($1,$2,$3,$4)
+         ON CONFLICT (test_series_id, assessment_id) DO NOTHING`,
+        [id, aId, `Test ${pos}`, pos]
+      );
+      pos += 1;
+    }
+  });
+
+  res.json({ message: `Successfully linked ${assessment_ids.length} tests` });
+});
+
+export const generateDraftStructure = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { count = 10, prefix = 'Draft Assessment' } = req.body;
+
+  const ts = await query('SELECT * FROM test_series WHERE id = $1', [id]);
+  if (!ts.rowCount) throw ApiError.notFound('Test series not found');
+  const series = ts.rows[0];
+
+  const createdCount = await withTransaction(async (client) => {
+    const existing = await client.query('SELECT COUNT(*)::int AS cnt FROM test_series_assessments WHERE test_series_id = $1', [id]);
+    let startPos = existing.rows[0].cnt + 1;
+
+    for (let i = 1; i <= count; i++) {
+      const pos = startPos + i - 1;
+      const title = `${series.title} — ${prefix} ${pos}`;
+      const assessRes = await client.query(
+        `INSERT INTO assessments (title, description, instructions, duration_minutes, passing_marks, is_published, created_by, test_type, preparation_phase)
+         VALUES ($1, $2, $3, 180, 180, false, $4, 'AIETS', 'CONCEPT_BUILDING') RETURNING id`,
+        [title, `Unscheduled draft assessment ${pos}`, 'Schedule and questions to be configured by Admin.', req.user.id]
+      );
+      const aId = assessRes.rows[0].id;
+
+      await client.query(
+        `INSERT INTO test_series_assessments (test_series_id, assessment_id, label, position)
+         VALUES ($1, $2, $3, $4)`,
+        [id, aId, `${prefix} ${pos}`, pos]
+      );
+    }
+    return count;
+  });
+
+  res.status(201).json({ message: `Generated ${createdCount} draft assessment placeholders` });
+});
+
+export const generateTwoYearDraftSkeleton = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const ts = await query('SELECT * FROM test_series WHERE id = $1', [id]);
+  if (!ts.rowCount) throw ApiError.notFound('Test series not found');
+  const series = ts.rows[0];
+
+  const TWO_YEAR_STRUCTURE = [
+    ...Array.from({ length: 22 }, (_, i) => ({ type: 'AIETS', name: `AIETS ${i + 1}`, phase: 'CONCEPT_BUILDING' })),
+    ...Array.from({ length: 15 }, (_, i) => ({ type: 'UNIT_TEST', name: `Unit Test ${i + 1}`, phase: 'CONCEPT_BUILDING' })),
+    ...Array.from({ length: 12 }, (_, i) => ({ type: 'PART_TEST', name: `Part Test ${i + 1}`, phase: 'PROGRESS_TRACKING' })),
+    ...Array.from({ length: 2 }, (_, i) => ({ type: 'CUMULATIVE_TEST', name: `Cumulative Test ${i + 1}`, phase: 'REVISION_CUMULATIVE' })),
+    ...Array.from({ length: 9 }, (_, i) => ({ type: 'FULL_SYLLABUS_MOCK', name: `Full-Syllabus Mock Test ${i + 1}`, phase: 'INTENSIVE_TESTING' })),
+  ];
+
+  const createdCount = await withTransaction(async (client) => {
+    let pos = 1;
+    for (const item of TWO_YEAR_STRUCTURE) {
+      const title = `AIETS 2028: ${item.name}`;
+      const assessRes = await client.query(
+        `INSERT INTO assessments (title, description, instructions, duration_minutes, passing_marks, is_published, created_by, test_type, preparation_phase)
+         VALUES ($1, $2, $3, 180, 180, false, $4, $5, $6) RETURNING id`,
+        [title, `Unscheduled draft assessment for 2-Year Program`, 'Schedule and questions to be configured by Admin.', req.user.id, item.type, item.phase]
+      );
+      const aId = assessRes.rows[0].id;
+
+      await client.query(
+        `INSERT INTO test_series_assessments (test_series_id, assessment_id, label, position)
+         VALUES ($1, $2, $3, $4)
+         ON CONFLICT (test_series_id, assessment_id) DO NOTHING`,
+        [id, aId, item.name, pos]
+      );
+      pos++;
+    }
+    return TWO_YEAR_STRUCTURE.length;
+  });
+
+  res.status(201).json({ message: `Generated ${createdCount} draft assessment skeletons for 2-Year Program` });
+});
+
 /** Student: my enrollments */
 export const myEnrollments = asyncHandler(async (req, res) => {
   const result = await query(
-    `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.test_count, ts.image_url,
-            COUNT(DISTINCT a.id)::int AS available_tests
+    `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.image_url, ts.code, ts.target_year, ts.program_type,
+            COALESCE(ts.planned_tests, ts.test_count, 0)::int AS planned_tests,
+            COUNT(DISTINCT tsa.assessment_id)::int AS linked_tests,
+            COUNT(DISTINCT CASE WHEN a.start_time IS NOT NULL OR a.sequence_number > 0 THEN a.id END)::int AS scheduled_tests,
+            COUNT(DISTINCT CASE WHEN a.is_published = true THEN a.id END)::int AS published_tests,
+            COUNT(DISTINCT CASE WHEN a.is_published = true AND a.start_time <= NOW() AND a.end_time >= NOW() THEN a.id END)::int AS live_tests,
+            COUNT(DISTINCT CASE WHEN a.is_published = true AND (a.end_time >= NOW() OR a.missed_test_allowed = true) THEN a.id END)::int AS currently_available
      FROM student_enrollments se
      JOIN test_series ts ON ts.id = se.test_series_id
      LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-     LEFT JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+     LEFT JOIN assessments a ON a.id = tsa.assessment_id
      WHERE se.user_id = $1 AND se.status = 'active' AND se.expires_at > NOW()
      GROUP BY se.id, ts.id ORDER BY se.purchased_at DESC`,
     [req.user.id]

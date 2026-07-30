@@ -32,13 +32,13 @@ export default function Login() {
   };
 
   return (
-    <AuthShell variant="admin" title="Admin sign in" subtitle="Sign in to manage test series, assessments and candidates.">
+    <AuthShell variant="admin" title="Admin & Center Sign In" subtitle="Sign in to manage test series, assessments, and candidates.">
       <form onSubmit={onSubmit} className="space-y-5">
         {error && (
           <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm font-medium text-red-300">{error}</div>
         )}
         <div>
-          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5" htmlFor="email">Email Address</label>
+          <label className="block text-[11px] font-semibold uppercase tracking-wider text-slate-300 mb-1.5" htmlFor="email">Email Address / Center ID</label>
           <input
             id="email"
             name="email"
@@ -66,10 +66,10 @@ export default function Login() {
         </div>
         <button
           type="submit"
-          className="w-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.02] disabled:opacity-50"
+          className="w-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] py-3 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.02] disabled:opacity-50 cursor-pointer"
           disabled={submitting}
         >
-          {submitting ? <Spinner className="h-4 w-4 text-white" /> : 'Sign In as Administrator'}
+          {submitting ? <Spinner className="h-4 w-4 text-white" /> : 'Sign In as Administrator / Center'}
         </button>
       </form>
       <p className="mt-6 text-center text-xs text-slate-400">

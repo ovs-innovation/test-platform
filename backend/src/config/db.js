@@ -2,55 +2,73 @@ import dns from 'node:dns';
 import pg from 'pg';
 import { env } from './env.js';
 
-// Force IPv4 lookup first to prevent Windows getaddrinfo ENOTFOUND errors on Neon PostgreSQL hostnames
+// Set process-level DNS resolution order for Neon dualstack / CNAME hostnames
 if (dns.setDefaultResultOrder) {
   dns.setDefaultResultOrder('ipv4first');
 }
 
 const { Pool } = pg;
 
-const customLookup = (hostname, options, callback) => {
-  const cb = typeof options === 'function' ? options : callback;
-  const opts = typeof options === 'object' && options !== null ? { ...options, family: 4 } : { family: 4 };
-  return dns.lookup(hostname, opts, cb);
-};
+const isLocalDb =
+  (env.databaseUrl && (env.databaseUrl.includes('localhost') || env.databaseUrl.includes('127.0.0.1'))) ||
+  (!env.databaseUrl && (env.pg.host === 'localhost' || env.pg.host === '127.0.0.1'));
 
 const poolConfig = env.databaseUrl
-  ? { connectionString: env.databaseUrl, lookup: customLookup }
+  ? {
+      connectionString: env.databaseUrl,
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+      ssl: isLocalDb ? false : { rejectUnauthorized: false },
+    }
   : {
       host: env.pg.host,
       port: env.pg.port,
       user: env.pg.user,
       password: env.pg.password,
       database: env.pg.database,
-      lookup: customLookup,
+      max: 10,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 10000,
+      ssl: isLocalDb ? false : { rejectUnauthorized: false },
     };
-
-// Enable SSL for hosted databases (Neon, RDS, etc.) that require it.
-const isLocalDb =
-  env.databaseUrl.includes('localhost') ||
-  env.databaseUrl.includes('127.0.0.1') ||
-  (!env.databaseUrl && (env.pg.host === 'localhost' || env.pg.host === '127.0.0.1'));
-
-if (!isLocalDb) {
-  poolConfig.ssl = { rejectUnauthorized: false };
-}
 
 export const pool = new Pool(poolConfig);
 
 pool.on('error', (err) => {
   // eslint-disable-next-line no-console
-  console.error('[db] Unexpected error on idle PostgreSQL client', err);
+  console.error('[db] Unexpected error on idle PostgreSQL pool client', err?.message || err);
 });
 
 /**
- * Run a parameterized query. Always use $1, $2 placeholders to avoid SQL injection.
+ * Run a parameterized query with safe retry for transient DB connection drops.
  */
-export const query = (text, params) => pool.query(text, params);
+export const query = async (text, params, retries = 2) => {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      return await pool.query(text, params);
+    } catch (err) {
+      const isTransient =
+        err &&
+        (err.code === 'ENOTFOUND' ||
+          err.code === 'ETIMEDOUT' ||
+          err.code === 'ECONNRESET' ||
+          err.code === '57P01' ||
+          (err.message && (err.message.includes('getaddrinfo') || err.message.includes('connection terminated'))));
+
+      if (isTransient && attempt < retries) {
+        // eslint-disable-next-line no-console
+        console.warn(`[db] Retrying transient query failure (attempt ${attempt + 1}/${retries})...`);
+        await new Promise((resolve) => setTimeout(resolve, 250 * (attempt + 1)));
+        continue;
+      }
+      throw err;
+    }
+  }
+};
 
 /**
  * Run a set of statements inside a single transaction.
- * The callback receives a dedicated client.
  */
 export const withTransaction = async (callback) => {
   const client = await pool.connect();
