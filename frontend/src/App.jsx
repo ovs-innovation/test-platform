@@ -27,10 +27,12 @@ import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
 
 import CandidateDashboard from './pages/candidate/Dashboard.jsx';
+import AIETSCalendar from './pages/candidate/AIETSCalendar.jsx';
 import MyTests from './pages/candidate/MyTests.jsx';
 import MySeriesTests from './pages/candidate/MySeriesTests.jsx';
 import AietsCalendarPage from './pages/candidate/AietsCalendarPage.jsx';
 import Analytics from './pages/candidate/Analytics.jsx';
+import PostTestAnalytics from './pages/candidate/PostTestAnalytics.jsx';
 import Notifications from './pages/candidate/Notifications.jsx';
 import PaymentHistory from './pages/candidate/PaymentHistory.jsx';
 import Profile from './pages/candidate/Profile.jsx';
@@ -44,6 +46,7 @@ import ExamScreen from './pages/candidate/ExamScreen.jsx';
 import ResultPage from './pages/candidate/ResultPage.jsx';
 
 import AdminOverview from './pages/admin/Overview.jsx';
+import AdminTestManager from './pages/admin/AdminTestManager.jsx';
 import AdminAssessments from './pages/admin/Assessments.jsx';
 import AdminAssessmentEditor from './pages/admin/AssessmentEditor.jsx';
 import AdminTestSeries from './pages/admin/TestSeries.jsx';
@@ -115,10 +118,12 @@ export default function App() {
         <Route path="/exam/:attemptId" element={<ProtectedRoute role="candidate"><ExamScreen /></ProtectedRoute>} />
 
         <Route path="/dashboard" element={<ProtectedRoute role="candidate"><Shell><CandidateDashboard /></Shell></ProtectedRoute>} />
+        <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AIETSCalendar /></Shell></ProtectedRoute>} />
         <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
         <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />
         <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AietsCalendarPage /></Shell></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
+        <Route path="/analytics/test/:testId" element={<ProtectedRoute role="candidate"><Shell><PostTestAnalytics /></Shell></ProtectedRoute>} />
         <Route path="/results" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
         <Route path="/leaderboard" element={<ProtectedRoute role="candidate"><Shell><Leaderboard /></Shell></ProtectedRoute>} />
         <Route path="/discussion-hub" element={<ProtectedRoute role="candidate"><Shell><Forum /></Shell></ProtectedRoute>} />
@@ -132,6 +137,7 @@ export default function App() {
         <Route path="/results/:attemptId" element={<ProtectedRoute role="candidate"><ResultPage /></ProtectedRoute>} />
 
         <Route path="/admin" element={<ProtectedRoute role="admin"><Shell><AdminOverview /></Shell></ProtectedRoute>} />
+        <Route path="/admin/tests" element={<ProtectedRoute role="admin"><Shell><AdminTestManager /></Shell></ProtectedRoute>} />
         <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><Shell><AdminAssessments /></Shell></ProtectedRoute>} />
         <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><Shell><AdminAssessmentEditor /></Shell></ProtectedRoute>} />
         <Route path="/admin/test-series" element={<ProtectedRoute role="admin"><Shell><AdminTestSeries /></Shell></ProtectedRoute>} />

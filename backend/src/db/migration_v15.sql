@@ -1,5 +1,4 @@
--- Migration v15: AIETS Architecture Extension
--- Adds comprehensive schema support for AIETS products, assessments, schedules, eBooks, batches, seat assignments, invoices, and audit logging.
+-- Migration v15: Test Management Enhancements, AIETS Architecture Extensions, eBooks, Batches, and Missed Test Overrides
 
 -- 1. Extend test_series table
 ALTER TABLE test_series ADD COLUMN IF NOT EXISTS code VARCHAR(50);
@@ -20,7 +19,7 @@ ALTER TABLE test_series ADD COLUMN IF NOT EXISTS feature_flags JSONB DEFAULT '{"
 
 CREATE UNIQUE INDEX IF NOT EXISTS idx_test_series_code ON test_series(code) WHERE code IS NOT NULL;
 
--- 2. Extend assessments table
+-- 2. Extend assessments and tests tables
 ALTER TABLE assessments ADD COLUMN IF NOT EXISTS sequence_number INTEGER DEFAULT 0;
 ALTER TABLE assessments ADD COLUMN IF NOT EXISTS test_type VARCHAR(50) DEFAULT 'AIETS';
 ALTER TABLE assessments ADD COLUMN IF NOT EXISTS preparation_phase VARCHAR(50) DEFAULT 'CONCEPT_BUILDING';
@@ -38,94 +37,46 @@ ALTER TABLE assessments ADD COLUMN IF NOT EXISTS rank_enabled BOOLEAN DEFAULT TR
 ALTER TABLE assessments ADD COLUMN IF NOT EXISTS ranking_scope_config JSONB DEFAULT '["AIR","STATE","CITY","INSTITUTION","BATCH"]'::jsonb;
 ALTER TABLE assessments ADD COLUMN IF NOT EXISTS missed_test_allowed BOOLEAN DEFAULT FALSE;
 
-CREATE INDEX IF NOT EXISTS idx_assessments_type ON assessments(test_type);
-CREATE INDEX IF NOT EXISTS idx_assessments_phase ON assessments(preparation_phase);
-CREATE INDEX IF NOT EXISTS idx_assessments_start ON assessments(start_time);
+-- Extend tests table
+ALTER TABLE tests ADD COLUMN IF NOT EXISTS is_deleted BOOLEAN DEFAULT FALSE;
+ALTER TABLE tests ADD COLUMN IF NOT EXISTS available_from TIMESTAMPTZ DEFAULT NULL;
+ALTER TABLE tests ADD COLUMN IF NOT EXISTS available_until TIMESTAMPTZ DEFAULT NULL;
+ALTER TABLE tests ADD COLUMN IF NOT EXISTS question_paper_url TEXT DEFAULT NULL;
+ALTER TABLE tests ADD COLUMN IF NOT EXISTS answer_key_url TEXT DEFAULT NULL;
 
--- 3. Digital eBooks and Learning Resources
-CREATE TABLE IF NOT EXISTS e_books_resources (
-  id              SERIAL PRIMARY KEY,
-  title           VARCHAR(200) NOT NULL,
-  category        VARCHAR(100) DEFAULT 'General',
-  subject_name    VARCHAR(100) DEFAULT 'All Subjects',
-  file_url        TEXT NOT NULL,
-  thumbnail_url   TEXT DEFAULT '',
-  description     TEXT DEFAULT '',
-  is_active       BOOLEAN DEFAULT TRUE,
-  created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+-- 3. Create eBooks table
+CREATE TABLE IF NOT EXISTS ebooks (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  author VARCHAR(255),
+  description TEXT,
+  pdf_url TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- 4. Institutional Batches
-CREATE TABLE IF NOT EXISTS institution_batches (
-  id                SERIAL PRIMARY KEY,
-  institution_id    VARCHAR(100) NOT NULL,
-  batch_name        VARCHAR(150) NOT NULL,
-  target_exam       VARCHAR(100) DEFAULT 'NEET',
-  academic_year     VARCHAR(20) DEFAULT '2026-2027',
-  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE (institution_id, batch_name)
+-- 4. Create Batches table
+CREATE TABLE IF NOT EXISTS batches (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL UNIQUE,
+  description TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_batches_inst ON institution_batches(institution_id);
-
--- 5. Institutional Batch Students
-CREATE TABLE IF NOT EXISTS institution_students (
-  id                SERIAL PRIMARY KEY,
-  institution_id    VARCHAR(100) NOT NULL,
-  batch_id          INTEGER REFERENCES institution_batches(id) ON DELETE SET NULL,
-  user_id           INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  student_roll      VARCHAR(100),
-  status            VARCHAR(50) DEFAULT 'Active',
-  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE (institution_id, user_id)
+-- 5. Create Missed Test Overrides table
+CREATE TABLE IF NOT EXISTS missed_test_overrides (
+  id SERIAL PRIMARY KEY,
+  test_id INTEGER NOT NULL REFERENCES tests(id) ON DELETE CASCADE,
+  student_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  valid_from TIMESTAMPTZ NOT NULL,
+  valid_until TIMESTAMPTZ NOT NULL,
+  note TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  UNIQUE(test_id, student_id)
 );
 
-CREATE INDEX IF NOT EXISTS idx_inst_students_inst ON institution_students(institution_id);
-CREATE INDEX IF NOT EXISTS idx_inst_students_batch ON institution_students(batch_id);
-
--- 6. Institutional Package Seat Allocations
-CREATE TABLE IF NOT EXISTS institution_package_assignments (
-  id                SERIAL PRIMARY KEY,
-  institution_id    VARCHAR(100) NOT NULL,
-  test_series_id    INTEGER NOT NULL REFERENCES test_series(id) ON DELETE CASCADE,
-  allocated_seats   INTEGER NOT NULL DEFAULT 100,
-  unit_price        NUMERIC(10,2) NOT NULL DEFAULT 1999.00,
-  start_date        DATE DEFAULT CURRENT_DATE,
-  end_date          DATE,
-  status            VARCHAR(50) DEFAULT 'Active',
-  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  UNIQUE (institution_id, test_series_id)
-);
-
--- 7. Invoices & Billing
-CREATE TABLE IF NOT EXISTS invoices (
-  id                SERIAL PRIMARY KEY,
-  invoice_number    VARCHAR(100) NOT NULL UNIQUE,
-  user_id           INTEGER REFERENCES users(id) ON DELETE SET NULL,
-  institution_id    VARCHAR(100),
-  billing_name      VARCHAR(200) NOT NULL,
-  gstin             VARCHAR(50) DEFAULT '',
-  package_name      VARCHAR(200) NOT NULL,
-  seat_count        INTEGER DEFAULT 1,
-  subtotal          NUMERIC(12,2) NOT NULL,
-  tax_amount        NUMERIC(12,2) NOT NULL,
-  grand_total       NUMERIC(12,2) NOT NULL,
-  payment_status    VARCHAR(50) DEFAULT 'Paid',
-  created_at        TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_invoices_user ON invoices(user_id);
-CREATE INDEX IF NOT EXISTS idx_invoices_inst ON invoices(institution_id);
-
--- 8. Audit Logging
-CREATE TABLE IF NOT EXISTS audit_logs (
-  id          SERIAL PRIMARY KEY,
-  user_id     INTEGER REFERENCES users(id) ON DELETE SET NULL,
-  action      VARCHAR(100) NOT NULL,
-  entity_type VARCHAR(50) NOT NULL,
-  entity_id   VARCHAR(100),
-  details     JSONB DEFAULT '{}'::jsonb,
-  created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_audit_action ON audit_logs(action);
+-- 6. Add FK constraint to recommended_ebook_id if not present
+DO $$ BEGIN
+  ALTER TABLE tests ADD CONSTRAINT fk_tests_recommended_ebook FOREIGN KEY (recommended_ebook_id) REFERENCES ebooks(id) ON DELETE SET NULL;
+EXCEPTION WHEN duplicate_object THEN NULL;
+          WHEN undefined_object THEN NULL;
+END $$;

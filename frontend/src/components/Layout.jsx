@@ -19,6 +19,7 @@ import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCirc
 
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
+  { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
   { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
@@ -33,6 +34,7 @@ const candidateNav = [
 
 const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
+  { to: '/admin/tests', label: 'AIETS & Test Manager', icon: 'calendar' },
   { to: '/admin/schools', label: 'Partner Schools', icon: 'bank' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
   { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
@@ -51,6 +53,7 @@ const adminNav = [
 const Icon = ({ name, className = 'h-5 w-5' }) => {
   const paths = {
     grid: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 9a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1v-5zm9-9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V5zm0 10a1 1 0 011-1h5a1 1 0 011 1v4a1 1 0 01-1 1h-5a1 1 0 01-1-1v-4z',
+    calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
     doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
     calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
     users: 'M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 10-4-4 4 4 0 004 4zm6 0a3 3 0 10-2.83-4',

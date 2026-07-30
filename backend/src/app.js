@@ -21,6 +21,8 @@ import testSeriesRoutes from './routes/testSeriesRoutes.js';
 import paymentRoutes from './routes/paymentRoutes.js';
 import notificationRoutes from './routes/notificationRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
+import studentReportRoutes from './routes/studentReportRoutes.js';
+import institutionReportRoutes from './routes/institutionReportRoutes.js';
 
 const app = express();
 
@@ -45,7 +47,8 @@ app.use(
   })
 );
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
-app.use(express.json({ limit: '2mb' }));
+app.use(express.json({ limit: '20mb' }));
+app.use('/uploads', express.static('uploads'));
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
 import { checkHealth, checkReadiness } from './controllers/healthController.js';
@@ -70,7 +73,9 @@ app.use('/api/public', publicRoutes);
 app.use('/api/test-series', testSeriesRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/student/reports', studentReportRoutes);
 app.use('/api/student', studentRoutes);
+app.use('/api/institution', institutionReportRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFoundHandler);

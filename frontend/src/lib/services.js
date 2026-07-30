@@ -251,6 +251,7 @@ export const notificationService = {
 
 export const studentService = {
   analytics: () => withCache('student_analytics', () => api.get('/student/analytics').then((r) => r.data)),
+  postTestAnalytics: (testId) => api.get(`/student/analytics/${testId}`).then((r) => r.data),
   profile: () => withCache('student_profile', () => api.get('/student/profile').then((r) => r.data)),
   updateProfile: (data) => {
     clearCache('student_profile');
@@ -271,6 +272,11 @@ export const studentService = {
     clearCache('student_forum');
     return api.post(`/student/forum/${id}/reply`, { body }).then((r) => r.data);
   },
+  calendar: () => withCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
+};
+
+export const calendarService = {
+  getCalendar: () => withCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
 };
 
 export const attemptService = {
@@ -358,11 +364,27 @@ export const adminService = {
     return api.post('/admin/faculty', data).then((r) => r.data);
   },
   subjects: () => withCache('admin_subjects', () => api.get('/admin/subjects').then((r) => r.data.subjects)),
-  createSubject: (data) => {
-    clearCache();
-    return api.post('/admin/subjects', data).then((r) => r.data);
-  },
-  chapters: (subjectId) => api.get(`/admin/subjects/${subjectId}/chapters`).then((r) => r.data.chapters),
   createChapter: (data) => api.post('/admin/chapters', data).then((r) => r.data),
   broadcast: (data) => api.post('/admin/notifications/broadcast', data).then((r) => r.data),
+  // Test Management Helpers
+  tests: (params) => api.get('/admin/tests', { params }).then((r) => r.data.tests),
+  createTest: (data) => api.post('/admin/tests', data).then((r) => r.data.test),
+  getTest: (id) => api.get(`/admin/tests/${id}`).then((r) => r.data),
+  updateTest: (id, data) => api.put(`/admin/tests/${id}`, data).then((r) => r.data.test),
+  deleteTest: (id) => api.delete(`/admin/tests/${id}`).then((r) => r.data),
+  togglePublishTest: (id, is_published) => api.patch(`/admin/tests/${id}/publish`, { is_published }).then((r) => r.data),
+  assignTest: (id, data) => api.post(`/admin/tests/${id}/assignments`, data).then((r) => r.data.assignment),
+  uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data).then((r) => r.data),
+  generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
+  setMissedTestOverride: (id, data) => api.post(`/admin/tests/${id}/missed-override`, data).then((r) => r.data.override),
+  notifyTestReminder: (id, custom_message) => api.post(`/admin/tests/${id}/notify`, { custom_message }).then((r) => r.data),
+  // eBook Helpers
+  ebooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
+  createEbook: (data) => api.post('/admin/ebooks', data).then((r) => r.data.ebook),
+  deleteEbook: (id) => api.delete(`/admin/ebooks/${id}`).then((r) => r.data),
+  // Batch Helpers
+  batches: () => api.get('/admin/batches').then((r) => r.data.batches),
+  createBatch: (data) => api.post('/admin/batches', data).then((r) => r.data.batch),
+  deleteBatch: (id) => api.delete(`/admin/batches/${id}`).then((r) => r.data),
+  institutionAnalytics: () => api.get('/admin/analytics/institution').then((r) => r.data.institution_analytics),
 };

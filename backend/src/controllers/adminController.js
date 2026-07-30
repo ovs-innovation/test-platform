@@ -140,7 +140,20 @@ export const getReports = asyncHandler(async (_req, res) => {
   res.json({ reports: result.rows });
 });
 
-export const exportReports = asyncHandler(async (_req, res) => {
+export const exportReports = asyncHandler(async (req, res) => {
+  const { type = 'student', format = 'csv', test_id } = req.query;
+
+  let whereClauses = [];
+  let params = [];
+  let paramIdx = 1;
+
+  if (test_id) {
+    whereClauses.push(`at.assessment_id = $${paramIdx++}`);
+    params.push(test_id);
+  }
+
+  const whereSql = whereClauses.length ? `WHERE ${whereClauses.join(' AND ')}` : '';
+
   const result = await query(`
     SELECT
       at.id AS attempt_id,
@@ -163,8 +176,9 @@ export const exportReports = asyncHandler(async (_req, res) => {
     JOIN users u ON u.id = at.candidate_id
     JOIN assessments a ON a.id = at.assessment_id
     LEFT JOIN scores s ON s.attempt_id = at.id
+    ${whereSql}
     ORDER BY at.started_at DESC
-  `);
+  `, params);
 
   const headers = [
     'attempt_id', 'candidate_name', 'candidate_email', 'assessment_title', 'status',
@@ -191,9 +205,39 @@ export const exportReports = asyncHandler(async (_req, res) => {
     ]));
   }
 
+  const filename = `${type}_reports_${Date.now()}.${format === 'excel' ? 'csv' : 'csv'}`;
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
-  res.setHeader('Content-Disposition', 'attachment; filename="attempt_reports.csv"');
+  res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
   res.send(lines.join('\n'));
+});
+
+export const getInstitutionAnalytics = asyncHandler(async (_req, res) => {
+  const result = await query(`
+    SELECT
+      u.id AS student_id,
+      u.name AS student_name,
+      u.email AS student_email,
+      sp.city,
+      sp.target_exam,
+      COUNT(at.id)::int AS total_attempts,
+      COUNT(at.id) FILTER (WHERE at.submitted_at IS NOT NULL)::int AS completed_attempts,
+      COALESCE(ROUND(AVG(s.percentage), 2), 0) AS avg_percentage,
+      COUNT(s.id) FILTER (WHERE s.passed)::int AS total_passed
+    FROM users u
+    LEFT JOIN student_profiles sp ON sp.user_id = u.id
+    LEFT JOIN attempts at ON at.candidate_id = u.id
+    LEFT JOIN scores s ON s.attempt_id = at.id
+    WHERE u.role = 'candidate'
+    GROUP BY u.id, u.name, u.email, sp.city, sp.target_exam
+    ORDER BY avg_percentage DESC;
+  `);
+
+  res.json({
+    institution_analytics: {
+      total_candidates: result.rows.length,
+      students: result.rows
+    }
+  });
 });
 
 export const getAttemptReport = asyncHandler(async (req, res) => {

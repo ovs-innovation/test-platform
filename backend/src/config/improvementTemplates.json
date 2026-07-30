@@ -1,0 +1,25 @@
+{
+  "general": {
+    "weak_topic_template": "Focus on {chapter} — your accuracy is {accuracy}%, class average is {class_avg}%. Recommended: revise NCERT chapter concepts + attempt {questions_needed} targeted practice questions this week.",
+    "moderate_topic_template": "Good progress in {chapter} ({accuracy}% accuracy). Review mis-attempted questions and focus on speed optimization.",
+    "strong_topic_template": "Mastered {chapter} ({accuracy}% accuracy). Keep revising formulas periodically to maintain accuracy under exam conditions."
+  },
+  "subjects": {
+    "Physics": {
+      "recommendation": "Solve standard numerical problems and focus on formula applications in {chapter}.",
+      "default_resource": "NCERT Physics + 25 Numerical Problems"
+    },
+    "Chemistry": {
+      "recommendation": "Revise NCERT reaction mechanisms and inorganic trend charts for {chapter}.",
+      "default_resource": "NCERT Chemistry + Reactions Revision Notes"
+    },
+    "Botany": {
+      "recommendation": "Review NCERT diagrams, terminology, and key plant process cycles in {chapter}.",
+      "default_resource": "NCERT Botany + Diagram Worksheets"
+    },
+    "Zoology": {
+      "recommendation": "Memorize anatomical structures, organ functions, and disease classifications in {chapter}.",
+      "default_resource": "NCERT Zoology + Flashcards"
+    }
+  }
+}
