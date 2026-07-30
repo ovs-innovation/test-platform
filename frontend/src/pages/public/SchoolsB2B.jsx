@@ -401,7 +401,6 @@ export default function SchoolsB2B() {
                 style={{ backgroundColor: activeSchool.accentColor || '#2563eb' }}
               />
 
-<<<<<<< HEAD
             <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between relative z-10">
               {/* Left: School Logo & Title */}
               <div className="flex items-center gap-4 sm:gap-5">
@@ -703,235 +702,47 @@ export default function SchoolsB2B() {
                         </td>
                       </tr>
                     ))
-=======
-              <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between relative z-10">
-                <div className="flex items-center gap-4 sm:gap-5">
-                  {activeSchool.logoUrl ? (
-                    <img
-                      src={activeSchool.logoUrl}
-                      alt={activeSchool.name}
-                      className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-contain bg-white p-2 shadow-xl border border-white/20 shrink-0"
-                    />
->>>>>>> 7c0a0eb (feat: AIETS calendar redesign, B2B pricing flow, auth stability repair, and hero seamless blending)
                   ) : (
-                    <div className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl ${activeSchool.logoBg || 'bg-[#2563eb]'} text-white font-black text-xl sm:text-2xl shadow-xl border border-white/20 shrink-0`}>
-                      {activeSchool.logoBadge || activeSchool.name.substring(0, 3).toUpperCase()}
-                    </div>
-                  )}
-
-                  <div className="space-y-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="inline-flex items-center gap-1.5 rounded-full bg-[#2563eb]/20 px-3 py-1 text-xs font-bold text-cyan-300 border border-[#2563eb]/30">
-                        <School className="h-3.5 w-3.5" />
-                        INSTITUTION PORTAL
-                      </span>
-                      <span className="text-xs font-mono font-bold text-slate-400">
-                        ID: {activeSchool.schoolId}
-                      </span>
-                    </div>
-                    <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                      {activeSchool.name}
-                    </h1>
-                    <p className="text-xs sm:text-sm text-slate-400 font-medium">
-                      {activeSchool.tagline} • <span className="text-emerald-400 font-bold">{activeSchool.totalLicenses} Issued Licenses</span>
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 shrink-0">
-                  <button
-                    onClick={() => setShowAddModal(true)}
-                    className="inline-flex items-center gap-2 rounded-xl bg-[#2563eb] hover:bg-blue-700 px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg transition cursor-pointer"
-                  >
-                    <Plus className="h-4 w-4" />
-                    <span>Enroll New Student</span>
-                  </button>
-                  <button
-                    onClick={handleLogout}
-                    className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/80 px-4 py-2.5 text-xs sm:text-sm font-bold text-slate-300 hover:bg-slate-800 hover:text-white transition cursor-pointer"
-                  >
-                    <LogOut className="h-4 w-4 text-rose-400" />
-                    <span>Exit Portal</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* KPI STATS */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-              <div className="rounded-2xl border border-slate-800 bg-[#071126] p-5">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-extrabold uppercase tracking-wider">Enrolled Students</span>
-                  <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                    <Users className="h-4 w-4" />
-                  </div>
-                </div>
-                <p className="text-2xl sm:text-3xl font-black text-white">{activeSchool.activeStudents} <span className="text-xs font-normal text-slate-400">/ {activeSchool.totalLicenses}</span></p>
-                <div className="mt-2 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#2563eb] rounded-full" style={{ width: `${(activeSchool.activeStudents / activeSchool.totalLicenses) * 100}%` }} />
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-slate-800 bg-[#071126] p-5">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-extrabold uppercase tracking-wider">Batch Avg Progress</span>
-                  <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                    <TrendingUp className="h-4 w-4" />
-                  </div>
-                </div>
-                <p className="text-2xl sm:text-3xl font-black text-emerald-400">{activeSchool.avgProgress}%</p>
-                <p className="text-[11px] font-bold text-slate-400 mt-2">Overall Syllabus Coverage</p>
-              </div>
-
-              <div className="rounded-2xl border border-slate-800 bg-[#071126] p-5">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-extrabold uppercase tracking-wider">Tests Attempted</span>
-                  <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
-                    <FileText className="h-4 w-4" />
-                  </div>
-                </div>
-                <p className="text-2xl sm:text-3xl font-black text-white">{activeSchool.testsAttempted.toLocaleString()}</p>
-                <p className="text-[11px] font-bold text-slate-400 mt-2">NTA Pattern CBT Tests</p>
-              </div>
-
-              <div className="rounded-2xl border border-slate-800 bg-[#071126] p-5">
-                <div className="flex items-center justify-between text-slate-400 mb-2">
-                  <span className="text-xs font-extrabold uppercase tracking-wider">Active Status</span>
-                  <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
-                    <UserCheck className="h-4 w-4" />
-                  </div>
-                </div>
-                <p className="text-2xl sm:text-3xl font-black text-cyan-400">{activeSchool.activeCount} <span className="text-xs font-normal text-slate-400">Active</span></p>
-                <p className="text-[11px] font-bold text-slate-400 mt-2">{activeSchool.inactiveCount} Inactive (30+ days)</p>
-              </div>
-            </div>
-
-            {/* ENROLLED STUDENTS TABLE */}
-            <div className="rounded-3xl border border-slate-800 bg-[#071126] p-6 backdrop-blur-xl shadow-xl space-y-5">
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-800 pb-5">
-                <div>
-                  <h2 className="text-lg font-extrabold text-white flex items-center gap-2">
-                    <span>Student Roster & Course Progress</span>
-                    <span className="rounded-full bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 text-xs font-bold text-blue-400">
-                      {filteredStudents.length} Students
-                    </span>
-                  </h2>
-                  <p className="text-xs text-slate-400 font-medium font-sans">Real-time performance analytics for students enrolled under {activeSchool.name}.</p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2.5">
-                  <button
-                    onClick={() => setShowRankingModal(true)}
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-[#C5A059]/40 bg-[#C5A059]/10 px-3 py-2 text-xs font-extrabold text-[#C5A059] hover:bg-[#C5A059]/20 transition cursor-pointer"
-                  >
-                    <Award className="h-3.5 w-3.5" />
-                    <span>🏆 Ranking Leaderboard</span>
-                  </button>
-
-                  <div className="relative w-full sm:w-56">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
-                    <input
-                      type="text"
-                      placeholder="Search student or roll..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full rounded-xl border border-slate-800 bg-slate-950 py-2 pl-9 pr-3 text-xs font-semibold text-white placeholder-slate-500 focus:border-[#2563eb] focus:outline-none"
-                    />
-                  </div>
-                </div>
-              </div>
-
-              {/* Table */}
-              <div className="w-full max-w-full overflow-x-auto min-w-0">
-                <table className="w-full text-left text-xs border-collapse">
-                  <thead className="border-b border-slate-800 bg-slate-950/50 text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
                     <tr>
-                      <th className="py-3.5 px-4">Student & Roll No</th>
-                      <th className="py-3.5 px-4">Enrolled Course</th>
-                      <th className="py-3.5 px-4">Syllabus Progress</th>
-                      <th className="py-3.5 px-4">Tests Done</th>
-                      <th className="py-3.5 px-4">Avg Score</th>
-                      <th className="py-3.5 px-4">Last Active</th>
-                      <th className="py-3.5 px-4">Status</th>
-                      <th className="py-3.5 px-4 text-right">Action</th>
+                      <td colSpan={8} className="py-10 text-center text-slate-400 font-medium">
+                        No student records found matching search filter.
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-800/60">
-                    {filteredStudents.length > 0 ? (
-                      filteredStudents.map((student) => (
-                        <tr key={student.id} className="hover:bg-slate-900/50 transition">
-                          <td className="py-3.5 px-4">
-                            <div className="font-extrabold text-white text-xs">{student.name}</div>
-                            <div className="text-[10px] font-mono text-slate-400">{student.rollNo}</div>
-                          </td>
-                          <td className="py-3.5 px-4 text-slate-300 font-medium">{student.course}</td>
-                          <td className="py-3.5 px-4">
-                            <div className="flex items-center gap-2">
-                              <span className="font-bold text-cyan-400 text-xs">{student.progress}%</span>
-                              <div className="h-1.5 w-16 bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-cyan-400 rounded-full" style={{ width: `${student.progress}%` }} />
-                              </div>
-                            </div>
-                          </td>
-                          <td className="py-3.5 px-4 font-bold text-white">{student.testsCount}</td>
-                          <td className="py-3.5 px-4 font-black text-emerald-400">{student.avgScore}%</td>
-                          <td className="py-3.5 px-4 text-slate-400 text-[11px]">{student.lastActive}</td>
-                          <td className="py-3.5 px-4">
-                            <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-bold border ${student.status === 'Active' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-slate-800 text-slate-400 border-slate-700'}`}>
-                              {student.status}
-                            </span>
-                          </td>
-                          <td className="py-3.5 px-4 text-right">
-                            <button
-                              onClick={() => setSelectedStudent(student)}
-                              className="rounded-lg border border-slate-700 bg-slate-800 px-2.5 py-1 text-[11px] font-bold text-slate-300 hover:border-cyan-500/50 hover:bg-cyan-500/10 hover:text-cyan-400 transition cursor-pointer"
-                            >
-                              View Report
-                            </button>
-                          </td>
-                        </tr>
-                      ))
-                    ) : (
-                      <tr>
-                        <td colSpan={8} className="py-10 text-center text-slate-400">
-                          No student records found.
-                        </td>
-                      </tr>
-                    )}
-                  </tbody>
-                </table>
-              </div>
+                  )}
+                </tbody>
+              </table>
             </div>
+          </div>
 
-            {/* MODALS */}
-            {selectedStudent && createPortal(
-              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
-                <div className="w-full max-w-lg rounded-3xl border border-slate-800 bg-[#071126] p-6 shadow-2xl space-y-5">
-                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                    <h3 className="font-extrabold text-white text-base">{selectedStudent.name}</h3>
-                    <button onClick={() => setSelectedStudent(null)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+          {/* Student Performance Report Modal */}
+          {selectedStudent && createPortal(
+            <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+              <div className="w-full max-w-lg rounded-3xl border border-slate-800 bg-[#071126] p-6 shadow-2xl space-y-5">
+                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                  <h3 className="font-extrabold text-white text-base">{selectedStudent.name}</h3>
+                  <button onClick={() => setSelectedStudent(null)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                </div>
+                <div className="grid grid-cols-3 gap-3 text-center">
+                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Progress</p>
+                    <p className="text-lg font-black text-cyan-400 mt-0.5">{selectedStudent.progress}%</p>
                   </div>
-                  <div className="grid grid-cols-3 gap-3 text-center">
-                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase">Progress</p>
-                      <p className="text-lg font-black text-cyan-400 mt-0.5">{selectedStudent.progress}%</p>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase">Tests Done</p>
-                      <p className="text-lg font-black text-white mt-0.5">{selectedStudent.testsCount}</p>
-                    </div>
-                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
-                      <p className="text-[10px] font-bold text-slate-400 uppercase">Avg Accuracy</p>
-                      <p className="text-lg font-black text-emerald-400 mt-0.5">{selectedStudent.avgScore}%</p>
-                    </div>
+                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Tests Done</p>
+                    <p className="text-lg font-black text-white mt-0.5">{selectedStudent.testsCount}</p>
                   </div>
-                  <div className="pt-3 border-t border-slate-800 flex justify-end">
-                    <button onClick={() => setSelectedStudent(null)} className="rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700">Close</button>
+                  <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800">
+                    <p className="text-[10px] font-bold text-slate-400 uppercase">Avg Accuracy</p>
+                    <p className="text-lg font-black text-emerald-400 mt-0.5">{selectedStudent.avgScore}%</p>
                   </div>
                 </div>
-              </div>,
-              document.body
-            )}
+                <div className="pt-3 border-t border-slate-800 flex justify-end">
+                  <button onClick={() => setSelectedStudent(null)} className="rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-white hover:bg-slate-700">Close</button>
+                </div>
+              </div>
+            </div>,
+            document.body
+          )}
 
             {showRankingModal && createPortal(
               <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
