@@ -203,24 +203,24 @@ export default function Analytics() {
       {/* ------------------------------------------------------------- */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Score Improvement Graph */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4 relative">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-              <h2 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide">Score Improvement Graph</h2>
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 sm:p-6 shadow-xs space-y-4 relative max-w-full overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <TrendingUp className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />
+              <h2 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-200 uppercase tracking-wide truncate">Score Improvement Graph</h2>
             </div>
-            <span className="text-[10px] font-bold text-blue-600 dark:text-cyan-300 bg-blue-500/10 dark:bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-500/20 dark:border-blue-500/30">
+            <span className="text-[10px] font-bold text-blue-600 dark:text-cyan-300 bg-blue-500/10 dark:bg-blue-500/20 px-2.5 py-0.5 rounded-full border border-blue-500/20 dark:border-blue-500/30 shrink-0">
               Score % Trend
             </span>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">{scoreImprovementSummary}</p>
 
           {trend.length > 0 ? (
-            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-14 min-h-[210px]">
+            <div className="mt-4 flex items-end gap-3.5 overflow-x-auto max-w-full custom-scrollbar pb-4 pt-14 min-h-[210px] border-b border-slate-100 dark:border-slate-800 px-1">
               {trend.map((t, i) => (
                 <div
                   key={i}
-                  className="group relative flex min-w-[56px] flex-col items-center gap-1.5 cursor-pointer"
+                  className="group relative flex min-w-[50px] shrink-0 flex-col items-center gap-1.5 cursor-pointer"
                   onMouseEnter={() => setHoveredScoreTrend(t)}
                   onMouseLeave={() => setHoveredScoreTrend(null)}
                 >
@@ -234,7 +234,7 @@ export default function Analytics() {
 
                   <span className="text-xs font-extrabold text-blue-600 dark:text-[#60a5fa] group-hover:scale-110 transition-transform">{t.percentage}%</span>
                   <div
-                    className="w-10 bg-gradient-to-t from-[#1d4ed8] to-[#2563eb] hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40"
+                    className="w-9 bg-gradient-to-t from-[#1d4ed8] to-[#2563eb] hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40"
                     style={{ height: `${Math.max(24, Math.round(t.percentage * 1.1))}px` }}
                   />
                   <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-1 text-center truncate w-14">
@@ -249,24 +249,24 @@ export default function Analytics() {
         </div>
 
         {/* Accuracy Trend Graph */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4 relative">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
-            <div className="flex items-center gap-2">
-              <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-              <h2 className="text-sm font-bold text-slate-900 dark:text-slate-200 uppercase tracking-wide">Accuracy Trend Graph</h2>
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 sm:p-6 shadow-xs space-y-4 relative max-w-full overflow-hidden">
+          <div className="flex flex-wrap items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3 gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <Target className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0" />
+              <h2 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-slate-200 uppercase tracking-wide truncate">Accuracy Trend Graph</h2>
             </div>
-            <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-300 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-500/30">
-              Target: &ge;75% Accuracy
+            <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-300 bg-emerald-500/10 dark:bg-emerald-500/20 px-2.5 py-0.5 rounded-full border border-emerald-500/20 dark:border-emerald-500/30 shrink-0">
+              Target: &ge;75% Acc
             </span>
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed font-medium">Percentage of correct answers vs total attempted questions per test.</p>
 
           {trend.length > 0 ? (
-            <div className="mt-6 flex items-end gap-3 overflow-x-auto border-b border-slate-100 dark:border-slate-800 pb-4 pt-14 min-h-[210px]">
+            <div className="mt-4 flex items-end gap-3.5 overflow-x-auto max-w-full custom-scrollbar pb-4 pt-14 min-h-[210px] border-b border-slate-100 dark:border-slate-800 px-1">
               {trend.map((t, i) => (
                 <div
                   key={i}
-                  className="group relative flex min-w-[56px] flex-col items-center gap-1.5 cursor-pointer"
+                  className="group relative flex min-w-[50px] shrink-0 flex-col items-center gap-1.5 cursor-pointer"
                   onMouseEnter={() => setHoveredAccuracyTrend(t)}
                   onMouseLeave={() => setHoveredAccuracyTrend(null)}
                 >
@@ -280,7 +280,7 @@ export default function Analytics() {
 
                   <span className="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 group-hover:scale-110 transition-transform">{t.accuracy}%</span>
                   <div
-                    className="w-10 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40"
+                    className="w-9 bg-gradient-to-t from-emerald-600 to-emerald-400 hover:brightness-125 transition-all duration-200 rounded-t-xl shadow-lg shadow-emerald-500/20 group-hover:shadow-emerald-500/40"
                     style={{ height: `${Math.max(24, Math.round(t.accuracy * 1.1))}px` }}
                   />
                   <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-1 text-center truncate w-14">

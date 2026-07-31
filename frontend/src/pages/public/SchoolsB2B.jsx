@@ -1085,7 +1085,7 @@ export default function SchoolsB2B() {
         <div>
 
           {/* SECTION 2: B2B HERO (CLEAN SEAMLESS MIDNIGHT GRADIENT) */}
-          <section id="b2b-hero" className="relative overflow-hidden bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-white flex items-center py-8 sm:py-10 lg:py-12 border-b border-slate-800/80 min-h-[calc(100vh-140px)] scroll-mt-32">
+          <section id="b2b-hero" className="relative overflow-hidden bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-white flex items-center py-8 sm:py-10 lg:py-12 border-b border-slate-800/80 min-h-0 lg:min-h-[calc(100vh-140px)] scroll-mt-32">
             
             {/* Soft Organic Ambient Depth Overlay */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -1140,7 +1140,7 @@ export default function SchoolsB2B() {
                   </div>
 
                   {/* 3 Short Trust Indicators */}
-                  <div className="pt-3 flex flex-wrap items-center gap-4 text-xs font-bold text-slate-300 border-t border-slate-800/90">
+                  <div className="pt-3 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-bold text-slate-300 border-t border-slate-800/90">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                       <span>National-Level Assessments</span>
@@ -1687,45 +1687,45 @@ export default function SchoolsB2B() {
                   <div className="space-y-4">
                     
                     {/* Feature 1 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs">
+                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
                       <div className="p-2 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 shrink-0">
                         <Users className="h-5 w-5" />
                       </div>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833]">Student and Batch Management</h4>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Student and Batch Management</h4>
                         <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Organize enrolled students, batches and login access.</p>
                       </div>
                     </div>
 
                     {/* Feature 2 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs">
+                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
                       <div className="p-2 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 shrink-0">
                         <BookOpen className="h-5 w-5" />
                       </div>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833]">Test-Series Assignment</h4>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Test-Series Assignment</h4>
                         <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Assign AIETS packages, tests and learning resources.</p>
                       </div>
                     </div>
 
                     {/* Feature 3 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs">
+                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
                       <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
                         <BarChart3 className="h-5 w-5" />
                       </div>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833]">Performance Analytics</h4>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Performance Analytics</h4>
                         <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Review participation, subject performance and batch progress.</p>
                       </div>
                     </div>
 
                     {/* Feature 4 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs">
+                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
                       <div className="p-2 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 shrink-0">
                         <FileText className="h-5 w-5" />
                       </div>
-                      <div>
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833]">Reports and Invoices</h4>
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Reports and Invoices</h4>
                         <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Download institutional reports and access payment records.</p>
                       </div>
                     </div>
@@ -1749,15 +1749,15 @@ export default function SchoolsB2B() {
                 </div>
 
                 {/* RIGHT SIDE: COMPACT DASHBOARD MOCKUP (~58% / 7 cols) */}
-                <div className="lg:col-span-7 relative">
+                <div className="lg:col-span-7 relative min-w-0 max-w-full">
                   <div className="absolute -inset-2 rounded-3xl bg-blue-500/10 blur-xl opacity-60 pointer-events-none" />
 
-                  <div className="relative rounded-3xl border border-[#DCE5F1] bg-white p-5 sm:p-6 shadow-md space-y-4 overflow-hidden">
+                  <div className="relative rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-6 shadow-md space-y-4 overflow-hidden max-w-full">
                     {/* Top Accent Line */}
                     <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
 
                     {/* Header Bar */}
-                    <div className="flex flex-wrap items-center justify-between border-b border-[#DCE5F1] pb-3 gap-2">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#DCE5F1] pb-3 gap-2">
                       <div className="space-y-0.5">
                         <h3 className="text-sm font-extrabold text-[#071833] flex items-center gap-2">
                           <span>AIETS Institution Portal</span>
@@ -1768,18 +1768,18 @@ export default function SchoolsB2B() {
                         <p className="text-[11px] text-[#5D6B82]">Sample Institution Workspace</p>
                       </div>
                       
-                      {/* Non-Interactive Tab Nav */}
-                      <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#DCE5F1] text-[10.5px] font-bold text-[#5D6B82]">
-                        <span className="px-2.5 py-1 rounded-lg bg-white text-[#2563EB] shadow-xs border border-[#DCE5F1]">Students</span>
-                        <span className="px-2 py-1">Batches</span>
-                        <span className="px-2 py-1">Assignments</span>
-                        <span className="px-2 py-1">Analytics</span>
-                        <span className="px-2 py-1">Reports</span>
+                      {/* Non-Interactive Tab Nav with Overflow Scroll */}
+                      <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#DCE5F1] text-[10.5px] font-bold text-[#5D6B82] overflow-x-auto max-w-full">
+                        <span className="px-2.5 py-1 rounded-lg bg-white text-[#2563EB] shadow-xs border border-[#DCE5F1] whitespace-nowrap">Students</span>
+                        <span className="px-2 py-1 whitespace-nowrap">Batches</span>
+                        <span className="px-2 py-1 whitespace-nowrap">Assignments</span>
+                        <span className="px-2 py-1 whitespace-nowrap">Analytics</span>
+                        <span className="px-2 py-1 whitespace-nowrap">Reports</span>
                       </div>
                     </div>
 
-                    {/* 4 Feature Mockup Tiles */}
-                    <div className="grid grid-cols-2 gap-3">
+                    {/* 4 Feature Mockup Tiles (Single Column on mobile <440px for 100% legibility) */}
+                    <div className="grid grid-cols-1 min-[440px]:grid-cols-2 gap-3">
                       
                       {/* Tile 1: Student Roster */}
                       <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
@@ -2132,25 +2132,25 @@ export default function SchoolsB2B() {
 
 
           {/* SECTION 12: INSTITUTIONAL PARTNERSHIP ENQUIRY FORM (FINAL CONVERSION POINT) */}
-          <section ref={enquiryFormRef} id="partnership-form" className="bg-[#F5F8FD] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1] scroll-mt-32">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <section ref={enquiryFormRef} id="partnership-form" className="bg-[#F5F8FD] py-12 sm:py-16 lg:py-24 border-b border-[#DCE5F1] scroll-mt-32">
+            <div className="max-w-[1280px] mx-auto px-3.5 sm:px-6 lg:px-8 w-full">
+              <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
                 
                 {/* LEFT SIDE: BRAND NARRATIVE & CONTACT DETAILS */}
-                <div className="lg:col-span-5 space-y-6">
+                <div className="lg:col-span-5 space-y-5">
                   <div className="space-y-2">
                     <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Get Started Today</span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
                       Let’s Build a Stronger Testing Program Together
                     </h2>
                     <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
                   </div>
 
-                  <p className="text-sm text-[#475467] leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
                     Transform your institution's results with NTA-style CBT mock assessments, All India Ranks, and real-time student performance analytics.
                   </p>
 
-                  <div className="space-y-3 pt-2">
+                  <div className="space-y-2.5 pt-1">
                     <div className="flex items-start gap-3">
                       <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
                         <Check className="h-4 w-4" />
@@ -2182,7 +2182,7 @@ export default function SchoolsB2B() {
                     </div>
                   </div>
 
-                  <div className="p-5 rounded-2xl bg-white border border-[#DCE5F1] space-y-2 shadow-xs">
+                  <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE5F1] space-y-1.5 shadow-xs">
                     <p className="text-xs font-extrabold text-[#071833]">Need Direct Institutional Support?</p>
                     <p className="text-xs text-[#475467]">
                       Email: <a href="mailto:support@edvedum.com" className="text-[#2563EB] font-bold hover:underline">support@edvedum.com</a>
@@ -2194,13 +2194,13 @@ export default function SchoolsB2B() {
                 </div>
 
                 {/* RIGHT SIDE: 12-FIELD ENQUIRY FORM CARD */}
-                <div className="lg:col-span-7">
-                  <div className="rounded-3xl border border-[#DCE5F1] bg-white p-7 sm:p-9 shadow-md space-y-5 relative">
-                    <div className="border-b border-[#DCE5F1] pb-4">
-                      <h3 className="text-xl font-extrabold text-[#071833]">
+                <div className="lg:col-span-7 w-full max-w-full">
+                  <div className="rounded-2xl sm:rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-7 lg:p-9 shadow-md space-y-4 sm:space-y-5 relative max-w-full overflow-hidden">
+                    <div className="border-b border-[#DCE5F1] pb-3.5">
+                      <h3 className="text-lg sm:text-xl font-extrabold text-[#071833]">
                         Institutional Partnership Application
                       </h3>
-                      <p className="text-xs text-[#5D6B82] mt-0.5">
+                      <p className="text-[11px] sm:text-xs text-[#5D6B82] mt-0.5">
                         Please fill out all required fields marked with an asterisk (*).
                       </p>
                     </div>
@@ -2242,14 +2242,14 @@ export default function SchoolsB2B() {
                         </button>
                       </div>
                     ) : (
-                      <form onSubmit={handleEnquirySubmit} className="space-y-4">
+                      <form onSubmit={handleEnquirySubmit} className="space-y-3.5 sm:space-y-4">
                         {formError && (
-                          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3.5 text-xs font-bold text-rose-700 text-center">
+                          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-bold text-rose-700 text-center">
                             {formError}
                           </div>
                         )}
 
-                        <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div>
                             <label className="block text-xs font-bold text-[#071833] mb-1">
                               1. Institution Name *
@@ -2260,7 +2260,7 @@ export default function SchoolsB2B() {
                               placeholder="e.g. Apex Educational Academy"
                               value={enquiryForm.institutionName}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionName: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
 
@@ -2274,12 +2274,12 @@ export default function SchoolsB2B() {
                               placeholder="e.g. Dr. Ramesh Sharma"
                               value={enquiryForm.contactPerson}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, contactPerson: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
                         </div>
 
-                        <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                           <div>
                             <label className="block text-xs font-bold text-[#071833] mb-1">
                               3. Designation
@@ -2287,7 +2287,7 @@ export default function SchoolsB2B() {
                             <select
                               value={enquiryForm.designation}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, designation: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             >
                               <option value="Principal">Principal / Vice Principal</option>
                               <option value="Director">Managing Director / Owner</option>
@@ -2307,7 +2307,7 @@ export default function SchoolsB2B() {
                               placeholder="+91 98765 43210"
                               value={enquiryForm.mobileNumber}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, mobileNumber: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
 
@@ -2321,12 +2321,12 @@ export default function SchoolsB2B() {
                               placeholder="principal@institution.edu.in"
                               value={enquiryForm.email}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
                         </div>
 
-                        <div className="grid sm:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div>
                             <label className="block text-xs font-bold text-[#071833] mb-1">
                               6. City *
@@ -2337,7 +2337,7 @@ export default function SchoolsB2B() {
                               placeholder="e.g. New Delhi"
                               value={enquiryForm.city}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, city: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
 
@@ -2351,12 +2351,12 @@ export default function SchoolsB2B() {
                               placeholder="e.g. Delhi NCR"
                               value={enquiryForm.state}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, state: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             />
                           </div>
                         </div>
 
-                        <div className="grid sm:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                           <div>
                             <label className="block text-xs font-bold text-[#071833] mb-1">
                               8. Institution Type
@@ -2364,7 +2364,7 @@ export default function SchoolsB2B() {
                             <select
                               value={enquiryForm.institutionType}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionType: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             >
                               {INSTITUTION_TYPES.map((t) => (
                                 <option key={t} value={t}>{t}</option>
@@ -2379,7 +2379,7 @@ export default function SchoolsB2B() {
                             <select
                               value={enquiryForm.studentCount}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, studentCount: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             >
                               <option value="50-100">50 - 100 Students</option>
                               <option value="100-300">100 - 300 Students</option>
@@ -2395,7 +2395,7 @@ export default function SchoolsB2B() {
                             <select
                               value={enquiryForm.targetExam}
                               onChange={(e) => setEnquiryForm({ ...enquiryForm, targetExam: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
                             >
                               {TARGET_EXAMINATIONS.map((exam) => (
                                 <option key={exam} value={exam}>{exam}</option>
@@ -2411,7 +2411,7 @@ export default function SchoolsB2B() {
                           <select
                             value={enquiryForm.interestedPackage}
                             onChange={(e) => setEnquiryForm({ ...enquiryForm, interestedPackage: e.target.value })}
-                            className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                            className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
                           >
                             {INTERESTED_PACKAGES.map((pkg) => (
                               <option key={pkg} value={pkg}>{pkg}</option>
@@ -2428,7 +2428,7 @@ export default function SchoolsB2B() {
                             placeholder="Mention any specific requirements, timing, or questions..."
                             value={enquiryForm.message}
                             onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                            className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                            className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
                           />
                         </div>
 
@@ -2440,7 +2440,7 @@ export default function SchoolsB2B() {
                             required
                             checked={enquiryForm.consent}
                             onChange={(e) => setEnquiryForm({ ...enquiryForm, consent: e.target.checked })}
-                            className="mt-0.5 h-4 w-4 rounded border-[#DCE5F1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer"
+                            className="mt-0.5 h-4 w-4 rounded border-[#DCE5F1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer shrink-0"
                           />
                           <label htmlFor="consent-check" className="text-xs text-[#475467] leading-snug cursor-pointer">
                             I agree to be contacted by Edvedum Academy regarding this institutional enquiry. *
@@ -2451,7 +2451,7 @@ export default function SchoolsB2B() {
                         <button
                           type="submit"
                           disabled={formSubmitting}
-                          className="w-full mt-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                          className="w-full mt-3 rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 px-4 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
                         >
                           {formSubmitting ? (
                             <>
@@ -2460,8 +2460,9 @@ export default function SchoolsB2B() {
                             </>
                           ) : (
                             <>
-                              <span>Submit Institutional Partnership Application</span>
-                              <Send className="h-4 w-4" />
+                              <span className="hidden sm:inline">Submit Institutional Partnership Application</span>
+                              <span className="sm:hidden">Submit Partnership Application</span>
+                              <Send className="h-4 w-4 shrink-0" />
                             </>
                           )}
                         </button>

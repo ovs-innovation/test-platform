@@ -140,8 +140,8 @@ export default function PublicHeader() {
     <header className="sticky top-0 z-40 bg-white">
 
       <div className="bg-[#0a1628] text-white">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center justify-between gap-2 px-4 py-2 text-[11px] sm:px-6 sm:text-xs">
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3.5 sm:px-6 py-2 text-[10px] min-[360px]:text-[11px] sm:text-xs whitespace-nowrap overflow-x-hidden">
+          <div className="flex items-center gap-3 shrink-0">
             <a href="tel:18003383386" className="flex items-center gap-1.5 text-white/85 hover:text-white transition-colors">
               1800-EDVEDUM (3383386)
             </a>
@@ -149,9 +149,8 @@ export default function PublicHeader() {
               support@edvedum.com
             </a>
           </div>
-          <div className="flex flex-wrap items-center gap-2.5 sm:gap-3.5">
+          <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
             {showDashboardLogout ? (
-
               <>
                 <Link
                   to={user.role === 'admin' ? '/admin' : '/dashboard'}
@@ -190,7 +189,7 @@ export default function PublicHeader() {
                 </Link>
               </>
             )}
-            <div className="flex items-center gap-2 border-l border-white/20 pl-3">
+            <div className="hidden lg:flex items-center gap-2 border-l border-white/20 pl-3">
               <SocialIcon type="youtube" />
               <SocialIcon type="instagram" />
               <SocialIcon type="facebook" />
@@ -351,6 +350,28 @@ export default function PublicHeader() {
                   </Link>
                 ),
               )}
+              <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col gap-1.5 sm:hidden">
+                <Link
+                  to="/blog"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-1.5 text-xs font-semibold text-slate-600 hover:text-[#0D6EFD]"
+                >
+                  Blog
+                </Link>
+                <Link
+                  to="/careers"
+                  onClick={() => setMenuOpen(false)}
+                  className="py-1.5 text-xs font-semibold text-slate-600 hover:text-[#0D6EFD]"
+                >
+                  Careers
+                </Link>
+                <div className="flex items-center gap-3 pt-2 text-slate-800">
+                  <SocialIcon type="youtube" />
+                  <SocialIcon type="instagram" />
+                  <SocialIcon type="facebook" />
+                  <SocialIcon type="linkedin" />
+                </div>
+              </div>
               <Link to="/signup" onClick={() => setMenuOpen(false)} className="edvedum-btn-gradient mt-3 rounded-full py-3 text-center text-sm font-semibold text-white">
                 Enroll Now
               </Link>

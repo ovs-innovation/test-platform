@@ -3,7 +3,7 @@ import { ProgramDropdownGrid } from "./EdvedumProgramDropdowns.jsx";
 
 export default function EdvedumHeroBridge() {
   return (
-    <section className="relative z-20 -mt-14 px-4 pb-2 lg:-mt-16 lg:px-8">
+    <section className="relative z-20 mt-5 sm:mt-6 lg:-mt-16 px-4 pb-2 lg:px-8">
       <div className="edvedum-section-wrap !px-0">
         <div className="rounded-2xl border border-slate-200/90 bg-white shadow-[0_20px_50px_-12px_rgba(15,23,42,0.18)]">
           {/* Announcement */}

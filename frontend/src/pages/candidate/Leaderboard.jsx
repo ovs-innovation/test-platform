@@ -1,7 +1,114 @@
-import { useEffect, useState, useCallback, useMemo } from 'react';
+import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PageHeader } from '../../components/ui.jsx';
-import { Trophy, Award, Search, Sparkles, ChevronDown } from 'lucide-react';
+import { Trophy, Award, Search, Sparkles, ChevronDown, Check, FileText } from 'lucide-react';
+
+function CustomAssessmentDropdown({ assessments, value, onChange }) {
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState('');
+  const dropdownRef = useRef(null);
+
+  const selectedAssessment = useMemo(() => {
+    return assessments.find((a) => String(a.id) === String(value)) || assessments[0];
+  }, [assessments, value]);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const filteredAssessments = useMemo(() => {
+    if (!search.trim()) return assessments;
+    const q = search.toLowerCase().trim();
+    return assessments.filter((a) => a.title?.toLowerCase().includes(q));
+  }, [assessments, search]);
+
+  return (
+    <div className="relative w-full sm:w-80" ref={dropdownRef}>
+      {/* Trigger Button */}
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        className="w-full flex items-center justify-between gap-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] py-2.5 px-3.5 text-xs font-bold text-slate-900 dark:text-white shadow-2xs hover:border-blue-500/80 hover:shadow-sm transition-all duration-200 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+      >
+        <div className="flex items-center gap-2 min-w-0 text-left">
+          <Award className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />
+          <span className="truncate font-extrabold text-xs text-slate-800 dark:text-slate-100">
+            {selectedAssessment ? selectedAssessment.title : 'Select Assessment'}
+          </span>
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          {selectedAssessment && (
+            <span className="hidden min-[420px]:inline-flex px-2 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 text-[10px] font-extrabold border border-blue-200 dark:border-blue-800/60">
+              {selectedAssessment.attempt_count} attempts
+            </span>
+          )}
+          <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180 text-blue-600' : ''}`} />
+        </div>
+      </button>
+
+      {/* Popover Menu Dropdown */}
+      {open && (
+        <div className="absolute right-0 top-full mt-2 w-full min-w-[300px] sm:w-[380px] z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-2 space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
+          {/* Search Filter */}
+          {assessments.length > 4 && (
+            <div className="relative p-1">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search assessment..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-1.5 pl-8 pr-3 text-xs font-semibold text-slate-800 dark:text-slate-100 focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          )}
+
+          {/* Options Scroll List */}
+          <div className="max-h-64 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
+            {filteredAssessments.length > 0 ? (
+              filteredAssessments.map((a) => {
+                const isSelected = String(a.id) === String(value);
+                return (
+                  <button
+                    key={a.id}
+                    type="button"
+                    onClick={() => {
+                      onChange(a.id);
+                      setOpen(false);
+                    }}
+                    className={`w-full flex items-center justify-between gap-3 p-2.5 rounded-xl text-left transition cursor-pointer ${
+                      isSelected
+                        ? 'bg-blue-50/90 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80 font-extrabold shadow-2xs'
+                        : 'hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold'
+                    }`}
+                  >
+                    <div className="min-w-0 flex-1 space-y-0.5">
+                      <p className="text-xs leading-snug truncate">{a.title}</p>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-500 dark:text-slate-400">
+                        {a.attempt_count} attempts
+                      </span>
+                      {isSelected && <Check className="h-4 w-4 text-blue-600 dark:text-blue-400 shrink-0" />}
+                    </div>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="p-4 text-center text-xs text-slate-400">No matching assessments</div>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function Leaderboard() {
   const [assessments, setAssessments] = useState([]);
@@ -42,9 +149,8 @@ export default function Leaderboard() {
     })();
   }, []);
 
-  const onAssessmentChange = (e) => {
-    const id = e.target.value;
-    setAssessmentId(id);
+  const handleAssessmentChange = (id) => {
+    setAssessmentId(String(id));
     setSearchQuery('');
     loadLeaderboard(id || undefined);
   };
@@ -100,20 +206,11 @@ export default function Leaderboard() {
         subtitle="Recognizing top academic performers. Standardized percentile rankings computed per test."
         actions={
           assessments.length > 0 && (
-            <div className="relative w-full sm:w-72">
-              <select
-                id="lb-assessment"
-                className="w-full rounded-xl border border-slate-200 bg-white py-2 px-3 pr-8 text-xs font-bold text-slate-900 shadow-2xs focus:border-blue-500 focus:outline-none dark:border-slate-800 dark:bg-[#111827] dark:text-white"
-                value={assessmentId}
-                onChange={onAssessmentChange}
-              >
-                {assessments.map((a) => (
-                  <option key={a.id} value={a.id}>
-                    {a.title} ({a.attempt_count} attempts)
-                  </option>
-                ))}
-              </select>
-            </div>
+            <CustomAssessmentDropdown
+              assessments={assessments}
+              value={assessmentId}
+              onChange={handleAssessmentChange}
+            />
           )
         }
       />

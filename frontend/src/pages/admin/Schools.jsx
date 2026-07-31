@@ -273,47 +273,47 @@ export default function Schools() {
           </div>
         </div>
 
-        <div className="w-full max-w-full overflow-x-auto min-w-0">
-          <table className="w-full text-left text-xs border-collapse">
+        <div className="w-full max-w-full overflow-x-auto min-w-0 custom-scrollbar">
+          <table className="w-full min-w-[960px] text-left text-xs border-collapse">
             <thead className="border-b border-slate-200 bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
               <tr>
-                <th className="py-3 px-4">School & Contact Person</th>
-                <th className="py-3 px-4">Official Email & Phone</th>
-                <th className="py-3 px-4">Target Capacity</th>
-                <th className="py-3 px-4">Request Date</th>
-                <th className="py-3 px-4">Status</th>
-                <th className="py-3 px-4 text-right">Quick Action</th>
+                <th className="py-3 px-4 min-w-[250px]">School & Contact Person</th>
+                <th className="py-3 px-4 min-w-[210px]">Official Email & Phone</th>
+                <th className="py-3 px-4 min-w-[130px]">Target Capacity</th>
+                <th className="py-3 px-4 min-w-[120px]">Request Date</th>
+                <th className="py-3 px-4 min-w-[140px]">Status</th>
+                <th className="py-3 px-4 text-right min-w-[180px]">Quick Action</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {leads.length > 0 ? (
                 leads.map((lead) => (
                   <tr key={lead.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
-                    <td className="py-3.5 px-4">
-                      <div>
-                        <p className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm">{lead.schoolName}</p>
-                        <p className="text-[11px] text-blue-600 dark:text-cyan-400 font-semibold">{lead.contactName}</p>
+                    <td className="py-3.5 px-4 min-w-[250px]">
+                      <div className="space-y-0.5 min-w-0">
+                        <p className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug">{lead.schoolName}</p>
+                        <p className="text-[11px] text-blue-600 dark:text-cyan-400 font-bold leading-snug">{lead.contactName}</p>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-3.5 px-4 min-w-[210px] whitespace-nowrap">
                       <div className="space-y-0.5">
                         <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-medium">
-                          <Mail className="h-3 w-3 text-slate-400" />
+                          <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                           <span>{lead.email}</span>
                         </div>
                         <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400 font-mono text-[11px]">
-                          <Phone className="h-3 w-3 text-slate-400" />
+                          <Phone className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                           <span>{lead.phone}</span>
                         </div>
                       </div>
                     </td>
-                    <td className="py-3.5 px-4 font-bold text-slate-900 dark:text-slate-200">
+                    <td className="py-3.5 px-4 min-w-[130px] font-bold text-slate-900 dark:text-slate-200 whitespace-nowrap">
                       {lead.studentCount} Students
                     </td>
-                    <td className="py-3.5 px-4 text-slate-500 dark:text-slate-400 font-medium text-[11px]">
+                    <td className="py-3.5 px-4 min-w-[120px] text-slate-500 dark:text-slate-400 font-medium text-[11px] whitespace-nowrap">
                       {lead.createdAt}
                     </td>
-                    <td className="py-3.5 px-4">
+                    <td className="py-3.5 px-4 min-w-[140px] whitespace-nowrap">
                       <select
                         value={lead.status}
                         onChange={(e) => handleLeadStatus(lead.id, e.target.value)}
@@ -326,7 +326,7 @@ export default function Schools() {
                         <option value="Rejected">🔴 Rejected</option>
                       </select>
                     </td>
-                    <td className="py-3.5 px-4 text-right">
+                    <td className="py-3.5 px-4 text-right min-w-[180px] whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
                         <button
                           type="button"
@@ -349,7 +349,7 @@ export default function Schools() {
                         <button
                           type="button"
                           onClick={() => handleDeleteLead(lead.id)}
-                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition"
+                          className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition cursor-pointer"
                           title="Delete Lead"
                         >
                           <Trash2 className="h-3.5 w-3.5" />
@@ -399,17 +399,17 @@ export default function Schools() {
         </div>
 
         {/* Table */}
-        <div className="w-full max-w-full overflow-x-auto min-w-0">
-          <table className="w-full text-left text-xs border-collapse">
+        <div className="w-full max-w-full overflow-x-auto min-w-0 custom-scrollbar">
+          <table className="w-full min-w-[1050px] text-left text-xs border-collapse">
             <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               <tr>
-                <th className="py-3.5 px-4">School Logo & Institution Name</th>
-                <th className="py-3.5 px-4">School Code / ID</th>
-                <th className="py-3.5 px-4">Admin Email</th>
-                <th className="py-3.5 px-4">Password</th>
-                <th className="py-3.5 px-4">License Capacity</th>
-                <th className="py-3.5 px-4">Payment Status</th>
-                <th className="py-3.5 px-4 text-right">Actions</th>
+                <th className="py-3.5 px-4 min-w-[280px]">School Logo & Institution Name</th>
+                <th className="py-3.5 px-4 min-w-[140px]">School Code / ID</th>
+                <th className="py-3.5 px-4 min-w-[200px]">Admin Email</th>
+                <th className="py-3.5 px-4 min-w-[140px]">Password</th>
+                <th className="py-3.5 px-4 min-w-[140px]">License Capacity</th>
+                <th className="py-3.5 px-4 min-w-[120px]">Payment Status</th>
+                <th className="py-3.5 px-4 text-right min-w-[180px]">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
@@ -417,8 +417,8 @@ export default function Schools() {
                 filteredSchools.map((school) => (
                   <tr key={school.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-900/40 transition">
                     {/* Logo & Name */}
-                    <td className="py-4 px-4">
-                      <div className="flex items-center gap-3.5">
+                    <td className="py-4 px-4 min-w-[280px]">
+                      <div className="flex items-center gap-3.5 min-w-0">
                         {/* Render Custom Logo Image or Emblem Badge */}
                         {school.logoUrl ? (
                           <img
@@ -440,30 +440,30 @@ export default function Schools() {
                           {school.logoBadge || school.name.substring(0, 3).toUpperCase()}
                         </div>
 
-                        <div>
-                          <p className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm">{school.name}</p>
-                          <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium">{school.tagline}</p>
+                        <div className="min-w-0 flex-1">
+                          <p className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm leading-snug">{school.name}</p>
+                          <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium leading-snug mt-0.5">{school.tagline}</p>
                         </div>
                       </div>
                     </td>
 
                     {/* School Code */}
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 min-w-[140px] whitespace-nowrap">
                       <span className="font-mono font-bold text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-500/10 px-2.5 py-1 rounded-lg border border-blue-200 dark:border-blue-500/20">
                         {school.schoolId}
                       </span>
                     </td>
 
                     {/* Email */}
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 min-w-[200px] whitespace-nowrap">
                       <div className="flex items-center gap-1.5 text-slate-700 dark:text-slate-300 font-semibold">
-                        <Mail className="h-3.5 w-3.5 text-slate-400" />
+                        <Mail className="h-3.5 w-3.5 text-slate-400 shrink-0" />
                         <span>{school.email}</span>
                       </div>
                     </td>
 
                     {/* Password */}
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 min-w-[140px] whitespace-nowrap">
                       <div className="flex items-center gap-2">
                         <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">
                           {showPasswords[school.id] ? school.password : '••••••••'}
@@ -471,7 +471,7 @@ export default function Schools() {
                         <button
                           type="button"
                           onClick={() => togglePasswordVisibility(school.id)}
-                          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                          className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-pointer"
                           title="Toggle Password View"
                         >
                           {showPasswords[school.id] ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
@@ -479,7 +479,7 @@ export default function Schools() {
                         <button
                           type="button"
                           onClick={() => handleCopy(school.password, school.id)}
-                          className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400"
+                          className="text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 cursor-pointer"
                           title="Copy Password"
                         >
                           <Copy className="h-3.5 w-3.5" />
@@ -507,14 +507,14 @@ export default function Schools() {
                     </td>
 
                     {/* Payment Status */}
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-4 min-w-[120px] whitespace-nowrap">
                       <select
                         value={school.paymentStatus || 'Paid'}
                         onChange={(e) => {
                           const updated = schools.map((s) => s.id === school.id ? { ...s, paymentStatus: e.target.value } : s);
                           setSchools(updated);
                         }}
-                        className={`rounded-lg border px-2 py-1 text-[11px] font-extrabold cursor-pointer focus:outline-none ${
+                        className={`rounded-lg border px-2.5 py-1 text-[11px] font-extrabold cursor-pointer focus:outline-none ${
                           (school.paymentStatus || 'Paid') === 'Paid'
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
                             : (school.paymentStatus || 'Paid') === 'Pending'
@@ -530,7 +530,7 @@ export default function Schools() {
 
 
                     {/* Actions */}
-                    <td className="py-4 px-4 text-right">
+                    <td className="py-4 px-4 text-right min-w-[180px] whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
                         <button
                           type="button"
@@ -555,7 +555,7 @@ export default function Schools() {
                         <button
                           type="button"
                           onClick={() => handleDelete(school.id, school.name)}
-                          className="p-1 rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 dark:hover:text-rose-400 transition"
+                          className="p-1 rounded-lg text-slate-400 hover:bg-rose-50 hover:text-rose-600 dark:hover:bg-rose-500/10 dark:hover:text-rose-400 transition cursor-pointer"
                           title="Delete School Account"
                         >
                           <Trash2 className="h-4 w-4" />
@@ -566,7 +566,7 @@ export default function Schools() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="py-10 text-center text-slate-400 font-medium">
+                  <td colSpan={7} className="py-10 text-center text-slate-400 font-medium">
                     No partner schools found. Click "+ Add Partner School" to create one.
                   </td>
                 </tr>
