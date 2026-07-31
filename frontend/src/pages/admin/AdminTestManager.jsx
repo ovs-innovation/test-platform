@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { adminService } from '../../lib/services.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
@@ -22,10 +22,79 @@ import {
   X,
   AlertCircle,
   Download,
-  Filter
+  Filter,
+  ChevronDown
 } from 'lucide-react';
 
 const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
+
+// Custom Floating Popover Dropdown for Test Type Filtering
+function CustomAdminTestTypeDropdown({ value, onChange, types }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const options = [
+    { value: 'All', label: 'All Test Types', desc: 'Display all scheduled CBT assessments' },
+    ...types.map((t) => ({ value: t, label: t, desc: `${t} mock exams & modules` }))
+  ];
+
+  const selectedOpt = options.find((o) => o.value === value) || options[0];
+
+  return (
+    <div className="relative shrink-0" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-300 bg-white dark:border-slate-800 dark:bg-slate-900 text-xs font-bold text-slate-800 dark:text-slate-200 hover:border-blue-500 shadow-xs transition cursor-pointer"
+      >
+        <Filter className="h-3.5 w-3.5 text-blue-500 shrink-0" />
+        <span className="truncate">{selectedOpt.label}</span>
+        <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
+      </button>
+
+      {open && (
+        <div className="absolute right-0 z-50 mt-1.5 min-w-[220px] rounded-2xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#0f172a] p-1.5 shadow-2xl animate-in fade-in zoom-in-95 duration-150">
+          <div className="px-3 py-1.5 border-b border-slate-100 dark:border-slate-800 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+            Filter Assessment Type
+          </div>
+          <div className="space-y-0.5 mt-1">
+            {options.map((o) => (
+              <button
+                key={o.value}
+                type="button"
+                onClick={() => {
+                  onChange(o.value);
+                  setOpen(false);
+                }}
+                className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left transition cursor-pointer ${
+                  value === o.value
+                    ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-cyan-300 font-extrabold'
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 font-semibold'
+                }`}
+              >
+                <div>
+                  <p className="text-xs">{o.label}</p>
+                  <p className="text-[10px] text-slate-400 font-normal">{o.desc}</p>
+                </div>
+                {value === o.value && <CheckCircle2 className="h-4 w-4 text-blue-600 dark:text-cyan-400 shrink-0" />}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function AdminTestManager() {
   const [tests, setTests] = useState([]);
@@ -294,15 +363,15 @@ export default function AdminTestManager() {
   return (
     <div className="space-y-6 w-full max-w-7xl mx-auto pb-12">
       {/* Header Banner */}
-      <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white shadow-xl border border-slate-800">
+      <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-blue-50/90 via-indigo-50/70 to-blue-50/90 dark:from-slate-900 dark:via-blue-950 dark:to-indigo-950 text-slate-900 dark:text-white shadow-xs border border-blue-100 dark:border-slate-800">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-extrabold border border-blue-400/30 text-blue-300">
+            <div className="inline-flex items-center gap-2 rounded-full bg-blue-600/10 dark:bg-blue-500/20 px-3 py-1 text-xs font-extrabold border border-blue-500/20 dark:border-blue-400/30 text-blue-700 dark:text-blue-300">
               <CalendarDays className="h-3.5 w-3.5" />
               AIETS & Test Series Command Center
             </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Test Schedule & Module Manager</h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
+            <h1 className="text-2xl sm:text-3xl font-black tracking-tight text-slate-900 dark:text-white">Test Schedule & Module Manager</h1>
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 max-w-xl">
               Create, edit, schedule, assign, upload answer keys/solutions, trigger rank calculations, and configure missed-test access overrides.
             </p>
           </div>
@@ -310,7 +379,7 @@ export default function AdminTestManager() {
           <div className="flex items-center gap-3">
             <button
               onClick={openCreateModal}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-extrabold text-white shadow-lg shadow-blue-500/25 transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-extrabold text-white shadow-md shadow-blue-500/20 transition cursor-pointer"
             >
               <Plus className="h-4 w-4" /> + Create New Test
             </button>
@@ -386,31 +455,26 @@ export default function AdminTestManager() {
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <select
+                  <CustomAdminTestTypeDropdown
                     value={selectedType}
-                    onChange={(e) => setSelectedType(e.target.value)}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none"
-                  >
-                    <option value="All">All Test Types</option>
-                    {TEST_TYPES.map((t) => (
-                      <option key={t} value={t}>{t}</option>
-                    ))}
-                  </select>
+                    onChange={setSelectedType}
+                    types={TEST_TYPES}
+                  />
                 </div>
               </div>
 
               {/* Table */}
               <div className="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
+                <div className="overflow-x-auto custom-scrollbar">
+                  <table className="w-full min-w-[1000px] text-left border-collapse">
                     <thead className="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase text-slate-400">
                       <tr>
-                        <th className="py-3.5 px-4">Test Title & Type</th>
-                        <th className="py-3.5 px-4">Scheduled Date</th>
-                        <th className="py-3.5 px-4">Timings</th>
-                        <th className="py-3.5 px-4">Duration & Marks</th>
-                        <th className="py-3.5 px-4">Status</th>
-                        <th className="py-3.5 px-4 text-right">Actions</th>
+                        <th className="py-3.5 px-4 min-w-[260px]">Test Title & Type</th>
+                        <th className="py-3.5 px-4 min-w-[130px]">Scheduled Date</th>
+                        <th className="py-3.5 px-4 min-w-[130px]">Timings</th>
+                        <th className="py-3.5 px-4 min-w-[130px]">Duration & Marks</th>
+                        <th className="py-3.5 px-4 min-w-[140px]">Status</th>
+                        <th className="py-3.5 px-4 text-right min-w-[240px]">Actions</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 text-xs font-semibold text-slate-700 dark:text-slate-200">
