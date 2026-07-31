@@ -57,8 +57,12 @@ const run = async () => {
     await pool.query(migration17);
     const migration18 = fs.readFileSync(path.join(__dirname, 'migration_v18.sql'), 'utf-8');
     await pool.query(migration18);
+    const migration19 = fs.readFileSync(path.join(__dirname, 'migration_v19.sql'), 'utf-8');
+    await pool.query(migration19);
+    const migration20 = fs.readFileSync(path.join(__dirname, 'migration_v20.sql'), 'utf-8');
+    await pool.query(migration20);
     // eslint-disable-next-line no-console
-    console.log('[migrate] Schema applied successfully.');
+    console.log('[migrate] Database migration successful.');
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('[migrate] Failed:', err.message);

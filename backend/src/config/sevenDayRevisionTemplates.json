@@ -1,0 +1,39 @@
+{
+  "day_plans": [
+    {
+      "day": 1,
+      "focus": "primary_weakness",
+      "task": "Revise core concepts from NCERT & notes, followed by 30 targeted topic MCQs."
+    },
+    {
+      "day": 2,
+      "focus": "primary_weakness",
+      "task": "Solve 20 numerical problems and past 5-year NEET PYQs."
+    },
+    {
+      "day": 3,
+      "focus": "secondary_weakness",
+      "task": "Revise key formulas, reaction mechanisms, and speed drill worksheets."
+    },
+    {
+      "day": 4,
+      "focus": "secondary_weakness",
+      "task": "Attempt 25 chapter-wise diagnostic MCQs with error analysis."
+    },
+    {
+      "day": 5,
+      "focus": "lowest_scoring_subject",
+      "task": "Comprehensive subject review focusing on high-weightage topics & diagrams."
+    },
+    {
+      "day": 6,
+      "focus": "mixed_practice",
+      "task": "Attempt a timed 45-minute mixed subject quiz covering all weak areas."
+    },
+    {
+      "day": 7,
+      "focus": "full_revision_and_rest",
+      "task": "Review formula cheat-sheets, mistake notebook notes, and prepare for next mock."
+    }
+  ]
+}

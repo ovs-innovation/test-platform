@@ -435,3 +435,213 @@ export const toggleBlockCandidate = asyncHandler(async (req, res) => {
     candidate: result.rows[0],
   });
 });
+
+export const getFeatureFlags = asyncHandler(async (_req, res) => {
+  const result = await query('SELECT * FROM feature_flags ORDER BY flag_name ASC');
+  res.json({ success: true, feature_flags: result.rows });
+});
+
+export const updateFeatureFlag = asyncHandler(async (req, res) => {
+  const { flag_name } = req.params;
+  const { is_enabled, config } = req.body;
+
+  const result = await query(
+    `INSERT INTO feature_flags (flag_name, is_enabled, config)
+     VALUES ($1, $2, COALESCE($3, '{}'::jsonb))
+     ON CONFLICT (flag_name) DO UPDATE SET
+       is_enabled = EXCLUDED.is_enabled,
+       config = COALESCE(EXCLUDED.config, feature_flags.config),
+       updated_at = NOW()
+     RETURNING *`,
+    [flag_name, Boolean(is_enabled), config ? JSON.stringify(config) : null]
+  );
+
+  res.json({ success: true, feature_flag: result.rows[0], message: `Feature flag ${flag_name} updated successfully` });
+});
+
+export const getInstitutions = asyncHandler(async (_req, res) => {
+  let instRes = await query(
+    `SELECT 
+       i.id,
+       i.code AS "schoolId",
+       i.name,
+       i.email,
+       i.tagline,
+       i.logo_badge AS "logoBadge",
+       i.logo_url AS "logoUrl",
+       i.accent_color AS "accentColor",
+       COALESCE(i.total_licenses, 100)::int AS "totalLicenses",
+       COUNT(u.id)::int AS "activeStudents",
+       i.created_at AS "createdAt"
+     FROM institutions i
+     LEFT JOIN users u ON u.institution_id = i.id AND u.role = 'candidate'
+     GROUP BY i.id
+     ORDER BY i.created_at DESC`
+  );
+
+  if (instRes.rowCount === 0) {
+    const pwHash = await hashPassword('password123');
+    await query(
+      `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, accent_color, total_licenses)
+       VALUES 
+         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250),
+         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500),
+         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150)
+       ON CONFLICT (email) DO NOTHING`,
+      [pwHash]
+    );
+
+    instRes = await query(
+      `SELECT 
+         i.id,
+         i.code AS "schoolId",
+         i.name,
+         i.email,
+         i.tagline,
+         i.logo_badge AS "logoBadge",
+         i.logo_url AS "logoUrl",
+         i.accent_color AS "accentColor",
+         COALESCE(i.total_licenses, 100)::int AS "totalLicenses",
+         COUNT(u.id)::int AS "activeStudents",
+         i.created_at AS "createdAt"
+       FROM institutions i
+       LEFT JOIN users u ON u.institution_id = i.id AND u.role = 'candidate'
+       GROUP BY i.id
+       ORDER BY i.created_at DESC`
+    );
+  }
+
+  const institutions = instRes.rows;
+  const totalInstitutions = institutions.length;
+  const issuedLicenses = institutions.reduce((sum, inst) => sum + (inst.totalLicenses || 0), 0);
+  const enrolledStudents = institutions.reduce((sum, inst) => sum + (inst.activeStudents || 0), 0);
+  const utilizationRate = issuedLicenses > 0 ? Math.round((enrolledStudents / issuedLicenses) * 1000) / 10 : 0;
+
+  res.json({
+    success: true,
+    institutions,
+    stats: {
+      totalInstitutions,
+      issuedLicenses,
+      enrolledStudents,
+      utilizationRate,
+    },
+  });
+});
+
+export const createInstitution = asyncHandler(async (req, res) => {
+  const { name, schoolId, email, password, tagline, logoBadge, logoUrl, accentColor, totalLicenses, leadId } = req.body;
+
+  if (!name || !schoolId || !email || !password) {
+    throw ApiError.badRequest('School Name, School ID, Email, and Password are required.');
+  }
+
+  const existing = await query('SELECT id FROM institutions WHERE email = $1 OR code = $2', [email.toLowerCase(), schoolId.toUpperCase()]);
+  if (existing.rowCount > 0) {
+    throw ApiError.conflict('An institution with this code or email already exists.');
+  }
+
+  const pwHash = await hashPassword(password);
+  const badge = logoBadge || name.substring(0, 3).toUpperCase();
+
+  const insertRes = await query(
+    `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, logo_url, accent_color, total_licenses)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+     RETURNING id, code AS "schoolId", name, email, tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", created_at AS "createdAt"`,
+    [
+      schoolId.toUpperCase(),
+      name,
+      email.toLowerCase(),
+      pwHash,
+      tagline || 'Premier Educational Institution',
+      badge,
+      logoUrl || '',
+      accentColor || '#2563eb',
+      Number(totalLicenses) || 200,
+    ]
+  );
+
+  if (leadId) {
+    await query(`UPDATE b2b_enquiries SET status = 'Converted' WHERE id = $1`, [leadId]).catch(() => {});
+  }
+
+  res.status(201).json({
+    success: true,
+    institution: insertRes.rows[0],
+    message: 'Partner School account created successfully.',
+  });
+});
+
+export const deleteInstitution = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query('DELETE FROM institutions WHERE id = $1 RETURNING id, name', [id]);
+  if (result.rowCount === 0) {
+    throw ApiError.notFound('Institution not found.');
+  }
+  res.json({ success: true, message: `Partner School "${result.rows[0].name}" deleted successfully.` });
+});
+
+export const getB2bEnquiries = asyncHandler(async (_req, res) => {
+  const leadsRes = await query(
+    `SELECT 
+       id,
+       COALESCE(reference_code, 'ENQ-2026-' || id) AS "referenceCode",
+       institution_name AS "schoolName",
+       contact_person AS "contactName",
+       designation,
+       email,
+       mobile_number AS "phone",
+       city,
+       state,
+       institution_type AS "institutionType",
+       student_count AS "studentCount",
+       target_exam AS "targetExam",
+       interested_package AS "interestedPackage",
+       message,
+       COALESCE(status, 'New Request') AS status,
+       created_at AS "createdAt"
+     FROM b2b_enquiries
+     ORDER BY id DESC`
+  );
+
+  res.json({
+    success: true,
+    leads: leadsRes.rows,
+  });
+});
+
+export const updateB2bEnquiryStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    throw ApiError.badRequest('Status is required.');
+  }
+
+  const result = await query(
+    `UPDATE b2b_enquiries 
+     SET status = $1 
+     WHERE id = $2 
+     RETURNING id, reference_code AS "referenceCode", institution_name AS "schoolName", status`,
+    [status, id]
+  );
+
+  if (result.rowCount === 0) {
+    throw ApiError.notFound('Demo request lead not found.');
+  }
+
+  res.json({
+    success: true,
+    lead: result.rows[0],
+    message: `Lead status updated to "${status}".`,
+  });
+});
+
+export const deleteB2bEnquiry = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query('DELETE FROM b2b_enquiries WHERE id = $1 RETURNING id', [id]);
+  if (result.rowCount === 0) {
+    throw ApiError.notFound('Demo request lead not found.');
+  }
+  res.json({ success: true, message: 'Demo request lead deleted successfully.' });
+});

@@ -20,7 +20,15 @@ import {
   ChevronUp,
   Download,
   Calendar,
-  Compass
+  Compass,
+  TrendingUp,
+  MapPin,
+  Building2,
+  Users,
+  GraduationCap,
+  CalendarDays,
+  Target,
+  ShieldAlert
 } from 'lucide-react';
 
 export default function PostTestAnalytics() {
@@ -61,6 +69,12 @@ export default function PostTestAnalytics() {
   const {
     test_info = {},
     summary = {},
+    ranks_breakdown = {},
+    national_comparison = null,
+    previous_test_comparison = null,
+    seven_day_revision_plan = [],
+    predicted_neet_score = null,
+    college_prediction = null,
     subject_analysis = [],
     chapter_performance = [],
     accuracy_report = {},
@@ -82,7 +96,6 @@ export default function PostTestAnalytics() {
     return `${s}s`;
   };
 
-  // Filter questions based on tabs
   const filteredQuestions = (question_wise_analysis || []).filter(q => {
     if (questionFilter === 'CORRECT') return q.is_attempted && q.is_correct;
     if (questionFilter === 'WRONG') return q.is_attempted && !q.is_correct;
@@ -96,7 +109,7 @@ export default function PostTestAnalytics() {
       <div className="flex flex-wrap items-center justify-between gap-4 pt-4">
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-bold text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4" /> Back to Test Dashboard
         </button>
@@ -123,7 +136,7 @@ export default function PostTestAnalytics() {
             <p className="mt-1 text-xs sm:text-sm text-blue-200 font-medium">Detailed Diagnostic Performance Report & National AIR Benchmarking</p>
           </div>
 
-          {/* Top 4 Summary Metric Cards Grid */}
+          {/* Top Metric Cards Grid */}
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 pt-2">
             {/* AIR Card */}
             <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-4 space-y-1">
@@ -145,7 +158,7 @@ export default function PostTestAnalytics() {
               <p className="text-[10px] text-blue-200/80 font-medium">National Standing</p>
             </div>
 
-            {/* Overall Score */}
+            {/* Total Score */}
             <div className="rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 p-4 space-y-1">
               <div className="flex items-center justify-between text-blue-200">
                 <span className="text-[11px] font-bold uppercase tracking-wider">Total Score</span>
@@ -171,7 +184,235 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
-      {/* SECTION 1: NEET SUBJECT ANALYSIS (Physics, Chem, Botany, Zoology) */}
+      {/* COMPREHENSIVE RANKS BREAKDOWN (AIR, State, City, Inst, Batch)    */}
+      {/* ----------------------------------------------------------------- */}
+      <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+          <div className="flex items-center gap-2">
+            <Trophy className="w-5 h-5 text-amber-500" />
+            <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Multi-Tier Rank Breakdown</h2>
+          </div>
+          <span className="text-xs font-bold text-amber-600 bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">Official Benchmarking</span>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-5">
+          <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 space-y-1">
+            <span className="text-[10px] font-extrabold uppercase text-amber-700 dark:text-amber-300 flex items-center gap-1"><Trophy className="w-3.5 h-3.5" /> All India</span>
+            <p className="text-xl font-black text-amber-600 dark:text-amber-400">#{ranks_breakdown.all_india_rank || summary.all_india_rank || 1}</p>
+          </div>
+          <div className="p-3.5 rounded-2xl bg-blue-500/10 border border-blue-500/20 space-y-1">
+            <span className="text-[10px] font-extrabold uppercase text-blue-700 dark:text-blue-300 flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> State Rank</span>
+            <p className="text-xl font-black text-blue-600 dark:text-blue-400">#{ranks_breakdown.state_rank || summary.state_rank || 1}</p>
+          </div>
+          <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 space-y-1">
+            <span className="text-[10px] font-extrabold uppercase text-cyan-700 dark:text-cyan-300 flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> City Rank</span>
+            <p className="text-xl font-black text-cyan-600 dark:text-cyan-400">#{ranks_breakdown.city_rank || summary.city_rank || 1}</p>
+          </div>
+          <div className="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
+            <span className="text-[10px] font-extrabold uppercase text-emerald-700 dark:text-emerald-300 flex items-center gap-1"><Building2 className="w-3.5 h-3.5" /> Institute Rank</span>
+            <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">#{ranks_breakdown.institute_rank || summary.institute_rank || 1}</p>
+          </div>
+          <div className="p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 space-y-1 col-span-2 sm:col-span-1">
+            <span className="text-[10px] font-extrabold uppercase text-purple-700 dark:text-purple-300 flex items-center gap-1"><Users className="w-3.5 h-3.5" /> Batch Rank</span>
+            <p className="text-xl font-black text-purple-600 dark:text-purple-400">#{ranks_breakdown.batch_rank || summary.batch_rank || 1}</p>
+          </div>
+        </div>
+      </div>
+
+      {/* ----------------------------------------------------------------- */}
+      {/* NEW ITEM 1: NATIONAL COMPARISON VS TOPPER & AVERAGE               */}
+      {/* ----------------------------------------------------------------- */}
+      {national_comparison && (
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="flex items-center gap-2.5">
+              <TrendingUp className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+              <div>
+                <h2 className="text-base font-extrabold text-slate-900 dark:text-white">National Aspirants Score Comparison</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Benchmarked against national average and top percentile scorers.</p>
+              </div>
+            </div>
+            <span className="text-xs font-extrabold text-indigo-600 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20">
+              Percentile: {national_comparison.your_percentile}%
+            </span>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="p-4 rounded-2xl bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800/40 text-center space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">Your Total Score</span>
+              <p className="text-3xl font-black text-blue-600 dark:text-blue-400">{national_comparison.your_score}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-center space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">National Average</span>
+              <p className="text-3xl font-black text-slate-700 dark:text-slate-300">{national_comparison.national_average_score}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/40 text-center space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">National Topper</span>
+              <p className="text-3xl font-black text-amber-600 dark:text-amber-400">{national_comparison.national_topper_score}</p>
+            </div>
+          </div>
+
+          {/* Subject-Wise National Averages Breakdown */}
+          <div className="space-y-3 pt-2">
+            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500">Subject-Wise National Average Comparison</h3>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              {(national_comparison.subject_wise || []).map((sw, i) => (
+                <div key={i} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/80 dark:border-slate-800 space-y-2">
+                  <div className="flex justify-between items-center text-xs font-bold">
+                    <span className="text-slate-900 dark:text-slate-200">{sw.subject}</span>
+                    <span className="text-indigo-600 dark:text-indigo-400">{sw.your_score} vs {sw.national_average} Avg</span>
+                  </div>
+                  <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                    <div className="bg-indigo-600 h-full rounded-full" style={{ width: `${Math.min(100, (sw.your_score / 180) * 100)}%` }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ----------------------------------------------------------------- */}
+      {/* NEW ITEM 2: PREVIOUS TEST COMPARISON                              */}
+      {/* ----------------------------------------------------------------- */}
+      {previous_test_comparison ? (
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-emerald-500" />
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Previous AIETS Test Progress Delta</h2>
+            </div>
+            <span className="text-xs font-bold text-emerald-600 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+              vs {previous_test_comparison.previous_test_name}
+            </span>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Score Delta</span>
+              <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{previous_test_comparison.score_change} Marks</p>
+              <p className="text-[11px] text-slate-500 font-medium">Prev: {previous_test_comparison.previous_score} &rarr; Curr: {previous_test_comparison.current_score}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-blue-500/10 border border-blue-500/20 space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Rank Progress</span>
+              <p className="text-2xl font-black text-blue-600 dark:text-blue-400">{previous_test_comparison.rank_change}</p>
+              <p className="text-[11px] text-slate-500 font-medium">AIR #{previous_test_comparison.previous_rank} &rarr; #{previous_test_comparison.current_rank}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-purple-500/10 border border-purple-500/20 space-y-1">
+              <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Accuracy Delta</span>
+              <p className="text-2xl font-black text-purple-600 dark:text-purple-400">{previous_test_comparison.accuracy_change}</p>
+              <p className="text-[11px] text-slate-500 font-medium">Prev: {previous_test_comparison.previous_accuracy}% &rarr; Curr: {previous_test_comparison.current_accuracy}%</p>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className="p-4 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs text-slate-500 font-medium flex items-center justify-between">
+          <span>This is your first AIETS attempt — previous test progress comparison will appear on your next mock!</span>
+        </div>
+      )}
+
+      {/* ----------------------------------------------------------------- */}
+      {/* NEW ITEM 3: SEVEN-DAY REVISION PLAN                               */}
+      {/* ----------------------------------------------------------------- */}
+      {seven_day_revision_plan && seven_day_revision_plan.length > 0 && (
+        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+            <div className="flex items-center gap-2">
+              <CalendarDays className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+              <div>
+                <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Seven-Day Post-Test Revision Plan</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Customized day-by-day study schedule derived from your weakest topics.</p>
+              </div>
+            </div>
+            <span className="text-xs font-extrabold text-purple-600 bg-purple-500/10 px-3 py-1 rounded-full border border-purple-500/20">7-Day Roadmap</span>
+          </div>
+
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
+            {seven_day_revision_plan.map((plan) => (
+              <div key={plan.day} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/80 dark:border-slate-800 space-y-2 flex flex-col justify-between hover:border-purple-500/40 transition-colors">
+                <div className="space-y-1">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[10px] font-black uppercase text-purple-600 dark:text-purple-400">Day {plan.day}</span>
+                    <span className="text-[9px] font-extrabold px-1.5 py-0.5 rounded bg-purple-500/10 text-purple-700 dark:text-purple-300">{plan.focus_subject}</span>
+                  </div>
+                  <p className="text-xs font-bold text-slate-900 dark:text-slate-100 line-clamp-2">{(plan.focus_chapters || []).join(', ')}</p>
+                </div>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 font-medium line-clamp-3 leading-snug">{plan.task}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ----------------------------------------------------------------- */}
+      {/* NEW ITEMS 4 & 5: PREDICTED NEET SCORE & COLLEGE PREDICTION CARDS  */}
+      {/* ----------------------------------------------------------------- */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* PREDICTED NEET SCORE CARD */}
+        {predicted_neet_score && predicted_neet_score.enabled ? (
+          <div className="rounded-3xl border border-indigo-200 dark:border-indigo-900/60 bg-gradient-to-br from-indigo-900 via-slate-900 to-blue-950 text-white p-6 shadow-xl space-y-4 relative overflow-hidden">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5 text-indigo-400" />
+                <h2 className="text-base font-black text-white">Predicted NEET-UG 2027 Score</h2>
+              </div>
+              <span className="text-[10px] font-extrabold bg-indigo-500/20 text-indigo-200 px-2.5 py-1 rounded-full border border-indigo-400/30 uppercase tracking-wider">AI Estimate</span>
+            </div>
+
+            <div className="flex items-baseline gap-3">
+              <p className="text-4xl font-black text-amber-300 tabular-nums">{predicted_neet_score.predicted_score} <span className="text-base text-indigo-200 font-normal">/ 720</span></p>
+              <span className="text-xs font-bold text-indigo-200 bg-white/10 px-2.5 py-1 rounded-lg">Est. Range: {predicted_neet_score.confidence_range}</span>
+            </div>
+
+            {/* MANDATORY VISIBLE DISCLAIMER */}
+            <div className="p-3.5 rounded-2xl bg-white/10 border border-white/15 text-xs space-y-1">
+              <div className="flex items-center gap-1.5 text-amber-300 font-bold">
+                <ShieldAlert className="w-4 h-4 shrink-0" />
+                <span>Important Score Disclaimer</span>
+              </div>
+              <p className="text-[11px] text-blue-100 font-medium leading-relaxed">{predicted_neet_score.disclaimer}</p>
+            </div>
+          </div>
+        ) : null}
+
+        {/* COLLEGE PREDICTION CARD */}
+        {college_prediction && college_prediction.enabled ? (
+          <div className="rounded-3xl border border-cyan-200 dark:border-cyan-900/60 bg-gradient-to-br from-cyan-950 via-slate-900 to-slate-950 text-white p-6 shadow-xl space-y-4 relative overflow-hidden">
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <div className="flex items-center gap-2">
+                <GraduationCap className="w-5 h-5 text-cyan-400" />
+                <h2 className="text-base font-black text-white">NEET Medical College Eligibility Predictor</h2>
+              </div>
+              <span className="text-[10px] font-extrabold bg-cyan-500/20 text-cyan-200 px-2.5 py-1 rounded-full border border-cyan-400/30 uppercase tracking-wider">Cutoff Matching</span>
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-xs font-bold text-cyan-200">Based on your performance trend, candidate is eligible for top government medical colleges:</p>
+              <div className="grid gap-2 sm:grid-cols-2">
+                {(college_prediction.eligible_colleges || []).slice(0, 4).map((col, idx) => (
+                  <div key={idx} className="p-2.5 rounded-xl bg-white/10 border border-white/15 text-xs space-y-0.5">
+                    <p className="font-bold text-white truncate">{col.college_name}</p>
+                    <p className="text-[10px] text-cyan-200 font-medium">{col.state} &bull; {col.quota} Quota ({col.category})</p>
+                    <p className="text-[10px] font-bold text-emerald-300">Cutoff: {col.min_score}+ marks (Closing Rank #{col.closing_rank})</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* MANDATORY VISIBLE DISCLAIMER */}
+            <div className="p-3.5 rounded-2xl bg-white/10 border border-white/15 text-xs space-y-1">
+              <div className="flex items-center gap-1.5 text-cyan-300 font-bold">
+                <ShieldAlert className="w-4 h-4 shrink-0" />
+                <span>Important College Prediction Disclaimer</span>
+              </div>
+              <p className="text-[11px] text-cyan-100 font-medium leading-relaxed">{college_prediction.disclaimer}</p>
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      {/* ----------------------------------------------------------------- */}
+      {/* SECTION 6: NEET SUBJECT ANALYSIS (Physics, Chem, Botany, Zoology) */}
       {/* ----------------------------------------------------------------- */}
       <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
@@ -204,7 +445,6 @@ export default function PostTestAnalytics() {
                       <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold">/ {sa.max_marks} marks</span>
                     </div>
 
-                    {/* Class Avg Comparative Badge */}
                     <div className={`mt-2 inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md border ${
                       isAboveAvg 
                         ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' 
@@ -216,7 +456,6 @@ export default function PostTestAnalytics() {
                 </div>
 
                 <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-                  {/* Detailed Q counts */}
                   <div className="grid grid-cols-3 gap-1 text-center text-[10px] font-semibold">
                     <div className="bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 p-1 rounded-lg">
                       <span className="block font-black">{sa.correct_count}</span> Correct
@@ -241,10 +480,9 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
-      {/* SECTION 2: PERFORMANCE CHARTS & ACCURACY BREAKDOWN               */}
+      {/* SECTION 7: DIFFICULTY & CHAPTER ACCURACY                         */}
       {/* ----------------------------------------------------------------- */}
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Difficulty Level Breakdown */}
         <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
             <div className="flex items-center gap-2">
@@ -277,7 +515,6 @@ export default function PostTestAnalytics() {
           </div>
         </div>
 
-        {/* Chapter-wise Accuracy Overview */}
         <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
             <div className="flex items-center gap-2">
@@ -310,7 +547,7 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
-      {/* SECTION 3: TIME MANAGEMENT & INEFFICIENT QUESTION FLAGS           */}
+      {/* SECTION 8: TIME MANAGEMENT REPORT                                 */}
       {/* ----------------------------------------------------------------- */}
       <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
@@ -326,7 +563,6 @@ export default function PostTestAnalytics() {
           </span>
         </div>
 
-        {/* Inefficient Questions Warning Card */}
         {time_management_report.inefficient_questions && time_management_report.inefficient_questions.length > 0 ? (
           <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-4 space-y-3">
             <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300 font-extrabold text-xs uppercase tracking-wide">
@@ -355,7 +591,7 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
-      {/* SECTION 4: QUESTION-WISE DIAGNOSTIC REVIEW TABLE                 */}
+      {/* SECTION 9: QUESTION-WISE DIAGNOSTIC REVIEW TABLE                 */}
       {/* ----------------------------------------------------------------- */}
       <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
@@ -367,7 +603,6 @@ export default function PostTestAnalytics() {
             </div>
           </div>
 
-          {/* Question Filter Tabs */}
           <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl text-xs font-bold">
             {['ALL', 'WRONG', 'CORRECT', 'UNATTEMPTED'].map((f) => (
               <button
@@ -452,66 +687,7 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
-      {/* SECTION 5: STRONG & WEAK TOPICS SIDE-BY-SIDE                     */}
-      {/* ----------------------------------------------------------------- */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Weak Topics */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs border-t-4 border-t-red-500 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-red-600" />
-              <h2 className="text-sm font-extrabold text-red-600 uppercase tracking-wide">Weak Topics (&lt;65% Accuracy)</h2>
-            </div>
-            <span className="text-[10px] font-bold text-red-600 bg-red-500/10 px-2 py-0.5 rounded-full">
-              {(strong_and_weak_topics.weak_topics || []).length} Priority Modules
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {(strong_and_weak_topics.weak_topics || []).map((wt, i) => (
-              <div key={i} className="p-3 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/70 dark:border-slate-800 space-y-1">
-                <div className="flex justify-between text-xs font-bold">
-                  <span className="text-slate-900 dark:text-slate-200">{wt.chapter_name} ({wt.subject})</span>
-                  <span className="text-red-600 font-bold">{wt.accuracy_percent}%</span>
-                </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-red-500 h-full rounded-full" style={{ width: `${wt.accuracy_percent}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Strong Topics */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs border-t-4 border-t-emerald-500 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Award className="w-4 h-4 text-emerald-600" />
-              <h2 className="text-sm font-extrabold text-emerald-600 uppercase tracking-wide">Strong Topics (&ge;65% Accuracy)</h2>
-            </div>
-            <span className="text-[10px] font-bold text-emerald-600 bg-emerald-500/10 px-2 py-0.5 rounded-full">
-              {(strong_and_weak_topics.strong_topics || []).length} Mastered
-            </span>
-          </div>
-
-          <div className="space-y-3">
-            {(strong_and_weak_topics.strong_topics || []).map((st, i) => (
-              <div key={i} className="p-3 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/70 dark:border-slate-800 space-y-1">
-                <div className="flex justify-between text-xs font-bold">
-                  <span className="text-slate-900 dark:text-slate-200">{st.chapter_name} ({st.subject})</span>
-                  <span className="text-emerald-600 font-bold">{st.accuracy_percent}%</span>
-                </div>
-                <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                  <div className="bg-emerald-500 h-full rounded-full" style={{ width: `${st.accuracy_percent}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* ----------------------------------------------------------------- */}
-      {/* SECTION 6: ACTION PLAN (IMPROVEMENT PLAN, EBOOKS & REVISION)      */}
+      {/* SECTION 10: ACTION PLAN & RECOMMENDED EBOOKS                       */}
       {/* ----------------------------------------------------------------- */}
       <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">
         <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
@@ -525,7 +701,6 @@ export default function PostTestAnalytics() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Personalized Suggestions Cards */}
           <div className="space-y-3">
             <h3 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">AI Improvement Guidance</h3>
             {personalized_improvement_plan.map((pip, idx) => (
@@ -540,7 +715,6 @@ export default function PostTestAnalytics() {
             ))}
           </div>
 
-          {/* Recommended eBooks */}
           <div className="space-y-3">
             <h3 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Recommended Revision eBooks</h3>
             <div className="space-y-2.5">
@@ -564,21 +738,6 @@ export default function PostTestAnalytics() {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Structured Revision Strategy Card */}
-        <div className="p-5 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-slate-900 dark:to-blue-950/40 border border-blue-200 dark:border-blue-800/40 flex flex-wrap items-center justify-between gap-4">
-          <div className="space-y-1">
-            <p className="text-xs font-extrabold text-blue-900 dark:text-blue-300 uppercase tracking-wider">Daily Revision Time Ratio (40-30-30 Rule)</p>
-            <p className="text-xs text-slate-700 dark:text-slate-300 font-medium">{revision_strategy.suggested_daily_plan}</p>
-          </div>
-          {revision_strategy.next_test_countdown && (
-            <div className="text-right">
-              <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase">Next AIETS Mock</span>
-              <p className="text-sm font-black text-slate-900 dark:text-white">{revision_strategy.next_test_countdown.next_test_name}</p>
-              <p className="text-xs font-bold text-blue-600 dark:text-blue-300">{revision_strategy.next_test_countdown.days_remaining} Days Remaining</p>
-            </div>
-          )}
         </div>
       </div>
     </div>

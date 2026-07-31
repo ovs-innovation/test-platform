@@ -716,7 +716,7 @@ function NotificationPanelDrawer({ onClose }) {
     onClose();
     const config = getNotificationConfig(n.type, n.title);
     const targetUrl = n.target || config.target || (user?.role === 'admin' ? '/admin' : '/dashboard');
-    navigate(targetUrl);
+    navigate(targetUrl, { state: { leadRef: n.title, leadBody: n.body } });
   };
 
 

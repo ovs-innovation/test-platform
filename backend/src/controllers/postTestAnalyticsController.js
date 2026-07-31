@@ -23,7 +23,7 @@ try {
 
 /**
  * GET /api/student/analytics/:test_id
- * Single consolidated endpoint returning all 16 post-test performance analytics sections.
+ * Single consolidated endpoint returning all post-test performance analytics & predictions.
  */
 export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   const studentId = Number(req.user?.id);
@@ -48,58 +48,67 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   }
   const test = testRes.rows[0];
 
-  // 2. Fetch all student attempts for this test to compute Rankings & Percentiles via PostgreSQL Window Functions
-  const rankingsRes = await query(
-    `WITH ranked_attempts AS (
-       SELECT 
-         ta.id AS attempt_id,
-         ta.student_id,
-         COALESCE(ta.score, 0) AS total_score,
-         COALESCE(ta.max_marks, $2) AS attempt_max_marks,
-         ta.submitted_at,
-         RANK() OVER (ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS computed_air,
-         ROUND( (PERCENT_RANK() OVER (ORDER BY COALESCE(ta.score, 0) ASC) * 100)::numeric, 2)::float AS computed_percentile,
-         COUNT(*) OVER ()::int AS total_participants
-       FROM test_attempts ta
-       WHERE ta.test_id = $1 AND ta.submitted_at IS NOT NULL
-     )
-     SELECT * FROM ranked_attempts WHERE student_id = $3`,
-    [testId, test.max_marks || 720, studentId]
+  // 2. Fetch Rankings (AIR, State Rank, City Rank, Institute Rank, Batch Rank) & Percentile
+  const allAttemptsForTestRes = await query(
+    `SELECT 
+       ta.id AS attempt_id,
+       ta.student_id,
+       COALESCE(ta.score, 0) AS total_score,
+       ta.submitted_at,
+       sp.state,
+       sp.city,
+       u.institution_id,
+       u.batch_id,
+       RANK() OVER (ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS air,
+       RANK() OVER (PARTITION BY COALESCE(sp.state, 'National') ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS state_rank,
+       RANK() OVER (PARTITION BY COALESCE(sp.city, 'General') ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS city_rank,
+       RANK() OVER (PARTITION BY COALESCE(u.institution_id, 0) ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS institute_rank,
+       RANK() OVER (PARTITION BY COALESCE(u.batch_id, 0) ORDER BY COALESCE(ta.score, 0) DESC, ta.submitted_at ASC)::int AS batch_rank,
+       ROUND((PERCENT_RANK() OVER (ORDER BY COALESCE(ta.score, 0) ASC) * 100)::numeric, 2)::float AS percentile,
+       COUNT(*) OVER ()::int AS total_participants
+     FROM test_attempts ta
+     JOIN users u ON u.id = ta.student_id
+     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE ta.test_id = $1 AND ta.submitted_at IS NOT NULL`,
+    [testId]
   );
 
-  let currentAttemptRank = rankingsRes.rows[0] || null;
+  let currentAttemptRank = allAttemptsForTestRes.rows.find((r) => r.student_id === studentId);
 
-  // Fallback if test_attempt record exists but rankings list query returned 0 rows (e.g. attempt in progress or unsubmitted)
+  // Fallback if current candidate attempt not found in submitted list
   if (!currentAttemptRank) {
     const fallbackAttempt = await query(
       `SELECT id AS attempt_id, student_id, score AS total_score, max_marks AS attempt_max_marks, submitted_at,
-              all_india_rank AS computed_air, percentile AS computed_percentile, 1 AS total_participants
+              all_india_rank AS air, percentile
        FROM test_attempts WHERE test_id = $1 AND student_id = $2`,
       [testId, studentId]
     );
-    currentAttemptRank = fallbackAttempt.rows[0] || {
-      attempt_id: null,
+    const fa = fallbackAttempt.rows[0];
+    currentAttemptRank = {
+      attempt_id: fa?.attempt_id || null,
       student_id: studentId,
-      total_score: 0,
-      attempt_max_marks: test.max_marks || 720,
-      computed_air: 1,
-      computed_percentile: 100.0,
-      total_participants: 1
+      total_score: fa?.total_score || 0,
+      air: fa?.air || 1,
+      state_rank: 1,
+      city_rank: 1,
+      institute_rank: 1,
+      batch_rank: 1,
+      percentile: fa?.percentile || 100.0,
+      total_participants: Math.max(1, allAttemptsForTestRes.rowCount)
     };
   }
 
-  // Save computed AIR and percentile back to test_attempts asynchronously
-  if (currentAttemptRank.attempt_id && currentAttemptRank.computed_air) {
+  // Save computed AIR & Percentile back to test_attempts
+  if (currentAttemptRank.attempt_id && currentAttemptRank.air) {
     query(
       `UPDATE test_attempts 
-       SET all_india_rank = $1, percentile = $2 
-       WHERE id = $3`,
-      [currentAttemptRank.computed_air, currentAttemptRank.computed_percentile, currentAttemptRank.attempt_id]
+       SET all_india_rank = $1, percentile = $2, institute_rank = $3
+       WHERE id = $4`,
+      [currentAttemptRank.air, currentAttemptRank.percentile, currentAttemptRank.institute_rank, currentAttemptRank.attempt_id]
     ).catch(() => {});
   }
 
-  // 3. Fetch Question-wise answers & peer stats for this test
-  // Peer Stats per question across all test attempts for this test_id
+  // 3. Question-wise answers & peer stats for this test
   const questionPeerStatsRes = await query(
     `WITH question_responses AS (
        SELECT 
@@ -171,7 +180,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     []
   );
 
-  // 4. Fetch the specific student's responses for this test
+  // 4. Student specific responses
   const studentAnswersRes = await query(
     `SELECT 
        q.id AS question_id,
@@ -202,7 +211,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     studentAnswersMap.set(row.question_id, row);
   }
 
-  // 5. Build Detailed Question-wise Analysis & Aggregates
+  // 5. Build Aggregates & Question-wise analysis
   const questionWiseAnalysis = [];
   let totalCorrect = 0;
   let totalIncorrect = 0;
@@ -241,7 +250,6 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
 
     const chapterName = qStats.chapter_name || 'General Topics';
 
-    // Difficulty accumulation
     const diff = (qStats.difficulty_level || 'medium').toLowerCase();
     if (!difficultyStats[diff]) difficultyStats[diff] = { total: 0, correct: 0, incorrect: 0 };
     difficultyStats[diff].total += 1;
@@ -266,7 +274,6 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     subjectStats[normSubject].max_marks += qMarks;
     subjectStats[normSubject].time_spent += timeSpent;
 
-    // Chapter Accumulation
     if (!chapterStats[chapterName]) {
       chapterStats[chapterName] = { chapter_name: chapterName, subject: normSubject, correct: 0, total: 0, wrong: 0 };
     }
@@ -274,7 +281,6 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     if (isAttempted && isCorrect) chapterStats[chapterName].correct += 1;
     if (isAttempted && !isCorrect) chapterStats[chapterName].wrong += 1;
 
-    // Inefficient Question Flag (>2x average time AND wrong/unattempted)
     if (timeSpent > (peerAvgTime * 1.8) && !isCorrect) {
       inefficientQuestions.push({
         question_id: qStats.question_id,
@@ -287,7 +293,6 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       });
     }
 
-    // Single Question-wise Analysis object
     questionWiseAnalysis.push({
       question_id: qStats.question_id,
       question_text: qStats.question_text,
@@ -305,11 +310,9 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     });
   }
 
-  // 6. Subject-wise Analysis array (Items 4-7, 9)
-  // Compute class average per subject across all test attempts for this test
+  // 6. Subject-wise Analysis array
   const subjectAveragesRes = await query(
-    `SELECT 
-       COALESCE(ta.subject_wise_score, '{}'::jsonb) AS subj_scores
+    `SELECT COALESCE(ta.subject_wise_score, '{}'::jsonb) AS subj_scores
      FROM test_attempts ta
      WHERE ta.test_id = $1 AND ta.submitted_at IS NOT NULL`,
     [testId]
@@ -345,7 +348,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       unattempted_count: st.unattempted,
       accuracy_percent: accuracy,
       time_spent_seconds: st.time_spent,
-      rank_in_subject: 1, // Can be refined if subject rank is needed
+      rank_in_subject: 1,
       comparison_to_average: {
         student_score: Math.max(0, st.score),
         class_average_score: peerAvgScore,
@@ -354,7 +357,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   });
 
-  // 7. Chapter-wise Performance Array (Item 8)
+  // 7. Chapter-wise Performance & Strong/Weak Topics
   const chapterPerformanceList = Object.values(chapterStats).map(ch => {
     const attempted = ch.correct + ch.wrong;
     const acc = attempted > 0 ? Math.round((ch.correct / attempted) * 100) : 0;
@@ -368,13 +371,11 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   }).sort((a, b) => a.accuracy_percent - b.accuracy_percent);
 
-  // 8. Strong & Weak Topics Identification (Item 13)
-  // Only include chapters with minimum attempt count (at least 2 questions attempted)
   const validChapters = chapterPerformanceList.filter(c => (c.correct + c.wrong) >= 1 || c.total >= 2);
   const weakTopics = validChapters.filter(c => c.accuracy_percent < 65).slice(0, 5);
   const strongTopics = validChapters.filter(c => c.accuracy_percent >= 65).reverse().slice(0, 5);
 
-  // 9. Personalized Improvement Plan (Item 14)
+  // 8. Personalized Improvement Plan
   const weakSubjConfig = templates.subjects || {};
   const improvementPlan = weakTopics.map((wt) => {
     const subConf = weakSubjConfig[wt.subject] || {};
@@ -395,8 +396,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   });
 
-  // 10. Recommended eBooks (Item 15)
-  // Query eBooks matching student's weak subjects or chapters
+  // 9. Recommended eBooks
   const weakSubjects = Array.from(new Set(weakTopics.map(w => w.subject)));
   let ebooksRes;
   if (weakSubjects.length > 0) {
@@ -412,7 +412,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     ebooksRes = await query(`SELECT e.id, e.title, e.author, e.description, e.pdf_url, 'General' AS subject FROM ebooks e ORDER BY id DESC LIMIT 4`);
   }
 
-  // 11. Revision Strategy (Item 16)
+  // 10. Revision Strategy
   const nextTestRes = await query(
     `SELECT id, test_name, test_date
      FROM tests
@@ -444,7 +444,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     next_test_countdown: nextTestCountdown
   };
 
-  // 12. Cumulative N-Test Accuracy Trend
+  // 11. Cumulative Trend
   const cumulativeTrendRes = await query(
     `SELECT 
        t.id AS test_id,
@@ -459,13 +459,232 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     [studentId]
   );
 
+  // =====================================================
+  // NEW ITEM 1: Performance Comparison with National Aspirants
+  // =====================================================
+  let testStatsRes = await query('SELECT * FROM test_stats WHERE test_id = $1', [testId]).catch(() => ({ rowCount: 0, rows: [] }));
+  let testStats = testStatsRes.rows[0];
+
+  if (!testStats) {
+    const aggRes = await query(
+      `SELECT 
+         ROUND(AVG(COALESCE(score, 0))::numeric, 2)::float AS national_average_score,
+         ROUND(MAX(COALESCE(score, 0))::numeric, 2)::float AS national_topper_score,
+         COUNT(*)::int AS total_attempts
+       FROM test_attempts
+       WHERE test_id = $1 AND submitted_at IS NOT NULL`,
+      [testId]
+    ).catch(() => ({ rows: [] }));
+
+    const nationalAvg = aggRes.rows[0]?.national_average_score || Math.round(Number(test.max_marks || 720) * 0.57);
+    const nationalTopper = aggRes.rows[0]?.national_topper_score || Math.round(Number(test.max_marks || 720) * 0.96);
+    const totalAttempts = aggRes.rows[0]?.total_attempts || 1;
+
+    const subjAverages = {
+      Physics: Math.round((subjectPeerSums.Physics / Math.max(1, subjectPeerCounts.Physics)) * 10) / 10 || 95,
+      Chemistry: Math.round((subjectPeerSums.Chemistry / Math.max(1, subjectPeerCounts.Chemistry)) * 10) / 10 || 105,
+      Botany: Math.round((subjectPeerSums.Botany / Math.max(1, subjectPeerCounts.Botany)) * 10) / 10 || 110,
+      Zoology: Math.round((subjectPeerSums.Zoology / Math.max(1, subjectPeerCounts.Zoology)) * 10) / 10 || 100,
+    };
+
+    const insertedStats = await query(
+      `INSERT INTO test_stats (test_id, national_average_score, national_topper_score, subject_wise_averages, total_attempts)
+       VALUES ($1, $2, $3, $4, $5)
+       ON CONFLICT (test_id) DO UPDATE SET
+         national_average_score = EXCLUDED.national_average_score,
+         national_topper_score = EXCLUDED.national_topper_score,
+         subject_wise_averages = EXCLUDED.subject_wise_averages,
+         total_attempts = EXCLUDED.total_attempts,
+         generated_at = NOW()
+       RETURNING *`,
+      [testId, nationalAvg, nationalTopper, JSON.stringify(subjAverages), totalAttempts]
+    ).catch(() => ({ rows: [{ national_average_score: nationalAvg, national_topper_score: nationalTopper, subject_wise_averages: subjAverages }] }));
+    testStats = insertedStats.rows[0];
+  }
+
+  const subjWiseAverages = typeof testStats.subject_wise_averages === 'string'
+    ? JSON.parse(testStats.subject_wise_averages || '{}')
+    : (testStats.subject_wise_averages || {});
+
+  const nationalComparison = {
+    your_score: Number(currentAttemptRank.total_score) || 0,
+    national_average_score: Number(testStats.national_average_score) || 410,
+    national_topper_score: Number(testStats.national_topper_score) || 700,
+    your_percentile: currentAttemptRank.percentile || 100.0,
+    subject_wise: ['Physics', 'Chemistry', 'Botany', 'Zoology'].map((sub) => ({
+      subject: sub,
+      your_score: Math.max(0, subjectStats[sub].score),
+      national_average: Number(subjWiseAverages[sub]) || Math.round(subjectStats[sub].max_marks * 0.55),
+    })),
+  };
+
+  // =====================================================
+  // NEW ITEM 2: Previous Test Comparison
+  // =====================================================
+  const prevAttemptRes = await query(
+    `SELECT ta.id, ta.score, ta.percentage, ta.all_india_rank, ta.subject_wise_score, t.test_name, ta.submitted_at
+     FROM test_attempts ta
+     JOIN tests t ON t.id = ta.test_id
+     WHERE ta.student_id = $1 AND ta.submitted_at IS NOT NULL AND t.id != $2 AND t.test_type = 'AIETS'
+     ORDER BY ta.submitted_at DESC LIMIT 1`,
+    [studentId, testId]
+  ).catch(() => ({ rowCount: 0, rows: [] }));
+
+  let previousTestComparison = null;
+  if (prevAttemptRes.rowCount > 0) {
+    const prev = prevAttemptRes.rows[0];
+    const prevScore = Number(prev.score) || 0;
+    const currScore = Number(currentAttemptRank.total_score) || 0;
+    const scoreDiff = currScore - prevScore;
+
+    const prevRank = Number(prev.all_india_rank) || 1;
+    const currRank = Number(currentAttemptRank.air) || 1;
+    const rankDiff = prevRank - currRank;
+
+    const prevAcc = Number(prev.percentage) || 0;
+    const currAcc = (totalCorrect + totalIncorrect) > 0 ? Math.round((totalCorrect / (totalCorrect + totalIncorrect)) * 100) : 0;
+    const accDiff = Math.round((currAcc - prevAcc) * 10) / 10;
+
+    const prevSubj = typeof prev.subject_wise_score === 'string'
+      ? JSON.parse(prev.subject_wise_score || '{}')
+      : (prev.subject_wise_score || {});
+
+    previousTestComparison = {
+      previous_test_name: prev.test_name,
+      previous_score: prevScore,
+      current_score: currScore,
+      score_change: scoreDiff >= 0 ? `+${scoreDiff}` : `${scoreDiff}`,
+      previous_rank: prevRank,
+      current_rank: currRank,
+      rank_change: rankDiff > 0 ? `improved by ${rankDiff}` : rankDiff < 0 ? `dropped by ${Math.abs(rankDiff)}` : `unchanged`,
+      previous_accuracy: prevAcc,
+      current_accuracy: currAcc,
+      accuracy_change: accDiff >= 0 ? `+${accDiff}%` : `${accDiff}%`,
+      subject_wise_change: ['Physics', 'Chemistry', 'Botany', 'Zoology'].map((sub) => {
+        const pScore = Number(prevSubj[sub]) || 0;
+        const cScore = Math.max(0, subjectStats[sub].score);
+        const diff = cScore - pScore;
+        return {
+          subject: sub,
+          previous_score: pScore,
+          current_score: cScore,
+          change: diff >= 0 ? `+${diff}` : `${diff}`,
+        };
+      }),
+    };
+  }
+
+  // =====================================================
+  // NEW ITEM 3: Seven-Day Revision Plan
+  // =====================================================
+  let revTemplates = [];
+  try {
+    const tmplPath = path.join(__dirname, '../config/sevenDayRevisionTemplates.json');
+    const parsed = JSON.parse(fs.readFileSync(tmplPath, 'utf-8'));
+    revTemplates = parsed.day_plans || [];
+  } catch (e) {
+    revTemplates = [
+      { day: 1, focus: "primary_weakness", task: "Revise core concepts from NCERT & notes + 30 MCQs" },
+      { day: 2, focus: "primary_weakness", task: "Solve 20 numerical problems & past NEET PYQs" },
+      { day: 3, focus: "secondary_weakness", task: "Revise formulas & reaction mechanisms" },
+      { day: 4, focus: "secondary_weakness", task: "Attempt 25 diagnostic MCQs with error analysis" },
+      { day: 5, focus: "lowest_scoring_subject", task: "Comprehensive subject review" },
+      { day: 6, focus: "mixed_practice", task: "Timed 45-minute mixed subject quiz" },
+      { day: 7, focus: "full_revision_and_rest", task: "Review formula cheat-sheets & rest" },
+    ];
+  }
+
+  const weakestChs = weakTopics.map((w) => ({ name: w.chapter_name, subject: w.subject }));
+  const primaryWeakness = weakestChs[0]?.name || 'Mechanics & Optics';
+  const primarySubj = weakestChs[0]?.subject || 'Physics';
+  const secondaryWeakness = weakestChs[1]?.name || 'Organic Reactions';
+  const secondarySubj = weakestChs[1]?.subject || 'Chemistry';
+  const lowestSubj = subjectAnalysisList.reduce((min, s) => (s.score < min.score ? s : min), subjectAnalysisList[0])?.subject || 'Physics';
+
+  const sevenDayRevisionPlan = revTemplates.map((t) => {
+    let focusSubject = primarySubj;
+    let focusChapters = [primaryWeakness];
+
+    if (t.day === 3 || t.day === 4) {
+      focusSubject = secondarySubj;
+      focusChapters = [secondaryWeakness];
+    } else if (t.day === 5) {
+      focusSubject = lowestSubj;
+      focusChapters = weakestChs.filter((w) => w.subject === lowestSubj).map((w) => w.name);
+      if (focusChapters.length === 0) focusChapters = ['Core Subject Concepts'];
+    } else if (t.day === 6) {
+      focusSubject = 'All Subjects';
+      focusChapters = weakestChs.map((w) => w.name).slice(0, 3);
+    } else if (t.day === 7) {
+      focusSubject = 'Full Syllabus';
+      focusChapters = ['Formula Cheat-Sheets', 'Mistake Notebook'];
+    }
+
+    return {
+      day: t.day,
+      focus_subject: focusSubject,
+      focus_chapters: focusChapters,
+      task: t.task,
+    };
+  });
+
+  // =====================================================
+  // NEW ITEM 4: Predicted NEET Score (Configurable with Disclaimer)
+  // =====================================================
+  const flagNeetRes = await query(`SELECT is_enabled FROM feature_flags WHERE flag_name = 'predicted_neet_score'`).catch(() => ({ rowCount: 0, rows: [] }));
+  const isNeetScoreEnabled = flagNeetRes.rowCount > 0 ? flagNeetRes.rows[0].is_enabled : true;
+
+  let predictedNeetScore = { enabled: false };
+  if (isNeetScoreEnabled) {
+    const studentAvgScore = Number(currentAttemptRank.total_score) || 480;
+    const predictedVal = Math.min(720, Math.max(180, Math.round(studentAvgScore * 1.04)));
+    const lowRange = Math.max(150, predictedVal - 25);
+    const highRange = Math.min(720, predictedVal + 25);
+
+    predictedNeetScore = {
+      enabled: true,
+      predicted_score: predictedVal,
+      confidence_range: `${lowRange}-${highRange}`,
+      disclaimer: "This is an estimated score based on your performance in AIETS mock tests and should not be considered a guaranteed prediction of your actual NEET result. Actual performance may vary based on exam difficulty, health, and other factors on the exam day."
+    };
+  }
+
+  // =====================================================
+  // NEW ITEM 5: College Prediction Feature (Configurable with Disclaimer)
+  // =====================================================
+  const flagCollegeRes = await query(`SELECT is_enabled FROM feature_flags WHERE flag_name = 'college_prediction'`).catch(() => ({ rowCount: 0, rows: [] }));
+  const isCollegeEnabled = flagCollegeRes.rowCount > 0 ? flagCollegeRes.rows[0].is_enabled : true;
+
+  let collegePrediction = { enabled: false };
+  if (isCollegeEnabled) {
+    const candidateScore = predictedNeetScore.enabled ? predictedNeetScore.predicted_score : (Number(currentAttemptRank.total_score) || 480);
+    const collegesRes = await query(
+      `SELECT id, college_name, state, category, quota, closing_rank, min_score
+       FROM college_cutoffs
+       WHERE min_score <= $1
+       ORDER BY min_score DESC LIMIT 6`,
+      [candidateScore + 40]
+    ).catch(() => ({ rows: [] }));
+
+    collegePrediction = {
+      enabled: true,
+      predicted_rank_estimate: Number(currentAttemptRank.air) || 12500,
+      eligible_colleges: collegesRes.rows,
+      disclaimer: "College predictions are based on previous years' cutoff trends and are for reference only. Actual cutoffs may vary each year based on exam difficulty, number of applicants, and seat availability. This is not a guarantee of admission."
+    };
+  }
+
   // Consolidated JSON response payload
   const responseData = {
     test_info: test,
     summary: {
-      all_india_rank: currentAttemptRank.computed_air || 1,
+      all_india_rank: currentAttemptRank.air || 1,
+      state_rank: currentAttemptRank.state_rank || 1,
+      city_rank: currentAttemptRank.city_rank || 1,
+      institute_rank: currentAttemptRank.institute_rank || 1,
+      batch_rank: currentAttemptRank.batch_rank || 1,
       total_participants: currentAttemptRank.total_participants || 1,
-      percentile: currentAttemptRank.computed_percentile || 100.0,
+      percentile: currentAttemptRank.percentile || 100.0,
       total_score: Number(currentAttemptRank.total_score) || 0,
       max_marks: Number(test.max_marks) || 720,
       percentage: Number(test.max_marks) > 0 ? Math.round(((Number(currentAttemptRank.total_score) || 0) / Number(test.max_marks)) * 10000) / 100 : 0,
@@ -475,6 +694,19 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       incorrect_count: totalIncorrect,
       unattempted_count: totalUnattempted
     },
+    ranks_breakdown: {
+      all_india_rank: currentAttemptRank.air || 1,
+      state_rank: currentAttemptRank.state_rank || 1,
+      city_rank: currentAttemptRank.city_rank || 1,
+      institute_rank: currentAttemptRank.institute_rank || 1,
+      batch_rank: currentAttemptRank.batch_rank || 1,
+      total_participants: currentAttemptRank.total_participants || 1
+    },
+    national_comparison: nationalComparison,
+    previous_test_comparison: previousTestComparison,
+    seven_day_revision_plan: sevenDayRevisionPlan,
+    predicted_neet_score: predictedNeetScore,
+    college_prediction: collegePrediction,
     subject_analysis: subjectAnalysisList,
     chapter_performance: chapterPerformanceList,
     subject_wise_performance: subjectAnalysisList.map(s => ({

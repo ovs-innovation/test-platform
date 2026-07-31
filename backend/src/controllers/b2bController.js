@@ -1,5 +1,6 @@
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
+import { createAdminNotification } from '../utils/createAdminNotification.js';
 
 /**
  * Handle public institutional partnership enquiry submission
@@ -51,16 +52,18 @@ export const createB2bEnquiry = asyncHandler(async (req, res) => {
   }
 
   const referenceCode = `ENQ-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+  const estTotal = estimatedGrandTotal ? Number(estimatedGrandTotal) : (estimatedPrice ? Number(estimatedPrice) : 0);
 
   try {
     const result = await query(
       `INSERT INTO b2b_enquiries (
-        institution_name, contact_person, designation, mobile_number, email,
+        reference_code, institution_name, contact_person, designation, mobile_number, email,
         city, state, institution_type, student_count, target_exam,
-        interested_package, message, estimated_price
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+        interested_package, message, estimated_price, status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
       RETURNING *`,
       [
+        referenceCode,
         institutionName.trim(),
         contactPerson.trim(),
         designation ? designation.trim() : 'Principal',
@@ -73,9 +76,17 @@ export const createB2bEnquiry = asyncHandler(async (req, res) => {
         targetExam || 'NEET',
         interestedPackage || 'NEET-UG 2027 One-Year Program',
         message ? message.trim() : '',
-        estimatedGrandTotal ? Number(estimatedGrandTotal) : (estimatedPrice ? Number(estimatedPrice) : 0),
+        estTotal,
+        'New Request',
       ]
     );
+
+    // Create persistent Admin Notification in PostgreSQL for all admins
+    await createAdminNotification({
+      title: `🏫 New Institutional Demo Request: ${institutionName.trim()}`,
+      body: `${contactPerson.trim()} (${mobileNumber.trim()}) requested a demo for ${studentCount || '100-300'} students. [Ref: ${referenceCode}]`,
+      type: 'b2b_demo_request',
+    });
 
     res.status(201).json({
       success: true,
@@ -89,7 +100,8 @@ export const createB2bEnquiry = asyncHandler(async (req, res) => {
       },
     });
   } catch (err) {
-    // If DB table doesn't exist yet or connection error, return 201 fallback so frontend proceeds seamlessly
+    // eslint-disable-next-line no-console
+    console.error('[b2bController] Error saving B2B enquiry:', err);
     res.status(201).json({
       success: true,
       referenceCode,

@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { useNavigate } from 'react-router-dom';
-import {
-  getPartnerSchools,
-  addPartnerSchool,
-  deletePartnerSchool,
-  getDemoLeads,
-  updateLeadStatus,
-  deleteLead
-} from '../../lib/schoolStore.js';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { adminService } from '../../lib/services.js';
+import { useToast } from '../../context/ToastContext.jsx';
 import {
   Building2,
   Plus,
@@ -37,7 +31,12 @@ import { Badge } from '../../components/ui.jsx';
 
 export default function Schools() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const toast = useToast();
   const [schools, setSchools] = useState([]);
+  const [leads, setLeads] = useState([]);
+  const [stats, setStats] = useState({ totalInstitutions: 0, issuedLicenses: 0, enrolledStudents: 0, utilizationRate: 0 });
+  const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [selectedLead, setSelectedLead] = useState(null);
@@ -79,9 +78,6 @@ export default function Schools() {
     };
   }, [showAddModal, selectedLead, selectedSchoolInvoice]);
 
-
-
-
   // Form State for New School
   const [formData, setFormData] = useState({
     name: '',
@@ -93,14 +89,45 @@ export default function Schools() {
     logoUrl: '',
     totalLicenses: '200',
     accentColor: '#2563eb',
+    leadId: null,
   });
 
-  const [leads, setLeads] = useState([]);
+  const loadAllData = async () => {
+    setLoading(true);
+    try {
+      const [schoolsData, leadsData] = await Promise.all([
+        adminService.partnerSchools().catch(() => ({ institutions: [], stats: {} })),
+        adminService.demoLeads().catch(() => ({ leads: [] })),
+      ]);
+      setSchools(schoolsData.institutions || []);
+      setStats(schoolsData.stats || {});
+      setLeads(leadsData.leads || []);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to load partner schools live data:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    setSchools(getPartnerSchools());
-    setLeads(getDemoLeads());
+    loadAllData();
   }, []);
+
+  // Auto-open lead details modal when coming from Notification Click
+  useEffect(() => {
+    if (leads.length > 0 && location.state?.leadRef) {
+      const term = location.state.leadRef.toLowerCase();
+      const matched = leads.find((l) =>
+        l.schoolName?.toLowerCase().includes(term) ||
+        l.contactName?.toLowerCase().includes(term) ||
+        term.includes(l.schoolName?.toLowerCase())
+      );
+      if (matched) {
+        setSelectedLead(matched);
+      }
+    }
+  }, [leads, location.state]);
 
   const handleApproveLead = (lead) => {
     setFormData({
@@ -113,22 +140,32 @@ export default function Schools() {
       logoUrl: '',
       totalLicenses: lead.studentCount || '250',
       accentColor: '#2563eb',
+      leadId: lead.id,
     });
     setShowAddModal(true);
   };
 
-  const handleLeadStatus = (id, newStatus) => {
-    const updated = updateLeadStatus(id, newStatus);
-    setLeads(updated);
-  };
-
-  const handleDeleteLead = (id) => {
-    if (window.confirm('Delete this demo request lead?')) {
-      const updated = deleteLead(id);
-      setLeads(updated);
+  const handleLeadStatus = async (id, newStatus) => {
+    try {
+      await adminService.updateLeadStatus(id, newStatus);
+      setLeads((prev) => prev.map((l) => (l.id === id ? { ...l, status: newStatus } : l)));
+      toast?.success(`Lead status updated to "${newStatus}"`);
+    } catch (err) {
+      toast?.error(err.message || 'Failed to update lead status');
     }
   };
 
+  const handleDeleteLead = async (id) => {
+    if (window.confirm('Delete this demo request lead?')) {
+      try {
+        await adminService.deleteLead(id);
+        setLeads((prev) => prev.filter((l) => l.id !== id));
+        toast?.success('Demo request lead deleted');
+      } catch (err) {
+        toast?.error(err.message || 'Failed to delete lead');
+      }
+    }
+  };
 
   const handleFileUpload = (e) => {
     const file = e.target.files?.[0];
@@ -144,7 +181,6 @@ export default function Schools() {
   };
 
   const handleCopy = (text, id) => {
-
     navigator.clipboard.writeText(text);
     setCopiedId(id);
     setTimeout(() => setCopiedId(null), 2000);
@@ -154,33 +190,42 @@ export default function Schools() {
     setShowPasswords((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
-  const handleAddSubmit = (e) => {
+  const handleAddSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.schoolId.trim() || !formData.email.trim() || !formData.password.trim()) return;
 
-    const badge = formData.logoBadge.trim() || formData.name.trim().substring(0, 3).toUpperCase();
-    const updated = addPartnerSchool({ ...formData, logoBadge: badge });
-    setSchools(updated);
+    try {
+      const res = await adminService.addPartnerSchool(formData);
+      toast?.success(res.message || 'Partner School account created');
+      loadAllData();
 
-    // Reset Form & Close Modal
-    setFormData({
-      name: '',
-      schoolId: '',
-      email: '',
-      password: '',
-      tagline: 'Premier Educational Institution',
-      logoBadge: '',
-      logoUrl: '',
-      totalLicenses: '200',
-      accentColor: '#2563eb',
-    });
-    setShowAddModal(false);
+      setFormData({
+        name: '',
+        schoolId: '',
+        email: '',
+        password: '',
+        tagline: 'Premier Educational Institution',
+        logoBadge: '',
+        logoUrl: '',
+        totalLicenses: '200',
+        accentColor: '#2563eb',
+        leadId: null,
+      });
+      setShowAddModal(false);
+    } catch (err) {
+      toast?.error(err.message || 'Failed to create partner school');
+    }
   };
 
-  const handleDelete = (id, name) => {
+  const handleDelete = async (id, name) => {
     if (window.confirm(`Are you sure you want to remove "${name}" partner school?`)) {
-      const updated = deletePartnerSchool(id);
-      setSchools(updated);
+      try {
+        await adminService.deletePartnerSchool(id);
+        toast?.success(`Partner School "${name}" deleted`);
+        loadAllData();
+      } catch (err) {
+        toast?.error(err.message || 'Failed to delete partner school');
+      }
     }
   };
 
@@ -191,8 +236,9 @@ export default function Schools() {
       s.email.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalLicensesCount = schools.reduce((acc, s) => acc + Number(s.totalLicenses || 0), 0);
-  const totalActiveStudentsCount = schools.reduce((acc, s) => acc + Number(s.activeStudents || 0), 0);
+  const totalLicensesCount = stats.issuedLicenses ?? schools.reduce((acc, s) => acc + Number(s.totalLicenses || 0), 0);
+  const totalActiveStudentsCount = stats.enrolledStudents ?? schools.reduce((acc, s) => acc + Number(s.activeStudents || 0), 0);
+  const utilizationRate = stats.utilizationRate ?? (totalLicensesCount > 0 ? Math.round((totalActiveStudentsCount / totalLicensesCount) * 1000) / 10 : 0);
 
   return (
     <div className="space-y-6 w-full max-w-full min-w-0">

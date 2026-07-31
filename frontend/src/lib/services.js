@@ -387,6 +387,15 @@ export const adminService = {
   createBatch: (data) => api.post('/admin/batches', data).then((r) => r.data.batch),
   deleteBatch: (id) => api.delete(`/admin/batches/${id}`).then((r) => r.data),
   institutionAnalytics: () => api.get('/admin/analytics/institution').then((r) => r.data.institution_analytics),
+  getFeatureFlags: () => api.get('/admin/feature-flags').then((r) => r.data),
+  updateFeatureFlag: (flagName, data) => api.put(`/admin/feature-flags/${flagName}`, data).then((r) => r.data),
+  // Partner Schools & B2B Enquiries
+  partnerSchools: () => api.get('/admin/institutions').then((r) => r.data),
+  addPartnerSchool: (data) => api.post('/admin/institutions', data).then((r) => r.data),
+  deletePartnerSchool: (id) => api.delete(`/admin/institutions/${id}`).then((r) => r.data),
+  demoLeads: () => api.get('/admin/b2b-enquiries').then((r) => r.data),
+  updateLeadStatus: (id, status) => api.patch(`/admin/b2b-enquiries/${id}/status`, { status }).then((r) => r.data),
+  deleteLead: (id) => api.delete(`/admin/b2b-enquiries/${id}`).then((r) => r.data),
 };
 
 export const institutionDashboardService = {

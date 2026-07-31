@@ -11,6 +11,14 @@ import {
   getAttemptReport,
   getAnalytics,
   getInstitutionAnalytics,
+  getFeatureFlags,
+  updateFeatureFlag,
+  getInstitutions,
+  createInstitution,
+  deleteInstitution,
+  getB2bEnquiries,
+  updateB2bEnquiryStatus,
+  deleteB2bEnquiry,
 } from '../controllers/adminController.js';
 import {
   listTests,
@@ -103,5 +111,16 @@ router.get('/subjects/:subjectId/chapters', listChapters);
 router.post('/chapters', createChapter);
 router.post('/topics', createTopic);
 router.post('/notifications/broadcast', broadcastNotification);
+
+router.get('/feature-flags', getFeatureFlags);
+router.put('/feature-flags/:flag_name', updateFeatureFlag);
+
+router.get('/institutions', getInstitutions);
+router.post('/institutions', createInstitution);
+router.delete('/institutions/:id', deleteInstitution);
+
+router.get('/b2b-enquiries', getB2bEnquiries);
+router.patch('/b2b-enquiries/:id/status', updateB2bEnquiryStatus);
+router.delete('/b2b-enquiries/:id', deleteB2bEnquiry);
 
 export default router;
