@@ -4,6 +4,7 @@ import { authService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
+import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 import {
   Sparkles,
   Trophy,
@@ -21,7 +22,8 @@ import {
   Building2,
   Download,
   FileText,
-  School
+  School,
+  Calendar as CalendarIcon
 } from 'lucide-react';
 
 export default function CandidateDashboard() {
@@ -243,6 +245,9 @@ export default function CandidateDashboard() {
           </Link>
         </div>
       )}
+
+      {/* 2.5 OFFICIAL AIETS 2027 ASSESSMENT SCHEDULE SNAPSHOT */}
+      <DashboardScheduleSnapshot />
 
       {/* 3. 6 REDESIGNED SAAS KPI CARDS */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
