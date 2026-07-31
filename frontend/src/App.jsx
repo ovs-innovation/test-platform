@@ -22,6 +22,7 @@ import Contact from './pages/public/Contact.jsx';
 import Careers from './pages/public/Careers.jsx';
 import SchoolsB2B from './pages/public/SchoolsB2B.jsx';
 import InstitutionLogin from './pages/public/InstitutionLogin.jsx';
+import InstitutionDashboard from './pages/institution/InstitutionDashboard.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
@@ -92,6 +93,8 @@ export default function App() {
           <Route path="/for-institutions" element={<SchoolsB2B />} />
           <Route path="/schools" element={<SchoolsB2B />} />
           <Route path="/institution-login" element={<InstitutionLogin />} />
+          <Route path="/institution/dashboard" element={<InstitutionDashboard />} />
+          <Route path="/institution/:id/dashboard" element={<InstitutionDashboard />} />
 
           <Route path="/privacy" element={<EdvedumLegalPage title="Privacy Policy"><p>{COMPANY.name} is committed to protecting your personal data. Information collected during registration, test attempts, and payments is encrypted and used solely to deliver our educational services.</p><p className="mt-4">We do not sell or share student data with third parties without consent, except as required by law.</p></EdvedumLegalPage>} />
           <Route path="/terms" element={<EdvedumLegalPage title="Terms & Conditions"><p>By using {COMPANY.name} platform you agree to fair examination policies, honest attempt guidelines, and acceptable use of our CBT test interface.</p><p className="mt-4">Misuse of the platform, sharing of credentials, or attempt to circumvent proctoring may result in account suspension.</p></EdvedumLegalPage>} />

@@ -19,9 +19,7 @@ import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCirc
 
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
-  { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
-  { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
   { to: '/leaderboard', label: 'Leaderboard', icon: 'trophy' },
   { to: '/discussion-hub', label: 'Discussion Hub', icon: 'chat' },

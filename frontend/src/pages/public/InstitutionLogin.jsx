@@ -20,6 +20,7 @@ import { Spinner, PasswordInput } from '../../components/ui.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { getPartnerSchools } from '../../lib/schoolStore.js';
+import { institutionDashboardService } from '../../lib/services.js';
 
 export default function InstitutionLogin() {
   const { login } = useAuth();
@@ -47,24 +48,38 @@ export default function InstitutionLogin() {
     setError('');
 
     try {
-      // Check local multi-tenant institution store first
+      // 1. Attempt backend institution admin login
+      try {
+        const res = await institutionDashboardService.login({ email: input, institutionId: input, password: pass });
+        if (res?.token) {
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(res.institution));
+          toast.success(`Welcome back, ${res.institution.name}!`);
+          navigate(`/institution/${res.institution.id}/dashboard`, { replace: true });
+          return;
+        }
+      } catch (backendErr) {
+        // Fallback to local store or standard login if backend endpoint error
+      }
+
+      // 2. Check local multi-tenant institution store fallback
       const schoolsList = getPartnerSchools();
       const matched = schoolsList.find(
         (s) => (s.schoolId.toLowerCase() === input || s.email.toLowerCase() === input) && s.password === pass
       );
 
       if (matched) {
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         toast.success(`Welcome back, ${matched.name}!`);
-        // Navigate to /for-schools with active session state
-        navigate('/for-schools', { state: { loggedInSchool: matched }, replace: true });
+        navigate(`/institution/${matched.id || 1}/dashboard`, { state: { loggedInSchool: matched }, replace: true });
         return;
       }
 
-      // Otherwise attempt standard auth login
+      // 3. Otherwise attempt standard auth login
       const user = await login({ email: input, password: pass });
       toast.success(`Welcome back, ${user.name.split(' ')[0]}!`);
       const dest = location.state?.from?.pathname;
-      navigate(dest || '/admin', { replace: true });
+      navigate(dest || '/institution/1/dashboard', { replace: true });
     } catch (err) {
       setError(err.message || 'Invalid Institution ID or Password. Please check your credentials.');
     } finally {

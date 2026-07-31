@@ -55,6 +55,8 @@ const run = async () => {
     await pool.query(migration16);
     const migration17 = fs.readFileSync(path.join(__dirname, 'migration_v17.sql'), 'utf-8');
     await pool.query(migration17);
+    const migration18 = fs.readFileSync(path.join(__dirname, 'migration_v18.sql'), 'utf-8');
+    await pool.query(migration18);
     // eslint-disable-next-line no-console
     console.log('[migrate] Schema applied successfully.');
   } catch (err) {

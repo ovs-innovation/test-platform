@@ -45,6 +45,8 @@ import {
 import { Spinner } from '../../components/ui.jsx';
 import {
   getPartnerSchools,
+  savePartnerSchools,
+  addStudentToSchool,
   submitSchoolDemoLead
 } from '../../lib/schoolStore.js';
 import {
@@ -78,6 +80,12 @@ export default function SchoolsB2B() {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRankingModal, setShowRankingModal] = useState(false);
+  const [showAssignTestModal, setShowAssignTestModal] = useState(false);
+  const [showAssignEbookModal, setShowAssignEbookModal] = useState(false);
+  const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [showResultsModal, setShowResultsModal] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
 
   // Search & Filter State inside Portal Dashboard
   const [searchQuery, setSearchQuery] = useState('');
@@ -106,6 +114,38 @@ export default function SchoolsB2B() {
   const enquiryFormRef = useRef(null);
   const calculatorHeadingRef = useRef(null);
   const calculatorSectionRef = useRef(null);
+
+  // Restore logged-in active school session from localStorage on refresh
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('edvedum_active_school');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const all = getPartnerSchools();
+        const found = all.find((s) => s.id === parsed.id || s.schoolId === parsed.schoolId);
+        if (found) {
+          // Merge student lists without losing any newly enrolled students
+          const parsedStudents = parsed.students || [];
+          const foundStudents = found.students || [];
+          const combined = [
+            ...parsedStudents,
+            ...foundStudents.filter((fs) => !parsedStudents.some((ps) => ps.id === fs.id || ps.rollNo === fs.rollNo)),
+          ];
+          const updated = {
+            ...found,
+            ...parsed,
+            activeStudents: combined.length,
+            students: combined,
+          };
+          setActiveSchool(updated);
+        } else {
+          setActiveSchool(parsed);
+        }
+      }
+    } catch (e) {
+      console.error('Failed to restore active school session:', e);
+    }
+  }, []);
 
   // URL Sync Effect for ?program=<slug> parameter and hash scrolling
   useEffect(() => {
@@ -313,6 +353,9 @@ export default function SchoolsB2B() {
 
       if (matched) {
         setActiveSchool(matched);
+        try {
+          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+        } catch (e) {}
         setLoginError('');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       } else {
@@ -327,6 +370,9 @@ export default function SchoolsB2B() {
 
   const handleLogout = () => {
     setActiveSchool(null);
+    try {
+      localStorage.removeItem('edvedum_active_school');
+    } catch (e) {}
     setLoginId('');
     setLoginPassword('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -334,12 +380,20 @@ export default function SchoolsB2B() {
 
   const handleAddStudent = (e) => {
     e.preventDefault();
-    if (!newStudentName.trim() || !newStudentRoll.trim()) return;
+    if (!newStudentName.trim()) return;
+
+    // Auto-generate Enrollment ID / Roll No if not entered
+    const schoolPrefix = activeSchool?.logoBadge || (activeSchool?.name ? activeSchool.name.substring(0, 3).toUpperCase() : 'ENR');
+    const existingCount = (activeSchool?.students || []).length;
+    const generatedEnrollmentId = newStudentRoll.trim()
+      ? newStudentRoll.trim().toUpperCase()
+      : `${schoolPrefix}-2026-${String(existingCount + 1).padStart(2, '0')}`;
 
     const newSt = {
       id: `ST-${Date.now()}`,
       name: newStudentName.trim(),
-      rollNo: newStudentRoll.trim(),
+      rollNo: generatedEnrollmentId,
+      enrollmentId: generatedEnrollmentId,
       course: newStudentCourse,
       progress: 0,
       testsCount: 0,
@@ -352,14 +406,26 @@ export default function SchoolsB2B() {
       biology: newStudentCourse.includes('NEET') ? 0 : null,
     };
 
-    const updatedStudents = [newSt, ...(activeSchool.students || [])];
+    const updatedStudents = [newSt, ...(activeSchool?.students || []).filter((s) => s.id !== newSt.id)];
     const updatedSchool = {
       ...activeSchool,
-      activeStudents: (activeSchool.activeStudents || 0) + 1,
+      activeStudents: updatedStudents.length,
       students: updatedStudents,
     };
 
+    // 1. Update React state immediately
     setActiveSchool(updatedSchool);
+
+    // 2. Persist active school session state to localStorage
+    try {
+      localStorage.setItem('edvedum_active_school', JSON.stringify(updatedSchool));
+      
+      // 3. Persist to partner schools store
+      addStudentToSchool(activeSchool?.schoolId || activeSchool?.id, newSt);
+    } catch (err) {
+      console.error('Failed to save updated partner school to localStorage:', err);
+    }
+
     setNewStudentName('');
     setNewStudentRoll('');
     setShowAddModal(false);
@@ -545,7 +611,7 @@ export default function SchoolsB2B() {
                   />
                 </label>
 
-                {/* Ranking Leaderboard Modal Button */}
+                {/* Ranking Leaderboard Button */}
                 <button
                   onClick={() => setShowRankingModal(true)}
                   className="inline-flex items-center gap-1.5 rounded-xl border border-[#C5A059]/40 bg-[#C5A059]/10 px-3 py-2 text-xs font-extrabold text-[#C5A059] hover:bg-[#C5A059]/20 transition cursor-pointer"
@@ -554,12 +620,66 @@ export default function SchoolsB2B() {
                   <span>🏆 Ranking Leaderboard</span>
                 </button>
 
+                {/* Assign Tests Button */}
+                <button
+                  onClick={() => setShowAssignTestModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-blue-500/30 bg-blue-500/10 px-3 py-2 text-xs font-bold text-blue-300 hover:bg-blue-500/20 transition cursor-pointer"
+                >
+                  <FileText className="h-3.5 w-3.5 text-blue-400" />
+                  <span>Assign Tests</span>
+                </button>
+
+                {/* Assign eBooks Button */}
+                <button
+                  onClick={() => setShowAssignEbookModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-purple-500/30 bg-purple-500/10 px-3 py-2 text-xs font-bold text-purple-300 hover:bg-purple-500/20 transition cursor-pointer"
+                >
+                  <BookOpen className="h-3.5 w-3.5 text-purple-400" />
+                  <span>Assign eBooks</span>
+                </button>
+
+                {/* Analytics Button */}
+                <button
+                  onClick={() => setShowAnalyticsModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-bold text-emerald-300 hover:bg-emerald-500/20 transition cursor-pointer"
+                >
+                  <BarChart3 className="h-3.5 w-3.5 text-emerald-400" />
+                  <span>Analytics</span>
+                </button>
+
+                {/* Attendance Button */}
+                <button
+                  onClick={() => setShowCompletionModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 px-3 py-2 text-xs font-bold text-cyan-300 hover:bg-cyan-500/20 transition cursor-pointer"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-cyan-400" />
+                  <span>Attendance</span>
+                </button>
+
+                {/* Histogram Results Button */}
+                <button
+                  onClick={() => setShowResultsModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-indigo-500/30 bg-indigo-500/10 px-3 py-2 text-xs font-bold text-indigo-300 hover:bg-indigo-500/20 transition cursor-pointer"
+                >
+                  <PieChart className="h-3.5 w-3.5 text-indigo-400" />
+                  <span>Histogram</span>
+                </button>
+
+                {/* Profile Settings Button */}
+                <button
+                  onClick={() => setShowProfileModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-xs font-bold text-slate-200 hover:bg-slate-700 transition cursor-pointer"
+                >
+                  <Building2 className="h-3.5 w-3.5 text-amber-400" />
+                  <span>Profile</span>
+                </button>
+
                 {/* Export Report */}
                 <button
-                  onClick={() => alert(`Exporting ${activeSchool.name} Roster & Rank Performance Report to Excel/PDF...`)}
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-2 text-xs font-bold text-slate-200 hover:bg-slate-700 hover:text-white cursor-pointer transition"
+                  onClick={() => alert(`Exporting ${activeSchool.name} Roster & Rank Performance Report to CSV...`)}
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/30 bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-500 cursor-pointer transition shadow-md"
                 >
-                  <FileText className="h-3.5 w-3.5 text-emerald-400" />
+                  <Download className="h-3.5 w-3.5" />
                   <span>Download Report</span>
                 </button>
 
@@ -807,11 +927,149 @@ export default function SchoolsB2B() {
                         <option value="Foundation (Class 10)">Foundation (Class 10)</option>
                       </select>
                     </div>
-                    <div className="pt-4 flex justify-end gap-3">
-                      <button type="button" onClick={() => setShowAddModal(false)} className="rounded-xl border border-slate-800 bg-slate-950 px-4 py-2 text-xs font-bold text-slate-300">Cancel</button>
-                      <button type="submit" className="rounded-xl bg-[#2563eb] px-5 py-2 text-xs font-bold text-white">Confirm Enrollment</button>
+                    <div className="flex justify-end gap-2 pt-2">
+                      <button type="button" onClick={() => setShowAddModal(false)} className="rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-slate-300">Cancel</button>
+                      <button type="submit" className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-xs font-extrabold text-white">Enroll Student</button>
                     </div>
                   </form>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* ASSIGN TESTS MODAL */}
+            {showAssignTestModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-lg rounded-3xl border border-blue-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Assign Test Series (Package Restricted)</h3>
+                    <button onClick={() => setShowAssignTestModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="space-y-3 text-xs">
+                    <p className="text-slate-400">Select a test from your active purchased package to assign to students or batches:</p>
+                    <div className="space-y-2">
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between items-center">
+                        <div>
+                          <p className="font-bold text-white">AIETS All India Full Mock 01</p>
+                          <p className="text-[10px] text-cyan-400">NEET-UG 2027 AIETS Package • 180 mins</p>
+                        </div>
+                        <button onClick={() => { alert('Test series assigned successfully to all batch students!'); setShowAssignTestModal(false); }} className="px-3 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold">Assign Now</button>
+                      </div>
+                      <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between items-center">
+                        <div>
+                          <p className="font-bold text-white">JEE Advanced Physics Unit Test 04</p>
+                          <p className="text-[10px] text-blue-400">JEE 1-Year AIETS Package • 180 mins</p>
+                        </div>
+                        <button onClick={() => { alert('Test series assigned successfully!'); setShowAssignTestModal(false); }} className="px-3 py-1.5 rounded-xl bg-cyan-500 text-slate-950 font-bold">Assign Now</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* ASSIGN eBOOKS MODAL */}
+            {showAssignEbookModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-lg rounded-3xl border border-purple-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Assign Digital eBooks & Formula Sheets</h3>
+                    <button onClick={() => setShowAssignEbookModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between items-center">
+                      <div>
+                        <p className="font-bold text-white">NCERT High-Yield Physics Formula Guide</p>
+                        <p className="text-[10px] text-purple-400">EDVEDUM Digital Library</p>
+                      </div>
+                      <button onClick={() => { alert('eBook assigned to institution library!'); setShowAssignEbookModal(false); }} className="px-3 py-1.5 rounded-xl bg-purple-500 text-white font-bold">Assign</button>
+                    </div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 flex justify-between items-center">
+                      <div>
+                        <p className="font-bold text-white">Organic Chemistry Mindmaps & Reactions PDF</p>
+                        <p className="text-[10px] text-purple-400">EDVEDUM Digital Library</p>
+                      </div>
+                      <button onClick={() => { alert('eBook assigned to institution library!'); setShowAssignEbookModal(false); }} className="px-3 py-1.5 rounded-xl bg-purple-500 text-white font-bold">Assign</button>
+                    </div>
+                  </div>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* ANALYTICS MODAL */}
+            {showAnalyticsModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-2xl rounded-3xl border border-emerald-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Institute Performance Analytics</h3>
+                    <button onClick={() => setShowAnalyticsModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="grid grid-cols-4 gap-3 text-center text-xs">
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Average Score</p><p className="text-xl font-black text-cyan-400">78.4%</p></div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Highest Score</p><p className="text-xl font-black text-emerald-400">96.2%</p></div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Participation</p><p className="text-xl font-black text-purple-400">94%</p></div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Attempts</p><p className="text-xl font-black text-amber-400">1,420</p></div>
+                  </div>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* ATTENDANCE & COMPLETION MODAL */}
+            {showCompletionModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-2xl rounded-3xl border border-cyan-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Attendance & Test Completion Report</h3>
+                    <button onClick={() => setShowCompletionModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-center text-xs">
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Assigned</p><p className="text-lg font-black text-white">218</p></div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Attempted & Submitted</p><p className="text-lg font-black text-emerald-400">205</p></div>
+                    <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800"><p className="text-slate-400 text-[10px]">Completion Rate</p><p className="text-lg font-black text-cyan-400">94.0%</p></div>
+                  </div>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* RESULT HISTOGRAM MODAL */}
+            {showResultsModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-xl rounded-3xl border border-indigo-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Result Analysis & Score Histogram</h3>
+                    <button onClick={() => setShowResultsModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="space-y-2 text-xs">
+                    <div className="flex justify-between"><span>81% - 100% Score Range</span><span className="font-bold text-emerald-400">42 students (20%)</span></div>
+                    <div className="w-full h-2 rounded-full bg-slate-800"><div className="h-full bg-emerald-400 rounded-full w-[20%]" /></div>
+                    <div className="flex justify-between pt-2"><span>61% - 80% Score Range</span><span className="font-bold text-cyan-400">112 students (54%)</span></div>
+                    <div className="w-full h-2 rounded-full bg-slate-800"><div className="h-full bg-cyan-400 rounded-full w-[54%]" /></div>
+                    <div className="flex justify-between pt-2"><span>41% - 60% Score Range</span><span className="font-bold text-amber-400">51 students (24%)</span></div>
+                    <div className="w-full h-2 rounded-full bg-slate-800"><div className="h-full bg-amber-400 rounded-full w-[24%]" /></div>
+                  </div>
+                </div>
+              </div>,
+              document.body
+            )}
+
+            {/* PROFILE MODAL */}
+            {showProfileModal && createPortal(
+              <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4">
+                <div className="w-full max-w-md rounded-3xl border border-amber-500/40 bg-[#071126] p-6 shadow-2xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                    <h3 className="font-extrabold text-white text-base">Institution Profile Details</h3>
+                    <button onClick={() => setShowProfileModal(false)} className="text-slate-400 hover:text-white"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="space-y-2 text-xs text-slate-300">
+                    <p><strong className="text-white">Institution Name:</strong> {activeSchool.name}</p>
+                    <p><strong className="text-white">Institution ID:</strong> {activeSchool.schoolId}</p>
+                    <p><strong className="text-white">Contact Email:</strong> {activeSchool.email}</p>
+                    <p><strong className="text-white">Total Enrolled Licenses:</strong> {activeSchool.totalLicenses}</p>
+                  </div>
                 </div>
               </div>,
               document.body

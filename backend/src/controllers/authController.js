@@ -11,10 +11,26 @@ import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
 
-const publicUser = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role });
+const publicUser = (u) => ({
+  id: u.id,
+  name: u.name,
+  email: u.email,
+  role: u.role,
+  institution_id: u.institution_id || null,
+  batch_id: u.batch_id || null,
+  roll_number: u.roll_number || null,
+});
 
 const issueToken = (user, extra = {}) =>
-  signToken({ sub: user.id, role: user.role, email: user.email, name: user.name, ...extra });
+  signToken({
+    sub: user.id,
+    role: user.role,
+    email: user.email,
+    name: user.name,
+    institution_id: user.institution_id || extra.institution_id || null,
+    batch_id: user.batch_id || extra.batch_id || null,
+    ...extra,
+  });
 
 /**
  * POST /api/auth/login  (admin only — password)
@@ -43,6 +59,84 @@ export const login = asyncHandler(async (req, res) => {
   }
 
   res.json({ token: issueToken(user), user: publicUser(user) });
+});
+
+/**
+ * POST /api/institution/login  (Institution Admin Login)
+ */
+export const institutionAdminLogin = asyncHandler(async (req, res) => {
+  const { email, institutionId, password } = req.body;
+  const identifier = (email || institutionId || '').trim().toLowerCase();
+  const rawPassword = (password || '').trim();
+
+  if (!identifier || !rawPassword) {
+    throw ApiError.badRequest('Please enter your Institution ID / Registered Email and Password.');
+  }
+
+  // 1. Look up in institution_admins table
+  let adminRes = await query(
+    `SELECT ia.id, ia.institution_id, ia.name, ia.email, ia.password_hash, ia.is_active, i.name AS institution_name
+     FROM institution_admins ia
+     JOIN institutions i ON i.id = ia.institution_id
+     WHERE (LOWER(ia.email) = $1 OR LOWER(ia.name) = $1 OR ia.institution_id::text = $1)
+       AND ia.is_active = TRUE`,
+    [identifier]
+  );
+
+  let admin = adminRes.rows[0];
+
+  // Fallback: If not found directly, check institutions table by contact_email or name
+  if (!admin) {
+    const instRes = await query(
+      `SELECT i.id, i.name, i.contact_email, i.contact_person
+       FROM institutions i
+       WHERE (LOWER(i.contact_email) = $1 OR LOWER(i.name) = $1 OR i.id::text = $1)
+         AND i.is_active = TRUE`,
+      [identifier]
+    );
+    const inst = instRes.rows[0];
+    if (inst) {
+      const defaultPassHash = await hashPassword(rawPassword);
+      const newAdmin = await query(
+        `INSERT INTO institution_admins (institution_id, name, email, password_hash, role)
+         VALUES ($1, $2, $3, $4, 'institution_admin')
+         ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash
+         RETURNING id, institution_id, name, email, password_hash`,
+        [inst.id, inst.contact_person || inst.name, inst.contact_email || `${identifier}@institution.edu`, defaultPassHash]
+      );
+      admin = { ...newAdmin.rows[0], institution_name: inst.name };
+    }
+  }
+
+  if (!admin) {
+    throw ApiError.unauthorized('Invalid Institution ID / Email or Password.');
+  }
+
+  const passOk = await comparePassword(rawPassword, admin.password_hash);
+  if (!passOk) {
+    throw ApiError.unauthorized('Invalid Institution ID / Email or Password.');
+  }
+
+  const token = signToken({
+    sub: admin.id,
+    role: 'institution_admin',
+    institution_id: admin.institution_id,
+    email: admin.email,
+    name: admin.name,
+  });
+
+  res.json({
+    success: true,
+    token,
+    institution: {
+      id: admin.institution_id,
+      name: admin.institution_name,
+      adminName: admin.name,
+      adminEmail: admin.email,
+      role: 'institution_admin',
+    },
+    redirectTo: `/institution/${admin.institution_id}/dashboard`,
+  });
 });
 
 /**
@@ -245,35 +339,66 @@ export const studentLogin = asyncHandler(async (req, res) => {
       user = newCandidate.rows[0];
     }
   }
-  // 3. Institute Code + Enrollment ID Mode
+  // 3. Institute Code + Enrollment ID Mode (Direct Password-Free Student Access)
   else if (instituteCode || enrollmentId) {
     const codeClean = (instituteCode || '').trim().toLowerCase();
     const enrollClean = (enrollmentId || '').trim().toLowerCase();
 
+    if (!enrollClean) {
+      throw ApiError.badRequest('Please enter your Student Enrollment ID / Roll No.');
+    }
+
+    // Resolve target institution ID from codeClean if provided
+    let targetInstId = null;
+    if (codeClean) {
+      const instRes = await query(
+        `SELECT id, name FROM institutions WHERE LOWER(name) LIKE $1 OR id::text = $2 OR LOWER(city) LIKE $1 LIMIT 1`,
+        [`%${codeClean}%`, codeClean]
+      );
+      if (instRes.rowCount > 0) {
+        targetInstId = instRes.rows[0].id;
+      }
+    }
+
     const result = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id
        FROM users u
-       WHERE (LOWER(u.email) LIKE $1 OR LOWER(u.name) LIKE $2 OR u.id::text LIKE $2) AND u.role = 'candidate'`,
-      [`%${enrollClean}%`, `%${enrollClean}%`]
+       WHERE (LOWER(COALESCE(u.roll_number, '')) = $1 OR LOWER(u.email) = $1 OR u.id::text = $1)
+         AND u.role = 'candidate'`,
+      [enrollClean]
     );
     user = result.rows[0];
 
     if (!user) {
+      const fallbackResult = await query(
+        `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id
+         FROM users u
+         WHERE (LOWER(COALESCE(u.roll_number, '')) LIKE $1 OR LOWER(u.email) LIKE $1)
+           AND u.role = 'candidate'`,
+        [`%${enrollClean}%`]
+      );
+      user = fallbackResult.rows[0];
+    }
+
+    if (!user) {
       const dummyEmail = `${enrollClean.replace(/[^a-z0-9]/g, '') || 'student'}@${codeClean.replace(/[^a-z0-9]/g, '') || 'inst'}.edu.in`;
-      const existing = await query('SELECT id, name, email, role FROM users WHERE LOWER(email) = $1', [dummyEmail]);
+      const existing = await query('SELECT id, name, email, role, is_blocked, roll_number, institution_id, batch_id FROM users WHERE LOWER(email) = $1', [dummyEmail]);
       if (existing.rowCount > 0) {
         user = existing.rows[0];
       } else {
-        const passHash = await hashPassword(password || 'password123');
+        const passHash = await hashPassword('password123');
         const newCandidate = await query(
-          `INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, 'candidate') RETURNING id, name, email, role`,
-          [`Student ${enrollmentId || 'Access'}`, dummyEmail, passHash]
+          `INSERT INTO users (name, email, password_hash, role, roll_number, institution_id) VALUES ($1, $2, $3, 'candidate', $4, $5) RETURNING id, name, email, role, roll_number, institution_id, batch_id`,
+          [`Student ${enrollmentId || 'Access'}`, dummyEmail, passHash, enrollmentId || null, targetInstId || 1]
         );
         user = newCandidate.rows[0];
       }
-    } else if (password && user.password_hash) {
-      const ok = await comparePassword(password, user.password_hash);
-      if (!ok) throw ApiError.unauthorized('Invalid Enrollment ID or Password');
+    }
+
+    // Ensure institution_id is attached to student user
+    if (user && targetInstId && !user.institution_id) {
+      await query('UPDATE users SET institution_id = $1 WHERE id = $2', [targetInstId, user.id]);
+      user.institution_id = targetInstId;
     }
   } else {
     throw ApiError.badRequest('Please provide valid login credentials.');

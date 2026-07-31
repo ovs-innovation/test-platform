@@ -23,7 +23,6 @@ import {
   FileText,
   School
 } from 'lucide-react';
-import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 
 export default function CandidateDashboard() {
   const { user } = useAuth();
@@ -308,9 +307,6 @@ export default function CandidateDashboard() {
           color="text-rose-600 dark:text-rose-400"
         />
       </div>
-
-      {/* 4. AIETS CALENDAR & PROGRAM SCHEDULE SNAPSHOT */}
-      <DashboardScheduleSnapshot />
 
       {/* 5. AI STUDY SUGGESTIONS & SUBJECT BREAKDOWN */}
       <div className="grid gap-3 lg:grid-cols-3">

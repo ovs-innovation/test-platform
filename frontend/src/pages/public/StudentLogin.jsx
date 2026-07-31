@@ -11,9 +11,9 @@ export default function StudentLogin() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [loginMode, setLoginMode] = useState('institute'); // 'institute', 'mobile', or 'email'
+  const [loginMode, setLoginMode] = useState('email'); // Default: 'email', 'mobile', 'institute'
 
-  // Form Fields - Strictly Empty Load
+  // Form Fields
   const [instituteCode, setInstituteCode] = useState('');
   const [enrollmentId, setEnrollmentId] = useState('');
   const [instPassword, setInstPassword] = useState('');
@@ -59,8 +59,8 @@ export default function StudentLogin() {
   // Handle Institute Login (Institute Code + Enrollment ID)
   const onInstituteSubmit = async (e) => {
     e?.preventDefault();
-    if (!instituteCode.trim() || !enrollmentId.trim() || !instPassword.trim()) {
-      setError('Please enter your Institute Code, Enrollment ID and Password.');
+    if (!instituteCode.trim() || !enrollmentId.trim()) {
+      setError('Please enter your Institute Code and Enrollment ID.');
       return;
     }
     setLoading(true);
@@ -69,13 +69,12 @@ export default function StudentLogin() {
       const u = await studentLogin({
         instituteCode: instituteCode.trim().toUpperCase(),
         enrollmentId: enrollmentId.trim(),
-        password: instPassword.trim(),
       });
       toast.success('Institutional Access Granted!');
       const destination = location.state?.from?.pathname || (getDashboardRoute ? getDashboardRoute(u?.role) : '/dashboard');
       navigate(destination, { replace: true });
     } catch (err) {
-      setError(err.message || 'Institutional login failed. Check Code, Enrollment ID or Password.');
+      setError(err.message || 'Institutional login failed. Check Institute Code or Enrollment ID.');
     } finally {
       setLoading(false);
     }
@@ -158,48 +157,45 @@ export default function StudentLogin() {
   return (
     <AuthShell
       title="Student Login"
-      subtitle="Sign in to access your assigned test series, upcoming exams, eBooks, results and performance analytics."
+      subtitle="Sign in to your account to access tests, eBooks, and performance reports."
     >
-      {/* Informational Access Strip */}
-      <div className="mb-5 rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3 text-xs text-cyan-300 flex items-center gap-2">
-        <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse shrink-0" />
-        <span>Sign in to securely access your assigned institution, batch, test series, eBooks and performance reports.</span>
-      </div>
-
       {/* 3-Tab Login Mode Switcher */}
-      <div className="grid grid-cols-3 border-b border-slate-700/80 mb-6 text-center">
+      <div className="grid grid-cols-3 p-1 bg-[#050a18]/80 border border-[#1e293b] rounded-2xl mb-6">
         <button
           type="button"
-          className={`pb-3 text-xs font-bold border-b-2 transition-all cursor-pointer truncate ${
-            loginMode === 'institute'
-              ? 'border-[#00F0FF] text-[#00F0FF]'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
-          }`}
-          onClick={() => handleSwitchTab('institute')}
-        >
-          🏫 Institute Code & ID
-        </button>
-        <button
-          type="button"
-          className={`pb-3 text-xs font-bold border-b-2 transition-all cursor-pointer truncate ${
-            loginMode === 'mobile'
-              ? 'border-[#00F0FF] text-[#00F0FF]'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
-          }`}
-          onClick={() => handleSwitchTab('mobile')}
-        >
-          📱 Mobile Number
-        </button>
-        <button
-          type="button"
-          className={`pb-3 text-xs font-bold border-b-2 transition-all cursor-pointer truncate ${
+          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
             loginMode === 'email'
-              ? 'border-[#00F0FF] text-[#00F0FF]'
-              : 'border-transparent text-slate-400 hover:text-slate-200'
+              ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
           }`}
           onClick={() => handleSwitchTab('email')}
         >
-          ✉️ Email Login
+          <span>✉️</span>
+          <span>Email Login</span>
+        </button>
+        <button
+          type="button"
+          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+            loginMode === 'mobile'
+              ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+          }`}
+          onClick={() => handleSwitchTab('mobile')}
+        >
+          <span>📱</span>
+          <span>Mobile Number</span>
+        </button>
+        <button
+          type="button"
+          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+            loginMode === 'institute'
+              ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+          }`}
+          onClick={() => handleSwitchTab('institute')}
+        >
+          <span>🏫</span>
+          <span>Code & ID Login</span>
         </button>
       </div>
 
@@ -209,56 +205,47 @@ export default function StudentLogin() {
         </div>
       )}
 
-      {/* MODE 1: INSTITUTE CODE & ENROLLMENT ID */}
-      {loginMode === 'institute' && (
-        <form onSubmit={onInstituteSubmit} className="space-y-4">
+      {/* MODE 1: EMAIL LOGIN */}
+      {loginMode === 'email' && (
+        <form onSubmit={onEmailSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              1. Institute Code *
+              Email Address *
             </label>
             <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono uppercase"
-              type="text"
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+              type="email"
+              placeholder="student@example.com"
               required
-              placeholder="e.g. DPS-DELHI-2026"
-              value={instituteCode}
-              onChange={(e) => setInstituteCode(e.target.value.toUpperCase())}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              2. Student Enrollment ID / Roll No *
-            </label>
-            <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none"
-              type="text"
-              required
-              placeholder="e.g. 2026-DPS-01"
-              value={enrollmentId}
-              onChange={(e) => setEnrollmentId(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              3. Access Password / PIN *
-            </label>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
+                Password *
+              </label>
+              <Link to="/forgot-password" className="text-xs font-semibold text-[#00F0FF] hover:underline">
+                Forgot?
+              </Link>
+            </div>
             <PasswordInput
-              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none"
+              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
               placeholder="••••••••"
               required
-              value={instPassword}
-              onChange={(e) => setInstPassword(e.target.value)}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] cursor-pointer disabled:opacity-50 mt-2"
+            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
           >
-            {loading ? 'Accessing Portal…' : 'Access Institutional AIETS →'}
+            {loading ? 'Signing in…' : 'Sign In →'}
           </button>
         </form>
       )}
@@ -270,12 +257,12 @@ export default function StudentLogin() {
             <form onSubmit={handleSendOtp} className="space-y-4">
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                  Registered Mobile Number *
+                  Mobile Number *
                 </label>
                 <div className="relative flex items-center">
                   <span className="absolute left-3.5 text-sm font-bold text-slate-400 font-mono">+91</span>
                   <input
-                    className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] pl-14 pr-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono"
+                    className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] pl-14 pr-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono transition-colors"
                     type="tel"
                     maxLength={10}
                     required
@@ -289,9 +276,9 @@ export default function StudentLogin() {
               <button
                 type="submit"
                 disabled={loading || mobileNumber.length < 10}
-                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] cursor-pointer disabled:opacity-50 mt-2"
+                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
               >
-                {loading ? 'Sending OTP…' : 'Send Login OTP →'}
+                {loading ? 'Sending OTP…' : 'Send OTP →'}
               </button>
             </form>
           ) : (
@@ -309,10 +296,10 @@ export default function StudentLogin() {
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-                  Enter 6-Digit OTP Code *
+                  Enter 6-Digit OTP *
                 </label>
                 <input
-                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-center text-lg font-black tracking-widest text-[#00F0FF] placeholder:text-slate-600 focus:border-[#00F0FF] focus:outline-none font-mono"
+                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-center text-lg font-black tracking-widest text-[#00F0FF] placeholder:text-slate-600 focus:border-[#00F0FF] focus:outline-none font-mono transition-colors"
                   type="text"
                   maxLength={6}
                   required
@@ -339,7 +326,7 @@ export default function StudentLogin() {
               <button
                 type="submit"
                 disabled={loading || otpCode.length < 4}
-                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] cursor-pointer disabled:opacity-50 mt-2"
+                className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
               >
                 {loading ? 'Verifying OTP…' : 'Verify OTP & Log In →'}
               </button>
@@ -348,47 +335,43 @@ export default function StudentLogin() {
         </div>
       )}
 
-      {/* MODE 3: EMAIL LOGIN */}
-      {loginMode === 'email' && (
-        <form onSubmit={onEmailSubmit} className="space-y-4">
+      {/* MODE 3: INSTITUTE CODE & ENROLLMENT ID */}
+      {loginMode === 'institute' && (
+        <form onSubmit={onInstituteSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              Email Address *
+              Institute Code *
             </label>
             <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none"
-              type="email"
-              placeholder="student@example.com"
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono uppercase transition-colors"
+              type="text"
               required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              placeholder="e.g. DPS-DELHI-2026"
+              value={instituteCode}
+              onChange={(e) => setInstituteCode(e.target.value.toUpperCase())}
             />
           </div>
 
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
-                Password *
-              </label>
-              <Link to="/forgot-password" className="text-xs font-semibold text-[#00F0FF] hover:underline">
-                Forgot?
-              </Link>
-            </div>
-            <PasswordInput
-              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none"
-              placeholder="••••••••"
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Student Enrollment ID / Roll No *
+            </label>
+            <input
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+              type="text"
               required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              placeholder="e.g. ZCI-2026-04"
+              value={enrollmentId}
+              onChange={(e) => setEnrollmentId(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] cursor-pointer disabled:opacity-50 mt-2"
+            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
           >
-            {loading ? 'Signing in…' : 'Log in with Email →'}
+            {loading ? 'Accessing Portal…' : 'Sign In with Institute ID →'}
           </button>
         </form>
       )}

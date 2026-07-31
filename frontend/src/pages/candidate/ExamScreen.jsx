@@ -50,7 +50,6 @@ export default function ExamScreen() {
   const [needsFullscreen, setNeedsFullscreen] = useState(false);
   const [warning, setWarning] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const [calcOpen, setCalcOpen] = useState(false);
   const [imgZoom, setImgZoom] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
 
@@ -423,9 +422,6 @@ export default function ExamScreen() {
             <div className={`rounded px-3 py-1 ${timerClass(remaining)}`}>
               Time Left: {formatDuration(remaining)}
             </div>
-            <button type="button" className="nta-btn border-white/40 bg-white/10 text-white hover:bg-white/20" onClick={() => setCalcOpen(true)}>
-              Calculator
-            </button>
             <button type="button" className="nta-btn nta-btn-danger" onClick={() => setConfirmOpen(true)}>
               Submit
             </button>
@@ -797,34 +793,9 @@ export default function ExamScreen() {
         </div>
       </Modal>
 
-      <Modal open={calcOpen} onClose={() => setCalcOpen(false)} title="Calculator" size="sm">
-        <Calculator />
-      </Modal>
-
       <Modal open={!!imgZoom} onClose={() => setImgZoom(null)} title="Question image" size="lg">
         {imgZoom && <img src={imgZoom} alt="Enlarged question" className="mx-auto max-h-[70vh] w-full object-contain" />}
       </Modal>
-    </div>
-  );
-}
-
-function Calculator() {
-  const [display, setDisplay] = useState('0');
-  const press = (v) => {
-    if (v === 'C') setDisplay('0');
-    else if (v === '=') {
-      try { setDisplay(String(Function(`"use strict"; return (${display})`)())); } catch { setDisplay('Error'); }
-    } else setDisplay((d) => (d === '0' ? v : d + v));
-  };
-  const keys = ['7', '8', '9', '/', '4', '5', '6', '*', '1', '2', '3', '-', '0', '.', '=', '+', 'C'];
-  return (
-    <div>
-      <div className="mb-3 border border-slate-400 bg-slate-900 p-3 text-right font-mono text-2xl text-white">{display}</div>
-      <div className="grid grid-cols-4 gap-2">
-        {keys.map((k) => (
-          <button key={k} type="button" className="nta-btn py-2" onClick={() => press(k)}>{k}</button>
-        ))}
-      </div>
     </div>
   );
 }

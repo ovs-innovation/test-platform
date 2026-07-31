@@ -69,3 +69,59 @@ export const authorize = (...roles) => (req, _res, next) => {
   }
   return next();
 };
+
+/**
+ * Dedicated auth middleware for Institution Admins.
+ * Verifies JWT token, ensures role is 'institution_admin' (or platform 'admin'),
+ * extracts institution_id, and cross-checks req.params.id against req.institution_id.
+ */
+export const authInstitutionAdmin = async (req, _res, next) => {
+  const header = req.headers.authorization || '';
+  const [scheme, token] = header.split(' ');
+
+  if (scheme !== 'Bearer' || !token) {
+    return next(ApiError.unauthorized('Authentication token missing'));
+  }
+
+  try {
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return next(ApiError.unauthorized('Invalid or expired token'));
+    }
+
+    // Allow Platform Admin full access
+    if (decoded.role === 'admin') {
+      req.user = { id: decoded.sub, role: 'admin', email: decoded.email, name: decoded.name };
+      req.institution_id = req.params.id ? Number(req.params.id) : 1;
+      return next();
+    }
+
+    if (decoded.role !== 'institution_admin' && decoded.role !== 'institution') {
+      return next(ApiError.forbidden('Access denied. Institution Admin privileges required.'));
+    }
+
+    const instId = Number(decoded.institution_id || 1);
+    req.user = {
+      id: decoded.sub,
+      role: 'institution_admin',
+      email: decoded.email,
+      name: decoded.name,
+      institution_id: instId,
+    };
+    req.institution_id = instId;
+
+    // Cross-check URL parameter vs logged-in admin's institution_id
+    if (req.params.id) {
+      const requestedId = Number(req.params.id);
+      if (!isNaN(requestedId) && requestedId !== instId) {
+        return next(ApiError.forbidden('Security Violation: Access to another institution’s data is prohibited.'));
+      }
+    }
+
+    return next();
+  } catch (err) {
+    if (err.status) return next(err);
+    return next(ApiError.unauthorized('Invalid or expired token'));
+  }
+};
+

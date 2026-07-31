@@ -50,6 +50,12 @@ export const getStudentCalendar = async (req, res, next) => {
           OR (a.assigned_to_type = 'batch' AND a.assigned_to_id = $2)
           OR (a.assigned_to_type = 'institution' AND a.assigned_to_id = $3)
           OR a.assigned_to_type = 'all'
+          OR t.id IN (
+            SELECT pt.test_id
+            FROM package_tests pt
+            JOIN institution_packages ip ON ip.package_id = pt.package_id
+            WHERE ip.institution_id = $3 AND ip.is_active = TRUE
+          )
         )
       ORDER BY t.id, t.test_date ASC, t.start_time ASC;
     `;

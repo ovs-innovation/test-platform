@@ -5,6 +5,23 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 });
 
+export const studentLoginSchema = z.object({
+  email: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  password: z.string().optional().or(z.literal('')),
+  mobile: z.string().trim().optional().or(z.literal('')),
+  phone: z.string().trim().optional().or(z.literal('')),
+  instituteCode: z.string().trim().optional().or(z.literal('')),
+  enrollmentId: z.string().trim().optional().or(z.literal('')),
+}).refine(
+  (data) => {
+    const hasEmail = Boolean(data.email && data.email.trim());
+    const hasMobile = Boolean(data.mobile || data.phone);
+    const hasInst = Boolean(data.instituteCode || data.enrollmentId);
+    return hasEmail || hasMobile || hasInst;
+  },
+  { message: 'Please provide Email, Mobile, or Institute Code & Enrollment ID.' }
+);
+
 export const registerSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
   email: z.string().trim().toLowerCase().email('A valid email is required'),

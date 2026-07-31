@@ -23,6 +23,7 @@ import notificationRoutes from './routes/notificationRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import studentReportRoutes from './routes/studentReportRoutes.js';
 import institutionReportRoutes from './routes/institutionReportRoutes.js';
+import institutionRoutes from './routes/institutionRoutes.js';
 
 const app = express();
 
@@ -75,7 +76,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/student/reports', studentReportRoutes);
 app.use('/api/student', studentRoutes);
-app.use('/api/institution', institutionReportRoutes);
+app.use('/api/institution', institutionRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFoundHandler);

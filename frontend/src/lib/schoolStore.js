@@ -130,6 +130,26 @@ export function deletePartnerSchool(id) {
   return updated;
 }
 
+export function addStudentToSchool(targetSchoolId, studentObj) {
+  const currentSchools = getPartnerSchools();
+  const idx = currentSchools.findIndex(
+    (s) => s.id === targetSchoolId || s.schoolId === targetSchoolId
+  );
+  if (idx !== -1) {
+    const school = currentSchools[idx];
+    const updatedStudents = [studentObj, ...(school.students || []).filter((st) => st.id !== studentObj.id)];
+    const updatedSchool = {
+      ...school,
+      activeStudents: updatedStudents.length,
+      students: updatedStudents,
+    };
+    currentSchools[idx] = updatedSchool;
+    savePartnerSchools(currentSchools);
+    return updatedSchool;
+  }
+  return null;
+}
+
 // ================= DEMO LEADS & NOTIFICATIONS =================
 
 export function getDemoLeads() {
