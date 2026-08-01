@@ -537,10 +537,10 @@ const seedAietsCalendar = async () => {
       for (const t of aietsTests) {
         const testRes = await client.query(
           `INSERT INTO tests (
-            test_name, test_type, test_date, start_time, end_time,
-            duration_minutes, syllabus, max_marks, is_published,
+            test_name, title, test_type, test_date, start_time, end_time,
+            duration_minutes, syllabus, max_marks, is_published, status,
             result_publish_time, solution_pdf_url, recommended_ebook_id
-          ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+          ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
           RETURNING id`,
           [
             t.test_name,
@@ -552,6 +552,7 @@ const seedAietsCalendar = async () => {
             t.syllabus,
             t.max_marks,
             t.is_published,
+            t.is_published ? 'published' : 'draft',
             t.result_publish_time,
             t.solution_pdf_url,
             null

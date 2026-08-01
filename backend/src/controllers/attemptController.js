@@ -298,13 +298,22 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
 
   const enrRes = await query(
     `SELECT se.id FROM student_enrollments se
-     JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
-     WHERE se.user_id = $1 AND tsa.assessment_id = $2
+     LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
+     LEFT JOIN test_series_tests tst ON tst.series_id = se.test_series_id
+     WHERE se.user_id = $1 AND (tsa.assessment_id = $2 OR tst.test_id = $2)
        AND se.status = 'active' AND se.expires_at > NOW()`,
     [user.id, assessmentId]
   );
   if (enrRes.rowCount > 0) {
     return { invite: null, source: 'enrollment' };
+  }
+
+  const assignCheck = await query(
+    `SELECT id FROM test_assignments WHERE test_id = $1 AND (assigned_to_type = 'all' OR (assigned_to_type = 'individual' AND assigned_to_id = $2))`,
+    [assessmentId, user.id]
+  );
+  if (assignCheck.rowCount > 0) {
+    return { invite: null, source: 'assignment' };
   }
 
   throw ApiError.forbidden('You do not have access to this assessment');
@@ -317,7 +326,21 @@ export const startAttempt = asyncHandler(async (req, res) => {
   const { invite } = await ensureAssessmentAccess(req.user, assessmentId);
 
   const aRes = await query('SELECT * FROM assessments WHERE id = $1', [assessmentId]);
-  const assessment = aRes.rows[0];
+  let assessment = aRes.rows[0];
+  if (!assessment) {
+    const tRes = await query(
+      `SELECT t.id, COALESCE(t.test_name, t.title) AS title,
+              t.syllabus AS description,
+              'Standard examination instructions apply.' AS instructions,
+              t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
+              true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
+              t.available_from, t.available_until
+       FROM tests t
+       WHERE t.id = $1 AND COALESCE(t.is_deleted, false) = false`,
+      [assessmentId]
+    );
+    assessment = tRes.rows[0];
+  }
   if (!assessment) throw ApiError.notFound('Assessment not found');
   if (!assessment.is_published) throw ApiError.forbidden('This assessment is not available');
 

@@ -82,6 +82,8 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
 /** GET /api/assessments/available/:id — student access check + details */
 export const getStudentAssessment = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  let assessmentRow = null;
+
   const list = await query(
     `
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
@@ -99,7 +101,36 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
     `,
     [id, req.user.id]
   );
-  if (!list.rowCount) throw ApiError.notFound('Assessment not found');
+
+  if (list.rowCount > 0) {
+    assessmentRow = list.rows[0];
+  } else {
+    const testList = await query(
+      `
+      SELECT t.id, COALESCE(t.test_name, t.title) AS title,
+             t.syllabus AS description,
+             'Standard examination instructions apply.' AS instructions,
+             t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
+             true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
+             t.available_from, t.available_until,
+             COALESCE(q.cnt, 0)::int AS question_count,
+             COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
+             ta.status AS attempt_status, ta.id AS attempt_id,
+             NULL AS percentage, NULL AS passed
+      FROM tests t
+      LEFT JOIN (SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id) q ON q.assessment_id = t.id
+      LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $2
+      WHERE t.id = $1 AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
+      `,
+      [id, req.user.id]
+    );
+
+    if (testList.rowCount > 0) {
+      assessmentRow = testList.rows[0];
+    }
+  }
+
+  if (!assessmentRow) throw ApiError.notFound('Assessment not found');
 
   const invite = await query(
     `SELECT id FROM candidate_invites WHERE candidate_email = $1 AND assessment_id = $2 AND status <> 'expired'`,
@@ -107,30 +138,37 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
   );
   const enr = await query(
     `SELECT se.id FROM student_enrollments se
-     JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
-     WHERE se.user_id = $1 AND tsa.assessment_id = $2 AND se.status = 'active' AND se.expires_at > NOW()`,
+     LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
+     LEFT JOIN test_series_tests tst ON tst.series_id = se.test_series_id
+     WHERE se.user_id = $1 AND (tsa.assessment_id = $2 OR tst.test_id = $2) AND se.status = 'active' AND se.expires_at > NOW()`,
     [req.user.id, id]
   );
-  if (!invite.rowCount && !enr.rowCount) {
+  const assign = await query(
+    `SELECT id FROM test_assignments WHERE test_id = $1 AND (assigned_to_type = 'all' OR (assigned_to_type = 'individual' AND assigned_to_id = $2))`,
+    [id, req.user.id]
+  );
+
+  if (!invite.rowCount && !enr.rowCount && !assign.rowCount) {
     throw ApiError.forbidden('You do not have access to this assessment');
   }
 
   let series_slug = null;
-  if (enr.rowCount) {
-    const slugRes = await query(
-      `SELECT ts.slug FROM test_series ts
-       JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-       JOIN student_enrollments se ON se.test_series_id = ts.id
-       WHERE tsa.assessment_id = $1 AND se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
-       LIMIT 1`,
-      [id, req.user.id]
-    );
-    series_slug = slugRes.rows[0]?.slug || null;
+  const slugRes = await query(
+    `SELECT ts.slug FROM test_series ts
+     LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+     LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+     JOIN student_enrollments se ON se.test_series_id = ts.id
+     WHERE (tsa.assessment_id = $1 OR tst.test_id = $1) AND se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
+     LIMIT 1`,
+    [id, req.user.id]
+  );
+  if (slugRes.rowCount) {
+    series_slug = slugRes.rows[0].slug;
   }
 
   res.json({
     assessment: {
-      ...list.rows[0],
+      ...assessmentRow,
       access_type: invite.rowCount ? 'invite' : 'enrollment',
       series_slug,
     },

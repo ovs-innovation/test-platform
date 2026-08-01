@@ -193,19 +193,26 @@ export default function AdminTestManager() {
     setTestModalOpen(true);
   };
 
+  const formatDateForInput = (dStr) => {
+    if (!dStr) return '';
+    const str = String(dStr);
+    if (str.includes('T')) return str.split('T')[0];
+    return str.slice(0, 10);
+  };
+
   const openEditModal = (t) => {
     setEditingTest(t);
     setTestForm({
-      test_name: t.test_name,
-      test_type: t.test_type,
-      test_date: t.test_date,
-      start_time: t.start_time,
-      end_time: t.end_time,
-      duration_minutes: t.duration_minutes,
-      max_marks: t.max_marks,
+      test_name: t.test_name || t.title || '',
+      test_type: t.test_type || 'AIETS',
+      test_date: formatDateForInput(t.test_date),
+      start_time: t.start_time ? String(t.start_time).slice(0, 8) : '09:00:00',
+      end_time: t.end_time ? String(t.end_time).slice(0, 8) : '12:00:00',
+      duration_minutes: Number(t.duration_minutes || t.duration || 180),
+      max_marks: Number(t.max_marks || t.total_marks || 300),
       syllabus: t.syllabus || '',
-      is_published: t.is_published,
-      result_publish_time: t.result_publish_time ? t.result_publish_time.slice(0, 16) : '',
+      is_published: Boolean(t.is_published),
+      result_publish_time: t.result_publish_time ? String(t.result_publish_time).slice(0, 16) : '',
       recommended_ebook_id: t.recommended_ebook_id || '',
     });
     setTestModalOpen(true);
@@ -503,10 +510,10 @@ export default function AdminTestManager() {
                               </div>
                             </td>
                             <td className="py-4 px-4 font-extrabold text-slate-900 dark:text-white whitespace-nowrap">
-                              {t.test_date}
+                              {t.test_date ? String(t.test_date).split('T')[0] : ''}
                             </td>
                             <td className="py-4 px-4 whitespace-nowrap text-slate-500">
-                              {t.start_time.slice(0, 5)} - {t.end_time.slice(0, 5)}
+                              {(t.start_time || '09:00').slice(0, 5)} - {(t.end_time || '12:00').slice(0, 5)}
                             </td>
                             <td className="py-4 px-4 whitespace-nowrap">
                               <span className="font-bold">{t.duration_minutes} mins</span>

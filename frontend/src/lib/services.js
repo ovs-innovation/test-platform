@@ -206,9 +206,8 @@ export const testSeriesService = {
     clearCache();
     return api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => r.data);
   },
-  link: (id, data) => api.post(`/test-series/${id}/link`, data).then((r) => r.data),
-  parsePdf: (pdf_base64) => api.post('/test-series/parse-pdf', { pdf_base64 }).then((r) => r.data),
-  importFromPdf: (data) => api.post('/test-series/import-pdf', data).then((r) => r.data),
+  link: (id, test_id) => api.post(`/test-series/${id}/link`, { test_id }).then((r) => r.data),
+  unlink: (id, testId) => api.delete(`/test-series/${id}/link/${testId}`).then((r) => r.data),
   myEnrollments: () => withCache('my_enrollments', () => api.get('/test-series/my/enrollments').then((r) => r.data)),
   mySeriesTests: (slug) => withCache(`my_series_tests_${slug}`, () => api.get(`/test-series/my/${slug}/tests`).then((r) => r.data)),
   enroll: (test_series_id) => {
@@ -218,11 +217,6 @@ export const testSeriesService = {
   remove: (id) => {
     clearCache();
     return api.delete(`/test-series/${id}`).then((r) => r.data);
-  },
-  unlink: (id, assessmentId) => api.delete(`/test-series/${id}/link/${assessmentId}`).then((r) => r.data),
-  generateTwoYearSkeleton: (id) => {
-    clearCache();
-    return api.post(`/test-series/${id}/generate-two-year-skeleton`).then((r) => r.data);
   },
 };
 

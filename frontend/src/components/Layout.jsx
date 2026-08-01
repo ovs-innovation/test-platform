@@ -33,10 +33,9 @@ const candidateNav = [
 
 const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
-  { to: '/admin/tests', label: 'AIETS & Test Manager', icon: 'calendar' },
   { to: '/admin/schools', label: 'Partner Schools', icon: 'bank' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
-  { to: '/admin/assessments', label: 'Assessments', icon: 'doc' },
+  { to: '/admin/assessments', label: 'Assessments', icon: 'calendar' },
   { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
   { to: '/admin/reports', label: 'Reports', icon: 'chart' },
   { to: '/admin/question-bank', label: 'Question Bank', icon: 'bank' },

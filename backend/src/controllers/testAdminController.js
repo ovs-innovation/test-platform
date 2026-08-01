@@ -82,11 +82,11 @@ export const createTest = asyncHandler(async (req, res) => {
   const test = await withTransaction(async (client) => {
     const result = await client.query(
       `INSERT INTO tests (
-        test_name, test_type, test_date, start_time, end_time,
-        duration_minutes, syllabus, max_marks, is_published,
+        test_name, title, test_type, test_date, start_time, end_time,
+        duration_minutes, syllabus, max_marks, is_published, status,
         result_publish_time, solution_pdf_url, recommended_ebook_id,
         available_from, available_until
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)
+      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
       RETURNING *`,
       [
         test_name,
@@ -98,6 +98,7 @@ export const createTest = asyncHandler(async (req, res) => {
         syllabus || null,
         max_marks,
         Boolean(is_published),
+        is_published ? 'published' : 'draft',
         result_publish_time || null,
         solution_pdf_url || null,
         recommended_ebook_id || null,
@@ -184,9 +185,14 @@ export const updateTest = asyncHandler(async (req, res) => {
   const check = await query('SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE', [id]);
   if (check.rowCount === 0) throw ApiError.notFound('Test not found');
 
+  const cleanDate = test_date ? String(test_date).split('T')[0] : null;
+  const cleanDuration = duration_minutes !== undefined && duration_minutes !== null ? parseInt(duration_minutes, 10) : null;
+  const cleanMarks = max_marks !== undefined && max_marks !== null ? parseInt(max_marks, 10) : null;
+
   const result = await query(
     `UPDATE tests SET
       test_name = COALESCE($1, test_name),
+      title = COALESCE($1, title),
       test_type = COALESCE($2, test_type),
       test_date = COALESCE($3, test_date),
       start_time = COALESCE($4, start_time),
@@ -195,30 +201,32 @@ export const updateTest = asyncHandler(async (req, res) => {
       syllabus = COALESCE($7, syllabus),
       max_marks = COALESCE($8, max_marks),
       is_published = COALESCE($9, is_published),
+      status = CASE WHEN $9 IS NULL THEN status WHEN $9 = true THEN 'published' ELSE 'draft' END,
       result_publish_time = $10,
       solution_pdf_url = COALESCE($11, solution_pdf_url),
       question_paper_url = COALESCE($12, question_paper_url),
       answer_key_url = COALESCE($13, answer_key_url),
       recommended_ebook_id = $14,
       available_from = $15,
-      available_until = $16
+      available_until = $16,
+      updated_at = NOW()
     WHERE id = $17
     RETURNING *`,
     [
-      test_name,
-      test_type,
-      test_date,
-      start_time,
-      end_time,
-      duration_minutes,
-      syllabus,
-      max_marks,
+      test_name || null,
+      test_type || null,
+      cleanDate,
+      start_time || null,
+      end_time || null,
+      cleanDuration,
+      syllabus !== undefined ? syllabus : null,
+      cleanMarks,
       is_published !== undefined ? Boolean(is_published) : null,
       result_publish_time || null,
-      solution_pdf_url,
-      question_paper_url,
-      answer_key_url,
-      recommended_ebook_id || null,
+      solution_pdf_url !== undefined ? solution_pdf_url : null,
+      question_paper_url !== undefined ? question_paper_url : null,
+      answer_key_url !== undefined ? answer_key_url : null,
+      recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
       available_from || null,
       available_until || null,
       id

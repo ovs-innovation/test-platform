@@ -466,6 +466,7 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
        i.code AS "schoolId",
        i.name,
        i.email,
+       COALESCE(i.raw_password, 'password123') AS "password",
        i.tagline,
        i.logo_badge AS "logoBadge",
        i.logo_url AS "logoUrl",
@@ -482,11 +483,11 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
   if (instRes.rowCount === 0) {
     const pwHash = await hashPassword('password123');
     await query(
-      `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, accent_color, total_licenses)
+      `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, accent_color, total_licenses)
        VALUES 
-         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250),
-         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500),
-         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150)
+         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'password123', 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250),
+         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'password123', 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500),
+         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'password123', 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150)
        ON CONFLICT (email) DO NOTHING`,
       [pwHash]
     );
@@ -497,6 +498,7 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
          i.code AS "schoolId",
          i.name,
          i.email,
+         COALESCE(i.raw_password, 'password123') AS "password",
          i.tagline,
          i.logo_badge AS "logoBadge",
          i.logo_url AS "logoUrl",
@@ -545,14 +547,15 @@ export const createInstitution = asyncHandler(async (req, res) => {
   const badge = logoBadge || name.substring(0, 3).toUpperCase();
 
   const insertRes = await query(
-    `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, logo_url, accent_color, total_licenses)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-     RETURNING id, code AS "schoolId", name, email, tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", created_at AS "createdAt"`,
+    `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", created_at AS "createdAt"`,
     [
       schoolId.toUpperCase(),
       name,
       email.toLowerCase(),
       pwHash,
+      password,
       tagline || 'Premier Educational Institution',
       badge,
       logoUrl || '',
@@ -561,13 +564,23 @@ export const createInstitution = asyncHandler(async (req, res) => {
     ]
   );
 
+  const newInst = insertRes.rows[0];
+
+  // Also create institution_admin user record for portal login
+  await query(
+    `INSERT INTO institution_admins (institution_id, name, email, password_hash, role)
+     VALUES ($1, $2, $3, $4, 'institution_admin')
+     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash`,
+    [newInst.id, name, email.toLowerCase(), pwHash]
+  ).catch(() => {});
+
   if (leadId) {
     await query(`UPDATE b2b_enquiries SET status = 'Converted' WHERE id = $1`, [leadId]).catch(() => {});
   }
 
   res.status(201).json({
     success: true,
-    institution: insertRes.rows[0],
+    institution: newInst,
     message: 'Partner School account created successfully.',
   });
 });

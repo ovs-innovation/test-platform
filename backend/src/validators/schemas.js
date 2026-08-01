@@ -69,6 +69,10 @@ export const testSeriesSchema = z.object({
 
 export const testSeriesUpdateSchema = testSeriesSchema.partial();
 
+export const linkTestSchema = z.object({
+  test_id: z.number().int().positive('Valid test ID is required'),
+});
+
 export const parsePdfSchema = z.object({
   pdf_base64: z.string().min(100, 'PDF data is required'),
 });
@@ -124,11 +128,6 @@ export const bankBulkImportSchema = z.object({
   message: 'Provide category or ids array',
 });
 
-export const linkTestSchema = z.object({
-  assessment_id: z.number().int().positive(),
-  label: z.string().max(120).optional().default(''),
-  position: z.number().int().min(0).optional().default(0),
-});
 
 export const markReviewSchema = z.object({
   question_id: z.number().int().positive(),

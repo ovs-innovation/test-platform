@@ -139,7 +139,7 @@ export default function App() {
         <Route path="/results/:attemptId" element={<ProtectedRoute role="candidate"><ResultPage /></ProtectedRoute>} />
 
         <Route path="/admin" element={<ProtectedRoute role="admin"><Shell><AdminOverview /></Shell></ProtectedRoute>} />
-        <Route path="/admin/tests" element={<ProtectedRoute role="admin"><Shell><AdminTestManager /></Shell></ProtectedRoute>} />
+        <Route path="/admin/tests" element={<Navigate to="/admin/assessments" replace />} />
         <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><Shell><AdminAssessments /></Shell></ProtectedRoute>} />
         <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><Shell><AdminAssessmentEditor /></Shell></ProtectedRoute>} />
         <Route path="/admin/test-series" element={<ProtectedRoute role="admin"><Shell><AdminTestSeries /></Shell></ProtectedRoute>} />
