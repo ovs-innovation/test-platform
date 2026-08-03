@@ -395,13 +395,13 @@ export default function SchoolsB2B() {
       );
 
       if (matched) {
-        setActiveSchool(matched);
         try {
           localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
           localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         } catch (e) {}
         setLoginError('');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        navigate('/institution/dashboard', { replace: true });
+        return;
       } else {
         setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');
       }
@@ -497,6 +497,7 @@ export default function SchoolsB2B() {
   return (
     <div className="min-h-screen bg-white text-slate-800 font-sans selection:bg-[#2563eb] selection:text-white">
 
+<<<<<<< HEAD
       {/* =========================================================================
           IF LOGGED IN: DISPLAY MULTI-TENANT INSTITUTION DASHBOARD
          ========================================================================= */}
@@ -1118,18 +1119,27 @@ export default function SchoolsB2B() {
               </div>,
               document.body
             )}
+=======
+>>>>>>> 33791f8 (feat: upgrade Institution Portal layout, routing architecture, and backend endpoints)
 
+      {activeSchool && (
+        <div className="bg-gradient-to-r from-[#071126] to-[#0B1E38] border-b border-blue-500/30 text-white px-4 py-3 text-xs font-semibold flex items-center justify-between shadow-lg sticky top-0 z-30">
+          <div className="flex items-center gap-2 max-w-xl truncate">
+            <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+            <span className="truncate">Active Session: <strong className="text-cyan-400">{activeSchool.name}</strong></span>
           </div>
+          <Link
+            to="/institution/dashboard"
+            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-1.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition shrink-0"
+          >
+            <span>Access Institution Portal</span>
+            <ArrowRight className="h-3.5 w-3.5" />
+          </Link>
         </div>
-      ) : (
+      )}
 
-        /* =========================================================================
-            LOGGED OUT: CLEANED B2B LANDING PAGE (SIMPLIFIED CTAS & REFINED VISUALS)
-           ========================================================================= */
-        <div>
-
-          {/* SECTION 2: B2B HERO (CLEAN SEAMLESS MIDNIGHT GRADIENT) */}
-          <section id="b2b-hero" className="relative overflow-hidden bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-white flex items-center py-8 sm:py-10 lg:py-12 border-b border-slate-800/80 min-h-0 lg:min-h-[calc(100vh-140px)] scroll-mt-32">
+      {/* SECTION 2: B2B HERO (CLEAN SEAMLESS MIDNIGHT GRADIENT) */}
+      <section id="b2b-hero" className="relative overflow-hidden bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-white flex items-center py-8 sm:py-10 lg:py-12 border-b border-slate-800/80 min-h-0 lg:min-h-[calc(100vh-140px)] scroll-mt-32">
             
             {/* Soft Organic Ambient Depth Overlay */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -2518,9 +2528,6 @@ export default function SchoolsB2B() {
               </div>
             </div>
           </section>
-
-        </div>
-      )}
 
     </div>
   );

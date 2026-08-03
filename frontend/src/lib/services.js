@@ -400,10 +400,17 @@ export const institutionDashboardService = {
   students: (instId, params) => api.get(`/institution/${instId}/students`, { params }).then((r) => r.data),
   addStudent: (instId, data) => api.post(`/institution/${instId}/students`, data).then((r) => r.data),
   updateStudent: (instId, studentId, data) => api.put(`/institution/${instId}/students/${studentId}`, data).then((r) => r.data),
+  toggleBlockStudent: (instId, studentId, isBlocked) => api.put(`/institution/${instId}/students/${studentId}/block`, { is_blocked: isBlocked }).then((r) => r.data),
   deleteStudent: (instId, studentId) => api.delete(`/institution/${instId}/students/${studentId}`).then((r) => r.data),
+  moveBatch: (instId, data) => api.post(`/institution/${instId}/students/move-batch`, data).then((r) => r.data),
   
   bulkUpload: (instId, rows) => api.post(`/institution/${instId}/students/bulk-upload`, { rows }).then((r) => r.data),
   regenerateCredentials: (instId, studentId) => api.post(`/institution/${instId}/students/${studentId}/regenerate-credentials`).then((r) => r.data),
+
+  batches: (instId) => api.get(`/institution/${instId}/batches`).then((r) => r.data),
+  createBatch: (instId, data) => api.post(`/institution/${instId}/batches`, data).then((r) => r.data),
+  updateBatch: (instId, batchId, data) => api.put(`/institution/${instId}/batches/${batchId}`, data).then((r) => r.data),
+  archiveBatch: (instId, batchId) => api.delete(`/institution/${instId}/batches/${batchId}`).then((r) => r.data),
   
   availableTests: (instId) => api.get(`/institution/${instId}/available-tests`).then((r) => r.data),
   assignTest: (instId, testId, data) => api.post(`/institution/${instId}/tests/${testId}/assign`, data).then((r) => r.data),
@@ -416,4 +423,11 @@ export const institutionDashboardService = {
   rankings: (instId, params) => api.get(`/institution/${instId}/rankings`, { params }).then((r) => r.data),
   testCompletion: (instId, params) => api.get(`/institution/${instId}/test-completion`, { params }).then((r) => r.data),
   resultAnalysis: (instId, params) => api.get(`/institution/${instId}/result-analysis`, { params }).then((r) => r.data),
+
+  invoices: (instId) => api.get(`/institution/${instId}/invoices`).then((r) => r.data),
+  requestLicenses: (instId, data) => api.post(`/institution/${instId}/invoices/request-licenses`, data).then((r) => r.data),
+
+  notifications: (instId) => api.get(`/institution/${instId}/notifications`).then((r) => r.data),
+  markNotificationRead: (instId, notifId) => api.put(`/institution/${instId}/notifications/${notifId}/read`).then((r) => r.data),
+  sendReminder: (instId, data) => api.post(`/institution/${instId}/notifications/send-reminder`, data).then((r) => r.data),
 };

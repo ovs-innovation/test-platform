@@ -4,6 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { hashPassword } from '../utils/password.js';
 import crypto from 'crypto';
 
+
 /**
  * 1. GET /api/institution/:id/profile & PUT /api/institution/:id/profile
  */
@@ -11,7 +12,19 @@ export const getInstitutionProfile = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
   const result = await query('SELECT * FROM institutions WHERE id = $1', [instId]);
   if (result.rowCount === 0) throw ApiError.notFound('Institution not found');
-  res.json({ success: true, profile: result.rows[0] });
+
+  const inst = result.rows[0];
+  const usedRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+  const actualUsed = usedRes.rows[0]?.cnt || 0;
+
+  res.json({
+    success: true,
+    profile: {
+      ...inst,
+      used_licenses: actualUsed,
+      available_licenses: Math.max(0, (inst.total_licenses || 50) - actualUsed),
+    },
+  });
 });
 
 export const updateInstitutionProfile = asyncHandler(async (req, res) => {
@@ -35,32 +48,48 @@ export const updateInstitutionProfile = asyncHandler(async (req, res) => {
 });
 
 /**
- * 2. STUDENT MANAGEMENT (CRUD)
+ * 2. STUDENT MANAGEMENT (CRUD & Licence Check)
  * GET/POST/PUT/DELETE /api/institution/:id/students
  */
 export const listInstitutionStudents = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
-  const { batch_id, search } = req.query;
+  const { batch_id, search, status, course } = req.query;
 
   let sql = `
-    SELECT u.id, u.name, u.email, u.roll_number, u.created_at,
+    SELECT u.id, u.name, u.email, u.roll_number, u.is_blocked, u.created_at,
            b.id AS batch_id, COALESCE(b.batch_name, b.name) AS batch_name,
-           sp.phone AS mobile
+           sp.phone AS mobile, sp.class AS class_level, sp.target_exam, sp.status AS student_status,
+           COALESCE(att.tests_completed, 0)::int AS tests_completed,
+           COALESCE(att.avg_score, 0)::numeric AS average_score
     FROM users u
     LEFT JOIN batches b ON b.id = u.batch_id
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
-    WHERE u.institution_id = $1
+    LEFT JOIN (
+      SELECT student_id, COUNT(id) AS tests_completed, AVG(percentage) AS avg_score
+      FROM test_attempts
+      WHERE submitted_at IS NOT NULL
+      GROUP BY student_id
+    ) att ON att.student_id = u.id
+    WHERE u.institution_id = $1 AND u.role = 'candidate'
   `;
   const params = [instId];
 
-  if (batch_id) {
+  if (batch_id && batch_id !== 'All') {
     params.push(Number(batch_id));
     sql += ` AND u.batch_id = $${params.length}`;
   }
 
   if (search) {
     params.push(`%${search.trim().toLowerCase()}%`);
-    sql += ` AND (LOWER(u.name) LIKE $${params.length} OR LOWER(u.email) LIKE $${params.length} OR LOWER(COALESCE(u.roll_number, '')) LIKE $${params.length})`;
+    sql += ` AND (LOWER(u.name) LIKE $${params.length} OR LOWER(u.email) LIKE $${params.length} OR LOWER(COALESCE(u.roll_number, '')) LIKE $${params.length} OR LOWER(COALESCE(sp.phone, '')) LIKE $${params.length})`;
+  }
+
+  if (status && status !== 'All') {
+    if (status === 'Blocked') {
+      sql += ` AND u.is_blocked = TRUE`;
+    } else if (status === 'Active') {
+      sql += ` AND COALESCE(u.is_blocked, FALSE) = FALSE`;
+    }
   }
 
   sql += ` ORDER BY u.id DESC`;
@@ -71,20 +100,31 @@ export const listInstitutionStudents = asyncHandler(async (req, res) => {
 
 export const addInstitutionStudent = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
-  const { name, email, mobile, password, batch_id, roll_number } = req.body;
+  const { name, email, mobile, password, batch_id, roll_number, class: studentClass, target_exam, gender, dob } = req.body;
 
   if (!name || !email) throw ApiError.badRequest('Student name and email are required');
   const normEmail = email.trim().toLowerCase();
 
-  const existing = await query('SELECT id FROM users WHERE LOWER(email) = $1', [normEmail]);
-  if (existing.rowCount > 0) throw ApiError.conflict('A user with this email already exists');
+  // 1. Check Licence Availability
+  const instRes = await query('SELECT total_licenses, name FROM institutions WHERE id = $1', [instId]);
+  if (instRes.rowCount === 0) throw ApiError.notFound('Institution record not found');
 
-  // Auto-generate Enrollment Number / Roll Number if not provided
+  const totalLic = instRes.rows[0].total_licenses || 50;
+  const countRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+  const usedLic = countRes.rows[0].cnt;
+
+  if (usedLic >= totalLic) {
+    throw ApiError.forbidden(`Licence Capacity Exceeded: You have used ${usedLic} of ${totalLic} available licences. Please request additional licences from billing.`);
+  }
+
+  // 2. Check Duplicate Email / Roll Number
+  const existing = await query('SELECT id FROM users WHERE LOWER(email) = $1', [normEmail]);
+  if (existing.rowCount > 0) throw ApiError.conflict('A student account with this email address already exists.');
+
   let finalRollNumber = roll_number ? roll_number.trim().toUpperCase() : null;
   if (!finalRollNumber) {
-    const instRes = await query('SELECT name FROM institutions WHERE id = $1', [instId]);
     let prefix = 'INST';
-    if (instRes.rowCount > 0 && instRes.rows[0].name) {
+    if (instRes.rows[0].name) {
       const instName = instRes.rows[0].name.trim();
       const words = instName.split(/\s+/);
       if (words.length >= 2) {
@@ -93,9 +133,11 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
         prefix = instName.substring(0, 3).toUpperCase();
       }
     }
-    const countRes = await query('SELECT COUNT(*) FROM users WHERE institution_id = $1', [instId]);
-    const seq = Number(countRes.rows[0].count || 0) + 1;
+    const seq = usedLic + 1;
     finalRollNumber = `${prefix}-2026-${String(seq).padStart(2, '0')}`;
+  } else {
+    const dupRoll = await query('SELECT id FROM users WHERE institution_id = $1 AND UPPER(roll_number) = $2', [instId, finalRollNumber]);
+    if (dupRoll.rowCount > 0) throw ApiError.conflict(`Roll Number / Enrollment ID ${finalRollNumber} is already assigned to another student in your institution.`);
   }
 
   const rawPass = password && password.trim() ? password.trim() : `Edu@${Math.floor(100000 + Math.random() * 900000)}`;
@@ -111,11 +153,14 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
     const u = userRes.rows[0];
 
     await client.query(
-      `INSERT INTO student_profiles (user_id, phone, institution_id, batch_id, roll_number)
-       VALUES ($1, $2, $3, $4, $5)
-       ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, institution_id = EXCLUDED.institution_id, roll_number = EXCLUDED.roll_number`,
-      [u.id, mobile ? mobile.trim() : null, instId, batch_id || null, finalRollNumber]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, gender, dob, institution_id, batch_id, roll_number)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+       ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, class = EXCLUDED.class, target_exam = EXCLUDED.target_exam, institution_id = EXCLUDED.institution_id, roll_number = EXCLUDED.roll_number`,
+      [u.id, mobile ? mobile.trim() : null, studentClass || 'Class 12', target_exam || 'NEET', gender || null, dob || null, instId, batch_id || null, finalRollNumber]
     );
+
+    // Update cached used_licenses count
+    await client.query('UPDATE institutions SET used_licenses = used_licenses + 1 WHERE id = $1', [instId]);
 
     return u;
   });
@@ -125,14 +170,14 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
     student,
     generatedPassword: rawPass,
     enrollmentId: finalRollNumber,
-    message: `Student enrolled with Enrollment ID ${finalRollNumber}`,
+    message: `Student successfully enrolled with Enrollment ID ${finalRollNumber}`,
   });
 });
 
 export const updateInstitutionStudent = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
   const { student_id } = req.params;
-  const { name, email, mobile, batch_id, roll_number } = req.body;
+  const { name, email, mobile, batch_id, roll_number, class: studentClass, target_exam } = req.body;
 
   const result = await query(
     `UPDATE users
@@ -147,27 +192,79 @@ export const updateInstitutionStudent = asyncHandler(async (req, res) => {
 
   if (result.rowCount === 0) throw ApiError.notFound('Student not found in this institution');
 
-  if (mobile) {
-    await query(
-      `UPDATE student_profiles SET phone = $1 WHERE user_id = $2`,
-      [mobile.trim(), Number(student_id)]
-    );
-  }
+  await query(
+    `UPDATE student_profiles
+     SET phone = COALESCE($1, phone),
+         class = COALESCE($2, class),
+         target_exam = COALESCE($3, target_exam),
+         batch_id = COALESCE($4, batch_id)
+     WHERE user_id = $5`,
+    [mobile ? mobile.trim() : null, studentClass, target_exam, batch_id, Number(student_id)]
+  );
 
   res.json({ success: true, student: result.rows[0], message: 'Student updated successfully' });
+});
+
+export const toggleBlockInstitutionStudent = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { student_id } = req.params;
+  const { is_blocked } = req.body;
+
+  const result = await query(
+    `UPDATE users SET is_blocked = $1 WHERE id = $2 AND institution_id = $3 RETURNING id, name, is_blocked`,
+    [!!is_blocked, Number(student_id), instId]
+  );
+
+  if (result.rowCount === 0) throw ApiError.notFound('Student not found in this institution');
+  res.json({
+    success: true,
+    message: `Student account ${is_blocked ? 'blocked' : 'unblocked'} successfully.`,
+    student: result.rows[0],
+  });
 });
 
 export const deleteInstitutionStudent = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
   const { student_id } = req.params;
 
-  const result = await query(
-    `DELETE FROM users WHERE id = $1 AND institution_id = $2 RETURNING id`,
-    [Number(student_id), instId]
-  );
+  const result = await withTransaction(async (client) => {
+    const delRes = await client.query(
+      `DELETE FROM users WHERE id = $1 AND institution_id = $2 RETURNING id`,
+      [Number(student_id), instId]
+    );
+    if (delRes.rowCount > 0) {
+      await client.query('UPDATE institutions SET used_licenses = GREATEST(0, used_licenses - 1) WHERE id = $1', [instId]);
+    }
+    return delRes;
+  });
 
   if (result.rowCount === 0) throw ApiError.notFound('Student not found in this institution');
-  res.json({ success: true, message: 'Student deleted successfully', id: student_id });
+  res.json({ success: true, message: 'Student deleted successfully and licence freed.', id: student_id });
+});
+
+export const moveStudentsBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { student_ids, target_batch_id } = req.body;
+
+  if (!Array.isArray(student_ids) || student_ids.length === 0) {
+    throw ApiError.badRequest('Please select at least one student to move.');
+  }
+
+  const batchId = target_batch_id ? Number(target_batch_id) : null;
+
+  await query(
+    `UPDATE users SET batch_id = $1 WHERE id = ANY($2::int[]) AND institution_id = $3`,
+    [batchId, student_ids, instId]
+  );
+  await query(
+    `UPDATE student_profiles SET batch_id = $1 WHERE user_id = ANY($2::int[])`,
+    [batchId, student_ids]
+  );
+
+  res.json({
+    success: true,
+    message: `${student_ids.length} student(s) moved to batch successfully.`,
+  });
 });
 
 /**
@@ -721,3 +818,210 @@ export const getResultAnalysis = asyncHandler(async (req, res) => {
     },
   });
 });
+
+/**
+ * 13. BATCH MANAGEMENT (CRUD)
+ * GET/POST/PUT/DELETE /api/institution/:id/batches
+ */
+export const listInstitutionBatches = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const result = await query(
+    `SELECT b.id, COALESCE(b.batch_name, b.name) AS batch_name, b.name,
+            b.academic_year, b.class_level, b.target_exam, b.start_date, b.end_date,
+            b.faculty_name, b.max_capacity, b.status, COALESCE(b.archived, FALSE) AS archived,
+            COUNT(DISTINCT u.id)::int AS student_count,
+            COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score
+     FROM batches b
+     LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1 AND u.role = 'candidate'
+     LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+     WHERE b.institution_id = $1 AND COALESCE(b.archived, FALSE) = FALSE
+     GROUP BY b.id, b.name, b.batch_name, b.academic_year, b.class_level, b.target_exam, b.start_date, b.end_date, b.faculty_name, b.max_capacity, b.status, b.archived
+     ORDER BY b.id DESC`,
+    [instId]
+  );
+  res.json({ success: true, count: result.rows.length, batches: result.rows });
+});
+
+export const createInstitutionBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_name, academic_year, class_level, target_exam, start_date, end_date, faculty_name, max_capacity } = req.body;
+
+  if (!batch_name || !batch_name.trim()) {
+    throw ApiError.badRequest('Batch name is required');
+  }
+
+  const result = await query(
+    `INSERT INTO batches (institution_id, name, batch_name, academic_year, class_level, target_exam, start_date, end_date, faculty_name, max_capacity, status)
+     VALUES ($1, $2, $2, $3, $4, $5, $6, $7, $8, $9, 'active')
+     RETURNING *`,
+    [
+      instId,
+      batch_name.trim(),
+      academic_year || '2026-2027',
+      class_level || 'Class 12',
+      target_exam || 'NEET',
+      start_date || null,
+      end_date || null,
+      faculty_name ? faculty_name.trim() : null,
+      max_capacity ? Number(max_capacity) : 100,
+    ]
+  );
+
+  res.status(201).json({
+    success: true,
+    batch: result.rows[0],
+    message: `Batch "${batch_name.trim()}" created successfully.`,
+  });
+});
+
+export const updateInstitutionBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+  const { batch_name, academic_year, class_level, target_exam, start_date, end_date, faculty_name, max_capacity, status } = req.body;
+
+  const result = await query(
+    `UPDATE batches
+     SET name = COALESCE($1, name),
+         batch_name = COALESCE($1, batch_name),
+         academic_year = COALESCE($2, academic_year),
+         class_level = COALESCE($3, class_level),
+         target_exam = COALESCE($4, target_exam),
+         start_date = COALESCE($5, start_date),
+         end_date = COALESCE($6, end_date),
+         faculty_name = COALESCE($7, faculty_name),
+         max_capacity = COALESCE($8, max_capacity),
+         status = COALESCE($9, status)
+     WHERE id = $10 AND institution_id = $11
+     RETURNING *`,
+    [batch_name ? batch_name.trim() : null, academic_year, class_level, target_exam, start_date, end_date, faculty_name, max_capacity, status, Number(batch_id), instId]
+  );
+
+  if (result.rowCount === 0) throw ApiError.notFound('Batch not found in this institution');
+
+  res.json({
+    success: true,
+    batch: result.rows[0],
+    message: 'Batch details updated successfully.',
+  });
+});
+
+export const archiveInstitutionBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+
+  const result = await query(
+    `UPDATE batches SET archived = TRUE, status = 'archived' WHERE id = $1 AND institution_id = $2 RETURNING id`,
+    [Number(batch_id), instId]
+  );
+
+  if (result.rowCount === 0) throw ApiError.notFound('Batch not found in this institution');
+
+  res.json({ success: true, message: 'Batch archived successfully.', id: batch_id });
+});
+
+/**
+ * 14. INVOICES & BILLING
+ * GET /api/institution/:id/invoices & POST /api/institution/:id/invoices/request-licenses
+ */
+export const listInstitutionInvoices = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const result = await query(
+    `SELECT * FROM institution_invoices WHERE institution_id = $1 ORDER BY id DESC`,
+    [instId]
+  );
+  res.json({ success: true, count: result.rows.length, invoices: result.rows });
+});
+
+export const requestAdditionalLicenses = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { requested_quantity, message } = req.body;
+
+  if (!requested_quantity || Number(requested_quantity) <= 0) {
+    throw ApiError.badRequest('Please enter a valid licence quantity.');
+  }
+
+  const instRes = await query('SELECT name, contact_email, contact_person FROM institutions WHERE id = $1', [instId]);
+  const inst = instRes.rows[0];
+
+  // Log in notifications
+  await query(
+    `INSERT INTO institution_notifications (institution_id, title, message, type)
+     VALUES ($1, $2, $3, 'license')`,
+    [
+      instId,
+      `Licence Expansion Request (${requested_quantity} seats)`,
+      `Your request for ${requested_quantity} additional student seats has been submitted to Edvedum Billing Team. Reference code: LIC-REQ-${Date.now()}`,
+    ]
+  );
+
+  res.status(201).json({
+    success: true,
+    message: `Licence request for ${requested_quantity} seats submitted successfully. Our team will contact ${inst?.contact_email || 'your email'} shortly.`,
+  });
+});
+
+/**
+ * 15. NOTIFICATIONS & REMINDERS
+ * GET /api/institution/:id/notifications & POST /api/institution/:id/notifications/send-reminder
+ */
+export const listInstitutionNotifications = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const result = await query(
+    `SELECT * FROM institution_notifications WHERE institution_id = $1 ORDER BY id DESC LIMIT 50`,
+    [instId]
+  );
+  const unreadCount = result.rows.filter(n => !n.is_read).length;
+
+  res.json({
+    success: true,
+    unread_count: unreadCount,
+    notifications: result.rows,
+  });
+});
+
+export const markNotificationAsRead = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { notif_id } = req.params;
+
+  await query(
+    `UPDATE institution_notifications SET is_read = TRUE WHERE id = $1 AND institution_id = $2`,
+    [Number(notif_id), instId]
+  );
+
+  res.json({ success: true, message: 'Notification marked as read.' });
+});
+
+export const sendStudentReminder = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { target_type, target_id, test_id, custom_message } = req.body;
+
+  let recipientCount = 0;
+
+  if (target_type === 'student' && target_id) {
+    recipientCount = 1;
+  } else if (target_type === 'batch' && target_id) {
+    const countRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE batch_id = $1 AND institution_id = $2', [Number(target_id), instId]);
+    recipientCount = countRes.rows[0]?.cnt || 0;
+  } else {
+    const countRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+    recipientCount = countRes.rows[0]?.cnt || 0;
+  }
+
+  await query(
+    `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id)
+     VALUES ($1, $2, $3, 'reminder', $4, $5)`,
+    [
+      instId,
+      'Test Reminder Dispatched',
+      custom_message || `Reminder sent to ${recipientCount} student(s) for upcoming AIETS examination.`,
+      target_type || 'all',
+      target_id ? Number(target_id) : null,
+    ]
+  );
+
+  res.json({
+    success: true,
+    message: `Test reminder dispatched successfully to ${recipientCount} student(s).`,
+  });
+});
+

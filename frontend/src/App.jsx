@@ -22,7 +22,19 @@ import Contact from './pages/public/Contact.jsx';
 import Careers from './pages/public/Careers.jsx';
 import SchoolsB2B from './pages/public/SchoolsB2B.jsx';
 import InstitutionLogin from './pages/public/InstitutionLogin.jsx';
-import InstitutionDashboard from './pages/institution/InstitutionDashboard.jsx';
+import InstitutionProtectedRoute from './components/institution/InstitutionProtectedRoute.jsx';
+import InstitutionDashboard, {
+  InstOverviewTabWrapper,
+  InstStudentsTabWrapper,
+  InstBatchesTabWrapper,
+  InstTestAssignmentsTabWrapper,
+  InstEbooksTabWrapper,
+  InstAnalyticsTabWrapper,
+  InstReportsTabWrapper,
+  InstPaymentsTabWrapper,
+  InstNotificationsTabWrapper,
+  InstProfileTabWrapper,
+} from './pages/institution/InstitutionDashboard.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
@@ -63,7 +75,6 @@ import AdminReports from './pages/admin/Reports.jsx';
 import AdminAttemptDetail from './pages/admin/AttemptDetail.jsx';
 import AdminSchools from './pages/admin/Schools.jsx';
 
-
 import ScrollToTop from './components/ScrollToTop.jsx';
 
 const Shell = ({ children }) => <Layout>{children}</Layout>;
@@ -77,6 +88,7 @@ export default function App() {
     <>
       <ScrollToTop />
       <Routes>
+        {/* PUBLIC WEBSITE ROUTES - Rendered inside PublicLayout */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<AppHome />} />
           <Route path="/test-series" element={<TestSeriesCatalog />} />
@@ -93,8 +105,6 @@ export default function App() {
           <Route path="/for-institutions" element={<SchoolsB2B />} />
           <Route path="/schools" element={<SchoolsB2B />} />
           <Route path="/institution-login" element={<InstitutionLogin />} />
-          <Route path="/institution/dashboard" element={<InstitutionDashboard />} />
-          <Route path="/institution/:id/dashboard" element={<InstitutionDashboard />} />
 
           <Route path="/privacy" element={<EdvedumLegalPage title="Privacy Policy"><p>{COMPANY.name} is committed to protecting your personal data. Information collected during registration, test attempts, and payments is encrypted and used solely to deliver our educational services.</p><p className="mt-4">We do not sell or share student data with third parties without consent, except as required by law.</p></EdvedumLegalPage>} />
           <Route path="/terms" element={<EdvedumLegalPage title="Terms & Conditions"><p>By using {COMPANY.name} platform you agree to fair examination policies, honest attempt guidelines, and acceptable use of our CBT test interface.</p><p className="mt-4">Misuse of the platform, sharing of credentials, or attempt to circumvent proctoring may result in account suspension.</p></EdvedumLegalPage>} />
@@ -108,9 +118,37 @@ export default function App() {
           <Route path="/digital-delivery" element={<EdvedumLegalPage title="Digital Delivery Policy"><p>Test series, mock exams, reports, and digital study resources are delivered electronically upon enrollment. Access remains available for the validity period stated at purchase.</p></EdvedumLegalPage>} />
         </Route>
 
+        {/* PROTECTED INSTITUTION PORTAL ROUTES - Rendered inside InstitutionPortalLayout (No Public Header/Footer) */}
+        <Route
+          path="/institution"
+          element={
+            <InstitutionProtectedRoute>
+              <InstitutionDashboard />
+            </InstitutionProtectedRoute>
+          }
+        >
+          <Route index element={<Navigate to="/institution/dashboard" replace />} />
+          <Route path="dashboard" element={<InstOverviewTabWrapper />} />
+          <Route path="students" element={<InstStudentsTabWrapper />} />
+          <Route path="batches" element={<InstBatchesTabWrapper />} />
+          <Route path="test-series" element={<InstTestAssignmentsTabWrapper />} />
+          <Route path="test-assignments" element={<InstTestAssignmentsTabWrapper />} />
+          <Route path="ebooks" element={<InstEbooksTabWrapper />} />
+          <Route path="analytics" element={<InstAnalyticsTabWrapper />} />
+          <Route path="rankings" element={<InstAnalyticsTabWrapper />} />
+          <Route path="reports" element={<InstReportsTabWrapper />} />
+          <Route path="attendance" element={<InstReportsTabWrapper />} />
+          <Route path="payments" element={<InstPaymentsTabWrapper />} />
+          <Route path="notifications" element={<InstNotificationsTabWrapper />} />
+          <Route path="profile" element={<InstProfileTabWrapper />} />
+          <Route path="settings" element={<InstProfileTabWrapper />} />
+          <Route path=":id/dashboard" element={<Navigate to="/institution/dashboard" replace />} />
+        </Route>
+
+        {/* ADMIN & AUTHENTICATION FALLBACK ROUTES */}
         <Route path="/admin-login" element={<Login />} />
         <Route path="/admin/login" element={<Navigate to="/admin-login" replace />} />
-        <Route path="/center-login" element={<Navigate to="/admin-login" replace />} />
+        <Route path="/center-login" element={<Navigate to="/institution-login" replace />} />
         <Route path="/login" element={<Navigate to="/student-login" replace />} />
         <Route path="/student-login" element={<StudentLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -118,6 +156,7 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/invite/:token" element={<InvitePage />} />
 
+        {/* CANDIDATE PROTECTED ROUTES */}
         <Route path="/exam/:attemptId" element={<ProtectedRoute role="candidate"><ExamScreen /></ProtectedRoute>} />
 
         <Route path="/dashboard" element={<ProtectedRoute role="candidate"><Shell><CandidateDashboard /></Shell></ProtectedRoute>} />
@@ -138,6 +177,7 @@ export default function App() {
         <Route path="/assessments/:assessmentId/instructions" element={<ProtectedRoute role="candidate"><AssessmentInstructions /></ProtectedRoute>} />
         <Route path="/results/:attemptId" element={<ProtectedRoute role="candidate"><ResultPage /></ProtectedRoute>} />
 
+        {/* PLATFORM ADMIN PROTECTED ROUTES */}
         <Route path="/admin" element={<ProtectedRoute role="admin"><Shell><AdminOverview /></Shell></ProtectedRoute>} />
         <Route path="/admin/tests" element={<Navigate to="/admin/assessments" replace />} />
         <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><Shell><AdminAssessments /></Shell></ProtectedRoute>} />
@@ -154,7 +194,6 @@ export default function App() {
         <Route path="/admin/reports" element={<ProtectedRoute role="admin"><Shell><AdminReports /></Shell></ProtectedRoute>} />
         <Route path="/admin/schools" element={<ProtectedRoute role="admin"><Shell><AdminSchools /></Shell></ProtectedRoute>} />
         <Route path="/admin/attempts/:attemptId" element={<ProtectedRoute role="admin"><Shell><AdminAttemptDetail /></Shell></ProtectedRoute>} />
-
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

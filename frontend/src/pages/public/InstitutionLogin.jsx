@@ -62,7 +62,7 @@ export default function InstitutionLogin() {
           localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
           localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
           toast.success(`Welcome back, ${instObj.name}!`);
-          navigate('/for-schools', { replace: true });
+          navigate('/institution/dashboard', { replace: true });
           return;
         }
       } catch (backendErr) {
@@ -79,8 +79,9 @@ export default function InstitutionLogin() {
 
       if (matched) {
         localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
         toast.success(`Welcome back, ${matched.name}!`);
-        navigate(`/institution/${matched.id || 1}/dashboard`, { state: { loggedInSchool: matched }, replace: true });
+        navigate('/institution/dashboard', { state: { loggedInSchool: matched }, replace: true });
         return;
       }
 
@@ -88,7 +89,7 @@ export default function InstitutionLogin() {
       const user = await login({ email: input, password: pass });
       toast.success(`Welcome back, ${user.name.split(' ')[0]}!`);
       const dest = location.state?.from?.pathname;
-      navigate(dest || '/institution/1/dashboard', { replace: true });
+      navigate(dest && dest.startsWith('/institution') ? dest : '/institution/dashboard', { replace: true });
     } catch (err) {
       setError(err.message || 'Invalid Institution ID or Password. Please check your credentials.');
     } finally {

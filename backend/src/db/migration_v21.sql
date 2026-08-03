@@ -1,4 +1,4 @@
--- Migration v21: Single Source of Truth for Test Creation & Join Table test_series_tests
+-- Migration v21: Single Source of Truth for Test Creation & Join Table test_series_tests + Institution Portal Extensions
 
 -- 1. Create test_series_tests join table (many-to-many join with unique constraint)
 CREATE TABLE IF NOT EXISTS test_series_tests (
@@ -31,7 +31,6 @@ ALTER TABLE test_assignments ADD COLUMN IF NOT EXISTS missed_access_override BOO
 -- 3. Backfill test_series_tests from any legacy test_series_assessments or test matches if needed
 DO $$
 BEGIN
-  -- Backfill from legacy test_series_assessments where assessment titles match tests test_name or title
   INSERT INTO test_series_tests (series_id, test_id)
   SELECT DISTINCT tsa.test_series_id, t.id
   FROM test_series_assessments tsa
@@ -41,3 +40,100 @@ BEGIN
 EXCEPTION WHEN OTHERS THEN
   NULL;
 END $$;
+
+-- 4. Add licence tracking columns to institutions
+ALTER TABLE institutions ADD COLUMN IF NOT EXISTS total_licenses INTEGER DEFAULT 50;
+ALTER TABLE institutions ADD COLUMN IF NOT EXISTS used_licenses INTEGER DEFAULT 0;
+
+-- Sync initial used_licenses count from existing users
+UPDATE institutions i
+SET used_licenses = (
+  SELECT COUNT(*) FROM users u WHERE u.institution_id = i.id AND u.role = 'candidate'
+);
+
+-- 5. Extend batches table for detailed batch management
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS academic_year VARCHAR(20) DEFAULT '2026-2027';
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS class_level VARCHAR(50);
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS target_exam VARCHAR(50);
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS start_date DATE;
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS end_date DATE;
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS faculty_name VARCHAR(120);
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS max_capacity INTEGER DEFAULT 100;
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'active';
+ALTER TABLE batches ADD COLUMN IF NOT EXISTS archived BOOLEAN DEFAULT FALSE;
+
+-- 6. Extend student_profiles for DOB, gender and account status
+ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS dob DATE;
+ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS gender VARCHAR(20);
+ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS status VARCHAR(20) DEFAULT 'Active';
+
+-- 7. Create institution_invoices table for billing and GST invoice records
+CREATE TABLE IF NOT EXISTS institution_invoices (
+  id SERIAL PRIMARY KEY,
+  institution_id INTEGER REFERENCES institutions(id) ON DELETE CASCADE,
+  invoice_number VARCHAR(100) UNIQUE NOT NULL,
+  package_name VARCHAR(255) NOT NULL,
+  price_per_student NUMERIC(10,2) DEFAULT 0,
+  license_quantity INTEGER DEFAULT 50,
+  subtotal NUMERIC(10,2) DEFAULT 0,
+  gst_amount NUMERIC(10,2) DEFAULT 0,
+  total_amount NUMERIC(10,2) DEFAULT 0,
+  payment_status VARCHAR(50) DEFAULT 'Paid',
+  payment_date TIMESTAMP DEFAULT NOW(),
+  pdf_url TEXT,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 8. Create institution_notifications table for alerts and reminders
+CREATE TABLE IF NOT EXISTS institution_notifications (
+  id SERIAL PRIMARY KEY,
+  institution_id INTEGER REFERENCES institutions(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  type VARCHAR(50) DEFAULT 'system',
+  target_type VARCHAR(50),
+  target_id INTEGER,
+  is_read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 9. Create institution_audit_logs table for security audit logging
+CREATE TABLE IF NOT EXISTS institution_audit_logs (
+  id SERIAL PRIMARY KEY,
+  institution_id INTEGER REFERENCES institutions(id) ON DELETE CASCADE,
+  admin_id INTEGER,
+  action VARCHAR(100) NOT NULL,
+  details TEXT,
+  ip_address VARCHAR(45),
+  created_at TIMESTAMP DEFAULT NOW()
+);
+
+-- 10. Performance Indexes
+CREATE INDEX IF NOT EXISTS idx_inst_invoices_inst ON institution_invoices(institution_id);
+CREATE INDEX IF NOT EXISTS idx_inst_notifs_inst ON institution_notifications(institution_id);
+CREATE INDEX IF NOT EXISTS idx_inst_audit_inst ON institution_audit_logs(institution_id);
+CREATE INDEX IF NOT EXISTS idx_batches_status ON batches(status);
+
+-- 11. Seed sample GST Invoice for default Institution ID 1 if not exists
+INSERT INTO institution_invoices (institution_id, invoice_number, package_name, price_per_student, license_quantity, subtotal, gst_amount, total_amount, payment_status, pdf_url)
+VALUES (
+  1,
+  'INV-EDV-2026-0091',
+  'NEET-UG 2027 AIETS Institutional Gold License Pack (50 Seats)',
+  999.98,
+  50,
+  49999.00,
+  8999.82,
+  58998.82,
+  'Paid',
+  '/invoices/INV-EDV-2026-0091.pdf'
+) ON CONFLICT (invoice_number) DO NOTHING;
+
+-- 12. Seed initial notification for Institution ID 1
+INSERT INTO institution_notifications (institution_id, title, message, type)
+VALUES (
+  1,
+  'Welcome to Edvedum Institution Management Portal',
+  'Your AIETS Institutional Gold Package with 50 student licenses is active. You can now enroll students and create batches.',
+  'system'
+) ON CONFLICT DO NOTHING;
