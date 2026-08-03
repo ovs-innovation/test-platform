@@ -186,15 +186,19 @@ export default function AssessmentInstructions() {
                 <tbody>
                   <tr className="border-b border-slate-300 dark:border-slate-700 bg-[#f3f6fb] dark:bg-slate-800/80">
                     <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Duration</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-blue-600 dark:text-blue-400">{assessment.duration_minutes} minutes</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-blue-600 dark:text-blue-400">{assessment.duration_minutes || 180} minutes</td>
                     <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Questions</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-slate-900 dark:text-slate-100">{assessment.question_count}</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-slate-900 dark:text-slate-100">
+                      {assessment.question_count > 0 ? assessment.question_count : (assessment.question_paper_url || assessment.solution_pdf_url ? 'PDF Test Paper' : '10 (PDF Paper)')}
+                    </td>
                   </tr>
                   <tr className="bg-white dark:bg-[#111827]">
                     <td className="border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Total marks</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-emerald-600 dark:text-emerald-400">{assessment.total_marks}</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-emerald-600 dark:text-emerald-400">{assessment.total_marks > 0 ? assessment.total_marks : '300 Marks'}</td>
                     <td className="border-l border-r border-slate-300 dark:border-slate-700 px-3.5 py-2.5 font-bold text-slate-900 dark:text-slate-100">Passing marks</td>
-                    <td className="px-3.5 py-2.5 font-extrabold text-amber-600 dark:text-amber-400">{assessment.passing_marks}</td>
+                    <td className="px-3.5 py-2.5 font-extrabold text-amber-600 dark:text-amber-400">
+                      {assessment.passing_marks > 0 ? assessment.passing_marks : (assessment.total_marks > 0 ? `${Math.round(assessment.total_marks * 0.45)} Marks` : '120 Marks')}
+                    </td>
                   </tr>
                   {assessment.max_violations > 0 && (
                     <tr className="border-t border-slate-300 dark:border-slate-700 bg-white dark:bg-[#111827]">
@@ -215,6 +219,25 @@ export default function AssessmentInstructions() {
                 </tbody>
               </table>
             </div>
+
+            {(assessment.question_paper_url || assessment.solution_pdf_url) && (
+              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
+                <div className="flex items-center gap-2">
+                  <span className="text-base">📄</span>
+                  <span>Question Paper PDF is uploaded for this test. You can view the question paper inside the exam player.</span>
+                </div>
+                {assessment.question_paper_url && (
+                  <a
+                    href={assessment.question_paper_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="rounded-lg bg-emerald-600 px-3.5 py-1.5 font-bold text-white shadow-xs hover:bg-emerald-700 transition"
+                  >
+                    Preview Question PDF
+                  </a>
+                )}
+              </div>
+            )}
 
             {/* Exam-Specific Instructions Box */}
             {assessment.instructions && (

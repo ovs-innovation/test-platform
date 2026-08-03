@@ -50,6 +50,10 @@ export default function AdminAssessments() {
   const [uploadType, setUploadType] = useState('solution_pdf');
   const [uploadFile, setUploadFile] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadQuestions, setUploadQuestions] = useState('');
+  const [uploadDuration, setUploadDuration] = useState('');
+  const [uploadMaxMarks, setUploadMaxMarks] = useState('');
+  const [uploadPassMarks, setUploadPassMarks] = useState('');
 
   const [assignModalTest, setAssignModalTest] = useState(null);
   const [assignType, setAssignType] = useState('all');
@@ -212,6 +216,14 @@ export default function AdminAssessments() {
     }
   };
 
+  const handleOpenUploadModal = (t) => {
+    setUploadModalTest(t);
+    setUploadQuestions(t.question_count || '');
+    setUploadDuration(t.duration_minutes || '180');
+    setUploadMaxMarks(t.max_marks || '300');
+    setUploadPassMarks(t.passing_marks || '120');
+  };
+
   const handleFileUploadSubmit = async (e) => {
     e.preventDefault();
     if (!uploadFile) return alert('Please select a file');
@@ -224,8 +236,12 @@ export default function AdminAssessments() {
           file_type: uploadType,
           file_name: uploadFile.name,
           file_base64: uploadEvent.target.result,
+          total_questions: uploadQuestions,
+          duration_minutes: uploadDuration,
+          max_marks: uploadMaxMarks,
+          passing_marks: uploadPassMarks,
         });
-        alert('File uploaded successfully!');
+        alert('File uploaded successfully & test parameters updated!');
         setUploadModalTest(null);
         setUploadFile(null);
         loadData();
@@ -494,7 +510,7 @@ export default function AdminAssessments() {
                                 <Pencil className="h-4 w-4" />
                               </button>
                               <button
-                                onClick={() => setUploadModalTest(t)}
+                                onClick={() => handleOpenUploadModal(t)}
                                 className="p-1.5 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 hover:bg-blue-100"
                                 title="Upload Question Paper / Answer Key / Solution"
                               >
@@ -832,6 +848,55 @@ export default function AdminAssessments() {
                   onChange={(e) => setUploadFile(e.target.files?.[0] || null)}
                   className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-semibold"
                 />
+              </div>
+
+              <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-3">
+                <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Configure Test Parameters (Displayed to Students)</p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Total Questions</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 10 or 90"
+                      value={uploadQuestions}
+                      onChange={(e) => setUploadQuestions(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Time (Minutes)</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 10 or 180"
+                      value={uploadDuration}
+                      onChange={(e) => setUploadDuration(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Total Marks</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 40 or 300"
+                      value={uploadMaxMarks}
+                      onChange={(e) => setUploadMaxMarks(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Passing Marks</label>
+                    <input
+                      type="number"
+                      placeholder="e.g. 18 or 120"
+                      value={uploadPassMarks}
+                      onChange={(e) => setUploadPassMarks(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-bold"
+                    />
+                  </div>
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">

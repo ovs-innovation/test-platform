@@ -27,6 +27,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { ONE_YEAR_39_SCHEDULE } from '../../lib/aietsCalendarData.js';
+import { calendarService } from '../../lib/services.js';
 import TestDetailDrawer from '../../components/candidate/TestDetailDrawer.jsx';
 
 // Custom Floating Popover Dropdown for Filter Toolbar
@@ -124,12 +125,23 @@ export default function AietsCalendarPage() {
   const [phaseFilter, setPhaseFilter] = useState('ALL');
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedMonthFilter, setSelectedMonthFilter] = useState('ALL');
+  const [apiTests, setApiTests] = useState([]);
 
-  // Calendar Month Navigation (Default to Oct 2026 where schedule starts)
-  const [currentCalendarDate, setCurrentCalendarDate] = useState(new Date(2026, 9, 1)); // Oct 2026
+  // Calendar Month Navigation (Default to real-time current month)
+  const [currentCalendarDate, setCurrentCalendarDate] = useState(() => new Date());
 
   // Selected Test for Detail Drawer
   const [activeTest, setActiveTest] = useState(null);
+
+  useEffect(() => {
+    calendarService.getCalendar()
+      .then((data) => {
+        if (data && Array.isArray(data.tests)) {
+          setApiTests(data.tests);
+        }
+      })
+      .catch((err) => console.error('Error fetching student calendar:', err));
+  }, []);
 
   // Sync state with URL params
   useEffect(() => {
@@ -139,11 +151,42 @@ export default function AietsCalendarPage() {
     setSearchParams(params, { replace: true });
   }, [selectedProgram, viewMode, setSearchParams, searchParams]);
 
-  // Compute test statuses dynamically based on current real-time clock
+  // Compute test statuses dynamically based on current real-time clock and backend tests
   const scheduleDataset = useMemo(() => {
     const now = new Date(); // Actual current time
 
-    return ONE_YEAR_39_SCHEDULE.map((t) => {
+    const formattedDbTests = apiTests.map((t) => {
+      let dateStr = '';
+      if (t.test_date) {
+        dateStr = typeof t.test_date === 'string' ? t.test_date.split('T')[0] : new Date(t.test_date).toISOString().split('T')[0];
+      } else {
+        dateStr = now.toISOString().split('T')[0];
+      }
+
+      const d = new Date(dateStr);
+      const monthYear = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+
+      return {
+        id: `db-${t.id}`,
+        testId: t.id,
+        sequence: t.id,
+        name: t.test_name || t.title || 'Published Assessment',
+        type: t.test_type || 'Unit Test',
+        date: dateStr,
+        startTime: t.start_time || '10:00:00',
+        endTime: t.end_time || '12:00:00',
+        durationMinutes: t.duration_minutes || 180,
+        syllabus: t.syllabus || 'Syllabus configured by Admin.',
+        maxMarks: t.max_marks || 180,
+        status: t.computed_status || 'Upcoming',
+        monthYear,
+        formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
+        phase: 'Phase I',
+        isDbTest: true,
+      };
+    });
+
+    const staticSchedule = ONE_YEAR_39_SCHEDULE.map((t) => {
       const testDate = new Date(`${t.date}T09:00:00+05:30`);
       const testEndDate = new Date(`${t.date}T12:00:00+05:30`);
 
@@ -164,7 +207,12 @@ export default function AietsCalendarPage() {
         formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
       };
     });
-  }, []);
+
+    const existingDates = new Set(formattedDbTests.map((t) => t.date));
+    const filteredStatic = staticSchedule.filter((t) => !existingDates.has(t.date));
+
+    return [...formattedDbTests, ...filteredStatic].sort((a, b) => new Date(a.date) - new Date(b.date));
+  }, [apiTests]);
 
   // Dynamic countdown in days for next assessment
   const getCountdownDays = (dateStr) => {

@@ -12,19 +12,45 @@ import {
   Play
 } from 'lucide-react';
 import { ONE_YEAR_39_SCHEDULE } from '../../lib/aietsCalendarData.js';
+import { calendarService } from '../../lib/services.js';
 import TestDetailDrawer from './TestDetailDrawer.jsx';
+import { useEffect } from 'react';
 
 export default function DashboardScheduleSnapshot() {
   const navigate = useNavigate();
   const [selectedTest, setSelectedTest] = useState(null);
+  const [dbSchedule, setDbSchedule] = useState([]);
+
+  useEffect(() => {
+    calendarService.getCalendar()
+      .then((data) => {
+        if (data && Array.isArray(data.tests) && data.tests.length > 0) {
+          const mapped = data.tests.map((t) => ({
+            id: `db-${t.id}`,
+            testId: t.id,
+            sequence: t.id,
+            name: t.test_name || t.title || 'Published Test',
+            date: t.test_date ? String(t.test_date).split('T')[0] : new Date().toISOString().split('T')[0],
+            type: t.test_type || 'UNIT_TEST',
+            phase: 'CONCEPT_BUILDING',
+            syllabus: t.syllabus || 'Syllabus configured by Admin.',
+            status: t.computed_status || 'Upcoming',
+          }));
+          setDbSchedule(mapped);
+        }
+      })
+      .catch((err) => console.error('Dashboard schedule fetch error:', err));
+  }, []);
+
+  const fullSchedule = dbSchedule.length > 0 ? dbSchedule : ONE_YEAR_39_SCHEDULE;
 
   // Compute upcoming schedule
-  const totalTests = ONE_YEAR_39_SCHEDULE.length; // 39 tests
-  const completedCount = 0;
-  const upcomingCount = 39;
+  const totalTests = fullSchedule.length;
+  const completedCount = fullSchedule.filter((t) => t.status === 'Attempted' || t.status === 'Result Published').length;
+  const upcomingCount = totalTests - completedCount;
 
   // Next test spotlight (First scheduled test)
-  const nextTest = ONE_YEAR_39_SCHEDULE[0] || {
+  const nextTest = fullSchedule[0] || {
     sequence: 1,
     name: 'Unit Test 1',
     date: '2026-10-04',
@@ -33,7 +59,7 @@ export default function DashboardScheduleSnapshot() {
   };
 
   // Next 3 scheduled tests for compact list
-  const nextThree = ONE_YEAR_39_SCHEDULE.slice(0, 3);
+  const nextThree = fullSchedule.slice(0, 3);
 
   const formatDate = (dateStr) => {
     if (!dateStr) return '';

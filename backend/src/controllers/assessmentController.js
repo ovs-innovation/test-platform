@@ -28,17 +28,23 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
 });
 
 export const listAvailableAssessments = asyncHandler(async (req, res) => {
+  const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [req.user.id]);
+  const student = userRes.rows[0] || {};
+  const batchId = student.batch_id || null;
+  const instId = student.institution_id || null;
+
   const result = await query(
     `
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
            a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
-           ci.id AS invite_id, ci.status AS invite_status, ci.token AS invite_token,
+           ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
            'invite' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
-           at.status AS attempt_status,
+           at.status::text AS attempt_status,
            at.id AS attempt_id,
-           s.marks_obtained, s.total_marks, s.percentage, s.passed
+           s.marks_obtained, s.total_marks AS score_total, s.percentage, s.passed,
+           a.question_paper_url, a.solution_pdf_url
     FROM candidate_invites ci
     JOIN assessments a ON a.id = ci.assessment_id
     LEFT JOIN (
@@ -56,9 +62,10 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
            'enrollment' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
-           at.status AS attempt_status,
+           at.status::text AS attempt_status,
            at.id AS attempt_id,
-           s.marks_obtained, s.total_marks, s.percentage, s.passed
+           s.marks_obtained, s.total_marks AS score_total, s.percentage, s.passed,
+           a.question_paper_url, a.solution_pdf_url
     FROM student_enrollments se
     JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
     JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
@@ -72,9 +79,44 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         SELECT 1 FROM candidate_invites ci2
         WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
       )
+
+    UNION
+
+    SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+           'Standard examination instructions apply.' AS instructions, t.duration_minutes,
+           0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
+           NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
+           'assignment' AS access_type,
+           COALESCE(q.cnt, 0)::int AS question_count,
+           COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
+           COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
+           COALESCE(at.id, tat.id) AS attempt_id,
+           COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
+           COALESCE(s.total_marks, ts.total_marks) AS score_total,
+           COALESCE(s.percentage, ts.percentage) AS percentage,
+           COALESCE(s.passed, ts.passed) AS passed,
+           t.question_paper_url, t.solution_pdf_url
+    FROM tests t
+    JOIN test_assignments tas ON tas.test_id = t.id
+    LEFT JOIN (
+      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+    ) q ON q.assessment_id = t.id
+    LEFT JOIN attempts at ON at.assessment_id = t.id AND at.candidate_id = $2
+    LEFT JOIN test_attempts tat ON tat.test_id = t.id AND tat.student_id = $2
+    LEFT JOIN scores s ON s.attempt_id = at.id
+    LEFT JOIN scores ts ON ts.attempt_id = tat.id
+    WHERE (t.is_published = true OR t.status = 'published')
+      AND COALESCE(t.is_deleted, false) = false
+      AND (
+        (tas.assigned_to_type = 'individual' AND tas.assigned_to_id = $2)
+        OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
+        OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
+        OR tas.assigned_to_type = 'all'
+      )
+
     ORDER BY id DESC
     `,
-    [req.user.email, req.user.id]
+    [req.user.email, req.user.id, batchId, instId]
   );
   res.json({ assessments: result.rows });
 });
@@ -92,7 +134,8 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
            at.status AS attempt_status, at.id AS attempt_id,
-           s.percentage, s.passed
+           s.percentage, s.passed,
+           a.question_paper_url, a.solution_pdf_url, a.answer_key_url
     FROM assessments a
     LEFT JOIN (SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id) q ON q.assessment_id = a.id
     LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
@@ -115,11 +158,16 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
              t.available_from, t.available_until,
              COALESCE(q.cnt, 0)::int AS question_count,
              COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
-             ta.status AS attempt_status, ta.id AS attempt_id,
-             NULL AS percentage, NULL AS passed
+             COALESCE(at.status::text, (CASE WHEN ta.submitted_at IS NOT NULL THEN 'completed' WHEN ta.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
+             COALESCE(at.id, ta.id) AS attempt_id,
+             COALESCE(s.percentage, NULL::numeric) AS percentage,
+             COALESCE(s.passed, NULL::boolean) AS passed,
+             t.question_paper_url, t.solution_pdf_url, t.answer_key_url
       FROM tests t
       LEFT JOIN (SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id) q ON q.assessment_id = t.id
+      LEFT JOIN attempts at ON at.assessment_id = t.id AND at.candidate_id = $2
       LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $2
+      LEFT JOIN scores s ON s.attempt_id = at.id
       WHERE t.id = $1 AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
       `,
       [id, req.user.id]
@@ -143,9 +191,21 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
      WHERE se.user_id = $1 AND (tsa.assessment_id = $2 OR tst.test_id = $2) AND se.status = 'active' AND se.expires_at > NOW()`,
     [req.user.id, id]
   );
+  const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [req.user.id]);
+  const student = userRes.rows[0] || {};
+  const batchId = student.batch_id || null;
+  const instId = student.institution_id || null;
+
   const assign = await query(
-    `SELECT id FROM test_assignments WHERE test_id = $1 AND (assigned_to_type = 'all' OR (assigned_to_type = 'individual' AND assigned_to_id = $2))`,
-    [id, req.user.id]
+    `SELECT id FROM test_assignments
+     WHERE test_id = $1
+       AND (
+         assigned_to_type = 'all'
+         OR (assigned_to_type = 'individual' AND assigned_to_id = $2)
+         OR (assigned_to_type = 'batch' AND $3::int IS NOT NULL AND assigned_to_id = $3)
+         OR (assigned_to_type = 'institution' AND $4::int IS NOT NULL AND assigned_to_id = $4)
+       )`,
+    [id, req.user.id, batchId, instId]
   );
 
   if (!invite.rowCount && !enr.rowCount && !assign.rowCount) {

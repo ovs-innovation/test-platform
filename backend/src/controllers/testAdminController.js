@@ -3,6 +3,8 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { saveUploadedFile } from '../middleware/upload.js';
 import nodemailer from 'nodemailer';
+import pdfParse from 'pdf-parse/lib/pdf-parse.js';
+import { parsePdfQuestions } from '../utils/pdfQuestionParser.js';
 
 /**
  * 1. GET /api/admin/tests
@@ -109,13 +111,14 @@ export const createTest = asyncHandler(async (req, res) => {
 
     const createdTest = result.rows[0];
 
-    // Assign to specified audience or default to 'all'
-    const assignType = assigned_to_type || 'all';
-    await client.query(
-      `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
-       VALUES ($1, $2, $3)`,
-      [createdTest.id, assignType, assigned_to_id || null]
-    );
+    // Assign to specified audience if explicitly provided
+    if (assigned_to_type) {
+      await client.query(
+        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+         VALUES ($1, $2, $3)`,
+        [createdTest.id, assigned_to_type, assigned_to_id || null]
+      );
+    }
 
     return createdTest;
   });
@@ -293,6 +296,9 @@ export const assignTest = asyncHandler(async (req, res) => {
   const testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
   if (testCheck.rowCount === 0) throw ApiError.notFound('Test not found');
 
+  // Replace existing audience assignments for this test
+  await query('DELETE FROM test_assignments WHERE test_id = $1', [id]);
+
   const result = await query(
     `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
      VALUES ($1, $2, $3) RETURNING *`,
@@ -326,7 +332,15 @@ export const removeAssignment = asyncHandler(async (req, res) => {
  */
 export const uploadTestFile = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { file_base64, file_name, file_type } = req.body; // file_type: 'question_paper' | 'answer_key' | 'solution_pdf'
+  const {
+    file_base64,
+    file_name,
+    file_type,
+    total_questions,
+    duration_minutes,
+    max_marks,
+    passing_marks
+  } = req.body; // file_type: 'question_paper' | 'answer_key' | 'solution_pdf'
 
   if (!['question_paper', 'answer_key', 'solution_pdf'].includes(file_type)) {
     throw ApiError.badRequest('file_type must be question_paper, answer_key, or solution_pdf');
@@ -341,7 +355,97 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   if (file_type === 'question_paper') columnToUpdate = 'question_paper_url';
   if (file_type === 'answer_key') columnToUpdate = 'answer_key_url';
 
-  await query(`UPDATE tests SET ${columnToUpdate} = $1 WHERE id = $2`, [relativeUrl, id]);
+  const cleanDuration = duration_minutes ? parseInt(duration_minutes, 10) : null;
+  const cleanMarks = max_marks ? parseInt(max_marks, 10) : null;
+  const cleanPass = passing_marks ? parseInt(passing_marks, 10) : null;
+
+  await query(
+    `UPDATE tests SET
+      ${columnToUpdate} = $1,
+      duration_minutes = COALESCE($2, duration_minutes),
+      max_marks = COALESCE($3, max_marks),
+      updated_at = NOW()
+     WHERE id = $4`,
+    [relativeUrl, cleanDuration, cleanMarks, id]
+  );
+
+  await query(
+    `UPDATE assessments SET
+      ${columnToUpdate} = $1,
+      duration_minutes = COALESCE($2, duration_minutes),
+      passing_marks = COALESCE($3, passing_marks),
+      updated_at = NOW()
+     WHERE id = $4`,
+    [relativeUrl, cleanDuration, cleanPass, id]
+  ).catch(() => {});
+
+  // Automatic PDF Question Extraction
+  let extractedCount = 0;
+  if (file_base64 && typeof file_base64 === 'string') {
+    try {
+      const base64Data = file_base64.replace(/^data:[^;]+;base64,/, '');
+      const pdfBuffer = Buffer.from(base64Data, 'base64');
+      const pdfData = await pdfParse(pdfBuffer).catch(() => null);
+
+      if (pdfData && pdfData.text) {
+        const parsedQs = parsePdfQuestions(pdfData.text);
+        if (parsedQs.length > 0) {
+          extractedCount = parsedQs.length;
+          await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
+          let calcTotalMarks = 0;
+          for (let i = 0; i < parsedQs.length; i++) {
+            const q = parsedQs[i];
+            calcTotalMarks += (q.marks || 4);
+            await query(
+              `INSERT INTO questions (
+                assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution
+              ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8)`,
+              [
+                id,
+                q.question_text,
+                JSON.stringify(q.options),
+                q.correct_index || 0,
+                q.marks || 4,
+                i + 1,
+                q.bank_category || 'General',
+                q.solution || ''
+              ]
+            );
+          }
+
+          if (calcTotalMarks > 0) {
+            await query('UPDATE tests SET max_marks = $1 WHERE id = $2', [calcTotalMarks, id]);
+            await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => {});
+          }
+        }
+      }
+    } catch (err) {
+      console.error('PDF Question Extraction Warning:', err.message);
+    }
+  }
+
+  // Fallback placeholder questions if extraction produced no matches and qNum specified
+  const qNum = total_questions ? parseInt(total_questions, 10) : 0;
+  if (qNum > 0 && extractedCount === 0) {
+    const qCheck = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [id]);
+    if (qCheck.rows[0].c === 0) {
+      const marksPerQ = cleanMarks && qNum ? Math.max(1, Math.floor(cleanMarks / qNum)) : 4;
+      for (let i = 1; i <= qNum; i++) {
+        await query(
+          `INSERT INTO questions (
+            assessment_id, question_text, question_type, options, correct_index, marks, position
+          ) VALUES ($1, $2, 'mcq', $3, 0, $4, $5)`,
+          [
+            id,
+            `Question ${i} (Refer to uploaded Question Paper PDF)`,
+            JSON.stringify(['Option A', 'Option B', 'Option C', 'Option D']),
+            marksPerQ,
+            i
+          ]
+        );
+      }
+    }
+  }
 
   res.json({
     message: `${file_type} uploaded successfully`,

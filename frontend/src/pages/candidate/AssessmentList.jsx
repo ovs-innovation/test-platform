@@ -32,9 +32,15 @@ export function AssessmentCard({ a }) {
         </p>
 
         <div className="mt-3.5 grid grid-cols-3 gap-1.5 text-center">
-          <Meta label="Questions" value={a.question_count || '—'} />
-          <Meta label="Minutes" value={a.duration_minutes || '—'} />
-          <Meta label="Pass Mark" value={a.passing_marks || '—'} />
+          <Meta
+            label="Questions"
+            value={a.question_count > 0 ? a.question_count : (a.question_paper_url || a.solution_pdf_url || a.access_type === 'assignment' ? 'PDF Paper' : '—')}
+          />
+          <Meta label="Minutes" value={a.duration_minutes || '180'} />
+          <Meta
+            label="Pass Mark"
+            value={a.passing_marks > 0 ? a.passing_marks : (a.total_marks > 0 ? `${a.total_marks} Marks` : '300 Marks')}
+          />
         </div>
       </div>
 

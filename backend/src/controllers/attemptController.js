@@ -308,9 +308,21 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
     return { invite: null, source: 'enrollment' };
   }
 
+  const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [user.id]);
+  const student = userRes.rows[0] || {};
+  const batchId = student.batch_id || null;
+  const instId = student.institution_id || null;
+
   const assignCheck = await query(
-    `SELECT id FROM test_assignments WHERE test_id = $1 AND (assigned_to_type = 'all' OR (assigned_to_type = 'individual' AND assigned_to_id = $2))`,
-    [assessmentId, user.id]
+    `SELECT id FROM test_assignments
+     WHERE test_id = $1
+       AND (
+         assigned_to_type = 'all'
+         OR (assigned_to_type = 'individual' AND assigned_to_id = $2)
+         OR (assigned_to_type = 'batch' AND $3::int IS NOT NULL AND assigned_to_id = $3)
+         OR (assigned_to_type = 'institution' AND $4::int IS NOT NULL AND assigned_to_id = $4)
+       )`,
+    [assessmentId, user.id, batchId, instId]
   );
   if (assignCheck.rowCount > 0) {
     return { invite: null, source: 'assignment' };
@@ -323,10 +335,30 @@ export const startAttempt = asyncHandler(async (req, res) => {
   const assessmentId = Number(req.body.assessment_id);
   if (!Number.isInteger(assessmentId)) throw ApiError.badRequest('assessment_id is required');
 
-  const { invite } = await ensureAssessmentAccess(req.user, assessmentId);
+  const { invite, source } = await ensureAssessmentAccess(req.user, assessmentId);
 
-  const aRes = await query('SELECT * FROM assessments WHERE id = $1', [assessmentId]);
-  let assessment = aRes.rows[0];
+  let assessment = null;
+  if (source === 'assignment') {
+    const tRes = await query(
+      `SELECT t.id, COALESCE(t.test_name, t.title) AS title,
+              t.syllabus AS description,
+              'Standard examination instructions apply.' AS instructions,
+              t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
+              true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
+              t.available_from, t.available_until,
+              t.question_paper_url, t.answer_key_url, t.solution_pdf_url
+       FROM tests t
+       WHERE t.id = $1 AND COALESCE(t.is_deleted, false) = false`,
+      [assessmentId]
+    );
+    assessment = tRes.rows[0];
+  }
+
+  if (!assessment) {
+    const aRes = await query('SELECT * FROM assessments WHERE id = $1', [assessmentId]);
+    assessment = aRes.rows[0];
+  }
+
   if (!assessment) {
     const tRes = await query(
       `SELECT t.id, COALESCE(t.test_name, t.title) AS title,
@@ -334,13 +366,15 @@ export const startAttempt = asyncHandler(async (req, res) => {
               'Standard examination instructions apply.' AS instructions,
               t.duration_minutes, 0 AS passing_marks, 5 AS max_violations,
               true AS result_visible, (t.is_published = true OR t.status = 'published') AS is_published,
-              t.available_from, t.available_until
+              t.available_from, t.available_until,
+              t.question_paper_url, t.answer_key_url, t.solution_pdf_url
        FROM tests t
        WHERE t.id = $1 AND COALESCE(t.is_deleted, false) = false`,
       [assessmentId]
     );
     assessment = tRes.rows[0];
   }
+
   if (!assessment) throw ApiError.notFound('Assessment not found');
   if (!assessment.is_published) throw ApiError.forbidden('This assessment is not available');
 
@@ -353,7 +387,11 @@ export const startAttempt = asyncHandler(async (req, res) => {
   }
 
   const qCount = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [assessmentId]);
-  if (qCount.rows[0].c === 0) throw ApiError.badRequest('This assessment has no questions');
+  const hasPdf = Boolean(assessment.question_paper_url || assessment.solution_pdf_url || assessment.answer_key_url);
+
+  if (qCount.rows[0].c === 0 && !hasPdf) {
+    throw ApiError.badRequest('Question paper PDF or questions have not been uploaded for this assessment yet.');
+  }
 
   const existing = await query(
     'SELECT * FROM attempts WHERE assessment_id = $1 AND candidate_id = $2',
@@ -407,7 +445,27 @@ export const getAttemptState = asyncHandler(async (req, res) => {
     return res.json({ attempt: refreshed.rows[0], sections: [], questions: [], answers: [], expired: true });
   }
 
-  const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
+  let assessmentObj = null;
+  const tCheck = await query('SELECT id FROM test_assignments WHERE test_id = $1 LIMIT 1', [attempt.assessment_id]);
+  if (tCheck.rowCount > 0) {
+    const tRes = await query(
+      `SELECT t.id, COALESCE(t.test_name, t.title) AS title, t.duration_minutes,
+              5 AS max_violations, t.question_paper_url, t.solution_pdf_url, t.answer_key_url
+       FROM tests t WHERE t.id = $1`,
+      [attempt.assessment_id]
+    );
+    assessmentObj = tRes.rows[0];
+  }
+
+  if (!assessmentObj) {
+    const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
+    assessmentObj = assessmentRes.rows[0];
+  }
+
+  if (!assessmentObj) {
+    assessmentObj = { id: attempt.assessment_id, title: 'Assessment', duration_minutes: 180, max_violations: 5 };
+  }
+
   const sectionsRes = await query(
     'SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
     [attempt.assessment_id]
@@ -432,10 +490,13 @@ export const getAttemptState = asyncHandler(async (req, res) => {
   res.json({
     attempt,
     assessment: {
-      id: assessmentRes.rows[0].id,
-      title: assessmentRes.rows[0].title,
-      duration_minutes: assessmentRes.rows[0].duration_minutes,
-      max_violations: assessmentRes.rows[0].max_violations,
+      id: assessmentObj.id,
+      title: assessmentObj.title,
+      duration_minutes: assessmentObj.duration_minutes,
+      max_violations: assessmentObj.max_violations || 5,
+      question_paper_url: assessmentObj.question_paper_url || null,
+      solution_pdf_url: assessmentObj.solution_pdf_url || null,
+      answer_key_url: assessmentObj.answer_key_url || null,
     },
     sections: sectionsRes.rows,
     questions: questionsRes.rows.map(sanitizeQuestion),

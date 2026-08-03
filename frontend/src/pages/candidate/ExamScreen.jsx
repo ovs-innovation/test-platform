@@ -52,6 +52,7 @@ export default function ExamScreen() {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [imgZoom, setImgZoom] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
+  const [pdfMode, setPdfMode] = useState('hidden'); // 'split' | 'full' | 'hidden'
 
   const finishedRef = useRef(false);
   const endsAtRef = useRef(null);
@@ -171,15 +172,33 @@ export default function ExamScreen() {
     return () => clearTimeout(id);
   }, [warning]);
 
+  const activeQuestions = useMemo(() => {
+    if (Array.isArray(questions) && questions.length > 0) return questions;
+    const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
+    if (pdfUrl || (meta?.id && !questions?.length)) {
+      const count = 10;
+      return Array.from({ length: count }, (_, i) => ({
+        id: i + 1,
+        question_text: `Question ${i + 1} (Refer to uploaded Question Paper PDF)`,
+        question_type: 'mcq',
+        options: ['Option A', 'Option B', 'Option C', 'Option D'],
+        marks: 4,
+        position: i + 1,
+        bank_category: 'General'
+      }));
+    }
+    return [];
+  }, [questions, meta]);
+
   useEffect(() => {
-    if (!loading && questions[current]) {
-      const q = questions[current];
+    if (!loading && activeQuestions[current]) {
+      const q = activeQuestions[current];
       setVisited((v) => ({ ...v, [q.id]: true }));
       if (q.section_id) {
         setActiveSection(q.section_id);
       }
     }
-  }, [current, loading, questions]);
+  }, [current, loading, activeQuestions]);
 
   const qAnswered = useCallback(
     (item) => isQuestionAnswered(item, answers, multiAnswers, codingAnswers, subjectiveAnswers, numericAnswers),
@@ -189,7 +208,7 @@ export default function ExamScreen() {
   const getQStatus = (item) => getQuestionStatus(item, visited, reviewed, qAnswered(item));
 
   const toggleReview = async (mark = true) => {
-    const qid = questions[current].id;
+    const qid = activeQuestions[current]?.id || (current + 1);
     const next = mark ? true : !reviewed[qid];
     setReviewed((r) => ({ ...r, [qid]: next }));
     try {
@@ -198,7 +217,7 @@ export default function ExamScreen() {
   };
 
   const clearResponse = async () => {
-    const qid = questions[current].id;
+    const qid = activeQuestions[current]?.id || (current + 1);
     setAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setMultiAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setNumericAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
@@ -210,7 +229,7 @@ export default function ExamScreen() {
   };
 
   const goNext = () => {
-    if (current < questions.length - 1) setCurrent((c) => c + 1);
+    if (current < activeQuestions.length - 1) setCurrent((c) => c + 1);
     else setConfirmOpen(true);
   };
 
@@ -300,10 +319,10 @@ export default function ExamScreen() {
     return '🧠';
   };
 
-  // Compute subject-based sections dynamically from questions
+  // Compute subject-based sections dynamically from activeQuestions
   const effectiveSections = useMemo(() => {
     const categoryMap = new Map();
-    questions.forEach((q, idx) => {
+    activeQuestions.forEach((q, idx) => {
       const cat = q.bank_category && !['General', 'Technical MCQ', ''].includes(q.bank_category)
         ? q.bank_category
         : (q.section_id && sectionMap.get(q.section_id)?.name) || 'General';
@@ -331,11 +350,11 @@ export default function ExamScreen() {
     }
 
     return [{ id: 'sec-all', name: 'All Questions', icon: '📚' }];
-  }, [questions, sections, sectionMap]);
+  }, [activeQuestions, sections, sectionMap]);
 
   const getSecQuestions = useCallback(
     (secItem) => {
-      return questions
+      return activeQuestions
         .map((item, idx) => ({ item, idx }))
         .filter(({ item }) => {
           if (secItem.categoryKey) {
@@ -350,15 +369,15 @@ export default function ExamScreen() {
           return true;
         });
     },
-    [questions, sectionMap]
+    [activeQuestions, sectionMap]
   );
 
   const answeredCount = useMemo(
-    () => questions.filter((item) => qAnswered(item)).length,
-    [questions, qAnswered],
+    () => activeQuestions.filter((item) => qAnswered(item)).length,
+    [activeQuestions, qAnswered],
   );
 
-  const unattemptedCount = questions.length - answeredCount;
+  const unattemptedCount = activeQuestions.length - answeredCount;
 
   const jumpToSection = (secItem) => {
     setActiveSection(secItem.id);
@@ -398,9 +417,18 @@ export default function ExamScreen() {
     );
   }
 
-  const q = questions[current];
+  const q = activeQuestions[current] || {
+    id: current + 1,
+    question_text: `Question ${current + 1} (Refer to uploaded Question Paper PDF)`,
+    question_type: 'mcq',
+    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    marks: 4,
+    bank_category: 'General'
+  };
   const qCategory = q?.bank_category || (q?.section_id && sectionMap.get(q.section_id)?.name) || 'General';
   const activeSecItem = effectiveSections.find((s) => s.id === activeSection);
+  const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
+  const hasPdf = Boolean(pdfUrl);
 
   return (
     <div className="exam-surface flex min-h-screen flex-col select-none">
@@ -414,6 +442,31 @@ export default function ExamScreen() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            {hasPdf && (
+              <div className="flex items-center gap-1 bg-white/10 rounded border border-white/20 p-0.5 text-[11px] font-bold text-white mr-2">
+                <button
+                  type="button"
+                  onClick={() => setPdfMode('split')}
+                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'split' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
+                >
+                  📄 Split View
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPdfMode('full')}
+                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'full' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
+                >
+                  🔍 Full PDF
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setPdfMode('hidden')}
+                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'hidden' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
+                >
+                  📝 Hide PDF
+                </button>
+              </div>
+            )}
             {maxViolations > 0 && (
               <span className="hidden rounded border border-white/30 px-2 py-1 text-[10px] font-semibold sm:inline">
                 Warnings {violations}/{maxViolations}
@@ -436,7 +489,7 @@ export default function ExamScreen() {
             className={`nta-section-tab ${!activeSection ? 'nta-section-tab-active' : ''}`}
             onClick={() => setActiveSection(null)}
           >
-            All Sections ({questions.length})
+            All Sections ({activeQuestions.length})
           </button>
           {effectiveSections.map((s) => {
             const count = getSecQuestions(s).length;
@@ -462,7 +515,34 @@ export default function ExamScreen() {
         </div>
       )}
 
-      <div className="mx-auto grid w-full max-w-7xl flex-1 gap-0 px-0 py-0 lg:grid-cols-[1fr_240px]">
+      <div className={`mx-auto grid w-full max-w-[1600px] flex-1 gap-0 px-0 py-0 ${
+        hasPdf && pdfMode === 'split'
+          ? 'lg:grid-cols-[1.1fr_1fr_240px]'
+          : 'lg:grid-cols-[1fr_240px]'
+      }`}>
+        {hasPdf && (pdfMode === 'split' || pdfMode === 'full') && (
+          <div className="border-r border-slate-400 bg-slate-100 p-2 flex flex-col min-h-[500px] lg:h-[calc(100vh-130px)] lg:sticky lg:top-[95px] overflow-hidden">
+            <div className="mb-2 flex items-center justify-between px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800 shadow-2xs">
+              <span className="flex items-center gap-1.5 text-[#1a4480]">
+                <span>📄</span> Question Paper PDF Document
+              </span>
+              <a
+                href={pdfUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="text-[11px] font-bold text-blue-600 hover:underline flex items-center gap-1"
+              >
+                Open in New Tab ↗
+              </a>
+            </div>
+            <iframe
+              src={`${pdfUrl}#toolbar=1`}
+              className="w-full flex-1 border border-slate-300 rounded-lg shadow-inner bg-white"
+              title="Question Paper PDF"
+            />
+          </div>
+        )}
+
         <div className="border-b border-r border-slate-400 bg-white p-5 lg:border-b-0">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
             <div>
@@ -471,7 +551,7 @@ export default function ExamScreen() {
                 <span>Subject: {qCategory}</span>
               </p>
               <p className="text-sm font-bold text-slate-800">
-                Question No. {current + 1} of {questions.length}
+                Question No. {current + 1} of {activeQuestions.length}
               </p>
             </div>
             <p className="text-xs text-slate-600">
@@ -703,7 +783,7 @@ export default function ExamScreen() {
           </div>
 
           <div className="mt-3 border-t border-slate-300 pt-2 text-center text-[10px] text-slate-600">
-            <p>Answered: <strong>{answeredCount}</strong> / {questions.length}</p>
+            <p>Answered: <strong>{answeredCount}</strong> / {activeQuestions.length}</p>
             <p className="mt-0.5">{savingId === q.id ? 'Saving…' : 'Auto-saved'}</p>
           </div>
         </aside>
@@ -763,7 +843,7 @@ export default function ExamScreen() {
         <div className="text-sm text-slate-700">
           <p>You are about to submit your test.</p>
           <ul className="mt-3 space-y-1 border border-slate-300 bg-slate-50 p-3 text-sm">
-            <li>Total questions: <strong>{questions.length}</strong></li>
+            <li>Total questions: <strong>{activeQuestions.length}</strong></li>
             <li>Answered: <strong>{answeredCount}</strong></li>
             <li className="text-red-700">Unattempted: <strong>{unattemptedCount}</strong></li>
             <li>Marked for review: <strong>{Object.values(reviewed).filter(Boolean).length}</strong></li>

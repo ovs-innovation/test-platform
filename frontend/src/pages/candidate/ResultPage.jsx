@@ -62,16 +62,27 @@ export default function ResultPage() {
 
   const subjectScores = useMemo(() => {
     if (!solutions || solutions.length === 0) return [];
+
+    const testTitle = (assessment?.title || assessment?.test_name || '').toLowerCase();
+    let primarySubject = null;
+    if (/chem/i.test(testTitle)) primarySubject = 'Chemistry';
+    else if (/phys/i.test(testTitle)) primarySubject = 'Physics';
+    else if (/math/i.test(testTitle)) primarySubject = 'Mathematics';
+    else if (/bio|botany|zoology/i.test(testTitle)) primarySubject = 'Biology';
+
     const getSubjectName = (q, index) => {
       const cat = q.subject_name || q.bank_category || q.section_name || '';
       if (cat && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized'].includes(cat.toLowerCase().trim())) {
         return cat;
       }
+
+      if (primarySubject) return primarySubject;
+
       const text = (q.question_text || '').toLowerCase();
       if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic motion|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed/i.test(text)) {
         return 'Physics';
       }
-      if (/chemistry|electron|atom|hybridization|exothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired/i.test(text)) {
+      if (/chemistry|electron|atom|hybridization|exothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired|iupac|propan|ester|isomer/i.test(text)) {
         return 'Chemistry';
       }
       if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of/i.test(text)) {
@@ -79,12 +90,6 @@ export default function ResultPage() {
       }
       if (/biology|cell|gene|dna|rna|organism|plant|zoology|botany|species|chromosome|protein|enzyme|tissue/i.test(text)) {
         return 'Biology';
-      }
-
-      if (index >= 0) {
-        if (index < 10) return 'Physics';
-        if (index < 20) return 'Chemistry';
-        if (index < 30) return 'Mathematics';
       }
 
       return cat || 'General';

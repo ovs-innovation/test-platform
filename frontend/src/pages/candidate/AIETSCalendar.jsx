@@ -74,7 +74,7 @@ export default function AIETSCalendar() {
   const [viewMode, setViewMode] = useState('calendar');
 
   // Month navigation for Calendar View
-  const [currentDate, setCurrentDate] = useState(() => new Date(2026, 6, 1)); // Default July 2026 (matching dataset)
+  const [currentDate, setCurrentDate] = useState(() => new Date());
 
   // Filters for List & Timeline View
   const [searchQuery, setSearchQuery] = useState('');

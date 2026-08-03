@@ -40,15 +40,16 @@ export const getStudentCalendar = async (req, res, next) => {
         mto.valid_from AS override_valid_from,
         mto.valid_until AS override_valid_until
       FROM tests t
-      JOIN test_assignments a ON a.test_id = t.id
+      LEFT JOIN test_assignments a ON a.test_id = t.id
       LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $1
       LEFT JOIN missed_test_overrides mto ON mto.test_id = t.id AND mto.student_id = $1
-      WHERE t.is_published = TRUE
+      WHERE (t.is_published = TRUE OR t.status = 'published')
         AND COALESCE(t.is_deleted, FALSE) = FALSE
         AND (
-          (a.assigned_to_type = 'individual' AND a.assigned_to_id = $1)
-          OR (a.assigned_to_type = 'batch' AND a.assigned_to_id = $2)
-          OR (a.assigned_to_type = 'institution' AND a.assigned_to_id = $3)
+          a.id IS NULL
+          OR (a.assigned_to_type = 'individual' AND a.assigned_to_id = $1)
+          OR (a.assigned_to_type = 'batch' AND $2::int IS NOT NULL AND a.assigned_to_id = $2)
+          OR (a.assigned_to_type = 'institution' AND $3::int IS NOT NULL AND a.assigned_to_id = $3)
           OR a.assigned_to_type = 'all'
           OR t.id IN (
             SELECT pt.test_id
