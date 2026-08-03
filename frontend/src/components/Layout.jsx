@@ -183,8 +183,16 @@ export default function Layout({ children }) {
 
 
   const handleLogout = () => {
+    const r = String(user?.role || '').toLowerCase();
+    const isTargetAdmin = r === 'admin' || location.pathname.startsWith('/admin');
+    const target = isTargetAdmin
+      ? '/admin-login'
+      : r.includes('institution') || r.includes('school')
+      ? '/institution-login'
+      : '/student-login';
+
+    navigate(target, { replace: true });
     logout();
-    navigate('/student-login');
   };
 
   const getBreadcrumbs = () => {

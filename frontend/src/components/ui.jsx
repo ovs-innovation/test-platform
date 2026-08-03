@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff, Key } from 'lucide-react';
 import { EmptyLineArt } from './landing/LineArtIllustrations.jsx';
 
 export function PasswordInput({
@@ -12,12 +12,19 @@ export function PasswordInput({
   autoComplete = 'current-password',
   className = '',
   disabled = false,
+  icon: LeftIcon = Key,
   ...props
 }) {
   const [show, setShow] = useState(false);
+  const hasPl10 = className.includes('pl-10') || !!LeftIcon;
 
   return (
     <div className="relative w-full">
+      {LeftIcon && (
+        <div className="absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none text-cyan-400/80">
+          <LeftIcon className="h-4 w-4" />
+        </div>
+      )}
       <input
         id={id}
         name={name}
@@ -28,7 +35,7 @@ export function PasswordInput({
         required={required}
         autoComplete={autoComplete}
         disabled={disabled}
-        className={`w-full pr-12 ${className}`}
+        className={`w-full pr-12 ${hasPl10 && !className.includes('pl-') ? 'pl-10' : ''} ${className}`}
         {...props}
       />
       <button

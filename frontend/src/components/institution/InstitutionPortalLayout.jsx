@@ -77,8 +77,12 @@ export default function InstitutionPortalLayout({
   const [notifDropdownOpen, setNotifDropdownOpen] = useState(false);
   const [quickActionOpen, setQuickActionOpen] = useState(false);
 
-  // Lock background scroll when mobile drawer is open
+  // Lock background scroll when mobile drawer is open & sync root background
   useEffect(() => {
+    const bg = isDarkMode ? '#060D1A' : '#f8fafc';
+    document.documentElement.style.backgroundColor = bg;
+    document.body.style.backgroundColor = bg;
+
     if (mobileDrawerOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -86,8 +90,10 @@ export default function InstitutionPortalLayout({
     }
     return () => {
       document.body.style.overflow = '';
+      document.documentElement.style.backgroundColor = '';
+      document.body.style.backgroundColor = '';
     };
-  }, [mobileDrawerOpen]);
+  }, [mobileDrawerOpen, isDarkMode]);
 
   // Determine active item from current route
   const currentPath = location.pathname;
@@ -136,7 +142,7 @@ export default function InstitutionPortalLayout({
         }`}
       >
         {/* BRAND LOGO HEADER */}
-        <div className={`flex items-center justify-between px-4 h-20 border-b shrink-0 ${
+        <div className={`flex items-center justify-between px-4 h-16 sm:h-18 border-b shrink-0 ${
           isDarkMode ? 'border-slate-800/80' : 'border-slate-100'
         }`}>
           <div className="flex items-center gap-3 overflow-hidden">
@@ -237,13 +243,13 @@ export default function InstitutionPortalLayout({
       {/* =========================================================================
           MAIN PORTAL CANVAS (OFFSET BY SIDEBAR WIDTH ON DESKTOP)
          ========================================================================= */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 min-h-screen ${
+      <div className={`flex-1 transition-all duration-300 min-h-screen ${
         sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'
       }`}>
 
         {/* STICKY PORTAL TOPBAR */}
-        <header className={`sticky top-0 z-40 h-20 px-4 sm:px-6 lg:px-8 border-b backdrop-blur-xl flex items-center justify-between gap-4 transition-colors ${
-          isDarkMode ? 'bg-[#060D1A]/90 border-slate-800/80 text-white' : 'bg-white/90 border-slate-200 text-slate-800 shadow-sm'
+        <header className={`sticky top-0 z-40 h-16 sm:h-18 px-4 sm:px-6 lg:px-8 border-b backdrop-blur-xl flex items-center justify-between gap-4 transition-colors ${
+          isDarkMode ? 'bg-[#060D1A]/95 border-slate-800/80 text-white' : 'bg-white/95 border-slate-200 text-slate-800 shadow-sm'
         }`}>
 
           {/* Left: Mobile Drawer Trigger & Breadcrumbs */}
@@ -418,7 +424,7 @@ export default function InstitutionPortalLayout({
 
               {profileDropdownOpen && (
                 <div
-                  className={`absolute right-0 mt-2 w-60 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in space-y-1 ${
+                  className={`absolute right-0 mt-2 w-56 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in space-y-1 ${
                     isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
                   }`}
                   onClick={() => setProfileDropdownOpen(false)}
@@ -427,36 +433,13 @@ export default function InstitutionPortalLayout({
                     <p className="text-xs font-extrabold text-white">{institutionData?.adminName || 'Centre Admin'}</p>
                     <p className="text-[11px] text-slate-400 truncate">{institutionData?.adminEmail || 'admin@sscpublic.edu.in'}</p>
                   </div>
-                  <Link
-                    to="/institution/profile"
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-blue-500/10 hover:text-blue-400 transition cursor-pointer"
+                  <button
+                    onClick={handleLogout}
+                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition cursor-pointer"
                   >
-                    <Building2 className="h-4 w-4 text-blue-400" />
-                    <span>Institution Profile</span>
-                  </Link>
-                  <Link
-                    to="/institution/settings"
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-cyan-500/10 hover:text-cyan-400 transition cursor-pointer"
-                  >
-                    <Settings className="h-4 w-4 text-cyan-400" />
-                    <span>Profile & Security</span>
-                  </Link>
-                  <a
-                    href="mailto:support@edvedum.com"
-                    className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-emerald-500/10 hover:text-emerald-400 transition cursor-pointer"
-                  >
-                    <HelpCircle className="h-4 w-4 text-emerald-400" />
-                    <span>Help & Support</span>
-                  </a>
-                  <div className="border-t border-slate-800/40 pt-1 mt-1">
-                    <button
-                      onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition cursor-pointer"
-                    >
-                      <LogOut className="h-4 w-4" />
-                      <span>Secure Logout</span>
-                    </button>
-                  </div>
+                    <LogOut className="h-4 w-4" />
+                    <span>Secure Logout</span>
+                  </button>
                 </div>
               )}
             </div>
@@ -465,7 +448,7 @@ export default function InstitutionPortalLayout({
         </header>
 
         {/* PORTAL MAIN CONTENT CANVAS */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 space-y-8 max-w-7xl w-full mx-auto animate-in fade-in duration-300">
+        <main className="p-4 sm:p-6 lg:p-8 space-y-6 sm:space-y-8 w-full max-w-[1700px] mx-auto animate-in fade-in duration-300">
           {children || <Outlet context={outletContext} />}
         </main>
       </div>

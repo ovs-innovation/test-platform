@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, NAV_MENUS } from '../../data/edvedumContent.js';
 
@@ -93,6 +93,7 @@ const DROPDOWN_STYLES = {
 
 export default function PublicHeader() {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname, search } = location;
   const [menuOpen, setMenuOpen] = useState(false);
@@ -162,8 +163,11 @@ export default function PublicHeader() {
                 <button
                   type="button"
                   onClick={() => {
+                    const r = String(user?.role || '').toLowerCase();
+                    const target = r === 'admin' ? '/admin-login' : r.includes('institution') || r.includes('school') ? '/institution-login' : '/student-login';
                     setOpenMenu(null);
                     logout();
+                    navigate(target, { replace: true });
                   }}
                   className="text-white/85 hover:text-white transition-colors"
                 >

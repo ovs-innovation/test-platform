@@ -78,6 +78,7 @@ export default function SchoolsB2B() {
   const [heroRememberMe, setHeroRememberMe] = useState(false);
   const [heroSubmitting, setHeroSubmitting] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [heroReadOnly, setHeroReadOnly] = useState(true);
 
   // Dashboard modal states
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -346,6 +347,12 @@ export default function SchoolsB2B() {
       return;
     }
 
+    if (heroRememberMe) {
+      try { localStorage.setItem('edvedum_remembered_institution_id', input); } catch (_) {}
+    } else {
+      try { localStorage.removeItem('edvedum_remembered_institution_id'); } catch (_) {}
+    }
+
     setHeroSubmitting(true);
 
     try {
@@ -596,26 +603,26 @@ export default function SchoolsB2B() {
                   {/* Dark Translucent Neo-Glass Card Frame */}
                   <div
                     id="institution-login"
-                    className="w-full max-w-[440px] rounded-[24px] border border-[#38BDF8]/25 bg-gradient-to-b from-[#0F213D]/95 via-[#0B1A32]/98 to-[#071224]/98 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] text-white overflow-hidden scroll-mt-32 relative z-10 transition-all duration-300"
+                    className="w-full max-w-[390px] rounded-[20px] border border-[#38BDF8]/25 bg-gradient-to-b from-[#0F213D]/95 via-[#0B1A32]/98 to-[#071224]/98 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] text-white overflow-hidden scroll-mt-32 relative z-10 transition-all duration-300"
                   >
                     {/* Top Accent Gradient Line */}
                     <div className="h-[2px] w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-80" />
 
                     {/* Header Area */}
-                    <div className="bg-white/[0.02] px-5 sm:px-6 py-4 sm:py-5 border-b border-white/10 space-y-2">
+                    <div className="bg-white/[0.02] px-4 sm:px-5 py-3.5 border-b border-white/10 space-y-1.5">
                       <div className="flex items-center justify-between">
                         {/* Gradient Icon Container */}
-                        <div className="h-10 w-10 rounded-2xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-md">
-                          <ShieldCheck className="h-5 w-5" />
+                        <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-md">
+                          <ShieldCheck className="h-4 w-4" />
                         </div>
                         {/* Partner Access Badge */}
-                        <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
+                        <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
                           Partner Access
                         </span>
                       </div>
 
                       <div className="space-y-0.5">
-                        <h3 className="text-xl sm:text-[26px] font-extrabold text-white tracking-tight leading-snug">
+                        <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-snug">
                           Institution Portal Login
                         </h3>
                         <p className="text-xs text-slate-300 leading-snug">
@@ -625,7 +632,7 @@ export default function SchoolsB2B() {
                     </div>
 
                     {/* Form Body Area */}
-                    <div className="px-5 sm:px-6 py-4 sm:py-5 space-y-3.5">
+                    <div className="px-4 sm:px-5 py-3.5 sm:py-4 space-y-3">
                       
                       {/* Error Message Box */}
                       {loginError && (
@@ -650,10 +657,13 @@ export default function SchoolsB2B() {
                             <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
                             <input
                               id="hero-login-id"
-                              name="institution_login_id_no_fill"
+                              name="institution_email"
                               type="text"
                               required
-                              autoComplete="off"
+                              readOnly={heroReadOnly}
+                              onFocus={() => setHeroReadOnly(false)}
+                              onClick={() => setHeroReadOnly(false)}
+                              autoComplete="username"
                               placeholder="Enter institution ID or registered email"
                               value={loginId}
                               onChange={(e) => setLoginId(e.target.value)}
@@ -676,10 +686,13 @@ export default function SchoolsB2B() {
                             <Key className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
                             <input
                               id="hero-login-pass"
-                              name="institution_login_pass_no_fill"
+                              name="institution_password"
                               type={showHeroPassword ? 'text' : 'password'}
                               required
-                              autoComplete="new-password"
+                              readOnly={heroReadOnly}
+                              onFocus={() => setHeroReadOnly(false)}
+                              onClick={() => setHeroReadOnly(false)}
+                              autoComplete="current-password"
                               placeholder="Enter your password"
                               value={loginPassword}
                               onChange={(e) => setLoginPassword(e.target.value)}
