@@ -25,6 +25,21 @@ export const authenticate = async (req, _res, next) => {
 
   try {
     const decoded = verifyToken(token);
+    if (!decoded) {
+      return next(ApiError.unauthorized('Invalid or expired token'));
+    }
+
+    if (decoded.role === 'institution_admin' || decoded.role === 'institution') {
+      req.user = {
+        id: decoded.sub,
+        role: 'institution_admin',
+        institution_id: Number(decoded.institution_id || 1),
+        email: decoded.email || 'institution@edvedum.com',
+        name: decoded.name || 'Institution Admin',
+      };
+      return next();
+    }
+
     const subNum = Number(decoded?.sub);
     const isNumericId = !isNaN(subNum) && Number.isInteger(subNum) && !String(decoded.sub).startsWith('inst_');
 
@@ -41,7 +56,7 @@ export const authenticate = async (req, _res, next) => {
     const userRes = await query('SELECT id, role, email, name, is_blocked FROM users WHERE id = $1', [subNum]);
     if (userRes.rowCount === 0) {
       req.user = {
-        id: 999999,
+        id: subNum,
         role: decoded.role || 'candidate',
         email: decoded.email || 'student@institution.edu',
         name: decoded.name || 'Institutional Student',

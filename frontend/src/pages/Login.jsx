@@ -21,9 +21,10 @@ export default function Login() {
     setError('');
     try {
       const user = await login(form);
-      toast.success(`Welcome back, ${user.name.split(' ')[0]}!`);
+      toast.success(`Welcome back, ${user.name ? user.name.split(' ')[0] : 'Admin'}!`);
       const dest = location.state?.from?.pathname;
-      navigate(dest || '/admin', { replace: true });
+      const defaultDest = user.redirectTo || (user.role === 'institution_admin' ? '/for-schools' : '/admin');
+      navigate(dest || defaultDest, { replace: true });
     } catch (err) {
       setError(err.message || 'Login failed');
     } finally {

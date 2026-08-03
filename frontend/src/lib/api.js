@@ -64,12 +64,20 @@ api.interceptors.response.use(
       const onAuthPage =
         path.startsWith('/student-login') ||
         path.startsWith('/admin-login') ||
+        path.startsWith('/institution-login') ||
+        path.startsWith('/for-schools') ||
+        path.startsWith('/for-institutions') ||
         path.startsWith('/signup') ||
         path.startsWith('/invite/');
 
       if (!onAuthPage && !sessionRedirecting) {
         sessionRedirecting = true;
-        window.location.replace(path.startsWith('/admin') ? '/admin-login' : '/student-login');
+        const targetLogin = path.startsWith('/admin')
+          ? '/admin-login'
+          : path.startsWith('/institution') || path.startsWith('/for-') || path.startsWith('/school')
+          ? '/for-schools'
+          : '/student-login';
+        window.location.replace(targetLogin);
       }
     }
 

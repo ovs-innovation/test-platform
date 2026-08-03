@@ -19,6 +19,8 @@ const poolConfig = env.databaseUrl
       max: 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10000,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },
     }
   : {
@@ -30,6 +32,8 @@ const poolConfig = env.databaseUrl
       max: 10,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 10000,
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10000,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },
     };
 
@@ -43,7 +47,7 @@ pool.on('error', (err) => {
 /**
  * Run a parameterized query with safe retry for transient DB connection drops.
  */
-export const query = async (text, params, retries = 2) => {
+export const query = async (text, params, retries = 3) => {
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       return await pool.query(text, params);
@@ -54,12 +58,20 @@ export const query = async (text, params, retries = 2) => {
           err.code === 'ETIMEDOUT' ||
           err.code === 'ECONNRESET' ||
           err.code === '57P01' ||
-          (err.message && (err.message.includes('getaddrinfo') || err.message.includes('connection terminated'))));
+          err.code === '08006' ||
+          err.code === '08003' ||
+          err.code === '08001' ||
+          (err.message &&
+            (err.message.includes('getaddrinfo') ||
+             err.message.includes('connection terminated') ||
+             err.message.includes('Connection terminated unexpectedly') ||
+             err.message.includes('SSL') ||
+             err.message.includes('Client has encountered a connection error'))));
 
       if (isTransient && attempt < retries) {
         // eslint-disable-next-line no-console
         console.warn(`[db] Retrying transient query failure (attempt ${attempt + 1}/${retries})...`);
-        await new Promise((resolve) => setTimeout(resolve, 250 * (attempt + 1)));
+        await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
         continue;
       }
       throw err;

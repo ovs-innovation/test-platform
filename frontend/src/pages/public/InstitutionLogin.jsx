@@ -50,16 +50,25 @@ export default function InstitutionLogin() {
     try {
       // 1. Attempt backend institution admin login
       try {
-        const res = await institutionDashboardService.login({ email: input, institutionId: input, password: pass });
+        const res = await institutionDashboardService.login({ email: input, identifier: input, institutionId: input, code: input, schoolId: input, password: pass });
         if (res?.token) {
+          const instObj = res.institution || {
+            id: res.user?.institution_id || 1,
+            name: res.user?.institution_name || 'Partner Institution',
+            schoolId: input.toUpperCase(),
+            email: res.user?.email || input,
+          };
           localStorage.setItem('token', res.token);
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(res.institution));
-          toast.success(`Welcome back, ${res.institution.name}!`);
-          navigate(`/institution/${res.institution.id}/dashboard`, { replace: true });
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
+          localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
+          toast.success(`Welcome back, ${instObj.name}!`);
+          navigate('/for-schools', { replace: true });
           return;
         }
       } catch (backendErr) {
-        // Fallback to local store or standard login if backend endpoint error
+        if (backendErr?.status === 401 || backendErr?.status === 400) {
+          throw new Error(backendErr.message || 'Invalid Institution ID or Password. Please check your credentials.');
+        }
       }
 
       // 2. Check local multi-tenant institution store fallback

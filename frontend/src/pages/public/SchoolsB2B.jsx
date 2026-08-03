@@ -49,6 +49,7 @@ import {
   addStudentToSchool,
   submitSchoolDemoLead
 } from '../../lib/schoolStore.js';
+import { institutionDashboardService } from '../../lib/services.js';
 import {
   B2B_PACKAGES,
   B2B_FAQS,
@@ -331,7 +332,7 @@ export default function SchoolsB2B() {
   };
 
   // Handle Hero Institution Login Form Submit
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e?.preventDefault();
     setLoginError('');
 
@@ -346,6 +347,48 @@ export default function SchoolsB2B() {
     setHeroSubmitting(true);
 
     try {
+      // 1. Attempt backend institution login
+      try {
+        const res = await institutionDashboardService.login({
+          identifier: input,
+          email: input,
+          institutionId: input,
+          code: input,
+          schoolId: input,
+          password: pass,
+        });
+
+        if (res?.token) {
+          const instObj = {
+            id: res.institution?.id || res.user?.institution_id || 1,
+            name: res.institution?.name || res.user?.institution_name || 'Partner Institution',
+            schoolId: res.institution?.code || input.toUpperCase(),
+            email: res.institution?.email || res.user?.email || input,
+            logoBadge: res.institution?.code?.substring(0, 3).toUpperCase() || input.substring(0, 3).toUpperCase(),
+            tagline: res.institution?.tagline || 'Premier Educational Institution',
+            totalLicenses: res.institution?.totalLicenses || 200,
+            activeStudents: res.institution?.activeStudents || 0,
+            avgProgress: res.institution?.avgProgress || 0,
+            testsAttempted: res.institution?.testsAttempted || 0,
+            activeCount: res.institution?.activeCount || 0,
+            inactiveCount: res.institution?.inactiveCount || 0,
+            students: res.institution?.students || [],
+          };
+          localStorage.setItem('token', res.token);
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
+          localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
+          setActiveSchool(instObj);
+          setLoginError('');
+          navigate(`/institution/${instObj.id}/dashboard`, { replace: true });
+          return;
+        }
+      } catch (backendErr) {
+        if (backendErr?.status === 401 || backendErr?.status === 400) {
+          throw new Error(backendErr.message || 'Invalid Institution ID or Password. Please check your credentials or contact support.');
+        }
+      }
+
+      // 2. Fallback to local mock school store for offline demo
       const schoolsList = getPartnerSchools();
       const matched = schoolsList.find(
         (s) => (s.schoolId.toLowerCase() === input || s.email.toLowerCase() === input) && s.password === pass
@@ -355,6 +398,7 @@ export default function SchoolsB2B() {
         setActiveSchool(matched);
         try {
           localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         } catch (e) {}
         setLoginError('');
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -362,7 +406,7 @@ export default function SchoolsB2B() {
         setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');
       }
     } catch (err) {
-      setLoginError(err.message || 'Invalid Institution ID or Password.');
+      setLoginError(err.message || 'Invalid Institution ID or Password. Please check your credentials or contact support.');
     } finally {
       setHeroSubmitting(false);
     }
@@ -483,7 +527,7 @@ export default function SchoolsB2B() {
                   />
                 ) : null}
                 <div className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl ${activeSchool.logoBg || 'bg-blue-600'} text-white font-black text-xl sm:text-2xl shadow-xl border border-white/20 shrink-0 ${activeSchool.logoUrl ? 'hidden' : 'flex'}`}>
-                  {activeSchool.logoBadge || activeSchool.name.substring(0, 3).toUpperCase()}
+                  {activeSchool.logoBadge || activeSchool.name?.substring(0, 3)?.toUpperCase() || 'INS'}
                 </div>
 
                 <div className="space-y-1">
@@ -493,14 +537,14 @@ export default function SchoolsB2B() {
                       INSTITUTION PORTAL
                     </span>
                     <span className="text-xs font-mono font-bold text-slate-400">
-                      ID: {activeSchool.schoolId}
+                      ID: {activeSchool.schoolId || activeSchool.id}
                     </span>
                   </div>
                   <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                    {activeSchool.name}
+                    {activeSchool.name || 'Partner Institution'}
                   </h1>
                   <p className="text-xs sm:text-sm text-slate-400 font-medium">
-                    {activeSchool.tagline} • <span className="text-emerald-400 font-bold">{activeSchool.totalLicenses} Total Licenses</span>
+                    {activeSchool.tagline || 'Premier Educational Institution'} • <span className="text-emerald-400 font-bold">{activeSchool.totalLicenses || 200} Total Licenses</span>
                   </p>
                 </div>
               </div>
@@ -536,9 +580,9 @@ export default function SchoolsB2B() {
                   <Users className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-white">{activeSchool.activeStudents} <span className="text-xs font-normal text-slate-400">/ {activeSchool.totalLicenses}</span></p>
+              <p className="text-2xl sm:text-3xl font-black text-white">{(activeSchool?.activeStudents ?? 0)} <span className="text-xs font-normal text-slate-400">/ {(activeSchool?.totalLicenses ?? 200)}</span></p>
               <div className="mt-2 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(activeSchool.activeStudents / activeSchool.totalLicenses) * 100}%` }} />
+                <div className="h-full bg-blue-500 rounded-full" style={{ width: `${(((activeSchool?.activeStudents ?? 0) / (activeSchool?.totalLicenses || 200)) * 100)}%` }} />
               </div>
             </div>
 
@@ -550,7 +594,7 @@ export default function SchoolsB2B() {
                   <TrendingUp className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-emerald-400">{activeSchool.avgProgress}%</p>
+              <p className="text-2xl sm:text-3xl font-black text-emerald-400">{(activeSchool?.avgProgress ?? 0)}%</p>
               <p className="text-[11px] font-bold text-slate-400 mt-2">Overall Syllabus Coverage</p>
             </div>
 
@@ -562,7 +606,7 @@ export default function SchoolsB2B() {
                   <FileText className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-white">{activeSchool.testsAttempted.toLocaleString()}</p>
+              <p className="text-2xl sm:text-3xl font-black text-white">{(activeSchool?.testsAttempted ?? 0).toLocaleString()}</p>
               <p className="text-[11px] font-bold text-slate-400 mt-2">NTA Pattern CBT Tests</p>
             </div>
 
@@ -574,8 +618,8 @@ export default function SchoolsB2B() {
                   <UserCheck className="h-4 w-4" />
                 </div>
               </div>
-              <p className="text-2xl sm:text-3xl font-black text-cyan-400">{activeSchool.activeCount} <span className="text-xs font-normal text-slate-400">Active</span></p>
-              <p className="text-[11px] font-bold text-rose-400 mt-2">{activeSchool.inactiveCount} Inactive (30+ days)</p>
+              <p className="text-2xl sm:text-3xl font-black text-cyan-400">{(activeSchool?.activeCount ?? 0)} <span className="text-xs font-normal text-slate-400">Active</span></p>
+              <p className="text-[11px] font-bold text-rose-400 mt-2">{(activeSchool?.inactiveCount ?? 0)} Inactive (30+ days)</p>
             </div>
           </div>
 
