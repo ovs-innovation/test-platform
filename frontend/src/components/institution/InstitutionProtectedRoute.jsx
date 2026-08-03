@@ -1,40 +1,57 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
+import { tokenStore } from '../../lib/api.js';
+
+export function isInstitutionRole(role) {
+  if (!role) return false;
+  const r = String(role).trim().toLowerCase();
+  return [
+    'institution_admin',
+    'center_admin',
+    'school_admin',
+    'partner_admin',
+    'institution',
+    'school',
+    'admin',
+  ].includes(r);
+}
 
 export default function InstitutionProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // 1. Check local session storage for active institution login
-  let hasLocalInstSession = false;
+  // 1. Check local session storage for active institution token or session
+  let activeInstitution = null;
+  const token = tokenStore.get();
   try {
-    const token = localStorage.getItem('token');
-    const instData = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
-    if (token && instData) {
-      hasLocalInstSession = true;
-    } else if (instData) {
-      hasLocalInstSession = true;
-    }
+    const raw = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
+    if (raw) activeInstitution = JSON.parse(raw);
   } catch (_) {}
 
-  // 2. Role validation if user object exists in AuthContext
-  const isInstRole =
-    user?.role === 'institution_admin' ||
-    user?.role === 'institution' ||
-    user?.role === 'school' ||
-    user?.role === 'admin'; // Platform admin permitted for inspection
+  const hasInstSession = !!(token || activeInstitution);
 
-  if (loading && !hasLocalInstSession) {
-    return null; // Wait for initial auth restoration
+  // 2. Validate role if user object exists in AuthContext
+  const isAuthorizedRole = isInstitutionRole(user?.role);
+
+  // 3. Hydration State: Do NOT redirect while AuthContext is restoring session
+  if (loading && hasInstSession) {
+    return (
+      <div className="min-h-screen bg-[#071126] text-white flex flex-col items-center justify-center space-y-4">
+        <div className="h-10 w-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+        <p className="text-xs font-semibold tracking-wider text-cyan-300 uppercase">
+          Verifying Institution Session...
+        </p>
+      </div>
+    );
   }
 
-  if (!hasLocalInstSession && user && !isInstRole) {
-    // If authenticated as a regular candidate/student, block access to institution portal
+  // 4. Block candidates/students attempting to open institution portal
+  if (!hasInstSession && user && !isAuthorizedRole) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  if (!hasLocalInstSession && !user) {
-    // Unauthenticated user attempting to access protected institution route
+  // 5. Unauthenticated access: Redirect to Center Login (/institution-login) ONLY when hydration is complete and no session exists
+  if (!loading && !hasInstSession && (!user || !isAuthorizedRole)) {
     return <Navigate to="/institution-login" state={{ from: location }} replace />;
   }
 

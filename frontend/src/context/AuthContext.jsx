@@ -134,7 +134,16 @@ export function AuthProvider({ children }) {
     if (!role) return '/dashboard';
     const r = String(role).toLowerCase();
     if (r === 'admin') return '/admin';
-    if (r === 'institution' || r === 'school' || r === 'institution_admin') return '/for-schools';
+    if (
+      r === 'institution' ||
+      r === 'school' ||
+      r === 'institution_admin' ||
+      r === 'center_admin' ||
+      r === 'school_admin' ||
+      r === 'partner_admin'
+    ) {
+      return '/institution/dashboard';
+    }
     return '/dashboard';
   }, []);
 

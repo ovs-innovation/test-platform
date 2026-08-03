@@ -4,15 +4,41 @@ const baseURL = import.meta.env.VITE_API_URL || '/api';
 
 const api = axios.create({ baseURL });
 
-const TOKEN_KEY = 'assesspro_token';
+const TOKEN_KEYS = ['assesspro_token', 'token', 'institutionToken', 'edvedum_institution_token'];
 
 export const tokenStore = {
-  get: () => localStorage.getItem(TOKEN_KEY),
-  set: (token) => localStorage.setItem(TOKEN_KEY, token),
-  clear: () => localStorage.removeItem(TOKEN_KEY),
+  get: () => {
+    for (const key of TOKEN_KEYS) {
+      const val = localStorage.getItem(key);
+      if (val) return val;
+    }
+    try {
+      const raw = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed?.token) return parsed.token;
+      }
+    } catch (_) {}
+    return null;
+  },
+  set: (token) => {
+    if (!token) return;
+    localStorage.setItem('assesspro_token', token);
+    localStorage.setItem('token', token);
+    localStorage.setItem('institutionToken', token);
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  },
+  clear: () => {
+    TOKEN_KEYS.forEach((key) => {
+      try { localStorage.removeItem(key); } catch (_) {}
+    });
+    try { localStorage.removeItem('edvedum_active_institution'); } catch (_) {}
+    try { localStorage.removeItem('edvedum_active_school'); } catch (_) {}
+    delete api.defaults.headers.common['Authorization'];
+  },
 };
 
-// Attach JWT to every request.
+// Attach JWT to every request
 api.interceptors.request.use((config) => {
   const token = tokenStore.get();
   if (token) {
@@ -21,7 +47,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Normalize error messages and handle global 401s without crashing on server/network 503s
+// Global response interceptor: Normalize errors & handle genuine 401s without crashing on server/network 503s
 let sessionRedirecting = false;
 
 api.interceptors.response.use(
@@ -29,7 +55,7 @@ api.interceptors.response.use(
   (error) => {
     const status = error.response?.status;
     const url = error.config?.url || '';
-    const isAuthAttempt = /\/auth\/(login|student-login|register|otp|me)(\/|$)/.test(url);
+    const isAuthAttempt = /\/auth\/(login|student-login|register|otp|me)(\/|$)/.test(url) || url.includes('/institution/login');
 
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
@@ -50,7 +76,7 @@ api.interceptors.response.use(
       message = error.message;
     }
 
-    // Never logout or redirect on 500/503/server or network errors!
+    // ONLY logout or redirect on genuine HTTP 401 (Unauthorized), NEVER on 500/503 or network errors!
     if (status === 401 && !isAuthAttempt) {
       const activeToken = tokenStore.get();
       if (activeToken && (activeToken.startsWith('mock_student_token_') || activeToken.startsWith('mock_token_'))) {
@@ -65,8 +91,6 @@ api.interceptors.response.use(
         path.startsWith('/student-login') ||
         path.startsWith('/admin-login') ||
         path.startsWith('/institution-login') ||
-        path.startsWith('/for-schools') ||
-        path.startsWith('/for-institutions') ||
         path.startsWith('/signup') ||
         path.startsWith('/invite/');
 
@@ -74,8 +98,8 @@ api.interceptors.response.use(
         sessionRedirecting = true;
         const targetLogin = path.startsWith('/admin')
           ? '/admin-login'
-          : path.startsWith('/institution') || path.startsWith('/for-') || path.startsWith('/school')
-          ? '/for-schools'
+          : path.startsWith('/institution') || path.startsWith('/school')
+          ? '/institution-login'
           : '/student-login';
         window.location.replace(targetLogin);
       }

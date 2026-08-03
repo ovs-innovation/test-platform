@@ -374,12 +374,12 @@ export default function SchoolsB2B() {
             inactiveCount: res.institution?.inactiveCount || 0,
             students: res.institution?.students || [],
           };
-          localStorage.setItem('token', res.token);
+          tokenStore.set(res.token);
           localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
           localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
           setActiveSchool(instObj);
           setLoginError('');
-          navigate(`/institution/${instObj.id}/dashboard`, { replace: true });
+          navigate('/institution/dashboard', { replace: true });
           return;
         }
       } catch (backendErr) {
@@ -395,10 +395,9 @@ export default function SchoolsB2B() {
       );
 
       if (matched) {
-        try {
-          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
-        } catch (e) {}
+        tokenStore.set(`token_inst_${matched.schoolId}`);
+        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         setLoginError('');
         navigate('/institution/dashboard', { replace: true });
         return;
@@ -413,10 +412,8 @@ export default function SchoolsB2B() {
   };
 
   const handleLogout = () => {
+    tokenStore.clear();
     setActiveSchool(null);
-    try {
-      localStorage.removeItem('edvedum_active_school');
-    } catch (e) {}
     setLoginId('');
     setLoginPassword('');
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -503,13 +500,22 @@ export default function SchoolsB2B() {
             <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0" />
             <span className="truncate">Active Session: <strong className="text-cyan-400">{activeSchool.name}</strong></span>
           </div>
-          <Link
-            to="/institution/dashboard"
-            className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-1.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition shrink-0"
-          >
-            <span>Access Institution Portal</span>
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              to="/institution/dashboard"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-3.5 py-1.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition"
+            >
+              <span>Continue to Institution Portal</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1 rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-bold text-slate-300 hover:bg-slate-700 hover:text-white transition cursor-pointer"
+            >
+              <LogOut className="h-3.5 w-3.5 text-rose-400" />
+              <span>Sign Out</span>
+            </button>
+          </div>
         </div>
       )}
 
