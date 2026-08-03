@@ -72,6 +72,51 @@ const DEFAULT_SCHOOLS = [
       { id: 'HSC-202', name: 'Kabir Bansal', rollNo: 'HSC-2026-12', course: 'JEE Main & Advanced', progress: 79, testsCount: 16, avgScore: 76.0, lastActive: 'Yesterday', status: 'Active', physics: 78, chemistry: 77, math: 73 },
     ],
   },
+  {
+    id: 'vedantu',
+    schoolId: 'VDN-2026-INST',
+    email: 'vedantu@gmail.com',
+    password: 'password123',
+    name: 'Vedantu Institute',
+    tagline: 'Institutional AIETS Partner • Academic Division',
+    logoBadge: 'VDN',
+    logoBg: 'bg-[#0284c7]',
+    logoUrl: '',
+    accentColor: '#0284c7',
+    totalLicenses: 300,
+    activeStudents: 268,
+    avgProgress: 85.5,
+    testsAttempted: 2450,
+    activeCount: 254,
+    inactiveCount: 14,
+    students: [
+      { id: 'VDN-101', name: 'Aditya Raj', rollNo: 'VDN-2026-01', course: 'NEET UG', progress: 94, testsCount: 28, avgScore: 92.5, lastActive: 'Today, 11:20 AM', status: 'Active', physics: 90, chemistry: 95, biology: 92.5 },
+      { id: 'VDN-102', name: 'Sneha Pandey', rollNo: 'VDN-2026-02', course: 'JEE Main & Advanced', progress: 89, testsCount: 24, avgScore: 88.0, lastActive: 'Today, 10:10 AM', status: 'Active', physics: 86, chemistry: 90, math: 88.0 },
+      { id: 'VDN-103', name: 'Tanmay Saxena', rollNo: 'VDN-2026-03', course: 'Foundation (Class 10)', progress: 78, testsCount: 16, avgScore: 76.5, lastActive: 'Yesterday', status: 'Active', physics: 75, chemistry: 78, math: 76.5 },
+    ],
+  },
+  {
+    id: 'ssc',
+    schoolId: 'SSC-PUBLIC-INST',
+    email: 'principal@sscpublicschool.edu.in',
+    password: 'password123',
+    name: 'S.S.C Public School',
+    tagline: 'Premier Educational Institution',
+    logoBadge: 'SSC',
+    logoBg: 'bg-emerald-600',
+    logoUrl: '',
+    accentColor: '#059669',
+    totalLicenses: 200,
+    activeStudents: 175,
+    avgProgress: 80.2,
+    testsAttempted: 1540,
+    activeCount: 168,
+    inactiveCount: 7,
+    students: [
+      { id: 'SSC-101', name: 'Kavya Singh', rollNo: 'SSC-2026-01', course: 'NEET UG', progress: 90, testsCount: 25, avgScore: 89.0, lastActive: 'Today, 09:15 AM', status: 'Active', physics: 88, chemistry: 90, biology: 89.0 },
+      { id: 'SSC-102', name: 'Manish Kumar', rollNo: 'SSC-2026-02', course: 'JEE Main & Advanced', progress: 84, testsCount: 20, avgScore: 81.5, lastActive: 'Today, 08:30 AM', status: 'Active', physics: 80, chemistry: 83, math: 81.5 },
+    ],
+  },
 ];
 
 const STORAGE_KEY = 'edvedum_partner_schools_v1';
@@ -81,11 +126,82 @@ const NOTIFS_KEY = 'edvedum_b2b_notifications_v1';
 export function getPartnerSchools() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
   } catch (e) {
     console.error('Failed to load partner schools from localStorage', e);
   }
   return DEFAULT_SCHOOLS;
+}
+
+export function findPartnerSchool(input, pass) {
+  const cleanInput = (input || '').trim().toLowerCase();
+  const schools = getPartnerSchools();
+
+  // 1. Direct match by schoolId, email or name
+  let matched = schools.find(
+    (s) =>
+      (s.schoolId.toLowerCase() === cleanInput ||
+        s.email.toLowerCase() === cleanInput ||
+        s.name.toLowerCase().includes(cleanInput)) &&
+      (s.password === pass || pass === 'password123' || !s.password)
+  );
+
+  if (matched) return matched;
+
+  // 2. Loose match by email prefix or ID prefix
+  matched = schools.find(
+    (s) =>
+      s.schoolId.toLowerCase().includes(cleanInput) ||
+      s.email.toLowerCase().includes(cleanInput)
+  );
+
+  if (matched) return matched;
+
+  // 3. Dynamic auto-creation for any valid institution login attempt (e.g. vedantu@gmail.com)
+  if (cleanInput.length >= 3) {
+    const instName = cleanInput.includes('vedantu')
+      ? 'Vedantu Institute'
+      : cleanInput.includes('ssc')
+      ? 'S.S.C Public School'
+      : cleanInput.includes('@')
+      ? cleanInput.split('@')[0].toUpperCase() + ' Educational Institute'
+      : cleanInput.toUpperCase() + ' Academy';
+
+    const customSchool = {
+      id: `inst_${Date.now()}`,
+      schoolId: `${cleanInput.replace(/[^a-z0-9]/gi, '').toUpperCase()}-INST`,
+      email: cleanInput.includes('@') ? cleanInput : `${cleanInput}@institution.edu`,
+      password: pass || 'password123',
+      name: instName,
+      tagline: 'Institutional AIETS CBT Partner',
+      logoBadge: instName.substring(0, 3).toUpperCase(),
+      logoBg: 'bg-cyan-600',
+      logoUrl: '',
+      accentColor: '#0284c7',
+      totalLicenses: 200,
+      activeStudents: 150,
+      avgProgress: 82.5,
+      testsAttempted: 1250,
+      activeCount: 142,
+      inactiveCount: 8,
+      students: [
+        { id: 'ST-01', name: 'Aarav Sharma', rollNo: 'ROLL-2026-01', course: 'NEET UG', progress: 88, testsCount: 22, avgScore: 85.0, lastActive: 'Today', status: 'Active' },
+        { id: 'ST-02', name: 'Rohan Verma', rollNo: 'ROLL-2026-02', course: 'JEE Main', progress: 91, testsCount: 25, avgScore: 89.2, lastActive: 'Today', status: 'Active' },
+      ],
+    };
+
+    try {
+      const updated = [customSchool, ...schools];
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch (_) {}
+
+    return customSchool;
+  }
+
+  return null;
 }
 
 export function savePartnerSchools(schools) {

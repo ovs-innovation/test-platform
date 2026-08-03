@@ -45,11 +45,13 @@ import {
 import { Spinner } from '../../components/ui.jsx';
 import {
   getPartnerSchools,
+  findPartnerSchool,
   savePartnerSchools,
   addStudentToSchool,
   submitSchoolDemoLead
 } from '../../lib/schoolStore.js';
 import { institutionDashboardService } from '../../lib/services.js';
+import { tokenStore } from '../../lib/api.js';
 import {
   B2B_PACKAGES,
   B2B_FAQS,
@@ -388,16 +390,14 @@ export default function SchoolsB2B() {
         }
       }
 
-      // 2. Fallback to local mock school store for offline demo
-      const schoolsList = getPartnerSchools();
-      const matched = schoolsList.find(
-        (s) => (s.schoolId.toLowerCase() === input || s.email.toLowerCase() === input) && s.password === pass
-      );
+      // 2. Fallback to multi-tenant school store for offline demo
+      const matched = findPartnerSchool(input, pass);
 
       if (matched) {
         tokenStore.set(`token_inst_${matched.schoolId}`);
         localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
         localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+        setActiveSchool(matched);
         setLoginError('');
         navigate('/institution/dashboard', { replace: true });
         return;

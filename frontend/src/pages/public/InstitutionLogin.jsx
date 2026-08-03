@@ -13,7 +13,7 @@ import {
 import { Spinner, PasswordInput } from '../../components/ui.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
-import { getPartnerSchools } from '../../lib/schoolStore.js';
+import { getPartnerSchools, findPartnerSchool } from '../../lib/schoolStore.js';
 import { institutionDashboardService } from '../../lib/services.js';
 import { tokenStore } from '../../lib/api.js';
 
@@ -92,11 +92,8 @@ export default function InstitutionLogin() {
         }
       }
 
-      // 2. Check local multi-tenant institution store fallback
-      const schoolsList = getPartnerSchools();
-      const matched = schoolsList.find(
-        (s) => (s.schoolId.toLowerCase() === input || s.email.toLowerCase() === input) && s.password === pass
-      );
+      // 2. Check multi-tenant institution store fallback
+      const matched = findPartnerSchool(input, pass);
 
       if (matched) {
         tokenStore.set(`token_inst_${matched.schoolId}`);
