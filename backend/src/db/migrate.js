@@ -68,6 +68,10 @@ const run = async () => {
       const migration22 = fs.readFileSync(path.join(__dirname, 'migration_v22.sql'), 'utf-8');
       await pool.query(migration22);
     }
+    if (fs.existsSync(path.join(__dirname, 'migration_v23.sql'))) {
+      const migration23 = fs.readFileSync(path.join(__dirname, 'migration_v23.sql'), 'utf-8');
+      await pool.query(migration23);
+    }
     // eslint-disable-next-line no-console
     console.log('[migrate] Database migration successful.');
   } catch (err) {

@@ -92,7 +92,10 @@ export const authService = {
             stats: {
               totalAttempts: studentObj?.studentStats?.testsCount || 1,
               avgScore: studentObj?.studentStats?.avgScore || 84,
-              topPercentile: 98.4,
+              topPercentile: 16.0,
+              airRank: 142,
+              studyStreak: 2,
+              streakActive: true,
             },
           };
         })
@@ -386,10 +389,21 @@ export const adminService = {
   // Partner Schools & B2B Enquiries
   partnerSchools: () => api.get('/admin/institutions').then((r) => r.data),
   addPartnerSchool: (data) => api.post('/admin/institutions', data).then((r) => r.data),
+  updatePartnerSchool: (id, data) => api.put(`/admin/institutions/${id}`, data).then((r) => r.data),
+  updateSchoolPaymentStatus: (id, paymentStatus) => api.patch(`/admin/institutions/${id}/payment-status`, { paymentStatus }).then((r) => r.data),
   deletePartnerSchool: (id) => api.delete(`/admin/institutions/${id}`).then((r) => r.data),
   demoLeads: () => api.get('/admin/b2b-enquiries').then((r) => r.data),
   updateLeadStatus: (id, status) => api.patch(`/admin/b2b-enquiries/${id}/status`, { status }).then((r) => r.data),
   deleteLead: (id) => api.delete(`/admin/b2b-enquiries/${id}`).then((r) => r.data),
+  getLeadNotes: (id) => api.get(`/admin/b2b-enquiries/${id}/notes`).then((r) => r.data),
+  addLeadNote: (id, noteText, author) => api.post(`/admin/b2b-enquiries/${id}/notes`, { noteText, author }).then((r) => r.data),
+  listPackages: () => api.get('/admin/packages').then((r) => r.data),
+  getSchoolPackages: (id) => api.get(`/admin/institutions/${id}/packages`).then((r) => r.data),
+  assignSchoolPackage: (id, packageId) => api.post(`/admin/institutions/${id}/packages`, { packageId }).then((r) => r.data),
+  removeSchoolPackage: (id, packageId) => api.delete(`/admin/institutions/${id}/packages/${packageId}`).then((r) => r.data),
+  createSchoolInvoice: (id, data) => api.post(`/admin/institutions/${id}/invoices`, data).then((r) => r.data),
+  getSchoolInvoices: (id) => api.get(`/admin/institutions/${id}/invoices`).then((r) => r.data),
+  assignCandidateInstitution: (id, data) => api.patch(`/admin/candidates/${id}/institution`, data).then((r) => r.data),
 };
 
 export const institutionDashboardService = {

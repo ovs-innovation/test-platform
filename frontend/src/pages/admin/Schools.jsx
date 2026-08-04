@@ -23,11 +23,12 @@ import {
   Phone,
   Inbox,
   Check,
-  FileText
+  FileText,
+  Pencil,
+  Package
 } from 'lucide-react';
 
 import { Badge } from '../../components/ui.jsx';
-
 
 export default function Schools() {
   const navigate = useNavigate();
@@ -50,12 +51,32 @@ export default function Schools() {
   const [showPasswords, setShowPasswords] = useState({});
   const [copiedId, setCopiedId] = useState(null);
 
-  // Sync invoice defaults when modal opens
+  // Additional B2B Features State
+  const [editingSchool, setEditingSchool] = useState(null);
+  const [editFormData, setEditFormData] = useState({
+    name: '',
+    schoolId: '',
+    email: '',
+    password: '',
+    tagline: '',
+    logoBadge: '',
+    logoUrl: '',
+    totalLicenses: '200',
+    gstin: '',
+    customPrice: '1999',
+    paymentStatus: 'Paid',
+    accentColor: '#2563eb',
+  });
+  const [availablePackages, setAvailablePackages] = useState([]);
+  const [schoolPackages, setSchoolPackages] = useState([]);
+  const [selectedPackageToAssign, setSelectedPackageToAssign] = useState('');
+  const [storedInvoices, setStoredInvoices] = useState([]);
+
+  // Sync invoice defaults & stored invoices when modal opens
   useEffect(() => {
     if (selectedSchoolInvoice) {
       const defaultLic = selectedSchoolInvoice.totalLicenses || 200;
       setInvoiceLicenses(defaultLic);
-      // Auto apply volume tier pricing if custom rate is standard
       let defaultRate = 1999;
       if (defaultLic >= 1000) defaultRate = 999;
       else if (defaultLic >= 500) defaultRate = 1199;
@@ -63,12 +84,37 @@ export default function Schools() {
       setInvoiceCustomPrice(selectedSchoolInvoice.customPrice || defaultRate);
       setAppliedCoupon(null);
       setCouponCodeInput('');
+
+      // Fetch recorded invoices from backend DB
+      adminService.getSchoolInvoices(selectedSchoolInvoice.id)
+        .then((data) => setStoredInvoices(data.invoices || []))
+        .catch(() => setStoredInvoices([]));
     }
   }, [selectedSchoolInvoice]);
 
+  // Fetch live lead follow-up notes when a lead is selected
+  useEffect(() => {
+    if (selectedLead?.id) {
+      adminService.getLeadNotes(selectedLead.id)
+        .then((data) => {
+          setLeadNotes((prev) => ({ ...prev, [selectedLead.id]: data.notes || [] }));
+        })
+        .catch(() => {});
+    }
+  }, [selectedLead]);
+
+  // Fetch assigned school packages when editing a school
+  useEffect(() => {
+    if (editingSchool?.id) {
+      adminService.getSchoolPackages(editingSchool.id)
+        .then((data) => setSchoolPackages(data.packages || []))
+        .catch(() => setSchoolPackages([]));
+    }
+  }, [editingSchool]);
+
   // Lock body scroll when modal is open
   useEffect(() => {
-    if (showAddModal || selectedLead || selectedSchoolInvoice) {
+    if (showAddModal || selectedLead || selectedSchoolInvoice || editingSchool) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = '';
@@ -76,7 +122,7 @@ export default function Schools() {
     return () => {
       document.body.style.overflow = '';
     };
-  }, [showAddModal, selectedLead, selectedSchoolInvoice]);
+  }, [showAddModal, selectedLead, selectedSchoolInvoice, editingSchool]);
 
   // Form State for New School
   const [formData, setFormData] = useState({
@@ -88,6 +134,9 @@ export default function Schools() {
     logoBadge: '',
     logoUrl: '',
     totalLicenses: '200',
+    gstin: '',
+    customPrice: '1999',
+    paymentStatus: 'Paid',
     accentColor: '#2563eb',
     leadId: null,
   });
@@ -95,13 +144,15 @@ export default function Schools() {
   const loadAllData = async () => {
     setLoading(true);
     try {
-      const [schoolsData, leadsData] = await Promise.all([
+      const [schoolsData, leadsData, pkgsData] = await Promise.all([
         adminService.partnerSchools().catch(() => ({ institutions: [], stats: {} })),
         adminService.demoLeads().catch(() => ({ leads: [] })),
+        adminService.listPackages().catch(() => ({ packages: [] })),
       ]);
       setSchools(schoolsData.institutions || []);
       setStats(schoolsData.stats || {});
       setLeads(leadsData.leads || []);
+      setAvailablePackages(pkgsData.packages || []);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error('Failed to load partner schools live data:', err);
@@ -128,6 +179,98 @@ export default function Schools() {
       }
     }
   }, [leads, location.state]);
+
+  const handlePaymentStatusChange = async (schoolId, newStatus) => {
+    try {
+      await adminService.updateSchoolPaymentStatus(schoolId, newStatus);
+      setSchools((prev) => prev.map((s) => (s.id === schoolId ? { ...s, paymentStatus: newStatus } : s)));
+      toast?.success(`Payment status updated to "${newStatus}"`);
+    } catch (err) {
+      toast?.error(err.message || 'Failed to update payment status');
+    }
+  };
+
+  const handleOpenEditModal = (school) => {
+    setEditingSchool(school);
+    setEditFormData({
+      name: school.name || '',
+      schoolId: school.schoolId || '',
+      email: school.email || '',
+      password: school.password || '',
+      tagline: school.tagline || '',
+      logoBadge: school.logoBadge || '',
+      logoUrl: school.logoUrl || '',
+      totalLicenses: String(school.totalLicenses || 200),
+      gstin: school.gstin || '',
+      customPrice: String(school.customPrice || 1999),
+      paymentStatus: school.paymentStatus || 'Paid',
+      accentColor: school.accentColor || '#2563eb',
+    });
+  };
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault();
+    if (!editingSchool) return;
+    try {
+      const res = await adminService.updatePartnerSchool(editingSchool.id, editFormData);
+      toast?.success(res.message || 'Partner School updated successfully');
+      loadAllData();
+      setEditingSchool(null);
+    } catch (err) {
+      toast?.error(err.message || 'Failed to update partner school');
+    }
+  };
+
+  const handleAssignPackage = async () => {
+    if (!selectedPackageToAssign || !editingSchool?.id) return;
+    try {
+      await adminService.assignSchoolPackage(editingSchool.id, selectedPackageToAssign);
+      toast?.success('Test package assigned successfully');
+      const updated = await adminService.getSchoolPackages(editingSchool.id);
+      setSchoolPackages(updated.packages || []);
+      setSelectedPackageToAssign('');
+    } catch (err) {
+      toast?.error(err.message || 'Failed to assign package');
+    }
+  };
+
+  const handleRemovePackage = async (packageId) => {
+    if (!editingSchool?.id) return;
+    try {
+      await adminService.removeSchoolPackage(editingSchool.id, packageId);
+      toast?.success('Package association removed');
+      setSchoolPackages((prev) => prev.filter((p) => p.packageId !== packageId));
+    } catch (err) {
+      toast?.error(err.message || 'Failed to remove package');
+    }
+  };
+
+  const handleSaveNote = async () => {
+    if (!newNote.trim() || !selectedLead?.id) return;
+    try {
+      const res = await adminService.addLeadNote(selectedLead.id, newNote.trim(), 'Master Admin');
+      const added = res.note;
+      setLeadNotes((prev) => ({
+        ...prev,
+        [selectedLead.id]: [added, ...(prev[selectedLead.id] || [])],
+      }));
+      setNewNote('');
+      toast?.success('Follow-up note saved');
+    } catch (err) {
+      toast?.error(err.message || 'Failed to save note');
+    }
+  };
+
+  const handleSaveInvoiceToDb = async (invDetails) => {
+    if (!selectedSchoolInvoice?.id) return;
+    try {
+      const res = await adminService.createSchoolInvoice(selectedSchoolInvoice.id, invDetails);
+      toast?.success(res.message || 'Invoice recorded in system database');
+      setStoredInvoices((prev) => [res.invoice, ...prev]);
+    } catch (err) {
+      toast?.error(err.message || 'Failed to record invoice');
+    }
+  };
 
   const handleApproveLead = (lead) => {
     setFormData({
@@ -556,10 +699,7 @@ export default function Schools() {
                     <td className="py-4 px-4 min-w-[120px] whitespace-nowrap">
                       <select
                         value={school.paymentStatus || 'Paid'}
-                        onChange={(e) => {
-                          const updated = schools.map((s) => s.id === school.id ? { ...s, paymentStatus: e.target.value } : s);
-                          setSchools(updated);
-                        }}
+                        onChange={(e) => handlePaymentStatusChange(school.id, e.target.value)}
                         className={`rounded-lg border px-2.5 py-1 text-[11px] font-extrabold cursor-pointer focus:outline-none ${
                           (school.paymentStatus || 'Paid') === 'Paid'
                             ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/20 dark:text-emerald-300 dark:border-emerald-500/30'
@@ -574,15 +714,22 @@ export default function Schools() {
                       </select>
                     </td>
 
-
                     {/* Actions */}
                     <td className="py-4 px-4 text-right min-w-[180px] whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
                         <button
                           type="button"
+                          onClick={() => handleOpenEditModal(school)}
+                          className="p-1 rounded-lg text-slate-400 hover:bg-blue-50 hover:text-blue-600 dark:hover:bg-blue-500/10 dark:hover:text-blue-400 transition cursor-pointer"
+                          title="Edit Partner School & Package Configuration"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </button>
+                        <button
+                          type="button"
                           onClick={() => setSelectedSchoolInvoice(school)}
                           className="inline-flex items-center gap-1 rounded-lg border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-bold text-emerald-700 hover:bg-emerald-100 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-300 transition cursor-pointer"
-                          title="Generate & View GST Invoice"
+                          title="Generate & Record GST Invoice"
                         >
                           <FileText className="h-3 w-3" />
                           <span>Invoice</span>
@@ -907,18 +1054,7 @@ export default function Schools() {
                 />
                 <button
                   type="button"
-                  onClick={() => {
-                    if (!newNote.trim()) return;
-                    const existing = leadNotes[selectedLead.id] || [];
-                    setLeadNotes({
-                      ...leadNotes,
-                      [selectedLead.id]: [
-                        { text: newNote.trim(), time: 'Just now', author: 'Master Admin' },
-                        ...existing,
-                      ],
-                    });
-                    setNewNote('');
-                  }}
+                  onClick={handleSaveNote}
                   className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-bold text-white hover:bg-blue-700 transition"
                 >
                   Save Note
@@ -1056,23 +1192,60 @@ export default function Schools() {
                 const netSubtotal = Math.max(0, subtotal - discount);
                 const gst = Math.round(netSubtotal * 0.18);
                 const grandTotal = netSubtotal + gst;
+                const invNum = `INV-EDV-2026-${Math.floor(1000 + Math.random() * 9000)}`;
 
                 return (
-                  <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 space-y-1.5 font-mono text-xs">
-                    <div className="flex justify-between"><span className="text-slate-500">Subtotal ({invoiceLicenses} x ₹{invoiceCustomPrice.toLocaleString()}):</span> <span>₹{subtotal.toLocaleString()}.00</span></div>
-                    {discount > 0 && (
-                      <div className="flex justify-between text-emerald-500"><span className="text-emerald-500 font-bold">Coupon Discount ({appliedCoupon?.code}):</span> <span>- ₹{discount.toLocaleString()}.00</span></div>
-                    )}
-                    <div className="flex justify-between"><span className="text-slate-500">GST (18% HSN 9992):</span> <span>₹{gst.toLocaleString()}.00</span></div>
-                    <div className="flex justify-between text-sm font-black pt-1.5 border-t border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
-                      <span>Grand Total Payable:</span>
-                      <span className="text-emerald-600 dark:text-emerald-400">₹{grandTotal.toLocaleString()}.00</span>
+                  <div className="space-y-3">
+                    <div className="p-3.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/80 space-y-1.5 font-mono text-xs">
+                      <div className="flex justify-between"><span className="text-slate-500">Subtotal ({invoiceLicenses} x ₹{invoiceCustomPrice.toLocaleString()}):</span> <span>₹{subtotal.toLocaleString()}.00</span></div>
+                      {discount > 0 && (
+                        <div className="flex justify-between text-emerald-500"><span className="text-emerald-500 font-bold">Coupon Discount ({appliedCoupon?.code}):</span> <span>- ₹{discount.toLocaleString()}.00</span></div>
+                      )}
+                      <div className="flex justify-between"><span className="text-slate-500">GST (18% HSN 9992):</span> <span>₹{gst.toLocaleString()}.00</span></div>
+                      <div className="flex justify-between text-sm font-black pt-1.5 border-t border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
+                        <span>Grand Total Payable:</span>
+                        <span className="text-emerald-600 dark:text-emerald-400">₹{grandTotal.toLocaleString()}.00</span>
+                      </div>
                     </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleSaveInvoiceToDb({
+                        invoiceNumber: invNum,
+                        packageName: 'NEET-UG 2027 AIETS Institutional Package',
+                        pricePerStudent: invoiceCustomPrice,
+                        licenseQuantity: invoiceLicenses,
+                        subtotal,
+                        gstAmount: gst,
+                        totalAmount: grandTotal,
+                        paymentStatus: selectedSchoolInvoice.paymentStatus || 'Paid',
+                      })}
+                      className="w-full py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition"
+                    >
+                      💾 Record Tax Invoice to System Database
+                    </button>
                   </div>
                 );
               })()}
-            </div>
 
+              {/* Recorded Invoices History Table */}
+              {storedInvoices.length > 0 && (
+                <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <h4 className="text-xs font-bold text-slate-700 dark:text-slate-300">Database Recorded Invoices ({storedInvoices.length})</h4>
+                  <div className="max-h-36 overflow-y-auto space-y-1.5 pr-1">
+                    {storedInvoices.map((inv) => (
+                      <div key={inv.id} className="flex items-center justify-between p-2 rounded-lg bg-slate-100 dark:bg-slate-900 text-[11px] font-mono">
+                        <div>
+                          <strong className="text-blue-600 dark:text-blue-400 block">{inv.invoice_number}</strong>
+                          <span className="text-slate-400">{inv.license_quantity} Licenses • ₹{Number(inv.total_amount).toLocaleString()}</span>
+                        </div>
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-bold">{inv.payment_status || 'Paid'}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
 
             <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
               <button
@@ -1082,17 +1255,200 @@ export default function Schools() {
               >
                 Close
               </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* 7. EDIT PARTNER SCHOOL MODAL */}
+      {editingSchool && createPortal(
+        <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-xl rounded-3xl border border-slate-200 bg-white dark:border-slate-800 dark:bg-[#111827] p-6 sm:p-7 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
+                  <Pencil className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg">Edit Partner School Account</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{editingSchool.name}</p>
+                </div>
+              </div>
               <button
-                type="button"
-                onClick={() => {
-                  alert('GST Tax Invoice generated and sent to school email!');
-                  setSelectedSchoolInvoice(null);
-                }}
-                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition"
+                onClick={() => setEditingSchool(null)}
+                className="text-slate-400 hover:text-slate-700 dark:hover:text-white p-1 rounded-lg"
               >
-                📄 Download PDF Invoice
+                <X className="h-5 w-5" />
               </button>
             </div>
+
+            <form onSubmit={handleEditSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">School / Institution Name *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editFormData.name}
+                    onChange={(e) => setEditFormData({ ...editFormData, name: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-semibold text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">School ID Code *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editFormData.schoolId}
+                    onChange={(e) => setEditFormData({ ...editFormData, schoolId: e.target.value.toUpperCase() })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-mono font-bold text-blue-600 dark:text-blue-400 uppercase focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Admin Email *</label>
+                  <input
+                    type="email"
+                    required
+                    value={editFormData.email}
+                    onChange={(e) => setEditFormData({ ...editFormData, email: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-medium text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Admin Password</label>
+                  <input
+                    type="text"
+                    value={editFormData.password}
+                    onChange={(e) => setEditFormData({ ...editFormData, password: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-mono font-bold text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Tagline / Location</label>
+                  <input
+                    type="text"
+                    value={editFormData.tagline}
+                    onChange={(e) => setEditFormData({ ...editFormData, tagline: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-medium text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">Issued License Limit</label>
+                  <input
+                    type="number"
+                    value={editFormData.totalLicenses}
+                    onChange={(e) => setEditFormData({ ...editFormData, totalLicenses: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* GSTIN, Custom Price & Payment Status */}
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">GSTIN Number</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. 07AAAAA0000A1Z5"
+                    value={editFormData.gstin}
+                    onChange={(e) => setEditFormData({ ...editFormData, gstin: e.target.value.toUpperCase() })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-2 text-xs font-mono font-bold uppercase text-slate-900 dark:text-white focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">Custom Rate / Student (₹)</label>
+                  <input
+                    type="number"
+                    value={editFormData.customPrice}
+                    onChange={(e) => setEditFormData({ ...editFormData, customPrice: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="block text-[11px] font-bold text-slate-700 dark:text-slate-300 mb-1">Payment Status</label>
+                  <select
+                    value={editFormData.paymentStatus}
+                    onChange={(e) => setEditFormData({ ...editFormData, paymentStatus: e.target.value })}
+                    className="w-full rounded-xl border border-slate-300 bg-slate-50 dark:border-slate-800 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:outline-none"
+                  >
+                    <option value="Paid">🟢 Paid</option>
+                    <option value="Pending">🟡 Pending</option>
+                    <option value="Partial">🟣 Partial</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Package Assignment Panel */}
+              <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 space-y-3">
+                <h4 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                  <Package className="h-4 w-4 text-blue-500" />
+                  <span>Assigned Test Packages ({schoolPackages.length})</span>
+                </h4>
+
+                <div className="space-y-1.5">
+                  {schoolPackages.length > 0 ? (
+                    schoolPackages.map((pkg) => (
+                      <div key={pkg.id} className="flex items-center justify-between p-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs">
+                        <span className="font-bold text-slate-800 dark:text-slate-200">{pkg.packageName}</span>
+                        <button
+                          type="button"
+                          onClick={() => handleRemovePackage(pkg.packageId)}
+                          className="p-1 text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 rounded"
+                          title="Remove Package"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                        </button>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-xs text-slate-400 italic">No specific packages assigned yet.</p>
+                  )}
+                </div>
+
+                <div className="flex gap-2">
+                  <select
+                    value={selectedPackageToAssign}
+                    onChange={(e) => setSelectedPackageToAssign(e.target.value)}
+                    className="flex-1 rounded-xl border border-slate-300 bg-white dark:border-slate-800 dark:bg-slate-900 px-3 py-1.5 text-xs text-slate-900 dark:text-white"
+                  >
+                    <option value="">-- Select Test Package to Assign --</option>
+                    {availablePackages.map((p) => (
+                      <option key={p.id} value={p.id}>{p.package_name}</option>
+                    ))}
+                  </select>
+                  <button
+                    type="button"
+                    onClick={handleAssignPackage}
+                    className="px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold"
+                  >
+                    + Assign
+                  </button>
+                </div>
+              </div>
+
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => setEditingSchool(null)}
+                  className="rounded-xl border border-slate-300 bg-slate-100 dark:border-slate-800 dark:bg-slate-900 px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-300"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
           </div>
         </div>,
         document.body

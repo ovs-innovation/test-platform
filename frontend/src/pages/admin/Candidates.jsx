@@ -27,6 +27,8 @@ export default function AdminCandidates() {
   const [candidateToBlock, setCandidateToBlock] = useState(null);
   const [blockActionLoading, setBlockActionLoading] = useState(false);
   
+  const [institutions, setInstitutions] = useState([]);
+
   // Form states
   const [form, setForm] = useState({
     name: '',
@@ -34,7 +36,8 @@ export default function AdminCandidates() {
     password: '',
     phone: '',
     class: '',
-    target_exam: 'JEE'
+    target_exam: 'JEE',
+    institution_id: ''
   });
   
   const [submitting, setSubmitting] = useState(false);
@@ -42,7 +45,12 @@ export default function AdminCandidates() {
   const load = async () => {
     setState('loading');
     try {
-      setCandidates(await adminService.candidates());
+      const [candidatesData, instData] = await Promise.all([
+        adminService.candidates(),
+        adminService.partnerSchools().catch(() => ({ institutions: [] }))
+      ]);
+      setCandidates(candidatesData);
+      setInstitutions(instData.institutions || []);
       setState('done');
     } catch {
       setState('error');
@@ -60,7 +68,8 @@ export default function AdminCandidates() {
       password: '',
       phone: '',
       class: '',
-      target_exam: 'JEE'
+      target_exam: 'JEE',
+      institution_id: ''
     });
     setModalMode('create');
     setSelectedCandidate(null);
@@ -74,7 +83,8 @@ export default function AdminCandidates() {
       password: '', // blank to keep current
       phone: c.phone || '',
       class: c.class || '',
-      target_exam: c.target_exam || 'JEE'
+      target_exam: c.target_exam || 'JEE',
+      institution_id: c.institution_id || ''
     });
     setModalMode('edit');
     setSelectedCandidate(c);
@@ -117,15 +127,22 @@ export default function AdminCandidates() {
     e.preventDefault();
     setSubmitting(true);
     try {
+      let savedCandidate;
       if (modalMode === 'create') {
-        const newCandidate = await adminService.createCandidate(form);
+        savedCandidate = await adminService.createCandidate(form);
         toast.success('Student registered successfully');
-        setCandidates([newCandidate, ...candidates]);
       } else {
-        const updatedCandidate = await adminService.updateCandidate(selectedCandidate.id, form);
+        savedCandidate = await adminService.updateCandidate(selectedCandidate.id, form);
         toast.success('Student profile updated');
-        setCandidates(candidates.map(c => c.id === selectedCandidate.id ? { ...c, ...updatedCandidate } : c));
       }
+
+      if (savedCandidate?.id) {
+        await adminService.assignCandidateInstitution(savedCandidate.id, {
+          institutionId: form.institution_id || null,
+        }).catch(() => {});
+      }
+
+      load();
       setModalOpen(false);
     } catch (err) {
       toast.error(err.message || 'Failed to save student profile');
@@ -384,6 +401,24 @@ export default function AdminCandidates() {
                       <option value="NEET">NEET</option>
                     </select>
                   </div>
+                </div>
+
+                <div>
+                  <label className="label">
+                    Allocated Partner School / Institution
+                  </label>
+                  <select
+                    className="input w-full font-semibold"
+                    value={form.institution_id || ''}
+                    onChange={(e) => setForm({ ...form, institution_id: e.target.value })}
+                  >
+                    <option value="">-- Independent Student (No Institution) --</option>
+                    {institutions.map((inst) => (
+                      <option key={inst.id} value={inst.id}>
+                        🏫 {inst.name} ({inst.schoolId})
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 

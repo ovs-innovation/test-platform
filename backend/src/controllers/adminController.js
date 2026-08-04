@@ -472,6 +472,9 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
        i.logo_url AS "logoUrl",
        i.accent_color AS "accentColor",
        COALESCE(i.total_licenses, 100)::int AS "totalLicenses",
+       COALESCE(i.gstin, '') AS "gstin",
+       COALESCE(i.custom_price, 1999.00)::numeric AS "customPrice",
+       COALESCE(i.payment_status, 'Paid') AS "paymentStatus",
        COUNT(u.id)::int AS "activeStudents",
        i.created_at AS "createdAt"
      FROM institutions i
@@ -483,11 +486,11 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
   if (instRes.rowCount === 0) {
     const pwHash = await hashPassword('password123');
     await query(
-      `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, accent_color, total_licenses)
+      `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, accent_color, total_licenses, gstin, custom_price, payment_status)
        VALUES 
-         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'password123', 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250),
-         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'password123', 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500),
-         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'password123', 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150)
+         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'password123', 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250, '07AAAAA0000A1Z5', 1499.00, 'Paid'),
+         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'password123', 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500, '08BBBBB1111B1Z2', 1199.00, 'Paid'),
+         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'password123', 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150, '08CCCCC2222C1Z9', 1999.00, 'Pending')
        ON CONFLICT (email) DO NOTHING`,
       [pwHash]
     );
@@ -504,6 +507,9 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
          i.logo_url AS "logoUrl",
          i.accent_color AS "accentColor",
          COALESCE(i.total_licenses, 100)::int AS "totalLicenses",
+         COALESCE(i.gstin, '') AS "gstin",
+         COALESCE(i.custom_price, 1999.00)::numeric AS "customPrice",
+         COALESCE(i.payment_status, 'Paid') AS "paymentStatus",
          COUNT(u.id)::int AS "activeStudents",
          i.created_at AS "createdAt"
        FROM institutions i
@@ -532,7 +538,7 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
 });
 
 export const createInstitution = asyncHandler(async (req, res) => {
-  const { name, schoolId, email, password, tagline, logoBadge, logoUrl, accentColor, totalLicenses, leadId } = req.body;
+  const { name, schoolId, email, password, tagline, logoBadge, logoUrl, accentColor, totalLicenses, gstin, customPrice, paymentStatus, leadId } = req.body;
 
   if (!name || !schoolId || !email || !password) {
     throw ApiError.badRequest('School Name, School ID, Email, and Password are required.');
@@ -547,9 +553,9 @@ export const createInstitution = asyncHandler(async (req, res) => {
   const badge = logoBadge || name.substring(0, 3).toUpperCase();
 
   const insertRes = await query(
-    `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", created_at AS "createdAt"`,
+    `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus", created_at AS "createdAt"`,
     [
       schoolId.toUpperCase(),
       name,
@@ -561,6 +567,9 @@ export const createInstitution = asyncHandler(async (req, res) => {
       logoUrl || '',
       accentColor || '#2563eb',
       Number(totalLicenses) || 200,
+      gstin ? gstin.trim().toUpperCase() : '',
+      customPrice ? Number(customPrice) : 1999.00,
+      paymentStatus || 'Paid',
     ]
   );
 
@@ -590,6 +599,101 @@ export const createInstitution = asyncHandler(async (req, res) => {
     success: true,
     institution: newInst,
     message: 'Partner School account created successfully.',
+  });
+});
+
+export const updateInstitution = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name, schoolId, email, password, tagline, logoBadge, logoUrl, accentColor, totalLicenses, gstin, customPrice, paymentStatus } = req.body;
+
+  const existingRes = await query('SELECT * FROM institutions WHERE id = $1', [id]);
+  if (existingRes.rowCount === 0) {
+    throw ApiError.notFound('Institution not found.');
+  }
+
+  const existing = existingRes.rows[0];
+  let pwHash = existing.password_hash;
+  let rawPw = existing.raw_password;
+
+  if (password && password.trim() && password !== existing.raw_password) {
+    pwHash = await hashPassword(password);
+    rawPw = password;
+  }
+
+  const updateRes = await query(
+    `UPDATE institutions
+     SET name = COALESCE($1, name),
+         code = COALESCE($2, code),
+         email = COALESCE($3, email),
+         password_hash = $4,
+         raw_password = $5,
+         tagline = COALESCE($6, tagline),
+         logo_badge = COALESCE($7, logo_badge),
+         logo_url = COALESCE($8, logo_url),
+         accent_color = COALESCE($9, accent_color),
+         total_licenses = COALESCE($10, total_licenses),
+         gstin = COALESCE($11, gstin),
+         custom_price = COALESCE($12, custom_price),
+         payment_status = COALESCE($13, payment_status)
+     WHERE id = $14
+     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus"`,
+    [
+      name,
+      schoolId ? schoolId.toUpperCase() : null,
+      email ? email.toLowerCase() : null,
+      pwHash,
+      rawPw,
+      tagline,
+      logoBadge,
+      logoUrl,
+      accentColor,
+      totalLicenses ? Number(totalLicenses) : null,
+      gstin !== undefined ? gstin.trim().toUpperCase() : null,
+      customPrice !== undefined ? Number(customPrice) : null,
+      paymentStatus,
+      id,
+    ]
+  );
+
+  // Sync institution_admins email & password
+  if (email || password) {
+    await query(
+      `UPDATE institution_admins
+       SET email = COALESCE($1, email),
+           password_hash = COALESCE($2, password_hash)
+       WHERE institution_id = $3`,
+      [email ? email.toLowerCase() : null, pwHash, id]
+    ).catch(() => {});
+  }
+
+  res.json({
+    success: true,
+    institution: updateRes.rows[0],
+    message: 'Partner School updated successfully.',
+  });
+});
+
+export const updateInstitutionPaymentStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { paymentStatus } = req.body;
+
+  if (!paymentStatus) {
+    throw ApiError.badRequest('Payment status is required.');
+  }
+
+  const result = await query(
+    `UPDATE institutions SET payment_status = $1 WHERE id = $2 RETURNING id, name, payment_status AS "paymentStatus"`,
+    [paymentStatus, id]
+  );
+
+  if (result.rowCount === 0) {
+    throw ApiError.notFound('Institution not found.');
+  }
+
+  res.json({
+    success: true,
+    institution: result.rows[0],
+    message: `Payment status for "${result.rows[0].name}" updated to "${paymentStatus}".`,
   });
 });
 
@@ -666,3 +770,133 @@ export const deleteB2bEnquiry = asyncHandler(async (req, res) => {
   }
   res.json({ success: true, message: 'Demo request lead deleted successfully.' });
 });
+
+// Follow-up Notes Endpoints
+export const getB2bEnquiryNotes = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query(
+    `SELECT id, lead_id AS "leadId", author, note_text AS "text", created_at AS "createdAt"
+     FROM b2b_lead_notes
+     WHERE lead_id = $1
+     ORDER BY id DESC`,
+    [id]
+  );
+  res.json({ success: true, notes: result.rows });
+});
+
+export const createB2bEnquiryNote = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { noteText, author } = req.body;
+
+  if (!noteText || !noteText.trim()) {
+    throw ApiError.badRequest('Note text is required.');
+  }
+
+  const result = await query(
+    `INSERT INTO b2b_lead_notes (lead_id, author, note_text)
+     VALUES ($1, $2, $3)
+     RETURNING id, lead_id AS "leadId", author, note_text AS "text", created_at AS "createdAt"`,
+    [id, author || 'Master Admin', noteText.trim()]
+  );
+
+  res.status(201).json({ success: true, note: result.rows[0] });
+});
+
+// Package Management Endpoints
+export const getTestPackages = asyncHandler(async (_req, res) => {
+  const result = await query('SELECT * FROM test_packages ORDER BY id ASC');
+  res.json({ success: true, packages: result.rows });
+});
+
+export const getInstitutionPackages = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query(
+    `SELECT ip.id, ip.institution_id AS "institutionId", ip.package_id AS "packageId", ip.purchased_at AS "purchasedAt", ip.is_active AS "isActive",
+            tp.package_name AS "packageName", tp.description, tp.price
+     FROM institution_packages ip
+     JOIN test_packages tp ON tp.id = ip.package_id
+     WHERE ip.institution_id = $1
+     ORDER BY ip.id DESC`,
+    [id]
+  );
+  res.json({ success: true, packages: result.rows });
+});
+
+export const assignInstitutionPackage = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { packageId } = req.body;
+
+  if (!packageId) {
+    throw ApiError.badRequest('Package ID is required.');
+  }
+
+  const result = await query(
+    `INSERT INTO institution_packages (institution_id, package_id, is_active)
+     VALUES ($1, $2, TRUE)
+     ON CONFLICT DO NOTHING
+     RETURNING id`,
+    [id, packageId]
+  );
+
+  res.status(201).json({ success: true, message: 'Package assigned to partner school successfully.' });
+});
+
+export const removeInstitutionPackage = asyncHandler(async (req, res) => {
+  const { id, packageId } = req.params;
+  await query('DELETE FROM institution_packages WHERE institution_id = $1 AND package_id = $2', [id, packageId]);
+  res.json({ success: true, message: 'Package association removed successfully.' });
+});
+
+// Invoice Management Endpoints
+export const createInstitutionInvoice = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { invoiceNumber, packageName, pricePerStudent, licenseQuantity, subtotal, gstAmount, totalAmount, paymentStatus } = req.body;
+
+  const invNum = invoiceNumber || `EDV-B2B-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+
+  const result = await query(
+    `INSERT INTO institution_invoices (
+       institution_id, invoice_number, package_name, price_per_student, license_quantity, subtotal, gst_amount, total_amount, payment_status, pdf_url
+     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+     RETURNING *`,
+    [
+      id,
+      invNum,
+      packageName || 'NEET-UG 2027 AIETS One-Year Complete Package',
+      Number(pricePerStudent) || 1999,
+      Number(licenseQuantity) || 200,
+      Number(subtotal) || 399800,
+      Number(gstAmount) || 71964,
+      Number(totalAmount) || 471764,
+      paymentStatus || 'Paid',
+      `/invoices/${invNum}.pdf`,
+    ]
+  );
+
+  res.status(201).json({
+    success: true,
+    invoice: result.rows[0],
+    message: `Tax Invoice ${invNum} generated and recorded in system database successfully.`,
+  });
+});
+
+export const getInstitutionInvoices = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query('SELECT * FROM institution_invoices WHERE institution_id = $1 ORDER BY id DESC', [id]);
+  res.json({ success: true, invoices: result.rows });
+});
+
+// Student Allocation Endpoint
+export const assignStudentInstitution = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { institutionId, batchId } = req.body;
+
+  const instId = institutionId ? Number(institutionId) : null;
+  const bId = batchId ? Number(batchId) : null;
+
+  await query('UPDATE users SET institution_id = $1, batch_id = $2 WHERE id = $3 AND role = $4', [instId, bId, id, 'candidate']);
+  await query('UPDATE student_profiles SET institution_id = $1 WHERE user_id = $2', [instId, id]).catch(() => {});
+
+  res.json({ success: true, message: 'Student institution allocation updated successfully.' });
+});
+

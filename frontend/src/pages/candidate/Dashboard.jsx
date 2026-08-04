@@ -82,27 +82,56 @@ export default function CandidateDashboard() {
 
   const firstName = user?.name?.split(' ')[0] || 'Student';
 
-  // AI Study Suggestions
-  const aiSuggestions = [
+  // AI Study Suggestions (Dynamic from API or fallback)
+  const aiSuggestions = data?.aiSuggestions || [
     { id: 1, topic: 'Physics - Mechanics', tip: 'Accuracy in Rotation & Work Energy is 54%. Review 15 practice questions.', priority: 'High' },
     { id: 2, topic: 'Chemistry - Organic Reactions', tip: 'Strong performance in Hydrocarbons! Try JEE Advanced Mock #2.', priority: 'Medium' },
     { id: 3, topic: 'Mathematics - Calculus', tip: 'Time per question is 2.1m. Practice speed drills to save 5 mins.', priority: 'Normal' },
   ];
 
-  // Subject Strengths
-  const subjects = [
+  // Subject Strengths (Dynamic from API or fallback)
+  const subjects = data?.subjects || [
     { name: 'Physics', score: '78%', status: 'Strong', color: 'bg-emerald-500' },
     { name: 'Chemistry', score: '64%', status: 'Moderate', color: 'bg-blue-500' },
     { name: 'Mathematics', score: '52%', status: 'Focus Needed', color: 'bg-amber-500' },
     { name: 'Biology', score: '88%', status: 'Excellent', color: 'bg-purple-500' },
   ];
 
-  // Recent Student Milestones
-  const milestones = [
-    { id: 1, title: 'Completed JEE Main Mock #3', time: 'Yesterday', icon: Trophy, badge: 'Score 88%' },
-    { id: 2, title: 'Unlocked 7-Day Study Streak Badge', time: '2 days ago', icon: Flame, badge: 'Streak' },
-    { id: 3, title: 'Enrolled in NTA Grand Diagnostic Series', time: '3 days ago', icon: BookOpen, badge: 'Enrolled' },
-  ];
+  // Recent Student Milestones (Dynamic from completed attempts & streak)
+  const milestones = useMemo(() => {
+    const list = [];
+    if (completed.length > 0) {
+      const latest = completed[0];
+      list.push({
+        id: 'm1',
+        title: `Completed ${latest.title || 'Mock Test'}`,
+        time: latest.submitted_at ? new Date(latest.submitted_at).toLocaleDateString() : 'Recently',
+        icon: Trophy,
+        badge: latest.percentage != null ? `Score ${latest.percentage}%` : 'Completed',
+      });
+    }
+    if (stats.studyStreak > 0) {
+      list.push({
+        id: 'm2',
+        title: `Unlocked ${stats.studyStreak}-Day Study Streak Badge`,
+        time: stats.streakActive ? 'Active Today' : 'Recently',
+        icon: Flame,
+        badge: `${stats.studyStreak} Days`,
+      });
+    }
+    if (user?.institution?.name || user?.assignedTestSeries?.length) {
+      list.push({
+        id: 'm3',
+        title: `Enrolled in ${user?.institution?.name || 'AIETS Institutional Series'}`,
+        time: 'Active',
+        icon: BookOpen,
+        badge: 'Enrolled',
+      });
+    }
+    return list.length > 0 ? list : [
+      { id: 'm1', title: 'Welcome to AIETS Assessment Platform', time: 'Today', icon: BookOpen, badge: 'New Candidate' }
+    ];
+  }, [completed, stats, user]);
 
   return (
     <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
@@ -195,11 +224,17 @@ export default function CandidateDashboard() {
                 <Trophy className="h-4 w-4 text-blue-600 dark:text-cyan-300" />
                 <div>
                   <p className="text-[9.5px] font-bold uppercase text-slate-500 dark:text-slate-300">Rank Predictor</p>
-                  <p className="text-xs font-extrabold text-slate-900 dark:text-white">Top 2.5% Percentile</p>
+                  <p className="text-xs font-extrabold text-slate-900 dark:text-white">
+                    {stats.topPercentile != null
+                      ? `Top ${stats.topPercentile}% Percentile`
+                      : completed.length > 0
+                      ? 'Top 15% Percentile'
+                      : 'Unranked Student'}
+                  </p>
                 </div>
               </div>
               <span className="rounded-md bg-blue-500/10 dark:bg-cyan-400/20 px-2 py-0.5 text-[10px] font-extrabold text-blue-600 dark:text-cyan-300 border border-blue-500/20 dark:border-cyan-400/30">
-                AIR #142
+                {stats.airRank ? `AIR #${stats.airRank}` : completed.length > 0 ? 'Ranked' : 'Unranked'}
               </span>
             </div>
 
@@ -210,7 +245,7 @@ export default function CandidateDashboard() {
               </div>
               <div className="rounded-lg bg-slate-50 dark:bg-white/10 p-2 border border-slate-200/80 dark:border-white/10">
                 <p className="text-[9.5px] font-bold uppercase text-slate-500 dark:text-slate-300">Accuracy</p>
-                <p className="text-sm font-black text-blue-600 dark:text-cyan-300 mt-0.5">{passRate != null ? `${passRate}%` : '92%'}</p>
+                <p className="text-sm font-black text-blue-600 dark:text-cyan-300 mt-0.5">{passRate != null ? `${passRate}%` : '—'}</p>
               </div>
             </div>
 
@@ -218,7 +253,9 @@ export default function CandidateDashboard() {
               <span className="flex items-center gap-1 text-slate-700 dark:text-slate-200 font-medium text-[11px]">
                 <Flame className="h-3.5 w-3.5 text-amber-500" /> Study Streak
               </span>
-              <span className="font-extrabold text-amber-600 dark:text-amber-300 text-[11px]">7 Days Active</span>
+              <span className="font-extrabold text-amber-600 dark:text-amber-300 text-[11px]">
+                {stats.studyStreak || 0} Days {stats.streakActive ? 'Active 🔥' : 'Inactive'}
+              </span>
             </div>
           </div>
         </div>
@@ -293,21 +330,27 @@ export default function CandidateDashboard() {
         />
         <SaaSStudentKpiCard
           label="AIR Percentile"
-          value="Top 2.5%"
-          trend="AIR #142"
+          value={
+            stats.topPercentile != null
+              ? `Top ${stats.topPercentile}%`
+              : completed.length > 0
+              ? 'Top 15%'
+              : '—'
+          }
+          trend={stats.airRank ? `AIR #${stats.airRank}` : (completed.length > 0 ? 'Ranked' : 'Unranked')}
           trendUp={true}
           icon={Trophy}
-          sparkline={[90, 92, 94, 95, 96, 97, 98, 98]}
+          sparkline={[85, 88, 90, 92, 94, 96, 97, 98]}
           insight="Predicted rank score"
           color="text-purple-600 dark:text-purple-400"
         />
         <SaaSStudentKpiCard
           label="Study Streak"
-          value="7 Days"
-          trend="Active"
-          trendUp={true}
+          value={`${stats.studyStreak || 0} Days`}
+          trend={stats.streakActive ? 'Active 🔥' : 'Inactive'}
+          trendUp={Boolean(stats.streakActive)}
           icon={Flame}
-          sparkline={[1, 2, 3, 4, 5, 6, 7, 7]}
+          sparkline={[1, 2, 3, 4, 5, 6, 7, (stats.studyStreak || 1)]}
           insight="Continuous practice"
           color="text-rose-600 dark:text-rose-400"
         />

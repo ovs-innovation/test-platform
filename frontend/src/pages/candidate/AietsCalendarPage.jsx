@@ -27,7 +27,7 @@ import {
   ArrowUpRight
 } from 'lucide-react';
 import { ONE_YEAR_39_SCHEDULE } from '../../lib/aietsCalendarData.js';
-import { calendarService } from '../../lib/services.js';
+import { calendarService, authService } from '../../lib/services.js';
 import TestDetailDrawer from '../../components/candidate/TestDetailDrawer.jsx';
 
 // Custom Floating Popover Dropdown for Filter Toolbar
@@ -126,6 +126,7 @@ export default function AietsCalendarPage() {
   const [statusFilter, setStatusFilter] = useState('ALL');
   const [selectedMonthFilter, setSelectedMonthFilter] = useState('ALL');
   const [apiTests, setApiTests] = useState([]);
+  const [completedTests, setCompletedTests] = useState([]);
 
   // Calendar Month Navigation (Default to real-time current month)
   const [currentCalendarDate, setCurrentCalendarDate] = useState(() => new Date());
@@ -141,6 +142,14 @@ export default function AietsCalendarPage() {
         }
       })
       .catch((err) => console.error('Error fetching student calendar:', err));
+
+    authService.candidateDashboard()
+      .then((data) => {
+        if (data && Array.isArray(data.completed)) {
+          setCompletedTests(data.completed);
+        }
+      })
+      .catch((err) => console.error('Error fetching completed tests:', err));
   }, []);
 
   // Sync state with URL params
@@ -150,6 +159,55 @@ export default function AietsCalendarPage() {
     params.set('view', viewMode);
     setSearchParams(params, { replace: true });
   }, [selectedProgram, viewMode, setSearchParams, searchParams]);
+
+  // Normalization Helpers for Types and Phases
+  const normalizeTestType = (str) => {
+    if (!str) return 'UNIT_TEST';
+    const val = String(str).toUpperCase().replace(/[\s_\-]+/g, '');
+    if (val.includes('UNIT')) return 'UNIT_TEST';
+    if (val.includes('AIETS')) return 'AIETS';
+    if (val.includes('PART')) return 'PART_TEST';
+    if (val.includes('CUMULATIVE')) return 'CUMULATIVE_TEST';
+    if (val.includes('FULL') || val.includes('MOCK')) return 'FULL_SYLLABUS_MOCK';
+    return val;
+  };
+
+  const normalizePhase = (str) => {
+    if (!str) return 'CONCEPT_BUILDING';
+    const val = String(str).toUpperCase().replace(/[\s_\-]+/g, '');
+    if (val.includes('CONCEPT') || val.includes('BUILDING') || val.includes('PHASE1') || val.includes('PHASEI')) return 'CONCEPT_BUILDING';
+    if (val.includes('PROGRESS') || val.includes('TRACKING') || val.includes('PERFORMANCE') || val.includes('PHASE2') || val.includes('PHASEII')) return 'PROGRESS_TRACKING';
+    if (val.includes('REVISION') || val.includes('CUMULATIVE') || val.includes('PHASE3') || val.includes('PHASEIII')) return 'REVISION_CUMULATIVE';
+    if (val.includes('INTENSIVE') || val.includes('TESTING') || val.includes('PHASE4') || val.includes('PHASEIV')) return 'INTENSIVE_TESTING';
+    return val;
+  };
+
+  // Helper matching function to link completed candidate attempts to calendar tests
+  const isCompletedTest = (testObj) => {
+    if (!completedTests || completedTests.length === 0) return false;
+    const testIdStr = String(testObj.testId || testObj.id || '').replace(/^db-/, '');
+    const testNameNorm = String(testObj.name || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+    return completedTests.some((c) => {
+      const cIdStr = String(c.id || c.assessment_id || '');
+      if (cIdStr && testIdStr && (cIdStr === testIdStr || testIdStr.endsWith(cIdStr))) return true;
+
+      const cTitleNorm = String(c.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (cTitleNorm && testNameNorm) {
+        if (cTitleNorm === testNameNorm) return true;
+        if (cTitleNorm.includes(testNameNorm) || testNameNorm.includes(cTitleNorm)) return true;
+
+        const num1 = (cTitleNorm.match(/unittest\d+/g) || [])[0];
+        const num2 = (testNameNorm.match(/unittest\d+/g) || [])[0];
+        if (num1 && num2) {
+          const d1 = num1.replace(/\D/g, '').padStart(2, '0');
+          const d2 = num2.replace(/\D/g, '').padStart(2, '0');
+          if (d1 === d2) return true;
+        }
+      }
+      return false;
+    });
+  };
 
   // Compute test statuses dynamically based on current real-time clock and backend tests
   const scheduleDataset = useMemo(() => {
@@ -165,23 +223,29 @@ export default function AietsCalendarPage() {
 
       const d = new Date(dateStr);
       const monthYear = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
+      const rawType = t.test_type || t.type || t.test_name || 'Unit Test';
+
+      const isDone = isCompletedTest({ id: t.id, name: t.test_name || t.title, testId: t.id }) ||
+        t.computed_status === 'Attempted' || t.computed_status === 'Result Published';
+      const status = isDone ? 'Attempted' : (t.computed_status || 'Upcoming');
 
       return {
         id: `db-${t.id}`,
         testId: t.id,
         sequence: t.id,
         name: t.test_name || t.title || 'Published Assessment',
-        type: t.test_type || 'Unit Test',
+        type: normalizeTestType(rawType),
+        rawTypeDisplay: rawType,
         date: dateStr,
         startTime: t.start_time || '10:00:00',
         endTime: t.end_time || '12:00:00',
         durationMinutes: t.duration_minutes || 180,
         syllabus: t.syllabus || 'Syllabus configured by Admin.',
         maxMarks: t.max_marks || 180,
-        status: t.computed_status || 'Upcoming',
+        status,
         monthYear,
         formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
-        phase: 'Phase I',
+        phase: normalizePhase(t.phase || 'CONCEPT_BUILDING'),
         isDbTest: true,
       };
     });
@@ -190,18 +254,23 @@ export default function AietsCalendarPage() {
       const testDate = new Date(`${t.date}T09:00:00+05:30`);
       const testEndDate = new Date(`${t.date}T12:00:00+05:30`);
 
-      let status = 'Upcoming';
+      let rawStatus = 'Upcoming';
       if (now >= testDate && now <= testEndDate) {
-        status = 'Live';
+        rawStatus = 'Live';
       } else if (now > testEndDate) {
-        status = 'Expired';
+        rawStatus = 'Expired';
       }
+
+      const isDone = isCompletedTest(t);
+      const status = isDone ? 'Attempted' : rawStatus;
 
       const d = new Date(t.date);
       const monthYear = d.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
 
       return {
         ...t,
+        type: normalizeTestType(t.type),
+        phase: normalizePhase(t.phase),
         status,
         monthYear,
         formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
@@ -212,7 +281,7 @@ export default function AietsCalendarPage() {
     const filteredStatic = staticSchedule.filter((t) => !existingDates.has(t.date));
 
     return [...formattedDbTests, ...filteredStatic].sort((a, b) => new Date(a.date) - new Date(b.date));
-  }, [apiTests]);
+  }, [apiTests, completedTests]);
 
   // Dynamic countdown in days for next assessment
   const getCountdownDays = (dateStr) => {
@@ -226,14 +295,14 @@ export default function AietsCalendarPage() {
   // Filtered schedule
   const filteredSchedule = useMemo(() => {
     return scheduleDataset.filter((t) => {
-      if (typeFilter !== 'ALL' && t.type !== typeFilter) return false;
-      if (phaseFilter !== 'ALL' && t.phase !== phaseFilter) return false;
+      if (typeFilter !== 'ALL' && normalizeTestType(t.type) !== normalizeTestType(typeFilter)) return false;
+      if (phaseFilter !== 'ALL' && normalizePhase(t.phase) !== normalizePhase(phaseFilter)) return false;
       if (statusFilter !== 'ALL' && t.status !== statusFilter) return false;
       if (selectedMonthFilter !== 'ALL' && t.monthYear !== selectedMonthFilter) return false;
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
         const matchName = t.name.toLowerCase().includes(q);
-        const matchType = t.type.toLowerCase().includes(q);
+        const matchType = String(t.type).toLowerCase().includes(q);
         if (!matchName && !matchType) return false;
       }
       return true;
@@ -289,7 +358,8 @@ export default function AietsCalendarPage() {
 
   // Helper type badge style with semantic tokens
   const getTypeBadgeStyle = (typeStr) => {
-    switch (typeStr) {
+    const norm = normalizeTestType(typeStr);
+    switch (norm) {
       case 'UNIT_TEST':
         return 'bg-blue-500/10 border-blue-500/30 text-blue-600 dark:text-blue-400';
       case 'AIETS':
@@ -323,7 +393,7 @@ export default function AietsCalendarPage() {
       const dayStr = String(day).padStart(2, '0');
       const dateKey = `${year}-${monthStr}-${dayStr}`;
 
-      const testsOnDate = scheduleDataset.filter((t) => t.date === dateKey);
+      const testsOnDate = filteredSchedule.filter((t) => t.date === dateKey);
 
       days.push({
         day,
@@ -334,7 +404,7 @@ export default function AietsCalendarPage() {
       });
     }
     return days;
-  }, [year, month, firstDayOfMonth, daysInMonth, scheduleDataset]);
+  }, [year, month, firstDayOfMonth, daysInMonth, filteredSchedule]);
 
   const monthLabel = currentCalendarDate.toLocaleString('en-IN', { month: 'long', year: 'numeric' });
 
@@ -503,7 +573,7 @@ export default function AietsCalendarPage() {
                 <Layers className="h-4 w-4" />
               </div>
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">39</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">{scheduleDataset.length}</p>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Included in Program</p>
           </div>
 
@@ -514,7 +584,9 @@ export default function AietsCalendarPage() {
                 <CheckCircle2 className="h-4 w-4" />
               </div>
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">0</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">
+              {scheduleDataset.filter((t) => t.status === 'Attempted' || t.status === 'Result Published').length}
+            </p>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Submitted Tests</p>
           </div>
 
@@ -525,7 +597,9 @@ export default function AietsCalendarPage() {
                 <Clock className="h-4 w-4" />
               </div>
             </div>
-            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">39</p>
+            <p className="text-3xl font-black text-slate-900 dark:text-white mt-3">
+              {scheduleDataset.filter((t) => t.status === 'Upcoming' || t.status === 'Live').length}
+            </p>
             <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">Scheduled Tests</p>
           </div>
 
@@ -713,7 +787,7 @@ export default function AietsCalendarPage() {
           )}
 
           <span className="ml-auto text-xs text-slate-500 dark:text-slate-400 font-medium">
-            Showing <strong>{filteredSchedule.length}</strong> of 39 tests
+            Showing <strong>{filteredSchedule.length}</strong> of {scheduleDataset.length} tests
           </span>
         </div>
       </div>

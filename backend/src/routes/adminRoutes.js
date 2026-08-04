@@ -15,10 +15,21 @@ import {
   updateFeatureFlag,
   getInstitutions,
   createInstitution,
+  updateInstitution,
+  updateInstitutionPaymentStatus,
   deleteInstitution,
   getB2bEnquiries,
   updateB2bEnquiryStatus,
   deleteB2bEnquiry,
+  getB2bEnquiryNotes,
+  createB2bEnquiryNote,
+  getTestPackages,
+  getInstitutionPackages,
+  assignInstitutionPackage,
+  removeInstitutionPackage,
+  createInstitutionInvoice,
+  getInstitutionInvoices,
+  assignStudentInstitution,
 } from '../controllers/adminController.js';
 import {
   listTests,
@@ -117,10 +128,24 @@ router.put('/feature-flags/:flag_name', updateFeatureFlag);
 
 router.get('/institutions', getInstitutions);
 router.post('/institutions', createInstitution);
+router.put('/institutions/:id', updateInstitution);
+router.patch('/institutions/:id/payment-status', updateInstitutionPaymentStatus);
 router.delete('/institutions/:id', deleteInstitution);
 
 router.get('/b2b-enquiries', getB2bEnquiries);
 router.patch('/b2b-enquiries/:id/status', updateB2bEnquiryStatus);
 router.delete('/b2b-enquiries/:id', deleteB2bEnquiry);
+router.get('/b2b-enquiries/:id/notes', getB2bEnquiryNotes);
+router.post('/b2b-enquiries/:id/notes', createB2bEnquiryNote);
+
+router.get('/packages', getTestPackages);
+router.get('/institutions/:id/packages', getInstitutionPackages);
+router.post('/institutions/:id/packages', assignInstitutionPackage);
+router.delete('/institutions/:id/packages/:packageId', removeInstitutionPackage);
+
+router.post('/institutions/:id/invoices', createInstitutionInvoice);
+router.get('/institutions/:id/invoices', getInstitutionInvoices);
+
+router.patch('/candidates/:id/institution', assignStudentInstitution);
 
 export default router;
