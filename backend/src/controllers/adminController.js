@@ -567,12 +567,20 @@ export const createInstitution = asyncHandler(async (req, res) => {
   const newInst = insertRes.rows[0];
 
   // Also create institution_admin user record for portal login
-  await query(
-    `INSERT INTO institution_admins (institution_id, name, email, password_hash, role)
-     VALUES ($1, $2, $3, $4, 'institution_admin')
-     ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash`,
-    [newInst.id, name, email.toLowerCase(), pwHash]
-  ).catch(() => {});
+  try {
+    await query(
+      `INSERT INTO institution_admins (institution_id, name, email, password_hash, role, is_active)
+       VALUES ($1, $2, $3, $4, 'institution_admin', TRUE)
+       ON CONFLICT (email) DO UPDATE SET 
+         password_hash = EXCLUDED.password_hash,
+         institution_id = EXCLUDED.institution_id,
+         name = EXCLUDED.name,
+         is_active = TRUE`,
+      [newInst.id, name, email.toLowerCase(), pwHash]
+    );
+  } catch (adminErr) {
+    console.error('[createInstitution] Warning: Could not create institution_admin row:', adminErr);
+  }
 
   if (leadId) {
     await query(`UPDATE b2b_enquiries SET status = 'Converted' WHERE id = $1`, [leadId]).catch(() => {});

@@ -76,9 +76,7 @@ export default function SchoolsB2B() {
   const [loginPassword, setLoginPassword] = useState('');
   const [showHeroPassword, setShowHeroPassword] = useState(false);
   const [heroRememberMe, setHeroRememberMe] = useState(false);
-  const [heroSubmitting, setHeroSubmitting] = useState(false);
   const [loginError, setLoginError] = useState('');
-  const [heroReadOnly, setHeroReadOnly] = useState(true);
 
   // Dashboard modal states
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -337,15 +335,19 @@ export default function SchoolsB2B() {
   // Handle Hero Institution Login Form Submit
   const handleLoginSubmit = async (e) => {
     e?.preventDefault();
+    console.log('[Institution Login] 1. Submit fired (Button Clicked)', { loginId, hasPassword: Boolean(loginPassword) });
     setLoginError('');
 
     const input = loginId.trim().toLowerCase();
     const pass = loginPassword.trim();
 
     if (!input || !pass) {
+      console.log('[Institution Login] 2. Validation failed: missing input or password');
       setLoginError('Please enter your Institution ID / registered email and password.');
       return;
     }
+
+    console.log('[Institution Login] 2. Validation passed for input:', input);
 
     if (heroRememberMe) {
       try { localStorage.setItem('edvedum_remembered_institution_id', input); } catch (_) {}
@@ -356,9 +358,14 @@ export default function SchoolsB2B() {
     setHeroSubmitting(true);
 
     try {
-      // 1. Attempt backend institution login
+      // 3. Attempt backend institution login
+      console.log('[Institution Login] 3. Calling API endpoint /institution/login with payload:', { identifier: input });
+      let res = null;
+      let apiCallMade = false;
+
       try {
-        const res = await institutionDashboardService.login({
+        apiCallMade = true;
+        res = await institutionDashboardService.login({
           identifier: input,
           email: input,
           institutionId: input,
@@ -366,52 +373,57 @@ export default function SchoolsB2B() {
           schoolId: input,
           password: pass,
         });
+        console.log('[Institution Login] 4. API Response received:', res);
+      } catch (backendErr) {
+        console.error('[Institution Login] 4. API Error caught:', backendErr);
+        const errorMsg = backendErr?.message || backendErr?.details || 'Invalid Institution ID or Password. Please check your credentials or contact support.';
+        throw new Error(errorMsg);
+      }
 
-        if (res?.token) {
-          const instObj = {
-            id: res.institution?.id || res.user?.institution_id || 1,
-            name: res.institution?.name || res.user?.institution_name || 'Partner Institution',
-            schoolId: res.institution?.code || input.toUpperCase(),
-            email: res.institution?.email || res.user?.email || input,
-            logoBadge: res.institution?.code?.substring(0, 3).toUpperCase() || input.substring(0, 3).toUpperCase(),
-            tagline: res.institution?.tagline || 'Premier Educational Institution',
-            totalLicenses: res.institution?.totalLicenses || 200,
-            activeStudents: res.institution?.activeStudents || 0,
-            avgProgress: res.institution?.avgProgress || 0,
-            testsAttempted: res.institution?.testsAttempted || 0,
-            activeCount: res.institution?.activeCount || 0,
-            inactiveCount: res.institution?.inactiveCount || 0,
-            students: res.institution?.students || [],
-          };
-          tokenStore.set(res.token);
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
-          localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
-          setActiveSchool(instObj);
+      if (res?.token) {
+        const instObj = {
+          id: res.institution?.id || res.user?.institution_id || 1,
+          name: res.institution?.name || res.user?.institution_name || 'Partner Institution',
+          schoolId: res.institution?.code || input.toUpperCase(),
+          email: res.institution?.email || res.user?.email || input,
+          logoBadge: res.institution?.code?.substring(0, 3).toUpperCase() || input.substring(0, 3).toUpperCase(),
+          tagline: res.institution?.tagline || 'Premier Educational Institution',
+          totalLicenses: res.institution?.totalLicenses || 200,
+          activeStudents: res.institution?.activeStudents || 0,
+          avgProgress: res.institution?.avgProgress || 0,
+          testsAttempted: res.institution?.testsAttempted || 0,
+          activeCount: res.institution?.activeCount || 0,
+          inactiveCount: res.institution?.inactiveCount || 0,
+          students: res.institution?.students || [],
+        };
+        tokenStore.set(res.token);
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
+        localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
+        setActiveSchool(instObj);
+        setLoginError('');
+        console.log('[Institution Login] 5. Login successful! Navigating to /institution/dashboard');
+        navigate('/institution/dashboard', { replace: true });
+        return;
+      }
+
+      // 4. Fallback to multi-tenant school store for offline demo (only if API was unreachable)
+      if (!apiCallMade) {
+        const matched = findPartnerSchool(input, pass);
+        if (matched) {
+          console.log('[Institution Login] Offline demo matched school:', matched.name);
+          tokenStore.set(`token_inst_${matched.schoolId}`);
+          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+          setActiveSchool(matched);
           setLoginError('');
           navigate('/institution/dashboard', { replace: true });
           return;
         }
-      } catch (backendErr) {
-        if (backendErr?.status === 401 || backendErr?.status === 400) {
-          throw new Error(backendErr.message || 'Invalid Institution ID or Password. Please check your credentials or contact support.');
-        }
       }
 
-      // 2. Fallback to multi-tenant school store for offline demo
-      const matched = findPartnerSchool(input, pass);
-
-      if (matched) {
-        tokenStore.set(`token_inst_${matched.schoolId}`);
-        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
-        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
-        setActiveSchool(matched);
-        setLoginError('');
-        navigate('/institution/dashboard', { replace: true });
-        return;
-      } else {
-        setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');
-      }
+      setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');
     } catch (err) {
+      console.error('[Institution Login] Error:', err.message);
       setLoginError(err.message || 'Invalid Institution ID or Password. Please check your credentials or contact support.');
     } finally {
       setHeroSubmitting(false);
@@ -660,9 +672,6 @@ export default function SchoolsB2B() {
                               name="institution_email"
                               type="text"
                               required
-                              readOnly={heroReadOnly}
-                              onFocus={() => setHeroReadOnly(false)}
-                              onClick={() => setHeroReadOnly(false)}
                               autoComplete="username"
                               placeholder="Enter institution ID or registered email"
                               value={loginId}
@@ -689,9 +698,6 @@ export default function SchoolsB2B() {
                               name="institution_password"
                               type={showHeroPassword ? 'text' : 'password'}
                               required
-                              readOnly={heroReadOnly}
-                              onFocus={() => setHeroReadOnly(false)}
-                              onClick={() => setHeroReadOnly(false)}
                               autoComplete="current-password"
                               placeholder="Enter your password"
                               value={loginPassword}

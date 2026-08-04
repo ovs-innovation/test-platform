@@ -29,7 +29,6 @@ export default function InstitutionLogin() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [activeSession, setActiveSession] = useState(null);
-  const [readOnly, setReadOnly] = useState(true);
 
   useEffect(() => {
     try {
@@ -48,13 +47,17 @@ export default function InstitutionLogin() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    console.log('[Institution Login Page] 1. Submit fired', { institutionId, hasPassword: Boolean(password) });
     const input = institutionId.trim().toLowerCase();
     const pass = password.trim();
 
     if (!input || !pass) {
+      console.log('[Institution Login Page] 2. Validation failed: missing input or password');
       setError('Please enter your Institution ID / Email and password.');
       return;
     }
+
+    console.log('[Institution Login Page] 2. Validation passed for input:', input);
 
     if (rememberMe) {
       try { localStorage.setItem('edvedum_remembered_institution_id', input); } catch (_) {}
@@ -66,9 +69,14 @@ export default function InstitutionLogin() {
     setError('');
 
     try {
-      // 1. Attempt backend institution admin login
+      // 3. Attempt backend institution admin login
+      console.log('[Institution Login Page] 3. Calling API endpoint /institution/login with payload:', { identifier: input });
+      let res = null;
+      let apiCallMade = false;
+
       try {
-        const res = await institutionDashboardService.login({
+        apiCallMade = true;
+        res = await institutionDashboardService.login({
           email: input,
           identifier: input,
           institutionId: input,
@@ -76,48 +84,49 @@ export default function InstitutionLogin() {
           schoolId: input,
           password: pass,
         });
-
-        if (res?.token) {
-          const instObj = res.institution || {
-            id: res.user?.institution_id || 1,
-            name: res.user?.institution_name || 'Partner Institution',
-            schoolId: input.toUpperCase(),
-            email: res.user?.email || input,
-          };
-
-          tokenStore.set(res.token);
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
-          localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
-
-          toast.success(`Welcome back, ${instObj.name}!`);
-          navigate('/institution/dashboard', { replace: true });
-          return;
-        }
+        console.log('[Institution Login Page] 4. API Response received:', res);
       } catch (backendErr) {
-        if (backendErr?.status === 401 || backendErr?.status === 400) {
-          throw new Error(backendErr.message || 'Invalid Institution ID or Password. Please check your credentials.');
-        }
+        console.error('[Institution Login Page] 4. API Error caught:', backendErr);
+        const errorMsg = backendErr?.message || backendErr?.details || 'Invalid Institution ID or Password. Please check your credentials.';
+        throw new Error(errorMsg);
       }
 
-      // 2. Check multi-tenant institution store fallback
-      const matched = findPartnerSchool(input, pass);
+      if (res?.token) {
+        const instObj = res.institution || {
+          id: res.user?.institution_id || 1,
+          name: res.user?.institution_name || 'Partner Institution',
+          schoolId: input.toUpperCase(),
+          email: res.user?.email || input,
+        };
 
-      if (matched) {
-        tokenStore.set(`token_inst_${matched.schoolId}`);
-        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
-        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+        tokenStore.set(res.token);
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
+        localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
 
-        toast.success(`Welcome back, ${matched.name}!`);
-        navigate('/institution/dashboard', { state: { loggedInSchool: matched }, replace: true });
+        toast.success(`Welcome back, ${instObj.name}!`);
+        console.log('[Institution Login Page] 5. Login successful! Navigating to /institution/dashboard');
+        navigate('/institution/dashboard', { replace: true });
         return;
       }
 
-      // 3. Fallback: Standard auth login
-      const user = await login({ email: input, password: pass });
-      toast.success(`Welcome back, ${user.name.split(' ')[0]}!`);
-      const dest = location.state?.from?.pathname;
-      navigate(dest && dest.startsWith('/institution') ? dest : '/institution/dashboard', { replace: true });
+      // 4. Check multi-tenant institution store fallback (only if API was not called)
+      if (!apiCallMade) {
+        const matched = findPartnerSchool(input, pass);
+        if (matched) {
+          console.log('[Institution Login Page] Offline demo matched school:', matched.name);
+          tokenStore.set(`token_inst_${matched.schoolId}`);
+          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+
+          toast.success(`Welcome back, ${matched.name}!`);
+          navigate('/institution/dashboard', { state: { loggedInSchool: matched }, replace: true });
+          return;
+        }
+      }
+
+      setError('Invalid Institution ID or Password. Please check your credentials.');
     } catch (err) {
+      console.error('[Institution Login Page] Error:', err.message);
       setError(err.message || 'Invalid Institution ID or Password. Please check your credentials.');
     } finally {
       setSubmitting(false);
@@ -277,9 +286,6 @@ export default function InstitutionLogin() {
                         name="institution_email"
                         type="text"
                         required
-                        readOnly={readOnly}
-                        onFocus={() => setReadOnly(false)}
-                        onClick={() => setReadOnly(false)}
                         autoComplete="username"
                         placeholder="Enter institution ID or registered email"
                         value={institutionId}
@@ -302,9 +308,6 @@ export default function InstitutionLogin() {
                       id="inst-password"
                       name="institution_password"
                       required
-                      readOnly={readOnly}
-                      onFocus={() => setReadOnly(false)}
-                      onClick={() => setReadOnly(false)}
                       autoComplete="current-password"
                       className="rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition"
                       placeholder="Enter your password"
