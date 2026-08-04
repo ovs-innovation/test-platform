@@ -24,6 +24,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { useToast } from '../../../context/ToastContext.jsx';
+import { CustomSelectDropdown } from '../../ui.jsx';
 
 export default function StudentsTab({
   students = [],
@@ -182,51 +183,53 @@ export default function StudentsTab({
 
           {/* Batch Filter */}
           <div className="lg:col-span-3">
-            <select
+            <CustomSelectDropdown
               value={selectedBatch}
-              onChange={(e) => setSelectedBatch(e.target.value)}
-              className={`w-full py-2 px-3 text-xs font-semibold rounded-xl border transition cursor-pointer focus:outline-none ${
-                isDarkMode ? 'border-slate-800 bg-slate-950 text-slate-200 focus:border-cyan-500' : 'border-slate-200 bg-slate-50 text-slate-800 focus:border-blue-600'
-              }`}
-            >
-              <option value="All">All Batches</option>
-              {batches.map((b) => (
-                <option key={b.id} value={b.id}>
-                  {b.batch_name || b.name} ({b.student_count || 0})
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setSelectedBatch(val)}
+              options={[
+                { value: 'All', label: 'All Batches' },
+                ...batches.map((b) => ({
+                  value: b.id,
+                  label: `${b.batch_name || b.name} (${b.student_count || 0})`,
+                })),
+              ]}
+              isDarkMode={isDarkMode}
+              placeholder="All Batches"
+              className="w-full"
+            />
           </div>
 
           {/* Target Exam Filter */}
           <div className="lg:col-span-2">
-            <select
+            <CustomSelectDropdown
               value={selectedCourse}
-              onChange={(e) => setSelectedCourse(e.target.value)}
-              className={`w-full py-2 px-3 text-xs font-semibold rounded-xl border transition cursor-pointer focus:outline-none ${
-                isDarkMode ? 'border-slate-800 bg-slate-950 text-slate-200 focus:border-cyan-500' : 'border-slate-200 bg-slate-50 text-slate-800 focus:border-blue-600'
-              }`}
-            >
-              <option value="All">All Exams</option>
-              <option value="NEET">NEET UG</option>
-              <option value="JEE">JEE Main & Adv</option>
-              <option value="Foundation">Class 9-10</option>
-            </select>
+              onChange={(val) => setSelectedCourse(val)}
+              options={[
+                { value: 'All', label: 'All Exams' },
+                { value: 'NEET', label: 'NEET UG' },
+                { value: 'JEE', label: 'JEE Main & Adv' },
+                { value: 'Foundation', label: 'Class 9-10' },
+              ]}
+              isDarkMode={isDarkMode}
+              placeholder="All Exams"
+              className="w-full"
+            />
           </div>
 
           {/* Account Status Filter */}
           <div className="lg:col-span-2">
-            <select
+            <CustomSelectDropdown
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className={`w-full py-2 px-3 text-xs font-semibold rounded-xl border transition cursor-pointer focus:outline-none ${
-                isDarkMode ? 'border-slate-800 bg-slate-950 text-slate-200 focus:border-cyan-500' : 'border-slate-200 bg-slate-50 text-slate-800 focus:border-blue-600'
-              }`}
-            >
-              <option value="All">All Status</option>
-              <option value="Active">Active Accounts</option>
-              <option value="Blocked">Blocked Accounts</option>
-            </select>
+              onChange={(val) => setSelectedStatus(val)}
+              options={[
+                { value: 'All', label: 'All Status' },
+                { value: 'Active', label: 'Active Accounts' },
+                { value: 'Blocked', label: 'Blocked Accounts' },
+              ]}
+              isDarkMode={isDarkMode}
+              placeholder="All Status"
+              className="w-full"
+            />
           </div>
         </div>
       </div>
@@ -459,17 +462,21 @@ export default function StudentsTab({
               <button
                 disabled={currentPage === 1}
                 onClick={() => setCurrentPage(currentPage - 1)}
-                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 disabled:opacity-40 transition cursor-pointer"
+                className={`p-1.5 rounded-lg border transition cursor-pointer disabled:opacity-40 ${
+                  isDarkMode ? 'border-slate-700 hover:bg-slate-800 text-slate-300' : 'border-slate-200 hover:bg-slate-100 text-slate-700'
+                }`}
               >
                 <ChevronLeft className="h-4 w-4" />
               </button>
-              <span className="px-3 font-bold text-white">
+              <span className={`px-3 font-bold text-xs ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 Page {currentPage} of {totalPages}
               </span>
               <button
                 disabled={currentPage >= totalPages}
                 onClick={() => setCurrentPage(currentPage + 1)}
-                className="p-1.5 rounded-lg border border-slate-700 hover:bg-slate-800 disabled:opacity-40 transition cursor-pointer"
+                className={`p-1.5 rounded-lg border transition cursor-pointer disabled:opacity-40 ${
+                  isDarkMode ? 'border-slate-700 hover:bg-slate-800 text-slate-300' : 'border-slate-200 hover:bg-slate-100 text-slate-700'
+                }`}
               >
                 <ChevronRight className="h-4 w-4" />
               </button>
@@ -479,12 +486,14 @@ export default function StudentsTab({
       ) : (
         /* FILTER EMPTY STATE */
         <div className={`rounded-3xl border p-12 text-center space-y-4 ${
-          isDarkMode ? 'bg-[#071126] border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700'
+          isDarkMode ? 'bg-[#071126] border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'
         }`}>
           <div className="h-16 w-16 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center mx-auto">
             <AlertCircle className="h-8 w-8" />
           </div>
-          <h3 className="text-lg font-extrabold text-white">No students match the selected filters</h3>
+          <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            No students match the selected filters
+          </h3>
           <p className="text-xs text-slate-400 max-w-sm mx-auto">
             Try adjusting your search query, batch selection, or status filters to view student records.
           </p>
@@ -495,7 +504,11 @@ export default function StudentsTab({
               setSelectedStatus('All');
               setSelectedCourse('All');
             }}
-            className="inline-flex items-center gap-2 rounded-xl bg-slate-800 px-4 py-2 text-xs font-bold text-cyan-400 hover:bg-slate-700 transition cursor-pointer"
+            className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-extrabold transition cursor-pointer border ${
+              isDarkMode
+                ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:bg-slate-700'
+                : 'bg-slate-100 border-slate-300 text-blue-700 hover:bg-slate-200 shadow-sm'
+            }`}
           >
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Reset All Filters</span>

@@ -13,6 +13,7 @@ import {
   FileSpreadsheet,
 } from 'lucide-react';
 import { downloadCsv } from '../../../lib/csv.js';
+import { CustomSelectDropdown } from '../../ui.jsx';
 
 export default function AttendanceTab({
   students = [],
@@ -143,20 +144,20 @@ export default function AttendanceTab({
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="h-4 w-4 text-slate-400" />
-            <select
+          <div className="w-full sm:w-auto">
+            <CustomSelectDropdown
               value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-              className={`px-3 py-2 text-xs rounded-xl border transition ${
-                isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-slate-100 border-slate-200 text-slate-900'
-              }`}
-            >
-              <option value="All">All Statuses</option>
-              <option value="Completed">Completed</option>
-              <option value="Missed">Missed</option>
-              <option value="Pending">Pending</option>
-            </select>
+              onChange={(val) => setSelectedStatus(val)}
+              options={[
+                { value: 'All', label: 'All Statuses' },
+                { value: 'Completed', label: 'Completed' },
+                { value: 'Missed', label: 'Missed' },
+                { value: 'Pending', label: 'Pending' },
+              ]}
+              isDarkMode={isDarkMode}
+              icon={Filter}
+              className="w-full sm:w-48"
+            />
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react';
-import { Eye, EyeOff, Key } from 'lucide-react';
+import { useState, useMemo, useRef, useEffect } from 'react';
+import { Eye, EyeOff, Key, ChevronDown, Check } from 'lucide-react';
 import { EmptyLineArt } from './landing/LineArtIllustrations.jsx';
 
 export function PasswordInput({
@@ -397,6 +397,90 @@ export function ErrorState({ message, onRetry }) {
         >
           Try Again
         </button>
+      )}
+    </div>
+  );
+}
+
+export function CustomSelectDropdown({
+  value,
+  onChange,
+  options = [],
+  placeholder = 'Select option...',
+  isDarkMode = true,
+  className = '',
+  icon: LeftIcon = null,
+  align = 'left',
+}) {
+  const [isOpen, setIsOpen] = useState(false);
+  const containerRef = useRef(null);
+
+  // Normalize options array into [{ value, label }]
+  const normalizedOptions = options.map((opt) => {
+    if (typeof opt === 'object' && opt !== null) {
+      return { value: opt.value ?? opt.id ?? opt.name, label: opt.label ?? opt.name ?? opt.batch_name ?? opt.value };
+    }
+    return { value: opt, label: String(opt) };
+  });
+
+  const selectedOpt = normalizedOptions.find((o) => String(o.value) === String(value)) || normalizedOptions[0];
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div ref={containerRef} className={`relative inline-block text-left ${className}`}>
+      <button
+        type="button"
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`w-full flex items-center justify-between gap-2.5 px-4 py-2.5 rounded-2xl border text-xs sm:text-sm font-extrabold transition-all cursor-pointer shadow-sm ${
+          isDarkMode
+            ? 'bg-[#0A1628] border-slate-800 text-slate-100 hover:border-slate-700 focus:border-cyan-500'
+            : 'bg-white border-slate-200 text-slate-900 hover:border-slate-300 hover:bg-slate-50 focus:border-blue-600'
+        }`}
+      >
+        <div className="flex items-center gap-2 truncate">
+          {LeftIcon && <LeftIcon className="h-4 w-4 text-slate-400 shrink-0" />}
+          <span className="truncate">{selectedOpt?.label || placeholder}</span>
+        </div>
+        <ChevronDown className={`h-4 w-4 text-slate-400 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-cyan-500' : ''}`} />
+      </button>
+
+      {isOpen && (
+        <div
+          className={`absolute ${align === 'right' ? 'right-0' : 'left-0'} mt-2 w-full min-w-[180px] max-h-60 overflow-y-auto rounded-2xl border p-1.5 z-50 shadow-2xl animate-in fade-in slide-in-from-top-2 custom-scrollbar ${
+            isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-900'
+          }`}
+        >
+          {normalizedOptions.map((opt) => {
+            const isSelected = String(opt.value) === String(value);
+            return (
+              <button
+                key={String(opt.value)}
+                type="button"
+                onClick={() => {
+                  onChange(opt.value);
+                  setIsOpen(false);
+                }}
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${
+                  isSelected
+                    ? (isDarkMode ? 'bg-cyan-500/10 text-cyan-400 font-extrabold' : 'bg-blue-50 text-blue-700 font-extrabold')
+                    : (isDarkMode ? 'hover:bg-slate-800/80 hover:text-white' : 'hover:bg-slate-100 hover:text-slate-900')
+                }`}
+              >
+                <span className="truncate">{opt.label}</span>
+                {isSelected && <Check className="h-3.5 w-3.5 text-cyan-500 shrink-0 ml-2" />}
+              </button>
+            );
+          })}
+        </div>
       )}
     </div>
   );

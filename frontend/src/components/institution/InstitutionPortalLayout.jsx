@@ -142,18 +142,18 @@ export default function InstitutionPortalLayout({
         }`}
       >
         {/* BRAND LOGO HEADER */}
-        <div className={`flex items-center justify-between px-5 h-20 border-b shrink-0 ${
+        <div className={`flex items-center ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center px-0' : 'justify-between px-5'} h-20 border-b shrink-0 ${
           isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
         }`}>
-          <div className="flex items-center gap-3.5 overflow-hidden">
+          <div className={`flex items-center gap-3.5 ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center w-full' : 'overflow-hidden'}`}>
             {institutionData?.logo_url ? (
               <img
                 src={institutionData.logo_url}
                 alt={institutionData.name}
-                className="h-11 w-11 rounded-2xl object-contain bg-white p-1 shadow-md border border-slate-200/50 shrink-0"
+                className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl object-contain bg-white p-1 shadow-md border border-slate-200/50 shrink-0"
               />
             ) : (
-              <div className="h-11 w-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-lg flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+              <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-lg flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
                 {institutionData?.logoBadge || (institutionData?.name ? institutionData.name.substring(0, 2).toUpperCase() : 'ED')}
               </div>
             )}
@@ -179,7 +179,7 @@ export default function InstitutionPortalLayout({
         </div>
 
         {/* NAVIGATION ITEMS */}
-        <nav className="flex-1 overflow-y-auto px-3.5 py-5 space-y-1.5 custom-scrollbar">
+        <nav className={`flex-1 overflow-y-auto ${sidebarCollapsed && !mobileDrawerOpen ? 'px-2 py-4 space-y-2' : 'px-3.5 py-5 space-y-1.5'} custom-scrollbar`}>
           {INSTITUTION_NAV_ITEMS.map((item) => {
             const Icon = item.icon;
             const isActive = currentPath.startsWith(item.path);
@@ -190,15 +190,19 @@ export default function InstitutionPortalLayout({
                 to={item.path}
                 onClick={() => setMobileDrawerOpen(false)}
                 title={sidebarCollapsed ? item.label : undefined}
-                className={`w-full flex items-center gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm transition-all cursor-pointer ${
+                className={`flex items-center transition-all cursor-pointer ${
+                  sidebarCollapsed && !mobileDrawerOpen
+                    ? 'h-12 w-12 mx-auto justify-center rounded-2xl'
+                    : 'w-full gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm'
+                } ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25 font-black'
                     : isDarkMode
                       ? 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                } ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center px-0' : ''}`}
+                }`}
               >
-                <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                <Icon className={`h-5 w-5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                 {(!sidebarCollapsed || mobileDrawerOpen) && (
                   <span className="truncate">{item.label}</span>
                 )}
@@ -211,10 +215,17 @@ export default function InstitutionPortalLayout({
         </nav>
 
         {/* SIDEBAR FOOTER */}
-        <div className={`p-4 border-t shrink-0 ${isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'}`}>
+        <div className={`border-t shrink-0 ${sidebarCollapsed && !mobileDrawerOpen ? 'p-2' : 'p-4'} ${
+          isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
+        }`}>
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className={`hidden lg:flex w-full items-center justify-center gap-2 p-3 rounded-2xl text-xs font-extrabold transition cursor-pointer ${
+            title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            className={`hidden lg:flex items-center justify-center transition cursor-pointer ${
+              sidebarCollapsed && !mobileDrawerOpen
+                ? 'h-11 w-11 mx-auto rounded-2xl'
+                : 'w-full gap-2 p-3 rounded-2xl text-xs font-extrabold'
+            } ${
               isDarkMode ? 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
             }`}
           >
@@ -228,15 +239,20 @@ export default function InstitutionPortalLayout({
             )}
           </button>
 
-          {(!sidebarCollapsed || mobileDrawerOpen) && (
-            <button
-              onClick={handleLogout}
-              className="mt-2 w-full flex items-center justify-center gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 transition cursor-pointer text-center"
-            >
-              <LogOut className="h-4 w-4 shrink-0 text-rose-400" />
-              <span className="text-center">Sign Out</span>
-            </button>
-          )}
+          <button
+            onClick={handleLogout}
+            title="Sign Out"
+            className={`flex items-center justify-center transition cursor-pointer text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 ${
+              sidebarCollapsed && !mobileDrawerOpen
+                ? 'h-11 w-11 mx-auto mt-2 rounded-2xl'
+                : 'mt-2 w-full gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold text-center'
+            }`}
+          >
+            <LogOut className="h-4.5 w-4.5 shrink-0 text-rose-400" />
+            {(!sidebarCollapsed || mobileDrawerOpen) && (
+              <span className="text-center font-extrabold">Sign Out</span>
+            )}
+          </button>
         </div>
       </aside>
 

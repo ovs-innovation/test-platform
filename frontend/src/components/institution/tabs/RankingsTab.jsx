@@ -13,6 +13,7 @@ import {
   Sparkles,
   BarChart2,
 } from 'lucide-react';
+import { CustomSelectDropdown } from '../../ui.jsx';
 
 export default function RankingsTab({
   rankings = [],
@@ -104,22 +105,21 @@ export default function RankingsTab({
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="h-4 w-4 text-slate-400" />
-            <select
+          <div className="w-full sm:w-auto">
+            <CustomSelectDropdown
               value={selectedBatch}
-              onChange={(e) => setSelectedBatch(e.target.value)}
-              className={`px-3 py-2 text-xs rounded-xl border transition ${
-                isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-slate-100 border-slate-200 text-slate-900'
-              }`}
-            >
-              <option value="All">All Batches</option>
-              {safeBatches.map((b) => (
-                <option key={b.id} value={b.batch_name || b.name}>
-                  {b.batch_name || b.name}
-                </option>
-              ))}
-            </select>
+              onChange={(val) => setSelectedBatch(val)}
+              options={[
+                { value: 'All', label: 'All Batches' },
+                ...safeBatches.map((b) => ({
+                  value: b.batch_name || b.name,
+                  label: b.batch_name || b.name,
+                })),
+              ]}
+              isDarkMode={isDarkMode}
+              icon={Filter}
+              className="w-full sm:w-56"
+            />
           </div>
         </div>
       </div>
