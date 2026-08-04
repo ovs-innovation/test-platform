@@ -76,6 +76,7 @@ export default function SchoolsB2B() {
   const [loginPassword, setLoginPassword] = useState('');
   const [showHeroPassword, setShowHeroPassword] = useState(false);
   const [heroRememberMe, setHeroRememberMe] = useState(false);
+  const [heroSubmitting, setHeroSubmitting] = useState(false);
   const [loginError, setLoginError] = useState('');
 
   // Dashboard modal states
