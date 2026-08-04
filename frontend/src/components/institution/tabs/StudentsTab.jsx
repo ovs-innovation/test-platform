@@ -525,31 +525,33 @@ export default function StudentsTab({
             </div>
 
             <div className="space-y-4 text-xs">
-              <div className="flex items-center gap-4 p-4 rounded-2xl bg-slate-900 border border-slate-800">
-                <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 font-black text-xl flex items-center justify-center text-white">
+              <div className={`flex items-center gap-4 p-4 rounded-2xl border ${
+                isDarkMode ? 'bg-slate-900 border-slate-800 text-white' : 'bg-slate-50 border-slate-200 text-slate-900'
+              }`}>
+                <div className="h-14 w-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-cyan-500 font-black text-xl flex items-center justify-center text-white shrink-0">
                   {inspectStudent.name.charAt(0)}
                 </div>
                 <div>
-                  <h4 className="text-base font-extrabold text-white">{inspectStudent.name}</h4>
+                  <h4 className={`text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{inspectStudent.name}</h4>
                   <p className="text-xs text-cyan-400 font-mono font-bold">{inspectStudent.roll_number || inspectStudent.rollNo}</p>
                   <p className="text-[11px] text-slate-400">{inspectStudent.email}</p>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className="text-slate-400 text-[10px] uppercase font-extrabold">Batch Allocation</span>
-                  <p className="font-bold text-white mt-0.5">{inspectStudent.batch_name || 'General Batch'}</p>
+                  <p className={`font-bold mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{inspectStudent.batch_name || 'General Batch'}</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className="text-slate-400 text-[10px] uppercase font-extrabold">Target Exam</span>
                   <p className="font-bold text-cyan-400 mt-0.5">{inspectStudent.target_exam || inspectStudent.course || 'NEET'}</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className="text-slate-400 text-[10px] uppercase font-extrabold">Tests Completed</span>
-                  <p className="font-bold text-white mt-0.5">{inspectStudent.tests_completed || 0} Mock Exams</p>
+                  <p className={`font-bold mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{inspectStudent.tests_completed || 0} Mock Exams</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className="text-slate-400 text-[10px] uppercase font-extrabold">Average Accuracy</span>
                   <p className="font-bold text-emerald-400 mt-0.5">{inspectStudent.average_score || 0}%</p>
                 </div>
@@ -559,7 +561,9 @@ export default function StudentsTab({
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setInspectStudent(null)}
-                className="px-4 py-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-200 hover:bg-slate-700"
+                className={`px-4 py-2 rounded-xl text-xs font-bold ${
+                  isDarkMode ? 'bg-slate-800 text-slate-200 hover:bg-slate-700' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                }`}
               >
                 Close
               </button>

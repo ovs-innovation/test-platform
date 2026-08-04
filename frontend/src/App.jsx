@@ -27,13 +27,17 @@ import InstitutionDashboard, {
   InstOverviewTabWrapper,
   InstStudentsTabWrapper,
   InstBatchesTabWrapper,
+  InstTestSeriesTabWrapper,
   InstTestAssignmentsTabWrapper,
   InstEbooksTabWrapper,
   InstAnalyticsTabWrapper,
+  InstRankingsTabWrapper,
   InstReportsTabWrapper,
+  InstAttendanceTabWrapper,
   InstPaymentsTabWrapper,
   InstNotificationsTabWrapper,
   InstProfileTabWrapper,
+  InstSettingsTabWrapper,
 } from './pages/institution/InstitutionDashboard.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
@@ -131,17 +135,17 @@ export default function App() {
           <Route path="dashboard" element={<InstOverviewTabWrapper />} />
           <Route path="students" element={<InstStudentsTabWrapper />} />
           <Route path="batches" element={<InstBatchesTabWrapper />} />
-          <Route path="test-series" element={<InstTestAssignmentsTabWrapper />} />
+          <Route path="test-series" element={<InstTestSeriesTabWrapper />} />
           <Route path="test-assignments" element={<InstTestAssignmentsTabWrapper />} />
           <Route path="ebooks" element={<InstEbooksTabWrapper />} />
           <Route path="analytics" element={<InstAnalyticsTabWrapper />} />
-          <Route path="rankings" element={<InstAnalyticsTabWrapper />} />
+          <Route path="rankings" element={<InstRankingsTabWrapper />} />
           <Route path="reports" element={<InstReportsTabWrapper />} />
-          <Route path="attendance" element={<InstReportsTabWrapper />} />
+          <Route path="attendance" element={<InstAttendanceTabWrapper />} />
           <Route path="payments" element={<InstPaymentsTabWrapper />} />
           <Route path="notifications" element={<InstNotificationsTabWrapper />} />
           <Route path="profile" element={<InstProfileTabWrapper />} />
-          <Route path="settings" element={<InstProfileTabWrapper />} />
+          <Route path="settings" element={<InstSettingsTabWrapper />} />
           <Route path=":id/dashboard" element={<Navigate to="/institution/dashboard" replace />} />
         </Route>
 

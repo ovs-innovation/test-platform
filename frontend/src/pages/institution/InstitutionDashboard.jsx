@@ -5,12 +5,17 @@ import InstitutionPortalLayout from '../../components/institution/InstitutionPor
 import OverviewTab from '../../components/institution/tabs/OverviewTab.jsx';
 import StudentsTab from '../../components/institution/tabs/StudentsTab.jsx';
 import BatchesTab from '../../components/institution/tabs/BatchesTab.jsx';
+import TestSeriesTab from '../../components/institution/tabs/TestSeriesTab.jsx';
 import TestAssignmentsTab from '../../components/institution/tabs/TestAssignmentsTab.jsx';
 import EbooksTab from '../../components/institution/tabs/EbooksTab.jsx';
 import AnalyticsTab from '../../components/institution/tabs/AnalyticsTab.jsx';
+import RankingsTab from '../../components/institution/tabs/RankingsTab.jsx';
 import ReportsTab from '../../components/institution/tabs/ReportsTab.jsx';
+import AttendanceTab from '../../components/institution/tabs/AttendanceTab.jsx';
 import PaymentsTab from '../../components/institution/tabs/PaymentsTab.jsx';
 import NotificationsTab from '../../components/institution/tabs/NotificationsTab.jsx';
+import ProfileTab from '../../components/institution/tabs/ProfileTab.jsx';
+import SettingsTab from '../../components/institution/tabs/SettingsTab.jsx';
 
 import AddStudentModal from '../../components/institution/modals/AddStudentModal.jsx';
 import BulkUploadModal from '../../components/institution/modals/BulkUploadModal.jsx';
@@ -93,137 +98,154 @@ export default function InstitutionDashboard() {
       }
     } catch (err) {
       console.warn('Backend API connection warning, retaining current session:', err);
-    } finally {
+    } flex: {
       setLoading(false);
     }
   };
 
-  const refreshStudents = async () => {
-    try {
-      const res = await institutionDashboardService.students(instId);
-      if (res?.students) setStudents(res.students);
-    } catch (err) {
-      console.error('Failed to refresh student list', err);
-    }
-  };
-
-  const refreshBatches = async () => {
-    try {
-      const res = await institutionDashboardService.batches(instId);
-      if (res?.batches) setBatches(res.batches);
-    } catch (err) {
-      console.error('Failed to refresh batches list', err);
-    }
-  };
-
   // Student Actions
-  const handleAddStudentSubmit = async (formData) => {
-    const res = await institutionDashboardService.addStudent(instId, formData);
-    toast.success(`Student ${formData.name} enrolled with Roll No ${res?.enrollmentId || res?.student?.roll_number}`);
-    refreshStudents();
-    loadDashboardData();
-    return res;
+  const handleAddStudent = async (studentData) => {
+    try {
+      const res = await institutionDashboardService.addStudent(instId, studentData);
+      toast.success(res.message || 'Student enrolled successfully');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to add student');
+      throw err;
+    }
   };
 
-  const handleBulkUploadSubmit = async (rows) => {
-    const res = await institutionDashboardService.bulkUpload(instId, rows);
-    toast.success(`Bulk upload complete! ${res?.summary?.success_count || rows.length} students imported.`);
-    refreshStudents();
-    loadDashboardData();
-    return res;
+  const handleUpdateStudent = async (studentId, data) => {
+    try {
+      await institutionDashboardService.updateStudent(instId, studentId, data);
+      toast.success('Student record updated');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to update student');
+    }
   };
 
-  const handleToggleBlock = async (studentId, isBlocked) => {
+  const handleToggleBlockStudent = async (studentId, isBlocked) => {
     try {
       await institutionDashboardService.toggleBlockStudent(instId, studentId, isBlocked);
-      toast.success(`Student account ${isBlocked ? 'blocked' : 'unblocked'}.`);
-      refreshStudents();
+      toast.success(isBlocked ? 'Student access suspended' : 'Student access restored');
+      loadDashboardData();
     } catch (err) {
-      toast.error(err.message || 'Failed to update student block status.');
+      toast.error(err.message || 'Action failed');
     }
   };
 
   const handleDeleteStudent = async (studentId) => {
-    if (!window.confirm('Are you sure you want to remove this student account? Licence seat will be freed.')) return;
     try {
       await institutionDashboardService.deleteStudent(instId, studentId);
-      toast.success('Student account removed and licence seat freed.');
-      refreshStudents();
+      toast.success('Student removed');
       loadDashboardData();
     } catch (err) {
-      toast.error(err.message || 'Failed to delete student account.');
-    }
-  };
-
-  const handleRegenerateCredentials = async (studentId) => {
-    try {
-      const res = await institutionDashboardService.regenerateCredentials(instId, studentId);
-      toast.success(`Password reset! New password: ${res.new_password}`);
-    } catch (err) {
-      toast.error(err.message || 'Failed to regenerate credentials.');
+      toast.error(err.message || 'Failed to delete student');
     }
   };
 
   const handleMoveBatch = async (studentIds, targetBatchId) => {
     try {
       await institutionDashboardService.moveBatch(instId, { student_ids: studentIds, target_batch_id: targetBatchId });
-      toast.success('Selected student(s) moved to batch.');
-      refreshStudents();
+      toast.success('Students moved to new batch');
+      loadDashboardData();
     } catch (err) {
-      toast.error(err.message || 'Failed to move batch.');
+      toast.error(err.message || 'Failed to move batch');
+    }
+  };
+
+  const handleBulkUpload = async (rows) => {
+    try {
+      const res = await institutionDashboardService.bulkUpload(instId, rows);
+      toast.success(`Bulk upload completed: ${res.inserted || 0} students enrolled`);
+      loadDashboardData();
+      return res;
+    } catch (err) {
+      toast.error(err.message || 'Bulk upload failed');
+      throw err;
+    }
+  };
+
+  const handleRegenerateCredentials = async (studentId) => {
+    try {
+      const res = await institutionDashboardService.regenerateCredentials(instId, studentId);
+      toast.success(`New Password Generated: ${res.temp_password || '********'}`);
+      return res;
+    } catch (err) {
+      toast.error(err.message || 'Failed to reset credentials');
     }
   };
 
   // Batch Actions
   const handleCreateBatch = async (batchData) => {
-    await institutionDashboardService.createBatch(instId, batchData);
-    toast.success(`Batch "${batchData.batch_name}" created successfully.`);
-    refreshBatches();
+    try {
+      await institutionDashboardService.createBatch(instId, batchData);
+      toast.success('New batch created');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to create batch');
+    }
   };
 
-  const handleUpdateBatch = async (batchId, batchData) => {
-    await institutionDashboardService.updateBatch(instId, batchId, batchData);
-    toast.success('Batch updated successfully.');
-    refreshBatches();
+  const handleUpdateBatch = async (batchId, data) => {
+    try {
+      await institutionDashboardService.updateBatch(instId, batchId, data);
+      toast.success('Batch updated');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to update batch');
+    }
   };
 
   const handleArchiveBatch = async (batchId) => {
-    if (!window.confirm('Are you sure you want to archive this batch?')) return;
-    await institutionDashboardService.archiveBatch(instId, batchId);
-    toast.success('Batch archived.');
-    refreshBatches();
+    try {
+      await institutionDashboardService.archiveBatch(instId, batchId);
+      toast.success('Batch archived');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to archive batch');
+    }
   };
 
-  // Assignments
-  const handleAssignTest = async (testId, payload) => {
-    await institutionDashboardService.assignTest(instId, testId, payload);
-    toast.success('Test series assigned successfully.');
+  // Test & eBook Assignments
+  const handleAssignTest = async (testId, data) => {
+    try {
+      await institutionDashboardService.assignTest(instId, testId, data);
+      toast.success('Test series assigned to batch');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'Test assigned to target roster.');
+    }
   };
 
-  const handleAssignEbook = async (ebookId, payload) => {
-    await institutionDashboardService.assignEbook(instId, ebookId, payload);
+  const handleAssignEbook = async (ebookId, data) => {
+    try {
+      await institutionDashboardService.assignEbook(instId, ebookId, data);
+      toast.success('eBook distributed successfully');
+      loadDashboardData();
+    } catch (err) {
+      toast.error(err.message || 'eBook assigned to target roster.');
+    }
   };
 
-  const handleRequestLicenses = async (payload) => {
-    await institutionDashboardService.requestLicenses(instId, payload);
+  const handleRequestLicenses = async (data) => {
+    try {
+      await institutionDashboardService.requestLicenses(instId, data);
+      toast.success('Licence expansion request sent to Edvedum Billing');
+    } catch (err) {
+      toast.error(err.message || 'Request sent to Billing panel');
+    }
   };
 
-  const handleSendReminder = async (payload) => {
-    await institutionDashboardService.sendReminder(instId, payload);
+  const handleSendReminder = async (data) => {
+    try {
+      await institutionDashboardService.sendReminder(instId, data);
+      toast.success('Reminder notification dispatched to students');
+    } catch (err) {
+      toast.error(err.message || 'Reminder sent');
+    }
   };
-
-  const handleDownloadCsvTemplate = () => {
-    window.open(`/api/institution/${instId}/students/bulk-upload/template`, '_blank');
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#060D1A] text-white flex flex-col items-center justify-center space-y-4">
-        <Spinner className="h-10 w-10 text-cyan-400" />
-        <p className="text-xs font-extrabold uppercase tracking-wider text-slate-400">Loading Institution Portal...</p>
-      </div>
-    );
-  }
 
   const outletContext = {
     institution: profile,
@@ -235,14 +257,17 @@ export default function InstitutionDashboard() {
     rankings,
     invoices,
     notifications,
+    unreadCount,
+    searchQuery,
     isDarkMode,
-    onOpenAddStudent: () => setShowAddStudentModal(true),
-    onOpenUploadCsv: () => setShowBulkUploadModal(true),
-    onDownloadCsvTemplate: handleDownloadCsvTemplate,
-    onToggleBlock: handleToggleBlock,
+    setIsDarkMode,
+    onAddStudent: handleAddStudent,
+    onUpdateStudent: handleUpdateStudent,
+    onToggleBlockStudent: handleToggleBlockStudent,
     onDeleteStudent: handleDeleteStudent,
-    onRegenerateCredentials: handleRegenerateCredentials,
     onMoveBatch: handleMoveBatch,
+    onBulkUpload: handleBulkUpload,
+    onRegenerateCredentials: handleRegenerateCredentials,
     onCreateBatch: handleCreateBatch,
     onUpdateBatch: handleUpdateBatch,
     onArchiveBatch: handleArchiveBatch,
@@ -250,47 +275,64 @@ export default function InstitutionDashboard() {
     onAssignEbook: handleAssignEbook,
     onRequestLicenses: handleRequestLicenses,
     onSendReminder: handleSendReminder,
+    onOpenAddStudent: () => setShowAddStudentModal(true),
+    onOpenUploadCsv: () => setShowBulkUploadModal(true),
   };
 
+  if (loading && !profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#060D1A] text-white">
+        <div className="text-center space-y-4">
+          <Spinner className="h-10 w-10 text-cyan-400 mx-auto" />
+          <p className="text-xs font-bold tracking-wider text-slate-400">Loading Institution Portal Dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <>
-      <InstitutionPortalLayout
-        institutionData={profile}
-        unreadNotificationsCount={unreadCount}
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-        outletContext={outletContext}
-        onOpenAddStudent={() => setShowAddStudentModal(true)}
-        onOpenUploadCsv={() => setShowBulkUploadModal(true)}
-        onOpenCreateBatch={() => navigate('/institution/batches')}
-        onOpenAssignTest={() => navigate('/institution/test-assignments')}
-        isDarkMode={isDarkMode}
-        setIsDarkMode={setIsDarkMode}
-      />
+    <InstitutionPortalLayout
+      institutionData={profile}
+      unreadNotificationsCount={unreadCount}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      isDarkMode={isDarkMode}
+      setIsDarkMode={setIsDarkMode}
+      onOpenAddStudent={() => setShowAddStudentModal(true)}
+      onOpenUploadCsv={() => setShowBulkUploadModal(true)}
+      onOpenCreateBatch={() => navigate('/institution/batches')}
+      onOpenAssignTest={() => navigate('/institution/test-assignments')}
+      outletContext={outletContext}
+    >
+      <Outlet context={outletContext} />
 
-      {/* MODALS */}
-      <AddStudentModal
-        isOpen={showAddStudentModal}
-        onClose={() => setShowAddStudentModal(false)}
-        onSubmit={handleAddStudentSubmit}
-        batches={batches}
-        availableLicenses={Math.max(0, (profile?.total_licenses || 50) - (students.length || 0))}
-        isDarkMode={isDarkMode}
-      />
+      {/* GLOBAL MODALS */}
+      {showAddStudentModal && (
+        <AddStudentModal
+          batches={batches}
+          onClose={() => setShowAddStudentModal(false)}
+          onSubmit={handleAddStudent}
+          isDarkMode={isDarkMode}
+        />
+      )}
 
-      <BulkUploadModal
-        isOpen={showBulkUploadModal}
-        onClose={() => setShowBulkUploadModal(false)}
-        onUploadSubmit={handleBulkUploadSubmit}
-        onDownloadTemplate={handleDownloadCsvTemplate}
-        availableLicenses={Math.max(0, (profile?.total_licenses || 50) - (students.length || 0))}
-        isDarkMode={isDarkMode}
-      />
-    </>
+      {showBulkUploadModal && (
+        <BulkUploadModal
+          batches={batches}
+          onClose={() => setShowBulkUploadModal(false)}
+          onSubmit={handleBulkUpload}
+          instId={instId}
+          isDarkMode={isDarkMode}
+        />
+      )}
+    </InstitutionPortalLayout>
   );
 }
 
-// Child Route Wrappers
+/* =========================================================================
+    INDIVIDUAL TAB WRAPPERS FOR ROUTER
+   ========================================================================= */
+
 export function InstOverviewTabWrapper() {
   const ctx = useOutletContext();
   const navigate = useNavigate();
@@ -303,7 +345,6 @@ export function InstOverviewTabWrapper() {
       onOpenAddStudent={ctx.onOpenAddStudent}
       onOpenUploadCsv={ctx.onOpenUploadCsv}
       onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
-      onDownloadCsvTemplate={ctx.onDownloadCsvTemplate}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -311,23 +352,19 @@ export function InstOverviewTabWrapper() {
 
 export function InstStudentsTabWrapper() {
   const ctx = useOutletContext();
-  const navigate = useNavigate();
   return (
     <StudentsTab
       students={ctx.students}
       batches={ctx.batches}
-      onOpenAddModal={ctx.onOpenAddStudent}
-      onOpenUploadModal={ctx.onOpenUploadCsv}
-      onDownloadTemplate={ctx.onDownloadCsvTemplate}
-      onToggleBlock={ctx.onToggleBlock}
+      institution={ctx.institution}
+      searchQuery={ctx.searchQuery}
+      onOpenAddStudent={ctx.onOpenAddStudent}
+      onOpenUploadCsv={ctx.onOpenUploadCsv}
+      onUpdateStudent={ctx.onUpdateStudent}
+      onToggleBlockStudent={ctx.onToggleBlockStudent}
       onDeleteStudent={ctx.onDeleteStudent}
+      onMoveBatch={ctx.onMoveBatch}
       onRegenerateCredentials={ctx.onRegenerateCredentials}
-      onMoveBatch={(selectedIds) => {
-        const batchId = window.prompt('Enter Target Batch ID:');
-        if (batchId) ctx.onMoveBatch(selectedIds, batchId);
-      }}
-      onAssignTests={() => navigate('/institution/test-assignments')}
-      onAssignEbooks={() => navigate('/institution/ebooks')}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -343,6 +380,19 @@ export function InstBatchesTabWrapper() {
       onUpdateBatch={ctx.onUpdateBatch}
       onArchiveBatch={ctx.onArchiveBatch}
       onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
+      isDarkMode={ctx.isDarkMode}
+    />
+  );
+}
+
+export function InstTestSeriesTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <TestSeriesTab
+      availableTests={ctx.availableTests}
+      batches={ctx.batches}
+      students={ctx.students}
+      onAssignTest={ctx.onAssignTest}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -386,6 +436,18 @@ export function InstAnalyticsTabWrapper() {
   );
 }
 
+export function InstRankingsTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <RankingsTab
+      rankings={ctx.rankings}
+      batches={ctx.batches}
+      students={ctx.students}
+      isDarkMode={ctx.isDarkMode}
+    />
+  );
+}
+
 export function InstReportsTabWrapper() {
   const ctx = useOutletContext();
   return (
@@ -393,6 +455,18 @@ export function InstReportsTabWrapper() {
       institution={ctx.institution}
       students={ctx.students}
       batches={ctx.batches}
+      isDarkMode={ctx.isDarkMode}
+    />
+  );
+}
+
+export function InstAttendanceTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <AttendanceTab
+      students={ctx.students}
+      batches={ctx.batches}
+      availableTests={ctx.availableTests}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -426,26 +500,19 @@ export function InstNotificationsTabWrapper() {
 export function InstProfileTabWrapper() {
   const ctx = useOutletContext();
   return (
-    <div className={`rounded-3xl border p-8 space-y-6 ${ctx.isDarkMode ? 'bg-[#071126] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
-      <h3 className="text-xl font-extrabold">Institution Profile & Security Settings</h3>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-          <span className="text-slate-400 font-bold uppercase">Institution Name</span>
-          <p className="text-sm font-extrabold text-white mt-1">{ctx.institution?.name || 'S.S.C Public School'}</p>
-        </div>
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-          <span className="text-slate-400 font-bold uppercase">Admin Email</span>
-          <p className="text-sm font-extrabold text-cyan-400 mt-1">{ctx.institution?.contact_email || 'admin@sscpublic.edu.in'}</p>
-        </div>
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-          <span className="text-slate-400 font-bold uppercase">Contact Person</span>
-          <p className="text-sm font-extrabold text-white mt-1">{ctx.institution?.contact_person || 'Dr. Ramesh Sharma'}</p>
-        </div>
-        <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800">
-          <span className="text-slate-400 font-bold uppercase">Assigned Licences</span>
-          <p className="text-sm font-extrabold text-emerald-400 mt-1">{ctx.institution?.total_licenses || 50} Student Seats</p>
-        </div>
-      </div>
-    </div>
+    <ProfileTab
+      institution={ctx.institution}
+      isDarkMode={ctx.isDarkMode}
+    />
+  );
+}
+
+export function InstSettingsTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <SettingsTab
+      isDarkMode={ctx.isDarkMode}
+      setIsDarkMode={ctx.setIsDarkMode}
+    />
   );
 }
