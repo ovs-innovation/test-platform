@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation, Link, Outlet } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -94,6 +94,39 @@ export default function InstitutionPortalLayout({
       document.body.style.backgroundColor = '';
     };
   }, [mobileDrawerOpen, isDarkMode]);
+
+  // Refs for click outside handling
+  const quickActionRef = useRef(null);
+  const notifRef = useRef(null);
+  const profileRef = useRef(null);
+
+  // Close dropdowns on route change
+  useEffect(() => {
+    setQuickActionOpen(false);
+    setNotifDropdownOpen(false);
+    setProfileDropdownOpen(false);
+    setMobileDrawerOpen(false);
+  }, [location.pathname]);
+
+  // Click outside listener to dismiss open dropdowns
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (quickActionRef.current && !quickActionRef.current.contains(event.target)) {
+        setQuickActionOpen(false);
+      }
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setNotifDropdownOpen(false);
+      }
+      if (profileRef.current && !profileRef.current.contains(event.target)) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Determine active item from current route
   const currentPath = location.pathname;
@@ -314,9 +347,13 @@ export default function InstitutionPortalLayout({
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
 
             {/* Quick Actions Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={quickActionRef}>
               <button
-                onClick={() => setQuickActionOpen(!quickActionOpen)}
+                onClick={() => {
+                  setNotifDropdownOpen(false);
+                  setProfileDropdownOpen(false);
+                  setQuickActionOpen(!quickActionOpen);
+                }}
                 className="hidden sm:inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-xs sm:text-sm font-extrabold text-white shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer"
               >
                 <Plus className="h-4 w-4 stroke-[3]" />
@@ -334,28 +371,28 @@ export default function InstitutionPortalLayout({
                     Institution Quick Actions
                   </div>
                   <button
-                    onClick={onOpenAddStudent}
+                    onClick={() => { setQuickActionOpen(false); onOpenAddStudent && onOpenAddStudent(); }}
                     className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-blue-500/10 hover:text-blue-400 transition cursor-pointer"
                   >
                     <UserPlus className="h-4 w-4 text-blue-400" />
                     <span>Add New Student</span>
                   </button>
                   <button
-                    onClick={onOpenUploadCsv}
+                    onClick={() => { setQuickActionOpen(false); onOpenUploadCsv && onOpenUploadCsv(); }}
                     className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-cyan-500/10 hover:text-cyan-400 transition cursor-pointer"
                   >
                     <Upload className="h-4 w-4 text-cyan-400" />
                     <span>Upload Student CSV</span>
                   </button>
                   <button
-                    onClick={onOpenCreateBatch}
+                    onClick={() => { setQuickActionOpen(false); onOpenCreateBatch && onOpenCreateBatch(); }}
                     className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-purple-500/10 hover:text-purple-400 transition cursor-pointer"
                   >
                     <Layers className="h-4 w-4 text-purple-400" />
                     <span>Create Academic Batch</span>
                   </button>
                   <button
-                    onClick={onOpenAssignTest}
+                    onClick={() => { setQuickActionOpen(false); onOpenAssignTest && onOpenAssignTest(); }}
                     className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-emerald-500/10 hover:text-emerald-400 transition cursor-pointer"
                   >
                     <FileText className="h-4 w-4 text-emerald-400" />
@@ -366,9 +403,13 @@ export default function InstitutionPortalLayout({
             </div>
 
             {/* Notification Bell */}
-            <div className="relative">
+            <div className="relative" ref={notifRef}>
               <button
-                onClick={() => setNotifDropdownOpen(!notifDropdownOpen)}
+                onClick={() => {
+                  setQuickActionOpen(false);
+                  setProfileDropdownOpen(false);
+                  setNotifDropdownOpen(!notifDropdownOpen);
+                }}
                 className={`relative h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${
                   isDarkMode
                     ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
@@ -421,9 +462,13 @@ export default function InstitutionPortalLayout({
             </button>
 
             {/* Profile Dropdown */}
-            <div className="relative">
+            <div className="relative" ref={profileRef}>
               <button
-                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                onClick={() => {
+                  setQuickActionOpen(false);
+                  setNotifDropdownOpen(false);
+                  setProfileDropdownOpen(!profileDropdownOpen);
+                }}
                 className={`flex items-center gap-2 sm:gap-3 h-9 sm:h-11 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${
                   isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
                 }`}
