@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FileText, CheckCircle2, Calendar, Clock, Send, Users, Layers, Award, Sparkles, Filter } from 'lucide-react';
 import { useToast } from '../../../context/ToastContext.jsx';
 
@@ -15,6 +15,15 @@ export default function TestAssignmentsTab({
   const [targetType, setTargetType] = useState('institution');
   const [targetId, setTargetId] = useState('');
   const [assigning, setAssigning] = useState(false);
+
+  useEffect(() => {
+    if (selectedTest) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedTest]);
 
   const defaultTests = [
     { id: 1, test_name: 'AIETS NEET-UG Full Mock Test #01', test_type: 'Full Mock', max_marks: 720, duration_minutes: 180, test_date: '2026-08-15' },
@@ -129,8 +138,8 @@ export default function TestAssignmentsTab({
 
       {/* ASSIGN TEST MODAL */}
       {selectedTest && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 ${
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 my-auto ${
             isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>

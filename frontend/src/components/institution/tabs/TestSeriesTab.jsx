@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import {
   FileText,
   Search,
@@ -24,6 +24,15 @@ export default function TestSeriesTab({
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [selectedSeries, setSelectedSeries] = useState(null);
+
+  useEffect(() => {
+    if (selectedSeries) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [selectedSeries]);
 
   // Group tests into Test Series Packages
   const packages = useMemo(() => {
@@ -215,8 +224,8 @@ export default function TestSeriesTab({
 
       {/* SELECTED SERIES TESTS DRAWER MODAL */}
       {selectedSeries && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-2xl rounded-3xl border p-6 space-y-4 max-h-[85vh] overflow-y-auto ${
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className={`w-full max-w-2xl rounded-3xl border p-6 space-y-4 max-h-[85vh] overflow-y-auto my-auto ${
             isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             <div className="flex items-center justify-between border-b border-slate-800/40 pb-4">

@@ -1,4 +1,5 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import {
   Users,
   Search,
@@ -68,6 +69,7 @@ export default function StudentsTab({
   // Active student detail drawer state
   const [inspectStudent, setInspectStudent] = useState(null);
 
+<<<<<<< HEAD
   // Helper to extract student target exam with fallback
   const getStudentTargetExam = (st) => {
     if (st.target_exam && String(st.target_exam).trim()) return String(st.target_exam).trim();
@@ -81,6 +83,21 @@ export default function StudentsTab({
     }
     return 'NEET';
   };
+=======
+  // Move batch modal state
+  const [showMoveBatchModal, setShowMoveBatchModal] = useState(false);
+  const [targetBatchId, setTargetBatchId] = useState('');
+  const [movingBatch, setMovingBatch] = useState(false);
+
+  useEffect(() => {
+    if (inspectStudent || showMoveBatchModal) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [inspectStudent, showMoveBatchModal]);
+>>>>>>> 2bfdf33 (Fix institution modal functionality, theme mode styling, scroll lock, and portal stacking context)
 
   // Filtered Students list
   const filteredStudents = useMemo(() => {
@@ -280,7 +297,7 @@ export default function StudentsTab({
             </button>
 
             <button
-              onClick={() => onMoveBatch(selectedStudentIds)}
+              onClick={() => setShowMoveBatchModal(true)}
               className="inline-flex items-center gap-1.5 rounded-xl bg-white/20 hover:bg-white/30 px-3 py-1.5 text-xs font-bold text-white transition cursor-pointer"
             >
               <Layers className="h-3.5 w-3.5" />
@@ -537,9 +554,9 @@ export default function StudentsTab({
       {/* =========================================================================
           4. STUDENT PROFILE DRAWER / MODAL
          ========================================================================= */}
-      {inspectStudent && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-lg rounded-3xl border shadow-2xl p-6 space-y-6 relative ${
+      {inspectStudent && createPortal(
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className={`w-full max-w-lg rounded-3xl border shadow-2xl p-6 space-y-6 relative my-auto ${
             isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
@@ -600,7 +617,71 @@ export default function StudentsTab({
               </button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
+      )}
+
+      {/* MOVE BATCH MODAL */}
+      {showMoveBatchModal && createPortal(
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 my-auto ${
+            isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+          }`}>
+            <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              Move {selectedStudentIds.length} Student(s) to Batch
+            </h3>
+
+            <div className="space-y-4 text-xs">
+              <div>
+                <label className={`block font-semibold uppercase mb-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Target Academic Batch</label>
+                <select
+                  value={targetBatchId}
+                  onChange={(e) => setTargetBatchId(e.target.value)}
+                  className={`w-full py-2.5 px-3 rounded-xl border transition cursor-pointer ${
+                    isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
+                  }`}
+                >
+                  <option value="">Select Target Batch...</option>
+                  {batches.map((b) => (
+                    <option key={b.id} value={b.id}>{b.batch_name || b.name}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowMoveBatchModal(false)}
+                  className={`px-4 py-2 rounded-xl border font-bold ${
+                    isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-700 hover:bg-slate-100'
+                  }`}
+                >
+                  Cancel
+                </button>
+                <button
+                  type="button"
+                  disabled={!targetBatchId || movingBatch}
+                  onClick={async () => {
+                    if (!targetBatchId) return;
+                    setMovingBatch(true);
+                    try {
+                      await onMoveBatch(selectedStudentIds, targetBatchId);
+                      setShowMoveBatchModal(false);
+                      setSelectedStudentIds([]);
+                      setTargetBatchId('');
+                    } finally {
+                      setMovingBatch(false);
+                    }
+                  }}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-bold text-white shadow-md disabled:opacity-50"
+                >
+                  {movingBatch ? 'Moving...' : 'Confirm Move Batch'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>,
+        document.body
       )}
 
     </div>

@@ -118,7 +118,7 @@ export default function InstitutionDashboard() {
       }
     } catch (err) {
       console.warn('Backend API connection warning, retaining current session:', err);
-    } flex: {
+    } finally {
       setLoading(false);
     }
   };
@@ -129,6 +129,7 @@ export default function InstitutionDashboard() {
       const res = await institutionDashboardService.addStudent(instId, studentData);
       toast.success(res.message || 'Student enrolled successfully');
       loadDashboardData();
+      return res;
     } catch (err) {
       toast.error(err.message || 'Failed to add student');
       throw err;
@@ -342,15 +343,22 @@ export default function InstitutionDashboard() {
       {/* GLOBAL MODALS */}
       {showAddStudentModal && (
         <AddStudentModal
+          isOpen={true}
           batches={batches}
           onClose={() => setShowAddStudentModal(false)}
           onSubmit={handleAddStudent}
+          availableLicenses={
+            profile?.total_licenses
+              ? Math.max(0, profile.total_licenses - students.length)
+              : Math.max(0, 50 - students.length)
+          }
           isDarkMode={isDarkMode}
         />
       )}
 
       {showBulkUploadModal && (
         <BulkUploadModal
+<<<<<<< HEAD
           isOpen={showBulkUploadModal}
           batches={batches}
           onClose={() => setShowBulkUploadModal(false)}
@@ -358,6 +366,22 @@ export default function InstitutionDashboard() {
           onSubmit={handleBulkUpload}
           onDownloadTemplate={downloadStudentCsvTemplate}
           availableLicenses={profile?.student_capacity || 500}
+=======
+          isOpen={true}
+          batches={batches}
+          onClose={() => setShowBulkUploadModal(false)}
+          onUploadSubmit={handleBulkUpload}
+          onDownloadTemplate={() => {
+            import('../../lib/csv.js').then(({ downloadFromApi }) => {
+              downloadFromApi(`/institution/${instId}/students/bulk-upload/template`, 'student_bulk_upload_template.csv');
+            });
+          }}
+          availableLicenses={
+            profile?.total_licenses
+              ? Math.max(0, profile.total_licenses - students.length)
+              : Math.max(0, 50 - students.length)
+          }
+>>>>>>> 2bfdf33 (Fix institution modal functionality, theme mode styling, scroll lock, and portal stacking context)
           instId={instId}
           isDarkMode={isDarkMode}
         />
@@ -440,6 +464,7 @@ export default function InstitutionDashboard() {
 // Wrapper Tab Components for Nested Routing
 export function InstOverviewTabWrapper() {
   const ctx = useOutletContext();
+  const navigate = useNavigate();
   return (
     <OverviewTab
       profile={ctx.institution}
@@ -449,6 +474,12 @@ export function InstOverviewTabWrapper() {
       notifications={ctx.notifications}
       onOpenAddStudent={ctx.onOpenAddStudent}
       onOpenUploadCsv={ctx.onOpenUploadCsv}
+      onDownloadCsvTemplate={() => {
+        import('../../lib/csv.js').then(({ downloadFromApi }) => {
+          downloadFromApi(`/institution/${ctx.institution?.id || 1}/students/bulk-upload/template`, 'student_bulk_upload_template.csv');
+        });
+      }}
+      onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -460,16 +491,24 @@ export function InstStudentsTabWrapper() {
     <StudentsTab
       students={ctx.students}
       batches={ctx.batches}
+      institution={ctx.institution}
+      searchQuery={ctx.searchQuery}
       onAddStudent={ctx.onAddStudent}
-      onUpdateStudent={ctx.onUpdateStudent}
-      onToggleBlockStudent={ctx.onToggleBlockStudent}
+      onEditStudent={ctx.onUpdateStudent}
+      onToggleBlock={ctx.onToggleBlockStudent}
       onDeleteStudent={ctx.onDeleteStudent}
       onMoveBatch={ctx.onMoveBatch}
       onBulkUpload={ctx.onBulkUpload}
       onRegenerateCredentials={ctx.onRegenerateCredentials}
-      onOpenAddStudent={ctx.onOpenAddStudent}
-      onOpenUploadCsv={ctx.onOpenUploadCsv}
-      onDownloadTemplate={ctx.onDownloadTemplate}
+      onAssignTests={(ids) => ctx.onAssignTest(ids)}
+      onAssignEbooks={(ids) => ctx.onAssignEbook(ids)}
+      onOpenAddModal={ctx.onOpenAddStudent}
+      onOpenUploadModal={ctx.onOpenUploadCsv}
+      onDownloadTemplate={() => {
+        import('../../lib/csv.js').then(({ downloadFromApi }) => {
+          downloadFromApi(`/institution/${ctx.institution?.id || 1}/students/bulk-upload/template`, 'student_bulk_upload_template.csv');
+        });
+      }}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -491,10 +530,19 @@ export function InstBatchesTabWrapper() {
 
 export function InstTestSeriesTabWrapper() {
   const ctx = useOutletContext();
+  const navigate = useNavigate();
   return (
     <TestSeriesTab
       availableTests={ctx.availableTests}
-      onAssignTest={ctx.onAssignTest}
+      batches={ctx.batches}
+      students={ctx.students}
+      onAssignTest={(testId) => {
+        if (testId) {
+          ctx.onAssignTest(testId);
+        } else {
+          navigate('/institution/test-assignments');
+        }
+      }}
       isDarkMode={ctx.isDarkMode}
     />
   );

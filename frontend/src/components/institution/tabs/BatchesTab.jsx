@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Layers, Plus, Users, TrendingUp, Calendar, UserCheck, Archive, Edit, ArrowRight, CheckCircle2, Search } from 'lucide-react';
 import { Spinner } from '../../ui.jsx';
 
@@ -13,6 +14,15 @@ export default function BatchesTab({
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [editingBatch, setEditingBatch] = useState(null);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (showCreateModal) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [showCreateModal]);
 
   const [form, setForm] = useState({
     batch_name: '',
@@ -193,9 +203,9 @@ export default function BatchesTab({
       )}
 
       {/* CREATE / EDIT BATCH MODAL */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 ${
+      {showCreateModal && createPortal(
+        <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 my-auto ${
             isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{editingBatch ? 'Edit Batch' : 'Create New Academic Batch'}</h3>
@@ -281,7 +291,8 @@ export default function BatchesTab({
               </div>
             </form>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
