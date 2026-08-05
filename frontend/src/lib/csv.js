@@ -41,3 +41,14 @@ export const BANK_CSV_TEMPLATE = `category,question_text,question_type,marks,opt
 Physics,"A particle moves along a circular path of radius R. In one complete revolution, its displacement is:","mcq",4,"2πR|πR|Zero|2R",2,,"In one complete revolution, the initial and final positions coincide, so displacement is zero."
 Chemistry,"What is the pH value of a neutral aqueous solution at 25°C?","mcq",4,"0|7|14|1",1,,"At 25°C, pure water has [H+] = 10^-7 M, giving a pH of 7."
 `;
+
+export const STUDENT_CSV_TEMPLATE = `name,email,mobile,roll_number,batch_name,class,target_exam
+"Rahul Sharma","rahul.sharma@example.com","9876543210","ROLL001","NEET Batch A","Class 12","NEET-UG"
+"Priya Patel","priya.patel@example.com","9876543211","ROLL002","NEET Batch A","Class 12","NEET-UG"
+"Aarav Gupta","aarav.gupta@example.com","9876543212","ROLL003","JEE Batch B","Class 12","JEE-Main"
+`;
+
+export function downloadStudentCsvTemplate() {
+  downloadCsv('student_import_template.csv', STUDENT_CSV_TEMPLATE);
+}
+

@@ -101,20 +101,11 @@ export default function OverviewTab({
           {/* Right: Primary & Secondary Actions */}
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <button
-              onClick={onOpenAddStudent}
+              onClick={onOpenUploadCsv}
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-blue-500/25 hover:scale-105 transition cursor-pointer"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Student</span>
-            </button>
-            <button
-              onClick={onOpenUploadCsv}
-              className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs sm:text-sm font-bold transition cursor-pointer ${
-                isDarkMode ? 'border-slate-700 bg-slate-800/90 text-slate-200 hover:bg-slate-700 hover:text-white' : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200'
-              }`}
-            >
-              <Upload className="h-4 w-4 text-cyan-400" />
-              <span>Upload CSV</span>
+              <Upload className="h-4 w-4 text-white" />
+              <span>Bulk CSV Import</span>
             </button>
             <button
               onClick={() => onNavigateTab('batches')}

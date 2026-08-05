@@ -1,15 +1,20 @@
 import { useState } from 'react';
 import { Upload, Download, FileSpreadsheet, CheckCircle2, AlertTriangle, X, FileText, Check } from 'lucide-react';
 import { Spinner } from '../../ui.jsx';
+import { downloadStudentCsvTemplate } from '../../../lib/csv.js';
 
 export default function BulkUploadModal({
-  isOpen,
+  isOpen = true,
   onClose,
   onUploadSubmit,
+  onSubmit,
   onDownloadTemplate,
   availableLicenses = 50,
   isDarkMode = true,
 }) {
+  const submitHandler = onUploadSubmit || onSubmit;
+  const downloadTemplateHandler = onDownloadTemplate || downloadStudentCsvTemplate;
+
   const [step, setStep] = useState(1); // 1: Select File -> 2: Validate & Preview -> 3: Import Results
   const [file, setFile] = useState(null);
   const [parsedRows, setParsedRows] = useState([]);
@@ -22,20 +27,42 @@ export default function BulkUploadModal({
 
   if (!isOpen) return null;
 
-  // Simple CSV Parser
+  // Robust CSV Parser
   const parseCSV = (text) => {
     const lines = text.split(/\r\n|\n/).filter((l) => l.trim().length > 0);
     if (lines.length <= 1) return [];
 
-    const headers = lines[0].split(',').map((h) => h.trim().replace(/^"|"$/g, ''));
+    const parseLine = (line) => {
+      const result = [];
+      let current = '';
+      let inQuotes = false;
+      for (let i = 0; i < line.length; i++) {
+        const char = line[i];
+        if (char === '"') {
+          inQuotes = !inQuotes;
+        } else if (char === ',' && !inQuotes) {
+          result.push(current.trim().replace(/^"|"$/g, ''));
+          current = '';
+        } else {
+          current += char;
+        }
+      }
+      result.push(current.trim().replace(/^"|"$/g, ''));
+      return result;
+    };
+
+    const headers = parseLine(lines[0]);
     const rows = [];
 
     for (let i = 1; i < lines.length; i++) {
-      const currentline = lines[i].split(',').map((cell) => cell.trim().replace(/^"|"$/g, ''));
-      if (currentline.length === headers.length || currentline.length >= 2) {
+      const currentline = parseLine(lines[i]);
+      if (currentline.some((cell) => cell.length > 0)) {
         const obj = {};
         headers.forEach((h, index) => {
-          obj[h] = currentline[index] || '';
+          const key = h.trim();
+          const lowerKey = key.toLowerCase().replace(/[^a-z0-9_]/g, '_');
+          obj[key] = currentline[index] || '';
+          obj[lowerKey] = currentline[index] || '';
         });
         rows.push(obj);
       }
@@ -123,7 +150,7 @@ export default function BulkUploadModal({
     setError('');
 
     try {
-      const res = await onUploadSubmit(validRows);
+      const res = await submitHandler(validRows);
       setImportSummary(res?.summary || { total_submitted: validRows.length, success_count: validRows.length, failed_count: 0 });
       setStep(3);
     } catch (err) {
@@ -175,7 +202,7 @@ export default function BulkUploadModal({
               </ul>
 
               <button
-                onClick={onDownloadTemplate}
+                onClick={downloadTemplateHandler}
                 className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline pt-1 cursor-pointer"
               >
                 <Download className="h-4 w-4" />

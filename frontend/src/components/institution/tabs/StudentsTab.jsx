@@ -25,6 +25,7 @@ import {
 } from 'lucide-react';
 import { useToast } from '../../../context/ToastContext.jsx';
 import { CustomSelectDropdown } from '../../ui.jsx';
+import { downloadStudentCsvTemplate } from '../../../lib/csv.js';
 
 export default function StudentsTab({
   students = [],
@@ -33,16 +34,23 @@ export default function StudentsTab({
   onEditStudent,
   onDeleteStudent,
   onToggleBlock,
+  onToggleBlockStudent,
   onRegenerateCredentials,
   onMoveBatch,
   onAssignTests,
   onAssignEbooks,
   onOpenAddModal,
+  onOpenAddStudent,
   onOpenUploadModal,
+  onOpenUploadCsv,
   onDownloadTemplate,
   isDarkMode = true,
 }) {
   const toast = useToast();
+  const handleOpenAdd = onOpenAddModal || onOpenAddStudent;
+  const handleOpenUpload = onOpenUploadModal || onOpenUploadCsv;
+  const handleDownloadTemplate = onDownloadTemplate || downloadStudentCsvTemplate;
+  const handleToggleBlock = onToggleBlock || onToggleBlockStudent;
 
   // Local Search & Filtering state
   const [search, setSearch] = useState('');
@@ -60,27 +68,47 @@ export default function StudentsTab({
   // Active student detail drawer state
   const [inspectStudent, setInspectStudent] = useState(null);
 
+  // Helper to extract student target exam with fallback
+  const getStudentTargetExam = (st) => {
+    if (st.target_exam && String(st.target_exam).trim()) return String(st.target_exam).trim();
+    if (st.course && String(st.course).trim()) return String(st.course).trim();
+    if (st.target && String(st.target).trim()) return String(st.target).trim();
+    if (st.batch_name) {
+      const bLower = String(st.batch_name).toLowerCase();
+      if (bLower.includes('neet')) return 'NEET';
+      if (bLower.includes('jee')) return 'JEE';
+      if (bLower.includes('foundation') || bLower.includes('9') || bLower.includes('10')) return 'Foundation';
+    }
+    return 'NEET';
+  };
+
   // Filtered Students list
   const filteredStudents = useMemo(() => {
     return students.filter((st) => {
       const matchesSearch =
-        st.name.toLowerCase().includes(search.toLowerCase()) ||
-        st.email.toLowerCase().includes(search.toLowerCase()) ||
+        (st.name || '').toLowerCase().includes(search.toLowerCase()) ||
+        (st.email || '').toLowerCase().includes(search.toLowerCase()) ||
         (st.roll_number || st.rollNo || '').toLowerCase().includes(search.toLowerCase()) ||
         (st.mobile || '').includes(search);
 
       const matchesBatch =
         selectedBatch === 'All' ||
         String(st.batch_id) === String(selectedBatch) ||
-        (st.batch_name || '').toLowerCase() === selectedBatch.toLowerCase();
+        (st.batch_name || '').toLowerCase() === String(selectedBatch).toLowerCase();
 
       const matchesStatus =
         selectedStatus === 'All' ||
         (selectedStatus === 'Blocked' ? st.is_blocked : !st.is_blocked);
 
+      const studentTarget = getStudentTargetExam(st).toLowerCase();
+      const selectedTarget = (selectedCourse || 'All').toLowerCase();
+
       const matchesCourse =
         selectedCourse === 'All' ||
-        (st.target_exam || st.course || '').toLowerCase().includes(selectedCourse.toLowerCase());
+        studentTarget.includes(selectedTarget) ||
+        (selectedTarget === 'neet' && (studentTarget.includes('neet') || studentTarget.includes('medical'))) ||
+        (selectedTarget === 'jee' && (studentTarget.includes('jee') || studentTarget.includes('iit') || studentTarget.includes('engineering'))) ||
+        (selectedTarget === 'foundation' && (studentTarget.includes('foundation') || studentTarget.includes('9') || studentTarget.includes('10')));
 
       return matchesSearch && matchesBatch && matchesStatus && matchesCourse;
     });
@@ -135,26 +163,16 @@ export default function StudentsTab({
           {/* Actions Toolbar */}
           <div className="flex flex-wrap items-center gap-2.5">
             <button
-              onClick={onOpenAddModal}
+              onClick={handleOpenUpload}
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-xs font-bold text-white shadow-md hover:scale-[1.02] transition cursor-pointer"
             >
-              <Plus className="h-4 w-4" />
-              <span>Add Student</span>
-            </button>
-
-            <button
-              onClick={onOpenUploadModal}
-              className={`inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
-                isDarkMode ? 'border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700' : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200'
-              }`}
-            >
-              <Upload className="h-3.5 w-3.5 text-cyan-400" />
+              <Upload className="h-4 w-4 text-white" />
               <span>Bulk CSV Import</span>
             </button>
 
             <button
-              onClick={onDownloadTemplate}
-              className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-xs font-bold transition cursor-pointer ${
+              onClick={handleDownloadTemplate}
+              className={`inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
                 isDarkMode ? 'border-slate-700 bg-slate-800/80 text-slate-300 hover:bg-slate-700' : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
               }`}
               title="Download CSV Template"
@@ -360,7 +378,7 @@ export default function StudentsTab({
                       {/* Class & Target */}
                       <td className="py-3.5 px-4">
                         <span className="inline-flex items-center gap-1 rounded-full bg-blue-500/10 border border-blue-500/20 px-2.5 py-0.5 text-[10px] font-bold text-blue-400">
-                          {student.target_exam || student.course || 'NEET'} ({student.class_level || 'Class 12'})
+                          {getStudentTargetExam(student)} ({student.class_level || 'Class 12'})
                         </span>
                       </td>
 
@@ -423,7 +441,7 @@ export default function StudentsTab({
                           </button>
 
                           <button
-                            onClick={() => onToggleBlock(student.id, !isBlocked)}
+                            onClick={() => handleToggleBlock(student.id, !isBlocked)}
                             className={`p-1.5 rounded-lg border transition cursor-pointer ${
                               isBlocked
                                 ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'

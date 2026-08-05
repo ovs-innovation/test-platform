@@ -445,3 +445,29 @@ export const institutionDashboardService = {
   markNotificationRead: (instId, notifId) => api.put(`/institution/${instId}/notifications/${notifId}/read`).then((r) => r.data),
   sendReminder: (instId, data) => api.post(`/institution/${instId}/notifications/send-reminder`, data).then((r) => r.data),
 };
+
+export const institutionReportsService = {
+  getOverall: (instId, params) => api.get(`/institution/${instId}/reports/overall`, { params }).then((r) => r.data),
+  getRankings: (instId, params) => api.get(`/institution/${instId}/reports/rankings`, { params }).then((r) => r.data),
+  getBatchComparison: (instId, params) => api.get(`/institution/${instId}/reports/batch-comparison`, { params }).then((r) => r.data),
+  getTrends: (instId, params) => api.get(`/institution/${instId}/reports/trends`, { params }).then((r) => r.data),
+  getImprovement: (instId, params) => api.get(`/institution/${instId}/reports/improvement`, { params }).then((r) => r.data),
+  download: async (instId, endpoint, format = 'csv', params = {}) => {
+    try {
+      const res = await api.get(`/institution/${instId}/reports/${endpoint}`, {
+        params: { ...params, format },
+        responseType: 'blob',
+      });
+      return res.data;
+    } catch (err) {
+      if (err.response?.data instanceof Blob) {
+        try {
+          const text = await err.response.data.text();
+          const json = JSON.parse(text);
+          throw new Error(json.message || json.error || 'Failed to download report.');
+        } catch (_) {}
+      }
+      throw err;
+    }
+  },
+};

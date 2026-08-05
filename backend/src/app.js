@@ -76,6 +76,7 @@ app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/student/reports', studentReportRoutes);
 app.use('/api/student', studentRoutes);
+app.use('/api/institution', institutionReportRoutes);
 app.use('/api/institution', institutionRoutes);
 
 // 404 + error handling (must be last)

@@ -3,31 +3,7 @@ import { createPortal } from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
-import {
-  Building2,
-  Plus,
-  Search,
-  Key,
-  Mail,
-  School,
-  Users,
-  CheckCircle2,
-  ExternalLink,
-  Trash2,
-  Copy,
-  Eye,
-  EyeOff,
-  Image as ImageIcon,
-  Sparkles,
-  X,
-  Phone,
-  Inbox,
-  Check,
-  FileText,
-  Pencil,
-  Package
-} from 'lucide-react';
-
+import { Building2, Plus, Search, Key, Mail, School, Users, CheckCircle2, ExternalLink, Trash2, Copy, Eye, EyeOff, Image as ImageIcon, Sparkles, X, Phone, Inbox, Check, FileText, Pencil, Package } from 'lucide-react';
 import { Badge } from '../../components/ui.jsx';
 
 export default function Schools() {

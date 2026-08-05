@@ -35,10 +35,9 @@ export default function EbooksTab({
           target_id: targetType === 'institution' ? null : targetId,
         });
       }
-      toast.success(`eBook "${selectedEbook.title}" assigned successfully.`);
       setSelectedEbook(null);
     } catch (err) {
-      toast.error(err.message || 'Assigned eBook successfully to target roster.');
+      toast.error(err.message || 'Failed to assign eBook.');
       setSelectedEbook(null);
     } finally {
       setAssigning(false);

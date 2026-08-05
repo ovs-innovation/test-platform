@@ -59,43 +59,7 @@ export default function CandidateDashboard() {
     load();
   }, [user]);
 
-  if (state === 'loading') {
-    return (
-      <div className="space-y-4 animate-pulse max-w-[1440px] mx-auto">
-        <div className="h-32 w-full rounded-2xl bg-slate-200 dark:bg-slate-800" />
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-          {Array.from({ length: 6 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-xl bg-slate-200 dark:bg-slate-800" />
-          ))}
-        </div>
-        <div className="h-64 w-full rounded-2xl bg-slate-200 dark:bg-slate-800" />
-      </div>
-    );
-  }
-  if (state === 'error') return <ErrorState onRetry={load} />;
-
   const { pending = [], upcoming = [], completed = [], stats = {} } = data || {};
-  const resume = pending.find((a) => a.attempt_status === 'in_progress');
-  const passRate = completed.length > 0
-    ? Math.round((completed.filter((c) => c.passed).length / completed.length) * 100)
-    : null;
-
-  const firstName = user?.name?.split(' ')[0] || 'Student';
-
-  // AI Study Suggestions (Dynamic from API or fallback)
-  const aiSuggestions = data?.aiSuggestions || [
-    { id: 1, topic: 'Physics - Mechanics', tip: 'Accuracy in Rotation & Work Energy is 54%. Review 15 practice questions.', priority: 'High' },
-    { id: 2, topic: 'Chemistry - Organic Reactions', tip: 'Strong performance in Hydrocarbons! Try JEE Advanced Mock #2.', priority: 'Medium' },
-    { id: 3, topic: 'Mathematics - Calculus', tip: 'Time per question is 2.1m. Practice speed drills to save 5 mins.', priority: 'Normal' },
-  ];
-
-  // Subject Strengths (Dynamic from API or fallback)
-  const subjects = data?.subjects || [
-    { name: 'Physics', score: '78%', status: 'Strong', color: 'bg-emerald-500' },
-    { name: 'Chemistry', score: '64%', status: 'Moderate', color: 'bg-blue-500' },
-    { name: 'Mathematics', score: '52%', status: 'Focus Needed', color: 'bg-amber-500' },
-    { name: 'Biology', score: '88%', status: 'Excellent', color: 'bg-purple-500' },
-  ];
 
   // Recent Student Milestones (Dynamic from completed attempts & streak)
   const milestones = useMemo(() => {
@@ -132,6 +96,43 @@ export default function CandidateDashboard() {
       { id: 'm1', title: 'Welcome to AIETS Assessment Platform', time: 'Today', icon: BookOpen, badge: 'New Candidate' }
     ];
   }, [completed, stats, user]);
+
+  if (state === 'loading') {
+    return (
+      <div className="space-y-4 animate-pulse max-w-[1440px] mx-auto">
+        <div className="h-32 w-full rounded-2xl bg-slate-200 dark:bg-slate-800" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="h-24 rounded-xl bg-slate-200 dark:bg-slate-800" />
+          ))}
+        </div>
+        <div className="h-64 w-full rounded-2xl bg-slate-200 dark:bg-slate-800" />
+      </div>
+    );
+  }
+  if (state === 'error') return <ErrorState onRetry={load} />;
+
+  const resume = pending.find((a) => a.attempt_status === 'in_progress');
+  const passRate = completed.length > 0
+    ? Math.round((completed.filter((c) => c.passed).length / completed.length) * 100)
+    : null;
+
+  const firstName = user?.name?.split(' ')[0] || 'Student';
+
+  // AI Study Suggestions (Dynamic from API or fallback)
+  const aiSuggestions = data?.aiSuggestions || [
+    { id: 1, topic: 'Physics - Mechanics', tip: 'Accuracy in Rotation & Work Energy is 54%. Review 15 practice questions.', priority: 'High' },
+    { id: 2, topic: 'Chemistry - Organic Reactions', tip: 'Strong performance in Hydrocarbons! Try JEE Advanced Mock #2.', priority: 'Medium' },
+    { id: 3, topic: 'Mathematics - Calculus', tip: 'Time per question is 2.1m. Practice speed drills to save 5 mins.', priority: 'Normal' },
+  ];
+
+  // Subject Strengths (Dynamic from API or fallback)
+  const subjects = data?.subjects || [
+    { name: 'Physics', score: '78%', status: 'Strong', color: 'bg-emerald-500' },
+    { name: 'Chemistry', score: '64%', status: 'Moderate', color: 'bg-blue-500' },
+    { name: 'Mathematics', score: '52%', status: 'Focus Needed', color: 'bg-amber-500' },
+    { name: 'Biology', score: '88%', status: 'Excellent', color: 'bg-purple-500' },
+  ];
 
   return (
     <div className="space-y-4 max-w-[1440px] mx-auto pb-12">

@@ -21,12 +21,31 @@ import AddStudentModal from '../../components/institution/modals/AddStudentModal
 import BulkUploadModal from '../../components/institution/modals/BulkUploadModal.jsx';
 
 import { institutionDashboardService } from '../../lib/services.js';
+import { downloadStudentCsvTemplate } from '../../lib/csv.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
+import { Key, Copy, CheckCircle2, X } from 'lucide-react';
 
 export default function InstitutionDashboard() {
   const { id } = useParams();
-  const instId = Number(id) || 1;
+
+  // Dynamically resolve active institution ID from URL param -> localStorage -> fallback 1
+  const getActiveInstId = () => {
+    if (id && !isNaN(Number(id))) {
+      return Number(id);
+    }
+    try {
+      const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        const savedId = Number(parsed?.id || parsed?.institution_id);
+        if (savedId && !isNaN(savedId) && savedId > 0) return savedId;
+      }
+    } catch (e) {}
+    return 1;
+  };
+
+  const instId = getActiveInstId();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -49,6 +68,7 @@ export default function InstitutionDashboard() {
   // Modals
   const [showAddStudentModal, setShowAddStudentModal] = useState(false);
   const [showBulkUploadModal, setShowBulkUploadModal] = useState(false);
+  const [generatedCredsModal, setGeneratedCredsModal] = useState(null);
 
   useEffect(() => {
     loadDashboardData();
@@ -170,7 +190,14 @@ export default function InstitutionDashboard() {
   const handleRegenerateCredentials = async (studentId) => {
     try {
       const res = await institutionDashboardService.regenerateCredentials(instId, studentId);
-      toast.success(`New Password Generated: ${res.temp_password || '********'}`);
+      const credData = {
+        name: res.name || 'Student',
+        email: res.email || '',
+        roll_number: res.roll_number || 'N/A',
+        password: res.new_password || res.temp_password || '********',
+      };
+      setGeneratedCredsModal(credData);
+      toast.success(`Password regenerated for ${credData.name}`);
       return res;
     } catch (err) {
       toast.error(err.message || 'Failed to reset credentials');
@@ -221,11 +248,13 @@ export default function InstitutionDashboard() {
 
   const handleAssignEbook = async (ebookId, data) => {
     try {
-      await institutionDashboardService.assignEbook(instId, ebookId, data);
-      toast.success('eBook distributed successfully');
+      const res = await institutionDashboardService.assignEbook(instId, ebookId, data);
+      toast.success(res?.message || 'eBook assigned to target roster successfully');
       loadDashboardData();
+      return res;
     } catch (err) {
-      toast.error(err.message || 'eBook assigned to target roster.');
+      toast.error(err?.message || 'Failed to assign eBook');
+      throw err;
     }
   };
 
@@ -277,6 +306,10 @@ export default function InstitutionDashboard() {
     onSendReminder: handleSendReminder,
     onOpenAddStudent: () => setShowAddStudentModal(true),
     onOpenUploadCsv: () => setShowBulkUploadModal(true),
+    onDownloadTemplate: () => {
+      downloadStudentCsvTemplate();
+      toast.success('CSV Template downloaded');
+    },
   };
 
   if (loading && !profile) {
@@ -318,33 +351,104 @@ export default function InstitutionDashboard() {
 
       {showBulkUploadModal && (
         <BulkUploadModal
+          isOpen={showBulkUploadModal}
           batches={batches}
           onClose={() => setShowBulkUploadModal(false)}
+          onUploadSubmit={handleBulkUpload}
           onSubmit={handleBulkUpload}
+          onDownloadTemplate={downloadStudentCsvTemplate}
+          availableLicenses={profile?.student_capacity || 500}
           instId={instId}
           isDarkMode={isDarkMode}
         />
+      )}
+
+      {/* GENERATED CREDENTIALS MODAL */}
+      {generatedCredsModal && (
+        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="w-full max-w-md rounded-3xl border border-slate-800 bg-[#0B1730] p-6 sm:p-8 space-y-5 text-white shadow-2xl relative animate-in zoom-in-95">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                  <Key className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-extrabold text-white">Credentials Reset Complete</h3>
+                  <p className="text-xs text-slate-400">Share new login details with student</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setGeneratedCredsModal(null)}
+                className="p-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-900/90 border border-slate-800 space-y-2.5 text-xs">
+              <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                <span className="text-slate-400 font-medium">Student Name:</span>
+                <span className="font-extrabold text-white">{generatedCredsModal.name}</span>
+              </div>
+              <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                <span className="text-slate-400 font-medium">Email Address:</span>
+                <span className="font-mono font-bold text-cyan-400">{generatedCredsModal.email}</span>
+              </div>
+              <div className="flex justify-between border-b border-slate-800/60 pb-2">
+                <span className="text-slate-400 font-medium">Roll / Reg No:</span>
+                <span className="font-mono text-slate-300">{generatedCredsModal.roll_number}</span>
+              </div>
+              <div className="flex justify-between items-center pt-1">
+                <span className="text-slate-400 font-medium">New Password:</span>
+                <span className="font-mono font-black text-emerald-400 text-sm bg-emerald-500/10 px-2.5 py-1 rounded-lg border border-emerald-500/20">
+                  {generatedCredsModal.password}
+                </span>
+              </div>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-xs text-cyan-300 flex items-start gap-2">
+              <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0 mt-0.5" />
+              <span>An in-app security alert with this temporary password has been dispatched to the student's dashboard inbox.</span>
+            </div>
+
+            <div className="flex items-center gap-2 pt-2">
+              <button
+                onClick={() => {
+                  const text = `Hello ${generatedCredsModal.name},\nYour password for the Edvedum Student Portal has been reset by your institute.\n\nEmail: ${generatedCredsModal.email}\nRoll No: ${generatedCredsModal.roll_number}\nNew Password: ${generatedCredsModal.password}\n\nPlease login and update your password in Settings.`;
+                  navigator.clipboard.writeText(text);
+                  toast.success('Formatted credentials copied to clipboard!');
+                }}
+                className="flex-1 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 text-xs font-bold text-white shadow-lg hover:scale-105 transition cursor-pointer flex items-center justify-center gap-2"
+              >
+                <Copy className="h-4 w-4" />
+                <span>Copy Credentials</span>
+              </button>
+              <button
+                onClick={() => setGeneratedCredsModal(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-700 text-xs font-bold text-slate-300 hover:bg-slate-800 transition cursor-pointer"
+              >
+                Done
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </InstitutionPortalLayout>
   );
 }
 
-/* =========================================================================
-    INDIVIDUAL TAB WRAPPERS FOR ROUTER
-   ========================================================================= */
-
+// Wrapper Tab Components for Nested Routing
 export function InstOverviewTabWrapper() {
   const ctx = useOutletContext();
-  const navigate = useNavigate();
   return (
     <OverviewTab
-      institution={ctx.institution}
+      profile={ctx.institution}
       students={ctx.students}
       batches={ctx.batches}
       analytics={ctx.analytics}
+      notifications={ctx.notifications}
       onOpenAddStudent={ctx.onOpenAddStudent}
       onOpenUploadCsv={ctx.onOpenUploadCsv}
-      onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -356,15 +460,16 @@ export function InstStudentsTabWrapper() {
     <StudentsTab
       students={ctx.students}
       batches={ctx.batches}
-      institution={ctx.institution}
-      searchQuery={ctx.searchQuery}
-      onOpenAddStudent={ctx.onOpenAddStudent}
-      onOpenUploadCsv={ctx.onOpenUploadCsv}
+      onAddStudent={ctx.onAddStudent}
       onUpdateStudent={ctx.onUpdateStudent}
       onToggleBlockStudent={ctx.onToggleBlockStudent}
       onDeleteStudent={ctx.onDeleteStudent}
       onMoveBatch={ctx.onMoveBatch}
+      onBulkUpload={ctx.onBulkUpload}
       onRegenerateCredentials={ctx.onRegenerateCredentials}
+      onOpenAddStudent={ctx.onOpenAddStudent}
+      onOpenUploadCsv={ctx.onOpenUploadCsv}
+      onDownloadTemplate={ctx.onDownloadTemplate}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -372,14 +477,13 @@ export function InstStudentsTabWrapper() {
 
 export function InstBatchesTabWrapper() {
   const ctx = useOutletContext();
-  const navigate = useNavigate();
   return (
     <BatchesTab
       batches={ctx.batches}
+      students={ctx.students}
       onCreateBatch={ctx.onCreateBatch}
       onUpdateBatch={ctx.onUpdateBatch}
       onArchiveBatch={ctx.onArchiveBatch}
-      onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -390,8 +494,6 @@ export function InstTestSeriesTabWrapper() {
   return (
     <TestSeriesTab
       availableTests={ctx.availableTests}
-      batches={ctx.batches}
-      students={ctx.students}
       onAssignTest={ctx.onAssignTest}
       isDarkMode={ctx.isDarkMode}
     />
@@ -431,6 +533,9 @@ export function InstAnalyticsTabWrapper() {
     <AnalyticsTab
       analytics={ctx.analytics}
       rankings={ctx.rankings}
+      batches={ctx.batches}
+      availableTests={ctx.availableTests}
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -443,6 +548,8 @@ export function InstRankingsTabWrapper() {
       rankings={ctx.rankings}
       batches={ctx.batches}
       students={ctx.students}
+      availableTests={ctx.availableTests}
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -452,9 +559,11 @@ export function InstReportsTabWrapper() {
   const ctx = useOutletContext();
   return (
     <ReportsTab
-      institution={ctx.institution}
+      institution={ctx.profile || ctx.institution}
       students={ctx.students}
       batches={ctx.batches}
+      availableTests={ctx.availableTests}
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
       isDarkMode={ctx.isDarkMode}
     />
   );
@@ -467,6 +576,7 @@ export function InstAttendanceTabWrapper() {
       students={ctx.students}
       batches={ctx.batches}
       availableTests={ctx.availableTests}
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
       isDarkMode={ctx.isDarkMode}
     />
   );
