@@ -212,13 +212,8 @@ export default function BulkUploadModal({
               </ul>
 
               <button
-<<<<<<< HEAD
                 onClick={downloadTemplateHandler}
-                className="inline-flex items-center gap-2 text-xs font-bold text-cyan-400 hover:text-cyan-300 hover:underline pt-1 cursor-pointer"
-=======
-                onClick={onDownloadTemplate}
                 className="inline-flex items-center gap-2 text-xs font-bold text-cyan-500 hover:text-cyan-400 hover:underline pt-1 cursor-pointer"
->>>>>>> 2bfdf33 (Fix institution modal functionality, theme mode styling, scroll lock, and portal stacking context)
               >
                 <Download className="h-4 w-4" />
                 <span>Download Sample CSV Template</span>

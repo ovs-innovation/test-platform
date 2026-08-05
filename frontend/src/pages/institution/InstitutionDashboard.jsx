@@ -358,15 +358,6 @@ export default function InstitutionDashboard() {
 
       {showBulkUploadModal && (
         <BulkUploadModal
-<<<<<<< HEAD
-          isOpen={showBulkUploadModal}
-          batches={batches}
-          onClose={() => setShowBulkUploadModal(false)}
-          onUploadSubmit={handleBulkUpload}
-          onSubmit={handleBulkUpload}
-          onDownloadTemplate={downloadStudentCsvTemplate}
-          availableLicenses={profile?.student_capacity || 500}
-=======
           isOpen={true}
           batches={batches}
           onClose={() => setShowBulkUploadModal(false)}
@@ -381,7 +372,6 @@ export default function InstitutionDashboard() {
               ? Math.max(0, profile.total_licenses - students.length)
               : Math.max(0, 50 - students.length)
           }
->>>>>>> 2bfdf33 (Fix institution modal functionality, theme mode styling, scroll lock, and portal stacking context)
           instId={instId}
           isDarkMode={isDarkMode}
         />

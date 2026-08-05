@@ -69,7 +69,6 @@ export default function StudentsTab({
   // Active student detail drawer state
   const [inspectStudent, setInspectStudent] = useState(null);
 
-<<<<<<< HEAD
   // Helper to extract student target exam with fallback
   const getStudentTargetExam = (st) => {
     if (st.target_exam && String(st.target_exam).trim()) return String(st.target_exam).trim();
@@ -83,7 +82,7 @@ export default function StudentsTab({
     }
     return 'NEET';
   };
-=======
+
   // Move batch modal state
   const [showMoveBatchModal, setShowMoveBatchModal] = useState(false);
   const [targetBatchId, setTargetBatchId] = useState('');
@@ -97,7 +96,6 @@ export default function StudentsTab({
       document.body.style.overflow = '';
     };
   }, [inspectStudent, showMoveBatchModal]);
->>>>>>> 2bfdf33 (Fix institution modal functionality, theme mode styling, scroll lock, and portal stacking context)
 
   // Filtered Students list
   const filteredStudents = useMemo(() => {
