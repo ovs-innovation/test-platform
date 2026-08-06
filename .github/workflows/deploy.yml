@@ -33,18 +33,20 @@ jobs:
             set -euo pipefail
 
             PROJECT_DIR="/var/www/test-platform"
-            HEALTH_URL="https://edvedum.com/api/health"
-            READY_URL="https://edvedum.com/api/health/ready"
+            BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
+            INTERNAL_HEALTH_URL="http://localhost:5000/api/health"
+            INTERNAL_READY_URL="http://localhost:5000/api/health/ready"
+            PUBLIC_HEALTH_URL="https://edvedum.com/api/health"
+            PUBLIC_READY_URL="https://edvedum.com/api/health/ready"
             MAX_RETRIES=24
             RETRY_INTERVAL=5
-            STASH_CREATED=false
 
             log() {
               echo "[$(date -u +'%Y-%m-%dT%H:%M:%SZ')] $1"
             }
 
             log "=================================================="
-            log " EDVEDUM Production Enterprise CI/CD Deployment"
+            log " EDVEDUM Production Safe CI/CD Deployment"
             log " Target Domain: edvedum.com"
             log " Target Host: /var/www/test-platform"
             log "=================================================="
@@ -56,113 +58,173 @@ jobs:
 
             cd "$PROJECT_DIR"
 
+            # 1. Clear any stuck git state (rebase/merge conflicts)
+            log "Step 1/8: Clearing any pending git merge or rebase operations..."
+            git merge --abort || true
+            git rebase --abort || true
+
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             log "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
-            # Step 1: Safe Git Syncing - Protect Local Uncommitted Production Overrides
-            log "Step 1/6: Syncing latest source code from GitHub..."
-            
-            if [ -n "$(git status --porcelain)" ]; then
-              log "NOTICE: Local VPS uncommitted changes detected. Safely stashing local production overrides..."
-              git stash push -m "ci-autostash-$(date +%s)"
-              STASH_CREATED=true
+            # 2. Backup production-specific files before git reset
+            log "Step 2/8: Backing up production-specific files to /tmp..."
+            mkdir -p "$BACKUP_DIR"
+
+            if [ -f "backend/src/config/db.js" ]; then
+              mkdir -p "$BACKUP_DIR/backend/src/config"
+              cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js"
+              log "Backed up backend/src/config/db.js"
             fi
 
+            if [ -f "frontend/nginx.conf" ]; then
+              mkdir -p "$BACKUP_DIR/frontend"
+              cp "frontend/nginx.conf" "$BACKUP_DIR/frontend/nginx.conf"
+              log "Backed up frontend/nginx.conf"
+            fi
+
+            # 3. Clean fetch and hard reset to origin/main
+            log "Step 3/8: Fetching latest code and resetting repository..."
             git fetch origin main
-            git checkout main
-            git pull --rebase origin main
+            git reset --hard origin/main
 
             NEW_COMMIT=$(git rev-parse HEAD)
-            log "New target commit fetched: ${NEW_COMMIT}"
+            log "New target commit: ${NEW_COMMIT}"
 
-            # Re-apply local stashed overrides if stashed previously
-            if [ "$STASH_CREATED" = "true" ]; then
-              log "Re-applying stashed local production overrides..."
-              git stash pop || log "WARNING: Local stash re-apply required manual verification."
+            # 4. Restore production files from backup
+            log "Step 4/8: Restoring production-specific files..."
+            if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
+              cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js"
+              log "Restored backend/src/config/db.js"
             fi
 
-            # Step 2: Build Production Docker Images
-            log "Step 2/6: Building production Docker images..."
+            if [ -f "$BACKUP_DIR/frontend/nginx.conf" ]; then
+              cp "$BACKUP_DIR/frontend/nginx.conf" "frontend/nginx.conf"
+              log "Restored frontend/nginx.conf"
+            fi
+
+            # Function to execute rollback on failure
+            execute_rollback() {
+              log "CRITICAL FAILURE OCCURRED! Diagnostics:"
+              log "--- Container Status ---"
+              docker compose ps || true
+              log "--- Backend Container Logs (Last 100 Lines) ---"
+              docker compose logs --tail=100 backend || true
+
+              if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
+                log "Initiating automatic rollback to commit ${PREV_COMMIT}..."
+                git checkout "$PREV_COMMIT" || true
+                
+                if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
+                  cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
+                fi
+                if [ -f "$BACKUP_DIR/frontend/nginx.conf" ]; then
+                  cp "$BACKUP_DIR/frontend/nginx.conf" "frontend/nginx.conf" || true
+                fi
+
+                docker compose build
+                docker compose up -d --remove-orphans
+                log "Rollback executed to commit ${PREV_COMMIT}."
+              fi
+
+              rm -rf "$BACKUP_DIR" || true
+              exit 1
+            }
+
+            # 5. Build and start containers
+            log "Step 5/8: Building Docker images..."
             docker compose build
 
-            # Step 3: Zero-Downtime Container Transition (Preserving all volumes & .env)
-            log "Step 3/6: Deploying updated containers (Preserving PostgreSQL & upload volumes)..."
+            log "Step 6/8: Starting production containers in background..."
             docker compose up -d --remove-orphans
 
-            log "Waiting 5 seconds for backend process stabilization..."
+            log "Waiting 5 seconds for backend process initialization..."
             sleep 5
 
-            # Step 4: Liveness Health Check (Process & HTTP Server)
-            log "Step 4/6: Verifying process liveness (${HEALTH_URL})..."
-            HEALTH_SUCCESS=false
+            # 6. Internal localhost Health Verification
+            log "Step 7/8: Verifying internal health via localhost:5000..."
 
+            INT_HEALTH_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$HEALTH_URL" || echo "000")
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$INTERNAL_HEALTH_URL" || echo "000")
               if [ "$HTTP_CODE" -eq 200 ]; then
-                log "SUCCESS: Liveness check PASSED (HTTP 200 OK) on attempt ${i}/${MAX_RETRIES}!"
-                HEALTH_SUCCESS=true
+                log "Internal liveness check PASSED (HTTP 200) on attempt ${i}/${MAX_RETRIES}!"
+                INT_HEALTH_OK=true
                 break
               else
-                log "Attempt ${i}/${MAX_RETRIES}: Liveness check returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                log "Attempt ${i}/${MAX_RETRIES}: Internal liveness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
                 sleep $RETRY_INTERVAL
               fi
             done
 
-            if [ "$HEALTH_SUCCESS" = "false" ]; then
-              log "CRITICAL FAILURE: Liveness health check failed after ${MAX_RETRIES} attempts!"
-              log "Dumping backend container log tail (last 100 lines):"
-              docker compose logs --tail=100 backend || true
-
-              if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
-                log "ATTENTION: Executing automatic rollback to commit ${PREV_COMMIT}..."
-                git checkout "$PREV_COMMIT"
-                docker compose build
-                docker compose up -d --remove-orphans
-                log "Rollback completed. Containers restored to previous commit ${PREV_COMMIT}."
-              fi
-              exit 1
+            if [ "$INT_HEALTH_OK" = "false" ]; then
+              log "Internal liveness check failed!"
+              execute_rollback
             fi
 
-            # Step 5: Database Readiness Health Check (Query execution & DB Pool)
-            log "Step 5/6: Verifying database readiness (${READY_URL})..."
-            READY_SUCCESS=false
-
+            INT_READY_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$READY_URL" || echo "000")
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$INTERNAL_READY_URL" || echo "000")
               if [ "$HTTP_CODE" -eq 200 ]; then
-                log "SUCCESS: Database readiness check PASSED (HTTP 200 OK - DB Connected) on attempt ${i}/${MAX_RETRIES}!"
-                READY_SUCCESS=true
+                log "Internal readiness check PASSED (HTTP 200 - DB Connected) on attempt ${i}/${MAX_RETRIES}!"
+                INT_READY_OK=true
                 break
               else
-                log "Attempt ${i}/${MAX_RETRIES}: Database readiness check returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                log "Attempt ${i}/${MAX_RETRIES}: Internal readiness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
                 sleep $RETRY_INTERVAL
               fi
             done
 
-            if [ "$READY_SUCCESS" = "false" ]; then
-              log "CRITICAL FAILURE: Database readiness check failed after ${MAX_RETRIES} attempts!"
-              log "Dumping backend container log tail (last 100 lines):"
-              docker compose logs --tail=100 backend || true
-
-              if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
-                log "ATTENTION: Executing automatic rollback to commit ${PREV_COMMIT}..."
-                git checkout "$PREV_COMMIT"
-                docker compose build
-                docker compose up -d --remove-orphans
-                log "Rollback completed. Containers restored to previous commit ${PREV_COMMIT}."
-              fi
-              exit 1
+            if [ "$INT_READY_OK" = "false" ]; then
+              log "Internal readiness check failed!"
+              execute_rollback
             fi
 
-            # Step 6: Post-Deployment Cleanup & Verification
-            log "Step 6/6: Pruning unused dangling Docker image layers to prevent VPS disk bloat..."
+            # 7. Public HTTPS Health Verification
+            log "Step 8/8: Verifying public health via https://edvedum.com..."
+
+            PUB_HEALTH_OK=false
+            for i in $(seq 1 $MAX_RETRIES); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$PUBLIC_HEALTH_URL" || echo "000")
+              if [ "$HTTP_CODE" -eq 200 ]; then
+                log "Public liveness check PASSED (HTTP 200) on attempt ${i}/${MAX_RETRIES}!"
+                PUB_HEALTH_OK=true
+                break
+              else
+                log "Attempt ${i}/${MAX_RETRIES}: Public liveness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                sleep $RETRY_INTERVAL
+              fi
+            done
+
+            if [ "$PUB_HEALTH_OK" = "false" ]; then
+              log "Public liveness check failed!"
+              execute_rollback
+            fi
+
+            PUB_READY_OK=false
+            for i in $(seq 1 $MAX_RETRIES); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "$PUBLIC_READY_URL" || echo "000")
+              if [ "$HTTP_CODE" -eq 200 ]; then
+                log "Public readiness check PASSED (HTTP 200 - DB Connected) on attempt ${i}/${MAX_RETRIES}!"
+                PUB_READY_OK=true
+                break
+              else
+                log "Attempt ${i}/${MAX_RETRIES}: Public readiness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                sleep $RETRY_INTERVAL
+              fi
+            done
+
+            if [ "$PUB_READY_OK" = "false" ]; then
+              log "Public readiness check failed!"
+              execute_rollback
+            fi
+
+            # Clean up dangling image layers & backup dir
+            log "Pruning dangling Docker build cache layers..."
             docker image prune -f --filter "until=24h" || true
-
-            log "Final Production Container Summary:"
-            docker compose ps
+            rm -rf "$BACKUP_DIR" || true
 
             log "=================================================="
             log " EDVEDUM Production Deployment SUCCESSFUL!"
             log " Active Commit: ${NEW_COMMIT}"
-            log " Health Status: Fully Operational (200 OK)"
+            log " Status: 100% Operational (Internal & Public Health OK)"
             log "=================================================="
