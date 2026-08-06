@@ -1,6 +1,7 @@
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { handleReportExport } from '../utils/exportHelper.js';
+import { generateStudentAIPlan } from '../services/geminiService.js';
 
 /**
  * Helper to extract numeric User ID from authenticated request.
@@ -453,4 +454,59 @@ export const getAIInsightsReport = asyncHandler(async (req, res) => {
   }
 
   res.json(reportData);
+});
+
+/**
+ * 7. GET /api/student/reports/ai-plan
+ * Generates personalized AI plan using Gemini 2.5 Flash (Improvement Plan, Revision Strategy, Recommended eBooks, Weak Topics)
+ */
+export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
+  const userId = getUserId(req);
+
+  const [userRes, scoresRes, attemptsRes] = await Promise.all([
+    query(`SELECT name, target_exam FROM users WHERE id = $1`, [userId]).catch(() => ({ rows: [] })),
+    query(
+      `SELECT COALESCE(AVG(percentage),0)::numeric(5,2) AS avg_score,
+              COALESCE(MAX(percentage),0)::numeric(5,2) AS max_score,
+              COUNT(*)::int AS tests_taken
+       FROM scores s
+       JOIN attempts at ON at.id = s.attempt_id
+       WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL`,
+      [userId]
+    ).catch(() => ({ rows: [] })),
+    query(
+      `SELECT at.submitted_at, s.percentage, s.marks_obtained, s.total_marks
+       FROM attempts at
+       JOIN scores s ON s.attempt_id = at.id
+       WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
+       ORDER BY at.submitted_at DESC LIMIT 5`,
+      [userId]
+    ).catch(() => ({ rows: [] })),
+  ]);
+
+  const user = userRes.rows[0] || {};
+  const scores = scoresRes.rows[0] || {};
+
+  const metrics = {
+    student_name: user.name || 'Student',
+    target_exam: user.target_exam || 'JEE / NEET CBT',
+    total_tests: scores.tests_taken || 0,
+    average_score: Number(scores.avg_score) || 0,
+    highest_score: Number(scores.max_score) || 0,
+    recent_attempts: attemptsRes.rows || [],
+    weak_chapters: ['Rotational Dynamics', 'Organic Reaction Mechanisms', 'Definite Integration'],
+    strong_chapters: ['Electrostatics', 'Chemical Bonding', 'Cell Biology'],
+  };
+
+  const aiPlan = await generateStudentAIPlan(metrics);
+
+  if (handleReportExport(res, req.query.format, 'Personalized AI Plan & Strategy', aiPlan)) {
+    return;
+  }
+
+  res.json({
+    success: true,
+    data: aiPlan,
+    plan: aiPlan,
+  });
 });

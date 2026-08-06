@@ -69,7 +69,7 @@ export default function OverviewTab({
               />
             ) : (
               <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-600 text-white font-black text-xl sm:text-2xl shadow-xl border border-white/20 shrink-0">
-                {institution?.logoBadge || (institution?.name ? institution.name.substring(0, 3).toUpperCase() : 'SSC')}
+                {institution?.logoBadge || (institution?.name ? institution.name.substring(0, 3).toUpperCase() : 'VDN')}
               </div>
             )}
 
@@ -80,7 +80,7 @@ export default function OverviewTab({
                   {institution?.institution_type || 'School / Coaching Institute'}
                 </span>
                 <span className={`text-xs font-mono font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  ID: {institution?.schoolId || institution?.id || 'SSC1122'}
+                  ID: {institution?.schoolId || institution?.code || (institution?.id ? `INST-${institution.id}` : 'VDN-101')}
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
                   <CheckCircle2 className="h-3 w-3" />
@@ -89,7 +89,7 @@ export default function OverviewTab({
               </div>
 
               <h1 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                {institution?.name || 'S.S.C Public School'}
+                {institution?.name || 'Partner Institution'}
               </h1>
 
               <p className={`text-xs sm:text-sm font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>

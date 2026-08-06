@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState } from '../../components/ui.jsx';
+import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
+import AIMentorReportView from '../../components/candidate/AIMentorReportView.jsx';
 import {
   Trophy,
   Award,
@@ -182,6 +184,9 @@ export default function PostTestAnalytics() {
           </div>
         </div>
       </div>
+
+      {/* GEMINI 2.5 AI DIAGNOSTIC & PERSONALISED REVISION HUB */}
+      <AIInsightsCard isDarkMode={true} />
 
       {/* ----------------------------------------------------------------- */}
       {/* COMPREHENSIVE RANKS BREAKDOWN (AIR, State, City, Inst, Batch)    */}
@@ -739,6 +744,18 @@ export default function PostTestAnalytics() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* ── AI Mentor Report Section ──────────────────────────────── */}
+      <div className="mt-2">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="h-px flex-1 bg-gradient-to-r from-purple-500/40 to-transparent" />
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-purple-400 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20">
+            ✦ AI Mentor Analysis
+          </span>
+          <div className="h-px flex-1 bg-gradient-to-l from-purple-500/40 to-transparent" />
+        </div>
+        <AIMentorReportView testId={testId} />
       </div>
     </div>
   );

@@ -747,3 +747,173 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
 
   res.json(responseData);
 });
+
+/**
+ * GET /api/student/analytics/:test_id/ai-mentor-report
+ * Generates an 8-section AI Mentor Report from real test data using Gemini AI.
+ * Every insight is derived from the student's actual performance — no generic content.
+ */
+export const getAIMentorReport = asyncHandler(async (req, res) => {
+  const studentId = Number(req.user?.id);
+  const testId = Number(req.params.test_id);
+
+  if (!studentId || isNaN(studentId)) throw ApiError.unauthorized('Invalid student session');
+  if (!testId || isNaN(testId)) throw ApiError.badRequest('Invalid test ID');
+
+  // 1. Fetch full analytics from the existing getPostTestAnalytics logic inline
+  // We reuse the same DB queries for correctness & DRY-ness
+  const testRes = await query(
+    `SELECT id, test_name, test_type, max_marks, duration_minutes FROM tests WHERE id = $1`,
+    [testId]
+  );
+  if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
+  const test = testRes.rows[0];
+
+  const attemptRes = await query(
+    `SELECT ta.id, ta.total_score, ta.time_taken_seconds, ta.subject_wise_score,
+            ta.submitted_at, ta.answers,
+            r.air, r.state_rank, r.city_rank, r.percentile
+     FROM test_attempts ta
+     LEFT JOIN test_rankings r ON r.attempt_id = ta.id
+     WHERE ta.test_id = $1 AND ta.student_id = $2 AND ta.submitted_at IS NOT NULL
+     ORDER BY ta.submitted_at DESC LIMIT 1`,
+    [testId, studentId]
+  );
+  if (attemptRes.rowCount === 0) throw ApiError.notFound('No submitted attempt found for this test');
+
+  const attempt = attemptRes.rows[0];
+  const studentAnswers = attempt.answers || [];
+
+  // 2. Fetch question stats
+  const questionPeerStatsRes = await query(
+    `SELECT qs.question_id, qs.subject, qs.chapter_name, qs.difficulty_level,
+            qs.correct_answer_index AS correct_index, qs.options, qs.percent_correct,
+            qs.avg_time_seconds AS avg_time
+     FROM question_stats qs
+     WHERE qs.test_id = $1
+     ORDER BY qs.question_number ASC`,
+    [testId]
+  );
+
+  // 3. Compute per-question metrics
+  let totalCorrect = 0, totalIncorrect = 0, totalUnattempted = 0;
+  const subjectStats = { Physics: { correct: 0, incorrect: 0, unattempted: 0, score: 0, max_marks: 0, time_spent: 0 }, Chemistry: { correct: 0, incorrect: 0, unattempted: 0, score: 0, max_marks: 0, time_spent: 0 }, Botany: { correct: 0, incorrect: 0, unattempted: 0, score: 0, max_marks: 0, time_spent: 0 }, Zoology: { correct: 0, incorrect: 0, unattempted: 0, score: 0, max_marks: 0, time_spent: 0 } };
+  const chapterStats = {};
+  const difficultyStats = { easy: { correct: 0, incorrect: 0, total: 0 }, medium: { correct: 0, incorrect: 0, total: 0 }, hard: { correct: 0, incorrect: 0, total: 0 } };
+  const questionWiseAnalysis = [];
+  const inefficientQuestions = [];
+
+  for (const qStats of questionPeerStatsRes.rows) {
+    const sAns = studentAnswers.find(a => Number(a.question_id) === Number(qStats.question_id)) || {};
+    const isAttempted = sAns.selected_index !== undefined && sAns.selected_index !== null;
+    const isCorrect = isAttempted && Number(sAns.selected_index) === Number(qStats.correct_index);
+    const timeSpent = Number(sAns.time_spent_seconds) || 0;
+    const normSubject = ['Physics', 'Chemistry', 'Botany', 'Zoology'].includes(qStats.subject) ? qStats.subject : 'Physics';
+    const diff = ['easy', 'medium', 'hard'].includes((qStats.difficulty_level || '').toLowerCase()) ? qStats.difficulty_level.toLowerCase() : 'medium';
+
+    if (!isAttempted) totalUnattempted++;
+    else if (isCorrect) totalCorrect++;
+    else totalIncorrect++;
+
+    if (subjectStats[normSubject]) {
+      subjectStats[normSubject].max_marks = (subjectStats[normSubject].max_marks || 0) + 4;
+      subjectStats[normSubject].time_spent += timeSpent;
+      if (!isAttempted) subjectStats[normSubject].unattempted++;
+      else if (isCorrect) { subjectStats[normSubject].correct++; subjectStats[normSubject].score += 4; }
+      else { subjectStats[normSubject].incorrect++; subjectStats[normSubject].score -= 1; }
+    }
+
+    const chKey = `${normSubject}:${qStats.chapter_name}`;
+    if (!chapterStats[chKey]) chapterStats[chKey] = { chapter_name: qStats.chapter_name, subject: normSubject, correct: 0, wrong: 0, total: 0 };
+    chapterStats[chKey].total++;
+    if (isCorrect) chapterStats[chKey].correct++;
+    else if (isAttempted) chapterStats[chKey].wrong++;
+
+    if (difficultyStats[diff]) {
+      difficultyStats[diff].total++;
+      if (isCorrect) difficultyStats[diff].correct++;
+      else if (isAttempted) difficultyStats[diff].incorrect++;
+    }
+
+    if (isAttempted && timeSpent > 150) {
+      inefficientQuestions.push({ question_number: questionWiseAnalysis.length + 1, time_spent_seconds: timeSpent, subject: normSubject, chapter: qStats.chapter_name });
+    }
+
+    questionWiseAnalysis.push({ question_number: questionWiseAnalysis.length + 1, subject: normSubject, chapter: qStats.chapter_name, difficulty_level: diff, is_correct: isCorrect, is_attempted: isAttempted, time_spent_seconds: timeSpent });
+  }
+
+  // 4. Build subject analysis list
+  const subjectAnalysisList = ['Physics', 'Chemistry', 'Botany', 'Zoology'].map(sub => {
+    const st = subjectStats[sub];
+    const attempted = st.correct + st.incorrect;
+    const accuracy = attempted > 0 ? Math.round((st.correct / attempted) * 100) : 0;
+    return { subject: sub, score: Math.max(0, st.score), max_marks: st.max_marks || 180, correct_count: st.correct, incorrect_count: st.incorrect, unattempted_count: st.unattempted, accuracy_percent: accuracy, time_spent_seconds: st.time_spent };
+  });
+
+  // 5. Build chapter performance list
+  const chapterPerformanceList = Object.values(chapterStats).map(ch => {
+    const attempted = ch.correct + ch.wrong;
+    const acc = attempted > 0 ? Math.round((ch.correct / attempted) * 100) : 0;
+    return { chapter_name: ch.chapter_name, subject: ch.subject, correct: ch.correct, wrong: ch.wrong, total: ch.total, accuracy_percent: acc };
+  }).sort((a, b) => a.accuracy_percent - b.accuracy_percent);
+
+  // 6. Previous test score for comparison
+  const prevAttemptRes = await query(
+    `SELECT total_score FROM test_attempts
+     WHERE student_id = $1 AND test_id != $2 AND submitted_at IS NOT NULL
+     ORDER BY submitted_at DESC LIMIT 1`,
+    [studentId, testId]
+  );
+  const prevScore = prevAttemptRes.rowCount > 0 ? Number(prevAttemptRes.rows[0].total_score) : null;
+
+  // 7. Student name
+  const studentRes = await query(`SELECT name FROM students WHERE id = $1`, [studentId]);
+  const studentName = studentRes.rows[0]?.name || 'Student';
+
+  const totalScore = Number(attempt.total_score) || 0;
+  const maxMarks = Number(test.max_marks) || 720;
+  const timeTakenSeconds = Number(attempt.time_taken_seconds) || 0;
+  const attemptedCount = totalCorrect + totalIncorrect;
+  const overallAccuracy = attemptedCount > 0 ? Math.round((totalCorrect / attemptedCount) * 100) : 0;
+  const negativeMarksLost = totalIncorrect; // 1 mark per wrong answer
+
+  // 8. Call Gemini AI (with structured real data fallback)
+  const { generateAIMentorReport } = await import('../services/geminiService.js');
+
+  const aiReport = await generateAIMentorReport({
+    student_name: studentName,
+    test_name: test.test_name,
+    total_questions: questionPeerStatsRes.rowCount,
+    attempted_count: attemptedCount,
+    correct_count: totalCorrect,
+    incorrect_count: totalIncorrect,
+    unattempted_count: totalUnattempted,
+    total_score: totalScore,
+    max_marks: maxMarks,
+    accuracy_percent: overallAccuracy,
+    percentage: maxMarks > 0 ? Math.round((totalScore / maxMarks) * 10000) / 100 : 0,
+    time_taken_seconds: timeTakenSeconds,
+    all_india_rank: attempt.air || null,
+    percentile: attempt.percentile || null,
+    subject_analysis: subjectAnalysisList,
+    chapter_performance: chapterPerformanceList,
+    time_management_report: { inefficient_questions: inefficientQuestions },
+    difficulty_accuracy: Object.keys(difficultyStats).map(d => ({ difficulty: d, total: difficultyStats[d].total, correct: difficultyStats[d].correct, accuracy: difficultyStats[d].correct + difficultyStats[d].incorrect > 0 ? Math.round((difficultyStats[d].correct / (difficultyStats[d].correct + difficultyStats[d].incorrect)) * 100) : 0 })),
+    negative_marks_lost: negativeMarksLost,
+    previous_test_score: prevScore,
+  });
+
+  res.json({
+    success: true,
+    test_info: { id: test.id, test_name: test.test_name, max_marks: maxMarks },
+    student_name: studentName,
+    summary: {
+      total_score: totalScore, max_marks: maxMarks, accuracy_percent: overallAccuracy,
+      correct_count: totalCorrect, incorrect_count: totalIncorrect, unattempted_count: totalUnattempted,
+      all_india_rank: attempt.air || null, percentile: attempt.percentile || null,
+    },
+    ai_mentor_report: aiReport,
+    generated_at: new Date().toISOString(),
+  });
+});
+

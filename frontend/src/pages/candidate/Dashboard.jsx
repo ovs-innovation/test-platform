@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
 import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
+import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import {
   Sparkles,
   Trophy,
@@ -286,6 +287,9 @@ export default function CandidateDashboard() {
 
       {/* 2.5 OFFICIAL AIETS 2027 ASSESSMENT SCHEDULE SNAPSHOT */}
       <DashboardScheduleSnapshot />
+
+      {/* 2.6 GEMINI 2.5 AI DIAGNOSTIC & PERSONALISED REVISION HUB */}
+      <AIInsightsCard isDarkMode={true} />
 
       {/* 3. 6 REDESIGNED SAAS KPI CARDS */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">

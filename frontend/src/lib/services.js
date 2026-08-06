@@ -249,6 +249,7 @@ export const notificationService = {
 export const studentService = {
   analytics: () => withCache('student_analytics', () => api.get('/student/analytics').then((r) => r.data)),
   postTestAnalytics: (testId) => api.get(`/student/analytics/${testId}`).then((r) => r.data),
+  getAIMentorReport: (testId) => api.get(`/student/analytics/${testId}/ai-mentor-report`).then((r) => r.data),
   profile: () => withCache('student_profile', () => api.get('/student/profile').then((r) => r.data)),
   updateProfile: (data) => {
     clearCache('student_profile');
@@ -470,4 +471,14 @@ export const institutionReportsService = {
       throw err;
     }
   },
+};
+
+export const studentReportService = {
+  getOverall: (params) => api.get('/student/reports/overall', { params }).then((r) => r.data),
+  getSubjectWise: (params) => api.get('/student/reports/subject-wise', { params }).then((r) => r.data),
+  getChapterWise: (params) => api.get('/student/reports/chapter-wise', { params }).then((r) => r.data),
+  getStrengthsWeaknesses: (params) => api.get('/student/reports/strengths-weaknesses', { params }).then((r) => r.data),
+  getTimeAnalysis: (params) => api.get('/student/reports/time-analysis', { params }).then((r) => r.data),
+  getInsights: (params) => api.get('/student/reports/insights', { params }).then((r) => r.data),
+  getAIPlan: (params) => api.get('/student/reports/ai-plan', { params }).then((r) => r.data),
 };

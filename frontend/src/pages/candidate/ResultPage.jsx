@@ -5,6 +5,7 @@ import { isMultiSelectQuestion } from '../../lib/examPalette.js';
 import { Skeleton, ErrorState } from '../../components/ui.jsx';
 import { SubjectBar } from '../../components/design.jsx';
 import { formatDateTime, attemptStatusLabel } from '../../lib/format.js';
+import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 
 export default function ResultPage() {
   const { attemptId } = useParams();
@@ -231,6 +232,11 @@ export default function ResultPage() {
               <div className="border-t border-slate-200 dark:border-slate-800 px-6 py-4 text-center text-xs text-slate-500 dark:text-slate-400">
                 Submitted {formatDateTime(attempt.submitted_at)}
               </div>
+            </div>
+
+            {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
+            <div className="mt-6">
+              <AIInsightsCard isDarkMode={true} />
             </div>
 
             {breakdown && (

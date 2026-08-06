@@ -25,13 +25,13 @@ export default function ProfileTab({
   const toast = useToast();
 
   const [formData, setFormData] = useState({
-    name: institution?.name || 'S.S.C Public School',
-    contact_person: institution?.contact_person || 'Dr. Ramesh Sharma',
-    contact_email: institution?.contact_email || institution?.email || 'admin@sscpublic.edu.in',
-    contact_mobile: institution?.contact_mobile || '+91 98765 43210',
+    name: institution?.name || 'Partner Institution',
+    contact_person: institution?.contact_person || 'Academic Coordinator',
+    contact_email: institution?.contact_email || institution?.email || '',
+    contact_mobile: institution?.contact_mobile || '',
     city: institution?.city || 'New Delhi',
     state: institution?.state || 'Delhi',
-    address: institution?.address || '12, Knowledge Park, Institutional Area, New Delhi - 110001',
+    address: institution?.address || '',
     logo_url: institution?.logo_url || '',
   });
 
@@ -163,7 +163,7 @@ export default function ProfileTab({
                 />
               ) : (
                 <div className="w-full h-full rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 text-white font-black text-4xl flex items-center justify-center shadow-lg">
-                  {formData.name ? formData.name.substring(0, 2).toUpperCase() : 'SSC'}
+                  {formData.name ? formData.name.substring(0, 2).toUpperCase() : 'VDN'}
                 </div>
               )}
             </div>
@@ -220,7 +220,7 @@ export default function ProfileTab({
             <div className="space-y-2 text-xs">
               <div className={`flex justify-between p-2.5 rounded-xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                 <span className="text-slate-400">School / Institution Code:</span>
-                <strong className="font-mono text-cyan-500">{institution?.code || 'SSC-123'}</strong>
+                <strong className="font-mono text-cyan-500">{institution?.code || institution?.schoolId || (institution?.id ? `INST-${institution.id}` : 'VDN-101')}</strong>
               </div>
               <div className={`flex justify-between p-2.5 rounded-xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                 <span className="text-slate-400">Enrolled Seat Capacity:</span>

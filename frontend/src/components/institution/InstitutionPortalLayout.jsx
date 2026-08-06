@@ -194,10 +194,10 @@ export default function InstitutionPortalLayout({
             {(!sidebarCollapsed || mobileDrawerOpen) && (
               <div className="space-y-0.5 truncate">
                 <h2 className={`font-black text-sm sm:text-base truncate leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                  {institutionData?.name || 'S.S.C Public School'}
+                  {institutionData?.name || 'Partner Institution'}
                 </h2>
                 <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-cyan-500 font-mono">
-                  ID: {institutionData?.id || institutionData?.schoolId || 'SSC1122'}
+                  ID: {institutionData?.schoolId || institutionData?.code || (institutionData?.id ? `INST-${institutionData.id}` : 'VDN-101')}
                 </span>
               </div>
             )}
@@ -481,7 +481,7 @@ export default function InstitutionPortalLayout({
                     {institutionData?.adminName || 'Centre Admin'}
                   </p>
                   <p className="text-[10px] text-slate-400 font-bold leading-tight truncate max-w-[120px]">
-                    {institutionData?.name || 'S.S.C Public School'}
+                    {institutionData?.name || 'Partner Institution'}
                   </p>
                 </div>
               </button>
@@ -495,7 +495,7 @@ export default function InstitutionPortalLayout({
                 >
                   <div className="px-3.5 py-2.5 border-b border-slate-800/40 mb-1">
                     <p className="text-xs font-black text-white">{institutionData?.adminName || 'Centre Admin'}</p>
-                    <p className="text-[11px] text-slate-400 truncate mt-0.5">{institutionData?.adminEmail || 'admin@sscpublic.edu.in'}</p>
+                    <p className="text-[11px] text-slate-400 truncate mt-0.5">{institutionData?.contact_email || institutionData?.adminEmail || institutionData?.email || ''}</p>
                   </div>
                   <button
                     onClick={handleLogout}

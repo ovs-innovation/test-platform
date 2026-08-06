@@ -457,7 +457,7 @@ export function InstOverviewTabWrapper() {
   const navigate = useNavigate();
   return (
     <OverviewTab
-      profile={ctx.institution}
+      institution={ctx.institution || ctx.profile}
       students={ctx.students}
       batches={ctx.batches}
       analytics={ctx.analytics}

@@ -6,6 +6,7 @@ import {
   getStrengthsWeaknessesReport,
   getTimeAnalysisReport,
   getAIInsightsReport,
+  getPersonalizedAIPlan,
 } from '../controllers/studentReportController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
@@ -20,5 +21,6 @@ router.get('/chapter-wise', getChapterWiseReport);
 router.get('/strengths-weaknesses', getStrengthsWeaknessesReport);
 router.get('/time-analysis', getTimeAnalysisReport);
 router.get('/insights', getAIInsightsReport);
+router.get('/ai-plan', getPersonalizedAIPlan);
 
 export default router;

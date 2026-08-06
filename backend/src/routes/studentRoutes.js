@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { studentAnalytics } from '../controllers/studentAnalyticsController.js';
-import { getPostTestAnalytics } from '../controllers/postTestAnalyticsController.js';
+import { getPostTestAnalytics, getAIMentorReport } from '../controllers/postTestAnalyticsController.js';
 import {
   getProfile, updateProfile, changePassword,
   getLeaderboard, getLeaderboardAssessments, getCertificate,
@@ -12,6 +12,7 @@ import { authenticate, authorize } from '../middleware/auth.js';
 const router = Router();
 
 router.get('/calendar', authenticate, authorize('candidate'), getStudentCalendar);
+router.get('/analytics/:test_id/ai-mentor-report', authenticate, authorize('candidate'), getAIMentorReport);
 router.get('/analytics/:test_id', authenticate, authorize('candidate'), getPostTestAnalytics);
 router.get('/analytics', authenticate, authorize('candidate'), studentAnalytics);
 router.get('/profile', authenticate, authorize('candidate'), getProfile);
