@@ -99,27 +99,30 @@ export default function PublicHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
   const [isVisible, setIsVisible] = useState(true);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const lastScrollY = useRef(0);
 
-  // Auto-hide header when scrolling down, show when scrolling up
+  // Auto-hide header when scrolling down, reveal instantly when scrolling up
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
+      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
 
-      // Always show navbar at top of page
-      if (currentScrollY <= 60) {
+      setIsScrolled(currentScrollY > 20);
+
+      // Always show navbar at top of page (first 80px)
+      if (currentScrollY <= 80) {
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current + 8) {
-        // Scrolling down -> slide navbar up out of view
+      } else if (currentScrollY > lastScrollY.current + 2) {
+        // Scrolling down -> hide navbar
         setIsVisible(false);
         setOpenMenu(null);
-      } else if (currentScrollY < lastScrollY.current - 8) {
-        // Scrolling up -> slide navbar back down into view
+      } else if (currentScrollY < lastScrollY.current - 2) {
+        // Scrolling up -> reveal navbar instantly
         setIsVisible(true);
       }
 
-      lastScrollY.current = currentScrollY;
+      lastScrollY.current = currentScrollY <= 0 ? 0 : currentScrollY;
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -164,7 +167,12 @@ export default function PublicHeader() {
   const showDashboardLogout = isSchoolsPage ? false : !!user;
 
   return (
-    <header className={`sticky top-0 z-40 bg-white transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
+    <>
+      <header
+        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ease-in-out ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        } ${isScrolled ? 'shadow-lg border-b border-slate-200/80' : ''}`}
+      >
 
       <div className="bg-[#0a1628] text-white">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3.5 sm:px-6 py-2 text-[10px] min-[360px]:text-[11px] sm:text-xs whitespace-nowrap overflow-x-hidden">
@@ -410,5 +418,8 @@ export default function PublicHeader() {
         )}
       </div>
     </header>
+      {/* Spacer element to preserve layout height under fixed header */}
+      <div className="h-[96px] sm:h-[104px] w-full shrink-0" aria-hidden="true" />
+    </>
   );
 }
