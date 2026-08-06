@@ -164,15 +164,25 @@ export default function NotificationsTab({
               notifications.map((n) => (
                 <div
                   key={n.id}
+                  onClick={() => {
+                    if (!n.is_read && onMarkRead) {
+                      onMarkRead(n.id);
+                    }
+                  }}
                   className={`p-4 rounded-2xl border transition space-y-1 ${
                     !n.is_read
-                      ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/20' : 'bg-cyan-50 border-cyan-200')
-                      : (isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200')
-                  }`}
+                      ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/30 text-white' : 'bg-cyan-50 border-cyan-200 text-slate-900')
+                      : (isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700')
+                  } ${!n.is_read ? 'cursor-pointer hover:border-cyan-400' : ''}`}
                 >
-                  <div className="flex items-center justify-between">
-                    <span className="font-extrabold text-sm text-cyan-400">{n.title || 'Platform Notice'}</span>
-                    <span className="text-[10px] text-slate-400">{n.created_at || 'Just now'}</span>
+                  <div className="flex items-center justify-between gap-2">
+                    <span className="font-extrabold text-sm text-cyan-400 flex items-center gap-2">
+                      {!n.is_read && <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />}
+                      <span>{n.title || 'Platform Notice'}</span>
+                    </span>
+                    <span className="text-[10px] text-slate-400">
+                      {n.created_at ? new Date(n.created_at).toLocaleString() : 'Just now'}
+                    </span>
                   </div>
                   <p className={`text-xs ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{n.message}</p>
                 </div>

@@ -5,12 +5,14 @@ import {
   getProfile, updateProfile, changePassword,
   getLeaderboard, getLeaderboardAssessments, getCertificate,
   listForumTopics, getForumTopic, createForumTopic, replyForumTopic,
+  getInstituteRank,
 } from '../controllers/studentController.js';
 import { getStudentCalendar } from '../controllers/calendarController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = Router();
 
+router.get('/dashboard/institute-rank', authenticate, authorize('candidate'), getInstituteRank);
 router.get('/calendar', authenticate, authorize('candidate'), getStudentCalendar);
 router.get('/analytics/:test_id/ai-mentor-report', authenticate, authorize('candidate'), getAIMentorReport);
 router.get('/analytics/:test_id', authenticate, authorize('candidate'), getPostTestAnalytics);

@@ -229,3 +229,68 @@ export const replyForumTopic = asyncHandler(async (req, res) => {
   );
   res.status(201).json({ reply: result.rows[0] });
 });
+
+/**
+ * GET /api/student/dashboard/institute-rank
+ * Fast O(1) read from precomputed student_institute_rank table.
+ * Returns null/isB2B: false for direct (non-institutional) students.
+ */
+export const getInstituteRank = asyncHandler(async (req, res) => {
+  const userId = Number(req.user?.id);
+
+  if (!userId || isNaN(userId)) {
+    return res.json({ isB2B: false, rankInfo: null });
+  }
+
+  // 1. Fetch user institution info
+  const userRes = await query('SELECT id, institution_id, batch_id FROM users WHERE id = $1', [userId]);
+  const userRow = userRes.rows[0];
+
+  const instId = Number(userRow?.institution_id || req.user?.institution_id);
+
+  // Direct/individual student -> return isB2B: false, rankInfo: null
+  if (!instId || isNaN(instId) || instId <= 0) {
+    return res.json({ isB2B: false, rankInfo: null });
+  }
+
+  // 2. Fetch precomputed rank from student_institute_rank (O(1) lookup)
+  let rankRes = await query('SELECT * FROM student_institute_rank WHERE student_id = $1', [userId]);
+
+  // 3. If rank row does not exist yet for this B2B student, compute ranks for the institution
+  if (rankRes.rowCount === 0) {
+    const { recomputeInstituteRanks } = await import('../services/rankService.js');
+    await recomputeInstituteRanks(instId);
+    rankRes = await query('SELECT * FROM student_institute_rank WHERE student_id = $1', [userId]);
+  }
+
+  const r = rankRes.rows[0];
+
+  if (!r) {
+    return res.json({
+      isB2B: true,
+      institution_id: instId,
+      rankInfo: {
+        rank: 1,
+        totalStudents: 1,
+        batchRank: null,
+        totalBatchStudents: null,
+        avgScore: 0,
+      },
+    });
+  }
+
+  return res.json({
+    isB2B: true,
+    institution_id: instId,
+    rankInfo: {
+      rank: r.rank,
+      totalStudents: r.total_students,
+      batchRank: r.batch_rank,
+      totalBatchStudents: r.total_batch_students,
+      avgScore: Number(r.avg_score),
+      testsAttempted: r.tests_attempted,
+      updatedAt: r.updated_at,
+    },
+  });
+});
+

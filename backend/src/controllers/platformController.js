@@ -96,6 +96,24 @@ export const toggleCoupon = asyncHandler(async (req, res) => {
   res.json({ coupon: result.rows[0] });
 });
 
+export const deleteCoupon = asyncHandler(async (req, res) => {
+  const result = await query('DELETE FROM coupons WHERE id = $1 RETURNING id', [req.params.id]);
+  if (!result.rowCount) throw ApiError.notFound('Coupon not found');
+  res.json({ success: true, message: 'Coupon deleted successfully' });
+});
+
+export const listPublicCoupons = asyncHandler(async (_req, res) => {
+  const result = await query(
+    `SELECT code, discount_type, discount_value, valid_until
+     FROM coupons
+     WHERE is_active = true
+       AND (valid_until IS NULL OR valid_until > NOW())
+       AND (max_uses IS NULL OR used_count < max_uses)
+     ORDER BY created_at DESC LIMIT 5`
+  );
+  res.json({ coupons: result.rows });
+});
+
 export const validateCoupon = asyncHandler(async (req, res) => {
   const { code, amount } = req.body;
   const result = await query(

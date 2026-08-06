@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 import {
   FileText,
   Search,
@@ -15,12 +16,20 @@ import {
 } from 'lucide-react';
 
 export default function TestSeriesTab({
-  availableTests = [],
-  batches = [],
-  students = [],
-  onAssignTest,
+  availableSeries: propAvailableSeries,
+  availableTests: propAvailableTests,
+  batches: propBatches,
+  students: propStudents,
+  onAssignTest: propOnAssignTest,
   isDarkMode = true,
 }) {
+  const context = useOutletContext() || {};
+  const availableSeries = propAvailableSeries || context.availableSeries || [];
+  const availableTests = propAvailableTests || context.availableTests || [];
+  const batches = propBatches || context.batches || [];
+  const students = propStudents || context.students || [];
+  const onAssignTest = propOnAssignTest || context.onAssignTest;
+
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
   const [selectedSeries, setSelectedSeries] = useState(null);
@@ -34,51 +43,93 @@ export default function TestSeriesTab({
     };
   }, [selectedSeries]);
 
-  // Group tests into Test Series Packages
+  // Group tests into Test Series Packages DYNAMICALLY from database
   const packages = useMemo(() => {
-    const defaultSeries = [
-      {
-        id: 'series-neet-2027',
-        title: 'NEET-UG 2027 All India Test Series (AIETS)',
-        exam: 'NEET UG',
-        targetYear: 2027,
-        testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')).length || 18,
-        description: 'Comprehensive NTA-standard NEET-UG full syllabus and chapterwise mock test series with detailed solutions.',
-        status: 'Active Package',
-        validity: '31 Mar 2027',
-        color: 'from-emerald-600 to-teal-500',
-        badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-        tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')),
-      },
-      {
-        id: 'series-jee-2027',
-        title: 'JEE Main & Advanced 2027 Master Test Series',
-        exam: 'JEE Main & Advanced',
-        targetYear: 2027,
-        testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')).length || 15,
-        description: 'Rigorous Computer Based Test (CBT) mock series for JEE Main & Advanced prep with rank prediction.',
-        status: 'Active Package',
-        validity: '31 Mar 2027',
-        color: 'from-blue-600 to-cyan-500',
-        badgeColor: 'bg-blue-500/10 text-cyan-400 border-cyan-500/20',
-        tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')),
-      },
-      {
-        id: 'series-foundation-2027',
-        title: 'Class 10 Foundation Olympiad & NTSE Test Series',
-        exam: 'Foundation (Class 10)',
-        targetYear: 2026,
-        testCount: 8,
-        description: 'Early booster test series covering Class 10 Science, Math & Mental Ability for Olympiad readiness.',
-        status: 'Included',
-        validity: '31 Dec 2026',
-        color: 'from-purple-600 to-indigo-500',
-        badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-        tests: [],
-      },
-    ];
+    let seriesList = [];
 
-    return defaultSeries.filter((pkg) => {
+    if (availableSeries && availableSeries.length > 0) {
+      seriesList = availableSeries.map((s) => {
+        const examName = s.exam_type || s.exam || 'NEET / JEE';
+        const isNeet = examName.toLowerCase().includes('neet');
+        const isJee = examName.toLowerCase().includes('jee');
+
+        const color = isNeet
+          ? 'from-emerald-600 to-teal-500'
+          : isJee
+          ? 'from-blue-600 to-cyan-500'
+          : 'from-purple-600 to-indigo-500';
+
+        const badgeColor = isNeet
+          ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+          : isJee
+          ? 'bg-blue-500/10 text-cyan-400 border-cyan-500/20'
+          : 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+
+        const matchingTests = availableTests.filter((t) =>
+          (t.category || t.test_type || t.test_name || '').toLowerCase().includes(examName.toLowerCase()) ||
+          (t.package_id && Number(t.package_id) === Number(s.id))
+        );
+
+        return {
+          id: s.id || s.slug,
+          title: s.title || s.package_name || 'Test Series Package',
+          exam: examName,
+          targetYear: s.target_year || 2027,
+          testCount: s.total_tests_count || s.test_count || matchingTests.length || 15,
+          description: s.description || 'Comprehensive computer-based test series package with AIETS diagnostic performance reporting.',
+          status: 'Active Package',
+          validity: s.validity_days ? `${s.validity_days} Days` : '31 Mar 2027',
+          color,
+          badgeColor,
+          tests: matchingTests,
+          raw: s,
+        };
+      });
+    } else {
+      seriesList = [
+        {
+          id: 'series-neet-2027',
+          title: 'NEET-UG 2027 All India Test Series (AIETS)',
+          exam: 'NEET UG',
+          targetYear: 2027,
+          testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')).length || 18,
+          description: 'Comprehensive NTA-standard NEET-UG full syllabus and chapterwise mock test series with detailed solutions.',
+          status: 'Active Package',
+          validity: '31 Mar 2027',
+          color: 'from-emerald-600 to-teal-500',
+          badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+          tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')),
+        },
+        {
+          id: 'series-jee-2027',
+          title: 'JEE Main & Advanced 2027 Master Test Series',
+          exam: 'JEE Main & Advanced',
+          targetYear: 2027,
+          testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')).length || 15,
+          description: 'Rigorous Computer Based Test (CBT) mock series for JEE Main & Advanced prep with rank prediction.',
+          status: 'Active Package',
+          validity: '31 Mar 2027',
+          color: 'from-blue-600 to-cyan-500',
+          badgeColor: 'bg-blue-500/10 text-cyan-400 border-cyan-500/20',
+          tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')),
+        },
+        {
+          id: 'series-foundation-2027',
+          title: 'Class 10 Foundation Olympiad & NTSE Test Series',
+          exam: 'Foundation (Class 10)',
+          targetYear: 2026,
+          testCount: 8,
+          description: 'Early booster test series covering Class 10 Science, Math & Mental Ability for Olympiad readiness.',
+          status: 'Included',
+          validity: '31 Dec 2026',
+          color: 'from-purple-600 to-indigo-500',
+          badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+          tests: [],
+        },
+      ];
+    }
+
+    return seriesList.filter((pkg) => {
       const matchesSearch =
         pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         pkg.exam.toLowerCase().includes(searchQuery.toLowerCase());
@@ -86,7 +137,7 @@ export default function TestSeriesTab({
         categoryFilter === 'All' || pkg.exam.toLowerCase().includes(categoryFilter.toLowerCase());
       return matchesSearch && matchesCategory;
     });
-  }, [availableTests, searchQuery, categoryFilter]);
+  }, [availableSeries, availableTests, searchQuery, categoryFilter]);
 
   return (
     <div className="space-y-6">

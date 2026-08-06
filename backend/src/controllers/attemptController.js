@@ -263,6 +263,20 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
   });
 
   if (result && !result.alreadyDone && result.score) {
+    // Trigger background rank recomputation for candidate's institution if candidate is B2B
+    (async () => {
+      try {
+        const uInst = await query('SELECT institution_id FROM users WHERE id = $1', [result.attempt.candidate_id]);
+        const instId = uInst.rows[0]?.institution_id;
+        if (instId && instId > 0) {
+          const { recomputeInstituteRanks } = await import('../services/rankService.js');
+          recomputeInstituteRanks(instId).catch((e) => console.error('[RankTrigger] Error:', e));
+        }
+      } catch (e) {
+        console.error('[RankTrigger] Background trigger failed:', e);
+      }
+    })();
+
     const userRes = await query('SELECT name, email FROM users WHERE id = $1', [result.attempt.candidate_id]);
     const user = userRes.rows[0];
     if (user?.email) {

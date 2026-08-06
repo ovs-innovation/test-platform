@@ -52,6 +52,9 @@ export const INSTITUTION_NAV_ITEMS = [
 export default function InstitutionPortalLayout({
   institutionData,
   unreadNotificationsCount = 0,
+  notifications = [],
+  onMarkNotificationRead,
+  onMarkAllNotificationsRead,
   searchQuery = '',
   setSearchQuery,
   children,
@@ -423,7 +426,7 @@ export default function InstitutionPortalLayout({
               </button>
 
               {notifDropdownOpen && (
-                <div className={`absolute right-0 mt-2.5 w-72 sm:w-80 rounded-2xl border shadow-2xl p-4 z-50 animate-in fade-in space-y-3 ${
+                <div className={`absolute right-0 mt-2.5 w-80 sm:w-96 rounded-2xl border shadow-2xl p-4 z-50 animate-in fade-in space-y-3 ${
                   isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
                 }`}>
                   <div className="flex items-center justify-between border-b border-slate-800/40 pb-2">
@@ -431,15 +434,68 @@ export default function InstitutionPortalLayout({
                       <Bell className="h-4 w-4 text-cyan-400" />
                       <span>Notifications</span>
                     </h4>
-                    <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
-                      {unreadNotificationsCount} Unread
-                    </span>
-                  </div>
-                  <div className="space-y-2 text-xs">
-                    <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-slate-300">
-                      <p className="font-bold text-white">System Active</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">Your {institutionData?.package_name || 'AIETS Institutional Package'} is active with {institutionData?.total_licenses || 50} student seats.</p>
+                    <div className="flex items-center gap-2">
+                      {unreadNotificationsCount > 0 && onMarkAllNotificationsRead && (
+                        <button
+                          type="button"
+                          onClick={onMarkAllNotificationsRead}
+                          className="text-[10px] text-cyan-400 hover:underline cursor-pointer font-bold"
+                        >
+                          Mark all read
+                        </button>
+                      )}
+                      <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                        {unreadNotificationsCount} Unread
+                      </span>
                     </div>
+                  </div>
+
+                  <div className="space-y-2 text-xs max-h-72 overflow-y-auto custom-scrollbar pr-1">
+                    {notifications.length > 0 ? (
+                      notifications.slice(0, 8).map((n) => (
+                        <div
+                          key={n.id}
+                          onClick={() => {
+                            if (!n.is_read && onMarkNotificationRead) {
+                              onMarkNotificationRead(n.id);
+                            }
+                          }}
+                          className={`p-3 rounded-xl border transition cursor-pointer space-y-1 ${
+                            !n.is_read
+                              ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/30 text-white' : 'bg-cyan-50 border-cyan-200 text-slate-900')
+                              : (isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700')
+                          }`}
+                        >
+                          <div className="flex items-center justify-between gap-2">
+                            <span className="font-extrabold text-xs flex items-center gap-1.5">
+                              {!n.is_read && <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />}
+                              <span>{n.title || 'Platform Notice'}</span>
+                            </span>
+                            <span className="text-[9.5px] font-mono text-slate-400 shrink-0">
+                              {n.created_at ? new Date(n.created_at).toLocaleDateString() : 'Recent'}
+                            </span>
+                          </div>
+                          <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">{n.message}</p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="p-6 text-center text-slate-400 space-y-1">
+                        <Bell className="h-6 w-6 mx-auto opacity-50 text-slate-400" />
+                        <p className="text-xs">No notifications received.</p>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="pt-2 border-t border-slate-800/40 text-center">
+                    <button
+                      onClick={() => {
+                        setNotifDropdownOpen(false);
+                        navigate('/institution/notifications');
+                      }}
+                      className="text-xs font-extrabold text-cyan-400 hover:text-cyan-300 transition cursor-pointer"
+                    >
+                      View All Notifications ({notifications.length}) →
+                    </button>
                   </div>
                 </div>
               )}

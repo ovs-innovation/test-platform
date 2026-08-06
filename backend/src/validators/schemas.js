@@ -41,18 +41,36 @@ export const adminCreateCandidateSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
   email: z.string().trim().toLowerCase().email('A valid email is required'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().nullable(),
-  class: z.string().trim().min(1, 'Class is required').optional().nullable(),
-  target_exam: z.enum(['JEE', 'NEET'], { required_error: 'Target exam must be JEE or NEET' }).optional().nullable(),
+  phone: z
+    .string()
+    .trim()
+    .refine((val) => !val || (val.length >= 10 && val.length <= 15), {
+      message: 'Mobile number must be between 10 and 15 digits',
+    })
+    .optional()
+    .nullable()
+    .or(z.literal('')),
+  class: z.string().trim().optional().nullable().or(z.literal('')),
+  target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
+  institution_id: z.any().optional(),
 });
 
 export const adminUpdateCandidateSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120).optional(),
   email: z.string().trim().toLowerCase().email('A valid email is required').optional(),
   password: z.string().min(6, 'Password must be at least 6 characters').optional().or(z.literal('')),
-  phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().nullable(),
-  class: z.string().trim().min(1, 'Class is required').optional().nullable(),
-  target_exam: z.enum(['JEE', 'NEET']).optional().nullable(),
+  phone: z
+    .string()
+    .trim()
+    .refine((val) => !val || (val.length >= 10 && val.length <= 15), {
+      message: 'Mobile number must be between 10 and 15 digits',
+    })
+    .optional()
+    .nullable()
+    .or(z.literal('')),
+  class: z.string().trim().optional().nullable().or(z.literal('')),
+  target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
+  institution_id: z.any().optional(),
 });
 
 export const testSeriesSchema = z.object({

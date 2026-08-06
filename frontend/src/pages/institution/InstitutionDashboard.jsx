@@ -71,6 +71,7 @@ export default function InstitutionDashboard() {
   const [profile, setProfile] = useState(null);
   const [students, setStudents] = useState([]);
   const [batches, setBatches] = useState([]);
+  const [availableSeries, setAvailableSeries] = useState([]);
   const [availableTests, setAvailableTests] = useState([]);
   const [availableEbooks, setAvailableEbooks] = useState([]);
   const [analytics, setAnalytics] = useState(null);
@@ -93,47 +94,61 @@ export default function InstitutionDashboard() {
   }, [instId]);
 
   const loadDashboardData = async () => {
-    setLoading(true);
     try {
-      try {
-        const saved = localStorage.getItem('edvedum_active_institution');
-        if (saved) setProfile(JSON.parse(saved));
-      } catch (e) {}
+      const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
+      if (saved) {
+        try { setProfile(JSON.parse(saved)); } catch (_) {}
+      }
 
-      const [
-        profRes,
-        studRes,
-        batchRes,
-        testsRes,
-        ebooksRes,
-        analRes,
-        rankRes,
-        invRes,
-        notifRes,
-      ] = await Promise.all([
-        institutionDashboardService.profile(instId).catch(() => null),
-        institutionDashboardService.students(instId).catch(() => null),
-        institutionDashboardService.batches(instId).catch(() => null),
+      // 1. Fetch Profile & update localStorage immediately
+      const profilePromise = institutionDashboardService.profile(instId).then((profRes) => {
+        if (profRes?.profile) {
+          setProfile(profRes.profile);
+          try {
+            localStorage.setItem('edvedum_active_institution', JSON.stringify(profRes.profile));
+            localStorage.setItem('edvedum_active_school', JSON.stringify(profRes.profile));
+          } catch (_) {}
+        }
+        return profRes;
+      }).catch(() => null);
+
+      // 2. Fetch Students & Batches immediately
+      const studentsPromise = institutionDashboardService.students(instId).then((studRes) => {
+        if (studRes?.students) setStudents(studRes.students);
+        return studRes;
+      }).catch(() => null);
+
+      const batchesPromise = institutionDashboardService.batches(instId).then((batchRes) => {
+        if (batchRes?.batches) setBatches(batchRes.batches);
+        return batchRes;
+      }).catch(() => null);
+
+      const analyticsPromise = institutionDashboardService.analytics(instId).then((analRes) => {
+        if (analRes?.analytics) setAnalytics(analRes.analytics);
+        return analRes;
+      }).catch(() => null);
+
+      // 3. Fetch secondary endpoints in parallel
+      const secondaryPromise = Promise.all([
+        institutionDashboardService.availableTestSeries(instId).catch(() => null),
         institutionDashboardService.availableTests(instId).catch(() => null),
         institutionDashboardService.availableEbooks(instId).catch(() => null),
-        institutionDashboardService.analytics(instId).catch(() => null),
         institutionDashboardService.rankings(instId).catch(() => null),
         institutionDashboardService.invoices(instId).catch(() => null),
         institutionDashboardService.notifications(instId).catch(() => null),
-      ]);
+      ]).then(([seriesRes, testsRes, ebooksRes, rankRes, invRes, notifRes]) => {
+        if (seriesRes?.packages) setAvailableSeries(seriesRes.packages);
+        if (testsRes?.tests) setAvailableTests(testsRes.tests);
+        if (ebooksRes?.ebooks) setAvailableEbooks(ebooksRes.ebooks);
+        if (rankRes?.rankings) setRankings(rankRes.rankings);
+        if (invRes?.invoices) setInvoices(invRes.invoices);
+        if (notifRes?.notifications) {
+          setNotifications(notifRes.notifications);
+          setUnreadCount(notifRes.unread_count || 0);
+        }
+      });
 
-      if (profRes?.profile) setProfile(profRes.profile);
-      if (studRes?.students) setStudents(studRes.students);
-      if (batchRes?.batches) setBatches(batchRes.batches);
-      if (testsRes?.tests) setAvailableTests(testsRes.tests);
-      if (ebooksRes?.ebooks) setAvailableEbooks(ebooksRes.ebooks);
-      if (analRes?.analytics) setAnalytics(analRes.analytics);
-      if (rankRes?.rankings) setRankings(rankRes.rankings);
-      if (invRes?.invoices) setInvoices(invRes.invoices);
-      if (notifRes?.notifications) {
-        setNotifications(notifRes.notifications);
-        setUnreadCount(notifRes.unread_count || 0);
-      }
+      await Promise.all([profilePromise, studentsPromise, batchesPromise, analyticsPromise, secondaryPromise]);
     } catch (err) {
       console.warn('Backend API connection warning, retaining current session:', err);
     } finally {
@@ -290,8 +305,34 @@ export default function InstitutionDashboard() {
     try {
       await institutionDashboardService.sendReminder(instId, data);
       toast.success('Reminder notification dispatched to students');
+      loadDashboardData();
     } catch (err) {
       toast.error(err.message || 'Reminder sent');
+    }
+  };
+
+  const handleMarkNotificationRead = async (notifId) => {
+    try {
+      await institutionDashboardService.markNotificationRead(instId, notifId);
+      setNotifications((prev) =>
+        prev.map((n) => (n.id === notifId ? { ...n, is_read: true } : n))
+      );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+    } catch (err) {
+      console.error('Failed to mark notification read:', err);
+    }
+  };
+
+  const handleMarkAllNotificationsRead = async () => {
+    try {
+      const unread = notifications.filter((n) => !n.is_read);
+      await Promise.all(
+        unread.map((n) => institutionDashboardService.markNotificationRead(instId, n.id))
+      );
+      setNotifications((prev) => prev.map((n) => ({ ...n, is_read: true })));
+      setUnreadCount(0);
+    } catch (err) {
+      console.error('Failed to mark all read:', err);
     }
   };
 
@@ -301,6 +342,7 @@ export default function InstitutionDashboard() {
     loading,
     students,
     batches,
+    availableSeries,
     availableTests,
     availableEbooks,
     analytics,
@@ -325,6 +367,8 @@ export default function InstitutionDashboard() {
     onAssignEbook: handleAssignEbook,
     onRequestLicenses: handleRequestLicenses,
     onSendReminder: handleSendReminder,
+    onMarkNotificationRead: handleMarkNotificationRead,
+    onMarkAllNotificationsRead: handleMarkAllNotificationsRead,
     onOpenAddStudent: () => setShowAddStudentModal(true),
     onOpenUploadCsv: () => setShowBulkUploadModal(true),
     onDownloadTemplate: () => {
@@ -348,6 +392,9 @@ export default function InstitutionDashboard() {
     <InstitutionPortalLayout
       institutionData={profile}
       unreadNotificationsCount={unreadCount}
+      notifications={notifications}
+      onMarkNotificationRead={handleMarkNotificationRead}
+      onMarkAllNotificationsRead={handleMarkAllNotificationsRead}
       searchQuery={searchQuery}
       setSearchQuery={setSearchQuery}
       isDarkMode={isDarkMode}

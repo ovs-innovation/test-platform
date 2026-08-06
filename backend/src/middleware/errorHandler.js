@@ -34,8 +34,11 @@ export const errorHandler = (err, _req, res, _next) => {
   const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
 
   if (statusCode < 500 || err instanceof ApiError) {
+    const detailedMsg = Array.isArray(err.details) && err.details.length > 0
+      ? err.details.map((d) => d.message).join(', ')
+      : err.message;
     return res.status(statusCode).json({
-      message: err.message || 'Request failed',
+      message: detailedMsg || 'Request failed',
       ...(err.details ? { details: err.details } : {}),
     });
   }

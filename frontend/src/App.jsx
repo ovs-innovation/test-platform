@@ -78,6 +78,7 @@ import AdminCandidates from './pages/admin/Candidates.jsx';
 import AdminReports from './pages/admin/Reports.jsx';
 import AdminAttemptDetail from './pages/admin/AttemptDetail.jsx';
 import AdminSchools from './pages/admin/Schools.jsx';
+import AdminSchoolDetail from './pages/admin/SchoolDetail.jsx';
 
 import ScrollToTop from './components/ScrollToTop.jsx';
 
@@ -197,6 +198,7 @@ export default function App() {
         <Route path="/admin/candidates" element={<ProtectedRoute role="admin"><Shell><AdminCandidates /></Shell></ProtectedRoute>} />
         <Route path="/admin/reports" element={<ProtectedRoute role="admin"><Shell><AdminReports /></Shell></ProtectedRoute>} />
         <Route path="/admin/schools" element={<ProtectedRoute role="admin"><Shell><AdminSchools /></Shell></ProtectedRoute>} />
+        <Route path="/admin/schools/:schoolId" element={<ProtectedRoute role="admin"><Shell><AdminSchoolDetail /></Shell></ProtectedRoute>} />
         <Route path="/admin/attempts/:attemptId" element={<ProtectedRoute role="admin"><Shell><AdminAttemptDetail /></Shell></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />

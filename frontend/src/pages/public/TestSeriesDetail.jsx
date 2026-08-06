@@ -16,7 +16,8 @@ import {
   ShieldCheck,
   Check,
   ChevronRight,
-  Layers
+  Layers,
+  Tag
 } from 'lucide-react';
 import { publicService, paymentService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -50,16 +51,54 @@ export default function TestSeriesDetail() {
   const [buying, setBuying] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
+  // Coupon States
+  const [couponInput, setCouponInput] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState(null);
+  const [couponError, setCouponError] = useState('');
+  const [validatingCoupon, setValidatingCoupon] = useState(false);
+  const [availableCoupons, setAvailableCoupons] = useState([]);
+
   useEffect(() => {
     setState('loading');
-    publicService
-      .testSeriesDetail(slug)
-      .then((d) => {
+    Promise.all([
+      publicService.testSeriesDetail(slug),
+      publicService.activeCoupons().catch(() => []),
+    ])
+      .then(([d, cList]) => {
         setSeries(d.test_series);
+        setAvailableCoupons(cList || []);
         setState('done');
       })
       .catch(() => setState('error'));
   }, [slug]);
+
+  const applyCodeDirectly = async (code) => {
+    setCouponInput(code);
+    setValidatingCoupon(true);
+    setCouponError('');
+    try {
+      const res = await publicService.validateCoupon(code, series.price);
+      setAppliedCoupon(res);
+      toast.success(`Coupon "${res.coupon.code}" applied! Saved ₹${res.discount}.`);
+    } catch (err) {
+      setAppliedCoupon(null);
+      setCouponError(err.message || 'Invalid or expired coupon code.');
+    } finally {
+      setValidatingCoupon(false);
+    }
+  };
+
+  const handleApplyCoupon = async (e) => {
+    e.preventDefault();
+    if (!couponInput.trim()) return;
+    applyCodeDirectly(couponInput.trim());
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setCouponInput('');
+    setCouponError('');
+  };
 
   const handleEnroll = async () => {
     if (!user) {
@@ -72,7 +111,10 @@ export default function TestSeriesDetail() {
     }
     setBuying(true);
     try {
-      const order = await paymentService.createOrder(series.id);
+      const order = await paymentService.createOrder(
+        series.id,
+        appliedCoupon ? appliedCoupon.coupon.code : null
+      );
 
       if (order.free || order.mock) {
         toast.success(order.message || 'Enrolled successfully!');
@@ -267,9 +309,20 @@ export default function TestSeriesDetail() {
                   <p className="text-[10px] font-extrabold uppercase tracking-wide text-slate-400">
                     {isInstitutional ? 'Standard Retail Price' : 'Price'}
                   </p>
-                  <p className="mt-1 text-xl sm:text-2xl font-black text-[#071833]">
-                    {isFree ? '₹0' : `₹${Number(series.price).toLocaleString()}`}
-                  </p>
+                  {appliedCoupon ? (
+                    <div className="mt-1 flex items-baseline gap-2">
+                      <p className="text-xl sm:text-2xl font-black text-emerald-600">
+                        ₹{appliedCoupon.final_amount}
+                      </p>
+                      <p className="text-xs font-bold text-slate-400 line-through">
+                        ₹{Number(series.price).toLocaleString()}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className="mt-1 text-xl sm:text-2xl font-black text-[#071833]">
+                      {isFree ? '₹0' : `₹${Number(series.price).toLocaleString()}`}
+                    </p>
+                  )}
                   {isInstitutional && (
                     <span className="text-[10px] font-semibold text-slate-500 block">/student – Standard Retail Price</span>
                   )}
@@ -318,13 +371,82 @@ export default function TestSeriesDetail() {
                 </div>
               ) : (
                 <div className="space-y-3 pt-1">
+                  {/* Coupon Code Entry Section */}
+                  {!isFree && (
+                    <div className="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+                      <p className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                        <Tag className="h-3.5 w-3.5 text-blue-600" />
+                        <span>Have a Discount Coupon?</span>
+                      </p>
+                      {appliedCoupon ? (
+                        <div className="flex items-center justify-between p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs">
+                          <div>
+                            <span className="font-mono font-black text-emerald-700 mr-2">{appliedCoupon.coupon.code}</span>
+                            <span className="text-emerald-600 font-semibold">({appliedCoupon.coupon.discount_type === 'percent' ? `${appliedCoupon.coupon.discount_value}% OFF` : `₹${appliedCoupon.coupon.discount_value} OFF`})</span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={handleRemoveCoupon}
+                            className="text-rose-600 font-bold hover:underline cursor-pointer"
+                          >
+                            Remove
+                          </button>
+                        </div>
+                      ) : (
+                        <form onSubmit={handleApplyCoupon} className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="CODE (e.g. G4DFD)"
+                            value={couponInput}
+                            onChange={(e) => setCouponInput(e.target.value.toUpperCase())}
+                            className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 text-xs font-mono font-black tracking-wider uppercase focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 shadow-2xs"
+                          />
+                          <button
+                            type="submit"
+                            disabled={validatingCoupon || !couponInput.trim()}
+                            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition cursor-pointer"
+                          >
+                            {validatingCoupon ? 'Validating…' : 'Apply'}
+                          </button>
+                        </form>
+                      )}
+                      {couponError && <p className="text-[11px] text-rose-600 font-semibold">{couponError}</p>}
+
+                      {availableCoupons.length > 0 && !appliedCoupon && (
+                        <div className="pt-2 border-t border-slate-200/80 space-y-1.5">
+                          <p className="text-[10.5px] font-extrabold uppercase tracking-wide text-slate-500 flex items-center gap-1">
+                            <Sparkles className="h-3 w-3 text-amber-500 shrink-0" />
+                            <span>Available Promo Offers (Click to Apply):</span>
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {availableCoupons.map((c) => (
+                              <button
+                                key={c.code}
+                                type="button"
+                                onClick={() => applyCodeDirectly(c.code)}
+                                className="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-slate-800 text-[11px] font-bold flex items-center gap-1 transition cursor-pointer shadow-2xs"
+                                title={`Click to apply ${c.code}`}
+                              >
+                                <span className="font-mono font-black text-blue-700">{c.code}</span>
+                                <span className="text-[10px] text-amber-800 font-semibold">
+                                  ({c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`})
+                                </span>
+                                <span className="text-[9.5px] font-bold text-blue-600 underline ml-0.5">Apply</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
                   <button
                     type="button"
                     className="w-full rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 text-sm font-extrabold text-white shadow-md transition cursor-pointer"
                     onClick={handleEnroll}
                     disabled={buying}
                   >
-                    {buying ? 'Processing Order…' : isFree ? 'Enroll for Free' : 'Buy Test Series'}
+                    {buying ? 'Processing Order…' : isFree ? 'Enroll for Free' : appliedCoupon ? `Buy for ₹${appliedCoupon.final_amount}` : 'Buy Test Series'}
                   </button>
 
                   {!user && (

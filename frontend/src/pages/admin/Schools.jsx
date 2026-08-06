@@ -3,8 +3,9 @@ import { createPortal } from 'react-dom';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
-import { Building2, Plus, Search, Key, Mail, School, Users, CheckCircle2, ExternalLink, Trash2, Copy, Eye, EyeOff, Image as ImageIcon, Sparkles, X, Phone, Inbox, Check, FileText, Pencil, Package } from 'lucide-react';
+import { Building2, Plus, Search, Key, Mail, School, Users, CheckCircle2, ExternalLink, Trash2, Copy, Eye, EyeOff, Image as ImageIcon, Sparkles, X, Phone, Inbox, Check, FileText, Pencil, Package, BarChart3 } from 'lucide-react';
 import { Badge } from '../../components/ui.jsx';
+import InstituteComparisonModal from '../../components/admin/InstituteComparisonModal.jsx';
 
 export default function Schools() {
   const navigate = useNavigate();
@@ -26,6 +27,10 @@ export default function Schools() {
   const [newNote, setNewNote] = useState('');
   const [showPasswords, setShowPasswords] = useState({});
   const [copiedId, setCopiedId] = useState(null);
+  
+  // Page 5.5 Multi-School Comparison State
+  const [selectedSchoolIds, setSelectedSchoolIds] = useState([]);
+  const [showComparisonModal, setShowComparisonModal] = useState(false);
 
   // Additional B2B Features State
   const [editingSchool, setEditingSchool] = useState(null);
@@ -380,13 +385,31 @@ export default function Schools() {
             </p>
           </div>
 
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition cursor-pointer shrink-0"
-          >
-            <Plus className="h-4 w-4" />
-            <span>+ Add Partner School</span>
-          </button>
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => {
+                if (selectedSchoolIds.length < 2) {
+                  toast.info('Select at least 2 partner schools using checkboxes to compare.');
+                  return;
+                }
+                setShowComparisonModal(true);
+              }}
+              disabled={selectedSchoolIds.length < 2}
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-md hover:scale-105 transition cursor-pointer disabled:opacity-40"
+              title="Compare 2-5 partner schools side-by-side"
+            >
+              <BarChart3 className="h-4 w-4" />
+              <span>Compare Institutes ({selectedSchoolIds.length})</span>
+            </button>
+
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-bold text-white shadow-md hover:bg-blue-700 transition cursor-pointer shrink-0"
+            >
+              <Plus className="h-4 w-4" />
+              <span>+ Add Partner School</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -568,19 +591,41 @@ export default function Schools() {
           <table className="w-full min-w-[1050px] text-left text-xs border-collapse">
             <thead className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-900/60 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
               <tr>
+                <th className="py-3.5 px-3 w-10">
+                  <input
+                    type="checkbox"
+                    checked={filteredSchools.length > 0 && selectedSchoolIds.length === filteredSchools.length}
+                    onChange={(e) => {
+                      if (e.target.checked) setSelectedSchoolIds(filteredSchools.map((s) => s.id));
+                      else setSelectedSchoolIds([]);
+                    }}
+                    className="rounded border-slate-300 dark:border-slate-700 text-blue-600 cursor-pointer"
+                  />
+                </th>
                 <th className="py-3.5 px-4 min-w-[280px]">School Logo & Institution Name</th>
                 <th className="py-3.5 px-4 min-w-[140px]">School Code / ID</th>
                 <th className="py-3.5 px-4 min-w-[200px]">Admin Email</th>
                 <th className="py-3.5 px-4 min-w-[140px]">Password</th>
                 <th className="py-3.5 px-4 min-w-[140px]">License Capacity</th>
                 <th className="py-3.5 px-4 min-w-[120px]">Payment Status</th>
-                <th className="py-3.5 px-4 text-right min-w-[180px]">Actions</th>
+                <th className="py-3.5 px-4 text-right min-w-[220px]">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
               {filteredSchools.length > 0 ? (
                 filteredSchools.map((school) => (
                   <tr key={school.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-900/40 transition">
+                    <td className="py-4 px-3 w-10">
+                      <input
+                        type="checkbox"
+                        checked={selectedSchoolIds.includes(school.id)}
+                        onChange={(e) => {
+                          if (e.target.checked) setSelectedSchoolIds((prev) => [...prev, school.id]);
+                          else setSelectedSchoolIds((prev) => prev.filter((id) => id !== school.id));
+                        }}
+                        className="rounded border-slate-300 dark:border-slate-700 text-blue-600 cursor-pointer"
+                      />
+                    </td>
                     {/* Logo & Name */}
                     <td className="py-4 px-4 min-w-[280px]">
                       <div className="flex items-center gap-3.5 min-w-0">
@@ -691,8 +736,17 @@ export default function Schools() {
                     </td>
 
                     {/* Actions */}
-                    <td className="py-4 px-4 text-right min-w-[180px] whitespace-nowrap">
+                    <td className="py-4 px-4 text-right min-w-[220px] whitespace-nowrap">
                       <div className="flex items-center justify-end gap-2">
+                        <button
+                          type="button"
+                          onClick={() => navigate(`/admin/schools/${school.id}`)}
+                          className="inline-flex items-center gap-1 rounded-lg border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-[11px] font-bold text-cyan-700 hover:bg-cyan-100 dark:border-cyan-500/30 dark:bg-cyan-500/10 dark:text-cyan-300 transition cursor-pointer"
+                          title="View School Detail & Institution Reports"
+                        >
+                          <BarChart3 className="h-3 w-3" />
+                          <span>Reports</span>
+                        </button>
                         <button
                           type="button"
                           onClick={() => handleOpenEditModal(school)}
@@ -1428,6 +1482,14 @@ export default function Schools() {
           </div>
         </div>,
         document.body
+      )}
+
+      {showComparisonModal && (
+        <InstituteComparisonModal
+          selectedSchoolIds={selectedSchoolIds}
+          onClose={() => setShowComparisonModal(false)}
+          isDarkMode={true}
+        />
       )}
 
     </div>

@@ -255,6 +255,9 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     name: admin.name,
   });
 
+  const fullInstRes = await query('SELECT * FROM institutions WHERE id = $1', [admin.institution_id]);
+  const fullInst = fullInstRes.rows[0] || {};
+
   res.json({
     token,
     user: {
@@ -266,18 +269,19 @@ export const institutionLogin = asyncHandler(async (req, res) => {
       role: 'institution_admin',
     },
     institution: {
+      ...fullInst,
       id: admin.institution_id,
-      name: admin.institution_name,
-      code: admin.institution_code || admin.code || `INST-${admin.institution_id}`,
-      schoolId: admin.institution_code || admin.code || `INST-${admin.institution_id}`,
-      email: admin.institution_email || admin.email,
-      logo_url: admin.logo_url || '',
-      logoBadge: admin.logo_badge || (admin.institution_name ? admin.institution_name.substring(0, 3).toUpperCase() : 'INST'),
-      institution_type: admin.institution_type || 'School',
-      total_licenses: admin.total_licenses || 50,
-      used_licenses: admin.used_licenses || 0,
-      package_name: admin.package_name || null,
-      valid_until: admin.valid_until || null,
+      name: admin.institution_name || fullInst.name,
+      code: admin.institution_code || fullInst.code || `INST-${admin.institution_id}`,
+      schoolId: admin.institution_code || fullInst.code || `INST-${admin.institution_id}`,
+      email: admin.institution_email || fullInst.email || admin.email,
+      logo_url: fullInst.logo_url || admin.logo_url || '',
+      logoBadge: fullInst.logo_badge || admin.logo_badge || (admin.institution_name ? admin.institution_name.substring(0, 3).toUpperCase() : 'INST'),
+      institution_type: fullInst.institution_type || admin.institution_type || 'School',
+      total_licenses: fullInst.total_licenses || admin.total_licenses || 50,
+      used_licenses: fullInst.used_licenses || admin.used_licenses || 0,
+      package_name: fullInst.package_name || admin.package_name || null,
+      valid_until: fullInst.valid_until || admin.valid_until || null,
     },
     redirectTo: '/for-schools',
   });

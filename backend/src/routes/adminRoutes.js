@@ -13,6 +13,8 @@ import {
   getInstitutionAnalytics,
   getFeatureFlags,
   updateFeatureFlag,
+} from '../controllers/adminController.js';
+import {
   getInstitutions,
   createInstitution,
   updateInstitution,
@@ -31,6 +33,14 @@ import {
   getInstitutionInvoices,
   assignStudentInstitution,
 } from '../controllers/adminController.js';
+import {
+  getInstitutionOverallReport,
+  getInstitutionRankingsReport,
+  getBatchComparisonReport,
+  getInstitutionTrendsReport,
+  getImprovementAnalyticsReport,
+  getInstitutionsComparisonReport,
+} from '../controllers/institutionReportController.js';
 import {
   listTests,
   createTest,
@@ -51,7 +61,7 @@ import { listEbooks, createEbook, deleteEbook } from '../controllers/ebookContro
 import { listBatches, createBatch, deleteBatch } from '../controllers/batchController.js';
 import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
-  listCoupons, createCoupon, toggleCoupon,
+  listCoupons, createCoupon, toggleCoupon, deleteCoupon,
   listFaculty, createFaculty,
   adminListSubjects, createSubject, createChapter, listChapters, createTopic,
   getSettings, updateSettings, broadcastNotification,
@@ -114,6 +124,7 @@ router.put('/settings', updateSettings);
 router.get('/coupons', listCoupons);
 router.post('/coupons', createCoupon);
 router.patch('/coupons/:id/toggle', toggleCoupon);
+router.delete('/coupons/:id', deleteCoupon);
 router.get('/faculty', listFaculty);
 router.post('/faculty', createFaculty);
 router.get('/subjects', adminListSubjects);
@@ -147,5 +158,14 @@ router.post('/institutions/:id/invoices', createInstitutionInvoice);
 router.get('/institutions/:id/invoices', getInstitutionInvoices);
 
 router.patch('/candidates/:id/institution', assignStudentInstitution);
+
+// Admin School Reports & Multi-School Comparison Endpoints
+router.get('/schools/reports/compare', getInstitutionsComparisonReport);
+router.get('/schools/:id/reports/overall', getInstitutionOverallReport);
+router.get('/schools/:id/reports/overview', getInstitutionOverallReport);
+router.get('/schools/:id/reports/rankings', getInstitutionRankingsReport);
+router.get('/schools/:id/reports/batch-comparison', getBatchComparisonReport);
+router.get('/schools/:id/reports/trends', getInstitutionTrendsReport);
+router.get('/schools/:id/reports/improvement', getImprovementAnalyticsReport);
 
 export default router;

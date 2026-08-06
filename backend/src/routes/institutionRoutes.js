@@ -18,6 +18,7 @@ import {
   updateInstitutionBatch,
   archiveInstitutionBatch,
   getAvailablePackageTests,
+  getAvailableTestSeries,
   assignTestSeries,
   getAvailableEbooks,
   assignEbook,
@@ -68,6 +69,7 @@ router.put('/:id/batches/:batch_id', updateInstitutionBatch);
 router.delete('/:id/batches/:batch_id', archiveInstitutionBatch);
 
 // 6. Test Series Assignment (Package Restricted)
+router.get('/:id/test-series', getAvailableTestSeries);
 router.get('/:id/available-tests', getAvailablePackageTests);
 router.post('/:id/tests/:test_id/assign', assignTestSeries);
 

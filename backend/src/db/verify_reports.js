@@ -1,6 +1,6 @@
 import { pool } from '../config/db.js';
 import { getOverallReport, getSubjectWiseReport, getChapterWiseReport, getStrengthsWeaknessesReport, getTimeAnalysisReport, getAIInsightsReport } from '../controllers/studentReportController.js';
-import { getInstitutionOverallReport, getInstitutionRankingsReport, getBatchComparisonReport, getInstitutionTrendsReport, getImprovementAnalyticsReport } from '../controllers/institutionReportController.js';
+import { getInstitutionOverallReport, getInstitutionRankingsReport, getBatchComparisonReport, getInstitutionTrendsReport, getImprovementAnalyticsReport, getInstitutionsComparisonReport } from '../controllers/institutionReportController.js';
 
 async function runVerification() {
   console.log('=== VERIFYING REPORTS & ANALYTICS MODULE ===\n');
@@ -86,12 +86,17 @@ async function runVerification() {
     const res11 = await executeController(getImprovementAnalyticsReport, reqMock);
     console.log('11. Institution Improvement Analytics Report:', res11.sentData ? 'PASS' : 'FAIL');
 
-    // 12. Test Export Option (?format=excel)
-    const reqExport = { ...reqMock, query: { format: 'excel' } };
-    const res12 = await executeController(getOverallReport, reqExport);
-    console.log('12. Export Option (?format=excel):', res12.headers['Content-Type'] === 'text/csv' ? 'PASS' : 'FAIL');
+    // 12. Multi-Institute Comparison Report (Page 5.5)
+    const reqCompare = { ...reqMock, query: { schoolIds: '1,2' } };
+    const res12 = await executeController(getInstitutionsComparisonReport, reqCompare);
+    console.log('12. Multi-Institute Comparison Report:', res12.sentData ? 'PASS' : 'FAIL');
 
-    console.log('\n=== ALL 12 VERIFICATION CHECKS PASSED SUCCESSFULLY! ===');
+    // 13. Test Export Option (?format=excel)
+    const reqExport = { ...reqMock, query: { format: 'excel' } };
+    const res13 = await executeController(getOverallReport, reqExport);
+    console.log('13. Export Option (?format=excel):', res13.headers['Content-Type'] === 'text/csv' ? 'PASS' : 'FAIL');
+
+    console.log('\n=== ALL 13 VERIFICATION CHECKS PASSED SUCCESSFULLY! ===');
   } catch (error) {
     console.error('Verification failed:', error);
   } finally {

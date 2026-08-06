@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { hashPassword } from '../utils/password.js';
 import crypto from 'crypto';
+import { processAndUploadImage } from '../services/cloudinaryService.js';
 
 
 /**
@@ -52,6 +53,11 @@ export const updateInstitutionProfile = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
   const { contact_person, contact_email, contact_mobile, logo_url, address } = req.body;
 
+  let finalLogoUrl = logo_url;
+  if (logo_url && typeof logo_url === 'string' && logo_url.startsWith('data:image/')) {
+    finalLogoUrl = await processAndUploadImage(logo_url, `edvedum/institutions/${instId}`);
+  }
+
   const result = await query(
     `UPDATE institutions
      SET contact_person = COALESCE($1, contact_person),
@@ -61,7 +67,7 @@ export const updateInstitutionProfile = asyncHandler(async (req, res) => {
          address = COALESCE($5, address)
      WHERE id = $6
      RETURNING *`,
-    [contact_person, contact_email, contact_mobile, logo_url, address, instId]
+    [contact_person, contact_email, contact_mobile, finalLogoUrl, address, instId]
   );
 
   if (result.rowCount === 0) throw ApiError.notFound('Institution not found');
@@ -1232,4 +1238,24 @@ export const sendStudentReminder = asyncHandler(async (req, res) => {
     message: `Test reminder dispatched successfully to ${recipientCount} student(s).`,
   });
 });
+
+/**
+ * GET /api/institution/:id/test-series
+ * Returns dynamic test series packages from DB test_series table.
+ */
+export const getAvailableTestSeries = asyncHandler(async (req, res) => {
+  const result = await query(
+    `SELECT ts.*,
+            COALESCE(ts.planned_tests, ts.test_count, COUNT(DISTINCT tst.test_id))::int AS total_tests_count,
+            COUNT(DISTINCT tst.test_id)::int AS linked_tests_count
+     FROM test_series ts
+     LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+     WHERE COALESCE(ts.is_active, TRUE) = TRUE
+     GROUP BY ts.id
+     ORDER BY ts.is_featured DESC, ts.id DESC`
+  );
+
+  res.json({ success: true, count: result.rows.length, packages: result.rows });
+});
+
 

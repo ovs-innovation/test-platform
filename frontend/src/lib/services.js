@@ -192,6 +192,7 @@ export const publicService = {
   subjects: () => withCache('public_subjects', () => api.get('/public/subjects').then((r) => r.data)),
   cms: (slug) => api.get(`/public/cms/${slug}`).then((r) => r.data.page),
   cmsList: (type) => api.get('/public/cms', { params: type ? { type } : {} }).then((r) => r.data.pages),
+  activeCoupons: () => api.get('/public/coupons/active').then((r) => r.data.coupons),
   validateCoupon: (code, amount) => api.post('/public/coupons/validate', { code, amount }).then((r) => r.data),
 };
 
@@ -224,7 +225,8 @@ export const testSeriesService = {
 };
 
 export const paymentService = {
-  createOrder: (test_series_id) => api.post('/payments/create-order', { test_series_id }).then((r) => r.data),
+  createOrder: (test_series_id, coupon_code) =>
+    api.post('/payments/create-order', { test_series_id, coupon_code }).then((r) => r.data),
   verify: (data) => {
     clearCache();
     return api.post('/payments/verify', data).then((r) => r.data);
@@ -356,6 +358,10 @@ export const adminService = {
     clearCache();
     return api.patch(`/admin/coupons/${id}/toggle`).then((r) => r.data);
   },
+  deleteCoupon: (id) => {
+    clearCache();
+    return api.delete(`/admin/coupons/${id}`).then((r) => r.data);
+  },
   faculty: () => withCache('admin_faculty', () => api.get('/admin/faculty').then((r) => r.data.faculty)),
   createFaculty: (data) => {
     clearCache();
@@ -405,6 +411,7 @@ export const adminService = {
   createSchoolInvoice: (id, data) => api.post(`/admin/institutions/${id}/invoices`, data).then((r) => r.data),
   getSchoolInvoices: (id) => api.get(`/admin/institutions/${id}/invoices`).then((r) => r.data),
   assignCandidateInstitution: (id, data) => api.patch(`/admin/candidates/${id}/institution`, data).then((r) => r.data),
+  compareInstitutes: (schoolIds) => api.get('/admin/schools/reports/compare', { params: { schoolIds: Array.isArray(schoolIds) ? schoolIds.join(',') : schoolIds } }).then((r) => r.data),
 };
 
 export const institutionDashboardService = {
@@ -427,6 +434,7 @@ export const institutionDashboardService = {
   updateBatch: (instId, batchId, data) => api.put(`/institution/${instId}/batches/${batchId}`, data).then((r) => r.data),
   archiveBatch: (instId, batchId) => api.delete(`/institution/${instId}/batches/${batchId}`).then((r) => r.data),
   
+  availableTestSeries: (instId) => api.get(`/institution/${instId}/test-series`).then((r) => r.data),
   availableTests: (instId) => api.get(`/institution/${instId}/available-tests`).then((r) => r.data),
   assignTest: (instId, testId, data) => api.post(`/institution/${instId}/tests/${testId}/assign`, data).then((r) => r.data),
   
@@ -453,6 +461,7 @@ export const institutionReportsService = {
   getBatchComparison: (instId, params) => api.get(`/institution/${instId}/reports/batch-comparison`, { params }).then((r) => r.data),
   getTrends: (instId, params) => api.get(`/institution/${instId}/reports/trends`, { params }).then((r) => r.data),
   getImprovement: (instId, params) => api.get(`/institution/${instId}/reports/improvement`, { params }).then((r) => r.data),
+  compareInstitutes: (schoolIds) => api.get('/institution/reports/compare', { params: { schoolIds: Array.isArray(schoolIds) ? schoolIds.join(',') : schoolIds } }).then((r) => r.data),
   download: async (instId, endpoint, format = 'csv', params = {}) => {
     try {
       const res = await api.get(`/institution/${instId}/reports/${endpoint}`, {
@@ -474,6 +483,7 @@ export const institutionReportsService = {
 };
 
 export const studentReportService = {
+  getInstituteRank: () => api.get('/student/dashboard/institute-rank').then((r) => r.data),
   getOverall: (params) => api.get('/student/reports/overall', { params }).then((r) => r.data),
   getSubjectWise: (params) => api.get('/student/reports/subject-wise', { params }).then((r) => r.data),
   getChapterWise: (params) => api.get('/student/reports/chapter-wise', { params }).then((r) => r.data),

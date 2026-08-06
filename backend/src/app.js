@@ -24,6 +24,7 @@ import studentRoutes from './routes/studentRoutes.js';
 import studentReportRoutes from './routes/studentReportRoutes.js';
 import institutionReportRoutes from './routes/institutionReportRoutes.js';
 import institutionRoutes from './routes/institutionRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 const app = express();
 
@@ -78,6 +79,7 @@ app.use('/api/student/reports', studentReportRoutes);
 app.use('/api/student', studentRoutes);
 app.use('/api/institution', institutionReportRoutes);
 app.use('/api/institution', institutionRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFoundHandler);

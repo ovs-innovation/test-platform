@@ -48,27 +48,64 @@ const enrollUser = async (userId, testSeriesId, paymentId) => {
  * POST /api/payments/create-order
  */
 export const createOrder = asyncHandler(async (req, res) => {
-  const { test_series_id } = req.body;
+  const { test_series_id, coupon_code } = req.body;
   const userId = req.user.id;
 
   const ts = await query('SELECT * FROM test_series WHERE id = $1 AND is_active = true', [test_series_id]);
   if (!ts.rowCount) throw ApiError.notFound('Test series not found');
   const series = ts.rows[0];
-  const amountPaise = Math.round(Number(series.price) * 100);
+
+  const basePrice = Number(series.price) || 0;
+  let finalPrice = basePrice;
+  let coupon = null;
+
+  if (coupon_code) {
+    const cRes = await query(
+      `SELECT * FROM coupons WHERE UPPER(code) = UPPER($1) AND is_active = true
+       AND (valid_until IS NULL OR valid_until > NOW())
+       AND (max_uses IS NULL OR used_count < max_uses)`,
+      [coupon_code.trim()]
+    );
+    if (!cRes.rowCount) {
+      throw ApiError.badRequest('Invalid, expired, or fully used discount coupon');
+    }
+    coupon = cRes.rows[0];
+    const discount = coupon.discount_type === 'fixed'
+      ? Number(coupon.discount_value)
+      : (basePrice * Number(coupon.discount_value)) / 100;
+    finalPrice = Math.max(0, basePrice - Math.min(discount, basePrice));
+  }
+
+  const amountPaise = Math.round(finalPrice * 100);
 
   if (amountPaise === 0) {
-    const result = await enrollUser(userId, test_series_id, null);
-    return res.json({ free: true, ...result, message: 'Enrolled successfully' });
+    const pay = await query(
+      `INSERT INTO payments (user_id, test_series_id, amount, status, coupon_id, razorpay_order_id, razorpay_payment_id)
+       VALUES ($1, $2, $3, 'success', $4, $5, $6) RETURNING id`,
+      [userId, test_series_id, finalPrice, coupon ? coupon.id : null, `free_order_${Date.now()}`, `free_pay_${Date.now()}`]
+    );
+    if (coupon) {
+      await query('UPDATE coupons SET used_count = used_count + 1 WHERE id = $1', [coupon.id]);
+    }
+    const result = await enrollUser(userId, test_series_id, pay.rows[0].id);
+    return res.json({
+      free: true,
+      ...result,
+      message: coupon ? 'Enrolled successfully with 100% discount coupon!' : 'Enrolled successfully',
+    });
   }
 
   const rzp = getRazorpay();
   if (!rzp) {
     if (!env.isProd) {
       const pay = await query(
-        `INSERT INTO payments (user_id, test_series_id, amount, status, razorpay_order_id, razorpay_payment_id)
-         VALUES ($1,$2,$3,'success',$4,$5) RETURNING id`,
-        [userId, test_series_id, series.price, `mock_order_${Date.now()}`, `mock_pay_${Date.now()}`]
+        `INSERT INTO payments (user_id, test_series_id, amount, status, coupon_id, razorpay_order_id, razorpay_payment_id)
+         VALUES ($1,$2,$3,'success',$4,$5,$6) RETURNING id`,
+        [userId, test_series_id, finalPrice, coupon ? coupon.id : null, `mock_order_${Date.now()}`, `mock_pay_${Date.now()}`]
       );
+      if (coupon) {
+        await query('UPDATE coupons SET used_count = used_count + 1 WHERE id = $1', [coupon.id]);
+      }
       const result = await enrollUser(userId, test_series_id, pay.rows[0].id);
       return res.json({ mock: true, ...result, message: 'Enrolled (dev mock payment)' });
     }
@@ -79,13 +116,13 @@ export const createOrder = asyncHandler(async (req, res) => {
     amount: amountPaise,
     currency: 'INR',
     receipt: `ts_${test_series_id}_u_${userId}_${Date.now()}`,
-    notes: { test_series_id: String(test_series_id), user_id: String(userId) },
+    notes: { test_series_id: String(test_series_id), user_id: String(userId), coupon_id: coupon ? String(coupon.id) : '' },
   });
 
   await query(
-    `INSERT INTO payments (user_id, test_series_id, amount, status, razorpay_order_id)
-     VALUES ($1,$2,$3,'pending',$4)`,
-    [userId, test_series_id, series.price, order.id]
+    `INSERT INTO payments (user_id, test_series_id, amount, status, coupon_id, razorpay_order_id)
+     VALUES ($1,$2,$3,'pending',$4,$5)`,
+    [userId, test_series_id, finalPrice, coupon ? coupon.id : null, order.id]
   );
 
   res.json({
@@ -93,7 +130,7 @@ export const createOrder = asyncHandler(async (req, res) => {
     amount: amountPaise,
     currency: 'INR',
     keyId: env.razorpay.keyId,
-    series: { id: series.id, title: series.title, price: series.price },
+    series: { id: series.id, title: series.title, price: finalPrice, originalPrice: basePrice },
   });
 });
 
@@ -121,10 +158,15 @@ export const verifyPayment = asyncHandler(async (req, res) => {
     const payRes = await client.query(
       `UPDATE payments SET status = 'success', razorpay_payment_id = $1
        WHERE razorpay_order_id = $2 AND user_id = $3 AND test_series_id = $4
-       RETURNING id`,
+       RETURNING id, coupon_id`,
       [razorpay_payment_id, razorpay_order_id, userId, test_series_id]
     );
     if (!payRes.rowCount) throw ApiError.notFound('Payment record not found');
+
+    const paymentRow = payRes.rows[0];
+    if (paymentRow.coupon_id) {
+      await client.query('UPDATE coupons SET used_count = used_count + 1 WHERE id = $1', [paymentRow.coupon_id]);
+    }
 
     const ts = await client.query('SELECT * FROM test_series WHERE id = $1', [test_series_id]);
     const series = ts.rows[0];
@@ -135,7 +177,7 @@ export const verifyPayment = asyncHandler(async (req, res) => {
        VALUES ($1,$2,$3,$4)
        ON CONFLICT (user_id, test_series_id) DO UPDATE SET expires_at = EXCLUDED.expires_at, payment_id = EXCLUDED.payment_id
        RETURNING *`,
-      [userId, test_series_id, payRes.rows[0].id, expires]
+      [userId, test_series_id, paymentRow.id, expires]
     );
 
     await client.query(

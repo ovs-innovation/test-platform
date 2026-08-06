@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { toCsvRow } from '../utils/csvQuestions.js';
 import { hashPassword } from '../utils/password.js';
+import { processAndUploadImage } from '../services/cloudinaryService.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations, testSeriesRes, activeStudentsRes] = await Promise.all([
@@ -551,6 +552,7 @@ export const createInstitution = asyncHandler(async (req, res) => {
 
   const pwHash = await hashPassword(password);
   const badge = logoBadge || name.substring(0, 3).toUpperCase();
+  const uploadedLogoUrl = logoUrl ? await processAndUploadImage(logoUrl, 'edvedum/institutions') : '';
 
   const insertRes = await query(
     `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
@@ -564,7 +566,7 @@ export const createInstitution = asyncHandler(async (req, res) => {
       password,
       tagline || 'Premier Educational Institution',
       badge,
-      logoUrl || '',
+      uploadedLogoUrl,
       accentColor || '#2563eb',
       Number(totalLicenses) || 200,
       gstin ? gstin.trim().toUpperCase() : '',
@@ -620,6 +622,11 @@ export const updateInstitution = asyncHandler(async (req, res) => {
     rawPw = password;
   }
 
+  let finalLogoUrl = logoUrl;
+  if (logoUrl && typeof logoUrl === 'string' && logoUrl.startsWith('data:image/')) {
+    finalLogoUrl = await processAndUploadImage(logoUrl, `edvedum/institutions/${id}`);
+  }
+
   const updateRes = await query(
     `UPDATE institutions
      SET name = COALESCE($1, name),
@@ -645,7 +652,7 @@ export const updateInstitution = asyncHandler(async (req, res) => {
       rawPw,
       tagline,
       logoBadge,
-      logoUrl,
+      finalLogoUrl,
       accentColor,
       totalLicenses ? Number(totalLicenses) : null,
       gstin !== undefined ? gstin.trim().toUpperCase() : null,

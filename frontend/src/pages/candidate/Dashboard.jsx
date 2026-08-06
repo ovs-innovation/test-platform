@@ -6,6 +6,7 @@ import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
 import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
+import InstituteRankCard from '../../components/candidate/InstituteRankCard.jsx';
 import {
   Sparkles,
   Trophy,
@@ -290,6 +291,9 @@ export default function CandidateDashboard() {
 
       {/* 2.6 GEMINI 2.5 AI DIAGNOSTIC & PERSONALISED REVISION HUB */}
       <AIInsightsCard isDarkMode={true} />
+
+      {/* 2.7 PRECOMPUTED B2B INSTITUTE RANK CARD (RENDERED ONLY FOR B2B STUDENTS) */}
+      <InstituteRankCard />
 
       {/* 3. 6 REDESIGNED SAAS KPI CARDS */}
       <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
