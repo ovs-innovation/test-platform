@@ -33,6 +33,7 @@ export default function OverviewTab({
   onNavigateTab,
   onDownloadCsvTemplate,
   isDarkMode = true,
+  loading = false,
 }) {
   const totalLic = institution?.total_licenses || 50;
   const usedLic = students.length || institution?.used_licenses || 0;
@@ -44,6 +45,14 @@ export default function OverviewTab({
   const avgScoreVal = analytics?.average_score || (students.length > 0
     ? Math.round(students.reduce((acc, s) => acc + Number(s.average_score || 0), 0) / students.length)
     : 0);
+
+  const instName = institution?.name || (loading ? 'Loading Institution...' : 'Partner Institution');
+  const instCode = institution?.schoolId || institution?.code || (institution?.id ? `INST-${institution.id}` : 'INST-001');
+  const logoBadgeText = institution?.logoBadge || (instName && instName !== 'Loading Institution...' ? instName.substring(0, 3).toUpperCase() : 'INST');
+  const packageName = institution?.package_name || 'Standard AIETS Institutional Package';
+  const validityStr = institution?.valid_until
+    ? new Date(institution.valid_until).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+    : (institution?.validity_date || 'Active Subscription');
 
   return (
     <div className="space-y-8 animate-in fade-in duration-300">
@@ -64,12 +73,12 @@ export default function OverviewTab({
             {institution?.logo_url ? (
               <img
                 src={institution.logo_url}
-                alt={institution.name}
+                alt={instName}
                 className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-contain bg-white p-2 shadow-xl border border-white/20 shrink-0"
               />
             ) : (
               <div className="flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-cyan-600 text-white font-black text-xl sm:text-2xl shadow-xl border border-white/20 shrink-0">
-                {institution?.logoBadge || (institution?.name ? institution.name.substring(0, 3).toUpperCase() : 'VDN')}
+                {logoBadgeText}
               </div>
             )}
 
@@ -80,7 +89,7 @@ export default function OverviewTab({
                   {institution?.institution_type || 'School / Coaching Institute'}
                 </span>
                 <span className={`text-xs font-mono font-bold ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  ID: {institution?.schoolId || institution?.code || (institution?.id ? `INST-${institution.id}` : 'VDN-101')}
+                  ID: {instCode}
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
                   <CheckCircle2 className="h-3 w-3" />
@@ -89,11 +98,11 @@ export default function OverviewTab({
               </div>
 
               <h1 className={`text-2xl sm:text-3xl font-extrabold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                {institution?.name || 'Partner Institution'}
+                {instName}
               </h1>
 
               <p className={`text-xs sm:text-sm font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Package: <span className="text-cyan-400 font-bold">NEET-UG 2027 AIETS Institutional Gold Package</span> • Validity: <span className="font-bold">31 Mar 2027</span>
+                Package: <span className="text-cyan-400 font-bold">{packageName}</span> • Validity: <span className="font-bold">{validityStr}</span>
               </p>
             </div>
           </div>

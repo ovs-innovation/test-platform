@@ -155,10 +155,14 @@ export const institutionLogin = asyncHandler(async (req, res) => {
   // 1. Look up in institution_admins joined with institutions
   let adminRes = await query(
     `SELECT ia.id, ia.institution_id, ia.name, ia.email, ia.password_hash, ia.is_active,
-            i.name AS institution_name, i.code AS institution_code, i.email AS institution_email, i.password_hash AS inst_password_hash, i.raw_password AS inst_raw_password
+            i.name AS institution_name, i.code AS institution_code, i.email AS institution_email,
+            i.password_hash AS inst_password_hash, i.raw_password AS inst_raw_password,
+            i.logo_url, i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
+            (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
+            (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
      FROM institution_admins ia
      JOIN institutions i ON i.id = ia.institution_id
-     WHERE (LOWER(ia.email) = $1 OR LOWER(i.email) = $1 OR LOWER(i.code) = $1 OR LOWER(ia.name) = $1 OR LOWER(i.name) = $1 OR ia.institution_id::text = $1)
+     WHERE (LOWER(ia.email) = $1 OR LOWER(i.email) = $1 OR LOWER(i.code) = $1 OR LOWER(ia.name) = $1 OR LOWER(i.name) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN ia.institution_id = $1::int ELSE FALSE END))
        AND ia.is_active = TRUE`,
     [idClean]
   );
@@ -168,9 +172,12 @@ export const institutionLogin = asyncHandler(async (req, res) => {
   // 2. Fallback: Check institutions table directly by code, email, contact_email, or name
   if (!admin) {
     const instRes = await query(
-      `SELECT i.id, i.name, i.code, i.email, i.password_hash, i.raw_password, i.contact_email, i.contact_person
+      `SELECT i.id, i.name, i.code, i.email, i.password_hash, i.raw_password, i.contact_email, i.contact_person,
+              i.logo_url, i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
+              (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
+              (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
        FROM institutions i
-       WHERE (LOWER(i.code) = $1 OR LOWER(i.email) = $1 OR LOWER(i.contact_email) = $1 OR LOWER(i.name) = $1 OR i.id::text = $1)
+       WHERE (LOWER(i.code) = $1 OR LOWER(i.email) = $1 OR LOWER(i.contact_email) = $1 OR LOWER(i.name) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN i.id = $1::int ELSE FALSE END))
          AND i.is_active = TRUE`,
       [idClean]
     );
@@ -193,6 +200,13 @@ export const institutionLogin = asyncHandler(async (req, res) => {
         institution_email: inst.email,
         inst_password_hash: inst.password_hash,
         inst_raw_password: inst.raw_password,
+        logo_url: inst.logo_url,
+        logo_badge: inst.logo_badge,
+        institution_type: inst.institution_type,
+        total_licenses: inst.total_licenses,
+        used_licenses: inst.used_licenses,
+        package_name: inst.package_name,
+        valid_until: inst.valid_until,
       };
     }
   }
@@ -203,8 +217,11 @@ export const institutionLogin = asyncHandler(async (req, res) => {
 
   // Multi-tier password verification
   let passOk = false;
+  let primaryPassMatched = false;
+
   if (admin.password_hash) {
     passOk = await comparePassword(rawPassword, admin.password_hash).catch(() => false);
+    if (passOk) primaryPassMatched = true;
   }
   if (!passOk && admin.inst_password_hash) {
     passOk = await comparePassword(rawPassword, admin.inst_password_hash).catch(() => false);
@@ -220,10 +237,13 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     throw ApiError.unauthorized('Invalid Institution ID or Password. Please check your credentials or contact support.');
   }
 
-  // Update password hashes to keep them perfectly synced
-  const freshHash = await hashPassword(rawPassword);
-  await query('UPDATE institution_admins SET password_hash = $1 WHERE id = $2', [freshHash, admin.id]).catch(() => { });
-  await query('UPDATE institutions SET password_hash = $1, raw_password = $2 WHERE id = $3', [freshHash, rawPassword, admin.institution_id]).catch(() => { });
+  // Asynchronously sync hashes in background ONLY if primary hash was not matched directly
+  if (!primaryPassMatched) {
+    hashPassword(rawPassword).then((freshHash) => {
+      query('UPDATE institution_admins SET password_hash = $1 WHERE id = $2', [freshHash, admin.id]).catch(() => {});
+      query('UPDATE institutions SET password_hash = $1, raw_password = $2 WHERE id = $3', [freshHash, rawPassword, admin.institution_id]).catch(() => {});
+    }).catch(() => {});
+  }
 
   const token = signToken({
     sub: admin.id,
@@ -246,8 +266,16 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     institution: {
       id: admin.institution_id,
       name: admin.institution_name,
-      code: admin.institution_code || admin.code || idClean.toUpperCase(),
+      code: admin.institution_code || admin.code || `INST-${admin.institution_id}`,
+      schoolId: admin.institution_code || admin.code || `INST-${admin.institution_id}`,
       email: admin.institution_email || admin.email,
+      logo_url: admin.logo_url || '',
+      logoBadge: admin.logo_badge || (admin.institution_name ? admin.institution_name.substring(0, 3).toUpperCase() : 'INST'),
+      institution_type: admin.institution_type || 'School',
+      total_licenses: admin.total_licenses || 50,
+      used_licenses: admin.used_licenses || 0,
+      package_name: admin.package_name || null,
+      valid_until: admin.valid_until || null,
     },
     redirectTo: '/for-schools',
   });

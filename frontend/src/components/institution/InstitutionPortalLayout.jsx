@@ -30,6 +30,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import { tokenStore } from '../../lib/api.js';
 
 export const INSTITUTION_NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard, path: '/institution/dashboard' },
@@ -136,11 +137,7 @@ export default function InstitutionPortalLayout({
 
   const handleLogout = () => {
     logout();
-    try {
-      localStorage.removeItem('token');
-      localStorage.removeItem('edvedum_active_institution');
-      localStorage.removeItem('edvedum_active_school');
-    } catch (_) {}
+    tokenStore.clear();
     toast.success('Signed out from Institution Portal');
     navigate('/institution-login', { replace: true });
   };
@@ -197,7 +194,7 @@ export default function InstitutionPortalLayout({
                   {institutionData?.name || 'Partner Institution'}
                 </h2>
                 <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-cyan-500 font-mono">
-                  ID: {institutionData?.schoolId || institutionData?.code || (institutionData?.id ? `INST-${institutionData.id}` : 'VDN-101')}
+                  ID: {institutionData?.schoolId || institutionData?.code || (institutionData?.id ? `INST-${institutionData.id}` : 'INST')}
                 </span>
               </div>
             )}
@@ -441,7 +438,7 @@ export default function InstitutionPortalLayout({
                   <div className="space-y-2 text-xs">
                     <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20 text-slate-300">
                       <p className="font-bold text-white">System Active</p>
-                      <p className="text-[11px] text-slate-400 mt-0.5">Your AIETS Institutional Gold Package is active with 50 student seats.</p>
+                      <p className="text-[11px] text-slate-400 mt-0.5">Your {institutionData?.package_name || 'AIETS Institutional Package'} is active with {institutionData?.total_licenses || 50} student seats.</p>
                     </div>
                   </div>
                 </div>
@@ -478,7 +475,7 @@ export default function InstitutionPortalLayout({
                 </div>
                 <div className="hidden sm:block text-left pr-1">
                   <p className={`text-xs font-black leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                    {institutionData?.adminName || 'Centre Admin'}
+                    {institutionData?.adminName || 'Institution Admin'}
                   </p>
                   <p className="text-[10px] text-slate-400 font-bold leading-tight truncate max-w-[120px]">
                     {institutionData?.name || 'Partner Institution'}
@@ -494,7 +491,7 @@ export default function InstitutionPortalLayout({
                   onClick={() => setProfileDropdownOpen(false)}
                 >
                   <div className="px-3.5 py-2.5 border-b border-slate-800/40 mb-1">
-                    <p className="text-xs font-black text-white">{institutionData?.adminName || 'Centre Admin'}</p>
+                    <p className="text-xs font-black text-white">{institutionData?.adminName || 'Institution Admin'}</p>
                     <p className="text-[11px] text-slate-400 truncate mt-0.5">{institutionData?.contact_email || institutionData?.adminEmail || institutionData?.email || ''}</p>
                   </div>
                   <button

@@ -92,11 +92,22 @@ export default function InstitutionLogin() {
       }
 
       if (res?.token) {
-        const instObj = res.institution || {
-          id: res.user?.institution_id || 1,
-          name: res.user?.institution_name || 'Partner Institution',
-          schoolId: input.toUpperCase(),
-          email: res.user?.email || input,
+        tokenStore.clear();
+        const instObj = {
+          id: res.institution?.id || res.user?.institution_id || 1,
+          name: res.institution?.name || res.user?.institution_name || 'Partner Institution',
+          schoolId: res.institution?.schoolId || res.institution?.code || input.toUpperCase(),
+          code: res.institution?.code || res.institution?.schoolId || input.toUpperCase(),
+          email: res.institution?.email || res.user?.email || input,
+          adminName: res.user?.name || res.institution?.name,
+          adminEmail: res.user?.email || res.institution?.email,
+          logo_url: res.institution?.logo_url || '',
+          logoBadge: res.institution?.logoBadge || (res.institution?.name ? res.institution.name.substring(0, 3).toUpperCase() : 'INST'),
+          institution_type: res.institution?.institution_type || 'School',
+          package_name: res.institution?.package_name || null,
+          valid_until: res.institution?.valid_until || null,
+          total_licenses: res.institution?.total_licenses || 50,
+          used_licenses: res.institution?.used_licenses || 0,
         };
 
         tokenStore.set(res.token);

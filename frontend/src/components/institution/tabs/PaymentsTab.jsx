@@ -68,9 +68,15 @@ export default function PaymentsTab({
         <div className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900 shadow-sm'}`}>
           <span className="text-[10px] font-bold text-cyan-400 uppercase tracking-wider block mb-1">Purchased Package</span>
           <h3 className={`text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-            NEET-UG 2027 AIETS Institutional Gold Package
+            {institution?.package_name || 'Standard AIETS Institutional Package'}
           </h3>
-          <p className="text-xs text-slate-400 mt-1">Valid until: <strong className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>31 March 2027</strong></p>
+          <p className="text-xs text-slate-400 mt-1">
+            Valid until: <strong className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              {institution?.valid_until
+                ? new Date(institution.valid_until).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+                : (institution?.validity_date || 'Active Subscription')}
+            </strong>
+          </p>
         </div>
 
         <div className={`p-6 rounded-3xl border ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900 shadow-sm'}`}>

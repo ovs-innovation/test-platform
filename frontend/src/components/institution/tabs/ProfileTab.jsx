@@ -25,12 +25,12 @@ export default function ProfileTab({
   const toast = useToast();
 
   const [formData, setFormData] = useState({
-    name: institution?.name || 'Partner Institution',
-    contact_person: institution?.contact_person || 'Academic Coordinator',
+    name: institution?.name || '',
+    contact_person: institution?.contact_person || '',
     contact_email: institution?.contact_email || institution?.email || '',
     contact_mobile: institution?.contact_mobile || '',
-    city: institution?.city || 'New Delhi',
-    state: institution?.state || 'Delhi',
+    city: institution?.city || '',
+    state: institution?.state || '',
     address: institution?.address || '',
     logo_url: institution?.logo_url || '',
   });
@@ -41,17 +41,16 @@ export default function ProfileTab({
 
   useEffect(() => {
     if (institution) {
-      setFormData((prev) => ({
-        ...prev,
-        name: institution.name || prev.name,
-        contact_person: institution.contact_person || prev.contact_person,
-        contact_email: institution.contact_email || institution.email || prev.contact_email,
-        contact_mobile: institution.contact_mobile || prev.contact_mobile,
-        city: institution.city || prev.city,
-        state: institution.state || prev.state,
-        address: institution.address || prev.address,
-        logo_url: institution.logo_url || prev.logo_url,
-      }));
+      setFormData({
+        name: institution.name || '',
+        contact_person: institution.contact_person || '',
+        contact_email: institution.contact_email || institution.email || '',
+        contact_mobile: institution.contact_mobile || '',
+        city: institution.city || '',
+        state: institution.state || '',
+        address: institution.address || '',
+        logo_url: institution.logo_url || '',
+      });
       setLogoPreview(institution.logo_url || '');
     }
   }, [institution]);

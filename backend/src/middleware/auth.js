@@ -103,8 +103,8 @@ export const authInstitutionAdmin = async (req, _res, next) => {
     req.user = {
       id: 1,
       role: 'institution_admin',
-      email: 'admin@sscpublic.edu.in',
-      name: 'Centre Admin',
+      email: 'institution.admin@edvedum.ac.in',
+      name: 'Institution Admin',
       institution_id: instId,
     };
     req.institution_id = instId;

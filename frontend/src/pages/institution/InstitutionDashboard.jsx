@@ -279,6 +279,8 @@ export default function InstitutionDashboard() {
 
   const outletContext = {
     institution: profile,
+    instId,
+    loading,
     students,
     batches,
     availableTests,
@@ -466,11 +468,12 @@ export function InstOverviewTabWrapper() {
       onOpenUploadCsv={ctx.onOpenUploadCsv}
       onDownloadCsvTemplate={() => {
         import('../../lib/csv.js').then(({ downloadFromApi }) => {
-          downloadFromApi(`/institution/${ctx.institution?.id || 1}/students/bulk-upload/template`, 'student_bulk_upload_template.csv');
+          downloadFromApi(`/institution/${ctx.institution?.id || ctx.instId || 1}/students/bulk-upload/template`, 'student_bulk_upload_template.csv');
         });
       }}
       onNavigateTab={(tab) => navigate(`/institution/${tab}`)}
       isDarkMode={ctx.isDarkMode}
+      loading={ctx.loading}
     />
   );
 }

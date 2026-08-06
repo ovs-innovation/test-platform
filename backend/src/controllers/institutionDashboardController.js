@@ -17,10 +17,23 @@ export const getInstitutionProfile = asyncHandler(async (req, res) => {
   const usedRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
   const actualUsed = usedRes.rows[0]?.cnt || 0;
 
+  const pkgRes = await query(
+    `SELECT tp.package_name, ip.valid_until
+     FROM institution_packages ip
+     JOIN test_packages tp ON tp.id = ip.package_id
+     WHERE ip.institution_id = $1 AND ip.is_active = TRUE
+     ORDER BY ip.id DESC LIMIT 1`,
+    [instId]
+  ).catch(() => ({ rows: [] }));
+  const activePkg = pkgRes.rows[0];
+
   res.json({
     success: true,
     profile: {
       ...inst,
+      schoolId: inst.code || `INST-${inst.id}`,
+      package_name: activePkg?.package_name || inst.package_name || null,
+      valid_until: activePkg?.valid_until || inst.valid_until || null,
       used_licenses: actualUsed,
       available_licenses: Math.max(0, (inst.total_licenses || 50) - actualUsed),
     },
@@ -65,10 +78,11 @@ export const listInstitutionStudents = asyncHandler(async (req, res) => {
     LEFT JOIN batches b ON b.id = u.batch_id
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
     LEFT JOIN (
-      SELECT student_id, COUNT(id) AS tests_completed, AVG(percentage) AS avg_score
-      FROM test_attempts
-      WHERE submitted_at IS NOT NULL
-      GROUP BY student_id
+      SELECT ta.student_id, COUNT(ta.id) AS tests_completed, AVG(ta.percentage) AS avg_score
+      FROM test_attempts ta
+      JOIN users u2 ON u2.id = ta.student_id
+      WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
+      GROUP BY ta.student_id
     ) att ON att.student_id = u.id
     WHERE u.institution_id = $1 AND u.role = 'candidate'
   `;
@@ -635,7 +649,7 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
   const { test_id, batch_id } = req.query;
 
-  let attemptWhere = `WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin'))`;
+  let attemptWhere = `WHERE u.institution_id = $1 AND u.role = 'candidate'`;
   const params = [instId];
 
   if (test_id && test_id !== 'All') {
@@ -1167,13 +1181,13 @@ export const sendStudentReminder = asyncHandler(async (req, res) => {
   let candidateRows = [];
 
   if (target_type === 'student' && target_id) {
-    const studentRes = await query('SELECT id FROM users WHERE id = $1 AND role = $2', [Number(target_id), 'candidate']);
+    const studentRes = await query('SELECT id FROM users WHERE id = $1 AND institution_id = $2 AND role = $3', [Number(target_id), instId, 'candidate']);
     candidateRows = studentRes.rows;
   } else if (target_type === 'batch' && target_id) {
-    const batchRes = await query('SELECT id FROM users WHERE batch_id = $1 AND role = $2', [Number(target_id), 'candidate']);
+    const batchRes = await query('SELECT id FROM users WHERE batch_id = $1 AND institution_id = $2 AND role = $3', [Number(target_id), instId, 'candidate']);
     candidateRows = batchRes.rows;
   } else {
-    const allRes = await query('SELECT id FROM users WHERE (institution_id = $1 OR $1 IS NULL) AND role = $2', [instId, 'candidate']);
+    const allRes = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
     candidateRows = allRes.rows;
   }
 

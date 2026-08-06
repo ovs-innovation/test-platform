@@ -47,13 +47,13 @@ export const getInstitutionOverallReport = asyncHandler(async (req, res) => {
          SELECT ta.test_id, ta.student_id, ta.submitted_at, ta.score, ta.percentage
          FROM test_attempts ta
          JOIN users u ON u.id = ta.student_id
-         WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin')) AND ta.submitted_at IS NOT NULL
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
          UNION ALL
          SELECT at.assessment_id AS test_id, at.candidate_id AS student_id, at.submitted_at, s.marks_obtained AS score, s.percentage
          FROM attempts at
          JOIN scores s ON s.attempt_id = at.id
          JOIN users u ON u.id = at.candidate_id
-         WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin')) AND at.submitted_at IS NOT NULL
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
        )
        SELECT 
          COALESCE(ROUND(AVG(combined.percentage), 2), 0) AS average_score,
@@ -66,7 +66,7 @@ export const getInstitutionOverallReport = asyncHandler(async (req, res) => {
       params
     ),
     query(
-      `SELECT COUNT(*)::int AS total_students FROM users WHERE institution_id = $1 OR role = 'candidate'`,
+      `SELECT COUNT(*)::int AS total_students FROM users WHERE institution_id = $1 AND role = 'candidate'`,
       [instId]
     )
   ]);
@@ -118,7 +118,7 @@ export const getInstitutionRankingsReport = asyncHandler(async (req, res) => {
     LEFT JOIN attempts at ON at.candidate_id = u.id AND at.submitted_at IS NOT NULL
     LEFT JOIN scores s ON s.attempt_id = at.id
     LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
-    WHERE (u.institution_id = $1 OR u.role = 'candidate')
+    WHERE u.institution_id = $1 AND u.role = 'candidate'
   `;
   const params = [instId];
 
@@ -174,7 +174,7 @@ export const getBatchComparisonReport = asyncHandler(async (req, res) => {
      LEFT JOIN attempts at ON at.candidate_id = u.id AND at.submitted_at IS NOT NULL
      LEFT JOIN scores s ON s.attempt_id = at.id
      LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
-     WHERE (u.institution_id = $1 OR u.role = 'candidate') ${testFilter}
+     WHERE u.institution_id = $1 AND u.role = 'candidate' ${testFilter}
      GROUP BY b.id, b.name
      ORDER BY average_score DESC`,
     params
@@ -224,13 +224,13 @@ export const getInstitutionTrendsReport = asyncHandler(async (req, res) => {
        SELECT ta.test_id, ta.student_id, ta.submitted_at, ta.percentage
        FROM test_attempts ta
        JOIN users u ON u.id = ta.student_id
-       WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin')) AND ta.submitted_at IS NOT NULL
+       WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
        UNION ALL
        SELECT at.assessment_id AS test_id, at.candidate_id AS student_id, at.submitted_at, s.percentage
        FROM attempts at
        JOIN scores s ON s.attempt_id = at.id
        JOIN users u ON u.id = at.candidate_id
-       WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin')) AND at.submitted_at IS NOT NULL
+       WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
      ) combined
      LEFT JOIN tests t ON t.id = combined.test_id
      LEFT JOIN assessments a ON a.id = combined.test_id
@@ -292,7 +292,7 @@ export const getImprovementAnalyticsReport = asyncHandler(async (req, res) => {
        LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
        LEFT JOIN assessments a ON a.id = at.assessment_id
        LEFT JOIN tests t ON t.id = ta.test_id
-       WHERE (u.institution_id = $1 OR u.role IN ('candidate', 'admin')) ${filterSql}
+       WHERE u.institution_id = $1 AND u.role = 'candidate' ${filterSql}
      )
      SELECT 
        curr.student_id,
