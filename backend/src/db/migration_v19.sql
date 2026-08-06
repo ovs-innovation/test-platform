@@ -35,6 +35,17 @@ CREATE TABLE IF NOT EXISTS college_cutoffs (
   created_at TIMESTAMP DEFAULT NOW()
 );
 
+DELETE FROM college_cutoffs c1
+USING college_cutoffs c2
+WHERE c1.id > c2.id
+  AND c1.college_name = c2.college_name
+  AND c1.state = c2.state
+  AND c1.category = c2.category
+  AND c1.quota = c2.quota
+  AND c1.year = c2.year;
+
+CREATE UNIQUE INDEX IF NOT EXISTS idx_college_cutoffs_uniq ON college_cutoffs (college_name, state, category, quota, year);
+
 -- Seed initial benchmark NEET College cutoffs
 INSERT INTO college_cutoffs (college_name, state, category, quota, year, closing_rank, min_score) VALUES
   ('AIIMS, New Delhi', 'Delhi', 'General', 'All India', 2025, 55, 715),
@@ -65,4 +76,4 @@ INSERT INTO college_cutoffs (college_name, state, category, quota, year, closing
   ('GMC Surat', 'Gujarat', 'General', 'State Quota', 2025, 8200, 635),
   ('Assam Medical College, Dibrugarh', 'Assam', 'General', 'State Quota', 2025, 14500, 610),
   ('RIMS Imphal', 'Manipur', 'General', 'All India', 2025, 16800, 602)
-ON CONFLICT DO NOTHING;
+ON CONFLICT (college_name, state, category, quota, year) DO NOTHING;

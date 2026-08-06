@@ -53,6 +53,7 @@ CREATE TABLE IF NOT EXISTS ebooks (
   pdf_url TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
+CREATE UNIQUE INDEX IF NOT EXISTS idx_ebooks_title ON ebooks(title);
 
 -- 4. Create Batches table
 CREATE TABLE IF NOT EXISTS batches (

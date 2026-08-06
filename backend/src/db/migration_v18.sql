@@ -82,31 +82,3 @@ CREATE INDEX IF NOT EXISTS idx_ebook_assignments_target ON ebook_assignments(ass
 CREATE INDEX IF NOT EXISTS idx_package_tests_pkg ON package_tests(package_id);
 CREATE INDEX IF NOT EXISTS idx_package_tests_test ON package_tests(test_id);
 CREATE INDEX IF NOT EXISTS idx_institution_packages_inst ON institution_packages(institution_id);
-
--- 8. Seed Default Sample Institution, Admin & Test Package if missing
-INSERT INTO institutions (id, name, institution_type, city, state, contact_person, contact_email, contact_mobile, address)
-VALUES (1, 'EDVEDUM Partner Academy', 'School', 'New Delhi', 'Delhi', 'Dr. Ramesh Sharma', 'admin@partneracademy.edu.in', '9876543210', 'Block B, Connaught Place, New Delhi')
-ON CONFLICT (id) DO NOTHING;
-
--- Default password: password123 (bcrypt hash: $2b$10$7Z2i7tYmG6dI7hZ9T8wXo.r7GqJ2.6Z.Z0Z0Z0Z0Z0Z0Z0Z0Z0Z0)
--- We will use hash: $2b$10$wT6Q1lT/6L0X6jUqH2GZ1eX5lX5lX5lX5lX5lX5lX5lX5lX5lX5lX or generate dynamically in seed script
-INSERT INTO institution_admins (id, institution_id, name, email, password_hash, role)
-VALUES (1, 1, 'Institution Admin', 'instadmin@edvedum.ac.in', '$2b$10$1Y8g4bCg6j5S0vH9qW4f4eK1l5m7n8o9p0q1r2s3t4u5v6w7x8y9z', 'institution_admin')
-ON CONFLICT (email) DO NOTHING;
-
-INSERT INTO test_packages (id, package_name, description, price)
-VALUES (1, 'NEET-UG 2027 AIETS One-Year Complete Package', 'Full access to 24 AIETS unit tests, part tests and cumulative grand mocks for NEET-UG 2027.', 49999.00)
-ON CONFLICT (id) DO NOTHING;
-
-INSERT INTO institution_packages (institution_id, package_id, is_active)
-SELECT 1, 1, TRUE
-WHERE NOT EXISTS (
-  SELECT 1 FROM institution_packages WHERE institution_id = 1 AND package_id = 1
-);
-
--- Associate existing tests to Package 1 if package_tests is empty
-INSERT INTO package_tests (package_id, test_id)
-SELECT 1, t.id FROM tests t
-WHERE NOT EXISTS (
-  SELECT 1 FROM package_tests WHERE package_id = 1 AND test_id = t.id
-);

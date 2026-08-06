@@ -113,27 +113,3 @@ CREATE INDEX IF NOT EXISTS idx_inst_invoices_inst ON institution_invoices(instit
 CREATE INDEX IF NOT EXISTS idx_inst_notifs_inst ON institution_notifications(institution_id);
 CREATE INDEX IF NOT EXISTS idx_inst_audit_inst ON institution_audit_logs(institution_id);
 CREATE INDEX IF NOT EXISTS idx_batches_status ON batches(status);
-
--- 11. Seed sample GST Invoice for default Institution ID 1 if not exists
-INSERT INTO institution_invoices (institution_id, invoice_number, package_name, price_per_student, license_quantity, subtotal, gst_amount, total_amount, payment_status, pdf_url)
-VALUES (
-  1,
-  'INV-EDV-2026-0091',
-  'NEET-UG 2027 AIETS Institutional Gold License Pack (50 Seats)',
-  999.98,
-  50,
-  49999.00,
-  8999.82,
-  58998.82,
-  'Paid',
-  '/invoices/INV-EDV-2026-0091.pdf'
-) ON CONFLICT (invoice_number) DO NOTHING;
-
--- 12. Seed initial notification for Institution ID 1
-INSERT INTO institution_notifications (institution_id, title, message, type)
-VALUES (
-  1,
-  'Welcome to Edvedum Institution Management Portal',
-  'Your AIETS Institutional Gold Package with 50 student licenses is active. You can now enroll students and create batches.',
-  'system'
-) ON CONFLICT DO NOTHING;

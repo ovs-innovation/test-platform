@@ -539,11 +539,11 @@ export const getAvailableEbooks = asyncHandler(async (_req, res) => {
   if (result.rowCount === 0) {
     try {
       await query(`
-        INSERT INTO ebooks (id, title, subject, author, class_level) VALUES
-        (1, 'NEET-UG High-Yield Physics Formula Handbook 2027', 'Physics', 'Edvedum Academic Panel', 'Class 11 & 12'),
-        (2, 'JEE Main Organic Chemistry Mechanism Shortcuts', 'Chemistry', 'Kota Subject Experts', 'Class 12'),
-        (3, 'Class 10 Olympiad Mathematics & Logical Reasoning', 'Mathematics', 'Foundation Division', 'Class 10')
-        ON CONFLICT (id) DO NOTHING
+        INSERT INTO ebooks (title, subject, author, class_level, pdf_url) VALUES
+        ('NEET-UG High-Yield Physics Formula Handbook 2027', 'Physics', 'Edvedum Academic Panel', 'Class 11 & 12', '/ebooks/neet-physics-handbook.pdf'),
+        ('JEE Main Organic Chemistry Mechanism Shortcuts', 'Chemistry', 'Kota Subject Experts', 'Class 12', '/ebooks/jee-chemistry-shortcuts.pdf'),
+        ('Class 10 Olympiad Mathematics & Logical Reasoning', 'Mathematics', 'Foundation Division', 'Class 10', '/ebooks/class10-olympiad-math.pdf')
+        ON CONFLICT (title) DO NOTHING
       `);
       result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC');
     } catch (_) {}

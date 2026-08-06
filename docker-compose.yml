@@ -33,7 +33,7 @@ services:
       JWT_SECRET: ${JWT_SECRET:-change_this_to_a_long_random_secret_string}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-2h}
       CLIENT_URL: ${CLIENT_URL:-http://localhost:5173}
-      RUN_SEED: ${RUN_SEED:-true}
+      RUN_SEED: ${RUN_SEED:-false}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@assess.io}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@12345}
       SEED_CANDIDATE_EMAIL: ${SEED_CANDIDATE_EMAIL:-candidate@assess.io}

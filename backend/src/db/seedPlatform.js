@@ -152,6 +152,84 @@ export const seedPlatform = async (client) => {
     );
   }
 
+  // ID-less, Idempotent Sample Institution Seeding
+  const instRes = await client.query(
+    `INSERT INTO institutions (name, institution_type, city, state, contact_person, contact_email, contact_mobile, address)
+     SELECT 'EDVEDUM Partner Academy', 'School', 'New Delhi', 'Delhi', 'Dr. Ramesh Sharma', 'admin@partneracademy.edu.in', '9876543210', 'Block B, Connaught Place, New Delhi'
+     WHERE NOT EXISTS (SELECT 1 FROM institutions WHERE contact_email = 'admin@partneracademy.edu.in' OR name = 'EDVEDUM Partner Academy')
+     RETURNING id`
+  );
+
+  let instId;
+  if (instRes.rowCount > 0) {
+    instId = instRes.rows[0].id;
+  } else {
+    const existingInst = await client.query(`SELECT id FROM institutions WHERE contact_email = 'admin@partneracademy.edu.in' OR name = 'EDVEDUM Partner Academy' LIMIT 1`);
+    if (existingInst.rowCount > 0) instId = existingInst.rows[0].id;
+  }
+
+  if (instId) {
+    const { hashPassword } = await import('../utils/password.js');
+    const instAdminHash = await hashPassword('password123');
+    await client.query(
+      `INSERT INTO institution_admins (institution_id, name, email, password_hash, role)
+       VALUES ($1, 'Institution Admin', 'instadmin@edvedum.ac.in', $2, 'institution_admin')
+       ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash`,
+      [instId, instAdminHash]
+    );
+
+    const pkgRes = await client.query(
+      `INSERT INTO test_packages (package_name, description, price)
+       SELECT 'NEET-UG 2027 AIETS One-Year Complete Package', 'Full access to 24 AIETS unit tests, part tests and cumulative grand mocks for NEET-UG 2027.', 49999.00
+       WHERE NOT EXISTS (SELECT 1 FROM test_packages WHERE package_name = 'NEET-UG 2027 AIETS One-Year Complete Package')
+       RETURNING id`
+    );
+
+    let pkgId;
+    if (pkgRes.rowCount > 0) {
+      pkgId = pkgRes.rows[0].id;
+    } else {
+      const existingPkg = await client.query(`SELECT id FROM test_packages WHERE package_name = 'NEET-UG 2027 AIETS One-Year Complete Package' LIMIT 1`);
+      if (existingPkg.rowCount > 0) pkgId = existingPkg.rows[0].id;
+    }
+
+    if (pkgId) {
+      await client.query(
+        `INSERT INTO institution_packages (institution_id, package_id, is_active)
+         SELECT $1, $2, TRUE
+         WHERE NOT EXISTS (
+           SELECT 1 FROM institution_packages WHERE institution_id = $1 AND package_id = $2
+         )`,
+        [instId, pkgId]
+      );
+
+      await client.query(
+        `INSERT INTO package_tests (package_id, test_id)
+         SELECT $1, t.id FROM tests t
+         WHERE NOT EXISTS (
+           SELECT 1 FROM package_tests WHERE package_id = $1 AND test_id = t.id
+         )`,
+        [pkgId]
+      );
+    }
+
+    await client.query(
+      `INSERT INTO institution_invoices (institution_id, invoice_number, package_name, price_per_student, license_quantity, subtotal, gst_amount, total_amount, payment_status, pdf_url)
+       VALUES ($1, 'INV-EDV-2026-0091', 'NEET-UG 2027 AIETS Institutional Gold License Pack (50 Seats)', 999.98, 50, 49999.00, 8999.82, 58998.82, 'Paid', '/invoices/INV-EDV-2026-0091.pdf')
+       ON CONFLICT (invoice_number) DO NOTHING`,
+      [instId]
+    );
+
+    await client.query(
+      `INSERT INTO institution_notifications (institution_id, title, message, type)
+       SELECT $1, 'Welcome to Edvedum Institution Management Portal', 'Your AIETS Institutional Gold Package with 50 student licenses is active. You can now enroll students and create batches.', 'system'
+       WHERE NOT EXISTS (
+         SELECT 1 FROM institution_notifications WHERE institution_id = $1 AND title = 'Welcome to Edvedum Institution Management Portal'
+       )`,
+      [instId]
+    );
+  }
+
   const { importAietsRecords } = await import('./importAiets.js');
   await importAietsRecords(client);
 };

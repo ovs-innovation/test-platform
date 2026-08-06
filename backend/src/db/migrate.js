@@ -8,6 +8,29 @@ const __dirname = path.dirname(__filename);
 
 const reset = process.argv.includes('--reset');
 
+export const syncSequences = async (clientOrPool) => {
+  const tablesRes = await clientOrPool.query(`
+    SELECT table_name, column_name
+    FROM information_schema.columns
+    WHERE table_schema = 'public'
+      AND column_default LIKE 'nextval%'
+  `);
+
+  for (const row of tablesRes.rows) {
+    const tableName = row.table_name;
+    const columnName = row.column_name;
+    try {
+      await clientOrPool.query(`
+        SELECT setval(
+          pg_get_serial_sequence('${tableName}', '${columnName}'),
+          COALESCE((SELECT MAX(${columnName}) FROM ${tableName}), 1),
+          true
+        )
+      `);
+    } catch (_) {}
+  }
+};
+
 const run = async () => {
   try {
     if (reset) {
@@ -72,8 +95,10 @@ const run = async () => {
       const migration23 = fs.readFileSync(path.join(__dirname, 'migration_v23.sql'), 'utf-8');
       await pool.query(migration23);
     }
+
+    await syncSequences(pool);
     // eslint-disable-next-line no-console
-    console.log('[migrate] Database migration successful.');
+    console.log('[migrate] Database migration and sequence sync successful.');
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('[migrate] Failed:', err);
