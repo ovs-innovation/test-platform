@@ -98,7 +98,33 @@ export default function PublicHeader() {
   const { pathname, search } = location;
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
+  const [isVisible, setIsVisible] = useState(true);
   const navRef = useRef(null);
+  const lastScrollY = useRef(0);
+
+  // Auto-hide header when scrolling down, show when scrolling up
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Always show navbar at top of page
+      if (currentScrollY <= 60) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current + 8) {
+        // Scrolling down -> slide navbar up out of view
+        setIsVisible(false);
+        setOpenMenu(null);
+      } else if (currentScrollY < lastScrollY.current - 8) {
+        // Scrolling up -> slide navbar back down into view
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Close dropdowns on route or search query changes
   useEffect(() => {
@@ -138,7 +164,7 @@ export default function PublicHeader() {
   const showDashboardLogout = isSchoolsPage ? false : !!user;
 
   return (
-    <header className="sticky top-0 z-40 bg-white">
+    <header className={`sticky top-0 z-40 bg-white transition-transform duration-300 ease-in-out ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
 
       <div className="bg-[#0a1628] text-white">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3.5 sm:px-6 py-2 text-[10px] min-[360px]:text-[11px] sm:text-xs whitespace-nowrap overflow-x-hidden">
