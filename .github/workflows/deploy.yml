@@ -1,0 +1,134 @@
+name: Production Deployment (EDVEDUM)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy to Hostinger VPS
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to VPS via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          timeout: 10m
+          command_timeout: 10m
+          script: |
+            set -euo pipefail
+
+            PROJECT_DIR="/var/www/test-platform"
+            HEALTH_URL="https://edvedum.com/api/health"
+            READY_URL="https://edvedum.com/api/health/ready"
+            MAX_RETRIES=20
+            RETRY_INTERVAL=5
+
+            log() {
+              echo "[$(date -u +'%Y-%m-%dT%H:%M:%SZ')] $1"
+            }
+
+            log "=================================================="
+            log " Starting EDVEDUM CI/CD Production Deployment"
+            log "=================================================="
+
+            if [ ! -d "$PROJECT_DIR" ]; then
+              log "ERROR: Project directory $PROJECT_DIR does not exist on target VPS!"
+              exit 1
+            fi
+
+            cd "$PROJECT_DIR"
+
+            PREV_COMMIT=$(git rev-parse HEAD || echo "")
+            log "Current deployed commit: ${PREV_COMMIT}"
+
+            log "Fetching latest code from origin/main..."
+            git fetch origin main
+            git reset --hard origin/main
+
+            NEW_COMMIT=$(git rev-parse HEAD)
+            log "New target commit: ${NEW_COMMIT}"
+
+            log "Building latest Docker images..."
+            docker compose build
+
+            log "Restarting production containers in background..."
+            docker compose up -d --remove-orphans
+
+            log "Waiting for services to stabilize..."
+            sleep 5
+
+            log "Performing liveness health check (${HEALTH_URL})..."
+            HEALTH_SUCCESS=false
+            for i in $(seq 1 $MAX_RETRIES); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL" || echo "000")
+              if [ "$HTTP_CODE" -eq 200 ]; then
+                log "Liveness check PASSED (HTTP 200) on attempt ${i}/${MAX_RETRIES}!"
+                HEALTH_SUCCESS=true
+                break
+              else
+                log "Attempt ${i}/${MAX_RETRIES}: Liveness check returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                sleep $RETRY_INTERVAL
+              fi
+            done
+
+            if [ "$HEALTH_SUCCESS" = "false" ]; then
+              log "CRITICAL: Liveness check failed after ${MAX_RETRIES} attempts!"
+              log "Container logs output:"
+              docker compose logs --tail=100 backend
+
+              if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
+                log "Initiating automatic rollback to commit ${PREV_COMMIT}..."
+                git reset --hard "$PREV_COMMIT"
+                docker compose build
+                docker compose up -d --remove-orphans
+                log "Rollback completed to commit ${PREV_COMMIT}."
+              fi
+              exit 1
+            fi
+
+            log "Performing database readiness health check (${READY_URL})..."
+            READY_SUCCESS=false
+            for i in $(seq 1 $MAX_RETRIES); do
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" "$READY_URL" || echo "000")
+              if [ "$HTTP_CODE" -eq 200 ]; then
+                log "Readiness check PASSED (HTTP 200 - DB Connected) on attempt ${i}/${MAX_RETRIES}!"
+                READY_SUCCESS=true
+                break
+              else
+                log "Attempt ${i}/${MAX_RETRIES}: Readiness check returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
+                sleep $RETRY_INTERVAL
+              fi
+            done
+
+            if [ "$READY_SUCCESS" = "false" ]; then
+              log "CRITICAL: Database readiness check failed after ${MAX_RETRIES} attempts!"
+              log "Container logs output:"
+              docker compose logs --tail=100 backend
+
+              if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
+                log "Initiating automatic rollback to commit ${PREV_COMMIT}..."
+                git reset --hard "$PREV_COMMIT"
+                docker compose build
+                docker compose up -d --remove-orphans
+                log "Rollback completed to commit ${PREV_COMMIT}."
+              fi
+              exit 1
+            fi
+
+            log "Container status summary:"
+            docker compose ps
+
+            log "=================================================="
+            log " EDVEDUM Production Deployment SUCCESSFUL!"
+            log " Deployed Commit: ${NEW_COMMIT}"
+            log "=================================================="
