@@ -1,5 +1,3 @@
-import { GoogleGenAI } from '@google/genai';
-
 /**
  * generateStudentAIPlan
  * Generates a personalized post-test AI study plan based on aggregated student metrics.
@@ -63,6 +61,7 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
   if (!apiKey) return buildFallbackPlan();
 
   try {
+    const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
     const prompt = `You are an elite academic mentor and NTA CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
 
@@ -350,6 +349,7 @@ export async function generateAIMentorReport(testData = {}) {
   }
 
   try {
+    const { GoogleGenAI } = await import('@google/genai');
     const ai = new GoogleGenAI({ apiKey });
 
     const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NTA-pattern CBT test series for NEET UG and JEE students in India.
