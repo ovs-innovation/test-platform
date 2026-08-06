@@ -21,6 +21,7 @@ import AddStudentModal from '../../components/institution/modals/AddStudentModal
 import BulkUploadModal from '../../components/institution/modals/BulkUploadModal.jsx';
 
 import { institutionDashboardService } from '../../lib/services.js';
+import { tokenStore } from '../../lib/api.js';
 import { downloadStudentCsvTemplate } from '../../lib/csv.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
@@ -29,11 +30,23 @@ import { Key, Copy, CheckCircle2, X } from 'lucide-react';
 export default function InstitutionDashboard() {
   const { id } = useParams();
 
-  // Dynamically resolve active institution ID from URL param -> localStorage -> fallback 1
+  // Dynamically resolve active institution ID from URL param -> JWT Token -> localStorage
   const getActiveInstId = () => {
     if (id && !isNaN(Number(id))) {
       return Number(id);
     }
+    try {
+      const token = tokenStore.get();
+      if (token) {
+        const parts = token.split('.');
+        if (parts.length === 3) {
+          const payload = JSON.parse(atob(parts[1]));
+          const tokenInstId = Number(payload?.institution_id);
+          if (tokenInstId && !isNaN(tokenInstId) && tokenInstId > 0) return tokenInstId;
+        }
+      }
+    } catch (_) {}
+
     try {
       const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
       if (saved) {
@@ -41,8 +54,9 @@ export default function InstitutionDashboard() {
         const savedId = Number(parsed?.id || parsed?.institution_id);
         if (savedId && !isNaN(savedId) && savedId > 0) return savedId;
       }
-    } catch (e) {}
-    return 1;
+    } catch (_) {}
+
+    return null;
   };
 
   const instId = getActiveInstId();
@@ -71,6 +85,10 @@ export default function InstitutionDashboard() {
   const [generatedCredsModal, setGeneratedCredsModal] = useState(null);
 
   useEffect(() => {
+    if (!instId) {
+      navigate('/institution-login', { replace: true });
+      return;
+    }
     loadDashboardData();
   }, [instId]);
 

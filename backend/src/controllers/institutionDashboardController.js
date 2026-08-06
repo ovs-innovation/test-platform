@@ -10,7 +10,15 @@ import crypto from 'crypto';
  */
 export const getInstitutionProfile = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
-  const result = await query('SELECT * FROM institutions WHERE id = $1', [instId]);
+  const result = await query(
+    `SELECT i.id, i.name, i.code, i.email, i.contact_person, i.contact_email, i.contact_mobile,
+            i.address, i.city, i.state, i.institution_type, i.total_licenses, i.used_licenses,
+            i.logo_badge,
+            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 200000 THEN '' ELSE i.logo_url END AS logo_url
+     FROM institutions i
+     WHERE i.id = $1`,
+    [instId]
+  );
   if (result.rowCount === 0) throw ApiError.notFound('Institution not found');
 
   const inst = result.rows[0];
@@ -527,7 +535,7 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/available-ebooks & POST /api/institution/:id/ebooks/:ebook_id/assign
  */
 export const getAvailableEbooks = asyncHandler(async (_req, res) => {
-  let result = await query('SELECT * FROM ebooks ORDER BY id ASC');
+  let result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC');
   if (result.rowCount === 0) {
     try {
       await query(`
@@ -537,7 +545,7 @@ export const getAvailableEbooks = asyncHandler(async (_req, res) => {
         (3, 'Class 10 Olympiad Mathematics & Logical Reasoning', 'Mathematics', 'Foundation Division', 'Class 10')
         ON CONFLICT (id) DO NOTHING
       `);
-      result = await query('SELECT * FROM ebooks ORDER BY id ASC');
+      result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC');
     } catch (_) {}
   }
   res.json({ success: true, ebooks: result.rows });
@@ -690,15 +698,13 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
     query(
       `SELECT b.id AS batch_id, COALESCE(b.batch_name, b.name, 'Default Batch') AS batch_name,
               COUNT(DISTINCT u.id)::int AS total_students,
-              COUNT(DISTINCT COALESCE(ta.student_id, at.candidate_id))::int AS active_students,
-              COALESCE(ROUND(AVG(COALESCE(s.percentage, ta.percentage)), 2), 0) AS avg_score,
-              COALESCE(ROUND(MAX(COALESCE(s.percentage, ta.percentage)), 2), 0) AS highest_score
+              COUNT(DISTINCT ta.student_id)::int AS active_students,
+              COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS avg_score,
+              COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score
        FROM batches b
-       LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1
+       LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1 AND u.role = 'candidate'
        LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
-       LEFT JOIN attempts at ON at.candidate_id = u.id AND at.submitted_at IS NOT NULL
-       LEFT JOIN scores s ON s.attempt_id = at.id
-       WHERE b.institution_id = $1 OR u.institution_id = $1
+       WHERE b.institution_id = $1
        GROUP BY b.id, b.name, b.batch_name`,
       [instId]
     ),
