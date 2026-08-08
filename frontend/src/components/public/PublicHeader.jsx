@@ -2,7 +2,6 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, NAV_MENUS, CONTACT } from '../../data/edvedumContent.js';
-import { WhatsAppIcon } from '../common/WhatsAppSupportButton.jsx';
 
 const MAIN_NAV = [
   { to: '/', label: 'Home', exact: true },
@@ -250,15 +249,6 @@ export default function PublicHeader({ onHeightChange }) {
             </a>
             <a href="mailto:edvedum@gmail.com" className="hidden text-white/85 hover:text-white sm:inline transition-colors">
               edvedum@gmail.com
-            </a>
-            <a
-              href={CONTACT.whatsappStudentHref}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-emerald-400 font-extrabold hover:text-emerald-300 transition-colors"
-            >
-              <WhatsAppIcon className="w-3.5 h-3.5 fill-current text-emerald-400" />
-              <span>WhatsApp: +91 91514 24445</span>
             </a>
           </div>
           <div className="flex items-center gap-2 sm:gap-3.5 shrink-0">
