@@ -10,8 +10,18 @@ if (dns.setDefaultResultOrder) {
 const { Pool } = pg;
 
 const isLocalDb =
-  (env.databaseUrl && (env.databaseUrl.includes('localhost') || env.databaseUrl.includes('127.0.0.1'))) ||
-  (!env.databaseUrl && (env.pg.host === 'localhost' || env.pg.host === '127.0.0.1'));
+  (env.databaseUrl && (
+    env.databaseUrl.includes('localhost') ||
+    env.databaseUrl.includes('127.0.0.1') ||
+    env.databaseUrl.includes('@postgres') ||
+    env.databaseUrl.includes('postgres:5432') ||
+    env.databaseUrl.includes('sslmode=disable')
+  )) ||
+  (!env.databaseUrl && (
+    env.pg.host === 'localhost' ||
+    env.pg.host === '127.0.0.1' ||
+    env.pg.host === 'postgres'
+  ));
 
 const poolConfig = env.databaseUrl
   ? {
