@@ -72,18 +72,59 @@ export default function ProfileTab({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 5 * 1024 * 1024) {
-      toast.error('Logo image size must be less than 5MB');
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error('Logo image size must be less than 10MB');
       return;
     }
 
     const reader = new FileReader();
-    reader.onloadend = () => {
-      const base64 = reader.result;
-      setFormData((prev) => ({ ...prev, logo_url: base64 }));
-      setLogoPreview(base64);
-      setLogoImgError(false);
-      toast.success('Logo uploaded. Click "Save Profile Changes" to apply.');
+    reader.onload = (event) => {
+      const rawResult = event.target?.result;
+      if (!rawResult) return;
+
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const maxDim = 500;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxDim) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          }
+        } else {
+          if (height > maxDim) {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        // Compress image to lightweight PNG/JPEG (typically ~30KB - 60KB)
+        const compressedBase64 = canvas.toDataURL(file.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.88);
+
+        setFormData((prev) => ({ ...prev, logo_url: compressedBase64 }));
+        setLogoPreview(compressedBase64);
+        setLogoImgError(false);
+        toast.success('Logo uploaded & optimized! Click "Save Profile Changes" to save.');
+      };
+
+      img.onerror = () => {
+        // Fallback to raw base64 if canvas parsing fails
+        setFormData((prev) => ({ ...prev, logo_url: rawResult }));
+        setLogoPreview(rawResult);
+        setLogoImgError(false);
+        toast.success('Logo uploaded. Click "Save Profile Changes" to save.');
+      };
+
+      img.src = rawResult;
     };
     reader.readAsDataURL(file);
   };

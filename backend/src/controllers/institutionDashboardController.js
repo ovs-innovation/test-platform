@@ -15,7 +15,7 @@ export const getInstitutionProfile = asyncHandler(async (req, res) => {
     `SELECT i.id, i.name, i.code, i.email, i.contact_person, i.contact_email, i.contact_mobile,
             i.address, i.city, i.state, i.institution_type, i.total_licenses, i.used_licenses,
             i.logo_badge,
-            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 200000 THEN '' ELSE i.logo_url END AS logo_url
+            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS logo_url
      FROM institutions i
      WHERE i.id = $1`,
     [instId]

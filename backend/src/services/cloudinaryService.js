@@ -1,19 +1,28 @@
 import { v2 as cloudinary } from 'cloudinary';
 import { env } from '../config/env.js';
 
-// Configure Cloudinary from env settings if provided
-if (env.cloudinary?.cloudName && env.cloudinary?.apiKey && env.cloudinary?.apiSecret) {
-  cloudinary.config({
-    cloud_name: env.cloudinary.cloudName,
-    api_key: env.cloudinary.apiKey,
-    api_secret: env.cloudinary.apiSecret,
-    secure: true,
-  });
-} else if (env.cloudinary?.url || process.env.CLOUDINARY_URL) {
-  cloudinary.config({
-    cloudinary_url: env.cloudinary?.url || process.env.CLOUDINARY_URL,
-    secure: true,
-  });
+function getCloudinaryInstance() {
+  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || env.cloudinary?.cloudName;
+  const apiKey = process.env.CLOUDINARY_API_KEY || env.cloudinary?.apiKey;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET || env.cloudinary?.apiSecret;
+  const cloudinaryUrl = process.env.CLOUDINARY_URL || env.cloudinary?.url;
+
+  if (cloudName && apiKey && apiSecret) {
+    cloudinary.config({
+      cloud_name: cloudName,
+      api_key: apiKey,
+      api_secret: apiSecret,
+      secure: true,
+    });
+    return true;
+  } else if (cloudinaryUrl) {
+    cloudinary.config({
+      cloudinary_url: cloudinaryUrl,
+      secure: true,
+    });
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -29,11 +38,7 @@ export const uploadImageToCloudinary = async (fileInput, customOptions = {}) => 
     throw new Error('No image file or data URI provided for upload.');
   }
 
-  // Check if Cloudinary is configured
-  const cloudName = process.env.CLOUDINARY_CLOUD_NAME || env.cloudinary?.cloudName;
-  const isConfigured = Boolean(
-    cloudName || process.env.CLOUDINARY_URL || env.cloudinary?.url
-  );
+  const isConfigured = getCloudinaryInstance();
 
   if (!isConfigured) {
     console.warn('[Cloudinary Service] Cloudinary credentials not found in env. Returning raw data/URL.');
@@ -84,8 +89,13 @@ export const processAndUploadImage = async (imageInput, folder = 'edvedum/instit
 
   // If it's a Base64 data URI, upload to Cloudinary
   if (typeof imageInput === 'string' && imageInput.startsWith('data:image/')) {
-    const res = await uploadImageToCloudinary(imageInput, { folder });
-    return res.secure_url || res.url;
+    try {
+      const res = await uploadImageToCloudinary(imageInput, { folder });
+      return res.secure_url || res.url;
+    } catch (err) {
+      console.error('[Cloudinary Upload Error]', err?.message || err);
+      return imageInput;
+    }
   }
 
   // Already a CDN or external HTTP URL

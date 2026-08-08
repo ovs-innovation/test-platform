@@ -157,7 +157,7 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     `SELECT ia.id, ia.institution_id, ia.name, ia.email, ia.password_hash, ia.is_active,
             i.name AS institution_name, i.code AS institution_code, i.email AS institution_email,
             i.password_hash AS inst_password_hash, i.raw_password AS inst_raw_password,
-            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 200000 THEN '' ELSE i.logo_url END AS logo_url,
+            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS logo_url,
             i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
             (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
             (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
@@ -174,7 +174,7 @@ export const institutionLogin = asyncHandler(async (req, res) => {
   if (!admin) {
     const instRes = await query(
       `SELECT i.id, i.name, i.code, i.email, i.password_hash, i.raw_password, i.contact_email, i.contact_person,
-              CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 200000 THEN '' ELSE i.logo_url END AS logo_url,
+              CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS logo_url,
               i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
               (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
               (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
