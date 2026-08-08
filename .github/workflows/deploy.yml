@@ -30,6 +30,7 @@ jobs:
           port: 22
           timeout: 15m
           command_timeout: 15m
+          ready_timeout: 2m
           script: |
             set -euo pipefail
 
