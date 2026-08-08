@@ -44,7 +44,6 @@ import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
 
 import CandidateDashboard from './pages/candidate/Dashboard.jsx';
-import AIETSCalendar from './pages/candidate/AIETSCalendar.jsx';
 import MyTests from './pages/candidate/MyTests.jsx';
 import MySeriesTests from './pages/candidate/MySeriesTests.jsx';
 import AietsCalendarPage from './pages/candidate/AietsCalendarPage.jsx';

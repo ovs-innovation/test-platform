@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, NAV_MENUS } from '../../data/edvedumContent.js';
@@ -11,10 +11,6 @@ const MAIN_NAV = [
   { label: 'Live Test', menuKey: 'livetest' },
   { to: '/for-schools', label: 'For Institutions' },
 ];
-
-
-
-
 
 function SocialIcon({ type }) {
   const cls = 'h-3.5 w-3.5 text-white/80 transition hover:text-white';
@@ -91,43 +87,116 @@ const DROPDOWN_STYLES = {
   },
 };
 
-export default function PublicHeader() {
+export default function PublicHeader({ onHeightChange }) {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { pathname, search } = location;
   const [menuOpen, setMenuOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(null);
-  const [isVisible, setIsVisible] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [measuredHeight, setMeasuredHeight] = useState(0);
   const navRef = useRef(null);
-  const lastScrollY = useRef(0);
+  const headerRef = useRef(null);
+  const navbarVisibleRef = useRef(true);
 
-  // Auto-hide header when scrolling down, reveal instantly when scrolling up
+  // Measure static header height once on mount & window resize
+  useLayoutEffect(() => {
+    if (!headerRef.current) return;
+
+    const updateHeight = () => {
+      if (headerRef.current) {
+        // Measure un-transformed height
+        const h = headerRef.current.offsetHeight;
+        if (h > 0) {
+          setMeasuredHeight(h);
+          if (typeof onHeightChange === 'function') {
+            onHeightChange(h);
+          }
+        }
+      }
+    };
+
+    updateHeight();
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateHeight();
+    });
+    resizeObserver.observe(headerRef.current);
+    window.addEventListener('resize', updateHeight);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updateHeight);
+    };
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY || document.documentElement.scrollTop;
+    let lastScrollY = window.scrollY;
+    let accumulatedDistance = 0;
+    let animationFrameId = null;
+
+    const updateNavbar = () => {
+      const currentScrollY = Math.max(0, window.scrollY);
+      const delta = currentScrollY - lastScrollY;
+      const h = measuredHeight || (headerRef.current ? headerRef.current.offsetHeight : 100);
 
       setIsScrolled(currentScrollY > 20);
 
-      // Always show navbar at top of page (first 80px)
-      if (currentScrollY <= 80) {
-        setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current + 2) {
-        // Scrolling down -> hide navbar
-        setIsVisible(false);
-        setOpenMenu(null);
-      } else if (currentScrollY < lastScrollY.current - 2) {
-        // Scrolling up -> reveal navbar instantly
-        setIsVisible(true);
+      if (delta > 0) {
+        accumulatedDistance += delta;
+      } else if (delta < 0) {
+        accumulatedDistance = 0;
       }
 
-      lastScrollY.current = currentScrollY <= 0 ? 0 : currentScrollY;
+      // Always keep navbar visible when within header height
+      if (currentScrollY <= h) {
+        if (!navbarVisibleRef.current) {
+          navbarVisibleRef.current = true;
+          setShowNavbar(true);
+        }
+        accumulatedDistance = 0;
+      } else if (delta < -1) {
+        // Any real upward movement immediately shows the navbar
+        if (!navbarVisibleRef.current) {
+          navbarVisibleRef.current = true;
+          setShowNavbar(true);
+        }
+        accumulatedDistance = 0;
+      } else if (
+        delta > 0 &&
+        currentScrollY > h + 20 &&
+        accumulatedDistance >= 35
+      ) {
+        // Hide navbar after scrolling past headerHeight + 20px with 35px continuous downward distance
+        if (navbarVisibleRef.current) {
+          navbarVisibleRef.current = false;
+          setShowNavbar(false);
+          setOpenMenu(null);
+        }
+        accumulatedDistance = 0;
+      }
+
+      lastScrollY = currentScrollY;
+      animationFrameId = null;
+    };
+
+    const handleScroll = () => {
+      if (animationFrameId === null) {
+        animationFrameId = requestAnimationFrame(updateNavbar);
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [measuredHeight]);
 
   // Close dropdowns on route or search query changes
   useEffect(() => {
@@ -167,13 +236,11 @@ export default function PublicHeader() {
   const showDashboardLogout = isSchoolsPage ? false : !!user;
 
   return (
-    <>
-      <header
-        className={`fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ease-in-out ${
-          isVisible ? 'translate-y-0' : '-translate-y-full'
-        } ${isScrolled ? 'shadow-lg border-b border-slate-200/80' : ''}`}
-      >
-
+    <header
+      ref={headerRef}
+      className={`fixed top-0 left-0 right-0 z-[1000] bg-white border-b border-slate-200/80 transform-gpu will-change-transform transition-transform duration-[320ms] ease-[cubic-bezier(0.22,1,0.36,1)] ${showNavbar ? 'translate-y-0' : '-translate-y-full'
+        } ${isScrolled ? 'shadow-lg' : ''}`}
+    >
       <div className="bg-[#0a1628] text-white">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3.5 sm:px-6 py-2 text-[10px] min-[360px]:text-[11px] sm:text-xs whitespace-nowrap overflow-x-hidden">
           <div className="flex items-center gap-3 shrink-0">
@@ -238,7 +305,6 @@ export default function PublicHeader() {
       </div>
 
       <div className="border-b border-slate-200/80 bg-white">
-
         <div className="mx-auto flex max-w-[1400px] items-center justify-between px-4 py-3 sm:px-6">
           <Link to="/" onClick={() => setOpenMenu(null)}>
             <EdvedumLogo />
@@ -261,12 +327,12 @@ export default function PublicHeader() {
                         setOpenMenu(open ? null : item.menuKey);
                       }}
                       className={`inline-flex items-center gap-1 text-[13px] font-semibold transition-colors cursor-pointer ${isFoundation
-                          ? open
-                            ? 'text-slate-400'
-                            : 'text-slate-500 hover:text-slate-400'
-                          : open
-                            ? 'text-[#0D6EFD]'
-                            : 'text-slate-700 hover:text-[#0D6EFD]'
+                        ? open
+                          ? 'text-slate-400'
+                          : 'text-slate-500 hover:text-slate-400'
+                        : open
+                          ? 'text-[#0D6EFD]'
+                          : 'text-slate-700 hover:text-[#0D6EFD]'
                         }`}
                     >
                       <span>{item.label}</span>
@@ -324,7 +390,7 @@ export default function PublicHeader() {
                   to={item.to}
                   onClick={() => setOpenMenu(null)}
                   className={`relative text-[13px] transition ${active
-                    ? 'font-semibold text-[#0D6EFD] after:absolute after:-bottom-[22px] after:left-0 after:h-0.5 after:w-full after:bg-[#0D6EFD]'
+                    ? 'font-semibold text-[#0D6EFD] after:absolute after:-bottom-[12px] after:left-0 after:h-0.5 after:w-full after:bg-[#0D6EFD]'
                     : 'font-medium text-slate-600 hover:text-[#0D6EFD]'
                     }`}
                 >
@@ -418,8 +484,5 @@ export default function PublicHeader() {
         )}
       </div>
     </header>
-      {/* Spacer element to preserve layout height under fixed header */}
-      <div className="h-[96px] sm:h-[104px] w-full shrink-0" aria-hidden="true" />
-    </>
   );
 }

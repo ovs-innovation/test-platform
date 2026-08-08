@@ -138,18 +138,42 @@ export const seedPlatform = async (client) => {
     ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()
   `);
 
-  // Link first published assessment to free diagnostic series if exists
-  const freeSeries = await client.query(`SELECT id FROM test_series WHERE slug = 'free-diagnostic'`);
-  const assessment = await client.query(
-    `SELECT id FROM assessments WHERE is_published = true ORDER BY id LIMIT 1`
-  );
-  if (freeSeries.rowCount && assessment.rowCount) {
-    await client.query(
-      `INSERT INTO test_series_assessments (test_series_id, assessment_id, position, label)
-       VALUES ($1, $2, 1, 'Diagnostic Mock 1')
-       ON CONFLICT DO NOTHING`,
-      [freeSeries.rows[0].id, assessment.rows[0].id]
+  // Link published assessments to free diagnostic series (JEE Main, NEET UG, NEET PG)
+  const freeDiagnosties = [
+    { slug: 'jee-main-diagnostic-free', title: 'JEE Main Full-Length Diagnostic Mock', exam: 'JEE Main', img: '/test-series/jee.svg', defaultAssId: 22 },
+    { slug: 'neet-ug-diagnostic-free', title: 'NEET UG Biology & Chemistry Diagnostic Mock', exam: 'NEET', img: '/test-series/neet.svg', defaultAssId: 12 },
+    { slug: 'neet-pg-clinical-free', title: 'NEET PG Clinical & High-Yield Diagnostic Mock', exam: 'NEET PG', img: '/test-series/neet-pg.svg', defaultAssId: 13 },
+  ];
+
+  for (const fd of freeDiagnosties) {
+    let sRes = await client.query('SELECT id FROM test_series WHERE slug = $1', [fd.slug]);
+    let tsId = sRes.rows[0]?.id;
+    if (!tsId) {
+      const ins = await client.query(
+        `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, test_count, image_url, is_active)
+         VALUES ($1, $2, $3, 0.00, 365, $4, true, 1, $5, true)
+         RETURNING id`,
+        [fd.title, fd.slug, `${fd.title} for CBT practice.`, fd.exam, fd.img]
+      );
+      tsId = ins.rows[0].id;
+    }
+    const assRes = await client.query(
+      `SELECT a.id FROM assessments a
+       WHERE a.id = $1 AND a.is_published = true
+       UNION ALL
+       SELECT a.id FROM assessments a
+       WHERE a.is_published = true AND (SELECT COUNT(*) FROM questions q WHERE q.assessment_id = a.id) > 0
+       LIMIT 1`,
+      [fd.defaultAssId]
     );
+    if (assRes.rows.length > 0) {
+      await client.query(
+        `INSERT INTO test_series_assessments (test_series_id, assessment_id, position, label)
+         VALUES ($1, $2, 1, 'Diagnostic Mock 1')
+         ON CONFLICT DO NOTHING`,
+        [tsId, assRes.rows[0].id]
+      );
+    }
   }
 
   // ID-less, Idempotent Sample Institution Seeding

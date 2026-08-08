@@ -336,6 +336,17 @@ export default function InstitutionDashboard() {
     }
   };
 
+  const handleUpdateProfile = (updatedProfileData) => {
+    setProfile((prev) => ({
+      ...prev,
+      ...updatedProfileData,
+    }));
+    try {
+      localStorage.setItem('edvedum_active_institution', JSON.stringify(updatedProfileData));
+      localStorage.setItem('edvedum_active_school', JSON.stringify(updatedProfileData));
+    } catch (_) {}
+  };
+
   const outletContext = {
     institution: profile,
     instId,
@@ -369,6 +380,7 @@ export default function InstitutionDashboard() {
     onSendReminder: handleSendReminder,
     onMarkNotificationRead: handleMarkNotificationRead,
     onMarkAllNotificationsRead: handleMarkAllNotificationsRead,
+    onUpdateProfile: handleUpdateProfile,
     onOpenAddStudent: () => setShowAddStudentModal(true),
     onOpenUploadCsv: () => setShowBulkUploadModal(true),
     onDownloadTemplate: () => {
@@ -718,6 +730,7 @@ export function InstProfileTabWrapper() {
   return (
     <ProfileTab
       institution={ctx.institution}
+      onUpdateProfile={ctx.onUpdateProfile}
       isDarkMode={ctx.isDarkMode}
     />
   );

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AuthShell from '../../components/AuthShell.jsx';
 import { PasswordInput } from '../../components/ui.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -9,6 +9,7 @@ export default function Signup() {
   const { register, sendSignupOtp } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [form, setForm] = useState({ name: '', email: '', phone: '', class: '', target_exam: '', password: '' });
   const [otp, setOtp] = useState('');
@@ -56,7 +57,11 @@ export default function Signup() {
     try {
       await register({ ...form, otp });
       toast.success('Account created and verified successfully!');
-      navigate('/free-mock', { replace: true });
+      const searchParams = new URLSearchParams(location.search);
+      const returnUrl = searchParams.get('returnUrl');
+      const fromState = typeof location.state?.from === 'string' ? location.state.from : location.state?.from?.pathname;
+      const destination = returnUrl || fromState || '/free-mock';
+      navigate(destination, { replace: true });
     } catch (err) {
       setError(err.message || 'Registration failed. Invalid or expired OTP.');
     } finally {

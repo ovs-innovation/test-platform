@@ -112,6 +112,30 @@ export default function InstitutionPortalLayout({
     setMobileDrawerOpen(false);
   }, [location.pathname]);
 
+  // Dynamic Institution state sync
+  const [currentInst, setCurrentInst] = useState(institutionData);
+
+  useEffect(() => {
+    if (institutionData) {
+      setCurrentInst(institutionData);
+    }
+  }, [institutionData]);
+
+  useEffect(() => {
+    const syncLocalInst = () => {
+      try {
+        const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          setCurrentInst((prev) => ({ ...prev, ...parsed }));
+        }
+      } catch (_) { }
+    };
+    syncLocalInst();
+    window.addEventListener('storage', syncLocalInst);
+    return () => window.removeEventListener('storage', syncLocalInst);
+  }, []);
+
   // Click outside listener to dismiss open dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -146,11 +170,10 @@ export default function InstitutionPortalLayout({
   };
 
   return (
-    <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${
-      isDarkMode
+    <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${isDarkMode
         ? 'bg-[#060D1A] text-slate-100 selection:bg-blue-500 selection:text-white'
         : 'bg-slate-50 text-slate-800 selection:bg-blue-600 selection:text-white'
-    }`}>
+      }`}>
 
       {/* MOBILE DRAWER BACKDROP */}
       {mobileDrawerOpen && (
@@ -164,40 +187,36 @@ export default function InstitutionPortalLayout({
           FIXED DESKTOP SIDEBAR & MOBILE SLIDE-OVER DRAWER
          ========================================================================= */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col transition-all duration-300 ${
-          isDarkMode
+        className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col transition-all duration-300 ${isDarkMode
             ? 'bg-[#0A1628] border-r border-slate-800/80 shadow-2xl'
             : 'bg-white border-r border-slate-200 shadow-lg'
-        } ${
-          mobileDrawerOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0'
-        } ${
-          sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'
-        }`}
+          } ${mobileDrawerOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0'
+          } ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'
+          }`}
       >
         {/* BRAND LOGO HEADER */}
-        <div className={`flex items-center ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center px-0' : 'justify-between px-5'} h-20 border-b shrink-0 ${
-          isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
-        }`}>
+        <div className={`flex items-center ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center px-0' : 'justify-between px-5'} min-h-[5.5rem] py-3.5 border-b shrink-0 ${isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
+          }`}>
           <div className={`flex items-center gap-3.5 ${sidebarCollapsed && !mobileDrawerOpen ? 'justify-center w-full' : 'overflow-hidden'}`}>
-            {institutionData?.logo_url ? (
+            {currentInst?.logo_url ? (
               <img
-                src={institutionData.logo_url}
-                alt={institutionData.name}
+                src={currentInst.logo_url}
+                alt={currentInst.name}
                 className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl object-contain bg-white p-1 shadow-md border border-slate-200/50 shrink-0"
               />
             ) : (
               <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-lg flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
-                {institutionData?.logoBadge || (institutionData?.name ? institutionData.name.substring(0, 2).toUpperCase() : 'ED')}
+                {currentInst?.logoBadge || (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'ED')}
               </div>
             )}
 
             {(!sidebarCollapsed || mobileDrawerOpen) && (
-              <div className="space-y-0.5 truncate">
-                <h2 className={`font-black text-sm sm:text-base truncate leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                  {institutionData?.name || 'Partner Institution'}
+              <div className="space-y-0.5 truncate my-auto">
+                <h2 className={`font-black text-sm sm:text-base truncate leading-normal ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  {currentInst?.name || 'Partner Institution'}
                 </h2>
-                <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-cyan-500 font-mono">
-                  ID: {institutionData?.schoolId || institutionData?.code || (institutionData?.id ? `INST-${institutionData.id}` : 'INST')}
+                <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-cyan-500 font-mono leading-none">
+                  ID: {currentInst?.schoolId || currentInst?.code || (currentInst?.id ? `INST-${currentInst.id}` : 'INST')}
                 </span>
               </div>
             )}
@@ -223,17 +242,15 @@ export default function InstitutionPortalLayout({
                 to={item.path}
                 onClick={() => setMobileDrawerOpen(false)}
                 title={sidebarCollapsed ? item.label : undefined}
-                className={`flex items-center transition-all cursor-pointer ${
-                  sidebarCollapsed && !mobileDrawerOpen
+                className={`flex items-center transition-all cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
                     ? 'h-12 w-12 mx-auto justify-center rounded-2xl'
                     : 'w-full gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm'
-                } ${
-                  isActive
+                  } ${isActive
                     ? 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25 font-black'
                     : isDarkMode
                       ? 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                }`}
+                  }`}
               >
                 <Icon className={`h-5 w-5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                 {(!sidebarCollapsed || mobileDrawerOpen) && (
@@ -248,19 +265,16 @@ export default function InstitutionPortalLayout({
         </nav>
 
         {/* SIDEBAR FOOTER */}
-        <div className={`border-t shrink-0 ${sidebarCollapsed && !mobileDrawerOpen ? 'p-2' : 'p-4'} ${
-          isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
-        }`}>
+        <div className={`border-t shrink-0 ${sidebarCollapsed && !mobileDrawerOpen ? 'p-2' : 'p-4'} ${isDarkMode ? 'border-slate-800/80 bg-[#0A1628]' : 'border-slate-200 bg-white'
+          }`}>
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            className={`hidden lg:flex items-center justify-center transition cursor-pointer ${
-              sidebarCollapsed && !mobileDrawerOpen
+            className={`hidden lg:flex items-center justify-center transition cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
                 ? 'h-11 w-11 mx-auto rounded-2xl'
                 : 'w-full gap-2 p-3 rounded-2xl text-xs font-extrabold'
-            } ${
-              isDarkMode ? 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
-            }`}
+              } ${isDarkMode ? 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
+              }`}
           >
             {sidebarCollapsed ? (
               <ChevronRight className="h-4 w-4" />
@@ -275,11 +289,10 @@ export default function InstitutionPortalLayout({
           <button
             onClick={handleLogout}
             title="Sign Out"
-            className={`flex items-center justify-center transition cursor-pointer text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 ${
-              sidebarCollapsed && !mobileDrawerOpen
+            className={`flex items-center justify-center transition cursor-pointer text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 ${sidebarCollapsed && !mobileDrawerOpen
                 ? 'h-11 w-11 mx-auto mt-2 rounded-2xl'
                 : 'mt-2 w-full gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold text-center'
-            }`}
+              }`}
           >
             <LogOut className="h-4.5 w-4.5 shrink-0 text-rose-400" />
             {(!sidebarCollapsed || mobileDrawerOpen) && (
@@ -292,33 +305,30 @@ export default function InstitutionPortalLayout({
       {/* =========================================================================
           MAIN PORTAL CANVAS (OFFSET BY SIDEBAR WIDTH ON DESKTOP)
          ========================================================================= */}
-      <div className={`flex-1 transition-all duration-300 min-h-screen ${
-        sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'
-      }`}>
-
-        {/* STICKY PORTAL TOPBAR */}
-        <header className={`sticky top-0 z-40 h-16 sm:h-20 px-3 sm:px-6 lg:px-8 border-b backdrop-blur-xl flex items-center justify-between gap-2 sm:gap-4 transition-colors ${
-          isDarkMode ? 'bg-[#060D1A]/95 border-slate-800/80 text-white' : 'bg-white/95 border-slate-200 text-slate-900 shadow-sm'
+      <div className={`flex-1 transition-all duration-300 min-h-screen ${sidebarCollapsed ? 'lg:pl-20' : 'lg:pl-64'
         }`}>
 
+        {/* STICKY PORTAL TOPBAR */}
+        <header className={`sticky top-0 z-40 min-h-[5.5rem] py-3.5 px-4 sm:px-6 lg:px-8 border-b backdrop-blur-xl flex items-center justify-between gap-3 sm:gap-4 transition-colors ${isDarkMode ? 'bg-[#060D1A]/95 border-slate-800/80 text-white' : 'bg-white/95 border-slate-200 text-slate-900 shadow-sm'
+          }`}>
+
           {/* Left: Mobile Drawer Trigger & Breadcrumbs */}
-          <div className="flex items-center gap-2 sm:gap-4 min-w-0 flex-1 sm:flex-initial">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 sm:flex-initial my-auto">
             <button
               onClick={() => setMobileDrawerOpen(true)}
-              className={`p-2 sm:p-2.5 rounded-2xl border lg:hidden cursor-pointer shrink-0 ${
-                isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-700'
-              }`}
+              className={`p-2 sm:p-2.5 rounded-2xl border lg:hidden cursor-pointer shrink-0 ${isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-700'
+                }`}
             >
               <Menu className="h-5 w-5" />
             </button>
 
-            <div className="min-w-0">
-              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-400 tracking-wider uppercase">
+            <div className="min-w-0 py-0.5">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-400 tracking-wider uppercase leading-none mb-1">
                 <span>Portal</span>
                 <span>/</span>
-                <span className="text-cyan-500 font-extrabold">{activeNavItem.label}</span>
+                <span className="text-cyan-400 font-extrabold">{activeNavItem.label}</span>
               </div>
-              <h1 className={`text-base sm:text-2xl font-black tracking-tight truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              <h1 className={`text-base sm:text-xl font-black tracking-tight truncate leading-normal ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 {activeNavItem.label}
               </h1>
             </div>
@@ -332,11 +342,10 @@ export default function InstitutionPortalLayout({
               placeholder="Search students, roll numbers, batches or tests..."
               value={searchQuery}
               onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-              className={`w-full py-2.5 pl-11 pr-16 text-xs sm:text-sm font-semibold rounded-2xl border transition-all focus:outline-none ${
-                isDarkMode
+              className={`w-full py-2.5 pl-11 pr-16 text-xs sm:text-sm font-semibold rounded-2xl border transition-all focus:outline-none ${isDarkMode
                   ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10'
                   : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 shadow-inner'
-              }`}
+                }`}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[10px] font-mono font-bold text-slate-400 pointer-events-none border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
               <span>⌘K</span>
@@ -362,9 +371,8 @@ export default function InstitutionPortalLayout({
 
               {quickActionOpen && (
                 <div
-                  className={`absolute right-0 mt-2.5 w-60 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 ${
-                    isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
-                  }`}
+                  className={`absolute right-0 mt-2.5 w-60 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in slide-in-from-top-2 ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                    }`}
                   onClick={() => setQuickActionOpen(false)}
                 >
                   <div className="px-3.5 py-2 text-[10px] font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-800/40 mb-1">
@@ -410,11 +418,10 @@ export default function InstitutionPortalLayout({
                   setProfileDropdownOpen(false);
                   setNotifDropdownOpen(!notifDropdownOpen);
                 }}
-                className={`relative h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${
-                  isDarkMode
+                className={`relative h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
                     ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
                     : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-sm'
-                }`}
+                  }`}
                 title="Notifications"
               >
                 <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -504,11 +511,10 @@ export default function InstitutionPortalLayout({
             {/* Light / Dark Mode Toggle */}
             <button
               onClick={() => setIsDarkMode && setIsDarkMode(!isDarkMode)}
-              className={`h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${
-                isDarkMode
+              className={`h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
                   ? 'border-slate-800 bg-slate-900 text-amber-400 hover:bg-slate-800'
                   : 'border-slate-200 bg-slate-100 text-indigo-600 hover:bg-slate-200 shadow-sm'
-              }`}
+                }`}
               title={isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             >
               {isDarkMode ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
@@ -522,33 +528,31 @@ export default function InstitutionPortalLayout({
                   setNotifDropdownOpen(false);
                   setProfileDropdownOpen(!profileDropdownOpen);
                 }}
-                className={`flex items-center gap-2 sm:gap-3 h-9 sm:h-11 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${
-                  isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
-                }`}
+                className={`flex items-center gap-2 sm:gap-3 h-9 sm:h-11 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
+                  }`}
               >
                 <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
-                  {institutionData?.adminName ? institutionData.adminName.substring(0, 2).toUpperCase() : 'AD'}
+                  {currentInst?.adminName ? currentInst.adminName.substring(0, 2).toUpperCase() : (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'AD')}
                 </div>
                 <div className="hidden sm:block text-left pr-1">
                   <p className={`text-xs font-black leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                    {institutionData?.adminName || 'Institution Admin'}
+                    {currentInst?.adminName || 'Institution Admin'}
                   </p>
                   <p className="text-[10px] text-slate-400 font-bold leading-tight truncate max-w-[120px]">
-                    {institutionData?.name || 'Partner Institution'}
+                    {currentInst?.name || 'Partner Institution'}
                   </p>
                 </div>
               </button>
 
               {profileDropdownOpen && (
                 <div
-                  className={`absolute right-0 mt-2.5 w-56 sm:w-60 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in space-y-1 ${
-                    isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
-                  }`}
+                  className={`absolute right-0 mt-2.5 w-56 sm:w-60 rounded-2xl border shadow-2xl p-2 z-50 animate-in fade-in space-y-1 ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                    }`}
                   onClick={() => setProfileDropdownOpen(false)}
                 >
                   <div className="px-3.5 py-2.5 border-b border-slate-800/40 mb-1">
-                    <p className="text-xs font-black text-white">{institutionData?.adminName || 'Institution Admin'}</p>
-                    <p className="text-[11px] text-slate-400 truncate mt-0.5">{institutionData?.contact_email || institutionData?.adminEmail || institutionData?.email || ''}</p>
+                    <p className="text-xs font-black text-white">{currentInst?.adminName || 'Institution Admin'}</p>
+                    <p className="text-[11px] text-slate-400 truncate mt-0.5">{currentInst?.contact_email || currentInst?.adminEmail || currentInst?.email || ''}</p>
                   </div>
                   <button
                     onClick={handleLogout}

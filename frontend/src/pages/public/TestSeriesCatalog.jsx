@@ -70,18 +70,22 @@ export default function TestSeriesCatalog() {
 
   const filtered = useMemo(() => list.filter((s) => {
     const text = `${s.exam_type || ''} ${s.title || ''}`;
-    if (filter === 'free') return Number(s.price) === 0;
-    if (filter === 'paid') return Number(s.price) > 0;
+    const isFree = Number(s.price) === 0;
+
+    if (filter === 'free') return isFree;
+    // For all other tabs (all, jee, neet, neetpg, featured), include ONLY paid series
+    if (isFree) return false;
+
     if (filter === 'jee') return /jee/i.test(text);
     if (filter === 'neet') return isNeetUg(text);
     if (filter === 'neetpg') return isNeetPg(text);
-    if (filter === 'featured') return s.is_featured;
+    if (filter === 'featured') return Boolean(s.is_featured);
     return true;
   }), [list, filter]);
 
   const filterCounts = useMemo(() => {
     const counts = {
-      all: list.length,
+      all: 0,
       free: 0,
       jee: 0,
       neet: 0,
@@ -90,11 +94,16 @@ export default function TestSeriesCatalog() {
     };
     list.forEach((s) => {
       const text = `${s.exam_type || ''} ${s.title || ''}`;
-      if (Number(s.price) === 0) counts.free++;
-      if (/jee/i.test(text)) counts.jee++;
-      if (isNeetUg(text)) counts.neet++;
-      if (isNeetPg(text)) counts.neetpg++;
-      if (s.is_featured) counts.featured++;
+      const isFree = Number(s.price) === 0;
+      if (isFree) {
+        counts.free++;
+      } else {
+        counts.all++;
+        if (/jee/i.test(text)) counts.jee++;
+        if (isNeetUg(text)) counts.neet++;
+        if (isNeetPg(text)) counts.neetpg++;
+        if (s.is_featured) counts.featured++;
+      }
     });
     return counts;
   }, [list]);

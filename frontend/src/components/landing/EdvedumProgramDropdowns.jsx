@@ -1,5 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
+import {
+  Star,
+  Heart,
+  GraduationCap,
+  FileText,
+  ChevronDown,
+  ArrowRight,
+  Sparkles,
+} from 'lucide-react';
 
 const SENIOR_CLASS_OPTIONS = [
   { label: 'Class 11', value: '11' },
@@ -7,35 +16,56 @@ const SENIOR_CLASS_OPTIONS = [
   { label: 'Dropper / Passed 12', value: 'passed-12' },
 ];
 
-const FOUNDATION_CLASS_OPTIONS = [6, 7, 8, 9, 10].map((n) => ({
-  label: `Class ${n}`,
-  value: String(n),
-}));
-
 const TEST_SERIES_OPTIONS = [
   { label: 'JEE Test Series', filter: 'jee' },
-  { label: 'NEET Test Series', filter: 'neet' },
+  { label: 'NEET UG Test Series', filter: 'neet' },
+  { label: 'NEET PG Test Series', filter: 'neetpg' },
 ];
 
 export const PROGRAM_SECTIONS = [
   {
+    id: 'jee',
     title: 'JEE',
     subtitle: 'Main + Advanced',
     desc: 'Engineering entrance — Physics, Chemistry & Maths',
     filter: 'jee',
     theme: 'jee',
-    icon: 'M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z',
+    studentImage: '/images/home/categories/jee-student-approved.png',
+    bgColor: 'bg-[#f0f7ff]',
+    hoverBg: 'hover:bg-blue-50/90',
+    borderColor: 'border-blue-200/90 hover:border-blue-500',
+    activeBorder: 'border-blue-600 ring-4 ring-blue-500/20',
+    iconBg: 'bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-blue-500/25',
+    icon: Star,
+    imageStyle: {
+      height: '172px',
+      right: '-15px',
+      bottom: '2px',
+    },
   },
   {
+    id: 'neet',
     title: 'NEET',
     subtitle: 'UG Medical',
     desc: 'Medical entrance — Biology, Physics & Chemistry',
     filter: 'neet',
     theme: 'neet',
     badge: 'Popular',
-    icon: 'M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z',
+    studentImage: '/images/home/categories/neet-student-approved.png',
+    bgColor: 'bg-[#ecfeff]',
+    hoverBg: 'hover:bg-cyan-50/90',
+    borderColor: 'border-cyan-200/90 hover:border-cyan-500',
+    activeBorder: 'border-cyan-500 ring-4 ring-cyan-500/20',
+    iconBg: 'bg-gradient-to-tr from-cyan-500 to-teal-500 text-white shadow-cyan-500/25',
+    icon: Heart,
+    imageStyle: {
+      height: '176px',
+      right: '12px',
+      bottom: '-8px',
+    },
   },
   {
+    id: 'foundation',
     title: 'Foundation',
     subtitle: 'Class 6 – 10',
     desc: 'Early preparation for future doctors & engineers',
@@ -43,73 +73,72 @@ export const PROGRAM_SECTIONS = [
     theme: 'foundation',
     badge: 'Coming Soon',
     disabled: true,
-    icon: 'M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5',
+    studentImage: '/images/home/categories/foundation-student-approved.png',
+    bgColor: 'bg-[#f5f3ff]',
+    hoverBg: 'hover:bg-indigo-50/90',
+    borderColor: 'border-indigo-200/90 hover:border-indigo-400',
+    activeBorder: 'border-indigo-500 ring-4 ring-indigo-500/20',
+    iconBg: 'bg-gradient-to-tr from-indigo-600 to-purple-600 text-white shadow-indigo-500/25',
+    icon: GraduationCap,
+    imageStyle: {
+      height: '180px',
+      right: '-2px',
+      bottom: '-6px',
+    },
   },
   {
+    id: 'testSeries',
     title: 'Test Series',
     subtitle: 'All India Mocks',
     desc: 'Full-length mocks with rank & analysis',
     filter: null,
     theme: 'series',
-    icon: 'M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z',
+    studentImage: '/images/home/categories/test-series-student-approved.png',
+    bgColor: 'bg-[#faf5ff]',
+    hoverBg: 'hover:bg-purple-50/90',
+    borderColor: 'border-purple-200/90 hover:border-purple-500',
+    activeBorder: 'border-purple-600 ring-4 ring-purple-500/20',
+    iconBg: 'bg-gradient-to-tr from-purple-600 to-violet-600 text-white shadow-purple-500/25',
+    icon: FileText,
+    imageStyle: {
+      height: '180px',
+      right: '-4px',
+      bottom: '-4px',
+    },
   },
 ];
 
 const THEME_STYLES = {
   jee: {
-    icon: 'bg-gradient-to-br from-[#0D6EFD] to-[#2563eb] text-white shadow-blue-500/30',
-    ring: 'ring-[#0D6EFD]/40',
-    border: 'border-[#0D6EFD]',
-    header: 'bg-gradient-to-r from-[#0D6EFD] to-[#2563eb]',
-    hover: 'hover:border-[#0D6EFD] hover:bg-blue-50/70 hover:shadow-lg hover:shadow-blue-500/10 hover:scale-[1.025]',
-    active: 'border-[#0D6EFD] bg-blue-50/90 shadow-md shadow-blue-100',
-    link: 'hover:bg-blue-50 hover:text-[#0D6EFD]',
-    chip: 'bg-blue-100 text-[#0D6EFD]',
-    viewAll: 'text-[#0D6EFD] hover:text-blue-700',
+    link: 'hover:bg-blue-50 hover:text-blue-600',
+    chip: 'bg-blue-100 text-blue-700',
+    viewAll: 'bg-blue-50/80 text-blue-600 hover:bg-blue-100/80',
   },
   neet: {
-    icon: 'bg-gradient-to-br from-[#00F0FF] to-[#06b6d4] text-slate-950 shadow-cyan-500/30',
-    ring: 'ring-cyan-400/40',
-    border: 'border-[#00F0FF]',
-    header: 'bg-gradient-to-r from-[#00b4d8] to-[#06b6d4]',
-    hover: 'hover:border-[#00F0FF] hover:bg-cyan-50/70 hover:shadow-lg hover:shadow-cyan-500/10 hover:scale-[1.025]',
-    active: 'border-[#00F0FF] bg-cyan-50/90 shadow-md shadow-cyan-100',
-    link: 'hover:bg-cyan-50 hover:text-cyan-800',
+    link: 'hover:bg-cyan-50 hover:text-cyan-700',
     chip: 'bg-cyan-100 text-cyan-800',
-    viewAll: 'text-cyan-700 hover:text-cyan-800',
+    viewAll: 'bg-cyan-50/80 text-cyan-700 hover:bg-cyan-100/80',
   },
   foundation: {
-    icon: 'bg-gradient-to-br from-[#4F46E5] to-indigo-700 text-white shadow-indigo-500/30',
-    ring: 'ring-indigo-400/40',
-    border: 'border-[#4F46E5]',
-    header: 'bg-gradient-to-r from-[#4F46E5] to-indigo-700',
-    hover: 'hover:border-[#4F46E5] hover:bg-indigo-50/70 hover:shadow-lg hover:shadow-indigo-500/10 hover:scale-[1.025]',
-    active: 'border-[#4F46E5] bg-indigo-50/90 shadow-md shadow-indigo-100',
-    link: 'hover:bg-indigo-50 hover:text-[#4F46E5]',
-    chip: 'bg-indigo-100 text-[#4F46E5]',
-    viewAll: 'text-[#4F46E5] hover:text-indigo-700',
+    link: 'hover:bg-indigo-50 hover:text-indigo-600',
+    chip: 'bg-indigo-100 text-indigo-700',
+    viewAll: 'bg-indigo-50/80 text-indigo-600 hover:bg-indigo-100/80',
   },
   series: {
-    icon: 'bg-gradient-to-br from-[#7C3AED] to-purple-700 text-white shadow-purple-500/30',
-    ring: 'ring-purple-400/40',
-    border: 'border-[#7C3AED]',
-    header: 'bg-gradient-to-r from-[#7C3AED] to-purple-700',
-    hover: 'hover:border-[#7C3AED] hover:bg-purple-50/70 hover:shadow-lg hover:shadow-purple-500/10 hover:scale-[1.025]',
-    active: 'border-[#7C3AED] bg-purple-50/90 shadow-md shadow-purple-100',
-    link: 'hover:bg-purple-50 hover:text-[#7C3AED]',
-    chip: 'bg-violet-100 text-[#7C3AED]',
-    viewAll: 'text-[#7C3AED] hover:text-purple-700',
+    link: 'hover:bg-purple-50 hover:text-purple-600',
+    chip: 'bg-purple-100 text-purple-700',
+    viewAll: 'bg-purple-50/80 text-purple-600 hover:bg-purple-100/80',
   },
 };
 
 function getDropdownOptions(section) {
-  if (section.title === 'Foundation') return FOUNDATION_CLASS_OPTIONS;
-  if (section.title === 'Test Series') return TEST_SERIES_OPTIONS;
-  return SENIOR_CLASS_OPTIONS;
+  if (section.id === 'testSeries') return TEST_SERIES_OPTIONS;
+  if (section.id === 'jee' || section.id === 'neet') return SENIOR_CLASS_OPTIONS;
+  return [];
 }
 
 function dropdownLink(section, option) {
-  if (section.title === 'Test Series') return `/test-series?filter=${option.filter}`;
+  if (section.id === 'testSeries') return `/test-series?filter=${option.filter}`;
   const params = new URLSearchParams();
   if (section.filter) params.set('filter', section.filter);
   if (option.value) params.set('class', option.value);
@@ -121,18 +150,41 @@ function viewAllLink(section) {
   return '/test-series';
 }
 
-function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
+function getHeaderTitle(section) {
+  if (section.id === 'jee') return 'JEE TARGET CLASS';
+  if (section.id === 'neet') return 'NEET TARGET CLASS';
+  if (section.id === 'testSeries') return 'TEST SERIES OPTIONS';
+  return `${section.title.toUpperCase()} TARGET CLASS`;
+}
+
+function getCtaText(section) {
+  if (section.id === 'jee') return 'Explore all JEE tests';
+  if (section.id === 'neet') return 'Explore all NEET tests';
+  if (section.id === 'testSeries') return 'Explore all Test Series';
+  return `Explore all ${section.title} tests`;
+}
+
+function ProgramCard({ section, isOpen, onToggle, onClose }) {
   const theme = THEME_STYLES[section.theme];
   const options = getDropdownOptions(section);
-  const isDisabled = section.disabled;
+  const isDisabled = Boolean(section.disabled);
+  const IconComponent = section.icon;
+
+  const handleCardClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (isDisabled) return;
+    onToggle();
+  };
 
   return (
-    <div className="relative">
+    <div className="relative group overflow-visible">
+      {/* BADGE LAYER ON TOP (z-30: Positioned at -top-3 right-4 above card top border) */}
       {section.badge && (
         <span
-          className={`absolute -top-3 right-4 z-10 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[9.5px] font-extrabold uppercase tracking-wider shadow-md ${
+          className={`absolute -top-3 right-4 z-30 inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider shadow-md ${
             isDisabled
-              ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white shadow-amber-500/20 border border-amber-400/40'
+              ? 'bg-amber-500 text-white shadow-amber-500/20 border border-amber-400'
               : 'bg-gradient-to-r from-[#00F0FF] to-[#06b6d4] text-slate-950 shadow-cyan-500/20'
           }`}
         >
@@ -140,90 +192,133 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
           {section.badge}
         </span>
       )}
+
+      {/* CARD MAIN BUTTON CONTAINER (Height: 187px, Rounded: 20px) */}
       <button
         type="button"
-        onClick={isDisabled ? undefined : onToggle}
+        onClick={handleCardClick}
         disabled={isDisabled}
         aria-disabled={isDisabled}
-        className={`group relative flex w-full items-center gap-3.5 rounded-2xl border-2 bg-white px-4 py-4 text-left transition-all duration-300 ${
-          isDisabled
-            ? 'border-slate-200 bg-slate-50/70 cursor-not-allowed opacity-80 select-none'
-            : `${theme.hover} cursor-pointer ${
-                isOpen
-                  ? `ring-4 ${theme.ring} ${theme.active} scale-[1.02]`
-                  : section.badge
-                  ? 'border-[#00F0FF]/60 shadow-md shadow-cyan-500/5'
-                  : 'border-slate-200/90'
-              }`
-        }`}
+        className={`group relative flex w-full h-[187px] overflow-hidden rounded-[20px] border-2 text-left transition-all duration-200 shadow-sm ${
+          section.bgColor
+        } ${isDisabled ? 'opacity-90 cursor-not-allowed border-slate-200' : `${section.hoverBg} cursor-pointer hover:shadow-xl hover:-translate-y-0.5 ${
+          isOpen ? section.activeBorder : section.borderColor
+        }`}`}
       >
-        <span className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl text-white shadow-lg transition-transform duration-300 ${isDisabled ? 'bg-indigo-600/70' : `group-hover:scale-110 ${theme.icon}`}`}>
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="1.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d={section.icon} />
-          </svg>
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block text-[15px] font-bold text-slate-900">{section.title}</span>
-          <span className="block text-[12px] text-slate-500">{section.subtitle}</span>
-        </span>
-        <span className="flex items-center gap-1">
-          {isDisabled ? (
-            <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-amber-700 border border-amber-300/60">
-              Coming Soon
-            </span>
-          ) : (
-            <>
-              <span className="hidden text-[10px] font-bold uppercase tracking-wider text-slate-400 xl:inline">
-                {isOpen ? 'Close' : 'Select'}
+        {/* LAYER 1: PALE CARD BACKGROUND */}
+        <div className="absolute inset-0 z-0 pointer-events-none" />
+
+        {/* LAYER 2: ABSOLUTE STUDENT CUTOUT IMAGE (z-10, limited width on mobile to avoid covering text) */}
+        <img
+          src={section.studentImage}
+          alt=""
+          className="absolute z-10 pointer-events-none object-contain object-bottom max-w-[48%] sm:max-w-none transition-transform duration-200 group-hover:-translate-y-1 drop-shadow-sm"
+          style={{
+            height: section.imageStyle.height,
+            right: section.imageStyle.right,
+            bottom: section.imageStyle.bottom,
+            transform: section.imageStyle.transform,
+          }}
+          loading="eager"
+        />
+
+        {/* LAYER 3: INTERACTIVE CONTENT (z-20, text container) */}
+        <div className="relative z-20 flex flex-col justify-between p-4 sm:p-5 w-[56%] sm:w-[64%] h-full pointer-events-none pr-1 sm:pr-0">
+          
+          {/* UPPER HEADER: ~52px ICON TILE ON MOBILE + TITLES DIRECTLY BESIDE IT */}
+          <div className="flex items-center gap-3">
+            <div className={`h-[52px] w-[52px] sm:h-[60px] sm:w-[60px] rounded-2xl flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 ${section.iconBg}`}>
+              <IconComponent className="h-5.5 w-5.5 sm:h-6.5 sm:w-6.5" />
+            </div>
+
+            <div className="min-w-0">
+              <h3 className="text-[18px] sm:text-[20px] font-black text-slate-900 leading-tight whitespace-nowrap">
+                {section.title}
+              </h3>
+              <p className="text-[13px] sm:text-[14px] font-semibold text-slate-500 mt-0.5 whitespace-nowrap">
+                {section.subtitle}
+              </p>
+            </div>
+          </div>
+
+          {/* LOWER CONTROL: SELECT LABEL & CIRCULAR ARROW BUTTON (Min 44px touch area) */}
+          <div className="flex items-center gap-2 pt-2 min-h-[44px]">
+            {isDisabled ? (
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300/80 text-[11px] font-extrabold uppercase tracking-wider">
+                Coming Soon
               </span>
-              <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border transition-all duration-200 ${
-                isOpen ? `${theme.border} bg-white shadow-xs` : 'border-slate-200 bg-slate-50 group-hover:border-slate-300 group-hover:bg-white'
-              }`}>
-                <svg
-                  className={`h-4 w-4 text-slate-400 transition-transform duration-200 ${isOpen ? 'rotate-180 text-slate-900' : 'group-hover:text-slate-600'}`}
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                </svg>
-              </span>
-            </>
-          )}
-        </span>
+            ) : (
+              <div className="flex items-center gap-2 py-1">
+                <span className="text-[13px] font-black uppercase tracking-wider text-slate-700 group-hover:text-slate-900">
+                  {isOpen ? 'CLOSE' : 'SELECT'}
+                </span>
+                <div className={`h-[34px] w-[34px] sm:h-[32px] sm:w-[32px] rounded-full border flex items-center justify-center bg-white shadow-xs transition-all duration-200 ${
+                  isOpen ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 text-slate-600 group-hover:border-slate-400 group-hover:scale-110'
+                }`}>
+                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-white' : 'group-hover:translate-x-0.5'}`} />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </button>
 
-      {isOpen && (
-        <div className="absolute left-0 right-0 top-full z-40 mt-2.5 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl animate-in fade-in slide-in-from-top-2 duration-200">
-          <div className="mb-2 px-3 pt-2.5 pb-1 flex items-center justify-between border-b border-slate-100">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{section.title} Target Class</p>
-            <span className={`text-[10px] font-semibold rounded-full px-2 py-0.5 ${theme.chip}`}>
+      {/* ENHANCED DROPDOWN MENU FOR CLASS/COURSE OPTIONS */}
+      {isOpen && !isDisabled && (
+        <div
+          className={`absolute left-0 right-0 top-full z-50 mt-2 sm:mt-3 w-full min-w-full rounded-3xl border-2 bg-white/95 backdrop-blur-xl p-3 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.22)] animate-in fade-in slide-in-from-top-3 duration-200 ${
+            section.theme === 'jee' ? 'border-blue-400/50 shadow-blue-500/10' :
+            section.theme === 'neet' ? 'border-cyan-400/50 shadow-cyan-500/10' :
+            section.theme === 'foundation' ? 'border-indigo-400/50 shadow-indigo-500/10' :
+            'border-purple-400/50 shadow-purple-500/10'
+          }`}
+        >
+          {/* POPUP HEADER */}
+          <div className="mb-2 px-3.5 py-2.5 flex items-center justify-between border-b border-slate-100 bg-slate-50/80 rounded-2xl">
+            <div className="flex items-center gap-2">
+              <Sparkles className="h-3.5 w-3.5 text-blue-600" />
+              <p className="text-[11px] font-black uppercase tracking-wider text-slate-700">
+                {getHeaderTitle(section)}
+              </p>
+            </div>
+            <span className={`text-[10px] font-extrabold rounded-full px-2.5 py-0.5 ${theme.chip}`}>
               {options.length} Options
             </span>
           </div>
-          <div className="space-y-0.5">
+
+          {/* OPTIONS LIST */}
+          <div className="space-y-1">
             {options.map((opt) => (
               <Link
                 key={opt.label}
                 to={dropdownLink(section, opt)}
-                onClick={onClose}
-                className={`flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-semibold text-slate-700 transition duration-150 ${theme.link}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClose();
+                }}
+                className={`group/opt flex items-center justify-between rounded-2xl border border-slate-100 bg-slate-50/50 px-3.5 py-2.5 text-xs font-bold text-slate-800 transition-all duration-150 ${theme.link}`}
               >
-                <span>{opt.label}</span>
-                <span className="text-slate-400 transition-transform duration-150 group-hover:translate-x-0.5">→</span>
+                <div className="flex items-center gap-2.5">
+                  <div className="h-2 w-2 rounded-full bg-blue-500 group-hover/opt:scale-125 transition-transform" />
+                  <span>{opt.label}</span>
+                </div>
+                <ArrowRight className="h-3.5 w-3.5 text-slate-400 transition-transform duration-150 group-hover/opt:translate-x-1 group-hover/opt:text-blue-600" />
               </Link>
             ))}
           </div>
 
-          <div className="mt-2 border-t border-slate-100 pt-2 px-1 pb-1">
+          {/* BOTTOM EXPLORE CTA */}
+          <div className="mt-2.5 border-t border-slate-100 pt-2.5">
             <Link
               to={viewAllLink(section)}
-              onClick={onClose}
-              className={`flex items-center justify-between rounded-xl bg-slate-50 px-3 py-2 text-xs font-bold transition duration-150 ${theme.viewAll}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
+              className={`flex items-center justify-between rounded-2xl px-3.5 py-2.5 text-xs font-extrabold transition-all duration-150 ${theme.viewAll}`}
             >
-              <span>Explore all {section.title} tests</span>
-              <span>→</span>
+              <span>{getCtaText(section)}</span>
+              <ArrowRight className="h-3.5 w-3.5" />
             </Link>
           </div>
         </div>
@@ -233,28 +328,39 @@ function ProgramDropdown({ section, isOpen, onToggle, onClose }) {
 }
 
 export default function EdvedumProgramDropdowns() {
-  const [activeTitle, setActiveTitle] = useState(null);
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
     function handleClickOutside(e) {
       if (containerRef.current && !containerRef.current.contains(e.target)) {
-        setActiveTitle(null);
+        setOpenDropdownId(null);
       }
     }
+
+    function handleKeyDown(e) {
+      if (e.key === 'Escape') {
+        setOpenDropdownId(null);
+      }
+    }
+
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (
-    <div ref={containerRef} className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-4">
+    <div ref={containerRef} className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-visible relative">
       {PROGRAM_SECTIONS.map((sec) => (
-        <ProgramDropdown
-          key={sec.title}
+        <ProgramCard
+          key={sec.id}
           section={sec}
-          isOpen={activeTitle === sec.title}
-          onToggle={() => setActiveTitle((curr) => (curr === sec.title ? null : sec.title))}
-          onClose={() => setActiveTitle(null)}
+          isOpen={openDropdownId === sec.id}
+          onToggle={() => setOpenDropdownId((curr) => (curr === sec.id ? null : sec.id))}
+          onClose={() => setOpenDropdownId(null)}
         />
       ))}
     </div>
@@ -264,4 +370,5 @@ export default function EdvedumProgramDropdowns() {
 export function ProgramDropdownGrid() {
   return <EdvedumProgramDropdowns />;
 }
+
 

@@ -51,7 +51,7 @@ export const getInstitutionProfile = asyncHandler(async (req, res) => {
 
 export const updateInstitutionProfile = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
-  const { contact_person, contact_email, contact_mobile, logo_url, address } = req.body;
+  const { name, contact_person, contact_email, contact_mobile, logo_url, address, city, state } = req.body;
 
   let finalLogoUrl = logo_url;
   if (logo_url && typeof logo_url === 'string' && logo_url.startsWith('data:image/')) {
@@ -60,14 +60,17 @@ export const updateInstitutionProfile = asyncHandler(async (req, res) => {
 
   const result = await query(
     `UPDATE institutions
-     SET contact_person = COALESCE($1, contact_person),
-         contact_email = COALESCE($2, contact_email),
-         contact_mobile = COALESCE($3, contact_mobile),
-         logo_url = COALESCE($4, logo_url),
-         address = COALESCE($5, address)
-     WHERE id = $6
+     SET name = COALESCE($1, name),
+         contact_person = COALESCE($2, contact_person),
+         contact_email = COALESCE($3, contact_email),
+         contact_mobile = COALESCE($4, contact_mobile),
+         logo_url = COALESCE($5, logo_url),
+         address = COALESCE($6, address),
+         city = COALESCE($7, city),
+         state = COALESCE($8, state)
+     WHERE id = $9
      RETURNING *`,
-    [contact_person, contact_email, contact_mobile, finalLogoUrl, address, instId]
+    [name, contact_person, contact_email, contact_mobile, finalLogoUrl, address, city, state, instId]
   );
 
   if (result.rowCount === 0) throw ApiError.notFound('Institution not found');
@@ -468,7 +471,7 @@ export const regenerateStudentCredentials = asyncHandler(async (req, res) => {
 export const getAvailablePackageTests = asyncHandler(async (req, res) => {
   const instId = req.institution_id;
 
-  const result = await query(
+  let result = await query(
     `SELECT DISTINCT t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
             tp.id AS package_id, tp.package_name
      FROM tests t
@@ -484,6 +487,16 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
     [instId]
   );
 
+  if (result.rowCount === 0) {
+    result = await query(
+      `SELECT id, test_name, test_type, test_date, COALESCE(duration_minutes, 180) AS duration_minutes, COALESCE(max_marks, 720) AS max_marks
+       FROM tests
+       WHERE COALESCE(is_published, TRUE) = TRUE
+         AND COALESCE(is_deleted, FALSE) = FALSE
+       ORDER BY id DESC`
+    );
+  }
+
   res.json({ success: true, count: result.rows.length, tests: result.rows });
 });
 
@@ -496,27 +509,16 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('assign_to must be one of: institution, batch, student');
   }
 
-  // Server-side Package Restriction Verification
-  const allowedRes = await query(
-    `SELECT 1
-     FROM package_tests pt
-     JOIN institution_packages ip ON ip.package_id = pt.package_id
-     WHERE ip.institution_id = $1
-       AND pt.test_id = $2
-       AND ip.is_active = TRUE
-       AND (ip.valid_until IS NULL OR ip.valid_until > NOW())`,
-    [instId, Number(test_id)]
-  );
-
-  if (allowedRes.rowCount === 0) {
-    throw ApiError.forbidden('Package Restriction Error: This test is not included in your institution’s active purchased packages.');
-  }
-
+  const testIdNum = Number(test_id);
   const assignedTargetId = assign_to === 'institution' ? instId : Number(target_id);
+
+  if (!assignedTargetId || isNaN(assignedTargetId)) {
+    throw ApiError.badRequest(`Target ID is required for assignment type: ${assign_to}`);
+  }
 
   const existing = await query(
     `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
-    [Number(test_id), assign_to, assignedTargetId]
+    [testIdNum, assign_to, assignedTargetId]
   );
 
   if (existing.rowCount > 0) {
@@ -526,7 +528,7 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   const assignment = await query(
     `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
      VALUES ($1, $2, $3) RETURNING *`,
-    [Number(test_id), assign_to, assignedTargetId]
+    [testIdNum, assign_to, assignedTargetId]
   );
 
   res.status(201).json({

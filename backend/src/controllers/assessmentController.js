@@ -209,7 +209,24 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
   );
 
   if (!invite.rowCount && !enr.rowCount && !assign.rowCount) {
-    throw ApiError.forbidden('You do not have access to this assessment');
+    const freeCheck = await query(
+      `SELECT ts.id FROM test_series ts
+       LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+       LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+       WHERE (tsa.assessment_id = $1 OR tst.test_id = $1)
+         AND (ts.price = 0 OR ts.slug LIKE '%free%') AND ts.is_active = true`,
+      [id]
+    );
+    if (freeCheck.rowCount > 0) {
+      await query(
+        `INSERT INTO student_enrollments (user_id, test_series_id, status, expires_at)
+         VALUES ($1, $2, 'active', NOW() + INTERVAL '365 days')
+         ON CONFLICT (user_id, test_series_id) DO NOTHING`,
+        [req.user.id, freeCheck.rows[0].id]
+      );
+    } else {
+      throw ApiError.forbidden('You do not have access to this assessment');
+    }
   }
 
   let series_slug = null;

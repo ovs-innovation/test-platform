@@ -118,7 +118,12 @@ export default function TestSeriesDetail() {
 
       if (order.free || order.mock) {
         toast.success(order.message || 'Enrolled successfully!');
-        navigate('/my-tests');
+        const firstTestId = series.tests && series.tests.length > 0 ? series.tests[0].id : null;
+        if (firstTestId) {
+          navigate(`/assessments/${firstTestId}/instructions`);
+        } else {
+          navigate('/my-tests');
+        }
         return;
       }
 

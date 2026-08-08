@@ -38,7 +38,7 @@ const THEMES = {
     accentText: 'text-[#0D6EFD]',
     chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
     btnGradient: 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8] text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40',
-    tags: ['PCM Mocks', 'NTA Interface', 'AIR Rank'],
+    tags: ['Physics, Chem & Maths', 'NTA CBT Interface', 'AIR Rank'],
   },
   neet: {
     categoryKey: 'neet',
@@ -52,7 +52,7 @@ const THEMES = {
     accentText: 'text-[#0891b2]',
     chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
     btnGradient: 'bg-gradient-to-r from-[#06b6d4] via-[#0891b2] to-[#0e7490] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/40',
-    tags: ['Biology & Physics', 'NCERT Mocks', 'Step Keys'],
+    tags: ['Physics, Chem & Bio', 'NCERT Mocks', 'Step Keys'],
   },
   'neet-pg': {
     categoryKey: 'neet-pg',
@@ -66,7 +66,7 @@ const THEMES = {
     accentText: 'text-[#7C3AED]',
     chipBg: 'bg-purple-50 text-[#7C3AED] border border-purple-200/60',
     btnGradient: 'bg-gradient-to-r from-[#7C3AED] via-[#6d28d9] to-[#5b21b6] text-white shadow-lg shadow-purple-500/25 hover:shadow-xl hover:shadow-purple-500/40',
-    tags: ['Clinical Mocks', 'High-Yield Notes', 'Analytics'],
+    tags: ['19 Medical Subjects', 'Clinical Vignettes', 'Grand Mocks'],
   },
   foundation: {
     categoryKey: 'foundation',
@@ -112,10 +112,23 @@ const THEMES = {
   },
 };
 
-/** Map specific series to one of the 9 tailored hero banner images. */
 export function getSeriesBannerImage(series) {
+  const slug = (series?.slug || '').toLowerCase();
   const text = `${series?.slug || ''} ${series?.title || ''} ${series?.exam_type || ''}`.toLowerCase();
   const free = Number(series?.price) === 0;
+
+  // Specific Slug Mappings for Maximum Visual Diversity (Boys & Girls)
+  if (slug === 'aiets-jee-main-2027-comprehensive') return '/edvedum/banners/banner-jee-full.png';
+  if (slug === 'aiets-jee-main-2028-two-year') return '/edvedum/banners/banner-jee-female.png';
+  if (slug === 'aiets-jee-main-mock-pack') return '/edvedum/banners/banner-jee-male2.png';
+
+  if (slug === 'neet-ug-2027-aiets-comprehensive-test-series') return '/edvedum/banners/banner-neet-mock.png';
+  if (slug === 'aiets-neet-ug-2028-two-year-online-cbt-program') return '/edvedum/banners/banner-neet-male.png';
+  if (slug === 'neet-ug-mock') return '/edvedum/banners/banner-neet-bio.png';
+
+  if (slug === 'aiets-neet-pg-2027-comprehensive') return '/edvedum/banners/banner-neet-pg.png';
+  if (slug === 'aiets-neet-pg-complete-program') return '/edvedum/banners/banner-neetpg-female.png';
+  if (slug === 'neet-pg-mock') return '/edvedum/banners/banner-neet-pg.png';
 
   if (text.includes('physics')) return '/edvedum/banners/banner-jee-physics.png';
   if (text.includes('biology') || text.includes('chemistry') || text.includes('ncert')) return '/edvedum/banners/banner-neet-bio.png';

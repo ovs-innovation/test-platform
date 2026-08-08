@@ -37,7 +37,7 @@ const PARTICLES = Array.from({ length: 22 }, (_, i) => ({
 export default function EdvedumHero() {
   return (
     <section
-      className="relative overflow-hidden text-white selection:bg-cyan-500 selection:text-slate-900 min-h-0 lg:min-h-[690px] pb-8 sm:pb-10 lg:pb-24"
+      className="relative overflow-hidden text-white selection:bg-cyan-500 selection:text-slate-900 min-h-0 lg:min-h-[690px] pb-8 sm:pb-10 lg:pb-24 border-t border-transparent m-0"
       style={{
         background: `
           radial-gradient(circle at 75% 45%, rgba(6, 182, 212, 0.14), transparent 38%),
@@ -52,7 +52,7 @@ export default function EdvedumHero() {
       <div
         className="hidden md:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none z-[1]"
         style={{
-          backgroundImage: "url('/edvedum/fullwidth-hero-bg.png?v=12')",
+          backgroundImage: "url('/edvedum/opt.png')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
           filter: 'drop-shadow(0 20px 35px rgba(2,11,24,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.14))',
@@ -214,7 +214,7 @@ export default function EdvedumHero() {
           >
             <div className="relative w-full aspect-[1/1] overflow-hidden">
               <img
-                src="/edvedum/fullwidth-hero-bg.png?v=12"
+                src="/edvedum/opt.png"
                 alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
                 className="w-full h-full object-contain mx-auto"
               />

@@ -60,6 +60,7 @@ export default function FreeMock() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [series, setSeries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const examId = EXAM_NAV_ITEMS.some((e) => e.id === searchParams.get('exam'))
     ? searchParams.get('exam')
@@ -68,12 +69,18 @@ export default function FreeMock() {
   const activeExam = EXAM_NAV_ITEMS.find((e) => e.id === examId) || EXAM_NAV_ITEMS[0];
   const theme = EXAM_THEMES[examId] || EXAM_THEMES.jee;
 
-  useEffect(() => {
+  const fetchSeries = () => {
+    setLoading(true);
+    setError(false);
     publicService
       .testSeries()
       .then((d) => setSeries(d.test_series || []))
-      .catch(() => setSeries([]))
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchSeries();
   }, []);
 
   const freeForExam = useMemo(() => {
@@ -242,9 +249,21 @@ export default function FreeMock() {
 
             {loading ? (
               <Skeleton className="h-72 w-full rounded-2xl" />
+            ) : error ? (
+              <div className="rounded-2xl border border-red-200 bg-red-50/50 p-6 text-center shadow-xs">
+                <p className="font-extrabold text-red-900">Failed to load {activeExam.label} free tests</p>
+                <p className="mt-1 text-xs text-red-600">Temporary network error. Please try again.</p>
+                <button
+                  type="button"
+                  onClick={fetchSeries}
+                  className="mt-4 rounded-full bg-red-600 px-5 py-2 text-xs font-bold text-white hover:bg-red-700 cursor-pointer"
+                >
+                  Retry Loading
+                </button>
+              </div>
             ) : freeForExam.length > 0 ? (
               <div className="flex flex-col gap-4">
-                {freeForExam.slice(0, 1).map((s) => (
+                {freeForExam.map((s) => (
                   <TestSeriesCard key={s.id} series={s} />
                 ))}
               </div>
@@ -254,15 +273,12 @@ export default function FreeMock() {
                   <span className="text-base font-extrabold">✦</span>
                 </div>
                 <p className="font-extrabold text-slate-900">No free {activeExam.label} mock series currently available</p>
-                <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">Try our general free diagnostic mock or explore paid series.</p>
+                <p className="mt-1.5 text-xs text-slate-500 leading-relaxed">Explore full-length paid test series for complete practice.</p>
                 <div className="mt-5 flex flex-col gap-2.5">
                   <Link
-                    to="/test-series/free-diagnostic"
+                    to={activeExam.catalogTo}
                     className={`rounded-full px-5 py-2.5 text-xs font-bold transition-all duration-200 ${theme.emptyBtn}`}
                   >
-                    Try Free Diagnostic Mock
-                  </Link>
-                  <Link to={activeExam.catalogTo} className={`mt-1 text-xs font-bold ${theme.accentText} hover:underline`}>
                     Browse {activeExam.label} Test Series →
                   </Link>
                 </div>

@@ -20,6 +20,7 @@ import { institutionDashboardService } from '../../../lib/services.js';
 
 export default function ProfileTab({
   institution = null,
+  onUpdateProfile,
   isDarkMode = true,
 }) {
   const toast = useToast();
@@ -29,15 +30,15 @@ export default function ProfileTab({
     contact_person: institution?.contact_person || '',
     contact_email: institution?.contact_email || institution?.email || '',
     contact_mobile: institution?.contact_mobile || '',
+    logo_url: institution?.logo_url || '',
+    address: institution?.address || '',
     city: institution?.city || '',
     state: institution?.state || '',
-    address: institution?.address || '',
-    logo_url: institution?.logo_url || '',
   });
 
-  const [logoPreview, setLogoPreview] = useState(formData.logo_url);
-  const [logoImgError, setLogoImgError] = useState(false);
+  const [logoPreview, setLogoPreview] = useState(institution?.logo_url || '');
   const [saving, setSaving] = useState(false);
+  const [logoImgError, setLogoImgError] = useState(false);
 
   useEffect(() => {
     if (institution) {
@@ -46,18 +47,24 @@ export default function ProfileTab({
         contact_person: institution.contact_person || '',
         contact_email: institution.contact_email || institution.email || '',
         contact_mobile: institution.contact_mobile || '',
+        logo_url: institution.logo_url || '',
+        address: institution.address || '',
         city: institution.city || '',
         state: institution.state || '',
-        address: institution.address || '',
-        logo_url: institution.logo_url || '',
       });
       setLogoPreview(institution.logo_url || '');
     }
   }, [institution]);
 
-  const handleLogoUrlChange = (url) => {
-    setFormData((prev) => ({ ...prev, logo_url: url }));
-    setLogoPreview(url);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleLogoUrlChange = (e) => {
+    const val = e.target.value;
+    setFormData((prev) => ({ ...prev, logo_url: val }));
+    setLogoPreview(val);
     setLogoImgError(false);
   };
 
@@ -66,17 +73,17 @@ export default function ProfileTab({
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Logo image file size must be less than 5MB.');
+      toast.error('Logo image size must be less than 5MB');
       return;
     }
 
     const reader = new FileReader();
-    reader.onload = () => {
-      const dataUrl = reader.result;
-      setFormData((prev) => ({ ...prev, logo_url: dataUrl }));
-      setLogoPreview(dataUrl);
+    reader.onloadend = () => {
+      const base64 = reader.result;
+      setFormData((prev) => ({ ...prev, logo_url: base64 }));
+      setLogoPreview(base64);
       setLogoImgError(false);
-      toast.success('Logo image uploaded! Click "Save Profile Changes" below to apply.');
+      toast.success('Logo uploaded. Click "Save Profile Changes" to apply.');
     };
     reader.readAsDataURL(file);
   };
@@ -93,14 +100,19 @@ export default function ProfileTab({
     setSaving(true);
     try {
       const instId = institution?.id || 1;
-      await institutionDashboardService.updateProfile(instId, formData).catch(() => null);
+      const res = await institutionDashboardService.updateProfile(instId, formData).catch(() => null);
 
       const updatedInst = {
         ...institution,
         ...formData,
+        ...(res?.profile || {}),
       };
       localStorage.setItem('edvedum_active_institution', JSON.stringify(updatedInst));
       localStorage.setItem('edvedum_active_school', JSON.stringify(updatedInst));
+
+      if (onUpdateProfile) {
+        onUpdateProfile(updatedInst);
+      }
 
       // Dispatch storage event so topbar and sidebar logo update immediately
       window.dispatchEvent(new Event('storage'));

@@ -29,11 +29,21 @@ export default function StudentLogin() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const getDestination = (role) => {
+    const searchParams = new URLSearchParams(location.search);
+    const returnUrl = searchParams.get('returnUrl');
+    const fromState = typeof location.state?.from === 'string' ? location.state.from : location.state?.from?.pathname;
+    const target = returnUrl || fromState;
+    if (target && !target.includes('/login') && !target.includes('/signup')) {
+      return target;
+    }
+    return getDashboardRoute ? getDashboardRoute(role) : '/dashboard';
+  };
+
   // Auto-redirect if student is already authenticated
   useEffect(() => {
     if (!authLoading && user) {
-      const destination = location.state?.from?.pathname || (getDashboardRoute ? getDashboardRoute(user.role) : '/dashboard');
-      navigate(destination, { replace: true });
+      navigate(getDestination(user.role), { replace: true });
     }
   }, [user, authLoading, navigate, location, getDashboardRoute]);
 
@@ -71,8 +81,7 @@ export default function StudentLogin() {
         enrollmentId: enrollmentId.trim(),
       });
       toast.success('Institutional Access Granted!');
-      const destination = location.state?.from?.pathname || (getDashboardRoute ? getDashboardRoute(u?.role) : '/dashboard');
-      navigate(destination, { replace: true });
+      navigate(getDestination(u?.role), { replace: true });
     } catch (err) {
       setError(err.message || 'Institutional login failed. Check Institute Code or Enrollment ID.');
     } finally {
@@ -124,8 +133,7 @@ export default function StudentLogin() {
         u = await studentLogin({ mobile: cleanPhone, phone: cleanPhone, otp: otpCode.trim() });
       }
       toast.success('Mobile verification successful!');
-      const destination = location.state?.from?.pathname || (getDashboardRoute ? getDashboardRoute(u?.role) : '/dashboard');
-      navigate(destination, { replace: true });
+      navigate(getDestination(u?.role), { replace: true });
     } catch (err) {
       setError(err.message || 'Invalid OTP code. Please try again.');
     } finally {
@@ -145,8 +153,7 @@ export default function StudentLogin() {
     try {
       const u = await studentLogin({ email: email.trim(), password: password.trim() });
       toast.success('Welcome back!');
-      const destination = location.state?.from?.pathname || (getDashboardRoute ? getDashboardRoute(u?.role) : '/dashboard');
-      navigate(destination, { replace: true });
+      navigate(getDestination(u?.role), { replace: true });
     } catch (err) {
       setError(err.message || 'Email login failed. Check email and password.');
     } finally {
