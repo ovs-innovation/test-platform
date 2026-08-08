@@ -20,7 +20,10 @@ export const CONTACT = {
   founderEmail: 'sumit@edvedum.com',
   phone: '1800-EDVEDUM (3383386)',
   phoneHref: 'tel:18003383386',
-  whatsapp: '+91',
+  whatsappNumber: '+91 9876543210',
+  whatsappHref: 'https://wa.me/919876543210',
+  whatsappStudentHref: 'https://wa.me/919876543210?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20a%20student%20and%20need%20assistance.',
+  whatsappInstituteHref: 'https://wa.me/919876543210?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20an%20institution%20administrator%20and%20need%20assistance.',
 };
 
 export const INTRO = {

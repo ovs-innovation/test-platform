@@ -3,6 +3,7 @@ import { NavLink, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
+import WhatsAppSupportButton from './common/WhatsAppSupportButton.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService, adminService } from '../lib/services.js';
 import { Spinner } from './ui.jsx';
@@ -459,6 +460,9 @@ export default function Layout({ children }) {
 
             {/* Theme Toggle Component */}
             <ThemeToggle />
+
+            {/* WhatsApp Contact Support Button */}
+            <WhatsAppSupportButton type="student" label="WhatsApp" className="h-9 px-3 py-1.5" />
 
             {/* User Profile Dropdown */}
             <div className="relative" ref={profileRef}>

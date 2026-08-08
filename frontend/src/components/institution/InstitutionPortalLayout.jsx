@@ -31,6 +31,7 @@ import {
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { tokenStore } from '../../lib/api.js';
+import WhatsAppSupportButton from '../common/WhatsAppSupportButton.jsx';
 
 export const INSTITUTION_NAV_ITEMS = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard, path: '/institution/dashboard' },
@@ -355,6 +356,9 @@ export default function InstitutionPortalLayout({
           {/* Right Toolbar Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
 
+            {/* WhatsApp Support for Admin & Customer Care */}
+            <WhatsAppSupportButton type="institute" label="WhatsApp Support" className="px-3 py-2 sm:px-3.5 sm:py-2.5 shadow-lg shadow-emerald-600/20" />
+
             {/* Quick Actions Dropdown */}
             <div className="relative" ref={quickActionRef}>
               <button
@@ -573,6 +577,9 @@ export default function InstitutionPortalLayout({
           {children || <Outlet context={outletContext} />}
         </main>
       </div>
+
+      {/* Floating WhatsApp Customer Care Support Widget */}
+      <WhatsAppSupportButton variant="floating" type="institute" />
 
     </div>
   );

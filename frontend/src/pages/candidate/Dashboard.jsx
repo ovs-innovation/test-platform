@@ -6,8 +6,8 @@ import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
 import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
-import InstituteRankCard from '../../components/candidate/InstituteRankCard.jsx';
 import AIDoubtSolverChatbox from '../../components/candidate/AIDoubtSolverChatbox.jsx';
+import WhatsAppSupportButton from '../../components/common/WhatsAppSupportButton.jsx';
 import {
   Sparkles,
   Trophy,
@@ -218,6 +218,8 @@ export default function CandidateDashboard() {
                 <BarChart3 className="h-3.5 w-3.5" />
                 <span>Analytics</span>
               </Link>
+
+              <WhatsAppSupportButton type="student" label="WhatsApp Admin Support" />
             </div>
           </div>
 
@@ -626,6 +628,12 @@ export default function CandidateDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Student WhatsApp Support & Customer Care Card */}
+      <WhatsAppSupportButton variant="card" type="student" className="bg-gradient-to-r from-emerald-50 via-white to-white dark:from-emerald-950/30 dark:via-slate-900 dark:to-slate-900 border-emerald-500/20" />
+
+      {/* Floating WhatsApp Quick Contact Button */}
+      <WhatsAppSupportButton variant="floating" type="student" />
 
       {/* Gemini AI Student Doubt Solver Floating Widget */}
       <AIDoubtSolverChatbox />
