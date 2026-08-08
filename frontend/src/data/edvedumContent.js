@@ -15,15 +15,14 @@ export const COMPANY = {
 };
 
 export const CONTACT = {
-  supportEmail: 'support@edvedum.com',
-  businessEmail: 'info@edvedum.com',
-  founderEmail: 'sumit@edvedum.com',
-  phone: '1800-EDVEDUM (3383386)',
-  phoneHref: 'tel:18003383386',
-  whatsappNumber: '+91 9876543210',
-  whatsappHref: 'https://wa.me/919876543210',
-  whatsappStudentHref: 'https://wa.me/919876543210?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20a%20student%20and%20need%20assistance.',
-  whatsappInstituteHref: 'https://wa.me/919876543210?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20an%20institution%20administrator%20and%20need%20assistance.',
+  supportEmail: 'edvedum@gmail.com',
+  businessEmail: 'edvedum@gmail.com',
+  phone: '+91 91514 24445',
+  phoneHref: 'tel:+919151424445',
+  whatsappNumber: '+91 91514 24445',
+  whatsappHref: 'https://wa.me/919151424445',
+  whatsappStudentHref: 'https://wa.me/919151424445?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20a%20student%20and%20need%20assistance.',
+  whatsappInstituteHref: 'https://wa.me/919151424445?text=Hello%20EDVEDUM%20Support%2C%20I%20am%20an%20institution%20administrator%20and%20need%20assistance.',
 };
 
 export const INTRO = {

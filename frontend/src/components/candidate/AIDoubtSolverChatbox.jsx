@@ -135,7 +135,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
     {
       id: 'msg-welcome',
       sender: 'ai',
-      text: '👋 Hello! I am your AIETS Gemini Academic Mentor. Type any academic doubt or snap/upload a photo of your question to get started!',
+      text: '👋 Hello! I am your AIETS Academic Mentor. Type any academic doubt or snap/upload a photo of your question to get started!',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -346,22 +346,13 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 group flex items-center gap-3 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 text-white px-5 py-3.5 rounded-full shadow-2xl hover:shadow-indigo-500/25 transition-all duration-300 transform hover:scale-105 active:scale-95 border border-white/20"
-          aria-label="Open AI Chatbot Doubt Solver"
+          className="fixed bottom-6 right-6 z-50 group flex items-center gap-2.5 bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 rounded-2xl shadow-xl shadow-blue-600/25 transition-all duration-300 hover:scale-[1.03] active:scale-95 border border-blue-500/30 backdrop-blur-md cursor-pointer"
+          aria-label="Solve Your Doubt"
         >
-          <div className="relative">
-            <Sparkles className="w-6 h-6 animate-pulse text-amber-300" />
-            <span className="absolute -top-1 -right-1 flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-amber-300"></span>
-            </span>
+          <div className="flex items-center justify-center h-8 w-8 rounded-xl bg-white/15 text-white">
+            <Sparkles className="w-4 h-4 text-cyan-300" />
           </div>
-          <div className="flex flex-col text-left">
-            <span className="font-bold text-sm leading-tight flex items-center gap-1.5">
-              Ask Chatbot <span className="bg-amber-400/30 text-amber-200 text-[10px] uppercase font-mono px-1.5 py-0.5 rounded">Live</span>
-            </span>
-            <span className="text-[11px] text-white/80 font-medium">Text or Camera Doubt Solver</span>
-          </div>
+          <span className="font-extrabold text-xs tracking-wide">Solve Your Doubt</span>
         </button>
       )}
 
@@ -375,21 +366,19 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
           }`}
         >
           {/* Header */}
-          <div className="bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-700 p-4 border-b border-indigo-800 flex items-center justify-between text-white shadow-sm">
+          <div className="bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between text-white shadow-sm">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-md p-0.5 flex items-center justify-center shadow-inner border border-white/30">
-                <div className="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-amber-500 animate-pulse" />
-                </div>
+              <div className="w-9 h-9 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0">
+                <Sparkles className="w-4.5 h-4.5 text-cyan-400" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-white text-base leading-tight">AIETS Chatbot</h3>
-                  <span className="inline-flex items-center gap-1 bg-white/20 text-white text-xs px-2 py-0.5 rounded-full font-medium border border-white/30">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 animate-pulse"></span> Instant
+                  <h3 className="font-extrabold text-white text-sm leading-tight">AIETS Doubt Solver</h3>
+                  <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Instant AI
                   </span>
                 </div>
-                <p className="text-xs text-indigo-100/90">Ask doubt via text or camera photo upload</p>
+                <p className="text-[11px] text-slate-400">Ask doubt via text or camera photo upload</p>
               </div>
             </div>
 

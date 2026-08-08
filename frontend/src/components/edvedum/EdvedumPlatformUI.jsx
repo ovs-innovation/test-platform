@@ -243,7 +243,7 @@ export function EdvedumCtaStrip({
   primary = { to: "/contact", label: "Contact Us" },
   secondary,
   quickContact = {
-    email: "support@edvedum.com",
+    email: "edvedum@gmail.com",
     phone: "1800-EDVEDUM (3383386)",
   },
 }) {

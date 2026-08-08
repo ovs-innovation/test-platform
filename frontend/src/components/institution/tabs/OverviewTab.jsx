@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import WhatsAppSupportButton from '../../common/WhatsAppSupportButton.jsx';
 import {
   Users,
   TrendingUp,
@@ -288,9 +287,6 @@ export default function OverviewTab({
         </div>
 
       </div>
-
-      {/* Institutional WhatsApp Customer Care & Admin Support Card */}
-      <WhatsAppSupportButton variant="card" type="institute" className={isDarkMode ? 'bg-gradient-to-r from-emerald-950/30 via-slate-900 to-slate-900 border-emerald-500/20' : 'bg-gradient-to-r from-emerald-50 via-white to-white border-emerald-200'} />
 
       {/* =========================================================================
           3. POLISHED EMPTY STATE WHEN NO STUDENTS ENROLLED

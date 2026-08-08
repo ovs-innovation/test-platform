@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import PublicHeader from './public/PublicHeader.jsx';
+import WhatsAppSupportButton from './common/WhatsAppSupportButton.jsx';
 import { COMPANY, CONTACT, EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, FOOTER_COMPANY, FOOTER_STUDENT, LEGAL_LINKS } from '../data/edvedumContent.js';
 
 export default function PublicLayout() {
@@ -162,6 +163,9 @@ export default function PublicLayout() {
           </div>
         </div>
       </footer>
+
+      {/* Floating WhatsApp Quick Contact Button on Public Website */}
+      <WhatsAppSupportButton variant="floating" type="student" className="fixed bottom-6 right-6" />
     </div>
   );
 }

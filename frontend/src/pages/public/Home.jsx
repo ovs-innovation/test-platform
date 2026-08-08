@@ -21,7 +21,7 @@ export default function Home() {
         desc="Reach out for admissions, technical support, or test series queries."
         primary={{ to: "/contact", label: "Contact Us" }}
         quickContact={{
-          email: "support@edvedum.com",
+          email: "edvedum@gmail.com",
           phone: "1800-EDVEDUM (3383386)",
         }}
       />

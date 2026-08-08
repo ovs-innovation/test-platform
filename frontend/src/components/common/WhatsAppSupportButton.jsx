@@ -24,11 +24,26 @@ export default function WhatsAppSupportButton({
         href={targetHref}
         target="_blank"
         rel="noopener noreferrer"
-        title="Contact Admin / Customer Care on WhatsApp"
-        className={`fixed bottom-6 left-6 z-50 flex items-center gap-2 px-3.5 py-2.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-extrabold text-xs shadow-xl shadow-emerald-900/30 hover:scale-105 active:scale-95 transition-all group ${className}`}
+        title="Chat on WhatsApp (+91 91514 24445)"
+        aria-label="Chat on WhatsApp"
+        className={`fixed bottom-6 right-6 z-[9999] group flex items-center justify-center ${className}`}
       >
-        <WhatsAppIcon className="w-4 h-4 fill-current shrink-0" />
-        <span className="font-extrabold">WhatsApp Admin</span>
+        {/* Glowing Ambient Aura Ring */}
+        <span className="absolute -inset-1 rounded-full bg-[#25D366] opacity-70 blur-md animate-pulse group-hover:opacity-100 transition-opacity" />
+        
+        {/* Animated Ripple Ping Ring */}
+        <span className="absolute h-full w-full rounded-full bg-[#25D366] opacity-75 animate-ping" />
+
+        {/* Main Circular Button Container */}
+        <div className="relative flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl shadow-emerald-900/50 hover:bg-[#20ba5a] hover:scale-110 active:scale-95 transition-all duration-300">
+          <WhatsAppIcon className="h-7 w-7 sm:h-8 sm:w-8 fill-current drop-shadow-md" />
+        </div>
+
+        {/* Hover Tooltip Label */}
+        <div className="absolute right-full mr-3 hidden rounded-xl bg-slate-900/95 px-3 py-1.5 text-xs font-extrabold text-white shadow-2xl group-hover:flex items-center gap-1.5 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150 border border-slate-800 backdrop-blur-md">
+          <span className="h-2 w-2 rounded-full bg-[#25D366] animate-pulse" />
+          <span>Chat on WhatsApp</span>
+        </div>
       </a>
     );
   }
