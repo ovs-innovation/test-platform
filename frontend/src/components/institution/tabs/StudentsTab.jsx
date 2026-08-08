@@ -27,6 +27,7 @@ import {
 import { useToast } from '../../../context/ToastContext.jsx';
 import { CustomSelectDropdown } from '../../ui.jsx';
 import { downloadStudentCsvTemplate } from '../../../lib/csv.js';
+import EditStudentModal from '../modals/EditStudentModal.jsx';
 
 export default function StudentsTab({
   students = [],
@@ -68,6 +69,9 @@ export default function StudentsTab({
 
   // Active student detail drawer state
   const [inspectStudent, setInspectStudent] = useState(null);
+
+  // Edit student modal state
+  const [editingStudent, setEditingStudent] = useState(null);
 
   // Helper to extract student target exam with fallback
   const getStudentTargetExam = (st) => {
@@ -448,6 +452,14 @@ export default function StudentsTab({
                           </button>
 
                           <button
+                            onClick={() => setEditingStudent(student)}
+                            className="p-1.5 rounded-lg border border-slate-700 text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/30 transition cursor-pointer"
+                            title="Edit Student Info"
+                          >
+                            <Edit className="h-3.5 w-3.5" />
+                          </button>
+
+                          <button
                             onClick={() => onRegenerateCredentials(student.id)}
                             className="p-1.5 rounded-lg border border-slate-700 text-cyan-400 hover:bg-cyan-500/10 transition cursor-pointer"
                             title="Regenerate Password"
@@ -680,6 +692,18 @@ export default function StudentsTab({
           </div>
         </div>,
         document.body
+      )}
+
+      {/* EDIT STUDENT MODAL */}
+      {editingStudent && (
+        <EditStudentModal
+          isOpen={true}
+          student={editingStudent}
+          batches={batches}
+          onClose={() => setEditingStudent(null)}
+          onSubmit={onEditStudent}
+          isDarkMode={isDarkMode}
+        />
       )}
 
     </div>

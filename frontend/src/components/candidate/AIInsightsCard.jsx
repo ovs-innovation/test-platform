@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import {
   Sparkles,
   Target,
@@ -17,15 +17,16 @@ import {
 } from 'lucide-react';
 import { studentReportService } from '../../lib/services.js';
 
-export default function AIInsightsCard({ isDarkMode = true }) {
+export default function AIInsightsCard({ isDarkMode = true, testId = null, testData = null }) {
   const [aiPlan, setAiPlan] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!testData);
   const [activeTab, setActiveTab] = useState('plan'); // 'plan' | 'strategy' | 'ebooks' | 'topics' | 'pacing'
 
   const fetchAIPlan = async () => {
     setLoading(true);
     try {
-      const res = await studentReportService.getAIPlan();
+      const params = testId ? { test_id: testId } : undefined;
+      const res = await studentReportService.getAIPlan(params);
       if (res?.data || res?.plan) {
         setAiPlan(res.data || res.plan);
       }
@@ -37,10 +38,77 @@ export default function AIInsightsCard({ isDarkMode = true }) {
   };
 
   useEffect(() => {
-    fetchAIPlan();
-  }, []);
+    if (!testData) {
+      fetchAIPlan();
+    } else {
+      setLoading(false);
+    }
+  }, [testId, testData]);
 
-  const planData = aiPlan || {};
+  const planData = useMemo(() => {
+    if (testData) {
+      const planArray = (testData.seven_day_revision_plan?.length > 0
+        ? testData.seven_day_revision_plan
+        : testData.personalized_improvement_plan) || [];
+      
+      const mappedPlan = planArray.map((item, idx) => ({
+        day: item.day ? (typeof item.day === 'number' ? `Day ${item.day}` : item.day) : `Day ${idx + 1}`,
+        focus_area: item.focus_chapter || item.chapter ? `${item.chapter || item.focus_chapter}${item.subject ? ` (${item.subject})` : ''}` : (item.focus_area || `Day ${idx + 1} Revision`),
+        recommended_action: item.task || item.suggestion || item.recommended_action || 'Review core chapter concepts and PYQs.',
+        target_time_minutes: item.target_time_minutes || item.revision_duration_minutes || 60,
+      }));
+
+      const ebooks = (testData.recommended_ebooks || []).map(b => ({
+        title: b.title || `Master Module: ${b.subject || 'Core Concepts'}`,
+        chapter: b.chapter || b.description || 'NTA PYQs & Theory Notes',
+        priority: b.priority || 'High Priority',
+        reason: b.reason || 'Targeted practice module based on your test performance.',
+      }));
+
+      const rawWeak = testData.weak_topics || testData.strong_and_weak_topics?.weak || [];
+      const weakTopicsMapped = rawWeak.map(t => ({
+        topic: typeof t === 'string' ? t : (t.chapter_name || t.topic || 'Weak Topic'),
+        status: 'Needs Focused Revision',
+        concept_gap: typeof t === 'object' ? (t.reason || t.suggestion || `Accuracy gap identified in test attempt.`) : `Focus needed on this chapter.`,
+        suggested_action: 'Practice 20 PYQs and review formula notes.',
+      }));
+
+      const rawStrong = testData.strong_topics || testData.strong_and_weak_topics?.strong || [];
+      const strongTopicsMapped = rawStrong.map(t => ({
+        topic: typeof t === 'string' ? t : (t.chapter_name || t.topic || 'Strong Topic'),
+        status: 'Mastered',
+        accuracy: typeof t === 'object' && t.accuracy_percent ? `${t.accuracy_percent}%` : '80%+',
+        recommendation: 'Maintain accuracy with weekly timed practice.',
+      }));
+
+      let mappedStrategy = [];
+      if (Array.isArray(testData.revision_strategy)) {
+        mappedStrategy = testData.revision_strategy;
+      } else if (testData.revision_strategy && typeof testData.revision_strategy === 'object') {
+        mappedStrategy = [
+          { title: 'Suggested Daily Allocation', rule: testData.revision_strategy.suggested_daily_plan || 'Spend 40% time on weak chapters, 30% on medium chapters, 30% on strong chapters for retention.' },
+          { title: 'High Priority Chapters', rule: `Focus revision on: ${(testData.revision_strategy.priority_topics || []).join(', ') || 'Identified test weak chapters'}` }
+        ];
+      }
+
+      return {
+        summary_observation: `AI Performance Diagnostic for ${testData.test_info?.test_name || 'Exam Attempt'}: Scored ${testData.summary?.total_score || 0}/${testData.summary?.max_marks || 0} (${testData.summary?.overall_accuracy || 0}% accuracy) across ${testData.chapter_performance?.length || 0} evaluated chapters.`,
+        improvement_plan: mappedPlan,
+        revision_strategy: mappedStrategy.length > 0 ? mappedStrategy : [
+          { title: 'Strict 2-Pass Question Selection', rule: 'First pass: Answer direct formula-based questions. Second pass: Attempt complex calculations.' },
+          { title: 'Time Trap Control', rule: 'If a question takes >2.5 minutes without progress, mark for review and move forward.' },
+        ],
+        recommended_ebooks: ebooks,
+        weak_topics: weakTopicsMapped,
+        strong_topics: strongTopicsMapped,
+        time_management_advice: {
+          observation: `Total time spent: ${Math.round((testData.summary?.time_spent_seconds || 0) / 60)} minutes across ${testData.question_wise_analysis?.length || 0} questions.`,
+          pacing_tip: testData.time_management_report?.pacing_advice || 'Focus on maintaining consistent speed and avoiding negative marks on doubtful questions.',
+        }
+      };
+    }
+    return aiPlan || {};
+  }, [testData, aiPlan]);
 
   return (
     <div
@@ -87,9 +155,6 @@ export default function AIInsightsCard({ isDarkMode = true }) {
         {[
           { id: 'plan', label: '7-Day Improvement Plan', icon: Calendar },
           { id: 'strategy', label: 'Revision Strategy', icon: Zap },
-          { id: 'ebooks', label: 'Recommended eBooks', icon: BookOpen },
-          { id: 'topics', label: 'Strong vs Weak Topics', icon: Brain },
-          { id: 'pacing', label: 'Time & Pacing Advice', icon: Clock },
         ].map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
@@ -187,118 +252,6 @@ export default function AIInsightsCard({ isDarkMode = true }) {
                     <p className="text-xs text-slate-300 leading-relaxed">{strat.rule}</p>
                   </div>
                 ))}
-              </div>
-            </div>
-          )}
-
-          {/* TAB 3: RECOMMENDED EBOOKS */}
-          {activeTab === 'ebooks' && (
-            <div className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                <BookOpen className="h-4 w-4 text-emerald-400" />
-                <span>AI-Recommended eBooks & Study Material</span>
-              </h3>
-
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {(planData.recommended_ebooks || []).map((book, idx) => (
-                  <div
-                    key={idx}
-                    className={`p-5 rounded-2xl border flex flex-col justify-between ${
-                      isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
-                    }`}
-                  >
-                    <div>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 mb-2 inline-block">
-                        {book.priority || 'Recommended'}
-                      </span>
-                      <h4 className="text-sm font-bold text-white mb-1">{book.title}</h4>
-                      <p className="text-xs font-mono text-cyan-400 mb-2">{book.chapter}</p>
-                      <p className="text-xs text-slate-400 leading-relaxed">{book.reason}</p>
-                    </div>
-
-                    <button className="mt-4 w-full py-2 rounded-xl text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition flex items-center justify-center gap-1 cursor-pointer">
-                      <span>Open eBook Module</span>
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* TAB 4: STRONG VS WEAK TOPICS */}
-          {activeTab === 'topics' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Weak Topics */}
-              <div
-                className={`p-5 rounded-2xl border space-y-3 ${
-                  isDarkMode ? 'bg-rose-950/20 border-rose-900/40' : 'bg-rose-50 border-rose-200'
-                }`}
-              >
-                <h4 className="text-xs font-black uppercase tracking-wider text-rose-400 flex items-center gap-2">
-                  <AlertTriangle className="h-4 w-4" />
-                  <span>Weak Topics Requiring Attention</span>
-                </h4>
-                <div className="space-y-3">
-                  {(planData.weak_topics || []).map((wt, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-rose-950/40 border border-rose-900/50 space-y-1">
-                      <span className="text-xs font-bold text-white block">{wt.topic}</span>
-                      <p className="text-[11px] text-rose-300">{wt.concept_gap}</p>
-                      <p className="text-[11px] font-semibold text-slate-400">{wt.suggested_action}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Strong Topics */}
-              <div
-                className={`p-5 rounded-2xl border space-y-3 ${
-                  isDarkMode ? 'bg-emerald-950/20 border-emerald-900/40' : 'bg-emerald-50 border-emerald-200'
-                }`}
-              >
-                <h4 className="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <span>Mastered Strong Topics</span>
-                </h4>
-                <div className="space-y-3">
-                  {(planData.strong_topics || []).map((st, idx) => (
-                    <div key={idx} className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-900/50 space-y-1">
-                      <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-white">{st.topic}</span>
-                        <span className="text-[10px] font-mono text-emerald-400">{st.accuracy}</span>
-                      </div>
-                      <p className="text-[11px] text-emerald-300">{st.recommendation}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 5: TIME & PACING ADVICE */}
-          {activeTab === 'pacing' && (
-            <div
-              className={`p-6 rounded-2xl border space-y-4 ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
-              }`}
-            >
-              <div className="flex items-center gap-2 text-cyan-400 font-extrabold text-sm">
-                <Clock className="h-5 w-5" />
-                <span>AI Time Management & Pacing Diagnostic</span>
-              </div>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                {planData.time_management_advice?.observation ||
-                  'Your current solving speed shows consistent pacing, but numerical sections require strategic skipping of 3-minute time traps.'}
-              </p>
-
-              <div className="p-4 rounded-xl bg-cyan-500/10 border border-cyan-500/20 space-y-1">
-                <span className="text-xs font-black uppercase tracking-wider text-cyan-400 block">
-                  Recommended Time Allocation Tip
-                </span>
-                <p className="text-xs text-slate-200 font-medium">
-                  {planData.time_management_advice?.pacing_tip ||
-                    'Allocate 45 minutes for Physics, 40 minutes for Chemistry, and 80 minutes for Math/Biology in full NTA CBT papers.'}
-                </p>
               </div>
             </div>
           )}

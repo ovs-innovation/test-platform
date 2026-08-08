@@ -240,16 +240,16 @@ export default function AdminCandidates() {
                     <Td>
                       <div className="flex flex-col gap-1">
                         <span className="text-[11px] font-bold text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md w-max border border-slate-200 dark:border-slate-700">
-                          Class: {c.class || 'N/A'}
+                          Class: {c.class || c.class_level || 'Class 12'}
                         </span>
                         <span className={`text-[11px] font-bold px-2 py-0.5 rounded-md w-max border ${
-                          c.target_exam === 'JEE' 
+                          (c.target_exam || '').toUpperCase().includes('JEE') 
                             ? 'bg-blue-500/15 text-blue-600 dark:text-blue-400 border-blue-500/30' 
-                            : c.target_exam === 'NEET' 
+                            : (c.target_exam || '').toUpperCase().includes('NEET') 
                               ? 'bg-pink-500/15 text-pink-600 dark:text-pink-400 border-pink-500/30' 
                               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border-slate-300 dark:border-slate-700'
                         }`}>
-                          Target: {c.target_exam || 'N/A'}
+                          Target: {c.target_exam || 'NEET'}
                         </span>
                       </div>
                     </Td>

@@ -334,41 +334,54 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
       continue;
     }
 
+    const rowClass = row.class || row.Class || row.class_level || row['Class'] || row['Grade'] || 'Class 12';
+    const rowTarget = row.target_exam || row.Target || row.target || row.course || row['Target Exam'] || 'NEET';
+
     // Handle batch auto-creation safely
     let batchId = null;
+    let batchClass = null;
+    let batchTarget = null;
+
     if (batchName && String(batchName).trim()) {
       const cleanBatch = String(batchName).trim();
       const batchRes = await query(
-        `SELECT id FROM batches WHERE (institution_id = $1 OR institution_id IS NULL) AND (LOWER(batch_name) = $2 OR LOWER(name) = $2)`,
+        `SELECT id, class_level, target_exam FROM batches WHERE (institution_id = $1 OR institution_id IS NULL) AND (LOWER(batch_name) = $2 OR LOWER(name) = $2)`,
         [instId, cleanBatch.toLowerCase()]
       );
       if (batchRes.rowCount > 0) {
         batchId = batchRes.rows[0].id;
+        batchClass = batchRes.rows[0].class_level;
+        batchTarget = batchRes.rows[0].target_exam;
       } else {
         try {
           const newBatch = await query(
-            `INSERT INTO batches (institution_id, name, batch_name) VALUES ($1, $2, $2) RETURNING id`,
-            [instId, cleanBatch]
+            `INSERT INTO batches (institution_id, name, batch_name, class_level, target_exam) VALUES ($1, $2, $2, $3, $4) RETURNING id`,
+            [instId, cleanBatch, rowClass, rowTarget]
           );
           batchId = newBatch.rows[0].id;
         } catch (bErr) {
           const fallbackBatch = await query(
-            `SELECT id FROM batches WHERE LOWER(batch_name) = $1 OR LOWER(name) = $1`,
+            `SELECT id, class_level, target_exam FROM batches WHERE LOWER(batch_name) = $1 OR LOWER(name) = $1`,
             [cleanBatch.toLowerCase()]
           );
           if (fallbackBatch.rowCount > 0) {
             batchId = fallbackBatch.rows[0].id;
+            batchClass = fallbackBatch.rows[0].class_level;
+            batchTarget = fallbackBatch.rows[0].target_exam;
           } else {
             const uniqueName = `${cleanBatch} (Inst #${instId})`;
             const newBatch = await query(
-              `INSERT INTO batches (institution_id, name, batch_name) VALUES ($1, $2, $3) RETURNING id`,
-              [instId, uniqueName, cleanBatch]
+              `INSERT INTO batches (institution_id, name, batch_name, class_level, target_exam) VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+              [instId, uniqueName, cleanBatch, rowClass, rowTarget]
             );
             batchId = newBatch.rows[0].id;
           }
         }
       }
     }
+
+    const finalClass = rowClass || batchClass || 'Class 12';
+    const finalTarget = rowTarget || batchTarget || 'NEET';
 
     const rawPass = `Edu@${Math.floor(100000 + Math.random() * 900000)}`;
     const passHash = await hashPassword(rawPass);
@@ -382,9 +395,16 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
       );
 
       await query(
-        `INSERT INTO student_profiles (user_id, phone, institution_id, batch_id, roll_number)
-         VALUES ($1, $2, $3, $4, $5) ON CONFLICT (user_id) DO NOTHING`,
-        [uRes.rows[0].id, mobile ? String(mobile).trim() : null, instId, batchId, rollNumber ? String(rollNumber).trim() : null]
+        `INSERT INTO student_profiles (user_id, phone, class, target_exam, institution_id, batch_id, roll_number)
+         VALUES ($1, $2, $3, $4, $5, $6, $7)
+         ON CONFLICT (user_id) DO UPDATE SET
+           phone = COALESCE(EXCLUDED.phone, student_profiles.phone),
+           class = COALESCE(EXCLUDED.class, student_profiles.class),
+           target_exam = COALESCE(EXCLUDED.target_exam, student_profiles.target_exam),
+           institution_id = EXCLUDED.institution_id,
+           batch_id = EXCLUDED.batch_id,
+           roll_number = EXCLUDED.roll_number`,
+        [uRes.rows[0].id, mobile ? String(mobile).trim() : null, finalClass, finalTarget, instId, batchId, rollNumber ? String(rollNumber).trim() : null]
       );
 
       successCount++;

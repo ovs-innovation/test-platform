@@ -96,18 +96,22 @@ export const getStats = asyncHandler(async (_req, res) => {
 export const getCandidates = asyncHandler(async (_req, res) => {
   const result = await query(`
     SELECT u.id, u.name, u.email, u.created_at, COALESCE(u.is_blocked, false) AS is_blocked,
-           sp.phone, sp.class, sp.target_exam, sp.city, sp.state,
+           sp.phone,
+           COALESCE(NULLIF(sp.class, ''), NULLIF(b.class_level, ''), 'Class 12') AS class,
+           COALESCE(NULLIF(sp.target_exam, ''), NULLIF(b.target_exam, ''), 'NEET') AS target_exam,
+           sp.city, sp.state,
            COUNT(DISTINCT ci.id)::int AS invites,
            COUNT(DISTINCT a.id)::int AS attempts,
            COUNT(DISTINCT a.id) FILTER (WHERE a.status <> 'in_progress')::int AS completed,
            COALESCE(ROUND(AVG(s.percentage), 1), 0) AS avg_score
     FROM users u
+    LEFT JOIN batches b ON b.id = u.batch_id
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
     LEFT JOIN candidate_invites ci ON ci.candidate_email = u.email
     LEFT JOIN attempts a ON a.candidate_id = u.id
     LEFT JOIN scores s ON s.attempt_id = a.id
     WHERE u.role = 'candidate'
-    GROUP BY u.id, u.is_blocked, sp.phone, sp.class, sp.target_exam, sp.city, sp.state
+    GROUP BY u.id, u.is_blocked, sp.phone, sp.class, b.class_level, sp.target_exam, b.target_exam, sp.city, sp.state
     ORDER BY u.created_at DESC
   `);
   res.json({ candidates: result.rows });

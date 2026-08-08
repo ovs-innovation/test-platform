@@ -462,7 +462,9 @@ export const getAIInsightsReport = asyncHandler(async (req, res) => {
  */
 export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
   const userId = getUserId(req);
+  const testId = req.query.test_id ? Number(req.query.test_id) : null;
 
+  // 1. Fetch user & score summaries
   const [userRes, scoresRes, attemptsRes] = await Promise.all([
     query(`SELECT name, target_exam FROM users WHERE id = $1`, [userId]).catch(() => ({ rows: [] })),
     query(
@@ -484,6 +486,59 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
     ).catch(() => ({ rows: [] })),
   ]);
 
+  // 2. Query REAL chapter performance from student question attempts (optionally filtered by testId)
+  let chapterQueryStr = `
+    SELECT 
+      COALESCE(c.name, NULLIF(q.bank_category, ''), s.name, 'General') AS chapter_name,
+      COALESCE(s.name, 'General') AS subject_name,
+      COUNT(*)::int AS total,
+      COUNT(*) FILTER (WHERE 
+        (ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index) OR
+        (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text) OR
+        (q.question_type IN ('integer', 'numerical') AND ans.numeric_answer::text = q.numeric_answer::text)
+      )::int AS correct
+    FROM questions q
+    JOIN attempts at ON at.assessment_id = q.assessment_id
+    LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
+    LEFT JOIN subjects s ON s.id = q.subject_id
+    LEFT JOIN chapters c ON c.id = q.chapter_id
+    WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
+  `;
+  const queryParams = [userId];
+
+  if (testId && !isNaN(testId)) {
+    chapterQueryStr += ` AND (at.assessment_id = $2 OR at.test_id = $2)`;
+    queryParams.push(testId);
+  }
+
+  chapterQueryStr += `
+    GROUP BY chapter_name, subject_name
+    HAVING COUNT(*) >= 1
+    ORDER BY (COUNT(*) FILTER (WHERE 
+      (ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index) OR
+      (q.question_type = 'multi_select' AND ans.selected_indices::text = q.correct_indices::text) OR
+      (q.question_type IN ('integer', 'numerical') AND ans.numeric_answer::text = q.numeric_answer::text)
+    )::float / GREATEST(COUNT(*), 1)::float) ASC
+  `;
+
+  const chaptersRes = await query(chapterQueryStr, queryParams).catch(() => ({ rows: [] }));
+  const chapterRows = chaptersRes.rows || [];
+
+  const weakList = [];
+  const strongList = [];
+
+  for (const r of chapterRows) {
+    const total = Number(r.total) || 1;
+    const correct = Number(r.correct) || 0;
+    const acc = correct / total;
+    const label = `${r.chapter_name} (${r.subject_name})`;
+    if (acc < 0.65) {
+      weakList.push(label);
+    } else {
+      strongList.push(label);
+    }
+  }
+
   const user = userRes.rows[0] || {};
   const scores = scoresRes.rows[0] || {};
 
@@ -494,8 +549,8 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
     average_score: Number(scores.avg_score) || 0,
     highest_score: Number(scores.max_score) || 0,
     recent_attempts: attemptsRes.rows || [],
-    weak_chapters: ['Rotational Dynamics', 'Organic Reaction Mechanisms', 'Definite Integration'],
-    strong_chapters: ['Electrostatics', 'Chemical Bonding', 'Cell Biology'],
+    weak_chapters: weakList.length > 0 ? weakList.slice(0, 5) : [],
+    strong_chapters: strongList.length > 0 ? strongList.slice(0, 5) : [],
   };
 
   const aiPlan = await generateStudentAIPlan(metrics);
