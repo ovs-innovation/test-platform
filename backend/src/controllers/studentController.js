@@ -3,6 +3,8 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
+import { solveStudentDoubt } from '../services/geminiService.js';
+
 
 export const getProfile = asyncHandler(async (req, res) => {
   const numId = Number(req.user?.id);
@@ -293,4 +295,53 @@ export const getInstituteRank = asyncHandler(async (req, res) => {
     },
   });
 });
+
+/**
+ * POST /api/student/doubt-solver
+ * Solves student academic doubt via Gemini AI (text query or camera/image upload).
+ */
+export const askAIDoubt = asyncHandler(async (req, res) => {
+  const { questionText, imageBase64, mimeType, subject } = req.body || {};
+
+  if (!questionText && !imageBase64) {
+    throw ApiError.badRequest('Please provide a question text or upload/capture a photo of your doubt.');
+  }
+
+  const studentName = req.user?.name || 'Student';
+
+  console.log('\n======================================================');
+  console.log(`📥 [DoubtSolver API Request] Student: ${studentName}`);
+  console.log(`📝 Question Query: "${questionText || 'Image/Photo Uploaded'}"`);
+  if (imageBase64) console.log(`📷 Image Attached: Yes (${mimeType || 'image/jpeg'})`);
+  console.log('------------------------------------------------------');
+
+  let solution;
+  try {
+    solution = await solveStudentDoubt({
+      questionText,
+      imageBase64,
+      mimeType: mimeType || 'image/jpeg',
+      studentName,
+      subjectContext: subject || ''
+    });
+  } catch (err) {
+    console.error('❌ [DoubtSolver API Exception]:', err.message);
+    solution = {
+      success: false,
+      text: `⚠️ **Something went wrong while connecting to the AI Tutor**\n\nThe AI service is currently experiencing a temporary issue. Please check your network or try asking your doubt again!`
+    };
+  }
+
+  console.log('🤖 [DoubtSolver API Response Text]:');
+  console.log(solution?.text || '[No text returned]');
+  console.log('======================================================\n');
+
+  return res.json({
+    success: true,
+    text: solution?.text,
+    solution,
+    timestamp: new Date().toISOString()
+  });
+});
+
 

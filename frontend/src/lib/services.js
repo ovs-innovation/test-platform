@@ -491,4 +491,5 @@ export const studentReportService = {
   getTimeAnalysis: (params) => api.get('/student/reports/time-analysis', { params }).then((r) => r.data),
   getInsights: (params) => api.get('/student/reports/insights', { params }).then((r) => r.data),
   getAIPlan: (params) => api.get('/student/reports/ai-plan', { params }).then((r) => r.data),
+  askAIDoubt: (data) => api.post('/student/doubt-solver', data).then((r) => r.data),
 };

@@ -7,6 +7,7 @@ import { AssessmentCard } from './AssessmentList.jsx';
 import DashboardScheduleSnapshot from '../../components/candidate/DashboardScheduleSnapshot.jsx';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import InstituteRankCard from '../../components/candidate/InstituteRankCard.jsx';
+import AIDoubtSolverChatbox from '../../components/candidate/AIDoubtSolverChatbox.jsx';
 import {
   Sparkles,
   Trophy,
@@ -625,6 +626,9 @@ export default function CandidateDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Gemini AI Student Doubt Solver Floating Widget */}
+      <AIDoubtSolverChatbox />
     </div>
   );
 }
