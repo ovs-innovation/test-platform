@@ -119,28 +119,48 @@ export default function EdvedumHero() {
       </div>
 
       {/* ================= HERO OVERLAY CONTENT ================= */}
-      <div className="relative mx-auto max-w-[1400px] px-5 sm:px-6 lg:px-8 pt-6 sm:pt-10 lg:pt-14 pb-4 sm:pb-8 lg:pb-16">
+      <div className="relative mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-8 pt-1 sm:pt-10 lg:pt-14 pb-6 sm:pb-8 lg:pb-16">
 
         {/* Main Content Area */}
         <div className="relative z-10 max-w-2xl lg:max-w-3xl">
 
-          {/* 1. BADGE ROW - Split into 2 Separate Pill Elements */}
+          {/* MOBILE-ONLY HERO VISUAL (Order #1 on Mobile, Uncropped Full-Width, Smooth Bottom Fade) */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="mobile-hero-visual block md:hidden relative w-[calc(100%+32px)] -ml-4 -mr-4 -mt-1 mb-2 h-auto overflow-hidden bg-transparent border-none p-0 shadow-none pointer-events-none select-none"
+            style={{
+              maskImage: 'linear-gradient(to bottom, black 0%, black 60%, rgba(0,0,0,0.6) 80%, transparent 100%)',
+              WebkitMaskImage: '-webkit-linear-gradient(top, black 0%, black 60%, rgba(0,0,0,0.6) 80%, transparent 100%)',
+            }}
+          >
+            <img
+              src="/edvedum/opt.png"
+              alt="EDVEDUM student using CBT mock tests on laptop and mobile"
+              className="w-full h-auto block object-contain object-center border-none rounded-none"
+            />
+            {/* Seamless multi-stop bottom fade blending 100% smoothly into #020b18 */}
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#020b18]/60 via-[#020b18]/90 to-[#020b18] pointer-events-none" />
+          </motion.div>
+
+          {/* 1. BADGE ROW */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-wrap items-center gap-2 sm:gap-2.5"
+            className="flex flex-wrap items-center justify-center md:justify-start gap-2 sm:gap-2.5"
           >
             {/* Badge 1: AI-Powered CBT Ecosystem 2026 */}
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#00F0FF]/40 bg-slate-950/80 px-3 py-1 sm:px-4 sm:py-1.5 backdrop-blur-xl shadow-sm">
-              <span className="h-2 w-2 rounded-full bg-[#00F0FF] shadow-[0_0_8px_#00F0FF] animate-pulse" />
-              <span className="text-[10px] sm:text-[11px] font-bold tracking-wider text-[#00F0FF] uppercase">
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#00F0FF]/40 bg-slate-950/80 px-3.5 py-1 sm:px-4 sm:py-1.5 backdrop-blur-xl shadow-sm">
+              <Zap className="h-3 w-3 text-[#00F0FF] fill-[#00F0FF] animate-pulse" />
+              <span className="text-[10.5px] sm:text-[11px] font-extrabold tracking-wider text-[#00F0FF] uppercase">
                 AI-POWERED CBT ECOSYSTEM 2026
               </span>
             </div>
 
-            {/* Badge 2: NTA Pattern Live */}
-            <div className="inline-flex items-center gap-1.5 rounded-full border border-[#7C3AED]/40 bg-slate-950/80 px-3 py-1 sm:px-4 sm:py-1.5 backdrop-blur-xl shadow-sm">
+            {/* Badge 2: NTA Pattern Live (Desktop/Tablet only, hidden on mobile per specs) */}
+            <div className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-[#7C3AED]/40 bg-slate-950/80 px-3 py-1 sm:px-4 sm:py-1.5 backdrop-blur-xl shadow-sm">
               <Sparkles className="h-3.5 w-3.5 text-[#7C3AED]" />
               <span className="text-[10px] sm:text-[11px] font-semibold text-purple-300">
                 NTA Pattern Live
@@ -148,23 +168,23 @@ export default function EdvedumHero() {
             </div>
           </motion.div>
 
-          {/* 2. MAIN HEADLINE - Snug Underline Offset & Typography Clamp */}
+          {/* 2. MAIN HEADLINE */}
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 sm:mt-6 text-[clamp(30px,8.5vw,38px)] sm:text-4xl lg:text-[2.85rem] xl:text-[3.1rem] font-extrabold tracking-tight text-[#F5F6FA] leading-[1.1] sm:leading-[1.18] lg:leading-[1.22]"
+            className="mt-3 sm:mt-6 text-center md:text-left text-[clamp(28px,7.8vw,34px)] sm:text-4xl lg:text-[2.85rem] xl:text-[3.1rem] font-extrabold tracking-tight text-[#F5F6FA] leading-[1.15] sm:leading-[1.18] lg:leading-[1.22]"
           >
-            Where Future <br />
-            <span className="inline-block mt-1 mb-1.5 sm:mb-2.5">
-              <span className="relative inline-block font-extrabold text-[#0D6EFD] after:absolute after:-bottom-0.5 after:left-0 after:h-[3px] after:w-full after:bg-[#0D6EFD]">
+            Where Future <br className="hidden md:inline" />
+            <span className="inline-block mt-1 mb-1 sm:mb-2.5">
+              <span className="font-extrabold text-[#0D6EFD]">
                 Doctors
               </span>{' '}
               <span className="text-[#F5F6FA]">&amp;</span>{' '}
-              <span className="relative inline-block font-extrabold text-[#7C3AED] after:absolute after:-bottom-0.5 after:left-0 after:h-[3px] after:w-full after:bg-[#7C3AED]">
+              <span className="font-extrabold text-[#7C3AED]">
                 Engineers
               </span>
-            </span>
+            </span>{' '}
             <br />
             Master Rank Success.
           </motion.h1>
@@ -174,7 +194,7 @@ export default function EdvedumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-3.5 sm:mt-5 max-w-xl text-[15px] sm:text-base md:text-lg leading-[1.6] text-[#94A3B8]"
+            className="mt-3.5 sm:mt-5 max-w-[320px] md:max-w-xl mx-auto md:mx-0 text-center md:text-left text-[14px] sm:text-base md:text-lg leading-[21px] sm:leading-[1.6] text-[#94A3B8]"
           >
             Not just another coaching platform — the future of competitive learning.
           </motion.p>
@@ -184,7 +204,7 @@ export default function EdvedumHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="mt-5 sm:mt-6 flex flex-col min-[480px]:flex-row items-stretch min-[480px]:items-center gap-2.5 sm:gap-3"
+            className="mt-5 sm:mt-6 flex flex-col min-[480px]:flex-row items-center justify-center md:justify-start gap-2.5 sm:gap-3 max-w-[330px] md:max-w-none mx-auto md:mx-0"
           >
             {/* Primary Button */}
             <Link
@@ -198,35 +218,14 @@ export default function EdvedumHero() {
             {/* Secondary Button */}
             <Link
               to="/test-series"
-              className="group inline-flex h-[52px] w-full min-[480px]:w-auto items-center justify-center gap-2.5 rounded-full border-2 border-[#00F0FF]/60 bg-slate-900/70 px-6 sm:px-8 text-base sm:text-lg font-bold text-[#F5F6FA] backdrop-blur-xl shadow-[0_0_20px_rgba(0,240,255,0.25)] transition-all duration-300 hover:border-[#00F0FF] hover:bg-slate-800/90 hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#00F0FF] focus:ring-offset-2 focus:ring-offset-[#020b18]"
+              className="group inline-flex h-[50px] sm:h-[52px] w-full min-[480px]:w-auto items-center justify-center gap-2.5 rounded-full border-2 border-[#00F0FF]/60 bg-slate-900/70 px-6 sm:px-8 text-base sm:text-lg font-bold text-[#F5F6FA] backdrop-blur-xl shadow-[0_0_20px_rgba(0,240,255,0.25)] transition-all duration-300 hover:border-[#00F0FF] hover:bg-slate-800/90 hover:shadow-[0_0_30px_rgba(0,240,255,0.45)] hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-[#00F0FF] focus:ring-offset-2 focus:ring-offset-[#020b18]"
             >
               <Play className="h-4.5 w-4.5 fill-[#00F0FF] text-[#00F0FF] shrink-0 transition-transform group-hover:scale-110" />
               <span className="whitespace-nowrap">Explore Test Series</span>
             </Link>
           </motion.div>
 
-          {/* 5. MOBILE HERO VISUAL (Exact match to design mockup) */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="relative mt-4 mb-2 block md:hidden w-full max-w-[420px] mx-auto pointer-events-none select-none"
-          >
-            <div className="relative w-full aspect-[1/1] overflow-hidden">
-              <img
-                src="/edvedum/opt.png"
-                alt="Edvedum NTA CBT Mock Exam Interface & Mobile App"
-                className="w-full h-full object-contain mx-auto"
-              />
-              {/* Soft edge gradient fades for seamless background blending into #010a17 */}
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#010a17] via-[#010a17]/80 to-transparent pointer-events-none" />
-              <div className="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-[#010a17] via-[#010a17]/60 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#010a17] via-[#010a17]/60 to-transparent pointer-events-none" />
-              <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#010a17] via-[#010a17]/60 to-transparent pointer-events-none" />
-            </div>
-          </motion.div>
-
-          {/* 6. BENEFIT ITEMS (Immediately following mobile visual) */}
+          {/* 5. BENEFIT ITEMS (Exact original design matching user reference image) */}
           <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
