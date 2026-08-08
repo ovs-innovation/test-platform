@@ -146,6 +146,16 @@ export default function InstitutionLogin() {
 
   return (
     <div className="relative overflow-hidden min-h-[calc(100vh-140px)] bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-slate-100 selection:bg-[#2563eb] selection:text-white flex items-center justify-center py-10 px-4 sm:px-6 lg:px-8">
+      
+      {/* Top Floating Back to Home Button */}
+      <Link
+        to="/"
+        className="fixed top-3 left-3 sm:top-5 sm:left-5 z-50 inline-flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-[#0a142c]/90 px-3.5 py-2 text-xs font-extrabold text-slate-200 backdrop-blur-xl transition hover:border-blue-500/50 hover:bg-[#112044] hover:text-white hover:scale-105 active:scale-95 shadow-2xl group cursor-pointer"
+      >
+        <span className="text-sm font-black leading-none transition-transform group-hover:-translate-x-1">←</span>
+        <span>Back to Home</span>
+      </Link>
+
       {/* Soft Ambient Depth Overlay */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-0 left-0 w-3/5 h-full bg-[radial-gradient(ellipse_at_top_left,rgba(14,165,233,0.06)_0%,transparent_70%)]" />

@@ -83,6 +83,16 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
 
   return (
     <div className="relative min-h-screen lg:h-screen lg:max-h-screen bg-gradient-to-br from-[#060a17] via-[#0d1527] to-[#182339] overflow-x-hidden text-slate-100 flex items-center justify-center p-3 sm:p-5 lg:p-6">
+      
+      {/* Top Floating Back to Home Button */}
+      <Link
+        to="/"
+        className="fixed top-3 left-3 sm:top-5 sm:left-5 z-50 inline-flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-[#0a142c]/90 px-3.5 py-2 text-xs font-extrabold text-slate-200 backdrop-blur-xl transition hover:border-blue-500/50 hover:bg-[#112044] hover:text-white hover:scale-105 active:scale-95 shadow-2xl group cursor-pointer"
+      >
+        <span className="text-sm font-black leading-none transition-transform group-hover:-translate-x-1">←</span>
+        <span>Back to Home</span>
+      </Link>
+
       {/* 1. EDGE-TO-EDGE CONTINUOUS ATMOSPHERIC BACKGROUND SCENE */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden select-none" aria-hidden="true">
         {/* Top-Left Continuous Primary Blue Glow Wash */}
@@ -251,6 +261,16 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
         {/* RIGHT PANEL: LOGIN FORM */}
         <div className="lg:w-[52%] xl:w-[54%] p-5 sm:p-7 lg:p-9 flex flex-col justify-between bg-[#081026]/95 overflow-y-auto">
           <div className="my-auto">
+            <div className="flex items-center justify-between mb-3">
+              <Link
+                to="/"
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-slate-400 hover:text-cyan-300 transition group"
+              >
+                <span className="text-sm font-black transition-transform group-hover:-translate-x-1">←</span>
+                <span>Back to Home</span>
+              </Link>
+            </div>
+
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">{title}</h1>
             {subtitle && <p className="mt-1.5 text-xs sm:text-sm text-slate-400 leading-relaxed">{subtitle}</p>}
             <div className="mt-5">{children}</div>
