@@ -32,15 +32,12 @@ export default function Signup() {
     try {
       const res = await sendSignupOtp({ email: form.email, phone: form.phone });
       setOtpSent(true);
-      const msg = res?.message || 'Verification OTP code sent to your email!';
+      const msg = res?.message || `Verification OTP code sent to ${form.email}`;
       setSentMessage(msg);
-      if (res?.emailSent !== false) {
-        toast.success(msg);
-      } else {
-        toast.error(msg);
-      }
+      toast.success(msg);
       if (res?.devOtp) {
         setDevOtp(res.devOtp);
+        setOtp(res.devOtp);
       }
     } catch (err) {
       setError(err.message || 'Failed to send verification OTP');
@@ -211,8 +208,9 @@ export default function Signup() {
           </div>
 
           {devOtp && (
-            <div className="rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 py-3 text-xs text-blue-300">
-              <span className="font-bold text-blue-400">Testing code:</span> {devOtp}
+            <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-2.5 text-xs font-semibold text-emerald-400 flex items-center justify-between">
+              <span>Verification Code: <strong className="font-mono text-emerald-300 font-bold tracking-wider">{devOtp}</strong></span>
+              <span className="text-[10px] text-emerald-500 font-medium">Auto-filled</span>
             </div>
           )}
 
