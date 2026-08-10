@@ -212,3 +212,22 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
   );
   res.json({ tests: testsRes.rows });
 });
+
+/**
+ * Admin: Trigger idempotent catalogue data sync script.
+ */
+export const syncCatalogue = asyncHandler(async (_req, res) => {
+  const { runCatalogueSync } = await import('../../scripts/sync-catalogue-series.mjs');
+  await runCatalogueSync();
+  const updated = await query(
+    `SELECT ts.*,
+            COUNT(DISTINCT se.id)::int AS enrollment_count,
+            COUNT(DISTINCT tst.test_id)::int AS linked_tests,
+            COUNT(DISTINCT tst.test_id)::int AS planned_tests
+     FROM test_series ts
+     LEFT JOIN student_enrollments se ON se.test_series_id = ts.id
+     LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+     GROUP BY ts.id ORDER BY ts.display_order ASC, ts.created_at DESC`
+  );
+  res.json({ message: 'Catalogue synced successfully', test_series: updated.rows });
+});

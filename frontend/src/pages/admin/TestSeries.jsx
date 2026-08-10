@@ -128,13 +128,34 @@ export default function AdminTestSeries() {
     return name.includes(q) || type.includes(q) || syllabus.includes(q);
   });
 
+  const handleSyncCatalogue = async () => {
+    try {
+      setSaving(true);
+      const res = await testSeriesService.sync();
+      setList(res || []);
+      toast.success('Catalogue dataset successfully synced to 9 paid + 3 free series!');
+    } catch {
+      toast.error('Failed to sync catalogue dataset');
+    } finally {
+      setSaving(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="space-y-6">
       <PageHeader
-        title="Test Series"
+        title="Test series catalogue"
         subtitle="Manage test packages, category tags, pricing, and link existing tests from the tests repository."
         actions={(
           <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              className="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs flex items-center gap-1.5"
+              onClick={handleSyncCatalogue}
+              disabled={saving}
+            >
+              {saving ? <Spinner size="sm" /> : '⚡ Sync Catalogue Dataset'}
+            </button>
             <button
               type="button"
               className="btn-primary"

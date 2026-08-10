@@ -10,6 +10,7 @@ import {
   mySeriesTests,
   deleteTestSeries,
   toggleTestSeriesActive,
+  syncCatalogue,
 } from '../controllers/testSeriesController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -29,6 +30,7 @@ router.get('/my/:slug/tests', authorize('candidate'), mySeriesTests);
 router.post('/enroll', authorize('candidate'), validate(enrollSchema), enrollTestSeries);
 
 router.get('/', authorize('admin'), listTestSeries);
+router.post('/sync', authorize('admin'), syncCatalogue);
 router.post('/', authorize('admin'), validate(testSeriesSchema), createTestSeries);
 router.put('/:id', authorize('admin'), validate(testSeriesUpdateSchema), updateTestSeries);
 router.patch('/:id/toggle-active', authorize('admin'), toggleTestSeriesActive);

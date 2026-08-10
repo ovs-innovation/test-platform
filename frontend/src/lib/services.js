@@ -218,6 +218,10 @@ export const testSeriesService = {
     clearCache();
     return api.post('/test-series/enroll', { test_series_id }).then((r) => r.data);
   },
+  sync: () => {
+    clearCache();
+    return api.post('/test-series/sync').then((r) => r.data.test_series);
+  },
   remove: (id) => {
     clearCache();
     return api.delete(`/test-series/${id}`).then((r) => r.data);
