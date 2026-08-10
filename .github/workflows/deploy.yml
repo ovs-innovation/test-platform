@@ -75,12 +75,6 @@ jobs:
               log "Backed up backend/src/config/db.js"
             fi
 
-            if [ -f "frontend/nginx.conf" ]; then
-              mkdir -p "$BACKUP_DIR/frontend"
-              cp "frontend/nginx.conf" "$BACKUP_DIR/frontend/nginx.conf"
-              log "Backed up frontend/nginx.conf"
-            fi
-
             # 3. Clean fetch and hard reset to origin/main
             log "Step 3/9: Fetching latest code and resetting repository..."
             git fetch origin main
@@ -94,11 +88,6 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js"
               log "Restored backend/src/config/db.js"
-            fi
-
-            if [ -f "$BACKUP_DIR/frontend/nginx.conf" ]; then
-              cp "$BACKUP_DIR/frontend/nginx.conf" "frontend/nginx.conf"
-              log "Restored frontend/nginx.conf"
             fi
 
             # Rollback helper function
@@ -115,9 +104,6 @@ jobs:
 
                 if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
                   cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
-                fi
-                if [ -f "$BACKUP_DIR/frontend/nginx.conf" ]; then
-                  cp "$BACKUP_DIR/frontend/nginx.conf" "frontend/nginx.conf" || true
                 fi
 
                 log "Rebuilding and restarting containers for rollback commit..."
