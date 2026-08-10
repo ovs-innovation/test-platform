@@ -29,16 +29,6 @@ export default function TestSeriesCard({ series }) {
           </div>
         )}
 
-        {/* Subtle Blueprint Grid Pattern Overlay */}
-        <div className="pointer-events-none absolute inset-0 opacity-15 z-10" aria-hidden="true">
-          <svg className="h-full w-full" fill="none" viewBox="0 0 360 160">
-            <pattern id={`hero-grid-${series.id || series.slug}`} width="24" height="24" patternUnits="userSpaceOnUse">
-              <path d="M 24 0 L 0 0 0 24" fill="none" stroke="currentColor" strokeWidth="0.75" />
-            </pattern>
-            <rect width="100%" height="100%" fill={`url(#hero-grid-${series.id || series.slug})`} />
-          </svg>
-        </div>
-
         {/* Floating Banner Badges & Overlay Items (Left-Aligned) */}
         <div className="relative z-20 flex flex-col justify-between h-full p-4 sm:p-5 max-w-[65%] sm:max-w-[70%]">
           <div className="flex flex-col gap-2">
