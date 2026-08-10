@@ -126,8 +126,26 @@ jobs:
               exit 1
             }
 
-            # 5. Build and start containers
-            log "Step 5/9: Building Docker images..."
+            # 5. Detect active Let's Encrypt certificate directory & Build images
+            log "Step 5/9: Detecting SSL certificates and building Docker images..."
+            CERT_DIR=""
+            if [ -d "certbot/conf/live" ]; then
+              if [ -f "certbot/conf/live/edvedum.com/fullchain.pem" ]; then
+                CERT_DIR="edvedum.com"
+              elif [ -f "certbot/conf/live/cbt.prosperrainfra.com/fullchain.pem" ]; then
+                CERT_DIR="cbt.prosperrainfra.com"
+              else
+                CERT_DIR=$(find certbot/conf/live -mindepth 1 -maxdepth 1 -type d -exec test -f "{}/fullchain.pem" \; -print -quit 2>/dev/null | xargs -r basename || echo "")
+              fi
+            fi
+
+            if [ -n "$CERT_DIR" ]; then
+              log "Detected active SSL certificate directory: ${CERT_DIR}"
+              sed -i "s|/etc/letsencrypt/live/[^/]*|/etc/letsencrypt/live/${CERT_DIR}|g" frontend/nginx.conf
+            else
+              log "WARNING: No active certificate directory found in certbot/conf/live!"
+            fi
+
             docker compose build
 
             log "Step 6/9: Starting production containers in background..."
@@ -136,18 +154,25 @@ jobs:
             log "Waiting 5 seconds for container process startup..."
             sleep 5
 
-            # 6. Verify backend container running status
-            log "Step 7/9: Verifying backend container process status..."
+            # 6. Verify container running status
+            log "Step 7/9: Verifying container process status..."
             docker compose ps
             RUNNING_BACKEND=$(docker compose ps --status running backend -q || echo "")
+            RUNNING_FRONTEND=$(docker compose ps --status running frontend -q || echo "")
 
             if [ -z "$RUNNING_BACKEND" ]; then
               log "CRITICAL ERROR: Backend container is not in 'running' state!"
               execute_rollback
             fi
 
-            # 7. Internal Docker Container Health Verification
-            log "Step 8/9: Executing internal Node.js health checks inside backend container..."
+            if [ -z "$RUNNING_FRONTEND" ]; then
+              log "CRITICAL ERROR: Frontend container is not in 'running' state! Container logs:"
+              docker compose logs --tail=100 frontend || true
+              execute_rollback
+            fi
+
+            # 7. Internal & Local Health Verification
+            log "Step 8/9: Executing internal & local health checks..."
 
             INTERNAL_HEALTH_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
@@ -187,6 +212,44 @@ jobs:
             log "Restarting frontend container to refresh Docker internal DNS resolver..."
             docker compose restart frontend
             sleep 5
+
+            # Local HTTP API health check
+            log "Verifying local HTTP API health via http://127.0.0.1/api/health..."
+            if ! curl -fL --retry 10 --retry-delay 2 -sS http://127.0.0.1/api/health > /dev/null; then
+              log "CRITICAL ERROR: Local HTTP health check failed! Frontend logs:"
+              docker compose logs --tail=100 frontend || true
+              execute_rollback
+            fi
+            log "Local HTTP health check PASSED!"
+
+            # Host port 443 listening check
+            log "Verifying host port 443 is listening..."
+            if ! (ss -ltnp | grep -q ':443' || netstat -ltnp 2>/dev/null | grep -q ':443'); then
+              log "CRITICAL ERROR: Port 443 is not listening on host! Frontend logs:"
+              docker compose logs --tail=100 frontend || true
+              execute_rollback
+            fi
+            log "Host port 443 is LISTENING!"
+
+            # Local HTTPS health check with Host header
+            log "Verifying local HTTPS health via 127.0.0.1 with Host header..."
+            LOCAL_HTTPS_OK=false
+            for i in $(seq 1 5); do
+              LOCAL_CODE=$(curl -vk -sS -o /dev/null -w "%{http_code}" --max-time 5 https://127.0.0.1/api/health -H "Host: edvedum.com" 2>/dev/null) || LOCAL_CODE="000"
+              if [ "$LOCAL_CODE" -eq 200 ]; then
+                log "Local HTTPS health check PASSED (HTTP 200 OK)!"
+                LOCAL_HTTPS_OK=true
+                break
+              fi
+              log "Attempt ${i}/5: Local HTTPS returned ${LOCAL_CODE}. Retrying in 2s..."
+              sleep 2
+            done
+
+            if [ "$LOCAL_HTTPS_OK" = "false" ]; then
+              log "CRITICAL ERROR: Local HTTPS health check failed! Frontend logs:"
+              docker compose logs --tail=100 frontend || true
+              execute_rollback
+            fi
 
             # 8. Public HTTPS Health Verification
             log "Step 9/9: Verifying public health endpoints via https://edvedum.com..."
