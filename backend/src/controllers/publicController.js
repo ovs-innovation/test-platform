@@ -17,7 +17,8 @@ const FALLBACK_SERIES = [
     test_count: 8,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/jee.svg',
+    display_order: 6,
+    image_url: '/edvedum/jee-student-ai.png',
   },
   {
     id: 24,
@@ -33,7 +34,8 @@ const FALLBACK_SERIES = [
     test_count: 30,
     is_featured: true,
     is_active: true,
-    image_url: '/test-series/jee.svg',
+    display_order: 2,
+    image_url: '/edvedum/jee-student-ai.png',
   },
   {
     id: 25,
@@ -49,7 +51,8 @@ const FALLBACK_SERIES = [
     test_count: 60,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/jee.svg',
+    display_order: 5,
+    image_url: '/edvedum/jee-student-ai.png',
   },
   // NEET UG
   {
@@ -66,7 +69,8 @@ const FALLBACK_SERIES = [
     test_count: 8,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet.svg',
+    display_order: 8,
+    image_url: '/edvedum/neet-student-ai.png',
   },
   {
     id: 20,
@@ -82,7 +86,8 @@ const FALLBACK_SERIES = [
     test_count: 39,
     is_featured: true,
     is_active: true,
-    image_url: '/test-series/neet.svg',
+    display_order: 3,
+    image_url: '/edvedum/neet-student-ai.png',
   },
   {
     id: 21,
@@ -98,7 +103,8 @@ const FALLBACK_SERIES = [
     test_count: 60,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet.svg',
+    display_order: 7,
+    image_url: '/edvedum/neet-student-ai.png',
   },
   // NEET PG
   {
@@ -115,7 +121,8 @@ const FALLBACK_SERIES = [
     test_count: 8,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet-pg.svg',
+    display_order: 9,
+    image_url: '/edvedum/neetpg-student-ai.png',
   },
   {
     id: 26,
@@ -131,7 +138,8 @@ const FALLBACK_SERIES = [
     test_count: 25,
     is_featured: true,
     is_active: true,
-    image_url: '/test-series/neet-pg.svg',
+    display_order: 1,
+    image_url: '/edvedum/neetpg-student-ai.png',
   },
   {
     id: 27,
@@ -147,7 +155,8 @@ const FALLBACK_SERIES = [
     test_count: 50,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet-pg.svg',
+    display_order: 4,
+    image_url: '/edvedum/neetpg-student-ai.png',
   },
   // Free Diagnostic
   {
@@ -156,6 +165,7 @@ const FALLBACK_SERIES = [
     slug: 'jee-main-diagnostic-free',
     description: 'Full-length JEE Main diagnostic mock covering Physics, Chemistry and Mathematics with NTA CBT pattern, All India Rank and instant score analysis.',
     price: '0.00',
+    is_free: true,
     validity_days: 365,
     exam_type: 'JEE Main',
     planned_tests: 1,
@@ -164,14 +174,16 @@ const FALLBACK_SERIES = [
     test_count: 1,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/jee.svg',
+    display_order: 10,
+    image_url: '/edvedum/jee-student-ai.png',
   },
   {
     id: 7,
-    title: 'NEET UG Full-Length Diagnostic Mock',
+    title: 'NEET UG Biology & Chemistry Diagnostic Mock',
     slug: 'neet-ug-diagnostic-free',
     description: 'Full-length NEET UG diagnostic mock covering Physics, Chemistry and Biology with NCERT pattern, All India Rank and step solutions.',
     price: '0.00',
+    is_free: true,
     validity_days: 365,
     exam_type: 'NEET',
     planned_tests: 1,
@@ -180,14 +192,16 @@ const FALLBACK_SERIES = [
     test_count: 1,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet.svg',
+    display_order: 11,
+    image_url: '/edvedum/neet-student-ai.png',
   },
   {
     id: 8,
-    title: 'NEET PG Full-Length Diagnostic Mock',
+    title: 'NEET PG Clinical & High-Yield Diagnostic Mock',
     slug: 'neet-pg-clinical-free',
     description: 'Full-length NEET PG diagnostic mock featuring clinical scenarios, 19 medical subjects, image-based questions and All India Rank predictor.',
     price: '0.00',
+    is_free: true,
     validity_days: 365,
     exam_type: 'NEET PG',
     planned_tests: 1,
@@ -196,7 +210,8 @@ const FALLBACK_SERIES = [
     test_count: 1,
     is_featured: false,
     is_active: true,
-    image_url: '/test-series/neet-pg.svg',
+    display_order: 12,
+    image_url: '/edvedum/neetpg-student-ai.png',
   },
 ];
 
@@ -246,7 +261,7 @@ export const listPublicTestSeries = asyncHandler(async (req, res) => {
       LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
       WHERE ts.is_active = true`;
     if (featured === 'true') sql += ' AND ts.is_featured = true';
-    sql += ' GROUP BY ts.id ORDER BY ts.is_featured DESC, ts.created_at DESC, ts.id ASC';
+    sql += ' GROUP BY ts.id ORDER BY ts.display_order ASC, ts.is_featured DESC, ts.created_at DESC, ts.id ASC';
     const result = await query(sql);
     if (result.rows && result.rows.length > 0) {
       return res.json({ test_series: result.rows });

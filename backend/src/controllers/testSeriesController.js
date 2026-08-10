@@ -17,7 +17,7 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
      FROM test_series ts
      LEFT JOIN student_enrollments se ON se.test_series_id = ts.id
      LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
-     GROUP BY ts.id ORDER BY ts.created_at DESC`
+     GROUP BY ts.id ORDER BY ts.display_order ASC, ts.created_at DESC`
   );
   res.json({ test_series: result.rows });
 });
@@ -26,12 +26,13 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
  * Create a new test series metadata row (No test or schedule creation).
  */
 export const createTestSeries = asyncHandler(async (req, res) => {
-  const { title, description, price, validity_days, exam_type, is_featured, is_active, image_url } = req.body;
+  const { title, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order } = req.body;
   const slug = slugify(title) + '-' + Date.now().toString(36);
+  const calculatedIsFree = typeof is_free === 'boolean' ? is_free : Number(price) === 0;
   const result = await query(
-    `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, is_active, image_url)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING *`,
-    [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, is_active ?? true, image_url || '']
+    `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
+    [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, is_active ?? true, image_url || '', calculatedIsFree, display_order ?? 0]
   );
   res.status(201).json({ test_series: result.rows[0] });
 });

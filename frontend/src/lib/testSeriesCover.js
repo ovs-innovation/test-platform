@@ -113,9 +113,12 @@ const THEMES = {
 };
 
 export function getSeriesBannerImage(series) {
+  const custom = series?.image_url?.trim();
+  if (custom) return custom;
+
   const slug = (series?.slug || '').toLowerCase();
   const text = `${series?.slug || ''} ${series?.title || ''} ${series?.exam_type || ''}`.toLowerCase();
-  const free = Number(series?.price) === 0;
+  const free = Number(series?.price) === 0 || Boolean(series?.is_free);
 
   // Specific Slug Mappings for Maximum Visual Diversity (Boys & Girls)
   if (slug === 'aiets-jee-main-2027-comprehensive') return '/edvedum/banners/banner-jee-full.png';
@@ -146,8 +149,8 @@ export function getSeriesBannerImage(series) {
 /** Exam-type styling for catalog cards. */
 export function getExamTheme(series) {
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
-  const free = Number(series?.price) === 0;
-  const bannerImage = getSeriesBannerImage(series);
+  const free = Number(series?.price) === 0 || Boolean(series?.is_free);
+  const bannerImage = (series?.image_url && series.image_url.trim()) ? series.image_url.trim() : getSeriesBannerImage(series);
 
   let theme = THEMES.general;
   if (isNeetPg(text)) theme = THEMES['neet-pg'];

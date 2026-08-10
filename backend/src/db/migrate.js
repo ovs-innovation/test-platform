@@ -95,6 +95,10 @@ const run = async () => {
       const migration23 = fs.readFileSync(path.join(__dirname, 'migration_v23.sql'), 'utf-8');
       await pool.query(migration23);
     }
+    if (fs.existsSync(path.join(__dirname, 'migration_v24.sql'))) {
+      const migration24 = fs.readFileSync(path.join(__dirname, 'migration_v24.sql'), 'utf-8');
+      await pool.query(migration24);
+    }
 
     await syncSequences(pool);
     // eslint-disable-next-line no-console

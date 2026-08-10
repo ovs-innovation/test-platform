@@ -24,6 +24,8 @@ export default function AdminTestSeries() {
     is_active: true,
     validity_days: 365,
     image_url: '',
+    is_free: false,
+    display_order: 0,
   });
 
   // Link Test Modal
@@ -147,6 +149,8 @@ export default function AdminTestSeries() {
                   is_active: true,
                   validity_days: 365,
                   image_url: '',
+                  is_free: false,
+                  display_order: 0,
                 });
                 setModal(true);
               }}
@@ -169,6 +173,7 @@ export default function AdminTestSeries() {
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap gap-2 items-center">
                 <Badge color="blue">{s.exam_type}</Badge>
+                {s.is_free || Number(s.price) === 0 ? <Badge color="cyan">Free Mock</Badge> : <Badge color="indigo">Paid</Badge>}
                 {s.is_featured && <Badge color="amber">Featured</Badge>}
                 {s.is_active ? (
                   <Badge color="green">Active</Badge>
@@ -186,7 +191,7 @@ export default function AdminTestSeries() {
               </h2>
               <p className="text-xs font-semibold text-slate-500 dark:text-slate-400 mt-1">
                 <span className="text-blue-600 dark:text-blue-400 font-black">
-                  {Number(s.price) === 0 ? 'FREE' : `₹${s.price}`}
+                  {Number(s.price) === 0 || s.is_free ? 'FREE' : `₹${s.price}`}
                 </span>
                 {' · '}
                 <span className="font-bold text-slate-700 dark:text-slate-300">
@@ -224,6 +229,8 @@ export default function AdminTestSeries() {
                     is_active: s.is_active !== false,
                     validity_days: s.validity_days || 365,
                     image_url: s.image_url || '',
+                    is_free: s.is_free || Number(s.price) === 0,
+                    display_order: s.display_order || 0,
                   });
                   setModal(true);
                 }}
@@ -280,7 +287,7 @@ export default function AdminTestSeries() {
               onChange={(e) => setForm((f) => ({ ...f, description: e.target.value }))}
             />
           </div>
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Price (₹)</label>
               <input
@@ -304,6 +311,16 @@ export default function AdminTestSeries() {
                 onChange={(e) => setForm((f) => ({ ...f, validity_days: Number(e.target.value) }))}
               />
             </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Display Order</label>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                value={form.display_order}
+                onChange={(e) => setForm((f) => ({ ...f, display_order: Number(e.target.value) }))}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
@@ -319,13 +336,13 @@ export default function AdminTestSeries() {
               <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Cover Image URL</label>
               <input
                 className="input"
-                placeholder="/test-series/neet.svg"
+                placeholder="/edvedum/banners/banner-jee-full.png"
                 value={form.image_url}
                 onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))}
               />
             </div>
           </div>
-          <div className="flex gap-4 pt-1">
+          <div className="flex flex-wrap gap-4 pt-1">
             <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
               <input
                 type="checkbox"
@@ -341,6 +358,14 @@ export default function AdminTestSeries() {
                 onChange={(e) => setForm((f) => ({ ...f, is_featured: e.target.checked }))}
               />
               Featured Series
+            </label>
+            <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
+              <input
+                type="checkbox"
+                checked={form.is_free}
+                onChange={(e) => setForm((f) => ({ ...f, is_free: e.target.checked, price: e.target.checked ? 0 : f.price }))}
+              />
+              Free Tier Mock
             </label>
           </div>
           <button type="submit" className="btn-primary w-full mt-2" disabled={saving}>
