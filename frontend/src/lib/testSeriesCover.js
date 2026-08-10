@@ -114,7 +114,7 @@ const THEMES = {
 
 export function getSeriesBannerImage(series) {
   const custom = series?.image_url?.trim();
-  if (custom) return custom;
+  if (custom && custom !== '/edvedum/banners/banner-free-mock.png') return custom;
 
   const slug = (series?.slug || '').toLowerCase();
   const text = `${series?.slug || ''} ${series?.title || ''} ${series?.exam_type || ''}`.toLowerCase();
