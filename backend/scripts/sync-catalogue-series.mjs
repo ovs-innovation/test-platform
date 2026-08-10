@@ -208,7 +208,7 @@ export const runCatalogueSync = async () => {
     await client.query(`
       UPDATE test_series
       SET title = 'AIETS JEE Main Full-Length Mock Test Pack', slug = 'aiets-jee-main-mock-pack'
-      WHERE title ILIKE 'JEE Main Full Test Series%' OR slug ILIKE 'jee-main-full-test-series%';
+      WHERE title ILIKE 'JEE Main Full Test Series%' OR slug ILIKE 'jee-main-full-test-series%' OR slug = 'jee-main-2026';
 
       UPDATE test_series
       SET title = 'AIETS NEET-UG Two-Year Online CBT Program', slug = 'aiets-neet-ug-2028-two-year-online-cbt-program'
@@ -220,11 +220,11 @@ export const runCatalogueSync = async () => {
 
       UPDATE test_series
       SET title = 'AIETS NEET-UG Full-Length Mock Test Pack', slug = 'neet-ug-mock'
-      WHERE title ILIKE 'NEET UG Mock Test Pack%' OR slug ILIKE 'neet-ug-mock-test-pack%';
+      WHERE title ILIKE 'NEET UG Mock Test Pack%' OR slug ILIKE 'neet-ug-mock-test-pack%' OR slug = 'neet-ug-mock';
 
       UPDATE test_series
       SET title = 'AIETS NEET-PG Full-Length Mock Test Pack', slug = 'neet-pg-mock'
-      WHERE title ILIKE 'NEET PG Mock Test Pack%' OR slug ILIKE 'neet-pg-mock-test-pack%';
+      WHERE title ILIKE 'NEET PG Mock Test Pack%' OR slug ILIKE 'neet-pg-mock-test-pack%' OR slug = 'neet-pg-mock';
     `);
 
     const activeSlugs = [...PAID_SERIES, ...FREE_SERIES].map((s) => s.slug);
