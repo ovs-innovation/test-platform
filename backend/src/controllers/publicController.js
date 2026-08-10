@@ -175,7 +175,7 @@ const FALLBACK_SERIES = [
     is_featured: false,
     is_active: true,
     display_order: 10,
-    image_url: '/edvedum/jee-student-ai.png',
+    image_url: '/edvedum/banners/banner-free-mock.png',
   },
   {
     id: 7,
@@ -193,7 +193,7 @@ const FALLBACK_SERIES = [
     is_featured: false,
     is_active: true,
     display_order: 11,
-    image_url: '/edvedum/neet-student-ai.png',
+    image_url: '/edvedum/banners/banner-neet-bio.png',
   },
   {
     id: 8,
@@ -211,7 +211,7 @@ const FALLBACK_SERIES = [
     is_featured: false,
     is_active: true,
     display_order: 12,
-    image_url: '/edvedum/neetpg-student-ai.png',
+    image_url: '/edvedum/banners/banner-neetpg-female.png',
   },
 ];
 

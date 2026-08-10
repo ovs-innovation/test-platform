@@ -133,6 +133,10 @@ export function getSeriesBannerImage(series) {
   if (slug === 'aiets-neet-pg-complete-program') return '/edvedum/banners/banner-neetpg-female.png';
   if (slug === 'neet-pg-mock') return '/edvedum/banners/banner-neet-pg.png';
 
+  if (slug === 'jee-main-diagnostic-free') return '/edvedum/banners/banner-free-mock.png';
+  if (slug === 'neet-ug-diagnostic-free') return '/edvedum/banners/banner-neet-bio.png';
+  if (slug === 'neet-pg-clinical-free') return '/edvedum/banners/banner-neetpg-female.png';
+
   if (text.includes('physics')) return '/edvedum/banners/banner-jee-physics.png';
   if (text.includes('biology') || text.includes('chemistry') || text.includes('ncert')) return '/edvedum/banners/banner-neet-bio.png';
   if (isNeetPg(text)) return '/edvedum/banners/banner-neet-pg.png';

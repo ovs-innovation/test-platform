@@ -166,7 +166,7 @@ const FREE_SERIES = [
     test_count: 1,
     planned_tests: 1,
     display_order: 11,
-    image_url: '/edvedum/banners/banner-free-mock.png',
+    image_url: '/edvedum/banners/banner-neet-bio.png',
     defaultAssId: 12,
   },
   {
@@ -181,7 +181,7 @@ const FREE_SERIES = [
     test_count: 1,
     planned_tests: 1,
     display_order: 12,
-    image_url: '/edvedum/banners/banner-free-mock.png',
+    image_url: '/edvedum/banners/banner-neetpg-female.png',
     defaultAssId: 13,
   },
 ];
