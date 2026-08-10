@@ -34,8 +34,12 @@ export default function Signup() {
       setOtpSent(true);
       const msg = res?.message || 'Verification OTP code sent to your email!';
       setSentMessage(msg);
-      toast.success(msg);
-      if (res?.devOtp && !res?.emailSent) {
+      if (res?.emailSent !== false) {
+        toast.success(msg);
+      } else {
+        toast.error(msg);
+      }
+      if (res?.devOtp) {
         setDevOtp(res.devOtp);
       }
     } catch (err) {
