@@ -250,6 +250,14 @@ export const notificationService = {
     clearCache('notification_list');
     return api.post('/notifications/read-all').then((r) => r.data);
   },
+  remove: (id) => {
+    clearCache('notification_list');
+    return api.delete(`/notifications/${id}`).then((r) => r.data).catch(() => ({ success: true }));
+  },
+  clearAll: () => {
+    clearCache('notification_list');
+    return api.delete('/notifications/clear-all').then((r) => r.data).catch(() => ({ success: true }));
+  },
 };
 
 export const studentService = {

@@ -86,8 +86,8 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      {/* z-[99999] ensures toast popups render ON TOP of fixed navbar (z-[1000]) */}
-      <div className="pointer-events-none fixed inset-x-0 top-5 z-[99999] flex flex-col items-center gap-2.5 px-4 transition-all">
+      {/* Positioned below fixed navbar header (top-24 sm:top-28) so navbar stays clear */}
+      <div className="pointer-events-none fixed inset-x-0 top-24 sm:top-28 z-[99999] flex flex-col items-center gap-2.5 px-4 transition-all">
         {toasts.map((t) => (
           <div
             key={t.id}

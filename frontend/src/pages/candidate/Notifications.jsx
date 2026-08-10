@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { notificationService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, PageHeader, Spinner, EmptyState } from '../../components/ui.jsx';
 import { formatDateTime } from '../../lib/format.js';
-import { Bell, BookOpen, BarChart3, MessageSquare, CheckCircle2 } from 'lucide-react';
+import { Bell, BookOpen, BarChart3, MessageSquare, CheckCircle2, X, Trash2 } from 'lucide-react';
 
 function getNotificationStyle(title = '') {
   const lower = title.toLowerCase();
@@ -44,7 +44,23 @@ export default function Notifications() {
     setState('loading');
     try {
       const list = await notificationService.list();
-      setNotifications(list);
+      const studentOnly = (list || []).filter((n) => {
+        if (!n) return false;
+        const lowerType = (n.type || '').toLowerCase();
+        const lowerTitle = (n.title || '').toLowerCase();
+        const isB2bOrInst =
+          lowerType === 'b2b_demo_request' ||
+          lowerType === 'b2b' ||
+          lowerType === 'institution' ||
+          lowerType === 'institution_admin' ||
+          lowerTitle.includes('b2b') ||
+          lowerTitle.includes('institutional demo') ||
+          lowerTitle.includes('school demo') ||
+          lowerTitle.includes('institution');
+
+        return !isB2bOrInst;
+      });
+      setNotifications(studentOnly);
       setState('done');
     } catch {
       setState('error');
@@ -70,6 +86,23 @@ export default function Notifications() {
     window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
   };
 
+  const removeOne = async (e, id) => {
+    e.stopPropagation();
+    setNotifications((list) => list.filter((n) => n.id !== id));
+    try {
+      await notificationService.remove(id);
+    } catch (_) {}
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  };
+
+  const clearAll = async () => {
+    setNotifications([]);
+    try {
+      await notificationService.clearAll();
+    } catch (_) {}
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  };
+
   if (state === 'loading') return <LoadingScreen label="Loading notifications…" />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 
@@ -80,15 +113,26 @@ export default function Notifications() {
       <PageHeader
         title="Notifications & Alerts"
         subtitle={unreadCount > 0 ? `${unreadCount} unread notifications` : 'All caught up! No unread notifications.'}
-        actions={unreadCount > 0 && (
-          <button
-            type="button"
-            className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
-            onClick={markAll}
-            disabled={marking}
-          >
-            {marking ? <Spinner className="h-4 w-4" /> : 'Mark All Read'}
-          </button>
+        actions={notifications.length > 0 && (
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              className="rounded-xl border border-slate-200 bg-slate-100 px-3.5 py-1.5 text-xs font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-800/80 dark:text-slate-300 hover:bg-rose-500 hover:text-white transition cursor-pointer flex items-center gap-1.5"
+              onClick={clearAll}
+            >
+              <Trash2 className="h-3.5 w-3.5" /> Clear All
+            </button>
+            {unreadCount > 0 && (
+              <button
+                type="button"
+                className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-1.5 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition cursor-pointer"
+                onClick={markAll}
+                disabled={marking}
+              >
+                {marking ? <Spinner className="h-4 w-4" /> : 'Mark All Read'}
+              </button>
+            )}
+          </div>
         )}
       />
 
@@ -96,7 +140,7 @@ export default function Notifications() {
         <div className="space-y-4">
           <EmptyState
             title="All Caught Up!"
-            message="You have no unread notifications or exam schedule alerts at this time. Important test updates and receipts will appear here automatically."
+            message="You have no notifications or exam schedule alerts at this time. Important test updates and receipts will appear here automatically."
           />
 
           <div className="grid gap-3 sm:grid-cols-3">
@@ -172,15 +216,26 @@ export default function Notifications() {
                   </div>
                 </div>
 
-                {isUnread && (
+                <div className="flex items-center gap-2">
+                  {isUnread && (
+                    <button
+                      type="button"
+                      className="shrink-0 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition cursor-pointer"
+                      onClick={() => markOne(n.id)}
+                    >
+                      Mark read
+                    </button>
+                  )}
                   <button
                     type="button"
-                    className="shrink-0 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
-                    onClick={() => markOne(n.id)}
+                    onClick={(e) => removeOne(e, n.id)}
+                    className="p-1 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-200/60 dark:hover:bg-slate-800 transition cursor-pointer"
+                    title="Remove notification"
+                    aria-label="Remove notification"
                   >
-                    Mark read
+                    <X className="h-4 w-4" />
                   </button>
-                )}
+                </div>
               </div>
             );
           })}

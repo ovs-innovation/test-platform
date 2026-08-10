@@ -850,67 +850,71 @@ export default function AietsCalendarPage() {
             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/30">Full-Syllabus Mock</span>
           </div>
 
-          {/* 7-Column Grid Desktop View */}
-          <div className="hidden md:block">
+          {/* Responsive 7-Column Month Calendar Grid (Mobile & Desktop) */}
+          <div>
             {/* Days of Week Header */}
-            <div className="grid grid-cols-7 gap-2 mb-2 text-center text-xs font-extrabold uppercase text-slate-400">
-              <div>Sun</div>
-              <div>Mon</div>
-              <div>Tue</div>
-              <div>Wed</div>
-              <div>Thu</div>
-              <div>Fri</div>
-              <div>Sat</div>
+            <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-2 text-center text-[10px] sm:text-xs font-black uppercase text-slate-400">
+              <div><span className="sm:hidden">S</span><span className="hidden sm:inline">Sun</span></div>
+              <div><span className="sm:hidden">M</span><span className="hidden sm:inline">Mon</span></div>
+              <div><span className="sm:hidden">T</span><span className="hidden sm:inline">Tue</span></div>
+              <div><span className="sm:hidden">W</span><span className="hidden sm:inline">Wed</span></div>
+              <div><span className="sm:hidden">T</span><span className="hidden sm:inline">Thu</span></div>
+              <div><span className="sm:hidden">F</span><span className="hidden sm:inline">Fri</span></div>
+              <div><span className="sm:hidden">S</span><span className="hidden sm:inline">Sat</span></div>
             </div>
 
             {/* Date Cells */}
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid grid-cols-7 gap-1 sm:gap-2">
               {calendarDays.map((cell, i) => {
                 if (cell.empty) {
                   return (
                     <div
                       key={cell.key}
-                      className="min-h-[96px] rounded-2xl border border-transparent bg-slate-50/20 dark:bg-slate-900/10 p-2"
+                      className="min-h-[52px] sm:min-h-[96px] rounded-xl sm:rounded-2xl border border-transparent bg-slate-50/20 dark:bg-slate-900/10 p-1 sm:p-2"
                     />
                   );
                 }
 
+                const hasTests = cell.tests.length > 0;
+
                 return (
                   <div
                     key={cell.dateKey}
-                    className={`min-h-[96px] rounded-2xl border p-2 flex flex-col justify-between transition hover:bg-blue-50/50 dark:hover:bg-[#0f1f3d] ${
+                    className={`min-h-[56px] sm:min-h-[96px] rounded-xl sm:rounded-2xl border p-1 sm:p-2 flex flex-col justify-between transition hover:bg-blue-50/50 dark:hover:bg-[#0f1f3d] ${
                       cell.isToday
                         ? 'border-cyan-500 bg-cyan-500/10'
                         : cell.isNextTest
                         ? 'border-blue-400 dark:border-blue-600 bg-blue-50/90 dark:bg-blue-950/40 shadow-xs'
-                        : 'border-slate-200 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#0a152e]'
+                        : hasTests
+                        ? 'border-blue-300 dark:border-blue-800/80 bg-blue-50/30 dark:bg-[#0c1836]'
+                        : 'border-slate-200/80 dark:border-slate-800/80 bg-slate-50/50 dark:bg-[#0a152e]'
                     }`}
                   >
-                    <div className="flex justify-between items-center text-xs">
-                      <span className={`font-bold ${cell.isToday ? 'h-5 w-5 rounded-full bg-cyan-500 text-white flex items-center justify-center font-black' : 'text-slate-500 dark:text-slate-400'}`}>
+                    <div className="flex justify-between items-center text-[11px] sm:text-xs">
+                      <span className={`font-bold ${cell.isToday ? 'h-4 w-4 sm:h-5 sm:w-5 rounded-full bg-cyan-500 text-white flex items-center justify-center font-black text-[9px] sm:text-[10px]' : 'text-slate-500 dark:text-slate-400'}`}>
                         {cell.day}
                       </span>
-                      {cell.tests.length > 0 && (
+                      {hasTests && (
                         <span className="h-1.5 w-1.5 rounded-full bg-blue-500 animate-pulse" />
                       )}
                     </div>
 
-                    <div className="space-y-1 mt-1">
+                    <div className="space-y-1 mt-0.5">
                       {cell.tests.slice(0, 2).map((t) => (
                         <div
                           key={t.sequence}
                           onClick={() => setActiveTest(t)}
-                          className={`p-1.5 rounded-lg border text-[10px] font-bold truncate cursor-pointer transition hover:scale-[1.02] ${getTypeBadgeStyle(
+                          className={`p-1 sm:p-1.5 rounded-md sm:rounded-lg border text-[9px] sm:text-[10px] font-bold truncate cursor-pointer transition hover:scale-[1.02] ${getTypeBadgeStyle(
                             t.type
                           )}`}
                           title={`${t.name} • Click for details`}
                         >
-                          #{t.sequence} {t.name}
+                          <span className="hidden sm:inline">#{t.sequence} </span>{t.name}
                         </div>
                       ))}
                       {cell.tests.length > 2 && (
-                        <span className="text-[9px] font-extrabold text-blue-600 dark:text-cyan-300 block text-right">
-                          +{cell.tests.length - 2} more
+                        <span className="text-[8px] sm:text-[9px] font-extrabold text-blue-600 dark:text-cyan-300 block text-right">
+                          +{cell.tests.length - 2}
                         </span>
                       )}
                     </div>
@@ -920,31 +924,41 @@ export default function AietsCalendarPage() {
             </div>
           </div>
 
-          {/* Agenda View for Mobile Screens */}
-          <div className="md:hidden space-y-3">
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Tests scheduled in {monthLabel}:</p>
+          {/* Agenda View below Calendar Grid for Easy Mobile Scanning */}
+          <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
+            <div className="flex items-center justify-between">
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-extrabold uppercase tracking-wider">
+                Tests scheduled in {monthLabel}:
+              </p>
+              <span className="text-xs font-bold text-blue-600 dark:text-cyan-400">
+                {filteredSchedule.filter((t) => t.monthYear === monthLabel).length} tests
+              </span>
+            </div>
+
             {filteredSchedule.filter((t) => t.monthYear === monthLabel).length === 0 ? (
-              <div className="p-6 text-center text-xs text-slate-500 border border-slate-200 dark:border-slate-800 rounded-2xl">
+              <div className="p-4 text-center text-xs text-slate-400 border border-slate-200 dark:border-slate-800/80 rounded-2xl bg-slate-50/50 dark:bg-[#0a152e]">
                 No tests scheduled in this month.
               </div>
             ) : (
-              filteredSchedule
-                .filter((t) => t.monthYear === monthLabel)
-                .map((t) => (
-                  <div
-                    key={t.sequence}
-                    onClick={() => setActiveTest(t)}
-                    className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0a152e] flex justify-between items-center cursor-pointer"
-                  >
-                    <div>
-                      <span className="text-[10px] font-mono text-blue-600 dark:text-cyan-400 block font-bold">{t.formattedDate}</span>
-                      <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-0.5">{t.name}</h4>
+              <div className="grid gap-2.5 sm:grid-cols-2">
+                {filteredSchedule
+                  .filter((t) => t.monthYear === monthLabel)
+                  .map((t) => (
+                    <div
+                      key={t.sequence}
+                      onClick={() => setActiveTest(t)}
+                      className="p-3 rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#0a152e] hover:border-blue-500/50 transition flex justify-between items-center cursor-pointer"
+                    >
+                      <div className="min-w-0 flex-1 pr-2">
+                        <span className="text-[10px] font-mono text-blue-600 dark:text-cyan-400 block font-bold">{t.formattedDate}</span>
+                        <h4 className="text-xs sm:text-sm font-extrabold text-slate-900 dark:text-white mt-0.5 truncate">{t.name}</h4>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded text-[9.5px] font-bold uppercase border shrink-0 ${getTypeBadgeStyle(t.type)}`}>
+                        {t.type}
+                      </span>
                     </div>
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${getTypeBadgeStyle(t.type)}`}>
-                      {t.type}
-                    </span>
-                  </div>
-                ))
+                  ))}
+              </div>
             )}
           </div>
         </div>

@@ -7,8 +7,8 @@ import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService, adminService } from '../lib/services.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
-import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead } from '../lib/schoolStore.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School } from 'lucide-react';
+import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2 } from 'lucide-react';
 
 
 
@@ -160,16 +160,17 @@ export default function Layout({ children }) {
   }, []);
 
   const fetchUnread = useCallback(() => {
+    const isUserAdmin = user?.role === 'admin' || user?.role === 'superadmin';
     notificationService.unreadCount().then((c) => {
-      const adminNotifs = getAdminNotifications();
+      const adminNotifs = isUserAdmin ? getAdminNotifications() : [];
       const unreadAdmin = adminNotifs.filter((n) => !n.read_at).length;
       setUnread((c || 0) + unreadAdmin);
     }).catch(() => {
-      const adminNotifs = getAdminNotifications();
+      const adminNotifs = isUserAdmin ? getAdminNotifications() : [];
       const unreadAdmin = adminNotifs.filter((n) => !n.read_at).length;
       setUnread(unreadAdmin);
     });
-  }, []);
+  }, [user?.role]);
 
   useEffect(() => {
     fetchUnread();
@@ -677,14 +678,37 @@ function NotificationPanelDrawer({ onClose }) {
 
   const loadNotifications = async () => {
     setLoading(true);
+    const isUserAdmin = user?.role === 'admin' || user?.role === 'superadmin';
     try {
       const list = await notificationService.list();
-      const adminNotifs = getAdminNotifications();
-      // Combine B2B demo notifications with mock list
-      const combined = [...adminNotifs, ...(list || [])];
-      setNotifications(combined);
+      const adminNotifs = isUserAdmin ? getAdminNotifications() : [];
+      const rawList = [...(isUserAdmin ? adminNotifs : []), ...(list || [])];
+
+      const filtered = rawList.filter((n) => {
+        if (!n) return false;
+        const lowerType = (n.type || '').toLowerCase();
+        const lowerTitle = (n.title || '').toLowerCase();
+        const isB2bOrInst =
+          lowerType === 'b2b_demo_request' ||
+          lowerType === 'b2b' ||
+          lowerType === 'institution' ||
+          lowerType === 'institution_admin' ||
+          lowerTitle.includes('b2b') ||
+          lowerTitle.includes('institutional demo') ||
+          lowerTitle.includes('school demo') ||
+          lowerTitle.includes('institution');
+
+        if (!isUserAdmin) {
+          // Candidates / Students should NEVER see B2B / Institution notifications!
+          return !isB2bOrInst;
+        }
+        return true;
+      });
+
+      setNotifications(filtered);
     } catch {
-      const adminNotifs = getAdminNotifications();
+      const isUserAdmin = user?.role === 'admin' || user?.role === 'superadmin';
+      const adminNotifs = isUserAdmin ? getAdminNotifications() : [];
       setNotifications(adminNotifs || []);
     } finally {
       setLoading(false);
@@ -710,6 +734,25 @@ function NotificationPanelDrawer({ onClose }) {
     setMarking(false);
   };
 
+  const handleRemoveOne = async (e, id) => {
+    e.stopPropagation();
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+    try {
+      await notificationService.remove(id);
+    } catch (_) {}
+    deleteAdminNotification(id);
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  };
+
+  const handleClearAll = async () => {
+    setNotifications([]);
+    try {
+      await notificationService.clearAll();
+    } catch (_) {}
+    clearAllAdminNotifications();
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  };
+
   const handleItemClick = async (n) => {
     if (!n.read_at) {
       try {
@@ -726,41 +769,71 @@ function NotificationPanelDrawer({ onClose }) {
     navigate(targetUrl, { state: { leadRef: n.title, leadBody: n.body } });
   };
 
-
-
   const unreadCount = notifications.filter((n) => !n.read_at).length;
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
       <div className="absolute inset-0 bg-slate-950/60 backdrop-blur-xs" onClick={onClose} />
       <div className="relative w-full max-w-md bg-white dark:bg-[#0f172a] h-full shadow-2xl border-l border-slate-200 dark:border-slate-800 p-5 sm:p-6 flex flex-col z-10 animate-in slide-in-from-right duration-200">
-        {/* Header */}
-        <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4">
-          <div className="flex items-center gap-2">
-            <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Notifications</h3>
-            {unreadCount > 0 ? (
-              <span className="rounded-full bg-rose-500/10 px-2.5 py-0.5 text-[10px] font-black text-rose-600 dark:text-rose-400 border border-rose-500/20">
-                {unreadCount} unread
-              </span>
-            ) : (
-              <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                All caught up
-              </span>
-            )}
+        {/* Mobile & Desktop Optimized Header */}
+        <div className="border-b border-slate-200 dark:border-slate-800 pb-3 sm:pb-4 space-y-2.5">
+          {/* Top Row: Title + Unread Badge + Close Button */}
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                <Bell className="h-4 w-4" />
+              </div>
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-base sm:text-lg truncate">Notifications</h3>
+              {unreadCount > 0 ? (
+                <span className="rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] font-black text-rose-600 dark:text-rose-400 border border-rose-500/20 shrink-0 animate-pulse">
+                  {unreadCount} new
+                </span>
+              ) : (
+                <span className="hidden sm:inline-flex rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 shrink-0">
+                  Caught up
+                </span>
+              )}
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+              aria-label="Close notifications panel"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
-          <div className="flex items-center gap-2">
-            {unreadCount > 0 && (
-              <button
-                type="button"
-                disabled={marking}
-                onClick={handleMarkAllRead}
-                className="text-[11px] font-extrabold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer disabled:opacity-50"
-              >
-                {marking ? 'Marking…' : 'Mark all read'}
-              </button>
-            )}
-            <button type="button" onClick={onClose} className="text-slate-400 hover:text-slate-700 dark:hover:text-white text-sm font-bold p-1 cursor-pointer">✕</button>
-          </div>
+
+          {/* Action Row: Summary + Quick Action Buttons */}
+          {notifications.length > 0 && (
+            <div className="flex items-center justify-between gap-2 pt-0.5">
+              <span className="text-[11px] font-bold text-slate-400">
+                {notifications.length} {notifications.length === 1 ? 'notification' : 'notifications'}
+              </span>
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                {unreadCount > 0 && (
+                  <button
+                    type="button"
+                    disabled={marking}
+                    onClick={handleMarkAllRead}
+                    className="flex items-center gap-1 rounded-lg border border-blue-200 bg-blue-50 px-2.5 py-1 text-[11px] font-extrabold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/50 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition cursor-pointer disabled:opacity-50"
+                  >
+                    <CheckCircle2 className="h-3 w-3" />
+                    <span>{marking ? 'Marking…' : 'Mark all read'}</span>
+                  </button>
+                )}
+                <button
+                  type="button"
+                  onClick={handleClearAll}
+                  className="flex items-center gap-1 rounded-lg border border-slate-200 bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-600 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-300 hover:bg-rose-500 hover:text-white dark:hover:bg-rose-600 transition cursor-pointer"
+                  title="Clear all notifications"
+                >
+                  <Trash2 className="h-3 w-3" />
+                  <span>Clear all</span>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
         {/* List */}
@@ -775,7 +848,7 @@ function NotificationPanelDrawer({ onClose }) {
                 <Bell className="h-6 w-6" />
               </div>
               <p className="text-sm font-bold text-slate-700 dark:text-slate-200">You're all caught up!</p>
-              <p className="text-xs text-slate-400 max-w-xs mx-auto">No unread notifications at this time. Important updates will appear here automatically.</p>
+              <p className="text-xs text-slate-400 max-w-xs mx-auto">No notifications at this time. Important updates will appear here automatically.</p>
             </div>
           ) : (
             notifications.map((n) => {
@@ -797,7 +870,18 @@ function NotificationPanelDrawer({ onClose }) {
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center justify-between gap-2">
                         <span className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{n.title}</span>
-                        {isUnread && <span className="h-2 w-2 rounded-full bg-rose-500 shrink-0" />}
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          {isUnread && <span className="h-2 w-2 rounded-full bg-rose-500 shrink-0" />}
+                          <button
+                            type="button"
+                            onClick={(e) => handleRemoveOne(e, n.id)}
+                            className="p-1 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-slate-200/60 dark:hover:bg-slate-700/60 transition cursor-pointer"
+                            title="Remove notification"
+                            aria-label="Remove notification"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
                       </div>
                       {n.body && <p className="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-relaxed">{n.body}</p>}
                       <div className="flex items-center justify-between mt-2 pt-1 border-t border-slate-200/50 dark:border-slate-800/50">

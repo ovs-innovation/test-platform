@@ -454,6 +454,28 @@ export function markAllAdminNotificationsRead() {
   return updated;
 }
 
+export function deleteAdminNotification(id) {
+  const current = getAdminNotifications();
+  const updated = current.filter((n) => n.id !== id);
+  try {
+    localStorage.setItem(NOTIFS_KEY, JSON.stringify(updated));
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  } catch (e) {
+    console.error('Failed to delete admin notification', e);
+  }
+  return updated;
+}
+
+export function clearAllAdminNotifications() {
+  try {
+    localStorage.setItem(NOTIFS_KEY, JSON.stringify([]));
+    window.dispatchEvent(new CustomEvent('notificationStatusChanged'));
+  } catch (e) {
+    console.error('Failed to clear admin notifications', e);
+  }
+  return [];
+}
+
 // ================= STUDENT ACCESS & AUTO-ASSIGNMENT =================
 
 export function getAssignedEbooksForCourse(courseName = '') {

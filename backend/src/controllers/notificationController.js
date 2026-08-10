@@ -15,10 +15,14 @@ export const listNotifications = asyncHandler(async (req, res) => {
   const userId = getValidUserId(req.user);
   if (!userId) return res.json({ notifications: [] });
 
-  const result = await query(
-    `SELECT * FROM notifications WHERE user_id = $1 ORDER BY created_at DESC LIMIT 50`,
-    [userId]
-  );
+  const isAdmin = req.user?.role === 'admin' || req.user?.role === 'superadmin';
+  let sql = `SELECT * FROM notifications WHERE user_id = $1`;
+  if (!isAdmin) {
+    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%' AND LOWER(title) NOT LIKE '%institution%'`;
+  }
+  sql += ` ORDER BY created_at DESC LIMIT 50`;
+
+  const result = await query(sql, [userId]);
   res.json({ notifications: result.rows });
 });
 
@@ -50,9 +54,29 @@ export const unreadCount = asyncHandler(async (req, res) => {
   const userId = getValidUserId(req.user);
   if (!userId) return res.json({ count: 0 });
 
-  const result = await query(
-    `SELECT COUNT(*)::int AS c FROM notifications WHERE user_id = $1 AND read_at IS NULL`,
-    [userId]
-  );
+  const isAdmin = req.user?.role === 'admin' || req.user?.role === 'superadmin';
+  let sql = `SELECT COUNT(*)::int AS c FROM notifications WHERE user_id = $1 AND read_at IS NULL`;
+  if (!isAdmin) {
+    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%' AND LOWER(title) NOT LIKE '%institution%'`;
+  }
+
+  const result = await query(sql, [userId]);
   res.json({ count: result.rows[0]?.c || 0 });
+});
+
+export const deleteNotification = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const userId = getValidUserId(req.user);
+  if (!userId) return res.json({ success: true, message: 'Notification removed' });
+
+  await query(`DELETE FROM notifications WHERE id = $1 AND user_id = $2`, [id, userId]);
+  res.json({ success: true, message: 'Notification removed' });
+});
+
+export const clearAllNotifications = asyncHandler(async (req, res) => {
+  const userId = getValidUserId(req.user);
+  if (!userId) return res.json({ success: true, message: 'All notifications cleared' });
+
+  await query(`DELETE FROM notifications WHERE user_id = $1`, [userId]);
+  res.json({ success: true, message: 'All notifications cleared' });
 });
