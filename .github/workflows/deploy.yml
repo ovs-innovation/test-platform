@@ -35,8 +35,6 @@ jobs:
 
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
-            PUBLIC_HEALTH_URL="https://edvedum.com/api/health"
-            PUBLIC_READY_URL="https://edvedum.com/api/health/ready"
             MAX_RETRIES=24
             RETRY_INTERVAL=5
 
@@ -58,7 +56,7 @@ jobs:
             cd "$PROJECT_DIR"
 
             # 1. Clear any stuck git state (rebase/merge conflicts)
-            log "Step 1/9: Clearing any pending git merge or rebase operations..."
+            log "Step 1/8: Clearing any pending git merge or rebase operations..."
             git merge --abort || true
             git rebase --abort || true
 
@@ -66,7 +64,7 @@ jobs:
             log "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
             # 2. Backup production-specific files before git reset
-            log "Step 2/9: Backing up production-specific files to /tmp..."
+            log "Step 2/8: Backing up production-specific files to /tmp..."
             mkdir -p "$BACKUP_DIR"
 
             if [ -f "backend/src/config/db.js" ]; then
@@ -76,7 +74,7 @@ jobs:
             fi
 
             # 3. Clean fetch and hard reset to origin/main
-            log "Step 3/9: Fetching latest code and resetting repository..."
+            log "Step 3/8: Fetching latest code and resetting repository..."
             git fetch origin main
             git reset --hard origin/main
 
@@ -84,7 +82,7 @@ jobs:
             log "New target commit: ${NEW_COMMIT}"
 
             # 4. Restore production files from backup
-            log "Step 4/9: Restoring production-specific files..."
+            log "Step 4/8: Restoring production-specific files..."
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js"
               log "Restored backend/src/config/db.js"
@@ -111,15 +109,6 @@ jobs:
                 docker compose up -d --remove-orphans
                 docker compose restart frontend || true
                 log "Rollback deployment completed to commit ${PREV_COMMIT}."
-
-                log "Verifying post-rollback public health status..."
-                sleep 5
-                ROLLBACK_CODE=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 5 "$PUBLIC_HEALTH_URL") || ROLLBACK_CODE="000"
-                if [ "$ROLLBACK_CODE" -eq 200 ]; then
-                  log "POST-ROLLBACK STATUS: Service successfully restored on commit ${PREV_COMMIT} (HTTP 200 OK)."
-                else
-                  log "POST-ROLLBACK STATUS WARNING: Rollback completed, but public health returned HTTP ${ROLLBACK_CODE}."
-                fi
               fi
 
               rm -rf "$BACKUP_DIR" || true
@@ -127,7 +116,7 @@ jobs:
             }
 
             # 5. Detect active Let's Encrypt certificate directory & Build images
-            log "Step 5/9: Detecting SSL certificates and building Docker images..."
+            log "Step 5/8: Detecting SSL certificates and building Docker images..."
             CERT_DIR=""
             if [ -d "certbot/conf/live" ]; then
               if [ -f "certbot/conf/live/edvedum.com/fullchain.pem" ]; then
@@ -148,14 +137,14 @@ jobs:
 
             docker compose build
 
-            log "Step 6/9: Starting production containers in background..."
+            log "Step 6/8: Starting production containers in background..."
             docker compose up -d --remove-orphans
 
             log "Waiting 5 seconds for container process startup..."
             sleep 5
 
             # 6. Verify container running status
-            log "Step 7/9: Verifying container process status..."
+            log "Step 7/8: Verifying container process status..."
             docker compose ps
             RUNNING_BACKEND=$(docker compose ps --status running backend -q || echo "")
             RUNNING_FRONTEND=$(docker compose ps --status running frontend -q || echo "")
@@ -172,7 +161,7 @@ jobs:
             fi
 
             # 7. Internal & Local Health Verification
-            log "Step 8/9: Executing internal & local health checks..."
+            log "Step 8/8: Executing internal & local health checks..."
 
             INTERNAL_HEALTH_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
@@ -213,15 +202,6 @@ jobs:
             docker compose restart frontend
             sleep 5
 
-            # Local HTTP API health check
-            log "Verifying local HTTP API health via http://127.0.0.1/api/health..."
-            if ! curl -fL --retry 10 --retry-delay 2 -sS http://127.0.0.1/api/health > /dev/null; then
-              log "CRITICAL ERROR: Local HTTP health check failed! Frontend logs:"
-              docker compose logs --tail=100 frontend || true
-              execute_rollback
-            fi
-            log "Local HTTP health check PASSED!"
-
             # Host port 443 listening check
             log "Verifying host port 443 is listening..."
             if ! (ss -ltnp | grep -q ':443' || netstat -ltnp 2>/dev/null | grep -q ':443'); then
@@ -231,64 +211,40 @@ jobs:
             fi
             log "Host port 443 is LISTENING!"
 
-            # Local HTTPS health check with Host header
-            log "Verifying local HTTPS health via 127.0.0.1 with Host header..."
-            LOCAL_HTTPS_OK=false
-            for i in $(seq 1 5); do
-              LOCAL_CODE=$(curl -vk -sS -o /dev/null -w "%{http_code}" --max-time 5 https://127.0.0.1/api/health -H "Host: edvedum.com" 2>/dev/null) || LOCAL_CODE="000"
-              if [ "$LOCAL_CODE" -eq 200 ]; then
-                log "Local HTTPS health check PASSED (HTTP 200 OK)!"
-                LOCAL_HTTPS_OK=true
-                break
-              fi
-              log "Attempt ${i}/5: Local HTTPS returned ${LOCAL_CODE}. Retrying in 2s..."
-              sleep 2
-            done
+            # Local HTTPS liveness check via --resolve
+            log "Verifying local HTTPS liveness check via --resolve edvedum.com:443:127.0.0.1..."
+            LOCAL_CODE=$(curl \
+              --resolve edvedum.com:443:127.0.0.1 \
+              -sS \
+              -o /dev/null \
+              -w "%{http_code}" \
+              --max-time 10 \
+              https://edvedum.com/api/health
+            ) || LOCAL_CODE="000"
 
-            if [ "$LOCAL_HTTPS_OK" = "false" ]; then
-              log "CRITICAL ERROR: Local HTTPS health check failed! Frontend logs:"
+            if [ "$LOCAL_CODE" != "200" ]; then
+              log "CRITICAL ERROR: Local HTTPS health returned HTTP ${LOCAL_CODE}"
               docker compose logs --tail=100 frontend || true
               execute_rollback
             fi
+            log "Local HTTPS liveness check PASSED!"
 
-            # 8. Public HTTPS Health Verification
-            log "Step 9/9: Verifying public health endpoints via https://edvedum.com..."
+            # Local HTTPS readiness check via --resolve
+            log "Verifying local HTTPS readiness check via --resolve edvedum.com:443:127.0.0.1..."
+            LOCAL_READY_CODE=$(curl \
+              --resolve edvedum.com:443:127.0.0.1 \
+              -sS \
+              -o /dev/null \
+              -w "%{http_code}" \
+              --max-time 10 \
+              https://edvedum.com/api/health/ready
+            ) || LOCAL_READY_CODE="000"
 
-            PUB_HEALTH_OK=false
-            for i in $(seq 1 $MAX_RETRIES); do
-              HTTP_CODE=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 5 "$PUBLIC_HEALTH_URL") || HTTP_CODE="000"
-              if [ "$HTTP_CODE" -eq 200 ]; then
-                log "Public liveness check PASSED (HTTP 200 OK) on attempt ${i}/${MAX_RETRIES}!"
-                PUB_HEALTH_OK=true
-                break
-              else
-                log "Attempt ${i}/${MAX_RETRIES}: Public liveness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
-                sleep $RETRY_INTERVAL
-              fi
-            done
-
-            if [ "$PUB_HEALTH_OK" = "false" ]; then
-              log "Public liveness check failed!"
+            if [ "$LOCAL_READY_CODE" != "200" ]; then
+              log "CRITICAL ERROR: Local HTTPS readiness returned HTTP ${LOCAL_READY_CODE}"
               execute_rollback
             fi
-
-            PUB_READY_OK=false
-            for i in $(seq 1 $MAX_RETRIES); do
-              HTTP_CODE=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 5 "$PUBLIC_READY_URL") || HTTP_CODE="000"
-              if [ "$HTTP_CODE" -eq 200 ]; then
-                log "Public readiness check PASSED (HTTP 200 OK - DB Connected) on attempt ${i}/${MAX_RETRIES}!"
-                PUB_READY_OK=true
-                break
-              else
-                log "Attempt ${i}/${MAX_RETRIES}: Public readiness returned HTTP ${HTTP_CODE}. Retrying in ${RETRY_INTERVAL}s..."
-                sleep $RETRY_INTERVAL
-              fi
-            done
-
-            if [ "$PUB_READY_OK" = "false" ]; then
-              log "Public readiness check failed!"
-              execute_rollback
-            fi
+            log "Local HTTPS readiness check PASSED!"
 
             # Post-deployment cleanup
             log "Pruning dangling Docker build cache layers..."
@@ -296,7 +252,42 @@ jobs:
             rm -rf "$BACKUP_DIR" || true
 
             log "=================================================="
-            log " EDVEDUM Production Deployment SUCCESSFUL!"
+            log " EDVEDUM VPS Local Deployment Successful!"
             log " Active Commit: ${NEW_COMMIT}"
-            log " Status: 100% Operational (Container & Public Health OK)"
+            log " Status: 100% Operational (Container & Local HTTPS OK)"
             log "=================================================="
+
+      - name: Verify public EDVEDUM deployment
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          check_url() {
+            local url="$1"
+            local expected="$2"
+
+            for attempt in $(seq 1 24); do
+              code=$(curl \
+                -sS \
+                -o /dev/null \
+                -w "%{http_code}" \
+                --connect-timeout 5 \
+                --max-time 10 \
+                "$url"
+              ) || code="000"
+
+              echo "Attempt ${attempt}/24: ${url} returned HTTP ${code}"
+
+              if [ "$code" = "$expected" ]; then
+                return 0
+              fi
+
+              sleep 5
+            done
+
+            return 1
+          }
+
+          check_url "https://edvedum.com/api/health" "200"
+          check_url "https://edvedum.com/api/health/ready" "200"
+          check_url "https://edvedum.com/" "200"
