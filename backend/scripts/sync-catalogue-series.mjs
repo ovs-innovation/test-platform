@@ -1,7 +1,7 @@
-import { query, pool } from '../src/config/db.js';
+import { pool, withTransaction } from '../src/config/db.js';
 
 const PAID_SERIES = [
-  // NEET PG 2027 Comprehensive
+  // 1. NEET PG 2027 Comprehensive
   {
     title: 'AIETS NEET-PG 2027 Comprehensive Test Series',
     slug: 'aiets-neet-pg-2027-comprehensive',
@@ -16,7 +16,7 @@ const PAID_SERIES = [
     display_order: 1,
     image_url: '/edvedum/banners/banner-neet-pg.png',
   },
-  // JEE Main 2027 Comprehensive
+  // 2. JEE Main 2027 Comprehensive
   {
     title: 'AIETS JEE Main 2027 Comprehensive Test Series',
     slug: 'aiets-jee-main-2027-comprehensive',
@@ -31,7 +31,7 @@ const PAID_SERIES = [
     display_order: 2,
     image_url: '/edvedum/banners/banner-jee-full.png',
   },
-  // NEET UG 2027 Comprehensive
+  // 3. NEET UG 2027 Comprehensive
   {
     title: 'AIETS NEET-UG 2027 Comprehensive Test Series',
     slug: 'neet-ug-2027-aiets-comprehensive-test-series',
@@ -46,7 +46,7 @@ const PAID_SERIES = [
     display_order: 3,
     image_url: '/edvedum/banners/banner-neet-mock.png',
   },
-  // NEET PG Complete Online CBT Program
+  // 4. NEET PG Complete Online CBT Program
   {
     title: 'AIETS NEET-PG Complete Online CBT Program',
     slug: 'aiets-neet-pg-complete-program',
@@ -61,7 +61,7 @@ const PAID_SERIES = [
     display_order: 4,
     image_url: '/edvedum/banners/banner-neetpg-female.png',
   },
-  // JEE Main Complete Online CBT Program
+  // 5. JEE Main Complete Online CBT Program
   {
     title: 'AIETS JEE Main Complete Online CBT Program',
     slug: 'aiets-jee-main-2028-two-year',
@@ -76,7 +76,7 @@ const PAID_SERIES = [
     display_order: 5,
     image_url: '/edvedum/banners/banner-jee-female.png',
   },
-  // JEE Main Full-Length Mock Test Pack
+  // 6. JEE Main Full-Length Mock Test Pack
   {
     title: 'AIETS JEE Main Full-Length Mock Test Pack',
     slug: 'aiets-jee-main-mock-pack',
@@ -91,7 +91,7 @@ const PAID_SERIES = [
     display_order: 6,
     image_url: '/edvedum/banners/banner-jee-male2.png',
   },
-  // NEET UG Two-Year Online CBT Program
+  // 7. NEET UG Two-Year Online CBT Program
   {
     title: 'AIETS NEET-UG Two-Year Online CBT Program',
     slug: 'aiets-neet-ug-2028-two-year-online-cbt-program',
@@ -106,7 +106,7 @@ const PAID_SERIES = [
     display_order: 7,
     image_url: '/edvedum/banners/banner-neet-male.png',
   },
-  // NEET UG Full-Length Mock Test Pack
+  // 8. NEET UG Full-Length Mock Test Pack
   {
     title: 'AIETS NEET-UG Full-Length Mock Test Pack',
     slug: 'neet-ug-mock',
@@ -121,7 +121,7 @@ const PAID_SERIES = [
     display_order: 8,
     image_url: '/edvedum/banners/banner-neet-bio.png',
   },
-  // NEET PG Full-Length Mock Test Pack
+  // 9. NEET PG Full-Length Mock Test Pack
   {
     title: 'AIETS NEET-PG Full-Length Mock Test Pack',
     slug: 'neet-pg-mock',
@@ -186,22 +186,60 @@ const FREE_SERIES = [
   },
 ];
 
-const run = async () => {
-  try {
+export const runCatalogueSync = async () => {
+  return withTransaction(async (client) => {
+    // Audit log existing state prior to migration
+    const snapshot = await client.query(`
+      SELECT 
+        ts.id,
+        ts.slug,
+        ts.title,
+        ts.exam_type AS category,
+        ts.price,
+        (SELECT COUNT(*) FROM user_test_series_enrollments e WHERE e.test_series_id = ts.id) AS enrollment_count,
+        (SELECT COUNT(*) FROM test_series_assessments tsa WHERE tsa.test_series_id = ts.id) AS linked_test_count
+      FROM test_series ts
+      ORDER BY ts.id
+    `);
+    console.log('[sync] Pre-migration Database Snapshot:');
+    console.table(snapshot.rows);
+
+    // 1. Rename existing legacy production titles/slugs to preserve existing record IDs & relations
+    await client.query(`
+      UPDATE test_series
+      SET title = 'AIETS JEE Main Full-Length Mock Test Pack', slug = 'aiets-jee-main-mock-pack'
+      WHERE title ILIKE 'JEE Main Full Test Series%' OR slug ILIKE 'jee-main-full-test-series%';
+
+      UPDATE test_series
+      SET title = 'AIETS NEET-UG Two-Year Online CBT Program', slug = 'aiets-neet-ug-2028-two-year-online-cbt-program'
+      WHERE title ILIKE 'AIETS Two-Year Online CBT Program%' OR slug = 'aiets-two-year-online-cbt-program';
+
+      UPDATE test_series
+      SET title = 'AIETS NEET-UG 2027 Comprehensive Test Series', slug = 'neet-ug-2027-aiets-comprehensive-test-series'
+      WHERE title ILIKE 'NEET-UG 2027 Comprehensive%' OR (slug ILIKE 'neet-ug-2027-comprehensive%' AND slug != 'neet-ug-2027-aiets-comprehensive-test-series');
+
+      UPDATE test_series
+      SET title = 'AIETS NEET-UG Full-Length Mock Test Pack', slug = 'neet-ug-mock'
+      WHERE title ILIKE 'NEET UG Mock Test Pack%' OR slug ILIKE 'neet-ug-mock-test-pack%';
+
+      UPDATE test_series
+      SET title = 'AIETS NEET-PG Full-Length Mock Test Pack', slug = 'neet-pg-mock'
+      WHERE title ILIKE 'NEET PG Mock Test Pack%' OR slug ILIKE 'neet-pg-mock-test-pack%';
+    `);
+
     const activeSlugs = [...PAID_SERIES, ...FREE_SERIES].map((s) => s.slug);
 
-    // 1. Archive outdated series without deleting records
-    await query(
+    // 2. Safe Deactivation of outdated/duplicate series (does NOT delete data or break enrollments)
+    await client.query(
       `UPDATE test_series SET is_active = false WHERE slug NOT IN (${activeSlugs.map((_, i) => `$${i + 1}`).join(',')})`,
       activeSlugs
     );
-    console.log('[sync] Archived outdated series not in target 12.');
 
-    // 2. Upsert Paid Series
+    // 3. Upsert Paid Series
     for (const s of PAID_SERIES) {
-      const existing = await query('SELECT id FROM test_series WHERE slug = $1', [s.slug]);
+      const existing = await client.query('SELECT id FROM test_series WHERE slug = $1', [s.slug]);
       if (existing.rowCount > 0) {
-        await query(
+        await client.query(
           `UPDATE test_series SET
              title = $1,
              description = $2,
@@ -218,24 +256,22 @@ const run = async () => {
            WHERE slug = $12`,
           [s.title, s.description, s.price, s.is_free, s.validity_days, s.exam_type, s.is_featured, s.test_count, s.planned_tests, s.image_url, s.display_order, s.slug]
         );
-        console.log(`[sync] Updated paid series: ${s.title}`);
       } else {
-        await query(
+        await client.query(
           `INSERT INTO test_series (title, slug, description, price, is_free, validity_days, exam_type, is_featured, test_count, planned_tests, image_url, display_order, is_active)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true)`,
           [s.title, s.slug, s.description, s.price, s.is_free, s.validity_days, s.exam_type, s.is_featured, s.test_count, s.planned_tests, s.image_url, s.display_order]
         );
-        console.log(`[sync] Inserted paid series: ${s.title}`);
       }
     }
 
-    // 3. Upsert Free Series & link assessments
+    // 4. Upsert Free Diagnostic Series & link default assessments
     for (const s of FREE_SERIES) {
       let tsId;
-      const existing = await query('SELECT id FROM test_series WHERE slug = $1', [s.slug]);
+      const existing = await client.query('SELECT id FROM test_series WHERE slug = $1', [s.slug]);
       if (existing.rowCount > 0) {
         tsId = existing.rows[0].id;
-        await query(
+        await client.query(
           `UPDATE test_series SET
              title = $1,
              description = $2,
@@ -252,25 +288,23 @@ const run = async () => {
            WHERE id = $12`,
           [s.title, s.description, s.price, s.is_free, s.validity_days, s.exam_type, s.is_featured, s.test_count, s.planned_tests, s.image_url, s.display_order, tsId]
         );
-        console.log(`[sync] Updated free series: ${s.title}`);
       } else {
-        const ins = await query(
+        const ins = await client.query(
           `INSERT INTO test_series (title, slug, description, price, is_free, validity_days, exam_type, is_featured, test_count, planned_tests, image_url, display_order, is_active)
            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, true)
            RETURNING id`,
           [s.title, s.slug, s.description, s.price, s.is_free, s.validity_days, s.exam_type, s.is_featured, s.test_count, s.planned_tests, s.image_url, s.display_order]
         );
         tsId = ins.rows[0].id;
-        console.log(`[sync] Inserted free series: ${s.title}`);
       }
 
-      // Link default assessment if not linked
-      const assRes = await query(
+      // Link default assessment if published and not already linked
+      const assRes = await client.query(
         `SELECT a.id FROM assessments a WHERE a.id = $1 AND a.is_published = true`,
         [s.defaultAssId]
       );
       if (assRes.rowCount > 0) {
-        await query(
+        await client.query(
           `INSERT INTO test_series_assessments (test_series_id, assessment_id, position, label)
            VALUES ($1, $2, 1, 'Diagnostic Mock 1')
            ON CONFLICT DO NOTHING`,
@@ -279,12 +313,15 @@ const run = async () => {
       }
     }
 
-    console.log('[sync] Catalogue sync complete!');
-  } catch (err) {
-    console.error('[sync] Sync failed:', err);
-  } finally {
-    await pool.end();
-  }
+    console.log('[sync] Catalogue transaction successfully executed.');
+  });
 };
 
-run();
+if (import.meta.url === `file://${process.argv[1]}`) {
+  runCatalogueSync()
+    .then(() => pool.end())
+    .catch((err) => {
+      console.error('[sync] Catalogue sync failed:', err);
+      process.exit(1);
+    });
+}
