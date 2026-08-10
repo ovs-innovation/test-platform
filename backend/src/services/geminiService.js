@@ -631,6 +631,49 @@ function buildSmartAcademicResolution({ questionText = '', imageBase64 = null, s
     };
   }
 
+  // --- 2B. BIOLOGY & GENETICS: DNA DIMENSIONS & CHARGAFF'S RULE ---
+  if (query.includes('dna') || query.includes('chargaff') || query.includes('base pair') || query.includes('hydrogen bond') || query.includes('bp') || query.includes('base')) {
+    return {
+      summary: 'DNA Structure & Quantitative Genetics: Calculation of DNA segment length, base frequencies using Chargaff\'s Rule (%A = %T, %G = %C), and total Hydrogen bonds.',
+      subject: 'Biology',
+      topic: 'Molecular Basis of Inheritance — B-DNA Dimensions & Chargaff\'s Rule',
+      problem_statement: questionText || 'DNA length, base composition and hydrogen bonding calculation',
+      key_concepts_and_formulas: [
+        'B-DNA Pitch & Distance: Distance between consecutive base pairs = 0.34 nm = 0.34 × 10⁻⁹ m',
+        'Chargaff\'s Rule: In double-stranded DNA, %A = %T and %G = %C (%A + %T + %G + %C = 100%)',
+        'Hydrogen Bonding: A=T pair has 2 H-bonds; G≡C pair has 3 H-bonds',
+        'Total Length Formula: Total Length = (Number of bp) × (Distance per bp)'
+      ],
+      step_by_step_solution: [
+        {
+          step_number: 1,
+          heading: 'Calculate total physical length of DNA segment',
+          explanation: '• Given number of base pairs (bp) = 1.2 × 10⁵ bp\n• Distance between adjacent base pairs = 0.34 nm = 0.34 × 10⁻⁹ m\n• Total Length = (Number of bp) × (Distance per bp)\n• Total Length = (1.2 × 10⁵) × (0.34 × 10⁻⁹ m) = 0.408 × 10⁻⁴ m = 4.08 × 10⁻⁵ m = 4.08 × 10⁴ nm.'
+        },
+        {
+          step_number: 2,
+          heading: 'Calculate individual base pair frequencies',
+          explanation: '• Total base pairs = 1.2 × 10⁵ bp, which means total bases = 2 × 1.2 × 10⁵ = 2.4 × 10⁵ bases.\n• Given %A = 20%, according to Chargaff\'s rule: %T = %A = 20%.\n• %G + %C = 100% - (20% + 20%) = 60% ➔ %G = %C = 30%.'
+        },
+        {
+          step_number: 3,
+          heading: 'Calculate total A-T and G-C base pairs',
+          explanation: '• Fraction of A-T pairs = 20% of total bp = 0.20 × 1.2 × 10⁵ = 2.4 × 10⁴ bp\n• Fraction of G-C pairs = 30% of total bp = 0.30 × 1.2 × 10⁵ = 3.6 × 10⁴ bp'
+        },
+        {
+          step_number: 4,
+          heading: 'Calculate total hydrogen bonds',
+          explanation: '• H-bonds from A-T pairs = 2 × (2.4 × 10⁴) = 4.8 × 10⁴\n• H-bonds from G-C pairs = 3 × (3.6 × 10⁴) = 10.8 × 10⁴\n• Total H-bonds = (4.8 × 10⁴) + (10.8 × 10⁴) = 15.6 × 10⁴ = 1.56 × 10⁵'
+        }
+      ],
+      final_answer: 'Total Length = 4.08 × 10⁴ nm (4.08 × 10⁻⁵ m). Base Composition: A = 20%, T = 20%, G = 30%, C = 30%. Total Hydrogen Bonds = 1.56 × 10⁵.',
+      pro_tips: [
+        'NEET Tip: Remember that A=T has 2 H-bonds while G≡C has 3 H-bonds. Higher G-C content increases DNA melting temperature (T_m).',
+        'Chargaff\'s rule applies ONLY to double-stranded DNA (dsDNA), NOT single-stranded RNA or ssDNA.'
+      ]
+    };
+  }
+
   // --- 3. PHYSICS: VELOCITY, SPEED & ACCELERATION ---
   if (query.includes('velocity') || query.includes('speed') || query.includes('displacement') || query.includes('acceleration') || query.includes('kinematics')) {
     return {
@@ -1542,10 +1585,12 @@ Detect which mode the student is asking and respond accordingly:
   3) Relevant degree paths & career outcomes.
   4) Caveat: Advise verifying latest official counseling/cutoff data.
 
-FORMATTING RULES:
-- Use clear markdown headers (###), bullet points, numbered steps, and LaTeX math notation ($x^2$, $\\frac{a}{b}$).
-- Bold the final answer or key recommendation.
-- Maintain an encouraging, patient, and precise tone.`;
+FORMATTING & MATHEMATICAL PRESENTATION RULES:
+- Format all mathematical, physics, chemistry, and biology equations in clean, clear, student-friendly presentation.
+- AVOID messy raw LaTeX command noise like \\text{...}, escaped percent signs \\%, or escaped dollar signs \\$.
+- Use clean standard mathematical and scientific symbols (e.g., × for multiplication, ÷ for division, ±, √, °, superscripts like 10⁵, 10⁻⁹, 10⁴, 10⁻⁴, subscripts, chemical reaction arrows ➔, base pair equality = or ≡) or clean LaTeX ($ equation $ or $$ equation $$) without \\text{} clutter.
+- Bold the final answer or key recommendation clearly with standard SI units.
+- Maintain an encouraging, patient, and precise academic mentor tone.`;
 
     let contentsPayload = [];
 

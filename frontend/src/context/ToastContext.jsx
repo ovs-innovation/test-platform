@@ -1,4 +1,5 @@
-import { createContext, useCallback, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useState, useRef } from 'react';
+import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
 
 const ToastContext = createContext(null);
 
@@ -6,17 +7,60 @@ let idCounter = 0;
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
+  const timersRef = useRef(new Map());
 
   const remove = useCallback((id) => {
+    if (timersRef.current.has(id)) {
+      clearTimeout(timersRef.current.get(id));
+      timersRef.current.delete(id);
+    }
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
   const push = useCallback(
     (message, type = 'info', duration = 4000) => {
-      const id = ++idCounter;
-      setToasts((prev) => [...prev, { id, message, type }]);
-      if (duration) setTimeout(() => remove(id), duration);
-      return id;
+      if (!message) return null;
+
+      let targetId = null;
+
+      setToasts((prev) => {
+        // Prevent duplicate toasts with identical message & type
+        const existing = prev.find((t) => t.message === message && t.type === type);
+        if (existing) {
+          targetId = existing.id;
+          // Refresh auto-dismiss timer for the existing toast
+          if (timersRef.current.has(existing.id)) {
+            clearTimeout(timersRef.current.get(existing.id));
+          }
+          if (duration) {
+            const timer = setTimeout(() => remove(existing.id), duration);
+            timersRef.current.set(existing.id, timer);
+          }
+          return prev;
+        }
+
+        const id = ++idCounter;
+        targetId = id;
+
+        if (duration) {
+          const timer = setTimeout(() => remove(id), duration);
+          timersRef.current.set(id, timer);
+        }
+
+        // Limit to maximum 3 active toasts to prevent clutter
+        const newToasts = [...prev, { id, message, type }];
+        if (newToasts.length > 3) {
+          const oldest = newToasts[0];
+          if (timersRef.current.has(oldest.id)) {
+            clearTimeout(timersRef.current.get(oldest.id));
+            timersRef.current.delete(oldest.id);
+          }
+          return newToasts.slice(1);
+        }
+        return newToasts;
+      });
+
+      return targetId;
     },
     [remove]
   );
@@ -28,22 +72,39 @@ export function ToastProvider({ children }) {
   };
 
   const styles = {
-    success: 'bg-emerald-600',
-    error: 'bg-red-600',
-    info: 'bg-slate-800',
+    success: 'bg-[#059669] border border-emerald-400/30 text-white shadow-emerald-900/20',
+    error: 'bg-[#DC2626] border border-red-400/30 text-white shadow-red-900/20',
+    info: 'bg-[#0F172A] border border-slate-700 text-white shadow-slate-900/30',
+  };
+
+  const icons = {
+    success: <CheckCircle2 className="h-5 w-5 text-emerald-200 shrink-0" />,
+    error: <AlertCircle className="h-5 w-5 text-red-200 shrink-0" />,
+    info: <Info className="h-5 w-5 text-sky-300 shrink-0" />,
   };
 
   return (
     <ToastContext.Provider value={toast}>
       {children}
-      <div className="pointer-events-none fixed inset-x-0 top-4 z-[100] flex flex-col items-center gap-2 px-4">
+      {/* z-[99999] ensures toast popups render ON TOP of fixed navbar (z-[1000]) */}
+      <div className="pointer-events-none fixed inset-x-0 top-5 z-[99999] flex flex-col items-center gap-2.5 px-4 transition-all">
         {toasts.map((t) => (
           <div
             key={t.id}
-            className={`pointer-events-auto w-full max-w-sm rounded-lg px-4 py-3 text-sm font-medium text-white shadow-lg ${styles[t.type]}`}
+            className={`pointer-events-auto flex items-center justify-between gap-3 w-full max-w-md rounded-xl px-4 py-3 text-sm font-semibold shadow-2xl backdrop-blur-md transition-all duration-300 transform animate-in fade-in slide-in-from-top-3 ${styles[t.type] || styles.info}`}
             role="status"
           >
-            {t.message}
+            <div className="flex items-center gap-2.5 min-w-0">
+              {icons[t.type] || icons.info}
+              <span className="truncate leading-snug">{t.message}</span>
+            </div>
+            <button
+              onClick={() => remove(t.id)}
+              className="p-1 rounded-lg hover:bg-white/20 text-white/80 hover:text-white transition cursor-pointer shrink-0"
+              aria-label="Close notification"
+            >
+              <X className="h-4 w-4" />
+            </button>
           </div>
         ))}
       </div>

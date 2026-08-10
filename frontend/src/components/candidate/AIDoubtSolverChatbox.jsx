@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
+import katex from 'katex';
+import 'katex/dist/katex.min.css';
 import {
   Sparkles,
   Send,
@@ -21,18 +23,99 @@ import {
   ChevronDown
 } from 'lucide-react';
 import { studentReportService } from '../../lib/services.js';
+
+function cleanScienceMathText(str) {
+  if (!str || typeof str !== 'string') return str || '';
+  let cleaned = str;
+
+  // 1. Fix escaped dollar signs and percent signs: \$ -> $, \% -> %
+  cleaned = cleaned.replace(/\\\$([^\$]+)\\\$/g, '$1');
+  cleaned = cleaned.replace(/\\\$/g, '$');
+  cleaned = cleaned.replace(/\\%/g, '%');
+
+  // 2. Clean \text{...} wrappers
+  cleaned = cleaned.replace(/\\text\{\s*([^{}]+)\s*\}/g, '$1');
+
+  // 3. Common LaTeX math symbols to clean Unicode symbols
+  cleaned = cleaned.replace(/\\times/g, '×');
+  cleaned = cleaned.replace(/\\cdot/g, '·');
+  cleaned = cleaned.replace(/\\equiv/g, '≡');
+  cleaned = cleaned.replace(/\\longrightarrow/g, '➔');
+  cleaned = cleaned.replace(/\\rightarrow/g, '➔');
+  cleaned = cleaned.replace(/\\pm/g, '±');
+  cleaned = cleaned.replace(/\\leq/g, '≤');
+  cleaned = cleaned.replace(/\\geq/g, '≥');
+  cleaned = cleaned.replace(/\\neq/g, '≠');
+  cleaned = cleaned.replace(/\\approx/g, '≈');
+  cleaned = cleaned.replace(/\\alpha/g, 'α');
+  cleaned = cleaned.replace(/\\beta/g, 'β');
+  cleaned = cleaned.replace(/\\gamma/g, 'γ');
+  cleaned = cleaned.replace(/\\delta/g, 'δ');
+  cleaned = cleaned.replace(/\\Delta/g, 'Δ');
+  cleaned = cleaned.replace(/\\theta/g, 'θ');
+  cleaned = cleaned.replace(/\\lambda/g, 'λ');
+  cleaned = cleaned.replace(/\\pi/g, 'π');
+  cleaned = cleaned.replace(/\\sigma/g, 'σ');
+  cleaned = cleaned.replace(/\\mu/g, 'μ');
+  cleaned = cleaned.replace(/\\omega/g, 'ω');
+  cleaned = cleaned.replace(/\\Omega/g, 'Ω');
+
+  // 4. Superscripts & exponents (e.g. 10^-9 -> 10⁻⁹, 10^5 -> 10⁵, x^2 -> x²)
+  const superMap = {
+    '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
+    '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
+    '+': '⁺', '-': '⁻', '=': '⁼', '(': '⁽', ')': '⁾',
+    'n': 'ⁿ', 'i': 'ⁱ'
+  };
+
+  cleaned = cleaned.replace(/\^{(-?\d+|\+?\d+|[a-z])}/gi, (_, p1) => {
+    return p1.split('').map(c => superMap[c] || c).join('');
+  });
+  cleaned = cleaned.replace(/\^([0-9\+\-n])/gi, (_, p1) => superMap[p1] || p1);
+
+  // 5. Clean LaTeX delimiter wrappers like \( \)
+  cleaned = cleaned.replace(/\\\(|\\\)/g, '');
+
+  return cleaned;
+}
+
+function KaTeXMath({ math, displayMode = false }) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    if (containerRef.current && math) {
+      const cleanedMath = cleanScienceMathText(math);
+      try {
+        katex.render(cleanedMath, containerRef.current, {
+          displayMode,
+          throwOnError: false,
+          output: 'html',
+        });
+      } catch (err) {
+        containerRef.current.textContent = cleanedMath;
+      }
+    }
+  }, [math, displayMode]);
+
+  return <span ref={containerRef} className={displayMode ? "block my-2 text-center text-indigo-950 font-semibold" : "inline-block px-1 font-semibold text-indigo-950"} />;
+}
+
 function renderInlineFormatting(str) {
   if (!str) return '';
-  const parts = str.split(/(\*\*.*?\*\*|\`.*?\`|\$.*?\$)/g);
+  const sanitized = cleanScienceMathText(str);
+  const parts = sanitized.split(/(\$\$.*?\$\$|\$.*?\$|\`.*?\`|\*\*.*?\*\*)/g);
   return parts.map((part, i) => {
+    if (part.startsWith('$$') && part.endsWith('$$') && part.length > 4) {
+      return <KaTeXMath key={i} math={part.slice(2, -2)} displayMode={true} />;
+    }
+    if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+      return <KaTeXMath key={i} math={part.slice(1, -1)} displayMode={false} />;
+    }
     if (part.startsWith('**') && part.endsWith('**')) {
-      return <strong key={i} className="font-bold text-slate-900">{part.slice(2, -2)}</strong>;
+      return <strong key={i} className="font-bold text-slate-900">{renderInlineFormatting(part.slice(2, -2))}</strong>;
     }
     if (part.startsWith('`') && part.endsWith('`')) {
       return <code key={i} className="bg-slate-100 text-indigo-700 px-1.5 py-0.5 rounded font-mono text-[11px] font-medium border border-slate-200">{part.slice(1, -1)}</code>;
-    }
-    if (part.startsWith('$') && part.endsWith('$')) {
-      return <span key={i} className="font-mono text-indigo-900 font-semibold bg-indigo-50/80 px-1.5 py-0.5 rounded border border-indigo-200/60">{part.slice(1, -1)}</span>;
     }
     return part;
   });
@@ -40,7 +123,8 @@ function renderInlineFormatting(str) {
 
 function renderFormattedMarkdownText(text) {
   if (!text) return null;
-  const lines = text.split('\n');
+  const cleanedText = cleanScienceMathText(text);
+  const lines = cleanedText.split('\n');
   const elements = [];
 
   lines.forEach((line, idx) => {
@@ -562,7 +646,9 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                       </div>
 
                       {/* Summary */}
-                      <p className="font-semibold text-slate-900 leading-snug">{msg.solution.summary}</p>
+                      <div className="font-semibold text-slate-900 leading-snug">
+                        {renderInlineFormatting(msg.solution.summary)}
+                      </div>
 
                       {/* Key Concepts & Formulas */}
                       {msg.solution.key_concepts_and_formulas && msg.solution.key_concepts_and_formulas.length > 0 && (
@@ -570,14 +656,14 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                           <span className="text-[11px] font-bold text-amber-800 uppercase tracking-wider block mb-1.5 flex items-center gap-1">
                             <BookOpen className="w-3.5 h-3.5 text-amber-600" /> Core Formulas & Laws
                           </span>
-                          <div className="flex flex-wrap gap-1.5">
+                          <div className="flex flex-col gap-1.5">
                             {msg.solution.key_concepts_and_formulas.map((concept, idx) => (
-                              <span
+                              <div
                                 key={idx}
-                                className="text-xs bg-white text-slate-800 font-mono px-2 py-0.5 rounded border border-slate-200 shadow-2xs font-semibold"
+                                className="text-xs bg-white text-slate-800 px-2.5 py-1 rounded border border-slate-200 shadow-2xs font-medium"
                               >
-                                {concept}
-                              </span>
+                                {renderInlineFormatting(concept)}
+                              </div>
                             ))}
                           </div>
                         </div>
@@ -592,17 +678,17 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                           {msg.solution.step_by_step_solution.map((step) => (
                             <div
                               key={step.step_number}
-                              className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1"
+                              className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 space-y-1.5"
                             >
                               <div className="flex items-center gap-2">
-                                <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center border border-indigo-200">
+                                <span className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center justify-center border border-indigo-200 shrink-0">
                                   {step.step_number}
                                 </span>
-                                <span className="font-bold text-slate-900 text-xs">{step.heading}</span>
+                                <span className="font-bold text-slate-900 text-xs">{renderInlineFormatting(step.heading)}</span>
                               </div>
-                              <p className="text-xs text-slate-700 leading-relaxed pl-7 whitespace-pre-wrap font-normal">
-                                {step.explanation}
-                              </p>
+                              <div className="text-xs text-slate-700 leading-relaxed pl-7 font-normal space-y-1">
+                                {renderFormattedMarkdownText(step.explanation)}
+                              </div>
                             </div>
                           ))}
                         </div>
@@ -612,13 +698,13 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                       {msg.solution.final_answer && (
                         <div className="bg-emerald-50 border border-emerald-300 p-3 rounded-xl flex items-start gap-2.5 text-emerald-950 shadow-2xs">
                           <Check className="w-4.5 h-4.5 text-emerald-600 shrink-0 mt-0.5" />
-                          <div>
+                          <div className="flex-1">
                             <span className="text-xs font-extrabold uppercase tracking-wider block text-emerald-700">
                               Final Result
                             </span>
-                            <span className="text-xs leading-relaxed font-mono font-bold text-emerald-900">
-                              {msg.solution.final_answer}
-                            </span>
+                            <div className="text-xs leading-relaxed font-bold text-emerald-950 mt-0.5">
+                              {renderInlineFormatting(msg.solution.final_answer)}
+                            </div>
                           </div>
                         </div>
                       )}
@@ -629,9 +715,9 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                           <span className="text-[11px] font-bold text-purple-900 flex items-center gap-1">
                             <Lightbulb className="w-3.5 h-3.5 text-amber-500" /> Exam Shortcut Tips
                           </span>
-                          <ul className="text-xs text-slate-700 space-y-0.5 pl-4 list-disc font-medium">
+                          <ul className="text-xs text-slate-700 space-y-1 pl-4 list-disc font-medium">
                             {msg.solution.pro_tips.map((tip, idx) => (
-                              <li key={idx}>{tip}</li>
+                              <li key={idx}>{renderInlineFormatting(tip)}</li>
                             ))}
                           </ul>
                         </div>
