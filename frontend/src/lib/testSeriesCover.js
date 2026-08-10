@@ -154,7 +154,8 @@ export function getSeriesBannerImage(series) {
 export function getExamTheme(series) {
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
   const free = Number(series?.price) === 0 || Boolean(series?.is_free);
-  const bannerImage = (series?.image_url && series.image_url.trim()) ? series.image_url.trim() : getSeriesBannerImage(series);
+  const custom = series?.image_url?.trim();
+  const bannerImage = (custom && custom !== '/edvedum/banners/banner-free-mock.png') ? custom : getSeriesBannerImage(series);
 
   let theme = THEMES.general;
   if (isNeetPg(text)) theme = THEMES['neet-pg'];
