@@ -38,6 +38,14 @@ services:
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@12345}
       SEED_CANDIDATE_EMAIL: ${SEED_CANDIDATE_EMAIL:-candidate@assess.io}
       SEED_CANDIDATE_PASSWORD: ${SEED_CANDIDATE_PASSWORD:-Candidate@123}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASS: ${SMTP_PASS:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      BREVO_API_KEY: ${BREVO_API_KEY:-}
     depends_on:
       postgres:
         condition: service_healthy

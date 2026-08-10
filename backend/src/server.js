@@ -95,17 +95,14 @@ const start = async () => {
   }
 
   try {
-    await verifySmtpConnection();
-    // eslint-disable-next-line no-console
-    console.log(`[email] Gmail SMTP connected (${env.smtp.user}).`);
+    const emailOk = await verifySmtpConnection();
+    if (!emailOk) {
+      // eslint-disable-next-line no-console
+      console.warn('[email] Email service initialized with warnings. Verify SMTP credentials or set RESEND_API_KEY/BREVO_API_KEY for transactional emails.');
+    }
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.error('[email] SMTP connection failed:', err.message);
-    if (env.isProd) {
-      process.exit(1);
-    }
-    // eslint-disable-next-line no-console
-    console.warn('[email] Continuing without SMTP in development — login works; invites/OTP emails will fail until SMTP is fixed.');
+    console.error('[email] Email initialization check failed:', err.message);
   }
 
   try {
