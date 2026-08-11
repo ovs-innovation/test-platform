@@ -28,10 +28,18 @@ import uploadRoutes from './routes/uploadRoutes.js';
 
 const app = express();
 
-const allowedOrigins = env.clientUrl
-  .split(',')
-  .map((origin) => origin.trim().replace(/\/$/, ''))
-  .filter(Boolean);
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:3000',
+  'https://edvedum.com',
+  'https://www.edvedum.com',
+  'https://cbt.prosperrainfra.com',
+  ...env.clientUrl
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/$/, ''))
+    .filter(Boolean),
+];
 
 // Security & infrastructure middleware
 app.use(helmet());

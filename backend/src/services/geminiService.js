@@ -1627,7 +1627,7 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
       contentsPayload = systemPrompt;
     }
 
-    const candidateModels = ['gemini-flash-latest', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-pro-latest', 'gemini-2.0-flash', 'gemini-1.5-flash'];
+    const candidateModels = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-lite', 'gemini-2.5-flash'];
 
     for (let keyIndex = 0; keyIndex < apiKeys.length; keyIndex++) {
       const currentKey = apiKeys[keyIndex];
@@ -1704,7 +1704,7 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
                 }
 
                 console.log(`\n[GeminiService] Successfully solved doubt using API Key #${keyIndex + 1} with model: ${modelName}`);
-                return { success: true, text: formatted, data };
+                return { success: true, text: formatted, data, solution: data };
               }
             }
 
@@ -1798,14 +1798,6 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
     };
   }
 
-  // If no verified offline topic matches and Gemini API was unavailable/rate-limited
-  if (!objSol) {
-    return {
-      success: false,
-      text: `⚠️ **Something went wrong while connecting to the AI Tutor**\n\nThe AI service is currently rate-limited or unavailable. Please try asking your doubt again in a few moments!`
-    };
-  }
-
   // Mode 1: Academic Doubt Solving Response from Verified Engine
   let naturalMarkdown = `### 💡 ${objSol.summary}\n\n`;
   naturalMarkdown += `**Difficulty Level:** Moderate (JEE Main / NEET Calibration)\n\n`;
@@ -1828,7 +1820,8 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
 
   return {
     success: true,
-    text: naturalMarkdown
+    text: naturalMarkdown,
+    solution: objSol
   };
 }
 

@@ -12,7 +12,7 @@ import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = Router();
 
-router.post('/doubt-solver', authenticate, authorize('candidate'), askAIDoubt);
+router.post('/doubt-solver', authenticate, authorize('candidate', 'admin', 'institution_admin'), askAIDoubt);
 router.get('/dashboard/institute-rank', authenticate, authorize('candidate'), getInstituteRank);
 router.get('/calendar', authenticate, authorize('candidate'), getStudentCalendar);
 router.get('/analytics/:test_id/ai-mentor-report', authenticate, authorize('candidate'), getAIMentorReport);
