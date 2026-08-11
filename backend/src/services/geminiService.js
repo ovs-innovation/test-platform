@@ -1634,6 +1634,10 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
 
       for (const modelName of candidateModels) {
         try {
+          if (currentKey.startsWith('AQ.')) {
+            console.warn(`[GeminiService WARNING] Key #${keyIndex + 1} starts with "AQ." which is a Developer Auth Token, not a standard Gemini API Key (starts with "AIzaSy"). If requests fail with 401/403, generate a standard API key in Google AI Studio.`);
+          }
+
           // 1. Direct REST fetch call to Google AI Studio API
           let rawText = null;
           try {
@@ -1641,12 +1645,17 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
             const restPayload = typeof contentsPayload === 'string'
               ? { contents: [{ parts: [{ text: contentsPayload }] }] }
               : { contents: contentsPayload };
+            const headers = {
+              'Content-Type': 'application/json',
+              'x-goog-api-key': currentKey
+            };
+            if (currentKey.startsWith('AQ.')) {
+              headers['Authorization'] = `Bearer ${currentKey}`;
+            }
+
             const restRes = await fetch(url, {
               method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'x-goog-api-key': currentKey
-              },
+              headers,
               body: JSON.stringify(restPayload)
             });
             const restData = await restRes.json();
