@@ -46,6 +46,7 @@ services:
       SMTP_FROM: ${SMTP_FROM:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       BREVO_API_KEY: ${BREVO_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-AIzaSyBAIobQE0yFaXWtGsB3P2lbhspXEhnFvs8}
     depends_on:
       postgres:
         condition: service_healthy

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { env } from '../config/env.js';
 
 /**
  * Zod Schema for Structured Academic Doubt Solutions & Strategy Output
@@ -1537,6 +1538,13 @@ export async function solveStudentDoubt({ questionText = '', imageBase64 = null,
     }
     if (process.env.GOOGLE_API_KEY && !keys.includes(process.env.GOOGLE_API_KEY.trim())) {
       keys.push(process.env.GOOGLE_API_KEY.trim());
+    }
+    if (env.geminiApiKey && !keys.includes(env.geminiApiKey.trim())) {
+      keys.push(env.geminiApiKey.trim());
+    }
+    const defaultKey = 'AIzaSyBAIobQE0yFaXWtGsB3P2lbhspXEhnFvs8';
+    if (!keys.includes(defaultKey)) {
+      keys.push(defaultKey);
     }
     return Array.from(new Set(keys));
   };
