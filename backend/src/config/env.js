@@ -68,5 +68,5 @@ export const env = {
     url: process.env.CLOUDINARY_URL || '',
   },
   firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
-  geminiApiKey: process.env.GEMINI_API_KEY || 'AIzaSyBAIobQE0yFaXWtGsB3P2lbhspXEhnFvs8',
+  geminiApiKey: process.env.GEMINI_API_KEY || '',
 };

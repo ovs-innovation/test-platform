@@ -1542,10 +1542,6 @@ export async function solveStudentDoubt({ questionText = '', imageBase64 = null,
     if (env.geminiApiKey && !keys.includes(env.geminiApiKey.trim())) {
       keys.push(env.geminiApiKey.trim());
     }
-    const defaultKey = 'AIzaSyBAIobQE0yFaXWtGsB3P2lbhspXEhnFvs8';
-    if (!keys.includes(defaultKey)) {
-      keys.push(defaultKey);
-    }
     return Array.from(new Set(keys));
   };
 
