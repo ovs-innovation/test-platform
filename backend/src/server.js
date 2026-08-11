@@ -94,16 +94,16 @@ const start = async () => {
     console.warn('[db] Could not connect to PostgreSQL after 5 retries. Starting server in fallback mode...');
   }
 
-  try {
-    const emailOk = await verifySmtpConnection();
+  // Asynchronously verify SMTP connection without blocking server startup
+  verifySmtpConnection().then((emailOk) => {
     if (!emailOk) {
       // eslint-disable-next-line no-console
-      console.warn('[email] Email service initialized with warnings. Verify SMTP credentials or set RESEND_API_KEY/BREVO_API_KEY for transactional emails.');
+      console.warn('[email] Email service initialized with warnings. Verify SMTP credentials if sending emails.');
     }
-  } catch (err) {
+  }).catch((err) => {
     // eslint-disable-next-line no-console
-    console.error('[email] Email initialization check failed:', err.message);
-  }
+    console.error('[email] Email initialization check error:', err.message);
+  });
 
   try {
     const server = await listenWithRetry(env.port);

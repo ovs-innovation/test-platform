@@ -60,26 +60,40 @@ const getTransporter = () => {
  */
 export const verifySmtpConnection = () => {
   return new Promise((resolve) => {
+    let isSettled = false;
+    const timeout = setTimeout(() => {
+      if (!isSettled) {
+        isSettled = true;
+        console.warn('[email WARNING] SMTP connection verification timed out after 3000ms. Proceeding without blocking.');
+        resolve(false);
+      }
+    }, 3000);
+
     try {
       const tx = getTransporter();
       console.log('[email] Verifying Nodemailer SMTP server connection...');
-      tx.verify((err, success) => {
-        if (err) {
-          console.error('[email ERROR] SMTP verification failed with detailed diagnostics:', {
-            message: err.message,
-            code: err.code || 'UNKNOWN',
-            command: err.command || 'N/A',
-            response: err.response || 'N/A',
-            responseCode: err.responseCode || 'N/A',
-          });
-          return resolve(false);
+      tx.verify((err) => {
+        if (!isSettled) {
+          isSettled = true;
+          clearTimeout(timeout);
+          if (err) {
+            console.warn('[email WARNING] SMTP verification failed:', {
+              message: err.message,
+              code: err.code || 'UNKNOWN',
+            });
+            return resolve(false);
+          }
+          console.log('[email] Nodemailer SMTP connection verified successfully!');
+          resolve(true);
         }
-        console.log('[email] Nodemailer SMTP connection verified successfully!');
-        resolve(true);
       });
     } catch (err) {
-      console.error('[email ERROR] SMTP verification failed:', err.message);
-      resolve(false);
+      if (!isSettled) {
+        isSettled = true;
+        clearTimeout(timeout);
+        console.warn('[email WARNING] SMTP verification skipped:', err.message);
+        resolve(false);
+      }
     }
   });
 };
