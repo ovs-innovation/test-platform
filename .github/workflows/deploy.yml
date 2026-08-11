@@ -164,7 +164,7 @@ jobs:
 
             INTERNAL_HEALTH_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              if docker compose exec -T backend node -e "fetch('http://127.0.0.1:5000/api/health').then(r => { if (!r.ok) process.exit(1); return r.text(); }).then(console.log).catch(() => process.exit(1));" >/dev/null 2>&1; then
+              if docker compose exec -T backend node -e "Promise.allSettled([fetch('http://127.0.0.1:5000/api/health'), fetch('http://localhost:5000/api/health')]).then(res => { if (res.some(r => r.status==='fulfilled' && r.value.ok)) process.exit(0); process.exit(1); }).catch(() => process.exit(1));" >/dev/null 2>&1; then
                 log "Internal liveness check PASSED on attempt ${i}/${MAX_RETRIES}!"
                 INTERNAL_HEALTH_OK=true
                 break
@@ -181,7 +181,7 @@ jobs:
 
             INTERNAL_READY_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              if docker compose exec -T backend node -e "fetch('http://127.0.0.1:5000/api/health/ready').then(r => { if (!r.ok) process.exit(1); return r.text(); }).then(console.log).catch(() => process.exit(1));" >/dev/null 2>&1; then
+              if docker compose exec -T backend node -e "Promise.allSettled([fetch('http://127.0.0.1:5000/api/health/ready'), fetch('http://localhost:5000/api/health/ready')]).then(res => { if (res.some(r => r.status==='fulfilled' && r.value.ok)) process.exit(0); process.exit(1); }).catch(() => process.exit(1));" >/dev/null 2>&1; then
                 log "Internal database readiness check PASSED on attempt ${i}/${MAX_RETRIES}!"
                 INTERNAL_READY_OK=true
                 break

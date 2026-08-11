@@ -10,7 +10,7 @@ const SHUTDOWN_FORCE_MS = 2500;
 function listenWithRetry(port) {
   return new Promise((resolve, reject) => {
     const tryListen = (attempt) => {
-      const server = app.listen(port);
+      const server = app.listen(port, '0.0.0.0');
 
       server.once('listening', () => resolve(server));
 
