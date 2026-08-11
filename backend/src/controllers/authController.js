@@ -333,26 +333,19 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
     [normalizedEmail, phone || '', otpHash, expiresAt]
   );
 
-  let emailSent = true;
-  let devOtpVal = null;
-  let emailErrorMsg = null;
   try {
     await sendOtpEmail(normalizedEmail, otp);
   } catch (err) {
-    emailSent = false;
-    emailErrorMsg = err.message || String(err);
+    const emailErrorMsg = err.message || String(err);
     // eslint-disable-next-line no-console
     console.error(`[email ERROR] Signup OTP email failed for ${normalizedEmail}: ${emailErrorMsg}`);
-    devOtpVal = otp;
+    throw ApiError.internal(`Could not send verification email directly to ${normalizedEmail}. Please check your email address or try again.`);
   }
 
   res.json({
-    message: emailSent
-      ? `Verification code sent to your email (${normalizedEmail})`
-      : `Verification code generated for your email (${normalizedEmail}). Please enter the 6-digit code below.`,
-    emailSent,
+    message: `Verification code sent to your email inbox (${normalizedEmail})`,
+    emailSent: true,
     expiresInMinutes: env.otpExpiresMinutes,
-    ...(devOtpVal ? { devOtp: devOtpVal } : {}),
   });
 });
 

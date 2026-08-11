@@ -2,7 +2,7 @@ import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { saveUploadedFile } from '../middleware/upload.js';
-import nodemailer from 'nodemailer';
+import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions } from '../utils/pdfQuestionParser.js';
 
@@ -570,31 +570,21 @@ export const notifyTestReminder = asyncHandler(async (req, res) => {
     );
   }
 
-  // 2. Optional Nodemailer Email dispatch (if SMTP env is configured)
+  // 2. Email dispatch via Resend sendEmail utility
   let emailsSent = 0;
-  if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-    try {
-      const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST,
-        port: Number(process.env.SMTP_PORT) || 587,
-        secure: Boolean(process.env.SMTP_SECURE),
-        auth: {
-          user: process.env.SMTP_USER,
-          pass: process.env.SMTP_PASS,
-        },
-      });
-
-      for (const c of candidates) {
-        await transporter.sendMail({
-          from: `"EDVEDUM Academy" <${process.env.SMTP_FROM || 'noreply@edvedum.com'}>`,
+  for (const c of candidates) {
+    if (c.email) {
+      try {
+        await sendEmail({
           to: c.email,
           subject: title,
-          text: `Hello ${c.name},\n\n${body}\n\nGood luck!\nEDVEDUM Team`,
+          html: `<p>Hello ${c.name || 'Student'},</p><p>${body}</p><p>Good luck!<br>EDVEDUM Team</p>`,
+          text: `Hello ${c.name || 'Student'},\n\n${body}\n\nGood luck!\nEDVEDUM Team`,
         });
         emailsSent++;
+      } catch (err) {
+        console.warn('Test notification email dispatch error:', err.message);
       }
-    } catch (err) {
-      console.warn('Nodemailer test notification email dispatch error:', err.message);
     }
   }
 

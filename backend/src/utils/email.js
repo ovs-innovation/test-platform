@@ -18,96 +18,6 @@ const getFromAddress = () => {
   return env.smtp.from || 'EDVEDUM Academy <noreply@edvedum.com>';
 };
 
-const parseEmailAddress = (addressStr) => {
-  if (!addressStr) return { name: 'EDVEDUM Academy', email: 'noreply@edvedum.com' };
-  const match = addressStr.match(/^(?:"?([^"]*)"?\s)?(?:<(.+)>)?$/);
-  if (match) {
-    const name = match[1] || 'EDVEDUM Academy';
-    const email = match[2] || addressStr;
-    return { name, email };
-  }
-  return { name: 'EDVEDUM Academy', email: addressStr };
-};
-
-/**
- * Send email via Resend Transactional Email REST API over HTTPS (Port 443)
- * Bypasses all VPS outbound SMTP port blocks (ports 25, 465, 587).
- */
-const sendViaResendApi = async ({ to, subject, html, text }) => {
-  const apiKey = env.smtp.resendApiKey;
-  const from = getFromAddress();
-
-  console.log(`[email] Sending transactional email via Resend HTTPS API to ${to}...`);
-
-  const response = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from,
-      to: [to],
-      subject,
-      html,
-      text,
-    }),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    const err = new Error(data.message || data.error?.message || `Resend API HTTP ${response.status}`);
-    err.code = 'RESEND_API_ERROR';
-    err.response = JSON.stringify(data);
-    err.status = response.status;
-    throw err;
-  }
-
-  console.log(`[email] Resend API email sent successfully to ${to} (ID: ${data.id})`);
-  return { sent: true, messageId: data.id, provider: 'resend' };
-};
-
-/**
- * Send email via Brevo (Sendinblue) Transactional Email REST API over HTTPS (Port 443)
- * Bypasses all VPS outbound SMTP port blocks (ports 25, 465, 587).
- */
-const sendViaBrevoApi = async ({ to, subject, html, text }) => {
-  const apiKey = env.smtp.brevoApiKey;
-  const sender = parseEmailAddress(getFromAddress());
-
-  console.log(`[email] Sending transactional email via Brevo HTTPS API to ${to}...`);
-
-  const response = await fetch('https://api.brevo.com/v3/smtp/email', {
-    method: 'POST',
-    headers: {
-      'api-key': apiKey,
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      sender,
-      to: [{ email: to }],
-      subject,
-      htmlContent: html,
-      textContent: text,
-    }),
-  });
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    const err = new Error(data.message || `Brevo API HTTP ${response.status}`);
-    err.code = 'BREVO_API_ERROR';
-    err.response = JSON.stringify(data);
-    err.status = response.status;
-    throw err;
-  }
-
-  console.log(`[email] Brevo API email sent successfully to ${to} (ID: ${data.messageId})`);
-  return { sent: true, messageId: data.messageId, provider: 'brevo' };
-};
-
 /**
  * Get or initialize Nodemailer SMTP Transporter
  */
@@ -146,118 +56,118 @@ const getTransporter = () => {
 };
 
 /**
- * Verify Connection with detailed diagnostic logging
+ * Verify Nodemailer SMTP Connection via Promise
  */
-export const verifySmtpConnection = async () => {
-  if (env.smtp.resendApiKey) {
-    console.log('[email] Active Email Provider: Resend HTTPS Transactional API (Port 443).');
-    return true;
-  }
-  if (env.smtp.brevoApiKey) {
-    console.log('[email] Active Email Provider: Brevo HTTPS Transactional API (Port 443).');
-    return true;
-  }
-
-  try {
-    const tx = getTransporter();
-    console.log('[email] Verifying Nodemailer SMTP server connection...');
-    await tx.verify();
-    console.log('[email] SMTP connection verified successfully!');
-    return true;
-  } catch (err) {
-    console.error('[email ERROR] SMTP verification failed with detailed diagnostics:', {
-      message: err.message,
-      code: err.code || 'UNKNOWN',
-      command: err.command || 'N/A',
-      response: err.response || 'N/A',
-      responseCode: err.responseCode || 'N/A',
-      stack: err.stack,
-    });
-    return false;
-  }
+export const verifySmtpConnection = () => {
+  return new Promise((resolve) => {
+    try {
+      const tx = getTransporter();
+      console.log('[email] Verifying Nodemailer SMTP server connection...');
+      tx.verify((err, success) => {
+        if (err) {
+          console.error('[email ERROR] SMTP verification failed with detailed diagnostics:', {
+            message: err.message,
+            code: err.code || 'UNKNOWN',
+            command: err.command || 'N/A',
+            response: err.response || 'N/A',
+            responseCode: err.responseCode || 'N/A',
+          });
+          return resolve(false);
+        }
+        console.log('[email] Nodemailer SMTP connection verified successfully!');
+        resolve(true);
+      });
+    } catch (err) {
+      console.error('[email ERROR] SMTP verification failed:', err.message);
+      resolve(false);
+    }
+  });
 };
 
 /**
- * Universal Send Email (Supports Resend API -> Brevo API -> Nodemailer SMTP)
+ * Send email using Nodemailer wrapped in an explicit Promise constructor
  */
-export const sendEmail = async ({ to, subject, html, text }) => {
-  // 1. Try Resend API over HTTPS if API key is set
-  if (env.smtp.resendApiKey) {
-    try {
-      return await sendViaResendApi({ to, subject, html, text });
-    } catch (err) {
-      console.error(`[email ERROR] Resend API attempt failed for ${to}: ${err.message}`, {
-        code: err.code,
-        response: err.response,
-      });
-      // Fall through if secondary provider is configured
-    }
-  }
-
-  // 2. Try Brevo API over HTTPS if API key is set
-  if (env.smtp.brevoApiKey) {
-    try {
-      return await sendViaBrevoApi({ to, subject, html, text });
-    } catch (err) {
-      console.error(`[email ERROR] Brevo API attempt failed for ${to}: ${err.message}`, {
-        code: err.code,
-        response: err.response,
-      });
-      // Fall through if Nodemailer SMTP is configured
-    }
-  }
-
-  // 3. Fall back to Nodemailer SMTP
-  try {
-    const tx = getTransporter();
+export const sendEmail = ({ to, subject, html, text }) => {
+  return new Promise((resolve, reject) => {
     const from = getFromAddress();
+    let isSettled = false;
 
-    console.log(`[email] Sending via Nodemailer SMTP to ${to}...`);
+    // Strict 10-second timeout handler for Hostinger VPS outbound port blocks
+    const timer = setTimeout(() => {
+      if (!isSettled) {
+        isSettled = true;
+        const err = new Error(
+          'SMTP Connection Timeout: Hostinger VPS outbound SMTP port (25/465/587) blocked or host unresponsive after 10000ms.'
+        );
+        err.code = 'ETIMEDOUT';
+        err.command = 'CONN_TIMEOUT';
+        console.error(`[email ERROR] Nodemailer SMTP send timed out for ${to}:`, {
+          message: err.message,
+          code: err.code,
+          command: err.command,
+        });
+        reject(err);
+      }
+    }, 10000);
 
-    const sendMailPromise = tx.sendMail({
-      from,
-      to,
-      subject,
-      html,
-      text,
-    });
+    try {
+      const tx = getTransporter();
+      console.log(`[email] Sending email via Nodemailer SMTP to ${to}...`);
 
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => {
-        const timeoutErr = new Error('SMTP timeout: Mail server took longer than 10s to respond (Hostinger VPS port 587/465 block)');
-        timeoutErr.code = 'ETIMEDOUT';
-        timeoutErr.command = 'CONN';
-        reject(timeoutErr);
-      }, 10000)
-    );
-
-    const info = await Promise.race([sendMailPromise, timeoutPromise]);
-    console.log(`[email] SMTP email sent successfully to ${to} (MessageId: ${info.messageId})`);
-    return { sent: true, messageId: info.messageId, provider: 'smtp' };
-  } catch (err) {
-    console.error(`[email ERROR] Nodemailer SMTP send failed for ${to} with full diagnostics:`, {
-      message: err.message,
-      code: err.code || 'UNKNOWN_ERROR',
-      command: err.command || 'N/A',
-      response: err.response || 'N/A',
-      responseCode: err.responseCode || 'N/A',
-      stack: err.stack,
-    });
-    throw err;
-  }
+      tx.sendMail({ from, to, subject, html, text }, (err, info) => {
+        if (!isSettled) {
+          isSettled = true;
+          clearTimeout(timer);
+          if (err) {
+            console.error(`[email ERROR] Nodemailer SMTP send error for ${to}:`, {
+              message: err.message,
+              code: err.code || 'SMTP_ERROR',
+              command: err.command || 'N/A',
+              response: err.response || 'N/A',
+              responseCode: err.responseCode || 'N/A',
+              stack: err.stack,
+            });
+            return reject(err);
+          }
+          console.log(`[email] Nodemailer SMTP email sent successfully to ${to} (MessageId: ${info?.messageId})`);
+          resolve({ sent: true, messageId: info?.messageId, provider: 'smtp' });
+        }
+      });
+    } catch (createErr) {
+      if (!isSettled) {
+        isSettled = true;
+        clearTimeout(timer);
+        console.error(`[email ERROR] Transporter creation error for ${to}:`, createErr.message);
+        reject(createErr);
+      }
+    }
+  });
 };
 
-export const sendOtpEmail = async (to, otp) => {
-  const tpl = otpEmailTemplate({ otp, expiresMinutes: env.otpExpiresMinutes });
-  return sendEmail({ to, ...tpl });
+/**
+ * Send OTP Email via Promise
+ */
+export const sendOtpEmail = (to, otp) => {
+  return new Promise((resolve, reject) => {
+    const tpl = otpEmailTemplate({ otp, expiresMinutes: env.otpExpiresMinutes });
+    sendEmail({ to, ...tpl }).then(resolve).catch(reject);
+  });
 };
 
-export const sendInviteEmail = async (to, name, assessmentTitle, inviteUrl, durationMinutes) => {
-  const tpl = inviteEmailTemplate({ name, assessmentTitle, inviteUrl, durationMinutes });
-  return sendEmail({ to, ...tpl });
+/**
+ * Send Invite Email via Promise
+ */
+export const sendInviteEmail = (to, name, assessmentTitle, inviteUrl, durationMinutes) => {
+  return new Promise((resolve, reject) => {
+    const tpl = inviteEmailTemplate({ name, assessmentTitle, inviteUrl, durationMinutes });
+    sendEmail({ to, ...tpl }).then(resolve).catch(reject);
+  });
 };
 
-export const sendCompletionEmail = async ({
+/**
+ * Send Completion Email via Promise
+ */
+export const sendCompletionEmail = ({
   to,
   name,
   assessmentTitle,
@@ -268,16 +178,18 @@ export const sendCompletionEmail = async ({
   durationSeconds,
   violationCount,
 }) => {
-  const durationMinutes = Math.max(1, Math.round((durationSeconds || 0) / 60));
-  const tpl = completionEmailTemplate({
-    name,
-    assessmentTitle,
-    marksObtained,
-    totalMarks,
-    percentage,
-    passed,
-    durationMinutes,
-    violationCount: violationCount || 0,
+  return new Promise((resolve, reject) => {
+    const durationMinutes = Math.max(1, Math.round((durationSeconds || 0) / 60));
+    const tpl = completionEmailTemplate({
+      name,
+      assessmentTitle,
+      marksObtained,
+      totalMarks,
+      percentage,
+      passed,
+      durationMinutes,
+      violationCount: violationCount || 0,
+    });
+    sendEmail({ to, ...tpl }).then(resolve).catch(reject);
   });
-  return sendEmail({ to, ...tpl });
 };
