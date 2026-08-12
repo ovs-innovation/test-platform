@@ -418,13 +418,13 @@ export default function InstitutionPortalLayout({
                   setProfileDropdownOpen(false);
                   setNotifDropdownOpen(!notifDropdownOpen);
                 }}
-                className={`group relative h-9.5 w-9.5 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-all duration-200 active:scale-95 cursor-pointer ${isDarkMode
+                className={`group relative h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-all duration-200 active:scale-95 cursor-pointer ${isDarkMode
                   ? 'border-slate-800 bg-slate-900/90 text-slate-300 hover:border-blue-500/50 hover:bg-slate-800 hover:text-blue-400'
                   : 'border-slate-200/90 bg-white/90 text-slate-600 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 shadow-xs hover:shadow-md hover:shadow-blue-500/10'
                   }`}
                 title="Notifications"
               >
-                <Bell className="h-4.5 w-4.5 sm:h-5 sm:w-5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
+                <Bell className="h-4 w-4 sm:h-4.5 sm:w-4.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
                 {unreadNotificationsCount > 0 && (
                   <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-pulse font-mono">
                     {unreadNotificationsCount > 99 ? '99+' : unreadNotificationsCount}
@@ -509,13 +509,13 @@ export default function InstitutionPortalLayout({
             {/* Light / Dark Mode Toggle */}
             <button
               onClick={() => setIsDarkMode && setIsDarkMode(!isDarkMode)}
-              className={`h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
+              className={`h-9 w-9 sm:h-10 sm:w-10 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
                 ? 'border-slate-800 bg-slate-900 text-amber-400 hover:bg-slate-800'
                 : 'border-slate-200 bg-slate-100 text-indigo-600 hover:bg-slate-200 shadow-sm'
                 }`}
               title={isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             >
-              {isDarkMode ? <Sun className="h-4 w-4 sm:h-5 sm:w-5" /> : <Moon className="h-4 w-4 sm:h-5 sm:w-5" />}
+              {isDarkMode ? <Sun className="h-4 w-4 sm:h-4.5 sm:w-4.5" /> : <Moon className="h-4 w-4 sm:h-4.5 sm:w-4.5" />}
             </button>
 
             {/* Profile Dropdown */}
@@ -526,7 +526,7 @@ export default function InstitutionPortalLayout({
                   setNotifDropdownOpen(false);
                   setProfileDropdownOpen(!profileDropdownOpen);
                 }}
-                className={`flex items-center gap-2 sm:gap-3 h-9 sm:h-11 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
+                className={`flex items-center gap-2 sm:gap-2.5 h-9 sm:h-10 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
                   }`}
               >
                 {(currentInst?.logo_url || currentInst?.logoUrl || currentInst?.logo) ? (
