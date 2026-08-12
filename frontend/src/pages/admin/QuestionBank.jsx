@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, Check } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -18,6 +18,67 @@ const tryParseArray = (val) => {
 };
 
 const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
+
+function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false }) {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const selected = options.find((o) => (o.id !== undefined ? o.id === value : o.value === value));
+  const displayLabel = selected ? (selected.label || selected.name) : placeholder;
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen(!open)}
+        className={`w-full flex items-center justify-between gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2.5 px-3.5 text-xs font-bold text-slate-800 dark:text-slate-100 hover:border-blue-500/80 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          disabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+      >
+        <span className="truncate">{displayLabel}</span>
+        <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 shrink-0 ${open ? 'rotate-180 text-blue-500' : ''}`} />
+      </button>
+
+      {open && !disabled && (
+        <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
+          {options.map((opt) => {
+            const optVal = opt.id !== undefined ? opt.id : opt.value;
+            const isSelected = optVal === value;
+            return (
+              <button
+                key={optVal ?? 'empty'}
+                type="button"
+                onClick={() => {
+                  onChange(optVal);
+                  setOpen(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
+                  isSelected
+                    ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold'
+                }`}
+              >
+                <span>{opt.label || opt.name}</span>
+                {isSelected && <Check className="h-4 w-4 text-white shrink-0 ml-2" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function AdminQuestionBank() {
   const toast = useToast();
@@ -264,16 +325,19 @@ export default function AdminQuestionBank() {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="label">Question type</label>
-              <select className="input" value={form.question_type} disabled={!!editing}
-                onChange={(e) => setForm((f) => ({ ...f, question_type: e.target.value }))}>
-                <option value="mcq">Single correct MCQ</option>
-                <option value="multi_select">Multiple correct MCQ</option>
-                <option value="integer">Integer type</option>
-                <option value="numerical">Numerical answer type</option>
-                <option value="assertion_reason">Assertion-reason type</option>
-                <option value="coding">Coding</option>
-                <option value="subjective">Subjective</option>
-              </select>
+              <CustomSelectDropdown
+                value={form.question_type}
+                options={[
+                  { value: 'mcq', label: 'Single correct MCQ' },
+                  { value: 'multi_select', label: 'Multiple correct MCQ' },
+                  { value: 'integer', label: 'Integer type' },
+                  { value: 'numerical', label: 'Numerical answer type' },
+                  { value: 'assertion_reason', label: 'Assertion-reason type' },
+                  { value: 'coding', label: 'Coding' },
+                  { value: 'subjective', label: 'Subjective' },
+                ]}
+                onChange={(val) => setForm((f) => ({ ...f, question_type: val }))}
+              />
             </div>
             <div>
               <label className="label">Marks</label>

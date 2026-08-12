@@ -12,6 +12,7 @@ import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
+import { ChevronDown, Check } from 'lucide-react';
 
 const toDatetimeLocal = (isoString) => {
   if (!isoString) return '';
@@ -635,18 +636,77 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown })
   );
 }
 
+function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false }) {
+  const [open, setOpen] = useState(false);
+  const dropdownRef = useRef(null);
+
+  const selected = options.find((o) => (o.id !== undefined ? o.id === value : o.value === value));
+  const displayLabel = selected ? (selected.label || selected.name) : placeholder;
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      <button
+        type="button"
+        disabled={disabled}
+        onClick={() => setOpen(!open)}
+        className={`w-full flex items-center justify-between gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2.5 px-3.5 text-xs font-bold text-slate-800 dark:text-slate-100 hover:border-blue-500/80 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
+          disabled ? 'opacity-50 cursor-not-allowed' : ''
+        }`}
+      >
+        <span className="truncate">{displayLabel}</span>
+        <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 shrink-0 ${open ? 'rotate-180 text-blue-500' : ''}`} />
+      </button>
+
+      {open && !disabled && (
+        <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
+          {options.map((opt) => {
+            const optVal = opt.id !== undefined ? opt.id : opt.value;
+            const isSelected = optVal === value;
+            return (
+              <button
+                key={optVal ?? 'empty'}
+                type="button"
+                onClick={() => {
+                  onChange(optVal);
+                  setOpen(false);
+                }}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
+                  isSelected
+                    ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold'
+                }`}
+              >
+                <span>{opt.label || opt.name}</span>
+                {isSelected && <Check className="h-4 w-4 text-white shrink-0 ml-2" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections, onSubmit, saving }) {
   const isChoice = form.question_type === 'mcq' || form.question_type === 'multi_select';
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
 
   useEffect(() => {
-    if (open) {
-      adminService.subjects().then((list) => {
-        setSubjectsList(list || []);
-      }).catch(() => {});
-    }
-  }, [open]);
+    adminService.subjects().then((list) => {
+      setSubjectsList(list || []);
+    }).catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (form.subject_id) {
@@ -672,42 +732,63 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="label">Question type</label>
-            <select className="input" value={form.question_type} disabled={!!editing}
-              onChange={(e) => setForm((f) => ({ ...emptyForm(e.target.value), question_text: f.question_text, section_id: f.section_id }))}>
-              {QUESTION_TYPES.map((t) => <option key={t.id} value={t.id}>{t.label}</option>)}
-            </select>
+            <CustomSelectDropdown
+              value={form.question_type}
+              options={QUESTION_TYPES}
+              onChange={(val) => setForm((f) => ({
+                ...emptyForm(val),
+                question_text: f.question_text,
+                section_id: f.section_id,
+                subject_id: f.subject_id,
+                chapter_id: f.chapter_id,
+                difficulty: f.difficulty,
+                marks: f.marks,
+                image_url: f.image_url,
+                explanation: f.explanation
+              }))}
+            />
           </div>
           <div>
             <label className="label">Section</label>
-            <select className="input" value={form.section_id || ''} onChange={(e) => setForm((f) => ({ ...f, section_id: Number(e.target.value) || null }))}>
-              <option value="">None</option>
-              {sections.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
+            <CustomSelectDropdown
+              value={form.section_id || ''}
+              options={[{ id: '', name: 'None' }, ...sections]}
+              onChange={(val) => setForm((f) => ({ ...f, section_id: Number(val) || null }))}
+            />
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-3">
           <div>
             <label className="label">Subject</label>
-            <select className="input" value={form.subject_id || ''} onChange={(e) => setForm((f) => ({ ...f, subject_id: Number(e.target.value) || null, chapter_id: null }))}>
-              <option value="">Select subject</option>
-              {subjectsList.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-            </select>
+            <CustomSelectDropdown
+              value={form.subject_id || ''}
+              placeholder="Select subject"
+              options={[{ id: '', name: 'Select subject' }, ...subjectsList]}
+              onChange={(val) => setForm((f) => ({ ...f, subject_id: Number(val) || null, chapter_id: null }))}
+            />
           </div>
           <div>
             <label className="label">Chapter</label>
-            <select className="input" value={form.chapter_id || ''} onChange={(e) => setForm((f) => ({ ...f, chapter_id: Number(e.target.value) || null }))} disabled={!form.subject_id}>
-              <option value="">Select chapter</option>
-              {chaptersList.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-            </select>
+            <CustomSelectDropdown
+              value={form.chapter_id || ''}
+              placeholder="Select chapter"
+              disabled={!form.subject_id}
+              options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
+              onChange={(val) => setForm((f) => ({ ...f, chapter_id: Number(val) || null }))}
+            />
           </div>
           <div>
             <label className="label">Difficulty</label>
-            <select className="input" value={form.difficulty || 'medium'} onChange={(e) => setForm((f) => ({ ...f, difficulty: e.target.value }))}>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
-            </select>
+            <CustomSelectDropdown
+              value={form.difficulty || 'medium'}
+              options={[
+                { value: 'easy', label: 'Easy' },
+                { value: 'medium', label: 'Medium' },
+                { value: 'hard', label: 'Hard' },
+              ]}
+              onChange={(val) => setForm((f) => ({ ...f, difficulty: val }))}
+            />
           </div>
         </div>
 
