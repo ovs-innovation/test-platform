@@ -63,7 +63,7 @@ import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
   listCoupons, createCoupon, toggleCoupon, deleteCoupon,
   listFaculty, createFaculty,
-  adminListSubjects, createSubject, createChapter, listChapters, createTopic,
+  adminListSubjects, createSubject, deleteSubject, createChapter, deleteChapter, listChapters, createTopic, deleteTopic,
   getSettings, updateSettings, broadcastNotification,
 } from '../controllers/platformController.js';
 import { createInvite, listInvites, resendInvite } from '../controllers/inviteController.js';
@@ -129,9 +129,12 @@ router.get('/faculty', listFaculty);
 router.post('/faculty', createFaculty);
 router.get('/subjects', adminListSubjects);
 router.post('/subjects', createSubject);
+router.delete('/subjects/:id', deleteSubject);
 router.get('/subjects/:subjectId/chapters', listChapters);
 router.post('/chapters', createChapter);
+router.delete('/chapters/:id', deleteChapter);
 router.post('/topics', createTopic);
+router.delete('/topics/:id', deleteTopic);
 router.post('/notifications/broadcast', broadcastNotification);
 
 router.get('/feature-flags', getFeatureFlags);

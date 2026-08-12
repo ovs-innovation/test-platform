@@ -61,9 +61,11 @@ export function Skeleton({ className = '' }) {
 }
 
 /** Inline button feedback only — no full-page use */
-export function Spinner({ className = 'h-4 w-4' }) {
+export function Spinner({ className = '' }) {
+  const hasSizeClass = /\b(h-|w-|size-)/.test(className);
+  const sizeClasses = hasSizeClass ? '' : 'h-5 w-5';
   return (
-    <svg className={`inline-block animate-spin text-current opacity-70 ${className}`} viewBox="0 0 24 24" fill="none" aria-hidden>
+    <svg className={`inline-block animate-spin text-current opacity-70 ${sizeClasses} ${className}`} viewBox="0 0 24 24" fill="none" aria-hidden>
       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
     </svg>

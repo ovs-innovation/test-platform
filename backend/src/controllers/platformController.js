@@ -166,12 +166,27 @@ export const adminListSubjects = asyncHandler(async (_req, res) => {
 });
 
 export const createSubject = asyncHandler(async (req, res) => {
-  const { name, exam_type } = req.body;
+  const { name, exam_type } = req.body || {};
+  if (!name || !name.trim()) {
+    throw ApiError.badRequest('Subject name is required.');
+  }
+  const cleanName = name.trim();
+  const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || `subject-${Date.now()}`;
+
   const result = await query(
-    `INSERT INTO subjects (name, exam_type) VALUES ($1,$2) RETURNING *`,
-    [name, exam_type || 'General']
+    `INSERT INTO subjects (name, slug, exam_type)
+     VALUES ($1, $2, $3)
+     ON CONFLICT (name) DO UPDATE SET exam_type = EXCLUDED.exam_type
+     RETURNING *`,
+    [cleanName, slug, exam_type || 'JEE']
   );
   res.status(201).json({ subject: result.rows[0] });
+});
+
+export const deleteSubject = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  await query('DELETE FROM subjects WHERE id = $1', [id]);
+  res.json({ success: true, message: 'Subject deleted' });
 });
 
 export const createChapter = asyncHandler(async (req, res) => {
@@ -186,11 +201,29 @@ export const createChapter = asyncHandler(async (req, res) => {
 export const listChapters = asyncHandler(async (req, res) => {
   const { subjectId } = req.params;
   const result = await query(
-    `SELECT c.*, COUNT(t.id)::int AS topic_count FROM chapters c
-     LEFT JOIN topics t ON t.chapter_id = c.id WHERE c.subject_id = $1 GROUP BY c.id ORDER BY c.position`,
+    `SELECT c.*,
+       COALESCE(
+         JSON_AGG(
+           JSON_BUILD_OBJECT('id', t.id, 'name', t.name, 'position', t.position)
+           ORDER BY t.position, t.name
+         ) FILTER (WHERE t.id IS NOT NULL),
+         '[]'
+       ) AS topics,
+       COUNT(t.id)::int AS topic_count
+     FROM chapters c
+     LEFT JOIN topics t ON t.chapter_id = c.id
+     WHERE c.subject_id = $1
+     GROUP BY c.id
+     ORDER BY c.position, c.name`,
     [subjectId]
   );
   res.json({ chapters: result.rows });
+});
+
+export const deleteChapter = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  await query('DELETE FROM chapters WHERE id = $1', [id]);
+  res.json({ success: true, message: 'Chapter deleted' });
 });
 
 export const createTopic = asyncHandler(async (req, res) => {
@@ -200,6 +233,12 @@ export const createTopic = asyncHandler(async (req, res) => {
     [chapter_id, name, position ?? 0]
   );
   res.status(201).json({ topic: result.rows[0] });
+});
+
+export const deleteTopic = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  await query('DELETE FROM topics WHERE id = $1', [id]);
+  res.json({ success: true, message: 'Topic deleted' });
 });
 
 // ─── Admin broadcast notification ───────────────────────────────────────────

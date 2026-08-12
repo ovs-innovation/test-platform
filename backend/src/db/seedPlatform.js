@@ -93,6 +93,41 @@ export const seedPlatform = async (client) => {
     console.log('[seed] Subjects & chapters seeded.');
   }
 
+  const topicCount = await client.query('SELECT COUNT(*)::int AS c FROM topics');
+  if (topicCount.rows[0].c === 0) {
+    const TOPIC_SEED = {
+      'Mechanics': ['Kinematics in 1D/2D', 'Newton Laws of Motion', 'Work Energy & Power', 'Rotational Dynamics'],
+      'Thermodynamics': ['Thermal Expansion & Heat Transfer', 'First Law of Thermodynamics', 'Kinetic Theory of Gases'],
+      'Optics': ['Ray Optics & Optical Instruments', 'Wave Optics & Interference'],
+      'Electromagnetism': ['Electrostatics & Coulomb Law', 'Current Electricity & Kirchhoff Laws', 'Electromagnetic Induction'],
+      'Organic': ['IUPAC Nomenclature & Isomerism', 'General Organic Chemistry (GOC)', 'Hydrocarbons & Haloalkanes'],
+      'Inorganic': ['Periodic Table & Periodicity', 'Chemical Bonding', 'Coordination Compounds'],
+      'Physical Chemistry': ['Mole Concept & Stoichiometry', 'Chemical Equilibrium', 'Electrochemistry'],
+      'Algebra': ['Quadratic Equations', 'Matrices & Determinants', 'Permutations & Combinations'],
+      'Calculus': ['Limits & Differentiability', 'Application of Derivatives', 'Definite Integration'],
+      'Coordinate Geometry': ['Straight Lines', 'Circles', 'Conic Sections'],
+      'Trigonometry': ['Trigonometric Ratios & Identities', 'Inverse Trigonometry'],
+      'Botany': ['Cell Biology', 'Plant Physiology & Photosynthesis', 'Genetics'],
+      'Zoology': ['Animal Kingdom', 'Human Physiology', 'Evolution & Health'],
+      'Human Physiology': ['Breathing & Respiration', 'Circulation', 'Neural Control'],
+      'Logical Reasoning': ['Number Series', 'Coding-Decoding', 'Syllogisms'],
+      'Data Interpretation': ['Bar Graphs & Tables', 'Pie Charts'],
+      'Verbal Ability': ['Reading Comprehension', 'Grammar & Vocabulary']
+    };
+
+    const chs = await client.query('SELECT id, name FROM chapters');
+    for (const ch of chs.rows) {
+      const list = TOPIC_SEED[ch.name] || ['Fundamental Concepts', 'Advanced Problem Solving', 'NTA PYQ Drills'];
+      for (let i = 0; i < list.length; i++) {
+        await client.query(
+          'INSERT INTO topics (chapter_id, name, position) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+          [ch.id, list[i], i + 1]
+        );
+      }
+    }
+    console.log('[seed] Topics seeded.');
+  }
+
   const seriesCount = await client.query('SELECT COUNT(*)::int AS c FROM test_series');
   if (seriesCount.rows[0].c === 0) {
     for (const s of SERIES) {

@@ -385,7 +385,31 @@ export const adminService = {
     return api.post('/admin/faculty', data).then((r) => r.data);
   },
   subjects: () => withCache('admin_subjects', () => api.get('/admin/subjects').then((r) => r.data.subjects)),
-  createChapter: (data) => api.post('/admin/chapters', data).then((r) => r.data),
+  createSubject: (data) => {
+    clearCache();
+    return api.post('/admin/subjects', data).then((r) => r.data.subject);
+  },
+  deleteSubject: (id) => {
+    clearCache();
+    return api.delete(`/admin/subjects/${id}`).then((r) => r.data);
+  },
+  chapters: (subjectId) => api.get(`/admin/subjects/${subjectId}/chapters`).then((r) => r.data.chapters),
+  createChapter: (data) => {
+    clearCache();
+    return api.post('/admin/chapters', data).then((r) => r.data.chapter);
+  },
+  deleteChapter: (id) => {
+    clearCache();
+    return api.delete(`/admin/chapters/${id}`).then((r) => r.data);
+  },
+  createTopic: (data) => {
+    clearCache();
+    return api.post('/admin/topics', data).then((r) => r.data.topic);
+  },
+  deleteTopic: (id) => {
+    clearCache();
+    return api.delete(`/admin/topics/${id}`).then((r) => r.data);
+  },
   broadcast: (data) => api.post('/admin/notifications/broadcast', data).then((r) => r.data),
   // Test Management Helpers
   tests: (params) => api.get('/admin/tests', { params }).then((r) => r.data.tests),
