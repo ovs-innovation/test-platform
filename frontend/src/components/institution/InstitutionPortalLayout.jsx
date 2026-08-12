@@ -418,16 +418,16 @@ export default function InstitutionPortalLayout({
                   setProfileDropdownOpen(false);
                   setNotifDropdownOpen(!notifDropdownOpen);
                 }}
-                className={`relative h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
-                  ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
-                  : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-sm'
+                className={`group relative h-9.5 w-9.5 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition-all duration-200 active:scale-95 cursor-pointer ${isDarkMode
+                  ? 'border-slate-800 bg-slate-900/90 text-slate-300 hover:border-blue-500/50 hover:bg-slate-800 hover:text-blue-400'
+                  : 'border-slate-200/90 bg-white/90 text-slate-600 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 shadow-xs hover:shadow-md hover:shadow-blue-500/10'
                   }`}
                 title="Notifications"
               >
-                <Bell className="h-4 w-4 sm:h-5 sm:w-5" />
+                <Bell className="h-4.5 w-4.5 sm:h-5 sm:w-5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
                 {unreadNotificationsCount > 0 && (
-                  <span className="absolute -top-1 -right-1 h-4 w-4 sm:h-4.5 sm:w-4.5 rounded-full bg-rose-500 text-white text-[9px] sm:text-[10px] font-black flex items-center justify-center animate-bounce shadow-md">
-                    {unreadNotificationsCount}
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-pulse font-mono">
+                    {unreadNotificationsCount > 99 ? '99+' : unreadNotificationsCount}
                   </span>
                 )}
               </button>

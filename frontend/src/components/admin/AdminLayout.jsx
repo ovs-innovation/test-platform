@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
+import { Bell } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { notificationService } from '../../lib/services.js';
@@ -146,41 +147,41 @@ export default function AdminLayout({ children }) {
     <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#F8FAFC] text-slate-900 transition-colors duration-200 dark:bg-[#080D1A] dark:text-slate-100">
       {/* DESKTOP COMMAND NAVIGATION RAIL */}
       <aside
-        className={`hidden shrink-0 flex-col p-4 transition-all duration-300 ease-in-out lg:flex ${
-          collapsed ? 'w-24' : 'w-[260px]'
+        className={`hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
+          collapsed ? 'w-20' : 'w-[260px]'
         }`}
       >
-        <div className="relative sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-2xl border border-slate-200/90 bg-white/95 shadow-sm backdrop-blur-xl transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]/95">
-          {/* Floating Collapse Toggle */}
+        <div className="relative sticky top-3 flex h-[calc(100vh-1.5rem)] flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]">
+          {/* Minimal Compact Circular Collapse Toggle (24px, Thin Bright Blue Border) */}
           <button
             type="button"
             onClick={() => setCollapsed(!collapsed)}
-            title={collapsed ? 'Expand Rail' : 'Collapse Rail'}
-            className="absolute -right-3.5 top-6 z-50 flex h-7 w-7 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-xs transition-all hover:scale-105 hover:border-blue-500 hover:text-blue-600 dark:border-slate-700 dark:bg-[#0F172A] dark:text-slate-300 dark:hover:border-blue-500 dark:hover:text-blue-400"
+            title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
+            className="absolute -right-3 top-3.5 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-blue-500 bg-white text-blue-600 transition-all duration-200 hover:scale-110 hover:bg-blue-50 dark:bg-[#0F172A] dark:text-white dark:border-blue-500 dark:hover:bg-blue-950/60 cursor-pointer shadow-xs"
           >
             <svg
-              className={`h-3.5 w-3.5 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
+              className={`h-3 w-3 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth="2.2"
+              strokeWidth="2.5"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           {/* Branding Header */}
-          <div className={`flex h-20 shrink-0 items-center border-b border-slate-200/70 px-4 dark:border-slate-800/70 ${
+          <div className={`flex h-14 shrink-0 items-center border-b border-slate-200/70 px-4 dark:border-slate-800/70 ${
             collapsed ? 'justify-center' : 'justify-between'
           }`}>
-            <Link to="/admin" className="flex items-center gap-3 overflow-hidden">
-              <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-9 w-auto shrink-0 object-contain" />
+            <Link to="/admin" className="flex items-center gap-2.5 overflow-hidden">
+              <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-8 w-auto shrink-0 object-contain" />
               {!collapsed && (
                 <div className="space-y-0.5 leading-none">
                   <span className="block font-serif text-sm font-black tracking-wider text-slate-900 uppercase dark:text-white">
                     EDVEDUM
                   </span>
-                  <span className="block text-[9px] font-extrabold tracking-[0.2em] text-[#D97706] uppercase dark:text-[#F59E0B]">
+                  <span className="block text-[8.5px] font-extrabold tracking-[0.2em] text-[#D97706] uppercase dark:text-[#F59E0B]">
                     COMMAND CENTRE
                   </span>
                 </div>
@@ -189,11 +190,11 @@ export default function AdminLayout({ children }) {
           </div>
 
           {/* Grouped Navigation Rail */}
-          <nav className="flex-1 overflow-y-auto p-3 scrollbar-thin space-y-4">
+          <nav className="flex-1 overflow-y-auto px-3 py-2.5 space-y-3.5 scrollbar-thin [::-webkit-scrollbar]:w-1 [::-webkit-scrollbar-thumb]:bg-slate-300/60 dark:[::-webkit-scrollbar-thumb]:bg-slate-700/50 [::-webkit-scrollbar-thumb]:rounded-full">
             {ADMIN_NAV_GROUPS.map((group, gIdx) => (
-              <div key={gIdx} className="space-y-1">
+              <div key={gIdx} className="space-y-0.5">
                 {!collapsed && (
-                  <p className="px-2 pt-2 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  <p className="px-3 pt-1 pb-1 text-[10px] font-bold uppercase tracking-wider text-slate-400/90 dark:text-slate-500">
                     {group.groupTitle}
                   </p>
                 )}
@@ -204,16 +205,16 @@ export default function AdminLayout({ children }) {
                       key={item.to}
                       to={item.to}
                       end={item.to === '/admin'}
-                      className={`group relative flex items-center transition-all duration-150 ${
-                        collapsed ? 'justify-center py-2' : 'gap-3 px-3 py-2 rounded-xl text-xs font-semibold'
+                      className={`group relative flex items-center h-10 transition-all duration-150 rounded-lg ${
+                        collapsed ? 'justify-center px-0' : 'gap-3 px-3 text-[13px] font-medium'
                       } ${
                         isActive
-                          ? 'bg-blue-50/90 text-blue-700 font-bold border-l-4 border-blue-600 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-500'
-                          : 'text-slate-600 hover:bg-slate-100/80 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white'
+                          ? 'bg-blue-50/90 text-blue-600 font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:rounded-r-full before:bg-blue-600 dark:bg-blue-950/30 dark:text-blue-400 dark:before:bg-blue-400'
+                          : 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300/80 dark:hover:bg-slate-800/50 dark:hover:text-white'
                       }`}
                     >
-                      <div className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${
-                        isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'
+                      <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${
+                        isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 group-hover:text-slate-600 dark:text-slate-400 dark:group-hover:text-slate-200'
                       }`}>
                         <NavIcon name={item.icon} className="h-4 w-4" />
                       </div>
@@ -226,12 +227,12 @@ export default function AdminLayout({ children }) {
           </nav>
 
           {/* Sticky Admin User Footer */}
-          <div className="shrink-0 border-t border-slate-200/80 p-3 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40">
+          <div className="shrink-0 border-t border-slate-200/70 p-3 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/30">
             {collapsed ? (
               <div className="flex justify-center">
                 <span
                   title={user?.name || 'Admin'}
-                  className="flex h-9 w-9 items-center justify-center rounded-xl bg-blue-600 text-xs font-black text-white shadow-xs cursor-pointer"
+                  className="flex h-8.5 w-8.5 items-center justify-center rounded-lg bg-blue-600 text-xs font-black text-white shadow-xs cursor-pointer"
                 >
                   {user?.name?.charAt(0)?.toUpperCase() || 'A'}
                 </span>
@@ -243,14 +244,14 @@ export default function AdminLayout({ children }) {
                     {user?.name?.charAt(0)?.toUpperCase() || 'A'}
                   </span>
                   <div className="min-w-0">
-                    <p className="truncate text-xs font-bold text-slate-900 dark:text-white">{user?.name || 'Administrator'}</p>
-                    <p className="truncate text-[10px] font-medium text-slate-400 capitalize">{user?.role || 'System Admin'}</p>
+                    <p className="truncate text-xs font-bold text-slate-900 dark:text-white">{user?.name || 'Platform Admin'}</p>
+                    <p className="truncate text-[10px] font-medium text-slate-400 capitalize">{user?.role || 'Admin'}</p>
                   </div>
                 </div>
                 <button
                   onClick={handleLogout}
                   title="Logout Admin Session"
-                  className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200/60 hover:text-rose-600 dark:hover:bg-slate-800 dark:hover:text-rose-400 transition"
+                  className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-200/60 hover:text-rose-600 dark:hover:bg-slate-800 dark:hover:text-rose-400 transition cursor-pointer"
                 >
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -305,116 +306,116 @@ export default function AdminLayout({ children }) {
 
       {/* MAIN ADMIN WORKSPACE AREA */}
       <div className="flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden">
-        {/* TOP COMMAND BAR */}
-        <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-slate-200/80 bg-white/90 px-4 sm:px-6 lg:px-8 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#0F172A]/90">
-          {/* Mobile Drawer Trigger & Breadcrumb */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setMobileDrawerOpen(true)}
-              className="rounded-xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 lg:hidden"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
-            <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
-              <span className="uppercase text-[10px] tracking-wider text-slate-400">Admin</span>
-              <span>/</span>
-              <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbLabel()}</span>
-            </div>
-          </div>
-
-          {/* Center Search Trigger */}
-          <div className="hidden md:block flex-1 max-w-md mx-6">
-            <button
-              type="button"
-              onClick={() => setCommandPaletteOpen(true)}
-              className="w-full flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3.5 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50"
-            >
-              <div className="flex items-center gap-2">
-                <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        {/* FLOATING ROUNDED NAVBAR CONTAINER */}
+        <div className="pt-3 px-3 sm:px-4 lg:px-6 lg:pl-3">
+          <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
+            {/* Mobile Drawer Trigger & Breadcrumb */}
+            <div className="flex items-center gap-3">
+              <button
+                onClick={() => setMobileDrawerOpen(true)}
+                className="rounded-xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 lg:hidden"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
-                <span>Search students, tests, questions, schools...</span>
+              </button>
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                <span className="uppercase text-[10px] tracking-wider text-slate-400">Admin</span>
+                <span>/</span>
+                <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbLabel()}</span>
               </div>
-              <kbd className="rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
-                Ctrl K
-              </kbd>
-            </button>
-          </div>
+            </div>
 
-          {/* Right Action Toolbar */}
-          <div className="flex items-center gap-2.5">
-            {/* Quick Actions Dropdown */}
-            <div className="relative" ref={quickActionsRef}>
+            {/* Center Search Trigger */}
+            <div className="hidden md:block flex-1 max-w-md mx-6">
               <button
                 type="button"
-                onClick={() => setQuickActionsOpen(!quickActionsOpen)}
-                className="btn btn-primary btn-sm hidden sm:inline-flex items-center gap-1.5"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="w-full flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3.5 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50"
               >
-                <span>+ Quick Action</span>
-              </button>
-              {quickActionsOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#0F172A]">
-                  <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Command Shortcuts</p>
-                  <button
-                    onClick={() => { navigate('/admin/assessments'); setQuickActionsOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                  >
-                    📝 New Assessment
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/candidates'); setQuickActionsOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                  >
-                    👤 Register Student
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/question-bank'); setQuickActionsOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                  >
-                    📚 Upload Questions
-                  </button>
-                  <button
-                    onClick={() => { navigate('/admin/coupons'); setQuickActionsOpen(false); }}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
-                  >
-                    🏷️ Create Coupon
-                  </button>
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>Search students, tests, questions, schools...</span>
                 </div>
-              )}
+                <kbd className="rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                  Ctrl K
+                </kbd>
+              </button>
             </div>
 
-            {/* Notification Bell */}
-            <button
-              onClick={() => setNotifPanelOpen(true)}
-              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 transition"
-              title="Notifications"
-            >
-              <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-              </svg>
-              {unreadNotifs > 0 && (
-                <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-600 text-[10px] font-black text-white">
-                  {unreadNotifs}
-                </span>
-              )}
-            </button>
+            {/* Right Action Toolbar */}
+            <div className="flex items-center gap-2.5">
+              {/* Quick Actions Dropdown */}
+              <div className="relative" ref={quickActionsRef}>
+                <button
+                  type="button"
+                  onClick={() => setQuickActionsOpen(!quickActionsOpen)}
+                  className="btn btn-primary btn-sm hidden sm:inline-flex items-center gap-1.5"
+                >
+                  <span>+ Quick Action</span>
+                </button>
+                {quickActionsOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-52 rounded-2xl border border-slate-200 bg-white p-2 shadow-xl dark:border-slate-800 dark:bg-[#0F172A]">
+                    <p className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400">Command Shortcuts</p>
+                    <button
+                      onClick={() => { navigate('/admin/assessments'); setQuickActionsOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      📝 New Assessment
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/candidates'); setQuickActionsOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      👤 Register Student
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/question-bank'); setQuickActionsOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      📚 Upload Questions
+                    </button>
+                    <button
+                      onClick={() => { navigate('/admin/coupons'); setQuickActionsOpen(false); }}
+                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
+                    >
+                      🏷️ Create Coupon
+                    </button>
+                  </div>
+                )}
+              </div>
 
-            {/* Theme Toggle */}
-            <button
-              type="button"
-              onClick={toggle}
-              className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 transition cursor-pointer"
-              title={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {dark ? '☀️' : '🌙'}
-            </button>
-          </div>
-        </header>
+              {/* Premium Notification Bell */}
+              <button
+                onClick={() => setNotifPanelOpen(true)}
+                className="group relative flex h-9.5 w-9.5 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-xs transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 hover:shadow-md hover:shadow-blue-500/10 active:scale-95 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 cursor-pointer"
+                title="Notifications"
+              >
+                <Bell className="h-4.5 w-4.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
+                {unreadNotifs > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-pulse font-mono">
+                    {unreadNotifs > 99 ? '99+' : unreadNotifs}
+                  </span>
+                )}
+              </button>
+
+              {/* Theme Toggle */}
+              <button
+                type="button"
+                onClick={toggle}
+                className="flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 transition cursor-pointer"
+                title={dark ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {dark ? '☀️' : '🌙'}
+              </button>
+            </div>
+          </header>
+        </div>
 
         {/* PAGE CONTENT CONTAINER */}
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full max-w-full">
+        <main className="flex-1 p-3 sm:p-4 lg:p-6 w-full max-w-full">
           {children || <Outlet />}
         </main>
       </div>
