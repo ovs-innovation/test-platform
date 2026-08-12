@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
+import { LoadingScreen, Spinner } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ChevronDown, Check, GraduationCap, Plus, BookOpen, Layers } from 'lucide-react';
 
@@ -106,11 +107,15 @@ export default function AdminSubjects() {
     loadChapters(selected);
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading academic subjects..." />;
 
   return (
-    <div className="space-y-6">
-      <PageHeader title="Subjects & Chapters" subtitle="Organize content hierarchy for JEE, NEET & Foundation exams." />
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader
+        title="Subjects & Academic Topics"
+        subtitle="Organize curriculum content hierarchy for JEE, NEET & Foundation national mock exams."
+        breadcrumbs={['Subjects & Topics']}
+      />
       <div className="grid gap-6 lg:grid-cols-2">
         {/* LEFT COLUMN: SUBJECTS MANAGEMENT */}
         <div>

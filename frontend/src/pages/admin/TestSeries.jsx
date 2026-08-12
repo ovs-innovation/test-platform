@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link2 as LinkIcon, Search, Clock, Award, Calendar } from 'lucide-react';
 import { testSeriesService, adminService } from '../../lib/services.js';
-import { PageHeader, LoadingScreen, ErrorState, Spinner, Badge } from '../../components/ui.jsx';
+import { LoadingScreen, ErrorState, Spinner, Badge } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { getTestSeriesCover } from '../../lib/testSeriesCover.js';
@@ -41,12 +42,12 @@ export default function AdminTestSeries() {
   const load = async () => {
     setState('loading');
     try {
-      const [ts, tests] = await Promise.all([
+      const [seriesData, testsData] = await Promise.all([
         testSeriesService.list(),
         adminService.tests().catch(() => []),
       ]);
-      setList(ts || []);
-      setAvailableTests(tests || []);
+      setList(seriesData || []);
+      setAvailableTests(testsData || []);
       setState('done');
     } catch {
       setState('error');
@@ -57,19 +58,46 @@ export default function AdminTestSeries() {
     load();
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleOpenEdit = (s) => {
+    setEditing(s);
+    setForm({
+      title: s.title || '',
+      description: s.description || '',
+      price: s.price || 0,
+      exam_type: s.exam_type || 'JEE Main',
+      is_featured: Boolean(s.is_featured),
+      is_active: Boolean(s.is_active),
+      validity_days: s.validity_days || 365,
+      image_url: s.image_url || '',
+      is_free: Boolean(s.is_free),
+      display_order: s.display_order || 0,
+    });
+    setModal(true);
+  };
+
+  const handleOpenDelete = (s) => {
+    setSeriesToDelete(s);
+    setDeleteConfirmOpen(true);
+  };
+
+  const handleOpenLinkModal = (s) => {
+    setLinkModal(s);
+    setTestSearch('');
+    setSelectedTestId('');
+  };
+
+  const handleSubmitSeries = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
       if (editing) {
         await testSeriesService.update(editing.id, form);
-        toast.success('Test series updated');
+        toast.success('Test series updated successfully');
       } else {
         await testSeriesService.create(form);
-        toast.success('Test series created');
+        toast.success('Test series created successfully');
       }
       setModal(false);
-      setEditing(null);
       load();
     } catch (err) {
       toast.error(err.message || 'Operation failed');
@@ -78,19 +106,14 @@ export default function AdminTestSeries() {
     }
   };
 
-  const handleLinkTest = async (e) => {
+  const handleLinkTestSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedTestId) {
-      toast.error('Please select an existing test to link');
-      return;
-    }
+    if (!linkModal || !selectedTestId) return;
     setSaving(true);
     try {
-      await testSeriesService.link(linkModal.id, Number(selectedTestId));
+      await testSeriesService.link(linkModal.id, selectedTestId);
       toast.success('Test linked to series successfully');
       setLinkModal(null);
-      setSelectedTestId('');
-      setTestSearch('');
       load();
     } catch (err) {
       toast.error(err.message || 'Failed to link test');
@@ -99,28 +122,35 @@ export default function AdminTestSeries() {
     }
   };
 
-  const handleToggleActive = async (s) => {
-    const newStatus = !s.is_active;
+  const handleUnlinkTest = async (seriesId, testId, testTitle) => {
+    if (!window.confirm(`Unlink test "${testTitle}" from this series?`)) return;
     try {
-      await testSeriesService.toggleActive(s.id, newStatus);
-      toast.success(newStatus ? `"${s.title}" activated` : `"${s.title}" deactivated`);
-      setList((prev) => prev.map((item) => (item.id === s.id ? { ...item, is_active: newStatus } : item)));
+      await testSeriesService.unlink(seriesId, testId);
+      toast.success('Test unlinked successfully');
+      load();
     } catch (err) {
-      toast.error(err.message || 'Failed to update test series status');
+      toast.error(err.message || 'Failed to unlink test');
     }
   };
 
-  const handleDeleteSeriesClick = (s) => {
-    setSeriesToDelete(s);
-    setDeleteConfirmOpen(true);
+  const handleToggleActive = async (s) => {
+    try {
+      await testSeriesService.toggleActive(s.id, !s.is_active);
+      toast.success(`Series marked as ${!s.is_active ? 'Active' : 'Inactive'}`);
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Failed to toggle status');
+    }
   };
 
-  if (state === 'loading') return <LoadingScreen />;
+  if (state === 'loading') return <LoadingScreen label="Loading test series…" />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 
-  // Filter available tests for picker search
-  const filteredTests = availableTests.filter((t) => {
-    if (!testSearch.trim()) return true;
+  const linkedTestIds = new Set((linkModal?.tests || []).map((t) => t.id));
+  const unlinkedAvailableTests = availableTests.filter((t) => !linkedTestIds.has(t.id));
+
+  const filteredTests = unlinkedAvailableTests.filter((t) => {
+    if (!testSearch) return true;
     const q = testSearch.toLowerCase();
     const name = (t.test_name || t.title || '').toLowerCase();
     const type = (t.test_type || '').toLowerCase();
@@ -142,23 +172,24 @@ export default function AdminTestSeries() {
   };
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Test series catalogue"
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader
+        title="Test Series Catalogue"
         subtitle="Manage test packages, category tags, pricing, and link existing tests from the tests repository."
+        breadcrumbs={['Test Series Packs']}
         actions={(
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
-              className="px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors shadow-xs flex items-center gap-1.5"
+              className="btn btn-secondary"
               onClick={handleSyncCatalogue}
               disabled={saving}
             >
-              {saving ? <Spinner size="sm" /> : '⚡ Sync Catalogue Dataset'}
+              {saving ? <Spinner size="sm" /> : '⚡ Sync Catalogue'}
             </button>
             <button
               type="button"
-              className="btn-primary"
+              className="btn btn-primary"
               onClick={() => {
                 setEditing(null);
                 setForm({
@@ -176,7 +207,7 @@ export default function AdminTestSeries() {
                 setModal(true);
               }}
             >
-              + New series
+              + Create Series
             </button>
           </div>
         )}
@@ -272,7 +303,7 @@ export default function AdminTestSeries() {
               <button
                 type="button"
                 className="btn-secondary !py-1.5 !px-3 text-xs text-rose-600 dark:text-rose-400"
-                onClick={() => handleDeleteSeriesClick(s)}
+                onClick={() => handleOpenDelete(s)}
               >
                 Delete 🗑️
               </button>
@@ -287,7 +318,7 @@ export default function AdminTestSeries() {
         onClose={() => setModal(false)}
         title={editing ? 'Edit Test Series' : 'Create New Test Series'}
       >
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmitSeries} className="space-y-4">
           <div>
             <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Series Name / Title</label>
             <input
@@ -402,7 +433,7 @@ export default function AdminTestSeries() {
         title={`Link Existing Test to "${linkModal?.title}"`}
         size="lg"
       >
-        <form onSubmit={handleLinkTest} className="space-y-4">
+        <form onSubmit={handleLinkTestSubmit} className="space-y-4">
           <div className="rounded-2xl p-3.5 bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/60 dark:border-blue-800/60 text-xs text-slate-700 dark:text-slate-300 flex items-center gap-3">
             <div className="p-2 rounded-xl bg-blue-600 text-white shrink-0 shadow-xs">
               <LinkIcon className="h-4 w-4" />

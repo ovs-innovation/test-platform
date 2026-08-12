@@ -171,8 +171,8 @@ export default function InstitutionPortalLayout({
 
   return (
     <div className={`min-h-screen font-sans flex flex-col transition-colors duration-200 ${isDarkMode
-        ? 'bg-[#060D1A] text-slate-100 selection:bg-blue-500 selection:text-white'
-        : 'bg-slate-50 text-slate-800 selection:bg-blue-600 selection:text-white'
+      ? 'bg-[#060D1A] text-slate-100 selection:bg-blue-500 selection:text-white'
+      : 'bg-slate-50 text-slate-800 selection:bg-blue-600 selection:text-white'
       }`}>
 
       {/* MOBILE DRAWER BACKDROP */}
@@ -188,8 +188,8 @@ export default function InstitutionPortalLayout({
          ========================================================================= */}
       <aside
         className={`fixed top-0 bottom-0 left-0 z-50 flex flex-col transition-all duration-300 ${isDarkMode
-            ? 'bg-[#0A1628] border-r border-slate-800/80 shadow-2xl'
-            : 'bg-white border-r border-slate-200 shadow-lg'
+          ? 'bg-[#0A1628] border-r border-slate-800/80 shadow-2xl'
+          : 'bg-white border-r border-slate-200 shadow-lg'
           } ${mobileDrawerOpen ? 'translate-x-0 w-72' : '-translate-x-full lg:translate-x-0'
           } ${sidebarCollapsed ? 'lg:w-20' : 'lg:w-64'
           }`}
@@ -243,8 +243,8 @@ export default function InstitutionPortalLayout({
                 onClick={() => setMobileDrawerOpen(false)}
                 title={sidebarCollapsed ? item.label : undefined}
                 className={`flex items-center transition-all cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
-                    ? 'h-12 w-12 mx-auto justify-center rounded-2xl'
-                    : 'w-full gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm'
+                  ? 'h-12 w-12 mx-auto justify-center rounded-2xl'
+                  : 'w-full gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm'
                   } ${isActive
                     ? 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25 font-black'
                     : isDarkMode
@@ -271,8 +271,8 @@ export default function InstitutionPortalLayout({
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
             title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
             className={`hidden lg:flex items-center justify-center transition cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
-                ? 'h-11 w-11 mx-auto rounded-2xl'
-                : 'w-full gap-2 p-3 rounded-2xl text-xs font-extrabold'
+              ? 'h-11 w-11 mx-auto rounded-2xl'
+              : 'w-full gap-2 p-3 rounded-2xl text-xs font-extrabold'
               } ${isDarkMode ? 'bg-slate-800/60 text-slate-400 hover:bg-slate-800 hover:text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-slate-900'
               }`}
           >
@@ -290,8 +290,8 @@ export default function InstitutionPortalLayout({
             onClick={handleLogout}
             title="Sign Out"
             className={`flex items-center justify-center transition cursor-pointer text-rose-400 hover:bg-rose-500/10 hover:text-rose-300 ${sidebarCollapsed && !mobileDrawerOpen
-                ? 'h-11 w-11 mx-auto mt-2 rounded-2xl'
-                : 'mt-2 w-full gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold text-center'
+              ? 'h-11 w-11 mx-auto mt-2 rounded-2xl'
+              : 'mt-2 w-full gap-2.5 px-3.5 py-2.5 rounded-2xl text-xs font-extrabold text-center'
               }`}
           >
             <LogOut className="h-4.5 w-4.5 shrink-0 text-rose-400" />
@@ -343,8 +343,8 @@ export default function InstitutionPortalLayout({
               value={searchQuery}
               onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
               className={`w-full py-2.5 pl-11 pr-16 text-xs sm:text-sm font-semibold rounded-2xl border transition-all focus:outline-none ${isDarkMode
-                  ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10'
-                  : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 shadow-inner'
+                ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10'
+                : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 shadow-inner'
                 }`}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[10px] font-mono font-bold text-slate-400 pointer-events-none border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
@@ -419,8 +419,8 @@ export default function InstitutionPortalLayout({
                   setNotifDropdownOpen(!notifDropdownOpen);
                 }}
                 className={`relative h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
-                    ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
-                    : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-sm'
+                  ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
+                  : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-sm'
                   }`}
                 title="Notifications"
               >
@@ -433,9 +433,8 @@ export default function InstitutionPortalLayout({
               </button>
 
               {notifDropdownOpen && (
-                <div className={`absolute right-0 mt-2.5 w-80 sm:w-96 rounded-2xl border shadow-2xl p-4 z-50 animate-in fade-in space-y-3 ${
-                  isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
-                }`}>
+                <div className={`absolute right-0 mt-2.5 w-80 sm:w-96 rounded-2xl border shadow-2xl p-4 z-50 animate-in fade-in space-y-3 ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+                  }`}>
                   <div className="flex items-center justify-between border-b border-slate-800/40 pb-2">
                     <h4 className="text-xs font-extrabold flex items-center gap-2">
                       <Bell className="h-4 w-4 text-cyan-400" />
@@ -467,11 +466,10 @@ export default function InstitutionPortalLayout({
                               onMarkNotificationRead(n.id);
                             }
                           }}
-                          className={`p-3 rounded-xl border transition cursor-pointer space-y-1 ${
-                            !n.is_read
+                          className={`p-3 rounded-xl border transition cursor-pointer space-y-1 ${!n.is_read
                               ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/30 text-white' : 'bg-cyan-50 border-cyan-200 text-slate-900')
                               : (isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700')
-                          }`}
+                            }`}
                         >
                           <div className="flex items-center justify-between gap-2">
                             <span className="font-extrabold text-xs flex items-center gap-1.5">
@@ -512,8 +510,8 @@ export default function InstitutionPortalLayout({
             <button
               onClick={() => setIsDarkMode && setIsDarkMode(!isDarkMode)}
               className={`h-9 w-9 sm:h-11 sm:w-11 rounded-xl sm:rounded-2xl border flex items-center justify-center transition cursor-pointer ${isDarkMode
-                  ? 'border-slate-800 bg-slate-900 text-amber-400 hover:bg-slate-800'
-                  : 'border-slate-200 bg-slate-100 text-indigo-600 hover:bg-slate-200 shadow-sm'
+                ? 'border-slate-800 bg-slate-900 text-amber-400 hover:bg-slate-800'
+                : 'border-slate-200 bg-slate-100 text-indigo-600 hover:bg-slate-200 shadow-sm'
                 }`}
               title={isDarkMode ? 'Switch to Light Theme' : 'Switch to Dark Theme'}
             >

@@ -729,7 +729,7 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
   let candidateRes;
   if (isEmail) {
     candidateRes = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.institution_id, u.batch_id, u.roll_number, sp.phone AS profile_phone
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
        WHERE LOWER(u.email) = $1 AND u.role = 'candidate'`,
@@ -737,7 +737,7 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
     );
   } else {
     candidateRes = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.institution_id, u.batch_id, u.roll_number, sp.phone AS profile_phone
        FROM users u
        JOIN student_profiles sp ON sp.user_id = u.id
        WHERE (sp.phone = $1 OR (sp.phone IS NOT NULL AND length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = $2))
@@ -754,13 +754,14 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
     throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
   }
 
+  const normalizedEmail = candidate.email.toLowerCase();
   const targetPhone = candidate.profile_phone || (isEmail ? '' : inputVal);
 
   const recentRes = await query(
     `SELECT COUNT(*)::int AS c FROM otp_verifications
-     WHERE (email = $1 OR (phone <> '' AND phone = $2)) AND purpose = 'student_login'
+     WHERE (LOWER(email) = LOWER($1) OR (phone <> '' AND phone = $2)) AND purpose = 'student_login'
        AND created_at > NOW() - ($3 || ' minutes')::interval`,
-    [candidate.email, targetPhone, env.otpResendWindowMinutes]
+    [normalizedEmail, targetPhone, env.otpResendWindowMinutes]
   );
   const limitThreshold = env.isProd ? env.otpResendLimit : 50;
   if (recentRes.rows[0].c >= limitThreshold) {
@@ -776,21 +777,21 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
   await query(
     `INSERT INTO otp_verifications (email, phone, otp_hash, purpose, expires_at)
      VALUES ($1, $2, $3, 'student_login', $4)`,
-    [candidate.email, targetPhone, otpHash, expiresAt]
+    [normalizedEmail, targetPhone, otpHash, expiresAt]
   );
 
   let emailSent = true;
   try {
-    await sendOtpEmail(candidate.email, otp);
+    await sendOtpEmail(normalizedEmail, otp);
   } catch (err) {
     emailSent = false;
     // eslint-disable-next-line no-console
-    console.warn(`[email] Failed to send OTP email to ${candidate.email}: ${err.message}`);
+    console.warn(`[email] Failed to send OTP email to ${normalizedEmail}: ${err.message}`);
   }
 
   res.json({
     message: emailSent
-      ? `Verification code sent to your email (${candidate.email})`
+      ? `Verification code sent to your email (${normalizedEmail})`
       : 'Could not send email directly to your inbox. Check server SMTP settings.',
     emailSent,
     expiresInMinutes: env.otpExpiresMinutes,
@@ -805,7 +806,9 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
   const { otp } = req.body;
   const inputVal = (req.body.identifier || req.body.phone || req.body.email || '').trim();
   if (!inputVal) throw ApiError.badRequest('Mobile number or Email is required');
+  if (!otp || String(otp).trim().length !== 6) throw ApiError.badRequest('A 6-digit OTP code is required');
 
+  const cleanOtp = String(otp).trim();
   const isEmail = inputVal.includes('@');
   const cleanPhone = inputVal.replace(/\D/g, '');
   const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
@@ -813,7 +816,7 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
   let candidateRes;
   if (isEmail) {
     candidateRes = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.institution_id, u.batch_id, u.roll_number, sp.phone AS profile_phone
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
        WHERE LOWER(u.email) = $1 AND u.role = 'candidate'`,
@@ -821,7 +824,7 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
     );
   } else {
     candidateRes = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, sp.phone AS profile_phone
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.institution_id, u.batch_id, u.roll_number, sp.phone AS profile_phone
        FROM users u
        JOIN student_profiles sp ON sp.user_id = u.id
        WHERE (sp.phone = $1 OR (sp.phone IS NOT NULL AND length(sp.phone) >= 10 AND RIGHT(sp.phone, 10) = $2))
@@ -835,14 +838,15 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
     throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
   }
 
+  const normalizedEmail = user.email.toLowerCase();
   const targetPhone = user.profile_phone || (isEmail ? '' : inputVal);
 
   const otpRes = await query(
     `SELECT * FROM otp_verifications
-     WHERE (email = $1 OR (phone <> '' AND phone = $2))
+     WHERE (LOWER(email) = LOWER($1) OR (phone <> '' AND phone = $2))
        AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()
      ORDER BY created_at DESC LIMIT 1`,
-    [user.email, targetPhone]
+    [normalizedEmail, targetPhone]
   );
   const record = otpRes.rows[0];
   if (!record) throw ApiError.badRequest('Invalid or expired verification code');
@@ -852,7 +856,7 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
     throw ApiError.tooManyRequests('Too many failed attempts. Request a new verification code.');
   }
 
-  const valid = await verifyOtp(otp, record.otp_hash);
+  const valid = await verifyOtp(cleanOtp, record.otp_hash);
   if (!valid) {
     const attempts = record.verify_attempts + 1;
     await query('UPDATE otp_verifications SET verify_attempts = $1 WHERE id = $2', [attempts, record.id]);
@@ -867,8 +871,10 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
 
   res.json({
+    success: true,
     token: issueToken(user),
     user: publicUser(user),
+    redirectTo: '/dashboard',
   });
 });
 

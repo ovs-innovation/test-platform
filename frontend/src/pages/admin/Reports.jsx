@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { formatDateTime, formatCompactDateTime, attemptStatusLabel } from '../../lib/format.js';
 import {
   Search,
@@ -38,7 +39,8 @@ export default function AdminReports() {
   const load = async () => {
     setState('loading');
     try {
-      setReports(await adminService.reports());
+      const data = await adminService.reports();
+      setReports(data || []);
       setState('done');
     } catch {
       setState('error');
@@ -49,12 +51,12 @@ export default function AdminReports() {
     load();
   }, []);
 
-  const exportCsv = async () => {
+  const handleExportCSV = async () => {
     setExporting(true);
     try {
       await adminService.exportReports();
-    } catch {
-      /* handled by api pattern */
+    } catch (err) {
+      alert(err.message || 'Failed to export CSV report');
     } finally {
       setExporting(false);
     }
@@ -63,10 +65,10 @@ export default function AdminReports() {
   // KPI Metrics calculation
   const metrics = useMemo(() => {
     const total = reports.length;
-    const completed = reports.filter((r) => r.status !== 'in_progress');
-    const passed = reports.filter((r) => r.passed === true);
-    const inProgress = reports.filter((r) => r.status === 'in_progress');
-    const totalViolations = reports.reduce((acc, r) => acc + (r.violation_count || 0), 0);
+    const completed = reports.filter((r) => r.status !== 'in_progress' && r.status !== 'started');
+    const passed = reports.filter((r) => r.passed === true || r.status === 'passed');
+    const inProgress = reports.filter((r) => r.status === 'in_progress' || r.status === 'started');
+    const totalViolations = reports.reduce((acc, r) => acc + (r.violation_count || r.violations_count || r.cheating_events_count || 0), 0);
     const passRate = completed.length > 0 ? Math.round((passed.length / completed.length) * 100) : 0;
 
     return {
@@ -80,18 +82,20 @@ export default function AdminReports() {
   // Filtered and searched reports
   const filtered = useMemo(() => {
     return reports.filter((r) => {
-      if (filter === 'passed' && r.passed !== true) return false;
-      if (filter === 'failed' && (r.passed !== false || r.status === 'in_progress')) return false;
-      if (filter === 'in_progress' && r.status !== 'in_progress') return false;
-      if (filter === 'violations' && (!r.violation_count || r.violation_count <= 0)) return false;
+      // 1. Search Query
+      const q = searchQuery.toLowerCase();
+      const name = (r.candidate_name || r.user_name || '').toLowerCase();
+      const email = (r.candidate_email || r.user_email || '').toLowerCase();
+      const test = (r.assessment_title || r.test_name || '').toLowerCase();
+      const matchesSearch = !q || name.includes(q) || email.includes(q) || test.includes(q);
 
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase();
-        const candidateMatch = (r.candidate_name || '').toLowerCase().includes(q);
-        const emailMatch = (r.candidate_email || '').toLowerCase().includes(q);
-        const assessmentMatch = (r.assessment_title || '').toLowerCase().includes(q);
-        return candidateMatch || emailMatch || assessmentMatch;
-      }
+      if (!matchesSearch) return false;
+
+      // 2. Tab Filter
+      if (filter === 'passed') return r.passed === true || r.status === 'passed';
+      if (filter === 'failed') return r.passed === false || r.status === 'failed';
+      if (filter === 'in_progress') return r.status === 'in_progress' || r.status === 'started';
+      if (filter === 'violations') return (r.violation_count || r.violations_count || r.cheating_events_count || 0) > 0;
 
       return true;
     });
@@ -132,25 +136,23 @@ export default function AdminReports() {
   if (state === 'error') return <ErrorState onRetry={load} />;
 
   return (
-    <div className="space-y-6 sm:space-y-8 max-w-[1440px] mx-auto">
+    <div className="w-full max-w-full space-y-6">
       {/* 1. Page Header with Title, Description, and Primary Actions */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200/80 pb-5 dark:border-slate-800/80">
-        <div>
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Reports & Attempt Analytics</h1>
-          <p className="mt-1 text-xs sm:text-sm text-slate-500 dark:text-slate-400 font-normal">
-            Complete record of candidate attempts, test performance, and proctoring violation logs.
-          </p>
-        </div>
-        <button
-          type="button"
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs sm:text-sm font-semibold text-white shadow-sm hover:bg-blue-500 transition cursor-pointer disabled:opacity-50 shrink-0"
-          onClick={exportCsv}
-          disabled={exporting || !reports.length}
-        >
-          <Download className="h-4 w-4" />
-          {exporting ? 'Exporting...' : 'Export Reports CSV'}
-        </button>
-      </div>
+      <AdminHeader
+        title="Reports & Attempt Audit Trail"
+        subtitle="Audit candidate test attempts, proctoring security violations, and export comprehensive CSV attempt logs."
+        breadcrumbs={['Platform Reports']}
+        actions={
+          <button
+            type="button"
+            disabled={exporting}
+            onClick={handleExportCSV}
+            className="btn btn-primary"
+          >
+            {exporting ? 'Exporting…' : 'Export Reports CSV'}
+          </button>
+        }
+      />
 
       {/* 2. Clean Summary KPI Stat Cards (Lighter Visual Weight) */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">

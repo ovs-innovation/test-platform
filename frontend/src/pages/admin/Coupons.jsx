@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { Ticket, ChevronDown, Check, Percent, Trash2, Plus, AlertTriangle, X, Calendar, Tag } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader, Badge } from '../../components/ui.jsx';
+import { LoadingScreen, Badge } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
@@ -127,22 +128,25 @@ export default function AdminCoupons() {
     }
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading discount coupons..." />;
 
   return (
-    <div className="space-y-6">
+    <div className="w-full max-w-full space-y-6">
       {/* HEADER SECTION */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <PageHeader title="Discount Coupons" subtitle="Create and manage discount codes for test series." />
-        <button
-          type="button"
-          onClick={() => setShowCreateModal(true)}
-          className="btn-primary rounded-xl px-4 py-2.5 text-xs font-extrabold flex items-center justify-center gap-2 cursor-pointer shadow-md hover:shadow-lg transition shrink-0"
-        >
-          <Plus className="h-4 w-4" />
-          <span>Create New Coupon</span>
-        </button>
-      </div>
+      <AdminHeader
+        title="Discount Coupons & Promotional Offers"
+        subtitle="Create, configure, and manage promotional discount codes for candidate test series purchases."
+        breadcrumbs={['Coupons & Promos']}
+        actions={
+          <button
+            type="button"
+            onClick={() => setShowCreateModal(true)}
+            className="btn btn-primary"
+          >
+            + Create New Coupon
+          </button>
+        }
+      />
 
       {/* COUPONS TABLE */}
       <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm rounded-3xl">

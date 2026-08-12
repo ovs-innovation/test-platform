@@ -50,20 +50,20 @@ export const inviteEmailTemplate = ({ name, assessmentTitle, inviteUrl, duration
 });
 
 export const otpEmailTemplate = ({ otp, expiresMinutes }) => ({
-  subject: `Your ${SITE_NAME} verification code`,
+  subject: `Your ${SITE_NAME} Login Verification Code`,
   html: layout(`
-    <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Email Verification</h2>
+    <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">EDVEDUM Academy - Verification</h2>
     <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">
-      Use the code below to verify your identity and access your assessment.
+      Use the verification code below to complete your login or identity verification.
     </p>
     <div style="margin:24px 0;padding:20px;background:#f1f5f9;border-radius:8px;text-align:center;">
-      <p style="margin:0 0 8px;color:#64748b;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Verification Code</p>
+      <p style="margin:0 0 8px;color:#64748b;font-size:13px;text-transform:uppercase;letter-spacing:1px;">Your Login Verification Code</p>
       <p style="margin:0;font-size:36px;font-weight:700;letter-spacing:8px;color:${BRAND};">${otp}</p>
     </div>
     <p style="margin:0 0 8px;color:#64748b;font-size:13px;">Expires in <strong>${expiresMinutes} minutes</strong>.</p>
-    <p style="margin:0;color:#64748b;font-size:13px;">Never share this code with anyone.</p>
+    <p style="margin:0;color:#64748b;font-size:13px;">Do not share this code with anyone.</p>
   `),
-  text: `Your ${SITE_NAME} verification code is: ${otp}\n\nExpires in ${expiresMinutes} minutes. Do not share this code.`,
+  text: `Your ${SITE_NAME} verification code is: ${otp}\n\nExpires in ${expiresMinutes} minutes. Do not share this code with anyone.`,
 });
 
 export const passwordResetEmailTemplate = ({ name, resetUrl, otp, expiresMinutes }) => ({

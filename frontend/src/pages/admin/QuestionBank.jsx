@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader, Spinner, DataTable, Badge } from '../../components/ui.jsx';
+import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
@@ -38,50 +39,36 @@ export default function AdminQuestionBank() {
     question_type: 'mcq',
     question_text: '',
     options: 'A|B|C|D',
-    correct_index: 0,
-    marks: 1,
-    solution: '',
-    image_url: '',
-    subject_id: null,
-    chapter_id: null,
-    difficulty: 'medium',
+    correct_option: 0,
+    solution_text: '',
+    explanation_url: '',
   });
 
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
 
-  const load = () => {
+  const load = async () => {
     setLoading(true);
-    questionBankService.list(category).then(setQuestions).finally(() => setLoading(false));
+    try {
+      const [data, subjects] = await Promise.all([
+        questionBankService.byCategory(category),
+        adminService.subjects().catch(() => []),
+      ]);
+      setQuestions(data || []);
+
+      const subNames = (subjects || []).map((s) => s.name).filter(Boolean);
+      const combined = Array.from(new Set([...DEFAULT_CATEGORIES, ...subNames]));
+      setCategoriesList(combined);
+    } catch {
+      toast.error('Could not load questions');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  useEffect(() => { load(); }, [category]);
-
   useEffect(() => {
-    questionBankService.categories().then((res) => {
-      if (res?.categories?.length) {
-        const names = res.categories.map((c) => c.name);
-        const merged = Array.from(new Set([...DEFAULT_CATEGORIES, ...names]));
-        setCategoriesList(merged);
-      }
-    }).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    adminService.subjects().then((list) => {
-      setSubjectsList(list || []);
-    }).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    if (form.subject_id) {
-      adminService.chapters(form.subject_id).then((list) => {
-        setChaptersList(list || []);
-      }).catch(() => {});
-    } else {
-      setChaptersList([]);
-    }
-  }, [form.subject_id]);
+    load();
+  }, [category]);
 
   const openAdd = () => {
     setEditing(null);
@@ -89,64 +76,54 @@ export default function AdminQuestionBank() {
       question_type: 'mcq',
       question_text: '',
       options: 'A|B|C|D',
-      correct_index: 0,
-      correct_indices_str: '',
-      marks: 1,
-      solution: '',
-      image_url: '',
-      subject_id: null,
-      chapter_id: null,
-      difficulty: 'medium',
+      correct_option: 0,
+      solution_text: '',
+      explanation_url: '',
     });
     setModalOpen(true);
   };
 
   const openEdit = (q) => {
     setEditing(q);
-    const opts = Array.isArray(q.options) ? q.options.join('|') : (q.options || 'A|B|C|D');
-    const idxs = Array.isArray(q.correct_indices) ? q.correct_indices : (typeof q.correct_indices === 'string' ? (tryParseArray(q.correct_indices)) : []);
-    const indicesStr = idxs.length > 0 ? idxs.join(',') : (q.correct_index != null ? String(q.correct_index) : '0');
+    const opts = tryParseArray(q.options);
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text || '',
-      options: opts,
-      correct_index: q.correct_index ?? 0,
-      correct_indices_str: indicesStr,
-      marks: q.marks ?? 1,
-      solution: q.solution || '',
-      image_url: q.image_url || '',
-      subject_id: q.subject_id || null,
-      chapter_id: q.chapter_id || null,
-      difficulty: q.difficulty || 'medium',
+      options: opts.length ? opts.join('|') : (typeof q.options === 'string' ? q.options : 'A|B|C|D'),
+      correct_option: q.correct_option ?? 0,
+      solution_text: q.solution_text || '',
+      explanation_url: q.explanation_url || '',
     });
     setModalOpen(true);
   };
 
-  const handleSave = async (e) => {
+  const removeQuestion = async (id) => {
+    if (!window.confirm('Delete this question permanently?')) return;
+    try {
+      await questionBankService.delete(id);
+      toast.success('Question deleted');
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Delete failed');
+    }
+  };
+
+  const saveQuestion = async (e) => {
     e.preventDefault();
     setSaving(true);
     try {
-      const isMulti = form.question_type === 'multi_select';
-      const parsedIndices = (form.correct_indices_str || '')
-        .split(/[,|\s]+/)
-        .map((s) => Number(s.trim()))
-        .filter((n) => !Number.isNaN(n));
       const payload = {
         ...form,
-        options: form.options.split('|').map((o) => o.trim()).filter(Boolean),
-        correct_index: isMulti ? (parsedIndices[0] ?? 0) : Number(form.correct_index),
-        correct_indices: isMulti ? parsedIndices : (form.correct_index != null ? [Number(form.correct_index)] : []),
-        marks: Number(form.marks),
+        subject: category,
+        correct_option: Number(form.correct_option),
       };
+
       if (editing) {
         await questionBankService.update(editing.id, payload);
         toast.success('Question updated');
       } else {
-        await questionBankService.create({
-          category,
-          ...payload,
-        });
-        toast.success('Question added');
+        await questionBankService.create(payload);
+        toast.success('Question created');
       }
       setModalOpen(false);
       setEditing(null);
@@ -197,19 +174,20 @@ export default function AdminQuestionBank() {
   };
 
   return (
-    <div>
-      <PageHeader
-        title="Question bank"
-        subtitle="Manage reusable questions — bulk import, export, and organize by category."
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader
+        title="Question Repository & Bank"
+        subtitle={`Managing reusable exam questions — bulk import, export, and subject organization (${questions.length} in ${category}).`}
+        breadcrumbs={['Question Repository']}
         actions={(
           <>
-            <button type="button" className="btn-primary text-sm" onClick={openAdd}>+ Add question</button>
-            <button type="button" className="btn-secondary text-sm" onClick={() => setCsvOpen(true)}>CSV Import</button>
-            <button type="button" className="btn-secondary text-sm" onClick={() => exportCsv(false)} disabled={exporting}>
+            <button type="button" className="btn btn-primary" onClick={openAdd}>+ Add Question</button>
+            <button type="button" className="btn btn-secondary" onClick={() => setCsvOpen(true)}>CSV Import</button>
+            <button type="button" className="btn btn-secondary" onClick={() => exportCsv(false)} disabled={exporting}>
               Export {category}
             </button>
-            <button type="button" className="btn-secondary text-sm" onClick={() => exportCsv(true)} disabled={exporting}>
-              Export all
+            <button type="button" className="btn btn-secondary" onClick={() => exportCsv(true)} disabled={exporting}>
+              Export All
             </button>
           </>
         )}
@@ -264,12 +242,7 @@ export default function AdminQuestionBank() {
                       {
                         label: 'Delete Question',
                         icon: Trash2,
-                        onClick: async () => {
-                          if (confirm('Are you sure you want to delete this question?')) {
-                            await questionBankService.remove(q.id);
-                            load();
-                          }
-                        },
+                        onClick: () => removeQuestion(q.id),
                         danger: true,
                       },
                     ]}
@@ -285,7 +258,7 @@ export default function AdminQuestionBank() {
 
       {/* Add / Edit Question Modal */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit question' : 'Add question'} size="lg">
-        <form onSubmit={handleSave} className="space-y-4">
+        <form onSubmit={saveQuestion} className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <div>
               <label className="label">Question type</label>

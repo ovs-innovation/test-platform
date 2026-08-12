@@ -170,7 +170,7 @@ export const otpVerifySchema = z.object({
 export const otpSendLoginSchema = z.object({
   identifier: z.string().trim().optional(),
   phone: z.string().trim().optional(),
-  email: z.string().trim().optional(),
+  email: z.string().trim().toLowerCase().optional(),
 }).refine((d) => d.identifier || d.phone || d.email, {
   message: 'Mobile number or Email is required',
 });
@@ -178,7 +178,7 @@ export const otpSendLoginSchema = z.object({
 export const otpVerifyLoginSchema = z.object({
   identifier: z.string().trim().optional(),
   phone: z.string().trim().optional(),
-  email: z.string().trim().optional(),
+  email: z.string().trim().toLowerCase().optional(),
   otp: z.string().length(6, 'OTP must be 6 digits'),
 }).refine((d) => d.identifier || d.phone || d.email, {
   message: 'Mobile number or Email is required',

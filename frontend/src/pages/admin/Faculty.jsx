@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader } from '../../components/ui.jsx';
+import { LoadingScreen } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
 export default function AdminFaculty() {
@@ -21,16 +22,20 @@ export default function AdminFaculty() {
     } catch (err) { toast.error(err.message); }
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading faculty directory..." />;
 
   return (
-    <div>
-      <PageHeader title="Faculty Members" subtitle="Manage faculty accounts and department permissions." />
-      <form onSubmit={create} className="card mb-6 grid gap-3 p-4 sm:grid-cols-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader
+        title="Faculty Directory & Instructors"
+        subtitle="Manage faculty accounts, teacher credentials, and department assignments."
+        breadcrumbs={['Faculty Directory']}
+      />
+      <form onSubmit={create} className="card p-4 sm:p-5 grid gap-3 sm:grid-cols-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
         <input className="input" placeholder="Name" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
         <input className="input" type="email" placeholder="Email" value={form.email} onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))} required />
         <input className="input" placeholder="Department" value={form.department} onChange={(e) => setForm((f) => ({ ...f, department: e.target.value }))} />
-        <button type="submit" className="btn-primary">Add Faculty</button>
+        <button type="submit" className="btn btn-primary">+ Add Faculty</button>
       </form>
       <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
         <table className="w-full text-xs">

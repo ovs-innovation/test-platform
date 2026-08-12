@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { adminService } from '../../lib/services.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import {
   CalendarDays,
   Plus,
@@ -321,31 +322,22 @@ export default function AdminAssessments() {
   });
 
   return (
-    <div className="space-y-6 w-full max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 w-full max-w-full pb-12">
       {/* Header Banner */}
-      <div className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white shadow-xl border border-slate-800">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full bg-blue-500/20 px-3 py-1 text-xs font-extrabold border border-blue-400/30 text-blue-300">
-              <CalendarDays className="h-3.5 w-3.5" />
-              Assessments Command Center
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Assessments & Test Schedule Manager</h1>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-xl">
-              Create, edit, schedule, assign, upload question papers/answer keys/solutions, trigger rank calculations, and configure missed-test access overrides.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={openCreateModal}
-              className="inline-flex items-center gap-2 rounded-xl bg-blue-600 hover:bg-blue-500 px-4 py-2.5 text-xs font-extrabold text-white shadow-lg shadow-blue-500/25 transition cursor-pointer"
-            >
-              <Plus className="h-4 w-4" /> + Create New Test
-            </button>
-          </div>
-        </div>
-      </div>
+      <AdminHeader
+        title="Assessments & Test Schedule Manager"
+        subtitle="Create, edit, schedule, assign, upload question papers/solutions, trigger rank calculations, and configure missed-test access overrides."
+        breadcrumbs={['CBT Assessments']}
+        actions={
+          <button
+            type="button"
+            onClick={openCreateModal}
+            className="btn btn-primary"
+          >
+            + Create New Test
+          </button>
+        }
+      />
 
       {/* Navigation Tabs */}
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto scrollbar-none">

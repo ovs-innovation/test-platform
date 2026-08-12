@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Pencil, ShieldAlert, Trash2 } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
-import { PageHeader, LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
+import { LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { formatDate } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -45,12 +46,12 @@ export default function AdminCandidates() {
   const load = async () => {
     setState('loading');
     try {
-      const [candidatesData, instData] = await Promise.all([
+      const [candData, instData] = await Promise.all([
         adminService.candidates(),
         adminService.partnerSchools().catch(() => ({ institutions: [] }))
       ]);
-      setCandidates(candidatesData);
-      setInstitutions(instData.institutions || []);
+      setCandidates(candData || []);
+      setInstitutions(instData?.institutions || instData || []);
       setState('done');
     } catch {
       setState('error');
@@ -62,6 +63,8 @@ export default function AdminCandidates() {
   }, []);
 
   const handleOpenCreate = () => {
+    setModalMode('create');
+    setSelectedCandidate(null);
     setForm({
       name: '',
       email: '',
@@ -71,55 +74,61 @@ export default function AdminCandidates() {
       target_exam: 'JEE',
       institution_id: ''
     });
-    setModalMode('create');
-    setSelectedCandidate(null);
     setModalOpen(true);
   };
 
   const handleOpenEdit = (c) => {
+    setModalMode('edit');
+    setSelectedCandidate(c);
     setForm({
       name: c.name || '',
       email: c.email || '',
-      password: '', // blank to keep current
+      password: '',
       phone: c.phone || '',
       class: c.class || '',
       target_exam: c.target_exam || 'JEE',
       institution_id: c.institution_id || ''
     });
-    setModalMode('edit');
-    setSelectedCandidate(c);
     setModalOpen(true);
   };
 
-  const handleDeleteClick = (c) => {
+  const handleOpenDelete = (c) => {
     setCandidateToDelete(c);
     setDeleteConfirmOpen(true);
   };
 
-  const handleBlockClick = (c) => {
+  const handleOpenBlockConfirm = (c) => {
     setCandidateToBlock(c);
     setBlockConfirmOpen(true);
   };
 
-  const handleConfirmToggleBlock = async () => {
+  const handleToggleBlock = async () => {
     if (!candidateToBlock) return;
     setBlockActionLoading(true);
     const newStatus = !candidateToBlock.is_blocked;
     try {
       await adminService.toggleBlockCandidate(candidateToBlock.id, newStatus);
-      toast.success(
-        newStatus
-          ? `Student "${candidateToBlock.name}" has been blocked.`
-          : `Student "${candidateToBlock.name}" has been unblocked.`
-      );
-      setCandidates((prev) =>
-        prev.map((c) => (c.id === candidateToBlock.id ? { ...c, is_blocked: newStatus } : c))
-      );
+      toast.success(`Candidate ${candidateToBlock.name} has been ${newStatus ? 'blocked' : 'unblocked'}.`);
       setBlockConfirmOpen(false);
+      setCandidateToBlock(null);
+      load();
     } catch (err) {
-      toast.error(err.message || 'Failed to update student block status');
+      toast.error(err.message || 'Failed to update candidate block status');
     } finally {
       setBlockActionLoading(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!candidateToDelete) return;
+    try {
+      await adminService.deleteCandidate(candidateToDelete.id);
+      toast.success(`Student ${candidateToDelete.name} deleted.`);
+      setDeleteConfirmOpen(false);
+      setCandidateToDelete(null);
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Failed to delete student');
     }
   };
 
@@ -127,25 +136,19 @@ export default function AdminCandidates() {
     e.preventDefault();
     setSubmitting(true);
     try {
-      let savedCandidate;
       if (modalMode === 'create') {
-        savedCandidate = await adminService.createCandidate(form);
-        toast.success('Student registered successfully');
+        await adminService.createCandidate(form);
+        toast.success('Student registered successfully!');
       } else {
-        savedCandidate = await adminService.updateCandidate(selectedCandidate.id, form);
-        toast.success('Student profile updated');
+        const payload = { ...form };
+        if (!payload.password) delete payload.password;
+        await adminService.updateCandidate(selectedCandidate.id, payload);
+        toast.success('Student details updated!');
       }
-
-      if (savedCandidate?.id) {
-        await adminService.assignCandidateInstitution(savedCandidate.id, {
-          institutionId: form.institution_id || null,
-        }).catch(() => {});
-      }
-
-      load();
       setModalOpen(false);
+      load();
     } catch (err) {
-      toast.error(err.message || 'Failed to save student profile');
+      toast.error(err.message || 'Operation failed');
     } finally {
       setSubmitting(false);
     }
@@ -162,20 +165,18 @@ export default function AdminCandidates() {
   );
 
   return (
-    <div>
-      <PageHeader 
-        title="Candidates" 
-        subtitle={`${candidates.length} registered candidate${candidates.length === 1 ? '' : 's'}.`} 
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader 
+        title="Student Candidates Roster" 
+        subtitle={`Managing ${candidates.length} registered candidate accounts across national partner institutions and open enrollments.`} 
+        breadcrumbs={['Students Roster']}
         actions={
           <button 
             type="button" 
-            className="btn-primary flex items-center gap-1.5"
+            className="btn btn-primary"
             onClick={handleOpenCreate}
           >
-            <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-            </svg>
-            Add Student
+            + Register Student
           </button>
         }
       />
@@ -277,14 +278,14 @@ export default function AdminCandidates() {
                             {
                               label: c.is_blocked ? 'Unblock Student' : 'Block Student',
                               icon: ShieldAlert,
-                              onClick: () => handleBlockClick(c),
+                              onClick: () => handleOpenBlockConfirm(c),
                               warning: !c.is_blocked,
                               color: c.is_blocked ? 'text-emerald-600 dark:text-emerald-400' : undefined,
                             },
                             {
                               label: 'Delete Student',
                               icon: Trash2,
-                              onClick: () => handleDeleteClick(c),
+                              onClick: () => handleOpenDelete(c),
                               danger: true,
                             },
                           ]}
@@ -532,7 +533,7 @@ export default function AdminCandidates() {
             <button
               type="button"
               className={candidateToBlock?.is_blocked ? 'btn-primary bg-emerald-600 hover:bg-emerald-500 text-xs' : 'btn-primary bg-amber-600 hover:bg-amber-500 text-xs'}
-              onClick={handleConfirmToggleBlock}
+              onClick={handleToggleBlock}
               disabled={blockActionLoading}
             >
               {blockActionLoading ? 'Processing…' : candidateToBlock?.is_blocked ? 'Unblock Student' : 'Block Student'}

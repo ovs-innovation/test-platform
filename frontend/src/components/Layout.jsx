@@ -189,8 +189,8 @@ export default function Layout({ children }) {
     const target = isTargetAdmin
       ? '/admin-login'
       : r.includes('institution') || r.includes('school')
-      ? '/institution-login'
-      : '/student-login';
+        ? '/institution-login'
+        : '/student-login';
 
     navigate(target, { replace: true });
     logout();
@@ -272,8 +272,8 @@ export default function Layout({ children }) {
                     }`}
                 >
                   <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${collapsed && isActive
-                      ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
-                      : 'group-hover:scale-105'
+                    ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
+                    : 'group-hover:scale-105'
                     }`}>
                     <Icon name={item.icon} className="h-5 w-5 shrink-0" />
                   </div>
@@ -531,13 +531,25 @@ export default function Layout({ children }) {
 function CommandPaletteModal({ onClose, navigate, nav }) {
   const [query, setQuery] = useState('');
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        onClose();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onClose]);
+
   const filtered = nav.filter((n) => n.label.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-150">
-      <div className="w-full max-w-xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-[#0f172a] animate-in zoom-in-95 duration-150">
+      <div className="fixed inset-0" onClick={onClose} />
+      <div className="relative z-10 w-full max-w-xl overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-2xl dark:border-slate-800 dark:bg-[#0f172a] animate-in zoom-in-95 duration-150">
         <div className="flex items-center border-b border-slate-200 dark:border-slate-800 px-4 py-3 bg-slate-50/50 dark:bg-slate-900/50">
-          <svg className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+          <svg className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-3 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
             <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -546,9 +558,19 @@ function CommandPaletteModal({ onClose, navigate, nav }) {
             placeholder="Type a command or search section..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') {
+                e.preventDefault();
+                onClose();
+              }
+            }}
             className="w-full bg-transparent text-sm font-semibold text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none"
           />
-          <button type="button" onClick={onClose} className="text-xs font-bold text-slate-400 hover:text-slate-700 dark:hover:text-slate-300">
+          <button
+            type="button"
+            onClick={onClose}
+            className="text-xs font-bold text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 transition cursor-pointer shrink-0 ml-2"
+          >
             ESC
           </button>
         </div>
@@ -859,8 +881,8 @@ function NotificationPanelDrawer({ onClose }) {
                   key={n.id}
                   onClick={() => handleItemClick(n)}
                   className={`p-3.5 rounded-2xl border transition hover:shadow-xs cursor-pointer ${borderClass} ${isUnread
-                      ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/80'
-                      : 'bg-slate-50/80 border-slate-200 dark:bg-slate-800/40 dark:border-slate-800'
+                    ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800/80'
+                    : 'bg-slate-50/80 border-slate-200 dark:bg-slate-800/40 dark:border-slate-800'
                     }`}
                 >
                   <div className="flex items-start gap-3">

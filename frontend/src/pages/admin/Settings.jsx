@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
+import { LoadingScreen, Spinner } from '../../components/ui.jsx';
+import { AdminHeader, AdminCard } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
-import { ShieldAlert, Target, GraduationCap } from 'lucide-react';
+import { Target, GraduationCap, Radio, Sliders, Shield } from 'lucide-react';
 
 export default function AdminSettings() {
   const toast = useToast();
@@ -67,100 +68,177 @@ export default function AdminSettings() {
     }
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading system settings..." />;
 
   const isPredictedNeetEnabled = featureFlags.find((f) => f.flag_name === 'predicted_neet_score')?.is_enabled ?? true;
   const isCollegePredictionEnabled = featureFlags.find((f) => f.flag_name === 'college_prediction')?.is_enabled ?? true;
 
   return (
-    <div className="space-y-8 max-w-4xl">
-      {/* 1. Global Settings */}
-      <div>
-        <PageHeader title="Platform Settings" subtitle="Global branding and support email details." />
-        <form onSubmit={saveSettings} className="card max-w-lg space-y-4 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] rounded-2xl">
-          <div>
-            <label className="label">Site Name</label>
-            <input className="input" value={settings.site_name || ''} onChange={(e) => setSettings((s) => ({ ...s, site_name: e.target.value }))} />
-          </div>
-          <div>
-            <label className="label">Support Email</label>
-            <input className="input" type="email" value={settings.support_email || ''} onChange={(e) => setSettings((s) => ({ ...s, support_email: e.target.value }))} />
-          </div>
-          <div className="flex justify-end pt-2">
-            <button type="submit" className="btn-primary" disabled={saving}>
-              {saving ? <Spinner className="h-4 w-4" /> : 'Save Settings'}
-            </button>
-          </div>
-        </form>
-      </div>
+    <div className="space-y-6 w-full max-w-full">
+      {/* Page Header */}
+      <AdminHeader
+        title="System Configuration & Platform Settings"
+        subtitle="Global platform branding, AI prediction feature flags, and broadcast candidate announcements."
+        breadcrumbs={['System Configuration']}
+        status="Operational"
+      />
 
-      {/* 2. Feature Flags Control Panel */}
-      <div>
-        <PageHeader title="AIETS Feature Flags & sensitive Prediction Controls" subtitle="Enable or disable sensitive AI score predictions and college cutoff algorithms platform-wide." />
-        <div className="card max-w-lg space-y-4 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] rounded-2xl">
-          {/* Toggle 1: Predicted NEET Score */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/80 dark:border-slate-800">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-indigo-500" />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">Predicted NEET Score Feature</span>
+      {/* 2-Column Grid Layout Filling Desktop Space */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 w-full">
+        {/* Left Column (6 Cols): Platform Branding & Broadcast Announcement */}
+        <div className="lg:col-span-6 space-y-6">
+          {/* 1. Global Platform Branding Settings */}
+          <AdminCard
+            title="Global Platform Identity"
+            subtitle="Configure public site branding and official candidate support email"
+          >
+            <form onSubmit={saveSettings} className="space-y-4 pt-1">
+              <div>
+                <label className="label">Site Name</label>
+                <input
+                  className="input"
+                  value={settings.site_name || ''}
+                  onChange={(e) => setSettings((s) => ({ ...s, site_name: e.target.value }))}
+                />
               </div>
-              <p className="text-xs text-slate-500 font-medium">Controls display of estimated NEET score range on student post-test report.</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleToggleFlag('predicted_neet_score', isPredictedNeetEnabled)}
-              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                isPredictedNeetEnabled ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-700'
-              }`}
-            >
-              <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                isPredictedNeetEnabled ? 'translate-x-5' : 'translate-x-0'
-              }`} />
-            </button>
-          </div>
+              <div>
+                <label className="label">Support Email</label>
+                <input
+                  className="input"
+                  type="email"
+                  value={settings.support_email || ''}
+                  onChange={(e) => setSettings((s) => ({ ...s, support_email: e.target.value }))}
+                />
+              </div>
+              <div className="flex justify-end pt-2 border-t border-slate-200/80 dark:border-slate-800">
+                <button type="submit" className="btn btn-primary" disabled={saving}>
+                  {saving ? <Spinner className="h-4 w-4" /> : 'Save Settings'}
+                </button>
+              </div>
+            </form>
+          </AdminCard>
 
-          {/* Toggle 2: College Prediction */}
-          <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/80 dark:border-slate-800">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <GraduationCap className="w-4 h-4 text-cyan-500" />
-                <span className="text-sm font-bold text-slate-900 dark:text-white">College Eligibility Predictor</span>
+          {/* 2. Broadcast Candidate Announcement */}
+          <AdminCard
+            title="Broadcast Candidate Announcement"
+            subtitle="Send real-time platform notifications to all active candidate accounts"
+          >
+            <form onSubmit={sendBroadcast} className="space-y-4 pt-1">
+              <div>
+                <label className="label">Announcement Title</label>
+                <input
+                  className="input"
+                  placeholder="e.g. AIETS Mock Test #4 Schedule Release"
+                  value={broadcast.title}
+                  onChange={(e) => setBroadcast((b) => ({ ...b, title: e.target.value }))}
+                  required
+                />
               </div>
-              <p className="text-xs text-slate-500 font-medium">Matches student performance against historical NEET college cutoff ranks.</p>
-            </div>
-            <button
-              type="button"
-              onClick={() => handleToggleFlag('college_prediction', isCollegePredictionEnabled)}
-              className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
-                isCollegePredictionEnabled ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-700'
-              }`}
-            >
-              <span className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
-                isCollegePredictionEnabled ? 'translate-x-5' : 'translate-x-0'
-              }`} />
-            </button>
-          </div>
+              <div>
+                <label className="label">Message Body</label>
+                <textarea
+                  className="input"
+                  rows={4}
+                  placeholder="Write clear instructions or announcement details for candidates..."
+                  value={broadcast.body}
+                  onChange={(e) => setBroadcast((b) => ({ ...b, body: e.target.value }))}
+                  required
+                />
+              </div>
+              <div className="flex justify-end pt-2 border-t border-slate-200/80 dark:border-slate-800">
+                <button type="submit" className="btn btn-primary">
+                  📢 Send Broadcast
+                </button>
+              </div>
+            </form>
+          </AdminCard>
         </div>
-      </div>
 
-      {/* 3. Broadcast Announcement */}
-      <div>
-        <PageHeader title="Broadcast Announcement" subtitle="Send instant notifications to all active candidates." />
-        <form onSubmit={sendBroadcast} className="card max-w-lg space-y-4 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] rounded-2xl">
-          <div>
-            <label className="label">Announcement Title</label>
-            <input className="input" placeholder="Title" value={broadcast.title} onChange={(e) => setBroadcast((b) => ({ ...b, title: e.target.value }))} required />
-          </div>
-          <div>
-            <label className="label">Message Body</label>
-            <textarea className="input" rows={3} placeholder="Message content..." value={broadcast.body} onChange={(e) => setBroadcast((b) => ({ ...b, body: e.target.value }))} required />
-          </div>
-          <div className="flex justify-end pt-2">
-            <button type="submit" className="btn-primary">📢 Send Broadcast</button>
-          </div>
-        </form>
+        {/* Right Column (6 Cols): AI Prediction Feature Flags & Environment Info */}
+        <div className="lg:col-span-6 space-y-6">
+          {/* 3. AI ETS Feature Flags & Sensitive Prediction Controls */}
+          <AdminCard
+            title="AI ETS Prediction Feature Flags"
+            subtitle="Enable or disable sensitive AI score predictions and college cutoff algorithms platform-wide"
+          >
+            <div className="space-y-4 pt-1">
+              {/* Toggle 1: Predicted NEET Score */}
+              <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
+                <div className="space-y-1 max-w-sm">
+                  <div className="flex items-center gap-2">
+                    <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Predicted NEET Score Feature</span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Controls display of estimated NEET score range on student post-test reports.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleToggleFlag('predicted_neet_score', isPredictedNeetEnabled)}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    isPredictedNeetEnabled ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-700'
+                  }`}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      isPredictedNeetEnabled ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+
+              {/* Toggle 2: College Prediction */}
+              <div className="flex items-center justify-between p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
+                <div className="space-y-1 max-w-sm">
+                  <div className="flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-cyan-600 dark:text-cyan-400" />
+                    <span className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">College Eligibility Predictor</span>
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium leading-relaxed">
+                    Matches candidate performance against historical NEET college cutoff rank data.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleToggleFlag('college_prediction', isCollegePredictionEnabled)}
+                  className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${
+                    isCollegePredictionEnabled ? 'bg-emerald-500' : 'bg-slate-300 dark:bg-slate-700'
+                  }`}
+                >
+                  <span
+                    className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+                      isCollegePredictionEnabled ? 'translate-x-5' : 'translate-x-0'
+                    }`}
+                  />
+                </button>
+              </div>
+            </div>
+          </AdminCard>
+
+          {/* 4. System Environment & Security Summary */}
+          <AdminCard
+            title="System Environment & Compliance"
+            subtitle="Platform operational parameters and security controls"
+          >
+            <div className="space-y-3 pt-1 text-xs">
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800">
+                <span className="font-semibold text-slate-600 dark:text-slate-400">Environment</span>
+                <span className="font-bold text-slate-900 dark:text-white">Production (Hostinger VPS)</span>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800">
+                <span className="font-semibold text-slate-600 dark:text-slate-400">Database Engine</span>
+                <span className="font-bold text-slate-900 dark:text-white">PostgreSQL (Prisma ORM)</span>
+              </div>
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800">
+                <span className="font-semibold text-slate-600 dark:text-slate-400">CBT Proctoring Status</span>
+                <span className="font-bold text-emerald-600 dark:text-emerald-400">Active (Full-Screen & Tab Lock)</span>
+              </div>
+            </div>
+          </AdminCard>
+        </div>
       </div>
     </div>
   );
 }
+

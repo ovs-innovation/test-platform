@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import PublicLayout from './components/PublicLayout.jsx';
 import Layout from './components/Layout.jsx';
+import AdminLayout from './components/admin/AdminLayout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 
 import Login from './pages/Login.jsx';
@@ -182,23 +183,23 @@ export default function App() {
         <Route path="/results/:attemptId" element={<ProtectedRoute role="candidate"><ResultPage /></ProtectedRoute>} />
 
         {/* PLATFORM ADMIN PROTECTED ROUTES */}
-        <Route path="/admin" element={<ProtectedRoute role="admin"><Shell><AdminOverview /></Shell></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute role="admin"><AdminLayout><AdminOverview /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/tests" element={<Navigate to="/admin/assessments" replace />} />
-        <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><Shell><AdminAssessments /></Shell></ProtectedRoute>} />
-        <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><Shell><AdminAssessmentEditor /></Shell></ProtectedRoute>} />
-        <Route path="/admin/test-series" element={<ProtectedRoute role="admin"><Shell><AdminTestSeries /></Shell></ProtectedRoute>} />
-        <Route path="/admin/question-bank" element={<ProtectedRoute role="admin"><Shell><AdminQuestionBank /></Shell></ProtectedRoute>} />
-        <Route path="/admin/subjects" element={<ProtectedRoute role="admin"><Shell><AdminSubjects /></Shell></ProtectedRoute>} />
-        <Route path="/admin/coupons" element={<ProtectedRoute role="admin"><Shell><AdminCoupons /></Shell></ProtectedRoute>} />
-        <Route path="/admin/cms" element={<ProtectedRoute role="admin"><Shell><AdminCMS /></Shell></ProtectedRoute>} />
-        <Route path="/admin/faculty" element={<ProtectedRoute role="admin"><Shell><AdminFaculty /></Shell></ProtectedRoute>} />
-        <Route path="/admin/settings" element={<ProtectedRoute role="admin"><Shell><AdminSettings /></Shell></ProtectedRoute>} />
-        <Route path="/admin/payments" element={<ProtectedRoute role="admin"><Shell><AdminPayments /></Shell></ProtectedRoute>} />
-        <Route path="/admin/candidates" element={<ProtectedRoute role="admin"><Shell><AdminCandidates /></Shell></ProtectedRoute>} />
-        <Route path="/admin/reports" element={<ProtectedRoute role="admin"><Shell><AdminReports /></Shell></ProtectedRoute>} />
-        <Route path="/admin/schools" element={<ProtectedRoute role="admin"><Shell><AdminSchools /></Shell></ProtectedRoute>} />
-        <Route path="/admin/schools/:schoolId" element={<ProtectedRoute role="admin"><Shell><AdminSchoolDetail /></Shell></ProtectedRoute>} />
-        <Route path="/admin/attempts/:attemptId" element={<ProtectedRoute role="admin"><Shell><AdminAttemptDetail /></Shell></ProtectedRoute>} />
+        <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessments /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessmentEditor /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/test-series" element={<ProtectedRoute role="admin"><AdminLayout><AdminTestSeries /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/question-bank" element={<ProtectedRoute role="admin"><AdminLayout><AdminQuestionBank /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/subjects" element={<ProtectedRoute role="admin"><AdminLayout><AdminSubjects /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/coupons" element={<ProtectedRoute role="admin"><AdminLayout><AdminCoupons /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/cms" element={<ProtectedRoute role="admin"><AdminLayout><AdminCMS /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/faculty" element={<ProtectedRoute role="admin"><AdminLayout><AdminFaculty /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute role="admin"><AdminLayout><AdminSettings /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/payments" element={<ProtectedRoute role="admin"><AdminLayout><AdminPayments /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/candidates" element={<ProtectedRoute role="admin"><AdminLayout><AdminCandidates /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/reports" element={<ProtectedRoute role="admin"><AdminLayout><AdminReports /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/schools" element={<ProtectedRoute role="admin"><AdminLayout><AdminSchools /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/schools/:schoolId" element={<ProtectedRoute role="admin"><AdminLayout><AdminSchoolDetail /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/attempts/:attemptId" element={<ProtectedRoute role="admin"><AdminLayout><AdminAttemptDetail /></AdminLayout></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

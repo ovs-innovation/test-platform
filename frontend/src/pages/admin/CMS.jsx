@@ -1,7 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
 import { Trash2, ChevronDown, Check, FileText } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
+import { LoadingScreen, Spinner } from '../../components/ui.jsx';
+import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -95,11 +96,15 @@ export default function AdminCMS() {
     finally { setSaving(false); }
   };
 
-  if (loading) return <LoadingScreen />;
+  if (loading) return <LoadingScreen label="Loading CMS articles..." />;
 
   return (
-    <div>
-      <PageHeader title="Content Management System (CMS)" subtitle="Manage blog posts, FAQs, announcements, and static landing pages." />
+    <div className="w-full max-w-full space-y-6">
+      <AdminHeader
+        title="Content Management System (CMS)"
+        subtitle="Manage blog posts, FAQs, announcements, and static landing page content."
+        breadcrumbs={['CMS Content & Ticker']}
+      />
       <form onSubmit={save} className="rounded-2xl mb-6 space-y-3 p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
         <div className="grid gap-3 sm:grid-cols-3">
           <input className="input rounded-xl" placeholder="slug-url" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} required />
