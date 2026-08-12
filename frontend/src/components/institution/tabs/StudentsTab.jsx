@@ -163,8 +163,8 @@ export default function StudentsTab({
       {/* =========================================================================
           1. TAB HEADER & SEARCH / FILTER TOOLBAR
          ========================================================================= */}
-      <div className={`rounded-3xl border p-6 backdrop-blur-xl shadow-xl space-y-4 ${
-        isDarkMode ? 'bg-[#071126] border-slate-800' : 'bg-white border-slate-200'
+      <div className={`rounded-2xl border p-5 sm:p-6 shadow-2xs space-y-4 ${
+        isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90'
       }`}>
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-b pb-5 border-slate-800/60">
           <div>

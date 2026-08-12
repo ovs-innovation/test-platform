@@ -139,10 +139,10 @@ export default function RankingsTab({
     <div className="space-y-6">
       {/* HEADER CARD */}
       <div
-        className={`p-6 rounded-3xl border ${
+        className={`p-5 sm:p-6 rounded-2xl border ${
           isDarkMode
-            ? 'bg-[#0B1730] border-slate-800/80 text-white'
-            : 'bg-white border-slate-200 text-slate-900 shadow-sm'
+            ? 'bg-[#0E1726] border-slate-800 text-white'
+            : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
         }`}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -267,10 +267,10 @@ export default function RankingsTab({
 
       {/* LEADERBOARD TABLE CARD */}
       <div
-        className={`rounded-3xl border overflow-hidden ${
+        className={`rounded-2xl border overflow-hidden ${
           isDarkMode
-            ? 'bg-[#0B1730] border-slate-800 text-white'
-            : 'bg-white border-slate-200 text-slate-900 shadow-sm'
+            ? 'bg-[#0E1726] border-slate-800 text-white'
+            : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
         }`}
       >
         <div className="p-5 border-b border-slate-800/40 flex items-center justify-between">

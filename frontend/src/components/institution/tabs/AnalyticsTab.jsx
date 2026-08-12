@@ -125,8 +125,8 @@ export default function AnalyticsTab({
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* HEADER CARD */}
       <div
-        className={`rounded-3xl border p-6 backdrop-blur-xl shadow-sm ${
-          isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+        className={`rounded-2xl border p-5 sm:p-6 shadow-2xs ${
+          isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
         }`}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">

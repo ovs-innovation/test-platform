@@ -93,8 +93,8 @@ export default function AddStudentModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-      <div className={`w-full max-w-lg rounded-3xl border shadow-2xl p-6 sm:p-8 space-y-6 relative my-auto ${
-        isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+      <div className={`w-full max-w-lg rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-6 relative my-auto ${
+        isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
       }`}>
 
         {/* Modal Header */}

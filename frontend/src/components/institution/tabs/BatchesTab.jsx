@@ -83,8 +83,8 @@ export default function BatchesTab({
     <div className="space-y-6 animate-in fade-in duration-300">
 
       {/* HEADER & CONTROLS */}
-      <div className={`rounded-3xl border p-5 sm:p-6 backdrop-blur-xl shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-        isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+      <div className={`rounded-2xl border p-5 sm:p-6 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
+        isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
       }`}>
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-purple-500/10 text-purple-400 border border-purple-500/20 mb-2">
@@ -133,8 +133,8 @@ export default function BatchesTab({
           {filteredBatches.map((batch) => (
             <div
               key={batch.id}
-              className={`rounded-3xl border p-6 space-y-4 shadow-sm relative overflow-hidden transition hover:-translate-y-1 flex flex-col justify-between ${
-                isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+              className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-2xs relative overflow-hidden transition hover:-translate-y-0.5 flex flex-col justify-between ${
+                isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
               }`}
             >
               <div className="flex items-start justify-between">

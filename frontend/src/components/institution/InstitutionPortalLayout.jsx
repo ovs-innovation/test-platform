@@ -241,23 +241,23 @@ export default function InstitutionPortalLayout({
                 key={item.id}
                 to={item.path}
                 onClick={() => setMobileDrawerOpen(false)}
-                title={sidebarCollapsed ? item.label : undefined}
-                className={`flex items-center transition-all cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
-                  ? 'h-12 w-12 mx-auto justify-center rounded-2xl'
-                  : 'w-full gap-3.5 px-3.5 py-3 rounded-2xl font-bold text-xs sm:text-sm'
+                title={item.label}
+                className={`flex items-center transition-all duration-200 cursor-pointer ${sidebarCollapsed && !mobileDrawerOpen
+                  ? 'h-11 w-11 mx-auto justify-center rounded-xl'
+                  : 'w-full gap-3 px-3 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm'
                   } ${isActive
-                    ? 'bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-white shadow-lg shadow-blue-500/25 font-black'
+                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 font-black'
                     : isDarkMode
-                      ? 'text-slate-400 hover:bg-slate-800/60 hover:text-slate-200'
+                      ? 'text-slate-400 hover:bg-slate-800/80 hover:text-slate-200'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
                   }`}
               >
-                <Icon className={`h-5 w-5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
+                <Icon className={`h-4.5 w-4.5 shrink-0 ${isActive ? 'text-white' : 'text-slate-400'}`} />
                 {(!sidebarCollapsed || mobileDrawerOpen) && (
-                  <span className="truncate">{item.label}</span>
+                  <span className="truncate flex-1 text-left">{item.label}</span>
                 )}
                 {isActive && (!sidebarCollapsed || mobileDrawerOpen) && (
-                  <span className="ml-auto h-2 w-2 rounded-full bg-white animate-pulse" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-white shrink-0" />
                 )}
               </Link>
             );
