@@ -33,17 +33,17 @@ const candidateNav = [
 
 const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
-  { to: '/admin/schools', label: 'Partner Schools', icon: 'bank' },
+  { to: '/admin/schools', label: 'Institutions', icon: 'bank' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
-  { to: '/admin/assessments', label: 'Assessments', icon: 'calendar' },
+  { to: '/admin/assessments', label: 'Tests & Exams', icon: 'calendar' },
   { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
-  { to: '/admin/reports', label: 'Reports', icon: 'chart' },
+  { to: '/admin/reports', label: 'Reports & Analytics', icon: 'chart' },
   { to: '/admin/question-bank', label: 'Question Bank', icon: 'bank' },
-  { to: '/admin/subjects', label: 'Subjects', icon: 'book' },
+  { to: '/admin/subjects', label: 'Subjects & Topics', icon: 'book' },
   { to: '/admin/faculty', label: 'Faculty', icon: 'badge' },
-  { to: '/admin/payments', label: 'Revenue', icon: 'wallet' },
+  { to: '/admin/payments', label: 'Payments', icon: 'wallet' },
   { to: '/admin/coupons', label: 'Coupons', icon: 'ticket' },
-  { to: '/admin/cms', label: 'CMS', icon: 'cms' },
+  { to: '/admin/cms', label: 'Website Content', icon: 'cms' },
   { to: '/admin/settings', label: 'Settings', icon: 'cog' },
 ];
 

@@ -9,36 +9,36 @@ import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
 
 const ADMIN_NAV_GROUPS = [
   {
-    groupTitle: 'OPERATIONS',
+    groupTitle: 'MANAGEMENT',
     items: [
-      { to: '/admin', label: 'Command Overview', icon: 'grid' },
-      { to: '/admin/schools', label: 'Partner Schools', icon: 'bank' },
-      { to: '/admin/candidates', label: 'Students Roster', icon: 'users' },
-      { to: '/admin/faculty', label: 'Faculty Directory', icon: 'badge' },
+      { to: '/admin', label: 'Dashboard', icon: 'grid' },
+      { to: '/admin/schools', label: 'Institutions', icon: 'bank' },
+      { to: '/admin/candidates', label: 'Students', icon: 'users' },
+      { to: '/admin/faculty', label: 'Faculty', icon: 'badge' },
     ],
   },
   {
-    groupTitle: 'ACADEMIC ENGINEERING',
+    groupTitle: 'ACADEMICS',
     items: [
-      { to: '/admin/assessments', label: 'CBT Assessments', icon: 'calendar' },
-      { to: '/admin/test-series', label: 'Test Series Packs', icon: 'layers' },
-      { to: '/admin/question-bank', label: 'Question Repository', icon: 'doc' },
+      { to: '/admin/assessments', label: 'Tests & Exams', icon: 'calendar' },
+      { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
+      { to: '/admin/question-bank', label: 'Question Bank', icon: 'doc' },
       { to: '/admin/subjects', label: 'Subjects & Topics', icon: 'book' },
     ],
   },
   {
-    groupTitle: 'COMMERCIAL & CONTENT',
+    groupTitle: 'PAYMENTS & CONTENT',
     items: [
-      { to: '/admin/payments', label: 'Revenue Operations', icon: 'wallet' },
-      { to: '/admin/coupons', label: 'Coupons & Promos', icon: 'ticket' },
-      { to: '/admin/cms', label: 'CMS Content & Ticker', icon: 'cms' },
-      { to: '/admin/reports', label: 'Platform Reports', icon: 'chart' },
+      { to: '/admin/payments', label: 'Payments', icon: 'wallet' },
+      { to: '/admin/coupons', label: 'Coupons', icon: 'ticket' },
+      { to: '/admin/cms', label: 'Website Content', icon: 'cms' },
+      { to: '/admin/reports', label: 'Reports & Analytics', icon: 'chart' },
     ],
   },
   {
     groupTitle: 'SYSTEM',
     items: [
-      { to: '/admin/settings', label: 'System Configuration', icon: 'cog' },
+      { to: '/admin/settings', label: 'Settings', icon: 'cog' },
     ],
   },
 ];
@@ -131,7 +131,7 @@ export default function AdminLayout({ children }) {
 
   const getBreadcrumbLabel = () => {
     const p = location.pathname;
-    if (p === '/admin') return 'Command Overview';
+    if (p === '/admin') return 'Dashboard';
     for (const grp of ADMIN_NAV_GROUPS) {
       const match = grp.items.find((it) => it.to === p);
       if (match) return match.label;
