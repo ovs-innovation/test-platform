@@ -297,23 +297,31 @@ export default function Layout({ children }) {
               <div className="relative group flex justify-center py-1">
                 <span
                   title={user?.name}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/30 border-2 border-blue-400/40 cursor-pointer hover:scale-105 transition"
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/30 border-2 border-blue-400/40 cursor-pointer hover:scale-105 transition overflow-hidden"
                 >
-                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                  {(user?.avatar_url || user?.avatar) ? (
+                    <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
+                  ) : (
+                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
+                  )}
                 </span>
                 <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-2 text-xs font-extrabold shadow-2xl group-hover:flex flex-col z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
                   <span>{user?.name}</span>
-                  <span className="text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Admin'}</span>
+                  <span className="text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Candidate'}</span>
                 </div>
               </div>
             ) : (
               <div className="flex items-center gap-3.5 p-3 rounded-[16px] bg-white border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/20">
-                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/20 overflow-hidden">
+                  {(user?.avatar_url || user?.avatar) ? (
+                    <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
+                  ) : (
+                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
+                  )}
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
-                  <p className="truncate text-[10px] font-semibold text-slate-500 dark:text-slate-400 capitalize">{user?.role || 'Admin'}</p>
+                  <p className="truncate text-[10px] font-semibold text-slate-500 dark:text-slate-400 capitalize">{user?.role || 'Candidate'}</p>
                 </div>
               </div>
             )}
@@ -466,19 +474,32 @@ export default function Layout({ children }) {
               <button
                 type="button"
                 onClick={() => setProfileDropdownOpen((prev) => !prev)}
-                className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 p-1.5 pr-3 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:hover:bg-slate-800 transition"
+                className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 p-1.5 pr-3 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:hover:bg-slate-800 transition cursor-pointer"
               >
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-black text-white shadow-md">
-                  {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-black text-white shadow-md overflow-hidden shrink-0">
+                  {(user?.avatar_url || user?.avatar) ? (
+                    <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
+                  ) : (
+                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
+                  )}
                 </span>
                 <span className="hidden md:block text-xs font-bold text-slate-900 dark:text-white max-w-[100px] truncate">{user?.name}</span>
               </button>
 
               {profileDropdownOpen && (
                 <div className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
-                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800/60 mb-1">
-                    <p className="text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
-                    <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
+                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800/60 mb-1 flex items-center gap-2.5">
+                    {(user?.avatar_url || user?.avatar) ? (
+                      <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-8 w-8 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
+                    ) : (
+                      <div className="h-8 w-8 rounded-xl bg-blue-600 font-black text-white text-xs flex items-center justify-center shrink-0">
+                        {user?.name?.charAt(0)?.toUpperCase() || 'A'}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{user?.name}</p>
+                      <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
+                    </div>
                   </div>
                   <button
                     onClick={handleLogout}

@@ -885,8 +885,15 @@ export const me = asyncHandler(async (req, res) => {
   if (req.user?.role === 'institution_admin' || String(req.user?.id).startsWith('inst_') || String(req.user?.id).startsWith('mock-')) {
     return res.json({ user: req.user });
   }
-  const result = await query('SELECT id, name, email, role, institution_id FROM users WHERE id = $1', [req.user.id]);
-  if (result.rowCount === 0) return res.json({ user: req.user });
+  const result = await query(
+    `SELECT u.id, u.name, u.email, u.role, u.institution_id, COALESCE(u.avatar_url, sp.avatar_url) AS avatar_url
+     FROM users u
+     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE u.id = $1`,
+    [req.user.id]
+  ).catch(() => query('SELECT id, name, email, role, institution_id FROM users WHERE id = $1', [req.user.id]));
+
+  if (!result || result.rowCount === 0) return res.json({ user: req.user });
   res.json({ user: result.rows[0] });
 });
 

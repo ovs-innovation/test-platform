@@ -54,7 +54,7 @@ export const env = {
   otpResendLimit: parseInt(process.env.OTP_RESEND_LIMIT || '3', 10),
   otpResendWindowMinutes: parseInt(process.env.OTP_RESEND_WINDOW_MINUTES || '15', 10),
   otpMaxVerifyAttempts: parseInt(process.env.OTP_MAX_VERIFY_ATTEMPTS || '5', 10),
-  inviteBaseUrl: process.env.INVITE_BASE_URL || process.env.CLIENT_URL || 'http://localhost:5173',
+  inviteBaseUrl: (process.env.INVITE_BASE_URL || '').split(',')[0].trim() || (process.env.CLIENT_URL || '').split(',')[0].trim() || 'http://localhost:5173',
 
   razorpay: {
     keyId: process.env.RAZORPAY_KEY_ID || '',
@@ -69,4 +69,5 @@ export const env = {
   },
   firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
   geminiApiKey: process.env.GEMINI_API_KEY || '',
+  openrouterApiKey: process.env.OPENROUTER_API_KEY || '',
 };

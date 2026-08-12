@@ -529,9 +529,17 @@ export default function InstitutionPortalLayout({
                 className={`flex items-center gap-2 sm:gap-3 h-9 sm:h-11 px-2 sm:px-3 rounded-xl sm:rounded-2xl border transition cursor-pointer ${isDarkMode ? 'border-slate-800 bg-slate-900/90 hover:bg-slate-800' : 'border-slate-200 bg-slate-100/90 hover:bg-slate-200 shadow-sm'
                   }`}
               >
-                <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
-                  {currentInst?.adminName ? currentInst.adminName.substring(0, 2).toUpperCase() : (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'AD')}
-                </div>
+                {(currentInst?.logo_url || currentInst?.logoUrl || currentInst?.logo) ? (
+                  <img
+                    src={currentInst.logo_url || currentInst.logoUrl || currentInst.logo}
+                    alt={currentInst?.name || 'Institution Logo'}
+                    className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl object-contain bg-white p-0.5 shadow-md border border-slate-200/60 shrink-0"
+                  />
+                ) : (
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                    {currentInst?.adminName ? currentInst.adminName.substring(0, 2).toUpperCase() : (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'AD')}
+                  </div>
+                )}
                 <div className="hidden sm:block text-left pr-1">
                   <p className={`text-xs font-black leading-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                     {currentInst?.adminName || 'Institution Admin'}
@@ -548,9 +556,22 @@ export default function InstitutionPortalLayout({
                     }`}
                   onClick={() => setProfileDropdownOpen(false)}
                 >
-                  <div className="px-3.5 py-2.5 border-b border-slate-800/40 mb-1">
-                    <p className="text-xs font-black text-white">{currentInst?.adminName || 'Institution Admin'}</p>
-                    <p className="text-[11px] text-slate-400 truncate mt-0.5">{currentInst?.contact_email || currentInst?.adminEmail || currentInst?.email || ''}</p>
+                  <div className="px-3.5 py-2.5 border-b border-slate-800/40 mb-1 flex items-center gap-3">
+                    {(currentInst?.logo_url || currentInst?.logoUrl || currentInst?.logo) ? (
+                      <img
+                        src={currentInst.logo_url || currentInst.logoUrl || currentInst.logo}
+                        alt={currentInst?.name || 'Logo'}
+                        className="h-9 w-9 rounded-xl object-contain bg-white p-0.5 shadow-md border border-slate-200/60 shrink-0"
+                      />
+                    ) : (
+                      <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs flex items-center justify-center shrink-0">
+                        {currentInst?.adminName ? currentInst.adminName.substring(0, 2).toUpperCase() : 'AD'}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <p className={`text-xs font-black truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{currentInst?.adminName || 'Institution Admin'}</p>
+                      <p className="text-[11px] text-slate-400 truncate mt-0.5">{currentInst?.contact_email || currentInst?.adminEmail || currentInst?.email || ''}</p>
+                    </div>
                   </div>
                   <button
                     onClick={handleLogout}

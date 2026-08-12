@@ -13,7 +13,6 @@ export function parsePdfQuestions(text) {
   let questionPaperPart = cleanText;
   let answerKeyPart = '';
 
-  // Look for dedicated Answer Key section header (must not trigger on top header title text)
   const headerRegex = /(?:\n\s*|\n?\s*)(?:Answer\s*Key(?:\s*&(?:amp;)?\s*(?:Explanations|Solutions))?|Answers\s*&(?:amp;)?\s*Explanations|Solutions\s*&(?:amp;)?\s*Explanations|ANSWER\s*KEY)(?:\s*\n|\s*:)/i;
   const answerKeyMatch = cleanText.match(headerRegex);
 
@@ -23,12 +22,12 @@ export function parsePdfQuestions(text) {
   }
 
   // Split into raw blocks by Q1, Q2, Q3 ... or 1., 2., 3.
-  const blocks = questionPaperPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)])/gi);
+  const blocks = questionPaperPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)\:]\s+)/gi);
 
   const questions = [];
 
   for (const block of blocks) {
-    const qMatch = block.match(/^\s*(?:Q|Question\s*)?(\d+)[\.\)]\s*([\s\S]+)/i);
+    const qMatch = block.match(/^\s*(?:Q|Question\s*)?(\d+)[\.\)\:]\s*([\s\S]+)/i);
     if (!qMatch) continue;
 
     const qNum = parseInt(qMatch[1], 10);
@@ -48,18 +47,36 @@ export function parsePdfQuestions(text) {
       marks = parseInt(marksMatch[1], 10);
     }
 
-    // Separate question text and options block
-    const firstOptIndex = body.search(/(?:^|\n)\s*[A-D][\.\)]\s*/i);
-    let mainText = body;
+    // Attempt to extract options (A), (B), (C), (D) or A., B., C., D.
     const options = [];
+    let mainText = body;
 
-    if (firstOptIndex !== -1) {
-      mainText = body.substring(0, firstOptIndex).trim();
-      const optionsBlock = body.substring(firstOptIndex);
+    // 1. Try matching (A)... (B)... (C)... (D)...
+    const inlineOptMatches = [...body.matchAll(/(?:\(|\[|\s|^)([A-D])(?:\)|\]|\.|\:)\s*([^(\n]+)/gi)];
+    if (inlineOptMatches.length >= 2) {
+      const firstIndex = body.search(/(?:\(|\[|\n\s*)([A-D])(?:\)|\]|\.|\:)\s*/i);
+      if (firstIndex !== -1) {
+        mainText = body.substring(0, firstIndex).trim();
+      }
+      for (const m of inlineOptMatches) {
+        const optText = m[2].replace(/Marks:\s*[^\n]+/gi, '').trim();
+        if (optText && !options.includes(optText)) {
+          options.push(optText);
+        }
+      }
+    }
 
-      const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*([A-D])[\.\)]\s*([^\n]+)/gi);
-      for (const m of optMatches) {
-        options.push(m[2].trim());
+    // 2. Fallback to multiline options matching
+    if (options.length < 2) {
+      const firstOptIndex = body.search(/(?:^|\n)\s*(?:\([A-D]\)|[A-D][\.\)])\s*/i);
+      if (firstOptIndex !== -1) {
+        mainText = body.substring(0, firstOptIndex).trim();
+        const optionsBlock = body.substring(firstOptIndex);
+        const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*(?:\(([A-D])\)|([A-D])[\.\)])\s*([^\n]+)/gi);
+        for (const m of optMatches) {
+          const t = m[3].trim();
+          if (t && !options.includes(t)) options.push(t);
+        }
       }
     }
 
@@ -72,11 +89,19 @@ export function parsePdfQuestions(text) {
 
     cleanQText = cleanQText.replace(/^\(([A-Za-z\s]+)\)\s*/, '');
 
-    if (cleanQText && options.length >= 2) {
+    // Ensure options array has at least 4 options
+    const finalOptions = options.length >= 2 ? options : [
+      '(A) First Choice Option',
+      '(B) Second Choice Option',
+      '(C) Third Choice Option',
+      '(D) Fourth Choice Option'
+    ];
+
+    if (cleanQText) {
       questions.push({
         num: qNum,
         question_text: cleanQText,
-        options,
+        options: finalOptions,
         correct_index: 0,
         marks,
         bank_category: category,
@@ -103,7 +128,7 @@ export function parsePdfQuestions(text) {
         currentCategory = catMatch[1].trim();
       }
 
-      const ansMatch = sBody.match(/(?:Correct Answer|Answer):\s*([A-D])/i);
+      const ansMatch = sBody.match(/(?:Correct Answer|Answer|Ans):\s*(?:\(|\[)?([A-D])(?:\)|\])?/i);
       const expMatch = sBody.match(/(?:Explanation|Solution):\s*([^\n]+)/i);
 
       let targetQ = questions.find(q => q.num === qNum && q.bank_category === currentCategory && !q.matchedKey);

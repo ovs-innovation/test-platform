@@ -27,7 +27,8 @@ export const DoubtSolutionZodSchema = z.object({
  * Generates a personalized post-test AI study plan based on aggregated student metrics.
  */
 export async function generateStudentAIPlan(studentMetrics = {}) {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || env.geminiApiKey;
 
   const {
     student_name = 'Student',
@@ -82,12 +83,9 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
     };
   };
 
-  if (!apiKey) return buildFallbackPlan();
+  if (!openRouterKey && !apiKey) return buildFallbackPlan();
 
-  try {
-    const { GoogleGenAI } = await import('@google/genai');
-    const ai = new GoogleGenAI({ apiKey });
-    const prompt = `You are an elite academic mentor and NTA CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
+  const prompt = `You are an elite academic mentor and NTA CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
 
 Analyze the following student test metrics and return a JSON object with personalized, actionable AI insights:
 
@@ -110,20 +108,38 @@ Return a strict JSON object with this EXACT structure:
   "recommended_ebooks": [{ "title": "string", "chapter": "string", "priority": "string", "reason": "string" }],
   "time_management_advice": { "observation": "string", "pacing_tip": "string" }
 }`;
-    const candidateModels = ['gemini-flash-latest', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-pro-latest', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-    for (const modelName of candidateModels) {
-      try {
-        const response = await ai.models.generateContent({ model: modelName, contents: prompt, config: { responseMimeType: 'application/json' } });
-        if (response.text) return JSON.parse(response.text);
-      } catch (mErr) {
-        console.warn(`[GeminiService] generateStudentAIPlan ${modelName} failed:`, mErr.message);
+
+  if (openRouterKey) {
+    try {
+      const openRouterText = await callOpenRouterAI({ systemPrompt: prompt, questionText: 'Generate structured study plan JSON object' });
+      if (openRouterText) {
+        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) return JSON.parse(jsonMatch[0]);
       }
+    } catch (err) {
+      console.warn('[AIService] OpenRouter generateStudentAIPlan failed:', err.message);
     }
-    return buildFallbackPlan();
-  } catch (err) {
-    console.error('Gemini generateStudentAIPlan failed, using fallback:', err.message);
-    return buildFallbackPlan();
   }
+
+  if (apiKey) {
+    try {
+      const { GoogleGenAI } = await import('@google/genai');
+      const ai = new GoogleGenAI({ apiKey });
+      const candidateModels = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'];
+      for (const modelName of candidateModels) {
+        try {
+          const response = await ai.models.generateContent({ model: modelName, contents: prompt, config: { responseMimeType: 'application/json' } });
+          if (response.text) return JSON.parse(response.text);
+        } catch (mErr) {
+          console.warn(`[AIService] generateStudentAIPlan ${modelName} failed:`, mErr.message);
+        }
+      }
+    } catch (err) {
+      console.error('[AIService] Gemini generateStudentAIPlan failed:', err.message);
+    }
+  }
+
+  return buildFallbackPlan();
 }
 
 /**
@@ -1180,7 +1196,7 @@ function buildSmartAcademicResolution({ questionText = '', imageBase64 = null, s
         explanation: 'Verify units, dimensions, and extreme boundary values to ensure logical consistency.'
       }
     ],
-    final_answer: `Target query evaluated under ${guessedSubject} principles. Note: Please configure a valid GEMINI_API_KEY in backend/.env for dynamic real-time AI solutions.`,
+    final_answer: `Target query evaluated under ${guessedSubject} principles.`,
     pro_tips: [
       'NEET/JEE Tip: Practice NTA Past Year Questions (PYQs) under timed exam conditions.',
       'Exam Strategy: Use dimensional analysis to quickly eliminate incorrect multi-choice options.'
@@ -1503,6 +1519,233 @@ $$a \\int_{0}^{s} ds = \\int_{0}^{v} v \\cdot dv \\implies a s = \\frac{v^2 - u^
 }
 
 /**
+ * callOpenRouterAIStream
+ * Streams AI doubt solution token by token via SSE callback onToken(chunk)
+ */
+export async function callOpenRouterAIStream({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg', onToken }) {
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  if (!openRouterKey) return false;
+
+  const openRouterModels = [
+    'google/gemini-2.0-flash-exp:free',
+    'meta-llama/llama-3.3-70b-instruct:free',
+    'qwen/qwen-2.5-72b-instruct:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
+    'deepseek/deepseek-r1:free'
+  ];
+
+  let messagesPayload = [
+    { role: 'system', content: systemPrompt }
+  ];
+
+  if (imageBase64) {
+    let cleanBase64 = imageBase64;
+    let detectedMime = mimeType || 'image/jpeg';
+    if (imageBase64.includes(';base64,')) {
+      const parts = imageBase64.split(';base64,');
+      detectedMime = parts[0].replace('data:', '') || detectedMime;
+      cleanBase64 = parts[1];
+    }
+    const fullDataUrl = `data:${detectedMime};base64,${cleanBase64}`;
+
+    messagesPayload.push({
+      role: 'user',
+      content: [
+        {
+          type: 'text',
+          text: questionText ? `Question: "${questionText}"` : 'Please read and solve the STEM doubt in this attached image step-by-step.'
+        },
+        {
+          type: 'image_url',
+          image_url: { url: fullDataUrl }
+        }
+      ]
+    });
+  } else {
+    messagesPayload.push({
+      role: 'user',
+      content: questionText || 'Solve this doubt.'
+    });
+  }
+
+  for (const modelName of openRouterModels) {
+    try {
+      console.log(`[OpenRouter Stream] Attempting AI solution with free model: ${modelName}...`);
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openRouterKey}`,
+          'HTTP-Referer': 'http://localhost:5173',
+          'X-Title': 'Edvedum AI Platform',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          model: modelName,
+          messages: messagesPayload,
+          temperature: 0.3,
+          max_tokens: 1200,
+          stream: true
+        })
+      });
+
+      if (!res.ok || !res.body) {
+        console.warn(`[OpenRouter Stream] Model ${modelName} returned HTTP ${res.status}`);
+        continue;
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      if (res.body.getReader) {
+        const reader = res.body.getReader();
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith(':')) continue;
+            if (trimmed === 'data: [DONE]') break;
+            if (trimmed.startsWith('data: ')) {
+              try {
+                const parsed = JSON.parse(trimmed.slice(6));
+                const token = parsed.choices?.[0]?.delta?.content || '';
+                if (token && onToken) {
+                  onToken(token);
+                }
+              } catch (_) {}
+            }
+          }
+        }
+      } else {
+        for await (const chunk of res.body) {
+          buffer += decoder.decode(chunk, { stream: true });
+          const lines = buffer.split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || trimmed.startsWith(':')) continue;
+            if (trimmed === 'data: [DONE]') break;
+            if (trimmed.startsWith('data: ')) {
+              try {
+                const parsed = JSON.parse(trimmed.slice(6));
+                const token = parsed.choices?.[0]?.delta?.content || '';
+                if (token && onToken) {
+                  onToken(token);
+                }
+              } catch (_) {}
+            }
+          }
+        }
+      }
+
+      console.log(`[OpenRouter Stream] Stream completed successfully with model ${modelName}`);
+      return true;
+    } catch (err) {
+      console.warn(`[OpenRouter Stream] Error streaming model ${modelName}:`, err.message);
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Helper to call OpenRouter API (supports free models like nemotron 3 super, gemini 2.0 flash, llama 3.3, deepseek r1, qwen 2.5)
+ */
+async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg' }) {
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  if (!openRouterKey) return null;
+
+  const openRouterModels = [
+    'google/gemini-2.0-flash-exp:free',
+    'meta-llama/llama-3.3-70b-instruct:free',
+    'qwen/qwen-2.5-72b-instruct:free',
+    'nvidia/nemotron-3-super-120b-a12b:free',
+    'deepseek/deepseek-r1:free'
+  ];
+
+  let messagesPayload = [
+    { role: 'system', content: systemPrompt }
+  ];
+
+  if (imageBase64) {
+    let cleanBase64 = imageBase64;
+    let detectedMime = mimeType || 'image/jpeg';
+    if (imageBase64.includes(';base64,')) {
+      const parts = imageBase64.split(';base64,');
+      detectedMime = parts[0].replace('data:', '') || detectedMime;
+      cleanBase64 = parts[1];
+    }
+    const fullDataUrl = `data:${detectedMime};base64,${cleanBase64}`;
+
+    messagesPayload.push({
+      role: 'user',
+      content: [
+        {
+          type: 'text',
+          text: questionText ? `Question: "${questionText}"` : 'Please read and solve the STEM doubt in this attached image step-by-step.'
+        },
+        {
+          type: 'image_url',
+          image_url: { url: fullDataUrl }
+        }
+      ]
+    });
+  } else {
+    messagesPayload.push({
+      role: 'user',
+      content: questionText || 'Solve this doubt.'
+    });
+  }
+
+  for (const modelName of openRouterModels) {
+    try {
+      console.log(`[OpenRouter] Attempting AI solution with free model: ${modelName}...`);
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second per-model timeout
+
+      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openRouterKey}`,
+          'HTTP-Referer': 'http://localhost:5173',
+          'X-Title': 'Edvedum AI Platform',
+          'Content-Type': 'application/json'
+        },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: modelName,
+          messages: messagesPayload,
+          temperature: 0.3,
+          max_tokens: 1200
+        })
+      });
+      clearTimeout(timeoutId);
+
+      const resData = await res.json();
+      if (!res.ok) {
+        console.warn(`[OpenRouter] Model ${modelName} returned HTTP ${res.status}:`, resData?.error?.message || resData);
+        continue;
+      }
+
+      const text = resData.choices?.[0]?.message?.content;
+      if (text && text.trim()) {
+        console.log(`[OpenRouter] Successfully generated doubt solution using ${modelName}`);
+        return text.trim();
+      }
+    } catch (err) {
+      console.warn(`[OpenRouter] Error calling OpenRouter model ${modelName}:`, err.message);
+    }
+  }
+
+  return null;
+}
+
+/**
  * solveStudentDoubt
  * Expert STEM Tutor & Career Guidance Counselor for JEE (Main & Advanced) and NEET.
  * Handles:
@@ -1522,7 +1765,74 @@ export async function solveStudentDoubt({ questionText = '', imageBase64 = null,
     };
   }
 
-  // 2. Gemini API integration with Multi-Key Rotation if keys are available
+  const systemPrompt = `You are an expert STEM tutor and career guidance counselor for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
+
+Student Name: ${studentName}
+${subjectContext ? `Subject Context: ${subjectContext}` : ''}
+${questionText ? `Student Query: "${questionText}"` : ''}
+${imageBase64 ? 'An image of the question/diagram/handwritten doubt has been attached.' : ''}
+
+CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
+1. NEVER output meta-commentary like "Mode Detected:", "Mode 1:", "Mode 2:", or "Mode 3:". Start DIRECTLY with the topic title or solution.
+2. NEVER output horizontal lines like "---" or "===". Use clean paragraph spacing instead.
+3. NEVER output raw markdown tables using pipe characters (|). Use clean bullet points (•) or numbered lists instead.
+4. AVOID messy raw LaTeX command noise like \\frac{a}{b} or \\text{...}. Use clean standard math symbols like (a / b) or clean math formatting.
+5. Keep explanations clear, elegant, well-structured, and easy for students to read.
+
+For Academic Doubts:
+### 💡 [Short Topic Summary]
+
+**Core Concepts & Formulas:**
+• **[Concept / Law Name]:** [Explanation and why it applies]
+• **[Formula Name]:** [Clean formula representation]
+
+**Step-by-Step Solution:**
+1. **[Step Title]:** [Detailed working step without skipped steps]
+2. **[Step Title]:** [Detailed working step]
+
+✅ **Final Answer:** [Boxed/Bold result with standard SI units]
+⚠️ **Exam Tip & Common Trap:** [1-2 lines on common student mistakes]`;
+
+  // 2. OpenRouter API integration (if OPENROUTER_API_KEY is configured)
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  if (openRouterKey) {
+    const openRouterText = await callOpenRouterAI({ systemPrompt, questionText, imageBase64, mimeType });
+    if (openRouterText) {
+      let jsonParsed = null;
+      if (openRouterText.startsWith('{') && openRouterText.endsWith('}')) {
+        try { jsonParsed = JSON.parse(openRouterText); } catch (_) {}
+      }
+
+      if (jsonParsed) {
+        const zodResult = DoubtSolutionZodSchema.safeParse(jsonParsed);
+        if (zodResult.success) {
+          const data = zodResult.data;
+          let formatted = `### 💡 ${data.summary}\n\n`;
+          formatted += `**Difficulty Level:** ${data.level} (${data.subject} — ${data.topic})\n\n`;
+          if (data.key_concepts_and_formulas && data.key_concepts_and_formulas.length > 0) {
+            formatted += `**Core Concepts, Formulas & Laws:**\n` + data.key_concepts_and_formulas.map(c => `• ${c}`).join('\n') + `\n\n`;
+          }
+          if (data.step_by_step_solution && data.step_by_step_solution.length > 0) {
+            formatted += `**Step-by-Step Numbered Working:**\n\n` + data.step_by_step_solution.map(s => `**${s.step_number}. ${s.heading}**\n${s.explanation}`).join('\n\n') + `\n\n`;
+          }
+          if (data.final_answer) {
+            formatted += `✅ **Final Answer:** ${data.final_answer}\n\n`;
+          }
+          if (data.pro_tips && data.pro_tips.length > 0) {
+            formatted += `⚠️ **Common Student Mistakes & Exam Tips:**\n` + data.pro_tips.map(t => `• ${t}`).join('\n');
+          }
+          return { success: true, text: formatted, data, solution: data };
+        }
+      }
+
+      return {
+        success: true,
+        text: openRouterText
+      };
+    }
+  }
+
+  // 3. Gemini API integration with Multi-Key Rotation if keys are available
   const getGeminiApiKeys = () => {
     const keys = [];
     if (process.env.GEMINI_API_KEYS) {
@@ -1645,16 +1955,20 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
           // 1. Direct REST fetch call to Google AI Studio API
           let rawText = null;
           try {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${currentKey}`;
+            const isAQToken = currentKey.startsWith('AQ.');
+            const url = isAQToken
+              ? `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`
+              : `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${currentKey}`;
             const restPayload = typeof contentsPayload === 'string'
               ? { contents: [{ parts: [{ text: contentsPayload }] }] }
               : { contents: contentsPayload };
             const headers = {
-              'Content-Type': 'application/json',
-              'x-goog-api-key': currentKey
+              'Content-Type': 'application/json'
             };
-            if (currentKey.startsWith('AQ.')) {
+            if (isAQToken) {
               headers['Authorization'] = `Bearer ${currentKey}`;
+            } else {
+              headers['x-goog-api-key'] = currentKey;
             }
 
             const restRes = await fetch(url, {

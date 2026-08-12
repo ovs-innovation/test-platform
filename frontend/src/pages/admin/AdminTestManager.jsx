@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { adminService } from '../../lib/services.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
 import {
   CalendarDays,
   Plus,
@@ -23,7 +24,9 @@ import {
   AlertCircle,
   Download,
   Filter,
-  ChevronDown
+  ChevronDown,
+  Send,
+  Sparkles
 } from 'lucide-react';
 
 const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
@@ -229,55 +232,106 @@ export default function AdminTestManager() {
       setTestModalOpen(false);
       loadData();
     } catch (err) {
-      alert(err.message || 'Action failed');
+      toast.error(err.message || 'Action failed');
     }
   };
 
   const handleTogglePublish = async (test) => {
     try {
       await adminService.togglePublishTest(test.id, !test.is_published);
+      toast.success(`Test ${!test.is_published ? 'published' : 'unpublished'} successfully!`);
       loadData();
     } catch (err) {
-      alert(err.message || 'Action failed');
+      toast.error(err.message || 'Action failed');
     }
   };
 
-  const handleDeleteTest = async (test) => {
-    if (!window.confirm(`Delete test "${test.test_name}"?`)) return;
-    try {
-      const res = await adminService.deleteTest(test.id);
-      alert(res.message);
-      loadData();
-    } catch (err) {
-      alert(err.message || 'Delete failed');
-    }
+  const toast = useToast();
+
+  // Custom Notification Modal State
+  const [notifyModalTest, setNotifyModalTest] = useState(null);
+  const [customNotifMsg, setCustomNotifMsg] = useState('');
+  const [sendingNotif, setSendingNotif] = useState(false);
+
+  // Custom Confirmation Modal State
+  const [confirmModal, setConfirmModal] = useState({
+    isOpen: false,
+    title: '',
+    description: '',
+    confirmText: 'Confirm',
+    confirmVariant: 'danger',
+    onConfirm: null,
+  });
+
+  const handleDeleteTest = (test) => {
+    setConfirmModal({
+      isOpen: true,
+      title: 'Delete Assessment Test',
+      description: `Are you sure you want to delete test "${test.test_name || test.title}"? Enrolled students will no longer see this test.`,
+      confirmText: 'Delete Test',
+      confirmVariant: 'danger',
+      onConfirm: async () => {
+        try {
+          const res = await adminService.deleteTest(test.id);
+          toast.success(res.message || 'Test deleted successfully');
+          loadData();
+        } catch (err) {
+          toast.error(err.message || 'Delete failed');
+        } finally {
+          setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        }
+      },
+    });
   };
 
-  const handleGenerateResults = async (testId) => {
-    if (!window.confirm('Trigger manual rank calculation & result publishing for all attempts of this test?')) return;
-    try {
-      const res = await adminService.generateResults(testId);
-      alert(res.message);
-      loadData();
-    } catch (err) {
-      alert(err.message || 'Result generation failed');
-    }
+  const handleGenerateResults = (testId) => {
+    const targetTest = tests.find((t) => t.id === testId);
+    setConfirmModal({
+      isOpen: true,
+      title: 'Publish Test Results & Ranks',
+      description: `Trigger manual rank calculation, percentile benchmarking, and result publishing for "${targetTest?.test_name || 'this test'}"?`,
+      confirmText: 'Publish Results & Ranks',
+      confirmVariant: 'primary',
+      onConfirm: async () => {
+        try {
+          const res = await adminService.generateResults(testId);
+          toast.success(res.message || 'Results and ranks published successfully!');
+          loadData();
+        } catch (err) {
+          toast.error(err.message || 'Result generation failed');
+        } finally {
+          setConfirmModal((prev) => ({ ...prev, isOpen: false }));
+        }
+      },
+    });
   };
 
-  const handleNotifyReminder = async (testId) => {
-    const msg = prompt('Enter custom notification message (or click OK for default reminder):');
-    if (msg === null) return;
+  const handleNotifyReminder = (test) => {
+    const testObj = typeof test === 'object' ? test : tests.find((t) => t.id === test);
+    if (!testObj) return;
+    setNotifyModalTest(testObj);
+    const defaultMsg = `Reminder: Your proctored test '${testObj?.test_name || 'Assessment'}' is scheduled. Please log in on time to start your exam.`;
+    setCustomNotifMsg(defaultMsg);
+  };
+
+  const submitNotifyReminder = async (e) => {
+    e.preventDefault();
+    if (!notifyModalTest) return;
+    setSendingNotif(true);
     try {
-      const res = await adminService.notifyTestReminder(testId, msg);
-      alert(res.message);
+      const res = await adminService.notifyTestReminder(notifyModalTest.id, customNotifMsg);
+      toast.success(res.message || 'Notification reminder sent to all enrolled candidates!');
+      setNotifyModalTest(null);
     } catch (err) {
-      alert(err.message || 'Notification failed');
+      toast.error(err.message || 'Notification failed');
+    } finally {
+      setSendingNotif(false);
     }
   };
 
   const handleFileUploadSubmit = async (e) => {
     e.preventDefault();
-    if (!uploadFile) return alert('Please select a file');
+    if (!uploadFile) return toast.error('Please select a file to upload');
 
     setUploading(true);
     const reader = new FileReader();
@@ -288,12 +342,12 @@ export default function AdminTestManager() {
           file_name: uploadFile.name,
           file_base64: uploadEvent.target.result,
         });
-        alert('File uploaded successfully!');
+        toast.success('File uploaded successfully & test parameters updated!');
         setUploadModalTest(null);
         setUploadFile(null);
         loadData();
       } catch (err) {
-        alert(err.message || 'Upload failed');
+        toast.error(err.message || 'Upload failed');
       } finally {
         setUploading(false);
       }
@@ -308,18 +362,18 @@ export default function AdminTestManager() {
         assigned_to_type: assignType,
         assigned_to_id: assignTargetId ? Number(assignTargetId) : null,
       });
-      alert('Test audience assignment saved!');
+      toast.success('Test audience assignment saved!');
       setAssignModalTest(null);
       loadData();
     } catch (err) {
-      alert(err.message || 'Assignment failed');
+      toast.error(err.message || 'Assignment failed');
     }
   };
 
   const handleOverrideSubmit = async (e) => {
     e.preventDefault();
     if (!overrideStudentId || !overrideValidFrom || !overrideValidUntil) {
-      return alert('Student ID, Valid From, and Valid Until dates are required');
+      return toast.error('Student ID, Valid From, and Valid Until dates are required');
     }
     try {
       await adminService.setMissedTestOverride(overrideModalTest.id, {
@@ -328,11 +382,11 @@ export default function AdminTestManager() {
         valid_until: overrideValidUntil,
         note: overrideNote,
       });
-      alert('Special missed-test access override granted!');
+      toast.success('Special missed-test access override granted!');
       setOverrideModalTest(null);
       loadData();
     } catch (err) {
-      alert(err.message || 'Override failed');
+      toast.error(err.message || 'Override failed');
     }
   };
 
@@ -340,11 +394,12 @@ export default function AdminTestManager() {
     e.preventDefault();
     try {
       await adminService.createEbook(newEbook);
+      toast.success('Recommended eBook created successfully!');
       setEbookModalOpen(false);
       setNewEbook({ title: '', author: '', description: '', pdf_url: '' });
       loadData();
     } catch (err) {
-      alert(err.message || 'Failed to create eBook');
+      toast.error(err.message || 'Failed to create eBook');
     }
   };
 
@@ -352,11 +407,12 @@ export default function AdminTestManager() {
     e.preventDefault();
     try {
       await adminService.createBatch(newBatch);
+      toast.success('Student batch created successfully!');
       setBatchModalOpen(false);
       setNewBatch({ name: '', description: '' });
       loadData();
     } catch (err) {
-      alert(err.message || 'Failed to create batch');
+      toast.error(err.message || 'Failed to create batch');
     }
   };
 
@@ -567,7 +623,7 @@ export default function AdminTestManager() {
                                 <Award className="h-4 w-4" />
                               </button>
                               <button
-                                onClick={() => handleNotifyReminder(t.id)}
+                                onClick={() => handleNotifyReminder(t)}
                                 className="p-1.5 rounded-lg border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-100"
                                 title="Send Notification Reminder"
                               >
@@ -1163,6 +1219,148 @@ export default function AdminTestManager() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* 1. CLEAN NOTIFICATION REMINDER MODAL */}
+      {notifyModalTest && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 space-y-5 shadow-2xl relative">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3.5">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-2xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
+                  <BellRing className="h-5 w-5" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Send Student Test Reminder</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Broadcast custom push notice to all enrolled candidates.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setNotifyModalTest(null)}
+                className="p-1.5 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-white transition cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800 space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-cyan-600 dark:text-cyan-400">Target Assessment</span>
+              <p className="text-xs font-bold text-slate-900 dark:text-white">{notifyModalTest.test_name}</p>
+            </div>
+
+            <form onSubmit={submitNotifyReminder} className="space-y-4 text-xs font-semibold">
+              <div className="space-y-1.5">
+                <div className="flex justify-between items-center">
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold">Custom Notification Message</label>
+                  <span className="text-[10.5px] text-slate-400 font-mono">{customNotifMsg.length} chars</span>
+                </div>
+                <textarea
+                  rows={3}
+                  required
+                  value={customNotifMsg}
+                  onChange={(e) => setCustomNotifMsg(e.target.value)}
+                  placeholder="Write your custom reminder message for students..."
+                  className="w-full rounded-2xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-3 font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                />
+              </div>
+
+              {/* Quick Template Selector */}
+              <div className="space-y-1.5">
+                <span className="text-[11px] font-bold text-slate-500">Quick Reminder Templates:</span>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCustomNotifMsg(`Reminder: Your proctored test '${notifyModalTest.test_name}' is scheduled. Please prepare your system.`)}
+                    className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-[11px] font-bold hover:bg-cyan-500/10 hover:text-cyan-500 hover:border-cyan-500/30 transition cursor-pointer"
+                  >
+                    Default Schedule
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCustomNotifMsg(`Exam Alert: '${notifyModalTest.test_name}' is live now! Log in immediately to complete your test.`)}
+                    className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-[11px] font-bold hover:bg-blue-500/10 hover:text-blue-500 hover:border-blue-500/30 transition cursor-pointer"
+                  >
+                    Test Live Alert
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCustomNotifMsg(`Urgent Notice: Only 1 hour remaining to submit your attempt for '${notifyModalTest.test_name}'.`)}
+                    className="px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-[11px] font-bold hover:bg-rose-500/10 hover:text-rose-500 hover:border-rose-500/30 transition cursor-pointer"
+                  >
+                    Deadline Warning
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setNotifyModalTest(null)}
+                  className="px-4 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={sendingNotif}
+                  className="px-5 py-2.5 rounded-xl bg-cyan-600 text-white font-extrabold hover:bg-cyan-500 shadow-lg shadow-cyan-500/20 transition flex items-center gap-2 cursor-pointer"
+                >
+                  {sendingNotif ? <Spinner className="h-4 w-4" /> : <Send className="h-4 w-4" />}
+                  <span>Send Notification</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* 2. CLEAN CONFIRMATION MODAL */}
+      {confirmModal.isOpen && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-full max-w-md rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 space-y-4 shadow-2xl relative text-center">
+            <div className={`mx-auto h-12 w-12 rounded-2xl flex items-center justify-center border ${
+              confirmModal.confirmVariant === 'danger'
+                ? 'bg-rose-500/10 text-rose-600 border-rose-500/20'
+                : 'bg-blue-500/10 text-blue-600 border-blue-500/20'
+            }`}>
+              {confirmModal.confirmVariant === 'danger' ? (
+                <Trash2 className="h-6 w-6" />
+              ) : (
+                <Sparkles className="h-6 w-6" />
+              )}
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">{confirmModal.title}</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                {confirmModal.description}
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setConfirmModal((prev) => ({ ...prev, isOpen: false }))}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmModal.onConfirm}
+                className={`px-5 py-2.5 rounded-xl font-extrabold text-white shadow-lg transition cursor-pointer ${
+                  confirmModal.confirmVariant === 'danger'
+                    ? 'bg-rose-600 hover:bg-rose-500 shadow-rose-500/20'
+                    : 'bg-blue-600 hover:bg-blue-500 shadow-blue-500/20'
+                }`}
+              >
+                {confirmModal.confirmText}
+              </button>
+            </div>
           </div>
         </div>,
         document.body

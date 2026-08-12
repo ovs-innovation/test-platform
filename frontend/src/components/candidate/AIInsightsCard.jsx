@@ -1,12 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
-  Sparkles,
   Target,
   BookOpen,
   Clock,
   CheckCircle2,
   AlertTriangle,
-  RefreshCw,
   TrendingUp,
   Brain,
   Zap,
@@ -17,7 +15,7 @@ import {
 } from 'lucide-react';
 import { studentReportService } from '../../lib/services.js';
 
-export default function AIInsightsCard({ isDarkMode = true, testId = null, testData = null }) {
+export default function AIInsightsCard({ isDarkMode = false, testId = null, testData = null }) {
   const [aiPlan, setAiPlan] = useState(null);
   const [loading, setLoading] = useState(!testData);
   const [activeTab, setActiveTab] = useState('plan'); // 'plan' | 'strategy' | 'ebooks' | 'topics' | 'pacing'
@@ -112,46 +110,31 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
 
   return (
     <div
-      className={`rounded-3xl border p-6 space-y-6 shadow-sm relative overflow-hidden backdrop-blur-xl transition ${
+      className={`rounded-3xl border p-6 sm:p-7 space-y-6 shadow-sm relative overflow-hidden transition ${
         isDarkMode
           ? 'bg-[#0B1730] border-slate-800 text-white'
-          : 'bg-white border-slate-200 text-slate-900'
+          : 'bg-white border-slate-200/90 text-slate-900'
       }`}
     >
       {/* Background Accent Mesh */}
       <div
-        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-cyan-500/10 blur-3xl"
+        className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-indigo-500/10 dark:bg-cyan-500/10 blur-3xl"
         aria-hidden="true"
       />
 
-      {/* HEADER WITH GEMINI AI BADGE */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-5 border-slate-200 dark:border-slate-800/80">
-        <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-purple-500/20 via-cyan-500/20 to-blue-500/20 text-cyan-400 border border-cyan-500/30 mb-2">
-            <Sparkles className="h-3.5 w-3.5 text-cyan-400 animate-pulse" />
-            <span>Powered by Gemini 2.5 AI Engine</span>
-          </div>
-          <h2 className="text-xl font-black flex items-center gap-2">
-            <span>AI Diagnostic & Personalised Revision Hub</span>
-          </h2>
-          <p className="text-xs text-slate-400 mt-1 max-w-2xl">
-            {planData.summary_observation ||
-              'Real-time AI diagnostic analysis of your test attempts, generating personalized 7-day revision roadmaps and topic mastery guides.'}
-          </p>
-        </div>
-
-        <button
-          onClick={fetchAIPlan}
-          disabled={loading}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 hover:bg-cyan-500/20 transition cursor-pointer self-start sm:self-center"
-        >
-          <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin' : ''}`} />
-          <span>{loading ? 'Analyzing...' : 'Refresh AI Analysis'}</span>
-        </button>
+      {/* HEADER */}
+      <div className="border-b pb-5 border-slate-100 dark:border-slate-800/80">
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+          <span>AI Diagnostic & Personalised Revision Hub</span>
+        </h2>
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl leading-relaxed">
+          {planData.summary_observation ||
+            'Real-time AI diagnostic analysis of your test attempts, generating personalized 7-day revision roadmaps and topic mastery guides.'}
+        </p>
       </div>
 
       {/* NAVIGATION TABS */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200 dark:border-slate-800/60">
+      <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-100 dark:border-slate-800/60">
         {[
           { id: 'plan', label: '7-Day Improvement Plan', icon: Calendar },
           { id: 'strategy', label: 'Revision Strategy', icon: Zap },
@@ -162,9 +145,9 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
+              className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
                 isActive
-                  ? 'bg-cyan-500 text-slate-950 shadow-md font-extrabold'
+                  ? 'bg-indigo-600 text-white shadow-md font-extrabold dark:bg-cyan-500 dark:text-slate-950'
                   : isDarkMode
                   ? 'text-slate-400 hover:text-white hover:bg-slate-800/60'
                   : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
@@ -180,9 +163,9 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
       {/* CONTENT AREA */}
       {loading ? (
         <div className="py-12 text-center space-y-3">
-          <Loader2 className="h-8 w-8 text-cyan-400 animate-spin mx-auto" />
-          <p className="text-xs text-slate-400 font-medium">
-            Gemini AI is analyzing your performance metrics and crafting your custom roadmap...
+          <Loader2 className="h-8 w-8 text-indigo-600 dark:text-cyan-400 animate-spin mx-auto" />
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+            AI is analyzing your performance metrics and crafting your custom roadmap...
           </p>
         </div>
       ) : (
@@ -190,8 +173,8 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
           {/* TAB 1: 7-DAY IMPROVEMENT PLAN */}
           {activeTab === 'plan' && (
             <div className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                <Target className="h-4 w-4 text-cyan-400" />
+              <h3 className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <Target className="h-4 w-4 text-indigo-600 dark:text-cyan-400" />
                 <span>7-Day Personalised Action Roadmap</span>
               </h3>
 
@@ -199,27 +182,27 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
                 {(planData.improvement_plan || []).map((item, idx) => (
                   <div
                     key={idx}
-                    className={`p-4 rounded-2xl border flex flex-col justify-between transition hover:border-cyan-500/40 ${
-                      isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+                    className={`p-4 sm:p-5 rounded-2xl border flex flex-col justify-between transition hover:border-indigo-300 dark:hover:border-cyan-500/40 ${
+                      isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50/80 border-slate-200/90'
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                      <div className="flex items-center justify-between mb-2.5">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase bg-indigo-100 text-indigo-800 border border-indigo-200 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20">
                           {item.day || `Day ${idx + 1}`}
                         </span>
                         {item.target_time_minutes && (
-                          <span className="text-[11px] text-slate-400 flex items-center gap-1 font-bold">
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1 font-bold">
                             <Clock className="h-3 w-3" /> {item.target_time_minutes}m
                           </span>
                         )}
                       </div>
-                      <h4 className="text-sm font-bold text-white mb-1.5">{item.focus_area}</h4>
-                      <p className="text-xs text-slate-400 leading-relaxed">{item.recommended_action}</p>
+                      <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1.5">{item.focus_area}</h4>
+                      <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">{item.recommended_action}</p>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-[11px]">
-                      <span className="text-emerald-400 font-bold flex items-center gap-1">
+                    <div className="mt-4 pt-3 border-t border-slate-200/80 dark:border-slate-800/60 flex items-center justify-between text-[11px]">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
                         <CheckCircle2 className="h-3.5 w-3.5" /> High Priority
                       </span>
                     </div>
@@ -232,8 +215,8 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
           {/* TAB 2: REVISION STRATEGY */}
           {activeTab === 'strategy' && (
             <div className="space-y-3">
-              <h3 className="text-xs font-black uppercase tracking-wider text-slate-400 flex items-center gap-2">
-                <Zap className="h-4 w-4 text-purple-400" />
+              <h3 className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-2">
+                <Zap className="h-4 w-4 text-purple-600 dark:text-purple-400" />
                 <span>Custom CBT Test-Taking Rules & Revision Protocols</span>
               </h3>
 
@@ -242,14 +225,14 @@ export default function AIInsightsCard({ isDarkMode = true, testId = null, testD
                   <div
                     key={idx}
                     className={`p-5 rounded-2xl border space-y-2 ${
-                      isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+                      isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50/80 border-slate-200/90'
                     }`}
                   >
-                    <div className="flex items-center gap-2 text-purple-400 font-extrabold text-sm">
+                    <div className="flex items-center gap-2 text-purple-700 dark:text-purple-400 font-extrabold text-sm">
                       <Award className="h-4 w-4" />
                       <span>{strat.title}</span>
                     </div>
-                    <p className="text-xs text-slate-300 leading-relaxed">{strat.rule}</p>
+                    <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{strat.rule}</p>
                   </div>
                 ))}
               </div>

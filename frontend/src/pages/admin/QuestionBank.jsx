@@ -35,6 +35,8 @@ export default function AdminQuestionBank() {
   // Modal & Form States
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [deleteQuestionId, setDeleteQuestionId] = useState(null);
+  const [deleting, setDeleting] = useState(false);
   const [form, setForm] = useState({
     question_type: 'mcq',
     question_text: '',
@@ -242,7 +244,7 @@ export default function AdminQuestionBank() {
                       {
                         label: 'Delete Question',
                         icon: Trash2,
-                        onClick: () => removeQuestion(q.id),
+                        onClick: () => setDeleteQuestionId(q.id),
                         danger: true,
                       },
                     ]}
@@ -398,6 +400,60 @@ export default function AdminQuestionBank() {
           </button>
         </div>
       </Modal>
+
+      {/* Delete Question Confirmation Modal */}
+      {deleteQuestionId && (
+        <Modal
+          open={!!deleteQuestionId}
+          onClose={() => setDeleteQuestionId(null)}
+          title="Delete Question from Bank"
+          size="sm"
+        >
+          <div className="space-y-4 text-center p-2">
+            <div className="mx-auto h-12 w-12 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center">
+              <Trash2 className="h-6 w-6" />
+            </div>
+
+            <div className="space-y-1.5">
+              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Delete Question</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                Are you sure you want to delete this question from the question bank? This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="flex justify-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setDeleteQuestionId(null)}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={deleting}
+                onClick={async () => {
+                  setDeleting(true);
+                  try {
+                    await questionBankService.remove(deleteQuestionId);
+                    toast.success('Question deleted from bank');
+                    setDeleteQuestionId(null);
+                    load();
+                  } catch (err) {
+                    toast.error(err.message || 'Delete failed');
+                  } finally {
+                    setDeleting(false);
+                  }
+                }}
+                className="px-5 py-2.5 rounded-xl font-extrabold text-white bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-500/20 transition cursor-pointer text-xs flex items-center gap-2"
+              >
+                {deleting ? <Spinner className="h-4 w-4" /> : null}
+                <span>Delete Question</span>
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

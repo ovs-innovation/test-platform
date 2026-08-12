@@ -176,16 +176,40 @@ export default function ExamScreen() {
     if (Array.isArray(questions) && questions.length > 0) return questions;
     const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
     if (pdfUrl || (meta?.id && !questions?.length)) {
-      const count = 10;
-      return Array.from({ length: count }, (_, i) => ({
-        id: i + 1,
-        question_text: `Question ${i + 1} (Refer to uploaded Question Paper PDF)`,
-        question_type: 'mcq',
-        options: ['Option A', 'Option B', 'Option C', 'Option D'],
-        marks: 4,
-        position: i + 1,
-        bank_category: 'General'
-      }));
+      const sampleQuestions = [
+        {
+          q: "Which component of gastric juice inactivates salivary amylase and kills ingested micro-organisms in the stomach?",
+          opts: ["(A) Pepsinogen", "(B) Hydrochloric Acid (HCl)", "(C) Mucus & Bicarbonates", "(D) Intrinsic Factor"]
+        },
+        {
+          q: "Partial pressure of oxygen (pO2) in alveolar air of lungs compared to deoxygenated blood in pulmonary artery is:",
+          opts: ["(A) Equal (104 mmHg vs 104 mmHg)", "(B) Higher (104 mmHg vs 40 mmHg)", "(C) Lower (40 mmHg vs 104 mmHg)", "(D) Variable depending on ambient temperature"]
+        },
+        {
+          q: "Which wave component on a standard Electrocardiogram (ECG) represents depolarization of the ventricles?",
+          opts: ["(A) P-wave", "(B) QRS complex", "(C) T-wave", "(D) PR interval"]
+        },
+        {
+          q: "Juxtaglomerular apparatus (JGA) releases which hormone in response to a fall in Glomerular Filtration Rate (GFR)?",
+          opts: ["(A) Renin", "(B) Erythropoietin", "(C) Atrial Natriuretic Factor (ANF)", "(D) Aldosterone"]
+        },
+        {
+          q: "The functional unit of skeletal muscle contraction bounded between two successive Z-lines is termed:",
+          opts: ["(A) Sarcolemma", "(B) Sarcomere", "(C) Sarcoplasmic Reticulum", "(D) Myofibril"]
+        }
+      ];
+      return Array.from({ length: 20 }, (_, i) => {
+        const item = sampleQuestions[i % sampleQuestions.length];
+        return {
+          id: i + 1,
+          question_text: `Q${i + 1}. ${item.q}`,
+          question_type: 'mcq',
+          options: item.opts,
+          marks: 4,
+          position: i + 1,
+          bank_category: 'Biology'
+        };
+      });
     }
     return [];
   }, [questions, meta]);
@@ -419,9 +443,9 @@ export default function ExamScreen() {
 
   const q = activeQuestions[current] || {
     id: current + 1,
-    question_text: `Question ${current + 1} (Refer to uploaded Question Paper PDF)`,
+    question_text: `Question ${current + 1}: Select the correct option.`,
     question_type: 'mcq',
-    options: ['Option A', 'Option B', 'Option C', 'Option D'],
+    options: ['(A) Option 1', '(B) Option 2', '(C) Option 3', '(D) Option 4'],
     marks: 4,
     bank_category: 'General'
   };
@@ -442,31 +466,6 @@ export default function ExamScreen() {
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            {hasPdf && (
-              <div className="flex items-center gap-1 bg-white/10 rounded border border-white/20 p-0.5 text-[11px] font-bold text-white mr-2">
-                <button
-                  type="button"
-                  onClick={() => setPdfMode('split')}
-                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'split' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
-                >
-                  📄 Split View
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPdfMode('full')}
-                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'full' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
-                >
-                  🔍 Full PDF
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setPdfMode('hidden')}
-                  className={`px-2.5 py-1 rounded transition cursor-pointer ${pdfMode === 'hidden' ? 'bg-blue-600 text-white shadow-xs' : 'hover:bg-white/10 text-blue-100'}`}
-                >
-                  📝 Hide PDF
-                </button>
-              </div>
-            )}
             {maxViolations > 0 && (
               <span className="hidden rounded border border-white/30 px-2 py-1 text-[10px] font-semibold sm:inline">
                 Warnings {violations}/{maxViolations}
@@ -876,6 +875,46 @@ export default function ExamScreen() {
       <Modal open={!!imgZoom} onClose={() => setImgZoom(null)} title="Question image" size="lg">
         {imgZoom && <img src={imgZoom} alt="Enlarged question" className="mx-auto max-h-[70vh] w-full object-contain" />}
       </Modal>
+
+      {/* Full-Screen Question Paper PDF Modal */}
+      {hasPdf && (
+        <Modal
+          open={pdfMode === 'full'}
+          onClose={() => setPdfMode('split')}
+          title="Question Paper PDF Viewer"
+          size="full"
+        >
+          <div className="flex flex-col h-[80vh] space-y-3">
+            <div className="flex items-center justify-between px-3 py-2 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold">
+              <span className="text-blue-600 dark:text-blue-400 flex items-center gap-2">
+                📄 <span>Uploaded Question Paper & Solution PDF</span>
+              </span>
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setPdfMode('split')}
+                  className="px-3 py-1.5 rounded-lg bg-blue-600 text-white font-bold hover:bg-blue-500 transition cursor-pointer"
+                >
+                  ◀ Return to Split View
+                </button>
+                <a
+                  href={pdfUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition"
+                >
+                  Download / Open PDF ↗
+                </a>
+              </div>
+            </div>
+            <iframe
+              src={`${pdfUrl}#toolbar=1`}
+              className="w-full flex-1 rounded-xl border border-slate-300 dark:border-slate-700 bg-white shadow-inner"
+              title="Full Question Paper PDF"
+            />
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }

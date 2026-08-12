@@ -3,7 +3,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { hashPassword, comparePassword } from '../utils/password.js';
-import { solveStudentDoubt } from '../services/geminiService.js';
+import { solveStudentDoubt, callOpenRouterAIStream } from '../services/geminiService.js';
 
 
 export const getProfile = asyncHandler(async (req, res) => {
@@ -16,16 +16,30 @@ export const getProfile = asyncHandler(async (req, res) => {
         city: 'New Delhi',
         state: 'Delhi',
         target_exam: 'JEE Main & Advanced',
-        class: 'Class 12'
+        class: 'Class 12',
+        avatar_url: req.user?.avatar_url || null,
       }
     });
   }
 
+  await query(`ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
+
   const [user, profile] = await Promise.all([
-    query('SELECT id, name, email, role, created_at FROM users WHERE id = $1', [numId]),
+    query('SELECT id, name, email, role, avatar_url, created_at FROM users WHERE id = $1', [numId]).catch(() => query('SELECT id, name, email, role, created_at FROM users WHERE id = $1', [numId])),
     query('SELECT * FROM student_profiles WHERE user_id = $1', [numId]),
   ]);
-  res.json({ user: user.rows[0] || req.user, profile: profile.rows[0] || null });
+
+  const userObj = user.rows[0] || req.user;
+  const profileObj = profile.rows[0] || null;
+  if (userObj && profileObj?.avatar_url && !userObj.avatar_url) {
+    userObj.avatar_url = profileObj.avatar_url;
+  }
+  if (profileObj && !profileObj.avatar_url && userObj?.avatar_url) {
+    profileObj.avatar_url = userObj.avatar_url;
+  }
+
+  res.json({ user: userObj, profile: profileObj });
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
@@ -34,14 +48,26 @@ export const updateProfile = asyncHandler(async (req, res) => {
     return res.json({ message: 'Profile updated' });
   }
 
-  const { name, phone, city, state, target_exam, class: studentClass } = req.body;
-  if (name) await query('UPDATE users SET name = $1 WHERE id = $2', [name, numId]);
+  const { name, phone, city, state, target_exam, class: studentClass, avatar_url } = req.body;
+
+  await query(`ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
+
+  if (name && avatar_url) {
+    await query('UPDATE users SET name = $1, avatar_url = $2 WHERE id = $3', [name, avatar_url, numId]).catch(() => {});
+  } else if (name) {
+    await query('UPDATE users SET name = $1 WHERE id = $2', [name, numId]);
+  } else if (avatar_url) {
+    await query('UPDATE users SET avatar_url = $1 WHERE id = $2', [avatar_url, numId]).catch(() => {});
+  }
+
   await query(
-    `INSERT INTO student_profiles (user_id, phone, city, state, target_exam, class)
-     VALUES ($1,$2,$3,$4,$5,$6)
+    `INSERT INTO student_profiles (user_id, phone, city, state, target_exam, class, avatar_url)
+     VALUES ($1,$2,$3,$4,$5,$6,$7)
      ON CONFLICT (user_id) DO UPDATE SET phone = EXCLUDED.phone, city = EXCLUDED.city,
-       state = EXCLUDED.state, target_exam = EXCLUDED.target_exam, class = EXCLUDED.class, updated_at = NOW()`,
-    [numId, phone || null, city || null, state || null, target_exam || null, studentClass || null]
+       state = EXCLUDED.state, target_exam = EXCLUDED.target_exam, class = EXCLUDED.class,
+       avatar_url = COALESCE(EXCLUDED.avatar_url, student_profiles.avatar_url), updated_at = NOW()`,
+    [numId, phone || null, city || null, state || null, target_exam || null, studentClass || null, avatar_url || null]
   );
   res.json({ message: 'Profile updated' });
 });
@@ -314,6 +340,51 @@ export const askAIDoubt = asyncHandler(async (req, res) => {
   console.log(`📝 Question Query: "${questionText || 'Image/Photo Uploaded'}"`);
   if (imageBase64) console.log(`📷 Image Attached: Yes (${mimeType || 'image/jpeg'})`);
   console.log('------------------------------------------------------');
+
+  const isStreaming = req.query.stream === 'true' || req.body?.stream === true || req.headers.accept?.includes('text/event-stream');
+
+  if (isStreaming) {
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache');
+    res.setHeader('Connection', 'keep-alive');
+
+    const systemPrompt = `You are an expert STEM tutor and career guidance counselor for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
+
+Student Name: ${studentName}
+${subject ? `Subject Context: ${subject}` : ''}
+${questionText ? `Student Query: "${questionText}"` : ''}
+
+CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
+1. NEVER output meta-commentary like "Mode Detected:", "Mode 1:", "Mode 2:", or "Mode 3:". Start DIRECTLY with the topic title or solution.
+2. NEVER output horizontal lines like "---" or "===". Use clean paragraph spacing instead.
+3. NEVER output raw markdown tables using pipe characters (|). Use clean bullet points (•) or numbered lists instead.
+4. AVOID messy raw LaTeX command noise like \\frac{a}{b} or \\text{...}. Use clean standard math symbols like (a / b) or clean math formatting.
+5. Keep explanations clear, elegant, well-structured, and easy for students to read.`;
+
+    const success = await callOpenRouterAIStream({
+      systemPrompt,
+      questionText,
+      imageBase64,
+      mimeType: mimeType || 'image/jpeg',
+      onToken: (token) => {
+        res.write(`data: ${JSON.stringify({ token })}\n\n`);
+      }
+    });
+
+    if (!success) {
+      const solution = await solveStudentDoubt({
+        questionText,
+        imageBase64,
+        mimeType: mimeType || 'image/jpeg',
+        studentName,
+        subjectContext: subject || ''
+      });
+      res.write(`data: ${JSON.stringify({ token: solution.text })}\n\n`);
+    }
+
+    res.write('data: [DONE]\n\n');
+    return res.end();
+  }
 
   let solution;
   try {

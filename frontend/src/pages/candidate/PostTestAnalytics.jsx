@@ -186,7 +186,7 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* GEMINI 2.5 AI DIAGNOSTIC & PERSONALISED REVISION HUB */}
-      <AIInsightsCard isDarkMode={true} testId={testId} testData={data} />
+      <AIInsightsCard isDarkMode={false} testId={testId} testData={data} />
 
       {/* ----------------------------------------------------------------- */}
       {/* COMPREHENSIVE RANKS BREAKDOWN (AIR, State, City, Inst, Batch)    */}

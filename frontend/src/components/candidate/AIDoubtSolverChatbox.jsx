@@ -28,15 +28,26 @@ function cleanScienceMathText(str) {
   if (!str || typeof str !== 'string') return str || '';
   let cleaned = str;
 
-  // 1. Fix escaped dollar signs and percent signs: \$ -> $, \% -> %
+  // 1. Strip diagnostic "Mode Detected:" lines and "Mode 1:", "Mode 2:", etc.
+  cleaned = cleaned.replace(/^(\*{0,2})Mode Detected:.*$/gmi, '');
+  cleaned = cleaned.replace(/^(\*{0,2})Mode \d+:.*$/gmi, '');
+
+  // 2. Strip horizontal divider lines "---" or "==="
+  cleaned = cleaned.replace(/^---+$/gm, '');
+  cleaned = cleaned.replace(/^===+$/gm, '');
+
+  // 3. Clean LaTeX \frac{a}{b} -> (a / b)
+  cleaned = cleaned.replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '($1 / $2)');
+
+  // 4. Fix escaped dollar signs and percent signs: \$ -> $, \% -> %
   cleaned = cleaned.replace(/\\\$([^\$]+)\\\$/g, '$1');
   cleaned = cleaned.replace(/\\\$/g, '$');
   cleaned = cleaned.replace(/\\%/g, '%');
 
-  // 2. Clean \text{...} wrappers
+  // 5. Clean \text{...} wrappers
   cleaned = cleaned.replace(/\\text\{\s*([^{}]+)\s*\}/g, '$1');
 
-  // 3. Common LaTeX math symbols to clean Unicode symbols
+  // 6. Common LaTeX math symbols to clean Unicode symbols
   cleaned = cleaned.replace(/\\times/g, '×');
   cleaned = cleaned.replace(/\\cdot/g, '·');
   cleaned = cleaned.replace(/\\equiv/g, '≡');
@@ -60,7 +71,7 @@ function cleanScienceMathText(str) {
   cleaned = cleaned.replace(/\\omega/g, 'ω');
   cleaned = cleaned.replace(/\\Omega/g, 'Ω');
 
-  // 4. Superscripts & exponents (e.g. 10^-9 -> 10⁻⁹, 10^5 -> 10⁵, x^2 -> x²)
+  // 7. Superscripts & exponents (e.g. 10^-9 -> 10⁻⁹, 10^5 -> 10⁵, x^2 -> x²)
   const superMap = {
     '0': '⁰', '1': '¹', '2': '²', '3': '³', '4': '⁴',
     '5': '⁵', '6': '⁶', '7': '⁷', '8': '⁸', '9': '⁹',
@@ -73,7 +84,7 @@ function cleanScienceMathText(str) {
   });
   cleaned = cleaned.replace(/\^([0-9\+\-n])/gi, (_, p1) => superMap[p1] || p1);
 
-  // 5. Clean LaTeX delimiter wrappers like \( \)
+  // 8. Clean LaTeX delimiter wrappers like \( \)
   cleaned = cleaned.replace(/\\\(|\\\)/g, '');
 
   return cleaned;
@@ -129,9 +140,41 @@ function renderFormattedMarkdownText(text) {
 
   lines.forEach((line, idx) => {
     const trimmed = line.trim();
-    if (!trimmed) {
-      elements.push(<div key={`space-${idx}`} className="h-1.5" />);
+    if (!trimmed || trimmed === '---' || trimmed === '===') {
       return;
+    }
+
+    // Skip diagnostic "Mode Detected:" lines
+    if (/^(\*{0,2})Mode Detected:/i.test(trimmed) || /^(\*{0,2})Mode \d+:/i.test(trimmed)) {
+      return;
+    }
+
+    // Ignore markdown table separator lines like |---|---|
+    if (/^\|[\s\-:|]+\|$/.test(trimmed)) {
+      return;
+    }
+
+    // Transform table data rows | col1 | col2 | into neat cards
+    if (trimmed.startsWith('|') && trimmed.endsWith('|')) {
+      const cells = trimmed.slice(1, -1).split('|').map(c => c.trim()).filter(Boolean);
+      if (cells.length >= 2) {
+        if (cells[0].toLowerCase().includes('concept') && cells[1].toLowerCase().includes('why')) {
+          elements.push(
+            <div key={idx} className="text-[11px] font-extrabold uppercase tracking-wider text-indigo-900 mt-2 mb-1">
+              Core Concepts & Laws Applied:
+            </div>
+          );
+          return;
+        }
+
+        elements.push(
+          <div key={idx} className="my-1.5 p-2.5 bg-slate-50 border border-slate-200/80 rounded-xl text-xs space-y-1 shadow-2xs">
+            <span className="font-bold text-indigo-950 block">{renderInlineFormatting(cells[0])}</span>
+            <span className="text-slate-600 block">{renderInlineFormatting(cells[1])}</span>
+          </div>
+        );
+        return;
+      }
     }
 
     if (trimmed.startsWith('### ')) {
@@ -145,12 +188,34 @@ function renderFormattedMarkdownText(text) {
       return;
     }
 
-    if (trimmed.startsWith('#### ')) {
-      const headerText = trimmed.replace(/^####\s+/, '');
+    if (trimmed.startsWith('#### ') || trimmed.startsWith('## ')) {
+      const headerText = trimmed.replace(/^#{2,4}\s+/, '');
       elements.push(
-        <h4 key={idx} className="text-xs font-bold text-slate-800 mt-2 mb-1">
+        <h4 key={idx} className="text-xs font-bold text-slate-800 mt-2.5 mb-1 flex items-center gap-1">
           {renderInlineFormatting(headerText)}
         </h4>
+      );
+      return;
+    }
+
+    if (/^\d+[\)\.]\s+/.test(trimmed)) {
+      const numStr = trimmed.match(/^\d+[\)\.]/)[0];
+      const headerText = trimmed.replace(/^\d+[\)\.]\s+/, '');
+      elements.push(
+        <div key={idx} className="mt-2.5 mb-1 font-bold text-xs text-indigo-950 flex items-center gap-1.5">
+          <span className="bg-indigo-100 text-indigo-700 px-1.5 py-0.5 rounded text-[11px] font-mono">{numStr}</span>
+          <span>{renderInlineFormatting(headerText)}</span>
+        </div>
+      );
+      return;
+    }
+
+    if (/^Step\s*\d+\s*[-:]/i.test(trimmed)) {
+      elements.push(
+        <div key={idx} className="mt-2.5 mb-1 font-bold text-xs text-indigo-950 flex items-center gap-1.5">
+          <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-md text-[11px] font-mono">{trimmed.split(/[-:]/)[0].trim()}</span>
+          <span>{renderInlineFormatting(trimmed.replace(/^Step\s*\d+\s*[-:]\s*/i, ''))}</span>
+        </div>
       );
       return;
     }
@@ -199,7 +264,7 @@ function renderFormattedMarkdownText(text) {
     );
   });
 
-  return <div className="space-y-0.5">{elements}</div>;
+  return <div className="space-y-1">{elements}</div>;
 }
 
 export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery = '' }) {
@@ -364,20 +429,44 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
         subject: selectedSubject
       };
 
-      const res = await studentReportService.askAIDoubt(payload);
-      
       const aiMsgId = `ai-${Date.now()}`;
-      const resText = res.text || res.solution?.text || (typeof res.solution === 'string' ? res.solution : null);
+      let messageAdded = false;
 
-      const newAIMessage = {
-        id: aiMsgId,
-        sender: 'ai',
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        text: resText,
-        solution: !resText ? res.solution : null
-      };
+      const res = await studentReportService.askAIDoubtStream(payload, (token, currentFullText) => {
+        if (!messageAdded) {
+          messageAdded = true;
+          setMessages((prev) => [
+            ...prev,
+            {
+              id: aiMsgId,
+              sender: 'ai',
+              timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+              text: currentFullText,
+              solution: null
+            }
+          ]);
+        } else {
+          setMessages((prev) =>
+            prev.map((msg) => (msg.id === aiMsgId ? { ...msg, text: currentFullText } : msg))
+          );
+        }
+      });
 
-      setMessages((prev) => [...prev, newAIMessage]);
+      if (!messageAdded) {
+        const resText = res?.text || res?.solution?.text || (typeof res?.solution === 'string' ? res.solution : null);
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: aiMsgId,
+            sender: 'ai',
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            text: resText,
+            solution: !resText ? res?.solution : null
+          }
+        ]);
+      }
+
+      setIsSending(false);
     } catch (err) {
       console.error('Failed to solve doubt:', err);
       const errMsgId = `ai-err-${Date.now()}`;
@@ -745,7 +834,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                   </div>
                 </div>
                 <div className="bg-white border border-slate-200 rounded-2xl rounded-tl-none p-3 shadow-sm flex items-center gap-2">
-                  <span className="text-xs text-slate-600 font-semibold">Gemini is solving your doubt</span>
+                  <span className="text-xs text-slate-600 font-semibold">Thinking...</span>
                   <div className="flex gap-1">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-600 animate-bounce"></span>
                     <span className="w-1.5 h-1.5 rounded-full bg-purple-600 animate-bounce delay-150"></span>

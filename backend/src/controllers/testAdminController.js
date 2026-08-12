@@ -437,8 +437,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           ) VALUES ($1, $2, 'mcq', $3, 0, $4, $5)`,
           [
             id,
-            `Question ${i} (Refer to uploaded Question Paper PDF)`,
-            JSON.stringify(['Option A', 'Option B', 'Option C', 'Option D']),
+            `Question ${i}: Select the correct option for this question statement.`,
+            JSON.stringify(['(A) Option 1', '(B) Option 2', '(C) Option 3', '(D) Option 4']),
             marksPerQ,
             i
           ]

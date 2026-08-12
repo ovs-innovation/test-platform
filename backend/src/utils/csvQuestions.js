@@ -1,3 +1,5 @@
+import { ApiError } from './ApiError.js';
+
 export const parseCsvLine = (line) => {
   const result = [];
   let cur = '';
@@ -50,100 +52,167 @@ export const parseOptions = (raw) => {
 export const optionsToCsv = (options) => parseOptions(options).join('|');
 
 export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
-  if (!csv?.trim()) throw new Error('CSV content is required');
+  if (!csv?.trim()) throw ApiError.badRequest('CSV content is required');
   const lines = csv.trim().split(/\r?\n/).filter((l) => l.trim());
-  if (lines.length < 2) throw new Error('CSV must include a header row and at least one question');
+  if (lines.length < 1) throw ApiError.badRequest('CSV must include at least one question line');
 
-  const header = parseCsvLine(lines[0]).map((h) => h.toLowerCase());
-  const idx = (name) => header.indexOf(name);
+  const firstLineCols = parseCsvLine(lines[0]);
+  const headerCandidates = firstLineCols.map((h) => h.toLowerCase());
 
-  const textIdx = idx('question_text');
-  const typeIdx = idx('question_type');
-  const marksIdx = idx('marks');
-  const optionsIdx = idx('options');
-  const correctIdx = idx('correct_index');
-  const correctIndicesIdx = idx('correct_indices');
-  const numericAnswerIdx = idx('numeric_answer');
-  const numericalToleranceIdx = idx('numerical_tolerance');
-  const assertionTextIdx = idx('assertion_text');
-  const reasonTextIdx = idx('reason_text');
-  const categoryIdx = idx('category');
-  const solutionIdx = idx('solution');
-  const subjectIdIdx = idx('subject_id');
-  const chapterIdIdx = idx('chapter_id');
-  const difficultyIdx = idx('difficulty');
-  const imageUrlIdx = idx('image_url');
+  const textIdx = headerCandidates.indexOf('question_text');
+  const typeIdx = headerCandidates.indexOf('question_type');
+  const marksIdx = headerCandidates.indexOf('marks');
+  const optionsIdx = headerCandidates.indexOf('options');
+  const correctIdx = headerCandidates.indexOf('correct_index');
+  const correctIndicesIdx = headerCandidates.indexOf('correct_indices');
+  const numericAnswerIdx = headerCandidates.indexOf('numeric_answer');
+  const numericalToleranceIdx = headerCandidates.indexOf('numerical_tolerance');
+  const assertionTextIdx = headerCandidates.indexOf('assertion_text');
+  const reasonTextIdx = headerCandidates.indexOf('reason_text');
+  const categoryIdx = headerCandidates.indexOf('category');
+  const solutionIdx = headerCandidates.indexOf('solution');
+  const subjectIdIdx = headerCandidates.indexOf('subject_id');
+  const chapterIdIdx = headerCandidates.indexOf('chapter_id');
+  const difficultyIdx = headerCandidates.indexOf('difficulty');
+  const imageUrlIdx = headerCandidates.indexOf('image_url');
 
-  if (textIdx === -1) throw new Error('CSV must include question_text column');
+  const hasStandardHeader = textIdx !== -1;
+  const startIndex = hasStandardHeader ? 1 : 0;
 
   const rows = [];
   const errors = [];
 
-  for (let i = 1; i < lines.length; i++) {
+  for (let i = startIndex; i < lines.length; i++) {
     const cols = parseCsvLine(lines[i]);
-    const question_text = cols[textIdx];
-    if (!question_text) {
-      errors.push({ line: i + 1, error: 'Missing question_text' });
-      continue;
-    }
-    let question_type = (cols[typeIdx] || 'mcq').toLowerCase();
-    const marks = Number(cols[marksIdx]) || 1;
-    const options = optionsIdx >= 0
-      ? (cols[optionsIdx] || '').split('|').map((o) => o.trim()).filter(Boolean)
-      : [];
-    const correct_index = correctIdx >= 0 ? Number(cols[correctIdx]) || 0 : 0;
-    let correct_indices = correctIndicesIdx >= 0
-      ? (cols[correctIndicesIdx] || '').split(/[,|\s]+/).map((n) => Number(n.trim())).filter((n) => !Number.isNaN(n))
-      : [];
-    
-    if (correct_indices.length > 1 || ['multi_select', 'multiple_correct', 'multiple_select', 'multiple_choice', 'multiple'].includes(question_type)) {
-      question_type = 'multi_select';
-      if (!correct_indices.length && correct_index != null) {
-        correct_indices = [correct_index];
+    if (!cols || cols.length === 0 || !cols.some(Boolean)) continue;
+
+    if (hasStandardHeader) {
+      // 1. Standard Header CSV Parsing
+      const question_text = cols[textIdx];
+      if (!question_text) {
+        errors.push({ line: i + 1, error: 'Missing question_text' });
+        continue;
       }
-    }
-    const numeric_answer = numericAnswerIdx >= 0 && cols[numericAnswerIdx] !== '' ? Number(cols[numericAnswerIdx]) : null;
-    const numerical_tolerance = numericalToleranceIdx >= 0 && cols[numericalToleranceIdx] !== '' ? Number(cols[numericalToleranceIdx]) : 0;
-    const assertion_text = assertionTextIdx >= 0 ? cols[assertionTextIdx] : null;
-    const reason_text = reasonTextIdx >= 0 ? cols[reasonTextIdx] : null;
-    const category = categoryIdx >= 0 ? cols[categoryIdx] : null;
-    const solution = solutionIdx >= 0 ? cols[solutionIdx] : '';
-    const subject_id = subjectIdIdx >= 0 ? (Number(cols[subjectIdIdx]) || null) : null;
-    const chapter_id = chapterIdIdx >= 0 ? (Number(cols[chapterIdIdx]) || null) : null;
-    const difficulty = difficultyIdx >= 0 ? (cols[difficultyIdx] || 'medium') : 'medium';
-    const image_url = imageUrlIdx >= 0 ? (cols[imageUrlIdx] || '') : '';
+      let question_type = (cols[typeIdx] || 'mcq').toLowerCase();
+      const marks = Number(cols[marksIdx]) || 1;
+      const options = optionsIdx >= 0
+        ? (cols[optionsIdx] || '').split('|').map((o) => o.trim()).filter(Boolean)
+        : [];
+      const correct_index = correctIdx >= 0 ? Number(cols[correctIdx]) || 0 : 0;
+      let correct_indices = correctIndicesIdx >= 0
+        ? (cols[correctIndicesIdx] || '').split(/[,|\s]+/).map((n) => Number(n.trim())).filter((n) => !Number.isNaN(n))
+        : [];
 
-    if (requireCategory && !category) {
-      errors.push({ line: i + 1, error: 'Missing category' });
-      continue;
-    }
-    if (options.length < 2 && ['mcq', 'single_choice', 'multi_select'].includes(question_type)) {
-      errors.push({ line: i + 1, error: 'Need at least 2 options' });
-      continue;
-    }
+      if (correct_indices.length > 1 || ['multi_select', 'multiple_correct', 'multiple_select', 'multiple_choice', 'multiple'].includes(question_type)) {
+        question_type = 'multi_select';
+        if (!correct_indices.length && correct_index != null) {
+          correct_indices = [correct_index];
+        }
+      }
+      const numeric_answer = numericAnswerIdx >= 0 && cols[numericAnswerIdx] !== '' ? Number(cols[numericAnswerIdx]) : null;
+      const numerical_tolerance = numericalToleranceIdx >= 0 && cols[numericalToleranceIdx] !== '' ? Number(cols[numericalToleranceIdx]) : 0;
+      const assertion_text = assertionTextIdx >= 0 ? cols[assertionTextIdx] : null;
+      const reason_text = reasonTextIdx >= 0 ? cols[reasonTextIdx] : null;
+      const category = categoryIdx >= 0 ? cols[categoryIdx] : null;
+      const solution = solutionIdx >= 0 ? cols[solutionIdx] : '';
+      const subject_id = subjectIdIdx >= 0 ? (Number(cols[subjectIdIdx]) || null) : null;
+      const chapter_id = chapterIdIdx >= 0 ? (Number(cols[chapterIdIdx]) || null) : null;
+      const difficulty = difficultyIdx >= 0 ? (cols[difficultyIdx] || 'medium') : 'medium';
+      const image_url = imageUrlIdx >= 0 ? (cols[imageUrlIdx] || '') : '';
 
-    rows.push({
-      line: i + 1,
-      question_text,
-      question_type,
-      marks,
-      options,
-      correct_index,
-      correct_indices,
-      numeric_answer,
-      numerical_tolerance,
-      assertion_text,
-      reason_text,
-      category,
-      solution,
-      subject_id,
-      chapter_id,
-      difficulty,
-      image_url,
-    });
+      if (requireCategory && !category) {
+        errors.push({ line: i + 1, error: 'Missing category' });
+        continue;
+      }
+      if (options.length < 2 && ['mcq', 'single_choice', 'multi_select'].includes(question_type)) {
+        errors.push({ line: i + 1, error: 'Need at least 2 options' });
+        continue;
+      }
+
+      rows.push({
+        line: i + 1,
+        question_text,
+        question_type,
+        marks,
+        options,
+        correct_index,
+        correct_indices,
+        numeric_answer,
+        numerical_tolerance,
+        assertion_text,
+        reason_text,
+        category,
+        solution,
+        subject_id,
+        chapter_id,
+        difficulty,
+        image_url,
+      });
+    } else {
+      // 2. Legacy / Unheadered CSV Format (Question, OptA, OptB, OptC, OptD, AnswerKey [A/B/C/D], Category)
+      const question_text = cols[0];
+      if (!question_text) {
+        errors.push({ line: i + 1, error: 'Missing question text' });
+        continue;
+      }
+
+      let options = [];
+      let answerRaw = '';
+      let category = null;
+
+      if (cols.length >= 6) {
+        options = [cols[1], cols[2], cols[3], cols[4]].map((s) => (s || '').trim()).filter(Boolean);
+        answerRaw = (cols[5] || '').trim().toUpperCase();
+        category = cols[6] ? cols[6].trim() : null;
+      } else if (cols.length >= 3) {
+        options = (cols[1] || '').split('|').map((s) => s.trim()).filter(Boolean);
+        answerRaw = (cols[2] || '').trim().toUpperCase();
+        category = cols[3] ? cols[3].trim() : null;
+      }
+
+      let correct_index = 0;
+      if (answerRaw === 'A' || answerRaw === '0' || answerRaw === '1ST') correct_index = 0;
+      else if (answerRaw === 'B' || answerRaw === '1' || answerRaw === '2ND') correct_index = 1;
+      else if (answerRaw === 'C' || answerRaw === '2' || answerRaw === '3RD') correct_index = 2;
+      else if (answerRaw === 'D' || answerRaw === '3' || answerRaw === '4TH') correct_index = 3;
+      else if (!isNaN(Number(answerRaw))) {
+        const num = Number(answerRaw);
+        correct_index = num >= 1 && num <= options.length ? num - 1 : Math.max(0, num);
+      }
+
+      if (options.length < 2) {
+        errors.push({ line: i + 1, error: 'Need at least 2 options' });
+        continue;
+      }
+
+      rows.push({
+        line: i + 1,
+        question_text,
+        question_type: 'mcq',
+        marks: 4,
+        options,
+        correct_index,
+        correct_indices: [],
+        numeric_answer: null,
+        numerical_tolerance: 0,
+        assertion_text: null,
+        reason_text: null,
+        category,
+        solution: '',
+        subject_id: null,
+        chapter_id: null,
+        difficulty: 'medium',
+        image_url: '',
+      });
+    }
   }
 
-  return { rows, errors, header };
+  if (rows.length === 0 && errors.length > 0) {
+    const firstErr = errors[0];
+    throw ApiError.badRequest(`CSV parse error on line ${firstErr.line}: ${firstErr.error}`);
+  }
+
+  return { rows, errors, header: hasStandardHeader ? headerCandidates : [] };
 };
 
 export const questionsToCsv = (questions, { includeCategory = false, includeSolution = false } = {}) => {

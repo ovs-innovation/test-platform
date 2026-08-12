@@ -11,7 +11,7 @@ function initials(name) {
 export default function Profile() {
   const toast = useToast();
   const fileInputRef = useRef(null);
-  const [form, setForm] = useState({ name: '', phone: '', city: '', state: '', target_exam: '', class: '' });
+  const [form, setForm] = useState({ name: '', phone: '', city: '', state: '', target_exam: '', class: '', avatar_url: '' });
   const [email, setEmail] = useState('');
   const [avatarPreview, setAvatarPreview] = useState(null);
   const [state, setState] = useState('loading');
@@ -20,6 +20,8 @@ export default function Profile() {
   useEffect(() => {
     studentService.profile().then((d) => {
       setEmail(d.user.email);
+      const url = d.profile?.avatar_url || d.user?.avatar_url || null;
+      if (url) setAvatarPreview(url);
       setForm({
         name: d.user.name || '',
         phone: d.profile?.phone || '',
@@ -27,6 +29,7 @@ export default function Profile() {
         state: d.profile?.state || '',
         target_exam: d.profile?.target_exam || '',
         class: d.profile?.class || '',
+        avatar_url: url || '',
       });
       setState('done');
     }).catch(() => setState('error'));
@@ -39,8 +42,14 @@ export default function Profile() {
         toast.error('Image file size must be under 5MB');
         return;
       }
-      setAvatarPreview(URL.createObjectURL(file));
-      toast.success('Avatar preview updated! Click Save Profile to persist.');
+      const reader = new FileReader();
+      reader.onload = (uploadEvent) => {
+        const base64 = uploadEvent.target.result;
+        setAvatarPreview(base64);
+        setForm((f) => ({ ...f, avatar_url: base64 }));
+        toast.success('Avatar photo updated! Click Save Profile to persist changes.');
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -49,7 +58,17 @@ export default function Profile() {
     setSaving(true);
     try {
       await studentService.updateProfile(form);
-      toast.success('Profile updated successfully');
+      const userRaw = localStorage.getItem('user');
+      if (userRaw) {
+        try {
+          const u = JSON.parse(userRaw);
+          u.avatar_url = form.avatar_url;
+          u.name = form.name;
+          localStorage.setItem('user', JSON.stringify(u));
+        } catch { /* ignore */ }
+      }
+      toast.success('Profile updated successfully!');
+      setTimeout(() => window.location.reload(), 400);
     } catch (err) {
       toast.error(err.message || 'Save failed');
     } finally {

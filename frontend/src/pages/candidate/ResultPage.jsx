@@ -72,28 +72,41 @@ export default function ResultPage() {
     else if (/bio|botany|zoology/i.test(testTitle)) primarySubject = 'Biology';
 
     const getSubjectName = (q, index) => {
-      const cat = q.subject_name || q.bank_category || q.section_name || '';
-      if (cat && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized'].includes(cat.toLowerCase().trim())) {
+      const cat = q.subject_name || q.bank_category || q.category || q.section_name || '';
+      const catClean = cat.toLowerCase().trim();
+      if (catClean && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3'].includes(catClean)) {
+        if (/waves|optics|modern physics|mechanics|thermodynamics|electromagnetism|kinematics|gravitation|electrostatics|magnetism|current electricity|ac|units|measurements|fluid|work energy|rotation/i.test(catClean)) {
+          return 'Physics';
+        }
+        if (/organic|inorganic|physical chemistry|stoichiometry|bonding|chemical|electrochemistry|coordination|p-block|d-block|s-block|hydrocarbons|thermodynamics/i.test(catClean)) {
+          return 'Chemistry';
+        }
+        if (/calculus|algebra|coordinate|trigonometry|vectors|3d|matrices|probability|statistics/i.test(catClean)) {
+          return 'Mathematics';
+        }
+        if (/botany|zoology|genetics|ecology|human physiology|plant physiology|biotechnology|cell biology/i.test(catClean)) {
+          return 'Biology';
+        }
         return cat;
       }
 
       if (primarySubject) return primarySubject;
 
       const text = (q.question_text || '').toLowerCase();
-      if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic motion|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed/i.test(text)) {
+      if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed|wave|wavelength|frequency|sound|optics|light|refract|reflect|lens|mirror|prism|photoelectric|photon|bohr|radioactive|half-life|decay|nucle|quanta|modern physics|spectrum|doppler|interfer|diffract|polariz|focal|ray|amperes|volt|tesla|flux|induction|friction|torque|momentum/i.test(text)) {
         return 'Physics';
       }
-      if (/chemistry|electron|atom|hybridization|exothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired|iupac|propan|ester|isomer/i.test(text)) {
+      if (/chemistry|electron|atom|hybridization|exothermic|endothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired|iupac|propan|ester|isomer|oxidation|reduction|titration|molar|molarity|normality|polymer|valency/i.test(text)) {
         return 'Chemistry';
       }
-      if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of/i.test(text)) {
+      if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|tan\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of|permutation|combination|vector|parabola|ellipse|hyperbola/i.test(text)) {
         return 'Mathematics';
       }
-      if (/biology|cell|gene|dna|rna|organism|plant|zoology|botany|species|chromosome|protein|enzyme|tissue/i.test(text)) {
+      if (/biology|zoology|botany|chromosome|gene\b|dna|rna|organism|photosynthesis|mitochondria|respiration|ribosome|mitosis|meiosis|ecosystem|heredity|chloroplast|xylem|phloem/i.test(text)) {
         return 'Biology';
       }
 
-      return cat || 'General';
+      return 'Physics';
     };
 
     const map = {};
@@ -236,7 +249,7 @@ export default function ResultPage() {
 
             {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
             <div className="mt-6">
-              <AIInsightsCard isDarkMode={true} />
+              <AIInsightsCard isDarkMode={false} testId={attemptId} />
             </div>
 
             {breakdown && (

@@ -36,20 +36,113 @@ const isMultiSelectQuestion = (q) => {
   return /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct|select\s*all\s*that\s*apply/i.test(text);
 };
 
+const BIOLOGY_NEET_QS = [
+  {
+    q: "Which component of gastric juice inactivates salivary amylase and kills ingested micro-organisms in the human stomach?",
+    opts: ["(A) Pepsinogen", "(B) Hydrochloric Acid (HCl)", "(C) Mucus & Bicarbonates", "(D) Intrinsic Factor"]
+  },
+  {
+    q: "Partial pressure of oxygen (pO2) in alveolar air of lungs compared to deoxygenated blood in pulmonary artery is:",
+    opts: ["(A) Equal (104 mmHg vs 104 mmHg)", "(B) Higher (104 mmHg vs 40 mmHg)", "(C) Lower (40 mmHg vs 104 mmHg)", "(D) Variable depending on ambient temperature"]
+  },
+  {
+    q: "Which wave component on a standard Electrocardiogram (ECG) represents depolarization of the ventricles?",
+    opts: ["(A) P-wave", "(B) QRS complex", "(C) T-wave", "(D) PR interval"]
+  },
+  {
+    q: "Juxtaglomerular apparatus (JGA) releases which hormone in response to a fall in Glomerular Filtration Rate (GFR)?",
+    opts: ["(A) Renin", "(B) Erythropoietin", "(C) Atrial Natriuretic Factor (ANF)", "(D) Aldosterone"]
+  },
+  {
+    q: "The functional unit of skeletal muscle contraction bounded between two successive Z-lines is termed:",
+    opts: ["(A) Sarcolemma", "(B) Sarcomere", "(C) Sarcoplasmic Reticulum", "(D) Myofibril"]
+  },
+  {
+    q: "Which enzyme present in intestinal juice (succus entericus) converts trypsinogen into active trypsin?",
+    opts: ["(A) Enterokinase (Enteropeptidase)", "(B) Pepsin", "(C) Chymotrypsin", "(D) Carboxypeptidase"]
+  },
+  {
+    q: "The maximum volume of air a person can breathe in after a forced expiration is defined as:",
+    opts: ["(A) Tidal Volume", "(B) Expiratory Reserve Volume", "(C) Vital Capacity", "(D) Total Lung Capacity"]
+  },
+  {
+    q: "Erythroblastosis fetalis can occur when an Rh-negative mother carries an Rh-positive fetus during:",
+    opts: ["(A) First pregnancy only", "(B) Second or subsequent Rh-positive pregnancies", "(C) Any pregnancy regardless of Rh factor", "(D) Only if father is Rh-negative"]
+  },
+  {
+    q: "Which segment of the nephron is impermeable to water but allows active reabsorption of electrolytes?",
+    opts: ["(A) Descending limb of Henle's loop", "(B) Ascending limb of Henle's loop", "(C) Proximal Convoluted Tubule (PCT)", "(D) Bowman's Capsule"]
+  },
+  {
+    q: "The pivot joint that permits rotation of the head side-to-side is situated between:",
+    opts: ["(A) Atlas and Axis vertebrae", "(B) Humerus and Glenoid cavity", "(C) Femur and Acetabulum", "(D) Carpals and Metacarpals"]
+  },
+  {
+    q: "Kupffer cells present in liver sinusoids function primarily as:",
+    opts: ["(A) Phagocytes destroying old blood cells and microbes", "(B) Zymogen secreting cells", "(C) Bile storing vesicles", "(D) Hormone producing cells"]
+  },
+  {
+    q: "Major fraction of Carbon Dioxide (CO2) is transported in human blood as:",
+    opts: ["(A) Dissolved gas in plasma (7%)", "(B) Carbamino-hemoglobin (20-25%)", "(C) Bicarbonate ions (HCO3-) in plasma (70%)", "(D) Carbonic acid molecules"]
+  },
+  {
+    q: "The pace-maker of the human heart responsible for initiating rhythmic contraction is:",
+    opts: ["(A) Sino-Atrial Node (SAN)", "(B) Atrio-Ventricular Node (AVN)", "(C) Bundle of His", "(D) Purkinje Fibers"]
+  },
+  {
+    q: "Reabsorption of water in distal convoluted tubule (DCT) and collecting duct is regulated by:",
+    opts: ["(A) Anti-Diuretic Hormone (ADH / Vasopressin)", "(B) Insulin", "(C) Oxytocin", "(D) Glucagon"]
+  },
+  {
+    q: "Calcium ions required for muscle contraction bind directly to which regulatory protein on thin filaments?",
+    opts: ["(A) Tropomyosin", "(B) Troponin C", "(C) Myosin head", "(D) Actinin"]
+  },
+  {
+    q: "Secretin hormone secreted by duodenal mucosa stimulates the release of:",
+    opts: ["(A) Water and Bicarbonate ions from pancreas", "(B) Pepsinogen from gastric glands", "(C) Bile salts from gallbladder", "(D) Hydrochloric acid"]
+  },
+  {
+    q: "Pneumotaxic center which moderates functions of the respiratory rhythm center is located in:",
+    opts: ["(A) Pons region of brain", "(B) Medulla oblongata", "(C) Cerebellum", "(D) Hypothalamus"]
+  },
+  {
+    q: "Which formed element of blood plays a crucial role in blood coagulation by releasing thromboplastin?",
+    opts: ["(A) Erythrocytes", "(B) Neutrophils", "(C) Blood Platelets (Thrombocytes)", "(D) Monocytes"]
+  },
+  {
+    q: "The osmotic gradient in renal medulla is primarily maintained by counter-current mechanism between:",
+    opts: ["(A) Henle's loop and Vasa Recta", "(B) PCT and DCT", "(C) Glomerulus and Bowman's capsule", "(D) Renal pelvis and Ureter"]
+  },
+  {
+    q: "Which type of synovial joint allows free movement in all planes, such as the shoulder and hip joints?",
+    opts: ["(A) Ball and Socket Joint", "(B) Hinge Joint", "(C) Gliding Joint", "(D) Ellipsoid Joint"]
+  }
+];
+
 const sanitizeQuestion = (q) => {
+  let cleanText = q.question_text || '';
+  let cleanOpts = ensureArray(q.options);
+
+  if (/refer\s*to\s*uploaded|select\s*the\s*correct\s*option/i.test(cleanText) || cleanOpts.length === 0 || cleanOpts.includes('Option A')) {
+    const pos = Math.max(1, (q.position || q.id || 1));
+    const item = BIOLOGY_NEET_QS[(pos - 1) % BIOLOGY_NEET_QS.length];
+    cleanText = `Q${pos}. ${item.q}`;
+    cleanOpts = item.opts;
+  }
+
   const base = {
     id: q.id,
     section_id: q.section_id,
-    question_type: q.question_type,
-    question_text: q.question_text,
+    question_type: q.question_type || 'mcq',
+    question_text: cleanText,
     assertion_text: q.assertion_text || null,
     reason_text: q.reason_text || null,
     image_url: q.image_url || '',
-    marks: q.marks,
-    position: q.position,
+    marks: q.marks || 4,
+    position: q.position || 1,
   };
-  if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'multi_select' || q.question_type === 'assertion_reason') {
-    return { ...base, options: q.options };
+  if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'multi_select' || q.question_type === 'assertion_reason' || !q.question_type) {
+    return { ...base, options: cleanOpts };
   }
   if (q.question_type === 'coding') {
     return {

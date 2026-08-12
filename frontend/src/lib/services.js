@@ -1,4 +1,4 @@
-import api from './api.js';
+import api, { tokenStore } from './api.js';
 
 const cache = new Map();
 
@@ -507,6 +507,56 @@ export const studentReportService = {
   getStrengthsWeaknesses: (params) => api.get('/student/reports/strengths-weaknesses', { params }).then((r) => r.data),
   getTimeAnalysis: (params) => api.get('/student/reports/time-analysis', { params }).then((r) => r.data),
   getInsights: (params) => api.get('/student/reports/insights', { params }).then((r) => r.data),
-  getAIPlan: (params) => api.get('/student/reports/ai-plan', { params }).then((r) => r.data),
   askAIDoubt: (data) => api.post('/student/doubt-solver', data).then((r) => r.data),
+  askAIDoubtStream: async (data, onToken) => {
+    const token = tokenStore.get();
+    const baseURL = import.meta.env.VITE_API_URL || '/api';
+    
+    try {
+      const response = await fetch(`${baseURL}/student/doubt-solver?stream=true`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body: JSON.stringify({ ...data, stream: true })
+      });
+
+      if (!response.ok || !response.body) {
+        return api.post('/student/doubt-solver', data).then((r) => r.data);
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let fullText = '';
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || trimmed.startsWith(':')) continue;
+          if (trimmed === 'data: [DONE]') break;
+          if (trimmed.startsWith('data: ')) {
+            try {
+              const parsed = JSON.parse(trimmed.slice(6));
+              if (parsed.token) {
+                fullText += parsed.token;
+                if (onToken) onToken(parsed.token, fullText);
+              }
+            } catch (_) {}
+          }
+        }
+      }
+
+      return { success: true, text: fullText };
+    } catch (_) {
+      return api.post('/student/doubt-solver', data).then((r) => r.data);
+    }
+  }
 };

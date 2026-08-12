@@ -220,24 +220,7 @@ export default function AssessmentInstructions() {
               </table>
             </div>
 
-            {(assessment.question_paper_url || assessment.solution_pdf_url) && (
-              <div className="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 p-3.5 text-xs font-semibold text-emerald-800 dark:text-emerald-300">
-                <div className="flex items-center gap-2">
-                  <span className="text-base">📄</span>
-                  <span>Question Paper PDF is uploaded for this test. You can view the question paper inside the exam player.</span>
-                </div>
-                {assessment.question_paper_url && (
-                  <a
-                    href={assessment.question_paper_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-lg bg-emerald-600 px-3.5 py-1.5 font-bold text-white shadow-xs hover:bg-emerald-700 transition"
-                  >
-                    Preview Question PDF
-                  </a>
-                )}
-              </div>
-            )}
+
 
             {/* Exam-Specific Instructions Box */}
             {assessment.instructions && (

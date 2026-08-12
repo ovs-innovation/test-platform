@@ -1197,7 +1197,7 @@ export default function Schools() {
                       } else if (code === 'SCHOOL5000') {
                         setAppliedCoupon({ code: 'SCHOOL5000', type: 'flat', value: 5000, label: '₹5,000 Flat Grant Discount' });
                       } else {
-                        alert('Invalid Coupon Code! Try EDVEDUM20, EARLYBIRD15, or SCHOOL5000');
+                        toast?.error('Invalid Coupon Code! Try EDVEDUM20, EARLYBIRD15, or SCHOOL5000');
                       }
                     }}
                     className="rounded-xl bg-slate-800 dark:bg-slate-700 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-slate-700 cursor-pointer"
