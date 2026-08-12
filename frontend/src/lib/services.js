@@ -133,6 +133,7 @@ export const assessmentService = {
 export const questionBankService = {
   categories: () => withCache('qb_categories', () => api.get('/question-bank/categories').then((r) => r.data.categories)),
   list: (category) => withCache(`qb_list_${category || 'all'}`, () => api.get('/question-bank', { params: category ? { category } : {} }).then((r) => r.data.questions)),
+  byCategory: (category) => withCache(`qb_list_${category || 'all'}`, () => api.get('/question-bank', { params: category ? { category } : {} }).then((r) => r.data.questions)),
   create: (data) => {
     clearCache();
     return api.post('/question-bank', data).then((r) => r.data.question);
@@ -142,6 +143,10 @@ export const questionBankService = {
     return api.put(`/question-bank/${id}`, data).then((r) => r.data.question);
   },
   remove: (id) => {
+    clearCache();
+    return api.delete(`/question-bank/${id}`).then((r) => r.data);
+  },
+  delete: (id) => {
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
   },
