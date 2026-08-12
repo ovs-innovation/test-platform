@@ -200,39 +200,42 @@ export default function Leaderboard() {
   if (state === 'error') return <ErrorState onRetry={() => loadLeaderboard(assessmentId || undefined)} />;
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader
-        title="Student Leaderboard"
-        subtitle="Recognizing top academic performers. Standardized percentile rankings computed per test."
-        actions={
-          assessments.length > 0 && (
-            <CustomAssessmentDropdown
-              assessments={assessments}
-              value={assessmentId}
-              onChange={handleAssessmentChange}
-            />
-          )
-        }
-      />
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Student Leaderboard</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Recognizing top academic performers. Percentile rankings computed per assessment.
+          </p>
+        </div>
 
-      {/* 1. STATS BANNER - LIGHT MODE COMPATIBLE */}
+        {assessments.length > 0 && (
+          <CustomAssessmentDropdown
+            assessments={assessments}
+            value={assessmentId}
+            onChange={handleAssessmentChange}
+          />
+        )}
+      </div>
+
+      {/* 1. STATS BANNER */}
       {rows.length > 0 && (
-        <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-          <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Candidates</p>
-            <p className="text-xl font-black text-slate-900 dark:text-white">{totalTakers}</p>
+            <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalTakers}</p>
           </div>
-          <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+          <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Highest Score</p>
-            <p className="text-xl font-black text-amber-600 dark:text-amber-400">{highestMarks} pts</p>
+            <p className="text-2xl font-extrabold text-amber-600 dark:text-amber-400">{highestMarks} pts</p>
           </div>
-          <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Avg. Percentage</p>
-            <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">{averagePercentage}%</p>
+          <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
+            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Avg Percentage</p>
+            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">{averagePercentage}%</p>
           </div>
-          <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+          <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Your Rank</p>
-            <p className="text-xl font-black text-blue-600 dark:text-blue-400">
+            <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
               {data?.your_rank != null ? `#${data.your_rank}` : 'Unranked'}
             </p>
           </div>

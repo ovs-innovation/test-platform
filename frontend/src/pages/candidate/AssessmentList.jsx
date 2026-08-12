@@ -108,8 +108,16 @@ export default function AssessmentList() {
   if (state === 'error') return <ErrorState onRetry={load} />;
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Invited Assessments" subtitle="Proctored test invitations assigned to your student profile." />
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Invited & Assigned Assessments</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Proctored test invitations and custom CBT mock exams assigned to your student profile.
+          </p>
+        </div>
+      </div>
+
       {assessments.length === 0 ? (
         <div className="space-y-4">
           <EmptyState

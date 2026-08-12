@@ -109,11 +109,16 @@ export default function Notifications() {
   const unreadCount = notifications.filter((n) => !n.read_at).length;
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader
-        title="Notifications & Alerts"
-        subtitle={unreadCount > 0 ? `${unreadCount} unread notifications` : 'All caught up! No unread notifications.'}
-        actions={notifications.length > 0 && (
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Notifications & Alerts</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            {unreadCount > 0 ? `${unreadCount} unread notifications` : 'All caught up! No unread notifications.'}
+          </p>
+        </div>
+
+        {notifications.length > 0 && (
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -134,7 +139,7 @@ export default function Notifications() {
             )}
           </div>
         )}
-      />
+      </div>
 
       {notifications.length === 0 ? (
         <div className="space-y-4">

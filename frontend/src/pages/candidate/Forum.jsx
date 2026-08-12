@@ -50,22 +50,29 @@ export default function Forum() {
   if (loading) return <LoadingScreen label="Loading forum..." />;
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Discussion Forum & Peer Q&A" subtitle="Ask doubts, share problem-solving strategies, and discuss mock test questions with aspirants." />
-      
-      <div className="grid gap-4 lg:grid-cols-12">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Discussion Hub & Peer Q&A</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Ask doubts, discuss mock test questions, and share problem-solving techniques with fellow aspirants.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-12">
         {/* Left Column: Post Topic Form & Thread List (6 Cols) */}
-        <div className="lg:col-span-6 space-y-3">
-          <form onSubmit={create} className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
-            <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+        <div className="lg:col-span-6 space-y-4">
+          <form onSubmit={create} className="p-5 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-3 shadow-xs">
+            <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-              <span>Post a New Question Topic</span>
+              <span>Ask a Question</span>
             </h2>
             
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Topic Title</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Question Title</label>
               <input
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                 placeholder="e.g. How to solve Integration by parts in JEE Math?"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
@@ -74,9 +81,9 @@ export default function Forum() {
             </div>
 
             <div>
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Question Description</label>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Question Description</label>
               <textarea
-                className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
+                className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                 rows={3}
                 placeholder="Describe your question or difficulty in detail..."
                 value={body}
@@ -87,16 +94,16 @@ export default function Forum() {
 
             <button
               type="submit"
-              className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-black text-white shadow-2xs hover:bg-blue-500 transition disabled:opacity-50"
+              className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition cursor-pointer disabled:opacity-50"
               disabled={posting}
             >
-              {posting ? <Spinner className="h-4 w-4" /> : 'Post Question Topic'}
+              {posting ? <Spinner className="h-4 w-4" /> : 'Post Question'}
             </button>
           </form>
 
           {/* Topics List Cards */}
-          <div className="space-y-2">
-            <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Active Discussions</h3>
+          <div className="space-y-2.5">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">Active Discussions</h3>
             {topics.length === 0 ? (
               <div className="saas-card p-6 text-center text-xs text-slate-500 dark:text-slate-400 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl">
                 No discussion topics created yet. Be the first to ask a question above!

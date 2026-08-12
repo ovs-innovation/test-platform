@@ -80,112 +80,138 @@ export default function Profile() {
   if (state === 'error') return <ErrorState onRetry={() => window.location.reload()} />;
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Student Profile" subtitle="Name, phone number, class, and target exam details for your account and certificates." />
-
-      {/* Avatar Showcase & Upload Box */}
-      <div className="saas-card p-4 sm:p-5 flex items-center gap-4 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl max-w-2xl">
-        <div className="relative group shrink-0">
-          <div
-            onClick={() => fileInputRef.current?.click()}
-            className="flex h-16 w-16 cursor-pointer items-center justify-center overflow-hidden rounded-full border-2 border-blue-500/40 bg-gradient-to-r from-blue-600 to-indigo-600 text-xl font-black text-white shadow-2xs transition hover:scale-105"
-            title="Click to change photo"
-          >
-            {avatarPreview ? (
-              <img src={avatarPreview} alt="Avatar preview" className="h-full w-full object-cover" />
-            ) : (
-              <span>{initials(form.name)}</span>
-            )}
-          </div>
-
-          <button
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-            className="absolute -bottom-1 -right-1 flex h-6 w-6 items-center justify-center rounded-full bg-blue-600 text-xs text-white border-2 border-white dark:border-[#111827] shadow-xs"
-            title="Change photo"
-          >
-            <Camera className="h-3 w-3" />
-          </button>
-
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleAvatarChange}
-          />
-        </div>
-
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
         <div>
-          <div className="flex items-center gap-2">
-            <h2 className="text-base font-extrabold text-slate-900 dark:text-white">{form.name || 'Student'}</h2>
-            <button
-              type="button"
-              onClick={() => fileInputRef.current?.click()}
-              className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline"
-            >
-              Change photo
-            </button>
-          </div>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">{email}</p>
-          {(form.class || form.target_exam) && (
-            <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-md bg-blue-500/10 px-2.5 py-0.5 text-xs font-bold text-blue-600 dark:text-cyan-300 border border-blue-500/20">
-              {form.class && <span>{form.class}</span>}
-              {form.class && form.target_exam && <span>·</span>}
-              {form.target_exam && <span>Preparing for {form.target_exam}</span>}
-            </p>
-          )}
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Student Profile & Account Settings</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Personal details, academic enrollment info, and target examination settings.
+          </p>
         </div>
       </div>
 
-      <form onSubmit={save} className="saas-card p-5 sm:p-6 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl max-w-2xl space-y-3.5">
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Email Address</label>
-          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 cursor-not-allowed" value={email} disabled />
-        </div>
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Full Name</label>
-          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Phone Number</label>
-          <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">City</label>
-            <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
+      <div className="grid gap-6 lg:grid-cols-12 items-start">
+        {/* Left Column: Avatar & Identity Showcase (4 Cols) */}
+        <div className="lg:col-span-4 p-5 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl shadow-xs space-y-4 text-center">
+          <div className="relative group inline-block mx-auto">
+            <div
+              onClick={() => fileInputRef.current?.click()}
+              className="flex h-24 w-24 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-blue-500/40 bg-blue-600 text-2xl font-extrabold text-white shadow-xs transition hover:scale-105 mx-auto"
+              title="Click to change photo"
+            >
+              {avatarPreview ? (
+                <img src={avatarPreview} alt="Avatar preview" className="h-full w-full object-cover" />
+              ) : (
+                <span>{initials(form.name)}</span>
+              )}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="absolute -bottom-1 -right-1 flex h-7 w-7 items-center justify-center rounded-lg bg-blue-600 text-xs text-white border-2 border-white dark:border-[#0F172A] shadow-xs cursor-pointer"
+              title="Change photo"
+            >
+              <Camera className="h-3.5 w-3.5" />
+            </button>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleAvatarChange}
+            />
           </div>
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">State</label>
-            <input className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} />
+
+          <div className="space-y-1">
+            <h2 className="text-lg font-extrabold text-slate-900 dark:text-white">{form.name || 'Student'}</h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{email}</p>
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline pt-1 cursor-pointer block mx-auto"
+            >
+              Upload Profile Photo
+            </button>
           </div>
+
+          {(form.class || form.target_exam) && (
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+              <span className="inline-flex items-center gap-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 px-3 py-1 text-xs font-bold text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
+                {form.class && <span>{form.class}</span>}
+                {form.class && form.target_exam && <span>·</span>}
+                {form.target_exam && <span>Target: {form.target_exam}</span>}
+              </span>
+            </div>
+          )}
         </div>
-        <div className="grid grid-cols-2 gap-3">
+
+        {/* Right Column: Form Editor (8 Cols) */}
+        <form onSubmit={save} className="lg:col-span-8 p-5 sm:p-6 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl shadow-xs space-y-4">
+          <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-400 border-b border-slate-100 dark:border-slate-800 pb-2">
+            Personal & Academic Information
+          </h2>
+
           <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Class</label>
-            <select className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
-              <option value="">Select class</option>
-              <option value="Class 11">Class 11</option>
-              <option value="Class 12">Class 12</option>
-              <option value="Dropper (12th Pass)">Dropper (12th Pass)</option>
-              <option value="Class 10">Class 10</option>
-              <option value="Class 9">Class 9</option>
-            </select>
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Email Address</label>
+            <input className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 px-3.5 py-2 text-xs font-medium text-slate-500 cursor-not-allowed" value={email} disabled />
           </div>
-          <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1">Target Exam</label>
-            <select className="w-full rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
-              <option value="">Select exam</option>
-              <option value="JEE">JEE</option>
-              <option value="NEET">NEET</option>
-            </select>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Full Name</label>
+              <input className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.name} onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} required />
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Phone Number</label>
+              <input className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" placeholder="e.g. 9876543210" value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))} />
+            </div>
           </div>
-        </div>
-        <button type="submit" className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-black text-white shadow-2xs hover:bg-blue-500 transition disabled:opacity-50" disabled={saving}>
-          {saving ? <Spinner className="h-4 w-4" /> : 'Save Profile Changes'}
-        </button>
-      </form>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">City</label>
+              <input className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.city} onChange={(e) => setForm((f) => ({ ...f, city: e.target.value }))} />
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">State</label>
+              <input className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.state} onChange={(e) => setForm((f) => ({ ...f, state: e.target.value }))} />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Class / Standard</label>
+              <select className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.class} onChange={(e) => setForm((f) => ({ ...f, class: e.target.value }))}>
+                <option value="">Select class</option>
+                <option value="Class 11">Class 11</option>
+                <option value="Class 12">Class 12</option>
+                <option value="Dropper (12th Pass)">Dropper (12th Pass)</option>
+                <option value="Class 10">Class 10</option>
+                <option value="Class 9">Class 9</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Target Exam Goal</label>
+              <select className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white focus:border-blue-500 focus:outline-none" value={form.target_exam} onChange={(e) => setForm((f) => ({ ...f, target_exam: e.target.value }))}>
+                <option value="">Select exam</option>
+                <option value="JEE">JEE Main & Advanced</option>
+                <option value="NEET">NEET UG Medical</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="pt-2">
+            <button type="submit" className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition cursor-pointer disabled:opacity-50" disabled={saving}>
+              {saving ? <Spinner className="h-4 w-4" /> : 'Save Profile Changes'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

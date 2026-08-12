@@ -9,6 +9,7 @@ import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
 import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2 } from 'lucide-react';
+import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 
 
 
@@ -101,12 +102,14 @@ export default function Layout({ children }) {
   const [notifPanelOpen, setNotifPanelOpen] = useState(false);
   const [quickCreateOpen, setQuickCreateOpen] = useState(false);
   const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
+  const [sidebarProfileOpen, setSidebarProfileOpen] = useState(false);
 
   const [unread, setUnread] = useState(0);
   const [currentTime, setCurrentTime] = useState('');
 
   const quickCreateRef = useRef(null);
   const profileRef = useRef(null);
+  const sidebarProfileRef = useRef(null);
 
   const isAdmin = user?.role === 'admin' || user?.role === 'superadmin';
   const nav = isAdmin ? adminNav : candidateNav;
@@ -143,6 +146,8 @@ export default function Layout({ children }) {
       if (e.key === 'Escape') {
         setCommandPaletteOpen(false);
         setNotifPanelOpen(false);
+        setProfileDropdownOpen(false);
+        setSidebarProfileOpen(false);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
@@ -154,6 +159,7 @@ export default function Layout({ children }) {
     const handleClickOutside = (e) => {
       if (quickCreateRef.current && !quickCreateRef.current.contains(e.target)) setQuickCreateOpen(false);
       if (profileRef.current && !profileRef.current.contains(e.target)) setProfileDropdownOpen(false);
+      if (sidebarProfileRef.current && !sidebarProfileRef.current.contains(e.target)) setSidebarProfileOpen(false);
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
@@ -198,64 +204,70 @@ export default function Layout({ children }) {
 
   const getBreadcrumbs = () => {
     const path = location.pathname;
-    if (path === '/admin') return 'Overview';
-    const match = adminNav.find((n) => n.to === path);
+    const currentNav = isAdmin ? adminNav : candidateNav;
+    const match = currentNav.find((n) => n.to === path);
     if (match) return match.label;
+    if (path.startsWith('/my-tests/')) return 'Test Details';
+    if (path.startsWith('/analytics/test/')) return 'Performance Report';
+    if (path.startsWith('/results/')) return 'Exam Results';
+    if (path.startsWith('/certificates/')) return 'Certificate';
+    if (path.startsWith('/assessments/')) return 'Assessment Details';
     if (path.includes('/admin/assessments')) return 'Assessments';
     if (path.includes('/admin/attempts')) return 'Attempt Details';
     return 'Dashboard';
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 dark:bg-[#0b1120] dark:text-slate-100 flex transition-colors duration-200 w-full max-w-full overflow-x-hidden">
-      {/* Sidebar Navigation */}
+    <div className="min-h-screen bg-[#F8FAFC] text-slate-900 dark:bg-[#080D1A] dark:text-slate-100 flex transition-colors duration-200 w-full max-w-full overflow-x-hidden">
+      {/* DESKTOP SIDEBAR NAVIGATION */}
       <aside
-        className={`hidden lg:flex flex-col shrink-0 p-4 transition-all duration-300 ease-in-out ${collapsed ? 'w-24' : 'w-[290px]'
-          }`}
+        className={`hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
+          collapsed ? 'w-20' : 'w-[260px]'
+        }`}
       >
-        <div className="sticky top-4 flex h-[calc(100vh-2rem)] flex-col rounded-[24px] border border-slate-200/80 bg-white/90 shadow-xl backdrop-blur-2xl dark:border-slate-800/80 dark:bg-[#111827]/95 transition-all duration-300 relative">
-          {/* Floating Toggle Button attached to STICKY container (Locked in place, never shifts on scroll!) */}
+        <div className="sticky top-3 flex h-[calc(100vh-1.5rem)] flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A] relative">
+          {/* Compact 24px Circular Collapse Toggle (Attached to right border) */}
           <button
             type="button"
             onClick={toggleCollapse}
             title={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
             aria-label={collapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            className="absolute -right-3.5 top-6 z-50 flex h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-500 shadow-md hover:border-blue-500/50 hover:bg-slate-50 hover:text-blue-600 dark:border-slate-700/80 dark:bg-[#0f172a] dark:text-slate-300 dark:shadow-slate-950/40 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 hover:scale-105 active:scale-95 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            className="absolute -right-3 top-3.5 z-50 flex h-6 w-6 items-center justify-center rounded-full border border-blue-500 bg-white text-blue-600 transition-all duration-200 hover:scale-110 hover:bg-blue-50 dark:bg-[#0F172A] dark:text-white dark:border-blue-500 dark:hover:bg-blue-950/60 cursor-pointer shadow-xs"
           >
             <svg
-              className={`h-4 w-4 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
+              className={`h-3 w-3 transition-transform duration-300 ${collapsed ? 'rotate-180' : ''}`}
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
-              strokeWidth="2.2"
+              strokeWidth="2.5"
             >
               <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
             </svg>
           </button>
 
           {/* Logo Header */}
-          <div className={`flex h-20 shrink-0 items-center border-b border-slate-200/60 dark:border-slate-800/60 rounded-t-[24px] transition-all duration-300 ${collapsed ? 'justify-center px-2' : 'justify-between px-5'
-            }`}>
-            <Link to="/" className="flex items-center gap-3 overflow-hidden transition-all duration-300 mx-auto" title="EDVEDUM Academy">
-              <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-9 w-auto shrink-0 object-contain drop-shadow-sm" />
+          <div className={`flex h-14 shrink-0 items-center border-b border-slate-200/70 dark:border-slate-800/70 px-4 transition-all duration-300 ${
+            collapsed ? 'justify-center' : 'justify-between'
+          }`}>
+            <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 overflow-hidden mx-auto" title="EDVEDUM Academy">
+              <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-8 w-auto shrink-0 object-contain" />
               {!collapsed && (
-                <div className="leading-none space-y-1">
-                  <span className="block font-serif font-black tracking-wider text-slate-900 dark:text-white text-base uppercase">
+                <div className="space-y-0.5 leading-none">
+                  <span className="block font-serif text-sm font-black tracking-wider text-slate-900 uppercase dark:text-white">
                     EDVEDUM
                   </span>
-                  <div className="flex items-center gap-0.5 text-[9px] font-bold tracking-[0.24em] text-[#C5A059] uppercase">
-                    <span>—</span>
-                    <span>ACADEMY</span>
-                    <span>—</span>
-                  </div>
+                  <span className="block text-[8.5px] font-extrabold tracking-[0.2em] text-[#D97706] uppercase dark:text-[#F59E0B]">
+                    ACADEMY
+                  </span>
                 </div>
               )}
             </Link>
           </div>
 
-          {/* Navigation Items (The ONLY scrollable section, centered 44px icons in collapsed mode) */}
-          <nav className={`flex-1 overflow-y-auto pt-5 pb-4 scrollbar-thin transition-all duration-300 ${collapsed ? 'px-2 space-y-3 flex flex-col items-center' : 'px-3 space-y-2'
-            }`}>
+          {/* Navigation Rail */}
+          <nav className={`flex-1 overflow-y-auto px-3 py-2.5 space-y-1 scrollbar-thin [::-webkit-scrollbar]:w-1 [::-webkit-scrollbar-thumb]:bg-slate-300/60 dark:[::-webkit-scrollbar-thumb]:bg-slate-700/50 [::-webkit-scrollbar-thumb]:rounded-full transition-all duration-300 ${
+            collapsed ? 'flex flex-col items-center' : ''
+          }`}>
             {nav.map((item) => {
               const isActive = checkIsActive(item.to, location.pathname);
               return (
@@ -263,26 +275,25 @@ export default function Layout({ children }) {
                   key={item.to}
                   to={item.to}
                   end={item.to === '/admin' || item.to === '/dashboard'}
-                  className={`relative group flex items-center transition-all duration-200 ${collapsed ? 'justify-center w-full py-1' : 'gap-3.5 px-3.5 py-2.5 h-[48px] rounded-[14px]'
-                    } ${isActive
-                      ? collapsed
-                        ? 'text-white'
-                        : 'saas-active-pill shadow-md shadow-blue-500/20'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-white hover:-translate-y-0.5'
-                    }`}
+                  className={`group relative flex items-center h-10 transition-all duration-150 rounded-lg ${
+                    collapsed ? 'justify-center w-full px-0' : 'gap-3 px-3 text-[13px] font-medium'
+                  } ${
+                    isActive
+                      ? 'bg-blue-50/90 text-blue-600 font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:rounded-r-full before:bg-blue-600 dark:bg-blue-950/30 dark:text-blue-400 dark:before:bg-blue-400'
+                      : 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300/80 dark:hover:bg-slate-800/50 dark:hover:text-white'
+                  }`}
                 >
-                  <div className={`flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-2xl transition-all duration-200 ${collapsed && isActive
-                    ? 'saas-active-pill shadow-lg shadow-blue-500/25 scale-105'
-                    : 'group-hover:scale-105'
-                    }`}>
-                    <Icon name={item.icon} className="h-5 w-5 shrink-0" />
+                  <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${
+                    isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 group-hover:text-slate-600 dark:text-slate-400 dark:group-hover:text-slate-200'
+                  }`}>
+                    <Icon name={item.icon} className="h-4 w-4" />
                   </div>
 
-                  {!collapsed && <span className="truncate text-[14.5px] font-semibold">{item.label}</span>}
+                  {!collapsed && <span className="truncate">{item.label}</span>}
 
                   {/* Collapsed Hover Tooltip */}
                   {collapsed && (
-                    <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-1.5 text-xs font-extrabold shadow-2xl group-hover:flex items-center z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
+                    <div className="absolute left-full ml-3 hidden rounded-lg border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3 py-1.5 text-xs font-bold shadow-xl group-hover:flex items-center z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
                       {item.label}
                     </div>
                   )}
@@ -291,246 +302,255 @@ export default function Layout({ children }) {
             })}
           </nav>
 
-          {/* Sticky User Profile Card (Centered Avatar, Fixed Bottom Padding) */}
-          <div className="shrink-0 border-t border-slate-200/80 dark:border-slate-800/80 p-3 pb-5 bg-slate-50/80 dark:bg-slate-900/60 transition-all duration-300">
+          {/* Sticky Student Profile & Sign Out Footer */}
+          <div className="shrink-0 border-t border-slate-200/70 p-3 dark:border-slate-800/80 bg-slate-50/40 dark:bg-slate-900/30 transition-all duration-300">
             {collapsed ? (
-              <div className="relative group flex justify-center py-1">
-                <span
-                  title={user?.name}
-                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/30 border-2 border-blue-400/40 cursor-pointer hover:scale-105 transition overflow-hidden"
+              <div className="flex flex-col items-center gap-2 justify-center py-0.5">
+                <div
+                  title={user?.name || 'Demo Candidate'}
+                  className="flex h-9 w-9 shrink-0 aspect-square items-center justify-center rounded-xl bg-blue-600 text-xs font-black text-white shadow-md shadow-blue-600/30 overflow-hidden"
                 >
                   {(user?.avatar_url || user?.avatar) ? (
                     <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
                   ) : (
-                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
+                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'S'}</span>
                   )}
-                </span>
-                <div className="absolute left-full ml-3.5 hidden rounded-xl border border-slate-200 bg-slate-900 text-white dark:border-slate-700 dark:bg-slate-950 px-3.5 py-2 text-xs font-extrabold shadow-2xl group-hover:flex flex-col z-50 whitespace-nowrap animate-in fade-in zoom-in-95 duration-150">
-                  <span>{user?.name}</span>
-                  <span className="text-[10px] font-semibold text-slate-400 capitalize">{user?.role || 'Candidate'}</span>
                 </div>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  title="Sign Out"
+                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-rose-500/10 text-rose-500 hover:bg-rose-500/20 active:scale-95 transition-all duration-200 cursor-pointer"
+                >
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                </button>
               </div>
             ) : (
-              <div className="flex items-center gap-3.5 p-3 rounded-[16px] bg-white border border-slate-200 dark:bg-slate-800/40 dark:border-slate-800">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-blue-600 font-black text-white text-xs shadow-md shadow-blue-500/20 overflow-hidden">
-                  {(user?.avatar_url || user?.avatar) ? (
-                    <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
-                  ) : (
-                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
-                  )}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate text-xs font-extrabold text-slate-900 dark:text-white">{user?.name}</p>
-                  <p className="truncate text-[10px] font-semibold text-slate-500 dark:text-slate-400 capitalize">{user?.role || 'Candidate'}</p>
+              <div className="rounded-2xl border border-slate-200/90 bg-white p-3 dark:border-slate-800 dark:bg-[#0E1726] shadow-2xs space-y-2.5">
+                {/* Candidate Info Header */}
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="flex h-9 w-9 shrink-0 aspect-square items-center justify-center rounded-xl bg-blue-600 font-extrabold text-xs text-white shadow-md shadow-blue-600/30 overflow-hidden">
+                    {(user?.avatar_url || user?.avatar) ? (
+                      <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
+                    ) : (
+                      <span>{user?.name?.charAt(0)?.toUpperCase() || 'S'}</span>
+                    )}
+                  </span>
+                  <div className="min-w-0 text-left flex-1">
+                    <p className="truncate text-xs font-extrabold text-slate-900 dark:text-white leading-snug">{user?.name || 'Demo Candidate'}</p>
+                    <p className="truncate text-[10px] font-semibold text-slate-500 dark:text-slate-400 leading-none capitalize">{user?.role || 'Candidate'}</p>
+                  </div>
                 </div>
+
+                {/* Direct Sign Out Button */}
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 px-3 py-2 text-xs font-extrabold text-rose-600 dark:text-rose-400 border border-rose-500/20 dark:border-rose-500/20 transition-all duration-200 cursor-pointer shadow-xs active:scale-[0.98]"
+                >
+                  <svg className="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  <span className="truncate">Sign Out</span>
+                </button>
               </div>
             )}
           </div>
         </div>
       </aside>
 
-      {/* Mobile Drawer */}
+      {/* MOBILE NAVIGATION DRAWER */}
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
           <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onClick={() => setMobileOpen(false)} />
-          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-[24px] border border-slate-200 bg-white p-4 shadow-2xl overflow-y-auto dark:border-slate-800 dark:bg-[#111827]">
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-4 mb-4">
-              <span className="font-extrabold text-slate-900 dark:text-white text-base">Navigation</span>
-              <button type="button" onClick={() => setMobileOpen(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">
-                ✕
-              </button>
-            </div>
-            <nav className="space-y-2">
-              {nav.map((item) => {
-                const isActive = checkIsActive(item.to, location.pathname);
-                return (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    end={item.to === '/admin' || item.to === '/dashboard'}
-                    onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3.5 rounded-xl px-3 py-2.5 text-sm font-bold transition-all duration-150 ${isActive ? 'saas-active-pill shadow-md shadow-blue-500/20' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+          <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl overflow-y-auto flex flex-col justify-between dark:border-slate-800 dark:bg-[#0F172A]">
+            <div>
+              <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800 mb-3">
+                <div className="flex items-center gap-2">
+                  <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto" />
+                  <span className="font-bold text-xs text-slate-900 dark:text-white">EDVEDUM Academy</span>
+                </div>
+                <button type="button" onClick={() => setMobileOpen(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer p-1">
+                  ✕
+                </button>
+              </div>
+              <nav className="space-y-1">
+                {nav.map((item) => {
+                  const isActive = checkIsActive(item.to, location.pathname);
+                  return (
+                    <NavLink
+                      key={item.to}
+                      to={item.to}
+                      end={item.to === '/admin' || item.to === '/dashboard'}
+                      onClick={() => setMobileOpen(false)}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2 text-xs font-semibold ${
+                        isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
                       }`}
-                  >
-                    <Icon name={item.icon} />
-                    <span>{item.label}</span>
-                  </NavLink>
-                );
-              })}
-            </nav>
+                    >
+                      <Icon name={item.icon} className="h-4 w-4" />
+                      <span>{item.label}</span>
+                    </NavLink>
+                  );
+                })}
+              </nav>
+            </div>
+
+            {/* Mobile Footer */}
+            <div className="shrink-0 border-t border-slate-200/80 pt-3 mt-4 dark:border-slate-800">
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-blue-600 text-xs font-black text-white shadow-xs overflow-hidden">
+                    {(user?.avatar_url || user?.avatar) ? (
+                      <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
+                    ) : (
+                      <span>{user?.name?.charAt(0)?.toUpperCase() || 'S'}</span>
+                    )}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-bold text-slate-900 dark:text-white">{user?.name || 'Student'}</p>
+                    <p className="truncate text-[10px] font-medium text-slate-400 capitalize">{user?.role || 'Candidate'}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    setMobileOpen(false);
+                    handleLogout();
+                  }}
+                  title="Logout Session"
+                  className="flex items-center gap-1.5 rounded-lg bg-rose-500/10 px-2.5 py-1.5 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 transition cursor-pointer"
+                >
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  <span>Logout</span>
+                </button>
+              </div>
+            </div>
           </aside>
         </div>
       )}
 
-      {/* Main Layout Area */}
-      <div className="flex min-w-0 flex-1 flex-col w-full max-w-full overflow-x-hidden">
-        {/* Top Navbar */}
-        <header className="sticky top-0 z-30 flex h-20 items-center justify-between border-b border-slate-200/80 bg-white/80 px-4 sm:px-6 lg:px-8 backdrop-blur-xl dark:border-slate-800/80 dark:bg-[#111827]/80 transition-colors duration-200">
-          {/* Left: Mobile Toggle & Breadcrumb */}
-          <div className="flex items-center gap-4">
-            <button
-              className="rounded-2xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 lg:hidden"
-              onClick={() => setMobileOpen(true)}
-              aria-label="Open navigation menu"
-            >
-              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+      {/* MAIN WORKSPACE AREA */}
+      <div className="flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden">
+        {/* FLOATING TOPBAR CARD */}
+        <div className="pt-3 px-3 sm:px-4 lg:px-6 lg:pl-3">
+          <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
+            {/* Left: Mobile Trigger & Dynamic Breadcrumbs */}
+            <div className="flex items-center gap-2.5">
+              <button
+                className="shrink-0 rounded-xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 lg:hidden cursor-pointer"
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open navigation menu"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
 
-            <div className="hidden sm:flex flex-col">
-              <div className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
-                <span>{user?.role === 'admin' ? 'Admin Portal' : 'Student Portal'}</span>
+              {/* Mobile Brand Logo */}
+              <Link to="/dashboard" className="flex items-center gap-2 shrink-0 min-w-0 lg:hidden">
+                <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto max-h-7 shrink-0 object-contain" />
+                <span className="font-serif text-xs font-black tracking-wider text-slate-900 uppercase dark:text-white sm:hidden truncate">
+                  EDVEDUM
+                </span>
+              </Link>
+
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+                <span className="uppercase text-[10px] tracking-wider text-slate-400">
+                  {isAdmin ? 'Admin Portal' : 'Student Portal'}
+                </span>
                 <span>/</span>
                 <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbs()}</span>
               </div>
-              <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">{currentTime}</p>
             </div>
-          </div>
 
-          {/* Center: Global Search Bar */}
-          <div className="flex-1 max-w-md mx-4 hidden md:block">
-            <button
-              type="button"
-              onClick={() => setCommandPaletteOpen(true)}
-              className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-slate-100/80 px-4 py-2 text-xs font-semibold text-slate-500 hover:border-blue-500/50 hover:bg-slate-200 dark:border-slate-800/80 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 transition cursor-pointer"
-            >
-              <div className="flex items-center gap-2.5">
-                <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-                <span>{isAdmin ? 'Search students, assessments, questions...' : 'Search tests, results and eBooks…'}</span>
-              </div>
-              <kbd className="rounded-lg border border-slate-300 bg-slate-200 px-2 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-400">
-                Ctrl K
-              </kbd>
-            </button>
-          </div>
+            {/* Center: Search Trigger */}
+            <div className="hidden md:block flex-1 max-w-md mx-6">
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="w-full flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3.5 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 cursor-pointer"
+              >
+                <div className="flex items-center gap-2">
+                  <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                  <span>{isAdmin ? 'Search students, tests, questions, schools...' : 'Search tests, series, eBooks, results...'}</span>
+                </div>
+                <kbd className="rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                  Ctrl K
+                </kbd>
+              </button>
+            </div>
 
-          {/* Right Controls */}
-          <div className="flex items-center gap-3">
-            {/* Quick Create Dropdown (Admin Only) */}
-            {isAdmin && (
-              <div className="relative" ref={quickCreateRef}>
+            {/* Right Controls */}
+            <div className="flex items-center gap-2.5">
+              {/* Notification Bell */}
+              <button
+                type="button"
+                onClick={() => setNotifPanelOpen(true)}
+                className="group relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-xs transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 hover:shadow-md hover:shadow-blue-500/10 active:scale-95 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 cursor-pointer"
+                title="Notifications"
+              >
+                <Bell className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
+                {unread > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-pulse font-mono">
+                    {unread > 99 ? '99+' : unread}
+                  </span>
+                )}
+              </button>
+
+              {/* Theme Toggle */}
+              <ThemeToggle />
+
+              {/* User Profile Dropdown */}
+              <div className="relative" ref={profileRef}>
                 <button
                   type="button"
-                  onClick={() => setQuickCreateOpen((prev) => !prev)}
-                  className="hidden sm:flex items-center gap-1.5 rounded-xl bg-blue-600 px-3.5 py-2 text-xs font-black text-white shadow-lg shadow-blue-500/25 hover:bg-blue-500 transition"
+                  onClick={() => setProfileDropdownOpen((prev) => !prev)}
+                  className="group flex items-center gap-2.5 rounded-2xl border border-slate-200/90 bg-white p-1.5 pr-3 dark:border-slate-800 dark:bg-[#0E1726] hover:border-blue-500/60 hover:bg-slate-50 dark:hover:border-blue-500/50 dark:hover:bg-[#131F37] hover:shadow-md hover:shadow-blue-500/10 active:scale-[0.98] transition-all duration-200 cursor-pointer shadow-2xs"
                 >
-                  <span>+ Quick Create</span>
+                  <span className="flex h-8 w-8 shrink-0 aspect-square items-center justify-center rounded-xl bg-gradient-to-tr from-blue-600 to-blue-500 text-xs font-black text-white shadow-xs overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-blue-500/40">
+                    {(user?.avatar_url || user?.avatar) ? (
+                      <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110" />
+                    ) : (
+                      <span>{user?.name?.charAt(0)?.toUpperCase() || 'S'}</span>
+                    )}
+                  </span>
+                  <span className="hidden md:block text-xs font-extrabold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors max-w-[120px] truncate">{user?.name || 'Demo Candidate'}</span>
                 </button>
-                {quickCreateOpen && (
-                  <div className="absolute right-0 z-50 mt-2 w-52 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl backdrop-blur-xl dark:border-slate-800 dark:bg-[#0f172a]">
-                    <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">Quick Actions</div>
-                    <button
-                      onClick={() => { navigate('/admin/assessments'); setQuickCreateOpen(false); }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                    >
-                      📝 Create Assessment
-                    </button>
-                    <button
-                      onClick={() => { navigate('/admin/candidates'); setQuickCreateOpen(false); }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                    >
-                      👤 Register Student
-                    </button>
-                    <button
-                      onClick={() => { navigate('/admin/coupons'); setQuickCreateOpen(false); }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                    >
-                      🏷️ Create Coupon
-                    </button>
-                    <button
-                      onClick={() => { navigate('/admin/question-bank'); setQuickCreateOpen(false); }}
-                      className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
-                    >
-                      📚 Upload Questions
-                    </button>
+
+                {profileDropdownOpen && (
+                  <div className="absolute right-0 z-50 mt-2 w-60 overflow-hidden rounded-2xl border border-slate-200 bg-white p-3.5 shadow-2xl dark:border-slate-800 dark:bg-[#0E1726] space-y-2.5 animate-in fade-in zoom-in-95 duration-150">
+                    <div>
+                      <p className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{user?.name || 'Demo Candidate'}</p>
+                      <p className="text-[10.5px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email || 'candidate@edvedum.com'}</p>
+                    </div>
+                    <div className="border-t border-slate-100 dark:border-slate-800/80 pt-2">
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2.5 rounded-xl px-2.5 py-1.5 text-xs font-extrabold text-rose-500 hover:bg-rose-500/10 transition cursor-pointer"
+                      >
+                        <span>🚪 Sign Out</span>
+                      </button>
+                    </div>
                   </div>
                 )}
               </div>
-            )}
-
-            {/* Notification Bell */}
-            <button
-              type="button"
-              onClick={() => setNotifPanelOpen(true)}
-              className="relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:text-slate-300 dark:hover:border-slate-700 dark:hover:bg-slate-800 transition cursor-pointer"
-              aria-label="Open notifications"
-            >
-              <Icon name="bell" className="h-4 w-4" />
-              {unread > 0 && (
-                <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-500 px-1 text-[9px] font-black text-white shadow-xs animate-pulse">
-                  {unread > 9 ? '9+' : unread}
-                </span>
-              )}
-            </button>
-
-            {/* Theme Toggle Component */}
-            <ThemeToggle />
-
-            {/* User Profile Dropdown */}
-            <div className="relative" ref={profileRef}>
-              <button
-                type="button"
-                onClick={() => setProfileDropdownOpen((prev) => !prev)}
-                className="flex items-center gap-2 rounded-2xl border border-slate-200 bg-slate-100 p-1.5 pr-3 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900/80 dark:hover:bg-slate-800 transition cursor-pointer"
-              >
-                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-xs font-black text-white shadow-md overflow-hidden shrink-0">
-                  {(user?.avatar_url || user?.avatar) ? (
-                    <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-full w-full object-cover" />
-                  ) : (
-                    <span>{user?.name?.charAt(0)?.toUpperCase() || 'A'}</span>
-                  )}
-                </span>
-                <span className="hidden md:block text-xs font-bold text-slate-900 dark:text-white max-w-[100px] truncate">{user?.name}</span>
-              </button>
-
-              {profileDropdownOpen && (
-                <div className="absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl dark:border-slate-800 dark:bg-[#0f172a]">
-                  <div className="px-3 py-2 border-b border-slate-200 dark:border-slate-800/60 mb-1 flex items-center gap-2.5">
-                    {(user?.avatar_url || user?.avatar) ? (
-                      <img src={user.avatar_url || user.avatar} alt="Avatar" className="h-8 w-8 rounded-xl object-cover border border-slate-200 dark:border-slate-700 shrink-0" />
-                    ) : (
-                      <div className="h-8 w-8 rounded-xl bg-blue-600 font-black text-white text-xs flex items-center justify-center shrink-0">
-                        {user?.name?.charAt(0)?.toUpperCase() || 'A'}
-                      </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <p className="text-xs font-extrabold text-slate-900 dark:text-white truncate">{user?.name}</p>
-                      <p className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 truncate">{user?.email}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={handleLogout}
-                    className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-xs font-semibold text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition"
-                  >
-                    🚪 Sign Out
-                  </button>
-                </div>
-              )}
             </div>
-          </div>
-        </header>
+          </header>
+        </div>
 
-
-        {/* Main Content Viewport */}
-        <main className="w-full max-w-7xl mx-auto flex-1 px-3 py-4 sm:px-6 lg:px-8 sm:py-6 lg:py-8 pb-20 min-w-0 overflow-x-hidden">{children}</main>
+        {/* Main Content Workspace Container */}
+        <main className="w-full max-w-7xl mx-auto flex-1 px-3 py-4 sm:px-6 lg:px-8 sm:py-6 lg:py-8 pb-20 min-w-0 overflow-x-hidden">
+          {children}
+        </main>
       </div>
 
-      {/* Floating Quick Action Button (Admin Only) */}
-      {isAdmin && (
-        <button
-          type="button"
-          onClick={() => setCommandPaletteOpen(true)}
-          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-20 flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-blue-600 text-white shadow-xl shadow-blue-500/40 hover:scale-105 active:scale-95 transition"
-          title="Open Command Palette (Ctrl + K)"
-        >
-          <svg className="h-5 w-5 sm:h-6 sm:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-      )}
+      {/* Global AI Doubt Assistant Floating Solver (Candidate Only) */}
+      {!isAdmin && <AIDoubtSolverChatbox />}
 
       {/* Command Palette Modal (Ctrl + K) */}
       {commandPaletteOpen && (

@@ -124,76 +124,65 @@ export default function Analytics() {
       />
 
       {/* ------------------------------------------------------------- */}
-      {/* 1. OVERVIEW METRICS SCORECARDS GRID                           */}
-      {/* ------------------------------------------------------------- */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {/* Total Tests */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-xs flex flex-col justify-between hover:border-blue-500/40 transition-colors">
+      {/* 1. TOP STATS OVERVIEW */}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Total Assessments */}
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Total Tests Taken</p>
-            <span className="p-2 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20">
-              <BarChart2 className="w-4 h-4" />
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Total Assessments</p>
+            <span className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
+              <BookOpen className="w-4 h-4" />
             </span>
           </div>
           <div className="mt-3">
-            <p className="text-3xl font-black text-blue-600 dark:text-blue-400 tabular-nums">{summary.tests_taken || 0}</p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">submitted mock attempts</p>
+            <p className="text-2xl font-extrabold text-slate-900 dark:text-white tabular-nums">{summary.total_tests_taken || 0}</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Completed CBT tests</p>
           </div>
         </div>
 
         {/* Average Score */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-xs flex flex-col justify-between hover:border-cyan-500/40 transition-colors">
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Average Score</p>
-            <span className="p-2 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-300 border border-cyan-500/20">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Average Score</p>
+            <span className="p-2 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60">
               <TrendingUp className="w-4 h-4" />
             </span>
           </div>
           <div className="mt-3">
-            <p className="text-3xl font-black text-cyan-600 dark:text-cyan-300 tabular-nums">{summary.avg_score || 0}%</p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">best score: {summary.best_score || 0}%</p>
+            <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 tabular-nums">
+              {summary.avg_score != null ? `${summary.avg_score}%` : '0%'}
+            </p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Evaluation mean score</p>
           </div>
         </div>
 
-        {/* Overall Accuracy Ring */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-xs flex items-center justify-between gap-3 hover:border-emerald-500/40 transition-colors">
-          <div>
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Overall Accuracy</p>
-            <p className="mt-2 text-3xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums">{avgAccuracy}%</p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">correct / attempted</p>
+        {/* Overall Accuracy */}
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Overall Accuracy</p>
+            <span className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/60">
+              <Target className="w-4 h-4" />
+            </span>
           </div>
-          <div className="relative flex h-14 w-14 shrink-0 items-center justify-center">
-            <svg className="h-full w-full -rotate-90" viewBox="0 0 48 48">
-              <circle cx="24" cy="24" r="20" className="stroke-slate-200 dark:stroke-slate-800" strokeWidth="4" fill="none" />
-              <circle
-                cx="24"
-                cy="24"
-                r="20"
-                className="stroke-emerald-500 dark:stroke-emerald-400 transition-all duration-700 ease-out"
-                strokeWidth="4"
-                fill="none"
-                strokeDasharray={ringCircumference}
-                strokeDashoffset={ringOffset}
-                strokeLinecap="round"
-              />
-            </svg>
-            <span className="absolute text-[10px] font-extrabold text-emerald-600 dark:text-emerald-300">{avgAccuracy}%</span>
+          <div className="mt-3 flex items-baseline justify-between">
+            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums">{avgAccuracy}%</p>
+            <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Correct Ratio</span>
           </div>
         </div>
 
         {/* Average Speed */}
-        <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-xs flex flex-col justify-between hover:border-amber-500/40 transition-colors">
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Average Speed</p>
-            <span className="p-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-300 border border-amber-500/20">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Average Speed</p>
+            <span className="p-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-900/60">
               <Clock className="w-4 h-4" />
             </span>
           </div>
           <div className="mt-3">
-            <p className="text-3xl font-black text-amber-600 dark:text-amber-300 tabular-nums">
+            <p className="text-2xl font-extrabold text-amber-600 dark:text-amber-400 tabular-nums">
               {time_management.avg_seconds_per_question ? `${time_management.avg_seconds_per_question}s` : '—'}
             </p>
-            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400 font-medium">{time_management.speed_rating || 'time per question'}</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">per question</p>
           </div>
         </div>
       </div>

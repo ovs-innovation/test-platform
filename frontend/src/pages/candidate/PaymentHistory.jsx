@@ -29,22 +29,29 @@ export default function PaymentHistory() {
   const totalSpent = payments.filter((p) => p.status === 'success').reduce((s, p) => s + Number(p.amount), 0);
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Payment History" subtitle="All your test series purchases, receipts, and enrollment invoices." />
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Payment & Billing History</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Test series purchases, enrollment receipts, and transaction history.
+          </p>
+        </div>
+      </div>
 
       {/* Summary Stats Cards */}
-      <div className="grid gap-2.5 sm:grid-cols-3">
-        <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+      <div className="grid gap-3 sm:grid-cols-3">
+        <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Invested</p>
-          <p className="text-xl font-black text-[#2563eb] dark:text-cyan-300 tabular-nums">₹{totalSpent.toLocaleString('en-IN')}</p>
+          <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 tabular-nums">₹{totalSpent.toLocaleString('en-IN')}</p>
         </div>
-        <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+        <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Enrollments</p>
-          <p className="text-xl font-black text-slate-900 dark:text-white tabular-nums">{payments.length}</p>
+          <p className="text-2xl font-extrabold text-slate-900 dark:text-white tabular-nums">{payments.length}</p>
         </div>
-        <div className="saas-card p-3.5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-0.5">
+        <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
           <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Successful Purchases</p>
-          <p className="text-xl font-black text-emerald-600 dark:text-emerald-400 tabular-nums">{payments.filter((p) => p.status === 'success').length}</p>
+          <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums">{payments.filter((p) => p.status === 'success').length}</p>
         </div>
       </div>
 
@@ -56,7 +63,7 @@ export default function PaymentHistory() {
             action={
               <Link
                 to="/test-series"
-                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2.5 text-xs font-extrabold text-white shadow-md hover:bg-blue-500 transition"
+                className="inline-flex items-center gap-1.5 rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition"
               >
                 <Compass className="h-4 w-4" />
                 <span>Browse Test Series Catalog →</span>
@@ -65,11 +72,11 @@ export default function PaymentHistory() {
           />
         </div>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#111827]">
+        <div className="overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs">
           <DataTable
             columns={[
-              { key: 'series_title', label: 'Test Series', render: (p) => <span className="font-extrabold text-slate-900 dark:text-white">{p.series_title}</span> },
-              { key: 'amount', label: 'Amount', render: (p) => <span className="font-extrabold text-blue-600 dark:text-cyan-300">₹{Number(p.amount).toLocaleString('en-IN')}</span> },
+              { key: 'series_title', label: 'Test Series', render: (p) => <span className="font-bold text-slate-900 dark:text-white text-xs">{p.series_title}</span> },
+              { key: 'amount', label: 'Amount', render: (p) => <span className="font-bold text-blue-600 dark:text-blue-400 text-xs">₹{Number(p.amount).toLocaleString('en-IN')}</span> },
               { key: 'status', label: 'Status', render: (p) => <Badge color={statusColor[p.status] || 'slate'}>{p.status}</Badge> },
               { key: 'created_at', label: 'Date', render: (p) => <span className="text-slate-500 dark:text-slate-400 font-medium text-xs">{formatDateTime(p.created_at)}</span> },
             ]}

@@ -29,16 +29,23 @@ export default function Settings() {
   };
 
   return (
-    <div className="space-y-4 max-w-[1440px] mx-auto pb-12">
-      <PageHeader title="Account Settings & Preferences" subtitle="Manage your login security, notification alerts, and active login sessions." />
+    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Account Settings & Preferences</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            Manage your login security, notification alerts, and active login sessions.
+          </p>
+        </div>
+      </div>
       
-      <div className="grid gap-4 lg:grid-cols-12">
+      <div className="grid gap-6 lg:grid-cols-12">
         {/* Left Column: Account Security & Change Password (6 Cols) */}
         <div className="lg:col-span-6 space-y-4">
           {/* Change Password Form Card */}
-          <form onSubmit={submit} className="saas-card p-4 sm:p-5 bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3">
-            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/60 pb-2">
-              <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+          <form onSubmit={submit} className="p-5 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-3.5 shadow-xs">
+            <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-2">
+              <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
                 <Lock className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <span>Change Password</span>
               </h2>
