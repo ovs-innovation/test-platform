@@ -71,33 +71,16 @@ const run = async () => {
       `);
     }
 
-    const migrationFiles = [
-      'schema.sql',
-      'migration_v2.sql',
-      'migration_v3.sql',
-      'migration_v4.sql',
-      'migration_v5.sql',
-      'migration_v6.sql',
-      'migration_v7.sql',
-      'migration_v8.sql',
-      'migration_v9.sql',
-      'migration_v10.sql',
-      'migration_v11.sql',
-      'migration_v12.sql',
-      'migration_v13.sql',
-      'migration_v14.sql',
-      'migration_v15.sql',
-      'migration_v16.sql',
-      'migration_v17.sql',
-      'migration_v18.sql',
-      'migration_v19.sql',
-      'migration_v20.sql',
-      'migration_v21.sql',
-      'migration_v22.sql',
-      'migration_v23.sql',
-      'migration_v24.sql',
-      'migration_v25.sql',
-    ];
+    const allFiles = fs.readdirSync(__dirname);
+    const migrationFiles = allFiles
+      .filter((f) => f === 'schema.sql' || /^migration_v\d+\.sql$/.test(f))
+      .sort((a, b) => {
+        if (a === 'schema.sql') return -1;
+        if (b === 'schema.sql') return 1;
+        const numA = parseInt(a.replace(/[^\d]/g, ''), 10);
+        const numB = parseInt(b.replace(/[^\d]/g, ''), 10);
+        return numA - numB;
+      });
 
     for (const file of migrationFiles) {
       await executeMigrationFile(file);
