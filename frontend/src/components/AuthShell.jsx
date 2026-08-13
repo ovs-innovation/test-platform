@@ -261,16 +261,6 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
         {/* RIGHT PANEL: LOGIN FORM */}
         <div className="lg:w-[52%] xl:w-[54%] p-5 sm:p-7 lg:p-9 flex flex-col justify-between bg-[#081026]/95 overflow-y-auto">
           <div className="my-auto">
-            <div className="flex items-center justify-between mb-3">
-              <Link
-                to="/"
-                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-slate-400 hover:text-cyan-300 transition group"
-              >
-                <span className="text-sm font-black transition-transform group-hover:-translate-x-1">←</span>
-                <span>Back to Home</span>
-              </Link>
-            </div>
-
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">{title}</h1>
             {subtitle && <p className="mt-1.5 text-xs sm:text-sm text-slate-400 leading-relaxed">{subtitle}</p>}
             <div className="mt-5">{children}</div>

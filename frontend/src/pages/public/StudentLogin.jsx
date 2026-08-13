@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AuthShell from '../../components/AuthShell.jsx';
-import { PasswordInput } from '../../components/ui.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 
@@ -11,7 +10,7 @@ export default function StudentLogin() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mode can be: 'email_otp' (default), 'email_pass', 'mobile', 'institute'
+  // Mode can be: 'email_otp' (default), 'mobile', 'institute'
   const [loginMode, setLoginMode] = useState('email_otp');
 
   // Form Fields
@@ -23,10 +22,6 @@ export default function StudentLogin() {
   const [mobileOtpSent, setMobileOtpSent] = useState(false);
   const [mobileOtpCode, setMobileOtpCode] = useState('');
   const [mobileTimer, setMobileTimer] = useState(0);
-
-  // Email Password Fields
-  const [emailPass, setEmailPass] = useState('');
-  const [password, setPassword] = useState('');
 
   // Email OTP Fields
   const [emailOtp, setEmailOtp] = useState('');
@@ -92,7 +87,6 @@ export default function StudentLogin() {
     setMobileOtpSent(false);
     setMobileOtpCode('');
     setMobileTimer(0);
-    setPassword('');
   };
 
   // Handle Send Email OTP
@@ -241,25 +235,7 @@ export default function StudentLogin() {
     }
   };
 
-  // Handle Email + Password Submit
-  const onEmailPassSubmit = async (e) => {
-    e?.preventDefault();
-    if (!emailPass.trim() || !password.trim()) {
-      setError('Please enter your Email Address and Password.');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    try {
-      const u = await studentLogin({ email: emailPass.trim(), password: password.trim() });
-      toast.success('Welcome back!');
-      navigate(getDestination(u?.role), { replace: true });
-    } catch (err) {
-      setError(err.message || 'Email login failed. Check email and password.');
-    } finally {
-      setLoading(false);
-    }
-  };
+
 
   // Handle Institute Login (Institute Code + Enrollment ID)
   const onInstituteSubmit = async (e) => {
@@ -289,8 +265,8 @@ export default function StudentLogin() {
       title="Student Login"
       subtitle="Sign in to your account to access tests, eBooks, and performance reports."
     >
-      {/* 4-Tab Login Mode Switcher */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 p-1 bg-[#050a18]/80 border border-[#1e293b] rounded-2xl mb-6 gap-1">
+      {/* 3-Tab Login Mode Switcher */}
+      <div className="grid grid-cols-3 p-1 bg-[#050a18]/80 border border-[#1e293b] rounded-2xl mb-6 gap-1">
         <button
           type="button"
           className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
@@ -302,18 +278,6 @@ export default function StudentLogin() {
         >
           <span>✉️</span>
           <span>Email OTP</span>
-        </button>
-        <button
-          type="button"
-          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
-            loginMode === 'email_pass'
-              ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
-              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
-          }`}
-          onClick={() => handleSwitchTab('email_pass')}
-        >
-          <span>🔑</span>
-          <span>Password</span>
         </button>
         <button
           type="button"
@@ -447,50 +411,7 @@ export default function StudentLogin() {
         </div>
       )}
 
-      {/* MODE 2: EMAIL & PASSWORD LOGIN */}
-      {loginMode === 'email_pass' && (
-        <form onSubmit={onEmailPassSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              Email Address *
-            </label>
-            <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
-              type="email"
-              placeholder="student@example.com"
-              required
-              value={emailPass}
-              onChange={(e) => setEmailPass(e.target.value)}
-            />
-          </div>
 
-          <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300">
-                Password *
-              </label>
-              <Link to="/forgot-password" className="text-xs font-semibold text-[#00F0FF] hover:underline">
-                Forgot?
-              </Link>
-            </div>
-            <PasswordInput
-              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
-              placeholder="••••••••"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
-          >
-            {loading ? 'Signing in…' : 'Sign In →'}
-          </button>
-        </form>
-      )}
 
       {/* MODE 3: MOBILE NUMBER & OTP */}
       {loginMode === 'mobile' && (
