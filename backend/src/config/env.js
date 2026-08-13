@@ -6,21 +6,59 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const required = ['JWT_SECRET'];
-for (const key of required) {
-  if (!process.env[key]) {
-    // eslint-disable-next-line no-console
-    console.warn(`[env] Warning: ${key} is not set. Using an insecure default for development only.`);
+export const validateJwtSecretInProduction = (nodeEnv, secret) => {
+  const isProduction = nodeEnv === 'production';
+  const knownPlaceholders = ['dev_insecure_secret_change_me', 'secret', 'change_me', '1234567890'];
+
+  if (isProduction) {
+    if (!secret || typeof secret !== 'string' || secret.trim() === '') {
+      throw new Error('FATAL CONFIGURATION ERROR: JWT_SECRET environment variable is missing in production environment.');
+    }
+    const cleanSecret = secret.trim();
+    if (knownPlaceholders.includes(cleanSecret) || cleanSecret.length < 32) {
+      throw new Error('FATAL CONFIGURATION ERROR: Insecure or placeholder JWT_SECRET configured in production environment. A minimum length of 32 characters is required.');
+    }
   }
-}
+};
+
+export const validateSeedCredentialsInProduction = (nodeEnv, seedConfig, runSeed = false) => {
+  if (nodeEnv === 'production' && runSeed) {
+    const defaultPasswords = ['Admin@12345', 'Candidate@123'];
+    if (
+      !seedConfig.adminPassword ||
+      defaultPasswords.includes(seedConfig.adminPassword) ||
+      !seedConfig.candidatePassword ||
+      defaultPasswords.includes(seedConfig.candidatePassword)
+    ) {
+      throw new Error('FATAL CONFIGURATION ERROR: Default or missing seed credentials must not be used when RUN_SEED=true in production environment.');
+    }
+  }
+};
+
+const nodeEnv = process.env.NODE_ENV || 'development';
+const jwtSecret = process.env.JWT_SECRET || 'dev_insecure_secret_change_me';
+const runSeed = process.env.RUN_SEED === 'true';
+
+const seedConfig = {
+  adminEmail: process.env.SEED_ADMIN_EMAIL || 'admin@assess.io',
+  adminPassword: process.env.SEED_ADMIN_PASSWORD || 'Admin@12345',
+  candidateEmail: process.env.SEED_CANDIDATE_EMAIL || 'candidate@assess.io',
+  candidatePassword: process.env.SEED_CANDIDATE_PASSWORD || 'Candidate@123',
+};
+
+validateJwtSecretInProduction(nodeEnv, jwtSecret);
+validateSeedCredentialsInProduction(nodeEnv, seedConfig, runSeed);
 
 export const env = {
   port: parseInt(process.env.PORT || '5000', 10),
   nodeEnv: process.env.NODE_ENV || 'development',
   isProd: (process.env.NODE_ENV || 'development') === 'production',
+  runSeed: process.env.RUN_SEED === 'true',
   clientUrl: process.env.CLIENT_URL || 'http://localhost:5173',
 
-  databaseUrl: process.env.DATABASE_URL || '',
+  databaseUrl: (process.env.NODE_ENV === 'test' && process.env.TEST_DATABASE_URL)
+    ? process.env.TEST_DATABASE_URL
+    : (process.env.DATABASE_URL || ''),
   pg: {
     host: process.env.PGHOST || 'localhost',
     port: parseInt(process.env.PGPORT || '5432', 10),
@@ -32,12 +70,7 @@ export const env = {
   jwtSecret: process.env.JWT_SECRET || 'dev_insecure_secret_change_me',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
 
-  seed: {
-    adminEmail: process.env.SEED_ADMIN_EMAIL || 'admin@assess.io',
-    adminPassword: process.env.SEED_ADMIN_PASSWORD || 'Admin@12345',
-    candidateEmail: process.env.SEED_CANDIDATE_EMAIL || 'candidate@assess.io',
-    candidatePassword: process.env.SEED_CANDIDATE_PASSWORD || 'Candidate@123',
-  },
+  seed: seedConfig,
 
   smtp: {
     host: process.env.SMTP_HOST || '',

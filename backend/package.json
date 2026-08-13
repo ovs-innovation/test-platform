@@ -7,6 +7,9 @@
   "scripts": {
     "start": "node src/db/migrate.js && node src/server.js",
     "dev": "node scripts/free-port.js && node --watch src/server.js",
+    "test:auth:config": "vitest run tests/integration/config --config vitest.config.config.js",
+    "test:auth:db": "vitest run tests/integration/auth tests/integration/student tests/integration/institution tests/integration/admin tests/integration/business --config vitest.config.db.js",
+    "test:auth": "npm run test:auth:config && npm run test:auth:db",
     "db:migrate": "node src/db/migrate.js",
     "db:seed": "node src/db/seed.js",
     "db:sync-catalogue": "node scripts/sync-catalogue-series.mjs",
@@ -33,5 +36,9 @@
     "pg": "^8.12.0",
     "razorpay": "^2.9.6",
     "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "supertest": "^7.2.2",
+    "vitest": "^4.1.10"
   }
 }

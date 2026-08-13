@@ -1113,12 +1113,12 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
     const subjRes = await query(
       `SELECT 
          COALESCE(s.name, 'General') AS subject_name,
-         COUNT(ar.id)::int AS total_ans,
-         SUM(CASE WHEN ar.is_correct THEN 1 ELSE 0 END)::int AS correct_ans
-       FROM answer_records ar
-       JOIN questions q ON q.id = ar.question_id
+         COUNT(ans.id)::int AS total_ans,
+         SUM(CASE WHEN ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index THEN 1 ELSE 0 END)::int AS correct_ans
+       FROM answers ans
+       JOIN questions q ON q.id = ans.question_id
        LEFT JOIN subjects s ON s.id = q.subject_id
-       JOIN attempts at ON at.id = ar.attempt_id
+       JOIN attempts at ON at.id = ans.attempt_id
        WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
        GROUP BY s.name
        ORDER BY total_ans DESC`,
