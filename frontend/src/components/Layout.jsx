@@ -221,11 +221,11 @@ export default function Layout({ children }) {
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 dark:bg-[#080D1A] dark:text-slate-100 flex transition-colors duration-200 w-full max-w-full overflow-x-hidden">
       {/* DESKTOP SIDEBAR NAVIGATION */}
       <aside
-        className={`hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
+        className={`fixed top-0 left-0 bottom-0 z-40 hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
           collapsed ? 'w-20' : 'w-[260px]'
         }`}
       >
-        <div className="sticky top-3 flex h-[calc(100vh-1.5rem)] flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A] relative">
+        <div className="flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A] relative">
           {/* Compact 24px Circular Collapse Toggle (Attached to right border) */}
           <button
             type="button"
@@ -433,9 +433,11 @@ export default function Layout({ children }) {
       )}
 
       {/* MAIN WORKSPACE AREA */}
-      <div className="flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden">
+      <div className={`flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ${
+        collapsed ? 'lg:pl-20' : 'lg:pl-[260px]'
+      }`}>
         {/* FLOATING TOPBAR CARD */}
-        <div className="pt-3 px-3 sm:px-4 lg:px-6 lg:pl-3">
+        <div className="pt-3 px-3 sm:px-4 lg:px-6">
           <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
             {/* Left: Mobile Trigger & Dynamic Breadcrumbs */}
             <div className="flex items-center gap-2.5">

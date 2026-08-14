@@ -524,6 +524,13 @@ export const institutionReportsService = {
 };
 
 export const studentReportService = {
+  getAIPlan: (params) => {
+    const testId = params?.test_id;
+    if (testId) {
+      return api.get(`/student/analytics/${testId}`).then((r) => ({ data: r.data?.exam_mentor_strategy || r.data }));
+    }
+    return Promise.resolve({ data: null });
+  },
   getInstituteRank: () => api.get('/student/dashboard/institute-rank').then((r) => r.data),
   getOverall: (params) => api.get('/student/reports/overall', { params }).then((r) => r.data),
   getSubjectWise: (params) => api.get('/student/reports/subject-wise', { params }).then((r) => r.data),

@@ -1,6 +1,7 @@
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { generateExamMentorStrategyReport } from '../services/geminiService.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -36,17 +37,32 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Invalid test ID parameter');
   }
 
-  // 1. Fetch Test details
-  const testRes = await query(
+  // 1. Fetch Test details (check tests table first, fallback to assessments table)
+  let testRes = await query(
     `SELECT id, test_name, test_type, test_date, duration_minutes, max_marks, is_published, result_publish_time
      FROM tests
      WHERE id = $1`,
     [testId]
-  );
+  ).catch(() => ({ rowCount: 0, rows: [] }));
+
   if (testRes.rowCount === 0) {
-    throw ApiError.notFound('Test not found');
+    testRes = await query(
+      `SELECT id, title AS test_name, COALESCE(test_type, 'JEE / NEET CBT') AS test_type, created_at AS test_date, duration_minutes, 300 AS max_marks, is_published, result_published_at AS result_publish_time
+       FROM assessments
+       WHERE id = $1`,
+      [testId]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
   }
-  const test = testRes.rows[0];
+
+  const test = testRes.rowCount > 0 ? testRes.rows[0] : {
+    id: testId,
+    test_name: `AIETS Test #${testId}`,
+    test_type: 'JEE / NEET CBT',
+    test_date: new Date().toISOString(),
+    duration_minutes: 180,
+    max_marks: 300,
+    is_published: true
+  };
 
   // 2. Fetch Rankings (AIR, State Rank, City Rank, Institute Rank, Batch Rank) & Percentile
   const allAttemptsForTestRes = await query(
@@ -69,43 +85,84 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
      FROM test_attempts ta
      JOIN users u ON u.id = ta.student_id
      LEFT JOIN student_profiles sp ON sp.user_id = u.id
-     WHERE ta.test_id = $1 AND ta.submitted_at IS NOT NULL`,
+     WHERE (ta.test_id = $1 OR ta.assessment_id = $1) AND ta.submitted_at IS NOT NULL`,
     [testId]
-  );
+  ).catch(() => ({ rowCount: 0, rows: [] }));
 
-  let currentAttemptRank = allAttemptsForTestRes.rows.find((r) => r.student_id === studentId);
+  let currentAttemptRank = (allAttemptsForTestRes.rows || []).find((r) => r.student_id === studentId);
+  let hasSubmittedAttempt = true;
+  const totalParticipantsCount = allAttemptsForTestRes.rowCount || 0;
 
   // Fallback if current candidate attempt not found in submitted list
   if (!currentAttemptRank) {
     const fallbackAttempt = await query(
       `SELECT id AS attempt_id, student_id, score AS total_score, max_marks AS attempt_max_marks, submitted_at,
               all_india_rank AS air, percentile
-       FROM test_attempts WHERE test_id = $1 AND student_id = $2`,
+       FROM test_attempts WHERE (test_id = $1 OR assessment_id = $1) AND student_id = $2`,
       [testId, studentId]
-    );
+    ).catch(() => ({ rowCount: 0, rows: [] }));
     const fa = fallbackAttempt.rows[0];
+
+    hasSubmittedAttempt = !!(fa && fa.submitted_at);
+    const scoreVal = Number(fa?.total_score) || 0;
+
+    let calcAir = fa?.air ?? null;
+    let calcPercentile = fa?.percentile !== null && fa?.percentile !== undefined ? Number(fa.percentile) : null;
+
+    if (totalParticipantsCount <= 1) {
+      calcAir = null;
+      calcPercentile = null;
+    } else if (scoreVal === 0) {
+      calcPercentile = 0.0;
+    }
+
     currentAttemptRank = {
       attempt_id: fa?.attempt_id || null,
       student_id: studentId,
-      total_score: fa?.total_score || 0,
-      air: fa?.air || 1,
-      state_rank: 1,
-      city_rank: 1,
-      institute_rank: 1,
-      batch_rank: 1,
-      percentile: fa?.percentile || 100.0,
-      total_participants: Math.max(1, allAttemptsForTestRes.rowCount)
+      total_score: scoreVal,
+      air: calcAir,
+      state_rank: calcAir,
+      city_rank: calcAir,
+      institute_rank: calcAir,
+      batch_rank: calcAir,
+      percentile: calcPercentile,
+      total_participants: totalParticipantsCount,
+      has_submitted_attempt: hasSubmittedAttempt
     };
+  } else {
+    currentAttemptRank.has_submitted_attempt = true;
+    if (totalParticipantsCount <= 1) {
+      currentAttemptRank.air = null;
+      currentAttemptRank.state_rank = null;
+      currentAttemptRank.city_rank = null;
+      currentAttemptRank.institute_rank = null;
+      currentAttemptRank.batch_rank = null;
+      currentAttemptRank.percentile = null;
+    } else if (Number(currentAttemptRank.total_score) === 0) {
+      currentAttemptRank.percentile = 0.0;
+    }
   }
 
-  // Save computed AIR & Percentile back to test_attempts
-  if (currentAttemptRank.attempt_id && currentAttemptRank.air) {
+  console.log('\n===================================================================');
+  console.log('[STEP 4 LOG] RAW CALCULATED VALUES BEFORE SENT TO FRONTEND OR AI:');
+  console.log({
+    studentId,
+    testId,
+    total_participants: currentAttemptRank?.total_participants,
+    total_score: currentAttemptRank?.total_score,
+    raw_air: currentAttemptRank?.air,
+    raw_percentile: currentAttemptRank?.percentile
+  });
+  console.log('===================================================================\n');
+
+  // Save computed AIR & Percentile back to test_attempts if submitted
+  if (currentAttemptRank.attempt_id && currentAttemptRank.air && hasSubmittedAttempt) {
     query(
       `UPDATE test_attempts 
        SET all_india_rank = $1, percentile = $2, institute_rank = $3
        WHERE id = $4`,
       [currentAttemptRank.air, currentAttemptRank.percentile, currentAttemptRank.institute_rank, currentAttemptRank.attempt_id]
-    ).catch(() => {});
+    ).catch(() => { });
   }
 
   // 3. Question-wise answers & peer stats for this test
@@ -244,9 +301,9 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     const normSubject = ['Physics', 'Chemistry', 'Botany', 'Zoology'].includes(qStats.subject_name)
       ? qStats.subject_name
       : (qStats.subject_name.toLowerCase().includes('botan') ? 'Botany'
-         : qStats.subject_name.toLowerCase().includes('zool') ? 'Zoology'
-         : qStats.subject_name.toLowerCase().includes('chem') ? 'Chemistry'
-         : 'Physics');
+        : qStats.subject_name.toLowerCase().includes('zool') ? 'Zoology'
+          : qStats.subject_name.toLowerCase().includes('chem') ? 'Chemistry'
+            : 'Physics');
 
     const chapterName = qStats.chapter_name || 'General Topics';
 
@@ -289,7 +346,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
         time_spent_seconds: timeSpent,
         peer_avg_time_seconds: peerAvgTime,
         is_correct: isCorrect,
-        flag: `Spent ${Math.round(timeSpent / 60 * 10)/10}m (>2x peer avg ${Math.round(peerAvgTime)}s) but answer was incorrect`
+        flag: `Spent ${Math.round(timeSpent / 60 * 10) / 10}m (>2x peer avg ${Math.round(peerAvgTime)}s) but answer was incorrect`
       });
     }
 
@@ -331,49 +388,70 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     }
   }
 
-  const subjectAnalysisList = ['Physics', 'Chemistry', 'Botany', 'Zoology'].map((sub) => {
-    const st = subjectStats[sub];
-    const attempted = st.correct + st.incorrect;
-    const accuracy = attempted > 0 ? Math.round((st.correct / attempted) * 100) : 0;
-    const peerAvgScore = subjectPeerCounts[sub] > 0 
-      ? Math.round((subjectPeerSums[sub] / subjectPeerCounts[sub]) * 10) / 10 
-      : Math.round((st.score * 0.75) * 10) / 10;
+  const subjectAnalysisList = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology', 'General']
+    .map((sub) => {
+      const st = subjectStats[sub];
+      if (!st || st.max_marks === 0) return null;
+      const attempted = st.correct + st.incorrect;
+      const accuracy = attempted > 0 ? Math.round((st.correct / attempted) * 100) : 0;
+      const peerAvgScore = subjectPeerCounts[sub] > 0
+        ? Math.round((subjectPeerSums[sub] / subjectPeerCounts[sub]) * 10) / 10
+        : Math.round((st.score * 0.75) * 10) / 10;
 
-    return {
-      subject: sub,
-      score: Math.max(0, st.score),
-      max_marks: st.max_marks || 180,
-      correct_count: st.correct,
-      incorrect_count: st.incorrect,
-      unattempted_count: st.unattempted,
-      accuracy_percent: accuracy,
-      time_spent_seconds: st.time_spent,
-      rank_in_subject: 1,
-      comparison_to_average: {
-        student_score: Math.max(0, st.score),
-        class_average_score: peerAvgScore,
-        difference: Math.round((Math.max(0, st.score) - peerAvgScore) * 10) / 10
-      }
-    };
-  });
+      return {
+        subject: sub,
+        score: Math.max(0, st.score),
+        max_marks: st.max_marks,
+        correct_count: st.correct,
+        incorrect_count: st.incorrect,
+        unattempted_count: st.unattempted,
+        accuracy_percent: accuracy,
+        time_spent_seconds: st.time_spent,
+        rank_in_subject: 1,
+        comparison_to_average: {
+          student_score: Math.max(0, st.score),
+          class_average_score: peerAvgScore,
+          difference: Math.round((Math.max(0, st.score) - peerAvgScore) * 10) / 10
+        }
+      };
+    })
+    .filter(Boolean);
 
   // 7. Chapter-wise Performance & Strong/Weak Topics
   const chapterPerformanceList = Object.values(chapterStats).map(ch => {
     const attempted = ch.correct + ch.wrong;
+    const isUnattempted = attempted === 0;
     const acc = attempted > 0 ? Math.round((ch.correct / attempted) * 100) : 0;
+
+    let engagementStatus = 'weak';
+    let statusLabel = 'Weak (Attempted - Low Accuracy)';
+    if (isUnattempted) {
+      engagementStatus = 'unattempted';
+      statusLabel = 'Unattempted Entirely';
+    } else if (acc >= 75) {
+      engagementStatus = 'strong';
+      statusLabel = 'Strong (Mastered)';
+    } else if (acc >= 50) {
+      engagementStatus = 'moderate';
+      statusLabel = 'Moderate';
+    }
+
     return {
       chapter_name: ch.chapter_name,
       subject: ch.subject,
       correct: ch.correct,
       wrong: ch.wrong,
       total: ch.total,
-      accuracy_percent: acc
+      attempted,
+      is_unattempted: isUnattempted,
+      accuracy_percent: acc,
+      engagement_status: engagementStatus,
+      status_label: statusLabel
     };
   }).sort((a, b) => a.accuracy_percent - b.accuracy_percent);
 
-  const validChapters = chapterPerformanceList.filter(c => (c.correct + c.wrong) >= 1 || c.total >= 2);
-  const weakTopics = validChapters.filter(c => c.accuracy_percent < 65).slice(0, 5);
-  const strongTopics = validChapters.filter(c => c.accuracy_percent >= 65).reverse().slice(0, 5);
+  const weakTopics = chapterPerformanceList.filter(c => c.engagement_status === 'unattempted' || c.engagement_status === 'weak');
+  const strongTopics = chapterPerformanceList.filter(c => c.engagement_status === 'strong').reverse();
 
   // 8. Personalized Improvement Plan
   const weakSubjConfig = templates.subjects || {};
@@ -678,13 +756,13 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   const responseData = {
     test_info: test,
     summary: {
-      all_india_rank: currentAttemptRank.air || 1,
-      state_rank: currentAttemptRank.state_rank || 1,
-      city_rank: currentAttemptRank.city_rank || 1,
-      institute_rank: currentAttemptRank.institute_rank || 1,
-      batch_rank: currentAttemptRank.batch_rank || 1,
-      total_participants: currentAttemptRank.total_participants || 1,
-      percentile: currentAttemptRank.percentile || 100.0,
+      all_india_rank: currentAttemptRank.air ?? null,
+      state_rank: currentAttemptRank.state_rank ?? null,
+      city_rank: currentAttemptRank.city_rank ?? null,
+      institute_rank: currentAttemptRank.institute_rank ?? null,
+      batch_rank: currentAttemptRank.batch_rank ?? null,
+      total_participants: currentAttemptRank.total_participants || 0,
+      percentile: currentAttemptRank.percentile ?? null,
       total_score: Number(currentAttemptRank.total_score) || 0,
       max_marks: Number(test.max_marks) || 720,
       percentage: Number(test.max_marks) > 0 ? Math.round(((Number(currentAttemptRank.total_score) || 0) / Number(test.max_marks)) * 10000) / 100 : 0,
@@ -695,12 +773,12 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       unattempted_count: totalUnattempted
     },
     ranks_breakdown: {
-      all_india_rank: currentAttemptRank.air || 1,
-      state_rank: currentAttemptRank.state_rank || 1,
-      city_rank: currentAttemptRank.city_rank || 1,
-      institute_rank: currentAttemptRank.institute_rank || 1,
-      batch_rank: currentAttemptRank.batch_rank || 1,
-      total_participants: currentAttemptRank.total_participants || 1
+      all_india_rank: currentAttemptRank.air ?? null,
+      state_rank: currentAttemptRank.state_rank ?? null,
+      city_rank: currentAttemptRank.city_rank ?? null,
+      institute_rank: currentAttemptRank.institute_rank ?? null,
+      batch_rank: currentAttemptRank.batch_rank ?? null,
+      total_participants: currentAttemptRank.total_participants || 0
     },
     national_comparison: nationalComparison,
     previous_test_comparison: previousTestComparison,
@@ -745,6 +823,58 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     revision_strategy: revisionStrategy
   };
 
+  let strongTopicsList = (chapterPerformanceList || [])
+    .filter(c => c.engagement_status === 'strong')
+    .map(c => `${c.chapter_name} (${c.accuracy_percent}%)`);
+
+  let weakTopicsList = (chapterPerformanceList || [])
+    .filter(c => c.engagement_status === 'unattempted' || c.engagement_status === 'weak')
+    .map(c => c.is_unattempted
+      ? `${c.chapter_name} (0% - Unattempted Entirely)`
+      : `${c.chapter_name} (${c.accuracy_percent}% - Concept Gaps)`
+    );
+
+  let moderateTopicsList = (chapterPerformanceList || [])
+    .filter(c => c.engagement_status === 'moderate')
+    .map(c => `${c.chapter_name} (${c.accuracy_percent}%)`);
+
+  const coveredSubjects = subjectAnalysisList.map(s => s.subject);
+
+  // Score & Max Marks sums calculated strictly from subjectAnalysisList live test data
+  const calculatedTotalScore = subjectAnalysisList.reduce((sum, s) => sum + (s.score || 0), 0);
+  const calculatedMaxMarks = subjectAnalysisList.reduce((sum, s) => sum + (s.max_marks || 0), 0);
+
+  const rushedWrongCount = (questionWiseAnalysis || []).filter(q => q.is_attempted && !q.is_correct && (q.time_spent_seconds < 45)).length;
+  const totalTimeSeconds = subjectAnalysisList.reduce((a, b) => a + (b.time_spent_seconds || 0), 0);
+  const attemptedCount = totalCorrect + totalIncorrect;
+  const avgTimeSecs = attemptedCount > 0 ? Math.round(totalTimeSeconds / attemptedCount) : 0;
+  const avgTimeFormatted = `${Math.floor(avgTimeSecs / 60)}m ${avgTimeSecs % 60}s`;
+  const subjectWiseStr = subjectAnalysisList.map(s => `${s.subject}: ${s.score}/${s.max_marks} (${s.accuracy_percent}%)`).join(', ');
+
+  try {
+    responseData.exam_mentor_strategy = await generateExamMentorStrategyReport({
+      exam_type: test.test_type || 'JEE Main',
+      test_date: test.test_date ? new Date(test.test_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+      days_remaining: 7,
+      score: calculatedTotalScore,
+      total_marks: calculatedMaxMarks > 0 ? calculatedMaxMarks : (Number(test.max_marks) || 300),
+      percentile: currentAttemptRank.percentile ?? null,
+      rank: currentAttemptRank.air ?? null,
+      covered_subjects: coveredSubjects,
+      subject_wise_breakdown: subjectWiseStr,
+      strong_topics: strongTopicsList,
+      weak_topics: weakTopicsList,
+      moderate_topics: moderateTopicsList,
+      avg_time_per_question: avgTimeFormatted,
+      unattempted_count: totalUnattempted,
+      rushed_wrong_count: rushedWrongCount,
+      raw_chapter_performance: chapterPerformanceList,
+      raw_subject_analysis: subjectAnalysisList
+    });
+  } catch (err) {
+    console.error('[PostTestAnalytics] Failed to compute exam_mentor_strategy:', err);
+  }
+
   res.json(responseData);
 });
 
@@ -761,27 +891,41 @@ export const getAIMentorReport = asyncHandler(async (req, res) => {
   if (!testId || isNaN(testId)) throw ApiError.badRequest('Invalid test ID');
 
   // 1. Fetch full analytics from the existing getPostTestAnalytics logic inline
-  // We reuse the same DB queries for correctness & DRY-ness
-  const testRes = await query(
+  let testRes = await query(
     `SELECT id, test_name, test_type, max_marks, duration_minutes FROM tests WHERE id = $1`,
     [testId]
-  );
-  if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
-  const test = testRes.rows[0];
+  ).catch(() => ({ rowCount: 0, rows: [] }));
 
-  const attemptRes = await query(
+  if (testRes.rowCount === 0) {
+    testRes = await query(
+      `SELECT id, title AS test_name, COALESCE(test_type, 'JEE / NEET CBT') AS test_type, 300 AS max_marks, duration_minutes FROM assessments WHERE id = $1`,
+      [testId]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
+  }
+
+  const test = testRes.rowCount > 0 ? testRes.rows[0] : { id: testId, test_name: `AIETS Part Test #${testId}`, test_type: 'JEE / NEET CBT', max_marks: 300, duration_minutes: 180 };
+
+  let attemptRes = await query(
     `SELECT ta.id, ta.total_score, ta.time_taken_seconds, ta.subject_wise_score,
             ta.submitted_at, ta.answers,
             r.air, r.state_rank, r.city_rank, r.percentile
      FROM test_attempts ta
      LEFT JOIN test_rankings r ON r.attempt_id = ta.id
-     WHERE ta.test_id = $1 AND ta.student_id = $2 AND ta.submitted_at IS NOT NULL
+     WHERE (ta.test_id = $1 OR ta.assessment_id = $1) AND ta.student_id = $2 AND ta.submitted_at IS NOT NULL
      ORDER BY ta.submitted_at DESC LIMIT 1`,
     [testId, studentId]
-  );
-  if (attemptRes.rowCount === 0) throw ApiError.notFound('No submitted attempt found for this test');
+  ).catch(() => ({ rowCount: 0, rows: [] }));
 
-  const attempt = attemptRes.rows[0];
+  if (attemptRes.rowCount === 0) {
+    attemptRes = await query(
+      `SELECT id, score AS total_score, duration_seconds AS time_taken_seconds, subject_wise_score, submitted_at
+       FROM attempts WHERE (assessment_id = $1 OR id = $1) AND candidate_id = $2 AND submitted_at IS NOT NULL
+       ORDER BY submitted_at DESC LIMIT 1`,
+      [testId, studentId]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
+  }
+
+  const attempt = attemptRes.rowCount > 0 ? attemptRes.rows[0] : { id: testId, total_score: 0, time_taken_seconds: 0, submitted_at: new Date().toISOString(), answers: [] };
   const studentAnswers = attempt.answers || [];
 
   // 2. Fetch question stats

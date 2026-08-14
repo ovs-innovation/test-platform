@@ -1,7 +1,7 @@
 /**
  * Parses raw text extracted from a test question paper PDF
  * Returns an array of formatted question objects:
- * [{ question_text, options, correct_index, marks, bank_category, solution }]
+ * [{ question_text, options, correct_index, marks, bank_category, solution, needs_review, review_reason }]
  */
 export function parsePdfQuestions(text) {
   if (!text || typeof text !== 'string') return [];
@@ -9,7 +9,7 @@ export function parsePdfQuestions(text) {
   // Normalize line breaks and clean whitespace
   const cleanText = text.replace(/\r\n/g, '\n');
 
-  // Separate Question Paper and Answer Key parts if present
+  // Separate Question Paper and Answer Key parts if present at the end
   let questionPaperPart = cleanText;
   let answerKeyPart = '';
 
@@ -22,7 +22,7 @@ export function parsePdfQuestions(text) {
   }
 
   // Split into raw blocks by Q1, Q2, Q3 ... or 1., 2., 3.
-  const blocks = questionPaperPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)\:]\s+)/gi);
+  const blocks = questionPaperPart.split(/(?=\n\s*(?:Q|Question\s*)?\d+[\.\)\:]\s+)/gi);
 
   const questions = [];
 
@@ -47,19 +47,35 @@ export function parsePdfQuestions(text) {
       marks = parseInt(marksMatch[1], 10);
     }
 
-    // Attempt to extract options (A), (B), (C), (D) or A., B., C., D.
-    const options = [];
-    let mainText = body;
+    // Check for Inline Answer & Solution/Explanation (e.g., "Answer: B — I = V/R = 10/(4+6) = 1 A" or "Ans: B")
+    let inlineCorrectIndex = 0;
+    let inlineSolution = '';
+    const inlineAnsMatch = body.match(/(?:Answer|Ans|Correct\s*Answer):\s*(?:\(|\[)?([A-D])(?:\)|\])?\s*(?:[—\-:\s]+(.*))?/i);
+    if (inlineAnsMatch) {
+      const letter = inlineAnsMatch[1].toUpperCase();
+      inlineCorrectIndex = letter.charCodeAt(0) - 65;
+      if (inlineAnsMatch[2]) {
+        inlineSolution = inlineAnsMatch[2].trim();
+      }
+    }
 
-    // 1. Try matching (A)... (B)... (C)... (D)...
-    const inlineOptMatches = [...body.matchAll(/(?:\(|\[|\s|^)([A-D])(?:\)|\]|\.|\:)\s*([^(\n]+)/gi)];
+    // Clean body text by stripping inline Answer lines before option parsing
+    const cleanBodyForOptions = body.replace(/(?:^|\n)\s*(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
+
+    // Attempt to extract options (A), (B), (C), (D) or A), B), C), D) or A., B., C., D.
+    const options = [];
+    let mainText = cleanBodyForOptions;
+
+    // 1. Try matching (A)... (B)... (C)... (D)... or A)... B)... C)... D)...
+    const inlineOptMatches = [...cleanBodyForOptions.matchAll(/(?:\(|\[|\n\s*|^)([A-D])(?:\)|\]|\.|\:)\s*([^(\n]+)/gi)];
     if (inlineOptMatches.length >= 2) {
-      const firstIndex = body.search(/(?:\(|\[|\n\s*)([A-D])(?:\)|\]|\.|\:)\s*/i);
+      const firstIndex = cleanBodyForOptions.search(/(?:\(|\[|\n\s*)([A-D])(?:\)|\]|\.|\:)\s*/i);
       if (firstIndex !== -1) {
-        mainText = body.substring(0, firstIndex).trim();
+        mainText = cleanBodyForOptions.substring(0, firstIndex).trim();
       }
       for (const m of inlineOptMatches) {
-        const optText = m[2].replace(/Marks:\s*[^\n]+/gi, '').trim();
+        let optText = m[2].replace(/Marks:\s*[^\n]+/gi, '').trim();
+        optText = optText.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '').trim();
         if (optText && !options.includes(optText)) {
           options.push(optText);
         }
@@ -68,13 +84,14 @@ export function parsePdfQuestions(text) {
 
     // 2. Fallback to multiline options matching
     if (options.length < 2) {
-      const firstOptIndex = body.search(/(?:^|\n)\s*(?:\([A-D]\)|[A-D][\.\)])\s*/i);
+      const firstOptIndex = cleanBodyForOptions.search(/(?:^|\n)\s*(?:\([A-D]\)|[A-D][\.\)])\s*/i);
       if (firstOptIndex !== -1) {
-        mainText = body.substring(0, firstOptIndex).trim();
-        const optionsBlock = body.substring(firstOptIndex);
+        mainText = cleanBodyForOptions.substring(0, firstOptIndex).trim();
+        const optionsBlock = cleanBodyForOptions.substring(firstOptIndex);
         const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*(?:\(([A-D])\)|([A-D])[\.\)])\s*([^\n]+)/gi);
         for (const m of optMatches) {
-          const t = m[3].trim();
+          let t = m[3].trim();
+          t = t.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '').trim();
           if (t && !options.includes(t)) options.push(t);
         }
       }
@@ -89,12 +106,14 @@ export function parsePdfQuestions(text) {
 
     cleanQText = cleanQText.replace(/^\(([A-Za-z\s]+)\)\s*/, '');
 
-    // Ensure options array has at least 4 options
-    const finalOptions = options.length >= 2 ? options : [
-      '(A) First Choice Option',
-      '(B) Second Choice Option',
-      '(C) Third Choice Option',
-      '(D) Fourth Choice Option'
+    // Instead of silent fake fallbacks like "First Choice Option", flag for review if < 2 options parsed
+    const hasValidOptions = options.length >= 2;
+    const needsReview = !hasValidOptions;
+    const finalOptions = hasValidOptions ? options : [
+      '[Needs Review] Option A',
+      '[Needs Review] Option B',
+      '[Needs Review] Option C',
+      '[Needs Review] Option D'
     ];
 
     if (cleanQText) {
@@ -102,15 +121,17 @@ export function parsePdfQuestions(text) {
         num: qNum,
         question_text: cleanQText,
         options: finalOptions,
-        correct_index: 0,
+        correct_index: inlineCorrectIndex,
         marks,
         bank_category: category,
-        solution: ''
+        solution: inlineSolution,
+        needs_review: needsReview,
+        review_reason: needsReview ? `Question ${qNum}: Option text could not be automatically separated. Please review manually.` : null
       });
     }
   }
 
-  // Parse Answer Key & Explanations if available
+  // Parse Answer Key & Explanations if available at end of document
   if (answerKeyPart && questions.length > 0) {
     const solutionBlocks = answerKeyPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)])/gi);
     let currentCategory = 'General';

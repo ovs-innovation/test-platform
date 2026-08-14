@@ -27,8 +27,9 @@ export const createQuestion = asyncHandler(async (req, res) => {
   await ensureAssessment(assessmentId);
 
   const {
+    section_id,
+    question_type = 'single_choice',
     question_text,
-    question_type = 'mcq',
     options,
     correct_index,
     correct_indices,
@@ -36,9 +37,8 @@ export const createQuestion = asyncHandler(async (req, res) => {
     numerical_tolerance,
     assertion_text,
     reason_text,
-    marks,
+    marks = 1,
     position,
-    section_id,
     starter_code,
     test_cases,
     language,
@@ -48,6 +48,8 @@ export const createQuestion = asyncHandler(async (req, res) => {
     subject_id,
     chapter_id,
     difficulty,
+    subject: inputSubject,
+    topic: inputTopic,
   } = req.body;
 
   let pos = position;
@@ -59,12 +61,15 @@ export const createQuestion = asyncHandler(async (req, res) => {
     pos = maxRes.rows[0].next;
   }
 
+  const questionSubject = inputSubject || bank_category || null;
+  const questionTopic = inputTopic || bank_category || null;
+
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
      RETURNING *`,
     [
       assessmentId,
@@ -89,6 +94,8 @@ export const createQuestion = asyncHandler(async (req, res) => {
       subject_id || null,
       chapter_id || null,
       difficulty || 'medium',
+      questionSubject,
+      questionTopic,
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -123,17 +130,20 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const subject_id = body.subject_id !== undefined ? (body.subject_id || null) : q.subject_id;
   const chapter_id = body.chapter_id !== undefined ? (body.chapter_id || null) : q.chapter_id;
   const difficulty = body.difficulty !== undefined ? body.difficulty : q.difficulty;
+  const subject = body.subject !== undefined ? body.subject : q.subject;
+  const topic = body.topic !== undefined ? body.topic : q.topic;
 
   const result = await query(
     `UPDATE questions SET
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
        numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
        marks = $10, position = $11, section_id = $12, starter_code = $13, test_cases = $14, language = $15,
-       bank_category = $16, solution = $17, image_url = $18, subject_id = $19, chapter_id = $20, difficulty = $21
-     WHERE id = $22 RETURNING *`,
+       bank_category = $16, solution = $17, image_url = $18, subject_id = $19, chapter_id = $20, difficulty = $21,
+       subject = $22, topic = $23
+     WHERE id = $24 RETURNING *`,
     [question_text, question_type, options, correct_index, correct_indices,
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
-      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, id]
+      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic, id]
   );
   res.json({ question: result.rows[0] });
 });

@@ -28,7 +28,6 @@ export const DoubtSolutionZodSchema = z.object({
  */
 export async function generateStudentAIPlan(studentMetrics = {}) {
   const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || env.geminiApiKey;
 
   const {
     student_name = 'Student',
@@ -83,7 +82,7 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
     };
   };
 
-  if (!openRouterKey && !apiKey) return buildFallbackPlan();
+  if (!openRouterKey) return buildFallbackPlan();
 
   const prompt = `You are an elite academic mentor and NTA CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
 
@@ -121,24 +120,6 @@ Return a strict JSON object with this EXACT structure:
     }
   }
 
-  if (apiKey) {
-    try {
-      const { GoogleGenAI } = await import('@google/genai');
-      const ai = new GoogleGenAI({ apiKey });
-      const candidateModels = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro'];
-      for (const modelName of candidateModels) {
-        try {
-          const response = await ai.models.generateContent({ model: modelName, contents: prompt, config: { responseMimeType: 'application/json' } });
-          if (response.text) return JSON.parse(response.text);
-        } catch (mErr) {
-          console.warn(`[AIService] generateStudentAIPlan ${modelName} failed:`, mErr.message);
-        }
-      }
-    } catch (err) {
-      console.error('[AIService] Gemini generateStudentAIPlan failed:', err.message);
-    }
-  }
-
   return buildFallbackPlan();
 }
 
@@ -149,7 +130,7 @@ Return a strict JSON object with this EXACT structure:
  * NEVER uses generic or hardcoded content — every insight references real metrics.
  */
 export async function generateAIMentorReport(testData = {}) {
-  const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
 
   const {
     student_name = 'Student',
@@ -249,19 +230,19 @@ export async function generateAIMentorReport(testData = {}) {
         },
         weakSubj.length > 0
           ? {
-              title: `Priority: Improve ${weakSubj[0].subject}`,
-              rule: `Your ${weakSubj[0].subject} accuracy is ${weakSubj[0].accuracy_percent}%. Dedicate 40% of daily study time to this subject over the next 7 days.`,
-            }
+            title: `Priority: Improve ${weakSubj[0].subject}`,
+            rule: `Your ${weakSubj[0].subject} accuracy is ${weakSubj[0].accuracy_percent}%. Dedicate 40% of daily study time to this subject over the next 7 days.`,
+          }
           : { title: 'Balanced Revision', rule: 'Maintain subject balance — split time equally between revision and problem solving.' },
         timeTraps.length > 0
           ? {
-              title: 'Time Trap Avoidance',
-              rule: `${timeTraps.length} questions consumed excessive time (${timeTraps[0]?.time_spent_seconds || 180}s+). Practice skipping questions that exceed 2.5 minutes without a clear solution path.`,
-            }
+            title: 'Time Trap Avoidance',
+            rule: `${timeTraps.length} questions consumed excessive time (${timeTraps[0]?.time_spent_seconds || 180}s+). Practice skipping questions that exceed 2.5 minutes without a clear solution path.`,
+          }
           : {
-              title: 'Time Management',
-              rule: 'Maintain 1.5–2 minutes per question average. Avoid spending >2.5 minutes on any single question during first pass.',
-            },
+            title: 'Time Management',
+            rule: 'Maintain 1.5–2 minutes per question average. Avoid spending >2.5 minutes on any single question during first pass.',
+          },
         {
           title: 'Formula Consolidation',
           rule: `Create a formula cheatsheet for ${weakSubj[0]?.subject || 'your weakest subject'} and revise it daily before solving practice questions.`,
@@ -323,16 +304,15 @@ export async function generateAIMentorReport(testData = {}) {
           advice: s.time_spent_seconds > 3000
             ? `Overran by ${s.time_spent_seconds - 2700}s — practice faster question selection.`
             : s.time_spent_seconds < 2000
-            ? `Rushed by ${2700 - s.time_spent_seconds}s — may have skipped solvable questions.`
-            : 'Well-paced.',
+              ? `Rushed by ${2700 - s.time_spent_seconds}s — may have skipped solvable questions.`
+              : 'Well-paced.',
         })),
-        overall_pacing_advice: `You averaged ${avgTimePerQ}s per question. ${
-          avgTimePerQ > 110
+        overall_pacing_advice: `You averaged ${avgTimePerQ}s per question. ${avgTimePerQ > 110
             ? 'Slower than ideal — prioritize skipping complex questions in first pass.'
             : avgTimePerQ < 60
-            ? 'Fast pace may indicate rushed decisions — slow down on 4-mark questions.'
-            : 'Good pacing maintained throughout the test.'
-        }`,
+              ? 'Fast pace may indicate rushed decisions — slow down on 4-mark questions.'
+              : 'Good pacing maintained throughout the test.'
+          }`,
       },
 
       mistake_pattern_analysis: {
@@ -346,17 +326,17 @@ export async function generateAIMentorReport(testData = {}) {
         })),
         silly_mistakes: sillyMistakes > 0
           ? {
-              count: sillyMistakes,
-              detail: `${sillyMistakes} wrong answers on easy difficulty questions — likely careless errors under time pressure or misread options.`,
-              fix: 'Re-read question stems before selecting an option. Allow 5–10 extra seconds for easy questions.',
-            }
+            count: sillyMistakes,
+            detail: `${sillyMistakes} wrong answers on easy difficulty questions — likely careless errors under time pressure or misread options.`,
+            fix: 'Re-read question stems before selecting an option. Allow 5–10 extra seconds for easy questions.',
+          }
           : { count: 0, detail: 'No significant silly mistakes detected on easy-level questions.', fix: '' },
         time_pressure_errors: timeTraps.length > 0
           ? {
-              count: timeTraps.length,
-              detail: `${timeTraps.length} questions spent >3 minutes — time pressure likely caused suboptimal answer choices.`,
-              fix: 'Practice mock tests with strict 2.5-minute cutoff per question to build decision-making speed.',
-            }
+            count: timeTraps.length,
+            detail: `${timeTraps.length} questions spent >3 minutes — time pressure likely caused suboptimal answer choices.`,
+            fix: 'Practice mock tests with strict 2.5-minute cutoff per question to build decision-making speed.',
+          }
           : { count: 0, detail: 'No significant time pressure patterns detected.', fix: '' },
         negative_marking_impact: {
           marks_lost: marksLostToNegative,
@@ -379,8 +359,8 @@ export async function generateAIMentorReport(testData = {}) {
         practice_intensity: accuracy_percent < 50
           ? 'Intensive — 4+ hours daily focused practice required.'
           : accuracy_percent < 70
-          ? 'Moderate-High — 2-3 hours daily revision with chapter-wise mocks.'
-          : 'Maintenance — 1-2 hours daily to sustain and improve current level.',
+            ? 'Moderate-High — 2-3 hours daily revision with chapter-wise mocks.'
+            : 'Maintenance — 1-2 hours daily to sustain and improve current level.',
         skills_to_improve: [
           ...(accuracy_percent < 65 ? ['Question selection strategy', 'Negative marking control'] : []),
           ...(avgTimePerQ > 110 ? ['Time management and pacing'] : []),
@@ -391,16 +371,12 @@ export async function generateAIMentorReport(testData = {}) {
     };
   };
 
-  if (!apiKey) {
-    console.log('[GeminiService] No API key — using data-driven mentor report fallback.');
+  if (!openRouterKey) {
+    console.log('[GeminiService] No OpenRouter API key configured — using data-driven mentor report fallback.');
     return buildDataDrivenFallback();
   }
 
-  try {
-    const { GoogleGenAI } = await import('@google/genai');
-    const ai = new GoogleGenAI({ apiKey });
-
-    const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NTA-pattern CBT test series for NEET UG and JEE students in India.
+  const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NTA-pattern CBT test series for NEET UG and JEE students in India.
 
 A student just completed an AIETS mock examination. Analyze the REAL test data below and generate a comprehensive 8-section personalized AI Mentor Report.
 
@@ -470,24 +446,20 @@ Return ONLY valid JSON with this exact structure:
     "skills_to_improve": ["array of skills based on real data"]
   }
 }`;
-    const candidateModels = ['gemini-flash-latest', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-pro-latest', 'gemini-2.0-flash', 'gemini-1.5-flash'];
-    for (const modelName of candidateModels) {
-      try {
-        const response = await ai.models.generateContent({
-          model: modelName,
-          contents: prompt,
-          config: { responseMimeType: 'application/json' },
-        });
-        if (response.text) return JSON.parse(response.text);
-      } catch (mErr) {
-        console.warn(`[GeminiService] generateAIMentorReport ${modelName} failed:`, mErr.message);
+
+  if (openRouterKey) {
+    try {
+      const openRouterText = await callOpenRouterAI({ systemPrompt: prompt, questionText: 'Generate 8-section AI mentor report JSON object' });
+      if (openRouterText) {
+        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) return JSON.parse(jsonMatch[0]);
       }
+    } catch (err) {
+      console.warn('[AIService] OpenRouter generateAIMentorReport failed:', err.message);
     }
-    return buildDataDrivenFallback();
-  } catch (err) {
-    console.error('[GeminiService] generateAIMentorReport failed, using data-driven fallback:', err.message);
-    return buildDataDrivenFallback();
   }
+
+  return buildDataDrivenFallback();
 }
 
 /**
@@ -1165,8 +1137,8 @@ function buildSmartAcademicResolution({ questionText = '', imageBase64 = null, s
   // Default Offline Academic Resolution for general STEM doubts when AI key is unavailable or query is unmatched
   const guessedSubject = subjectContext || (
     query.includes('math') || query.includes('calc') || query.includes('algebra') || query.includes('geom') ? 'Mathematics' :
-    query.includes('chem') || query.includes('bond') || query.includes('react') || query.includes('acid') ? 'Chemistry' :
-    query.includes('bio') || query.includes('cell') || query.includes('gene') || query.includes('organ') ? 'Biology' : 'Physics'
+      query.includes('chem') || query.includes('bond') || query.includes('react') || query.includes('acid') ? 'Chemistry' :
+        query.includes('bio') || query.includes('cell') || query.includes('gene') || query.includes('organ') ? 'Biology' : 'Physics'
   );
 
   return {
@@ -1616,7 +1588,7 @@ export async function callOpenRouterAIStream({ systemPrompt, questionText = '', 
                 if (token && onToken) {
                   onToken(token);
                 }
-              } catch (_) {}
+              } catch (_) { }
             }
           }
         }
@@ -1637,7 +1609,7 @@ export async function callOpenRouterAIStream({ systemPrompt, questionText = '', 
                 if (token && onToken) {
                   onToken(token);
                 }
-              } catch (_) {}
+              } catch (_) { }
             }
           }
         }
@@ -1661,11 +1633,13 @@ async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 =
   if (!openRouterKey) return null;
 
   const openRouterModels = [
-    'google/gemini-2.0-flash-exp:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'qwen/qwen-2.5-72b-instruct:free',
     'nvidia/nemotron-3-super-120b-a12b:free',
-    'deepseek/deepseek-r1:free'
+    'google/gemini-2.0-flash-lite-001',
+    'google/gemini-2.0-flash-001',
+    'meta-llama/llama-3.3-70b-instruct',
+    'deepseek/deepseek-r1',
+    'qwen/qwen-2.5-72b-instruct',
+    'mistralai/mistral-small-24b-instruct-2501:free'
   ];
 
   let messagesPayload = [
@@ -1800,7 +1774,7 @@ For Academic Doubts:
     if (openRouterText) {
       let jsonParsed = null;
       if (openRouterText.startsWith('{') && openRouterText.endsWith('}')) {
-        try { jsonParsed = JSON.parse(openRouterText); } catch (_) {}
+        try { jsonParsed = JSON.parse(openRouterText); } catch (_) { }
       }
 
       if (jsonParsed) {
@@ -1830,231 +1804,7 @@ For Academic Doubts:
         text: openRouterText
       };
     }
-  }
-
-  // 3. Gemini API integration with Multi-Key Rotation if keys are available
-  const getGeminiApiKeys = () => {
-    const keys = [];
-    if (process.env.GEMINI_API_KEYS) {
-      const list = process.env.GEMINI_API_KEYS.split(',').map(k => k.trim()).filter(Boolean);
-      keys.push(...list);
-    }
-    for (let i = 1; i <= 10; i++) {
-      const k = process.env[`GEMINI_API_KEY_${i}`];
-      if (k && k.trim()) keys.push(k.trim());
-    }
-    if (process.env.GEMINI_API_KEY && !keys.includes(process.env.GEMINI_API_KEY.trim())) {
-      keys.push(process.env.GEMINI_API_KEY.trim());
-    }
-    if (process.env.GOOGLE_API_KEY && !keys.includes(process.env.GOOGLE_API_KEY.trim())) {
-      keys.push(process.env.GOOGLE_API_KEY.trim());
-    }
-    if (env.geminiApiKey && !keys.includes(env.geminiApiKey.trim())) {
-      keys.push(env.geminiApiKey.trim());
-    }
-    return Array.from(new Set(keys));
-  };
-
-  const apiKeys = getGeminiApiKeys();
-
-  if (apiKeys.length > 0) {
-    const systemPrompt = `You are an expert STEM tutor and career guidance counselor for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
-
-Student Name: ${studentName}
-${subjectContext ? `Subject Context: ${subjectContext}` : ''}
-${questionText ? `Student Query: "${questionText}"` : ''}
-${imageBase64 ? 'An image of the question/diagram/handwritten doubt has been attached.' : ''}
-
-You handle three kinds of requests:
-(1) ACADEMIC DOUBT-SOLVING (MODE 1)
-(2) EXAM STRATEGY & IMPORTANT TOPICS (MODE 2)
-(3) CAREER GUIDANCE & COLLEGE ADVICE (MODE 3)
-
-Detect which mode the student is asking and respond accordingly:
-
----
-## MODE 1: ACADEMIC DOUBT-SOLVING
-- Identify the level: Easy, Moderate, or Hard (JEE/NEET Calibration).
-- Provide:
-  1) One-line summary of what is being asked/tested.
-  2) Core concept(s)/formula(s)/law(s) involved with brief "why this applies here".
-  3) Step-by-step working (clearly numbered logical steps, no skipped algebra).
-  4) Final Answer clearly highlighted/boxed at the end with SI units.
-  5) Common Mistakes students make on this problem type (1-2 lines).
-
----
-## MODE 2: EXAM STRATEGY & IMPORTANT TOPICS
-- Provide:
-  1) Chapter/topic-wise weightage (High-yield chapters based on historical trends for JEE/NEET).
-  2) Difficulty distribution (Easy-scoring vs concept-heavy).
-  3) Prioritization advice (What to master first under time constraints).
-  4) Revision tips (NCERT-first for NEET, PYQs for pattern recognition in JEE).
-  5) Caveat: Mention exam patterns shift yearly, cross-check against official NTA (JEE) or NMC (NEET) syllabus.
-
----
-## MODE 3: CAREER GUIDANCE
-- Provide:
-  1) Clarifying questions (optional) + immediate practical advice.
-  2) Balanced trade-offs (branch vs college brand, core engineering/medical vs CS/AI/biotech).
-  3) Relevant degree paths & career outcomes.
-  4) Caveat: Advise verifying latest official counseling/cutoff data.
-
-FORMATTING & MATHEMATICAL PRESENTATION RULES:
-- Format all mathematical, physics, chemistry, and biology equations in clean, clear, student-friendly presentation.
-- AVOID messy raw LaTeX command noise like \\text{...}, escaped percent signs \\%, or escaped dollar signs \\$.
-- Use clean standard mathematical and scientific symbols (e.g., × for multiplication, ÷ for division, ±, √, °, superscripts like 10⁵, 10⁻⁹, 10⁴, 10⁻⁴, subscripts, chemical reaction arrows ➔, base pair equality = or ≡) or clean LaTeX ($ equation $ or $$ equation $$) without \\text{} clutter.
-- Bold the final answer or key recommendation clearly with standard SI units.
-- Maintain an encouraging, patient, and precise academic mentor tone.`;
-
-    let contentsPayload = [];
-
-    if (imageBase64) {
-      let cleanBase64 = imageBase64;
-      let detectedMime = mimeType || 'image/jpeg';
-      if (imageBase64.includes(';base64,')) {
-        const parts = imageBase64.split(';base64,');
-        detectedMime = parts[0].replace('data:', '') || detectedMime;
-        cleanBase64 = parts[1];
-      }
-
-      const userPromptText = questionText 
-        ? `Question Text: "${questionText}"\n\nRecognize the question/diagram in the image and provide the full step-by-step mathematical/scientific solution.` 
-        : `Please read and recognize the math/physics/chemistry problem in this attached image and solve it step-by-step with formulas and final boxed answer.`;
-
-      contentsPayload = [
-        {
-          role: 'user',
-          parts: [
-            {
-              inlineData: {
-                mimeType: detectedMime,
-                data: cleanBase64
-              }
-            },
-            {
-              text: `${systemPrompt}\n\n${userPromptText}`
-            }
-          ]
-        }
-      ];
-    } else {
-      contentsPayload = systemPrompt;
-    }
-
-    const candidateModels = ['gemini-2.0-flash', 'gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash-lite', 'gemini-2.5-flash'];
-
-    for (let keyIndex = 0; keyIndex < apiKeys.length; keyIndex++) {
-      const currentKey = apiKeys[keyIndex];
-
-      for (const modelName of candidateModels) {
-        try {
-          if (currentKey.startsWith('AQ.')) {
-            console.warn(`[GeminiService WARNING] Key #${keyIndex + 1} starts with "AQ." which is a Developer Auth Token, not a standard Gemini API Key (starts with "AIzaSy"). If requests fail with 401/403, generate a standard API key in Google AI Studio.`);
-          }
-
-          // 1. Direct REST fetch call to Google AI Studio API
-          let rawText = null;
-          try {
-            const isAQToken = currentKey.startsWith('AQ.');
-            const url = isAQToken
-              ? `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent`
-              : `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${currentKey}`;
-            const restPayload = typeof contentsPayload === 'string'
-              ? { contents: [{ parts: [{ text: contentsPayload }] }] }
-              : { contents: contentsPayload };
-            const headers = {
-              'Content-Type': 'application/json'
-            };
-            if (isAQToken) {
-              headers['Authorization'] = `Bearer ${currentKey}`;
-            } else {
-              headers['x-goog-api-key'] = currentKey;
-            }
-
-            const restRes = await fetch(url, {
-              method: 'POST',
-              headers,
-              body: JSON.stringify(restPayload)
-            });
-            const restData = await restRes.json();
-            if (!restRes.ok) {
-              if (restRes.status === 429 || JSON.stringify(restData).includes('RESOURCE_EXHAUSTED')) {
-                throw new Error('429 quota exceeded');
-              }
-              throw new Error(restData?.error?.message || `HTTP ${restRes.status}`);
-            }
-            const fetchedText = restData.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (fetchedText && fetchedText.trim()) {
-              rawText = fetchedText.trim();
-            }
-          } catch (restErr) {
-            if (restErr.message && restErr.message.includes('429')) throw restErr;
-            // 2. Fallback to SDK call if fetch encounters error
-            try {
-              const { GoogleGenAI } = await import('@google/genai');
-              const ai = new GoogleGenAI({ apiKey: currentKey });
-              const response = await ai.models.generateContent({
-                model: modelName,
-                contents: contentsPayload
-              });
-              if (response.text && response.text.trim()) {
-                rawText = response.text.trim();
-              }
-            } catch (_) {}
-          }
-
-          if (rawText) {
-            let jsonParsed = null;
-            if (rawText.startsWith('{') && rawText.endsWith('}')) {
-              try {
-                jsonParsed = JSON.parse(rawText);
-              } catch (_) {}
-            }
-
-            if (jsonParsed) {
-              const zodResult = DoubtSolutionZodSchema.safeParse(jsonParsed);
-              if (zodResult.success) {
-                const data = zodResult.data;
-                let formatted = `### 💡 ${data.summary}\n\n`;
-                formatted += `**Difficulty Level:** ${data.level} (${data.subject} — ${data.topic})\n\n`;
-                if (data.key_concepts_and_formulas && data.key_concepts_and_formulas.length > 0) {
-                  formatted += `**Core Concepts, Formulas & Laws:**\n` + data.key_concepts_and_formulas.map(c => `• ${c}`).join('\n') + `\n\n`;
-                }
-                if (data.step_by_step_solution && data.step_by_step_solution.length > 0) {
-                  formatted += `**Step-by-Step Numbered Working:**\n\n` + data.step_by_step_solution.map(s => `**${s.step_number}. ${s.heading}**\n${s.explanation}`).join('\n\n') + `\n\n`;
-                }
-                if (data.final_answer) {
-                  formatted += `✅ **Final Answer:** ${data.final_answer}\n\n`;
-                }
-                if (data.pro_tips && data.pro_tips.length > 0) {
-                  formatted += `⚠️ **Common Student Mistakes & Exam Tips:**\n` + data.pro_tips.map(t => `• ${t}`).join('\n');
-                }
-
-                console.log(`\n[GeminiService] Successfully solved doubt using API Key #${keyIndex + 1} with model: ${modelName}`);
-                return { success: true, text: formatted, data, solution: data };
-              }
-            }
-
-            console.log(`\n[GeminiService] Successfully solved doubt using API Key #${keyIndex + 1} with model: ${modelName}`);
-            return {
-              success: true,
-              text: rawText
-            };
-          }
-        } catch (modelErr) {
-          const isQuota = modelErr.message && (modelErr.message.includes('429') || modelErr.message.includes('quota') || modelErr.message.includes('RESOURCE_EXHAUSTED'));
-          if (isQuota) {
-            console.warn(`[GeminiService] Key #${keyIndex + 1} with model ${modelName} rate limited (429). Trying next key...`);
-            break;
-          } else {
-            console.warn(`[GeminiService] Key #${keyIndex + 1} model ${modelName} failed:`, modelErr.message);
-          }
-        }
-      }
-    }
-  }
-
-  // 3. Fallback to Smart Academic & Strategy Engine
+  }  // 3. Fallback to Smart Academic & Strategy Engine
   console.log('[GeminiService] Executing Smart Academic & Strategy Engine for doubt query.');
   const objSol = buildSmartAcademicResolution({ questionText, imageBase64, subjectContext, studentName });
 
@@ -2151,6 +1901,291 @@ FORMATTING & MATHEMATICAL PRESENTATION RULES:
     solution: objSol
   };
 }
+
+/**
+ * generateExamMentorStrategyReport
+ * Generates an expert academic mentor strategy report following the exact exam mentor prompt template.
+ * Output: Strict JSON matching the UI rendering schema.
+ */
+export async function generateExamMentorStrategyReport(testData = {}) {
+  const openRouterKey = (process.env.OPENROUTER_API_KEY || env?.openrouterApiKey || '').trim();
+
+  const {
+    exam_type = 'JEE Main',
+    test_date = new Date().toISOString().split('T')[0],
+    days_remaining = 7,
+    score = 0,
+    total_marks = 300,
+    percentile = 0,
+    rank = 1,
+    covered_subjects = [],
+    subject_wise_breakdown = 'Physics: 0/100, Chemistry: 0/100, Mathematics: 0/100',
+    strong_topics = [],
+    weak_topics = [],
+    moderate_topics = [],
+    avg_time_per_question = '2m 0s',
+    unattempted_count = 0,
+    rushed_wrong_count = 0,
+    raw_chapter_performance = [],
+    raw_subject_analysis = []
+  } = testData;
+
+  const cleanSubjectList = (Array.isArray(covered_subjects) ? covered_subjects : []).filter(s => s && s !== 'General');
+  const coveredSubjectsList = cleanSubjectList.length > 0 
+    ? cleanSubjectList 
+    : (String(exam_type).toUpperCase().includes('NEET') ? ['Botany', 'Zoology', 'Physics', 'Chemistry'] : ['Physics', 'Chemistry', 'Mathematics']);
+  
+  const coveredSubjectsText = coveredSubjectsList.join(', ');
+
+  const cleanTopicStr = (t) => {
+    if (!t) return '';
+    const str = typeof t === 'string' ? t : (t.chapter_name || t.topic || '');
+    return str.replace(/\s*\([^)]*\)/g, '').trim();
+  };
+
+  const strongTopicsText = Array.isArray(strong_topics) ? strong_topics.map(cleanTopicStr).filter(Boolean).join(', ') : (cleanTopicStr(strong_topics) || 'None identified');
+  const weakTopicsText = Array.isArray(weak_topics) ? weak_topics.map(cleanTopicStr).filter(Boolean).join(', ') : (cleanTopicStr(weak_topics) || 'None identified');
+  const moderateTopicsText = Array.isArray(moderate_topics) ? moderate_topics.map(cleanTopicStr).filter(Boolean).join(', ') : (cleanTopicStr(moderate_topics) || 'None identified');
+  
+  const rawWeakList = Array.isArray(weak_topics) ? weak_topics : (typeof weak_topics === 'string' ? weak_topics.split(',').map(s => s.trim()) : []);
+  const rawModList = Array.isArray(moderate_topics) ? moderate_topics : (typeof moderate_topics === 'string' ? moderate_topics.split(',').map(s => s.trim()) : []);
+  const rawStrongList = Array.isArray(strong_topics) ? strong_topics : (typeof strong_topics === 'string' ? strong_topics.split(',').map(s => s.trim()) : []);
+
+  const weakTopicsList = rawWeakList.map(cleanTopicStr).filter(Boolean);
+  const moderateTopicsList = rawModList.map(cleanTopicStr).filter(Boolean);
+  const strongTopicsList = rawStrongList.map(cleanTopicStr).filter(Boolean);
+
+  // DATA-DRIVEN FALLBACK ENGINE
+  const buildDataDrivenReport = () => {
+    let combinedWeakAndMod = Array.from(new Set([...weakTopicsList, ...moderateTopicsList])).filter(Boolean);
+    
+    if (combinedWeakAndMod.length === 0) {
+      const isBio = coveredSubjectsList.some(s => ['Botany', 'Zoology', 'Biology'].includes(s));
+      const isPhys = coveredSubjectsList.every(s => s === 'Physics');
+      const isChem = coveredSubjectsList.every(s => s === 'Chemistry');
+      const isMath = coveredSubjectsList.every(s => s === 'Mathematics');
+
+      if (isPhys && !isChem && !isMath && !isBio) {
+        combinedWeakAndMod = ['Electricity & Magnetism', 'Mechanics & Rotational Motion', 'Electrostatics & Capacitance', 'Ray & Wave Optics', 'Thermodynamics & Heat'];
+      } else if (isBio && !isPhys && !isChem && !isMath) {
+        combinedWeakAndMod = ['Human Physiology & Anatomy', 'Genetics & Molecular Inheritance', 'Plant Physiology & Photosynthesis', 'Cell Biology & Biomolecules', 'Biotechnology & Ecology'];
+      } else if (isChem && !isPhys && !isMath && !isBio) {
+        combinedWeakAndMod = ['Organic Chemistry & Mechanisms', 'Ionic & Chemical Equilibrium', 'Chemical Bonding & Structure', 'Electrochemistry & Kinetics', 'Coordination Compounds'];
+      } else if (isMath && !isPhys && !isChem && !isBio) {
+        combinedWeakAndMod = ['Definite Integration & Area', 'Vector Algebra & 3D Geometry', 'Probability & Statistics', 'Matrices & Determinants', 'Differential Calculus'];
+      } else {
+        combinedWeakAndMod = String(exam_type).toUpperCase().includes('NEET')
+          ? ['Human Physiology', 'Genetics & Evolution', 'Chemical Bonding', 'Optics & Mechanics', 'Plant Physiology']
+          : ['Mechanics & Dynamics', 'Chemical Equilibrium', 'Calculus & Integration', 'Organic Reactions', 'Electrostatics & Magnetism'];
+      }
+    }
+
+    const topPriorities = combinedWeakAndMod.length > 0 ? combinedWeakAndMod.slice(0, 5) : ['Foundation Concepts', 'Time Management'];
+
+    const rootCauses = combinedWeakAndMod.slice(0, 4).map((topic, i) => {
+      let issue = `Conceptual gap and formula application errors observed in test questions.`;
+      if (rushed_wrong_count > 0 && i % 2 === 0) {
+        issue = `Rushed attempt with low accuracy suggesting formula confusion or guessing under time pressure.`;
+      } else if (unattempted_count > 5 && i % 2 === 1) {
+        issue = `High unattempted rate indicates hesitation and lack of speed on numerical applications.`;
+      }
+      return { topic: typeof topic === 'string' ? topic : (topic.name || topic.topic || 'Weak Topic'), issue };
+    });
+
+    const daysCount = Math.max(1, Math.min(14, Number(days_remaining) || 7));
+    const dailyPlan = [];
+
+    const activityTypes = [
+      (top) => [`Revise core theory and key formula shortcuts for ${top}`, `Solve 25 targeted previous year questions (PYQs) on ${top} with a timer`],
+      (top) => [`Practice high-yield numerical problem sets for ${top}`, `Review error log and formula application tricks for ${top}`],
+      (top) => [`Attempt 20 timed sub-topic diagnostic questions on ${top}`, `Formula speed check and concept review for ${top}`],
+      (top) => [`Focus on multi-concept application questions involving ${top}`, `Solve past exam PYQs for ${top}`],
+      (top) => [`Consolidate weak area formulas and common traps in ${top}`, `Timed 30-minute practice drill on ${top}`],
+    ];
+
+    for (let d = 1; d <= daysCount; d++) {
+      if (d === daysCount) {
+        dailyPlan.push({
+          day: d,
+          focus: 'Final Revision & Strategic Mental Prep',
+          activities: [
+            'Revise formula sheet and error log across all weak topics',
+            'Light timing practice and relaxation for peak exam mindset'
+          ],
+          estimatedHours: 4
+        });
+      } else if (d === daysCount - 1 && daysCount >= 3) {
+        dailyPlan.push({
+          day: d,
+          focus: `Full Mock Test & Time Audit (${exam_type})`,
+          activities: [
+            `Attempt a full test under strict CBT conditions covering ${coveredSubjectsText}`,
+            'Detailed error log analysis focusing on rushed wrong answers'
+          ],
+          estimatedHours: 6
+        });
+      } else {
+        const topicFocus = combinedWeakAndMod[(d - 1) % combinedWeakAndMod.length] || `Topic ${d} Mastery`;
+        const actGenerator = activityTypes[(d - 1) % activityTypes.length];
+        dailyPlan.push({
+          day: d,
+          focus: `Focus Area: ${topicFocus}`,
+          activities: actGenerator(topicFocus),
+          estimatedHours: 5
+        });
+      }
+    }
+
+    const tips = [
+      `Manage time strictly: Spend no more than 2 minutes per question on initial pass. Mark lengthy questions for Round 2.`,
+      `Reduce rushed errors: Double check calculations on direct questions before submitting your choice.`,
+      unattempted_count > 0
+        ? `Target unattempted questions by building formula recall speed so you can attempt at least ${Math.min(unattempted_count, 5)} more questions confidently.`
+        : `Protect your accuracy: Avoid taking random guesses on 50-50 options to prevent negative marking penalties.`
+    ];
+
+    const cleanExamType = String(exam_type).replace(/_/g, ' ');
+    const hasValidRank = percentile !== null && percentile !== undefined && rank !== null && rank !== undefined;
+    const summaryText = score > 0
+      ? (hasValidRank
+        ? `Scored ${score}/${total_marks} marks (${percentile}% percentile, AIR #${rank}). Target your priority topics below to boost accuracy.`
+        : `Scored ${score}/${total_marks} marks. Percentile and rank will be available once more students complete this test.`)
+      : `Test analysis complete (${score}/${total_marks} marks). Target your priority topics below to build concept accuracy.`;
+    const noteText = `Focusing on your priority revision plan over the next ${daysCount} days will unlock your target score!`;
+
+    return {
+      examType: cleanExamType,
+      coveredSubjects: coveredSubjectsList,
+      performanceSummary: summaryText,
+      rootCauseAnalysis: rootCauses,
+      priorityTopics: topPriorities,
+      dailyPlan,
+      examStrategyTips: tips,
+      motivationalNote: noteText
+    };
+  };
+
+  console.log('[AIService] generateExamMentorStrategyReport Prompt Inputs:', JSON.stringify({
+    exam_type,
+    covered_subjects: coveredSubjectsList,
+    test_date,
+    days_remaining,
+    score,
+    total_marks,
+    percentile,
+    rank,
+    subject_wise_breakdown,
+    strong_topics: strongTopicsList,
+    weak_topics: weakTopicsList,
+    moderate_topics: moderateTopicsList,
+    avg_time_per_question,
+    unattempted_count,
+    rushed_wrong_count
+  }, null, 2));
+
+  const percentileText = (percentile !== null && percentile !== undefined) ? `${percentile}%` : 'Not Available Yet (Insufficient Comparison Data)';
+  const rankText = (rank !== null && rank !== undefined) ? `#${rank}` : 'Not Available Yet (Insufficient Comparison Data)';
+
+  const systemPrompt = `You are an expert exam mentor and academic strategist for competitive exams (NEET, JEE Main, JEE Advanced), with deep knowledge of each exam's syllabus, pattern, marking scheme, and time-management strategies used by top-ranking students.
+
+--- INPUT DATA ---
+Exam Type: ${exam_type}
+Subjects Covered in This Test: ${coveredSubjectsText}
+Test Date: ${test_date}
+Days Until Next Test: ${days_remaining}
+Overall Score: ${score} / ${total_marks}
+Percentile: ${percentileText}
+Rank: ${rankText}
+
+Subject-wise Performance (ONLY for subjects covered in this test):
+${subject_wise_breakdown}
+
+Topic-wise Breakdown (ONLY topics from ${coveredSubjectsText}):
+Strong topics (75%+ accuracy): ${strongTopicsText}
+Weak topics (below 50% accuracy or unattempted): ${weakTopicsText}
+Moderate topics (50-75% accuracy): ${moderateTopicsText}
+
+Time Management Data:
+Average time per question: ${avg_time_per_question}
+Questions left unattempted: ${unattempted_count}
+Questions attempted but wrong (flag if time taken was very low but answer was wrong, suggesting rushing/guessing): ${rushed_wrong_count}
+
+--- CRITICAL SCOPING RULE ---
+This test covered ONLY these subjects: ${coveredSubjectsText}.
+You MUST NOT mention, reference, or generate topics, root causes, priority items, or study plan content for ANY subject outside ${coveredSubjectsText} — even if you know that subject is part of ${exam_type}'s full syllabus. If ${coveredSubjectsText} is only "Biology," do not mention Physics, Chemistry, or Mathematics anywhere in your response.
+
+--- MISSING DATA RULE ---
+If Percentile or Rank is "Not Available Yet", do NOT state a numerical percentile or rank in your performance summary. Instead state "Percentile and rank will be available once more students complete this test."
+
+--- ROOT CAUSE ANALYSIS RULE ---
+- For topics tagged as "(0% - Unattempted Entirely)": Explain the root cause as a time-management, pacing, or exam strategy issue (e.g. running out of time, skipping during question selection passes, or unrevised syllabus coverage).
+- For topics tagged as "(Concept Gaps)" or low accuracy: Explain the root cause as a conceptual gap, formula application error, or calculation mistake.
+
+--- YOUR TASK ---
+Using ONLY the data above, produce:
+
+1. Performance Summary (2-3 sentences)
+   - Honest, encouraging assessment scoped strictly to ${coveredSubjectsText}.
+
+2. Root Cause Analysis
+   - For each weak topic (from ${coveredSubjectsText} only), briefly explain WHY it's likely weak based on the data. Apply the ROOT CAUSE ANALYSIS RULE above to differentiate unattempted topics from low-accuracy attempted topics.
+
+3. Priority Ranking
+   - Rank the weak/moderate topics (from ${coveredSubjectsText} only) by: (a) weakness severity, (b) typical weightage of that topic in ${exam_type}, (c) days available.
+
+4. Day-by-Day Study Plan
+   - Create a plan for exactly ${days_remaining} days, using topics ONLY from ${coveredSubjectsText}.
+   - MANDATORY: Each day must have a DIFFERENT focus area and DIFFERENT activities from every other day. Do not repeat the same "Focus Area" text or the same activity descriptions on more than one day, even if two weak topics seem similar. Cycle through the priority topics list across the available days, then use remaining days for consolidation/mock tests/revision.
+   - Each day should specify: topic focus, activity type (concept revision, practice questions, formula revision, mock test, previous-year questions, error-log review), and estimated time commitment.
+   - Include at least one full revision day and one mock-test/practice day if ${days_remaining} allows.
+   - If ${days_remaining} is very short (under 3 days), prioritize high-yield revision over new learning, but each day must still be distinct.
+
+5. Exam Strategy Tips
+   - Based on time-management data, scoped to ${coveredSubjectsText} and ${exam_type}'s format.
+
+6. Motivational Closing Note
+   - One short, genuine sentence tied to something specific in their data.
+
+--- OUTPUT FORMAT ---
+Return valid JSON only, no text outside it:
+
+{
+  "examType": "string",
+  "coveredSubjects": ["string"],
+  "performanceSummary": "string",
+  "rootCauseAnalysis": [{ "topic": "string", "issue": "string" }],
+  "priorityTopics": ["string"],
+  "dailyPlan": [{ "day": 1, "focus": "string", "activities": ["string"], "estimatedHours": number }],
+  "examStrategyTips": ["string"],
+  "motivationalNote": "string"
+}
+
+Before finalizing your response, verify: (1) every topic mentioned belongs to ${coveredSubjectsText} only, (2) no two days in dailyPlan have the same focus or activities, (3) percentile/rank are only stated if valid data was provided. If any check fails, correct it before returning the JSON.`;
+
+  console.log('\n===================================================================');
+  console.log('=== [STEP 4 LOG] FULL FINAL PROMPT TEXT BEING SENT TO OPENROUTER ===');
+  console.log(systemPrompt);
+  console.log('===================================================================\n');
+
+  if (openRouterKey) {
+    try {
+      const openRouterText = await callOpenRouterAI({ systemPrompt, questionText: 'Generate exam mentor strategy report JSON object' });
+      console.log('\n===================================================================');
+      console.log('=== [STEP 5 LOG] AI RAW RESPONSE TEXT (BEFORE JSON PARSING) ===');
+      console.log(openRouterText);
+      console.log('===================================================================\n');
+      if (openRouterText) {
+        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+        if (jsonMatch) return JSON.parse(jsonMatch[0]);
+      }
+    } catch (err) {
+      console.warn('[AIService] OpenRouter generateExamMentorStrategyReport failed:', err.message);
+    }
+  }
+
+  return buildDataDrivenReport();
+}
+
 
 
 

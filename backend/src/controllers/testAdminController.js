@@ -5,6 +5,7 @@ import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions } from '../utils/pdfQuestionParser.js';
+import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 
 /**
  * 1. GET /api/admin/tests
@@ -381,6 +382,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
   // Automatic PDF Question Extraction
   let extractedCount = 0;
+  let reviewWarnings = [];
   if (file_base64 && typeof file_base64 === 'string') {
     try {
       const base64Data = file_base64.replace(/^data:[^;]+;base64,/, '');
@@ -388,18 +390,47 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       const pdfData = await pdfParse(pdfBuffer).catch(() => null);
 
       if (pdfData && pdfData.text) {
+        console.log('\n===================================================================');
+        console.log('[PDF EXTRACTION LOG] Raw PDF Extracted Text (First 1000 chars):');
+        console.log(pdfData.text.substring(0, 1000));
+        console.log('===================================================================\n');
+
         const parsedQs = parsePdfQuestions(pdfData.text);
         if (parsedQs.length > 0) {
           extractedCount = parsedQs.length;
+          reviewWarnings = parsedQs.filter(q => q.needs_review).map(q => q.review_reason);
+          if (reviewWarnings.length > 0) {
+            console.warn(`[PDF Import Warning] ${reviewWarnings.length} question(s) flagged for manual review:`, reviewWarnings);
+          }
+
+          // Retrieve test details for context
+          const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
+          const currentTest = currentTestRes.rows[0] || {};
+
           await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
           let calcTotalMarks = 0;
+          const detectedSubjects = new Set();
+
           for (let i = 0; i < parsedQs.length; i++) {
             const q = parsedQs[i];
             calcTotalMarks += (q.marks || 4);
+
+            // Infer subject & topic from test name, syllabus, pdf text, and question text
+            const classification = inferSubjectAndTopic({
+              testName: currentTest.test_name,
+              syllabus: currentTest.syllabus,
+              questionText: q.question_text,
+              pdfText: pdfData.text
+            });
+
+            const qSubject = (q.bank_category && q.bank_category !== 'General') ? q.bank_category : classification.subject;
+            const qTopic = classification.topic;
+            if (qSubject && qSubject !== 'General') detectedSubjects.add(qSubject);
+
             await query(
               `INSERT INTO questions (
-                assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution
-              ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8)`,
+                assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic
+              ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10)`,
               [
                 id,
                 q.question_text,
@@ -407,14 +438,27 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                 q.correct_index || 0,
                 q.marks || 4,
                 i + 1,
-                q.bank_category || 'General',
-                q.solution || ''
+                qSubject || 'General',
+                q.solution || '',
+                qSubject,
+                qTopic
               ]
             );
           }
 
-          if (calcTotalMarks > 0) {
-            await query('UPDATE tests SET max_marks = $1 WHERE id = $2', [calcTotalMarks, id]);
+          const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
+          const subjectsArray = Array.from(detectedSubjects);
+
+          if (calcTotalMarks > 0 || primarySubject) {
+            await query(
+              `UPDATE tests SET 
+                max_marks = GREATEST(max_marks, $1),
+                subject = COALESCE(subject, $2),
+                subjects = COALESCE(subjects, $3::jsonb),
+                updated_at = NOW()
+               WHERE id = $4`,
+              [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
+            );
             await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => {});
           }
         }
@@ -450,7 +494,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   res.json({
     message: `${file_type} uploaded successfully`,
     url: relativeUrl,
-    file_type
+    file_type,
+    warnings: reviewWarnings.length > 0 ? reviewWarnings : undefined
   });
 });
 

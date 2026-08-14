@@ -147,11 +147,11 @@ export default function AdminLayout({ children }) {
     <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#F8FAFC] text-slate-900 transition-colors duration-200 dark:bg-[#080D1A] dark:text-slate-100">
       {/* DESKTOP COMMAND NAVIGATION RAIL */}
       <aside
-        className={`hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
+        className={`fixed top-0 left-0 bottom-0 z-40 hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
           collapsed ? 'w-20' : 'w-[260px]'
         }`}
       >
-        <div className="relative sticky top-3 flex h-[calc(100vh-1.5rem)] flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]">
+        <div className="relative flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]">
           {/* Minimal Compact Circular Collapse Toggle (24px, Thin Bright Blue Border) */}
           <button
             type="button"
@@ -335,9 +335,11 @@ export default function AdminLayout({ children }) {
       )}
 
       {/* MAIN ADMIN WORKSPACE AREA */}
-      <div className="flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden">
+      <div className={`flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ${
+        collapsed ? 'lg:pl-20' : 'lg:pl-[260px]'
+      }`}>
         {/* FLOATING ROUNDED NAVBAR CONTAINER */}
-        <div className="pt-3 px-3 sm:px-4 lg:px-6 lg:pl-3">
+        <div className="pt-3 px-3 sm:px-4 lg:px-6">
           <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
             {/* Mobile Drawer Trigger & Breadcrumb / Mobile Logo */}
             <div className="flex items-center gap-2 min-w-0">
@@ -391,7 +393,7 @@ export default function AdminLayout({ children }) {
                 <button
                   type="button"
                   onClick={() => setQuickActionsOpen(!quickActionsOpen)}
-                  className="btn btn-primary btn-sm hidden sm:inline-flex items-center gap-1.5"
+                  className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white transition-all shadow-xs cursor-pointer"
                 >
                   <span>+ Quick Action</span>
                 </button>
@@ -429,10 +431,10 @@ export default function AdminLayout({ children }) {
               {/* Premium Notification Bell */}
               <button
                 onClick={() => setNotifPanelOpen(true)}
-                className="group relative flex h-9.5 w-9.5 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-xs transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 hover:shadow-md hover:shadow-blue-500/10 active:scale-95 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 cursor-pointer"
+                className="group relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-xs transition-all duration-200 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 hover:shadow-md hover:shadow-blue-500/10 active:scale-95 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 cursor-pointer"
                 title="Notifications"
               >
-                <Bell className="h-4.5 w-4.5 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
+                <Bell className="h-4 w-4 transition-transform duration-300 group-hover:rotate-12 group-hover:scale-110" strokeWidth={1.8} />
                 {unreadNotifs > 0 && (
                   <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-red-500 via-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-pulse font-mono">
                     {unreadNotifs > 99 ? '99+' : unreadNotifs}
