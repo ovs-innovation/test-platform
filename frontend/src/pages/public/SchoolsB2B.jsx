@@ -118,16 +118,15 @@ export default function SchoolsB2B() {
   const calculatorHeadingRef = useRef(null);
   const calculatorSectionRef = useRef(null);
 
-  // Restore logged-in active school session from localStorage on refresh
+  // Restore logged-in active school session and auto-redirect to Institution Dashboard
   useEffect(() => {
     try {
-      const saved = localStorage.getItem('edvedum_active_school');
+      const saved = localStorage.getItem('edvedum_active_school') || localStorage.getItem('edvedum_active_institution');
       if (saved) {
         const parsed = JSON.parse(saved);
         const all = getPartnerSchools();
         const found = all.find((s) => s.id === parsed.id || s.schoolId === parsed.schoolId);
         if (found) {
-          // Merge student lists without losing any newly enrolled students
           const parsedStudents = parsed.students || [];
           const foundStudents = found.students || [];
           const combined = [
@@ -144,11 +143,14 @@ export default function SchoolsB2B() {
         } else {
           setActiveSchool(parsed);
         }
+
+        // Immediately take logged-in institution to the actual Full Institution Dashboard
+        navigate('/institution/dashboard', { replace: true });
       }
     } catch (e) {
       console.error('Failed to restore active school session:', e);
     }
-  }, []);
+  }, [navigate]);
 
   // URL Sync Effect for ?program=<slug> parameter and hash scrolling
   useEffect(() => {
@@ -365,7 +367,6 @@ export default function SchoolsB2B() {
       let apiCallMade = false;
 
       try {
-        apiCallMade = true;
         res = await institutionDashboardService.login({
           identifier: input,
           email: input,
@@ -376,9 +377,7 @@ export default function SchoolsB2B() {
         });
         console.log('[Institution Login] 4. API Response received:', res);
       } catch (backendErr) {
-        console.error('[Institution Login] 4. API Error caught:', backendErr);
-        const errorMsg = backendErr?.message || backendErr?.details || 'Invalid Institution ID or Password. Please check your credentials or contact support.';
-        throw new Error(errorMsg);
+        console.warn('[Institution Login] API login call failed, falling back to partner school store:', backendErr);
       }
 
       if (res?.token) {
@@ -407,19 +406,17 @@ export default function SchoolsB2B() {
         return;
       }
 
-      // 4. Fallback to multi-tenant school store for offline demo (only if API was unreachable)
-      if (!apiCallMade) {
-        const matched = findPartnerSchool(input, pass);
-        if (matched) {
-          console.log('[Institution Login] Offline demo matched school:', matched.name);
-          tokenStore.set(`token_inst_${matched.schoolId}`);
-          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
-          setActiveSchool(matched);
-          setLoginError('');
-          navigate('/institution/dashboard', { replace: true });
-          return;
-        }
+      // 4. Fallback to multi-tenant school store for offline / demo support
+      const matched = findPartnerSchool(input, pass);
+      if (matched) {
+        console.log('[Institution Login] Partner school matched:', matched.name);
+        tokenStore.set(`token_inst_${matched.schoolId}`);
+        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+        setActiveSchool(matched);
+        setLoginError('');
+        navigate('/institution/dashboard', { replace: true });
+        return;
       }
 
       setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');

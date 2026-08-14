@@ -835,4 +835,68 @@
   ::-webkit-scrollbar-thumb:hover {
     background: rgba(148, 163, 184, 0.45);
   }
+
+  /* Geo Pattern Flow Multi-Layer Parallax Animations */
+  @keyframes geoBackDrift {
+    0%, 100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(-6px, 4px, 0);
+    }
+  }
+
+  @keyframes geoMidLeftBreathing {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-8px, 6px, 0) scale(1.01);
+    }
+  }
+
+  @keyframes geoMidRightBreathing {
+    0%, 100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(6px, -10px, 0) scale(0.99);
+    }
+  }
+
+  @keyframes geoFrontSubtle {
+    0%, 100% {
+      transform: translate3d(0, 0, 0);
+    }
+    50% {
+      transform: translate3d(-3px, 3px, 0);
+    }
+  }
+
+  .animate-geo-back {
+    animation: geoBackDrift 22s ease-in-out infinite;
+  }
+
+  .animate-geo-mid-left {
+    animation: geoMidLeftBreathing 18s ease-in-out infinite;
+    transform-origin: top left;
+  }
+
+  .animate-geo-mid-right {
+    animation: geoMidRightBreathing 20s ease-in-out infinite 2s;
+    transform-origin: bottom right;
+  }
+
+  .animate-geo-front {
+    animation: geoFrontSubtle 24s ease-in-out infinite 1s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .animate-geo-back,
+    .animate-geo-mid-left,
+    .animate-geo-mid-right,
+    .animate-geo-front {
+      animation: none !important;
+    }
+  }
 }

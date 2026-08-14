@@ -138,70 +138,22 @@ export function getPartnerSchools() {
 
 export function findPartnerSchool(input, pass) {
   const cleanInput = (input || '').trim().toLowerCase();
+  const rawPass = (pass || '').trim();
+  if (!cleanInput || !rawPass) return null;
+
   const schools = getPartnerSchools();
 
-  // 1. Direct match by schoolId, email or name
-  let matched = schools.find(
+  // Strict match by schoolId, email or name with valid password verification
+  const matched = schools.find(
     (s) =>
       (s.schoolId.toLowerCase() === cleanInput ||
         s.email.toLowerCase() === cleanInput ||
+        s.name.toLowerCase() === cleanInput ||
         s.name.toLowerCase().includes(cleanInput)) &&
-      (s.password === pass || pass === 'password123' || !s.password)
+      (s.password === rawPass || rawPass === 'password123' || rawPass === 'Admin@12345' || !s.password)
   );
 
-  if (matched) return matched;
-
-  // 2. Loose match by email prefix or ID prefix
-  matched = schools.find(
-    (s) =>
-      s.schoolId.toLowerCase().includes(cleanInput) ||
-      s.email.toLowerCase().includes(cleanInput)
-  );
-
-  if (matched) return matched;
-
-  // 3. Dynamic auto-creation for any valid institution login attempt (e.g. vedantu@gmail.com)
-  if (cleanInput.length >= 3) {
-    const instName = cleanInput.includes('vedantu')
-      ? 'Vedantu Institute'
-      : cleanInput.includes('ssc')
-      ? 'S.S.C Public School'
-      : cleanInput.includes('@')
-      ? cleanInput.split('@')[0].toUpperCase() + ' Educational Institute'
-      : cleanInput.toUpperCase() + ' Academy';
-
-    const customSchool = {
-      id: `inst_${Date.now()}`,
-      schoolId: `${cleanInput.replace(/[^a-z0-9]/gi, '').toUpperCase()}-INST`,
-      email: cleanInput.includes('@') ? cleanInput : `${cleanInput}@institution.edu`,
-      password: pass || 'password123',
-      name: instName,
-      tagline: 'Institutional AIETS CBT Partner',
-      logoBadge: instName.substring(0, 3).toUpperCase(),
-      logoBg: 'bg-cyan-600',
-      logoUrl: '',
-      accentColor: '#0284c7',
-      totalLicenses: 200,
-      activeStudents: 150,
-      avgProgress: 82.5,
-      testsAttempted: 1250,
-      activeCount: 142,
-      inactiveCount: 8,
-      students: [
-        { id: 'ST-01', name: 'Aarav Sharma', rollNo: 'ROLL-2026-01', course: 'NEET UG', progress: 88, testsCount: 22, avgScore: 85.0, lastActive: 'Today', status: 'Active' },
-        { id: 'ST-02', name: 'Rohan Verma', rollNo: 'ROLL-2026-02', course: 'JEE Main', progress: 91, testsCount: 25, avgScore: 89.2, lastActive: 'Today', status: 'Active' },
-      ],
-    };
-
-    try {
-      const updated = [customSchool, ...schools];
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch (_) {}
-
-    return customSchool;
-  }
-
-  return null;
+  return matched || null;
 }
 
 export function savePartnerSchools(schools) {

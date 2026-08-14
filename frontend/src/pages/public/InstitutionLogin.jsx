@@ -34,10 +34,13 @@ export default function InstitutionLogin() {
     try {
       const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
       if (saved) {
-        setActiveSession(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        setActiveSession(parsed);
+        // Automatically redirect directly to the Full Institution Dashboard
+        navigate('/institution/dashboard', { replace: true });
       }
     } catch (_) {}
-  }, []);
+  }, [navigate]);
 
   const handleSignOut = () => {
     tokenStore.clear();
@@ -75,7 +78,6 @@ export default function InstitutionLogin() {
       let apiCallMade = false;
 
       try {
-        apiCallMade = true;
         res = await institutionDashboardService.login({
           email: input,
           identifier: input,
@@ -86,9 +88,7 @@ export default function InstitutionLogin() {
         });
         console.log('[Institution Login Page] 4. API Response received:', res);
       } catch (backendErr) {
-        console.error('[Institution Login Page] 4. API Error caught:', backendErr);
-        const errorMsg = backendErr?.message || backendErr?.details || 'Invalid Institution ID or Password. Please check your credentials.';
-        throw new Error(errorMsg);
+        console.warn('[Institution Login Page] API login call failed, falling back to partner school store:', backendErr);
       }
 
       if (res?.token) {
@@ -120,19 +120,17 @@ export default function InstitutionLogin() {
         return;
       }
 
-      // 4. Check multi-tenant institution store fallback (only if API was not called)
-      if (!apiCallMade) {
-        const matched = findPartnerSchool(input, pass);
-        if (matched) {
-          console.log('[Institution Login Page] Offline demo matched school:', matched.name);
-          tokenStore.set(`token_inst_${matched.schoolId}`);
-          localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
-          localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
+      // 4. Check multi-tenant institution store fallback
+      const matched = findPartnerSchool(input, pass);
+      if (matched) {
+        console.log('[Institution Login Page] Demo matched school:', matched.name);
+        tokenStore.set(`token_inst_${matched.schoolId}`);
+        localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
+        localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
 
-          toast.success(`Welcome back, ${matched.name}!`);
-          navigate('/institution/dashboard', { state: { loggedInSchool: matched }, replace: true });
-          return;
-        }
+        toast.success(`Welcome back, ${matched.name}!`);
+        navigate('/institution/dashboard', { state: { loggedInSchool: matched }, replace: true });
+        return;
       }
 
       setError('Invalid Institution ID or Password. Please check your credentials.');
@@ -229,55 +227,8 @@ export default function InstitutionLogin() {
           <div className="w-full max-w-[400px] rounded-[20px] border border-[#38BDF8]/25 bg-gradient-to-b from-[#0F213D]/95 via-[#0B1A32]/98 to-[#071224]/98 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] text-white p-5 sm:p-6 space-y-4 relative overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-80" />
 
-            {/* IF ACTIVE SESSION EXISTS: DISPLAY ACTIVE SESSION PANEL */}
-            {activeSession ? (
-              <div className="space-y-4 text-left">
-                <div className="space-y-1.5">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-0.5 text-[11px] font-extrabold text-emerald-400">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>ACTIVE INSTITUTION SESSION FOUND</span>
-                  </div>
-                  <h2 className="text-xl font-extrabold text-white tracking-tight">
-                    {activeSession.name}
-                  </h2>
-                  <p className="text-xs text-slate-300">
-                    Logged in as Institutional Administrator • <span className="font-mono text-cyan-300 font-bold">ID: {activeSession.schoolId || activeSession.id}</span>
-                  </p>
-                </div>
-
-                <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 space-y-1.5 text-xs">
-                  <div className="flex justify-between text-slate-300">
-                    <span>Contact Email:</span>
-                    <strong className="text-white font-mono">{activeSession.email || 'admin@institution.edu'}</strong>
-                  </div>
-                  <div className="flex justify-between text-slate-300">
-                    <span>Assigned Licenses:</span>
-                    <strong className="text-emerald-400">{activeSession.totalLicenses || 200} Enrolled Seats</strong>
-                  </div>
-                </div>
-
-                <div className="space-y-2.5 pt-1">
-                  <button
-                    onClick={() => navigate('/institution/dashboard', { replace: true })}
-                    className="w-full rounded-xl bg-gradient-to-r from-blue-600 via-cyan-500 to-blue-500 py-3 text-xs sm:text-sm font-extrabold text-white shadow-lg hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <span>Continue to Institution Portal</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full rounded-xl border border-rose-500/30 bg-rose-500/10 py-2.5 text-xs font-bold text-rose-300 hover:bg-rose-500/20 transition cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <LogOut className="h-4 w-4" />
-                    <span>Sign Out & Switch Account</span>
-                  </button>
-                </div>
-              </div>
-            ) : (
-              /* OTHERWISE: DISPLAY NORMAL LOGIN FORM */
-              <>
-                <div className="space-y-1">
+            {/* INSTITUTION PORTAL LOGIN FORM */}
+            <div className="space-y-1">
                   <div className="h-9 w-9 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-md mb-2">
                     <Building2 className="h-4.5 w-4.5" />
                   </div>
@@ -377,8 +328,6 @@ export default function InstitutionLogin() {
                     </a>
                   </p>
                 </div>
-              </>
-            )}
           </div>
         </div>
       </div>

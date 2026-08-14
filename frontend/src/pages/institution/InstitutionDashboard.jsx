@@ -32,17 +32,16 @@ export default function InstitutionDashboard() {
 
   // Dynamically resolve active institution ID from URL param -> JWT Token -> localStorage
   const getActiveInstId = () => {
-    if (id && !isNaN(Number(id))) {
-      return Number(id);
+    if (id) {
+      return id;
     }
     try {
       const token = tokenStore.get();
-      if (token) {
+      if (token && token.includes('.')) {
         const parts = token.split('.');
         if (parts.length === 3) {
           const payload = JSON.parse(atob(parts[1]));
-          const tokenInstId = Number(payload?.institution_id);
-          if (tokenInstId && !isNaN(tokenInstId) && tokenInstId > 0) return tokenInstId;
+          if (payload?.institution_id) return payload.institution_id;
         }
       }
     } catch (_) {}
@@ -51,12 +50,12 @@ export default function InstitutionDashboard() {
       const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
       if (saved) {
         const parsed = JSON.parse(saved);
-        const savedId = Number(parsed?.id || parsed?.institution_id);
-        if (savedId && !isNaN(savedId) && savedId > 0) return savedId;
+        const savedId = parsed?.id || parsed?.institution_id || parsed?.schoolId;
+        if (savedId) return savedId;
       }
     } catch (_) {}
 
-    return null;
+    return 1;
   };
 
   const instId = getActiveInstId();

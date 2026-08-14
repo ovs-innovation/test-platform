@@ -79,7 +79,15 @@ api.interceptors.response.use(
     // ONLY logout or redirect on genuine HTTP 401 (Unauthorized), NEVER on 500/503 or network errors!
     if (status === 401 && !isAuthAttempt) {
       const activeToken = tokenStore.get();
-      if (activeToken && (activeToken.startsWith('mock_student_token_') || activeToken.startsWith('mock_token_'))) {
+      const isInstSession = activeToken && (
+        activeToken.startsWith('mock_student_token_') ||
+        activeToken.startsWith('mock_token_') ||
+        activeToken.startsWith('token_inst_') ||
+        activeToken.startsWith('token_') ||
+        window.location.pathname.startsWith('/institution')
+      );
+
+      if (isInstSession) {
         return Promise.reject({ status, message, details: error.response?.data?.details });
       }
 
