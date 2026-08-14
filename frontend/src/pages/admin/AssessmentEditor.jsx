@@ -314,6 +314,8 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
 function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
+  const [lastSubjectId, setLastSubjectId] = useState(null);
+  const [lastChapterId, setLastChapterId] = useState(null);
   const [form, setForm] = useState(emptyForm('mcq'));
   const [saving, setSaving] = useState(false);
   const [bankOpen, setBankOpen] = useState(false);
@@ -338,7 +340,12 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     setEditing(null);
     const f = emptyForm(type);
     const sec = sections.find((s) => s.section_type.includes(type === 'mcq' || type === 'multi_select' ? 'mcq' : type)) || sections[0];
-    setForm({ ...f, section_id: sec?.id || null });
+    setForm({
+      ...f,
+      section_id: sec?.id || null,
+      subject_id: lastSubjectId || form.subject_id || null,
+      chapter_id: lastChapterId || form.chapter_id || null,
+    });
     setModalOpen(true);
   };
 
@@ -346,6 +353,11 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     setEditing(q);
     const opts = Array.isArray(q.options) ? q.options : (typeof q.options === 'string' ? JSON.parse(q.options) : []);
     const indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
+    const subjId = q.subject_id || null;
+    const chapId = q.chapter_id || null;
+    if (subjId) setLastSubjectId(subjId);
+    if (chapId) setLastChapterId(chapId);
+
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text,
@@ -362,8 +374,9 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       test_cases: q.test_cases?.length ? q.test_cases : [{ input: '', expected: '' }],
       solution: q.solution || '',
       image_url: q.image_url || '',
-      subject_id: q.subject_id || null,
-      chapter_id: q.chapter_id || null,
+      subject_id: subjId,
+      subject: q.subject || '',
+      chapter_id: chapId,
       difficulty: q.difficulty || 'medium',
     });
     setModalOpen(true);
@@ -373,8 +386,13 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     e.preventDefault();
     setSaving(true);
     try {
+      if (form.subject_id) setLastSubjectId(form.subject_id);
+      if (form.chapter_id) setLastChapterId(form.chapter_id);
+
       const payload = {
         ...form,
+        subject_id: form.subject_id || null,
+        chapter_id: form.chapter_id || null,
         section_id: form.section_id || null,
         options: form.options.map((o) => o.trim()).filter(Boolean),
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
@@ -640,7 +658,19 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const selected = options.find((o) => (o.id !== undefined ? o.id === value : o.value === value));
+  const getOptVal = (o) => (o.id !== undefined ? o.id : o.value);
+
+  const isMatchingVal = (optVal, targetVal) => {
+    if ((optVal === '' || optVal === null || optVal === undefined) && (targetVal === '' || targetVal === null || targetVal === undefined)) {
+      return true;
+    }
+    if (optVal != null && targetVal != null) {
+      return String(optVal) === String(targetVal);
+    }
+    return false;
+  };
+
+  const selected = options.find((o) => isMatchingVal(getOptVal(o), value));
   const displayLabel = selected ? (selected.label || selected.name) : placeholder;
 
   useEffect(() => {
@@ -669,12 +699,12 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
 
       {open && !disabled && (
         <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
-          {options.map((opt) => {
-            const optVal = opt.id !== undefined ? opt.id : opt.value;
-            const isSelected = optVal === value;
+          {options.map((opt, idx) => {
+            const optVal = getOptVal(opt);
+            const isSelected = isMatchingVal(optVal, value);
             return (
               <button
-                key={optVal ?? 'empty'}
+                key={optVal ?? opt.name ?? idx}
                 type="button"
                 onClick={() => {
                   onChange(optVal);
@@ -704,9 +734,17 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
 
   useEffect(() => {
     adminService.subjects().then((list) => {
-      setSubjectsList(list || []);
+      const fetched = list || [];
+      setSubjectsList(fetched);
+      if (fetched.length && !form.subject_id && (form.subject || editing?.subject)) {
+        const subjName = form.subject || editing?.subject;
+        const match = fetched.find(s => s.name.toLowerCase() === subjName.toLowerCase());
+        if (match) {
+          setForm(f => ({ ...f, subject_id: match.id }));
+        }
+      }
     }).catch(() => {});
-  }, []);
+  }, [editing?.subject]);
 
   useEffect(() => {
     if (form.subject_id) {

@@ -64,6 +64,24 @@ export const createQuestion = asyncHandler(async (req, res) => {
   const questionSubject = inputSubject || bank_category || null;
   const questionTopic = inputTopic || bank_category || null;
 
+  let finalSubjectId = subject_id ? Number(subject_id) : null;
+  let finalChapterId = chapter_id ? Number(chapter_id) : null;
+  let finalSubjectName = questionSubject;
+  let finalTopicName = questionTopic;
+
+  if (finalSubjectId && !finalSubjectName) {
+    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [finalSubjectId]);
+    if (sRes.rows.length > 0) finalSubjectName = sRes.rows[0].name;
+  } else if (!finalSubjectId && finalSubjectName) {
+    const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [finalSubjectName]);
+    if (sRes.rows.length > 0) finalSubjectId = sRes.rows[0].id;
+  }
+
+  if (finalChapterId && !finalTopicName) {
+    const cRes = await query('SELECT name FROM chapters WHERE id = $1', [finalChapterId]);
+    if (cRes.rows.length > 0) finalTopicName = cRes.rows[0].name;
+  }
+
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
@@ -91,11 +109,11 @@ export const createQuestion = asyncHandler(async (req, res) => {
       bank_category || null,
       solution || '',
       image_url || '',
-      subject_id || null,
-      chapter_id || null,
+      finalSubjectId,
+      finalChapterId,
       difficulty || 'medium',
-      questionSubject,
-      questionTopic,
+      finalSubjectName,
+      finalTopicName,
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -127,11 +145,24 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const bank_category = body.bank_category !== undefined ? body.bank_category : q.bank_category;
   const solution = body.solution !== undefined ? body.solution : q.solution;
   const image_url = body.image_url !== undefined ? body.image_url : q.image_url;
-  const subject_id = body.subject_id !== undefined ? (body.subject_id || null) : q.subject_id;
-  const chapter_id = body.chapter_id !== undefined ? (body.chapter_id || null) : q.chapter_id;
+  let subject_id = body.subject_id !== undefined ? (Number(body.subject_id) || null) : q.subject_id;
+  let chapter_id = body.chapter_id !== undefined ? (Number(body.chapter_id) || null) : q.chapter_id;
   const difficulty = body.difficulty !== undefined ? body.difficulty : q.difficulty;
-  const subject = body.subject !== undefined ? body.subject : q.subject;
-  const topic = body.topic !== undefined ? body.topic : q.topic;
+  let subject = body.subject !== undefined ? body.subject : q.subject;
+  let topic = body.topic !== undefined ? body.topic : q.topic;
+
+  if (subject_id && (!subject || body.subject_id !== q.subject_id)) {
+    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [subject_id]);
+    if (sRes.rows.length > 0) subject = sRes.rows[0].name;
+  } else if (!subject_id && subject) {
+    const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [subject]);
+    if (sRes.rows.length > 0) subject_id = sRes.rows[0].id;
+  }
+
+  if (chapter_id && (!topic || body.chapter_id !== q.chapter_id)) {
+    const cRes = await query('SELECT name FROM chapters WHERE id = $1', [chapter_id]);
+    if (cRes.rows.length > 0) topic = cRes.rows[0].name;
+  }
 
   const result = await query(
     `UPDATE questions SET
