@@ -95,6 +95,10 @@ jobs:
               docker compose ps || true
               log "--- Backend Container Logs (Last 150 Lines) ---"
               docker compose logs --tail=150 backend || true
+              log "--- Frontend Container Logs (Last 150 Lines) ---"
+              docker compose logs --tail=150 frontend || true
+              log "--- Postgres Container Logs (Last 50 Lines) ---"
+              docker compose logs --tail=50 postgres || true
 
               if [ -n "$PREV_COMMIT" ] && [ "$PREV_COMMIT" != "$NEW_COMMIT" ]; then
                 log "Initiating automatic rollback to commit ${PREV_COMMIT}..."
@@ -130,7 +134,7 @@ jobs:
               log "Detected active SSL certificate directory: ${CERT_DIR}"
               sed -i "s|/etc/letsencrypt/live/[^/]*|/etc/letsencrypt/live/${CERT_DIR}|g" frontend/nginx.conf || true
             else
-              log "WARNING: No active certificate directory found in certbot/conf/live!"
+              log "WARNING: No active certificate directory found in certbot/conf/live! Preserving default nginx.conf configuration."
             fi
 
             log "Building docker containers..."
@@ -145,8 +149,8 @@ jobs:
             # 6. Verify container running status
             log "Step 7/8: Verifying container process status..."
             docker compose ps
-            RUNNING_BACKEND=$(docker compose ps --status running backend -q 2>/dev/null || docker compose ps -q backend || echo "")
-            RUNNING_FRONTEND=$(docker compose ps --status running frontend -q 2>/dev/null || docker compose ps -q frontend || echo "")
+            RUNNING_BACKEND=$(docker compose ps --filter "status=running" -q backend 2>/dev/null || docker ps --filter "name=backend" --filter "status=running" -q 2>/dev/null || echo "")
+            RUNNING_FRONTEND=$(docker compose ps --filter "status=running" -q frontend 2>/dev/null || docker ps --filter "name=frontend" --filter "status=running" -q 2>/dev/null || echo "")
 
             if [ -z "$RUNNING_BACKEND" ]; then
               log "CRITICAL ERROR: Backend container is not in 'running' state!"
@@ -154,8 +158,7 @@ jobs:
             fi
 
             if [ -z "$RUNNING_FRONTEND" ]; then
-              log "CRITICAL ERROR: Frontend container is not in 'running' state! Container logs:"
-              docker compose logs --tail=100 frontend || true
+              log "CRITICAL ERROR: Frontend container is not in 'running' state!"
               execute_rollback
             fi
 
