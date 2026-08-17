@@ -74,13 +74,15 @@ jobs:
               cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
             fi
             if [ -d "frontend/dist" ]; then
-              mkdir -p "$BACKUP_DIR/frontend_dist_backup"
-              cp -r frontend/dist/* "$BACKUP_DIR/frontend_dist_backup/" 2>/dev/null || true
+              cp -r frontend/dist "$BACKUP_DIR/frontend_dist_backup" || true
             fi
 
-            # Fetch and reset to target commit
+            # Clean any stale git lock files
+            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock 2>/dev/null || true
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
+
+            # Fetch and reset to target commit
             git fetch origin main || git fetch --all || true
             git reset --hard "${{ github.sha }}" || git reset --hard origin/main
 
