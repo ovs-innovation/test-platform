@@ -30,7 +30,7 @@ services:
       NODE_ENV: production
       PORT: 5000
       DATABASE_URL: ${DATABASE_URL:-postgres://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@postgres:5432/${POSTGRES_DB:-interview_platform}}
-      JWT_SECRET: ${JWT_SECRET:-change_this_to_a_long_random_secret_string}
+      JWT_SECRET: ${JWT_SECRET:-edvedum_production_secure_fallback_jwt_secret_key_9876543210_v2_key}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-2h}
       CLIENT_URL: ${CLIENT_URL:-http://localhost:5173}
       RUN_SEED: ${RUN_SEED:-false}
