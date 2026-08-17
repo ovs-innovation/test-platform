@@ -155,10 +155,16 @@ jobs:
             fi
 
             log "Building docker containers..."
-            docker compose build
+            if ! docker compose build; then
+              log "CRITICAL ERROR: 'docker compose build' failed on VPS!"
+              execute_rollback
+            fi
 
             log "Step 6/8: Starting production containers in background..."
-            docker compose up -d --remove-orphans
+            if ! docker compose up -d --remove-orphans; then
+              log "CRITICAL ERROR: 'docker compose up' failed on VPS!"
+              execute_rollback
+            fi
 
             log "Waiting 5 seconds for container process startup..."
             sleep 5
