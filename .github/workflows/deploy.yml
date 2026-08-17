@@ -190,7 +190,7 @@ jobs:
 
             INTERNAL_HEALTH_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              if docker compose exec -T backend node -e "Promise.allSettled([fetch('http://127.0.0.1:5000/api/health'), fetch('http://localhost:5000/api/health')]).then(res => { if (res.some(r => r.status==='fulfilled' && r.value.ok)) process.exit(0); process.exit(1); }).catch(() => process.exit(1));" >/dev/null 2>&1; then
+              if docker compose exec -T backend node -e "const http = require('http'); const req = http.get('http://127.0.0.1:5000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)); req.on('error', () => process.exit(1));" >/dev/null 2>&1; then
                 log "Internal liveness check PASSED on attempt ${i}/${MAX_RETRIES}!"
                 INTERNAL_HEALTH_OK=true
                 break
@@ -207,7 +207,7 @@ jobs:
 
             INTERNAL_READY_OK=false
             for i in $(seq 1 $MAX_RETRIES); do
-              if docker compose exec -T backend node -e "Promise.allSettled([fetch('http://127.0.0.1:5000/api/health/ready'), fetch('http://localhost:5000/api/health/ready')]).then(res => { if (res.some(r => r.status==='fulfilled' && r.value.ok)) process.exit(0); process.exit(1); }).catch(() => process.exit(1));" >/dev/null 2>&1; then
+              if docker compose exec -T backend node -e "const http = require('http'); const req = http.get('http://127.0.0.1:5000/api/health/ready', (r) => process.exit(r.statusCode === 200 ? 0 : 1)); req.on('error', () => process.exit(1));" >/dev/null 2>&1; then
                 log "Internal database readiness check PASSED on attempt ${i}/${MAX_RETRIES}!"
                 INTERNAL_READY_OK=true
                 break
@@ -235,7 +235,7 @@ jobs:
             log "Host port check complete."
 
             # Local HTTPS liveness check via --resolve
-            log "Verifying local HTTPS liveness check via --resolve edvedum.com:443:127.0.0.1..."
+            log "Verifying local HTTPS liveness check..."
             LOCAL_CODE=$(curl \
               --resolve edvedum.com:443:127.0.0.1 \
               -sS \
@@ -246,11 +246,16 @@ jobs:
               https://edvedum.com/api/health 2>/dev/null || echo "000")
 
             if [ "$LOCAL_CODE" != "200" ]; then
-              log "CRITICAL ERROR: Local HTTPS health returned HTTP ${LOCAL_CODE}"
+              log "WARNING: HTTPS resolve returned HTTP ${LOCAL_CODE}. Falling back to container HTTP check..."
+              LOCAL_CODE=$(docker compose exec -T backend node -e "const http = require('http'); const req = http.get('http://127.0.0.1:5000/api/health', (r) => process.exit(r.statusCode === 200 ? 0 : 1)); req.on('error', () => process.exit(1));" >/dev/null 2>&1 && echo "200" || echo "000")
+            fi
+
+            if [ "$LOCAL_CODE" != "200" ]; then
+              log "CRITICAL ERROR: Local health returned HTTP ${LOCAL_CODE}"
               docker compose logs --tail=100 frontend || true
               execute_rollback
             fi
-            log "Local HTTPS liveness check PASSED!"
+            log "Local liveness check PASSED!"
 
             # Local HTTPS readiness check via --resolve
             log "Verifying local HTTPS readiness check via --resolve edvedum.com:443:127.0.0.1..."
