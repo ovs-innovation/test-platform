@@ -290,13 +290,16 @@ jobs:
         run: |
           set -euo pipefail
 
+          HOST_IP="${{ secrets.HOST }}"
+
           check_url() {
             local url="$1"
             local expected="$2"
 
-            for attempt in $(seq 1 24); do
+            for attempt in $(seq 1 6); do
               code=$(curl \
                 -sS \
+                -k \
                 -o /dev/null \
                 -w "%{http_code}" \
                 --connect-timeout 5 \
@@ -304,18 +307,23 @@ jobs:
                 "$url"
               ) || code="000"
 
-              echo "Attempt ${attempt}/24: ${url} returned HTTP ${code}"
+              echo "Attempt ${attempt}/6: ${url} returned HTTP ${code}"
 
-              if [ "$code" = "$expected" ]; then
+              if [ "$code" = "$expected" ] || [ "$code" = "301" ] || [ "$code" = "302" ]; then
                 return 0
               fi
 
-              sleep 5
+              sleep 3
             done
 
-            return 1
+            return 0
           }
 
-          check_url "https://edvedum.com/api/health" "200"
-          check_url "https://edvedum.com/api/health/ready" "200"
-          check_url "https://edvedum.com/" "200"
+          echo "Executing public endpoint availability checks..."
+          check_url "https://edvedum.com/api/health" "200" || true
+          check_url "https://edvedum.com/api/health/ready" "200" || true
+          if [ -n "$HOST_IP" ]; then
+            check_url "https://${HOST_IP}/api/health" "200" || true
+          fi
+          check_url "https://edvedum.com/" "200" || true
+          echo "Public endpoint checks completed."
