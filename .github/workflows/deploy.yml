@@ -21,29 +21,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Build Frontend Assets on Runner
-        run: |
-          cd frontend
-          npm ci
-          npm run build
-
-      - name: Upload Frontend Bundle to VPS
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          source: "frontend/dist"
-          target: "/var/www/test-platform"
-
       - name: Deploy to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -104,11 +81,6 @@ jobs:
               cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
               log "Backed up backend/.env"
             fi
-            if [ -d "frontend/dist" ]; then
-              mkdir -p "$BACKUP_DIR/dist_copy"
-              cp -r frontend/dist/* "$BACKUP_DIR/dist_copy/" || true
-              log "Backed up frontend/dist"
-            fi
 
             # 3. Clean fetch and hard reset to origin/main
             log "Step 3/8: Fetching latest code and resetting repository..."
@@ -131,11 +103,6 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/.env" ]; then
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
               log "Restored backend/.env"
-            fi
-            if [ -d "$BACKUP_DIR/dist_copy" ]; then
-              mkdir -p "frontend/dist"
-              cp -r "$BACKUP_DIR/dist_copy/"* "frontend/dist/" || true
-              log "Restored frontend/dist"
             fi
 
             # Rollback helper function
