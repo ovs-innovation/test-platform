@@ -105,8 +105,8 @@ jobs:
               log "Backed up backend/.env"
             fi
             if [ -d "frontend/dist" ]; then
-              mkdir -p "$BACKUP_DIR/frontend"
-              cp -r "frontend/dist" "$BACKUP_DIR/frontend/dist" || true
+              mkdir -p "$BACKUP_DIR/dist_copy"
+              cp -r frontend/dist/* "$BACKUP_DIR/dist_copy/" || true
               log "Backed up frontend/dist"
             fi
 
@@ -132,9 +132,9 @@ jobs:
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
               log "Restored backend/.env"
             fi
-            if [ -d "$BACKUP_DIR/frontend/dist" ] && [ ! -d "frontend/dist" ]; then
-              mkdir -p "frontend"
-              cp -r "$BACKUP_DIR/frontend/dist" "frontend/dist" || true
+            if [ -d "$BACKUP_DIR/dist_copy" ]; then
+              mkdir -p "frontend/dist"
+              cp -r "$BACKUP_DIR/dist_copy/"* "frontend/dist/" || true
               log "Restored frontend/dist"
             fi
 
