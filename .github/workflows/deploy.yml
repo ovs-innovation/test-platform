@@ -21,7 +21,51 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy to VPS via SSH
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Build Frontend Asset Bundle
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+
+      - name: Prepare VPS Git State
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          timeout: 60s
+          script: |
+            set -e
+            PROJECT_DIR="/var/www/test-platform"
+            if [ ! -d "$PROJECT_DIR" ]; then
+              echo "CRITICAL ERROR: Deployment directory $PROJECT_DIR does not exist on VPS!"
+              exit 1
+            fi
+            cd "$PROJECT_DIR"
+            git merge --abort >/dev/null 2>&1 || true
+            git rebase --abort >/dev/null 2>&1 || true
+            git fetch origin main || git fetch --all || true
+            git reset --hard origin/main
+
+      - name: Upload Frontend Bundle to VPS
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "frontend/dist"
+          target: "/var/www/test-platform"
+
+      - name: Deploy Containers to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOST }}
@@ -55,16 +99,11 @@ jobs:
 
             cd "$PROJECT_DIR"
 
-            # 1. Clear any stuck git state (rebase/merge conflicts)
-            log "Step 1/8: Clearing any pending git merge or rebase operations..."
-            git merge --abort >/dev/null 2>&1 || true
-            git rebase --abort >/dev/null 2>&1 || true
-
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             log "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
-            # 2. Backup production-specific files before git reset
-            log "Step 2/8: Backing up production-specific files to /tmp..."
+            # Backup production-specific files
+            log "Backing up production-specific files to /tmp..."
             mkdir -p "$BACKUP_DIR"
 
             if [ -f "backend/src/config/db.js" ]; then
@@ -82,16 +121,11 @@ jobs:
               log "Backed up backend/.env"
             fi
 
-            # 3. Clean fetch and hard reset to origin/main
-            log "Step 3/8: Fetching latest code and resetting repository..."
-            git fetch origin main || git fetch --all || true
-            git reset --hard origin/main
-
             NEW_COMMIT=$(git rev-parse HEAD)
             log "New target commit: ${NEW_COMMIT}"
 
-            # 4. Restore production files from backup
-            log "Step 4/8: Restoring production-specific files..."
+            # Restore production files from backup
+            log "Restoring production-specific files..."
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
               log "Restored backend/src/config/db.js"
