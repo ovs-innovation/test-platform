@@ -48,16 +48,54 @@ jobs:
           script: |
             set -e
             PROJECT_DIR="/var/www/test-platform"
+            BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
+
             if [ ! -d "$PROJECT_DIR" ]; then
               echo "CRITICAL ERROR: Deployment directory $PROJECT_DIR does not exist on VPS!"
               exit 1
             fi
             cd "$PROJECT_DIR"
+
+            PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
+            echo "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
+
+            # Backup production-specific files before git reset
+            mkdir -p "$BACKUP_DIR"
+
+            if [ -f "backend/src/config/db.js" ]; then
+              mkdir -p "$BACKUP_DIR/backend/src/config"
+              cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
+            fi
+            if [ -f ".env" ]; then
+              cp ".env" "$BACKUP_DIR/.env" || true
+            fi
+            if [ -f "backend/.env" ]; then
+              mkdir -p "$BACKUP_DIR/backend"
+              cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
+            fi
+            if [ -d "frontend/dist" ]; then
+              mkdir -p "$BACKUP_DIR/frontend_dist_backup"
+              cp -r frontend/dist/* "$BACKUP_DIR/frontend_dist_backup/" 2>/dev/null || true
+            fi
+
+            # Fetch and reset to target commit
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
             git fetch origin main || git fetch --all || true
-            git reset --hard origin/main
-            echo "VPS git reset completed successfully."
+            git reset --hard "${{ github.sha }}" || git reset --hard origin/main
+
+            # Restore production files
+            if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
+              cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
+            fi
+            if [ -f "$BACKUP_DIR/.env" ]; then
+              cp "$BACKUP_DIR/.env" ".env" || true
+            fi
+            if [ -f "$BACKUP_DIR/backend/.env" ]; then
+              cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
+            fi
+
+            echo "VPS git reset completed successfully to commit ${{ github.sha }}."
 
       - name: Upload Frontend Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
