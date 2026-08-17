@@ -1,19 +1,19 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 
 const ThemeContext = createContext({
-  theme: 'dark',
-  resolvedTheme: 'dark',
-  dark: true,
+  theme: 'light',
+  resolvedTheme: 'light',
+  dark: false,
   setTheme: () => {},
   toggle: () => {},
 });
 
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
-    return localStorage.getItem('theme_mode') || 'dark';
+    return localStorage.getItem('theme_mode') || 'light';
   });
 
-  const [resolvedTheme, setResolvedTheme] = useState('dark');
+  const [resolvedTheme, setResolvedTheme] = useState('light');
 
   const applyTheme = useCallback((mode) => {
     let target = mode;
