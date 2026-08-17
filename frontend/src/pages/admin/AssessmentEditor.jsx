@@ -735,15 +735,43 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   useEffect(() => {
     adminService.subjects().then((list) => {
       const fetched = list || [];
-      setSubjectsList(fetched);
-      if (fetched.length && !form.subject_id && (form.subject || editing?.subject)) {
+      const defaultSubjects = [
+        { name: 'Physics' },
+        { name: 'Chemistry' },
+        { name: 'Mathematics' },
+        { name: 'Botany' },
+        { name: 'Zoology' }
+      ];
+
+      const map = new Map();
+      fetched.forEach(s => {
+        if (s && s.name) map.set(s.name.toLowerCase(), s);
+      });
+      defaultSubjects.forEach((ds, idx) => {
+        if (!map.has(ds.name.toLowerCase())) {
+          map.set(ds.name.toLowerCase(), { id: 1000 + idx, name: ds.name });
+        }
+      });
+
+      const unified = Array.from(map.values());
+      setSubjectsList(unified);
+
+      if (unified.length && !form.subject_id && (form.subject || editing?.subject)) {
         const subjName = form.subject || editing?.subject;
-        const match = fetched.find(s => s.name.toLowerCase() === subjName.toLowerCase());
+        const match = unified.find(s => s.name.toLowerCase() === subjName.toLowerCase());
         if (match) {
           setForm(f => ({ ...f, subject_id: match.id }));
         }
       }
-    }).catch(() => {});
+    }).catch(() => {
+      setSubjectsList([
+        { id: 1, name: 'Physics' },
+        { id: 2, name: 'Chemistry' },
+        { id: 3, name: 'Mathematics' },
+        { id: 4, name: 'Botany' },
+        { id: 5, name: 'Zoology' }
+      ]);
+    });
   }, [editing?.subject]);
 
   useEffect(() => {

@@ -119,7 +119,29 @@ export default function AdminQuestionBank() {
       ]);
       setQuestions(data || []);
 
-      const subNames = (subjects || []).map((s) => s.name).filter(Boolean);
+      const fetched = subjects || [];
+      const defaultSubjects = [
+        { name: 'Physics' },
+        { name: 'Chemistry' },
+        { name: 'Mathematics' },
+        { name: 'Botany' },
+        { name: 'Zoology' }
+      ];
+
+      const map = new Map();
+      fetched.forEach(s => {
+        if (s && s.name) map.set(s.name.toLowerCase(), s);
+      });
+      defaultSubjects.forEach((ds, idx) => {
+        if (!map.has(ds.name.toLowerCase())) {
+          map.set(ds.name.toLowerCase(), { id: 1000 + idx, name: ds.name });
+        }
+      });
+
+      const unifiedSubjects = Array.from(map.values());
+      setSubjectsList(unifiedSubjects);
+
+      const subNames = unifiedSubjects.map((s) => s.name).filter(Boolean);
       const combined = Array.from(new Set([...DEFAULT_CATEGORIES, ...subNames]));
       setCategoriesList(combined);
     } catch {
