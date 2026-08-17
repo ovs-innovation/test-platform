@@ -33,6 +33,9 @@ jobs:
           cd frontend
           npm ci
           npm run build
+          test -f dist/index.html
+          echo "Verified GitHub artifact: frontend/dist/index.html exists"
+          ls -lah dist
 
       - name: Prepare VPS Git State
         uses: appleboy/ssh-action@v1.0.3
@@ -54,6 +57,7 @@ jobs:
             git rebase --abort >/dev/null 2>&1 || true
             git fetch origin main || git fetch --all || true
             git reset --hard origin/main
+            echo "VPS git reset completed successfully."
 
       - name: Upload Frontend Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -63,7 +67,28 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: 22
           source: "frontend/dist"
-          target: "/var/www/test-platform"
+          target: "/var/www/test-platform/frontend/dist"
+          strip_components: 2
+
+      - name: Verify VPS Frontend Bundle Upload
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          timeout: 60s
+          script: |
+            set -e
+            PROJECT_DIR="/var/www/test-platform"
+            cd "$PROJECT_DIR"
+            if [ ! -f "frontend/dist/index.html" ]; then
+              echo "CRITICAL ERROR: /var/www/test-platform/frontend/dist/index.html is missing after SCP upload!"
+              exit 1
+            fi
+            echo "Frontend bundle uploaded successfully"
+            echo "Verified VPS artifact: /var/www/test-platform/frontend/dist/index.html exists"
+            ls -lah frontend/dist
 
       - name: Deploy Containers to VPS via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -102,8 +127,8 @@ jobs:
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             log "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
-            # Backup production-specific files
-            log "Backing up production-specific files to /tmp..."
+            # Backup production-specific files & dist bundle before proceeding
+            log "Backing up production-specific files and dist bundle to /tmp..."
             mkdir -p "$BACKUP_DIR"
 
             if [ -f "backend/src/config/db.js" ]; then
@@ -119,6 +144,11 @@ jobs:
               mkdir -p "$BACKUP_DIR/backend"
               cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
               log "Backed up backend/.env"
+            fi
+            if [ -d "frontend/dist" ]; then
+              mkdir -p "$BACKUP_DIR/frontend_dist_backup"
+              cp -r frontend/dist/* "$BACKUP_DIR/frontend_dist_backup/" 2>/dev/null || true
+              log "Backed up current frontend/dist"
             fi
 
             NEW_COMMIT=$(git rev-parse HEAD)
@@ -158,6 +188,11 @@ jobs:
                 if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
                   cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
                 fi
+                if [ -d "$BACKUP_DIR/frontend_dist_backup" ]; then
+                  log "Restoring previous frontend/dist bundle for rollback..."
+                  mkdir -p "frontend/dist"
+                  cp -r "$BACKUP_DIR/frontend_dist_backup/"* "frontend/dist/" 2>/dev/null || true
+                fi
 
                 log "Rebuilding and restarting containers for rollback commit..."
                 docker compose build || true
@@ -169,6 +204,15 @@ jobs:
               rm -rf "$BACKUP_DIR" || true
               exit 1
             }
+
+            # Pre-build artifact check
+            log "Checking frontend build artifact..."
+            if [ ! -f "frontend/dist/index.html" ]; then
+              log "CRITICAL ERROR: frontend/dist/index.html is missing"
+              execute_rollback
+            fi
+            log "Verified frontend build artifact: frontend/dist/index.html exists"
+            ls -lah frontend/dist
 
             # 5. Detect active Let's Encrypt certificate directory & Build images
             log "Step 5/8: Detecting SSL certificates and building Docker images..."
