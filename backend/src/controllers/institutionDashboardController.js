@@ -1286,11 +1286,23 @@ export const sendStudentReminder = asyncHandler(async (req, res) => {
 });
 
 /**
- * GET /api/institution/:id/test-series
- * Returns dynamic test series packages from DB test_series table.
+ * GET available test series
  */
 export const getAvailableTestSeries = asyncHandler(async (req, res) => {
-  const result = await query(
+  const instId = req.institution_id || req.params.id;
+
+  const assignedRes = await query(
+    `SELECT tp.id, tp.package_name AS title, tp.package_name, tp.description, tp.exam_type,
+            tp.target_year, tp.validity_days, COALESCE(tp.total_tests, 18)::int AS total_tests_count,
+            'Assigned Package' AS status
+     FROM institution_packages ip
+     JOIN test_packages tp ON tp.id = ip.package_id
+     WHERE ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+     ORDER BY ip.id DESC`,
+    [instId]
+  ).catch(() => ({ rows: [] }));
+
+  const generalRes = await query(
     `SELECT ts.*,
             COALESCE(ts.planned_tests, ts.test_count, COUNT(DISTINCT tst.test_id))::int AS total_tests_count,
             COUNT(DISTINCT tst.test_id)::int AS linked_tests_count
@@ -1299,9 +1311,13 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
      WHERE COALESCE(ts.is_active, TRUE) = TRUE
      GROUP BY ts.id
      ORDER BY ts.is_featured DESC, ts.id DESC`
-  );
+  ).catch(() => ({ rows: [] }));
 
-  res.json({ success: true, count: result.rows.length, packages: result.rows });
+  const assignedIds = new Set(assignedRes.rows.map((r) => r.id));
+  const uniqueGeneral = generalRes.rows.filter((r) => !assignedIds.has(r.id));
+  const combined = [...assignedRes.rows, ...uniqueGeneral];
+
+  res.json({ success: true, count: combined.length, packages: combined });
 });
 
 

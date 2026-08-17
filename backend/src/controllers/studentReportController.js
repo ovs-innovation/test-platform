@@ -2,6 +2,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { handleReportExport } from '../utils/exportHelper.js';
 import { generateStudentAIPlan } from '../services/geminiService.js';
+import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
 
 /**
  * Helper to extract numeric User ID from authenticated request.
@@ -464,6 +465,19 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
   const userId = getUserId(req);
   const testId = req.query.test_id ? Number(req.query.test_id) : null;
 
+  if (userId && testId) {
+    const cachedPlan = await getCachedAIReport(userId, testId);
+    if (cachedPlan) {
+      console.log(`[StudentReport] Returning cached AI plan from Neon DB for user ${userId}, test ${testId}.`);
+      return res.json({
+        success: true,
+        data: cachedPlan,
+        plan: cachedPlan,
+        cached: true,
+      });
+    }
+  }
+
   // 1. Fetch user & score summaries
   const [userRes, scoresRes, attemptsRes] = await Promise.all([
     query(`SELECT name, target_exam FROM users WHERE id = $1`, [userId]).catch(() => ({ rows: [] })),
@@ -554,6 +568,10 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
   };
 
   const aiPlan = await generateStudentAIPlan(metrics);
+
+  if (userId && testId) {
+    await saveCachedAIReport(userId, testId, null, aiPlan);
+  }
 
   if (handleReportExport(res, req.query.format, 'Personalized AI Plan & Strategy', aiPlan)) {
     return;

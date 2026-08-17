@@ -27,6 +27,7 @@ import {
   UserPlus,
   HelpCircle,
   ShieldCheck,
+  Home,
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -354,6 +355,19 @@ export default function InstitutionPortalLayout({
 
           {/* Right Toolbar Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            {/* Back to Home Button */}
+            <Link
+              to="/"
+              className={`inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl border text-xs font-extrabold transition cursor-pointer shrink-0 ${
+                isDarkMode
+                  ? 'border-slate-800 bg-slate-900/90 text-slate-300 hover:bg-slate-800 hover:text-white'
+                  : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-2xs'
+              }`}
+              title="Back to Public Home Page"
+            >
+              <Home className="h-4 w-4 text-cyan-400" />
+              <span className="hidden sm:inline">Back to Home</span>
+            </Link>
 
             {/* Quick Actions Dropdown */}
             <div className="relative" ref={quickActionRef}>

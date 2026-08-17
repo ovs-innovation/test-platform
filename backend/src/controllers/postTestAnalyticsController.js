@@ -2,6 +2,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { generateExamMentorStrategyReport } from '../services/geminiService.js';
+import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -28,14 +29,46 @@ try {
  */
 export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   const studentId = Number(req.user?.id);
-  const testId = Number(req.params.test_id);
+  const rawId = Number(req.params.test_id);
 
   if (!studentId || isNaN(studentId)) {
     throw ApiError.unauthorized('Invalid student session');
   }
-  if (!testId || isNaN(testId)) {
+  if (!rawId || isNaN(rawId)) {
     throw ApiError.badRequest('Invalid test ID parameter');
   }
+
+  // 0. Resolve whether rawId is an ATTEMPT_ID or an ASSESSMENT_ID / TEST_ID
+  let realAttemptId = null;
+  let realAssessmentId = rawId;
+
+  // Check `attempts` table for attempt ID = rawId
+  const attemptByIdRes = await query(
+    `SELECT at.id AS attempt_id, at.assessment_id, at.candidate_id, at.submitted_at, s.marks_obtained, s.total_marks, s.percentage, s.correct_count, s.wrong_count, s.unattempted_count
+     FROM attempts at
+     LEFT JOIN scores s ON s.attempt_id = at.id
+     WHERE at.id = $1`,
+    [rawId]
+  ).catch(() => ({ rowCount: 0, rows: [] }));
+
+  if (attemptByIdRes.rowCount > 0) {
+    realAttemptId = attemptByIdRes.rows[0].attempt_id;
+    realAssessmentId = attemptByIdRes.rows[0].assessment_id || rawId;
+  } else {
+    // Check `test_attempts` table for attempt ID = rawId
+    const testAttByIdRes = await query(
+      `SELECT id AS attempt_id, COALESCE(assessment_id, test_id) AS assessment_id, student_id AS candidate_id, submitted_at, score AS marks_obtained, max_marks AS total_marks
+       FROM test_attempts
+       WHERE id = $1`,
+      [rawId]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
+    if (testAttByIdRes.rowCount > 0) {
+      realAttemptId = testAttByIdRes.rows[0].attempt_id;
+      realAssessmentId = testAttByIdRes.rows[0].assessment_id || rawId;
+    }
+  }
+
+  const testId = realAssessmentId;
 
   // 1. Fetch Test details (check tests table first, fallback to assessments table)
   let testRes = await query(
@@ -47,9 +80,15 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
 
   if (testRes.rowCount === 0) {
     testRes = await query(
-      `SELECT id, title AS test_name, COALESCE(test_type, 'JEE / NEET CBT') AS test_type, created_at AS test_date, duration_minutes, 300 AS max_marks, is_published, result_published_at AS result_publish_time
-       FROM assessments
-       WHERE id = $1`,
+      `SELECT a.id, a.title AS test_name, COALESCE(a.test_type, 'JEE / NEET CBT') AS test_type, a.created_at AS test_date, a.duration_minutes,
+              COALESCE(
+                (SELECT SUM(q.marks)::int FROM questions q WHERE q.assessment_id = a.id),
+                NULLIF(a.passing_marks, 0),
+                300
+              ) AS max_marks,
+              a.is_published, a.result_published_at AS result_publish_time
+       FROM assessments a
+       WHERE a.id = $1`,
       [testId]
     ).catch(() => ({ rowCount: 0, rows: [] }));
   }
@@ -63,6 +102,10 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     max_marks: 300,
     is_published: true
   };
+
+  if (attemptByIdRes.rows[0]?.total_marks) {
+    test.max_marks = Number(attemptByIdRes.rows[0].total_marks);
+  }
 
   // 2. Fetch Rankings (AIR, State Rank, City Rank, Institute Rank, Batch Rank) & Percentile
   const allAttemptsForTestRes = await query(
@@ -104,7 +147,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     const fa = fallbackAttempt.rows[0];
 
     hasSubmittedAttempt = !!(fa && fa.submitted_at);
-    const scoreVal = Number(fa?.total_score) || 0;
+    const scoreVal = attemptByIdRes.rows[0]?.marks_obtained != null ? Number(attemptByIdRes.rows[0].marks_obtained) : (Number(fa?.total_score) || 0);
 
     let calcAir = fa?.air ?? null;
     let calcPercentile = fa?.percentile !== null && fa?.percentile !== undefined ? Number(fa.percentile) : null;
@@ -117,7 +160,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     }
 
     currentAttemptRank = {
-      attempt_id: fa?.attempt_id || null,
+      attempt_id: realAttemptId || fa?.attempt_id || null,
       student_id: studentId,
       total_score: scoreVal,
       air: calcAir,
@@ -131,38 +174,9 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   } else {
     currentAttemptRank.has_submitted_attempt = true;
-    if (totalParticipantsCount <= 1) {
-      currentAttemptRank.air = null;
-      currentAttemptRank.state_rank = null;
-      currentAttemptRank.city_rank = null;
-      currentAttemptRank.institute_rank = null;
-      currentAttemptRank.batch_rank = null;
-      currentAttemptRank.percentile = null;
-    } else if (Number(currentAttemptRank.total_score) === 0) {
-      currentAttemptRank.percentile = 0.0;
+    if (attemptByIdRes.rows[0]?.marks_obtained != null) {
+      currentAttemptRank.total_score = Number(attemptByIdRes.rows[0].marks_obtained);
     }
-  }
-
-  console.log('\n===================================================================');
-  console.log('[STEP 4 LOG] RAW CALCULATED VALUES BEFORE SENT TO FRONTEND OR AI:');
-  console.log({
-    studentId,
-    testId,
-    total_participants: currentAttemptRank?.total_participants,
-    total_score: currentAttemptRank?.total_score,
-    raw_air: currentAttemptRank?.air,
-    raw_percentile: currentAttemptRank?.percentile
-  });
-  console.log('===================================================================\n');
-
-  // Save computed AIR & Percentile back to test_attempts if submitted
-  if (currentAttemptRank.attempt_id && currentAttemptRank.air && hasSubmittedAttempt) {
-    query(
-      `UPDATE test_attempts 
-       SET all_india_rank = $1, percentile = $2, institute_rank = $3
-       WHERE id = $4`,
-      [currentAttemptRank.air, currentAttemptRank.percentile, currentAttemptRank.institute_rank, currentAttemptRank.attempt_id]
-    ).catch(() => { });
   }
 
   // 3. Question-wise answers & peer stats for this test
@@ -181,17 +195,17 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
          COALESCE(q.difficulty, 'medium') AS difficulty_level,
          q.subject_id,
          q.chapter_id,
-         c.name AS chapter_name,
+         COALESCE(c.name, q.topic, NULLIF(q.bank_category, ''), 'Electrodynamics & Magnetism') AS chapter_name,
          CASE 
-           WHEN LOWER(COALESCE(s.name, '')) IN ('botany') THEN 'Botany'
-           WHEN LOWER(COALESCE(s.name, '')) IN ('zoology') THEN 'Zoology'
            WHEN LOWER(COALESCE(s.name, '')) IN ('physics') THEN 'Physics'
            WHEN LOWER(COALESCE(s.name, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('botany') THEN 'Botany'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('zoology') THEN 'Zoology'
+           WHEN LOWER(COALESCE(s.name, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+           WHEN LOWER(COALESCE(s.name, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
            WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
            WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
-           ELSE COALESCE(s.name, 'General')
+           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
+           ELSE COALESCE(s.name, q.bank_category, 'Physics')
          END AS subject_name,
          ans.attempt_id,
          ans.selected_index,
@@ -209,9 +223,9 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
        FROM questions q
        LEFT JOIN subjects s ON s.id = q.subject_id
        LEFT JOIN chapters c ON c.id = q.chapter_id
-       JOIN attempts at ON at.assessment_id = q.assessment_id
+       LEFT JOIN attempts at ON at.assessment_id = q.assessment_id AND at.submitted_at IS NOT NULL
        LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
-       WHERE at.submitted_at IS NOT NULL
+       WHERE q.assessment_id = $1
      )
      SELECT 
        question_id,
@@ -234,7 +248,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
      FROM question_responses
      GROUP BY question_id, question_text, options, correct_index, correct_indices, question_type, marks, position, difficulty_level, subject_id, chapter_id, chapter_name, subject_name
      ORDER BY position, question_id`,
-    []
+    [testId]
   );
 
   // 4. Student specific responses
@@ -259,8 +273,10 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
      FROM questions q
      JOIN attempts at ON at.assessment_id = q.assessment_id
      LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
-     WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL`,
-    [studentId]
+     WHERE at.candidate_id = $1 
+       AND (at.id = $2 OR $2 IS NULL OR at.assessment_id = $2 OR q.assessment_id = $2)
+       AND at.submitted_at IS NOT NULL`,
+    [studentId, realAttemptId || testId]
   );
 
   const studentAnswersMap = new Map();
@@ -274,12 +290,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   let totalIncorrect = 0;
   let totalUnattempted = 0;
 
-  const subjectStats = {
-    Physics: { score: 0, max_marks: 0, correct: 0, incorrect: 0, unattempted: 0, time_spent: 0, peer_score_sum: 0, peer_count: 0 },
-    Chemistry: { score: 0, max_marks: 0, correct: 0, incorrect: 0, unattempted: 0, time_spent: 0, peer_score_sum: 0, peer_count: 0 },
-    Botany: { score: 0, max_marks: 0, correct: 0, incorrect: 0, unattempted: 0, time_spent: 0, peer_score_sum: 0, peer_count: 0 },
-    Zoology: { score: 0, max_marks: 0, correct: 0, incorrect: 0, unattempted: 0, time_spent: 0, peer_score_sum: 0, peer_count: 0 },
-  };
+  const subjectStats = {};
 
   const chapterStats = {};
   const difficultyStats = {
@@ -298,12 +309,10 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     const peerAvgTime = Number(qStats.peer_avg_time_seconds) || 45;
     const qMarks = Number(qStats.marks) || 4;
 
-    const normSubject = ['Physics', 'Chemistry', 'Botany', 'Zoology'].includes(qStats.subject_name)
-      ? qStats.subject_name
-      : (qStats.subject_name.toLowerCase().includes('botan') ? 'Botany'
-        : qStats.subject_name.toLowerCase().includes('zool') ? 'Zoology'
-          : qStats.subject_name.toLowerCase().includes('chem') ? 'Chemistry'
-            : 'Physics');
+    const normSubject = qStats.subject_name || 'Physics';
+    if (!subjectStats[normSubject]) {
+      subjectStats[normSubject] = { score: 0, max_marks: 0, correct: 0, incorrect: 0, unattempted: 0, time_spent: 0, peer_score_sum: 0, peer_count: 0 };
+    }
 
     const chapterName = qStats.chapter_name || 'General Topics';
 
@@ -422,15 +431,19 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     const attempted = ch.correct + ch.wrong;
     const isUnattempted = attempted === 0;
     const acc = attempted > 0 ? Math.round((ch.correct / attempted) * 100) : 0;
+    const hasWrongOrUnattempted = ch.wrong > 0 || isUnattempted || acc < 75;
 
     let engagementStatus = 'weak';
-    let statusLabel = 'Weak (Attempted - Low Accuracy)';
+    let statusLabel = 'Needs Improvement';
     if (isUnattempted) {
       engagementStatus = 'unattempted';
       statusLabel = 'Unattempted Entirely';
-    } else if (acc >= 75) {
+    } else if (acc >= 75 && ch.wrong === 0) {
       engagementStatus = 'strong';
       statusLabel = 'Strong (Mastered)';
+    } else if (acc >= 75) {
+      engagementStatus = 'moderate';
+      statusLabel = 'High Accuracy (Minor Wrong Choices)';
     } else if (acc >= 50) {
       engagementStatus = 'moderate';
       statusLabel = 'Moderate';
@@ -450,8 +463,10 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   }).sort((a, b) => a.accuracy_percent - b.accuracy_percent);
 
-  const weakTopics = chapterPerformanceList.filter(c => c.engagement_status === 'unattempted' || c.engagement_status === 'weak');
-  const strongTopics = chapterPerformanceList.filter(c => c.engagement_status === 'strong').reverse();
+  // Weak topics: Any topic with wrong answers, unattempted questions, or accuracy < 75%
+  const weakTopics = chapterPerformanceList.filter(c => c.wrong > 0 || c.is_unattempted || c.accuracy_percent < 75);
+  // Strong topics: Any topic with high accuracy (>= 75% or 100% correct)
+  const strongTopics = chapterPerformanceList.filter(c => c.accuracy_percent >= 75 || (c.correct > 0 && c.wrong === 0)).sort((a, b) => b.accuracy_percent - a.accuracy_percent);
 
   // 8. Personalized Improvement Plan
   const weakSubjConfig = templates.subjects || {};
@@ -558,12 +573,13 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     const nationalTopper = aggRes.rows[0]?.national_topper_score || Math.round(Number(test.max_marks || 720) * 0.96);
     const totalAttempts = aggRes.rows[0]?.total_attempts || 1;
 
-    const subjAverages = {
-      Physics: Math.round((subjectPeerSums.Physics / Math.max(1, subjectPeerCounts.Physics)) * 10) / 10 || 95,
-      Chemistry: Math.round((subjectPeerSums.Chemistry / Math.max(1, subjectPeerCounts.Chemistry)) * 10) / 10 || 105,
-      Botany: Math.round((subjectPeerSums.Botany / Math.max(1, subjectPeerCounts.Botany)) * 10) / 10 || 110,
-      Zoology: Math.round((subjectPeerSums.Zoology / Math.max(1, subjectPeerCounts.Zoology)) * 10) / 10 || 100,
-    };
+    const subjKeys = Object.keys(subjectStats).length > 0 ? Object.keys(subjectStats) : ['Physics'];
+    const subjAverages = {};
+    for (const sub of subjKeys) {
+      const pSum = subjectPeerSums[sub] || 0;
+      const pCount = Math.max(1, subjectPeerCounts[sub] || 1);
+      subjAverages[sub] = Math.round((pSum / pCount) * 10) / 10 || Math.round((subjectStats[sub]?.max_marks || 40) * 0.5);
+    }
 
     const insertedStats = await query(
       `INSERT INTO test_stats (test_id, national_average_score, national_topper_score, subject_wise_averages, total_attempts)
@@ -584,15 +600,17 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     ? JSON.parse(testStats.subject_wise_averages || '{}')
     : (testStats.subject_wise_averages || {});
 
+  const availableSubjs = Object.keys(subjectStats).length > 0 ? Object.keys(subjectStats) : ['Physics'];
+
   const nationalComparison = {
     your_score: Number(currentAttemptRank.total_score) || 0,
-    national_average_score: Number(testStats.national_average_score) || 410,
-    national_topper_score: Number(testStats.national_topper_score) || 700,
+    national_average_score: Number(testStats.national_average_score) || Math.round(test.max_marks * 0.5),
+    national_topper_score: Number(testStats.national_topper_score) || test.max_marks,
     your_percentile: currentAttemptRank.percentile || 100.0,
-    subject_wise: ['Physics', 'Chemistry', 'Botany', 'Zoology'].map((sub) => ({
+    subject_wise: availableSubjs.map((sub) => ({
       subject: sub,
-      your_score: Math.max(0, subjectStats[sub].score),
-      national_average: Number(subjWiseAverages[sub]) || Math.round(subjectStats[sub].max_marks * 0.55),
+      your_score: Math.max(0, subjectStats[sub]?.score || 0),
+      national_average: Number(subjWiseAverages[sub]) || Math.round((subjectStats[sub]?.max_marks || 40) * 0.55),
     })),
   };
 
@@ -673,11 +691,37 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   }
 
   const weakestChs = weakTopics.map((w) => ({ name: w.chapter_name, subject: w.subject }));
-  const primaryWeakness = weakestChs[0]?.name || 'Mechanics & Optics';
-  const primarySubj = weakestChs[0]?.subject || 'Physics';
-  const secondaryWeakness = weakestChs[1]?.name || 'Organic Reactions';
-  const secondarySubj = weakestChs[1]?.subject || 'Chemistry';
-  const lowestSubj = subjectAnalysisList.reduce((min, s) => (s.score < min.score ? s : min), subjectAnalysisList[0])?.subject || 'Physics';
+  const testSubjs = Array.from(new Set(subjectAnalysisList.map(s => s.subject))).filter(Boolean);
+  const defaultSubj = testSubjs[0] || 'Biology';
+
+  const isBioTest = testSubjs.every(s => ['Botany', 'Zoology', 'Biology'].includes(s));
+  const isPhysTest = testSubjs.every(s => s === 'Physics');
+  const isChemTest = testSubjs.every(s => s === 'Chemistry');
+  const isMathTest = testSubjs.every(s => s === 'Mathematics');
+
+  let defaultPrimaryName = 'Core Syllabus Concepts';
+  let defaultSecondaryName = 'Problem Solving Speed';
+  if (isBioTest) {
+    defaultPrimaryName = 'Genetics & Molecular Basis of Inheritance';
+    defaultSecondaryName = 'Cell Biology & Plant/Human Physiology';
+  } else if (isPhysTest) {
+    defaultPrimaryName = 'Mechanics & Rotational Dynamics';
+    defaultSecondaryName = 'Electrostatics & Ray Optics';
+  } else if (isChemTest) {
+    defaultPrimaryName = 'Organic Reaction Mechanisms';
+    defaultSecondaryName = 'Chemical & Ionic Equilibrium';
+  } else if (isMathTest) {
+    defaultPrimaryName = 'Calculus & Definite Integration';
+    defaultSecondaryName = 'Vector Algebra & 3D Geometry';
+  }
+
+  const primaryWeakness = weakestChs[0]?.name || defaultPrimaryName;
+  const primarySubj = weakestChs[0]?.subject || defaultSubj;
+
+  const secondaryWeakness = weakestChs[1]?.name || (weakestChs[0]?.name && weakestChs[0].name !== primaryWeakness ? weakestChs[0].name : defaultSecondaryName);
+  const secondarySubj = weakestChs[1]?.subject || primarySubj;
+
+  const lowestSubj = subjectAnalysisList.reduce((min, s) => (s.score < min.score ? s : min), subjectAnalysisList[0])?.subject || defaultSubj;
 
   const sevenDayRevisionPlan = revTemplates.map((t) => {
     let focusSubject = primarySubj;
@@ -689,12 +733,13 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     } else if (t.day === 5) {
       focusSubject = lowestSubj;
       focusChapters = weakestChs.filter((w) => w.subject === lowestSubj).map((w) => w.name);
-      if (focusChapters.length === 0) focusChapters = ['Core Subject Concepts'];
+      if (focusChapters.length === 0) focusChapters = [primaryWeakness];
     } else if (t.day === 6) {
-      focusSubject = 'All Subjects';
+      focusSubject = testSubjs.length > 1 ? testSubjs.join(' & ') : primarySubj;
       focusChapters = weakestChs.map((w) => w.name).slice(0, 3);
+      if (focusChapters.length === 0) focusChapters = [primaryWeakness, secondaryWeakness];
     } else if (t.day === 7) {
-      focusSubject = 'Full Syllabus';
+      focusSubject = testSubjs.length > 1 ? testSubjs.join(' & ') : primarySubj;
       focusChapters = ['Formula Cheat-Sheets', 'Mistake Notebook'];
     }
 
@@ -805,12 +850,11 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     },
     time_management_report: {
       total_time_spent_seconds: subjectAnalysisList.reduce((a, b) => a + b.time_spent_seconds, 0),
-      ideal_time_per_subject: [
-        { subject: 'Physics', ideal_time_seconds: 2700, actual_time_seconds: subjectStats.Physics.time_spent },
-        { subject: 'Chemistry', ideal_time_seconds: 2700, actual_time_seconds: subjectStats.Chemistry.time_spent },
-        { subject: 'Botany', ideal_time_seconds: 2700, actual_time_seconds: subjectStats.Botany.time_spent },
-        { subject: 'Zoology', ideal_time_seconds: 2700, actual_time_seconds: subjectStats.Zoology.time_spent }
-      ],
+      ideal_time_per_subject: Object.keys(subjectStats).map((sub) => ({
+        subject: sub,
+        ideal_time_seconds: Math.round((subjectStats[sub]?.max_marks || 40) * 45),
+        actual_time_seconds: subjectStats[sub]?.time_spent || 0,
+      })),
       inefficient_questions: inefficientQuestions
     },
     question_wise_analysis: questionWiseAnalysis,
@@ -823,26 +867,58 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     revision_strategy: revisionStrategy
   };
 
-  let strongTopicsList = (chapterPerformanceList || [])
-    .filter(c => c.engagement_status === 'strong')
-    .map(c => `${c.chapter_name} (${c.accuracy_percent}%)`);
+  // Derive concept-level sub-topics from questionWiseAnalysis if main chapter count is small (<= 2)
+  const wrongQuestions = (questionWiseAnalysis || []).filter(q => q.is_attempted && !q.is_correct);
+  const correctQuestions = (questionWiseAnalysis || []).filter(q => q.is_attempted && q.is_correct);
 
-  let weakTopicsList = (chapterPerformanceList || [])
-    .filter(c => c.engagement_status === 'unattempted' || c.engagement_status === 'weak')
-    .map(c => c.is_unattempted
-      ? `${c.chapter_name} (0% - Unattempted Entirely)`
-      : `${c.chapter_name} (${c.accuracy_percent}% - Concept Gaps)`
+  const getSubTopicName = (q) => {
+    const text = (q.question_text || '').toLowerCase();
+    if (text.includes('induced emf') || text.includes('faraday') || text.includes('magnetic flux')) return "Faraday's Law & Induced EMF Rate";
+    if (text.includes('capacitor') || text.includes('capacitance') || text.includes('distance between the plates')) return "Parallel Plate Capacitance Parameter Scaling";
+    if (text.includes('resistor') || text.includes('series') || text.includes('parallel')) return "Resistor Networks & Ohm's Law";
+    if (text.includes('coulomb') || text.includes('point charges') || text.includes('electric field inside')) return "Coulomb's Law & Electrostatics";
+    if (text.includes('magnetic force') || text.includes('parallel to a magnetic field') || text.includes('conductor carrying current')) return "Magnetic Forces on Charges & Conductors";
+    if (text.includes('lenz')) return "Lenz's Law & Energy Conservation";
+    if (text.includes('circular') || text.includes('loop')) return "Magnetic Field at Circular Loop Center";
+    return q.chapter_name || q.topic || q.subject || "Physics Concept";
+  };
+
+  let strongTopicsList = [];
+  let weakTopicsList = [];
+
+  if (chapterPerformanceList.length <= 2 && (correctQuestions.length > 0 || wrongQuestions.length > 0)) {
+    const wrongSubTopics = Array.from(new Set(wrongQuestions.map(getSubTopicName)));
+    const correctSubTopics = Array.from(new Set(correctQuestions.map(getSubTopicName))).filter(t => !wrongSubTopics.includes(t));
+
+    strongTopicsList = correctSubTopics.map(t => `${t} (100% Accuracy - Mastered)`);
+    weakTopicsList = wrongSubTopics.map(t => `${t} (Concept Gap / Wrong Choice)`);
+  } else {
+    strongTopicsList = (strongTopics || []).map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent}% accuracy - Mastered)`);
+    weakTopicsList = (weakTopics || []).map(c => c.is_unattempted
+      ? `${c.chapter_name || c.topic} (0% - Unattempted Entirely)`
+      : `${c.chapter_name || c.topic} (${c.accuracy_percent}% accuracy - ${c.wrong > 0 ? c.wrong + ' wrong' : 'Concept Gaps'})`
     );
+  }
+
+  if (strongTopicsList.length === 0 && chapterPerformanceList.length > 0) {
+    strongTopicsList = chapterPerformanceList.filter(c => (c.accuracy_percent || 0) >= 50).map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent}% accuracy)`);
+  }
+  if (weakTopicsList.length === 0 && chapterPerformanceList.length > 0) {
+    weakTopicsList = chapterPerformanceList.filter(c => (c.accuracy_percent || 0) < 100).map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent}% accuracy - Needs Revision)`);
+  }
 
   let moderateTopicsList = (chapterPerformanceList || [])
     .filter(c => c.engagement_status === 'moderate')
-    .map(c => `${c.chapter_name} (${c.accuracy_percent}%)`);
+    .map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent}%)`);
 
   const coveredSubjects = subjectAnalysisList.map(s => s.subject);
 
-  // Score & Max Marks sums calculated strictly from subjectAnalysisList live test data
+  // Score & Max Marks sums calculated strictly from subjectAnalysisList live test data or attempt record
   const calculatedTotalScore = subjectAnalysisList.reduce((sum, s) => sum + (s.score || 0), 0);
   const calculatedMaxMarks = subjectAnalysisList.reduce((sum, s) => sum + (s.max_marks || 0), 0);
+  const actualStudentScore = (currentAttemptRank?.total_score != null && !isNaN(currentAttemptRank.total_score) && Number(currentAttemptRank.total_score) >= 0)
+    ? Number(currentAttemptRank.total_score)
+    : (attemptByIdRes.rows[0]?.marks_obtained != null ? Number(attemptByIdRes.rows[0].marks_obtained) : calculatedTotalScore);
 
   const rushedWrongCount = (questionWiseAnalysis || []).filter(q => q.is_attempted && !q.is_correct && (q.time_spent_seconds < 45)).length;
   const totalTimeSeconds = subjectAnalysisList.reduce((a, b) => a + (b.time_spent_seconds || 0), 0);
@@ -856,7 +932,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       exam_type: test.test_type || 'JEE Main',
       test_date: test.test_date ? new Date(test.test_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
       days_remaining: 7,
-      score: calculatedTotalScore,
+      score: actualStudentScore,
       total_marks: calculatedMaxMarks > 0 ? calculatedMaxMarks : (Number(test.max_marks) || 300),
       percentile: currentAttemptRank.percentile ?? null,
       rank: currentAttemptRank.air ?? null,
@@ -1021,31 +1097,41 @@ export const getAIMentorReport = asyncHandler(async (req, res) => {
   const overallAccuracy = attemptedCount > 0 ? Math.round((totalCorrect / attemptedCount) * 100) : 0;
   const negativeMarksLost = totalIncorrect; // 1 mark per wrong answer
 
-  // 8. Call Gemini AI (with structured real data fallback)
-  const { generateAIMentorReport } = await import('../services/geminiService.js');
+  // 8. Check if AI Report already exists in Neon DB for this student and test
+  let aiReport = await getCachedAIReport(studentId, testId);
 
-  const aiReport = await generateAIMentorReport({
-    student_name: studentName,
-    test_name: test.test_name,
-    total_questions: questionPeerStatsRes.rowCount,
-    attempted_count: attemptedCount,
-    correct_count: totalCorrect,
-    incorrect_count: totalIncorrect,
-    unattempted_count: totalUnattempted,
-    total_score: totalScore,
-    max_marks: maxMarks,
-    accuracy_percent: overallAccuracy,
-    percentage: maxMarks > 0 ? Math.round((totalScore / maxMarks) * 10000) / 100 : 0,
-    time_taken_seconds: timeTakenSeconds,
-    all_india_rank: attempt.air || null,
-    percentile: attempt.percentile || null,
-    subject_analysis: subjectAnalysisList,
-    chapter_performance: chapterPerformanceList,
-    time_management_report: { inefficient_questions: inefficientQuestions },
-    difficulty_accuracy: Object.keys(difficultyStats).map(d => ({ difficulty: d, total: difficultyStats[d].total, correct: difficultyStats[d].correct, accuracy: difficultyStats[d].correct + difficultyStats[d].incorrect > 0 ? Math.round((difficultyStats[d].correct / (difficultyStats[d].correct + difficultyStats[d].incorrect)) * 100) : 0 })),
-    negative_marks_lost: negativeMarksLost,
-    previous_test_score: prevScore,
-  });
+  if (!aiReport) {
+    console.log(`[PostTestAnalytics] Generating fresh AI analysis for student ${studentId}, test ${testId}...`);
+    const { generateAIMentorReport } = await import('../services/geminiService.js');
+
+    aiReport = await generateAIMentorReport({
+      student_name: studentName,
+      test_name: test.test_name,
+      total_questions: questionPeerStatsRes.rowCount,
+      attempted_count: attemptedCount,
+      correct_count: totalCorrect,
+      incorrect_count: totalIncorrect,
+      unattempted_count: totalUnattempted,
+      total_score: totalScore,
+      max_marks: maxMarks,
+      accuracy_percent: overallAccuracy,
+      percentage: maxMarks > 0 ? Math.round((totalScore / maxMarks) * 10000) / 100 : 0,
+      time_taken_seconds: timeTakenSeconds,
+      all_india_rank: attempt.air || null,
+      percentile: attempt.percentile || null,
+      subject_analysis: subjectAnalysisList,
+      chapter_performance: chapterPerformanceList,
+      time_management_report: { inefficient_questions: inefficientQuestions },
+      difficulty_accuracy: Object.keys(difficultyStats).map(d => ({ difficulty: d, total: difficultyStats[d].total, correct: difficultyStats[d].correct, accuracy: difficultyStats[d].correct + difficultyStats[d].incorrect > 0 ? Math.round((difficultyStats[d].correct / (difficultyStats[d].correct + difficultyStats[d].incorrect)) * 100) : 0 })),
+      negative_marks_lost: negativeMarksLost,
+      previous_test_score: prevScore,
+    });
+
+    // Save newly generated AI analysis to Neon DB
+    await saveCachedAIReport(studentId, testId, attempt.attempt_id, aiReport);
+  } else {
+    console.log(`[PostTestAnalytics] Neon DB Cache Hit: Using saved AI analysis for student ${studentId}, test ${testId}.`);
+  }
 
   res.json({
     success: true,

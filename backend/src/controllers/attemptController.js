@@ -815,7 +815,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, s.name AS section_name, subj.name AS subject_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, s.name AS section_name, subj.name AS subject_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        LEFT JOIN subjects subj ON subj.id = q.subject_id
@@ -917,11 +917,14 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       is_correct: correct,
       your_answer: yourAnswer,
       solution: q.solution,
+      topic: q.topic || null,
       subject_name: q.subject_name || null,
       bank_category: q.subject_name || q.bank_category || null,
       section_name: q.subject_name || q.bank_category || q.section_name || 'General',
     };
   });
+
+  const formattedReport = buildFormattedResult(attempt, assessment, scoreRes.rows[0] || null, solutions);
 
   res.json({
     attempt: {
@@ -935,9 +938,106 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     assessment: { id: assessment.id, title: assessment.title, passing_marks: assessment.passing_marks },
     score: scoreRes.rows[0] || null,
     solutions,
+    formattedReport,
+    ...formattedReport,
     resultVisible: true,
   });
 });
+
+const buildFormattedResult = (attempt, assessment, score, solutions) => {
+  const correct = Number(score?.correct_count || 0);
+  const incorrect = Number(score?.wrong_count || 0);
+  const unattempted = Number(score?.unattempted_count || 0);
+  const attemptedTotal = correct + incorrect;
+  const overallAccuracy = attemptedTotal > 0 ? Number(((correct / attemptedTotal) * 100).toFixed(2)) : 0;
+
+  const subjects = {};
+  const topics = {};
+
+  for (const sol of solutions) {
+    const rawSubj = sol.subject_name || sol.bank_category || sol.section_name || 'General';
+    const subjKey = rawSubj.toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'general';
+
+    if (!subjects[subjKey]) {
+      subjects[subjKey] = { marks: 0, correct: 0, incorrect: 0, unattempted: 0, accuracy: 0 };
+    }
+
+    const marksObt = Number(sol.marks_obtained || 0);
+    subjects[subjKey].marks += marksObt;
+
+    const isUnattempted = sol.your_answer === null || sol.your_answer === undefined || (Array.isArray(sol.your_answer) && sol.your_answer.length === 0) || (typeof sol.your_answer === 'string' && !sol.your_answer.trim());
+
+    if (isUnattempted) {
+      subjects[subjKey].unattempted += 1;
+    } else if (sol.is_correct) {
+      subjects[subjKey].correct += 1;
+    } else {
+      subjects[subjKey].incorrect += 1;
+    }
+
+    const rawTopic = sol.topic || sol.bank_category || 'general';
+    const topicKey = String(rawTopic).toLowerCase().trim().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'general';
+
+    if (!topics[topicKey]) {
+      topics[topicKey] = { attempted: 0, correct: 0, incorrect: 0, accuracy: 0 };
+    }
+
+    if (!isUnattempted) {
+      topics[topicKey].attempted += 1;
+      if (sol.is_correct) {
+        topics[topicKey].correct += 1;
+      } else {
+        topics[topicKey].incorrect += 1;
+      }
+    }
+  }
+
+  for (const key of Object.keys(subjects)) {
+    const s = subjects[key];
+    s.marks = Number(s.marks.toFixed(2));
+    const sAttempted = s.correct + s.incorrect;
+    s.accuracy = sAttempted > 0 ? Number(((s.correct / sAttempted) * 100).toFixed(2)) : 0;
+  }
+
+  for (const key of Object.keys(topics)) {
+    const t = topics[key];
+    t.accuracy = t.attempted > 0 ? Number(((t.correct / t.attempted) * 100).toFixed(2)) : 0;
+  }
+
+  const durationSec = Number(attempt.duration_seconds || 0);
+  const totalQuestions = solutions.length;
+  const avgTimePerQ = totalQuestions > 0 ? Math.round(durationSec / totalQuestions) : 0;
+
+  const timeAnalysis = {
+    averageTimePerQuestion: avgTimePerQ
+  };
+
+  for (const key of Object.keys(subjects)) {
+    timeAnalysis[`${key}Average`] = avgTimePerQ;
+  }
+
+  return {
+    student: {
+      id: String(attempt.candidate_id || '')
+    },
+    test: {
+      name: assessment.title || 'Assessment Test',
+      totalMarks: Number(score?.total_marks || assessment.total_marks || 0),
+      durationMinutes: Number(assessment.duration_minutes || 0)
+    },
+    overall: {
+      marks: Number(score?.marks_obtained || 0),
+      percentage: Number(score?.percentage || 0),
+      correct,
+      incorrect,
+      unattempted,
+      accuracy: overallAccuracy
+    },
+    subjects,
+    topics,
+    timeAnalysis
+  };
+};
 
 export const getResult = getAttemptResult;
 export { finalizeAttempt };

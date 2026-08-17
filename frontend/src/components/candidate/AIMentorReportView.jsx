@@ -132,44 +132,53 @@ function OverallPerformanceSection({ data, summary }) {
 // ──────────────────────────────────────────────
 function SevenDayPlanSection({ days = [] }) {
   const [expanded, setExpanded] = useState(null);
-  if (!days.length) return null;
+  if (!days || !days.length) return null;
 
   return (
     <SectionCard icon={Calendar} title="7-Day Personalised Study Plan" badge="AI Curated" color="blue">
       <div className="space-y-2">
-        {days.map((d, i) => (
-          <div key={i} className="rounded-xl border border-slate-700/50 overflow-hidden">
-            <button
-              onClick={() => setExpanded(expanded === i ? null : i)}
-              className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/70 transition-colors text-left"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-7 h-7 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-xs font-black text-blue-400">
-                  {d.day}
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-white">{d.focus_chapter}</p>
-                  <p className="text-[10px] text-slate-400 font-medium">{d.subject} · {d.revision_duration_minutes}min · {d.practice_questions}Q</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <AccuracyBar value={d.current_accuracy} color={d.current_accuracy < 50 ? 'red' : d.current_accuracy < 75 ? 'amber' : 'green'} />
-                {expanded === i ? <ChevronUp className="w-3.5 h-3.5 text-slate-400" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
-              </div>
-            </button>
-            {expanded === i && (
-              <div className="px-4 py-3 bg-slate-900/40 border-t border-slate-700/40 space-y-2">
-                <p className="text-xs text-slate-300 leading-relaxed">{d.task}</p>
-                {d.daily_goal && (
-                  <div className="flex items-center gap-2 pt-1">
-                    <Target className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                    <p className="text-[10px] text-emerald-300 font-semibold">{d.daily_goal}</p>
+        {days.map((d, i) => {
+          const focusTitle = d.focus_chapter || d.focus || `Day ${d.day || i + 1} Revision`;
+          const subName = d.subject || 'Subject';
+          const duration = d.revision_duration_minutes || (d.estimatedHours ? d.estimatedHours * 60 : 60);
+          const qCount = d.practice_questions || 20;
+          const accVal = d.current_accuracy !== undefined ? d.current_accuracy : 40;
+          const taskDesc = d.task || (Array.isArray(d.tasks) ? d.tasks.join('. ') : (Array.isArray(d.activities) ? d.activities.join('. ') : 'Revise core concepts and solve PYQs.'));
+
+          return (
+            <div key={i} className="rounded-xl border border-slate-700/50 overflow-hidden">
+              <button
+                onClick={() => setExpanded(expanded === i ? null : i)}
+                className="w-full flex items-center justify-between gap-3 px-4 py-3 bg-slate-800/40 hover:bg-slate-800/70 transition-colors text-left"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-7 h-7 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-xs font-black text-blue-400">
+                    {d.day || i + 1}
                   </div>
-                )}
-              </div>
-            )}
-          </div>
-        ))}
+                  <div>
+                    <p className="text-xs font-bold text-white">{focusTitle}</p>
+                    <p className="text-[10px] text-slate-400 font-medium">{subName} · {duration}min · {qCount}Q</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 shrink-0">
+                  <AccuracyBar value={accVal} color={accVal < 50 ? 'red' : accVal < 75 ? 'amber' : 'green'} />
+                  {expanded === i ? <ChevronUp className="w-3.5 h-3.5 text-slate-400" /> : <ChevronDown className="w-3.5 h-3.5 text-slate-400" />}
+                </div>
+              </button>
+              {expanded === i && (
+                <div className="px-4 py-3 bg-slate-900/40 border-t border-slate-700/40 space-y-2">
+                  <p className="text-xs text-slate-300 leading-relaxed">{taskDesc}</p>
+                  {d.daily_goal && (
+                    <div className="flex items-center gap-2 pt-1">
+                      <Target className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                      <p className="text-[10px] text-emerald-300 font-semibold">{d.daily_goal}</p>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          );
+        })}
       </div>
     </SectionCard>
   );
@@ -208,8 +217,10 @@ function RevisionStrategySection({ strategies = [] }) {
 // Topic Diagnostics (Strong / Average / Weak)
 // ──────────────────────────────────────────────
 function TopicDiagnosticsSection({ diagnostics = {} }) {
-  const { strong = [], average = [], weak = [] } = diagnostics;
-  const [tab, setTab] = useState(weak.length > 0 ? 'weak' : 'strong');
+  const strong = diagnostics?.strong || [];
+  const average = diagnostics?.average || [];
+  const weak = diagnostics?.weak || [];
+  const [tab, setTab] = useState(weak.length > 0 ? 'weak' : (strong.length > 0 ? 'strong' : 'average'));
   if (!strong.length && !average.length && !weak.length) return null;
 
   const tabs = [

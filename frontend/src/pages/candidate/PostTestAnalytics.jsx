@@ -552,6 +552,114 @@ export default function PostTestAnalytics() {
       </div>
 
       {/* ----------------------------------------------------------------- */}
+      {/* DEDICATED STRONG & WEAK TOPICS BREAKDOWN                         */}
+      {/* ----------------------------------------------------------------- */}
+      {(() => {
+        const strongList = (strong_and_weak_topics.strong_topics || []).length > 0 
+          ? strong_and_weak_topics.strong_topics 
+          : (chapter_performance || []).filter(c => (c.accuracy_percent || 0) >= 75 || ((c.correct || 0) > 0 && (c.wrong || 0) === 0));
+        
+        const weakList = (strong_and_weak_topics.weak_topics || []).length > 0 
+          ? strong_and_weak_topics.weak_topics 
+          : (chapter_performance || []).filter(c => (c.wrong || 0) > 0 || (c.accuracy_percent || 0) < 75 || c.is_unattempted);
+
+        return (
+          <div className="grid gap-6 lg:grid-cols-2">
+            {/* Strong Topics Card */}
+            <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs border-t-4 border-t-emerald-500 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Award className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <div>
+                    <h2 className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400 uppercase tracking-wide">Strong Topics (&ge;75% Accuracy)</h2>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Concept areas where you demonstrated high accuracy and speed.</p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-emerald-600 dark:text-emerald-300 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                  {strongList.length} Mastered
+                </span>
+              </div>
+
+              {strongList.length > 0 ? (
+                <div className="space-y-3 pt-1">
+                  {strongList.map((st, idx) => {
+                    const chName = st.chapter_name || st.topic || st.chapter || 'Strong Concept';
+                    const subName = st.subject || 'Subject';
+                    const acc = st.accuracy_percent ?? st.accuracy ?? 85;
+                    return (
+                      <div key={idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/70 dark:border-slate-800 space-y-1.5">
+                        <div className="flex items-center justify-between text-xs font-bold">
+                          <span className="text-slate-900 dark:text-slate-100">{chName} <span className="text-[10px] text-slate-400 font-normal">({subName})</span></span>
+                          <span className="text-emerald-600 dark:text-emerald-400 font-black tabular-nums">{acc}%</span>
+                        </div>
+                        <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                          <div className="bg-emerald-500 h-full rounded-full transition-all duration-500" style={{ width: `${acc}%` }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-6 text-center text-xs text-slate-500 space-y-1">
+                  <Award className="w-8 h-8 text-slate-400 opacity-50" />
+                  <p className="font-bold text-slate-700 dark:text-slate-300">No Mastered Topics Yet</p>
+                  <p className="text-[11px]">Score &ge;75% accuracy in a chapter to mark it as a Strong Topic.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Weak Topics Card */}
+            <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs border-t-4 border-t-red-500 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                  <div>
+                    <h2 className="text-sm font-extrabold text-red-600 dark:text-red-400 uppercase tracking-wide">Weak Topics & Focus Areas</h2>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">Topics requiring immediate formula review, PYQ practice, or pacing correction.</p>
+                  </div>
+                </div>
+                <span className="text-xs font-bold text-red-600 dark:text-red-300 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">
+                  {weakList.length} Priority
+                </span>
+              </div>
+
+              {weakList.length > 0 ? (
+                <div className="space-y-3 pt-1">
+                  {weakList.map((wt, idx) => {
+                    const chName = wt.chapter_name || wt.topic || wt.chapter || 'Weak Concept';
+                    const subName = wt.subject || 'Subject';
+                    const acc = wt.accuracy_percent ?? wt.accuracy ?? 0;
+                    const isUnattempted = wt.is_unattempted || wt.engagement_status === 'unattempted';
+                    return (
+                      <div key={idx} className="p-3 rounded-2xl bg-slate-50 dark:bg-[#070c18] border border-slate-200/70 dark:border-slate-800 space-y-1.5">
+                        <div className="flex items-center justify-between text-xs font-bold">
+                          <span className="text-slate-900 dark:text-slate-100">{chName} <span className="text-[10px] text-slate-400 font-normal">({subName})</span></span>
+                          <span className="inline-flex items-center gap-1.5">
+                            <span className={`text-[10px] font-extrabold px-1.5 py-0.5 rounded ${isUnattempted ? 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400' : 'bg-red-500/10 text-red-600 dark:text-red-400'}`}>
+                              {isUnattempted ? 'Unattempted' : `${acc}% Acc`}
+                            </span>
+                          </span>
+                        </div>
+                        <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                          <div className="bg-red-500 h-full rounded-full transition-all duration-500" style={{ width: `${Math.max(5, acc)}%` }} />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-6 text-center text-xs text-slate-500 space-y-1">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-500" />
+                  <p className="font-bold text-slate-700 dark:text-slate-300">No Weak Topics Identified!</p>
+                  <p className="text-[11px]">All tested topics met the required accuracy threshold.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        );
+      })()}
+
+      {/* ----------------------------------------------------------------- */}
       {/* SECTION 8: TIME MANAGEMENT REPORT                                 */}
       {/* ----------------------------------------------------------------- */}
       <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">

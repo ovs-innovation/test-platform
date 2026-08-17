@@ -70,6 +70,14 @@ export default function TestSeriesTab({
           (t.package_id && Number(t.package_id) === Number(s.id))
         );
 
+        const isAssigned =
+          s.status === 'Assigned Package' ||
+          s.status === 'Purchased' ||
+          Boolean(s.package_name && !s.title) ||
+          s.is_assigned === true;
+
+        const statusText = isAssigned ? 'Assigned Package' : (s.status || 'Active Package');
+
         return {
           id: s.id || s.slug,
           title: s.title || s.package_name || 'Test Series Package',
@@ -77,7 +85,8 @@ export default function TestSeriesTab({
           targetYear: s.target_year || 2027,
           testCount: s.total_tests_count || s.test_count || matchingTests.length || 15,
           description: s.description || 'Comprehensive computer-based test series package with AIETS diagnostic performance reporting.',
-          status: 'Active Package',
+          status: statusText,
+          isAssigned,
           validity: s.validity_days ? `${s.validity_days} Days` : '31 Mar 2027',
           color,
           badgeColor,
@@ -95,6 +104,7 @@ export default function TestSeriesTab({
           testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')).length || 18,
           description: 'Comprehensive NTA-standard NEET-UG full syllabus and chapterwise mock test series with detailed solutions.',
           status: 'Active Package',
+          isAssigned: false,
           validity: '31 Mar 2027',
           color: 'from-emerald-600 to-teal-500',
           badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
@@ -108,6 +118,7 @@ export default function TestSeriesTab({
           testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')).length || 15,
           description: 'Rigorous Computer Based Test (CBT) mock series for JEE Main & Advanced prep with rank prediction.',
           status: 'Active Package',
+          isAssigned: false,
           validity: '31 Mar 2027',
           color: 'from-blue-600 to-cyan-500',
           badgeColor: 'bg-blue-500/10 text-cyan-400 border-cyan-500/20',
@@ -121,6 +132,7 @@ export default function TestSeriesTab({
           testCount: 8,
           description: 'Early booster test series covering Class 10 Science, Math & Mental Ability for Olympiad readiness.',
           status: 'Included',
+          isAssigned: false,
           validity: '31 Dec 2026',
           color: 'from-purple-600 to-indigo-500',
           badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
@@ -129,14 +141,18 @@ export default function TestSeriesTab({
       ];
     }
 
-    return seriesList.filter((pkg) => {
-      const matchesSearch =
-        pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        pkg.exam.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory =
-        categoryFilter === 'All' || pkg.exam.toLowerCase().includes(categoryFilter.toLowerCase());
-      return matchesSearch && matchesCategory;
-    });
+    return seriesList
+      .sort((a, b) => (b.isAssigned ? 1 : 0) - (a.isAssigned ? 1 : 0))
+      .filter((pkg) => {
+        const matchesSearch =
+          pkg.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          pkg.exam.toLowerCase().includes(searchQuery.toLowerCase());
+        const matchesCategory =
+          categoryFilter === 'All' ||
+          (categoryFilter === 'Assigned Only' && pkg.isAssigned) ||
+          pkg.exam.toLowerCase().includes(categoryFilter.toLowerCase());
+        return matchesSearch && matchesCategory;
+      });
   }, [availableSeries, availableTests, searchQuery, categoryFilter]);
 
   return (
@@ -149,11 +165,11 @@ export default function TestSeriesTab({
           <div>
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
               <Sparkles className="h-3.5 w-3.5" />
-              <span>Purchased Test Series Packages</span>
+              <span>Purchased & Available Test Series Packages</span>
             </div>
             <h2 className="text-xl font-black tracking-tight">Institutional Test Series Catalog</h2>
             <p className={`text-xs mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-              Browse and assign entire test series packages to your enrolled batches and students.
+              Browse assigned packages or assign test series to your enrolled batches and students.
             </p>
           </div>
 
@@ -188,21 +204,21 @@ export default function TestSeriesTab({
             />
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <Filter className="h-4 w-4 text-slate-400" />
-            {['All', 'NEET', 'JEE', 'Foundation'].map((cat) => (
+          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+            <Filter className="h-4 w-4 text-slate-400 shrink-0" />
+            {['All', 'Assigned Only', 'NEET', 'JEE', 'Foundation'].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition shrink-0 ${
                   categoryFilter === cat
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-blue-600 text-white shadow-md font-black'
                     : isDarkMode
                       ? 'bg-slate-900 text-slate-400 hover:text-white'
                       : 'bg-slate-100 text-slate-600 hover:text-slate-900'
                 }`}
               >
-                {cat}
+                {cat === 'Assigned Only' ? '✓ Assigned to Institute' : cat}
               </button>
             ))}
           </div>
@@ -214,12 +230,25 @@ export default function TestSeriesTab({
         {packages.map((pkg) => (
           <div
             key={pkg.id}
-            className={`rounded-2xl border flex flex-col overflow-hidden transition-all hover:shadow-md ${
-              isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
+            className={`rounded-2xl border-2 flex flex-col overflow-hidden transition-all hover:shadow-xl ${
+              pkg.isAssigned
+                ? isDarkMode
+                  ? 'bg-[#0E1726] border-emerald-500/80 shadow-emerald-500/10 text-white ring-2 ring-emerald-500/20'
+                  : 'bg-white border-emerald-500 shadow-lg text-slate-900 ring-2 ring-emerald-500/20'
+                : isDarkMode
+                ? 'bg-[#0E1726] border-slate-800 text-white'
+                : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
             }`}
           >
             {/* CARD BANNER HEADER */}
-            <div className={`p-5 bg-gradient-to-r ${pkg.color} text-white space-y-3`}>
+            <div className={`p-5 bg-gradient-to-r ${pkg.color} text-white space-y-3 relative overflow-hidden`}>
+              {pkg.isAssigned && (
+                <div className="mb-1 inline-flex items-center gap-1.5 bg-emerald-400 text-slate-950 font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
+                  <CheckCircle2 className="h-3.5 w-3.5 fill-slate-950 text-emerald-400" />
+                  <span>Assigned to Your Institute</span>
+                </div>
+              )}
+
               <div className="flex items-center justify-between">
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/20 backdrop-blur-md text-white border border-white/20">
                   {pkg.exam}

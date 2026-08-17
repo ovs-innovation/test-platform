@@ -73,8 +73,8 @@ export default function Analytics() {
   const chapters = useMemo(() => {
     const list = chapter_breakdown || [];
     return {
-      weak: [...list].filter(c => c.accuracy < 60).sort((a, b) => a.accuracy - b.accuracy),
-      strong: [...list].filter(c => c.accuracy >= 60).sort((a, b) => b.accuracy - a.accuracy),
+      weak: [...list].filter(c => c.accuracy < 75 || (c.wrong && c.wrong > 0) || c.is_unattempted).sort((a, b) => a.accuracy - b.accuracy),
+      strong: [...list].filter(c => c.accuracy >= 75 || (c.correct > 0 && (!c.wrong || c.wrong === 0))).sort((a, b) => b.accuracy - a.accuracy),
       all: list,
     };
   }, [chapter_breakdown]);
@@ -124,8 +124,8 @@ export default function Analytics() {
       />
 
       {/* ------------------------------------------------------------- */}
-      {/* 1. TOP STATS OVERVIEW */}
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      {/* 1. TOP HISTORICAL STATS OVERVIEW */}
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {/* Total Assessments */}
         <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
@@ -135,8 +135,8 @@ export default function Analytics() {
             </span>
           </div>
           <div className="mt-3">
-            <p className="text-2xl font-extrabold text-slate-900 dark:text-white tabular-nums">{summary.total_tests_taken || 0}</p>
-            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Completed CBT tests</p>
+            <p className="text-2xl font-extrabold text-slate-900 dark:text-white tabular-nums">{summary.tests_taken || summary.total_tests_taken || attempts.length || 0}</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Completed tests</p>
           </div>
         </div>
 
@@ -152,20 +152,36 @@ export default function Analytics() {
             <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400 tabular-nums">
               {summary.avg_score != null ? `${summary.avg_score}%` : '0%'}
             </p>
-            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Evaluation mean score</p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Historical mean score</p>
           </div>
         </div>
 
-        {/* Overall Accuracy */}
+        {/* Highest Score */}
         <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
           <div className="flex items-center justify-between">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Overall Accuracy</p>
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Highest Score</p>
+            <span className="p-2 rounded-xl bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 border border-purple-200 dark:border-purple-900/60">
+              <Award className="w-4 h-4" />
+            </span>
+          </div>
+          <div className="mt-3">
+            <p className="text-2xl font-extrabold text-purple-600 dark:text-purple-400 tabular-nums">
+              {summary.highest_score != null ? `${summary.highest_score}%` : (summary.best_score != null ? `${summary.best_score}%` : '0%')}
+            </p>
+            <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400 font-medium">Personal record score</p>
+          </div>
+        </div>
+
+        {/* Average Accuracy */}
+        <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-4 shadow-xs flex flex-col justify-between">
+          <div className="flex items-center justify-between">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Average Accuracy</p>
             <span className="p-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-900/60">
               <Target className="w-4 h-4" />
             </span>
           </div>
           <div className="mt-3 flex items-baseline justify-between">
-            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums">{avgAccuracy}%</p>
+            <p className="text-2xl font-extrabold text-emerald-600 dark:text-emerald-400 tabular-nums">{summary.avg_accuracy != null ? `${summary.avg_accuracy}%` : `${avgAccuracy}%`}</p>
             <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Correct Ratio</span>
           </div>
         </div>

@@ -8,7 +8,7 @@ import { notificationService, adminService } from '../lib/services.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2 } from 'lucide-react';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home } from 'lucide-react';
 import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 
 
@@ -489,6 +489,16 @@ export default function Layout({ children }) {
 
             {/* Right Controls */}
             <div className="flex items-center gap-2.5">
+              {/* Back to Home Button */}
+              <Link
+                to="/"
+                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
+                title="Back to Public Home Page"
+              >
+                <Home className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <span className="hidden sm:inline">Back to Home</span>
+              </Link>
+
               {/* Notification Bell */}
               <button
                 type="button"

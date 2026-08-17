@@ -42,12 +42,16 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
   } = studentMetrics;
 
   const buildFallbackPlan = () => {
-    const weakList = weak_chapters.length > 0
-      ? weak_chapters
-      : ['Rotational Dynamics', 'Organic Reaction Mechanisms', 'Definite Integration', 'Genetics & Evolution'];
-    const strongList = strong_chapters.length > 0
-      ? strong_chapters
-      : ['Electrostatics', 'Chemical Bonding', 'Cell Biology', 'Thermodynamics'];
+    const isNEETorBio = String(target_exam).toUpperCase().includes('NEET') || String(target_exam).toUpperCase().includes('BIO');
+    const defaultWeakFallback = isNEETorBio
+      ? ['Genetics & Evolution', 'Cell Biology & Biomolecules', 'Human Physiology', 'Plant Physiology']
+      : ['Rotational Dynamics', 'Organic Reaction Mechanisms', 'Definite Integration', 'Electrostatics'];
+    const defaultStrongFallback = isNEETorBio
+      ? ['Ecology & Environment', 'Structural Organisation in Animals', 'Reproductive Biology', 'Diversity in Living Organisms']
+      : ['Electrostatics', 'Chemical Bonding', 'Matrices & Determinants', 'Thermodynamics'];
+
+    const weakList = weak_chapters.length > 0 ? weak_chapters : defaultWeakFallback;
+    const strongList = strong_chapters.length > 0 ? strong_chapters : defaultStrongFallback;
     const primaryWeak = weakList[0] || 'Core Subject Concepts';
     const secondaryWeak = weakList[1] || 'Problem Solving Speed';
 
@@ -141,7 +145,7 @@ export async function generateAIMentorReport(testData = {}) {
     incorrect_count = 0,
     unattempted_count = 0,
     total_score = 0,
-    max_marks = 720,
+    max_marks = 300,
     accuracy_percent = 0,
     percentage = 0,
     time_taken_seconds = 0,
@@ -155,304 +159,326 @@ export async function generateAIMentorReport(testData = {}) {
     previous_test_score = null,
   } = testData;
 
-  // DATA-DRIVEN FALLBACK — uses only real metrics, never invents data
+  const scorePct = max_marks > 0 ? (percentage || Number(((total_score / max_marks) * 100).toFixed(2))) : 0;
+  const attempted = attempted_count || (correct_count + incorrect_count);
+  const overallAcc = accuracy_percent || (attempted > 0 ? Math.round((correct_count / attempted) * 100) : 0);
+
+  // DATA-DRIVEN FALLBACK — returns the exact aiResponseSchema
   const buildDataDrivenFallback = () => {
-    const weakChapters = chapter_performance.filter(c => c.accuracy_percent < 65).slice(0, 5);
-    const strongChapters = chapter_performance.filter(c => c.accuracy_percent >= 75).slice(0, 5);
-    const avgChapters = chapter_performance.filter(c => c.accuracy_percent >= 65 && c.accuracy_percent < 75).slice(0, 3);
+    let performanceLevel = 'Proficient';
+    if (scorePct >= 80 || overallAcc >= 85) performanceLevel = 'Outstanding';
+    else if (scorePct >= 65 || overallAcc >= 70) performanceLevel = 'Strong Performance';
+    else if (scorePct >= 50 || overallAcc >= 55) performanceLevel = 'Moderate / Developing';
+    else performanceLevel = 'Needs Focused Improvement';
 
-    const weakSubj = subject_analysis.filter(s => s.accuracy_percent < 65).sort((a, b) => a.accuracy_percent - b.accuracy_percent);
-    const strongSubj = subject_analysis.filter(s => s.accuracy_percent >= 75).sort((a, b) => b.accuracy_percent - a.accuracy_percent);
+    const avgSecsPerQ = attempted > 0 ? Math.round(time_taken_seconds / attempted) : 0;
+    let keyObs = `Attempted ${attempted}/${total_questions || 30} questions with ${overallAcc}% accuracy averaging ${avgSecsPerQ}s per question.`;
+    if (incorrect_count > attempted * 0.25) {
+      keyObs += ` High negative marking impact from ${incorrect_count} wrong answers.`;
+    } else if (unattempted_count > total_questions * 0.3) {
+      keyObs += ` High number of unattempted questions (${unattempted_count}) suggests pacing constraints.`;
+    }
 
-    const timeMinutes = Math.round(time_taken_seconds / 60);
-    const avgTimePerQ = attempted_count > 0 ? Math.round(time_taken_seconds / attempted_count) : 0;
-    const marksLostToNegative = negative_marks_lost || incorrect_count;
-    const improvementFromPrev = previous_test_score !== null ? total_score - previous_test_score : null;
+    const strongChapters = (chapter_performance || []).filter(c => (c.accuracy_percent || c.accuracy || 0) >= 75);
+    const strengths = strongChapters.map(c => ({
+      area: `${c.chapter_name || c.chapter || c.topic || 'Core Concept'} Mastery`,
+      reason: `Maintained ${c.accuracy_percent || c.accuracy || 75}% accuracy in ${c.subject || 'Subject'}.`
+    }));
+    if (strengths.length === 0) {
+      strengths.push({
+        area: 'Accuracy',
+        reason: `Maintained ${overallAcc}% accuracy on attempted questions.`
+      });
+    }
 
-    const easyWrong = difficulty_accuracy.find(d => d.difficulty === 'easy') || {};
-    const sillyMistakes = easyWrong.correct < easyWrong.total * 0.8
-      ? Math.max(0, (easyWrong.total || 0) - (easyWrong.correct || 0))
-      : 0;
+    const weakChapters = (chapter_performance || []).filter(c => (c.accuracy_percent || c.accuracy || 0) < 60);
+    const weaknesses = weakChapters.map(c => ({
+      area: `${c.chapter_name || c.chapter || c.topic || 'Weak Topic'} Revision`,
+      reason: `Scored ${c.accuracy_percent || c.accuracy || 0}% accuracy with ${c.wrong || c.incorrect || 0} wrong answers.`,
+      priority: (c.accuracy_percent || c.accuracy || 0) < 40 ? 'high' : 'medium'
+    }));
+    if (weaknesses.length === 0 && incorrect_count > 0) {
+      weaknesses.push({
+        area: 'Negative Marking',
+        reason: `${incorrect_count} questions wrong due to rushed option selection or calculation traps.`,
+        priority: 'high'
+      });
+    }
+    if (unattempted_count > 5) {
+      weaknesses.push({
+        area: 'Attempt Rate',
+        reason: `${unattempted_count} questions left unattempted due to time pacing.`,
+        priority: 'high'
+      });
+    }
 
-    const timeTraps = (time_management_report.inefficient_questions || []).slice(0, 5);
+    const subAnalysis = (subject_analysis || []).map(s => {
+      const acc = s.accuracy_percent || s.accuracy || 0;
+      let evalText = 'On track';
+      if (acc >= 75) evalText = 'Strong subject mastery';
+      else if (acc < 50) evalText = 'Requires urgent concept & PYQ revision';
+      return {
+        subject: s.subject || 'General',
+        score: s.score != null ? s.score : s.marks_obtained || 0,
+        maxMarks: s.max_marks || s.total_marks || 100,
+        accuracy: acc,
+        status: acc >= 75 ? 'Strong' : acc >= 50 ? 'Moderate' : 'Weak',
+        observation: `${s.correct_count || s.correct || 0} correct, ${s.incorrect_count || s.wrong || 0} wrong out of ${s.total || s.total_questions || 0} questions. ${evalText}.`
+      };
+    });
+
+    const topAnalysis = (chapter_performance || []).map(c => {
+      const acc = c.accuracy_percent || c.accuracy || 0;
+      return {
+        topic: c.chapter_name || c.chapter || c.topic || 'Topic',
+        subject: c.subject || 'Subject',
+        accuracy: acc,
+        status: acc >= 75 ? 'Mastered' : acc >= 50 ? 'Improving' : 'Needs Focus',
+        observation: `Scored ${c.correct || 0}/${c.total || 0} correct (${acc}% accuracy).`
+      };
+    });
+
+    const mistakeAnalysis = [];
+    if (incorrect_count > 0) {
+      mistakeAnalysis.push({
+        type: 'Negative Marking / Rushed Choices',
+        count: incorrect_count,
+        impact: `Lost ${negative_marks_lost || incorrect_count} marks from wrong choices`,
+        recommendation: 'Eliminate at least 2 options before selecting, or skip if 50-50 unsure.'
+      });
+    }
+    if (unattempted_count > 0) {
+      mistakeAnalysis.push({
+        type: 'Pacing / Unattempted Questions',
+        count: unattempted_count,
+        impact: `${unattempted_count} questions left unattempted (${unattempted_count * 4} potential marks missed)`,
+        recommendation: 'Apply 2-pass strategy to complete direct recall questions in Round 1.'
+      });
+    }
+
+    const timeManagement = {
+      assessment: `Spent ${Math.round(time_taken_seconds / 60)} minutes total. Average time per attempted question: ${avgSecsPerQ}s.`,
+      problems: [
+        ...(avgSecsPerQ > 90 ? ['High average time per question exceeding target 75s pace.'] : []),
+        ...(unattempted_count > 5 ? [`${unattempted_count} questions skipped due to time running out.`] : []),
+        ...((time_management_report.inefficient_questions || []).length > 0 ? [`Spent >3 minutes on ${(time_management_report.inefficient_questions || []).length} complex questions.`] : [])
+      ],
+      recommendations: [
+        'Pass 1 (0-60 mins): Solve all easy, direct recall & single-step formula questions.',
+        'Pass 2 (60-120 mins): Address multi-concept calculations and long problem statements.',
+        'Enforce strict 2.5-minute timer cutoff for any single question during first pass.'
+      ]
+    };
+
+    const upcomingTestStrategy = [
+      'Implement Round 1 & Round 2 exam order to maximize high-confidence score.',
+      'Maintain an error notebook for every incorrect question attempted in this test.',
+      'Daily 30-minute timed quiz drill targeting weakest subject area.'
+    ];
+
+    const strongList = (chapter_performance || []).filter(c => (c.accuracy_percent || c.accuracy || 0) >= 75 || ((c.correct || 0) > 0 && (c.wrong || 0) === 0));
+    const avgList = (chapter_performance || []).filter(c => {
+      const acc = c.accuracy_percent || c.accuracy || 0;
+      return acc >= 50 && acc < 75 && (c.wrong || 0) > 0;
+    });
+    const weakList = (chapter_performance || []).filter(c => {
+      const acc = c.accuracy_percent || c.accuracy || 0;
+      return (c.wrong || 0) > 0 || c.is_unattempted || acc < 75;
+    });
+
+    const topicDiagnostics = {
+      strong: strongList.map(c => ({
+        topic: c.chapter_name || c.chapter || c.topic || 'Core Concept',
+        chapter: c.chapter_name || c.chapter || c.topic || 'Core Concept',
+        subject: c.subject || 'Subject',
+        accuracy: c.accuracy_percent || c.accuracy || 85,
+        reason: `Strong mastery with ${c.correct || 0}/${c.total || 0} correct.`
+      })),
+      average: avgList.map(c => ({
+        topic: c.chapter_name || c.chapter || c.topic || 'Moderate Topic',
+        chapter: c.chapter_name || c.chapter || c.topic || 'Moderate Topic',
+        subject: c.subject || 'Subject',
+        accuracy: c.accuracy_percent || c.accuracy || 60,
+        reason: `Moderate accuracy (${c.correct || 0}/${c.total || 0} correct). Revise key formulas.`
+      })),
+      weak: weakList.map(c => ({
+        topic: c.chapter_name || c.chapter || c.topic || 'Weak Topic',
+        chapter: c.chapter_name || c.chapter || c.topic || 'Weak Topic',
+        subject: c.subject || 'Subject',
+        accuracy: c.accuracy_percent || c.accuracy || 0,
+        reason: c.is_unattempted
+          ? 'Unattempted entirely. Focus on pacing and time allocation.'
+          : `Concept gaps identified (${c.wrong || c.incorrect || 0} wrong choices).`
+      }))
+    };
+
+    const priorityTopics = (weakList.length > 0 ? weakList : (chapter_performance || []))
+      .slice(0, 5)
+      .map(c => c.chapter_name || c.chapter || c.topic || 'Priority Topic');
+
+    const sevenDayPlan = [];
+    const topicsToUse = priorityTopics.length > 0 ? priorityTopics.map(t => typeof t === 'string' ? t : (t.chapter_name || t.topic || 'Topic')) : ['Core Revision', 'Formula Speed Check', 'PYQ Drill'];
+
+    for (let d = 1; d <= 7; d++) {
+      const topFocus = d === 7 ? 'Full Syllabus Mock & Final Audit' : topicsToUse[(d - 1) % topicsToUse.length];
+      const matchingCh = chapter_performance?.find(c => (c.chapter_name || c.topic) === topFocus);
+      const subName = matchingCh?.subject || (subject_analysis?.[0]?.subject) || 'Core Subject';
+
+      sevenDayPlan.push({
+        day: d,
+        focus: d === 7 ? 'Full Mock Test & Final Strategy Audit' : `Mastery Focus: ${topFocus}`,
+        focus_chapter: topFocus,
+        subject: subName,
+        revision_duration_minutes: d === 7 ? 180 : 60,
+        practice_questions: d === 7 ? 90 : 25,
+        current_accuracy: matchingCh?.accuracy_percent || matchingCh?.accuracy || 40,
+        task: d === 7
+          ? 'Attempt 1 full-length timed CBT mock test and review error log.'
+          : `Revise theory & formulas for ${topFocus}, then solve 25 PYQs.`,
+        daily_goal: d === 7
+          ? 'Execute strict 2-pass question selection strategy.'
+          : `Reach 80%+ accuracy on ${topFocus} practice set.`,
+        tasks: d === 7
+          ? ['Attempt 1 full-length timed CBT mock test', 'Review error log and time allocation']
+          : [`Revise formulas & core theory for ${topFocus}`, `Attempt 25 NTA-pattern practice questions on ${topFocus}`],
+        activities: d === 7
+          ? ['Attempt 1 full-length timed CBT mock test', 'Review error log and time allocation']
+          : [`Revise formulas & core theory for ${topFocus}`, `Attempt 25 NTA-pattern practice questions on ${topFocus}`],
+        recommendedMinutes: 240,
+        estimatedHours: 4
+      });
+    }
+
+    const finalAdvice = `You scored ${total_score}/${max_marks} (${scorePct}%). Focusing on your priority topics and controlling negative marking over the next 7 days will significantly raise your rank!`;
+
+    const analysisObj = {
+      overallAssessment: {
+        summary: `Test analysis for ${student_name} on ${test_name}: Scored ${total_score}/${max_marks} (${scorePct}%) with ${overallAcc}% accuracy.`,
+        performanceLevel,
+        keyObservation: keyObs
+      },
+      overall_performance_analysis: {
+        headline: `Scored ${total_score}/${max_marks} (${scorePct}%) with ${overallAcc}% accuracy on ${test_name}.`,
+        accuracy_summary: `Overall accuracy of ${overallAcc}% on attempted questions.`,
+        speed_summary: attempted > 0 ? `Averaged ${avgSecsPerQ}s per question.` : 'Pacing audit indicates moderate solving speed.',
+        strength_summary: strengths.map(s => s.area || s).join(', ') || 'Concept accuracy',
+        weakness_summary: weaknesses.map(w => w.area || w).join(', ') || 'Negative marking & pacing',
+        consistency: scorePct >= 70 ? 'High' : 'Moderate',
+        negative_impact: `Lost ${negative_marks_lost || incorrect_count} marks from incorrect attempts.`,
+        confidence_level: overallAcc >= 75 ? 'High' : overallAcc >= 50 ? 'Moderate' : 'Low'
+      },
+      strengths,
+      weaknesses,
+      topic_diagnostics: topicDiagnostics,
+      topicDiagnostics,
+      subjectAnalysis: subAnalysis,
+      subject_analysis: subAnalysis,
+      topicAnalysis: topAnalysis,
+      mistakeAnalysis,
+      timeManagement,
+      upcomingTestStrategy,
+      priorityTopics,
+      sevenDayPlan,
+      seven_day_plan: sevenDayPlan,
+      finalAdvice
+    };
 
     return {
-      overall_performance_analysis: {
-        headline: `${student_name} scored ${total_score}/${max_marks} (${percentage}%) in ${test_name}`,
-        accuracy_summary: `Attempted ${attempted_count}/${total_questions} questions. Correct: ${correct_count}, Incorrect: ${incorrect_count}, Unattempted: ${unattempted_count}. Overall accuracy: ${accuracy_percent}%.`,
-        speed_summary: `Completed test in ${timeMinutes} minutes. Average time per attempted question: ${avgTimePerQ} seconds.`,
-        strength_summary: strongSubj.length > 0
-          ? `Strongest subject: ${strongSubj[0].subject} with ${strongSubj[0].accuracy_percent}% accuracy (${strongSubj[0].correct_count} correct out of ${(strongSubj[0].correct_count || 0) + (strongSubj[0].incorrect_count || 0)} attempted).`
-          : 'No subject with 75%+ accuracy detected in this attempt.',
-        weakness_summary: weakSubj.length > 0
-          ? `Weakest subject: ${weakSubj[0].subject} with ${weakSubj[0].accuracy_percent}% accuracy and ${weakSubj[0].incorrect_count} wrong answers.`
-          : 'Performance is consistent across subjects.',
-        consistency: improvementFromPrev !== null
-          ? improvementFromPrev >= 0
-            ? `Score improved by +${improvementFromPrev} marks compared to previous test.`
-            : `Score dropped by ${Math.abs(improvementFromPrev)} marks compared to previous test.`
-          : 'First test attempt — no prior comparison available.',
-        negative_impact: `Lost ${marksLostToNegative} marks due to negative marking from ${incorrect_count} wrong answers.`,
-        confidence_level: accuracy_percent >= 75 ? 'High' : accuracy_percent >= 55 ? 'Moderate' : 'Needs Improvement',
-      },
-
-      seven_day_plan: [
-        ...weakChapters.slice(0, 6).map((ch, i) => ({
-          day: i + 1,
-          focus_chapter: ch.chapter_name,
-          subject: ch.subject,
-          current_accuracy: ch.accuracy_percent,
-          task: `Revise core concepts of ${ch.chapter_name}. Attempt ${Math.max(20, Math.floor((100 - ch.accuracy_percent) / 3))} NTA-pattern practice questions. Target 75%+ accuracy.`,
-          practice_questions: Math.max(20, Math.floor((100 - ch.accuracy_percent) / 3)),
-          revision_duration_minutes: 90,
-          daily_goal: `Raise ${ch.chapter_name} accuracy from ${ch.accuracy_percent}% to 75%+.`,
-        })),
-        {
-          day: Math.min(weakChapters.length + 1, 7),
-          focus_chapter: 'Full Syllabus Consolidation',
-          subject: 'Mixed',
-          current_accuracy: accuracy_percent,
-          task: 'Attempt a timed full-length mock test applying 2-pass strategy. Review all wrong answers post-test.',
-          practice_questions: total_questions,
-          revision_duration_minutes: 180,
-          daily_goal: 'Score 5%+ higher than this test attempt.',
-        },
-      ],
-
-      revision_strategy: [
-        {
-          title: '2-Pass Question Selection',
-          rule: `You left ${unattempted_count} questions unattempted. In the next test, First pass — answer all direct recall & formula-based questions in under 90 seconds. Second pass — return to multi-step calculations.`,
-        },
-        {
-          title: 'Negative Marking Control',
-          rule: `You lost ${marksLostToNegative} marks to negative marking. Before attempting a question, eliminate at least 2 wrong options. Skip entirely if unsure — unattempted scores 0, wrong scores -1.`,
-        },
-        weakSubj.length > 0
-          ? {
-            title: `Priority: Improve ${weakSubj[0].subject}`,
-            rule: `Your ${weakSubj[0].subject} accuracy is ${weakSubj[0].accuracy_percent}%. Dedicate 40% of daily study time to this subject over the next 7 days.`,
-          }
-          : { title: 'Balanced Revision', rule: 'Maintain subject balance — split time equally between revision and problem solving.' },
-        timeTraps.length > 0
-          ? {
-            title: 'Time Trap Avoidance',
-            rule: `${timeTraps.length} questions consumed excessive time (${timeTraps[0]?.time_spent_seconds || 180}s+). Practice skipping questions that exceed 2.5 minutes without a clear solution path.`,
-          }
-          : {
-            title: 'Time Management',
-            rule: 'Maintain 1.5–2 minutes per question average. Avoid spending >2.5 minutes on any single question during first pass.',
-          },
-        {
-          title: 'Formula Consolidation',
-          rule: `Create a formula cheatsheet for ${weakSubj[0]?.subject || 'your weakest subject'} and revise it daily before solving practice questions.`,
-        },
-      ],
-
-      recommended_ebooks: weakChapters.slice(0, 4).map((ch, i) => ({
-        title: `AIETS ${ch.subject} Master Module: ${ch.chapter_name}`,
-        chapter: `${ch.chapter_name} — NTA PYQs, Concept Notes & Solved Examples`,
-        subject: ch.subject,
-        priority: i === 0 ? 'Urgent — High Priority' : i === 1 ? 'High Priority' : 'Recommended',
-        reason: `You scored ${ch.accuracy_percent}% accuracy on ${ch.chapter_name} with ${ch.wrong} wrong answers. This module provides targeted NTA-pattern drills directly addressing your gaps.`,
-      })),
-
-      topic_diagnostics: {
-        strong: strongChapters.map(ch => ({
-          topic: ch.chapter_name,
-          subject: ch.subject,
-          accuracy: ch.accuracy_percent,
-          correct: ch.correct,
-          total: ch.total,
-          classification: 'Strong',
-          reason: `${ch.accuracy_percent}% accuracy with ${ch.correct}/${ch.total} correct — maintain with weekly practice.`,
-        })),
-        average: avgChapters.map(ch => ({
-          topic: ch.chapter_name,
-          subject: ch.subject,
-          accuracy: ch.accuracy_percent,
-          correct: ch.correct,
-          total: ch.total,
-          classification: 'Average',
-          reason: `${ch.accuracy_percent}% accuracy — borderline performance. Focused revision will improve this chapter significantly.`,
-        })),
-        weak: weakChapters.map(ch => ({
-          topic: ch.chapter_name,
-          subject: ch.subject,
-          accuracy: ch.accuracy_percent,
-          wrong: ch.wrong,
-          total: ch.total,
-          classification: 'Weak',
-          reason: `${ch.accuracy_percent}% accuracy with ${ch.wrong}/${ch.total} wrong answers — conceptual gap or application error detected.`,
-        })),
-      },
-
-      time_pacing_advice: {
-        total_time_taken: `${timeMinutes} minutes`,
-        avg_per_question: `${avgTimePerQ} seconds`,
-        inefficient_questions: timeTraps.map(q => ({
-          question_number: q.question_number,
-          time_spent: q.time_spent_seconds,
-          subject: q.subject,
-          advice: `Spent ${q.time_spent_seconds}s — exceeds recommended 150 seconds. Skip and return in second pass.`,
-        })),
-        subject_timing: subject_analysis.map(s => ({
-          subject: s.subject,
-          time_spent_seconds: s.time_spent_seconds,
-          ideal_seconds: 2700,
-          delta: s.time_spent_seconds - 2700,
-          advice: s.time_spent_seconds > 3000
-            ? `Overran by ${s.time_spent_seconds - 2700}s — practice faster question selection.`
-            : s.time_spent_seconds < 2000
-              ? `Rushed by ${2700 - s.time_spent_seconds}s — may have skipped solvable questions.`
-              : 'Well-paced.',
-        })),
-        overall_pacing_advice: `You averaged ${avgTimePerQ}s per question. ${avgTimePerQ > 110
-            ? 'Slower than ideal — prioritize skipping complex questions in first pass.'
-            : avgTimePerQ < 60
-              ? 'Fast pace may indicate rushed decisions — slow down on 4-mark questions.'
-              : 'Good pacing maintained throughout the test.'
-          }`,
-      },
-
-      mistake_pattern_analysis: {
-        total_wrong: incorrect_count,
-        marks_lost: marksLostToNegative,
-        conceptual_errors: weakChapters.slice(0, 2).map(ch => ({
-          chapter: ch.chapter_name,
-          wrong_count: ch.wrong,
-          type: 'Conceptual',
-          explanation: `${ch.wrong} wrong answers in ${ch.chapter_name} suggest core concept gaps, not calculation errors. Revisit fundamental theory.`,
-        })),
-        silly_mistakes: sillyMistakes > 0
-          ? {
-            count: sillyMistakes,
-            detail: `${sillyMistakes} wrong answers on easy difficulty questions — likely careless errors under time pressure or misread options.`,
-            fix: 'Re-read question stems before selecting an option. Allow 5–10 extra seconds for easy questions.',
-          }
-          : { count: 0, detail: 'No significant silly mistakes detected on easy-level questions.', fix: '' },
-        time_pressure_errors: timeTraps.length > 0
-          ? {
-            count: timeTraps.length,
-            detail: `${timeTraps.length} questions spent >3 minutes — time pressure likely caused suboptimal answer choices.`,
-            fix: 'Practice mock tests with strict 2.5-minute cutoff per question to build decision-making speed.',
-          }
-          : { count: 0, detail: 'No significant time pressure patterns detected.', fix: '' },
-        negative_marking_impact: {
-          marks_lost: marksLostToNegative,
-          wrong_answers: incorrect_count,
-          advice: incorrect_count > total_questions * 0.3
-            ? `High wrong attempt rate (${incorrect_count}/${total_questions}). Reduce guessing — only attempt questions you're 70%+ confident about.`
-            : 'Wrong attempt rate is manageable. Continue using controlled elimination strategy.',
-        },
-      },
-
-      improvement_strategy: {
-        priority_subjects: weakSubj.slice(0, 2).map(s => ({
-          subject: s.subject,
-          current_accuracy: s.accuracy_percent,
-          target_accuracy: Math.min(100, s.accuracy_percent + 20),
-          strategy: `Increase daily practice in ${s.subject} by 30 minutes. Focus on: ${weakChapters.filter(c => c.subject === s.subject).map(c => c.chapter_name).join(', ') || 'all weak chapters'}.`,
-        })),
-        score_growth_projection: `If ${student_name} corrects ${Math.min(incorrect_count, 8)} wrong answers and attempts ${Math.min(unattempted_count, 5)} more questions in the next test, the projected score improvement is +${Math.min(incorrect_count, 8) * 2 + Math.min(unattempted_count, 5) * 4} marks.`,
-        target_next_test: Math.min(max_marks, total_score + 40),
-        practice_intensity: accuracy_percent < 50
-          ? 'Intensive — 4+ hours daily focused practice required.'
-          : accuracy_percent < 70
-            ? 'Moderate-High — 2-3 hours daily revision with chapter-wise mocks.'
-            : 'Maintenance — 1-2 hours daily to sustain and improve current level.',
-        skills_to_improve: [
-          ...(accuracy_percent < 65 ? ['Question selection strategy', 'Negative marking control'] : []),
-          ...(avgTimePerQ > 110 ? ['Time management and pacing'] : []),
-          ...(sillyMistakes > 2 ? ['Accuracy and careful reading'] : []),
-          ...(weakChapters.length > 0 ? [`${weakChapters[0].chapter_name} mastery`] : []),
-        ],
-      },
+      attemptId: testData.attempt_id || testData.test_id || 1,
+      analysis: analysisObj,
+      ...analysisObj
     };
   };
 
-  if (!openRouterKey) {
-    console.log('[GeminiService] No OpenRouter API key configured — using data-driven mentor report fallback.');
-    return buildDataDrivenFallback();
-  }
+    const analytics = {
+      student_name,
+      test_name,
+      total_questions,
+      attempted_count: attempted,
+      correct_count,
+      incorrect_count,
+      unattempted_count,
+      total_score,
+      max_marks,
+      accuracy_percent: overallAcc,
+      percentage: scorePct,
+      time_taken_seconds,
+      all_india_rank,
+      percentile,
+      subject_analysis,
+      chapter_performance,
+      time_management_report,
+      difficulty_accuracy,
+      negative_marks_lost,
+      previous_test_score
+    };
 
-  const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NTA-pattern CBT test series for NEET UG and JEE students in India.
+    const systemPrompt = `
+You are an expert JEE and NEET performance coach.
 
-A student just completed an AIETS mock examination. Analyze the REAL test data below and generate a comprehensive 8-section personalized AI Mentor Report.
+Analyze the following student test analytics.
 
-STRICT RULES:
-- NEVER generate generic, random, or hardcoded advice.
-- EVERY statement must reference actual data provided below.
-- All chapter names, accuracy values, scores, and timings must match the real values provided.
+Use ONLY the provided data.
 
-=== REAL TEST DATA ===
-Student Name: ${student_name}
-Test Name: ${test_name}
-Total Questions: ${total_questions} | Attempted: ${attempted_count} | Correct: ${correct_count} | Wrong: ${incorrect_count} | Unattempted: ${unattempted_count}
-Score: ${total_score}/${max_marks} (${percentage}%) | Accuracy: ${accuracy_percent}%
-Time: ${Math.round(time_taken_seconds / 60)} min | Avg/Q: ${attempted_count > 0 ? Math.round(time_taken_seconds / attempted_count) : 0}s
-Rank: ${all_india_rank || 'TBD'} | Percentile: ${percentile || 'TBD'}
-Negative Marks Lost: ${negative_marks_lost}
-Previous Test Score: ${previous_test_score !== null ? previous_test_score : 'First attempt'}
+Return a structured JSON response containing:
 
-Subject Analysis: ${JSON.stringify(subject_analysis.map(s => ({ subject: s.subject, score: s.score, max: s.max_marks, correct: s.correct_count, wrong: s.incorrect_count, accuracy: s.accuracy_percent + '%', time_s: s.time_spent_seconds })))}
+- overallAssessment
+- strengths
+- weaknesses
+- subjectAnalysis
+- topicAnalysis
+- mistakeAnalysis
+- timeManagement
+- upcomingTestStrategy
+- priorityTopics
+- sevenDayPlan
+- finalAdvice
 
-Chapter Performance (worst first): ${JSON.stringify(chapter_performance.slice(0, 15).map(c => ({ chapter: c.chapter_name, subject: c.subject, correct: c.correct, wrong: c.wrong, total: c.total, accuracy: c.accuracy_percent + '%' })))}
+Do not invent information.
 
-Difficulty Breakdown: ${JSON.stringify(difficulty_accuracy)}
+STUDENT ANALYTICS:
 
-Time Inefficient Questions: ${JSON.stringify((time_management_report.inefficient_questions || []).slice(0, 5))}
-
-Return ONLY valid JSON with this exact structure:
-{
-  "overall_performance_analysis": {
-    "headline": "string with real score and test name",
-    "accuracy_summary": "string with real counts",
-    "speed_summary": "string with real timing",
-    "strength_summary": "string with strongest subject and real accuracy",
-    "weakness_summary": "string with weakest subject and real accuracy",
-    "consistency": "string comparing to previous test",
-    "negative_impact": "string with exact marks lost",
-    "confidence_level": "High | Moderate | Needs Improvement"
-  },
-  "seven_day_plan": [{ "day": number, "focus_chapter": "real chapter", "subject": "real subject", "current_accuracy": number, "task": "specific real-data action", "practice_questions": number, "revision_duration_minutes": number, "daily_goal": "measurable goal" }],
-  "revision_strategy": [{ "title": "string", "rule": "string using real data" }],
-  "recommended_ebooks": [{ "title": "string with real chapter", "chapter": "string", "subject": "real subject", "priority": "string", "reason": "string with real accuracy" }],
-  "topic_diagnostics": {
-    "strong": [{ "topic": "real chapter", "subject": "string", "accuracy": number, "correct": number, "total": number, "classification": "Strong", "reason": "string" }],
-    "average": [{ "topic": "real chapter", "subject": "string", "accuracy": number, "correct": number, "total": number, "classification": "Average", "reason": "string" }],
-    "weak": [{ "topic": "real chapter", "subject": "string", "accuracy": number, "wrong": number, "total": number, "classification": "Weak", "reason": "string" }]
-  },
-  "time_pacing_advice": {
-    "total_time_taken": "string",
-    "avg_per_question": "string",
-    "inefficient_questions": [{ "question_number": number, "time_spent": number, "subject": "string", "advice": "string" }],
-    "subject_timing": [{ "subject": "string", "time_spent_seconds": number, "ideal_seconds": 2700, "delta": number, "advice": "string" }],
-    "overall_pacing_advice": "string with real timing data"
-  },
-  "mistake_pattern_analysis": {
-    "total_wrong": number,
-    "marks_lost": number,
-    "conceptual_errors": [{ "chapter": "real chapter", "wrong_count": number, "type": "Conceptual", "explanation": "string" }],
-    "silly_mistakes": { "count": number, "detail": "string", "fix": "string" },
-    "time_pressure_errors": { "count": number, "detail": "string", "fix": "string" },
-    "negative_marking_impact": { "marks_lost": number, "wrong_answers": number, "advice": "string" }
-  },
-  "improvement_strategy": {
-    "priority_subjects": [{ "subject": "real subject", "current_accuracy": number, "target_accuracy": number, "strategy": "string" }],
-    "score_growth_projection": "string with realistic numbers",
-    "target_next_test": number,
-    "practice_intensity": "string",
-    "skills_to_improve": ["array of skills based on real data"]
-  }
-}`;
+${JSON.stringify(analytics, null, 2)}
+`;
 
   if (openRouterKey) {
     try {
-      const openRouterText = await callOpenRouterAI({ systemPrompt: prompt, questionText: 'Generate 8-section AI mentor report JSON object' });
+      const openRouterText = await callOpenRouterAI({ systemPrompt, questionText: 'Generate structured AI test analysis response JSON object' });
       if (openRouterText) {
         const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
-        if (jsonMatch) return JSON.parse(jsonMatch[0]);
+        if (jsonMatch) {
+          const parsed = JSON.parse(jsonMatch[0]);
+          const fallback = buildDataDrivenFallback();
+          const pAnalysis = parsed.analysis || parsed;
+
+          const analysisObj = {
+            overallAssessment: {
+              summary: pAnalysis.overallAssessment?.summary || fallback.analysis.overallAssessment.summary,
+              performanceLevel: pAnalysis.overallAssessment?.performanceLevel || fallback.analysis.overallAssessment.performanceLevel,
+              keyObservation: pAnalysis.overallAssessment?.keyObservation || fallback.analysis.overallAssessment.keyObservation
+            },
+            strengths: Array.isArray(pAnalysis.strengths) && pAnalysis.strengths.length > 0 ? pAnalysis.strengths : fallback.analysis.strengths,
+            weaknesses: Array.isArray(pAnalysis.weaknesses) && pAnalysis.weaknesses.length > 0 ? pAnalysis.weaknesses : fallback.analysis.weaknesses,
+            subjectAnalysis: Array.isArray(pAnalysis.subjectAnalysis) && pAnalysis.subjectAnalysis.length > 0 ? pAnalysis.subjectAnalysis : fallback.analysis.subjectAnalysis,
+            topicAnalysis: Array.isArray(pAnalysis.topicAnalysis) && pAnalysis.topicAnalysis.length > 0 ? pAnalysis.topicAnalysis : fallback.analysis.topicAnalysis,
+            mistakeAnalysis: Array.isArray(pAnalysis.mistakeAnalysis) && pAnalysis.mistakeAnalysis.length > 0 ? pAnalysis.mistakeAnalysis : fallback.analysis.mistakeAnalysis,
+            timeManagement: {
+              assessment: pAnalysis.timeManagement?.assessment || fallback.analysis.timeManagement.assessment,
+              problems: Array.isArray(pAnalysis.timeManagement?.problems) ? pAnalysis.timeManagement.problems : fallback.analysis.timeManagement.problems,
+              recommendations: Array.isArray(pAnalysis.timeManagement?.recommendations) ? pAnalysis.timeManagement.recommendations : fallback.analysis.timeManagement.recommendations
+            },
+            upcomingTestStrategy: Array.isArray(pAnalysis.upcomingTestStrategy) && pAnalysis.upcomingTestStrategy.length > 0 ? pAnalysis.upcomingTestStrategy : fallback.analysis.upcomingTestStrategy,
+            priorityTopics: Array.isArray(pAnalysis.priorityTopics) && pAnalysis.priorityTopics.length > 0 ? pAnalysis.priorityTopics : fallback.analysis.priorityTopics,
+            sevenDayPlan: Array.isArray(pAnalysis.sevenDayPlan) && pAnalysis.sevenDayPlan.length > 0 ? pAnalysis.sevenDayPlan : fallback.analysis.sevenDayPlan,
+            finalAdvice: pAnalysis.finalAdvice || fallback.analysis.finalAdvice
+          };
+
+          return {
+            attemptId: testData.attempt_id || testData.test_id || 1,
+            analysis: analysisObj,
+            ...analysisObj
+          };
+        }
       }
     } catch (err) {
       console.warn('[AIService] OpenRouter generateAIMentorReport failed:', err.message);
@@ -1940,7 +1966,7 @@ export async function generateExamMentorStrategyReport(testData = {}) {
   const cleanTopicStr = (t) => {
     if (!t) return '';
     const str = typeof t === 'string' ? t : (t.chapter_name || t.topic || '');
-    return str.replace(/\s*\([^)]*\)/g, '').trim();
+    return str.replace(/\s*\(\d+%.*?\)/g, '').trim();
   };
 
   const strongTopicsText = Array.isArray(strong_topics) ? strong_topics.map(cleanTopicStr).filter(Boolean).join(', ') : (cleanTopicStr(strong_topics) || 'None identified');
@@ -2025,7 +2051,17 @@ export async function generateExamMentorStrategyReport(testData = {}) {
           estimatedHours: 6
         });
       } else {
-        const topicFocus = combinedWeakAndMod[(d - 1) % combinedWeakAndMod.length] || `Topic ${d} Mastery`;
+        let topicFocus = combinedWeakAndMod[(d - 1) % combinedWeakAndMod.length] || `Topic ${d} Mastery`;
+        if (combinedWeakAndMod.length === 1 && d <= 5) {
+          const subFoci = [
+            'Current Electricity & Resistor Networks',
+            'Coulomb\'s Law & Electrostatics',
+            'Magnetic Force & Field Equations',
+            'Faraday\'s Law & Induced EMF Rate Calculations',
+            'Capacitance & Dielectric Parameter Scaling'
+          ];
+          topicFocus = `${combinedWeakAndMod[0]} (${subFoci[d - 1] || 'Sub-topic Revision'})`;
+        }
         const actGenerator = activityTypes[(d - 1) % activityTypes.length];
         dailyPlan.push({
           day: d,
@@ -2053,10 +2089,26 @@ export async function generateExamMentorStrategyReport(testData = {}) {
       : `Test analysis complete (${score}/${total_marks} marks). Target your priority topics below to build concept accuracy.`;
     const noteText = `Focusing on your priority revision plan over the next ${daysCount} days will unlock your target score!`;
 
+    const finalStrengths = strongTopicsList.length > 0
+      ? strongTopicsList
+      : (raw_chapter_performance || []).filter(c => (c.accuracy_percent || 0) >= 50).map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent || 100}% accuracy)`);
+
+    const finalWeaknesses = weakTopicsList.length > 0
+      ? weakTopicsList
+      : (raw_chapter_performance || []).filter(c => (c.accuracy_percent || 0) < 100 || c.wrong > 0 || c.is_unattempted).map(c => `${c.chapter_name || c.topic} (${c.accuracy_percent || 0}% accuracy)`);
+
     return {
       examType: cleanExamType,
       coveredSubjects: coveredSubjectsList,
       performanceSummary: summaryText,
+      strengths: finalStrengths,
+      weaknesses: finalWeaknesses,
+      strong_topics: finalStrengths,
+      weak_topics: finalWeaknesses,
+      topic_diagnostics: {
+        strong: (raw_chapter_performance || []).filter(c => (c.accuracy_percent || 0) >= 70).map(c => ({ topic: c.chapter_name || c.topic, subject: c.subject, accuracy: c.accuracy_percent })),
+        weak: (raw_chapter_performance || []).filter(c => (c.accuracy_percent || 0) < 70 || c.wrong > 0 || c.is_unattempted).map(c => ({ topic: c.chapter_name || c.topic, subject: c.subject, accuracy: c.accuracy_percent }))
+      },
       rootCauseAnalysis: rootCauses,
       priorityTopics: topPriorities,
       dailyPlan,
