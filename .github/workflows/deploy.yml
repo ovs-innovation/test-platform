@@ -28,14 +28,14 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          timeout: 15m
-          command_timeout: 15m
+          timeout: 30m
+          command_timeout: 30m
           script: |
             set -e
 
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
-            MAX_RETRIES=24
+            MAX_RETRIES=36
             RETRY_INTERVAL=5
 
             log() {
@@ -72,6 +72,15 @@ jobs:
               cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
               log "Backed up backend/src/config/db.js"
             fi
+            if [ -f ".env" ]; then
+              cp ".env" "$BACKUP_DIR/.env" || true
+              log "Backed up .env"
+            fi
+            if [ -f "backend/.env" ]; then
+              mkdir -p "$BACKUP_DIR/backend"
+              cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
+              log "Backed up backend/.env"
+            fi
 
             # 3. Clean fetch and hard reset to origin/main
             log "Step 3/8: Fetching latest code and resetting repository..."
@@ -86,6 +95,14 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
               log "Restored backend/src/config/db.js"
+            fi
+            if [ -f "$BACKUP_DIR/.env" ]; then
+              cp "$BACKUP_DIR/.env" ".env" || true
+              log "Restored .env"
+            fi
+            if [ -f "$BACKUP_DIR/backend/.env" ]; then
+              cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
+              log "Restored backend/.env"
             fi
 
             # Rollback helper function
