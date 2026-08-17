@@ -90,16 +90,45 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
       priorityTopics = dataObj.priority_topics || (dataObj.rootCauseAnalysis || []).map(r => r.topic);
     }
 
-    let sevenDayPlan = dataObj.sevenDayPlan;
-    if (!Array.isArray(sevenDayPlan) || sevenDayPlan.length === 0) {
-      sevenDayPlan = (dataObj.dailyPlan || dataObj.seven_day_plan || []).map((item, idx) => ({
-        day: item.day || idx + 1,
-        focus: item.focus || item.focus_chapter || `Day ${idx + 1} Revision`,
-        tasks: Array.isArray(item.tasks) ? item.tasks : (Array.isArray(item.activities) ? item.activities : [item.task || 'Revise core concepts']),
-        activities: Array.isArray(item.activities) ? item.activities : (Array.isArray(item.tasks) ? item.tasks : [item.task || 'Revise core concepts']),
-        recommendedMinutes: item.recommendedMinutes || (item.estimatedHours ? item.estimatedHours * 60 : 60),
-        estimatedHours: item.estimatedHours || 4
-      }));
+    let rawSevenDay = dataObj.seven_day_revision_plan || dataObj.sevenDayPlan || dataObj.seven_day_plan || dataObj.dailyPlan || [];
+    let sevenDayPlan = [];
+    if (Array.isArray(rawSevenDay) && rawSevenDay.length > 0) {
+      sevenDayPlan = rawSevenDay.map((item, idx) => {
+        let focusText = item.focus || item.focus_chapter;
+        if (!focusText && Array.isArray(item.focus_chapters) && item.focus_chapters.length > 0) {
+          focusText = item.focus_chapters.join(', ');
+        } else if (!focusText && typeof item.focus_chapters === 'string') {
+          focusText = item.focus_chapters;
+        }
+
+        if (item.focus_subject && focusText && !focusText.toLowerCase().includes(item.focus_subject.toLowerCase())) {
+          focusText = `${item.focus_subject}: ${focusText}`;
+        } else if (!focusText && item.focus_subject) {
+          focusText = `Focus: ${item.focus_subject}`;
+        } else if (!focusText) {
+          focusText = `Day ${item.day || idx + 1} Revision`;
+        }
+
+        let tasksList = [];
+        if (Array.isArray(item.tasks) && item.tasks.length > 0) {
+          tasksList = item.tasks;
+        } else if (Array.isArray(item.activities) && item.activities.length > 0) {
+          tasksList = item.activities;
+        } else if (item.task) {
+          tasksList = [item.task];
+        } else {
+          tasksList = ['Revise core concepts and practice targeted questions.'];
+        }
+
+        return {
+          day: item.day || idx + 1,
+          focus: focusText,
+          tasks: tasksList,
+          activities: tasksList,
+          recommendedMinutes: item.recommendedMinutes || (item.estimatedHours ? item.estimatedHours * 60 : 60),
+          estimatedHours: item.estimatedHours || 1
+        };
+      });
     }
 
     const finalAdvice = dataObj.finalAdvice || dataObj.motivationalNote || 'Focus on your priority topics to boost your test score!';
