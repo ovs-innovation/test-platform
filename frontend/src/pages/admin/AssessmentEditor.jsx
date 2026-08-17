@@ -756,9 +756,8 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
       const unified = Array.from(map.values());
       setSubjectsList(unified);
 
-      if (unified.length && !form.subject_id && (form.subject || editing?.subject)) {
-        const subjName = form.subject || editing?.subject;
-        const match = unified.find(s => s.name.toLowerCase() === subjName.toLowerCase());
+      if (unified.length && !form.subject_id && form.subject) {
+        const match = unified.find(s => s.name.toLowerCase() === String(form.subject).toLowerCase());
         if (match) {
           setForm(f => ({ ...f, subject_id: match.id }));
         }
@@ -772,17 +771,28 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
         { id: 5, name: 'Zoology' }
       ]);
     });
-  }, [editing?.subject]);
+  }, [open]);
 
   useEffect(() => {
     if (form.subject_id) {
-      adminService.chapters(form.subject_id).then((list) => {
-        setChaptersList(list || []);
-      }).catch(() => {});
+      const targetSubj = subjectsList.find(s => String(s.id) === String(form.subject_id) || s.name.toLowerCase() === String(form.subject_id).toLowerCase());
+      const queryParam = targetSubj ? targetSubj.name : form.subject_id;
+
+      adminService.chapters(queryParam).then((list) => {
+        if (list && list.length > 0) {
+          setChaptersList(list);
+        } else if (targetSubj && targetSubj.id) {
+          adminService.chapters(targetSubj.id).then((l) => setChaptersList(l || [])).catch(() => setChaptersList([]));
+        } else {
+          setChaptersList([]);
+        }
+      }).catch(() => {
+        setChaptersList([]);
+      });
     } else {
       setChaptersList([]);
     }
-  }, [form.subject_id]);
+  }, [form.subject_id, subjectsList]);
 
   const toggleMulti = (i) => {
     setForm((f) => {
@@ -831,7 +841,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
               value={form.subject_id || ''}
               placeholder="Select subject"
               options={[{ id: '', name: 'Select subject' }, ...subjectsList]}
-              onChange={(val) => setForm((f) => ({ ...f, subject_id: Number(val) || null, chapter_id: null }))}
+              onChange={(val) => setForm((f) => ({ ...f, subject_id: val !== '' && val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null, chapter_id: null }))}
             />
           </div>
           <div>
@@ -841,7 +851,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
               placeholder="Select chapter"
               disabled={!form.subject_id}
               options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
-              onChange={(val) => setForm((f) => ({ ...f, chapter_id: Number(val) || null }))}
+              onChange={(val) => setForm((f) => ({ ...f, chapter_id: val !== '' && val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null }))}
             />
           </div>
           <div>

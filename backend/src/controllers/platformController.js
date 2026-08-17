@@ -200,6 +200,7 @@ export const createChapter = asyncHandler(async (req, res) => {
 
 export const listChapters = asyncHandler(async (req, res) => {
   const { subjectId } = req.params;
+  const isNumeric = !isNaN(Number(subjectId));
   const result = await query(
     `SELECT c.*,
        COALESCE(
@@ -212,7 +213,8 @@ export const listChapters = asyncHandler(async (req, res) => {
        COUNT(t.id)::int AS topic_count
      FROM chapters c
      LEFT JOIN topics t ON t.chapter_id = c.id
-     WHERE c.subject_id = $1
+     LEFT JOIN subjects s ON s.id = c.subject_id
+     WHERE (${isNumeric ? 'c.subject_id = $1 OR s.id = $1 OR ' : ''}LOWER(s.name) = LOWER($1) OR LOWER(s.slug) = LOWER($1))
      GROUP BY c.id
      ORDER BY c.position, c.name`,
     [subjectId]
