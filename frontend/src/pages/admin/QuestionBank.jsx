@@ -23,8 +23,28 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const selected = options.find((o) => (o.id !== undefined ? o.id === value : o.value === value));
-  const displayLabel = selected ? (selected.label || selected.name) : placeholder;
+  const getOptVal = (o) => (o.id !== undefined ? o.id : (o.value !== undefined ? o.value : o.name));
+
+  const isMatchingOpt = (opt, targetVal) => {
+    if (targetVal === '' || targetVal === null || targetVal === undefined) {
+      const optVal = getOptVal(opt);
+      return optVal === '' || optVal === null || optVal === undefined;
+    }
+    const optVal = getOptVal(opt);
+    if (optVal !== undefined && optVal !== null && String(optVal) === String(targetVal)) {
+      return true;
+    }
+    if (opt.name && String(opt.name).toLowerCase() === String(targetVal).toLowerCase()) {
+      return true;
+    }
+    if (opt.label && String(opt.label).toLowerCase() === String(targetVal).toLowerCase()) {
+      return true;
+    }
+    return false;
+  };
+
+  const selected = options.find((o) => isMatchingOpt(o, value));
+  const displayLabel = selected ? (selected.label || selected.name) : (typeof value === 'string' && isNaN(Number(value)) && value !== '' ? value : placeholder);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -52,15 +72,15 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
 
       {open && !disabled && (
         <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
-          {options.map((opt) => {
-            const optVal = opt.id !== undefined ? opt.id : opt.value;
-            const isSelected = optVal === value;
+          {options.map((opt, idx) => {
+            const optVal = getOptVal(opt);
+            const isSelected = isMatchingOpt(opt, value);
             return (
               <button
-                key={optVal ?? 'empty'}
+                key={optVal ?? opt.name ?? idx}
                 type="button"
                 onClick={() => {
-                  onChange(optVal);
+                  onChange(optVal, opt);
                   setOpen(false);
                 }}
                 className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
@@ -178,6 +198,12 @@ export default function AdminQuestionBank() {
       correct_option: q.correct_option ?? 0,
       solution_text: q.solution_text || '',
       explanation_url: q.explanation_url || '',
+      subject_id: q.subject_id || null,
+      subject: q.subject || '',
+      chapter_id: q.chapter_id || null,
+      topic: q.topic || '',
+      difficulty: q.difficulty || 'medium',
+      marks: q.marks ?? 4,
     });
     setModalOpen(true);
   };
@@ -370,25 +396,54 @@ export default function AdminQuestionBank() {
           <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="label">Subject</label>
-              <select className="input" value={form.subject_id || ''} onChange={(e) => setForm((f) => ({ ...f, subject_id: Number(e.target.value) || null, chapter_id: null }))}>
-                <option value="">Select subject</option>
-                {subjectsList.map((s) => <option key={s.id} value={s.id}>{s.name}</option>)}
-              </select>
+              <CustomSelectDropdown
+                value={form.subject_id || form.subject || ''}
+                placeholder="Select subject"
+                options={[{ id: '', name: 'Select subject' }, ...subjectsList]}
+                onChange={(val, opt) => {
+                  const subjObj = opt || subjectsList.find(s => (s.id !== undefined && String(s.id) === String(val)) || (s.name && s.name.toLowerCase() === String(val).toLowerCase()));
+                  const nextSubjId = (subjObj && subjObj.id !== undefined && subjObj.id !== '' && !isNaN(Number(subjObj.id))) ? Number(subjObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : val);
+                  const nextSubjName = (subjObj && (subjObj.name || subjObj.label)) ? (subjObj.name || subjObj.label) : String(val || '');
+                  setForm((f) => ({
+                    ...f,
+                    subject_id: nextSubjId || null,
+                    subject: nextSubjName,
+                    chapter_id: null,
+                    topic: ''
+                  }));
+                }}
+              />
             </div>
             <div>
               <label className="label">Chapter</label>
-              <select className="input" value={form.chapter_id || ''} onChange={(e) => setForm((f) => ({ ...f, chapter_id: Number(e.target.value) || null }))} disabled={!form.subject_id}>
-                <option value="">Select chapter</option>
-                {chaptersList.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-              </select>
+              <CustomSelectDropdown
+                value={form.chapter_id || form.topic || ''}
+                placeholder="Select chapter"
+                disabled={!form.subject_id && !form.subject}
+                options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
+                onChange={(val, opt) => {
+                  const chapObj = opt || chaptersList.find(c => (c.id !== undefined && String(c.id) === String(val)) || (c.name && c.name.toLowerCase() === String(val).toLowerCase()));
+                  const nextChapId = (chapObj && chapObj.id !== undefined && chapObj.id !== '' && !isNaN(Number(chapObj.id))) ? Number(chapObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : null);
+                  const nextTopicName = (chapObj && (chapObj.name || chapObj.label)) ? (chapObj.name || chapObj.label) : String(val || '');
+                  setForm((f) => ({
+                    ...f,
+                    chapter_id: nextChapId || null,
+                    topic: nextTopicName
+                  }));
+                }}
+              />
             </div>
             <div>
               <label className="label">Difficulty</label>
-              <select className="input" value={form.difficulty || 'medium'} onChange={(e) => setForm((f) => ({ ...f, difficulty: e.target.value }))}>
-                <option value="easy">Easy</option>
-                <option value="medium">Medium</option>
-                <option value="hard">Hard</option>
-              </select>
+              <CustomSelectDropdown
+                value={form.difficulty || 'medium'}
+                options={[
+                  { value: 'easy', label: 'Easy' },
+                  { value: 'medium', label: 'Medium' },
+                  { value: 'hard', label: 'Hard' },
+                ]}
+                onChange={(val) => setForm((f) => ({ ...f, difficulty: val }))}
+              />
             </div>
           </div>
 

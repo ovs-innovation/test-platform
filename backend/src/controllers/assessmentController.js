@@ -260,8 +260,16 @@ export const getAssessmentAdmin = asyncHandler(async (req, res) => {
   const [sections, questions, invites] = await Promise.all([
     query('SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC', [id]),
     query(
-      `SELECT q.*, s.name AS section_name FROM questions q
+      `SELECT q.*, 
+              s.name AS section_name,
+              COALESCE(c.name, q.topic) AS topic,
+              COALESCE(c.id, q.chapter_id) AS chapter_id,
+              COALESCE(subj.name, q.subject) AS subject,
+              COALESCE(subj.id, q.subject_id) AS subject_id
+       FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
+       LEFT JOIN chapters c ON c.id = q.chapter_id
+       LEFT JOIN subjects subj ON subj.id = q.subject_id
        WHERE q.assessment_id = $1 ORDER BY q.position ASC, q.id ASC`,
       [id]
     ),

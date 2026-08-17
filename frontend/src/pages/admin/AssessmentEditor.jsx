@@ -377,6 +377,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       subject_id: subjId,
       subject: q.subject || '',
       chapter_id: chapId,
+      topic: q.topic || '',
       difficulty: q.difficulty || 'medium',
     });
     setModalOpen(true);
@@ -440,9 +441,17 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
   const loadBank = async (cat) => {
     setBankCategory(cat);
-    setCategories(await questionBankService.categories());
-    setBankQuestions(await questionBankService.list(cat));
-    setBankOpen(true);
+    try {
+      const res = await questionBankService.categories();
+      if (res?.categories?.length) {
+        setCategories(res.categories.map((c) => c.name));
+      }
+      const questionsList = await questionBankService.list(cat);
+      setBankQuestions(Array.isArray(questionsList) ? questionsList : (questionsList?.questions || []));
+      setBankOpen(true);
+    } catch (err) {
+      toast.error(err.message || 'Could not load question bank');
+    }
   };
 
   const importBank = async (bankId) => {
@@ -568,15 +577,15 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
       <Modal open={bankOpen} onClose={() => setBankOpen(false)} title={`Question bank — ${bankCategory}`} size="lg">
         {bankQuestions.length === 0 ? (
-          <p className="text-sm text-slate-500">No questions in this category. Run db:seed to populate the bank.</p>
+          <p className="text-sm text-slate-500 dark:text-slate-400">No questions in this category. Run db:seed to populate the bank.</p>
         ) : (
           <ul className="max-h-96 space-y-3 overflow-y-auto">
             {bankQuestions.map((bq) => (
-              <li key={bq.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-200 p-3">
+              <li key={bq.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3">
                 <div className="min-w-0 flex-1">
                   <Badge color="blue">{bq.question_type}</Badge>
-                  <p className="mt-1 text-sm text-slate-800">{bq.question_text}</p>
-                  <p className="text-xs text-slate-500">{bq.marks} marks</p>
+                  <p className="mt-1 text-sm font-medium text-slate-800 dark:text-slate-100">{bq.question_text}</p>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">{bq.marks} marks</p>
                 </div>
                 <button type="button" className="btn-primary shrink-0 text-xs" onClick={() => importBank(bq.id)}>Import</button>
               </li>
@@ -620,34 +629,39 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown })
   const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
 
   return (
-    <div className="card p-4">
+    <div className="card p-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
       <div className="flex gap-3">
         <div className="flex flex-col gap-1">
-          <button type="button" className="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" onClick={onMoveUp} disabled={idx === 0} title="Move up">↑</button>
-          <span className="text-center text-xs font-bold text-slate-400">{idx + 1}</span>
-          <button type="button" className="rounded p-1 text-slate-400 hover:bg-slate-100 disabled:opacity-30" onClick={onMoveDown} disabled={idx === total - 1} title="Move down">↓</button>
+          <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveUp} disabled={idx === 0} title="Move up">↑</button>
+          <span className="text-center text-xs font-bold text-slate-400 dark:text-slate-500">{idx + 1}</span>
+          <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveDown} disabled={idx === total - 1} title="Move down">↓</button>
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <Badge color="blue">{typeLabel}</Badge>
             {q.section_name && <Badge color="slate">{q.section_name}</Badge>}
             <Badge color="green">{q.marks} mk</Badge>
+            {(q.topic || q.subject) && (
+              <Badge color="amber">
+                {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}
+              </Badge>
+            )}
           </div>
-          <p className="mt-2 text-sm font-medium text-slate-900">{q.question_text}</p>
+          <p className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{q.question_text}</p>
           {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
-            <ul className="mt-2 space-y-0.5 text-sm text-slate-600">
+            <ul className="mt-2 space-y-0.5 text-sm text-slate-600 dark:text-slate-300">
               {opts.map((opt, i) => {
                 const correct = q.question_type === 'multi_select'
                   ? (q.correct_indices || []).includes(i)
                   : i === q.correct_index;
-                return <li key={i} className={correct ? 'font-medium text-emerald-700' : ''}>{opt}</li>;
+                return <li key={i} className={correct ? 'font-semibold text-emerald-600 dark:text-emerald-400' : ''}>{opt}</li>;
               })}
             </ul>
           )}
         </div>
         <div className="flex shrink-0 flex-col gap-1">
-          <button type="button" className="text-sm text-brand-600 hover:underline" onClick={onEdit}>Edit</button>
-          <button type="button" className="text-sm text-red-600 hover:underline" onClick={onDelete}>Delete</button>
+          <button type="button" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline" onClick={onEdit}>Edit</button>
+          <button type="button" className="text-sm font-semibold text-red-600 dark:text-red-400 hover:underline" onClick={onDelete}>Delete</button>
         </div>
       </div>
     </div>
@@ -658,20 +672,36 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const getOptVal = (o) => (o.id !== undefined ? o.id : o.value);
+  const getOptVal = (o) => (o.id !== undefined ? o.id : (o.value !== undefined ? o.value : o.name));
 
-  const isMatchingVal = (optVal, targetVal) => {
-    if ((optVal === '' || optVal === null || optVal === undefined) && (targetVal === '' || targetVal === null || targetVal === undefined)) {
+  const isMatchingOpt = (opt, targetVal) => {
+    if (targetVal === '' || targetVal === null || targetVal === undefined) {
+      const optVal = getOptVal(opt);
+      return optVal === '' || optVal === null || optVal === undefined;
+    }
+    const optVal = getOptVal(opt);
+    if (optVal !== undefined && optVal !== null && String(optVal) === String(targetVal)) {
       return true;
     }
-    if (optVal != null && targetVal != null) {
-      return String(optVal) === String(targetVal);
+    if (opt.name && String(opt.name).toLowerCase() === String(targetVal).toLowerCase()) {
+      return true;
+    }
+    if (opt.label && String(opt.label).toLowerCase() === String(targetVal).toLowerCase()) {
+      return true;
     }
     return false;
   };
 
-  const selected = options.find((o) => isMatchingVal(getOptVal(o), value));
-  const displayLabel = selected ? (selected.label || selected.name) : placeholder;
+  const selected = options.find((o) => isMatchingOpt(o, value));
+  const displayLabel = selected ? (selected.label || selected.name) : (typeof value === 'string' && isNaN(Number(value)) && value !== '' ? value : placeholder);
+
+  if (placeholder === 'Select chapter') {
+    console.log('[CHAPTER DROPDOWN DEBUG]', {
+      value,
+      resolvedSelected: selected ? { id: selected.id, name: selected.name } : null,
+      displayLabel
+    });
+  }
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -701,13 +731,13 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
         <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
           {options.map((opt, idx) => {
             const optVal = getOptVal(opt);
-            const isSelected = isMatchingVal(optVal, value);
+            const isSelected = isMatchingOpt(opt, value);
             return (
               <button
                 key={optVal ?? opt.name ?? idx}
                 type="button"
                 onClick={() => {
-                  onChange(optVal);
+                  onChange(optVal, opt);
                   setOpen(false);
                 }}
                 className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
@@ -774,24 +804,28 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   }, [open]);
 
   useEffect(() => {
-    if (form.subject_id) {
-      const targetSubj = subjectsList.find(s => String(s.id) === String(form.subject_id) || s.name.toLowerCase() === String(form.subject_id).toLowerCase());
-      const queryParam = targetSubj ? targetSubj.name : form.subject_id;
-
-      adminService.chapters(queryParam).then((list) => {
-        if (list && list.length > 0) {
-          setChaptersList(list);
-        } else if (targetSubj && targetSubj.id) {
-          adminService.chapters(targetSubj.id).then((l) => setChaptersList(l || [])).catch(() => setChaptersList([]));
-        } else {
-          setChaptersList([]);
-        }
-      }).catch(() => {
-        setChaptersList([]);
-      });
-    } else {
+    if (!form.subject_id) {
       setChaptersList([]);
+      return;
     }
+
+    const targetSubj = subjectsList.find(s => String(s.id) === String(form.subject_id) || s.name.toLowerCase() === String(form.subject_id).toLowerCase());
+    const queryParam = targetSubj ? targetSubj.name : form.subject_id;
+
+    adminService.chapters(queryParam).then((list) => {
+      const fetchedChapters = list || [];
+      if (fetchedChapters.length > 0) {
+        setChaptersList(fetchedChapters);
+      } else if (targetSubj && targetSubj.id) {
+        adminService.chapters(targetSubj.id).then((l) => {
+          setChaptersList(l || []);
+        }).catch(() => setChaptersList([]));
+      } else {
+        setChaptersList([]);
+      }
+    }).catch(() => {
+      setChaptersList([]);
+    });
   }, [form.subject_id, subjectsList]);
 
   const toggleMulti = (i) => {
@@ -838,20 +872,40 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           <div>
             <label className="label">Subject</label>
             <CustomSelectDropdown
-              value={form.subject_id || ''}
+              value={form.subject_id || form.subject || ''}
               placeholder="Select subject"
               options={[{ id: '', name: 'Select subject' }, ...subjectsList]}
-              onChange={(val) => setForm((f) => ({ ...f, subject_id: val !== '' && val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null, chapter_id: null }))}
+              onChange={(val, opt) => {
+                const subjObj = opt || subjectsList.find(s => (s.id !== undefined && String(s.id) === String(val)) || (s.name && s.name.toLowerCase() === String(val).toLowerCase()));
+                const nextSubjId = (subjObj && subjObj.id !== undefined && subjObj.id !== '' && !isNaN(Number(subjObj.id))) ? Number(subjObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : val);
+                const nextSubjName = (subjObj && (subjObj.name || subjObj.label)) ? (subjObj.name || subjObj.label) : String(val || '');
+                setForm((f) => ({
+                  ...f,
+                  subject_id: nextSubjId || null,
+                  subject: nextSubjName,
+                  chapter_id: null,
+                  topic: ''
+                }));
+              }}
             />
           </div>
           <div>
             <label className="label">Chapter</label>
             <CustomSelectDropdown
-              value={form.chapter_id || ''}
+              value={form.chapter_id || form.topic || ''}
               placeholder="Select chapter"
-              disabled={!form.subject_id}
+              disabled={!form.subject_id && !form.subject}
               options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
-              onChange={(val) => setForm((f) => ({ ...f, chapter_id: val !== '' && val !== null ? (isNaN(Number(val)) ? val : Number(val)) : null }))}
+              onChange={(val, opt) => {
+                const chapObj = opt || chaptersList.find(c => (c.id !== undefined && String(c.id) === String(val)) || (c.name && c.name.toLowerCase() === String(val).toLowerCase()));
+                const nextChapId = (chapObj && chapObj.id !== undefined && chapObj.id !== '' && !isNaN(Number(chapObj.id))) ? Number(chapObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : null);
+                const nextTopicName = (chapObj && (chapObj.name || chapObj.label)) ? (chapObj.name || chapObj.label) : String(val || '');
+                setForm((f) => ({
+                  ...f,
+                  chapter_id: nextChapId || null,
+                  topic: nextTopicName
+                }));
+              }}
             />
           </div>
           <div>

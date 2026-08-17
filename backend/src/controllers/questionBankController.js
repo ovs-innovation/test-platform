@@ -60,12 +60,39 @@ export const importToAssessment = asyncHandler(async (req, res) => {
     [assessmentId]
   );
 
+  let subject_id = b.subject_id || null;
+  let subject = b.subject || null;
+  let chapter_id = b.chapter_id || null;
+  let topic = b.topic || b.category || null;
+
+  if (subject_id && !subject) {
+    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [subject_id]);
+    if (sRes.rows.length > 0) subject = sRes.rows[0].name;
+  } else if (!subject_id && subject) {
+    const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [subject]);
+    if (sRes.rows.length > 0) subject_id = sRes.rows[0].id;
+  } else if (!subject_id && b.category) {
+    const sRes = await query('SELECT id, name FROM subjects WHERE LOWER(name) = LOWER($1)', [b.category]);
+    if (sRes.rows.length > 0) {
+      subject_id = sRes.rows[0].id;
+      subject = sRes.rows[0].name;
+    }
+  }
+
+  if (chapter_id && !topic) {
+    const cRes = await query('SELECT name FROM chapters WHERE id = $1', [chapter_id]);
+    if (cRes.rows.length > 0) topic = cRes.rows[0].name;
+  } else if (!chapter_id && topic && subject_id) {
+    const cRes = await query('SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2)', [subject_id, topic]);
+    if (cRes.rows.length > 0) chapter_id = cRes.rows[0].id;
+  }
+
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
      RETURNING *`,
     [
       assessmentId,
@@ -87,9 +114,11 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       b.category,
       b.solution || '',
       b.image_url || '',
-      b.subject_id || null,
-      b.chapter_id || null,
+      subject_id,
+      chapter_id,
       b.difficulty || 'medium',
+      subject,
+      topic,
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -270,12 +299,39 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
 
   for (const b of bankRows) {
     position += 1;
+    let subject_id = b.subject_id || null;
+    let subject = b.subject || null;
+    let chapter_id = b.chapter_id || null;
+    let topic = b.topic || b.category || null;
+
+    if (subject_id && !subject) {
+      const sRes = await query('SELECT name FROM subjects WHERE id = $1', [subject_id]);
+      if (sRes.rows.length > 0) subject = sRes.rows[0].name;
+    } else if (!subject_id && subject) {
+      const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [subject]);
+      if (sRes.rows.length > 0) subject_id = sRes.rows[0].id;
+    } else if (!subject_id && b.category) {
+      const sRes = await query('SELECT id, name FROM subjects WHERE LOWER(name) = LOWER($1)', [b.category]);
+      if (sRes.rows.length > 0) {
+        subject_id = sRes.rows[0].id;
+        subject = sRes.rows[0].name;
+      }
+    }
+
+    if (chapter_id && !topic) {
+      const cRes = await query('SELECT name FROM chapters WHERE id = $1', [chapter_id]);
+      if (cRes.rows.length > 0) topic = cRes.rows[0].name;
+    } else if (!chapter_id && topic && subject_id) {
+      const cRes = await query('SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2)', [subject_id, topic]);
+      if (cRes.rows.length > 0) chapter_id = cRes.rows[0].id;
+    }
+
     const result = await query(
       `INSERT INTO questions
          (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
           numeric_answer, numerical_tolerance, assertion_text, reason_text,
-          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22)
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
        RETURNING id, question_text`,
       [
         assessmentId,
@@ -297,9 +353,11 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         b.category,
         b.solution || '',
         b.image_url || '',
-        b.subject_id || null,
-        b.chapter_id || null,
+        subject_id,
+        chapter_id,
         b.difficulty || 'medium',
+        subject,
+        topic,
       ]
     );
     imported.push(result.rows[0]);
