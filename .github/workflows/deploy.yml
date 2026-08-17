@@ -22,16 +22,21 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v1.0.3
+        uses: nick-fields/retry-action@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          timeout: 30m
-          command_timeout: 30m
-          script: |
-            set -e
+          max_attempts: 3
+          retry_on: error
+          timeout_minutes: 20
+          action: appleboy/ssh-action@v1.0.3
+          with: |
+            host: ${{ secrets.HOST }}
+            username: ${{ secrets.USERNAME }}
+            key: ${{ secrets.SSH_KEY }}
+            port: 22
+            timeout: 120s
+            command_timeout: 30m
+            script: |
+              set -e
 
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
