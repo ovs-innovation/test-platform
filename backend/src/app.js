@@ -63,12 +63,12 @@ app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
 import { checkHealth, checkReadiness } from './controllers/healthController.js';
 
-// Global rate limiting
-app.use('/api', apiLimiter);
-
-// Health & Database Readiness check
+// Health & Database Readiness check (exempt from global rate limiting)
 app.get('/api/health', checkHealth);
 app.get('/api/health/ready', checkReadiness);
+
+// Global rate limiting
+app.use('/api', apiLimiter);
 
 // Routes
 app.use('/api/auth', authRoutes);
