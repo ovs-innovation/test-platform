@@ -73,7 +73,9 @@ export default function StudentLogin() {
   // Auto-focus first OTP digit box when Email OTP is sent
   useEffect(() => {
     if (emailOtpSent) {
-      const timer = setTimeout(() => focusBox(0), 50);
+      const timer = setTimeout(() => {
+        otpBoxRefs.current[0]?.focus();
+      }, 50);
       return () => clearTimeout(timer);
     }
   }, [emailOtpSent]);
@@ -115,68 +117,49 @@ export default function StudentLogin() {
     }
   };
 
-  // Focus helper for OTP boxes
-  const focusBox = (targetIndex) => {
-    const el = otpBoxRefs.current[targetIndex];
-    if (el) {
-      el.focus();
-      if (el.value) {
-        try { el.select(); } catch {}
-      }
-    }
-  };
-
   // OTP Box Handlers (Typing, Paste, Backspace, Arrow keys)
   const handleOtpDigitChange = (index, value) => {
-    const cleanVal = value.replace(/\D/g, '');
-    if (!cleanVal) {
-      const newDigits = [...emailOtpDigits];
-      newDigits[index] = '';
-      setEmailOtpDigits(newDigits);
-      return;
-    }
-
-    const digit = cleanVal.slice(-1);
+    const digit = value.replace(/\D/g, '').slice(-1);
     const newDigits = [...emailOtpDigits];
     newDigits[index] = digit;
     setEmailOtpDigits(newDigits);
 
-    if (index < 5) {
-      setTimeout(() => focusBox(index + 1), 10);
+    if (digit && index < 5) {
+      requestAnimationFrame(() => {
+        otpBoxRefs.current[index + 1]?.focus();
+      });
     }
   };
 
   const handleOtpKeyDown = (index, e) => {
     if (e.key === 'Backspace') {
-      e.preventDefault();
-      const newDigits = [...emailOtpDigits];
-      if (newDigits[index]) {
-        newDigits[index] = '';
-        setEmailOtpDigits(newDigits);
-      } else if (index > 0) {
-        setTimeout(() => focusBox(index - 1), 10);
+      if (!emailOtpDigits[index] && index > 0) {
+        e.preventDefault();
+        otpBoxRefs.current[index - 1]?.focus();
       }
     } else if (e.key === 'ArrowLeft' && index > 0) {
       e.preventDefault();
-      focusBox(index - 1);
+      otpBoxRefs.current[index - 1]?.focus();
     } else if (e.key === 'ArrowRight' && index < 5) {
       e.preventDefault();
-      focusBox(index + 1);
+      otpBoxRefs.current[index + 1]?.focus();
     }
   };
 
-  const handleOtpPaste = (startIndex, e) => {
+  const handleOtpPaste = (index, e) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '');
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
     if (!pasted) return;
 
     const newDigits = [...emailOtpDigits];
-    for (let i = 0; i < pasted.length && startIndex + i < 6; i++) {
-      newDigits[startIndex + i] = pasted[i];
+    for (let i = 0; i < pasted.length && index + i < 6; i++) {
+      newDigits[index + i] = pasted[i];
     }
     setEmailOtpDigits(newDigits);
-    const targetIndex = Math.min(startIndex + pasted.length, 5);
-    setTimeout(() => focusBox(targetIndex), 10);
+    const targetIndex = Math.min(index + pasted.length, 5);
+    requestAnimationFrame(() => {
+      otpBoxRefs.current[targetIndex]?.focus();
+    });
   };
 
   // Handle Verify Email OTP Submit
@@ -386,33 +369,21 @@ export default function StudentLogin() {
 
                 {/* 6-Box OTP Input */}
                 <div className="grid grid-cols-6 gap-2 sm:gap-3 my-3">
-                  {emailOtpDigits.map((digit, idx) => {
-                    const isFilled = Boolean(digit);
-                    return (
-                      <input
-                        key={idx}
-                        ref={(el) => (otpBoxRefs.current[idx] = el)}
-                        type="text"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        maxLength={1}
-                        value={digit}
-                        onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
-                        onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                        onFocus={(e) => {
-                          if (e.target.value) {
-                            try { e.target.select(); } catch {}
-                          }
-                        }}
-                        onPaste={(e) => handleOtpPaste(idx, e)}
-                        className={`w-full h-12 sm:h-14 rounded-xl border text-center text-lg sm:text-xl font-black text-[#00F0FF] font-mono transition-all duration-200 outline-none ${
-                          isFilled
-                            ? 'border-[#00F0FF] bg-[#00F0FF]/10 shadow-[0_0_15px_rgba(0,240,255,0.25)] ring-1 ring-[#00F0FF]/60'
-                            : 'border-[#2A354A] bg-[#070c18] focus:border-[#00F0FF] focus:bg-[#00F0FF]/10 focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] focus:ring-1 focus:ring-[#00F0FF]'
-                        }`}
-                      />
-                    );
-                  })}
+                  {emailOtpDigits.map((digit, idx) => (
+                    <input
+                      key={idx}
+                      ref={(el) => (otpBoxRefs.current[idx] = el)}
+                      type="text"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      maxLength={1}
+                      value={digit}
+                      onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
+                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                      onPaste={(e) => handleOtpPaste(idx, e)}
+                      className="w-full h-12 sm:h-14 rounded-xl border border-[#2A354A] bg-[#070c18] text-center text-lg sm:text-xl font-bold text-[#00F0FF] font-mono transition-all outline-none focus:border-[#00F0FF] focus:bg-[#00F0FF]/10 focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] focus:ring-1 focus:ring-[#00F0FF]"
+                    />
+                  ))}
                 </div>
               </div>
 
