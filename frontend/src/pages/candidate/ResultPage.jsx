@@ -372,11 +372,13 @@ export default function ResultPage() {
                     <span className="inline-block rounded-full border border-rose-600 bg-rose-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">Not qualified</span>
                   )}
                 </div>
-                {(score?.rank || score?.percentile) && (
+                {score?.rank != null && score?.percentile != null ? (
                   <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                    {score.rank && <>Rank <strong>#{score.rank}</strong></>}
-                    {score.rank && score.percentile && ' · '}
-                    {score.percentile != null && <>Percentile <strong>{score.percentile}%</strong></>}
+                    Rank <strong>#{score.rank}</strong> · Percentile <strong>{score.percentile}%</strong>
+                  </p>
+                ) : (
+                  <p className="mt-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Rank & Percentile will be available once more students complete this test.
                   </p>
                 )}
               </div>

@@ -362,6 +362,64 @@ Provide direct, encouraging, highly actionable advice based on their score, weak
 Answer their questions specifically using the test performance data above!`;
   }
 
+  // Fetch all completed test attempts for this candidate from DB
+  let studentHistoryBlock = '';
+  try {
+    const userId = req.user?.id;
+    if (userId) {
+      const attemptsRes = await query(`
+        SELECT 
+          COALESCE(a.title, t.test_name, t.title) AS test_title,
+          at.id AS attempt_id,
+          at.status::text AS status,
+          s.marks_obtained,
+          s.total_marks,
+          s.percentage,
+          s.percentile,
+          s.rank
+        FROM attempts at
+        LEFT JOIN assessments a ON a.id = at.assessment_id
+        LEFT JOIN tests t ON t.id = at.assessment_id
+        LEFT JOIN scores s ON s.attempt_id = at.id
+        WHERE at.candidate_id = $1
+
+        UNION ALL
+
+        SELECT 
+          COALESCE(t.test_name, t.title) AS test_title,
+          tat.id AS attempt_id,
+          (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' ELSE 'in_progress' END)::text AS status,
+          ts.marks_obtained,
+          ts.total_marks,
+          ts.percentage,
+          ts.percentile,
+          ts.rank
+        FROM test_attempts tat
+        JOIN tests t ON t.id = tat.test_id
+        LEFT JOIN scores ts ON ts.attempt_id = tat.id
+        WHERE tat.student_id = $1
+
+        ORDER BY attempt_id DESC
+        LIMIT 20
+      `, [userId]);
+
+      if (attemptsRes.rows.length > 0) {
+        const rows = attemptsRes.rows.map((row, i) => 
+          `${i + 1}. Test: "${row.test_title}" | Marks Obtained: ${row.marks_obtained ?? 'N/A'} / ${row.total_marks ?? 'N/A'} | Percentage: ${row.percentage != null ? row.percentage + '%' : 'N/A'} | Rank: ${row.rank ? '#' + row.rank : 'N/A'} | Status: ${row.status}`
+        );
+        studentHistoryBlock = `
+OFFICIAL ACADEMIC DATABASE RECORDS FOR CANDIDATE ${studentName}:
+The student has taken the following tests on Edvedum test platform:
+${rows.join('\n')}
+
+INSTRUCTION REGARDING TEST SCORES & PERCENTAGES:
+When the student asks about their score, percentage, rank, or performance in ANY test listed above (e.g. "What is my percentage in AIETS 2028: Part Test 6?"), refer to the exact values in the OFFICIAL ACADEMIC DATABASE RECORDS table above. State their score and percentage clearly and accurately!`;
+      }
+    }
+  } catch (err) {
+    console.error('Failed to fetch student test history for AI prompt:', err.message);
+  }
+
   if (isStreaming) {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
@@ -372,6 +430,7 @@ Answer their questions specifically using the test performance data above!`;
 Student Name: ${studentName}
 ${subject ? `Subject Context: ${subject}` : ''}
 ${testContextBlock}
+${studentHistoryBlock}
 ${questionText ? `Student Query: "${questionText}"` : ''}
 
 CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
@@ -392,8 +451,9 @@ CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
     });
 
     if (!success) {
+      const combinedText = [testContextBlock, studentHistoryBlock, questionText].filter(Boolean).join('\n\n');
       const solution = await solveStudentDoubt({
-        questionText,
+        questionText: combinedText,
         imageBase64,
         mimeType: mimeType || 'image/jpeg',
         studentName,
@@ -408,8 +468,9 @@ CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
 
   let solution;
   try {
+    const combinedText = [testContextBlock, studentHistoryBlock, questionText].filter(Boolean).join('\n\n');
     solution = await solveStudentDoubt({
-      questionText,
+      questionText: combinedText,
       imageBase64,
       mimeType: mimeType || 'image/jpeg',
       studentName,

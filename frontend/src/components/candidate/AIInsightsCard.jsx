@@ -21,12 +21,30 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
   const [activeTab, setActiveTab] = useState('summary'); // 'summary' | 'detailed'
 
   const fetchAIPlan = async () => {
+    if (testId) {
+      try {
+        const cachedStr = sessionStorage.getItem(`ai_plan_${testId}`);
+        if (cachedStr) {
+          const cachedObj = JSON.parse(cachedStr);
+          setAiPlan(cachedObj);
+          setLoading(false);
+          return;
+        }
+      } catch (_) {}
+    }
+
     setLoading(true);
     try {
       const params = testId ? { test_id: testId } : undefined;
       const res = await studentReportService.getAIPlan(params);
-      if (res?.data || res?.plan || res?.ai_mentor_report || res?.analysis) {
-        setAiPlan(res.data || res.plan || res.ai_mentor_report || res.analysis || res);
+      const planObj = res?.data || res?.plan || res?.ai_mentor_report || res?.analysis || res;
+      if (planObj) {
+        setAiPlan(planObj);
+        if (testId) {
+          try {
+            sessionStorage.setItem(`ai_plan_${testId}`, JSON.stringify(planObj));
+          } catch (_) {}
+        }
       }
     } catch (err) {
       console.error('Error fetching Gemini AI plan:', err);

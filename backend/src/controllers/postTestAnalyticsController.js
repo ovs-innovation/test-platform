@@ -928,25 +928,38 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   const subjectWiseStr = subjectAnalysisList.map(s => `${s.subject}: ${s.score}/${s.max_marks} (${s.accuracy_percent}%)`).join(', ');
 
   try {
-    responseData.exam_mentor_strategy = await generateExamMentorStrategyReport({
-      exam_type: test.test_type || 'JEE Main',
-      test_date: test.test_date ? new Date(test.test_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-      days_remaining: 7,
-      score: actualStudentScore,
-      total_marks: calculatedMaxMarks > 0 ? calculatedMaxMarks : (Number(test.max_marks) || 300),
-      percentile: currentAttemptRank.percentile ?? null,
-      rank: currentAttemptRank.air ?? null,
-      covered_subjects: coveredSubjects,
-      subject_wise_breakdown: subjectWiseStr,
-      strong_topics: strongTopicsList,
-      weak_topics: weakTopicsList,
-      moderate_topics: moderateTopicsList,
-      avg_time_per_question: avgTimeFormatted,
-      unattempted_count: totalUnattempted,
-      rushed_wrong_count: rushedWrongCount,
-      raw_chapter_performance: chapterPerformanceList,
-      raw_subject_analysis: subjectAnalysisList
-    });
+    let cachedStrategy = await getCachedAIReport(studentId, testId);
+
+    if (!cachedStrategy) {
+      console.log(`[PostTestAnalytics] Generating fresh exam_mentor_strategy for student ${studentId}, test ${testId}...`);
+      cachedStrategy = await generateExamMentorStrategyReport({
+        exam_type: test.test_type || 'JEE Main',
+        test_date: test.test_date ? new Date(test.test_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        days_remaining: 7,
+        score: actualStudentScore,
+        total_marks: calculatedMaxMarks > 0 ? calculatedMaxMarks : (Number(test.max_marks) || 300),
+        percentile: currentAttemptRank.percentile ?? null,
+        rank: currentAttemptRank.air ?? null,
+        covered_subjects: coveredSubjects,
+        subject_wise_breakdown: subjectWiseStr,
+        strong_topics: strongTopicsList,
+        weak_topics: weakTopicsList,
+        moderate_topics: moderateTopicsList,
+        avg_time_per_question: avgTimeFormatted,
+        unattempted_count: totalUnattempted,
+        rushed_wrong_count: rushedWrongCount,
+        raw_chapter_performance: chapterPerformanceList,
+        raw_subject_analysis: subjectAnalysisList
+      });
+
+      if (cachedStrategy) {
+        await saveCachedAIReport(studentId, testId, realAttemptId, cachedStrategy);
+      }
+    } else {
+      console.log(`[PostTestAnalytics] DB Cache Hit: Loaded cached exam_mentor_strategy for student ${studentId}, test ${testId} in <15ms.`);
+    }
+
+    responseData.exam_mentor_strategy = cachedStrategy;
   } catch (err) {
     console.error('[PostTestAnalytics] Failed to compute exam_mentor_strategy:', err);
   }

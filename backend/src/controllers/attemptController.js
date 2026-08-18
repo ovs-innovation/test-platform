@@ -325,10 +325,8 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     await client.query(
       `WITH ranked AS (
          SELECT s.attempt_id,
-                RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) AS rk,
-                CASE WHEN cnt.total <= 1 THEN 100
-                     ELSE ROUND((below.c::numeric / cnt.total) * 100, 2)
-                END AS pct
+                CASE WHEN cnt.total <= 1 THEN NULL ELSE RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) END AS rk,
+                CASE WHEN cnt.total <= 1 THEN NULL ELSE ROUND((below.c::numeric / cnt.total) * 100, 2) END AS pct
          FROM scores s
          JOIN attempts a ON a.id = s.attempt_id
          CROSS JOIN (SELECT COUNT(*)::int AS total FROM scores s2 JOIN attempts a2 ON a2.id = s2.attempt_id WHERE a2.assessment_id = $1) cnt
