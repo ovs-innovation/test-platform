@@ -72,49 +72,13 @@ export default function StudentLogin() {
 
   // Auto-focus first OTP digit box when Email OTP is sent
   useEffect(() => {
-    if (emailOtpSent && otpBoxRefs.current[0]) {
-      otpBoxRefs.current[0].focus();
+    if (emailOtpSent) {
+      const timer = setTimeout(() => focusBox(0), 50);
+      return () => clearTimeout(timer);
     }
   }, [emailOtpSent]);
 
-  // Tab switch cleanup
-  const handleSwitchTab = (mode) => {
-    setLoginMode(mode);
-    setError('');
-    setEmailOtpSent(false);
-    setEmailOtpDigits(['', '', '', '', '', '']);
-    setEmailTimer(0);
-    setMobileOtpSent(false);
-    setMobileOtpCode('');
-    setMobileTimer(0);
-  };
-
-  // Handle Send Email OTP
-  const handleSendEmailOtp = async (e) => {
-    e?.preventDefault();
-    const cleanEmail = emailOtp.trim().toLowerCase();
-    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
-      setError('Please enter a valid Gmail or Email address.');
-      return;
-    }
-    setLoading(true);
-    setError('');
-    try {
-      if (sendLoginOtp) {
-        await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
-      }
-      setEmailOtpSent(true);
-      setEmailTimer(30);
-      setEmailOtpDigits(['', '', '', '', '', '']);
-      toast.success(`Verification OTP sent to ${cleanEmail}`);
-    } catch (err) {
-      setError(err.message || 'Failed to send OTP code. Please verify your email.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // Focus helper for OTP boxes with text auto-selection safety
+  // Focus helper for OTP boxes
   const focusBox = (targetIndex) => {
     const el = otpBoxRefs.current[targetIndex];
     if (el) {
@@ -135,20 +99,13 @@ export default function StudentLogin() {
       return;
     }
 
+    const digit = cleanVal.slice(-1);
     const newDigits = [...emailOtpDigits];
-    if (cleanVal.length > 1) {
-      for (let i = 0; i < cleanVal.length && index + i < 6; i++) {
-        newDigits[index + i] = cleanVal[i];
-      }
-      setEmailOtpDigits(newDigits);
-      const nextFocus = Math.min(index + cleanVal.length, 5);
-      setTimeout(() => focusBox(nextFocus), 10);
-    } else {
-      newDigits[index] = cleanVal;
-      setEmailOtpDigits(newDigits);
-      if (index < 5) {
-        setTimeout(() => focusBox(index + 1), 10);
-      }
+    newDigits[index] = digit;
+    setEmailOtpDigits(newDigits);
+
+    if (index < 5) {
+      setTimeout(() => focusBox(index + 1), 10);
     }
   };
 
@@ -160,8 +117,6 @@ export default function StudentLogin() {
         newDigits[index] = '';
         setEmailOtpDigits(newDigits);
       } else if (index > 0) {
-        newDigits[index - 1] = '';
-        setEmailOtpDigits(newDigits);
         setTimeout(() => focusBox(index - 1), 10);
       }
     } else if (e.key === 'ArrowLeft' && index > 0) {
@@ -173,17 +128,18 @@ export default function StudentLogin() {
     }
   };
 
-  const handleOtpPaste = (e) => {
+  const handleOtpPaste = (startIndex, e) => {
     e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
+    const pasted = e.clipboardData.getData('text').replace(/\D/g, '');
     if (!pasted) return;
+
     const newDigits = [...emailOtpDigits];
-    for (let i = 0; i < 6; i++) {
-      newDigits[i] = pasted[i] || '';
+    for (let i = 0; i < pasted.length && startIndex + i < 6; i++) {
+      newDigits[startIndex + i] = pasted[i];
     }
     setEmailOtpDigits(newDigits);
-    const focusTarget = Math.min(pasted.length, 5);
-    setTimeout(() => focusBox(focusTarget), 10);
+    const targetIndex = Math.min(startIndex + pasted.length, 5);
+    setTimeout(() => focusBox(targetIndex), 10);
   };
 
   // Handle Verify Email OTP Submit
@@ -402,7 +358,7 @@ export default function StudentLogin() {
                         type="text"
                         inputMode="numeric"
                         pattern="[0-9]*"
-                        maxLength={6}
+                        maxLength={1}
                         value={digit}
                         onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
                         onKeyDown={(e) => handleOtpKeyDown(idx, e)}
@@ -411,7 +367,7 @@ export default function StudentLogin() {
                             try { e.target.select(); } catch {}
                           }
                         }}
-                        onPaste={handleOtpPaste}
+                        onPaste={(e) => handleOtpPaste(idx, e)}
                         className={`w-full h-12 sm:h-14 rounded-xl border text-center text-lg sm:text-xl font-black text-[#00F0FF] font-mono transition-all duration-200 outline-none ${
                           isFilled
                             ? 'border-[#00F0FF] bg-[#00F0FF]/10 shadow-[0_0_15px_rgba(0,240,255,0.25)] ring-1 ring-[#00F0FF]/60'
