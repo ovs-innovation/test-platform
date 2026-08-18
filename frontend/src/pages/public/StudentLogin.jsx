@@ -120,14 +120,17 @@ export default function StudentLogin() {
   // OTP Box Handlers (Typing, Paste, Backspace, Arrow keys)
   const handleOtpDigitChange = (index, value) => {
     const digit = value.replace(/\D/g, '').slice(-1);
-    const newDigits = [...emailOtpDigits];
-    newDigits[index] = digit;
-    setEmailOtpDigits(newDigits);
+
+    setEmailOtpDigits((prev) => {
+      const next = [...prev];
+      next[index] = digit;
+      return next;
+    });
 
     if (digit && index < 5) {
-      requestAnimationFrame(() => {
+      setTimeout(() => {
         otpBoxRefs.current[index + 1]?.focus();
-      });
+      }, 0);
     }
   };
 
@@ -151,15 +154,18 @@ export default function StudentLogin() {
     const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
     if (!pasted) return;
 
-    const newDigits = [...emailOtpDigits];
-    for (let i = 0; i < pasted.length && index + i < 6; i++) {
-      newDigits[index + i] = pasted[i];
-    }
-    setEmailOtpDigits(newDigits);
-    const targetIndex = Math.min(index + pasted.length, 5);
-    requestAnimationFrame(() => {
-      otpBoxRefs.current[targetIndex]?.focus();
+    setEmailOtpDigits((prev) => {
+      const next = [...prev];
+      for (let i = 0; i < pasted.length && index + i < 6; i++) {
+        next[index + i] = pasted[i];
+      }
+      return next;
     });
+
+    const targetIndex = Math.min(index + pasted.length, 5);
+    setTimeout(() => {
+      otpBoxRefs.current[targetIndex]?.focus();
+    }, 0);
   };
 
   // Handle Verify Email OTP Submit
