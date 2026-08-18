@@ -47,22 +47,42 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
     const rawObj = testData?.analysis || testData?.ai_mentor_report?.analysis || testData?.ai_mentor_report || testData?.exam_mentor_strategy?.analysis || testData?.exam_mentor_strategy || testData?.data?.analysis || testData?.data || testData?.plan?.analysis || testData?.plan || aiPlan?.analysis || aiPlan || {};
     const dataObj = rawObj.analysis || rawObj;
 
+    // Detect perfect 100% score or 0 wrong answers
+    const accuracy = testData?.summary?.accuracy_percent ?? testData?.score?.accuracy_percent ?? dataObj.accuracy_percent ?? 0;
+    const correctCount = testData?.summary?.correct_count ?? testData?.score?.correct_count ?? 0;
+    const wrongCount = testData?.summary?.incorrect_count ?? testData?.score?.wrong_count ?? 0;
+    const isPerfectScore = accuracy === 100 || (correctCount > 0 && wrongCount === 0);
+
     const overall = dataObj.overallAssessment || {};
-    const summaryText = overall.summary || dataObj.performanceSummary || dataObj.performance_summary || 'Your accuracy is strong, but your attempt rate needs improvement.';
-    const performanceLevel = overall.performanceLevel || dataObj.confidence_level || 'Needs Improvement';
-    const keyObservation = overall.keyObservation || dataObj.key_observation || '';
+    const defaultSummary = isPerfectScore
+      ? 'Outstanding performance! You achieved a perfect 100% score with 100% accuracy across all questions.'
+      : 'Your performance analysis is ready. Review your strengths and priority topics below.';
+    const summaryText = overall.summary || dataObj.performanceSummary || dataObj.performance_summary || defaultSummary;
+
+    const defaultLevel = isPerfectScore ? 'Outstanding' : (accuracy >= 75 ? 'High' : accuracy >= 55 ? 'Moderate' : 'Needs Improvement');
+    let performanceLevel = overall.performanceLevel || dataObj.confidence_level || defaultLevel;
+    if (isPerfectScore) {
+      performanceLevel = 'Outstanding';
+    }
+    const keyObservation = overall.keyObservation || dataObj.key_observation || (isPerfectScore ? 'Zero errors detected. Flawless conceptual execution across all subjects.' : '');
 
     let strengths = dataObj.strengths;
     if (!Array.isArray(strengths) || strengths.length === 0) {
-      const strongItems = dataObj.strong_topics || dataObj.strongTopics || dataObj.topic_diagnostics?.strong || [];
+      const strongItems = dataObj.strong_topics || dataObj.strongTopics || dataObj.topic_diagnostics?.strong || dataObj.strong_and_weak_topics?.strong_topics || [];
       strengths = strongItems.map(s => typeof s === 'string' ? s : `${s.topic || s.chapter_name || s.chapter} (${s.accuracy || s.accuracy_percent || 100}% accuracy)`);
+    }
+    if ((!strengths || strengths.length === 0) && isPerfectScore) {
+      strengths = ['100% Accuracy across all attempted questions', 'Flawless Time Management & Option Elimination', 'Mastery in all covered exam topics'];
     }
     strengths = (strengths || []).map(s => typeof s === 'string' ? s.replace(/\s*\(\d+%.*?\)/g, '').trim() : s);
 
-    let weaknesses = dataObj.weaknesses;
-    if (!Array.isArray(weaknesses) || weaknesses.length === 0) {
+    let weaknesses = isPerfectScore ? [] : dataObj.weaknesses;
+    if (!isPerfectScore && (!Array.isArray(weaknesses) || weaknesses.length === 0)) {
       const weakItems = dataObj.weak_topics || dataObj.weakTopics || dataObj.topic_diagnostics?.weak || dataObj.rootCauseAnalysis || [];
       weaknesses = weakItems.map(w => typeof w === 'string' ? (w.topic ? `${w.topic}: ${w.issue}` : w) : `${w.topic || w.chapter_name || w.chapter} (${w.accuracy || w.accuracy_percent || 0}% accuracy)`);
+    }
+    if (isPerfectScore) {
+      weaknesses = [];
     }
     weaknesses = (weaknesses || []).map(w => typeof w === 'string' ? w.replace(/\s*\(\d+%.*?\)/g, '').trim() : w);
 

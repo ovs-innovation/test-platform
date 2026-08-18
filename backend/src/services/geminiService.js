@@ -194,7 +194,7 @@ export async function generateAIMentorReport(testData = {}) {
             : `Score dropped by ${Math.abs(improvementFromPrev)} marks compared to previous test.`
           : 'First test attempt — no prior comparison available.',
         negative_impact: `Lost ${marksLostToNegative} marks due to negative marking from ${incorrect_count} wrong answers.`,
-        confidence_level: accuracy_percent >= 75 ? 'High' : accuracy_percent >= 55 ? 'Moderate' : 'Needs Improvement',
+        confidence_level: accuracy_percent >= 90 ? 'Outstanding' : accuracy_percent >= 75 ? 'High' : accuracy_percent >= 55 ? 'Moderate' : 'Needs Improvement',
       },
 
       seven_day_plan: [
@@ -1958,9 +1958,11 @@ export async function generateExamMentorStrategyReport(testData = {}) {
 
   // DATA-DRIVEN FALLBACK ENGINE
   const buildDataDrivenReport = () => {
+    const isPerfectOrHighScorer = (score > 0 && total_marks > 0 && score === total_marks) || (unattempted_count === 0 && rushed_wrong_count === 0 && rawWeakList.length === 0);
+
     let combinedWeakAndMod = Array.from(new Set([...weakTopicsList, ...moderateTopicsList])).filter(Boolean);
 
-    if (combinedWeakAndMod.length === 0) {
+    if (combinedWeakAndMod.length === 0 && !isPerfectOrHighScorer) {
       const isBio = coveredSubjectsList.some(s => ['Botany', 'Zoology', 'Biology'].includes(s));
       const isPhys = coveredSubjectsList.every(s => s === 'Physics');
       const isChem = coveredSubjectsList.every(s => s === 'Chemistry');
@@ -1981,9 +1983,11 @@ export async function generateExamMentorStrategyReport(testData = {}) {
       }
     }
 
-    const topPriorities = combinedWeakAndMod.length > 0 ? combinedWeakAndMod.slice(0, 5) : ['Foundation Concepts', 'Time Management'];
+    const topPriorities = combinedWeakAndMod.length > 0
+      ? combinedWeakAndMod.slice(0, 5)
+      : (strongTopicsList.length > 0 ? strongTopicsList.slice(0, 5) : ['Full Syllabus Speed & Accuracy', 'Advanced Problem Solving']);
 
-    const rootCauses = combinedWeakAndMod.slice(0, 4).map((topic, i) => {
+    const rootCauses = isPerfectOrHighScorer ? [] : combinedWeakAndMod.slice(0, 4).map((topic, i) => {
       let issue = `Conceptual gap and formula application errors observed in test questions.`;
       if (rushed_wrong_count > 0 && i % 2 === 0) {
         issue = `Rushed attempt with low accuracy suggesting formula confusion or guessing under time pressure.`;
