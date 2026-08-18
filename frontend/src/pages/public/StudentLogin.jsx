@@ -123,24 +123,53 @@ export default function StudentLogin() {
       setEmailOtpDigits(newDigits);
       return;
     }
-    const digit = cleanVal.slice(-1);
+
     const newDigits = [...emailOtpDigits];
-    newDigits[index] = digit;
-    setEmailOtpDigits(newDigits);
-    if (index < 5 && otpBoxRefs.current[index + 1]) {
-      otpBoxRefs.current[index + 1].focus();
+    if (cleanVal.length > 1) {
+      for (let i = 0; i < cleanVal.length && index + i < 6; i++) {
+        newDigits[index + i] = cleanVal[i];
+      }
+      setEmailOtpDigits(newDigits);
+      const nextFocus = Math.min(index + cleanVal.length, 5);
+      setTimeout(() => {
+        otpBoxRefs.current[nextFocus]?.focus();
+        otpBoxRefs.current[nextFocus]?.select();
+      }, 0);
+    } else {
+      newDigits[index] = cleanVal;
+      setEmailOtpDigits(newDigits);
+      if (index < 5) {
+        setTimeout(() => {
+          otpBoxRefs.current[index + 1]?.focus();
+          otpBoxRefs.current[index + 1]?.select();
+        }, 0);
+      }
     }
   };
 
   const handleOtpKeyDown = (index, e) => {
     if (e.key === 'Backspace') {
-      if (!emailOtpDigits[index] && index > 0 && otpBoxRefs.current[index - 1]) {
-        otpBoxRefs.current[index - 1].focus();
+      e.preventDefault();
+      const newDigits = [...emailOtpDigits];
+      if (newDigits[index]) {
+        newDigits[index] = '';
+        setEmailOtpDigits(newDigits);
+      } else if (index > 0) {
+        newDigits[index - 1] = '';
+        setEmailOtpDigits(newDigits);
+        setTimeout(() => {
+          otpBoxRefs.current[index - 1]?.focus();
+          otpBoxRefs.current[index - 1]?.select();
+        }, 0);
       }
     } else if (e.key === 'ArrowLeft' && index > 0) {
+      e.preventDefault();
       otpBoxRefs.current[index - 1]?.focus();
+      otpBoxRefs.current[index - 1]?.select();
     } else if (e.key === 'ArrowRight' && index < 5) {
+      e.preventDefault();
       otpBoxRefs.current[index + 1]?.focus();
+      otpBoxRefs.current[index + 1]?.select();
     }
   };
 
@@ -154,7 +183,10 @@ export default function StudentLogin() {
     }
     setEmailOtpDigits(newDigits);
     const focusTarget = Math.min(pasted.length, 5);
-    otpBoxRefs.current[focusTarget]?.focus();
+    setTimeout(() => {
+      otpBoxRefs.current[focusTarget]?.focus();
+      otpBoxRefs.current[focusTarget]?.select();
+    }, 0);
   };
 
   // Handle Verify Email OTP Submit
@@ -371,10 +403,11 @@ export default function StudentLogin() {
                       type="text"
                       inputMode="numeric"
                       pattern="[0-9]*"
-                      maxLength={1}
+                      maxLength={6}
                       value={digit}
                       onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
                       onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                      onFocus={(e) => e.target.select()}
                       onPaste={handleOtpPaste}
                       className="w-full h-12 rounded-xl border border-[#2A354A] bg-[#070c18] text-center text-lg font-bold text-[#00F0FF] focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] focus:outline-none transition-all font-mono"
                     />
