@@ -126,11 +126,11 @@ export default function BulkUploadModal({
             valid.push({
               name: String(name).trim(),
               email: String(email).trim().toLowerCase(),
-              mobile: r.mobile || r.Mobile || r.phone || '',
+              mobile: r.mobile || r.Mobile || r.phone || r.Phone || '',
               roll_number: roll ? String(roll).trim() : '',
-              batch_name: r.batch_name || r.batch || r.Class || 'General',
+              batch_name: r.batch_name || r.batch || r['batch_name'] || r['batch'] || r['Batch Name'] || '',
               class: r.class || r.Class || 'Class 12',
-              target_exam: r.target_exam || r.TargetExam || 'NEET',
+              target_exam: r.target_exam || r.TargetExam || r['target_exam'] || 'NEET',
             });
           }
         });
@@ -161,7 +161,15 @@ export default function BulkUploadModal({
 
     try {
       const res = await submitHandler(validRows);
-      setImportSummary(res?.summary || { total_submitted: validRows.length, success_count: validRows.length, failed_count: 0 });
+      const summary = res?.summary || {
+        total_submitted: validRows.length,
+        success_count: typeof res?.inserted === 'number' ? res.inserted : validRows.length,
+        failed_count: res?.failed_rows?.length || 0,
+      };
+      if (res?.failed_rows && res.failed_rows.length > 0) {
+        setFailedRows((prev) => [...prev, ...res.failed_rows.map((f) => ({ rowNumber: f.row, data: f.data, reason: f.reason }))]);
+      }
+      setImportSummary(summary);
       setStep(3);
     } catch (err) {
       setError(err.message || 'Failed to complete bulk import.');
@@ -220,76 +228,73 @@ export default function BulkUploadModal({
               </button>
             </div>
 
-            {/* File Dropzone */}
-            <label className={`border-2 border-dashed rounded-3xl p-8 flex flex-col items-center justify-center gap-3 cursor-pointer transition text-center ${
-              isDarkMode
-                ? 'border-slate-700 hover:border-cyan-500 bg-slate-900/40 hover:bg-slate-900'
-                : 'border-slate-300 hover:border-blue-500 bg-slate-50 hover:bg-slate-100'
+            <div className={`p-8 border-2 border-dashed rounded-3xl text-center space-y-3 transition ${
+              file ? 'border-emerald-500 bg-emerald-500/5' : isDarkMode ? 'border-slate-800 bg-slate-900/50 hover:border-slate-700' : 'border-slate-300 bg-slate-50 hover:border-slate-400'
             }`}>
-              <Upload className="h-10 w-10 text-cyan-500 animate-pulse" />
-              <div>
-                <p className={`text-sm font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Click or drag & drop student CSV file</p>
-                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Supports .csv file formats up to 10MB</p>
+              <div className="h-12 w-12 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center mx-auto">
+                <Upload className="h-6 w-6" />
               </div>
-              <input type="file" accept=".csv,.txt" onChange={handleFileChange} className="hidden" />
-            </label>
+              <div className="space-y-1">
+                <p className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  {file ? file.name : 'Select or Drop CSV File'}
+                </p>
+                <p className="text-[11px] text-slate-400">Supports .csv or .txt files up to 5MB</p>
+              </div>
+
+              <label className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-xs font-bold text-white shadow-md cursor-pointer transition">
+                <span>Browse File</span>
+                <input type="file" accept=".csv,.txt" onChange={handleFileChange} className="hidden" />
+              </label>
+            </div>
           </div>
         )}
 
-        {/* STEP 2: PREVIEW & VALIDATION */}
+        {/* STEP 2: VALIDATE & PREVIEW */}
         {step === 2 && (
-          <div className="space-y-5">
-            <div className="grid grid-cols-3 gap-3 text-center">
-              <div className="p-3 rounded-2xl bg-blue-500/10 border border-blue-500/20">
-                <span className={`text-xs font-bold block ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>Total Rows</span>
-                <span className={`text-xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{parsedRows.length}</span>
-              </div>
-              <div className="p-3 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
-                <span className="text-xs text-emerald-500 font-bold block">Valid Rows</span>
-                <span className="text-xl font-black text-emerald-500">{validRows.length}</span>
-              </div>
-              <div className="p-3 rounded-2xl bg-rose-500/10 border border-rose-500/20">
-                <span className="text-xs text-rose-500 font-bold block">Invalid / Duplicate</span>
-                <span className="text-xl font-black text-rose-500">{failedRows.length}</span>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between text-xs">
+              <span className={`font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Parsed Rows Preview ({parsedRows.length})</span>
+              <div className="flex items-center gap-3">
+                <span className="text-emerald-400 font-extrabold">{validRows.length} Valid</span>
+                {failedRows.length > 0 && <span className="text-rose-400 font-extrabold">{failedRows.length} Failed</span>}
               </div>
             </div>
 
-            {/* Valid Rows Preview Table */}
-            <div className="space-y-2">
-              <h4 className={`text-xs font-extrabold uppercase tracking-wider ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Valid Preview ({validRows.length})</h4>
-              <div className={`max-h-48 overflow-y-auto rounded-2xl border p-2 text-xs ${isDarkMode ? 'border-slate-800 bg-slate-950' : 'border-slate-200 bg-slate-50'}`}>
-                <table className="w-full text-left border-collapse">
-                  <thead className={`text-[10px] font-bold border-b ${isDarkMode ? 'text-slate-400 border-slate-800' : 'text-slate-600 border-slate-200'}`}>
-                    <tr>
-                      <th className="p-2">Name</th>
-                      <th className="p-2">Email</th>
-                      <th className="p-2">Roll No</th>
-                      <th className="p-2">Batch</th>
+            {/* Preview Table */}
+            <div className={`rounded-2xl border overflow-hidden max-h-52 overflow-y-auto ${isDarkMode ? 'border-slate-800 bg-slate-900/90' : 'border-slate-200 bg-slate-50'}`}>
+              <table className="w-full text-left text-xs border-collapse">
+                <thead className={isDarkMode ? 'bg-slate-800/80 text-slate-300' : 'bg-slate-200/80 text-slate-700'}>
+                  <tr>
+                    <th className="p-2.5 font-bold">#</th>
+                    <th className="p-2.5 font-bold">Name</th>
+                    <th className="p-2.5 font-bold">Email</th>
+                    <th className="p-2.5 font-bold">Batch</th>
+                    <th className="p-2.5 font-bold">Roll No</th>
+                  </tr>
+                </thead>
+                <tbody className={`divide-y ${isDarkMode ? 'divide-slate-800 text-slate-300' : 'divide-slate-200 text-slate-700'}`}>
+                  {validRows.slice(0, 10).map((r, i) => (
+                    <tr key={i}>
+                      <td className="p-2.5 font-mono text-[11px] opacity-70">{i + 1}</td>
+                      <td className="p-2.5 font-bold">{r.name}</td>
+                      <td className="p-2.5 font-mono text-[11px]">{r.email}</td>
+                      <td className="p-2.5">{r.batch_name || 'General'}</td>
+                      <td className="p-2.5 font-mono text-[11px] text-cyan-400">{r.roll_number || 'Auto-Generate'}</td>
                     </tr>
-                  </thead>
-                  <tbody className={`divide-y ${isDarkMode ? 'divide-slate-800/50' : 'divide-slate-200'}`}>
-                    {validRows.slice(0, 5).map((r, i) => (
-                      <tr key={i}>
-                        <td className={`p-2 font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{r.name}</td>
-                        <td className={`p-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{r.email}</td>
-                        <td className="p-2 text-cyan-500 font-mono">{r.roll_number || 'Auto'}</td>
-                        <td className={`p-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{r.batch_name}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
             {/* Failed Rows List */}
             {failedRows.length > 0 && (
               <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-1 text-xs">
-                <p className="font-extrabold text-rose-500">Failed Rows Alert ({failedRows.length})</p>
+                <p className="font-extrabold text-rose-400">Failed Rows Alert ({failedRows.length})</p>
                 <div className={`max-h-24 overflow-y-auto space-y-1 text-[11px] ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
                   {failedRows.map((f, idx) => (
                     <div key={idx} className="flex justify-between">
                       <span>Row {f.rowNumber}: {f.data?.name || f.data?.email || 'Empty row'}</span>
-                      <span className="font-bold text-rose-500">{f.reason}</span>
+                      <span className="font-bold text-rose-400">{f.reason}</span>
                     </div>
                   ))}
                 </div>
@@ -299,7 +304,7 @@ export default function BulkUploadModal({
             <div className="flex items-center justify-between pt-2">
               <button
                 onClick={() => setStep(1)}
-                className={`px-4 py-2 rounded-xl border text-xs font-bold transition ${isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100'}`}
+                className={`px-4 py-2 rounded-xl border text-xs font-bold transition cursor-pointer ${isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-300 text-slate-700 hover:bg-slate-100'}`}
               >
                 ← Back
               </button>
@@ -324,16 +329,45 @@ export default function BulkUploadModal({
         {/* STEP 3: IMPORT SUCCESS SUMMARY */}
         {step === 3 && (
           <div className="space-y-6 text-center animate-in fade-in">
-            <div className="h-16 w-16 rounded-3xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center justify-center mx-auto shadow-xl">
-              <CheckCircle2 className="h-8 w-8" />
+            <div className={`h-16 w-16 rounded-3xl flex items-center justify-center mx-auto shadow-xl border ${
+              (importSummary?.success_count ?? 0) > 0
+                ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                : 'bg-rose-500/10 border-rose-500/30 text-rose-400'
+            }`}>
+              {(importSummary?.success_count ?? 0) > 0 ? (
+                <CheckCircle2 className="h-8 w-8 text-emerald-400" />
+              ) : (
+                <AlertTriangle className="h-8 w-8 text-rose-400" />
+              )}
             </div>
 
             <div className="space-y-1">
-              <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Bulk CSV Import Complete!</h3>
+              <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                {(importSummary?.success_count ?? 0) > 0 ? 'Bulk CSV Import Complete!' : 'Import Failed'}
+              </h3>
               <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Successfully enrolled <span className="font-bold text-emerald-500">{importSummary?.success_count || validRows.length}</span> students. Initial passwords generated securely.
+                Successfully enrolled <span className="font-bold text-emerald-400">{importSummary?.success_count ?? 0}</span> students.
+                {importSummary?.failed_count > 0 && (
+                  <span className="block text-rose-400 mt-1 font-semibold">
+                    {importSummary.failed_count} row(s) could not be imported (e.g. duplicate email).
+                  </span>
+                )}
               </p>
             </div>
+
+            {failedRows.length > 0 && (
+              <div className="p-3.5 rounded-2xl bg-rose-500/10 border border-rose-500/20 space-y-1 text-xs text-left">
+                <p className="font-extrabold text-rose-400">Failed / Skipped Rows Details:</p>
+                <div className="max-h-32 overflow-y-auto space-y-1 text-[11px] text-slate-300">
+                  {failedRows.map((f, idx) => (
+                    <div key={idx} className="flex justify-between border-b border-rose-500/10 pb-1">
+                      <span>Row {f.rowNumber || f.row}: {f.data?.name || f.data?.email || 'Student'}</span>
+                      <span className="font-bold text-rose-400">{f.reason}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
 
             <button
               onClick={onClose}

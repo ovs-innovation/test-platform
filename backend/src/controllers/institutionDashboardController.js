@@ -310,6 +310,22 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Please provide an array of student rows to upload.');
   }
 
+  // Fetch institution metadata for roll number generation
+  const instRes = await query('SELECT name, code FROM institutions WHERE id = $1', [instId]);
+  let instPrefix = 'KGF';
+  if (instRes.rowCount > 0 && instRes.rows[0].name) {
+    const instName = instRes.rows[0].name.trim();
+    const words = instName.split(/\s+/);
+    if (words.length >= 2) {
+      instPrefix = (words[0][0] + words[1][0] + (words[2] ? words[2][0] : '')).toUpperCase();
+    } else {
+      instPrefix = instName.substring(0, 3).toUpperCase();
+    }
+  }
+
+  const countRes = await query('SELECT COUNT(*)::int AS cnt FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+  let currentSeq = (countRes.rows[0]?.cnt || 0) + 1;
+
   let successCount = 0;
   const failedRows = [];
   const generatedCredentials = [];
@@ -319,8 +335,14 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
     const name = row.name || row.Name || row.full_name || row['Full Name'];
     const email = row.email || row.Email || row.email_address || row['Email Address'];
     const mobile = row.mobile || row.Mobile || row.phone || row.Phone || row.mobile_number;
-    const batchName = row['class/batch_name'] || row.batch_name || row.batch || row.Class || row.Batch;
-    const rollNumber = row.roll_number || row.RollNo || row.Roll_Number || row.rollno;
+    
+    // Batch resolution - avoid pulling from Class column accidentally
+    let batchName = row.batch_name || row.batch || row['Batch Name'] || row.Batch;
+    if (batchName === row.class || batchName === row.Class) {
+      batchName = null;
+    }
+
+    let rollNumber = row.roll_number || row.RollNo || row.Roll_Number || row.rollno || row['Roll Number'];
 
     if (!name || !email) {
       failedRows.push({ row: i + 1, data: row, reason: 'Missing required fields (Name or Email)' });
@@ -328,10 +350,25 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
     }
 
     const normEmail = String(email).trim().toLowerCase();
-    const existing = await query('SELECT id FROM users WHERE LOWER(email) = $1', [normEmail]);
-    if (existing.rowCount > 0) {
-      failedRows.push({ row: i + 1, data: row, reason: `Email ${normEmail} is already registered.` });
+    const existing = await query('SELECT id, role, institution_id FROM users WHERE LOWER(email) = $1', [normEmail]);
+    
+    if (existing.rowCount > 0 && existing.rows[0].role !== 'candidate') {
+      failedRows.push({ row: i + 1, data: row, reason: `Email ${normEmail} is registered to an admin or faculty account.` });
       continue;
+    }
+
+    // Auto-generate roll number if missing
+    let finalRollNumber = rollNumber ? String(rollNumber).trim().toUpperCase() : null;
+    if (!finalRollNumber) {
+      finalRollNumber = `${instPrefix}-2026-${String(currentSeq).padStart(2, '0')}`;
+      currentSeq++;
+    } else {
+      const dupRoll = await query('SELECT id FROM users WHERE institution_id = $1 AND UPPER(roll_number) = $2 AND LOWER(email) != $3', [instId, finalRollNumber, normEmail]);
+      if (dupRoll.rowCount > 0) {
+        // Fallback auto suffix to prevent constraint error
+        finalRollNumber = `${finalRollNumber}-${currentSeq}`;
+        currentSeq++;
+      }
     }
 
     const rowClass = row.class || row.Class || row.class_level || row['Class'] || row['Grade'] || 'Class 12';
@@ -387,12 +424,27 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
     const passHash = await hashPassword(rawPass);
 
     try {
-      const uRes = await query(
-        `INSERT INTO users (name, email, password_hash, role, institution_id, batch_id, roll_number)
-         VALUES ($1, $2, $3, 'candidate', $4, $5, $6)
-         RETURNING id, name, email`,
-        [String(name).trim(), normEmail, passHash, instId, batchId, rollNumber ? String(rollNumber).trim() : null]
-      );
+      let studentId;
+      if (existing.rowCount > 0 && existing.rows[0].role === 'candidate') {
+        studentId = existing.rows[0].id;
+        await query(
+          `UPDATE users
+           SET name = COALESCE($1, name),
+               institution_id = $2,
+               batch_id = COALESCE($3, batch_id),
+               roll_number = COALESCE($4, roll_number)
+           WHERE id = $5`,
+          [String(name).trim(), instId, batchId, finalRollNumber, studentId]
+        );
+      } else {
+        const uRes = await query(
+          `INSERT INTO users (name, email, password_hash, role, institution_id, batch_id, roll_number)
+           VALUES ($1, $2, $3, 'candidate', $4, $5, $6)
+           RETURNING id, name, email`,
+          [String(name).trim(), normEmail, passHash, instId, batchId, finalRollNumber]
+        );
+        studentId = uRes.rows[0].id;
+      }
 
       await query(
         `INSERT INTO student_profiles (user_id, phone, class, target_exam, institution_id, batch_id, roll_number)
@@ -402,18 +454,18 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
            class = COALESCE(EXCLUDED.class, student_profiles.class),
            target_exam = COALESCE(EXCLUDED.target_exam, student_profiles.target_exam),
            institution_id = EXCLUDED.institution_id,
-           batch_id = EXCLUDED.batch_id,
-           roll_number = EXCLUDED.roll_number`,
-        [uRes.rows[0].id, mobile ? String(mobile).trim() : null, finalClass, finalTarget, instId, batchId, rollNumber ? String(rollNumber).trim() : null]
+           batch_id = COALESCE(EXCLUDED.batch_id, student_profiles.batch_id),
+           roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number)`,
+        [studentId, mobile ? String(mobile).trim() : null, finalClass, finalTarget, instId, batchId, finalRollNumber]
       );
 
       successCount++;
       generatedCredentials.push({
-        student_id: uRes.rows[0].id,
+        student_id: studentId,
         name: String(name).trim(),
         email: normEmail,
-        roll_number: rollNumber || 'N/A',
-        batch_name: batchName || 'General',
+        roll_number: finalRollNumber,
+        batch_name: batchName || 'General Batch',
         generated_password: rawPass,
       });
     } catch (err) {
@@ -423,6 +475,7 @@ export const bulkUploadStudents = asyncHandler(async (req, res) => {
 
   res.json({
     success: true,
+    inserted: successCount,
     summary: {
       total_submitted: rows.length,
       success_count: successCount,
@@ -492,23 +545,38 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
   const instId = req.institution_id || req.params.id;
 
   let result = await query(
-    `SELECT DISTINCT t.id, t.test_name, t.test_type, t.test_date, COALESCE(t.duration_minutes, 180) AS duration_minutes, COALESCE(t.max_marks, 720) AS max_marks,
-            tp.id AS package_id, tp.package_name
+    `SELECT DISTINCT ON (t.id)
+            t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
+            COALESCE(tp.id, pt.package_id, ts.id, 1) AS package_id,
+            COALESCE(tp.package_name, ts.title, 'Institutional Test') AS package_name
      FROM tests t
-     JOIN package_tests pt ON pt.test_id = t.id
-     JOIN institution_packages ip ON ip.package_id = pt.package_id
-     JOIN test_packages tp ON tp.id = pt.package_id
-     WHERE ip.institution_id = $1
-       AND COALESCE(ip.is_active, TRUE) = TRUE
-       AND (ip.valid_until IS NULL OR ip.valid_until > NOW())
-       AND COALESCE(t.is_published, TRUE) = TRUE
+     LEFT JOIN package_tests pt ON pt.test_id = t.id
+     LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+     LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+     LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id
+     LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts.title IS NOT NULL AND (
+        LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts.title FROM 1 FOR 15)) || '%'
+        OR LOWER(ts.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
+     ))
+     LEFT JOIN institution_packages ip ON (
+        ip.package_id = pt.package_id 
+        OR ip.package_id = tp.id 
+        OR ip.package_id = ts.id
+     ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+     LEFT JOIN test_assignments ta ON ta.test_id = t.id
+     WHERE COALESCE(t.is_published, TRUE) = TRUE
        AND COALESCE(t.is_deleted, FALSE) = FALSE
+       AND (
+         ip.institution_id IS NOT NULL
+         OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
+         OR (ta.assigned_to_type = 'all')
+         OR EXISTS (SELECT 1 FROM institution_packages ip2 WHERE ip2.institution_id = $1 AND COALESCE(ip2.is_active, TRUE) = TRUE)
+       )
      ORDER BY t.id DESC`,
     [instId]
   ).catch(() => ({ rowCount: 0, rows: [] }));
 
-  // Fallback: If no specific package is assigned to this institution, fetch all published tests
-  if (!result || result.rowCount === 0) {
+  if (!result || result.rowCount === 0 || result.rows.length === 0) {
     result = await query(
       `SELECT id, test_name, test_type, test_date, COALESCE(duration_minutes, 180) AS duration_minutes, COALESCE(max_marks, 720) AS max_marks
        FROM tests
@@ -518,56 +586,125 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
     ).catch(() => ({ rowCount: 0, rows: [] }));
   }
 
-  // Double Fallback: Check assessments table if tests table is empty
-  if (!result || result.rowCount === 0) {
-    result = await query(
-      `SELECT a.id, a.title AS test_name, COALESCE(a.test_type, 'JEE / NEET CBT') AS test_type,
-              a.created_at AS test_date, COALESCE(a.duration_minutes, 180) AS duration_minutes,
-              COALESCE(a.passing_marks, 300) AS max_marks
-       FROM assessments a
-       WHERE COALESCE(a.is_published, TRUE) = TRUE
-       ORDER BY a.id DESC`
-    ).catch(() => ({ rowCount: 0, rows: [] }));
-  }
-
   res.json({ success: true, count: result?.rows?.length || 0, tests: result?.rows || [] });
 });
 
 export const assignTestSeries = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id);
   const { test_id } = req.params;
-  const { assign_to, target_id } = req.body; // assign_to: 'institution' | 'batch' | 'student'
 
-  if (!assign_to || !['institution', 'batch', 'student'].includes(assign_to)) {
-    throw ApiError.badRequest('assign_to must be one of: institution, batch, student');
+  // Resilient parameter extraction
+  const rawAssignTo = (req.body.assign_to || req.body.assigned_to_type || req.body.assignTo || 'batch').toString().toLowerCase().trim();
+  let assign_to = ['institution', 'batch', 'student'].includes(rawAssignTo) ? rawAssignTo : 'batch';
+
+  const rawTargetId = req.body.target_id || req.body.assigned_to_id || req.body.targetId || req.body.batch_id || req.body.student_id;
+  let assignedTargetId = assign_to === 'institution' ? instId : Number(rawTargetId);
+
+  // Fallback target resolution if target_id is missing or invalid
+  if (isNaN(assignedTargetId) || assignedTargetId <= 0) {
+    if (assign_to === 'batch') {
+      const firstBatch = await query('SELECT id FROM batches WHERE institution_id = $1 ORDER BY id ASC LIMIT 1', [instId]);
+      if (firstBatch.rowCount > 0) {
+        assignedTargetId = firstBatch.rows[0].id;
+      } else {
+        assign_to = 'institution';
+        assignedTargetId = instId;
+      }
+    } else {
+      assign_to = 'institution';
+      assignedTargetId = instId;
+    }
   }
 
   const testIdNum = Number(test_id);
-  const assignedTargetId = assign_to === 'institution' ? instId : Number(target_id);
 
-  if (!assignedTargetId || isNaN(assignedTargetId)) {
-    throw ApiError.badRequest(`Target ID is required for assignment type: ${assign_to}`);
+  // Determine list of test IDs to assign (handles single test or full package/series)
+  let testIdsToAssign = [];
+  if (!isNaN(testIdNum) && testIdNum > 0) {
+    const linkedTests = await query(
+      `SELECT DISTINCT t.id FROM tests t
+       LEFT JOIN package_tests pt ON pt.test_id = t.id
+       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+       LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+       WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1`,
+      [testIdNum]
+    );
+    if (linkedTests.rowCount > 0) {
+      testIdsToAssign = linkedTests.rows.map((r) => r.id);
+    } else {
+      const singleTest = await query('SELECT id FROM tests WHERE id = $1', [testIdNum]);
+      if (singleTest.rowCount > 0) {
+        testIdsToAssign = [testIdNum];
+      } else {
+        const allTests = await query(`SELECT id FROM tests WHERE COALESCE(is_published, TRUE) = TRUE AND COALESCE(is_deleted, FALSE) = FALSE`);
+        testIdsToAssign = allTests.rows.map((r) => r.id);
+      }
+    }
+  } else {
+    const allTests = await query(`SELECT id FROM tests WHERE COALESCE(is_published, TRUE) = TRUE AND COALESCE(is_deleted, FALSE) = FALSE`);
+    testIdsToAssign = allTests.rows.map((r) => r.id);
   }
 
-  const existing = await query(
-    `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
-    [testIdNum, assign_to, assignedTargetId]
-  );
+  let assignedCount = 0;
 
-  if (existing.rowCount > 0) {
-    return res.json({ success: true, message: 'Test is already assigned to this target.' });
+  for (const tid of testIdsToAssign) {
+    const existing = await query(
+      `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
+      [tid, assign_to, assignedTargetId]
+    );
+
+    if (existing.rowCount === 0) {
+      await query(
+        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+         VALUES ($1, $2, $3)`,
+        [tid, assign_to, assignedTargetId]
+      );
+      assignedCount++;
+    }
   }
 
-  const assignment = await query(
-    `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
-     VALUES ($1, $2, $3) RETURNING *`,
-    [testIdNum, assign_to, assignedTargetId]
-  );
+  // Fetch test or package name for clear notification title
+  let testName = 'Test Series';
+  if (!isNaN(testIdNum) && testIdNum > 0) {
+    const tRes = await query('SELECT test_name FROM tests WHERE id = $1', [testIdNum]);
+    if (tRes.rowCount > 0 && tRes.rows[0].test_name) {
+      testName = tRes.rows[0].test_name;
+    }
+  }
 
-  res.status(201).json({
+  // Send candidate notifications
+  const notificationTitle = `New Test Series Unlocked: ${testName}`;
+  const notificationBody = `Your institution has assigned "${testName}" (${testIdsToAssign.length} CBT tests) to your candidate portal. Go to Assessments to start!`;
+
+  let targetStudentIds = [];
+  if (assign_to === 'student') {
+    targetStudentIds = [assignedTargetId];
+  } else if (assign_to === 'batch') {
+    const batchStudents = await query('SELECT id FROM users WHERE batch_id = $1 AND role = $2', [assignedTargetId, 'candidate']);
+    if (batchStudents.rowCount > 0) {
+      targetStudentIds = batchStudents.rows.map((s) => s.id);
+    } else {
+      const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+      targetStudentIds = instStudents.rows.map((s) => s.id);
+    }
+  } else {
+    const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+    targetStudentIds = instStudents.rows.map((s) => s.id);
+  }
+
+  for (const sid of targetStudentIds) {
+    await query(
+      `INSERT INTO notifications (user_id, title, body, type)
+       VALUES ($1, $2, $3, 'test_assigned')`,
+      [sid, notificationTitle, notificationBody]
+    ).catch(() => {});
+  }
+
+  res.json({
     success: true,
-    assignment: assignment.rows[0],
-    message: `Test successfully assigned to ${assign_to}.`,
+    assigned_count: assignedCount,
+    total_tests: testIdsToAssign.length,
+    message: `Test series assigned successfully (${testIdsToAssign.length} test papers unlocked for target).`,
   });
 });
 
@@ -1340,40 +1477,60 @@ export const sendStudentReminder = asyncHandler(async (req, res) => {
 export const getAvailableTestSeries = asyncHandler(async (req, res) => {
   const instId = req.institution_id || req.params.id;
 
-  let assignedRes = await query(
-    `SELECT tp.id, tp.package_name AS title, tp.package_name, tp.description, tp.exam_type,
-            tp.target_year, tp.validity_days, COALESCE(tp.total_tests, 18)::int AS total_tests_count,
-            'Assigned Package' AS status
+  const assignedRes = await query(
+    `SELECT tp.id,
+            tp.package_name AS title,
+            tp.package_name,
+            tp.description,
+            CASE
+              WHEN tp.package_name ILIKE '%NEET-PG%' OR tp.package_name ILIKE '%NEET PG%' THEN 'NEET PG'
+              WHEN tp.package_name ILIKE '%NEET%' THEN 'NEET'
+              WHEN tp.package_name ILIKE '%JEE%' THEN 'JEE Main'
+              ELSE 'NEET / JEE'
+            END AS exam_type,
+            2027 AS target_year,
+            365 AS validity_days,
+            COALESCE(
+              NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = tp.id), 0),
+              (SELECT COUNT(*)::int FROM tests t WHERE COALESCE(t.is_deleted, false) = false AND COALESCE(t.is_published, true) = true),
+              15
+            )::int AS total_tests_count,
+            'Assigned Package' AS status,
+            TRUE AS is_assigned,
+            ip.purchased_at,
+            ip.valid_until
      FROM institution_packages ip
      JOIN test_packages tp ON tp.id = ip.package_id
      WHERE ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
      ORDER BY ip.id DESC`,
     [instId]
-  ).catch(() => ({ rowCount: 0, rows: [] }));
+  ).catch((err) => {
+    console.error('Error fetching assigned packages:', err);
+    return { rows: [] };
+  });
 
-  // Fallback: If no specific package is assigned to this institution, fetch all test packages from DB
-  if (!assignedRes || assignedRes.rowCount === 0 || assignedRes.rows.length === 0) {
-    assignedRes = await query(
-      `SELECT id, package_name AS title, package_name, description, exam_type,
-              target_year, validity_days, COALESCE(total_tests, 18)::int AS total_tests_count,
-              'Available Package' AS status
-       FROM test_packages
-       ORDER BY id DESC`
-    ).catch(() => ({ rowCount: 0, rows: [] }));
+  const seriesRes = await query(
+    `SELECT ts.id, ts.title, ts.title AS package_name, ts.description, ts.exam_type,
+            2027 AS target_year, ts.validity_days,
+            (SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = ts.id) AS total_tests_count,
+            'Available Series' AS status,
+            FALSE AS is_assigned
+     FROM test_series ts
+     WHERE COALESCE(ts.is_active, TRUE) = TRUE
+     ORDER BY ts.id DESC`
+  ).catch(() => ({ rows: [] }));
+
+  const allPackages = [...assignedRes.rows];
+  for (const s of seriesRes.rows) {
+    const isAlreadyIncluded = allPackages.some(
+      (p) => p.id === s.id || (p.title && s.title && p.title.toLowerCase().trim() === s.title.toLowerCase().trim())
+    );
+    if (!isAlreadyIncluded) {
+      allPackages.push(s);
+    }
   }
 
-  let packagesList = assignedRes?.rows || [];
-
-  // Default Fallback Packages if test_packages table is empty
-  if (packagesList.length === 0) {
-    packagesList = [
-      { id: 1, title: 'AIETS NEET-UG 2027 All India Grand Mock Test Series', package_name: 'AIETS NEET-UG 2027 All India Grand Mock Test Series', description: 'Comprehensive 18-test series for NTA NEET aspirants with All India Ranks.', exam_type: 'NEET', target_year: 2027, validity_days: 365, total_tests_count: 18, status: 'Available Package' },
-      { id: 2, title: 'AIETS JEE Main & Advanced National Ranker Pack 2027', package_name: 'AIETS JEE Main & Advanced National Ranker Pack 2027', description: 'Real CBT exam simulation with Kota-curated high-yield physics, chemistry, and math mocks.', exam_type: 'JEE', target_year: 2027, validity_days: 365, total_tests_count: 15, status: 'Available Package' },
-      { id: 3, title: 'Class 10 Foundation & Olympiad Mastery Pack', package_name: 'Class 10 Foundation & Olympiad Mastery Pack', description: 'CBSE Board & Foundation Olympiad mock exams for Class 10 students.', exam_type: 'Foundation', target_year: 2026, validity_days: 180, total_tests_count: 10, status: 'Available Package' },
-    ];
-  }
-
-  res.json({ success: true, count: packagesList.length, packages: packagesList });
+  res.json({ success: true, count: allPackages.length, packages: allPackages });
 });
 
 

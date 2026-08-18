@@ -294,8 +294,9 @@ export const assignTest = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('assigned_to_type must be one of: individual, batch, institution, all');
   }
 
-  const testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
+  const testCheck = await query('SELECT id, test_name FROM tests WHERE id = $1', [id]);
   if (testCheck.rowCount === 0) throw ApiError.notFound('Test not found');
+  const testName = testCheck.rows[0].test_name || 'Test';
 
   // Replace existing audience assignments for this test
   await query('DELETE FROM test_assignments WHERE test_id = $1', [id]);
@@ -305,6 +306,47 @@ export const assignTest = asyncHandler(async (req, res) => {
      VALUES ($1, $2, $3) RETURNING *`,
     [id, assigned_to_type, assigned_to_id || null]
   );
+
+  // Send notifications based on assignment target
+  if (assigned_to_type === 'institution' && assigned_to_id) {
+    await query(
+      `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id)
+       VALUES ($1, $2, $3, 'test_assigned', 'test', $4)`,
+      [
+        assigned_to_id,
+        'New Test Assigned by Admin',
+        `Admin assigned test "${testName}" to your institution.`,
+        id,
+      ]
+    ).catch((err) => console.error('Failed to create institution notification:', err));
+
+    const studentsRes = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [assigned_to_id, 'candidate']);
+    for (const s of studentsRes.rows) {
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type)
+         VALUES ($1, $2, $3, 'test_assigned')`,
+        [
+          s.id,
+          'New Test Assigned',
+          `A new test "${testName}" has been assigned to your institution.`,
+        ]
+      ).catch(() => {});
+    }
+  } else if (assigned_to_type === 'all') {
+    const instRes = await query('SELECT id FROM institutions WHERE is_active = TRUE');
+    for (const inst of instRes.rows) {
+      await query(
+        `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id)
+         VALUES ($1, $2, $3, 'test_assigned', 'test', $4)`,
+        [
+          inst.id,
+          'New Global Test Assigned',
+          `Admin assigned test "${testName}" to all partner institutions.`,
+          id,
+        ]
+      ).catch(() => {});
+    }
+  }
 
   res.status(201).json({ assignment: result.rows[0] });
 });

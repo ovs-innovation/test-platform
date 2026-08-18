@@ -114,7 +114,20 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
            COALESCE(s.passed, ts.passed) AS passed,
            t.question_paper_url, t.solution_pdf_url
     FROM tests t
-    JOIN test_assignments tas ON tas.test_id = t.id
+    LEFT JOIN test_assignments tas ON tas.test_id = t.id
+    LEFT JOIN package_tests pt ON pt.test_id = t.id
+    LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+    LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+    LEFT JOIN test_series ts_series ON ts_series.id = tst.series_id OR ts_series.id = tsa.test_series_id
+    LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts_series.title IS NOT NULL AND (
+       LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts_series.title FROM 1 FOR 15)) || '%'
+       OR LOWER(ts_series.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
+    ))
+    LEFT JOIN institution_packages ip ON (
+       ip.package_id = pt.package_id
+       OR ip.package_id = tp.id
+       OR ip.package_id = ts_series.id
+    ) AND $4::int IS NOT NULL AND ip.institution_id = $4 AND COALESCE(ip.is_active, TRUE) = TRUE
     LEFT JOIN (
       SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
     ) q ON q.assessment_id = t.id
@@ -130,6 +143,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
         OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
         OR tas.assigned_to_type = 'all'
+        OR (ip.institution_id IS NOT NULL AND (ip.valid_until IS NULL OR ip.valid_until > NOW()))
       )
 
     ORDER BY id DESC

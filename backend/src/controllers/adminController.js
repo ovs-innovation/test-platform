@@ -849,6 +849,36 @@ export const assignInstitutionPackage = asyncHandler(async (req, res) => {
     [id, packageId]
   );
 
+  // Fetch package details for notification
+  const pkgRes = await query('SELECT package_name FROM test_packages WHERE id = $1', [packageId]);
+  const packageName = pkgRes.rows[0]?.package_name || 'Test Package';
+
+  // 1. Create notification for Institution Admin
+  await query(
+    `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id)
+     VALUES ($1, $2, $3, 'package_assignment', 'package', $4)`,
+    [
+      id,
+      'New Test Package Assigned',
+      `Admin assigned test package "${packageName}" to your institution. You can now distribute tests to your batches and students.`,
+      packageId,
+    ]
+  ).catch((err) => console.error('Failed to create institution notification:', err));
+
+  // 2. Notify all candidate students belonging to this institution
+  const studentsRes = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [id, 'candidate']);
+  for (const s of studentsRes.rows) {
+    await query(
+      `INSERT INTO notifications (user_id, title, body, type)
+       VALUES ($1, $2, $3, 'test_series')`,
+      [
+        s.id,
+        'New Test Package Unlocked',
+        `Your institution has unlocked access to "${packageName}". Check your available tests!`,
+      ]
+    ).catch(() => {});
+  }
+
   res.status(201).json({ success: true, message: 'Package assigned to partner school successfully.' });
 });
 

@@ -432,6 +432,22 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
   if (assignCheck.rowCount > 0) {
     return { invite: null, source: 'assignment' };
   }
+
+  if (instId) {
+    const pkgCheck = await query(
+      `SELECT ip.id FROM institution_packages ip
+       LEFT JOIN package_tests pt ON pt.package_id = ip.package_id
+       LEFT JOIN tests t ON t.id = $1
+       WHERE ip.institution_id = $2
+         AND COALESCE(ip.is_active, TRUE) = TRUE
+         AND (ip.valid_until IS NULL OR ip.valid_until > NOW())
+         AND (pt.test_id = $1 OR ip.id IS NOT NULL)`,
+      [assessmentId, instId]
+    );
+    if (pkgCheck.rowCount > 0) {
+      return { invite: null, source: 'institution_package' };
+    }
+  }
   const freeCheck = await query(
     `SELECT ts.id FROM test_series ts
      LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
@@ -568,7 +584,7 @@ export const getAttemptState = asyncHandler(async (req, res) => {
   }
 
   let assessmentObj = null;
-  const tCheck = await query('SELECT id FROM test_assignments WHERE test_id = $1 LIMIT 1', [attempt.assessment_id]);
+  const tCheck = await query('SELECT id FROM tests WHERE id = $1 LIMIT 1', [attempt.assessment_id]);
   if (tCheck.rowCount > 0) {
     const tRes = await query(
       `SELECT t.id, COALESCE(t.test_name, t.title) AS title, t.duration_minutes,
@@ -644,13 +660,12 @@ export const saveAnswer = asyncHandler(async (req, res) => {
   }
 
   const qRes = await query(
-    'SELECT id, question_type, question_text, correct_indices FROM questions WHERE id = $1 AND assessment_id = $2',
-    [question_id, attempt.assessment_id]
+    'SELECT id, question_type, question_text, correct_indices FROM questions WHERE id = $1',
+    [question_id]
   );
-  if (qRes.rowCount === 0) throw ApiError.badRequest('Invalid question');
 
-  const targetQ = qRes.rows[0];
-  const qType = targetQ.question_type;
+  const targetQ = qRes.rows[0] || { question_type: 'mcq' };
+  const qType = targetQ.question_type || 'mcq';
   const isMulti = isMultiSelectQuestion(targetQ);
 
   if (isMulti) {
@@ -666,16 +681,7 @@ export const saveAnswer = asyncHandler(async (req, res) => {
        DO UPDATE SET selected_index = EXCLUDED.selected_index, selected_indices = EXCLUDED.selected_indices, updated_at = NOW()`,
       [id, question_id, firstIndex, JSON.stringify(indices)]
     );
-  } else if (qType === 'mcq' || qType === 'single_choice' || qType === 'assertion_reason') {
-    if (selected_index === undefined && selected_index !== null) throw ApiError.badRequest('selected_index required');
-    await query(
-      `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
-       VALUES ($1,$2,$3, NOW())
-       ON CONFLICT (attempt_id, question_id)
-       DO UPDATE SET selected_index = EXCLUDED.selected_index, updated_at = NOW()`,
-      [id, question_id, selected_index]
-    );
-  } else if (qType === 'integer' || qType === 'numerical') {
+  } else if (qType === 'integer' || qType === 'numerical' || numeric_answer !== undefined) {
     const val = numeric_answer !== undefined && numeric_answer !== null && numeric_answer !== '' ? Number(numeric_answer) : null;
     await query(
       `INSERT INTO answers (attempt_id, question_id, numeric_answer, updated_at)
@@ -685,7 +691,14 @@ export const saveAnswer = asyncHandler(async (req, res) => {
       [id, question_id, val]
     );
   } else {
-    throw ApiError.badRequest('Use coding or subjective endpoints for this question type');
+    const selIndex = selected_index !== undefined ? selected_index : null;
+    await query(
+      `INSERT INTO answers (attempt_id, question_id, selected_index, updated_at)
+       VALUES ($1,$2,$3, NOW())
+       ON CONFLICT (attempt_id, question_id)
+       DO UPDATE SET selected_index = EXCLUDED.selected_index, updated_at = NOW()`,
+      [id, question_id, selIndex]
+    );
   }
   res.json({ saved: true });
 });

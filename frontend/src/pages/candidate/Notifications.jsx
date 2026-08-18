@@ -50,13 +50,9 @@ export default function Notifications() {
         const lowerTitle = (n.title || '').toLowerCase();
         const isB2bOrInst =
           lowerType === 'b2b_demo_request' ||
-          lowerType === 'b2b' ||
-          lowerType === 'institution' ||
-          lowerType === 'institution_admin' ||
-          lowerTitle.includes('b2b') ||
-          lowerTitle.includes('institutional demo') ||
-          lowerTitle.includes('school demo') ||
-          lowerTitle.includes('institution');
+          lowerType === 'institution_admin_alert' ||
+          lowerTitle.includes('institutional demo request') ||
+          lowerTitle.includes('school demo request');
 
         return !isB2bOrInst;
       });

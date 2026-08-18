@@ -282,11 +282,10 @@ export const assessmentSchema = z.object({
 export const assessmentUpdateSchema = assessmentSchema.partial();
 
 export const saveAnswerSchema = z.object({
-  question_id: z.number().int().positive(),
-  selected_index: z.number().int().min(0).nullable().optional(),
-  selected_indices: z.array(z.number().int().min(0)).optional(),
-}).refine((d) => d.selected_index !== undefined || d.selected_indices !== undefined, {
-  message: 'Provide selected_index or selected_indices',
+  question_id: z.coerce.number().int().positive(),
+  selected_index: z.coerce.number().int().min(0).nullable().optional(),
+  selected_indices: z.array(z.coerce.number().int().min(0)).optional(),
+  numeric_answer: z.union([z.number(), z.string()]).nullable().optional(),
 });
 
 export const saveCodingSchema = z.object({

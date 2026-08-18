@@ -413,7 +413,7 @@ export default function InstitutionDashboard() {
       onOpenAddStudent={() => setShowAddStudentModal(true)}
       onOpenUploadCsv={() => setShowBulkUploadModal(true)}
       onOpenCreateBatch={() => navigate('/institution/batches')}
-      onOpenAssignTest={() => navigate('/institution/test-assignments')}
+      onOpenAssignTest={() => navigate('/institution/test-series')}
       outletContext={outletContext}
     >
       <Outlet context={outletContext} />

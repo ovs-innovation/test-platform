@@ -137,7 +137,7 @@ export default function App() {
           <Route path="students" element={<InstStudentsTabWrapper />} />
           <Route path="batches" element={<InstBatchesTabWrapper />} />
           <Route path="test-series" element={<InstTestSeriesTabWrapper />} />
-          <Route path="test-assignments" element={<InstTestAssignmentsTabWrapper />} />
+          <Route path="test-assignments" element={<Navigate to="/institution/test-series" replace />} />
           <Route path="ebooks" element={<InstEbooksTabWrapper />} />
           <Route path="analytics" element={<InstAnalyticsTabWrapper />} />
           <Route path="rankings" element={<InstRankingsTabWrapper />} />
