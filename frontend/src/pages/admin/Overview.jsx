@@ -197,21 +197,29 @@ export default function Overview() {
         <div className="lg:col-span-5 space-y-6 min-w-0">
           <AdminCard title="Qualification Ratio" subtitle="Distribution of passing vs improvement-needed candidates">
             <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{stats.passRate}%</p>
-                  <p className="text-xs text-slate-500 font-medium">Passed Cutoff</p>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-black text-rose-600 dark:text-rose-400">{100 - stats.passRate}%</p>
-                  <p className="text-xs text-slate-500 font-medium">Needs Improvement</p>
-                </div>
-              </div>
+              {(() => {
+                const passRateVal = Number(Number(stats.passRate || 0).toFixed(1));
+                const needsImprovementVal = Number((100 - passRateVal).toFixed(1));
+                return (
+                  <>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-2xl font-black text-emerald-600 dark:text-emerald-400">{passRateVal}%</p>
+                        <p className="text-xs text-slate-500 font-medium">Passed Cutoff</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-2xl font-black text-rose-600 dark:text-rose-400">{needsImprovementVal}%</p>
+                        <p className="text-xs text-slate-500 font-medium">Needs Improvement</p>
+                      </div>
+                    </div>
 
-              <div className="h-3 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
-                <div className="h-full bg-emerald-500" style={{ width: `${stats.passRate}%` }} />
-                <div className="h-full bg-rose-500" style={{ width: `${100 - stats.passRate}%` }} />
-              </div>
+                    <div className="h-3 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden flex">
+                      <div className="h-full bg-emerald-500" style={{ width: `${passRateVal}%` }} />
+                      <div className="h-full bg-rose-500" style={{ width: `${needsImprovementVal}%` }} />
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </AdminCard>
 
