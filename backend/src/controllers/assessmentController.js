@@ -35,26 +35,43 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
 
   const result = await query(
     `
-    SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
-           a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
+    SELECT COALESCE(a.id, t.id) AS id, COALESCE(a.title, t.test_name, t.title) AS title,
+           COALESCE(a.description, t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+           COALESCE(a.instructions, 'Standard examination instructions apply.') AS instructions,
+           COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes,
+           COALESCE(a.passing_marks, 0) AS passing_marks,
+           COALESCE(a.max_violations, 5) AS max_violations,
+           COALESCE(a.result_visible, true) AS result_visible,
+           COALESCE(a.available_from, t.available_from) AS available_from,
+           COALESCE(a.available_until, t.available_until) AS available_until,
            ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
            'invite' AS access_type,
-           COALESCE(q.cnt, 0)::int AS question_count,
-           COALESCE(q.total_marks, 0)::int AS total_marks,
-           at.status::text AS attempt_status,
-           at.id AS attempt_id,
-           s.marks_obtained, s.total_marks AS score_total, s.percentage, s.passed,
-           a.question_paper_url, a.solution_pdf_url
+           COALESCE(q.cnt, qt.cnt, 0)::int AS question_count,
+           COALESCE(q.total_marks, qt.total_marks, t.max_marks, 300)::int AS total_marks,
+           COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
+           COALESCE(at.id, tat.id) AS attempt_id,
+           COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
+           COALESCE(s.total_marks, ts.total_marks) AS score_total,
+           COALESCE(s.percentage, ts.percentage) AS percentage,
+           COALESCE(s.passed, ts.passed) AS passed,
+           COALESCE(a.question_paper_url, t.question_paper_url) AS question_paper_url,
+           COALESCE(a.solution_pdf_url, t.solution_pdf_url) AS solution_pdf_url
     FROM candidate_invites ci
-    JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN tests t ON t.id = ci.assessment_id
     LEFT JOIN (
       SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
     ) q ON q.assessment_id = a.id
-    LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
+    LEFT JOIN (
+      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+    ) qt ON qt.assessment_id = t.id
+    LEFT JOIN attempts at ON at.assessment_id = ci.assessment_id AND at.candidate_id = $2
+    LEFT JOIN test_attempts tat ON tat.test_id = ci.assessment_id AND tat.student_id = $2
     LEFT JOIN scores s ON s.attempt_id = at.id
+    LEFT JOIN scores ts ON ts.attempt_id = tat.id
     WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
 
-    UNION
+    UNION ALL
 
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
            a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
@@ -80,7 +97,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
       )
 
-    UNION
+    UNION ALL
 
     SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
            'Standard examination instructions apply.' AS instructions, t.duration_minutes,
@@ -109,6 +126,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       AND COALESCE(t.is_deleted, false) = false
       AND (
         (tas.assigned_to_type = 'individual' AND tas.assigned_to_id = $2)
+        OR (tas.assigned_to_id IS NOT NULL AND tas.assigned_to_id = $2)
         OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
         OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
         OR tas.assigned_to_type = 'all'

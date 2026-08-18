@@ -107,7 +107,7 @@ export const inviteService = {
 };
 
 export const assessmentService = {
-  listAvailable: () => withCache('assessments_available', () => api.get('/assessments/available').then((r) => r.data.assessments)),
+  listAvailable: () => api.get('/assessments/available').then((r) => r.data.assessments),
   getStudent: (id) => api.get(`/assessments/available/${id}`).then((r) => r.data.assessment),
   listAll: () => withCache('assessments_all', () => api.get('/assessments').then((r) => r.data.assessments)),
   getAdmin: (id) => api.get(`/assessments/${id}`).then((r) => r.data),
