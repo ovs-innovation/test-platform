@@ -26,13 +26,14 @@ export default function StudentLogin() {
   // Email OTP Fields
   const [emailOtp, setEmailOtp] = useState('');
   const [emailOtpSent, setEmailOtpSent] = useState(false);
-  const [emailOtpDigits, setEmailOtpDigits] = useState(['', '', '', '', '', '']);
+  const [emailOtpCode, setEmailOtpCode] = useState('');
+  const [emailOtpFocused, setEmailOtpFocused] = useState(false);
   const [emailTimer, setEmailTimer] = useState(0);
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const otpBoxRefs = useRef([]);
+  const emailOtpInputRef = useRef(null);
 
   const getDestination = (role) => {
     const searchParams = new URLSearchParams(location.search);
@@ -70,11 +71,11 @@ export default function StudentLogin() {
     return () => clearInterval(interval);
   }, [mobileTimer]);
 
-  // Auto-focus first OTP digit box when Email OTP is sent
+  // Auto-focus single OTP input when Email OTP is sent
   useEffect(() => {
     if (emailOtpSent) {
       const timer = setTimeout(() => {
-        otpBoxRefs.current[0]?.focus();
+        emailOtpInputRef.current?.focus();
       }, 50);
       return () => clearTimeout(timer);
     }
@@ -85,7 +86,8 @@ export default function StudentLogin() {
     setLoginMode(mode);
     setError('');
     setEmailOtpSent(false);
-    setEmailOtpDigits(['', '', '', '', '', '']);
+    setEmailOtpCode('');
+    setEmailOtpFocused(false);
     setEmailTimer(0);
     setMobileOtpSent(false);
     setMobileOtpCode('');
@@ -108,7 +110,7 @@ export default function StudentLogin() {
       }
       setEmailOtpSent(true);
       setEmailTimer(30);
-      setEmailOtpDigits(['', '', '', '', '', '']);
+      setEmailOtpCode('');
       toast.success(`Verification OTP sent to ${cleanEmail}`);
     } catch (err) {
       setError(err.message || 'Failed to send OTP code. Please verify your email.');
@@ -117,61 +119,10 @@ export default function StudentLogin() {
     }
   };
 
-  // OTP Box Handlers (Typing, Paste, Backspace, Arrow keys)
-  const handleOtpDigitChange = (index, value) => {
-    const digit = value.replace(/\D/g, '').slice(-1);
-
-    setEmailOtpDigits((prev) => {
-      const next = [...prev];
-      next[index] = digit;
-      return next;
-    });
-
-    if (digit && index < 5) {
-      setTimeout(() => {
-        otpBoxRefs.current[index + 1]?.focus();
-      }, 0);
-    }
-  };
-
-  const handleOtpKeyDown = (index, e) => {
-    if (e.key === 'Backspace') {
-      if (!emailOtpDigits[index] && index > 0) {
-        e.preventDefault();
-        otpBoxRefs.current[index - 1]?.focus();
-      }
-    } else if (e.key === 'ArrowLeft' && index > 0) {
-      e.preventDefault();
-      otpBoxRefs.current[index - 1]?.focus();
-    } else if (e.key === 'ArrowRight' && index < 5) {
-      e.preventDefault();
-      otpBoxRefs.current[index + 1]?.focus();
-    }
-  };
-
-  const handleOtpPaste = (index, e) => {
-    e.preventDefault();
-    const pasted = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-    if (!pasted) return;
-
-    setEmailOtpDigits((prev) => {
-      const next = [...prev];
-      for (let i = 0; i < pasted.length && index + i < 6; i++) {
-        next[index + i] = pasted[i];
-      }
-      return next;
-    });
-
-    const targetIndex = Math.min(index + pasted.length, 5);
-    setTimeout(() => {
-      otpBoxRefs.current[targetIndex]?.focus();
-    }, 0);
-  };
-
   // Handle Verify Email OTP Submit
   const handleVerifyEmailOtpSubmit = async (e) => {
     e?.preventDefault();
-    const fullCode = emailOtpDigits.join('').trim();
+    const fullCode = emailOtpCode.trim();
     if (fullCode.length !== 6) {
       setError('Please enter the full 6-digit OTP code sent to your email.');
       return;
@@ -359,7 +310,7 @@ export default function StudentLogin() {
                   type="button"
                   onClick={() => {
                     setEmailOtpSent(false);
-                    setEmailOtpDigits(['', '', '', '', '', '']);
+                    setEmailOtpCode('');
                     setError('');
                   }}
                   className="text-[#00F0FF] hover:underline font-bold cursor-pointer"
@@ -373,23 +324,50 @@ export default function StudentLogin() {
                   Enter 6-Digit Verification Code *
                 </label>
 
-                {/* 6-Box OTP Input */}
-                <div className="grid grid-cols-6 gap-2 sm:gap-3 my-3">
-                  {emailOtpDigits.map((digit, idx) => (
-                    <input
-                      key={idx}
-                      ref={(el) => (otpBoxRefs.current[idx] = el)}
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      maxLength={1}
-                      value={digit}
-                      onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
-                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                      onPaste={(e) => handleOtpPaste(idx, e)}
-                      className="w-full h-12 sm:h-14 rounded-xl border border-[#2A354A] bg-[#070c18] text-center text-lg sm:text-xl font-bold text-[#00F0FF] font-mono transition-all outline-none focus:border-[#00F0FF] focus:bg-[#00F0FF]/10 focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] focus:ring-1 focus:ring-[#00F0FF]"
-                    />
-                  ))}
+                {/* Single Invisible Input + 6 Visual Display Boxes */}
+                <div
+                  className="relative w-full my-3 cursor-text"
+                  onClick={() => emailOtpInputRef.current?.focus()}
+                >
+                  {/* Single Real Focusable Input covering the area */}
+                  <input
+                    ref={emailOtpInputRef}
+                    type="text"
+                    inputMode="numeric"
+                    autoComplete="one-time-code"
+                    pattern="[0-9]*"
+                    maxLength={6}
+                    value={emailOtpCode}
+                    onChange={(e) => {
+                      const cleanVal = e.target.value.replace(/\D/g, '').slice(0, 6);
+                      setEmailOtpCode(cleanVal);
+                    }}
+                    onFocus={() => setEmailOtpFocused(true)}
+                    onBlur={() => setEmailOtpFocused(false)}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-text z-10 font-mono"
+                  />
+
+                  {/* 6 Visual Display Boxes */}
+                  <div className="grid grid-cols-6 gap-2 sm:gap-3 pointer-events-none">
+                    {Array.from({ length: 6 }).map((_, idx) => {
+                      const digit = emailOtpCode[idx] || '';
+                      const activeIndex = Math.min(emailOtpCode.length, 5);
+                      const isActive = emailOtpFocused && idx === activeIndex;
+
+                      return (
+                        <div
+                          key={idx}
+                          className={`w-full h-12 sm:h-14 rounded-xl border flex items-center justify-center text-lg sm:text-xl font-bold text-[#00F0FF] font-mono transition-all ${
+                            isActive
+                              ? 'border-[#00F0FF] bg-[#00F0FF]/10 shadow-[0_0_15px_rgba(0,240,255,0.3)] ring-1 ring-[#00F0FF]'
+                              : 'border-[#2A354A] bg-[#070c18]'
+                          }`}
+                        >
+                          {digit}
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
 
@@ -412,7 +390,7 @@ export default function StudentLogin() {
 
               <button
                 type="submit"
-                disabled={loading || emailOtpDigits.join('').trim().length < 6}
+                disabled={loading || emailOtpCode.trim().length < 6}
                 className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
               >
                 {loading ? 'Verifying OTP…' : 'Verify OTP & Log In →'}
