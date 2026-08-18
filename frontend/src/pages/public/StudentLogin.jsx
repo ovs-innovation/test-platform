@@ -114,6 +114,17 @@ export default function StudentLogin() {
     }
   };
 
+  // Focus helper for OTP boxes with text auto-selection safety
+  const focusBox = (targetIndex) => {
+    const el = otpBoxRefs.current[targetIndex];
+    if (el) {
+      el.focus();
+      if (el.value) {
+        try { el.select(); } catch {}
+      }
+    }
+  };
+
   // OTP Box Handlers (Typing, Paste, Backspace, Arrow keys)
   const handleOtpDigitChange = (index, value) => {
     const cleanVal = value.replace(/\D/g, '');
@@ -131,18 +142,12 @@ export default function StudentLogin() {
       }
       setEmailOtpDigits(newDigits);
       const nextFocus = Math.min(index + cleanVal.length, 5);
-      setTimeout(() => {
-        otpBoxRefs.current[nextFocus]?.focus();
-        otpBoxRefs.current[nextFocus]?.select();
-      }, 0);
+      setTimeout(() => focusBox(nextFocus), 10);
     } else {
       newDigits[index] = cleanVal;
       setEmailOtpDigits(newDigits);
       if (index < 5) {
-        setTimeout(() => {
-          otpBoxRefs.current[index + 1]?.focus();
-          otpBoxRefs.current[index + 1]?.select();
-        }, 0);
+        setTimeout(() => focusBox(index + 1), 10);
       }
     }
   };
@@ -157,19 +162,14 @@ export default function StudentLogin() {
       } else if (index > 0) {
         newDigits[index - 1] = '';
         setEmailOtpDigits(newDigits);
-        setTimeout(() => {
-          otpBoxRefs.current[index - 1]?.focus();
-          otpBoxRefs.current[index - 1]?.select();
-        }, 0);
+        setTimeout(() => focusBox(index - 1), 10);
       }
     } else if (e.key === 'ArrowLeft' && index > 0) {
       e.preventDefault();
-      otpBoxRefs.current[index - 1]?.focus();
-      otpBoxRefs.current[index - 1]?.select();
+      focusBox(index - 1);
     } else if (e.key === 'ArrowRight' && index < 5) {
       e.preventDefault();
-      otpBoxRefs.current[index + 1]?.focus();
-      otpBoxRefs.current[index + 1]?.select();
+      focusBox(index + 1);
     }
   };
 
@@ -183,10 +183,7 @@ export default function StudentLogin() {
     }
     setEmailOtpDigits(newDigits);
     const focusTarget = Math.min(pasted.length, 5);
-    setTimeout(() => {
-      otpBoxRefs.current[focusTarget]?.focus();
-      otpBoxRefs.current[focusTarget]?.select();
-    }, 0);
+    setTimeout(() => focusBox(focusTarget), 10);
   };
 
   // Handle Verify Email OTP Submit
@@ -396,22 +393,33 @@ export default function StudentLogin() {
 
                 {/* 6-Box OTP Input */}
                 <div className="grid grid-cols-6 gap-2 sm:gap-3 my-3">
-                  {emailOtpDigits.map((digit, idx) => (
-                    <input
-                      key={idx}
-                      ref={(el) => (otpBoxRefs.current[idx] = el)}
-                      type="text"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      maxLength={6}
-                      value={digit}
-                      onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
-                      onKeyDown={(e) => handleOtpKeyDown(idx, e)}
-                      onFocus={(e) => e.target.select()}
-                      onPaste={handleOtpPaste}
-                      className="w-full h-12 rounded-xl border border-[#2A354A] bg-[#070c18] text-center text-lg font-bold text-[#00F0FF] focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] focus:outline-none transition-all font-mono"
-                    />
-                  ))}
+                  {emailOtpDigits.map((digit, idx) => {
+                    const isFilled = Boolean(digit);
+                    return (
+                      <input
+                        key={idx}
+                        ref={(el) => (otpBoxRefs.current[idx] = el)}
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        maxLength={6}
+                        value={digit}
+                        onChange={(e) => handleOtpDigitChange(idx, e.target.value)}
+                        onKeyDown={(e) => handleOtpKeyDown(idx, e)}
+                        onFocus={(e) => {
+                          if (e.target.value) {
+                            try { e.target.select(); } catch {}
+                          }
+                        }}
+                        onPaste={handleOtpPaste}
+                        className={`w-full h-12 sm:h-14 rounded-xl border text-center text-lg sm:text-xl font-black text-[#00F0FF] font-mono transition-all duration-200 outline-none ${
+                          isFilled
+                            ? 'border-[#00F0FF] bg-[#00F0FF]/10 shadow-[0_0_15px_rgba(0,240,255,0.25)] ring-1 ring-[#00F0FF]/60'
+                            : 'border-[#2A354A] bg-[#070c18] focus:border-[#00F0FF] focus:bg-[#00F0FF]/10 focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] focus:ring-1 focus:ring-[#00F0FF]'
+                        }`}
+                      />
+                    );
+                  })}
                 </div>
               </div>
 
