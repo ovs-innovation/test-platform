@@ -88,7 +88,7 @@ export const testSeriesSchema = z.object({
 export const testSeriesUpdateSchema = testSeriesSchema.partial();
 
 export const linkTestSchema = z.object({
-  test_id: z.number().int().positive('Valid test ID is required'),
+  test_id: z.coerce.number().int().positive('Valid test ID is required'),
 });
 
 export const parsePdfSchema = z.object({

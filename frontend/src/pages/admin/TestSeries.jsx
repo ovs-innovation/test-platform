@@ -111,7 +111,7 @@ export default function AdminTestSeries() {
     if (!linkModal || !selectedTestId) return;
     setSaving(true);
     try {
-      await testSeriesService.link(linkModal.id, selectedTestId);
+      await testSeriesService.link(linkModal.id, Number(selectedTestId));
       toast.success('Test linked to series successfully');
       setLinkModal(null);
       load();
