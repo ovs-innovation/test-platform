@@ -381,23 +381,23 @@ export default function Analytics() {
       {/* ------------------------------------------------------------- */}
       {/* 4. CHAPTER-WISE PERFORMANCE TABLE & FILTER                    */}
       {/* ------------------------------------------------------------- */}
-      <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-6">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+      <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-4 sm:p-6 shadow-xs space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-4">
           <div className="flex items-center gap-2.5">
-            <Layers className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+            <Layers className="w-5 h-5 text-cyan-600 dark:text-cyan-400 shrink-0" />
             <div>
-              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Chapter-wise Performance</h2>
+              <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">Chapter-wise Performance</h2>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Filter chapter level accuracy and pinpoint target revision modules.</p>
             </div>
           </div>
 
           {/* Subject Filter Dropdown */}
-          <div className="flex items-center gap-2">
-            <Filter className="w-3.5 h-3.5 text-slate-400" />
+          <div className="flex items-center gap-2 w-full sm:w-auto">
+            <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <select
               value={selectedSubjectFilter}
               onChange={(e) => setSelectedSubjectFilter(e.target.value)}
-              className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-[#070c18] dark:text-slate-200 font-medium"
+              className="w-full sm:w-auto rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs text-slate-800 focus:border-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-[#070c18] dark:text-slate-200 font-medium"
             >
               <option value="ALL">All Subjects ({availableSubjects.length})</option>
               {availableSubjects.map((sub, i) => (
@@ -408,61 +408,118 @@ export default function Analytics() {
         </div>
 
         {filteredChapters.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead>
-                <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  <th className="pb-3 pl-2">Chapter</th>
-                  <th className="pb-3">Subject</th>
-                  <th className="pb-3 text-center">Tested</th>
-                  <th className="pb-3 text-center">Correct / Wrong</th>
-                  <th className="pb-3 w-48">Accuracy</th>
-                  <th className="pb-3 text-right pr-2">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
-                {filteredChapters.map((ch, idx) => {
-                  const acc = ch.accuracy || 0;
-                  const isWeak = acc < 60;
-                  return (
-                    <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
-                      <td className="py-3 pl-2 font-bold text-slate-900 dark:text-slate-100">{ch.chapter}</td>
-                      <td className="py-3 text-slate-500 dark:text-slate-400 font-medium">{ch.subject}</td>
-                      <td className="py-3 text-center font-bold text-slate-700 dark:text-slate-300">{ch.total}</td>
-                      <td className="py-3 text-center font-semibold">
-                        <span className="text-emerald-600 dark:text-emerald-400">{ch.correct}</span>
-                        <span className="text-slate-400 mx-1">/</span>
-                        <span className="text-red-600 dark:text-red-400">{ch.wrong}</span>
-                      </td>
-                      <td className="py-3">
-                        <div className="flex items-center gap-2">
-                          <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
-                            <div
-                              className={`h-full rounded-full ${isWeak ? 'bg-red-500' : 'bg-emerald-500 dark:bg-emerald-400'}`}
-                              style={{ width: `${acc}%` }}
-                            />
+          <>
+            {/* Desktop View Table (hidden on mobile) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-200 dark:border-slate-800 text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    <th className="pb-3 pl-2">Chapter</th>
+                    <th className="pb-3">Subject</th>
+                    <th className="pb-3 text-center">Tested</th>
+                    <th className="pb-3 text-center">Correct / Wrong</th>
+                    <th className="pb-3 w-48">Accuracy</th>
+                    <th className="pb-3 text-right pr-2">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
+                  {filteredChapters.map((ch, idx) => {
+                    const acc = ch.accuracy || 0;
+                    const isWeak = acc < 60;
+                    return (
+                      <tr key={idx} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition-colors">
+                        <td className="py-3 pl-2 font-bold text-slate-900 dark:text-slate-100">{ch.chapter}</td>
+                        <td className="py-3 text-slate-500 dark:text-slate-400 font-medium">{ch.subject}</td>
+                        <td className="py-3 text-center font-bold text-slate-700 dark:text-slate-300">{ch.total}</td>
+                        <td className="py-3 text-center font-semibold">
+                          <span className="text-emerald-600 dark:text-emerald-400">{ch.correct}</span>
+                          <span className="text-slate-400 mx-1">/</span>
+                          <span className="text-red-600 dark:text-red-400">{ch.wrong}</span>
+                        </td>
+                        <td className="py-3">
+                          <div className="flex items-center gap-2">
+                            <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${isWeak ? 'bg-red-500' : 'bg-emerald-500 dark:bg-emerald-400'}`}
+                                style={{ width: `${acc}%` }}
+                              />
+                            </div>
+                            <span className={`text-[11px] font-bold tabular-nums w-9 text-right ${isWeak ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
+                              {acc}%
+                            </span>
                           </div>
-                          <span className={`text-[11px] font-bold tabular-nums w-9 text-right ${isWeak ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
-                            {acc}%
+                        </td>
+                        <td className="py-3 text-right pr-2">
+                          <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md border ${
+                            isWeak
+                              ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30'
+                              : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                          }`}>
+                            {isWeak ? <AlertTriangle className="w-3 h-3" /> : <CheckCircle2 className="w-3 h-3" />}
+                            {isWeak ? 'Needs Revision' : 'Mastered'}
                           </span>
-                        </div>
-                      </td>
-                      <td className="py-3 text-right pr-2">
-                        <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md border ${
-                          isWeak
-                            ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30'
-                            : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
-                        }`}>
-                          {isWeak ? <AlertTriangle className="w-3 h-3" /> : <CheckCircle2 className="w-3 h-3" />}
-                          {isWeak ? 'Needs Revision' : 'Mastered'}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile View Card List (shown on mobile, hidden on desktop) */}
+            <div className="block md:hidden space-y-3">
+              {filteredChapters.map((ch, idx) => {
+                const acc = ch.accuracy || 0;
+                const isWeak = acc < 60;
+                return (
+                  <div key={idx} className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-[#070c18] space-y-3">
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <h4 className="font-bold text-slate-900 dark:text-slate-100 text-xs sm:text-sm leading-snug">{ch.chapter}</h4>
+                        <span className="inline-block text-[10px] font-semibold text-slate-500 dark:text-slate-400 mt-0.5">{ch.subject}</span>
+                      </div>
+                      <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-md border shrink-0 ${
+                        isWeak
+                          ? 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30'
+                          : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                      }`}>
+                        {isWeak ? <AlertTriangle className="w-3 h-3" /> : <CheckCircle2 className="w-3 h-3" />}
+                        {isWeak ? 'Needs Revision' : 'Mastered'}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-xs bg-white dark:bg-slate-900/60 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-800/80">
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Questions Tested</span>
+                        <span className="font-extrabold text-slate-800 dark:text-slate-200">{ch.total}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] uppercase font-bold text-slate-400 block">Correct / Wrong</span>
+                        <span className="font-bold">
+                          <span className="text-emerald-600 dark:text-emerald-400">{ch.correct}</span>
+                          <span className="text-slate-400 mx-1">/</span>
+                          <span className="text-red-600 dark:text-red-400">{ch.wrong}</span>
                         </span>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-[10px] font-bold uppercase text-slate-400">Accuracy</span>
+                        <span className={`text-xs font-black ${isWeak ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>{acc}%</span>
+                      </div>
+                      <div className="w-full bg-slate-200 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${isWeak ? 'bg-red-500' : 'bg-emerald-500 dark:bg-emerald-400'}`}
+                          style={{ width: `${acc}%` }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </>
         ) : (
           <div className="py-8 text-center text-xs text-slate-500 dark:text-slate-400 font-medium">No chapters found for selected filter.</div>
         )}
