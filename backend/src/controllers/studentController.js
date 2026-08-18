@@ -327,7 +327,7 @@ export const getInstituteRank = asyncHandler(async (req, res) => {
  * Solves student academic doubt via Gemini AI (text query or camera/image upload).
  */
 export const askAIDoubt = asyncHandler(async (req, res) => {
-  const { questionText, imageBase64, mimeType, subject } = req.body || {};
+  const { questionText, imageBase64, mimeType, subject, testContext } = req.body || {};
 
   if (!questionText && !imageBase64) {
     throw ApiError.badRequest('Please provide a question text or upload/capture a photo of your doubt.');
@@ -338,24 +338,44 @@ export const askAIDoubt = asyncHandler(async (req, res) => {
   console.log('\n======================================================');
   console.log(`📥 [DoubtSolver API Request] Student: ${studentName}`);
   console.log(`📝 Question Query: "${questionText || 'Image/Photo Uploaded'}"`);
+  if (testContext) console.log(`🎯 Test Context: ${testContext.title || 'Test Attached'} (${testContext.score || ''})`);
   if (imageBase64) console.log(`📷 Image Attached: Yes (${mimeType || 'image/jpeg'})`);
   console.log('------------------------------------------------------');
 
   const isStreaming = req.query.stream === 'true' || req.body?.stream === true || req.headers.accept?.includes('text/event-stream');
+
+  let testContextBlock = '';
+  if (testContext && (testContext.title || testContext.score)) {
+    testContextBlock = `
+ACTIVE TEST CONTEXT BEING DISCUSSED WITH STUDENT:
+- Test Title: ${testContext.title || 'Diagnostic Assessment'}
+- Student Score: ${testContext.score || 'N/A'} ${testContext.percentage ? `(${testContext.percentage})` : ''}
+- Accuracy: ${testContext.accuracy || 'N/A'}
+- Correct Answers: ${testContext.correct ?? 'N/A'} | Wrong Answers: ${testContext.wrong ?? 'N/A'} | Unattempted: ${testContext.unattempted ?? 'N/A'}
+- Weak Topics Identified: ${Array.isArray(testContext.weakTopics) ? testContext.weakTopics.join(', ') : (testContext.weakTopics || 'None')}
+- Strong Topics Mastered: ${Array.isArray(testContext.strongTopics) ? testContext.strongTopics.join(', ') : (testContext.strongTopics || 'None')}
+${testContext.timeTaken ? `- Time Spent: ${testContext.timeTaken}` : ''}
+
+INSTRUCTIONS FOR TEST MENTOR CHAT:
+You are speaking to ${studentName} about their specific test "${testContext.title || 'Assessment'}".
+Provide direct, encouraging, highly actionable advice based on their score, weak topics, and accuracy in this exact test.
+Answer their questions specifically using the test performance data above!`;
+  }
 
   if (isStreaming) {
     res.setHeader('Content-Type', 'text/event-stream');
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    const systemPrompt = `You are an expert STEM tutor and career guidance counselor for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
+    const systemPrompt = `You are an expert STEM tutor, examination mentor, and NTA CBT test analyst for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
 
 Student Name: ${studentName}
 ${subject ? `Subject Context: ${subject}` : ''}
+${testContextBlock}
 ${questionText ? `Student Query: "${questionText}"` : ''}
 
 CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
-1. NEVER output meta-commentary like "Mode Detected:", "Mode 1:", "Mode 2:", or "Mode 3:". Start DIRECTLY with the topic title or solution.
+1. NEVER output meta-commentary like "Mode Detected:", "Mode 1:", "Mode 2:", or "Mode 3:". Start DIRECTLY with the topic title, test analysis, or solution.
 2. NEVER output horizontal lines like "---" or "===". Use clean paragraph spacing instead.
 3. NEVER output raw markdown tables using pipe characters (|). Use clean bullet points (•) or numbered lists instead.
 4. AVOID messy raw LaTeX command noise like \\frac{a}{b} or \\text{...}. Use clean standard math symbols like (a / b) or clean math formatting.

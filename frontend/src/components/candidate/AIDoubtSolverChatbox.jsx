@@ -267,7 +267,7 @@ function renderFormattedMarkdownText(text) {
   return <div className="space-y-1">{elements}</div>;
 }
 
-export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery = '' }) {
+export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery = '', testContext = null }) {
   const [isOpen, setIsOpen] = useState(defaultOpen);
   const [isExpanded, setIsExpanded] = useState(false);
   const [questionText, setQuestionText] = useState(initialQuery);
@@ -278,6 +278,45 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
   const [isSending, setIsSending] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // Active test context & chat mode ('doubt' | 'test_mentor')
+  const [activeTestContext, setActiveTestContext] = useState(() => {
+    if (testContext) return testContext;
+    try {
+      const stored = sessionStorage.getItem('active_test_context');
+      return stored ? JSON.parse(stored) : null;
+    } catch (_) {
+      return null;
+    }
+  });
+
+  const [chatMode, setChatMode] = useState(() => {
+    return activeTestContext ? 'test_mentor' : 'doubt';
+  });
+
+  // Listen for dynamic test context updates from result pages or drawers
+  useEffect(() => {
+    const handleContextUpdate = () => {
+      try {
+        const stored = sessionStorage.getItem('active_test_context');
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          setActiveTestContext(parsed);
+          setChatMode('test_mentor');
+        }
+      } catch (_) {}
+    };
+
+    window.addEventListener('active_test_context_updated', handleContextUpdate);
+    return () => window.removeEventListener('active_test_context_updated', handleContextUpdate);
+  }, []);
+
+  useEffect(() => {
+    if (testContext) {
+      setActiveTestContext(testContext);
+      setChatMode('test_mentor');
+    }
+  }, [testContext]);
 
   // Initial simple welcome message
   const [messages, setMessages] = useState([
@@ -426,7 +465,8 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
         questionText: currentText,
         imageBase64: currentImage?.base64 || null,
         mimeType: currentImage?.mimeType || 'image/jpeg',
-        subject: selectedSubject
+        subject: selectedSubject,
+        testContext: chatMode === 'test_mentor' ? activeTestContext : null
       };
 
       const aiMsgId = `ai-${Date.now()}`;
@@ -506,7 +546,12 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const presetChips = [
+  const presetChips = chatMode === 'test_mentor' && activeTestContext ? [
+    { label: `💡 How to score higher?`, query: `How can I score higher in ${activeTestContext.title || 'this test'}? What specific steps should I take?` },
+    { label: `⚠️ Analyze weak topics`, query: `Analyze my weak topics in ${activeTestContext.title || 'this test'} and explain why I lost marks.` },
+    { label: `⏱️ Time management tips`, query: `Give me time management and question pacing advice for ${activeTestContext.title || 'this test'}.` },
+    { label: `📅 3-Day Revision Plan`, query: `Generate a 3-day revision action plan to improve my score in ${activeTestContext.title || 'this test'}.` },
+  ] : [
     { label: '📐 Solve Physics Numerical', query: 'Please solve this physics numerical step by step with formulas: ' },
     { label: '🧪 Organic Mechanism', query: 'Explain the organic chemistry reaction mechanism for: ' },
     { label: '🔢 Math Formula Proof', query: 'Derive and explain the mathematical formula for: ' },
@@ -558,12 +603,12 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-extrabold text-white text-sm leading-tight">AIETS Doubt Solver</h3>
+                  <h3 className="font-extrabold text-white text-sm leading-tight">AIETS Doubt & Test Mentor</h3>
                   <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-400 text-[10px] px-2 py-0.5 rounded-full font-bold border border-emerald-500/20">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Instant AI
                   </span>
                 </div>
-                <p className="text-[11px] text-slate-400">Ask doubt via text or camera photo upload</p>
+                <p className="text-[11px] text-slate-400">Ask STEM doubt or discuss your test report</p>
               </div>
             </div>
 
@@ -586,6 +631,31 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                 <X className="w-5 h-5" />
               </button>
             </div>
+          </div>
+
+          {/* Mode Switcher Bar */}
+          <div className="flex items-center gap-2 px-3 py-2 bg-slate-950 border-b border-slate-800 overflow-x-auto no-scrollbar">
+            <button
+              type="button"
+              onClick={() => setChatMode('doubt')}
+              className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition whitespace-nowrap ${
+                chatMode === 'doubt' ? 'bg-indigo-600 text-white border-indigo-500 shadow-xs' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200'
+              }`}
+            >
+              🧪 STEM Doubt
+            </button>
+
+            {activeTestContext && (
+              <button
+                type="button"
+                onClick={() => setChatMode('test_mentor')}
+                className={`text-[10px] font-bold px-2.5 py-1 rounded-lg border transition flex items-center gap-1.5 truncate max-w-[260px] ${
+                  chatMode === 'test_mentor' ? 'bg-cyan-500 text-slate-950 border-cyan-400 font-extrabold shadow-xs' : 'bg-slate-900 text-slate-400 border-slate-800 hover:text-slate-200'
+                }`}
+              >
+                <span className="truncate">🎯 Test: {activeTestContext.title} ({activeTestContext.accuracy || activeTestContext.percentage || ''})</span>
+              </button>
+            )}
           </div>
 
           {/* Subject Filter Bar */}

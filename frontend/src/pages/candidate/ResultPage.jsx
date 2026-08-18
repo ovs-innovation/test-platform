@@ -281,6 +281,39 @@ export default function ResultPage() {
     return result;
   }, [solutions, assessment]);
 
+  useEffect(() => {
+    if (assessment && score) {
+      const weakTopicsList = [];
+      const strongTopicsList = [];
+
+      if (subjectScores && subjectScores.length > 0) {
+        subjectScores.forEach((subj) => {
+          const perc = subj.max > 0 ? (subj.obtained / subj.max) * 100 : 0;
+          if (perc < 50) weakTopicsList.push(`${subj.name} (${Math.round(perc)}%)`);
+          else if (perc >= 75) strongTopicsList.push(`${subj.name} (${Math.round(perc)}%)`);
+        });
+      }
+
+      const activeCtx = {
+        title: assessment?.title || assessment?.test_name || 'Assessment',
+        score: `${score?.marks_obtained ?? 0} / ${score?.total_marks ?? 0}`,
+        percentage: `${score?.percentage ?? 0}%`,
+        accuracy: accuracy || '0%',
+        correct: score?.correct_count ?? 0,
+        wrong: score?.wrong_count ?? 0,
+        unattempted: score?.unattempted_count ?? 0,
+        weakTopics: weakTopicsList.length > 0 ? weakTopicsList : ['Needs calculation accuracy & speed improvement'],
+        strongTopics: strongTopicsList.length > 0 ? strongTopicsList : ['General conceptual understanding'],
+        timeTaken: timeTakenStr || ''
+      };
+
+      try {
+        sessionStorage.setItem('active_test_context', JSON.stringify(activeCtx));
+        window.dispatchEvent(new Event('active_test_context_updated'));
+      } catch (_) {}
+    }
+  }, [assessment, score, accuracy, subjectScores, timeTakenStr]);
+
   if (state === 'loading') {
     return (
       <div className="exam-surface min-h-screen">

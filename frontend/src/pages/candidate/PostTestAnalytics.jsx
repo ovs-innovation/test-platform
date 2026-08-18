@@ -60,6 +60,32 @@ export default function PostTestAnalytics() {
     loadAnalytics();
   }, [testId]);
 
+  useEffect(() => {
+    if (data) {
+      const summary = data.performance_summary || data.attempt || {};
+      const weakList = Array.isArray(data.weak_topics) ? data.weak_topics.map(t => typeof t === 'string' ? t : (t.name || t.topic)) : [];
+      const strongList = Array.isArray(data.strong_topics) ? data.strong_topics.map(t => typeof t === 'string' ? t : (t.name || t.topic)) : [];
+
+      const activeCtx = {
+        title: summary.test_name || summary.title || 'Assessment',
+        score: `${summary.score_obtained ?? summary.marks_obtained ?? 0} / ${summary.max_marks ?? summary.total_marks ?? 0}`,
+        percentage: `${summary.percentage ?? 0}%`,
+        accuracy: summary.accuracy != null ? `${summary.accuracy}%` : '0%',
+        correct: summary.correct_count ?? 0,
+        wrong: summary.wrong_count ?? 0,
+        unattempted: summary.unattempted_count ?? 0,
+        weakTopics: weakList.length > 0 ? weakList : ['Calculation speed & numerical accuracy'],
+        strongTopics: strongList.length > 0 ? strongList : ['Core subject concepts'],
+        timeTaken: summary.total_time_taken || ''
+      };
+
+      try {
+        sessionStorage.setItem('active_test_context', JSON.stringify(activeCtx));
+        window.dispatchEvent(new Event('active_test_context_updated'));
+      } catch (_) {}
+    }
+  }, [data]);
+
   if (state === 'loading') {
     return <LoadingScreen label="Processing All India Ranks & generating your performance report..." />;
   }
