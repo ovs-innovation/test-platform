@@ -227,6 +227,11 @@ const questionBaseSchema = z.object({
   bank_category: z.string().max(60).optional(),
   solution: z.string().max(10000).optional().nullable(),
   image_url: z.string().max(2000).optional().nullable(),
+  subject_id: z.number().int().positive().nullable().optional(),
+  subject: z.string().max(100).optional().nullable(),
+  chapter_id: z.number().int().positive().nullable().optional(),
+  topic: z.string().max(200).optional().nullable(),
+  difficulty: z.string().max(20).optional().default('medium'),
 });
 
 export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {

@@ -262,10 +262,10 @@ export const getAssessmentAdmin = asyncHandler(async (req, res) => {
     query(
       `SELECT q.*, 
               s.name AS section_name,
-              COALESCE(c.name, q.topic) AS topic,
-              COALESCE(c.id, q.chapter_id) AS chapter_id,
-              COALESCE(subj.name, q.subject) AS subject,
-              COALESCE(subj.id, q.subject_id) AS subject_id
+              COALESCE(NULLIF(q.topic, ''), c.name) AS topic,
+              COALESCE(q.chapter_id, c.id) AS chapter_id,
+              COALESCE(NULLIF(q.subject, ''), subj.name) AS subject,
+              COALESCE(q.subject_id, subj.id) AS subject_id
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        LEFT JOIN chapters c ON c.id = q.chapter_id

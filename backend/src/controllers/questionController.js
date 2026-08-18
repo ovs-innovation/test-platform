@@ -8,6 +8,71 @@ const ensureAssessment = async (assessmentId) => {
   if (a.rowCount === 0) throw ApiError.notFound('Assessment not found');
 };
 
+async function resolveSubjectAndChapter({ subject_id, subject, chapter_id, topic }) {
+  let finalSubjectId = subject_id ? (Number(subject_id) || null) : null;
+  let finalSubjectName = subject || null;
+  let finalChapterId = chapter_id ? (Number(chapter_id) || null) : null;
+  let finalTopicName = topic || null;
+
+  if (finalSubjectId) {
+    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [finalSubjectId]);
+    if (sRes.rows.length > 0) {
+      finalSubjectName = sRes.rows[0].name;
+    }
+  } else if (finalSubjectName) {
+    const sRes = await query('SELECT id, name FROM subjects WHERE LOWER(name) = LOWER($1)', [finalSubjectName]);
+    if (sRes.rows.length > 0) {
+      finalSubjectId = sRes.rows[0].id;
+      finalSubjectName = sRes.rows[0].name;
+    }
+  }
+
+  if (finalChapterId) {
+    const cRes = await query('SELECT id, name FROM chapters WHERE id = $1', [finalChapterId]);
+    if (cRes.rows.length > 0) {
+      const dbChapterName = cRes.rows[0].name;
+      if (!finalTopicName || finalTopicName.trim().toLowerCase() === dbChapterName.trim().toLowerCase()) {
+        finalTopicName = dbChapterName;
+      } else {
+        finalChapterId = null;
+      }
+    } else {
+      finalChapterId = null;
+    }
+  }
+
+  if (!finalChapterId && finalTopicName && finalTopicName.trim()) {
+    const cleanTopic = finalTopicName.trim();
+    let cRes;
+    if (finalSubjectId) {
+      cRes = await query('SELECT id, name FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2)', [finalSubjectId, cleanTopic]);
+    } else {
+      cRes = await query('SELECT id, name FROM chapters WHERE LOWER(name) = LOWER($1)', [cleanTopic]);
+    }
+
+    if (cRes.rows.length > 0) {
+      finalChapterId = cRes.rows[0].id;
+      finalTopicName = cRes.rows[0].name;
+    } else if (finalSubjectId) {
+      const insRes = await query(
+        'INSERT INTO chapters (subject_id, name, position) VALUES ($1, $2, 0) ON CONFLICT (subject_id, name) DO UPDATE SET name = EXCLUDED.name RETURNING id, name',
+        [finalSubjectId, cleanTopic]
+      );
+      if (insRes.rows.length > 0) {
+        finalChapterId = insRes.rows[0].id;
+        finalTopicName = insRes.rows[0].name;
+      }
+    }
+  }
+
+  return {
+    subject_id: finalSubjectId,
+    subject: finalSubjectName,
+    chapter_id: finalChapterId,
+    topic: finalTopicName,
+  };
+}
+
 export const listQuestions = asyncHandler(async (req, res) => {
   const { assessmentId } = req.params;
   await ensureAssessment(assessmentId);
@@ -64,46 +129,17 @@ export const createQuestion = asyncHandler(async (req, res) => {
   const questionSubject = inputSubject || bank_category || null;
   const questionTopic = inputTopic || bank_category || null;
 
-  let finalSubjectId = subject_id ? Number(subject_id) : null;
-  let finalChapterId = chapter_id ? Number(chapter_id) : null;
-  let finalSubjectName = questionSubject;
-  let finalTopicName = questionTopic;
+  const resolved = await resolveSubjectAndChapter({
+    subject_id,
+    subject: questionSubject,
+    chapter_id,
+    topic: questionTopic,
+  });
 
-  if (finalSubjectId && !finalSubjectName) {
-    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [finalSubjectId]);
-    if (sRes.rows.length > 0) finalSubjectName = sRes.rows[0].name;
-  } else if (!finalSubjectId && finalSubjectName) {
-    const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [finalSubjectName]);
-    if (sRes.rows.length > 0) finalSubjectId = sRes.rows[0].id;
-  }
-
-  if (finalChapterId) {
-    const cRes = await query('SELECT name FROM chapters WHERE id = $1', [finalChapterId]);
-    if (cRes.rows.length > 0) {
-      finalTopicName = cRes.rows[0].name;
-    } else {
-      finalChapterId = null;
-    }
-  }
-
-  if (!finalChapterId && finalTopicName) {
-    let cRes;
-    if (finalSubjectId) {
-      cRes = await query('SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2)', [finalSubjectId, finalTopicName]);
-    } else {
-      cRes = await query('SELECT id FROM chapters WHERE LOWER(name) = LOWER($1)', [finalTopicName]);
-    }
-
-    if (cRes.rows.length > 0) {
-      finalChapterId = cRes.rows[0].id;
-    } else if (finalSubjectId && finalTopicName.trim()) {
-      const insRes = await query(
-        'INSERT INTO chapters (subject_id, name, position) VALUES ($1, $2, 0) ON CONFLICT (subject_id, name) DO UPDATE SET name = EXCLUDED.name RETURNING id',
-        [finalSubjectId, finalTopicName.trim()]
-      );
-      if (insRes.rows.length > 0) finalChapterId = insRes.rows[0].id;
-    }
-  }
+  const finalSubjectId = resolved.subject_id;
+  const finalSubjectName = resolved.subject;
+  const finalChapterId = resolved.chapter_id;
+  const finalTopicName = resolved.topic;
 
   const result = await query(
     `INSERT INTO questions
@@ -152,9 +188,9 @@ export const updateQuestion = asyncHandler(async (req, res) => {
 
   const question_text = body.question_text ?? q.question_text;
   const question_type = body.question_type ?? q.question_type;
-  const options = body.options !== undefined ? JSON.stringify(body.options) : q.options;
+  const options = body.options !== undefined ? JSON.stringify(body.options) : (typeof q.options === 'string' ? q.options : JSON.stringify(q.options || []));
   const correct_index = body.correct_index ?? q.correct_index;
-  const correct_indices = body.correct_indices !== undefined ? JSON.stringify(body.correct_indices) : q.correct_indices;
+  const correct_indices = body.correct_indices !== undefined ? JSON.stringify(body.correct_indices) : (typeof q.correct_indices === 'string' ? q.correct_indices : JSON.stringify(q.correct_indices || []));
   const numeric_answer = body.numeric_answer !== undefined ? body.numeric_answer : q.numeric_answer;
   const numerical_tolerance = body.numerical_tolerance !== undefined ? body.numerical_tolerance : q.numerical_tolerance;
   const assertion_text = body.assertion_text !== undefined ? body.assertion_text : q.assertion_text;
@@ -163,52 +199,32 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const position = body.position ?? q.position;
   const section_id = body.section_id !== undefined ? body.section_id : q.section_id;
   const starter_code = body.starter_code ?? q.starter_code;
-  const test_cases = body.test_cases !== undefined ? JSON.stringify(body.test_cases) : q.test_cases;
+  const test_cases = body.test_cases !== undefined ? JSON.stringify(body.test_cases) : (typeof q.test_cases === 'string' ? q.test_cases : JSON.stringify(q.test_cases || []));
   const language = body.language ?? q.language;
   const bank_category = body.bank_category !== undefined ? body.bank_category : q.bank_category;
   const solution = body.solution !== undefined ? body.solution : q.solution;
   const image_url = body.image_url !== undefined ? body.image_url : q.image_url;
-  let subject_id = body.subject_id !== undefined ? (Number(body.subject_id) || null) : q.subject_id;
-  let chapter_id = body.chapter_id !== undefined ? (Number(body.chapter_id) || null) : q.chapter_id;
+  let rawSubjectId = body.subject_id !== undefined ? (Number(body.subject_id) || null) : q.subject_id;
+  let rawChapterId = body.chapter_id !== undefined ? (Number(body.chapter_id) || null) : q.chapter_id;
   const difficulty = body.difficulty !== undefined ? body.difficulty : q.difficulty;
-  let subject = body.subject !== undefined ? body.subject : q.subject;
-  let topic = body.topic !== undefined ? body.topic : q.topic;
+  let rawSubject = body.subject !== undefined ? body.subject : q.subject;
+  let rawTopic = body.topic !== undefined ? body.topic : q.topic;
 
-  if (subject_id && (!subject || body.subject_id !== q.subject_id)) {
-    const sRes = await query('SELECT name FROM subjects WHERE id = $1', [subject_id]);
-    if (sRes.rows.length > 0) subject = sRes.rows[0].name;
-  } else if (!subject_id && subject) {
-    const sRes = await query('SELECT id FROM subjects WHERE LOWER(name) = LOWER($1)', [subject]);
-    if (sRes.rows.length > 0) subject_id = sRes.rows[0].id;
+  if (body.topic !== undefined && body.topic !== q.topic && body.chapter_id === undefined) {
+    rawChapterId = null;
   }
 
-  if (chapter_id) {
-    const cRes = await query('SELECT name FROM chapters WHERE id = $1', [chapter_id]);
-    if (cRes.rows.length > 0) {
-      topic = cRes.rows[0].name;
-    } else {
-      chapter_id = null;
-    }
-  }
+  const resolved = await resolveSubjectAndChapter({
+    subject_id: rawSubjectId,
+    subject: rawSubject,
+    chapter_id: rawChapterId,
+    topic: rawTopic,
+  });
 
-  if (!chapter_id && topic) {
-    let cRes;
-    if (subject_id) {
-      cRes = await query('SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2)', [subject_id, topic]);
-    } else {
-      cRes = await query('SELECT id FROM chapters WHERE LOWER(name) = LOWER($1)', [topic]);
-    }
-
-    if (cRes.rows.length > 0) {
-      chapter_id = cRes.rows[0].id;
-    } else if (subject_id && topic.trim()) {
-      const insRes = await query(
-        'INSERT INTO chapters (subject_id, name, position) VALUES ($1, $2, 0) ON CONFLICT (subject_id, name) DO UPDATE SET name = EXCLUDED.name RETURNING id',
-        [subject_id, topic.trim()]
-      );
-      if (insRes.rows.length > 0) chapter_id = insRes.rows[0].id;
-    }
-  }
+  const subject_id = resolved.subject_id;
+  const subject = resolved.subject;
+  const chapter_id = resolved.chapter_id;
+  const topic = resolved.topic;
 
   const result = await query(
     `UPDATE questions SET

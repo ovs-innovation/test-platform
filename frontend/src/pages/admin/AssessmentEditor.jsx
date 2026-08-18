@@ -353,8 +353,8 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     setEditing(q);
     const opts = Array.isArray(q.options) ? q.options : (typeof q.options === 'string' ? JSON.parse(q.options) : []);
     const indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
-    const subjId = q.subject_id || null;
-    const chapId = q.chapter_id || null;
+    const subjId = q.subject_id ? Number(q.subject_id) : null;
+    const chapId = q.chapter_id ? Number(q.chapter_id) : null;
     if (subjId) setLastSubjectId(subjId);
     if (chapId) setLastChapterId(chapId);
 
@@ -393,7 +393,9 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       const payload = {
         ...form,
         subject_id: form.subject_id || null,
+        subject: form.subject || '',
         chapter_id: form.chapter_id || null,
+        topic: form.topic || '',
         section_id: form.section_id || null,
         options: form.options.map((o) => o.trim()).filter(Boolean),
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
@@ -572,7 +574,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         </div>
       </div>
 
-      <QuestionBuilderModal open={modalOpen} onClose={() => setModalOpen(false)} editing={!!editing}
+      <QuestionBuilderModal open={modalOpen} onClose={() => setModalOpen(false)} editing={editing}
         form={form} setForm={setForm} sections={sections} onSubmit={saveQuestion} saving={saving} />
 
       <Modal open={bankOpen} onClose={() => setBankOpen(false)} title={`Question bank — ${bankCategory}`} size="lg">
@@ -763,6 +765,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   const [chaptersList, setChaptersList] = useState([]);
 
   useEffect(() => {
+    if (!open) return;
     adminService.subjects().then((list) => {
       const fetched = list || [];
       const defaultSubjects = [
@@ -789,7 +792,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
       if (unified.length && !form.subject_id && form.subject) {
         const match = unified.find(s => s.name.toLowerCase() === String(form.subject).toLowerCase());
         if (match) {
-          setForm(f => ({ ...f, subject_id: match.id }));
+          setForm(f => ({ ...f, subject_id: match.id, subject: match.name }));
         }
       }
     }).catch(() => {
@@ -804,13 +807,13 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   }, [open]);
 
   useEffect(() => {
-    if (!form.subject_id) {
+    if (!form.subject_id && !form.subject) {
       setChaptersList([]);
       return;
     }
 
-    const targetSubj = subjectsList.find(s => String(s.id) === String(form.subject_id) || s.name.toLowerCase() === String(form.subject_id).toLowerCase());
-    const queryParam = targetSubj ? targetSubj.name : form.subject_id;
+    const targetSubj = subjectsList.find(s => String(s.id) === String(form.subject_id) || s.name.toLowerCase() === String(form.subject_id).toLowerCase() || s.name.toLowerCase() === String(form.subject).toLowerCase());
+    const queryParam = targetSubj ? targetSubj.name : (form.subject_id || form.subject);
 
     adminService.chapters(queryParam).then((list) => {
       const fetchedChapters = list || [];
@@ -826,7 +829,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
     }).catch(() => {
       setChaptersList([]);
     });
-  }, [form.subject_id, subjectsList]);
+  }, [form.subject_id, form.subject, subjectsList]);
 
   const toggleMulti = (i) => {
     setForm((f) => {
@@ -850,7 +853,9 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                 question_text: f.question_text,
                 section_id: f.section_id,
                 subject_id: f.subject_id,
+                subject: f.subject,
                 chapter_id: f.chapter_id,
+                topic: f.topic,
                 difficulty: f.difficulty,
                 marks: f.marks,
                 image_url: f.image_url,
