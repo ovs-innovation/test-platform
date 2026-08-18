@@ -598,53 +598,7 @@ export default function AietsCalendarPage() {
         </div>
       </div>
 
-      {/* 3. PREPARATION PHASE NAVIGATOR ROADMAP RAIL */}
-      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#071126] p-6 shadow-xs space-y-4 relative">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-            Preparation Phase Roadmap
-          </h3>
-          <span className="text-xs font-semibold text-slate-500 dark:text-slate-400">
-            4 Connected Learning Phases
-          </span>
-        </div>
 
-        {/* Visual Progress Connecting Rail */}
-        <div className="relative">
-          <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-slate-200 dark:bg-slate-800 -translate-y-1/2 z-0" />
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 relative z-10">
-            {groupedByPhase.map((p, idx) => (
-              <div
-                key={p.key}
-                onClick={() => setPhaseFilter(phaseFilter === p.key ? 'ALL' : p.key)}
-                className={`p-4 rounded-2xl border-2 border-t-4 transition cursor-pointer relative bg-white dark:bg-[#0a152e] ${p.accent} ${
-                  phaseFilter === p.key
-                    ? 'border-blue-500 dark:border-blue-400 shadow-md scale-[1.01]'
-                    : 'border-slate-200 dark:border-slate-800/80 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className={`text-[10px] font-black uppercase ${p.color}`}>
-                    Phase {idx + 1}
-                  </span>
-                  <span className="px-2 py-0.5 rounded text-[9px] font-bold uppercase bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
-                    Not Started
-                  </span>
-                </div>
-                <h4 className="text-sm font-extrabold text-slate-900 dark:text-white mt-1.5">
-                  {p.title}
-                </h4>
-                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">{p.range}</p>
-                <div className="mt-3 flex justify-between items-center text-[10px] font-bold text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800/80 pt-2">
-                  <span>{p.tests.length} Assessments</span>
-                  <span>0%</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* 4. FILTER TOOLBAR & VIEW SWITCHER */}
       <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#071126] p-4 sm:p-5 shadow-xs space-y-4">
