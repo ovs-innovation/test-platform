@@ -138,7 +138,9 @@ export default function DashboardScheduleSnapshot() {
 
               <div className="p-2.5 rounded-xl bg-white/90 dark:bg-slate-900/60 border border-blue-200/60 dark:border-slate-800 text-xs col-span-2 sm:col-span-1 shadow-2xs">
                 <span className="text-slate-500 dark:text-slate-400 block text-[10px] font-semibold">Duration & Marks</span>
-                <span className="font-extrabold text-slate-900 dark:text-white">3 hrs • 720 Marks</span>
+                <span className="font-extrabold text-slate-900 dark:text-white">
+                  {nextTest?.duration_minutes ? `${nextTest.duration_minutes / 60} hrs` : '3 hrs'} • {nextTest?.max_marks || nextTest?.maxMarks || nextTest?.total_marks || 180} Marks
+                </span>
               </div>
             </div>
           </div>

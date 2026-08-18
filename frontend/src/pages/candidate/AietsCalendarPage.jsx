@@ -241,7 +241,9 @@ export default function AietsCalendarPage() {
         endTime: t.end_time || '12:00:00',
         durationMinutes: t.duration_minutes || 180,
         syllabus: t.syllabus || 'Syllabus configured by Admin.',
-        maxMarks: t.max_marks || 180,
+        maxMarks: t.max_marks || t.total_marks || 180,
+        max_marks: t.max_marks || t.total_marks || 180,
+        total_marks: t.total_marks || t.max_marks || 180,
         status,
         monthYear,
         formattedDate: d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }),
@@ -521,7 +523,7 @@ export default function AietsCalendarPage() {
               </div>
               <div className="p-2.5 rounded-lg bg-slate-50 dark:bg-slate-900/60 border border-slate-200/80 dark:border-slate-800">
                 <span className="text-slate-400 block text-[10px] font-medium">Marks</span>
-                <span className="font-bold text-slate-900 dark:text-white">720 marks</span>
+                <span className="font-bold text-slate-900 dark:text-white">{nextAssessment?.maxMarks || nextAssessment?.max_marks || nextAssessment?.total_marks || 180} marks</span>
               </div>
             </div>
           </div>

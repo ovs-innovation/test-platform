@@ -25,7 +25,8 @@ export const getStudentCalendar = async (req, res, next) => {
         t.end_time,
         t.duration_minutes,
         t.syllabus,
-        t.max_marks,
+        COALESCE(t.max_marks, q.total_marks) AS max_marks,
+        COALESCE(q.total_marks, t.max_marks) AS total_marks,
         t.is_published,
         t.result_publish_time,
         t.solution_pdf_url,
@@ -40,6 +41,10 @@ export const getStudentCalendar = async (req, res, next) => {
         mto.valid_from AS override_valid_from,
         mto.valid_until AS override_valid_until
       FROM tests t
+      LEFT JOIN (
+        SELECT assessment_id, SUM(marks)::int AS total_marks
+        FROM questions GROUP BY assessment_id
+      ) q ON q.assessment_id = t.id
       LEFT JOIN test_assignments a ON a.test_id = t.id
       LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $1
       LEFT JOIN missed_test_overrides mto ON mto.test_id = t.id AND mto.student_id = $1
@@ -133,7 +138,8 @@ export const getStudentCalendar = async (req, res, next) => {
         end_time: endTimeStr,
         duration_minutes: row.duration_minutes,
         syllabus: row.syllabus,
-        max_marks: row.max_marks,
+        max_marks: row.max_marks || row.total_marks || null,
+        total_marks: row.total_marks || row.max_marks || null,
         computed_status: computedStatus,
         attempt_status: attemptStatus,
         result_status: resultStatus,

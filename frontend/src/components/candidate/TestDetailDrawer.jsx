@@ -82,6 +82,94 @@ export default function TestDetailDrawer({ test, onClose }) {
 
   const typeInfo = getTypeStyle(test.type);
 
+  const maxMarks = test.max_marks ?? test.maxMarks ?? test.total_marks ?? test.totalMarks ?? 180;
+
+  const getSyllabusSections = (testObj) => {
+    const rawSyllabus = (testObj?.syllabus || '').trim();
+    const testName = (testObj?.name || testObj?.title || '').trim();
+
+    if (rawSyllabus && (rawSyllabus.includes(':') || rawSyllabus.includes('\n') || rawSyllabus.includes('|'))) {
+      const parts = rawSyllabus.split(/[\n|]/).map((s) => s.trim()).filter(Boolean);
+      const sections = [];
+
+      parts.forEach((part) => {
+        if (part.includes(':')) {
+          const [subj, ...rest] = part.split(':');
+          const subjClean = subj.trim();
+          const topicsClean = rest.join(':').trim();
+          if (subjClean && topicsClean) {
+            sections.push({ subject: subjClean, topics: topicsClean });
+          }
+        }
+      });
+
+      if (sections.length > 0) {
+        return sections;
+      }
+    }
+
+    const textToScan = `${testName} ${rawSyllabus}`;
+
+    const hasPhysics = /\bphysic(s)?\b/i.test(textToScan);
+    const hasChemistry = /\bchemist(ry)?\b|\bchem\b/i.test(textToScan);
+    const hasBiology = /\bbiolog(y)?\b|\bbio\b|\bbotany\b|\bzoology\b/i.test(textToScan);
+    const hasMath = /\bmath(s)?\b|\bmathematic(s)?\b/i.test(textToScan);
+
+    const sections = [];
+
+    if (hasPhysics) {
+      sections.push({
+        subject: 'Physics',
+        topics: rawSyllabus && !rawSyllabus.toLowerCase().includes('syllabus configured')
+          ? rawSyllabus
+          : 'Physics concepts & problem-solving topics'
+      });
+    }
+
+    if (hasChemistry) {
+      sections.push({
+        subject: 'Chemistry',
+        topics: rawSyllabus && !rawSyllabus.toLowerCase().includes('syllabus configured')
+          ? rawSyllabus
+          : 'Chemistry reactions & conceptual modules'
+      });
+    }
+
+    if (hasBiology) {
+      sections.push({
+        subject: 'Biology',
+        topics: rawSyllabus && !rawSyllabus.toLowerCase().includes('syllabus configured')
+          ? rawSyllabus
+          : 'Botany & Zoology key curriculum'
+      });
+    }
+
+    if (hasMath) {
+      sections.push({
+        subject: 'Mathematics',
+        topics: rawSyllabus && !rawSyllabus.toLowerCase().includes('syllabus configured')
+          ? rawSyllabus
+          : 'Mathematics core concepts & problem solving'
+      });
+    }
+
+    if (sections.length > 0) {
+      return sections;
+    }
+
+    if (rawSyllabus && !rawSyllabus.toLowerCase().includes('syllabus configured')) {
+      return [{ subject: 'Syllabus', topics: rawSyllabus }];
+    }
+
+    return [
+      { subject: 'Physics', topics: 'Rotation, Mechanics, Thermodynamics' },
+      { subject: 'Chemistry', topics: 'Organic Mechanisms, Periodic Table, Electrochemistry' },
+      { subject: 'Biology / Math', topics: 'Cell Biology, Genetics, Human Physiology' },
+    ];
+  };
+
+  const syllabusSections = getSyllabusSections(test);
+
   const drawerContent = (
     <div className="fixed inset-0 z-[999] overflow-hidden bg-slate-950/60 dark:bg-slate-950/80 backdrop-blur-md flex justify-end animate-in fade-in duration-200">
       {/* Full Backdrop Click Handler */}
@@ -153,7 +241,7 @@ export default function TestDetailDrawer({ test, onClose }) {
                 <Award className="h-3.5 w-3.5 text-amber-600 dark:text-amber-400" />
                 <span>Maximum Marks</span>
               </div>
-              <p className="text-sm font-extrabold text-slate-900 dark:text-white">{test.total_marks || 720} Marks</p>
+              <p className="text-sm font-extrabold text-slate-900 dark:text-white">{maxMarks} Marks</p>
             </div>
 
             <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0d1835] space-y-1">
@@ -173,18 +261,15 @@ export default function TestDetailDrawer({ test, onClose }) {
             </h3>
 
             <div className="space-y-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
-              <div className="flex justify-between border-b border-slate-200 dark:border-slate-800 pb-1.5">
-                <span className="text-slate-500 dark:text-slate-400">Physics:</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">Rotation, Mechanics, Thermodynamics</span>
-              </div>
-              <div className="flex justify-between border-b border-slate-200 dark:border-slate-800 pb-1.5">
-                <span className="text-slate-500 dark:text-slate-400">Chemistry:</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">Organic Mechanisms, Periodic Table, Electrochemistry</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-slate-500 dark:text-slate-400">Biology / Math:</span>
-                <span className="font-semibold text-slate-900 dark:text-slate-200">Cell Biology, Genetics, Human Physiology</span>
-              </div>
+              {syllabusSections.map((sec, idx) => (
+                <div
+                  key={sec.subject + idx}
+                  className={`flex justify-between items-center ${idx < syllabusSections.length - 1 ? 'border-b border-slate-200 dark:border-slate-800 pb-1.5' : ''}`}
+                >
+                  <span className="text-slate-500 dark:text-slate-400 shrink-0 mr-3">{sec.subject}:</span>
+                  <span className="font-semibold text-slate-900 dark:text-slate-200 text-right">{sec.topics}</span>
+                </div>
+              ))}
             </div>
           </div>
 
