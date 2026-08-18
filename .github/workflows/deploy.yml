@@ -44,7 +44,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          timeout: 60s
+          timeout: 10m
+          command_timeout: 15m
           script: |
             set -e
             PROJECT_DIR="/var/www/test-platform"
@@ -106,6 +107,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
+          timeout: 10m
+          command_timeout: 15m
           source: "frontend/dist"
           target: "/var/www/test-platform/frontend/dist"
           strip_components: 2
@@ -117,7 +120,8 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          timeout: 60s
+          timeout: 10m
+          command_timeout: 15m
           script: |
             set -e
             PROJECT_DIR="/var/www/test-platform"
@@ -137,7 +141,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: 22
-          timeout: 60s
+          timeout: 10m
           command_timeout: 30m
           script: |
             set -e
