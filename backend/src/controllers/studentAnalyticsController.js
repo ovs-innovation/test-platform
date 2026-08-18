@@ -55,7 +55,12 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
   try {
     // 1. Fetch completed test attempts & scores ordered chronologically
     const attemptsRes = await query(
-      `SELECT at.id AS attempt_id, at.assessment_id, a.title, at.submitted_at, at.duration_seconds,
+      `SELECT at.id AS attempt_id, at.assessment_id, a.title, at.submitted_at, at.started_at,
+              COALESCE(
+                NULLIF(at.duration_seconds, 0),
+                GREATEST(0, ROUND(EXTRACT(EPOCH FROM (at.submitted_at - at.started_at))))::int,
+                0
+              ) AS duration_seconds,
               s.marks_obtained, s.total_marks, s.percentage, s.passed, s.rank, s.percentile,
               s.correct_count, s.wrong_count, s.unattempted_count
        FROM attempts at
@@ -238,12 +243,25 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
       };
     });
 
-    const totalDurSecs = scoreTrend.reduce((sum, curr) => sum + (curr.duration_seconds || 0), 0);
+    const totalDurSecs = scoreTrend.reduce((sum, curr) => sum + (Number(curr.duration_seconds) || 0), 0);
+    const avgSecsPerTest = testsTaken > 0 ? Math.round(totalDurSecs / testsTaken) : 0;
     const avgSecsPerQ = totalAttempted > 0 ? Math.round(totalDurSecs / totalAttempted) : 0;
 
     let speedRating = 'Optimal Pace';
     if (avgSecsPerQ > 0 && avgSecsPerQ < 45) speedRating = 'Swift Pace';
     else if (avgSecsPerQ > 90) speedRating = 'Thoughtful / Careful Pace';
+
+    const testBreakdown = scoreTrend.map((t) => {
+      const qCount = (t.correct_count || 0) + (t.wrong_count || 0) + (t.unattempted_count || 0);
+      const attemptedQ = (t.correct_count || 0) + (t.wrong_count || 0);
+      const secsPerQ = attemptedQ > 0 ? Math.round((t.duration_seconds || 0) / attemptedQ) : 0;
+      return {
+        title: t.title,
+        total_questions: qCount,
+        duration_seconds: t.duration_seconds || 0,
+        seconds_per_question: secsPerQ,
+      };
+    });
 
     res.json({
       summary: {
@@ -279,8 +297,11 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
         accuracy: t.average_accuracy,
       })),
       time_management: {
+        total_time_seconds: totalDurSecs,
+        avg_seconds_per_test: avgSecsPerTest,
         avg_seconds_per_question: avgSecsPerQ,
         speed_rating: speedRating,
+        test_breakdown: testBreakdown,
       },
     });
   } catch (err) {
@@ -304,8 +325,11 @@ export const studentAnalytics = asyncHandler(async (req, res) => {
       topic_trends: [],
       chapter_breakdown: [],
       time_management: {
+        total_time_seconds: 0,
+        avg_seconds_per_test: 0,
         avg_seconds_per_question: 0,
         speed_rating: 'No Data Yet',
+        test_breakdown: [],
       },
     });
   }
