@@ -370,7 +370,7 @@ export default function ResultPage() {
 
             {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
             <div className="mt-6">
-              <AIInsightsCard isDarkMode={false} testId={attemptId} />
+              <AIInsightsCard testId={attemptId} />
             </div>
 
             {breakdown && (

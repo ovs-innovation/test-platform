@@ -161,7 +161,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
   return (
     <div className="space-y-6">
       {loading ? (
-        <div className={`p-8 rounded-3xl border text-center space-y-3 ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+        <div className="p-8 rounded-3xl border text-center space-y-3 bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white shadow-sm">
           <Loader2 className="h-8 w-8 text-indigo-600 dark:text-cyan-400 animate-spin mx-auto" />
           <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
             AI is analyzing your performance metrics...
@@ -171,7 +171,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
         <div className="space-y-6">
 
           {/* 1. AI PERFORMANCE SUMMARY CARD */}
-          <div className={`rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm relative overflow-hidden transition ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+          <div className="rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm relative overflow-hidden transition bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
             <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-4 border-slate-100 dark:border-slate-800/80">
               <h2 className="text-base sm:text-lg font-black tracking-wide text-slate-900 dark:text-white flex items-center gap-2.5 uppercase">
                 <Brain className="h-5 w-5 text-indigo-600 dark:text-cyan-400" />
@@ -187,7 +187,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                 {overallAssessment.summary}
               </p>
               {overallAssessment.keyObservation && (
-                <div className={`p-3.5 rounded-2xl border text-xs font-medium ${isDarkMode ? 'bg-indigo-950/40 border-indigo-800/50 text-indigo-200' : 'bg-indigo-50 border-indigo-200/80 text-indigo-900'}`}>
+                <div className="p-3.5 rounded-2xl border text-xs font-medium bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200/80 dark:border-indigo-800/50 text-indigo-900 dark:text-indigo-200">
                   <span className="font-bold uppercase tracking-wider text-[10px] block text-indigo-600 dark:text-indigo-400 mb-1">Key Observation</span>
                   {overallAssessment.keyObservation}
                 </div>
@@ -198,7 +198,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
           {/* 2. STRENGTHS & WEAKNESSES GRID */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* STRENGTHS CARD */}
-            <div className={`rounded-3xl border p-6 space-y-4 shadow-sm ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+            <div className="rounded-3xl border p-6 space-y-4 shadow-sm bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
               <h3 className="text-xs font-black uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-2 border-b pb-3 border-slate-100 dark:border-slate-800/80">
                 <CheckCircle2 className="h-4 w-4" /> STRENGTHS
               </h3>
@@ -222,12 +222,12 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                   })}
                 </ul>
               ) : (
-                <p className="text-xs text-slate-400">No major strengths recorded.</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500">No major strengths recorded.</p>
               )}
             </div>
 
             {/* WEAKNESSES CARD */}
-            <div className={`rounded-3xl border p-6 space-y-4 shadow-sm ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+            <div className="rounded-3xl border p-6 space-y-4 shadow-sm bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
               <h3 className="text-xs font-black uppercase tracking-wider text-rose-600 dark:text-rose-400 flex items-center gap-2 border-b pb-3 border-slate-100 dark:border-slate-800/80">
                 <AlertTriangle className="h-4 w-4" /> WEAKNESSES
               </h3>
@@ -251,13 +251,13 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                   })}
                 </ul>
               ) : (
-                <p className="text-xs text-slate-400">No severe weaknesses identified.</p>
+                <p className="text-xs text-slate-400 dark:text-slate-500">No severe weaknesses identified.</p>
               )}
             </div>
           </div>
 
           {/* 3. NEXT TEST STRATEGY CARD */}
-          <div className={`rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+          <div className="rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
             <h3 className="text-xs font-black uppercase tracking-wider text-purple-600 dark:text-purple-400 flex items-center gap-2 border-b pb-3 border-slate-100 dark:border-slate-800/80">
               <Zap className="h-4 w-4" /> NEXT TEST STRATEGY
             </h3>
@@ -275,12 +275,12 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                 ))}
               </ol>
             ) : (
-              <p className="text-xs text-slate-400">No test strategy rules specified.</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">No test strategy rules specified.</p>
             )}
           </div>
 
           {/* 4. YOUR 7-DAY PLAN CARD */}
-          <div className={`rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'}`}>
+          <div className="rounded-3xl border p-6 sm:p-7 space-y-4 shadow-sm bg-white dark:bg-[#071126] border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white">
             <h3 className="text-xs font-black uppercase tracking-wider text-indigo-600 dark:text-cyan-400 flex items-center gap-2 border-b pb-3 border-slate-100 dark:border-slate-800/80">
               <Calendar className="h-4 w-4" /> YOUR 7-DAY PLAN
             </h3>
@@ -293,9 +293,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                   return (
                     <div
                       key={idx}
-                      className={`p-4 rounded-2xl border flex flex-col sm:flex-row sm:items-start justify-between gap-3 transition ${
-                        isDarkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50/80 border-slate-200/80'
-                      }`}
+                      className="p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 flex flex-col sm:flex-row sm:items-start justify-between gap-3 transition bg-slate-50/80 dark:bg-slate-900/50"
                     >
                       <div className="space-y-1.5 flex-1">
                         <div className="flex items-center gap-2">
@@ -323,13 +321,13 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
                 })}
               </div>
             ) : (
-              <p className="text-xs text-slate-400">No 7-day study plan generated.</p>
+              <p className="text-xs text-slate-400 dark:text-slate-500">No 7-day study plan generated.</p>
             )}
           </div>
 
           {/* FINAL ADVICE BANNER */}
           {finalAdvice && (
-            <div className={`p-4 rounded-2xl border text-center ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-slate-50 border-slate-200 text-slate-800'}`}>
+            <div className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 text-center bg-slate-50 dark:bg-[#071126] text-slate-800 dark:text-slate-200">
               <p className="text-xs font-bold">💡 {finalAdvice}</p>
             </div>
           )}
