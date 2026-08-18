@@ -78,6 +78,43 @@ export default function StudentLogin() {
     }
   }, [emailOtpSent]);
 
+  // Tab switch cleanup
+  const handleSwitchTab = (mode) => {
+    setLoginMode(mode);
+    setError('');
+    setEmailOtpSent(false);
+    setEmailOtpDigits(['', '', '', '', '', '']);
+    setEmailTimer(0);
+    setMobileOtpSent(false);
+    setMobileOtpCode('');
+    setMobileTimer(0);
+  };
+
+  // Handle Send Email OTP
+  const handleSendEmailOtp = async (e) => {
+    e?.preventDefault();
+    const cleanEmail = emailOtp.trim().toLowerCase();
+    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+      setError('Please enter a valid Gmail or Email address.');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      if (sendLoginOtp) {
+        await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
+      }
+      setEmailOtpSent(true);
+      setEmailTimer(30);
+      setEmailOtpDigits(['', '', '', '', '', '']);
+      toast.success(`Verification OTP sent to ${cleanEmail}`);
+    } catch (err) {
+      setError(err.message || 'Failed to send OTP code. Please verify your email.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Focus helper for OTP boxes
   const focusBox = (targetIndex) => {
     const el = otpBoxRefs.current[targetIndex];
