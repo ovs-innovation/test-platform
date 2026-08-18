@@ -413,35 +413,40 @@ export default function ResultPage() {
             )}
 
             {Object.keys(topicScores).length > 0 && (
-              <div className="mt-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 shadow-sm">
-                <h3 className="text-sm font-extrabold text-slate-900 dark:text-white mb-1">Topic-wise</h3>
+              <div className="mt-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-5 sm:p-6 shadow-sm">
+                <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white mb-1">Topic-wise</h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Accuracy breakdown per topic in each subject</p>
 
                 <div className="space-y-4">
                   {Object.entries(topicScores).map(([subjName, topics]) => (
-                    <div key={subjName} className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-slate-900 dark:bg-slate-950 p-4 font-mono text-slate-100 shadow-sm">
-                      <p className="font-bold text-white text-sm tracking-wide mb-3">{subjName}</p>
+                    <div key={subjName} className="rounded-2xl border border-slate-200 dark:border-slate-800/80 bg-slate-50 dark:bg-[#071126] p-4 sm:p-5 font-mono shadow-xs transition-colors">
+                      <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800/80 pb-2.5 mb-3">
+                        <p className="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base tracking-wide">{subjName}</p>
+                        <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-md bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-900/60 font-sans">
+                          {topics.length} Topics
+                        </span>
+                      </div>
 
-                      <div className="space-y-1.5 text-xs sm:text-sm">
+                      <div className="space-y-1 text-xs sm:text-sm">
                         {topics.map((t, idx) => {
                           const isLast = idx === topics.length - 1;
                           const branchSymbol = isLast ? '└──' : '├──';
 
-                          let accuracyColor = 'text-emerald-400 dark:text-emerald-400';
-                          if (t.accuracy < 50) accuracyColor = 'text-rose-400 dark:text-rose-400';
-                          else if (t.accuracy < 75) accuracyColor = 'text-amber-400 dark:text-amber-400';
+                          let accuracyColor = 'text-emerald-600 dark:text-emerald-400';
+                          if (t.accuracy < 50) accuracyColor = 'text-rose-600 dark:text-rose-400';
+                          else if (t.accuracy < 75) accuracyColor = 'text-amber-600 dark:text-amber-400';
 
                           return (
-                            <div key={t.name} className="flex items-center justify-between py-1 px-1.5 rounded hover:bg-slate-800/50 transition-colors">
+                            <div key={t.name} className="flex items-center justify-between py-1.5 px-2 rounded-xl hover:bg-slate-200/60 dark:hover:bg-slate-800/50 transition-colors">
                               <div className="flex items-center gap-2 overflow-hidden">
-                                <span className="text-slate-500 font-bold select-none">{branchSymbol}</span>
-                                <span className="truncate text-slate-200 font-medium">{t.name}</span>
+                                <span className="text-slate-400 dark:text-slate-500 font-bold select-none">{branchSymbol}</span>
+                                <span className="truncate text-slate-800 dark:text-slate-200 font-semibold">{t.name}</span>
                               </div>
                               <div className="flex items-center gap-3 shrink-0">
-                                <span className="text-[11px] text-slate-400 font-sans">
+                                <span className="text-[11px] text-slate-500 dark:text-slate-400 font-sans font-medium">
                                   ({t.correct}/{t.attempted > 0 ? t.attempted : t.total})
                                 </span>
-                                <span className={`font-extrabold text-xs sm:text-sm min-w-[40px] text-right ${accuracyColor}`}>
+                                <span className={`font-extrabold text-xs sm:text-sm min-w-[42px] text-right ${accuracyColor}`}>
                                   {t.accuracy}%
                                 </span>
                               </div>
