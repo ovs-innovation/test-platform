@@ -95,50 +95,7 @@ export default function TestSeriesTab({
         };
       });
     } else {
-      seriesList = [
-        {
-          id: 'series-neet-2027',
-          title: 'NEET-UG 2027 All India Test Series (AIETS)',
-          exam: 'NEET UG',
-          targetYear: 2027,
-          testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')).length || 18,
-          description: 'Comprehensive NTA-standard NEET-UG full syllabus and chapterwise mock test series with detailed solutions.',
-          status: 'Active Package',
-          isAssigned: false,
-          validity: '31 Mar 2027',
-          color: 'from-emerald-600 to-teal-500',
-          badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
-          tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('neet') || (t.title || '').toLowerCase().includes('neet')),
-        },
-        {
-          id: 'series-jee-2027',
-          title: 'JEE Main & Advanced 2027 Master Test Series',
-          exam: 'JEE Main & Advanced',
-          targetYear: 2027,
-          testCount: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')).length || 15,
-          description: 'Rigorous Computer Based Test (CBT) mock series for JEE Main & Advanced prep with rank prediction.',
-          status: 'Active Package',
-          isAssigned: false,
-          validity: '31 Mar 2027',
-          color: 'from-blue-600 to-cyan-500',
-          badgeColor: 'bg-blue-500/10 text-cyan-400 border-cyan-500/20',
-          tests: availableTests.filter((t) => (t.category || '').toLowerCase().includes('jee') || (t.title || '').toLowerCase().includes('jee')),
-        },
-        {
-          id: 'series-foundation-2027',
-          title: 'Class 10 Foundation Olympiad & NTSE Test Series',
-          exam: 'Foundation (Class 10)',
-          targetYear: 2026,
-          testCount: 8,
-          description: 'Early booster test series covering Class 10 Science, Math & Mental Ability for Olympiad readiness.',
-          status: 'Included',
-          isAssigned: false,
-          validity: '31 Dec 2026',
-          color: 'from-purple-600 to-indigo-500',
-          badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
-          tests: [],
-        },
-      ];
+      seriesList = [];
     }
 
     return seriesList
@@ -226,8 +183,16 @@ export default function TestSeriesTab({
       </div>
 
       {/* PACKAGE CARDS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {packages.map((pkg) => (
+      {packages.length === 0 ? (
+        <div className={`p-10 text-center rounded-2xl border text-xs space-y-2 ${isDarkMode ? 'bg-[#0E1726] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-500'}`}>
+          <p className="font-extrabold text-sm text-slate-200">No test series packages assigned yet</p>
+          <p className="max-w-md mx-auto">
+            Your institution does not have any active assigned test series packages. Platform administrators assign test series packages to partner school accounts from the Admin Portal.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {packages.map((pkg) => (
           <div
             key={pkg.id}
             className={`rounded-2xl border-2 flex flex-col overflow-hidden transition-all hover:shadow-xl ${
@@ -301,6 +266,7 @@ export default function TestSeriesTab({
           </div>
         ))}
       </div>
+      )}
 
       {/* SELECTED SERIES TESTS DRAWER MODAL */}
       {selectedSeries && (

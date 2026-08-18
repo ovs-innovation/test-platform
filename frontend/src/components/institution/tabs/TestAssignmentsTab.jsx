@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import {
+  Search,
   CheckCircle2,
   Calendar,
   Clock,
@@ -29,6 +30,8 @@ export default function TestAssignmentsTab({
   const [targetType, setTargetType] = useState('institution');
   const [targetId, setTargetId] = useState('');
   const [assigning, setAssigning] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [activeCategory, setActiveCategory] = useState('All');
 
   useEffect(() => {
     if (selectedTest) {
@@ -39,13 +42,20 @@ export default function TestAssignmentsTab({
     };
   }, [selectedTest]);
 
-  const defaultTests = [
-    { id: 81, test_name: 'AIETS 01 - Physics: Kinematics & Laws of Motion', test_type: 'Full Mock', max_marks: 720, duration_minutes: 180, test_date: '2026-08-15' },
-    { id: 84, test_name: 'JEE Main Physics Mechanics Speed Test #02', test_type: 'Topic Test', max_marks: 300, duration_minutes: 180, test_date: '2026-08-20' },
-    { id: 85, test_name: 'NEET Organic Chemistry Grand Test #03', test_type: 'Subject Test', max_marks: 720, duration_minutes: 180, test_date: '2026-08-28' },
-  ];
+  const testsList = Array.isArray(availableTests) ? availableTests : [];
 
-  const testsList = availableTests && availableTests.length > 0 ? availableTests : defaultTests;
+  const filteredTests = testsList.filter((test) => {
+    const q = searchQuery.toLowerCase().trim();
+    const nameMatch = (test.test_name || '').toLowerCase().includes(q);
+    const typeMatch = (test.test_type || '').toLowerCase().includes(q);
+    const queryMatch = !q || nameMatch || typeMatch;
+
+    if (activeCategory === 'All') return queryMatch;
+    if (activeCategory === 'Full Mock') return queryMatch && (test.test_type?.toLowerCase().includes('mock') || test.test_type?.toLowerCase().includes('full'));
+    if (activeCategory === 'Unit Test') return queryMatch && (test.test_type?.toLowerCase().includes('unit') || test.test_name?.toLowerCase().includes('unit'));
+    if (activeCategory === 'Diagnostic') return queryMatch && (test.test_name?.toLowerCase().includes('diagnostic') || test.test_type?.toLowerCase().includes('diagnostic'));
+    return queryMatch;
+  });
 
   const handleTargetTypeChange = (newType) => {
     setTargetType(newType);
@@ -126,10 +136,72 @@ export default function TestAssignmentsTab({
           NEET & JEE Schedules Active
         </span>
       </div>
+      {/* SEARCH AND FILTER BAR */}
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search test assignments by name or type..."
+            className={`w-full rounded-xl border pl-10 pr-4 py-2 text-xs font-semibold focus:outline-none focus:border-cyan-500 transition ${
+              isDarkMode
+                ? 'bg-[#0E1726] border-slate-800 text-white placeholder-slate-500'
+                : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'
+            }`}
+          />
+        </div>
+
+        <div className="flex flex-wrap items-center gap-2">
+          {['All', 'Full Mock', 'Unit Test', 'Diagnostic'].map((cat) => (
+            <button
+              key={cat}
+              type="button"
+              onClick={() => setActiveCategory(cat)}
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeCategory === cat
+                  ? 'bg-cyan-500 text-white shadow-xs'
+                  : isDarkMode
+                  ? 'bg-[#0E1726] border border-slate-800 text-slate-300 hover:border-slate-700'
+                  : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+              }`}
+            >
+              {cat === 'All' ? `All (${testsList.length})` : cat}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* RESULT COUNT INDICATOR */}
+      <div className="flex items-center justify-between text-xs font-medium text-slate-400 px-1">
+        <span>Showing {filteredTests.length} of {testsList.length} available tests</span>
+        {(searchQuery || activeCategory !== 'All') && (
+          <button
+            type="button"
+            onClick={() => { setSearchQuery(''); setActiveCategory('All'); }}
+            className="text-cyan-400 hover:underline cursor-pointer"
+          >
+            Clear Filters
+          </button>
+        )}
+      </div>
 
       {/* TESTS GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {testsList.map((test) => (
+      {testsList.length === 0 ? (
+        <div className={`p-10 text-center rounded-2xl border text-xs space-y-2 ${isDarkMode ? 'bg-[#0E1726] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-500'}`}>
+          <p className="font-extrabold text-sm text-slate-200">No test packages assigned yet</p>
+          <p className="max-w-md mx-auto">
+            Your institution does not have any active assigned test packages. Platform administrators assign test series/packages to partner school accounts from the Admin Portal.
+          </p>
+        </div>
+      ) : filteredTests.length === 0 ? (
+        <div className={`p-10 text-center rounded-2xl border text-xs ${isDarkMode ? 'bg-[#0E1726] border-slate-800 text-slate-400' : 'bg-white border-slate-200 text-slate-500'}`}>
+          No tests found matching your search term or category.
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredTests.map((test) => (
           <div
             key={test.id}
             className={`rounded-2xl border p-5 sm:p-6 space-y-4 shadow-2xs flex flex-col justify-between transition hover:border-cyan-500/30 ${
@@ -183,6 +255,7 @@ export default function TestAssignmentsTab({
           </div>
         ))}
       </div>
+      )}
 
       {/* PORTAL-RENDERED ASSIGN TEST MODAL */}
       {selectedTest &&

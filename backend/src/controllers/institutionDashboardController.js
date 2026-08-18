@@ -489,9 +489,9 @@ export const regenerateStudentCredentials = asyncHandler(async (req, res) => {
  * POST /api/institution/:id/tests/:test_id/assign
  */
 export const getAvailablePackageTests = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || req.params.id;
 
-  let result = await query(
+  const result = await query(
     `SELECT DISTINCT t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
             tp.id AS package_id, tp.package_name
      FROM tests t
@@ -499,23 +499,13 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
      JOIN institution_packages ip ON ip.package_id = pt.package_id
      JOIN test_packages tp ON tp.id = pt.package_id
      WHERE ip.institution_id = $1
-       AND ip.is_active = TRUE
+       AND COALESCE(ip.is_active, TRUE) = TRUE
        AND (ip.valid_until IS NULL OR ip.valid_until > NOW())
        AND COALESCE(t.is_published, TRUE) = TRUE
        AND COALESCE(t.is_deleted, FALSE) = FALSE
      ORDER BY t.id DESC`,
     [instId]
   );
-
-  if (result.rowCount === 0) {
-    result = await query(
-      `SELECT id, test_name, test_type, test_date, COALESCE(duration_minutes, 180) AS duration_minutes, COALESCE(max_marks, 720) AS max_marks
-       FROM tests
-       WHERE COALESCE(is_published, TRUE) = TRUE
-         AND COALESCE(is_deleted, FALSE) = FALSE
-       ORDER BY id DESC`
-    );
-  }
 
   res.json({ success: true, count: result.rows.length, tests: result.rows });
 });
@@ -1302,22 +1292,7 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
     [instId]
   ).catch(() => ({ rows: [] }));
 
-  const generalRes = await query(
-    `SELECT ts.*,
-            COALESCE(ts.planned_tests, ts.test_count, COUNT(DISTINCT tst.test_id))::int AS total_tests_count,
-            COUNT(DISTINCT tst.test_id)::int AS linked_tests_count
-     FROM test_series ts
-     LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
-     WHERE COALESCE(ts.is_active, TRUE) = TRUE
-     GROUP BY ts.id
-     ORDER BY ts.is_featured DESC, ts.id DESC`
-  ).catch(() => ({ rows: [] }));
-
-  const assignedIds = new Set(assignedRes.rows.map((r) => r.id));
-  const uniqueGeneral = generalRes.rows.filter((r) => !assignedIds.has(r.id));
-  const combined = [...assignedRes.rows, ...uniqueGeneral];
-
-  res.json({ success: true, count: combined.length, packages: combined });
+  res.json({ success: true, count: assignedRes.rows.length, packages: assignedRes.rows });
 });
 
 
