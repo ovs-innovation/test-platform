@@ -304,7 +304,7 @@ export default function ResultPage() {
         <p className="text-xs text-blue-100">{assessment.title}</p>
       </header>
 
-      <div className="mx-auto max-w-3xl px-4 py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 pb-16 space-y-6">
         <Link to={backTo} className="mb-4 inline-flex items-center gap-1 text-xs font-semibold uppercase text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200">
           ← {backLabel}
         </Link>
