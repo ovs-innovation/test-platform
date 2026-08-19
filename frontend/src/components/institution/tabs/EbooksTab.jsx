@@ -297,7 +297,6 @@ export default function EbooksTab({
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
-          <div className="flex items-center gap-3 shrink-0">
             <button
               onClick={() => setShowCreateModal(true)}
               className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-xs font-extrabold text-white shadow-md hover:bg-purple-500 transition cursor-pointer"
