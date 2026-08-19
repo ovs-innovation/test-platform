@@ -485,11 +485,9 @@ export default function TestSeriesDetail() {
             {[
               { id: 'overview', label: 'Overview', icon: BookOpen },
               { id: 'structure', label: 'Test Structure', icon: Layers },
-              { id: 'schedule', label: 'Complete Schedule', icon: Calendar },
               { id: 'benefits', label: 'Student Benefits', icon: Award },
               { id: 'analytics', label: 'Performance Analytics', icon: BarChart3 },
               { id: 'resources', label: 'Study Resources', icon: FileText },
-              { id: 'mentoring', label: 'Mentoring', icon: Users },
               { id: 'faqs', label: 'FAQs', icon: HelpCircle },
             ].map((tab) => {
               const Icon = tab.icon;
@@ -595,73 +593,7 @@ export default function TestSeriesDetail() {
             </div>
           )}
 
-          {/* TAB 3: COMPLETE SCHEDULE */}
-          {activeTab === 'schedule' && (
-            <div className="space-y-6">
-              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
-                <div>
-                  <h3 className="text-xl font-extrabold text-[#071833]">Complete Test Schedule</h3>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {tests.length > 0
-                      ? `Displaying ${tests.length} linked assessment schedules`
-                      : `Total ${plannedTestCount} tests planned for this program`}
-                  </p>
-                </div>
-                <span className="px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] border border-blue-200 text-xs font-extrabold font-mono">
-                  {plannedTestCount} Total Mocks Included
-                </span>
-              </div>
-
-              {tests.length > 0 ? (
-                <div className="overflow-x-auto rounded-xl border border-slate-200">
-                  <table className="w-full text-left text-xs">
-                    <thead>
-                      <tr className="border-b border-slate-200 bg-slate-50 text-[#071833] font-extrabold uppercase tracking-wide">
-                        <th className="px-4 py-3 w-12">#</th>
-                        <th className="px-4 py-3">Test Title</th>
-                        <th className="px-4 py-3">Category</th>
-                        <th className="px-4 py-3 text-center">Duration</th>
-                        <th className="px-4 py-3 text-center">Max Marks</th>
-                        <th className="px-4 py-3 text-right">Status</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
-                      {tests.map((t, idx) => (
-                        <tr key={t.id || idx} className="hover:bg-slate-50/80 transition">
-                          <td className="px-4 py-3 font-mono font-bold text-slate-400">{idx + 1}</td>
-                          <td className="px-4 py-3 font-bold text-[#071833]">{t.label || t.title}</td>
-                          <td className="px-4 py-3">
-                            <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-semibold text-[11px]">
-                              {t.category || 'NTA Mock'}
-                            </span>
-                          </td>
-                          <td className="px-4 py-3 text-center font-mono">{t.duration_minutes || 180} min</td>
-                          <td className="px-4 py-3 text-center font-mono font-bold text-slate-800">{t.total_marks || 720}</td>
-                          <td className="px-4 py-3 text-right">
-                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
-                              Included
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              ) : (
-                <div className="p-8 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-3">
-                  <Calendar className="h-10 w-10 text-[#2563EB] mx-auto opacity-80" />
-                  <h4 className="text-base font-extrabold text-[#071833]">
-                    Detailed test calendar will be published by the administrator.
-                  </h4>
-                  <p className="text-xs text-slate-600 max-w-lg mx-auto leading-relaxed">
-                    This program includes <strong>{plannedTestCount} planned CBT tests</strong> across the curriculum. The complete test-by-test calendar, chapter syllabus mapping, and test dates will be published prior to session commencement.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-
-          {/* TAB 4: STUDENT BENEFITS */}
+          {/* TAB 3: STUDENT BENEFITS */}
           {activeTab === 'benefits' && (
             <div className="space-y-6">
               <div className="space-y-2">
@@ -743,25 +675,7 @@ export default function TestSeriesDetail() {
             </div>
           )}
 
-          {/* TAB 7: MENTORING */}
-          {activeTab === 'mentoring' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Faculty Mentoring & Guidance</h3>
-                <p className="text-sm text-slate-600">Academic mentorship and test strategy reviews.</p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-blue-50/60 border border-blue-100 space-y-3">
-                <Users className="h-8 w-8 text-[#2563EB]" />
-                <h4 className="text-base font-extrabold text-[#071833]">Mentoring Sessions Included</h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                  Mentoring sessions are provided as included in the selected package. Partner institutions can also request dedicated faculty strategy workshops for batch performance enhancement.
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 8: FAQS */}
+          {/* TAB 6: FAQS */}
           {activeTab === 'faqs' && (
             <div className="space-y-6">
               <div className="space-y-2">
