@@ -4,8 +4,8 @@ import { assessmentService, attemptService } from '../../lib/services.js';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { requestFullscreen } from '../../lib/proctoring.js';
 import { PALETTE_LEGEND } from '../../lib/examPalette.js';
+import { BookOpen, FileText } from 'lucide-react';
 
 const GENERAL_RULES = [
   'Total duration of the examination is fixed. The clock is server-synced and shown at the top of the screen.',
@@ -227,6 +227,37 @@ export default function AssessmentInstructions() {
               <div className="mt-5 rounded-xl border border-amber-400/80 bg-amber-50 dark:bg-amber-950/40 dark:border-amber-500/40 p-4 text-sm text-amber-950 dark:text-amber-200 shadow-xs">
                 <p className="mb-1 text-xs font-black uppercase text-amber-900 dark:text-amber-300 tracking-wider">Exam-specific instructions</p>
                 <div className="font-medium leading-relaxed whitespace-pre-line">{assessment.instructions}</div>
+              </div>
+            )}
+
+            {/* Attached Study eBook Box */}
+            {(assessment.ebook_pdf_url || assessment.ebook_title) && (
+              <div className="mt-5 rounded-xl border border-indigo-300 dark:border-indigo-800 bg-indigo-50/80 dark:bg-indigo-950/40 p-4 shadow-xs">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-xs">
+                      <BookOpen className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <p className="text-xs font-black uppercase tracking-wider text-indigo-900 dark:text-indigo-300">Attached Study Reference eBook</p>
+                      <h4 className="text-sm font-extrabold text-slate-900 dark:text-white">{assessment.ebook_title || 'Recommended Reference Book'}</h4>
+                      {assessment.ebook_author && (
+                        <p className="text-xs text-slate-600 dark:text-slate-400 font-medium">By {assessment.ebook_author}</p>
+                      )}
+                    </div>
+                  </div>
+                  {assessment.ebook_pdf_url && (
+                    <a
+                      href={assessment.ebook_pdf_url.startsWith('http') ? assessment.ebook_pdf_url : `http://127.0.0.1:5000${assessment.ebook_pdf_url.startsWith('/') ? '' : '/'}${assessment.ebook_pdf_url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-indigo-700 transition cursor-pointer"
+                    >
+                      <FileText className="h-4 w-4" />
+                      Open PDF
+                    </a>
+                  )}
+                </div>
               </div>
             )}
 

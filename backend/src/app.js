@@ -25,6 +25,7 @@ import studentReportRoutes from './routes/studentReportRoutes.js';
 import institutionReportRoutes from './routes/institutionReportRoutes.js';
 import institutionRoutes from './routes/institutionRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
+import ebookRoutes from './routes/ebookRoutes.js';
 
 const app = express();
 
@@ -59,6 +60,7 @@ app.use(
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
 app.use(express.json({ limit: '20mb' }));
 app.use('/uploads', express.static('uploads'));
+app.use('/ebooks', express.static('public/ebooks'));
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
 import { checkHealth, checkReadiness } from './controllers/healthController.js';
@@ -88,6 +90,7 @@ app.use('/api/student', studentRoutes);
 app.use('/api/institution', institutionReportRoutes);
 app.use('/api/institution', institutionRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/ebooks', ebookRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFoundHandler);

@@ -46,6 +46,7 @@ import { COMPANY, CONTACT } from './data/edvedumContent.js';
 
 import CandidateDashboard from './pages/candidate/Dashboard.jsx';
 import MyTests from './pages/candidate/MyTests.jsx';
+import MyEbooks from './pages/candidate/MyEbooks.jsx';
 import MySeriesTests from './pages/candidate/MySeriesTests.jsx';
 import AietsCalendarPage from './pages/candidate/AietsCalendarPage.jsx';
 import Analytics from './pages/candidate/Analytics.jsx';
@@ -167,6 +168,7 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedRoute role="candidate"><Shell><CandidateDashboard /></Shell></ProtectedRoute>} />
         <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AietsCalendarPage /></Shell></ProtectedRoute>} />
         <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
+        <Route path="/my-ebooks" element={<ProtectedRoute role="candidate"><Shell><MyEbooks /></Shell></ProtectedRoute>} />
         <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />
         <Route path="/analytics/test/:testId" element={<ProtectedRoute role="candidate"><Shell><PostTestAnalytics /></Shell></ProtectedRoute>} />

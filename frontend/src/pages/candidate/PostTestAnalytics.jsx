@@ -865,7 +865,7 @@ export default function PostTestAnalytics() {
                   </div>
                   {eb.pdf_url && (
                     <a
-                      href={eb.pdf_url}
+                      href={eb.pdf_url.startsWith('http') ? eb.pdf_url : `http://127.0.0.1:5000${eb.pdf_url.startsWith('/') ? '' : '/'}${eb.pdf_url}`}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-[11px] transition-colors"

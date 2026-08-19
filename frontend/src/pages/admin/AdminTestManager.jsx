@@ -673,9 +673,17 @@ export default function AdminTestManager() {
                     <BookOpen className="h-6 w-6 text-blue-600" />
                     <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">{e.title}</h4>
                     {e.author && <p className="text-xs font-semibold text-slate-500">Author: {e.author}</p>}
-                    <a href={e.pdf_url} target="_blank" rel="noreferrer" className="text-xs font-bold text-blue-600 hover:underline block truncate">
-                      {e.pdf_url}
-                    </a>
+                    {e.pdf_url && (
+                      <a
+                        href={e.pdf_url.startsWith('http') ? e.pdf_url : `http://127.0.0.1:5000${e.pdf_url.startsWith('/') ? '' : '/'}${e.pdf_url}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 truncate"
+                      >
+                        <FileText className="h-3.5 w-3.5 shrink-0" />
+                        <span>Open PDF</span>
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>
@@ -1138,11 +1146,11 @@ export default function AdminTestManager() {
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">PDF URL *</label>
                 <input
-                  type="url"
+                  type="text"
                   required
                   value={newEbook.pdf_url}
                   onChange={(e) => setNewEbook({ ...newEbook, pdf_url: e.target.value })}
-                  placeholder="https://edvedum.com/ebooks/physics_guide.pdf"
+                  placeholder="/ebooks/neet-physics-handbook.pdf or https://..."
                   className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-semibold"
                 />
               </div>

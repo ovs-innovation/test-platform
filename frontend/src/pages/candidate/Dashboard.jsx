@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { authService } from '../../lib/services.js';
+import { authService, ebookService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
@@ -22,13 +22,18 @@ export default function CandidateDashboard() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [data, setData] = useState(null);
+  const [assignedEbooks, setAssignedEbooks] = useState([]);
   const [state, setState] = useState('loading');
 
   const load = async () => {
     setState('loading');
     try {
-      const res = await authService.candidateDashboard();
+      const [res, ebooksData] = await Promise.all([
+        authService.candidateDashboard(),
+        ebookService.myEbooks().catch(() => []),
+      ]);
       setData(res);
+      setAssignedEbooks(ebooksData || []);
       setState('done');
     } catch {
       setData({
@@ -265,6 +270,61 @@ export default function CandidateDashboard() {
                     <ChevronRight className="h-3.5 w-3.5" />
                   </Link>
                 )}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* 5. ASSIGNED EBOOKS & STUDY MATERIAL SECTION */}
+      <div className="rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-4">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400">
+              <BookOpen className="h-5 w-5" />
+            </div>
+            <div>
+              <h2 className="text-base font-extrabold text-slate-900 dark:text-white">Assigned eBooks & Study Material</h2>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Reference handbooks, formula sheets, and practice modules assigned by your institute.</p>
+            </div>
+          </div>
+          <Link to="/my-ebooks" className="text-xs font-bold text-purple-600 dark:text-purple-400 hover:underline flex items-center gap-1">
+            <span>View All Material ({assignedEbooks.length})</span>
+            <ChevronRight className="h-3.5 w-3.5" />
+          </Link>
+        </div>
+
+        {assignedEbooks.length === 0 ? (
+          <div className="p-6 text-center text-xs text-slate-500 dark:text-slate-400">
+            No study materials assigned yet. Your institution faculty will assign reference handbooks here.
+          </div>
+        ) : (
+          <div className="grid gap-3.5 sm:grid-cols-2 lg:grid-cols-3">
+            {assignedEbooks.slice(0, 3).map((b) => (
+              <div
+                key={b.id}
+                className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-purple-500/40 transition space-y-3"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-400 bg-purple-500/10 px-2.5 py-0.5 rounded-full border border-purple-500/20">
+                      {b.subject || 'General'}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">{b.class_level || 'Class 11 & 12'}</span>
+                  </div>
+                  <h3 className="text-xs font-bold text-slate-900 dark:text-white line-clamp-1">{b.title}</h3>
+                  {b.author && <p className="text-[11px] text-slate-500 dark:text-slate-400">Author: {b.author}</p>}
+                </div>
+
+                <a
+                  href={b.pdf_url?.startsWith('http') ? b.pdf_url : `http://127.0.0.1:5000${b.pdf_url?.startsWith('/') ? '' : '/'}${b.pdf_url}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="pt-2 border-t border-slate-200/60 dark:border-slate-800 text-xs font-extrabold text-purple-600 dark:text-purple-400 hover:underline flex items-center justify-between"
+                >
+                  <span>Open PDF Handbook</span>
+                  <ArrowRight className="h-3.5 w-3.5" />
+                </a>
               </div>
             ))}
           </div>

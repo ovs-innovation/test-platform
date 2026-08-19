@@ -106,8 +106,22 @@ export const inviteService = {
   get: (token) => api.get(`/invites/${token}`).then((r) => r.data.invite),
 };
 
+export const ebookService = {
+  myEbooks: () => api.get('/ebooks/my').then((r) => r.data.ebooks || []),
+};
+
 export const assessmentService = {
-  listAvailable: () => api.get('/assessments/available').then((r) => r.data.assessments),
+  listAvailable: () =>
+    api.get('/assessments/available').then((r) => {
+      const raw = Array.isArray(r.data?.assessments) ? r.data.assessments : [];
+      const seen = new Set();
+      return raw.filter((t) => {
+        const key = t.id;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }),
   getStudent: (id) => api.get(`/assessments/available/${id}`).then((r) => r.data.assessment),
   listAll: () => withCache('assessments_all', () => api.get('/assessments').then((r) => r.data.assessments)),
   getAdmin: (id) => api.get(`/assessments/${id}`).then((r) => r.data),
@@ -480,7 +494,9 @@ export const institutionDashboardService = {
   assignTest: (instId, testId, data) => api.post(`/institution/${instId}/tests/${testId}/assign`, data).then((r) => r.data),
   
   availableEbooks: (instId) => api.get(`/institution/${instId}/available-ebooks`).then((r) => r.data),
+  createEbook: (instId, data) => api.post(`/institution/${instId}/ebooks`, data).then((r) => r.data),
   assignEbook: (instId, ebookId, data) => api.post(`/institution/${instId}/ebooks/${ebookId}/assign`, data).then((r) => r.data),
+  deleteEbook: (instId, ebookId) => api.delete(`/institution/${instId}/ebooks/${ebookId}`).then((r) => r.data),
   
   studentProgress: (instId, studentId) => api.get(`/institution/${instId}/students/${studentId}/progress`).then((r) => r.data),
   analytics: (instId) => api.get(`/institution/${instId}/analytics`).then((r) => r.data),

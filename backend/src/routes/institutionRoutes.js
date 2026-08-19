@@ -22,6 +22,8 @@ import {
   assignTestSeries,
   getAvailableEbooks,
   assignEbook,
+  createInstitutionEbook,
+  deleteInstitutionEbook,
   getStudentProgress,
   getInstitutionAnalytics,
   exportInstitutionReport,
@@ -73,9 +75,11 @@ router.get('/:id/test-series', getAvailableTestSeries);
 router.get('/:id/available-tests', getAvailablePackageTests);
 router.post('/:id/tests/:test_id/assign', assignTestSeries);
 
-// 7. eBooks Assignment
+// 7. eBooks Assignment, Creation & Deletion
 router.get('/:id/available-ebooks', getAvailableEbooks);
+router.post('/:id/ebooks', createInstitutionEbook);
 router.post('/:id/ebooks/:ebook_id/assign', assignEbook);
+router.delete('/:id/ebooks/:ebook_id', deleteInstitutionEbook);
 
 // 8. Student Progress
 router.get('/:id/students/:student_id/progress', getStudentProgress);

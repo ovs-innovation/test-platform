@@ -291,6 +291,30 @@ export default function InstitutionDashboard() {
     }
   };
 
+  const handleCreateEbook = async (data) => {
+    try {
+      const res = await institutionDashboardService.createEbook(instId, data);
+      toast.success(res?.message || 'Study material created successfully');
+      loadDashboardData();
+      return res;
+    } catch (err) {
+      toast.error(err?.message || 'Failed to create study material');
+      throw err;
+    }
+  };
+
+  const handleDeleteEbook = async (ebookId) => {
+    try {
+      const res = await institutionDashboardService.deleteEbook(instId, ebookId);
+      toast.success(res?.message || 'eBook deleted successfully');
+      loadDashboardData();
+      return res;
+    } catch (err) {
+      toast.error(err?.message || 'Failed to delete eBook');
+      throw err;
+    }
+  };
+
   const handleRequestLicenses = async (data) => {
     try {
       await institutionDashboardService.requestLicenses(instId, data);
@@ -375,6 +399,8 @@ export default function InstitutionDashboard() {
     onArchiveBatch: handleArchiveBatch,
     onAssignTest: handleAssignTest,
     onAssignEbook: handleAssignEbook,
+    onCreateEbook: handleCreateEbook,
+    onDeleteEbook: handleDeleteEbook,
     onRequestLicenses: handleRequestLicenses,
     onSendReminder: handleSendReminder,
     onMarkNotificationRead: handleMarkNotificationRead,
@@ -641,6 +667,8 @@ export function InstEbooksTabWrapper() {
       batches={ctx.batches}
       students={ctx.students}
       onAssignEbook={ctx.onAssignEbook}
+      onCreateEbook={ctx.onCreateEbook}
+      onDeleteEbook={ctx.onDeleteEbook}
       isDarkMode={ctx.isDarkMode}
     />
   );

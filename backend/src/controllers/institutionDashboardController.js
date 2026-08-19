@@ -3,6 +3,8 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { hashPassword } from '../utils/password.js';
 import crypto from 'crypto';
+import fs from 'fs';
+import path from 'path';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
 
 
@@ -831,6 +833,70 @@ export const assignEbook = asyncHandler(async (req, res) => {
     assignment: assignment?.rows?.[0] || { ebook_id: ebookId, assigned_to_type: assign_to, assigned_to_id: assignedTargetId },
     message: `eBook successfully assigned to ${assign_to}.`,
   });
+});
+
+export const createInstitutionEbook = asyncHandler(async (req, res) => {
+  let { title, author, description, subject, class_level, pdf_url } = req.body;
+  if (!title || !pdf_url) throw ApiError.badRequest('Title and PDF file URL are required');
+
+  let sanitizedPdfUrl = pdf_url.trim();
+  if (sanitizedPdfUrl.startsWith('file:///') || sanitizedPdfUrl.startsWith('file://') || /^[a-zA-Z]:[\\/]/.test(sanitizedPdfUrl)) {
+    const rawFilePath = sanitizedPdfUrl.replace(/^file:\/\/\//, '').replace(/^file:\/\//, '');
+    const fileName = path.basename(rawFilePath);
+    const destDir = path.resolve('public/ebooks');
+    const destPath = path.join(destDir, fileName);
+
+    if (fs.existsSync(rawFilePath)) {
+      try {
+        if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
+        fs.copyFileSync(rawFilePath, destPath);
+      } catch (err) {
+        console.warn('[createInstitutionEbook] Could not copy local file:', err.message);
+      }
+    }
+    sanitizedPdfUrl = `/ebooks/${fileName}`;
+  }
+
+  await query(`
+    CREATE TABLE IF NOT EXISTS ebooks (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      description TEXT,
+      subject VARCHAR(100),
+      author VARCHAR(200),
+      class_level VARCHAR(100),
+      pdf_url TEXT,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `).catch(() => {});
+
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS subject VARCHAR(100)').catch(() => {});
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS class_level VARCHAR(100)').catch(() => {});
+
+  const result = await query(
+    `INSERT INTO ebooks (title, author, description, subject, class_level, pdf_url)
+     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+    [title, author || 'Institute Faculty', description || null, subject || 'General', class_level || 'Class 11 & 12', sanitizedPdfUrl]
+  );
+
+  res.status(201).json({ success: true, ebook: result.rows[0], message: 'Study material created successfully' });
+});
+
+export const deleteInstitutionEbook = asyncHandler(async (req, res) => {
+  const ebookId = Number(req.params.ebook_id);
+
+  // Unlink references in tests or assessments if present
+  await query('UPDATE tests SET recommended_ebook_id = NULL WHERE recommended_ebook_id = $1', [ebookId]).catch(() => {});
+  await query('UPDATE assessments SET recommended_ebook_id = NULL WHERE recommended_ebook_id = $1', [ebookId]).catch(() => {});
+
+  // Delete ebook assignments
+  await query('DELETE FROM ebook_assignments WHERE ebook_id = $1', [ebookId]).catch(() => {});
+
+  // Delete ebook row
+  const result = await query('DELETE FROM ebooks WHERE id = $1', [ebookId]);
+  if (result.rowCount === 0) throw ApiError.notFound('eBook not found or already deleted');
+
+  res.json({ success: true, message: 'eBook deleted successfully', id: ebookId });
 });
 
 /**

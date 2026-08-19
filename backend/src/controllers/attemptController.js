@@ -423,7 +423,7 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
      WHERE test_id = $1
        AND (
          assigned_to_type = 'all'
-         OR (assigned_to_type = 'individual' AND assigned_to_id = $2)
+         OR (assigned_to_type IN ('individual', 'student') AND assigned_to_id = $2)
          OR (assigned_to_type = 'batch' AND $3::int IS NOT NULL AND assigned_to_id = $3)
          OR (assigned_to_type = 'institution' AND $4::int IS NOT NULL AND assigned_to_id = $4)
        )`,
@@ -437,12 +437,13 @@ const ensureAssessmentAccess = async (user, assessmentId) => {
     const pkgCheck = await query(
       `SELECT ip.id FROM institution_packages ip
        LEFT JOIN package_tests pt ON pt.package_id = ip.package_id
-       LEFT JOIN tests t ON t.id = $1
-       WHERE ip.institution_id = $2
+       LEFT JOIN test_series_tests tst ON tst.series_id = ip.package_id
+       LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ip.package_id
+       WHERE ip.institution_id = $1
          AND COALESCE(ip.is_active, TRUE) = TRUE
          AND (ip.valid_until IS NULL OR ip.valid_until > NOW())
-         AND (pt.test_id = $1 OR ip.id IS NOT NULL)`,
-      [assessmentId, instId]
+         AND (pt.test_id = $2 OR tst.test_id = $2 OR tsa.assessment_id = $2 OR ip.package_id = $2)`,
+      [instId, assessmentId]
     );
     if (pkgCheck.rowCount > 0) {
       return { invite: null, source: 'institution_package' };

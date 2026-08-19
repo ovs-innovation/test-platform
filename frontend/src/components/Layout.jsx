@@ -21,6 +21,7 @@ import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
+  { to: '/my-ebooks', label: 'Study Material', icon: 'book' },
   { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
   { to: '/leaderboard', label: 'Leaderboard', icon: 'trophy' },

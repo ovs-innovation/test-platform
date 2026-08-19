@@ -492,7 +492,20 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   // 9. Recommended eBooks
   const weakSubjects = Array.from(new Set(weakTopics.map(w => w.subject)));
   let ebooksRes;
-  if (weakSubjects.length > 0) {
+  if (test.recommended_ebook_id) {
+    ebooksRes = await query(
+      `SELECT e.id, e.title, e.author, e.description, e.pdf_url, 'Attached Reference' AS subject
+       FROM ebooks e
+       WHERE e.id = $1
+       UNION ALL
+       (SELECT e.id, e.title, e.author, e.description, e.pdf_url, COALESCE(s.name, 'General') AS subject
+        FROM ebooks e
+        LEFT JOIN subjects s ON s.id = e.subject_id
+        WHERE e.id != $1
+        ORDER BY e.id DESC LIMIT 3)`,
+      [test.recommended_ebook_id]
+    );
+  } else if (weakSubjects.length > 0) {
     ebooksRes = await query(
       `SELECT e.id, e.title, e.author, e.description, e.pdf_url, s.name AS subject
        FROM ebooks e

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
-import { ChevronRight, ShieldCheck, BarChart3, Zap } from 'lucide-react';
+import { ChevronRight, ShieldCheck, BarChart3, Zap, BookOpen } from 'lucide-react';
 
 export function AssessmentCard({ a }) {
   const assessmentId = a.assessment_id || a.id;
@@ -30,6 +30,26 @@ export function AssessmentCard({ a }) {
         <p className="mt-1.5 line-clamp-2 text-[11px] text-slate-500 dark:text-slate-400 font-normal">
           {a.description || 'Proctored NTA CBT format diagnostic mock exam.'}
         </p>
+
+        {(a.ebook_pdf_url || a.ebook_title) && (
+          <div className="mt-2 flex items-center justify-between rounded-lg bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 text-[11px] text-indigo-700 dark:text-indigo-300 font-semibold border border-indigo-200/60 dark:border-indigo-800/60">
+            <span className="truncate flex items-center gap-1.5">
+              <BookOpen className="h-3.5 w-3.5 shrink-0 text-indigo-600 dark:text-indigo-400" />
+              <span className="truncate">{a.ebook_title || 'Attached Study eBook'}</span>
+            </span>
+            {a.ebook_pdf_url && (
+              <a
+                href={a.ebook_pdf_url.startsWith('http') ? a.ebook_pdf_url : `http://127.0.0.1:5000${a.ebook_pdf_url.startsWith('/') ? '' : '/'}${a.ebook_pdf_url}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="shrink-0 text-[10px] font-bold underline hover:text-indigo-900 dark:hover:text-white"
+              >
+                Open PDF
+              </a>
+            )}
+          </div>
+        )}
 
         <div className="mt-3.5 grid grid-cols-3 gap-1.5 text-center">
           <Meta

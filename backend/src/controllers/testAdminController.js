@@ -330,7 +330,7 @@ export const assignTest = asyncHandler(async (req, res) => {
           'New Test Assigned',
           `A new test "${testName}" has been assigned to your institution.`,
         ]
-      ).catch(() => {});
+      ).catch(() => { });
     }
   } else if (assigned_to_type === 'all') {
     const instRes = await query('SELECT id FROM institutions WHERE is_active = TRUE');
@@ -344,7 +344,7 @@ export const assignTest = asyncHandler(async (req, res) => {
           `Admin assigned test "${testName}" to all partner institutions.`,
           id,
         ]
-      ).catch(() => {});
+      ).catch(() => { });
     }
   }
 
@@ -420,7 +420,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       updated_at = NOW()
      WHERE id = $4`,
     [relativeUrl, cleanDuration, cleanPass, id]
-  ).catch(() => {});
+  ).catch(() => { });
 
   // Automatic PDF Question Extraction
   let extractedCount = 0;
@@ -501,7 +501,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                WHERE id = $4`,
               [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
             );
-            await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => {});
+            await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
           }
         }
       }
