@@ -558,7 +558,6 @@ export default function EbooksTab({
                 <span>Assign eBook to Batch</span>
               </button>
             </div>
-            </div>
           </div>
         </div>
       )}
@@ -903,6 +902,7 @@ export default function EbooksTab({
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }
