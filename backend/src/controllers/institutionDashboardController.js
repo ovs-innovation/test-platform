@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
+import pdfParse from 'pdf-parse';
 
 
 /**
@@ -857,6 +858,27 @@ export const createInstitutionEbook = asyncHandler(async (req, res) => {
     sanitizedPdfUrl = `/ebooks/${fileName}`;
   }
 
+  let detectedPages = null;
+  let detectedFileSize = null;
+
+  const targetPath = sanitizedPdfUrl.startsWith('/ebooks/')
+    ? path.resolve('public', sanitizedPdfUrl.substring(1))
+    : null;
+
+  if (targetPath && fs.existsSync(targetPath)) {
+    try {
+      const stats = fs.statSync(targetPath);
+      const sizeMb = (stats.size / (1024 * 1024)).toFixed(1);
+      detectedFileSize = `${sizeMb} MB`;
+
+      const pdfBuffer = fs.readFileSync(targetPath);
+      const pdfData = await pdfParse(pdfBuffer);
+      detectedPages = pdfData.numpages || null;
+    } catch (err) {
+      console.warn('[createInstitutionEbook] Could not parse PDF metadata:', err.message);
+    }
+  }
+
   await query(`
     CREATE TABLE IF NOT EXISTS ebooks (
       id SERIAL PRIMARY KEY,
@@ -872,11 +894,22 @@ export const createInstitutionEbook = asyncHandler(async (req, res) => {
 
   await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS subject VARCHAR(100)').catch(() => {});
   await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS class_level VARCHAR(100)').catch(() => {});
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS pages INT').catch(() => {});
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS file_size VARCHAR(50)').catch(() => {});
 
   const result = await query(
-    `INSERT INTO ebooks (title, author, description, subject, class_level, pdf_url)
-     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, author || 'Institute Faculty', description || null, subject || 'General', class_level || 'Class 11 & 12', sanitizedPdfUrl]
+    `INSERT INTO ebooks (title, author, description, subject, class_level, pdf_url, pages, file_size)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+    [
+      title,
+      author || 'Institute Faculty',
+      description || null,
+      subject || 'General',
+      class_level || 'Class 11 & 12',
+      sanitizedPdfUrl,
+      detectedPages,
+      detectedFileSize
+    ]
   );
 
   res.status(201).json({ success: true, ebook: result.rows[0], message: 'Study material created successfully' });

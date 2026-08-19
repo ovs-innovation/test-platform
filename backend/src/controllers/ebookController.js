@@ -15,6 +15,7 @@ export const listEbooks = asyncHandler(async (_req, res) => {
 
 import fs from 'fs';
 import path from 'path';
+import pdfParse from 'pdf-parse';
 
 export const createEbook = asyncHandler(async (req, res) => {
   let { title, author, description, pdf_url, subject_id, chapter_id } = req.body;
@@ -40,10 +41,43 @@ export const createEbook = asyncHandler(async (req, res) => {
     sanitizedPdfUrl = `/ebooks/${fileName}`;
   }
 
+  let detectedPages = null;
+  let detectedFileSize = null;
+
+  const targetPath = sanitizedPdfUrl.startsWith('/ebooks/')
+    ? path.resolve('public', sanitizedPdfUrl.substring(1))
+    : null;
+
+  if (targetPath && fs.existsSync(targetPath)) {
+    try {
+      const stats = fs.statSync(targetPath);
+      const sizeMb = (stats.size / (1024 * 1024)).toFixed(1);
+      detectedFileSize = `${sizeMb} MB`;
+
+      const pdfBuffer = fs.readFileSync(targetPath);
+      const pdfData = await pdfParse(pdfBuffer);
+      detectedPages = pdfData.numpages || null;
+    } catch (err) {
+      console.warn('[createEbook] Could not parse PDF metadata:', err.message);
+    }
+  }
+
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS pages INT').catch(() => {});
+  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS file_size VARCHAR(50)').catch(() => {});
+
   const result = await query(
-    `INSERT INTO ebooks (title, author, description, pdf_url, subject_id, chapter_id)
-     VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-    [title, author || null, description || null, sanitizedPdfUrl, subject_id || null, chapter_id || null]
+    `INSERT INTO ebooks (title, author, description, pdf_url, subject_id, chapter_id, pages, file_size)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
+    [
+      title,
+      author || null,
+      description || null,
+      sanitizedPdfUrl,
+      subject_id || null,
+      chapter_id || null,
+      detectedPages,
+      detectedFileSize
+    ]
   );
   res.status(201).json({ ebook: result.rows[0] });
 });

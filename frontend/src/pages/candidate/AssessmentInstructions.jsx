@@ -5,6 +5,7 @@ import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { PALETTE_LEGEND } from '../../lib/examPalette.js';
+import { requestFullscreen } from '../../lib/proctoring.js';
 import { BookOpen, FileText } from 'lucide-react';
 
 const GENERAL_RULES = [

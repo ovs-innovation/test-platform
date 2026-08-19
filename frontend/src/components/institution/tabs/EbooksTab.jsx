@@ -426,7 +426,7 @@ export default function EbooksTab({
                   </div>
                   <div>
                     <span className={`block text-[10px] font-extrabold uppercase ${textMutedClass}`}>Format & Volume</span>
-                    <strong className="text-xs font-extrabold text-purple-600 dark:text-purple-400">{book.pages || 160} Pages • {book.file_size || '10 MB'}</strong>
+                    <strong className="text-xs font-extrabold text-purple-600 dark:text-purple-400">{book.pages ? `${book.pages} Pages` : 'PDF Document'}{book.file_size ? ` • ${book.file_size}` : ''}</strong>
                   </div>
                 </div>
 
@@ -529,7 +529,7 @@ export default function EbooksTab({
                 </div>
                 <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>PDF Document Size</span>
-                  <p className="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{previewEbook.pages || 160} Pages ({previewEbook.file_size || '10 MB'})</p>
+                  <p className="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{previewEbook.pages ? `${previewEbook.pages} Pages` : 'PDF Document'}{previewEbook.file_size ? ` (${previewEbook.file_size})` : ''}</p>
                 </div>
               </div>
             </div>
