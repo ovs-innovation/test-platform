@@ -179,7 +179,7 @@ export default function SchoolsB2B() {
   const handleCalculatePricing = (pkg) => {
     setSelectedCalcPackageId(pkg.id);
     navigate(`/for-institutions?program=${pkg.slug}#institutional-pricing`, { replace: true });
-    
+
     const element = document.getElementById('institutional-pricing') || calculatorSectionRef.current;
     if (element) {
       const yOffset = -70;
@@ -353,9 +353,9 @@ export default function SchoolsB2B() {
     console.log('[Institution Login] 2. Validation passed for input:', input);
 
     if (heroRememberMe) {
-      try { localStorage.setItem('edvedum_remembered_institution_id', input); } catch (_) {}
+      try { localStorage.setItem('edvedum_remembered_institution_id', input); } catch (_) { }
     } else {
-      try { localStorage.removeItem('edvedum_remembered_institution_id'); } catch (_) {}
+      try { localStorage.removeItem('edvedum_remembered_institution_id'); } catch (_) { }
     }
 
     setHeroSubmitting(true);
@@ -477,7 +477,7 @@ export default function SchoolsB2B() {
     // 2. Persist active school session state to localStorage
     try {
       localStorage.setItem('edvedum_active_school', JSON.stringify(updatedSchool));
-      
+
       // 3. Persist to partner schools store
       addStudentToSchool(activeSchool?.schoolId || activeSchool?.id, newSt);
     } catch (err) {
@@ -538,1394 +538,1391 @@ export default function SchoolsB2B() {
 
       {/* SECTION 2: B2B HERO (CLEAN SEAMLESS MIDNIGHT GRADIENT) */}
       <section id="b2b-hero" className="relative overflow-hidden bg-gradient-to-br from-[#061224] via-[#0B1E38] to-[#040C1A] text-white flex items-center py-8 sm:py-10 lg:py-12 border-b border-slate-800/80 min-h-0 lg:min-h-[calc(100vh-140px)] scroll-mt-32">
-            
-            {/* Soft Organic Ambient Depth Overlay */}
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-0 left-0 w-3/5 h-full bg-[radial-gradient(ellipse_at_top_left,rgba(14,165,233,0.06)_0%,transparent_70%)]" />
-              <div className="absolute bottom-0 right-0 w-3/5 h-full bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
+
+        {/* Soft Organic Ambient Depth Overlay */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-0 left-0 w-3/5 h-full bg-[radial-gradient(ellipse_at_top_left,rgba(14,165,233,0.06)_0%,transparent_70%)]" />
+          <div className="absolute bottom-0 right-0 w-3/5 h-full bg-[radial-gradient(ellipse_at_bottom_right,rgba(99,102,241,0.05)_0%,transparent_70%)]" />
+        </div>
+
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
+          <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+
+            {/* HERO LEFT SIDE: PARTNERSHIP CONTENT (55% / 7 cols) */}
+            <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-left">
+              {/* Partnership Badge */}
+              <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-blue-500/10 px-3.5 py-1 backdrop-blur-xl">
+                <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+                <span className="text-[11px] font-extrabold tracking-wider text-cyan-300 uppercase">
+                  B2B & Institutional Partnerships
+                </span>
+              </div>
+
+              {/* Main Headline & Subheading */}
+              <div className="space-y-1.5">
+                <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white tracking-tight leading-[1.12]">
+                  Power Your Institution’s Results with AIETS
+                </h1>
+                <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+                  NTA-Pattern CBT Test Series
+                </p>
+              </div>
+
+              {/* Short Description */}
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl font-normal">
+                Bring national-level testing, detailed performance analytics, student rankings and institutional reporting to your school, coaching institute or college.
+              </p>
+
+              {/* SIMPLIFIED HERO CTAs */}
+              <div className="pt-0.5 flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => scrollToEnquiryForm()}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-3 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.16)] hover:-translate-y-[1px] hover:shadow-[0_8px_20px_rgba(37,99,235,0.20)] active:translate-y-0 transition-all duration-200 cursor-pointer"
+                >
+                  <Send className="h-4 w-4" />
+                  <span>Request a Demo</span>
+                </button>
+                <button
+                  onClick={() => scrollToPrograms()}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-200 backdrop-blur-xl hover:border-slate-500 hover:text-white transition cursor-pointer"
+                >
+                  <BookOpen className="h-4 w-4 text-cyan-400" />
+                  <span>Explore AIETS Programs</span>
+                </button>
+              </div>
+
+              {/* 3 Short Trust Indicators */}
+              <div className="pt-3 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-bold text-slate-300 border-t border-slate-800/90">
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>National-Level Assessments</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>Bulk Student Onboarding</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>Dedicated Support</span>
+                </div>
+              </div>
             </div>
 
-            <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
-              <div className="grid lg:grid-cols-12 gap-6 lg:gap-8 items-center">
-                
-                {/* HERO LEFT SIDE: PARTNERSHIP CONTENT (55% / 7 cols) */}
-                <div className="lg:col-span-7 space-y-4 sm:space-y-5 text-left">
-                  {/* Partnership Badge */}
-                  <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-blue-500/10 px-3.5 py-1 backdrop-blur-xl">
-                    <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
-                    <span className="text-[11px] font-extrabold tracking-wider text-cyan-300 uppercase">
-                      B2B & Institutional Partnerships
+            {/* HERO RIGHT SIDE: EDVEDUM SIGNATURE NEO-GLASS INSTITUTION LOGIN CARD (45% / 5 cols) */}
+            <div className="lg:col-span-5 relative mt-6 lg:mt-0 flex justify-center lg:justify-end">
+              {/* Dark Translucent Neo-Glass Card Frame */}
+              <div
+                id="institution-login"
+                className="w-full max-w-[390px] rounded-[20px] border border-[#38BDF8]/25 bg-gradient-to-b from-[#0F213D]/95 via-[#0B1A32]/98 to-[#071224]/98 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] text-white overflow-hidden scroll-mt-32 relative z-10 transition-all duration-300"
+              >
+                {/* Top Accent Gradient Line */}
+                <div className="h-[2px] w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-80" />
+
+                {/* Header Area */}
+                <div className="bg-white/[0.02] px-4 sm:px-5 py-3.5 border-b border-white/10 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    {/* Gradient Icon Container */}
+                    <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-md">
+                      <ShieldCheck className="h-4 w-4" />
+                    </div>
+                    {/* Partner Access Badge */}
+                    <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
+                      Partner Access
                     </span>
                   </div>
 
-                  {/* Main Headline & Subheading */}
-                  <div className="space-y-1.5">
-                    <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white tracking-tight leading-[1.12]">
-                      Power Your Institution’s Results with AIETS
-                    </h1>
-                    <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
-                      NTA-Pattern CBT Test Series
+                  <div className="space-y-0.5">
+                    <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-snug">
+                      Institution Portal Login
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-snug">
+                      Secure access for authorized institutional partners.
                     </p>
                   </div>
-
-                  {/* Short Description */}
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl font-normal">
-                    Bring national-level testing, detailed performance analytics, student rankings and institutional reporting to your school, coaching institute or college.
-                  </p>
-
-                  {/* SIMPLIFIED HERO CTAs */}
-                  <div className="pt-0.5 flex flex-wrap items-center gap-3">
-                    <button
-                      onClick={() => scrollToEnquiryForm()}
-                      className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-3 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.16)] hover:-translate-y-[1px] hover:shadow-[0_8px_20px_rgba(37,99,235,0.20)] active:translate-y-0 transition-all duration-200 cursor-pointer"
-                    >
-                      <Send className="h-4 w-4" />
-                      <span>Request a Demo</span>
-                    </button>
-                    <button
-                      onClick={() => scrollToPrograms()}
-                      className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-200 backdrop-blur-xl hover:border-slate-500 hover:text-white transition cursor-pointer"
-                    >
-                      <BookOpen className="h-4 w-4 text-cyan-400" />
-                      <span>Explore AIETS Programs</span>
-                    </button>
-                  </div>
-
-                  {/* 3 Short Trust Indicators */}
-                  <div className="pt-3 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-bold text-slate-300 border-t border-slate-800/90">
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                      <span>National-Level Assessments</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                      <span>Bulk Student Onboarding</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                      <span>Dedicated Support</span>
-                    </div>
-                  </div>
                 </div>
 
-                {/* HERO RIGHT SIDE: EDVEDUM SIGNATURE NEO-GLASS INSTITUTION LOGIN CARD (45% / 5 cols) */}
-                <div className="lg:col-span-5 relative mt-6 lg:mt-0 flex justify-center lg:justify-end">
-                  {/* Dark Translucent Neo-Glass Card Frame */}
-                  <div
-                    id="institution-login"
-                    className="w-full max-w-[390px] rounded-[20px] border border-[#38BDF8]/25 bg-gradient-to-b from-[#0F213D]/95 via-[#0B1A32]/98 to-[#071224]/98 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.45)] text-white overflow-hidden scroll-mt-32 relative z-10 transition-all duration-300"
-                  >
-                    {/* Top Accent Gradient Line */}
-                    <div className="h-[2px] w-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 opacity-80" />
+                {/* Form Body Area */}
+                <div className="px-4 sm:px-5 py-3.5 sm:py-4 space-y-3">
 
-                    {/* Header Area */}
-                    <div className="bg-white/[0.02] px-4 sm:px-5 py-3.5 border-b border-white/10 space-y-1.5">
-                      <div className="flex items-center justify-between">
-                        {/* Gradient Icon Container */}
-                        <div className="h-8 w-8 rounded-xl bg-gradient-to-tr from-[#0284C7] to-[#38BDF8] text-white flex items-center justify-center shadow-md">
-                          <ShieldCheck className="h-4 w-4" />
-                        </div>
-                        {/* Partner Access Badge */}
-                        <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-400/30 text-[10px] font-extrabold uppercase tracking-widest backdrop-blur-md">
-                          Partner Access
-                        </span>
-                      </div>
+                  {/* Error Message Box */}
+                  {loginError && (
+                    <div
+                      role="alert"
+                      className="rounded-xl border border-rose-500/30 bg-rose-500/15 p-2.5 text-xs font-semibold text-rose-200 flex items-start gap-2 animate-in fade-in"
+                    >
+                      <X className="h-4 w-4 shrink-0 text-rose-400 mt-0.5" />
+                      <span>{loginError}</span>
+                    </div>
+                  )}
 
-                      <div className="space-y-0.5">
-                        <h3 className="text-lg sm:text-xl font-extrabold text-white tracking-tight leading-snug">
-                          Institution Portal Login
-                        </h3>
-                        <p className="text-xs text-slate-300 leading-snug">
-                          Secure access for authorized institutional partners.
-                        </p>
+                  {/* Form */}
+                  <form onSubmit={handleLoginSubmit} autoComplete="off" className="space-y-3">
+
+                    {/* Institution ID / Email Field */}
+                    <div>
+                      <label htmlFor="hero-login-id" className="block text-xs font-semibold text-slate-200 mb-1">
+                        Institution ID or registered email
+                      </label>
+                      <div className="relative">
+                        <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
+                        <input
+                          id="hero-login-id"
+                          name="institution_email"
+                          type="text"
+                          required
+                          autoComplete="username"
+                          placeholder="Enter institution ID or registered email"
+                          value={loginId}
+                          onChange={(e) => setLoginId(e.target.value)}
+                          className="w-full h-11 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-3.5 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition-all duration-200"
+                        />
                       </div>
                     </div>
 
-                    {/* Form Body Area */}
-                    <div className="px-4 sm:px-5 py-3.5 sm:py-4 space-y-3">
-                      
-                      {/* Error Message Box */}
-                      {loginError && (
-                        <div
-                          role="alert"
-                          className="rounded-xl border border-rose-500/30 bg-rose-500/15 p-2.5 text-xs font-semibold text-rose-200 flex items-start gap-2 animate-in fade-in"
-                        >
-                          <X className="h-4 w-4 shrink-0 text-rose-400 mt-0.5" />
-                          <span>{loginError}</span>
-                        </div>
-                      )}
-
-                      {/* Form */}
-                      <form onSubmit={handleLoginSubmit} autoComplete="off" className="space-y-3">
-                        
-                        {/* Institution ID / Email Field */}
-                        <div>
-                          <label htmlFor="hero-login-id" className="block text-xs font-semibold text-slate-200 mb-1">
-                            Institution ID or registered email
-                          </label>
-                          <div className="relative">
-                            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
-                            <input
-                              id="hero-login-id"
-                              name="institution_email"
-                              type="text"
-                              required
-                              autoComplete="username"
-                              placeholder="Enter institution ID or registered email"
-                              value={loginId}
-                              onChange={(e) => setLoginId(e.target.value)}
-                              className="w-full h-11 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-3.5 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition-all duration-200"
-                            />
-                          </div>
-                        </div>
-
-                        {/* Password Field */}
-                        <div>
-                          <div className="flex items-center justify-between mb-1">
-                            <label htmlFor="hero-login-pass" className="block text-xs font-semibold text-slate-200">
-                              Password
-                            </label>
-                            <Link to="/forgot-password" className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 hover:underline">
-                              Forgot password?
-                            </Link>
-                          </div>
-                          <div className="relative">
-                            <Key className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
-                            <input
-                              id="hero-login-pass"
-                              name="institution_password"
-                              type={showHeroPassword ? 'text' : 'password'}
-                              required
-                              autoComplete="current-password"
-                              placeholder="Enter your password"
-                              value={loginPassword}
-                              onChange={(e) => setLoginPassword(e.target.value)}
-                              className="w-full h-11 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-10 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition-all duration-200"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowHeroPassword(!showHeroPassword)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-lg transition"
-                              aria-label={showHeroPassword ? 'Hide password' : 'Show password'}
-                            >
-                              {showHeroPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
-                          </div>
-                        </div>
-
-                        {/* Remember Me Checkbox */}
-                        <div className="flex items-center justify-between pt-0.5">
-                          <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
-                            <input
-                              type="checkbox"
-                              checked={heroRememberMe}
-                              onChange={(e) => setHeroRememberMe(e.target.checked)}
-                              className="h-3.5 w-3.5 rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/30"
-                            />
-                            <span>Remember me</span>
-                          </label>
-                        </div>
-
-                        {/* Primary Gradient Login Button */}
+                    {/* Password Field */}
+                    <div>
+                      <div className="flex items-center justify-between mb-1">
+                        <label htmlFor="hero-login-pass" className="block text-xs font-semibold text-slate-200">
+                          Password
+                        </label>
+                        <Link to="/forgot-password" className="text-[11px] font-semibold text-cyan-400 hover:text-cyan-300 hover:underline">
+                          Forgot password?
+                        </Link>
+                      </div>
+                      <div className="relative">
+                        <Key className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-cyan-400/80 pointer-events-none" />
+                        <input
+                          id="hero-login-pass"
+                          name="institution_password"
+                          type={showHeroPassword ? 'text' : 'password'}
+                          required
+                          autoComplete="current-password"
+                          placeholder="Enter your password"
+                          value={loginPassword}
+                          onChange={(e) => setLoginPassword(e.target.value)}
+                          className="w-full h-11 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-10 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition-all duration-200"
+                        />
                         <button
-                          type="submit"
-                          disabled={heroSubmitting}
-                          className="w-full h-11 rounded-xl bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.20)] hover:-translate-y-[1.5px] hover:shadow-[0_8px_25px_rgba(37,99,235,0.30)] active:translate-y-0 transition-all duration-200 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                          type="button"
+                          onClick={() => setShowHeroPassword(!showHeroPassword)}
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white p-1 rounded-lg transition"
+                          aria-label={showHeroPassword ? 'Hide password' : 'Show password'}
                         >
-                          {heroSubmitting ? (
-                            <>
-                              <Spinner className="h-4 w-4 text-white" />
-                              <span>Accessing Dashboard...</span>
-                            </>
-                          ) : (
-                            <>
-                              <span>Access Institution Dashboard</span>
-                              <ArrowRight className="h-4 w-4" />
-                            </>
-                          )}
+                          {showHeroPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                         </button>
-                      </form>
-
-                      {/* Support Email Footer */}
-                      <div className="pt-3 border-t border-white/10 text-center text-[11px] text-slate-300">
-                        Need portal assistance? Email <a href="mailto:edvedum@gmail.com" className="text-cyan-400 font-semibold hover:underline">edvedum@gmail.com</a>
                       </div>
-
                     </div>
-                  </div>
-                </div>
 
+                    {/* Remember Me Checkbox */}
+                    <div className="flex items-center justify-between pt-0.5">
+                      <label className="flex items-center gap-2 text-xs text-slate-300 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          checked={heroRememberMe}
+                          onChange={(e) => setHeroRememberMe(e.target.checked)}
+                          className="h-3.5 w-3.5 rounded border-white/20 bg-white/10 text-cyan-400 focus:ring-cyan-400/30"
+                        />
+                        <span>Remember me</span>
+                      </label>
+                    </div>
+
+                    {/* Primary Gradient Login Button */}
+                    <button
+                      type="submit"
+                      disabled={heroSubmitting}
+                      className="w-full h-11 rounded-xl bg-gradient-to-r from-[#0284C7] via-[#2563EB] to-[#7C3AED] py-2.5 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.20)] hover:-translate-y-[1.5px] hover:shadow-[0_8px_25px_rgba(37,99,235,0.30)] active:translate-y-0 transition-all duration-200 cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {heroSubmitting ? (
+                        <>
+                          <Spinner className="h-4 w-4 text-white" />
+                          <span>Accessing Dashboard...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Access Institution Dashboard</span>
+                          <ArrowRight className="h-4 w-4" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+
+                  {/* Support Email Footer */}
+                  <div className="pt-3 border-t border-white/10 text-center text-[11px] text-slate-300">
+                    Need portal assistance? Email <a href="mailto:edvedum@gmail.com" className="text-cyan-400 font-semibold hover:underline">edvedum@gmail.com</a>
+                  </div>
+
+                </div>
               </div>
             </div>
-          </section>
 
-          {/* SLIM FULL-WIDTH NTA DISCLAIMER STRIP */}
-          <div className="w-full border-y border-slate-800/90 bg-[#040d1a] py-3 px-4 text-center">
-            <p className="text-xs sm:text-[13px] font-medium text-slate-300 max-w-4xl mx-auto leading-relaxed text-center">
-              <ShieldCheck className="inline-block h-3.5 w-3.5 text-cyan-400 mr-1.5 -mt-0.5 align-middle" />
-              <span>
-                Edvedum Academy is an independent educational platform and is not affiliated with or endorsed by the National Testing Agency.
-              </span>
+          </div>
+        </div>
+      </section>
+
+      {/* SLIM FULL-WIDTH NTA DISCLAIMER STRIP */}
+      <div className="w-full border-y border-slate-800/90 bg-[#040d1a] py-3 px-4 text-center">
+        <p className="text-xs sm:text-[13px] font-medium text-slate-300 max-w-4xl mx-auto leading-relaxed text-center">
+          <ShieldCheck className="inline-block h-3.5 w-3.5 text-cyan-400 mr-1.5 -mt-0.5 align-middle" />
+          <span>
+            Edvedum Academy is an independent educational platform and is not affiliated with or endorsed by the National Testing Agency.
+          </span>
+        </p>
+      </div>
+
+
+      {/* SECTION 3: WHAT IS AIETS? (WHITE WITH SUBTLE RADIAL GLOW) */}
+      <section id="what-is-aiets" className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
+        <div className="absolute -inset-10 rounded-full bg-cyan-400/5 blur-3xl pointer-events-none" />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-12 gap-10 items-center">
+
+            {/* Left Col */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="space-y-2">
+                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Edvedum Assessment Engine</span>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+                  What is AIETS?
+                </h2>
+                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
+              </div>
+
+              <div className="p-4.5 rounded-2xl bg-[#F4F8FF] border border-[#D0E2FF]">
+                <p className="text-base font-black text-[#2563EB]">
+                  AIETS — All India Edvedum Test Series
+                </p>
+              </div>
+
+              <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
+                AIETS is Edvedum’s national-level testing program designed to provide structured assessments, realistic NTA-pattern CBT practice, All India ranking, granular performance analytics, detailed step-by-step solution PDFs, and personalized improvement insights for NEET aspirants.
+              </p>
+
+              <div className="grid sm:grid-cols-2 gap-4 pt-1">
+                <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
+                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Authentic NTA CBT Interface</h4>
+                  <p className="text-xs text-[#5D6B82]">Exact timer, question palette, section navigation, and proctoring controls.</p>
+                </div>
+                <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
+                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Peer Benchmarking</h4>
+                  <p className="text-xs text-[#5D6B82]">Benchmark performance across eligible AIETS participants nationwide.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Col: Highlights Panel */}
+            <div className="lg:col-span-5 relative">
+              <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-blue-100 via-cyan-100 to-indigo-100 blur-xl opacity-70 pointer-events-none" />
+              <div className="relative rounded-3xl border border-[#D0E2FF] bg-white p-7 sm:p-8 space-y-5 shadow-md">
+                <h3 className="text-lg font-black text-[#071833] border-b border-[#DCE5F1] pb-3">
+                  Key Highlights of AIETS
+                </h3>
+
+                <ul className="space-y-4 text-xs text-[#475467]">
+                  <li className="flex items-start gap-3">
+                    <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <span><strong className="text-[#101828]">NTA-Style Practice Interface:</strong> Authentic exam environment builds student confidence.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <span><strong className="text-[#101828]">Structured Test Schedule:</strong> Unit tests, cumulative reviews, and full-syllabus mocks.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="p-1.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 mt-0.5 shrink-0">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <span><strong className="text-[#101828]">Granular Performance Analytics:</strong> Speed, accuracy, and topic-level weakness analysis.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="p-1.5 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 mt-0.5 shrink-0">
+                      <Check className="h-4 w-4" />
+                    </div>
+                    <span><strong className="text-[#101828]">Curated eBooks & Solutions:</strong> Complete NCERT-aligned study modules and explanation PDFs.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 4: AIETS PACKAGE COMPARISON (COMPACT & REFINED PROGRAM CARDS) */}
+      <section id="aiets-programs" className="bg-[#F4F7FC] py-12 sm:py-14 lg:py-16 border-b border-[#DCE5F1] scroll-mt-32">
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+          <div className="text-center space-y-1.5 max-w-2xl mx-auto">
+            <span className="text-[11px] font-extrabold text-[#2563EB] uppercase tracking-wider">Institutional Testing Curriculums</span>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#071833] tracking-tight">
+              AIETS Package Comparison
+            </h2>
+            <div className="h-1 w-14 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-xs sm:text-sm text-[#475467] pt-0.5">
+              Select the target examination program best suited for your institution's batches.
             </p>
           </div>
 
-
-          {/* SECTION 3: WHAT IS AIETS? (WHITE WITH SUBTLE RADIAL GLOW) */}
-          <section id="what-is-aiets" className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
-            <div className="absolute -inset-10 rounded-full bg-cyan-400/5 blur-3xl pointer-events-none" />
-            <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="grid lg:grid-cols-12 gap-10 items-center">
-                
-                {/* Left Col */}
-                <div className="lg:col-span-7 space-y-6">
-                  <div className="space-y-2">
-                    <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Edvedum Assessment Engine</span>
-                    <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                      What is AIETS?
-                    </h2>
-                    <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
-                  </div>
-
-                  <div className="p-4.5 rounded-2xl bg-[#F4F8FF] border border-[#D0E2FF]">
-                    <p className="text-base font-black text-[#2563EB]">
-                      AIETS — All India Edvedum Test Series
-                    </p>
-                  </div>
-
-                  <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
-                    AIETS is Edvedum’s national-level testing program designed to provide structured assessments, realistic NTA-pattern CBT practice, All India ranking, granular performance analytics, detailed step-by-step solution PDFs, and personalized improvement insights for NEET aspirants.
-                  </p>
-
-                  <div className="grid sm:grid-cols-2 gap-4 pt-1">
-                    <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
-                      <h4 className="text-xs font-extrabold text-[#071833] uppercase">Authentic NTA CBT Interface</h4>
-                      <p className="text-xs text-[#5D6B82]">Exact timer, question palette, section navigation, and proctoring controls.</p>
+          {/* Package Cards Grid */}
+          <div className="grid md:grid-cols-2 gap-6 items-stretch">
+            {B2B_PACKAGES.map((pkg, idx) => {
+              const isFirst = idx === 0;
+              const buttonLabel = isFirst ? 'Select 2027 Program' : 'Select 2028 Program';
+              return (
+                <div
+                  key={pkg.id}
+                  className={`rounded-2xl border bg-white p-5 sm:p-6 space-y-4 flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${isFirst ? 'border-[#2563EB] ring-1 ring-[#2563EB]/20 relative hover:border-[#1D4ED8]' : 'border-[#DCE5F1] hover:border-blue-300'
+                    }`}
+                >
+                  <div className="space-y-4">
+                    {/* Header Banner */}
+                    <div className={`p-3 rounded-xl border ${isFirst ? 'bg-blue-50/60 border-blue-100' : 'bg-purple-50/60 border-purple-100'} flex items-center justify-between`}>
+                      <div>
+                        <span className={`text-[10px] font-extrabold uppercase tracking-wider ${isFirst ? 'text-[#2563EB]' : 'text-purple-700'}`}>
+                          {isFirst ? 'One-Year Program' : 'Two-Year Program'}
+                        </span>
+                        <h3 className="text-base sm:text-lg font-extrabold text-[#071833] mt-0.5 leading-snug">{pkg.title}</h3>
+                      </div>
+                      <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shrink-0 ml-2 ${isFirst ? 'bg-[#2563EB] text-white' : 'bg-purple-600 text-white'}`}>
+                        {pkg.target}
+                      </span>
                     </div>
-                    <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
-                      <h4 className="text-xs font-extrabold text-[#071833] uppercase">Peer Benchmarking</h4>
-                      <p className="text-xs text-[#5D6B82]">Benchmark performance across eligible AIETS participants nationwide.</p>
+
+                    <p className="text-[11px] text-[#5D6B82] font-medium">Target: {pkg.suitableFor} • Duration: {pkg.duration}</p>
+
+                    {/* Total Count & Rate */}
+                    <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#DCE5F1] flex items-center justify-between">
+                      <div>
+                        <p className="text-[11px] text-[#5D6B82] font-semibold">Total Test Series Count</p>
+                        <p className="text-xl font-extrabold text-[#071833]">{pkg.totalTests} CBT Tests</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[9px] uppercase font-extrabold text-[#5D6B82]">Standard Retail Rate</p>
+                        <p className="text-lg font-extrabold text-[#2563EB]">₹{pkg.baseRetailPrice.toLocaleString()} <span className="text-[11px] text-[#5D6B82] font-normal">/student</span></p>
+                      </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Right Col: Highlights Panel */}
-                <div className="lg:col-span-5 relative">
-                  <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-blue-100 via-cyan-100 to-indigo-100 blur-xl opacity-70 pointer-events-none" />
-                  <div className="relative rounded-3xl border border-[#D0E2FF] bg-white p-7 sm:p-8 space-y-5 shadow-md">
-                    <h3 className="text-lg font-black text-[#071833] border-b border-[#DCE5F1] pb-3">
-                      Key Highlights of AIETS
-                    </h3>
+                    {/* Test Breakdown Grid */}
+                    <div className="space-y-1.5">
+                      <p className="text-[11px] font-extrabold text-[#071833] uppercase tracking-wider">Curriculum Test Breakdown:</p>
+                      <div className="grid grid-cols-2 gap-1.5 text-xs font-semibold">
+                        <div className="py-1.5 px-2.5 rounded-lg bg-blue-50/80 text-[#2563EB] border border-blue-100 flex justify-between items-center text-[11px]">
+                          <span>AIETS Mocks:</span>
+                          <span className="font-extrabold text-xs">{pkg.breakdown.aiets}</span>
+                        </div>
+                        <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
+                          <span>Unit Tests:</span>
+                          <span className="font-extrabold text-xs">{pkg.breakdown.unitTests}</span>
+                        </div>
+                        <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
+                          <span>Part Tests:</span>
+                          <span className="font-extrabold text-xs">{pkg.breakdown.partTests}</span>
+                        </div>
+                        <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
+                          <span>Cumulative Tests:</span>
+                          <span className="font-extrabold text-xs">{pkg.breakdown.cumulativeTests}</span>
+                        </div>
+                        <div className="col-span-2 py-1.5 px-2.5 rounded-lg bg-emerald-50/80 text-emerald-800 border border-emerald-100 flex justify-between items-center text-[11px]">
+                          <span>Full-Syllabus Mock Tests:</span>
+                          <span className="font-extrabold text-xs">{pkg.breakdown.fullMocks}</span>
+                        </div>
+                      </div>
+                    </div>
 
-                    <ul className="space-y-4 text-xs text-[#475467]">
-                      <li className="flex items-start gap-3">
-                        <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
-                          <Check className="h-4 w-4" />
-                        </div>
-                        <span><strong className="text-[#101828]">NTA-Style Practice Interface:</strong> Authentic exam environment builds student confidence.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
-                          <Check className="h-4 w-4" />
-                        </div>
-                        <span><strong className="text-[#101828]">Structured Test Schedule:</strong> Unit tests, cumulative reviews, and full-syllabus mocks.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="p-1.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 mt-0.5 shrink-0">
-                          <Check className="h-4 w-4" />
-                        </div>
-                        <span><strong className="text-[#101828]">Granular Performance Analytics:</strong> Speed, accuracy, and topic-level weakness analysis.</span>
-                      </li>
-                      <li className="flex items-start gap-3">
-                        <div className="p-1.5 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 mt-0.5 shrink-0">
-                          <Check className="h-4 w-4" />
-                        </div>
-                        <span><strong className="text-[#101828]">Curated eBooks & Solutions:</strong> Complete NCERT-aligned study modules and explanation PDFs.</span>
-                      </li>
+                    {/* Feature Bullet List */}
+                    <ul className="space-y-1.5 text-[11px] sm:text-xs text-[#475467]">
+                      {pkg.features.map((feat, i) => (
+                        <li key={i} className="flex items-start gap-1.5">
+                          <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
+                          <span>{feat}</span>
+                        </li>
+                      ))}
                     </ul>
                   </div>
-                </div>
 
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 4: AIETS PACKAGE COMPARISON (COMPACT & REFINED PROGRAM CARDS) */}
-          <section id="aiets-programs" className="bg-[#F4F7FC] py-12 sm:py-14 lg:py-16 border-b border-[#DCE5F1] scroll-mt-32">
-            <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-              <div className="text-center space-y-1.5 max-w-2xl mx-auto">
-                <span className="text-[11px] font-extrabold text-[#2563EB] uppercase tracking-wider">Institutional Testing Curriculums</span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#071833] tracking-tight">
-                  AIETS Package Comparison
-                </h2>
-                <div className="h-1 w-14 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-xs sm:text-sm text-[#475467] pt-0.5">
-                  Select the target examination program best suited for your institution's batches.
-                </p>
-              </div>
-
-              {/* Package Cards Grid */}
-              <div className="grid md:grid-cols-2 gap-6 items-stretch">
-                {B2B_PACKAGES.map((pkg, idx) => {
-                  const isFirst = idx === 0;
-                  const buttonLabel = isFirst ? 'Select 2027 Program' : 'Select 2028 Program';
-                  return (
-                    <div
-                      key={pkg.id}
-                      className={`rounded-2xl border bg-white p-5 sm:p-6 space-y-4 flex flex-col justify-between shadow-xs hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ${
-                        isFirst ? 'border-[#2563EB] ring-1 ring-[#2563EB]/20 relative hover:border-[#1D4ED8]' : 'border-[#DCE5F1] hover:border-blue-300'
-                      }`}
-                    >
-                      <div className="space-y-4">
-                        {/* Header Banner */}
-                        <div className={`p-3 rounded-xl border ${isFirst ? 'bg-blue-50/60 border-blue-100' : 'bg-purple-50/60 border-purple-100'} flex items-center justify-between`}>
-                          <div>
-                            <span className={`text-[10px] font-extrabold uppercase tracking-wider ${isFirst ? 'text-[#2563EB]' : 'text-purple-700'}`}>
-                              {isFirst ? 'One-Year Program' : 'Two-Year Program'}
-                            </span>
-                            <h3 className="text-base sm:text-lg font-extrabold text-[#071833] mt-0.5 leading-snug">{pkg.title}</h3>
-                          </div>
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shrink-0 ml-2 ${isFirst ? 'bg-[#2563EB] text-white' : 'bg-purple-600 text-white'}`}>
-                            {pkg.target}
-                          </span>
-                        </div>
-
-                        <p className="text-[11px] text-[#5D6B82] font-medium">Target: {pkg.suitableFor} • Duration: {pkg.duration}</p>
-
-                        {/* Total Count & Rate */}
-                        <div className="p-3 rounded-xl bg-[#F8FAFC] border border-[#DCE5F1] flex items-center justify-between">
-                          <div>
-                            <p className="text-[11px] text-[#5D6B82] font-semibold">Total Test Series Count</p>
-                            <p className="text-xl font-extrabold text-[#071833]">{pkg.totalTests} CBT Tests</p>
-                          </div>
-                          <div className="text-right">
-                            <p className="text-[9px] uppercase font-extrabold text-[#5D6B82]">Standard Retail Rate</p>
-                            <p className="text-lg font-extrabold text-[#2563EB]">₹{pkg.baseRetailPrice.toLocaleString()} <span className="text-[11px] text-[#5D6B82] font-normal">/student</span></p>
-                          </div>
-                        </div>
-
-                        {/* Test Breakdown Grid */}
-                        <div className="space-y-1.5">
-                          <p className="text-[11px] font-extrabold text-[#071833] uppercase tracking-wider">Curriculum Test Breakdown:</p>
-                          <div className="grid grid-cols-2 gap-1.5 text-xs font-semibold">
-                            <div className="py-1.5 px-2.5 rounded-lg bg-blue-50/80 text-[#2563EB] border border-blue-100 flex justify-between items-center text-[11px]">
-                              <span>AIETS Mocks:</span>
-                              <span className="font-extrabold text-xs">{pkg.breakdown.aiets}</span>
-                            </div>
-                            <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
-                              <span>Unit Tests:</span>
-                              <span className="font-extrabold text-xs">{pkg.breakdown.unitTests}</span>
-                            </div>
-                            <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
-                              <span>Part Tests:</span>
-                              <span className="font-extrabold text-xs">{pkg.breakdown.partTests}</span>
-                            </div>
-                            <div className="py-1.5 px-2.5 rounded-lg bg-slate-50 text-[#071833] border border-[#DCE5F1] flex justify-between items-center text-[11px]">
-                              <span>Cumulative Tests:</span>
-                              <span className="font-extrabold text-xs">{pkg.breakdown.cumulativeTests}</span>
-                            </div>
-                            <div className="col-span-2 py-1.5 px-2.5 rounded-lg bg-emerald-50/80 text-emerald-800 border border-emerald-100 flex justify-between items-center text-[11px]">
-                              <span>Full-Syllabus Mock Tests:</span>
-                              <span className="font-extrabold text-xs">{pkg.breakdown.fullMocks}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Feature Bullet List */}
-                        <ul className="space-y-1.5 text-[11px] sm:text-xs text-[#475467]">
-                          {pkg.features.map((feat, i) => (
-                            <li key={i} className="flex items-start gap-1.5">
-                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500 shrink-0 mt-0.5" />
-                              <span>{feat}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Package CTAs */}
-                      <div className="pt-2 space-y-1.5">
-                        <button
-                          type="button"
-                          onClick={() => handleCalculatePricing(pkg)}
-                          className="w-full rounded-xl bg-[#2563EB] hover:bg-blue-700 active:scale-[0.99] py-2.5 text-xs font-extrabold text-white transition shadow-xs cursor-pointer flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                        >
-                          <Calculator className="h-3.5 w-3.5" />
-                          <span>Calculate Institutional Pricing</span>
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => handleViewProgramDetails(pkg)}
-                          className="w-full rounded-xl border border-[#DCE5F1] bg-white py-2 text-xs font-semibold text-[#071833] hover:bg-[#F8FAFC] hover:border-slate-400 transition cursor-pointer flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                        >
-                          <BookOpen className="h-3.5 w-3.5 text-[#2563EB]" />
-                          <span>View Full Program Details</span>
-                        </button>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 5: INSTITUTION ADVANTAGES (GRADIENT FROM #EEF5FF TO #F8FBFF) */}
-          <section className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FBFF] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-              <div className="text-center space-y-2 max-w-2xl mx-auto">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Institutional Advantages</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  Why Institutions Should Partner with Edvedum
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-sm text-[#475467] pt-1">
-                  Built specifically for Schools, Coaching Institutes, Junior Colleges, and Educational Organizations.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {[
-                  { title: 'National-Level Test Series', desc: '39 NTA-style practice CBT assessments curated by senior academic faculty.', icon: Award, color: 'blue', isFuture: false },
-                  { title: 'AI-Based Performance Analytics', desc: 'Evaluates student speed, accuracy, question time distribution, and topic mastery.', icon: Sparkles, color: 'cyan', isFuture: false },
-                  { title: 'All India Student Ranking', desc: 'Benchmarks scores nationally via AIR, State, City, and Institute rank cards.', icon: TrendingUp, color: 'purple', isFuture: false },
-                  { title: 'Subject-Wise & Chapter Reports', desc: 'Granular analytics breakdown across Physics, Chemistry, Botany, and Zoology.', icon: BarChart3, color: 'emerald', isFuture: false },
-                  { title: 'Curated eBooks & Study Material', desc: 'Every test includes assigned digital eBooks, formula guides, and solution PDFs.', icon: FileText, color: 'indigo', isFuture: false },
-                  { title: 'Institution Performance Dashboard', desc: 'Unified admin portal to monitor attendance, test completion %, and batch progress.', icon: School, color: 'amber', isFuture: false },
-                  { title: 'Bulk Student Registration', desc: 'Fast bulk student onboarding via CSV templates with auto credential generation.', icon: Users, color: 'blue', isFuture: false },
-                  { title: 'Dedicated Institutional Support', desc: 'Assigned Onboarding Manager, priority technical support, and faculty guidance.', icon: UserCheck, color: 'emerald', isFuture: false },
-                  { title: 'Future AI Learning Features', desc: 'Adaptive question recommendations, predictive rank algorithms, and LMS integration.', icon: ShieldCheck, color: 'purple', isFuture: true },
-                ].map((card, idx) => {
-                  const Icon = card.icon;
-                  return (
-                    <div
-                      key={idx}
-                      className="rounded-2xl border border-[#DCE5F1] bg-white p-6 space-y-3 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
-                    >
-                      <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
-                      
-                      <div className="flex items-center justify-between pt-1">
-                        <div className="h-11 w-11 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100">
-                          <Icon className="h-5 w-5" />
-                        </div>
-                        {card.isFuture && (
-                          <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-600 uppercase">
-                            Future
-                          </span>
-                        )}
-                      </div>
-                      <h3 className="text-base font-extrabold text-[#071833]">{card.title}</h3>
-                      <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">{card.desc}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 6: STUDENT BENEFITS (WHITE WITH TINTED CARDS) */}
-          <section className="bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-              <div className="text-center space-y-2 max-w-2xl mx-auto">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Student Academic Impact</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  Student Benefits
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-sm text-[#475467] pt-1">
-                  What every enrolled student receives under your institutional partnership.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
-                  <div className="h-12 w-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100">
-                    <Award className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#071833]">Ranking & Benchmarking</h3>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-[#2563EB] mt-0.5 shrink-0" />
-                      <span>All India Rank (AIR), state, city, institution and batch ranks.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-[#2563EB] mt-0.5 shrink-0" />
-                      <span>Test-by-test progress tracking and peer comparison.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
-                  <div className="h-12 w-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center border border-cyan-100">
-                    <BarChart3 className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#071833]">Performance Analytics</h3>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" />
-                      <span>Subject and chapter-wise accuracy analysis.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" />
-                      <span>Time management & question attempt distribution reports.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
-                  <div className="h-12 w-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
-                    <BookOpen className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#071833]">Digital Resources</h3>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-purple-600 mt-0.5 shrink-0" />
-                      <span>Detailed step-by-step solution PDFs for every question.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-purple-600 mt-0.5 shrink-0" />
-                      <span>Curated eBooks, formula guides, and NCERT digital modules.</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
-                  <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
-                    <Target className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-base font-extrabold text-[#071833]">Improvement Guidance</h3>
-                  <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
-                      <span>Personalized improvement & revision recommendations.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <Check className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
-                      <span>Mentoring sessions as included in the selected package.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 7: PUBLIC DASHBOARD PREVIEW (GRADIENT FROM #F1F6FD TO #F7FBFF) */}
-          <section className="bg-gradient-to-b from-[#F1F6FD] to-[#F7FBFF] py-16 lg:py-18 border-b border-[#DCE5F1]">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-              
-              {/* Section Header */}
-              <div className="text-center space-y-2 max-w-2xl mx-auto">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">
-                  CENTRALIZED INSTITUTION MANAGEMENT
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  See What Your Institution Can Manage
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-xs sm:text-sm text-[#475467] pt-1">
-                  Preview the tools available to authorized institutional partners for managing students, batches, tests, analytics and reports.
-                </p>
-                <span className="inline-block mt-1 px-3 py-0.5 rounded-full bg-blue-50 text-[#2563EB] border border-blue-100 text-[11px] font-bold">
-                  Illustrative preview — sample data only
-                </span>
-              </div>
-
-              {/* Two-Column Layout */}
-              <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
-                
-                {/* LEFT SIDE: PRODUCT INFORMATION (~42% / 5 cols) */}
-                <div className="lg:col-span-5 space-y-6">
-                  <div className="space-y-4">
-                    
-                    {/* Feature 1 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
-                      <div className="p-2 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 shrink-0">
-                        <Users className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Student and Batch Management</h4>
-                        <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Organize enrolled students, batches and login access.</p>
-                      </div>
-                    </div>
-
-                    {/* Feature 2 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
-                      <div className="p-2 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 shrink-0">
-                        <BookOpen className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Test-Series Assignment</h4>
-                        <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Assign AIETS packages, tests and learning resources.</p>
-                      </div>
-                    </div>
-
-                    {/* Feature 3 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
-                      <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
-                        <BarChart3 className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Performance Analytics</h4>
-                        <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Review participation, subject performance and batch progress.</p>
-                      </div>
-                    </div>
-
-                    {/* Feature 4 */}
-                    <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
-                      <div className="p-2 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 shrink-0">
-                        <FileText className="h-5 w-5" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Reports and Invoices</h4>
-                        <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Download institutional reports and access payment records.</p>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Cleaned CTAs (One primary login-return action) */}
-                  <div className="space-y-2.5 pt-1">
+                  {/* Package CTAs */}
+                  <div className="pt-2 space-y-1.5">
                     <button
-                      onClick={() => scrollToHeroLogin()}
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 px-6 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer"
+                      type="button"
+                      onClick={() => handleCalculatePricing(pkg)}
+                      className="w-full rounded-xl bg-[#2563EB] hover:bg-blue-700 active:scale-[0.99] py-2.5 text-xs font-extrabold text-white transition shadow-xs cursor-pointer flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
                     >
-                      <span>Go to Institution Login</span>
-                      <ArrowRight className="h-4 w-4" />
+                      <Calculator className="h-3.5 w-3.5" />
+                      <span>Calculate Institutional Pricing</span>
                     </button>
-
-                    <p className="text-[11px] text-[#5D6B82] italic">
-                      The complete dashboard is available only to authorized institutional partners.
-                    </p>
-                  </div>
-                </div>
-
-                {/* RIGHT SIDE: COMPACT DASHBOARD MOCKUP (~58% / 7 cols) */}
-                <div className="lg:col-span-7 relative min-w-0 max-w-full">
-                  <div className="absolute -inset-2 rounded-3xl bg-blue-500/10 blur-xl opacity-60 pointer-events-none" />
-
-                  <div className="relative rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-6 shadow-md space-y-4 overflow-hidden max-w-full">
-                    {/* Top Accent Line */}
-                    <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
-
-                    {/* Header Bar */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#DCE5F1] pb-3 gap-2">
-                      <div className="space-y-0.5">
-                        <h3 className="text-sm font-extrabold text-[#071833] flex items-center gap-2">
-                          <span>AIETS Institution Portal</span>
-                          <span className="px-2 py-0.5 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200 text-[10px] font-bold">
-                            Sample Preview
-                          </span>
-                        </h3>
-                        <p className="text-[11px] text-[#5D6B82]">Sample Institution Workspace</p>
-                      </div>
-                      
-                      {/* Non-Interactive Tab Nav with Overflow Scroll */}
-                      <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#DCE5F1] text-[10.5px] font-bold text-[#5D6B82] overflow-x-auto max-w-full">
-                        <span className="px-2.5 py-1 rounded-lg bg-white text-[#2563EB] shadow-xs border border-[#DCE5F1] whitespace-nowrap">Students</span>
-                        <span className="px-2 py-1 whitespace-nowrap">Batches</span>
-                        <span className="px-2 py-1 whitespace-nowrap">Assignments</span>
-                        <span className="px-2 py-1 whitespace-nowrap">Analytics</span>
-                        <span className="px-2 py-1 whitespace-nowrap">Reports</span>
-                      </div>
-                    </div>
-
-                    {/* 4 Feature Mockup Tiles (Single Column on mobile <440px for 100% legibility) */}
-                    <div className="grid grid-cols-1 min-[440px]:grid-cols-2 gap-3">
-                      
-                      {/* Tile 1: Student Roster */}
-                      <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
-                            <Users className="h-3.5 w-3.5 text-[#2563EB]" />
-                            <span>Student Roster</span>
-                          </span>
-                          <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Active</span>
-                        </div>
-                        <div className="space-y-1.5 text-[10.5px] text-[#5D6B82]">
-                          <div className="flex justify-between items-center p-1.5 rounded-lg bg-white border border-[#DCE5F1]">
-                            <span className="font-medium text-[#071833]">Batch A — NEET 2027</span>
-                            <span className="h-2 w-12 bg-blue-100 rounded-full overflow-hidden inline-block"><span className="h-full bg-[#2563eb] block w-[80%]" /></span>
-                          </div>
-                          <div className="flex justify-between items-center p-1.5 rounded-lg bg-white border border-[#DCE5F1]">
-                            <span className="font-medium text-[#071833]">Batch B — JEE 2027</span>
-                            <span className="h-2 w-12 bg-cyan-100 rounded-full overflow-hidden inline-block"><span className="h-full bg-cyan-500 block w-[65%]" /></span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Tile 2: Batch Progress */}
-                      <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
-                            <TrendingUp className="h-3.5 w-3.5 text-cyan-600" />
-                            <span>Batch Progress</span>
-                          </span>
-                          <span className="text-[10px] font-mono text-[#2563EB] font-bold">100% NTA</span>
-                        </div>
-                        <div className="space-y-1.5 text-[10.5px] text-[#5D6B82]">
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] space-y-1">
-                            <div className="flex justify-between text-[10px]">
-                              <span className="font-semibold text-[#071833]">Physics Syllabus</span>
-                              <span className="text-emerald-600 font-bold">Covered</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-emerald-500 rounded-full w-[78%]" /></div>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] space-y-1">
-                            <div className="flex justify-between text-[10px]">
-                              <span className="font-semibold text-[#071833]">Chemistry Syllabus</span>
-                              <span className="text-cyan-600 font-bold">In Progress</span>
-                            </div>
-                            <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full w-[62%]" /></div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Tile 3: Test Participation */}
-                      <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
-                            <Activity className="h-3.5 w-3.5 text-purple-600" />
-                            <span>Test Participation</span>
-                          </span>
-                          <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded">Scheduled</span>
-                        </div>
-                        <div className="space-y-1 text-[10.5px] text-[#5D6B82]">
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
-                            <span className="font-semibold text-[#071833]">AIETS Mock 14</span>
-                            <span className="text-[10px] font-bold text-emerald-600 font-mono">Completed</span>
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
-                            <span className="font-semibold text-[#071833]">Unit Test 08</span>
-                            <span className="text-[10px] font-bold text-[#2563EB] font-mono">Upcoming</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Tile 4: Reports & Invoices */}
-                      <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
-                        <div className="flex justify-between items-center text-xs">
-                          <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
-                            <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
-                            <span>Reports & Invoices</span>
-                          </span>
-                          <span className="text-[10px] font-bold text-slate-500">PDF / CSV</span>
-                        </div>
-                        <div className="space-y-1 text-[10.5px] text-[#5D6B82]">
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
-                            <span className="font-semibold text-[#071833]">Scorecard Export</span>
-                            <Download className="h-3.5 w-3.5 text-[#2563EB]" />
-                          </div>
-                          <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
-                            <span className="font-semibold text-[#071833]">GST Tax Invoice</span>
-                            <Download className="h-3.5 w-3.5 text-[#2563EB]" />
-                          </div>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    <div className="pt-1 text-center">
-                      <p className="text-[10.5px] text-[#5D6B82] italic">
-                        Non-interactive sample preview — Log in to access your authorized institution portal.
-                      </p>
-                    </div>
-
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 8: PARTNERSHIP PROCESS (WHITE BACKGROUND) */}
-          <section className="bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-              <div className="text-center space-y-2 max-w-2xl mx-auto">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Seamless Onboarding</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  Partnership Process
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-sm text-[#475467] pt-1">
-                  Get your institution live on AIETS in four simple steps.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {[
-                  { step: '01', title: 'Submit Enquiry', desc: 'Fill out the partnership enquiry form with your student count and exam targets.', icon: FileText },
-                  { step: '02', title: 'Schedule Demo', desc: 'Our institutional specialist delivers a personalized product walkthrough and pricing quote.', icon: Phone },
-                  { step: '03', title: 'Configure Institution', desc: 'Configure institution details, package selection, and admin credentials.', icon: Building2 },
-                  { step: '04', title: 'Launch AIETS', desc: 'Upload student roster via CSV, distribute logins, and start national CBT testing.', icon: RocketIcon },
-                ].map((card, idx) => {
-                  const Icon = card.icon || Send;
-                  return (
-                    <div key={idx} className="rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-3 shadow-xs hover:-translate-y-1 transition duration-300 relative">
-                      <div className="flex items-center justify-between">
-                        <span className="text-2xl font-black text-[#2563EB] font-mono">{card.step}</span>
-                        <div className="p-2 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100">
-                          <Icon className="h-4 w-4" />
-                        </div>
-                      </div>
-                      <h3 className="text-base font-extrabold text-[#071833]">{card.title}</h3>
-                      <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">{card.desc}</p>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 10: INSTITUTIONAL PRICING CALCULATOR (SOFT GREY-BLUE BACKGROUND) */}
-          <section id="institutional-pricing" ref={calculatorSectionRef} className="bg-[#F3F7FD] py-10 sm:py-14 lg:py-16 border-b border-[#DCE5F1] scroll-mt-20">
-            <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
-              <div className="text-center space-y-2 max-w-2xl mx-auto">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Transparent Bulk Pricing</span>
-                <h2 ref={calculatorHeadingRef} className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight outline-none focus:outline-none">
-                  Institutional Pricing Calculator
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-sm text-[#475467] pt-1">
-                  Select your program and student capacity to calculate estimated bulk volume savings.
-                </p>
-              </div>
-
-              <div className="grid lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-7 rounded-3xl border border-[#DCE5F1] bg-white p-6 sm:p-8 space-y-6 shadow-sm">
-                  <div className="space-y-2">
-                    <label className="block text-xs font-extrabold uppercase text-[#071833]">
-                      Step 1: Select Program Package
-                    </label>
-                    <div className="grid sm:grid-cols-2 gap-3">
-                      {B2B_PACKAGES.map((pkg) => (
-                        <button
-                          key={pkg.id}
-                          type="button"
-                          onClick={() => setSelectedCalcPackageId(pkg.id)}
-                          className={`p-4 rounded-2xl border text-left transition cursor-pointer ${
-                            selectedCalcPackageId === pkg.id
-                              ? 'border-[#2563EB] bg-blue-50/50 ring-2 ring-[#2563EB]/20'
-                              : 'border-[#DCE5F1] bg-white hover:bg-slate-50'
-                          }`}
-                        >
-                          <p className="text-xs font-black text-[#071833]">{pkg.target}</p>
-                          <p className="text-[11px] text-[#5D6B82] mt-0.5">{pkg.totalTests} Mocks • ₹{pkg.baseRetailPrice}/std</p>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <label className="text-xs font-extrabold uppercase text-[#071833]">
-                        Step 2: Student Batch Capacity
-                      </label>
-                      <span className="text-lg font-black text-[#2563EB] font-mono">{calcStudentCount} Students</span>
-                    </div>
-                    <input
-                      type="range"
-                      min="50"
-                      max="1500"
-                      step="25"
-                      value={calcStudentCount}
-                      onChange={(e) => setCalcStudentCount(parseInt(e.target.value))}
-                      className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2563eb]"
-                    />
-                    <div className="flex justify-between text-[11px] font-bold text-[#5D6B82] font-mono">
-                      <span>50</span>
-                      <span>500</span>
-                      <span>1,500+ Students</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-                    <div className={`p-2.5 rounded-xl border ${calcStudentCount < 200 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                      <span>50-199</span>
-                      <p className="text-[10px] font-normal">Standard Rate</p>
-                    </div>
-                    <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 200 && calcStudentCount < 500 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                      <span>200-499</span>
-                      <p className="text-[10px] font-bold text-emerald-600">25% OFF</p>
-                    </div>
-                    <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 500 && calcStudentCount < 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                      <span>500-999</span>
-                      <p className="text-[10px] font-bold text-emerald-600">40% OFF</p>
-                    </div>
-                    <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                      <span>1,000+</span>
-                      <p className="text-[10px] font-bold text-emerald-600">50% OFF</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-5 rounded-3xl border border-[#DCE5F1] bg-white p-6 sm:p-7 shadow-md space-y-4">
-                  <div className="flex justify-between items-center border-b border-[#DCE5F1] pb-3">
-                    <div>
-                      <h3 className="font-extrabold text-[#071833] text-base">Estimated Quotation</h3>
-                      <p className="text-xs text-[#2563EB] font-bold">{calculatedQuote.tierLabel}</p>
-                    </div>
-                    <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold font-mono">
-                      Save ₹{calculatedQuote.totalSavings.toLocaleString()}
-                    </span>
-                  </div>
-
-                  <div className="space-y-2 text-xs font-mono">
-                    <div className="flex justify-between text-[#5D6B82]">
-                      <span>Standard Retail Subtotal:</span>
-                      <span className="line-through text-slate-400">₹{calculatedQuote.retailSubtotal.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-[#071833] font-bold">
-                      <span>Discounted Rate ({calcStudentCount} x ₹{calculatedQuote.discountedPricePerStudent}):</span>
-                      <span className="text-[#2563EB]">₹{calculatedQuote.subtotal.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-[#5D6B82]">
-                      <span>18% GST (HSN 9992):</span>
-                      <span>₹{calculatedQuote.taxAmount.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-sm font-black pt-3 border-t border-[#DCE5F1] text-[#071833]">
-                      <span>Grand Net Total (Incl. GST):</span>
-                      <span className="text-emerald-600 text-base">₹{calculatedQuote.grandTotal.toLocaleString()}</span>
-                    </div>
-                  </div>
-
-                  {/* Continue with This Estimate Button */}
-                  <button
-                    type="button"
-                    onClick={() =>
-                      scrollToEnquiryForm({
-                        interestedPackage: calculatedQuote.package.title,
-                        studentCount: `${calcStudentCount} Students`,
-                        targetExam: calculatedQuote.package.target.includes('2028') ? 'Both' : 'NEET',
-                        message: `Requested institutional quote for ${calcStudentCount} students under ${calculatedQuote.package.title} (Est. Net Total ₹${calculatedQuote.grandTotal.toLocaleString()} incl. 18% GST).`,
-                      })
-                    }
-                    className="w-full rounded-2xl bg-[#2563EB] hover:bg-blue-700 active:scale-[0.99] py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <span>Continue with This Estimate</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </button>
-
-                  <p className="text-[11px] text-[#5D6B82] text-center pt-1 italic">
-                    This is an estimated institutional quotation. Final pricing is subject to confirmation.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-
-          {/* SECTION 11: FREQUENTLY ASKED QUESTIONS (REDESIGNED ACCORDION WITH GRADIENT BACKDROP) */}
-          <section className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FAFF] py-20 lg:py-24 border-b border-[#DCE5F1]">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
-              <div className="text-center space-y-2">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Got Questions?</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  Frequently Asked Questions
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
-                <p className="text-sm text-[#475467] pt-1">
-                  Everything you need to know about AIETS institutional partnerships and onboarding.
-                </p>
-              </div>
-
-              {/* Accordion Container with Generous Spacing */}
-              <div className="space-y-3.5">
-                {visibleFaqs.map((faq, idx) => {
-                  const isOpen = faqOpen === idx;
-                  return (
-                    <div
-                      key={idx}
-                      className={`rounded-2xl border transition-all duration-300 overflow-hidden ${
-                        isOpen
-                          ? 'border-[#2563EB] border-l-4 border-l-[#2563EB] bg-[#F4F8FF] shadow-sm'
-                          : 'border-[#DCE5F1] bg-white hover:border-[#2563EB]/40 shadow-xs'
-                      }`}
+                    <button
+                      type="button"
+                      onClick={() => handleViewProgramDetails(pkg)}
+                      className="w-full rounded-xl border border-[#DCE5F1] bg-white py-2 text-xs font-semibold text-[#071833] hover:bg-[#F8FAFC] hover:border-slate-400 transition cursor-pointer flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
                     >
-                      <button
-                        type="button"
-                        aria-expanded={isOpen}
-                        aria-controls={`faq-answer-${idx}`}
-                        onClick={() => setFaqOpen(isOpen ? null : idx)}
-                        className="w-full text-left px-6 py-4.5 min-h-[64px] flex items-center justify-between gap-4 font-extrabold text-[#071833] text-base sm:text-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
-                      >
-                        <span className="leading-snug">{faq.q}</span>
-                        <div className={`h-8 w-8 rounded-full bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 bg-[#2563EB] text-white' : ''}`}>
-                          <ChevronDown className="h-4 w-4" />
-                        </div>
-                      </button>
-
-                      {isOpen && (
-                        <div id={`faq-answer-${idx}`} className="px-6 pb-6 pt-2 text-sm sm:text-base text-[#475467] leading-[1.65] border-t border-[#DCE5F1]/60">
-                          {faq.a}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              {/* View More / Fewer FAQs Button */}
-              {B2B_FAQS.length > 6 && (
-                <div className="text-center pt-2">
-                  <button
-                    onClick={() => setShowAllFaqs(!showAllFaqs)}
-                    className="inline-flex items-center gap-2 rounded-xl border border-[#DCE5F1] bg-white px-6 py-3 text-xs sm:text-sm font-extrabold text-[#071833] hover:bg-blue-50 hover:text-[#2563EB] hover:border-blue-200 transition cursor-pointer shadow-xs"
-                  >
-                    <span>{showAllFaqs ? 'Show Fewer Questions' : 'View 3 More Questions'}</span>
-                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAllFaqs ? 'rotate-180' : ''}`} />
-                  </button>
-                </div>
-              )}
-            </div>
-          </section>
-
-
-          {/* SECTION 12: INSTITUTIONAL PARTNERSHIP ENQUIRY FORM (FINAL CONVERSION POINT) */}
-          <section ref={enquiryFormRef} id="partnership-form" className="bg-[#F5F8FD] py-12 sm:py-16 lg:py-24 border-b border-[#DCE5F1] scroll-mt-32">
-            <div className="max-w-[1280px] mx-auto px-3.5 sm:px-6 lg:px-8 w-full">
-              <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
-                
-                {/* LEFT SIDE: BRAND NARRATIVE & CONTACT DETAILS */}
-                <div className="lg:col-span-5 space-y-5">
-                  <div className="space-y-2">
-                    <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Get Started Today</span>
-                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
-                      Let’s Build a Stronger Testing Program Together
-                    </h2>
-                    <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
-                  </div>
-
-                  <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
-                    Transform your institution's results with NTA-style CBT mock assessments, All India Ranks, and real-time student performance analytics.
-                  </p>
-
-                  <div className="space-y-2.5 pt-1">
-                    <div className="flex items-start gap-3">
-                      <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
-                        <Check className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-xs font-extrabold text-[#071833]">Tailored Volume Quotation</h4>
-                        <p className="text-xs text-[#5D6B82]">Custom pricing quotes structured specifically for your student capacity.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
-                        <Check className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-xs font-extrabold text-[#071833]">Personalized Live Demo</h4>
-                        <p className="text-xs text-[#5D6B82]">Interactive walkthrough of student tests & admin dashboard management.</p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start gap-3">
-                      <div className="p-1.5 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 mt-0.5 shrink-0">
-                        <Check className="h-4 w-4" />
-                      </div>
-                      <div>
-                        <h4 className="text-xs font-extrabold text-[#071833]">Dedicated Account Specialist</h4>
-                        <p className="text-xs text-[#5D6B82]">Assigned onboarding manager for student roster import and setup.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE5F1] space-y-1.5 shadow-xs">
-                    <p className="text-xs font-extrabold text-[#071833]">Need Direct Institutional Support?</p>
-                    <p className="text-xs text-[#475467]">
-                      Email: <a href="mailto:edvedum@gmail.com" className="text-[#2563EB] font-bold hover:underline">edvedum@gmail.com</a>
-                    </p>
-                    <p className="text-xs text-[#475467]">
-                      Phone: <a href="tel:18003383386" className="text-[#2563EB] font-bold hover:underline">1800-EDVEDUM (3383386)</a>
-                    </p>
+                      <BookOpen className="h-3.5 w-3.5 text-[#2563EB]" />
+                      <span>View Full Program Details</span>
+                    </button>
                   </div>
                 </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                {/* RIGHT SIDE: 12-FIELD ENQUIRY FORM CARD */}
-                <div className="lg:col-span-7 w-full max-w-full">
-                  <div className="rounded-2xl sm:rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-7 lg:p-9 shadow-md space-y-4 sm:space-y-5 relative max-w-full overflow-hidden">
-                    <div className="border-b border-[#DCE5F1] pb-3.5">
-                      <h3 className="text-lg sm:text-xl font-extrabold text-[#071833]">
-                        Institutional Partnership Application
-                      </h3>
-                      <p className="text-[11px] sm:text-xs text-[#5D6B82] mt-0.5">
-                        Please fill out all required fields marked with an asterisk (*).
-                      </p>
+
+      {/* SECTION 5: INSTITUTION ADVANTAGES (GRADIENT FROM #EEF5FF TO #F8FBFF) */}
+      <section className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FBFF] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Institutional Advantages</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+              Why Institutions Should Partner with Edvedum
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm text-[#475467] pt-1">
+              Built specifically for Schools, Coaching Institutes, Junior Colleges, and Educational Organizations.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { title: 'National-Level Test Series', desc: '39 NTA-style practice CBT assessments curated by senior academic faculty.', icon: Award, color: 'blue', isFuture: false },
+              { title: 'AI-Based Performance Analytics', desc: 'Evaluates student speed, accuracy, question time distribution, and topic mastery.', icon: Sparkles, color: 'cyan', isFuture: false },
+              { title: 'All India Student Ranking', desc: 'Benchmarks scores nationally via AIR, State, City, and Institute rank cards.', icon: TrendingUp, color: 'purple', isFuture: false },
+              { title: 'Subject-Wise & Chapter Reports', desc: 'Granular analytics breakdown across Physics, Chemistry, Botany, and Zoology.', icon: BarChart3, color: 'emerald', isFuture: false },
+              { title: 'Curated eBooks & Study Material', desc: 'Every test includes assigned digital eBooks, formula guides, and solution PDFs.', icon: FileText, color: 'indigo', isFuture: false },
+              { title: 'Institution Performance Dashboard', desc: 'Unified admin portal to monitor attendance, test completion %, and batch progress.', icon: School, color: 'amber', isFuture: false },
+              { title: 'Bulk Student Registration', desc: 'Fast bulk student onboarding via CSV templates with auto credential generation.', icon: Users, color: 'blue', isFuture: false },
+              { title: 'Dedicated Institutional Support', desc: 'Assigned Onboarding Manager, priority technical support, and faculty guidance.', icon: UserCheck, color: 'emerald', isFuture: false },
+              { title: 'Future AI Learning Features', desc: 'Adaptive question recommendations, predictive rank algorithms, and LMS integration.', icon: ShieldCheck, color: 'purple', isFuture: true },
+            ].map((card, idx) => {
+              const Icon = card.icon;
+              return (
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-[#DCE5F1] bg-white p-6 space-y-3 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                >
+                  <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
+
+                  <div className="flex items-center justify-between pt-1">
+                    <div className="h-11 w-11 rounded-xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100">
+                      <Icon className="h-5 w-5" />
                     </div>
-
-                    {formSuccess ? (
-                      <div className="py-8 text-center space-y-4 animate-in zoom-in-95">
-                        <div className="h-16 w-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
-                          <CheckCircle2 className="h-9 w-9" />
-                        </div>
-                        <div className="space-y-1">
-                          <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] border border-blue-200 text-xs font-mono font-extrabold">
-                            Reference #: {enquiryRefCode || 'ENQ-2026-CONFIRMED'}
-                          </span>
-                          <h3 className="text-xl font-bold text-[#071833] pt-1">Application Submitted Successfully!</h3>
-                        </div>
-                        <p className="text-xs sm:text-sm text-[#475467] max-w-md mx-auto leading-relaxed">
-                          Thank you for submitting your institutional application. An Edvedum Institutional Partnership Specialist will review your request and contact your team within 24 hours.
-                        </p>
-                        <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] max-w-md mx-auto text-left text-xs space-y-1 font-mono">
-                          <div className="flex justify-between text-[#5D6B82]">
-                            <span>Program:</span>
-                            <span className="font-bold text-[#071833]">{enquiryForm.interestedPackage}</span>
-                          </div>
-                          <div className="flex justify-between text-[#5D6B82]">
-                            <span>Students:</span>
-                            <span className="font-bold text-[#071833]">{enquiryForm.studentCount}</span>
-                          </div>
-                          <div className="flex justify-between text-[#5D6B82]">
-                            <span>Estimated Total:</span>
-                            <span className="font-bold text-emerald-600">₹{calculatedQuote.grandTotal.toLocaleString()}</span>
-                          </div>
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => setFormSuccess(false)}
-                          className="rounded-xl bg-[#2563EB] px-6 py-2.5 text-xs font-bold text-white hover:bg-blue-700 transition cursor-pointer"
-                        >
-                          Submit Another Enquiry
-                        </button>
-                      </div>
-                    ) : (
-                      <form onSubmit={handleEnquirySubmit} className="space-y-3.5 sm:space-y-4">
-                        {formError && (
-                          <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-bold text-rose-700 text-center">
-                            {formError}
-                          </div>
-                        )}
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              1. Institution Name *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              placeholder="e.g. Apex Educational Academy"
-                              value={enquiryForm.institutionName}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionName: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              2. Contact Person *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              placeholder="e.g. Dr. Ramesh Sharma"
-                              value={enquiryForm.contactPerson}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, contactPerson: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              3. Designation
-                            </label>
-                            <select
-                              value={enquiryForm.designation}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, designation: e.target.value })}
-                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            >
-                              <option value="Principal">Principal / Vice Principal</option>
-                              <option value="Director">Managing Director / Owner</option>
-                              <option value="Academic Head">Academic Head / HOD</option>
-                              <option value="Trustee">School Trustee / Administrator</option>
-                              <option value="Teacher">Senior Faculty / Teacher</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              4. Mobile Number *
-                            </label>
-                            <input
-                              type="tel"
-                              required
-                              placeholder="+91 98765 43210"
-                              value={enquiryForm.mobileNumber}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, mobileNumber: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              5. Official Email Address *
-                            </label>
-                            <input
-                              type="email"
-                              required
-                              placeholder="principal@institution.edu.in"
-                              value={enquiryForm.email}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              6. City *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              placeholder="e.g. New Delhi"
-                              value={enquiryForm.city}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, city: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              7. State *
-                            </label>
-                            <input
-                              type="text"
-                              required
-                              placeholder="e.g. Delhi NCR"
-                              value={enquiryForm.state}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, state: e.target.value })}
-                              className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            />
-                          </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              8. Institution Type
-                            </label>
-                            <select
-                              value={enquiryForm.institutionType}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionType: e.target.value })}
-                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            >
-                              {INSTITUTION_TYPES.map((t) => (
-                                <option key={t} value={t}>{t}</option>
-                              ))}
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              9. Number of Students
-                            </label>
-                            <select
-                              value={enquiryForm.studentCount}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, studentCount: e.target.value })}
-                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            >
-                              <option value="50-100">50 - 100 Students</option>
-                              <option value="100-300">100 - 300 Students</option>
-                              <option value="300-500">300 - 500 Students</option>
-                              <option value="500+">500+ Students</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label className="block text-xs font-bold text-[#071833] mb-1">
-                              10. Target Examination
-                            </label>
-                            <select
-                              value={enquiryForm.targetExam}
-                              onChange={(e) => setEnquiryForm({ ...enquiryForm, targetExam: e.target.value })}
-                              className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                            >
-                              {TARGET_EXAMINATIONS.map((exam) => (
-                                <option key={exam} value={exam}>{exam}</option>
-                              ))}
-                            </select>
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-bold text-[#071833] mb-1">
-                            11. Interested Package
-                          </label>
-                          <select
-                            value={enquiryForm.interestedPackage}
-                            onChange={(e) => setEnquiryForm({ ...enquiryForm, interestedPackage: e.target.value })}
-                            className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                          >
-                            {INTERESTED_PACKAGES.map((pkg) => (
-                              <option key={pkg} value={pkg}>{pkg}</option>
-                            ))}
-                          </select>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-bold text-[#071833] mb-1">
-                            12. Message / Requirements
-                          </label>
-                          <textarea
-                            rows="2"
-                            placeholder="Mention any specific requirements, timing, or questions..."
-                            value={enquiryForm.message}
-                            onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
-                            className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
-                          />
-                        </div>
-
-                        {/* Consent Checkbox */}
-                        <div className="pt-2 flex items-start gap-2.5">
-                          <input
-                            id="consent-check"
-                            type="checkbox"
-                            required
-                            checked={enquiryForm.consent}
-                            onChange={(e) => setEnquiryForm({ ...enquiryForm, consent: e.target.checked })}
-                            className="mt-0.5 h-4 w-4 rounded border-[#DCE5F1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer shrink-0"
-                          />
-                          <label htmlFor="consent-check" className="text-xs text-[#475467] leading-snug cursor-pointer">
-                            I agree to be contacted by Edvedum Academy regarding this institutional enquiry. *
-                          </label>
-                        </div>
-
-                        {/* Submit Button */}
-                        <button
-                          type="submit"
-                          disabled={formSubmitting}
-                          className="w-full mt-3 rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 px-4 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
-                        >
-                          {formSubmitting ? (
-                            <>
-                              <Spinner className="h-4 w-4 text-white" />
-                              <span>Submitting Application...</span>
-                            </>
-                          ) : (
-                            <>
-                              <span className="hidden sm:inline">Submit Institutional Partnership Application</span>
-                              <span className="sm:hidden">Submit Partnership Application</span>
-                              <Send className="h-4 w-4 shrink-0" />
-                            </>
-                          )}
-                        </button>
-                      </form>
+                    {card.isFuture && (
+                      <span className="rounded-full bg-amber-500/10 border border-amber-500/20 px-2.5 py-0.5 text-[10px] font-bold text-amber-600 uppercase">
+                        Future
+                      </span>
                     )}
                   </div>
+                  <h3 className="text-base font-extrabold text-[#071833]">{card.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">{card.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 6: STUDENT BENEFITS (WHITE WITH TINTED CARDS) */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Student Academic Impact</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+              Student Benefits
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm text-[#475467] pt-1">
+              What every enrolled student receives under your institutional partnership.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
+              <div className="h-12 w-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100">
+                <Award className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-extrabold text-[#071833]">Ranking & Benchmarking</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-[#2563EB] mt-0.5 shrink-0" />
+                  <span>All India Rank (AIR), state, city, institution and batch ranks.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-[#2563EB] mt-0.5 shrink-0" />
+                  <span>Test-by-test progress tracking and peer comparison.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
+              <div className="h-12 w-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center border border-cyan-100">
+                <BarChart3 className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-extrabold text-[#071833]">Performance Analytics</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" />
+                  <span>Subject and chapter-wise accuracy analysis.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-cyan-600 mt-0.5 shrink-0" />
+                  <span>Time management & question attempt distribution reports.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
+              <div className="h-12 w-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center border border-purple-100">
+                <BookOpen className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-extrabold text-[#071833]">Digital Resources</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-purple-600 mt-0.5 shrink-0" />
+                  <span>Detailed step-by-step solution PDFs for every question.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-purple-600 mt-0.5 shrink-0" />
+                  <span>Curated eBooks, formula guides, and NCERT digital modules.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-4 hover:-translate-y-1 transition duration-300 shadow-xs">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+                <Target className="h-6 w-6" />
+              </div>
+              <h3 className="text-base font-extrabold text-[#071833]">Improvement Guidance</h3>
+              <ul className="space-y-2 text-xs sm:text-sm text-[#475467]">
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                  <span>Personalized improvement & revision recommendations.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <Check className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                  <span>Mentoring sessions as included in the selected package.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 7: PUBLIC DASHBOARD PREVIEW (GRADIENT FROM #F1F6FD TO #F7FBFF) */}
+      <section className="bg-gradient-to-b from-[#F1F6FD] to-[#F7FBFF] py-16 lg:py-18 border-b border-[#DCE5F1]">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+          {/* Section Header */}
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">
+              CENTRALIZED INSTITUTION MANAGEMENT
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+              See What Your Institution Can Manage
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-xs sm:text-sm text-[#475467] pt-1">
+              Preview the tools available to authorized institutional partners for managing students, batches, tests, analytics and reports.
+            </p>
+            <span className="inline-block mt-1 px-3 py-0.5 rounded-full bg-blue-50 text-[#2563EB] border border-blue-100 text-[11px] font-bold">
+              Illustrative preview — sample data only
+            </span>
+          </div>
+
+          {/* Two-Column Layout */}
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+
+            {/* LEFT SIDE: PRODUCT INFORMATION (~42% / 5 cols) */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="space-y-4">
+
+                {/* Feature 1 */}
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
+                  <div className="p-2 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 shrink-0">
+                    <Users className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Student and Batch Management</h4>
+                    <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Organize enrolled students, batches and login access.</p>
+                  </div>
+                </div>
+
+                {/* Feature 2 */}
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
+                  <div className="p-2 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 shrink-0">
+                    <BookOpen className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Test-Series Assignment</h4>
+                    <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Assign AIETS packages, tests and learning resources.</p>
+                  </div>
+                </div>
+
+                {/* Feature 3 */}
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
+                  <div className="p-2 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 shrink-0">
+                    <BarChart3 className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Performance Analytics</h4>
+                    <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Review participation, subject performance and batch progress.</p>
+                  </div>
+                </div>
+
+                {/* Feature 4 */}
+                <div className="flex items-start gap-3.5 p-3.5 rounded-2xl bg-white border border-[#DCE5F1] shadow-xs min-w-0">
+                  <div className="p-2 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 shrink-0">
+                    <FileText className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <h4 className="text-xs sm:text-sm font-extrabold text-[#071833] leading-snug">Reports and Invoices</h4>
+                    <p className="text-xs text-[#5D6B82] mt-0.5 leading-snug">Download institutional reports and access payment records.</p>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Cleaned CTAs (One primary login-return action) */}
+              <div className="space-y-2.5 pt-1">
+                <button
+                  onClick={() => scrollToHeroLogin()}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-[#2563EB] hover:bg-blue-700 px-6 py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer"
+                >
+                  <span>Go to Institution Login</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+
+                <p className="text-[11px] text-[#5D6B82] italic">
+                  The complete dashboard is available only to authorized institutional partners.
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: COMPACT DASHBOARD MOCKUP (~58% / 7 cols) */}
+            <div className="lg:col-span-7 relative min-w-0 max-w-full">
+              <div className="absolute -inset-2 rounded-3xl bg-blue-500/10 blur-xl opacity-60 pointer-events-none" />
+
+              <div className="relative rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-6 shadow-md space-y-4 overflow-hidden max-w-full">
+                {/* Top Accent Line */}
+                <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
+
+                {/* Header Bar */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-[#DCE5F1] pb-3 gap-2">
+                  <div className="space-y-0.5">
+                    <h3 className="text-sm font-extrabold text-[#071833] flex items-center gap-2">
+                      <span>AIETS Institution Portal</span>
+                      <span className="px-2 py-0.5 rounded-full bg-cyan-50 text-cyan-700 border border-cyan-200 text-[10px] font-bold">
+                        Sample Preview
+                      </span>
+                    </h3>
+                    <p className="text-[11px] text-[#5D6B82]">Sample Institution Workspace</p>
+                  </div>
+
+                  {/* Non-Interactive Tab Nav with Overflow Scroll */}
+                  <div className="flex items-center gap-1 bg-[#F8FAFC] p-1 rounded-xl border border-[#DCE5F1] text-[10.5px] font-bold text-[#5D6B82] overflow-x-auto max-w-full">
+                    <span className="px-2.5 py-1 rounded-lg bg-white text-[#2563EB] shadow-xs border border-[#DCE5F1] whitespace-nowrap">Students</span>
+                    <span className="px-2 py-1 whitespace-nowrap">Batches</span>
+                    <span className="px-2 py-1 whitespace-nowrap">Assignments</span>
+                    <span className="px-2 py-1 whitespace-nowrap">Analytics</span>
+                    <span className="px-2 py-1 whitespace-nowrap">Reports</span>
+                  </div>
+                </div>
+
+                {/* 4 Feature Mockup Tiles (Single Column on mobile <440px for 100% legibility) */}
+                <div className="grid grid-cols-1 min-[440px]:grid-cols-2 gap-3">
+
+                  {/* Tile 1: Student Roster */}
+                  <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
+                        <Users className="h-3.5 w-3.5 text-[#2563EB]" />
+                        <span>Student Roster</span>
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">Active</span>
+                    </div>
+                    <div className="space-y-1.5 text-[10.5px] text-[#5D6B82]">
+                      <div className="flex justify-between items-center p-1.5 rounded-lg bg-white border border-[#DCE5F1]">
+                        <span className="font-medium text-[#071833]">Batch A — NEET 2027</span>
+                        <span className="h-2 w-12 bg-blue-100 rounded-full overflow-hidden inline-block"><span className="h-full bg-[#2563eb] block w-[80%]" /></span>
+                      </div>
+                      <div className="flex justify-between items-center p-1.5 rounded-lg bg-white border border-[#DCE5F1]">
+                        <span className="font-medium text-[#071833]">Batch B — JEE 2027</span>
+                        <span className="h-2 w-12 bg-cyan-100 rounded-full overflow-hidden inline-block"><span className="h-full bg-cyan-500 block w-[65%]" /></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tile 2: Batch Progress */}
+                  <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
+                        <TrendingUp className="h-3.5 w-3.5 text-cyan-600" />
+                        <span>Batch Progress</span>
+                      </span>
+                      <span className="text-[10px] font-mono text-[#2563EB] font-bold">100% NTA</span>
+                    </div>
+                    <div className="space-y-1.5 text-[10.5px] text-[#5D6B82]">
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] space-y-1">
+                        <div className="flex justify-between text-[10px]">
+                          <span className="font-semibold text-[#071833]">Physics Syllabus</span>
+                          <span className="text-emerald-600 font-bold">Covered</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-emerald-500 rounded-full w-[78%]" /></div>
+                      </div>
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] space-y-1">
+                        <div className="flex justify-between text-[10px]">
+                          <span className="font-semibold text-[#071833]">Chemistry Syllabus</span>
+                          <span className="text-cyan-600 font-bold">In Progress</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-cyan-500 rounded-full w-[62%]" /></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tile 3: Test Participation */}
+                  <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
+                        <Activity className="h-3.5 w-3.5 text-purple-600" />
+                        <span>Test Participation</span>
+                      </span>
+                      <span className="text-[10px] font-bold text-purple-700 bg-purple-50 px-1.5 py-0.5 rounded">Scheduled</span>
+                    </div>
+                    <div className="space-y-1 text-[10.5px] text-[#5D6B82]">
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
+                        <span className="font-semibold text-[#071833]">AIETS Mock 14</span>
+                        <span className="text-[10px] font-bold text-emerald-600 font-mono">Completed</span>
+                      </div>
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
+                        <span className="font-semibold text-[#071833]">Unit Test 08</span>
+                        <span className="text-[10px] font-bold text-[#2563EB] font-mono">Upcoming</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Tile 4: Reports & Invoices */}
+                  <div className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] space-y-2">
+                    <div className="flex justify-between items-center text-xs">
+                      <span className="font-extrabold text-[#071833] flex items-center gap-1.5">
+                        <FileSpreadsheet className="h-3.5 w-3.5 text-emerald-600" />
+                        <span>Reports & Invoices</span>
+                      </span>
+                      <span className="text-[10px] font-bold text-slate-500">PDF / CSV</span>
+                    </div>
+                    <div className="space-y-1 text-[10.5px] text-[#5D6B82]">
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
+                        <span className="font-semibold text-[#071833]">Scorecard Export</span>
+                        <Download className="h-3.5 w-3.5 text-[#2563EB]" />
+                      </div>
+                      <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] flex justify-between items-center">
+                        <span className="font-semibold text-[#071833]">GST Tax Invoice</span>
+                        <Download className="h-3.5 w-3.5 text-[#2563EB]" />
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <div className="pt-1 text-center">
+                  <p className="text-[10.5px] text-[#5D6B82] italic">
+                    Non-interactive sample preview — Log in to access your authorized institution portal.
+                  </p>
                 </div>
 
               </div>
             </div>
-          </section>
+
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 8: PARTNERSHIP PROCESS (WHITE BACKGROUND) */}
+      <section className="bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Seamless Onboarding</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+              Partnership Process
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm text-[#475467] pt-1">
+              Get your institution live on AIETS in four simple steps.
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { step: '01', title: 'Submit Enquiry', desc: 'Fill out the partnership enquiry form with your student count and exam targets.', icon: FileText },
+              { step: '02', title: 'Schedule Demo', desc: 'Our institutional specialist delivers a personalized product walkthrough and pricing quote.', icon: Phone },
+              { step: '03', title: 'Configure Institution', desc: 'Configure institution details, package selection, and admin credentials.', icon: Building2 },
+              { step: '04', title: 'Launch AIETS', desc: 'Upload student roster via CSV, distribute logins, and start national CBT testing.', icon: RocketIcon },
+            ].map((card, idx) => {
+              const Icon = card.icon || Send;
+              return (
+                <div key={idx} className="rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 space-y-3 shadow-xs hover:-translate-y-1 transition duration-300 relative">
+                  <div className="flex items-center justify-between">
+                    <span className="text-2xl font-black text-[#2563EB] font-mono">{card.step}</span>
+                    <div className="p-2 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100">
+                      <Icon className="h-4 w-4" />
+                    </div>
+                  </div>
+                  <h3 className="text-base font-extrabold text-[#071833]">{card.title}</h3>
+                  <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">{card.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 10: INSTITUTIONAL PRICING CALCULATOR (SOFT GREY-BLUE BACKGROUND) */}
+      <section id="institutional-pricing" ref={calculatorSectionRef} className="bg-[#F3F7FD] py-10 sm:py-14 lg:py-16 border-b border-[#DCE5F1] scroll-mt-20">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-8">
+          <div className="text-center space-y-2 max-w-2xl mx-auto">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Transparent Bulk Pricing</span>
+            <h2 ref={calculatorHeadingRef} className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight outline-none focus:outline-none">
+              Institutional Pricing Calculator
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm text-[#475467] pt-1">
+              Select your program and student capacity to calculate estimated bulk volume savings.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-7 rounded-3xl border border-[#DCE5F1] bg-white p-6 sm:p-8 space-y-6 shadow-sm">
+              <div className="space-y-2">
+                <label className="block text-xs font-extrabold uppercase text-[#071833]">
+                  Step 1: Select Program Package
+                </label>
+                <div className="grid sm:grid-cols-2 gap-3">
+                  {B2B_PACKAGES.map((pkg) => (
+                    <button
+                      key={pkg.id}
+                      type="button"
+                      onClick={() => setSelectedCalcPackageId(pkg.id)}
+                      className={`p-4 rounded-2xl border text-left transition cursor-pointer ${selectedCalcPackageId === pkg.id
+                          ? 'border-[#2563EB] bg-blue-50/50 ring-2 ring-[#2563EB]/20'
+                          : 'border-[#DCE5F1] bg-white hover:bg-slate-50'
+                        }`}
+                    >
+                      <p className="text-xs font-black text-[#071833]">{pkg.target}</p>
+                      <p className="text-[11px] text-[#5D6B82] mt-0.5">{pkg.totalTests} Mocks • ₹{pkg.baseRetailPrice}/std</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex justify-between items-center">
+                  <label className="text-xs font-extrabold uppercase text-[#071833]">
+                    Step 2: Student Batch Capacity
+                  </label>
+                  <span className="text-lg font-black text-[#2563EB] font-mono">{calcStudentCount} Students</span>
+                </div>
+                <input
+                  type="range"
+                  min="50"
+                  max="1500"
+                  step="25"
+                  value={calcStudentCount}
+                  onChange={(e) => setCalcStudentCount(parseInt(e.target.value))}
+                  className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2563eb]"
+                />
+                <div className="flex justify-between text-[11px] font-bold text-[#5D6B82] font-mono">
+                  <span>50</span>
+                  <span>500</span>
+                  <span>1,500+ Students</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
+                <div className={`p-2.5 rounded-xl border ${calcStudentCount < 200 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
+                  <span>50-199</span>
+                  <p className="text-[10px] font-normal">Standard Rate</p>
+                </div>
+                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 200 && calcStudentCount < 500 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
+                  <span>200-499</span>
+                  <p className="text-[10px] font-bold text-emerald-600">25% OFF</p>
+                </div>
+                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 500 && calcStudentCount < 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
+                  <span>500-999</span>
+                  <p className="text-[10px] font-bold text-emerald-600">40% OFF</p>
+                </div>
+                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
+                  <span>1,000+</span>
+                  <p className="text-[10px] font-bold text-emerald-600">50% OFF</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="lg:col-span-5 rounded-3xl border border-[#DCE5F1] bg-white p-6 sm:p-7 shadow-md space-y-4">
+              <div className="flex justify-between items-center border-b border-[#DCE5F1] pb-3">
+                <div>
+                  <h3 className="font-extrabold text-[#071833] text-base">Estimated Quotation</h3>
+                  <p className="text-xs text-[#2563EB] font-bold">{calculatedQuote.tierLabel}</p>
+                </div>
+                <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold font-mono">
+                  Save ₹{calculatedQuote.totalSavings.toLocaleString()}
+                </span>
+              </div>
+
+              <div className="space-y-2 text-xs font-mono">
+                <div className="flex justify-between text-[#5D6B82]">
+                  <span>Standard Retail Subtotal:</span>
+                  <span className="line-through text-slate-400">₹{calculatedQuote.retailSubtotal.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-[#071833] font-bold">
+                  <span>Discounted Rate ({calcStudentCount} x ₹{calculatedQuote.discountedPricePerStudent}):</span>
+                  <span className="text-[#2563EB]">₹{calculatedQuote.subtotal.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-[#5D6B82]">
+                  <span>18% GST (HSN 9992):</span>
+                  <span>₹{calculatedQuote.taxAmount.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm font-black pt-3 border-t border-[#DCE5F1] text-[#071833]">
+                  <span>Grand Net Total (Incl. GST):</span>
+                  <span className="text-emerald-600 text-base">₹{calculatedQuote.grandTotal.toLocaleString()}</span>
+                </div>
+              </div>
+
+              {/* Continue with This Estimate Button */}
+              <button
+                type="button"
+                onClick={() =>
+                  scrollToEnquiryForm({
+                    interestedPackage: calculatedQuote.package.title,
+                    studentCount: `${calcStudentCount} Students`,
+                    targetExam: calculatedQuote.package.target.includes('2028') ? 'Both' : 'NEET',
+                    message: `Requested institutional quote for ${calcStudentCount} students under ${calculatedQuote.package.title} (Est. Net Total ₹${calculatedQuote.grandTotal.toLocaleString()} incl. 18% GST).`,
+                  })
+                }
+                className="w-full rounded-2xl bg-[#2563EB] hover:bg-blue-700 active:scale-[0.99] py-3.5 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+              >
+                <span>Continue with This Estimate</span>
+                <ArrowRight className="h-4 w-4" />
+              </button>
+
+              <p className="text-[11px] text-[#5D6B82] text-center pt-1 italic">
+                This is an estimated institutional quotation. Final pricing is subject to confirmation.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      {/* SECTION 11: FREQUENTLY ASKED QUESTIONS (REDESIGNED ACCORDION WITH GRADIENT BACKDROP) */}
+      <section className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FAFF] py-20 lg:py-24 border-b border-[#DCE5F1]">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-10">
+          <div className="text-center space-y-2">
+            <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Got Questions?</span>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
+              Frequently Asked Questions
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm text-[#475467] pt-1">
+              Everything you need to know about AIETS institutional partnerships and onboarding.
+            </p>
+          </div>
+
+          {/* Accordion Container with Generous Spacing */}
+          <div className="space-y-3.5">
+            {visibleFaqs.map((faq, idx) => {
+              const isOpen = faqOpen === idx;
+              return (
+                <div
+                  key={idx}
+                  className={`rounded-2xl border transition-all duration-300 overflow-hidden ${isOpen
+                      ? 'border-[#2563EB] border-l-4 border-l-[#2563EB] bg-[#F4F8FF] shadow-sm'
+                      : 'border-[#DCE5F1] bg-white hover:border-[#2563EB]/40 shadow-xs'
+                    }`}
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${idx}`}
+                    onClick={() => setFaqOpen(isOpen ? null : idx)}
+                    className="w-full text-left px-6 py-4.5 min-h-[64px] flex items-center justify-between gap-4 font-extrabold text-[#071833] text-base sm:text-lg cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#2563eb]"
+                  >
+                    <span className="leading-snug">{faq.q}</span>
+                    <div className={`h-8 w-8 rounded-full bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100 shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 bg-[#2563EB] text-white' : ''}`}>
+                      <ChevronDown className="h-4 w-4" />
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div id={`faq-answer-${idx}`} className="px-6 pb-6 pt-2 text-sm sm:text-base text-[#475467] leading-[1.65] border-t border-[#DCE5F1]/60">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+          {/* View More / Fewer FAQs Button */}
+          {B2B_FAQS.length > 6 && (
+            <div className="text-center pt-2">
+              <button
+                onClick={() => setShowAllFaqs(!showAllFaqs)}
+                className="inline-flex items-center gap-2 rounded-xl border border-[#DCE5F1] bg-white px-6 py-3 text-xs sm:text-sm font-extrabold text-[#071833] hover:bg-blue-50 hover:text-[#2563EB] hover:border-blue-200 transition cursor-pointer shadow-xs"
+              >
+                <span>{showAllFaqs ? 'Show Fewer Questions' : 'View 3 More Questions'}</span>
+                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${showAllFaqs ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+          )}
+        </div>
+      </section>
+
+
+      {/* SECTION 12: INSTITUTIONAL PARTNERSHIP ENQUIRY FORM (FINAL CONVERSION POINT) */}
+      <section ref={enquiryFormRef} id="partnership-form" className="bg-[#F5F8FD] py-12 sm:py-16 lg:py-24 border-b border-[#DCE5F1] scroll-mt-32">
+        <div className="max-w-[1280px] mx-auto px-3.5 sm:px-6 lg:px-8 w-full">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+
+            {/* LEFT SIDE: BRAND NARRATIVE & CONTACT DETAILS */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="space-y-2">
+                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Get Started Today</span>
+                <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
+                  Let’s Build a Stronger Testing Program Together
+                </h2>
+                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
+              </div>
+
+              <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
+                Transform your institution's results with NTA-style CBT mock assessments, All India Ranks, and real-time student performance analytics.
+              </p>
+
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
+                    <Check className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-extrabold text-[#071833]">Tailored Volume Quotation</h4>
+                    <p className="text-xs text-[#5D6B82]">Custom pricing quotes structured specifically for your student capacity.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
+                    <Check className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-extrabold text-[#071833]">Personalized Live Demo</h4>
+                    <p className="text-xs text-[#5D6B82]">Interactive walkthrough of student tests & admin dashboard management.</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3">
+                  <div className="p-1.5 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 mt-0.5 shrink-0">
+                    <Check className="h-4 w-4" />
+                  </div>
+                  <div>
+                    <h4 className="text-xs font-extrabold text-[#071833]">Dedicated Account Specialist</h4>
+                    <p className="text-xs text-[#5D6B82]">Assigned onboarding manager for student roster import and setup.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE5F1] space-y-1.5 shadow-xs">
+                <p className="text-xs font-extrabold text-[#071833]">Need Direct Institutional Support?</p>
+                <p className="text-xs text-[#475467]">
+                  Email: <a href="mailto:edvedum@gmail.com" className="text-[#2563EB] font-bold hover:underline">edvedum@gmail.com</a>
+                </p>
+                <p className="text-xs text-[#475467]">
+                  Phone: <a href="tel:18003383386" className="text-[#2563EB] font-bold hover:underline">1800-EDVEDUM (3383386)</a>
+                </p>
+              </div>
+            </div>
+
+            {/* RIGHT SIDE: 12-FIELD ENQUIRY FORM CARD */}
+            <div className="lg:col-span-7 w-full max-w-full">
+              <div className="rounded-2xl sm:rounded-3xl border border-[#DCE5F1] bg-white p-4 sm:p-7 lg:p-9 shadow-md space-y-4 sm:space-y-5 relative max-w-full overflow-hidden">
+                <div className="border-b border-[#DCE5F1] pb-3.5">
+                  <h3 className="text-lg sm:text-xl font-extrabold text-[#071833]">
+                    Institutional Partnership Application
+                  </h3>
+                  <p className="text-[11px] sm:text-xs text-[#5D6B82] mt-0.5">
+                    Please fill out all required fields marked with an asterisk (*).
+                  </p>
+                </div>
+
+                {formSuccess ? (
+                  <div className="py-8 text-center space-y-4 animate-in zoom-in-95">
+                    <div className="h-16 w-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto border border-emerald-200">
+                      <CheckCircle2 className="h-9 w-9" />
+                    </div>
+                    <div className="space-y-1">
+                      <span className="inline-block px-3 py-1 rounded-full bg-blue-50 text-[#2563EB] border border-blue-200 text-xs font-mono font-extrabold">
+                        Reference #: {enquiryRefCode || 'ENQ-2026-CONFIRMED'}
+                      </span>
+                      <h3 className="text-xl font-bold text-[#071833] pt-1">Application Submitted Successfully!</h3>
+                    </div>
+                    <p className="text-xs sm:text-sm text-[#475467] max-w-md mx-auto leading-relaxed">
+                      Thank you for submitting your institutional application. An Edvedum Institutional Partnership Specialist will review your request and contact your team within 24 hours.
+                    </p>
+                    <div className="p-4 rounded-2xl bg-[#F8FAFC] border border-[#DCE5F1] max-w-md mx-auto text-left text-xs space-y-1 font-mono">
+                      <div className="flex justify-between text-[#5D6B82]">
+                        <span>Program:</span>
+                        <span className="font-bold text-[#071833]">{enquiryForm.interestedPackage}</span>
+                      </div>
+                      <div className="flex justify-between text-[#5D6B82]">
+                        <span>Students:</span>
+                        <span className="font-bold text-[#071833]">{enquiryForm.studentCount}</span>
+                      </div>
+                      <div className="flex justify-between text-[#5D6B82]">
+                        <span>Estimated Total:</span>
+                        <span className="font-bold text-emerald-600">₹{calculatedQuote.grandTotal.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFormSuccess(false)}
+                      className="rounded-xl bg-[#2563EB] px-6 py-2.5 text-xs font-bold text-white hover:bg-blue-700 transition cursor-pointer"
+                    >
+                      Submit Another Enquiry
+                    </button>
+                  </div>
+                ) : (
+                  <form onSubmit={handleEnquirySubmit} className="space-y-3.5 sm:space-y-4">
+                    {formError && (
+                      <div className="rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-bold text-rose-700 text-center">
+                        {formError}
+                      </div>
+                    )}
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          1. Institution Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Apex Educational Academy"
+                          value={enquiryForm.institutionName}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionName: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          2. Contact Person *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Dr. Ramesh Sharma"
+                          value={enquiryForm.contactPerson}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, contactPerson: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          3. Designation
+                        </label>
+                        <select
+                          value={enquiryForm.designation}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, designation: e.target.value })}
+                          className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        >
+                          <option value="Principal">Principal / Vice Principal</option>
+                          <option value="Director">Managing Director / Owner</option>
+                          <option value="Academic Head">Academic Head / HOD</option>
+                          <option value="Trustee">School Trustee / Administrator</option>
+                          <option value="Teacher">Senior Faculty / Teacher</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          4. Mobile Number *
+                        </label>
+                        <input
+                          type="tel"
+                          required
+                          placeholder="+91 98765 43210"
+                          value={enquiryForm.mobileNumber}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, mobileNumber: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          5. Official Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          placeholder="principal@institution.edu.in"
+                          value={enquiryForm.email}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, email: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          6. City *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. New Delhi"
+                          value={enquiryForm.city}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, city: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          7. State *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          placeholder="e.g. Delhi NCR"
+                          value={enquiryForm.state}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, state: e.target.value })}
+                          className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          8. Institution Type
+                        </label>
+                        <select
+                          value={enquiryForm.institutionType}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, institutionType: e.target.value })}
+                          className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        >
+                          {INSTITUTION_TYPES.map((t) => (
+                            <option key={t} value={t}>{t}</option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          9. Number of Students
+                        </label>
+                        <select
+                          value={enquiryForm.studentCount}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, studentCount: e.target.value })}
+                          className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        >
+                          <option value="50-100">50 - 100 Students</option>
+                          <option value="100-300">100 - 300 Students</option>
+                          <option value="300-500">300 - 500 Students</option>
+                          <option value="500+">500+ Students</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold text-[#071833] mb-1">
+                          10. Target Examination
+                        </label>
+                        <select
+                          value={enquiryForm.targetExam}
+                          onChange={(e) => setEnquiryForm({ ...enquiryForm, targetExam: e.target.value })}
+                          className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                        >
+                          {TARGET_EXAMINATIONS.map((exam) => (
+                            <option key={exam} value={exam}>{exam}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-[#071833] mb-1">
+                        11. Interested Package
+                      </label>
+                      <select
+                        value={enquiryForm.interestedPackage}
+                        onChange={(e) => setEnquiryForm({ ...enquiryForm, interestedPackage: e.target.value })}
+                        className="w-full max-w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-2.5 py-2.5 text-xs text-[#071833] focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                      >
+                        {INTERESTED_PACKAGES.map((pkg) => (
+                          <option key={pkg} value={pkg}>{pkg}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold text-[#071833] mb-1">
+                        12. Message / Requirements
+                      </label>
+                      <textarea
+                        rows="2"
+                        placeholder="Mention any specific requirements, timing, or questions..."
+                        value={enquiryForm.message}
+                        onChange={(e) => setEnquiryForm({ ...enquiryForm, message: e.target.value })}
+                        className="w-full rounded-xl border border-[#DCE5F1] bg-[#F8FAFC] px-3 py-2.5 text-xs text-[#071833] placeholder:text-[11px] sm:placeholder:text-xs focus:border-[#2563eb] focus:bg-white focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Consent Checkbox */}
+                    <div className="pt-2 flex items-start gap-2.5">
+                      <input
+                        id="consent-check"
+                        type="checkbox"
+                        required
+                        checked={enquiryForm.consent}
+                        onChange={(e) => setEnquiryForm({ ...enquiryForm, consent: e.target.checked })}
+                        className="mt-0.5 h-4 w-4 rounded border-[#DCE5F1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer shrink-0"
+                      />
+                      <label htmlFor="consent-check" className="text-xs text-[#475467] leading-snug cursor-pointer">
+                        I agree to be contacted by Edvedum Academy regarding this institutional enquiry. *
+                      </label>
+                    </div>
+
+                    {/* Submit Button */}
+                    <button
+                      type="submit"
+                      disabled={formSubmitting}
+                      className="w-full mt-3 rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 px-4 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer disabled:opacity-50 flex items-center justify-center gap-2"
+                    >
+                      {formSubmitting ? (
+                        <>
+                          <Spinner className="h-4 w-4 text-white" />
+                          <span>Submitting Application...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="hidden sm:inline">Submit Institutional Partnership Application</span>
+                          <span className="sm:hidden">Submit Partnership Application</span>
+                          <Send className="h-4 w-4 shrink-0" />
+                        </>
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
     </div>
   );

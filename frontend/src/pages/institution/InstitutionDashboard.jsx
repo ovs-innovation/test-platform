@@ -585,6 +585,7 @@ export function InstStudentsTabWrapper() {
 
 export function InstBatchesTabWrapper() {
   const ctx = useOutletContext();
+  const navigate = useNavigate();
   return (
     <BatchesTab
       batches={ctx.batches}
@@ -592,6 +593,7 @@ export function InstBatchesTabWrapper() {
       onCreateBatch={ctx.onCreateBatch}
       onUpdateBatch={ctx.onUpdateBatch}
       onArchiveBatch={ctx.onArchiveBatch}
+      onNavigateTab={(tab, batchId) => navigate(`/institution/${tab}${batchId ? `?batch=${batchId}` : ''}`)}
       isDarkMode={ctx.isDarkMode}
     />
   );

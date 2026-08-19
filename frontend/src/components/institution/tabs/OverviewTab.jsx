@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import {
   Users,
   TrendingUp,
@@ -34,6 +35,15 @@ export default function OverviewTab({
   isDarkMode = true,
   loading = false,
 }) {
+  const navigate = useNavigate();
+
+  const handleNavigate = (tab) => {
+    if (typeof onNavigateTab === 'function') {
+      onNavigateTab(tab);
+    } else {
+      navigate(`/institution/${tab}`);
+    }
+  };
   const totalLic = institution?.total_licenses || 50;
   const usedLic = students.length || institution?.used_licenses || 0;
   const availLic = Math.max(0, totalLic - usedLic);
@@ -63,8 +73,13 @@ export default function OverviewTab({
   const getLicenceBadgeColor = () => {
     if (licPercentage > 90) return 'bg-rose-500/10 text-rose-500 border-rose-500/20';
     if (licPercentage > 75) return 'bg-amber-500/10 text-amber-500 border-amber-500/20';
-    return 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20';
+    return isDarkMode
+      ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20'
+      : 'bg-cyan-50 text-cyan-700 border-cyan-200';
   };
+
+  const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600';
+  const textSubtleClass = isDarkMode ? 'text-slate-400' : 'text-slate-500';
 
   return (
     <div className="space-y-6 animate-in fade-in duration-200">
@@ -73,7 +88,7 @@ export default function OverviewTab({
           1. INSTITUTION SUMMARY BLOCK
          ========================================================================= */}
       <div className={`rounded-2xl border p-6 sm:p-7 relative overflow-hidden shadow-2xs transition-all ${
-        isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90'
+        isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-sm'
       }`}>
         <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between relative z-10">
           
@@ -93,7 +108,9 @@ export default function OverviewTab({
 
             <div className="space-y-1.5">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 rounded-xl bg-cyan-500/10 px-2.5 py-0.5 text-xs font-extrabold text-cyan-400 border border-cyan-500/20">
+                <span className={`inline-flex items-center gap-1.5 rounded-xl px-2.5 py-0.5 text-xs font-extrabold border ${
+                  isDarkMode ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-cyan-50 text-cyan-700 border-cyan-200'
+                }`}>
                   <School className="h-3.5 w-3.5" />
                   {institution?.institution_type || 'School / Coaching Institute'}
                 </span>
@@ -102,7 +119,9 @@ export default function OverviewTab({
                 }`}>
                   ID: {instCode}
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
+                <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold border ${
+                  isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                }`}>
                   <CheckCircle2 className="h-3.5 w-3.5" />
                   Account Active
                 </span>
@@ -112,8 +131,8 @@ export default function OverviewTab({
                 {instName}
               </h1>
 
-              <p className={`text-xs font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                Package: <span className="text-cyan-400 font-bold">{packageName}</span> • Validity: <span className="font-bold">{validityStr}</span>
+              <p className={`text-xs font-medium ${textMutedClass}`}>
+                Package: <span className="text-cyan-600 dark:text-cyan-400 font-bold">{packageName}</span> • Validity: <span className="font-bold">{validityStr}</span>
               </p>
             </div>
           </div>
@@ -128,12 +147,12 @@ export default function OverviewTab({
               <span>Bulk CSV Import</span>
             </button>
             <button
-              onClick={() => onNavigateTab && onNavigateTab('batches')}
+              onClick={() => handleNavigate('batches')}
               className={`inline-flex items-center gap-2 rounded-xl border px-4 py-2.5 text-xs font-bold transition cursor-pointer ${
                 isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white' : 'border-slate-200 bg-slate-100 text-slate-800 hover:bg-slate-200'
               }`}
             >
-              <Layers className="h-4 w-4 text-purple-400" />
+              <Layers className="h-4 w-4 text-purple-500 dark:text-purple-400" />
               <span>Manage Batches</span>
             </button>
           </div>
@@ -150,12 +169,12 @@ export default function OverviewTab({
                 {usedLic} Used • {availLic} Available • {totalLic} Total Seats
               </span>
             </div>
-            <span className="text-slate-400 font-semibold text-xs">
+            <span className={`${textMutedClass} font-semibold text-xs`}>
               {licPercentage}% Capacity Allocated
             </span>
           </div>
 
-          <div className={`h-2.5 w-full rounded-full overflow-hidden ${isDarkMode ? 'bg-slate-900' : 'bg-slate-200'}`}>
+          <div className={`h-2.5 w-full rounded-full overflow-hidden ${isDarkMode ? 'bg-slate-900' : 'bg-slate-100 border border-slate-200/80'}`}>
             <div
               className={`h-full rounded-full transition-all duration-500 ${getLicenceBarColor()}`}
               style={{ width: `${Math.max(2, licPercentage)}%` }}
@@ -173,62 +192,62 @@ export default function OverviewTab({
         <div className={`rounded-2xl border p-5 transition-all ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider">Enrolled Students</span>
-            <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-xs font-extrabold uppercase tracking-wider ${textMutedClass}`}>Enrolled Students</span>
+            <div className={`p-2 rounded-xl border ${isDarkMode ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-blue-50 text-blue-600 border-blue-200'}`}>
               <Users className="h-4 w-4" />
             </div>
           </div>
           <p className={`text-2xl sm:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-            {students.length} <span className="text-xs font-normal text-slate-400">/ {totalLic} capacity</span>
+            {students.length} <span className={`text-xs font-normal ${textSubtleClass}`}>/ {totalLic} capacity</span>
           </p>
-          <p className="text-[11px] font-bold text-cyan-400 mt-2">Active student roster</p>
+          <p className="text-[11px] font-bold text-cyan-600 dark:text-cyan-400 mt-2">Active student roster</p>
         </div>
 
         {/* Available Licences */}
         <div className={`rounded-2xl border p-5 transition-all ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider">Available Licences</span>
-            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-xs font-extrabold uppercase tracking-wider ${textMutedClass}`}>Available Licences</span>
+            <div className={`p-2 rounded-xl border ${isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-600 border-emerald-200'}`}>
               <UserCheck className="h-4 w-4" />
             </div>
           </div>
-          <p className="text-2xl sm:text-3xl font-black text-emerald-400">{availLic}</p>
-          <p className="text-[11px] font-bold text-slate-400 mt-2">Ready for seat allocation</p>
+          <p className="text-2xl sm:text-3xl font-black text-emerald-600 dark:text-emerald-400">{availLic}</p>
+          <p className={`text-[11px] font-bold ${textMutedClass} mt-2`}>Ready for seat allocation</p>
         </div>
 
         {/* Active Batches */}
         <div className={`rounded-2xl border p-5 transition-all ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider">Active Batches</span>
-            <div className="p-2 rounded-xl bg-purple-500/10 text-purple-400 border border-purple-500/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-xs font-extrabold uppercase tracking-wider ${textMutedClass}`}>Active Batches</span>
+            <div className={`p-2 rounded-xl border ${isDarkMode ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-purple-50 text-purple-600 border-purple-200'}`}>
               <Layers className="h-4 w-4" />
             </div>
           </div>
           <p className={`text-2xl sm:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
             {batches.length}
           </p>
-          <p className="text-[11px] font-bold text-purple-400 mt-2">Academic year 2026–2027</p>
+          <p className="text-[11px] font-bold text-purple-600 dark:text-purple-400 mt-2">Academic year 2026–2027</p>
         </div>
 
         {/* Tests Assigned */}
         <div className={`rounded-2xl border p-5 transition-all ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between text-slate-400 mb-2">
-            <span className="text-xs font-extrabold uppercase tracking-wider">Tests Assigned</span>
-            <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className={`text-xs font-extrabold uppercase tracking-wider ${textMutedClass}`}>Tests Assigned</span>
+            <div className={`p-2 rounded-xl border ${isDarkMode ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-cyan-50 text-cyan-600 border-cyan-200'}`}>
               <FileText className="h-4 w-4" />
             </div>
           </div>
           <p className={`text-2xl sm:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-            24 <span className="text-xs font-normal text-slate-400">/ 39 included</span>
+            24 <span className={`text-xs font-normal ${textSubtleClass}`}>/ 39 included</span>
           </p>
-          <p className="text-[11px] font-bold text-slate-400 mt-2">Current package coverage</p>
+          <p className={`text-[11px] font-bold ${textMutedClass} mt-2`}>Current package coverage</p>
         </div>
 
       </div>
@@ -242,14 +261,14 @@ export default function OverviewTab({
         <div className={`lg:col-span-2 rounded-2xl border p-6 space-y-4 ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
+          <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-slate-800/80' : 'border-slate-200'}`}>
             <div className="flex items-center gap-2">
-              <Activity className="h-4 w-4 text-cyan-400" />
+              <Activity className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
               <h3 className={`text-sm font-extrabold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 Academic Performance Snapshot
               </h3>
             </div>
-            <span className="text-xs font-semibold text-slate-400">Live Institute Analytics</span>
+            <span className={`text-xs font-semibold ${textMutedClass}`}>Live Institute Analytics</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-1">
@@ -258,48 +277,50 @@ export default function OverviewTab({
             <div className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10.5px] font-extrabold uppercase text-slate-400 block mb-1">Tests Attempted</span>
+              <span className={`text-[10.5px] font-extrabold uppercase block mb-1 ${textMutedClass}`}>Tests Attempted</span>
               <p className={`text-xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 {testsAttemptedCount > 0 ? testsAttemptedCount : '—'}
               </p>
-              <span className="text-[10px] text-slate-400 font-semibold mt-1 block">Submissions to date</span>
+              <span className={`text-[10px] font-semibold mt-1 block ${textMutedClass}`}>Submissions to date</span>
             </div>
 
             {/* Average Batch Score */}
             <div className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10.5px] font-extrabold uppercase text-slate-400 block mb-1">Avg Batch Score</span>
-              <p className="text-xl font-black text-emerald-400">
+              <span className={`text-[10.5px] font-extrabold uppercase block mb-1 ${textMutedClass}`}>Avg Batch Score</span>
+              <p className="text-xl font-black text-emerald-600 dark:text-emerald-400">
                 {testsAttemptedCount > 0 ? `${avgScoreVal}%` : '—'}
               </p>
-              <span className="text-[10px] text-slate-400 font-semibold mt-1 block">Institute mean accuracy</span>
+              <span className={`text-[10px] font-semibold mt-1 block ${textMutedClass}`}>Institute mean accuracy</span>
             </div>
 
             {/* Active Students */}
             <div className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10.5px] font-extrabold uppercase text-slate-400 block mb-1">Active Students</span>
+              <span className={`text-[10.5px] font-extrabold uppercase block mb-1 ${textMutedClass}`}>Active Students</span>
               <p className={`text-xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 {students.length > 0 ? activeStudentsCount : '0'}
               </p>
-              <span className="text-[10px] text-slate-400 font-semibold mt-1 block">Regular logins</span>
+              <span className={`text-[10px] font-semibold mt-1 block ${textMutedClass}`}>Regular logins</span>
             </div>
 
             {/* Target Mocks */}
             <div className={`p-4 rounded-xl border ${
               isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10.5px] font-extrabold uppercase text-slate-400 block mb-1">Assigned Mocks</span>
-              <p className="text-xl font-black text-cyan-400">24 / 39</p>
-              <span className="text-[10px] text-slate-400 font-semibold mt-1 block">Current series</span>
+              <span className={`text-[10.5px] font-extrabold uppercase block mb-1 ${textMutedClass}`}>Assigned Mocks</span>
+              <p className="text-xl font-black text-cyan-600 dark:text-cyan-400">24 / 39</p>
+              <span className={`text-[10px] font-semibold mt-1 block ${textMutedClass}`}>Current series</span>
             </div>
           </div>
 
           {testsAttemptedCount === 0 && (
-            <div className="p-3.5 rounded-xl bg-slate-900/40 border border-slate-800 text-xs text-slate-400 flex items-center gap-2.5">
-              <Clock className="h-4 w-4 text-cyan-400 shrink-0" />
+            <div className={`p-3.5 rounded-xl border text-xs flex items-center gap-2.5 ${
+              isDarkMode ? 'bg-slate-900/40 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
+            }`}>
+              <Clock className="h-4 w-4 text-cyan-500 dark:text-cyan-400 shrink-0" />
               <span>No assessment performance data yet. Performance insights will populate after students submit assigned tests.</span>
             </div>
           )}
@@ -310,14 +331,16 @@ export default function OverviewTab({
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
           <div>
-            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3 mb-4">
+            <div className={`flex items-center justify-between border-b pb-3 mb-4 ${isDarkMode ? 'border-slate-800/80' : 'border-slate-200'}`}>
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-rose-400" />
+                <Calendar className="h-4 w-4 text-rose-500 dark:text-rose-400" />
                 <h3 className={`text-sm font-extrabold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                   Upcoming Test
                 </h3>
               </div>
-              <span className="text-[10px] font-extrabold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
+              <span className={`text-[10px] font-extrabold px-2 py-0.5 rounded-md border ${
+                isDarkMode ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-emerald-700 bg-emerald-50 border-emerald-200'
+              }`}>
                 Scheduled
               </span>
             </div>
@@ -328,25 +351,29 @@ export default function OverviewTab({
               </h4>
               
               <div className="space-y-2 text-xs">
-                <div className="flex items-center justify-between text-slate-400">
-                  <span className="font-semibold">Scheduled Date:</span>
-                  <span className="font-bold text-white font-mono">Sun, 4 Oct 2026</span>
+                <div className="flex items-center justify-between">
+                  <span className={`font-semibold ${textMutedClass}`}>Scheduled Date:</span>
+                  <span className={`font-bold font-mono ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Sun, 4 Oct 2026</span>
                 </div>
-                <div className="flex items-center justify-between text-slate-400">
-                  <span className="font-semibold">Target Batches:</span>
-                  <span className="font-bold text-cyan-400">All Active Batches</span>
+                <div className="flex items-center justify-between">
+                  <span className={`font-semibold ${textMutedClass}`}>Target Batches:</span>
+                  <span className="font-bold text-cyan-600 dark:text-cyan-400">All Active Batches</span>
                 </div>
-                <div className="flex items-center justify-between text-slate-400">
-                  <span className="font-semibold">Duration:</span>
-                  <span className="font-mono text-slate-300">180 Mins (CBT Mode)</span>
+                <div className="flex items-center justify-between">
+                  <span className={`font-semibold ${textMutedClass}`}>Duration:</span>
+                  <span className={`font-mono font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-800'}`}>180 Mins (CBT Mode)</span>
                 </div>
               </div>
             </div>
           </div>
 
           <button
-            onClick={() => onNavigateTab && onNavigateTab('test-assignments')}
-            className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-blue-600/10 hover:bg-blue-600/20 text-blue-500 dark:text-blue-400 border border-blue-500/20 py-2.5 text-xs font-extrabold transition cursor-pointer"
+            onClick={() => handleNavigate('test-assignments')}
+            className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-extrabold transition cursor-pointer border ${
+              isDarkMode
+                ? 'bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border-blue-500/20'
+                : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
+            }`}
           >
             <span>Manage Test Assignments</span>
             <ArrowRight className="h-4 w-4" />
@@ -364,86 +391,96 @@ export default function OverviewTab({
         <div className={`lg:col-span-2 rounded-2xl border p-6 space-y-4 ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800/80 pb-3">
+          <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-slate-800/80' : 'border-slate-200'}`}>
             <h3 className={`text-sm font-extrabold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               Institution Quick Actions
             </h3>
-            <span className="text-xs text-slate-400 font-medium">Frequent Administrative Tasks</span>
+            <span className={`text-xs font-medium ${textMutedClass}`}>Frequent Administrative Tasks</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
             <button
               onClick={onOpenAddStudent}
               className={`p-4 rounded-xl border flex flex-col items-start gap-2.5 transition text-left cursor-pointer group ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-blue-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-blue-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-blue-300'
               }`}
             >
-              <div className="p-2 rounded-lg bg-blue-500/10 text-blue-400 border border-blue-500/20 group-hover:scale-105 transition">
+              <div className={`p-2 rounded-lg border group-hover:scale-105 transition ${
+                isDarkMode ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-blue-100 text-blue-700 border-blue-200'
+              }`}>
                 <Plus className="h-4 w-4" />
               </div>
               <div>
                 <p className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Add Student</p>
-                <p className="text-[10px] text-slate-400 font-semibold">Individual seat creation</p>
+                <p className={`text-[10px] font-semibold ${textMutedClass}`}>Individual seat creation</p>
               </div>
             </button>
 
             <button
               onClick={onOpenUploadCsv}
               className={`p-4 rounded-xl border flex flex-col items-start gap-2.5 transition text-left cursor-pointer group ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-cyan-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-cyan-300'
               }`}
             >
-              <div className="p-2 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 group-hover:scale-105 transition">
+              <div className={`p-2 rounded-lg border group-hover:scale-105 transition ${
+                isDarkMode ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-cyan-100 text-cyan-700 border-cyan-200'
+              }`}>
                 <Upload className="h-4 w-4" />
               </div>
               <div>
                 <p className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Upload CSV Roster</p>
-                <p className="text-[10px] text-slate-400 font-semibold">Batch student import</p>
+                <p className={`text-[10px] font-semibold ${textMutedClass}`}>Batch student import</p>
               </div>
             </button>
 
             <button
-              onClick={() => onNavigateTab && onNavigateTab('batches')}
+              onClick={() => handleNavigate('batches')}
               className={`p-4 rounded-xl border flex flex-col items-start gap-2.5 transition text-left cursor-pointer group ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-purple-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-purple-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-purple-300'
               }`}
             >
-              <div className="p-2 rounded-lg bg-purple-500/10 text-purple-400 border border-purple-500/20 group-hover:scale-105 transition">
+              <div className={`p-2 rounded-lg border group-hover:scale-105 transition ${
+                isDarkMode ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-purple-100 text-purple-700 border-purple-200'
+              }`}>
                 <Layers className="h-4 w-4" />
               </div>
               <div>
                 <p className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Manage Batches</p>
-                <p className="text-[10px] text-slate-400 font-semibold">Organize academic groups</p>
+                <p className={`text-[10px] font-semibold ${textMutedClass}`}>Organize academic groups</p>
               </div>
             </button>
 
             <button
-              onClick={() => onNavigateTab && onNavigateTab('test-assignments')}
+              onClick={() => handleNavigate('test-assignments')}
               className={`p-4 rounded-xl border flex flex-col items-start gap-2.5 transition text-left cursor-pointer group ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-emerald-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-emerald-300'
               }`}
             >
-              <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 group-hover:scale-105 transition">
+              <div className={`p-2 rounded-lg border group-hover:scale-105 transition ${
+                isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-100 text-emerald-700 border-emerald-200'
+              }`}>
                 <FileText className="h-4 w-4" />
               </div>
               <div>
                 <p className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Assign Test Series</p>
-                <p className="text-[10px] text-slate-400 font-semibold">Schedule mock exams</p>
+                <p className={`text-[10px] font-semibold ${textMutedClass}`}>Schedule mock exams</p>
               </div>
             </button>
 
             <button
               onClick={onDownloadCsvTemplate}
               className={`p-4 rounded-xl border flex flex-col items-start gap-2.5 transition text-left cursor-pointer group ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-amber-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
+                isDarkMode ? 'bg-slate-900/60 border-slate-800 hover:border-amber-500/40 hover:bg-slate-900' : 'bg-slate-50 border-slate-200 hover:bg-slate-100 hover:border-amber-300'
               }`}
             >
-              <div className="p-2 rounded-lg bg-amber-500/10 text-amber-400 border border-amber-500/20 group-hover:scale-105 transition">
+              <div className={`p-2 rounded-lg border group-hover:scale-105 transition ${
+                isDarkMode ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-amber-100 text-amber-700 border-amber-200'
+              }`}>
                 <Download className="h-4 w-4" />
               </div>
               <div>
                 <p className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>CSV Template</p>
-                <p className="text-[10px] text-slate-400 font-semibold">Download import schema</p>
+                <p className={`text-[10px] font-semibold ${textMutedClass}`}>Download import schema</p>
               </div>
             </button>
           </div>
@@ -453,34 +490,42 @@ export default function OverviewTab({
         <div className={`rounded-2xl border p-6 space-y-4 ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800' : 'bg-white border-slate-200/90 shadow-2xs'
         }`}>
-          <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800/80 pb-3">
-            <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          <div className={`flex items-center gap-2 border-b pb-3 ${isDarkMode ? 'border-slate-800/80' : 'border-slate-200'}`}>
+            <ShieldCheck className="h-4 w-4 text-emerald-500 dark:text-emerald-400" />
             <h3 className={`text-sm font-extrabold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               Account Operational Health
             </h3>
           </div>
 
           <div className="space-y-2.5 text-xs">
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="font-semibold text-slate-300">Account Status</span>
-              <span className="font-extrabold text-emerald-400 flex items-center gap-1">
+            <div className={`flex items-center justify-between p-2.5 rounded-xl border ${
+              isDarkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200/80'
+            }`}>
+              <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Account Status</span>
+              <span className="font-extrabold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
                 <CheckCircle2 className="h-3.5 w-3.5" /> Active
               </span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="font-semibold text-slate-300">Subscription Plan</span>
-              <span className="font-bold text-cyan-400 font-mono">Standard AIETS</span>
+            <div className={`flex items-center justify-between p-2.5 rounded-xl border ${
+              isDarkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200/80'
+            }`}>
+              <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Subscription Plan</span>
+              <span className="font-bold text-cyan-600 dark:text-cyan-400 font-mono">Standard AIETS</span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="font-semibold text-slate-300">Licence Availability</span>
-              <span className="font-bold text-slate-200 font-mono">{availLic} / {totalLic} Seats</span>
+            <div className={`flex items-center justify-between p-2.5 rounded-xl border ${
+              isDarkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200/80'
+            }`}>
+              <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Licence Availability</span>
+              <span className={`font-bold font-mono ${isDarkMode ? 'text-slate-200' : 'text-slate-900'}`}>{availLic} / {totalLic} Seats</span>
             </div>
 
-            <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-900/50 border border-slate-800">
-              <span className="font-semibold text-slate-300">Academic Batches</span>
-              <span className="font-bold text-slate-200">{batches.length} Configured</span>
+            <div className={`flex items-center justify-between p-2.5 rounded-xl border ${
+              isDarkMode ? 'bg-slate-900/50 border-slate-800' : 'bg-slate-50 border-slate-200/80'
+            }`}>
+              <span className={`font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Academic Batches</span>
+              <span className={`font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-900'}`}>{batches.length} Configured</span>
             </div>
           </div>
         </div>
@@ -494,7 +539,9 @@ export default function OverviewTab({
         <div className={`rounded-2xl border p-7 sm:p-10 text-center max-w-3xl mx-auto space-y-5 ${
           isDarkMode ? 'bg-[#0E1726] border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-md'
         }`}>
-          <div className="h-16 w-16 rounded-2xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mx-auto shadow-md">
+          <div className={`h-16 w-16 rounded-2xl border flex items-center justify-center mx-auto shadow-md ${
+            isDarkMode ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' : 'bg-cyan-50 border-cyan-200 text-cyan-600'
+          }`}>
             <Users className="h-8 w-8" />
           </div>
 
@@ -502,7 +549,7 @@ export default function OverviewTab({
             <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               No students enrolled in your roster
             </h3>
-            <p className="text-xs text-slate-400 leading-relaxed">
+            <p className={`text-xs leading-relaxed ${textMutedClass}`}>
               Enroll students individually or bulk upload your student roster via CSV file. Once enrolled, student credentials will be auto-generated and test series access granted.
             </p>
           </div>
@@ -522,13 +569,13 @@ export default function OverviewTab({
                 isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800' : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200'
               }`}
             >
-              <Upload className="h-4 w-4 text-cyan-400" />
+              <Upload className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
               <span>Upload CSV Roster</span>
             </button>
 
             <button
               onClick={onDownloadCsvTemplate}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-400 hover:text-cyan-300 transition cursor-pointer px-3 py-2"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-cyan-600 dark:text-cyan-400 hover:underline transition cursor-pointer px-3 py-2"
             >
               <Download className="h-4 w-4" />
               <span>Download CSV Template</span>
