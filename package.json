@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "cd frontend && npm install && npm run build",
-    "vercel-build": "cd frontend && npm install && npm run build"
+    "build": "cd frontend && npm install && NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build",
+    "vercel-build": "cd frontend && npm install && NODE_OPTIONS=\"--max-old-space-size=4096\" npm run build"
   },
   "dependencies": {
     "pdfkit": "^0.19.1"
