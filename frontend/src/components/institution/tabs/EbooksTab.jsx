@@ -902,6 +902,5 @@ export default function EbooksTab({
         </div>
       )}
     </div>
-    </div>
   );
 }
