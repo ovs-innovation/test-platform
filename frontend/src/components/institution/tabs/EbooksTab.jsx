@@ -171,7 +171,6 @@ export default function EbooksTab({
       badgeBg: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
       icon: BookMarked
     }
->>>>>>> da237fa (fix: institution theme contrast, mobile responsive views, and b2b test package options)
   ];
 
   const booksList = availableEbooks && availableEbooks.length > 0
@@ -242,7 +241,6 @@ export default function EbooksTab({
     }
   };
 
-<<<<<<< HEAD
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
     if (!createForm.title || !createForm.pdf_url) {
@@ -270,9 +268,8 @@ export default function EbooksTab({
       setCreating(false);
     }
   };
-=======
+
   const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-medium';
->>>>>>> da237fa (fix: institution theme contrast, mobile responsive views, and b2b test package options)
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
@@ -300,6 +297,15 @@ export default function EbooksTab({
           </div>
 
           <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-3 shrink-0">
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-xs font-extrabold text-white shadow-md hover:bg-purple-500 transition cursor-pointer"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Upload Study Material</span>
+            </button>
+
             <div className={`px-4 py-2 rounded-2xl border text-center ${
               isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
             }`}>
@@ -307,27 +313,13 @@ export default function EbooksTab({
               <span className="text-base font-black text-purple-600 dark:text-purple-400">{booksList.length} eBooks</span>
             </div>
 
-            <span className="inline-flex items-center gap-1.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 px-3.5 py-2 text-xs font-extrabold text-purple-600 dark:text-purple-400 shrink-0">
+            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 px-3.5 py-2 text-xs font-extrabold text-purple-600 dark:text-purple-400 shrink-0">
               <Sparkles className="h-4 w-4" />
-              <span>Full Institution Access Unlocked</span>
+              <span>Full Access Unlocked</span>
             </span>
           </div>
         </div>
 
-<<<<<<< HEAD
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2.5 text-xs font-extrabold text-white shadow-md hover:bg-purple-500 transition cursor-pointer"
-          >
-            <Plus className="h-4 w-4" />
-            <span>Upload Study Material</span>
-          </button>
-          <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full bg-purple-500/10 border border-purple-500/20 px-3.5 py-1 text-xs font-extrabold text-purple-400 shrink-0">
-            <Sparkles className="h-3.5 w-3.5" />
-            Digital Library
-          </span>
-=======
         {/* SEARCH AND CATEGORY FILTERS ROW */}
         <div className={`pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3 ${
           isDarkMode ? 'border-slate-800/80' : 'border-slate-200'
@@ -367,7 +359,6 @@ export default function EbooksTab({
               </button>
             ))}
           </div>
->>>>>>> da237fa (fix: institution theme contrast, mobile responsive views, and b2b test package options)
         </div>
       </div>
 
@@ -544,40 +535,6 @@ export default function EbooksTab({
               </div>
             </div>
 
-<<<<<<< HEAD
-            <div className="pt-3 border-t border-slate-800/40 flex items-center justify-between gap-2 text-xs">
-              <span className="text-[10px] font-mono text-slate-400">{book.class_level || 'Class 11 & 12'}</span>
-              <div className="flex items-center gap-2">
-                {book.pdf_url && (
-                  <a
-                    href={book.pdf_url.startsWith('http') ? book.pdf_url : `http://127.0.0.1:5000${book.pdf_url.startsWith('/') ? '' : '/'}${book.pdf_url}`}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1 rounded-xl bg-slate-800 border border-slate-700 px-3 py-1.5 text-xs font-bold text-slate-200 hover:bg-slate-700 transition"
-                  >
-                    <Download className="h-3.5 w-3.5" />
-                    <span>PDF</span>
-                  </a>
-                )}
-                <button
-                  onClick={() => {
-                    setSelectedEbook(book);
-                    setTargetType('institution');
-                  }}
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-purple-600 px-3.5 py-1.5 text-xs font-bold text-white hover:bg-purple-500 transition cursor-pointer shadow-md"
-                >
-                  <span>Assign eBook</span>
-                </button>
-
-                <button
-                  onClick={() => setDeletingBook(book)}
-                  title="Delete eBook"
-                  className="inline-flex items-center gap-1.5 rounded-xl bg-rose-500/10 border border-rose-500/20 px-2.5 py-1.5 text-xs font-bold text-rose-400 hover:bg-rose-500 hover:text-white transition cursor-pointer"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                </button>
-              </div>
-=======
             <div className={`pt-3 border-t flex items-center justify-end gap-3 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
               <button
                 type="button"
@@ -600,7 +557,7 @@ export default function EbooksTab({
                 <Send className="h-3.5 w-3.5" />
                 <span>Assign eBook to Batch</span>
               </button>
->>>>>>> da237fa (fix: institution theme contrast, mobile responsive views, and b2b test package options)
+            </div>
             </div>
           </div>
         </div>
