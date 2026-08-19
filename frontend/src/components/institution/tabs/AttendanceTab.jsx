@@ -140,26 +140,30 @@ export default function AttendanceTab({
     downloadCsv(csvData, 'institution_test_attendance.csv');
   };
 
+  const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-semibold';
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-in fade-in duration-300">
       {/* HEADER STRIP */}
       <div
-        className={`p-5 sm:p-6 rounded-2xl border ${
+        className={`p-5 sm:p-6 rounded-3xl border shadow-sm ${
           isDarkMode
             ? 'bg-[#0E1726] border-slate-800 text-white'
-            : 'bg-white border-slate-200/90 text-slate-900 shadow-2xs'
+            : 'bg-white border-slate-200/90 text-slate-900'
         }`}
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-teal-500/10 text-teal-400 border border-teal-500/20 mb-2">
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
+              isDarkMode ? 'bg-teal-500/10 text-teal-400 border-teal-500/20' : 'bg-teal-50 text-teal-700 border-teal-200'
+            }`}>
               <CheckCircle2 className="h-3.5 w-3.5" />
               <span>Test Participation Audit</span>
             </div>
-            <h2 className="text-xl font-black tracking-tight">
+            <h2 className={`text-xl sm:text-2xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               Test Attendance & Student Participation
             </h2>
-            <p className={`text-xs mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+            <p className={`text-xs mt-1 ${textMutedClass}`}>
               Monitor student test presence, completion rates, missed examinations, and attempt timestamps.
             </p>
           </div>
@@ -176,65 +180,75 @@ export default function AttendanceTab({
         </div>
 
         {/* STATS STRIP */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t border-slate-800/40">
+        <div className={`grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t ${
+          isDarkMode ? 'border-slate-800/80' : 'border-slate-200'
+        }`}>
           <div
-            className={`p-3 rounded-2xl border text-center ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'
+            className={`p-3.5 rounded-2xl border text-center ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
             }`}
           >
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <span className={`text-[10px] font-black uppercase tracking-wider block ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-600'
+            }`}>
               Attendance Rate
             </span>
-            <span className="text-lg font-black text-emerald-400">{stats.attendanceRate}%</span>
+            <span className="text-xl font-black text-emerald-700 dark:text-emerald-400">{stats.attendanceRate}%</span>
           </div>
 
           <div
-            className={`p-3 rounded-2xl border text-center ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'
+            className={`p-3.5 rounded-2xl border text-center ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
             }`}
           >
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <span className={`text-[10px] font-black uppercase tracking-wider block ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-600'
+            }`}>
               Completed
             </span>
-            <span className="text-lg font-black text-cyan-400">{stats.completedCount}</span>
+            <span className="text-xl font-black text-cyan-700 dark:text-cyan-400">{stats.completedCount}</span>
           </div>
 
           <div
-            className={`p-3 rounded-2xl border text-center ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'
+            className={`p-3.5 rounded-2xl border text-center ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
             }`}
           >
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <span className={`text-[10px] font-black uppercase tracking-wider block ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-600'
+            }`}>
               Missed / Absent
             </span>
-            <span className="text-lg font-black text-rose-400">{stats.missedCount}</span>
+            <span className="text-xl font-black text-rose-700 dark:text-rose-400">{stats.missedCount}</span>
           </div>
 
           <div
-            className={`p-3 rounded-2xl border text-center ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'
+            className={`p-3.5 rounded-2xl border text-center ${
+              isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
             }`}
           >
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+            <span className={`text-[10px] font-black uppercase tracking-wider block ${
+              isDarkMode ? 'text-slate-400' : 'text-slate-600'
+            }`}>
               Upcoming / Pending
             </span>
-            <span className="text-lg font-black text-amber-400">{stats.pendingCount}</span>
+            <span className="text-xl font-black text-amber-700 dark:text-amber-400">{stats.pendingCount}</span>
           </div>
         </div>
 
         {/* SEARCH & FILTERS */}
         <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
           <div className="relative w-full sm:w-80">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} />
             <input
               type="text"
-              placeholder="Search student or roll number..."
+              placeholder="Search student name or roll number..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full pl-10 pr-4 py-2 text-xs rounded-xl border transition ${
+              className={`w-full pl-10 pr-4 py-2.5 text-xs font-semibold rounded-xl border transition ${
                 isDarkMode
-                  ? 'bg-slate-900 border-slate-800 text-white placeholder-slate-500 focus:border-cyan-500'
-                  : 'bg-slate-100 border-slate-200 text-slate-900 placeholder-slate-400 focus:border-cyan-500'
+                  ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-cyan-400'
+                  : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-blue-600 focus:bg-white shadow-2xs'
               }`}
             />
           </div>
@@ -292,51 +306,55 @@ export default function AttendanceTab({
               onClick={() => fetchAttendance(selectedTest, selectedBatch)}
               disabled={loading}
               title="Refresh Attendance Data"
-              className={`p-2 rounded-xl border transition flex items-center justify-center ${
+              className={`p-2.5 rounded-xl border transition cursor-pointer flex items-center justify-center ${
                 isDarkMode
                   ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800'
-                  : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
+                  : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 shadow-2xs'
               }`}
             >
-              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-cyan-400' : ''}`} />
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-cyan-500' : ''}`} />
             </button>
           </div>
         </div>
       </div>
 
-      {/* ATTENDANCE TABLE */}
+      {/* ATTENDANCE TABLE CARD */}
       <div
-        className={`rounded-3xl border overflow-hidden ${
+        className={`rounded-3xl border overflow-hidden shadow-sm ${
           isDarkMode
-            ? 'bg-[#0B1730] border-slate-800 text-white'
-            : 'bg-white border-slate-200 text-slate-900 shadow-sm'
+            ? 'bg-[#0E1726] border-slate-800 text-white'
+            : 'bg-white border-slate-200/90 text-slate-900'
         }`}
       >
-        <div className="p-4 border-b border-slate-800/40 flex items-center justify-between">
-          <span className="text-xs font-bold text-slate-400 flex items-center gap-2">
-            {loading && <Loader2 className="h-3.5 w-3.5 animate-spin text-cyan-400" />}
-            Live Attendance & Participation Log
+        <div className={`p-4 border-b flex items-center justify-between ${
+          isDarkMode ? 'border-slate-800/80' : 'border-slate-200'
+        }`}>
+          <span className={`text-xs font-black flex items-center gap-2 ${
+            isDarkMode ? 'text-white' : 'text-slate-900'
+          }`}>
+            {loading && <Loader2 className="h-3.5 w-3.5 animate-spin text-cyan-500" />}
+            Live Attendance & Student Participation Log
           </span>
         </div>
 
         {filteredParticipation.length > 0 ? (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
+            <table className="w-full text-left text-xs border-collapse">
               <thead
-                className={`border-b ${
+                className={`border-b text-[11px] font-black uppercase tracking-wider ${
                   isDarkMode
-                    ? 'bg-slate-900/60 border-slate-800 text-slate-400'
-                    : 'bg-slate-50 border-slate-200 text-slate-600'
+                    ? 'bg-slate-950/60 border-slate-800 text-slate-400'
+                    : 'bg-slate-100/90 border-slate-200 text-slate-700'
                 }`}
               >
                 <tr>
-                  <th className="py-3.5 px-4 font-bold">Student Name</th>
-                  <th className="py-3.5 px-4 font-bold">Roll Number</th>
-                  <th className="py-3.5 px-4 font-bold">Batch</th>
-                  <th className="py-3.5 px-4 font-bold">Assigned Test</th>
-                  <th className="py-3.5 px-4 font-bold">Participation Status</th>
-                  <th className="py-3.5 px-4 font-bold">Score</th>
-                  <th className="py-3.5 px-4 font-bold">Attempt Timestamp</th>
+                  <th className="py-3.5 px-4">Student Name</th>
+                  <th className="py-3.5 px-4">Roll Number</th>
+                  <th className="py-3.5 px-4">Batch</th>
+                  <th className="py-3.5 px-4">Assigned Test</th>
+                  <th className="py-3.5 px-4">Participation Status</th>
+                  <th className="py-3.5 px-4">Score</th>
+                  <th className="py-3.5 px-4">Attempt Timestamp</th>
                 </tr>
               </thead>
               <tbody
@@ -373,23 +391,27 @@ export default function AttendanceTab({
                   return (
                     <tr
                       key={row.student_id || row.id || index}
-                      className="hover:bg-blue-500/5 transition"
+                      className={`transition ${isDarkMode ? 'hover:bg-slate-800/40' : 'hover:bg-slate-50'}`}
                     >
-                      <td className="py-3.5 px-4 font-bold">{studentName}</td>
-                      <td className="py-3.5 px-4 font-mono text-cyan-400 font-semibold">
+                      <td className={`py-3.5 px-4 font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{studentName}</td>
+                      <td className="py-3.5 px-4 font-mono font-extrabold text-cyan-700 dark:text-cyan-400">
                         {rollNo}
                       </td>
-                      <td className="py-3.5 px-4 text-slate-400">{batchName}</td>
-                      <td className="py-3.5 px-4 font-semibold">{testName}</td>
+                      <td className={`py-3.5 px-4 font-semibold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{batchName}</td>
+                      <td className={`py-3.5 px-4 font-bold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>{testName}</td>
                       <td className="py-3.5 px-4">
                         {(status === 'Completed' || status === 'Submitted') && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                            isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                          }`}>
                             <CheckCircle2 className="h-3 w-3" />
                             <span>Completed</span>
                           </span>
                         )}
                         {(status === 'Missed' || status === 'Not Attempted') && (
-                          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+                          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                            isDarkMode ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-rose-50 text-rose-700 border-rose-200'
+                          }`}>
                             <XCircle className="h-3 w-3" />
                             <span>Missed</span>
                           </span>
@@ -398,16 +420,18 @@ export default function AttendanceTab({
                           status !== 'Submitted' &&
                           status !== 'Missed' &&
                           status !== 'Not Attempted' && (
-                            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold border ${
+                              isDarkMode ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-amber-50 text-amber-800 border-amber-200'
+                            }`}>
                               <Clock className="h-3 w-3" />
                               <span>Scheduled</span>
                             </span>
                           )}
                       </td>
-                      <td className="py-3.5 px-4 font-extrabold text-cyan-400">
+                      <td className="py-3.5 px-4 font-black text-cyan-700 dark:text-cyan-400">
                         {scoreDisplay}
                       </td>
-                      <td className="py-3.5 px-4 text-slate-400">{timestampDisplay}</td>
+                      <td className={`py-3.5 px-4 font-medium ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>{timestampDisplay}</td>
                     </tr>
                   );
                 })}
@@ -415,16 +439,17 @@ export default function AttendanceTab({
             </table>
           </div>
         ) : (
-          <div className="p-12 text-center space-y-3">
-            <div className="h-12 w-12 rounded-2xl bg-teal-500/10 text-teal-400 flex items-center justify-center mx-auto border border-teal-500/20">
+          /* EMPTY STATE */
+          <div className={`p-12 text-center space-y-3 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+            <div className="h-12 w-12 rounded-2xl bg-teal-500/10 text-teal-600 dark:text-teal-400 flex items-center justify-center mx-auto border border-teal-500/20">
               <CheckCircle2 className="h-6 w-6" />
             </div>
-            <h4 className="text-base font-extrabold">
+            <h4 className={`text-base font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
               {searchQuery || selectedStatus !== 'All' || selectedTest !== 'All' || selectedBatch !== 'All'
                 ? 'No Attendance Records Match the Filters'
                 : 'No Test Attendance Records Available'}
             </h4>
-            <p className="text-xs text-slate-400 max-w-md mx-auto leading-relaxed">
+            <p className={`text-xs max-w-md mx-auto leading-relaxed ${textMutedClass}`}>
               {searchQuery || selectedStatus !== 'All' || selectedTest !== 'All' || selectedBatch !== 'All'
                 ? 'Try adjusting your search query, status, test, or batch selection to view attendance logs.'
                 : 'Test participation logs and attempt timestamps will populate automatically as enrolled students start and submit CBT test series.'}

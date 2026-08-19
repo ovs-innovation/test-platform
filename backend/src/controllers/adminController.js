@@ -815,7 +815,47 @@ export const createB2bEnquiryNote = asyncHandler(async (req, res) => {
 
 // Package Management Endpoints
 export const getTestPackages = asyncHandler(async (_req, res) => {
-  const result = await query('SELECT * FROM test_packages ORDER BY id ASC');
+  // Ensure default institutional test packages exist
+  const defaultPkgs = [
+    { name: 'NEET-UG 2027 AIETS One-Year Complete Package', desc: 'Full access to 24 AIETS unit tests, part tests and cumulative grand mocks for NEET-UG 2027.', price: 49999.00 },
+    { name: 'JEE Main & Advanced 2026 AIETS Complete Test Package', desc: 'Comprehensive JEE Main and Advanced NTA CBT mock tests with video/PDF solutions.', price: 44999.00 },
+    { name: 'NEET PG Clinical & High-Yield AIETS Test Package', desc: 'Clinical pattern mocks, image-based questions, and national rank benchmarking for NEET PG.', price: 29999.00 },
+    { name: 'Foundation Class 10 Board & NTSE Mock Package', desc: 'Complete board preparation and NTSE/Olympiad foundation test series.', price: 14999.00 },
+  ];
+
+  for (const pkg of defaultPkgs) {
+    await query(
+      `INSERT INTO test_packages (package_name, description, price)
+       SELECT $1, $2, $3
+       WHERE NOT EXISTS (SELECT 1 FROM test_packages WHERE LOWER(package_name) = LOWER($1))`,
+      [pkg.name, pkg.desc, pkg.price]
+    ).catch((err) => console.error('[getTestPackages] Warning: could not seed default package:', err));
+  }
+
+  // Also sync all test_series titles from test_series table so any test series can be assigned to partner schools
+  await query(`
+    INSERT INTO test_packages (package_name, description, price)
+    SELECT 
+      ts.title AS package_name,
+      COALESCE(ts.description, ts.title || ' complete test series package.') AS description,
+      COALESCE(ts.price, 1999.00) AS price
+    FROM test_series ts
+    WHERE NOT EXISTS (
+      SELECT 1 FROM test_packages tp WHERE LOWER(tp.package_name) = LOWER(ts.title)
+    )
+  `).catch((err) => console.error('[getTestPackages] Warning: could not sync test_series:', err));
+
+  const result = await query(
+    `SELECT 
+       id, 
+       package_name AS "package_name",
+       package_name AS "packageName",
+       description, 
+       price 
+     FROM test_packages 
+     ORDER BY id ASC`
+  );
+
   res.json({ success: true, packages: result.rows });
 });
 

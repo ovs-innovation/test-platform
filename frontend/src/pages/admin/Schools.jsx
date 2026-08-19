@@ -1450,7 +1450,7 @@ export default function Schools() {
                   >
                     <option value="">-- Select Test Package to Assign --</option>
                     {availablePackages.map((p) => (
-                      <option key={p.id} value={p.id}>{p.package_name}</option>
+                      <option key={p.id} value={p.id}>{p.package_name || p.packageName || p.title}</option>
                     ))}
                   </select>
                   <button

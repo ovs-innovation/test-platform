@@ -148,74 +148,163 @@ export default function AdminCoupons() {
         }
       />
 
-      {/* COUPONS TABLE */}
-      <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm rounded-3xl">
-        <table className="w-full text-xs">
-          <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
-            <tr>
-              <th className="px-5 py-4">Code</th>
-              <th className="px-5 py-4">Discount</th>
-              <th className="px-5 py-4">Used</th>
-              <th className="px-5 py-4">Status</th>
-              <th className="px-5 py-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
-            {coupons.length > 0 ? (
-              coupons.map((c) => (
-                <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      <Tag className="h-4 w-4 text-blue-500 shrink-0" />
-                      <span className="font-mono font-black text-sm text-blue-600 dark:text-blue-400 tracking-wider">
-                        {c.code}
-                      </span>
-                    </div>
-                  </td>
-                  <td className="px-5 py-4 font-extrabold text-slate-900 dark:text-white">
-                    {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
-                  </td>
-                  <td className="px-5 py-4 font-semibold text-slate-700 dark:text-slate-300">
-                    {c.used_count}/{c.max_uses ?? '∞'}
-                  </td>
-                  <td className="px-5 py-4">
-                    <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
-                  </td>
-                  <td className="px-5 py-4 text-right">
-                    <ActionDropdown
-                      items={[
-                        {
-                          label: c.is_active ? 'Deactivate Coupon' : 'Activate Coupon',
-                          icon: Ticket,
-                          onClick: async () => {
-                            await adminService.toggleCoupon(c.id);
-                            load();
+      {/* ─── DESKTOP TABLE VIEW ────────────────────────────────────────── */}
+      <div className="hidden sm:block card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm rounded-3xl">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[600px] text-xs">
+            <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
+              <tr>
+                <th className="px-5 py-4">Code</th>
+                <th className="px-5 py-4">Discount</th>
+                <th className="px-5 py-4">Used</th>
+                <th className="px-5 py-4">Status</th>
+                <th className="px-5 py-4 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
+              {coupons.length > 0 ? (
+                coupons.map((c) => (
+                  <tr key={c.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-2">
+                        <Tag className="h-4 w-4 text-blue-500 shrink-0" />
+                        <span className="font-mono font-black text-sm text-blue-600 dark:text-blue-400 tracking-wider">
+                          {c.code}
+                        </span>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4 font-extrabold text-slate-900 dark:text-white">
+                      {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
+                    </td>
+                    <td className="px-5 py-4 font-semibold text-slate-700 dark:text-slate-300">
+                      {c.used_count}/{c.max_uses ?? '∞'}
+                    </td>
+                    <td className="px-5 py-4">
+                      <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
+                    </td>
+                    <td className="px-5 py-4 text-right">
+                      <ActionDropdown
+                        items={[
+                          {
+                            label: c.is_active ? 'Deactivate Coupon' : 'Activate Coupon',
+                            icon: Ticket,
+                            onClick: async () => {
+                              await adminService.toggleCoupon(c.id);
+                              load();
+                            },
+                            warning: c.is_active,
+                            color: !c.is_active ? 'text-emerald-600 dark:text-emerald-400' : undefined,
                           },
-                          warning: c.is_active,
-                          color: !c.is_active ? 'text-emerald-600 dark:text-emerald-400' : undefined,
-                        },
-                        {
-                          label: 'Delete Coupon',
-                          icon: Trash2,
-                          onClick: () => setCouponToDelete(c),
-                          danger: true,
-                        },
-                      ]}
-                    />
+                          {
+                            label: 'Delete Coupon',
+                            icon: Trash2,
+                            onClick: () => setCouponToDelete(c),
+                            danger: true,
+                          },
+                        ]}
+                      />
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={5} className="px-5 py-12 text-center text-slate-400">
+                    <Ticket className="h-8 w-8 mx-auto mb-2 opacity-50 text-slate-400" />
+                    <p className="text-xs font-bold text-slate-700 dark:text-slate-200">No coupons found.</p>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Click "+ Create New Coupon" above to create your first discount code.</p>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan={5} className="px-5 py-12 text-center text-slate-400">
-                  <Ticket className="h-8 w-8 mx-auto mb-2 opacity-50 text-slate-400" />
-                  <p className="text-xs font-bold">No coupons found.</p>
-                  <p className="text-[11px] text-slate-500 mt-0.5">Click "+ Create New Coupon" above to create your first discount code.</p>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* ─── MOBILE CARD VIEW ────────────────────────────────────────────── */}
+      <div className="block sm:hidden space-y-3.5">
+        {coupons.length > 0 ? (
+          coupons.map((c) => (
+            <div
+              key={c.id}
+              className="p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm space-y-3"
+            >
+              {/* Header Row */}
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className="h-8 w-8 rounded-xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0 border border-blue-200 dark:border-blue-800">
+                    <Tag className="h-4 w-4" />
+                  </div>
+                  <span className="font-mono font-black text-base text-blue-600 dark:text-blue-400 tracking-wider truncate">
+                    {c.code}
+                  </span>
+                </div>
+                <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
+              </div>
+
+              {/* Specs Box */}
+              <div className="flex items-center justify-between p-3 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/80 text-xs">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Discount Value</span>
+                  <span className="font-black text-slate-900 dark:text-white text-sm">
+                    {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
+                  </span>
+                </div>
+                <div className="text-right">
+                  <span className="text-[10px] font-bold text-slate-400 uppercase block">Redemptions</span>
+                  <span className="font-bold text-slate-700 dark:text-slate-300">
+                    {c.used_count} / {c.max_uses ?? '∞'} used
+                  </span>
+                </div>
+              </div>
+
+              {/* Mobile Actions Toolbar */}
+              <div className="flex items-center justify-between gap-2 pt-1">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    await adminService.toggleCoupon(c.id);
+                    load();
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 cursor-pointer ${
+                    c.is_active
+                      ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800'
+                      : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
+                  }`}
+                >
+                  <Ticket className="h-3.5 w-3.5" />
+                  <span>{c.is_active ? 'Deactivate' : 'Activate'}</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setCouponToDelete(c)}
+                  className="px-3 py-1.5 rounded-xl text-xs font-bold border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 transition cursor-pointer flex items-center gap-1.5"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span>Delete</span>
+                </button>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="p-8 text-center rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm space-y-3">
+            <div className="h-12 w-12 rounded-2xl bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto border border-blue-200 dark:border-blue-800">
+              <Ticket className="h-6 w-6" />
+            </div>
+            <h4 className="text-sm font-black text-slate-900 dark:text-white">No Discount Coupons Created</h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-xs mx-auto">
+              Create promotional discount codes for candidate test series enrollments.
+            </p>
+            <button
+              type="button"
+              onClick={() => setShowCreateModal(true)}
+              className="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-extrabold shadow-md transition cursor-pointer inline-flex items-center gap-1.5 mt-1"
+            >
+              <Plus className="h-4 w-4" />
+              <span>Create New Coupon</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* ─── CREATE COUPON MODAL POPUP ────────────────────────────────────────── */}

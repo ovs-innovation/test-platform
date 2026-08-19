@@ -139,16 +139,16 @@ export default function TestAssignmentsTab({
       {/* SEARCH AND FILTER BAR */}
       <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3.5 top-2.5 h-4 w-4 text-slate-400" />
+          <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search test assignments by name or type..."
-            className={`w-full rounded-xl border pl-10 pr-4 py-2 text-xs font-semibold focus:outline-none focus:border-cyan-500 transition ${
+            className={`w-full rounded-xl border pl-10 pr-4 py-2.5 text-xs font-semibold transition ${
               isDarkMode
-                ? 'bg-[#0E1726] border-slate-800 text-white placeholder-slate-500'
-                : 'bg-white border-slate-200 text-slate-900 placeholder-slate-400'
+                ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-cyan-400'
+                : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-blue-600 focus:bg-white shadow-2xs'
             }`}
           />
         </div>

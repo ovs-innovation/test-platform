@@ -197,7 +197,7 @@ export function AdminDataTable({
       )}
 
       <div className="overflow-x-auto scrollbar-thin">
-        <table className="w-full text-left text-xs">
+        <table className="w-full min-w-[600px] text-left text-xs">
           <thead className="border-b border-slate-200 bg-slate-100/70 text-[11px] font-bold uppercase tracking-wider text-slate-600 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400">
             <tr>
               {columns.map((col, idx) => (

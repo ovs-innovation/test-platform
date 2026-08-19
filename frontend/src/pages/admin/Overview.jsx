@@ -167,42 +167,71 @@ export default function Overview() {
               </Link>
             }
           >
-            <AdminDataTable
-              searchable={false}
-              columns={[
-                {
-                  key: 'user_name',
-                  header: 'Candidate',
-                  render: (r) => (
-                    <div>
-                      <p className="font-bold text-slate-900 dark:text-white">{r.user_name || r.candidate_name || 'Student'}</p>
-                      <p className="text-[10px] text-slate-500 dark:text-slate-400">{r.user_email || r.candidate_email || '—'}</p>
+            {/* Desktop Table View */}
+            <div className="hidden sm:block">
+              <AdminDataTable
+                searchable={false}
+                columns={[
+                  {
+                    key: 'user_name',
+                    header: 'Candidate',
+                    render: (r) => (
+                      <div>
+                        <p className="font-bold text-slate-900 dark:text-white">{r.user_name || r.candidate_name || 'Student'}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400">{r.user_email || r.candidate_email || '—'}</p>
+                      </div>
+                    ),
+                  },
+                  {
+                    key: 'series_title',
+                    header: 'Test Series',
+                    render: (r) => <span className="font-semibold text-slate-800 dark:text-slate-200">{r.series_title || 'Mock Series'}</span>,
+                  },
+                  {
+                    key: 'amount',
+                    header: 'Amount',
+                    render: (r) => <span className="font-extrabold text-emerald-600 dark:text-emerald-400">₹{Number(r.amount).toLocaleString('en-IN')}</span>,
+                  },
+                  {
+                    key: 'status',
+                    header: 'Status',
+                    render: (r) => (
+                      <AdminStatusBadge
+                        status={r.status || 'success'}
+                        type={r.status === 'success' ? 'green' : 'amber'}
+                      />
+                    ),
+                  },
+                ]}
+                rows={recentPayments}
+              />
+            </div>
+
+            {/* Mobile Responsive Cards */}
+            <div className="block sm:hidden space-y-3">
+              {recentPayments.length === 0 ? (
+                <p className="text-center py-6 text-xs text-slate-500">No recent transactions recorded.</p>
+              ) : (
+                recentPayments.map((r, i) => (
+                  <div key={i} className="p-3.5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-slate-900/80 shadow-2xs space-y-2.5 text-xs">
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <p className="font-black text-slate-900 dark:text-white truncate">{r.user_name || r.candidate_name || 'Student'}</p>
+                        <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">{r.user_email || r.candidate_email || '—'}</p>
+                      </div>
+                      <AdminStatusBadge
+                        status={r.status || 'success'}
+                        type={r.status === 'success' ? 'green' : 'amber'}
+                      />
                     </div>
-                  ),
-                },
-                {
-                  key: 'series_title',
-                  header: 'Test Series',
-                  render: (r) => <span className="font-semibold text-slate-800 dark:text-slate-200">{r.series_title || 'Mock Series'}</span>,
-                },
-                {
-                  key: 'amount',
-                  header: 'Amount',
-                  render: (r) => <span className="font-extrabold text-emerald-600 dark:text-emerald-400">₹{Number(r.amount).toLocaleString('en-IN')}</span>,
-                },
-                {
-                  key: 'status',
-                  header: 'Status',
-                  render: (r) => (
-                    <AdminStatusBadge
-                      status={r.status || 'success'}
-                      type={r.status === 'success' ? 'green' : 'amber'}
-                    />
-                  ),
-                },
-              ]}
-              rows={recentPayments}
-            />
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                      <span className="font-bold text-slate-700 dark:text-slate-300 text-xs truncate max-w-[200px]">{r.series_title || 'Mock Series'}</span>
+                      <span className="font-black text-emerald-600 dark:text-emerald-400 text-xs shrink-0">₹{Number(r.amount).toLocaleString('en-IN')}</span>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </AdminCard>
         </div>
 

@@ -107,11 +107,11 @@ export default function ReportsTab({
     {
       key: 'roster',
       endpoint: 'rankings',
-      title: 'Student Roster & Accuracy Report',
+      title: 'Student Directory & Accuracy Report',
       description:
         'Export full student list with roll numbers, contact details, percentile rankings, and accuracy scores.',
       icon: Users,
-      badgeColor: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+      badgeColor: isDarkMode ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-blue-50 text-blue-700 border-blue-200',
       btnColor: 'bg-blue-600 hover:bg-blue-500 text-white',
     },
     {
@@ -121,7 +121,7 @@ export default function ReportsTab({
       description:
         'Export academic batch aggregates, syllabus completion rates, student counts, and comparative metrics.',
       icon: Layers,
-      badgeColor: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+      badgeColor: isDarkMode ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-purple-50 text-purple-700 border-purple-200',
       btnColor: 'bg-purple-600 hover:bg-purple-500 text-white',
     },
     {
@@ -131,7 +131,7 @@ export default function ReportsTab({
       description:
         'Export master AIETS test attempts log, national percentile benchmarking, and institutional audit details.',
       icon: Building2,
-      badgeColor: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
+      badgeColor: isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200',
       btnColor: 'bg-emerald-600 hover:bg-emerald-500 text-white',
     },
     {
@@ -141,7 +141,7 @@ export default function ReportsTab({
       description:
         'Export longitudinal score progression trends, historical average score graphs, and attempt counts.',
       icon: TrendingUp,
-      badgeColor: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+      badgeColor: isDarkMode ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-amber-50 text-amber-800 border-amber-200',
       btnColor: 'bg-amber-600 hover:bg-amber-500 text-white',
     },
     {
@@ -151,16 +151,18 @@ export default function ReportsTab({
       description:
         'Export score growth velocity, topic-wise progress trajectories, and student improvement indices.',
       icon: Award,
-      badgeColor: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20',
+      badgeColor: isDarkMode ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-cyan-50 text-cyan-700 border-cyan-200',
       btnColor: 'bg-cyan-600 hover:bg-cyan-500 text-white',
     },
   ];
+
+  const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-semibold';
 
   return (
     <div className="space-y-6 animate-in fade-in duration-300">
       {/* HEADER CARD */}
       <div
-        className={`rounded-2xl border p-5 sm:p-6 shadow-2xs ${
+        className={`rounded-3xl border p-5 sm:p-6 shadow-sm ${
           isDarkMode
             ? 'bg-[#0E1726] border-slate-800 text-white'
             : 'bg-white border-slate-200/90 text-slate-900'
@@ -168,18 +170,20 @@ export default function ReportsTab({
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
+            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
+              isDarkMode ? 'bg-blue-500/10 text-cyan-400 border-cyan-500/20' : 'bg-blue-50 text-blue-700 border-blue-200'
+            }`}>
               <Download className="h-3.5 w-3.5" />
               <span>Data Export & Compliance Center</span>
             </div>
             <h2
-              className={`text-lg sm:text-xl font-black ${
+              className={`text-xl sm:text-2xl font-black tracking-tight ${
                 isDarkMode ? 'text-white' : 'text-slate-900'
               }`}
             >
               Institutional Reports & Analytics Center
             </h2>
-            <p className={`text-xs mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+            <p className={`text-xs mt-1 ${textMutedClass}`}>
               Generate and download official student scorecards, batch aggregate reports, and institution-wide compliance files.
             </p>
           </div>
@@ -189,18 +193,18 @@ export default function ReportsTab({
             {/* FORMAT SELECTOR TOGGLE */}
             <div
               className={`p-1 rounded-2xl border flex items-center gap-1 ${
-                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
+                isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200/90'
               }`}
             >
               <button
                 type="button"
                 onClick={() => setExportFormat('csv')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer ${
                   exportFormat === 'csv'
                     ? 'bg-blue-600 text-white shadow-sm'
                     : isDarkMode
                     ? 'text-slate-400 hover:text-white'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/60'
                 }`}
               >
                 CSV
@@ -208,12 +212,12 @@ export default function ReportsTab({
               <button
                 type="button"
                 onClick={() => setExportFormat('excel')}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer ${
                   exportFormat === 'excel'
                     ? 'bg-emerald-600 text-white shadow-sm'
                     : isDarkMode
                     ? 'text-slate-400 hover:text-white'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-slate-200/60'
                 }`}
               >
                 Excel (.xlsx)
@@ -240,55 +244,65 @@ export default function ReportsTab({
 
         {/* LIVE SUMMARY BANNER */}
         {overallSummary && (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t border-slate-800/40">
+          <div className={`grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-4 border-t ${
+            isDarkMode ? 'border-slate-800/80' : 'border-slate-200'
+          }`}>
             <div
-              className={`p-3 rounded-2xl border text-center ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+              className={`p-3.5 rounded-2xl border text-center ${
+                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
               }`}
             >
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+              <span className={`text-[10px] font-black uppercase tracking-wider block ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-600'
+              }`}>
                 Avg Institution Score
               </span>
-              <span className="text-lg font-black text-cyan-400">
+              <span className="text-lg font-black text-cyan-700 dark:text-cyan-400">
                 {overallSummary.average_score}%
               </span>
             </div>
 
             <div
-              className={`p-3 rounded-2xl border text-center ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+              className={`p-3.5 rounded-2xl border text-center ${
+                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
               }`}
             >
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+              <span className={`text-[10px] font-black uppercase tracking-wider block ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-600'
+              }`}>
                 Total Test Attempts
               </span>
-              <span className="text-lg font-black text-emerald-400">
+              <span className="text-lg font-black text-emerald-700 dark:text-emerald-400">
                 {overallSummary.total_attempts || 0}
               </span>
             </div>
 
             <div
-              className={`p-3 rounded-2xl border text-center ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+              className={`p-3.5 rounded-2xl border text-center ${
+                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
               }`}
             >
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+              <span className={`text-[10px] font-black uppercase tracking-wider block ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-600'
+              }`}>
                 Participation Rate
               </span>
-              <span className="text-lg font-black text-purple-400">
+              <span className="text-lg font-black text-purple-700 dark:text-purple-400">
                 {overallSummary.participation_rate || 0}%
               </span>
             </div>
 
             <div
-              className={`p-3 rounded-2xl border text-center ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+              className={`p-3.5 rounded-2xl border text-center ${
+                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
               }`}
             >
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+              <span className={`text-[10px] font-black uppercase tracking-wider block ${
+                isDarkMode ? 'text-slate-400' : 'text-slate-600'
+              }`}>
                 Highest Score Achieved
               </span>
-              <span className="text-lg font-black text-amber-400">
+              <span className="text-lg font-black text-amber-700 dark:text-amber-400">
                 {overallSummary.highest_score}%
               </span>
             </div>
@@ -305,10 +319,10 @@ export default function ReportsTab({
           return (
             <div
               key={report.key}
-              className={`rounded-3xl border p-6 space-y-4 shadow-sm flex flex-col justify-between transition hover:border-slate-700 ${
+              className={`rounded-3xl border p-6 space-y-4 shadow-sm flex flex-col justify-between transition hover:shadow-md ${
                 isDarkMode
-                  ? 'bg-[#0B1730] border-slate-800 text-white'
-                  : 'bg-white border-slate-200 text-slate-900'
+                  ? 'bg-[#0B1730] border-slate-800 text-white hover:border-slate-700'
+                  : 'bg-white border-slate-200/90 text-slate-900 hover:border-slate-300'
               }`}
             >
               <div className="space-y-3">
@@ -317,15 +331,15 @@ export default function ReportsTab({
                 </div>
                 <div>
                   <h3
-                    className={`text-base font-extrabold ${
+                    className={`text-base font-black leading-snug ${
                       isDarkMode ? 'text-white' : 'text-slate-900'
                     }`}
                   >
                     {report.title}
                   </h3>
                   <p
-                    className={`text-xs mt-1 leading-relaxed ${
-                      isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                    className={`text-xs mt-1.5 leading-relaxed ${
+                      isDarkMode ? 'text-slate-400' : 'text-slate-600 font-medium'
                     }`}
                   >
                     {report.description}
@@ -336,7 +350,7 @@ export default function ReportsTab({
               <button
                 onClick={() => handleDownloadReport(report.key, report.endpoint, report.title)}
                 disabled={isDownloading}
-                className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-bold transition cursor-pointer shadow-md ${report.btnColor}`}
+                className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-black transition cursor-pointer shadow-md ${report.btnColor}`}
               >
                 {isDownloading ? (
                   <>

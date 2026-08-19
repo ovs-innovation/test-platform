@@ -399,17 +399,17 @@ export default function AdminAssessments() {
       <div className="flex items-center gap-2 border-b border-slate-200 dark:border-slate-800 pb-3 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab('tests')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl transition ${
+          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl shrink-0 whitespace-nowrap transition ${
             activeTab === 'tests'
               ? 'bg-blue-600 text-white shadow-md'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
           }`}
         >
-          <CalendarDays className="h-4 w-4" /> Tests Roster ({tests.length})
+          <CalendarDays className="h-4 w-4" /> All Assessments ({tests.length})
         </button>
         <button
           onClick={() => setActiveTab('ebooks')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl transition ${
+          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl shrink-0 whitespace-nowrap transition ${
             activeTab === 'ebooks'
               ? 'bg-blue-600 text-white shadow-md'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
@@ -419,7 +419,7 @@ export default function AdminAssessments() {
         </button>
         <button
           onClick={() => setActiveTab('batches')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl transition ${
+          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl shrink-0 whitespace-nowrap transition ${
             activeTab === 'batches'
               ? 'bg-blue-600 text-white shadow-md'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
@@ -429,7 +429,7 @@ export default function AdminAssessments() {
         </button>
         <button
           onClick={() => setActiveTab('analytics')}
-          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl transition ${
+          className={`flex items-center gap-2 px-4 py-2 text-xs font-extrabold rounded-xl shrink-0 whitespace-nowrap transition ${
             activeTab === 'analytics'
               ? 'bg-blue-600 text-white shadow-md'
               : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200'
@@ -446,7 +446,7 @@ export default function AdminAssessments() {
         </div>
       ) : (
         <>
-          {/* TAB 1: TESTS ROSTER */}
+          {/* TAB 1: TESTS LIST */}
           {activeTab === 'tests' && (
             <div className="space-y-4">
               {/* Search & Type Filters */}
@@ -466,7 +466,7 @@ export default function AdminAssessments() {
                   <select
                     value={selectedType}
                     onChange={(e) => setSelectedType(e.target.value)}
-                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none"
+                    className="rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 focus:outline-none w-full sm:w-auto"
                   >
                     <option value="All">All Test Types</option>
                     {TEST_TYPES.map((t) => (
@@ -476,10 +476,10 @@ export default function AdminAssessments() {
                 </div>
               </div>
 
-              {/* Table */}
-              <div className="bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden">
+              {/* Desktop Table View */}
+              <div className="hidden sm:block bg-white dark:bg-[#111827] rounded-3xl border border-slate-200 dark:border-slate-800 shadow-md overflow-hidden">
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left border-collapse">
+                  <table className="w-full min-w-[850px] text-left border-collapse">
                     <thead className="bg-slate-100 dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 text-[11px] font-black uppercase text-slate-400">
                       <tr>
                         <th className="py-3.5 px-4">Test Title & Type</th>
@@ -613,6 +613,144 @@ export default function AdminAssessments() {
                     </tbody>
                   </table>
                 </div>
+              </div>
+
+              {/* Mobile Responsive Cards */}
+              <div className="block sm:hidden space-y-3.5">
+                {filteredTests.length === 0 ? (
+                  <div className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-200 dark:border-slate-800 p-8 text-center text-xs text-slate-400">
+                    No tests found matching your criteria.
+                  </div>
+                ) : (
+                  filteredTests.map((t) => (
+                    <div
+                      key={t.id}
+                      className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-200/90 dark:border-slate-800 p-4 space-y-3 shadow-sm"
+                    >
+                      {/* Top Header Row */}
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="min-w-0 flex-1">
+                          <Link
+                            to={`/admin/assessments/${t.id}`}
+                            className="font-black text-slate-900 dark:text-white text-sm hover:text-blue-600 transition block leading-tight"
+                          >
+                            {t.test_name}
+                          </Link>
+                          <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                            <span className="bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-extrabold border border-blue-200 dark:border-blue-800">
+                              {t.test_type}
+                            </span>
+                            {t.solution_pdf_url && (
+                              <span className="text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
+                                Solution Uploaded
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {t.is_published ? (
+                          <span className="inline-flex items-center gap-1 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-lg text-[10px] font-extrabold shrink-0">
+                            <CheckCircle2 className="h-3 w-3" /> Published
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 bg-slate-500/10 text-slate-600 dark:text-slate-400 border border-slate-300 dark:border-slate-700 px-2 py-0.5 rounded-lg text-[10px] font-bold shrink-0">
+                            <PauseCircle className="h-3 w-3" /> Draft
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Specs Grid */}
+                      <div className="grid grid-cols-2 gap-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/80 text-xs">
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase block">Scheduled Date</span>
+                          <span className="font-extrabold text-slate-900 dark:text-white">
+                            {t.test_date ? String(t.test_date).split('T')[0] : 'Unscheduled'}
+                          </span>
+                          <span className="text-[10px] text-slate-500 block">
+                            {(t.start_time || '09:00').slice(0, 5)} - {(t.end_time || '12:00').slice(0, 5)}
+                          </span>
+                        </div>
+
+                        <div>
+                          <span className="text-[10px] font-bold text-slate-400 uppercase block">Duration & Marks</span>
+                          <span className="font-extrabold text-slate-900 dark:text-white block">
+                            {t.duration_minutes} mins
+                          </span>
+                          <span className="text-[10px] text-slate-500 block">{t.max_marks} Total Marks</span>
+                        </div>
+                      </div>
+
+                      {/* Mobile Action Buttons Bar */}
+                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-1 overflow-x-auto scrollbar-none">
+                        <Link
+                          to={`/admin/assessments/${t.id}`}
+                          className="px-2.5 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold text-[11px] flex items-center gap-1 shrink-0"
+                        >
+                          <FileText className="h-3.5 w-3.5" /> Edit Paper
+                        </Link>
+                        
+                        <div className="flex items-center gap-1 shrink-0">
+                          <button
+                            onClick={() => openEditModal(t)}
+                            className="p-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+                            title="Edit Schedule"
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleOpenUploadModal(t)}
+                            className="p-1.5 rounded-lg border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400"
+                            title="Upload Question Paper / Solution"
+                          >
+                            <Upload className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setAssignModalTest(t)}
+                            className="p-1.5 rounded-lg border border-purple-200 dark:border-purple-800 bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400"
+                            title="Assign Audience"
+                          >
+                            <UserCheck className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => setOverrideModalTest(t)}
+                            className="p-1.5 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400"
+                            title="Access Override"
+                          >
+                            <Clock className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleGenerateResults(t.id)}
+                            className="p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400"
+                            title="Publish Ranks"
+                          >
+                            <Award className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleNotifyReminder(t)}
+                            className="p-1.5 rounded-lg border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400"
+                            title="Send Notification"
+                          >
+                            <BellRing className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleTogglePublish(t)}
+                            className="p-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200"
+                            title={t.is_published ? 'Unpublish' : 'Publish'}
+                          >
+                            {t.is_published ? <PauseCircle className="h-3.5 w-3.5 text-amber-500" /> : <CheckCircle2 className="h-3.5 w-3.5 text-emerald-500" />}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteTest(t)}
+                            className="p-1.5 rounded-lg text-rose-500 bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800"
+                            title="Delete"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}
