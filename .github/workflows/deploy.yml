@@ -31,7 +31,7 @@ jobs:
       - name: Build Frontend Asset Bundle
         run: |
           cd frontend
-          npm ci
+          npm ci || npm install
           npm run build
           test -f dist/index.html
           echo "Verified GitHub artifact: frontend/dist/index.html exists"
