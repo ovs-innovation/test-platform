@@ -216,7 +216,7 @@ export default function InstitutionLogin() {
               to="/for-schools#enquiry-form"
               className="inline-flex items-center gap-2 text-xs font-bold text-cyan-300 hover:text-white transition"
             >
-              <span>Not a partner yet? Request a Demo</span>
+              <span>Not a partner yet? Request an Enquiry</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>

@@ -580,7 +580,7 @@ export default function SchoolsB2B() {
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-3 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.16)] hover:-translate-y-[1px] hover:shadow-[0_8px_20px_rgba(37,99,235,0.20)] active:translate-y-0 transition-all duration-200 cursor-pointer"
                 >
                   <Send className="h-4 w-4" />
-                  <span>Request a Demo</span>
+                  <span>Request an Enquiry</span>
                 </button>
                 <button
                   onClick={() => scrollToPrograms()}
