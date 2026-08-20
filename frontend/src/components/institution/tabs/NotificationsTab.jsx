@@ -43,7 +43,9 @@ export default function NotificationsTab({
         isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
       }`}>
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 mb-2">
+          <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
+            isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
+          }`}>
             <Bell className="h-3.5 w-3.5" />
             <span>Communication & Broadcast Center</span>
           </div>
@@ -59,11 +61,11 @@ export default function NotificationsTab({
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
         {/* LEFT COLUMN: SEND REMINDER FORM (~40%) */}
-        <div className={`lg:col-span-5 rounded-3xl border p-6 space-y-4 shadow-sm ${
-          isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+        <div className={`lg:col-span-5 rounded-2xl border p-6 space-y-4 shadow-sm ${
+          isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
         }`}>
           <h3 className="text-base font-extrabold flex items-center gap-2">
-            <Send className="h-4 w-4 text-cyan-400" />
+            <Send className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             <span>Dispatch Test Reminder</span>
           </h3>
 
@@ -134,8 +136,8 @@ export default function NotificationsTab({
                 onChange={(e) => setMessage(e.target.value)}
                 className={`w-full py-2.5 px-3 rounded-xl border font-medium transition focus:outline-none ${
                   isDarkMode
-                    ? 'border-slate-800 bg-slate-900 text-white placeholder-slate-500 focus:border-cyan-500'
-                    : 'border-slate-200 bg-slate-100 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600'
+                    ? 'border-slate-800 bg-slate-900 text-white placeholder-slate-500 focus:border-indigo-500'
+                    : 'border-slate-200 bg-slate-100 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-indigo-600'
                 }`}
               />
             </div>
@@ -143,7 +145,7 @@ export default function NotificationsTab({
             <button
               type="submit"
               disabled={sending}
-              className="w-full py-3 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-extrabold text-white shadow-md hover:scale-[1.02] transition cursor-pointer"
+              className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-extrabold text-white shadow-sm transition cursor-pointer"
             >
               {sending ? 'Dispatching Reminder...' : 'Dispatch Reminder Notification →'}
             </button>
@@ -151,11 +153,11 @@ export default function NotificationsTab({
         </div>
 
         {/* RIGHT COLUMN: NOTIFICATION LOGS (~60%) */}
-        <div className={`lg:col-span-7 rounded-3xl border p-6 space-y-4 shadow-sm ${
-          isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+        <div className={`lg:col-span-7 rounded-2xl border p-6 space-y-4 shadow-sm ${
+          isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
         }`}>
           <h3 className="text-base font-extrabold flex items-center gap-2">
-            <Bell className="h-4 w-4 text-purple-400" />
+            <Bell className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
             <span>Recent Notifications ({notifications.length})</span>
           </h3>
 
@@ -169,22 +171,26 @@ export default function NotificationsTab({
                       onMarkRead(n.id);
                     }
                   }}
-                  className={`p-4 rounded-2xl border transition space-y-1 ${
+                  className={`p-4 rounded-xl border transition space-y-1.5 ${
                     !n.is_read
-                      ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/30 text-white' : 'bg-cyan-50 border-cyan-200 text-slate-900')
+                      ? (isDarkMode ? 'bg-indigo-500/10 border-indigo-500/30 text-white' : 'bg-indigo-50/70 border-indigo-200 text-slate-900')
                       : (isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700')
-                  } ${!n.is_read ? 'cursor-pointer hover:border-cyan-400' : ''}`}
+                  } ${!n.is_read ? 'cursor-pointer hover:border-indigo-400' : ''}`}
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-extrabold text-sm text-cyan-400 flex items-center gap-2">
-                      {!n.is_read && <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />}
+                    <span className={`font-extrabold text-sm flex items-center gap-2 ${
+                      !n.is_read
+                        ? (isDarkMode ? 'text-indigo-400' : 'text-indigo-800')
+                        : (isDarkMode ? 'text-slate-200' : 'text-slate-900')
+                    }`}>
+                      {!n.is_read && <span className="h-2 w-2 rounded-full bg-indigo-600 dark:bg-indigo-400 shrink-0" />}
                       <span>{n.title || 'Platform Notice'}</span>
                     </span>
-                    <span className="text-[10px] text-slate-400">
+                    <span className="text-[11px] font-medium text-slate-400 shrink-0">
                       {n.created_at ? new Date(n.created_at).toLocaleString() : 'Just now'}
                     </span>
                   </div>
-                  <p className={`text-xs ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{n.message}</p>
+                  <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{n.message}</p>
                 </div>
               ))
             ) : (

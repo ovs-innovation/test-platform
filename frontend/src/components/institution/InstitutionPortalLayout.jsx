@@ -205,7 +205,7 @@ export default function InstitutionPortalLayout({
                 className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl object-contain bg-white p-1 shadow-md border border-slate-200/50 shrink-0"
               />
             ) : (
-              <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-lg flex items-center justify-center shadow-lg shadow-blue-500/20 shrink-0">
+              <div className="h-10 w-10 sm:h-11 sm:w-11 rounded-2xl bg-indigo-600 text-white font-black text-lg flex items-center justify-center shadow-md shrink-0">
                 {currentInst?.logoBadge || (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'ED')}
               </div>
             )}
@@ -215,7 +215,7 @@ export default function InstitutionPortalLayout({
                 <h2 className={`font-black text-sm sm:text-base truncate leading-normal ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                   {currentInst?.name || 'Partner Institution'}
                 </h2>
-                <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-cyan-500 font-mono leading-none">
+                <span className="inline-block text-[11px] font-bold tracking-wider uppercase text-slate-400 font-mono leading-none">
                   ID: {currentInst?.schoolId || currentInst?.code || (currentInst?.id ? `INST-${currentInst.id}` : 'INST')}
                 </span>
               </div>
@@ -246,7 +246,7 @@ export default function InstitutionPortalLayout({
                   ? 'h-11 w-11 mx-auto justify-center rounded-xl'
                   : 'w-full gap-3 px-3 py-2.5 rounded-xl font-extrabold text-xs sm:text-sm'
                   } ${isActive
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20 font-black'
+                    ? 'bg-indigo-600 text-white shadow-sm font-black'
                     : isDarkMode
                       ? 'text-slate-400 hover:bg-slate-800/80 hover:text-slate-200'
                       : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
@@ -326,7 +326,7 @@ export default function InstitutionPortalLayout({
               <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-400 tracking-wider uppercase leading-none mb-1">
                 <span>Portal</span>
                 <span>/</span>
-                <span className="text-cyan-400 font-extrabold">{activeNavItem.label}</span>
+                <span className="text-indigo-600 dark:text-indigo-400 font-extrabold">{activeNavItem.label}</span>
               </div>
               <h1 className={`text-base sm:text-xl font-black tracking-tight truncate leading-normal ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 {activeNavItem.label}
@@ -343,8 +343,8 @@ export default function InstitutionPortalLayout({
               value={searchQuery}
               onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
               className={`w-full py-2.5 pl-11 pr-16 text-xs sm:text-sm font-semibold rounded-2xl border transition-all focus:outline-none ${isDarkMode
-                ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10'
-                : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-500/10 shadow-inner'
+                ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10'
+                : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/10 shadow-inner'
                 }`}
             />
             <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[10px] font-mono font-bold text-slate-400 pointer-events-none border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
@@ -364,7 +364,7 @@ export default function InstitutionPortalLayout({
               }`}
               title="Back to Public Home Page"
             >
-              <Home className="h-4 w-4 text-cyan-400" />
+              <Home className="h-4 w-4 text-slate-400" />
               <span className="hidden sm:inline">Back to Home</span>
             </Link>
 
@@ -376,7 +376,7 @@ export default function InstitutionPortalLayout({
                   setProfileDropdownOpen(false);
                   setQuickActionOpen(!quickActionOpen);
                 }}
-                className="hidden sm:inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-gradient-to-r from-blue-600 via-blue-500 to-cyan-500 text-xs sm:text-sm font-extrabold text-white shadow-lg shadow-blue-500/20 hover:scale-[1.02] active:scale-[0.98] transition cursor-pointer"
+                className="hidden sm:inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-xs sm:text-sm font-extrabold text-white shadow-md transition cursor-pointer"
               >
                 <Plus className="h-4 w-4 stroke-[3]" />
                 <span>Quick Actions</span>
@@ -393,30 +393,30 @@ export default function InstitutionPortalLayout({
                   </div>
                   <button
                     onClick={() => { setQuickActionOpen(false); onOpenAddStudent && onOpenAddStudent(); }}
-                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-blue-500/10 hover:text-blue-400 transition cursor-pointer"
+                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-500/10 hover:text-indigo-400 transition cursor-pointer"
                   >
-                    <UserPlus className="h-4 w-4 text-blue-400" />
+                    <UserPlus className="h-4 w-4 text-indigo-400" />
                     <span>Add New Student</span>
                   </button>
                   <button
                     onClick={() => { setQuickActionOpen(false); onOpenUploadCsv && onOpenUploadCsv(); }}
-                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-cyan-500/10 hover:text-cyan-400 transition cursor-pointer"
+                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-500/10 hover:text-indigo-400 transition cursor-pointer"
                   >
-                    <Upload className="h-4 w-4 text-cyan-400" />
+                    <Upload className="h-4 w-4 text-indigo-400" />
                     <span>Upload Student CSV</span>
                   </button>
                   <button
                     onClick={() => { setQuickActionOpen(false); onOpenCreateBatch && onOpenCreateBatch(); }}
-                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-purple-500/10 hover:text-purple-400 transition cursor-pointer"
+                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-500/10 hover:text-indigo-400 transition cursor-pointer"
                   >
-                    <Layers className="h-4 w-4 text-purple-400" />
+                    <Layers className="h-4 w-4 text-indigo-400" />
                     <span>Create Academic Batch</span>
                   </button>
                   <button
                     onClick={() => { setQuickActionOpen(false); onOpenAssignTest && onOpenAssignTest(); }}
-                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-emerald-500/10 hover:text-emerald-400 transition cursor-pointer"
+                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold hover:bg-indigo-500/10 hover:text-indigo-400 transition cursor-pointer"
                   >
-                    <FileText className="h-4 w-4 text-emerald-400" />
+                    <FileText className="h-4 w-4 text-indigo-400" />
                     <span>Assign Test Series</span>
                   </button>
                 </div>
@@ -448,9 +448,9 @@ export default function InstitutionPortalLayout({
               {notifDropdownOpen && (
                 <div className={`absolute right-0 mt-2.5 w-80 sm:w-96 rounded-2xl border shadow-2xl p-4 z-50 animate-in fade-in space-y-3 ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
                   }`}>
-                  <div className="flex items-center justify-between border-b border-slate-800/40 pb-2">
+                  <div className={`flex items-center justify-between border-b pb-2 ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
                     <h4 className="text-xs font-extrabold flex items-center gap-2">
-                      <Bell className="h-4 w-4 text-cyan-400" />
+                      <Bell className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                       <span>Notifications</span>
                     </h4>
                     <div className="flex items-center gap-2">
@@ -458,12 +458,16 @@ export default function InstitutionPortalLayout({
                         <button
                           type="button"
                           onClick={onMarkAllNotificationsRead}
-                          className="text-[10px] text-cyan-400 hover:underline cursor-pointer font-bold"
+                          className="text-[10px] text-indigo-600 dark:text-indigo-400 hover:underline cursor-pointer font-bold"
                         >
                           Mark all read
                         </button>
                       )}
-                      <span className="text-[10px] font-bold text-cyan-400 bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+                      <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-full border ${
+                        isDarkMode
+                          ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                          : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                      }`}>
                         {unreadNotificationsCount} Unread
                       </span>
                     </div>
@@ -480,20 +484,24 @@ export default function InstitutionPortalLayout({
                             }
                           }}
                           className={`p-3 rounded-xl border transition cursor-pointer space-y-1 ${!n.is_read
-                              ? (isDarkMode ? 'bg-cyan-500/10 border-cyan-500/30 text-white' : 'bg-cyan-50 border-cyan-200 text-slate-900')
+                              ? (isDarkMode ? 'bg-indigo-500/10 border-indigo-500/30 text-white' : 'bg-indigo-50/80 border-indigo-200 text-slate-900')
                               : (isDarkMode ? 'bg-slate-900/60 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-200 text-slate-700')
                             }`}
                         >
                           <div className="flex items-center justify-between gap-2">
-                            <span className="font-extrabold text-xs flex items-center gap-1.5">
-                              {!n.is_read && <span className="h-2 w-2 rounded-full bg-cyan-400 shrink-0" />}
+                            <span className={`font-extrabold text-xs flex items-center gap-1.5 ${
+                              isDarkMode ? 'text-white' : 'text-slate-900'
+                            }`}>
+                              {!n.is_read && <span className="h-2 w-2 rounded-full bg-indigo-600 dark:bg-indigo-400 shrink-0" />}
                               <span>{n.title || 'Platform Notice'}</span>
                             </span>
                             <span className="text-[9.5px] font-mono text-slate-400 shrink-0">
                               {n.created_at ? new Date(n.created_at).toLocaleDateString() : 'Recent'}
                             </span>
                           </div>
-                          <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">{n.message}</p>
+                          <p className={`text-[11px] line-clamp-2 leading-relaxed ${
+                            isDarkMode ? 'text-slate-300' : 'text-slate-600 font-medium'
+                          }`}>{n.message}</p>
                         </div>
                       ))
                     ) : (
@@ -504,13 +512,13 @@ export default function InstitutionPortalLayout({
                     )}
                   </div>
 
-                  <div className="pt-2 border-t border-slate-800/40 text-center">
+                  <div className={`pt-2 border-t text-center ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
                     <button
                       onClick={() => {
                         setNotifDropdownOpen(false);
                         navigate('/institution/notifications');
                       }}
-                      className="text-xs font-extrabold text-cyan-400 hover:text-cyan-300 transition cursor-pointer"
+                      className="text-xs font-extrabold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition cursor-pointer"
                     >
                       View All Notifications ({notifications.length}) →
                     </button>
@@ -549,7 +557,7 @@ export default function InstitutionPortalLayout({
                     className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl object-contain bg-white p-0.5 shadow-md border border-slate-200/60 shrink-0"
                   />
                 ) : (
-                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl bg-gradient-to-tr from-blue-600 via-blue-500 to-cyan-500 text-white font-black text-xs flex items-center justify-center shadow-md shadow-blue-500/20 shrink-0">
+                  <div className="h-7 w-7 sm:h-8 sm:w-8 rounded-lg sm:rounded-xl bg-indigo-600 text-white font-black text-xs flex items-center justify-center shadow-sm shrink-0">
                     {currentInst?.adminName ? currentInst.adminName.substring(0, 2).toUpperCase() : (currentInst?.name ? currentInst.name.substring(0, 2).toUpperCase() : 'AD')}
                   </div>
                 )}

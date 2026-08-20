@@ -166,7 +166,7 @@ export default function AnalyticsTab({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
-              isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
             }`}>
               <Activity className="h-3.5 w-3.5" />
               <span>Academic Performance Insights</span>
@@ -221,7 +221,7 @@ export default function AnalyticsTab({
                   : 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200 shadow-2xs'
               }`}
             >
-              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-cyan-500' : ''}`} />
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin text-indigo-500' : ''}`} />
             </button>
           </div>
         </div>
@@ -243,7 +243,7 @@ export default function AnalyticsTab({
           }`}>
             Institute Mean Accuracy
           </span>
-          <p className="text-3xl font-black text-emerald-600 dark:text-emerald-400">
+          <p className="text-3xl font-black text-indigo-600 dark:text-indigo-400">
             {currentAnalytics.average_score !== undefined
               ? `${currentAnalytics.average_score}%`
               : '81.2%'}
@@ -266,7 +266,7 @@ export default function AnalyticsTab({
           }`}>
             Top Test Score
           </span>
-          <p className="text-3xl font-black text-cyan-600 dark:text-cyan-400">
+          <p className="text-3xl font-black text-indigo-600 dark:text-indigo-400">
             {currentAnalytics.highest_score !== undefined
               ? `${currentAnalytics.highest_score}%`
               : '95.1%'}
@@ -289,7 +289,7 @@ export default function AnalyticsTab({
           }`}>
             Active Participation Rate
           </span>
-          <p className="text-3xl font-black text-purple-600 dark:text-purple-400">
+          <p className="text-3xl font-black text-indigo-600 dark:text-indigo-400">
             {currentAnalytics.participation_rate !== undefined
               ? `${currentAnalytics.participation_rate}%`
               : '92.4%'}

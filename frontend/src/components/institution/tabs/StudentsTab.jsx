@@ -210,7 +210,7 @@ export default function StudentsTab({
                 Student Directory & Accounts
               </h2>
               <span className={`shrink-0 whitespace-nowrap rounded-xl px-3 py-1 text-xs font-bold border ${
-                isDarkMode ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' : 'bg-blue-50 border-blue-200 text-blue-700'
+                isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
               }`}>
                 {filteredStudents.length} Enrolled
               </span>
@@ -224,7 +224,7 @@ export default function StudentsTab({
           <div className="flex flex-wrap items-center gap-2.5">
             <button
               onClick={handleOpenAdd}
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-xs font-bold text-white shadow-md hover:scale-[1.02] transition cursor-pointer"
+              className="inline-flex items-center gap-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 px-4 py-2 text-xs font-bold text-white shadow-sm transition cursor-pointer"
             >
               <Plus className="h-4 w-4 text-white" />
               <span>Add Student</span>
@@ -264,7 +264,7 @@ export default function StudentsTab({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className={`w-full py-2 pl-10 pr-4 text-xs font-semibold rounded-xl border transition focus:outline-none ${
-                isDarkMode ? 'border-slate-800 bg-slate-950 text-white placeholder-slate-500 focus:border-cyan-500' : 'border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:border-blue-600'
+                isDarkMode ? 'border-slate-800 bg-slate-950 text-white placeholder-slate-500 focus:border-indigo-500' : 'border-slate-200 bg-slate-50 text-slate-900 placeholder-slate-400 focus:border-indigo-600'
               }`}
             />
           </div>
@@ -320,7 +320,7 @@ export default function StudentsTab({
           2. BULK SELECTION ACTION BAR (ACTIVATES WHEN 1+ SELECTED)
          ========================================================================= */}
       {selectedStudentIds.length > 0 && (
-        <div className="rounded-2xl bg-gradient-to-r from-blue-600 via-blue-700 to-cyan-600 p-4 text-white shadow-xl flex flex-wrap items-center justify-between gap-3 animate-in fade-in">
+        <div className="rounded-2xl bg-indigo-600 p-4 text-white shadow-md flex flex-wrap items-center justify-between gap-3 animate-in fade-in">
           <div className="flex items-center gap-2 text-xs font-extrabold">
             <CheckSquare className="h-4 w-4" />
             <span>{selectedStudentIds.length} Student(s) Selected</span>

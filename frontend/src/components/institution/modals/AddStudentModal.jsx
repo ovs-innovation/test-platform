@@ -100,12 +100,12 @@ export default function AddStudentModal({
         {/* Modal Header */}
         <div className={`flex items-center justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20">
+            <div className={`p-2 rounded-xl border ${isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'}`}>
               <UserPlus className="h-5 w-5" />
             </div>
             <div>
               <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Enroll New Student</h3>
-              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Available Licences: <span className="font-bold text-cyan-400">{availableLicenses} Seats</span></p>
+              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Available Licences: <span className="font-bold text-indigo-600 dark:text-indigo-400">{availableLicenses} Seats</span></p>
             </div>
           </div>
           <button
@@ -308,7 +308,7 @@ export default function AddStudentModal({
               <button
                 type="submit"
                 disabled={submitting}
-                className="rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-6 py-2.5 text-xs font-bold text-white shadow-lg shadow-blue-500/20 hover:scale-105 transition cursor-pointer disabled:opacity-50"
+                className="rounded-xl bg-indigo-600 hover:bg-indigo-500 px-6 py-2.5 text-xs font-bold text-white shadow-sm transition cursor-pointer disabled:opacity-50"
               >
                 {submitting ? (
                   <span className="flex items-center gap-2">

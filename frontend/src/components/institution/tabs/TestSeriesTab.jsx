@@ -198,7 +198,7 @@ export default function TestSeriesTab({
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
-              isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+              isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
             }`}>
               <Award className="h-3.5 w-3.5" />
               <span>{assignedPackages.length} Active Assigned Package(s)</span>
@@ -218,7 +218,7 @@ export default function TestSeriesTab({
               }`}
             >
               <span className={`text-[10px] font-extrabold uppercase tracking-wider block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Assigned Packages</span>
-              <span className="text-base font-black text-emerald-600 dark:text-emerald-400">{assignedPackages.length} Active</span>
+              <span className="text-base font-black text-indigo-600 dark:text-indigo-400">{assignedPackages.length} Active</span>
             </div>
             <div
               className={`px-4 py-2 rounded-2xl border text-center ${
@@ -226,7 +226,7 @@ export default function TestSeriesTab({
               }`}
             >
               <span className={`text-[10px] font-extrabold uppercase tracking-wider block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Available Tests</span>
-              <span className="text-base font-black text-cyan-600 dark:text-cyan-400">{availableTests.length || 38} Tests</span>
+              <span className="text-base font-black text-indigo-600 dark:text-indigo-400">{availableTests.length || 38} Tests</span>
             </div>
           </div>
         </div>
@@ -244,8 +244,8 @@ export default function TestSeriesTab({
               onChange={(e) => setSearchQuery(e.target.value)}
               className={`w-full pl-10 pr-4 py-2.5 text-xs font-semibold rounded-xl border transition ${
                 isDarkMode
-                  ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-cyan-400'
-                  : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-blue-600 focus:bg-white shadow-2xs'
+                  ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-indigo-500'
+                  : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-indigo-600 focus:bg-white shadow-2xs'
               }`}
             />
           </div>
@@ -258,7 +258,7 @@ export default function TestSeriesTab({
                 onClick={() => setCategoryFilter(cat)}
                 className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer ${
                   categoryFilter === cat
-                    ? 'bg-blue-600 text-white shadow-md font-black'
+                    ? 'bg-indigo-600 text-white shadow-sm font-black'
                     : isDarkMode
                     ? 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800'
                     : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200/90'
@@ -274,26 +274,23 @@ export default function TestSeriesTab({
       {/* FEATURED SECTION FOR ADMIN ASSIGNED PACKAGES */}
       {assignedPackages.length > 0 && categoryFilter === 'All' && !searchQuery && (
         <div
-          className={`p-5 sm:p-6 rounded-3xl border-2 shadow-xl space-y-4 ${
-            isDarkMode
-              ? 'bg-gradient-to-br from-[#0B1E1A] via-[#0E1726] to-[#0E1726] border-emerald-500/80 text-white ring-1 ring-emerald-500/30'
-              : 'bg-gradient-to-br from-emerald-50/90 via-white to-emerald-50/30 border-emerald-500/90 text-slate-900'
+          className={`p-5 sm:p-6 rounded-2xl border space-y-4 ${
+            isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900 shadow-sm'
           }`}
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <span className="flex h-3 w-3 rounded-full bg-emerald-500 animate-ping" />
-              <h3 className="text-base font-black text-emerald-600 dark:text-emerald-400 tracking-tight flex items-center gap-2">
-                <CheckCircle2 className="h-5 w-5 text-emerald-500 dark:text-emerald-400" />
-                <span>ADMIN ASSIGNED TEST PACKAGES ({assignedPackages.length})</span>
+              <CheckCircle2 className="h-4.5 w-4.5 text-indigo-600 dark:text-indigo-400" />
+              <h3 className="text-xs font-extrabold tracking-wider uppercase text-slate-700 dark:text-slate-300">
+                Admin Assigned Test Packages ({assignedPackages.length})
               </h3>
             </div>
-            <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full border tracking-wider ${
+            <span className={`text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full border ${
               isDarkMode
-                ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-                : 'bg-emerald-100 text-emerald-800 border-emerald-300 font-extrabold'
+                ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                : 'bg-indigo-50 text-indigo-700 border-indigo-200'
             }`}>
-              ✓ UNLOCKED & ACTIVE
+              ✓ Unlocked & Active
             </span>
           </div>
 
@@ -301,53 +298,67 @@ export default function TestSeriesTab({
             {assignedPackages.map((pkg) => (
               <div
                 key={`assigned-feat-${pkg.id}`}
-                className={`p-5 rounded-2xl border-2 space-y-3.5 shadow-md relative transition ${
+                className={`p-5 rounded-2xl border space-y-4 transition ${
                   isDarkMode
-                    ? 'border-emerald-500/80 bg-slate-900/90 text-white'
-                    : 'border-emerald-500 bg-white text-slate-900 shadow-md'
+                    ? 'border-indigo-500/30 bg-slate-900/90 text-white'
+                    : 'border-indigo-200 bg-white text-slate-900 shadow-sm ring-1 ring-indigo-500/10'
                 }`}
               >
-                <div className="flex items-center justify-between">
-                  <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider border ${
-                    isDarkMode
-                      ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30'
-                      : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                  }`}>
-                    {pkg.exam}
-                  </span>
-                  <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400">Target {pkg.targetYear}</span>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-wider border ${
+                      isDarkMode
+                        ? 'bg-slate-800 text-slate-300 border-slate-700'
+                        : 'bg-slate-100 text-slate-700 border-slate-200'
+                    }`}>
+                      {pkg.exam}
+                    </span>
+                    <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                      isDarkMode
+                        ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                        : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                    }`}>
+                      <CheckCircle2 className="h-3 w-3" />
+                      <span>Assigned</span>
+                    </span>
+                  </div>
+                  <span className="text-xs font-semibold text-slate-400">Target {pkg.targetYear}</span>
                 </div>
 
                 <div>
-                  <h4 className={`text-base font-black leading-snug ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.title}</h4>
-                  <p className={`text-xs mt-1 line-clamp-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-600 font-medium'}`}>{pkg.description}</p>
+                  <h4 className={`text-base font-bold leading-snug ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.title}</h4>
+                  <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>{pkg.description}</p>
                 </div>
 
-                <div className={`flex items-center justify-between pt-2 border-t text-xs ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
-                  <span className={`text-[11px] ${textMutedClass}`}>
-                    Included: <strong className="text-cyan-600 dark:text-cyan-400 font-extrabold">{pkg.testCount} Mocks</strong>
-                  </span>
-                  <span className={`text-[11px] ${textMutedClass}`}>
-                    Validity: <strong className="text-emerald-600 dark:text-emerald-400 font-extrabold">{pkg.validity}</strong>
-                  </span>
+                <div className={`grid grid-cols-2 gap-2 text-xs p-3 rounded-xl border ${
+                  isDarkMode ? 'bg-slate-950 border-slate-800/80' : 'bg-slate-50 border-slate-100'
+                }`}>
+                  <div>
+                    <span className="block text-[10px] font-semibold uppercase text-slate-400">Included Tests</span>
+                    <strong className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.testCount} Full Mocks</strong>
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-semibold uppercase text-slate-400">Validity</span>
+                    <strong className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.validity}</strong>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2 pt-1">
                   <button
                     onClick={() => setSelectedSeries(pkg)}
-                    className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold border transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                    className={`flex-1 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-1.5 cursor-pointer ${
                       isDarkMode
-                        ? 'border-slate-700 bg-slate-800 text-slate-200 hover:bg-slate-700'
-                        : 'border-slate-300 bg-slate-100 text-slate-800 hover:bg-slate-200 shadow-2xs'
+                        ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-2xs'
                     }`}
                   >
-                    <BookOpen className="h-3.5 w-3.5 text-cyan-600 dark:text-cyan-400" />
+                    <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                     <span>View Included Tests</span>
                   </button>
 
                   <button
                     onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
-                    className="flex-1 py-2.5 rounded-xl text-xs font-black bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md hover:brightness-110 transition flex items-center justify-center gap-1.5 cursor-pointer"
+                    className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <Send className="h-3.5 w-3.5" />
                     <span>Assign to Batch</span>
@@ -362,7 +373,7 @@ export default function TestSeriesTab({
       {/* ALL PACKAGES CATALOG GRID */}
       <div className="space-y-4">
         <h3 className={`text-base font-extrabold tracking-tight flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-          <Layers className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
+          <Layers className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
           <span>Full Test Series Catalog ({packages.length})</span>
         </h3>
 
@@ -378,72 +389,87 @@ export default function TestSeriesTab({
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {packages.map((pkg) => (
               <div
                 key={pkg.id}
-                className={`rounded-2xl border-2 flex flex-col overflow-hidden transition-all hover:shadow-xl ${
+                className={`rounded-2xl border flex flex-col justify-between p-5 space-y-4 transition-all hover:shadow-md ${
                   pkg.isAssigned
                     ? isDarkMode
-                      ? 'bg-[#0E1726] border-emerald-500/80 shadow-emerald-500/10 text-white ring-2 ring-emerald-500/20'
-                      : 'bg-white border-emerald-500 shadow-md text-slate-900 ring-2 ring-emerald-500/20'
+                      ? 'bg-[#0E1726] border-indigo-500/40 text-white shadow-sm'
+                      : 'bg-white border-indigo-200 text-slate-900 shadow-sm ring-1 ring-indigo-500/10'
                     : isDarkMode
                     ? 'bg-[#0E1726] border-slate-800 text-white'
                     : 'bg-white border-slate-200 text-slate-900 shadow-sm'
                 }`}
               >
-                {/* CARD HEADER */}
-                <div className={`p-5 bg-gradient-to-r ${pkg.color} text-white space-y-3 relative overflow-hidden`}>
-                  {pkg.isAssigned && (
-                    <div className="mb-1 inline-flex items-center gap-1.5 bg-emerald-400 text-slate-950 font-black text-[10px] uppercase tracking-wider px-3 py-1 rounded-full shadow-lg">
-                      <CheckCircle2 className="h-3.5 w-3.5 fill-slate-950 text-emerald-400" />
-                      <span>Assigned to Your Institute</span>
+                {/* TOP METADATA ROW */}
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between gap-2 flex-wrap">
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2.5 py-0.5 rounded-lg text-[11px] font-bold uppercase tracking-wider border ${
+                        isDarkMode
+                          ? 'bg-slate-800 text-slate-300 border-slate-700'
+                          : 'bg-slate-100 text-slate-700 border-slate-200'
+                      }`}>
+                        {pkg.exam}
+                      </span>
+                      {pkg.isAssigned && (
+                        <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full border ${
+                          isDarkMode
+                            ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
+                            : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                        }`}>
+                          <CheckCircle2 className="h-3 w-3" />
+                          <span>Assigned</span>
+                        </span>
+                      )}
                     </div>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-black/20 backdrop-blur-md text-white border border-white/20">
-                      {pkg.exam}
-                    </span>
-                    <span className="text-xs font-bold opacity-90">Target {pkg.targetYear}</span>
+                    <span className="text-xs font-semibold text-slate-400">Target {pkg.targetYear}</span>
                   </div>
-                  <h3 className="text-base font-extrabold leading-snug">{pkg.title}</h3>
+
+                  <div>
+                    <h3 className={`text-base font-bold leading-snug ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                      {pkg.title}
+                    </h3>
+                    <p className={`text-xs mt-1.5 line-clamp-2 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                      {pkg.description}
+                    </p>
+                  </div>
                 </div>
 
-                {/* CARD BODY */}
-                <div className="p-5 flex-1 space-y-4 flex flex-col justify-between">
-                  <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-600 font-medium'}`}>
-                    {pkg.description}
-                  </p>
-
-                  <div className={`grid grid-cols-2 gap-2 text-xs py-2 border-y ${isDarkMode ? 'border-slate-800/80' : 'border-slate-200'}`}>
+                {/* METRICS ROW */}
+                <div className="space-y-4">
+                  <div className={`grid grid-cols-2 gap-2 text-xs p-3 rounded-xl border ${
+                    isDarkMode ? 'bg-slate-900/80 border-slate-800/80' : 'bg-slate-50 border-slate-100'
+                  }`}>
                     <div>
-                      <span className={`block text-[10px] font-bold uppercase ${textMutedClass}`}>Included Tests</span>
-                      <strong className="text-sm font-extrabold text-cyan-600 dark:text-cyan-400">{pkg.testCount} Full Mocks</strong>
+                      <span className="block text-[10px] font-semibold uppercase text-slate-400">Included Tests</span>
+                      <strong className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.testCount} Full Mocks</strong>
                     </div>
                     <div>
-                      <span className={`block text-[10px] font-bold uppercase ${textMutedClass}`}>Package Validity</span>
-                      <strong className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">{pkg.validity}</strong>
+                      <span className="block text-[10px] font-semibold uppercase text-slate-400">Validity</span>
+                      <strong className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{pkg.validity}</strong>
                     </div>
                   </div>
 
                   {/* ACTION BUTTONS */}
-                  <div className="pt-2 flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <button
                       onClick={() => setSelectedSeries(pkg)}
-                      className={`flex-1 py-2.5 rounded-xl text-xs font-extrabold border transition flex items-center justify-center gap-1.5 cursor-pointer ${
+                      className={`flex-1 py-2 rounded-xl text-xs font-bold border transition flex items-center justify-center gap-1.5 cursor-pointer ${
                         isDarkMode
-                          ? 'border-slate-800 bg-slate-900 text-slate-200 hover:bg-slate-800 hover:text-white'
-                          : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-2xs'
+                          ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
+                          : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50 shadow-2xs'
                       }`}
                     >
-                      <BookOpen className="h-3.5 w-3.5" />
+                      <BookOpen className="h-3.5 w-3.5 text-slate-400" />
                       <span>View Tests</span>
                     </button>
 
                     <button
                       onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
-                      className="flex-1 py-2.5 rounded-xl text-xs font-extrabold bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md hover:scale-[1.02] transition flex items-center justify-center gap-1.5 cursor-pointer"
+                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                     >
                       <Send className="h-3.5 w-3.5" />
                       <span>Assign to Batch</span>
@@ -459,14 +485,14 @@ export default function TestSeriesTab({
       {/* UNLOCKED TESTS LIST SECTION */}
       {filteredTests.length > 0 && (
         <div
-          className={`p-6 rounded-3xl border space-y-4 ${
+          className={`p-6 rounded-2xl border space-y-4 ${
             isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900 shadow-sm'
           }`}
         >
           <div className={`flex items-center justify-between border-b pb-3 ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
             <div>
               <h3 className={`text-base font-extrabold tracking-tight flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                <FileText className="h-4 w-4 text-cyan-500 dark:text-cyan-400" />
+                <FileText className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
                 <span>Unlocked CBT Mock Exams & Tests ({filteredTests.length})</span>
               </h3>
               <p className={`text-xs mt-0.5 ${textMutedClass}`}>
@@ -474,7 +500,7 @@ export default function TestSeriesTab({
               </p>
             </div>
             <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
-              isDarkMode ? 'bg-cyan-500/10 border-cyan-500/20 text-cyan-400' : 'bg-cyan-50 border-cyan-200 text-cyan-700'
+              isDarkMode ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
             }`}>
               {filteredTests.length} Tests Ready
             </span>
@@ -490,8 +516,8 @@ export default function TestSeriesTab({
               >
                 <div className="space-y-1">
                   <div className="flex items-center gap-2">
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border ${
-                      isDarkMode ? 'bg-blue-500/10 text-cyan-400 border-cyan-500/20' : 'bg-blue-50 text-blue-700 border-blue-200'
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase border ${
+                      isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
                     }`}>
                       {test.test_type || 'Mock Exam'}
                     </span>
@@ -504,7 +530,7 @@ export default function TestSeriesTab({
 
                 <button
                   onClick={() => handleOpenAssignModal({ id: test.id, title: test.test_name || test.title, type: 'test' })}
-                  className="px-3.5 py-2 rounded-xl text-xs font-extrabold bg-blue-600 text-white hover:bg-blue-500 transition shadow-md shrink-0 cursor-pointer flex items-center gap-1"
+                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition shadow-sm shrink-0 cursor-pointer flex items-center gap-1"
                 >
                   <Send className="h-3 w-3" />
                   <span>Assign</span>
@@ -519,13 +545,13 @@ export default function TestSeriesTab({
       {selectedSeries && (
         <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           <div
-            className={`w-full max-w-2xl rounded-3xl border p-6 space-y-4 max-h-[85vh] overflow-y-auto my-auto shadow-2xl relative ${
+            className={`w-full max-w-2xl rounded-2xl border p-6 space-y-4 max-h-[85vh] overflow-y-auto my-auto shadow-2xl relative ${
               isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
             }`}
           >
             <div className={`flex items-center justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800/40' : 'border-slate-200'}`}>
               <div>
-                <span className="text-xs font-bold text-cyan-500 dark:text-cyan-400 uppercase tracking-wider">{selectedSeries.exam}</span>
+                <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">{selectedSeries.exam}</span>
                 <h3 className={`text-lg font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{selectedSeries.title}</h3>
               </div>
               <button
@@ -551,7 +577,7 @@ export default function TestSeriesTab({
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${
-                          isDarkMode ? 'bg-blue-500/10 text-cyan-400 border-cyan-500/20' : 'bg-blue-50 text-blue-700 border-blue-200'
+                          isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
                         }`}>
                           Mock #{idx + 1}
                         </span>
@@ -566,7 +592,7 @@ export default function TestSeriesTab({
                         setSelectedSeries(null);
                         handleOpenAssignModal({ id: t.id, title: t.test_name || t.title, type: 'test' });
                       }}
-                      className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-blue-600 text-white hover:bg-blue-500 transition cursor-pointer flex items-center gap-1 shrink-0"
+                      className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition cursor-pointer flex items-center gap-1 shrink-0"
                     >
                       <Send className="h-3 w-3" />
                       <span>Assign</span>
@@ -587,13 +613,13 @@ export default function TestSeriesTab({
       {assignModalItem && (
         <div className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
           <div
-            className={`w-full max-w-lg rounded-3xl border p-6 sm:p-7 space-y-5 shadow-2xl relative my-auto animate-in zoom-in-95 ${
+            className={`w-full max-w-lg rounded-2xl border p-6 sm:p-7 space-y-5 shadow-2xl relative my-auto animate-in zoom-in-95 ${
               isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
             }`}
           >
             <div className={`flex items-center justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-md">
+                <div className="p-2.5 rounded-2xl bg-indigo-600 text-white shadow-sm">
                   <Send className="h-5 w-5" />
                 </div>
                 <div>
@@ -614,7 +640,7 @@ export default function TestSeriesTab({
             <div className={`p-4 rounded-2xl border space-y-1 ${
               isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10px] font-extrabold uppercase text-cyan-600 dark:text-cyan-400 tracking-wider">Target Test Item</span>
+              <span className="text-[10px] font-extrabold uppercase text-indigo-600 dark:text-indigo-400 tracking-wider">Target Test Item</span>
               <h4 className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{assignModalItem.title}</h4>
             </div>
 
@@ -630,7 +656,7 @@ export default function TestSeriesTab({
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                       targetType === 'batch'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -648,7 +674,7 @@ export default function TestSeriesTab({
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                       targetType === 'student'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -666,7 +692,7 @@ export default function TestSeriesTab({
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
                       targetType === 'institution'
-                        ? 'bg-blue-600 text-white border-blue-500 shadow-md'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -735,7 +761,7 @@ export default function TestSeriesTab({
                 <button
                   type="submit"
                   disabled={assigning}
-                  className="px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-bold text-white shadow-md disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
+                  className="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-white shadow-sm disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
                 >
                   <span>{assigning ? 'Assigning...' : 'Confirm Assignment'}</span>
                 </button>

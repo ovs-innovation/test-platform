@@ -210,22 +210,24 @@ export default function BulkUploadModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-      <div className={`w-full max-w-2xl rounded-3xl border shadow-2xl p-6 sm:p-8 space-y-6 relative my-auto ${
-        isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
+      <div className={`w-full max-w-2xl rounded-2xl border shadow-2xl p-6 sm:p-8 space-y-6 relative my-auto ${
+        isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
       }`}>
 
         {/* Modal Header */}
         <div className={`flex items-center justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+            <div className={`p-2.5 rounded-xl border ${
+              isDarkMode ? 'bg-slate-800 text-indigo-400 border-slate-700' : 'bg-slate-100 text-indigo-600 border-slate-200'
+            }`}>
               <FileSpreadsheet className="h-5 w-5" />
             </div>
             <div>
               <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Bulk Student CSV Import</h3>
-              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Step {step} of 3 • Available Licences: <span className="font-bold text-cyan-400">{availableLicenses} Seats</span></p>
+              <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Step {step} of 3 • Available Licences: <span className="font-bold text-indigo-600 dark:text-indigo-400">{availableLicenses} Seats</span></p>
             </div>
           </div>
-          <button onClick={onClose} className={`p-1.5 rounded-xl transition ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}>
+          <button onClick={onClose} className={`p-1.5 rounded-xl transition cursor-pointer ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}>
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -240,10 +242,10 @@ export default function BulkUploadModal({
         {/* STEP 1: SELECT FILE & TEMPLATE */}
         {step === 1 && (
           <div className="space-y-6">
-            <div className={`p-4 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-              <h4 className="text-xs font-extrabold text-cyan-500 uppercase tracking-wider">CSV Upload Instructions</h4>
+            <div className={`p-4 rounded-2xl border space-y-3 ${isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200/90'}`}>
+              <h4 className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider">CSV Upload Instructions</h4>
               <ul className={`text-xs space-y-1.5 list-disc list-inside ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                <li>Ensure columns match standard headers: <code className={`font-mono ${isDarkMode ? 'text-cyan-300' : 'text-cyan-700 font-bold'}`}>name, email, mobile, batch_name, roll_number, class, target_exam</code>.</li>
+                <li>Ensure columns match standard headers: <code className={`font-mono px-1.5 py-0.5 rounded text-[11px] ${isDarkMode ? 'bg-slate-800 text-indigo-300' : 'bg-slate-200 text-indigo-900 font-semibold'}`}>name, email, mobile, batch_name, roll_number, class, target_exam</code>.</li>
                 <li>Email address must be unique for each student.</li>
                 <li>Duplicate roll numbers in the same institution will be flagged.</li>
                 <li>Downloaded template includes sample valid student rows.</li>
@@ -251,7 +253,7 @@ export default function BulkUploadModal({
 
               <button
                 onClick={downloadTemplateHandler}
-                className="inline-flex items-center gap-2 text-xs font-bold text-cyan-500 hover:text-cyan-400 hover:underline pt-1 cursor-pointer"
+                className="inline-flex items-center gap-2 text-xs font-bold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 hover:underline pt-1 cursor-pointer"
               >
                 <Download className="h-4 w-4" />
                 <span>Download Sample CSV Template</span>
@@ -263,19 +265,21 @@ export default function BulkUploadModal({
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
               onDrop={handleDrop}
-              className={`group relative block p-8 border-2 border-dashed rounded-3xl text-center space-y-4 transition cursor-pointer ${
+              className={`group relative block p-8 border-2 border-dashed rounded-2xl text-center space-y-4 transition cursor-pointer ${
                 file
                   ? 'border-emerald-500 bg-emerald-500/10'
                   : isDragging
-                    ? 'border-cyan-400 bg-cyan-500/10 scale-[1.01]'
+                    ? 'border-indigo-500 bg-indigo-500/10 scale-[1.01]'
                     : isDarkMode
-                      ? 'border-slate-800 bg-slate-900/50 hover:border-cyan-500/50 hover:bg-slate-900/80'
-                      : 'border-slate-300 bg-slate-50 hover:border-blue-400 hover:bg-slate-100'
+                      ? 'border-slate-800 bg-slate-900/50 hover:border-indigo-500/50 hover:bg-slate-900/80'
+                      : 'border-slate-300 bg-slate-50 hover:border-indigo-400 hover:bg-slate-100'
               }`}
             >
               <input type="file" accept=".csv,.txt" onChange={handleFileChange} className="hidden" />
 
-              <div className="h-14 w-14 rounded-2xl bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 flex items-center justify-center mx-auto transition-transform group-hover:scale-110 shadow-md">
+              <div className={`h-14 w-14 rounded-2xl border flex items-center justify-center mx-auto transition-transform group-hover:scale-110 shadow-xs ${
+                isDarkMode ? 'bg-slate-800 text-indigo-400 border-slate-700' : 'bg-indigo-50 text-indigo-600 border-indigo-200'
+              }`}>
                 <Upload className="h-7 w-7" />
               </div>
 
@@ -287,7 +291,7 @@ export default function BulkUploadModal({
               </div>
 
               <div className="pt-1">
-                <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-600 group-hover:bg-blue-500 text-xs font-bold text-white shadow-md transition pointer-events-none">
+                <span className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-indigo-600 group-hover:bg-indigo-500 text-xs font-bold text-white shadow-xs transition pointer-events-none">
                   <Upload className="h-4 w-4" />
                   <span>Browse File</span>
                 </span>
@@ -302,8 +306,8 @@ export default function BulkUploadModal({
             <div className="flex items-center justify-between text-xs">
               <span className={`font-bold ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>Parsed Rows Preview ({parsedRows.length})</span>
               <div className="flex items-center gap-3">
-                <span className="text-emerald-400 font-extrabold">{validRows.length} Valid</span>
-                {failedRows.length > 0 && <span className="text-rose-400 font-extrabold">{failedRows.length} Failed</span>}
+                <span className="text-emerald-500 font-extrabold">{validRows.length} Valid</span>
+                {failedRows.length > 0 && <span className="text-rose-500 font-extrabold">{failedRows.length} Failed</span>}
               </div>
             </div>
 
@@ -324,11 +328,11 @@ export default function BulkUploadModal({
                   {validRows.slice(0, 50).map((row, i) => (
                     <tr key={i} className={isDarkMode ? 'hover:bg-slate-800/40' : 'hover:bg-slate-100'}>
                       <td className="p-2.5 font-bold">{row.name}</td>
-                      <td className="p-2.5 font-mono text-cyan-400">{row.email}</td>
+                      <td className="p-2.5 font-mono text-indigo-600 dark:text-indigo-400">{row.email}</td>
                       <td className="p-2.5 font-mono text-slate-400">{row.mobile || '—'}</td>
                       <td className="p-2.5 font-mono">{row.roll_number || '—'}</td>
                       <td className="p-2.5">{row.batch_name || 'General'}</td>
-                      <td className="p-2.5 font-bold text-blue-400">{row.target_exam}</td>
+                      <td className="p-2.5 font-bold text-indigo-600 dark:text-indigo-400">{row.target_exam}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -359,7 +363,7 @@ export default function BulkUploadModal({
                 type="button"
                 disabled={uploading || validRows.length === 0}
                 onClick={handleConfirmImport}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-bold text-xs text-white shadow-md hover:scale-105 transition disabled:opacity-50 flex items-center gap-2 cursor-pointer"
+                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-xs text-white shadow-sm transition disabled:opacity-50 flex items-center gap-2 cursor-pointer"
               >
                 {uploading ? <Spinner className="h-4 w-4 text-white" /> : <Check className="h-4 w-4" />}
                 <span>{uploading ? 'Importing Students...' : `Confirm Import (${validRows.length} Students)`}</span>
@@ -398,7 +402,7 @@ export default function BulkUploadModal({
             <div className="pt-4 border-t border-slate-800">
               <button
                 onClick={onClose}
-                className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 font-bold text-xs text-white shadow-md hover:scale-105 transition cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-bold text-xs text-white shadow-sm transition cursor-pointer"
               >
                 Return to Student Directory
               </button>

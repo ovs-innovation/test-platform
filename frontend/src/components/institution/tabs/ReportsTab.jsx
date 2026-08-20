@@ -111,8 +111,8 @@ export default function ReportsTab({
       description:
         'Export full student list with roll numbers, contact details, percentile rankings, and accuracy scores.',
       icon: Users,
-      badgeColor: isDarkMode ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' : 'bg-blue-50 text-blue-700 border-blue-200',
-      btnColor: 'bg-blue-600 hover:bg-blue-500 text-white',
+      badgeColor: isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200',
+      btnColor: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm',
     },
     {
       key: 'batch',
@@ -121,8 +121,8 @@ export default function ReportsTab({
       description:
         'Export academic batch aggregates, syllabus completion rates, student counts, and comparative metrics.',
       icon: Layers,
-      badgeColor: isDarkMode ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-purple-50 text-purple-700 border-purple-200',
-      btnColor: 'bg-purple-600 hover:bg-purple-500 text-white',
+      badgeColor: isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200',
+      btnColor: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm',
     },
     {
       key: 'overall',
@@ -131,8 +131,8 @@ export default function ReportsTab({
       description:
         'Export master AIETS test attempts log, national percentile benchmarking, and institutional audit details.',
       icon: Building2,
-      badgeColor: isDarkMode ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      btnColor: 'bg-emerald-600 hover:bg-emerald-500 text-white',
+      badgeColor: isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200',
+      btnColor: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm',
     },
     {
       key: 'trends',
@@ -141,8 +141,8 @@ export default function ReportsTab({
       description:
         'Export longitudinal score progression trends, historical average score graphs, and attempt counts.',
       icon: TrendingUp,
-      badgeColor: isDarkMode ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-amber-50 text-amber-800 border-amber-200',
-      btnColor: 'bg-amber-600 hover:bg-amber-500 text-white',
+      badgeColor: isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200',
+      btnColor: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm',
     },
     {
       key: 'improvement',
@@ -151,8 +151,8 @@ export default function ReportsTab({
       description:
         'Export score growth velocity, topic-wise progress trajectories, and student improvement indices.',
       icon: Award,
-      badgeColor: isDarkMode ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-cyan-50 text-cyan-700 border-cyan-200',
-      btnColor: 'bg-cyan-600 hover:bg-cyan-500 text-white',
+      badgeColor: isDarkMode ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200',
+      btnColor: 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm',
     },
   ];
 
