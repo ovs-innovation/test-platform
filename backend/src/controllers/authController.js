@@ -870,8 +870,9 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
 
   const result = await query(
     `
-    SELECT a.id,
-           a.id AS assessment_id,
+    -- 1. Candidate Invites
+    SELECT a.id::text AS id,
+           a.id::text AS assessment_id,
            a.title,
            a.description,
            a.duration_minutes,
@@ -880,32 +881,33 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
            a.is_published,
            a.available_from,
            a.available_until,
-           ci.status AS invite_status,
+           ci.status::text AS invite_status,
            'invite' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
            at.id AS attempt_id,
-           at.status AS attempt_status,
+           COALESCE(at.status::text, CASE WHEN at.submitted_at IS NOT NULL THEN 'submitted' ELSE 'in_progress' END) AS attempt_status,
            at.started_at,
            at.submitted_at,
-           at.violation_count,
+           COALESCE(at.violation_count, 0) AS violation_count,
            s.marks_obtained,
-           s.total_marks AS score_total,
-           s.percentage,
+           COALESCE(s.total_marks, 100) AS score_total,
+           COALESCE(s.percentage, 0)::numeric(5,2) AS percentage,
            s.passed
     FROM candidate_invites ci
-    JOIN assessments a ON a.id = ci.assessment_id
+    JOIN assessments a ON a.id::text = ci.assessment_id::text
     LEFT JOIN (
       SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) q ON q.assessment_id = a.id
-    LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
+    ) q ON q.assessment_id::text = a.id::text
+    LEFT JOIN attempts at ON at.assessment_id::text = a.id::text AND at.candidate_id = $2
     LEFT JOIN scores s ON s.attempt_id = at.id
     WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
 
-    UNION
+    UNION ALL
 
-    SELECT a.id,
-           a.id AS assessment_id,
+    -- 2. Test Series Enrollments
+    SELECT a.id::text AS id,
+           a.id::text AS assessment_id,
            a.title,
            a.description,
            a.duration_minutes,
@@ -914,39 +916,146 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
            a.is_published,
            a.available_from,
            a.available_until,
-           NULL AS invite_status,
+           NULL::text AS invite_status,
            'enrollment' AS access_type,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
            at.id AS attempt_id,
-           at.status AS attempt_status,
+           COALESCE(at.status::text, CASE WHEN at.submitted_at IS NOT NULL THEN 'submitted' ELSE 'in_progress' END) AS attempt_status,
            at.started_at,
            at.submitted_at,
-           at.violation_count,
+           COALESCE(at.violation_count, 0) AS violation_count,
            s.marks_obtained,
-           s.total_marks AS score_total,
-           s.percentage,
+           COALESCE(s.total_marks, 100) AS score_total,
+           COALESCE(s.percentage, 0)::numeric(5,2) AS percentage,
            s.passed
     FROM student_enrollments se
     JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
-    JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+    JOIN assessments a ON a.id::text = tsa.assessment_id::text AND a.is_published = true
     LEFT JOIN (
       SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) q ON q.assessment_id = a.id
-    LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
+    ) q ON q.assessment_id::text = a.id::text
+    LEFT JOIN attempts at ON at.assessment_id::text = a.id::text AND at.candidate_id = $2
     LEFT JOIN scores s ON s.attempt_id = at.id
     WHERE se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
-      AND NOT EXISTS (
-        SELECT 1 FROM candidate_invites ci2
-        WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
-      )
+
+    UNION ALL
+
+    -- 3. Direct Assessment Attempts by Candidate
+    SELECT a.id::text AS id,
+           a.id::text AS assessment_id,
+           a.title,
+           a.description,
+           a.duration_minutes,
+           a.passing_marks,
+           a.result_visible,
+           a.is_published,
+           NULL::timestamp AS available_from,
+           NULL::timestamp AS available_until,
+           NULL::text AS invite_status,
+           'direct' AS access_type,
+           COALESCE(q.cnt, 0)::int AS question_count,
+           COALESCE(q.total_marks, 0)::int AS total_marks,
+           at.id AS attempt_id,
+           COALESCE(at.status::text, CASE WHEN at.submitted_at IS NOT NULL THEN 'submitted' ELSE 'in_progress' END) AS attempt_status,
+           at.started_at,
+           at.submitted_at,
+           COALESCE(at.violation_count, 0) AS violation_count,
+           s.marks_obtained,
+           COALESCE(s.total_marks, 100) AS score_total,
+           COALESCE(s.percentage, 0)::numeric(5,2) AS percentage,
+           s.passed
+    FROM attempts at
+    JOIN assessments a ON a.id::text = at.assessment_id::text
+    LEFT JOIN (
+      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+    ) q ON q.assessment_id::text = a.id::text
+    LEFT JOIN scores s ON s.attempt_id = at.id
+    WHERE at.candidate_id = $2
+
+    UNION ALL
+
+    -- 4. Calendar / AIETS Test Attempts
+    SELECT t.id::text AS id,
+           t.id::text AS assessment_id,
+           t.test_name AS title,
+           COALESCE(t.syllabus, 'AIETS CBT Exam') AS description,
+           t.duration_minutes,
+           40 AS passing_marks,
+           TRUE AS result_visible,
+           TRUE AS is_published,
+           NULL::timestamp AS available_from,
+           NULL::timestamp AS available_until,
+           NULL::text AS invite_status,
+           'cbt_test' AS access_type,
+           75 AS question_count,
+           COALESCE(ta.max_marks, t.max_marks, 720)::int AS total_marks,
+           ta.id AS attempt_id,
+           CASE WHEN ta.submitted_at IS NOT NULL THEN 'submitted' ELSE 'in_progress' END AS attempt_status,
+           ta.started_at,
+           ta.submitted_at,
+           0 AS violation_count,
+           ta.score AS marks_obtained,
+           COALESCE(ta.max_marks, 720) AS score_total,
+           COALESCE(ta.percentage, 0)::numeric(5,2) AS percentage,
+           (COALESCE(ta.percentage, 0) >= 40) AS passed
+    FROM test_attempts ta
+    JOIN tests t ON t.id = ta.test_id
+    WHERE ta.student_id = $2
+
+    UNION ALL
+
+    -- 5. Assigned Tests via Institution / Batch / Student Assignments
+    SELECT t.id::text AS id,
+           t.id::text AS assessment_id,
+           t.test_name AS title,
+           COALESCE(t.syllabus, 'Assigned CBT Exam') AS description,
+           t.duration_minutes,
+           40 AS passing_marks,
+           TRUE AS result_visible,
+           TRUE AS is_published,
+           NULL::timestamp AS available_from,
+           NULL::timestamp AS available_until,
+           NULL::text AS invite_status,
+           'assignment' AS access_type,
+           75 AS question_count,
+           COALESCE(t.max_marks, 720)::int AS total_marks,
+           ta.id AS attempt_id,
+           CASE WHEN ta.submitted_at IS NOT NULL THEN 'submitted' WHEN ta.started_at IS NOT NULL THEN 'in_progress' ELSE 'not_started' END AS attempt_status,
+           ta.started_at,
+           ta.submitted_at,
+           0 AS violation_count,
+           ta.score AS marks_obtained,
+           COALESCE(ta.max_marks, 720) AS score_total,
+           COALESCE(ta.percentage, 0)::numeric(5,2) AS percentage,
+           (COALESCE(ta.percentage, 0) >= 40) AS passed
+    FROM users u
+    JOIN test_assignments tas ON (
+      (tas.assigned_to_type = 'institution' AND tas.assigned_to_id = u.institution_id) OR
+      (tas.assigned_to_type = 'batch' AND tas.assigned_to_id = u.batch_id) OR
+      (tas.assigned_to_type = 'student' AND tas.assigned_to_id = u.id) OR
+      (tas.assigned_to_type = 'all')
+    )
+    JOIN tests t ON t.id = tas.test_id
+    LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.test_id = t.id
+    WHERE u.id = $2
     ORDER BY title ASC
     `,
     [req.user.email, req.user.id]
   );
 
   const now = new Date();
-  const rows = result.rows;
+  
+  // Deduplicate rows by attempt_id if available, otherwise by assessment_id + access_type
+  const uniqueMap = new Map();
+  for (const r of result.rows) {
+    const key = r.attempt_id ? `attempt_${r.attempt_id}` : `assess_${r.assessment_id}_${r.access_type}`;
+    if (!uniqueMap.has(key) || (r.submitted_at && !uniqueMap.get(key).submitted_at)) {
+      uniqueMap.set(key, r);
+    }
+  }
+  const rows = Array.from(uniqueMap.values());
+
   const isDone = (r) =>
     r.attempt_status === 'submitted' ||
     r.attempt_status === 'auto_submitted' ||
@@ -958,7 +1067,7 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
   const upcoming = activeOrUpcoming.filter((r) => r.available_from && new Date(r.available_from) > now);
   const pending = activeOrUpcoming.filter((r) => !r.available_from || new Date(r.available_from) <= now);
 
-  // 1. Calculate AIR Percentile & Best AIR Rank across student attempts
+  // 1. Calculate AIR Percentile & Cohort AIR Rank across real student attempts in database
   let topPercentile = null;
   let airRank = null;
   let studyStreak = 0;
@@ -977,18 +1086,32 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
       [req.user.id]
     );
 
-    const avgPct = Number(rankRes.rows[0]?.avg_pct || 0);
-    const bestRank = Number(rankRes.rows[0]?.best_rank || 0);
     const avgScore = Number(rankRes.rows[0]?.avg_score || 0);
+    const bestRank = Number(rankRes.rows[0]?.best_rank || 0);
     const totalScored = Number(rankRes.rows[0]?.total_scored || 0);
 
     if (totalScored > 0 || completed.length > 0) {
-      const effectivePct = avgPct > 0 ? avgPct : (avgScore > 0 ? avgScore : 75);
-      topPercentile = Number(Math.max(0.1, Math.min(99.9, 100 - effectivePct)).toFixed(1));
-      airRank = bestRank > 0 ? bestRank : Math.max(1, Math.round((100 - effectivePct) * 15 + 5));
+      const cohortRes = await query(
+        `SELECT COUNT(DISTINCT candidate_id)::int AS total_students,
+                COUNT(DISTINCT CASE WHEN avg_score > $1 THEN candidate_id END)::int AS ahead_students
+         FROM (
+           SELECT at.candidate_id, AVG(s.percentage) AS avg_score
+           FROM attempts at
+           JOIN scores s ON s.attempt_id = at.id
+           WHERE at.submitted_at IS NOT NULL
+           GROUP BY at.candidate_id
+         ) cohort`,
+        [avgScore || 0]
+      ).catch(() => ({ rows: [{ total_students: 1, ahead_students: 0 }] }));
+
+      const ahead = Number(cohortRes.rows[0]?.ahead_students || 0);
+      const totalCohort = Math.max(1, Number(cohortRes.rows[0]?.total_students || 1));
+
+      airRank = bestRank > 0 ? bestRank : (ahead + 1);
+      topPercentile = Number(Math.max(0.1, Math.min(99.9, ((totalCohort - ahead) / totalCohort) * 100)).toFixed(1));
     }
 
-    // 2. Calculate Daily Study Streak
+    // 2. Calculate Daily Study Streak strictly from database timestamps
     const streakRes = await query(
       `SELECT DISTINCT (activity_time AT TIME ZONE 'UTC')::date AS activity_date
        FROM (
@@ -1030,31 +1153,32 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
         }
       }
     }
-    // 3. Dynamic Subject Mastery & AI Suggestions
-    let subjects = [
-      { name: 'Physics', score: '78%', accuracy: 78, status: 'Strong', color: 'bg-emerald-500' },
-      { name: 'Chemistry', score: '64%', accuracy: 64, status: 'Moderate', color: 'bg-blue-500' },
-      { name: 'Mathematics', score: '52%', accuracy: 52, status: 'Focus Needed', color: 'bg-amber-500' },
-      { name: 'Biology', score: '88%', accuracy: 88, status: 'Excellent', color: 'bg-purple-500' },
-    ];
 
-    let aiSuggestions = [
-      { id: 1, topic: 'Physics - Mechanics', tip: 'Accuracy in Rotation & Work Energy is 54%. Review 15 practice questions.', priority: 'High' },
-      { id: 2, topic: 'Chemistry - Organic Reactions', tip: 'Strong performance in Hydrocarbons! Try JEE Advanced Mock #2.', priority: 'Medium' },
-      { id: 3, topic: 'Mathematics - Calculus', tip: 'Time per question is 2.1m. Practice speed drills to save 5 mins.', priority: 'Normal' },
-    ];
+    // 3. Dynamic Subject Mastery & AI Suggestions strictly derived from DB answers
+    let subjects = [];
+    let aiSuggestions = [];
 
     const subjRes = await query(
       `SELECT 
-         COALESCE(s.name, 'General') AS subject_name,
+         COALESCE(
+           NULLIF(s.name, ''),
+           CASE 
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
+             WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+             ELSE NULL
+           END,
+           'General'
+         ) AS subject_name,
          COUNT(ans.id)::int AS total_ans,
-         SUM(CASE WHEN ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index THEN 1 ELSE 0 END)::int AS correct_ans
+         SUM(CASE WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index) OR (ans.selected_indices::text = q.correct_indices::text) THEN 1 ELSE 0 END)::int AS correct_ans
        FROM answers ans
        JOIN questions q ON q.id = ans.question_id
        LEFT JOIN subjects s ON s.id = q.subject_id
        JOIN attempts at ON at.id = ans.attempt_id
        WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
-       GROUP BY s.name
+       GROUP BY 1
        ORDER BY total_ans DESC`,
       [req.user.id]
     );
@@ -1067,7 +1191,7 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
         Biology: 'bg-purple-500',
       };
 
-      const computedSubjs = subjRes.rows.map((r) => {
+      subjects = subjRes.rows.map((r) => {
         const total = Number(r.total_ans) || 1;
         const correct = Number(r.correct_ans) || 0;
         const acc = Math.round((correct / total) * 100);
@@ -1085,10 +1209,8 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
         };
       });
 
-      if (computedSubjs.length > 0) {
-        subjects = computedSubjs;
-
-        const sortedByAcc = [...computedSubjs].sort((a, b) => a.accuracy - b.accuracy);
+      if (subjects.length > 0) {
+        const sortedByAcc = [...subjects].sort((a, b) => a.accuracy - b.accuracy);
         const weakest = sortedByAcc[0];
         const strongest = sortedByAcc[sortedByAcc.length - 1];
 
@@ -1096,20 +1218,14 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
           {
             id: 1,
             topic: `${weakest.name} - Targeted Practice`,
-            tip: `Your current accuracy in ${weakest.name} is ${weakest.score}. Complete 15 practice questions to strengthen weak chapters.`,
+            tip: `Your current accuracy in ${weakest.name} is ${weakest.score}. Complete practice questions to strengthen weak chapters.`,
             priority: 'High',
           },
           {
             id: 2,
             topic: `${strongest.name} - High Performance`,
-            tip: `Excellent accuracy of ${strongest.score} in ${strongest.name}! Challenge yourself with All-India Speed Drills.`,
+            tip: `Excellent accuracy of ${strongest.score} in ${strongest.name}! Keep up the great work.`,
             priority: 'Medium',
-          },
-          {
-            id: 3,
-            topic: 'Time Efficiency & Accuracy',
-            tip: 'Focus on eliminating negative markings by revising unattempted conceptual questions.',
-            priority: 'Normal',
           },
         ];
       }

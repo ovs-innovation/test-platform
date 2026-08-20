@@ -70,16 +70,21 @@ export const getInstitutionOverallReport = asyncHandler(async (req, res) => {
   let stats = { average_score: 0, highest_score: 0, lowest_score: 0, unique_participating_students: 0, total_attempts: 0, platform_avg_percentile: 75.0 };
   try {
     const aggRes = await query(
-      `SELECT 
-         COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score,
-         COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score,
-         COALESCE(ROUND(MIN(ta.percentage), 2), 0) AS lowest_score,
-         COUNT(DISTINCT ta.student_id)::int AS unique_participating_students,
-         COUNT(ta.id)::int AS total_attempts,
-         COALESCE(ROUND(AVG(ta.percentile), 2), 75.0) AS platform_avg_percentile
-       FROM test_attempts ta
-       JOIN users u ON u.id = ta.student_id
-       WHERE u.institution_id = $1 AND ta.submitted_at IS NOT NULL ${timeFilter}`,
+      `WITH combined AS (
+         SELECT student_id, score, percentage, percentile, submitted_at FROM test_attempts WHERE submitted_at IS NOT NULL
+         UNION ALL
+         SELECT candidate_id AS student_id, s.marks_obtained AS score, s.percentage, COALESCE(s.percentile, s.percentage) AS percentile, at.submitted_at FROM attempts at JOIN scores s ON s.attempt_id = at.id WHERE at.submitted_at IS NOT NULL
+       )
+       SELECT 
+         COALESCE(ROUND(AVG(c.percentage), 2), 0) AS average_score,
+         COALESCE(ROUND(MAX(c.percentage), 2), 0) AS highest_score,
+         COALESCE(ROUND(MIN(c.percentage), 2), 0) AS lowest_score,
+         COUNT(DISTINCT c.student_id)::int AS unique_participating_students,
+         COUNT(c.submitted_at)::int AS total_attempts,
+         COALESCE(ROUND(AVG(c.percentile), 2), 75.0) AS platform_avg_percentile
+       FROM users u
+       JOIN combined c ON c.student_id = u.id
+       WHERE u.institution_id = $1 AND u.role = 'candidate' ${timeFilter}`,
       params
     );
     if (aggRes.rows[0]) stats = aggRes.rows[0];
@@ -157,23 +162,28 @@ export const getInstitutionRankingsReport = asyncHandler(async (req, res) => {
     totalStudents = countRes.rows[0]?.total || 0;
 
     const rankingsQuery = `
-      WITH student_scores AS (
+      WITH combined AS (
+        SELECT student_id, score, percentage, percentile, all_india_rank AS platform_rank, submitted_at FROM test_attempts WHERE submitted_at IS NOT NULL
+        UNION ALL
+        SELECT candidate_id AS student_id, s.marks_obtained AS score, s.percentage, COALESCE(s.percentile, s.percentage) AS percentile, COALESCE(s.rank, 1) AS platform_rank, at.submitted_at FROM attempts at JOIN scores s ON s.attempt_id = at.id WHERE at.submitted_at IS NOT NULL
+      ),
+      student_scores AS (
         SELECT 
           u.id AS student_id,
           u.name AS student_name,
           u.email AS student_email,
           u.roll_number,
-          b.name AS batch_name,
-          COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS percentage,
-          COALESCE(MAX(ta.score), 0) AS score,
-          COUNT(ta.id)::int AS tests_attempted,
-          COALESCE(ROUND(AVG(ta.percentile), 2), 80.0) AS percentile,
-          COALESCE(ROUND(AVG(ta.all_india_rank), 0), 120) AS platform_rank
+          COALESCE(b.batch_name, b.name) AS batch_name,
+          COALESCE(ROUND(AVG(c.percentage), 2), 0) AS percentage,
+          COALESCE(MAX(c.score), 0) AS score,
+          COUNT(c.submitted_at)::int AS tests_attempted,
+          COALESCE(ROUND(AVG(c.percentile), 2), 80.0) AS percentile,
+          COALESCE(ROUND(AVG(c.platform_rank), 0), 120) AS platform_rank
         FROM users u
         LEFT JOIN batches b ON b.id = u.batch_id
-        LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+        LEFT JOIN combined c ON c.student_id = u.id
         ${filterSql}
-        GROUP BY u.id, u.name, u.email, u.roll_number, b.name
+        GROUP BY u.id, u.name, u.email, u.roll_number, b.batch_name, b.name
       )
       SELECT 
         student_id,
@@ -241,20 +251,25 @@ export const getBatchComparisonReport = asyncHandler(async (req, res) => {
   let batches = [];
   try {
     const result = await query(
-      `SELECT 
+      `WITH combined AS (
+         SELECT student_id, percentage, submitted_at FROM test_attempts WHERE submitted_at IS NOT NULL
+         UNION ALL
+         SELECT candidate_id AS student_id, s.percentage, at.submitted_at FROM attempts at JOIN scores s ON s.attempt_id = at.id WHERE at.submitted_at IS NOT NULL
+       )
+       SELECT 
          COALESCE(b.id, 0) AS batch_id,
-         COALESCE(b.name, 'Default Batch') AS batch_name,
+         COALESCE(b.batch_name, b.name, 'Default Batch') AS batch_name,
          COUNT(DISTINCT u.id)::int AS total_students,
-         COUNT(DISTINCT ta.student_id)::int AS attempted_students,
-         COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score,
-         COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score,
-         COUNT(CASE WHEN ta.percentage >= 40 THEN 1 END)::int AS passed_attempts,
-         COUNT(ta.id)::int AS total_attempts
+         COUNT(DISTINCT c.student_id)::int AS attempted_students,
+         COALESCE(ROUND(AVG(c.percentage), 2), 0) AS average_score,
+         COALESCE(ROUND(MAX(c.percentage), 2), 0) AS highest_score,
+         COUNT(CASE WHEN c.percentage >= 40 THEN 1 END)::int AS passed_attempts,
+         COUNT(c.submitted_at)::int AS total_attempts
        FROM users u
        LEFT JOIN batches b ON b.id = u.batch_id
-       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+       LEFT JOIN combined c ON c.student_id = u.id
        WHERE u.institution_id = $1 AND u.role = 'candidate' ${batchFilterStr}
-       GROUP BY b.id, b.name
+       GROUP BY b.id, b.name, b.batch_name
        ORDER BY average_score DESC`,
       params
     );

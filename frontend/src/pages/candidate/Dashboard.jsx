@@ -75,7 +75,7 @@ export default function CandidateDashboard() {
 
   const resume = pending.find((a) => a.attempt_status === 'in_progress');
   const passRate = completed.length > 0
-    ? Math.round((completed.filter((c) => c.passed).length / completed.length) * 100)
+    ? Math.round((completed.filter((c) => c.passed || Number(c.percentage) >= 40).length / completed.length) * 100)
     : null;
 
   const firstName = user?.name?.split(' ')[0] || 'Student';
@@ -168,7 +168,7 @@ export default function CandidateDashboard() {
         />
         <CleanStatCard
           label="Predicted Rank"
-          value={stats.airRank ? `AIR #${stats.airRank}` : (completed.length > 0 ? 'Top 15%' : 'Unranked')}
+          value={stats.airRank ? `AIR #${stats.airRank}` : 'Unranked'}
           subtitle={stats.topPercentile ? `Top ${stats.topPercentile}%` : 'Assessment AIR'}
           icon={Trophy}
           color="text-purple-600 dark:text-purple-400"

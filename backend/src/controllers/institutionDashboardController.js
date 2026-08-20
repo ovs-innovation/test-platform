@@ -991,13 +991,13 @@ export const getStudentProgress = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/analytics?test_id=X&batch_id=Y
  */
 export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id) || 1;
   const { test_id, batch_id } = req.query;
 
   let attemptWhere = `WHERE u.institution_id = $1 AND u.role = 'candidate'`;
   const params = [instId];
 
-  if (test_id && test_id !== 'All') {
+  if (test_id && test_id !== 'All' && !isNaN(Number(test_id))) {
     params.push(Number(test_id));
     attemptWhere += ` AND (ta.test_id = $${params.length} OR at.assessment_id = $${params.length})`;
   }
@@ -1031,36 +1031,90 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
        FROM combined`,
       params
     ),
-    query(`SELECT COUNT(*)::int AS total_students FROM users WHERE institution_id = $1`, [instId]),
+    query(`SELECT COUNT(*)::int AS total_students FROM users WHERE institution_id = $1 AND role = 'candidate'`, [instId]),
     query(
-      `SELECT b.id AS batch_id, COALESCE(b.batch_name, b.name, 'Default Batch') AS batch_name,
-              COUNT(DISTINCT u.id)::int AS total_students,
-              COUNT(DISTINCT ta.student_id)::int AS active_students,
-              COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS avg_score,
-              COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score
+      `WITH combined_attempts AS (
+         SELECT 
+           u.batch_id,
+           ta.student_id,
+           ta.percentage
+         FROM test_attempts ta
+         JOIN users u ON u.id = ta.student_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
+
+         UNION ALL
+
+         SELECT 
+           u.batch_id,
+           at.candidate_id AS student_id,
+           s.percentage
+         FROM attempts at
+         JOIN scores s ON s.attempt_id = at.id
+         JOIN users u ON u.id = at.candidate_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
+       )
+       SELECT 
+         b.id AS batch_id,
+         COALESCE(b.batch_name, b.name, 'Default Batch') AS batch_name,
+         COUNT(DISTINCT u.id)::int AS total_students,
+         COUNT(DISTINCT ca.student_id)::int AS active_students,
+         COALESCE(ROUND(AVG(ca.percentage), 2), 0) AS avg_score,
+         COALESCE(ROUND(MAX(ca.percentage), 2), 0) AS highest_score
        FROM batches b
        LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1 AND u.role = 'candidate'
-       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+       LEFT JOIN combined_attempts ca ON ca.batch_id = b.id
        WHERE b.institution_id = $1
-       GROUP BY b.id, b.name, b.batch_name`,
+       GROUP BY b.id, b.name, b.batch_name
+       ORDER BY b.name ASC`,
       [instId]
     ),
     query(
-      `SELECT 
-         COALESCE(sec.name, 'General') AS subject,
-         ROUND(AVG(ta.percentage), 2) AS avg_score,
-         COUNT(DISTINCT ta.test_id)::int AS tests_count
-       FROM test_attempts ta
-       JOIN users u ON u.id = ta.student_id
-       LEFT JOIN test_sections sec ON sec.test_id = ta.test_id
-       WHERE u.institution_id = $1 AND ta.submitted_at IS NOT NULL
-       GROUP BY COALESCE(sec.name, 'General')
+      `WITH combined_subject_attempts AS (
+         SELECT 
+           COALESCE(sec.name, 'General') AS subject,
+           ta.percentage,
+           ta.test_id
+         FROM test_attempts ta
+         JOIN users u ON u.id = ta.student_id
+         LEFT JOIN test_sections sec ON sec.test_id = ta.test_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
+
+         UNION ALL
+
+         SELECT 
+           COALESCE(
+             NULLIF(s_subj.name, ''),
+             CASE 
+               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
+               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
+               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
+               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
+               ELSE NULL
+             END,
+             'General'
+           ) AS subject,
+           sc.percentage,
+           at.assessment_id AS test_id
+         FROM attempts at
+         JOIN scores sc ON sc.attempt_id = at.id
+         JOIN users u ON u.id = at.candidate_id
+         JOIN answers ans ON ans.attempt_id = at.id
+         JOIN questions q ON q.id = ans.question_id
+         LEFT JOIN subjects s_subj ON s_subj.id = q.subject_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
+       )
+       SELECT 
+         subject,
+         COALESCE(ROUND(AVG(percentage), 2), 0) AS avg_score,
+         COUNT(DISTINCT test_id)::int AS tests_count
+       FROM combined_subject_attempts
+       GROUP BY subject
        LIMIT 5`,
       [instId]
     ).catch(() => ({ rows: [] }))
   ]);
 
-  const stats = aggRes.rows[0];
+  const stats = aggRes.rows[0] || {};
   const totalEnrolled = studentCountRes.rows[0]?.total_students || 1;
   const participationRate = Math.min(100, Math.round(((stats.active_students || 0) / totalEnrolled) * 100));
 
@@ -1090,7 +1144,7 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/reports/export?type=student|batch|institution&format=csv|excel
  */
 export const exportInstitutionReport = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id) || 1;
   const { type = 'student' } = req.query;
 
   let csvContent = '';
@@ -1098,13 +1152,18 @@ export const exportInstitutionReport = asyncHandler(async (req, res) => {
 
   if (type === 'student') {
     const studentsRes = await query(
-      `SELECT u.id, u.name, u.email, u.roll_number, COALESCE(b.batch_name, b.name, 'General') AS batch_name,
-              COUNT(ta.id)::int AS attempts_count,
-              COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS avg_score
+      `WITH combined AS (
+         SELECT student_id, score, percentage, submitted_at FROM test_attempts WHERE submitted_at IS NOT NULL
+         UNION ALL
+         SELECT candidate_id AS student_id, s.marks_obtained AS score, s.percentage, at.submitted_at FROM attempts at JOIN scores s ON s.attempt_id = at.id WHERE at.submitted_at IS NOT NULL
+       )
+       SELECT u.id, u.name, u.email, u.roll_number, COALESCE(b.batch_name, b.name, 'General') AS batch_name,
+              COUNT(c.submitted_at)::int AS attempts_count,
+              COALESCE(ROUND(AVG(c.percentage), 2), 0) AS avg_score
        FROM users u
        LEFT JOIN batches b ON b.id = u.batch_id
-       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
-       WHERE u.institution_id = $1
+       LEFT JOIN combined c ON c.student_id = u.id
+       WHERE u.institution_id = $1 AND u.role = 'candidate'
        GROUP BY u.id, u.name, u.email, u.roll_number, b.batch_name, b.name`,
       [instId]
     );
@@ -1115,13 +1174,18 @@ export const exportInstitutionReport = asyncHandler(async (req, res) => {
     });
   } else {
     const batchRes = await query(
-      `SELECT b.id, COALESCE(b.batch_name, b.name) AS batch_name,
+      `WITH combined_attempts AS (
+         SELECT u.batch_id, ta.percentage FROM test_attempts ta JOIN users u ON u.id = ta.student_id WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
+         UNION ALL
+         SELECT u.batch_id, s.percentage FROM attempts at JOIN scores s ON s.attempt_id = at.id JOIN users u ON u.id = at.candidate_id WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
+       )
+       SELECT b.id, COALESCE(b.batch_name, b.name, 'Default Batch') AS batch_name,
               COUNT(DISTINCT u.id)::int AS total_students,
-              COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS avg_score
+              COALESCE(ROUND(AVG(ca.percentage), 2), 0) AS avg_score
        FROM batches b
-       LEFT JOIN users u ON u.batch_id = b.id
-       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
-       WHERE b.institution_id = $1 OR u.institution_id = $1
+       LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1 AND u.role = 'candidate'
+       LEFT JOIN combined_attempts ca ON ca.batch_id = b.id
+       WHERE b.institution_id = $1
        GROUP BY b.id, b.name, b.batch_name`,
       [instId]
     );
@@ -1212,55 +1276,156 @@ export const getInstitutionRankings = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/test-completion?test_id=X&batch_id=Y
  */
 export const getTestCompletionStatus = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id) || 1;
   const { test_id, batch_id } = req.query;
 
-  let sql = `
-    SELECT 
-      u.id AS student_id,
-      u.name AS student_name,
-      u.roll_number,
-      b.id AS batch_id,
-      COALESCE(b.batch_name, b.name, 'General') AS batch_name,
-      COALESCE(t.title, 'AIETS CBT Test') AS test_name,
-      COALESCE(s.marks_obtained, ta.score) AS score,
-      COALESCE(s.total_marks, ta.max_marks, 720) AS max_marks,
-      COALESCE(at.submitted_at, ta.submitted_at) AS submitted_at,
-      CASE 
-        WHEN ta.submitted_at IS NOT NULL OR at.submitted_at IS NOT NULL THEN 'Completed'
-        WHEN ta.started_at IS NOT NULL OR at.id IS NOT NULL THEN 'In Progress'
-        WHEN (t.due_date IS NOT NULL AND t.due_date < NOW()) OR (t.end_time IS NOT NULL AND t.end_time < NOW()) THEN 'Missed'
-        ELSE 'Pending'
-      END AS status,
-      CASE WHEN tas.id IS NOT NULL OR ta.id IS NOT NULL THEN TRUE ELSE FALSE END AS is_assigned
-    FROM users u
-    LEFT JOIN batches b ON b.id = u.batch_id
-    LEFT JOIN test_assignments tas ON (
-      (tas.assigned_to_type = 'institution' AND tas.assigned_to_id = $1) OR
-      (tas.assigned_to_type = 'batch' AND tas.assigned_to_id = u.batch_id) OR
-      (tas.assigned_to_type = 'student' AND tas.assigned_to_id = u.id)
-    )
-    LEFT JOIN test_attempts ta ON ta.student_id = u.id
-    LEFT JOIN tests t ON t.id = COALESCE(ta.test_id, tas.test_id)
-    LEFT JOIN attempts at ON at.candidate_id = u.id
-    LEFT JOIN scores s ON s.attempt_id = at.id
-    WHERE u.institution_id = $1 AND (tas.id IS NOT NULL OR ta.id IS NOT NULL OR at.id IS NOT NULL)
-  `;
   const params = [instId];
+  let filterClauses = '';
 
-  if (test_id && test_id !== 'All') {
+  if (test_id && test_id !== 'All' && !isNaN(Number(test_id))) {
     params.push(Number(test_id));
-    sql += ` AND (tas.test_id = $${params.length} OR ta.test_id = $${params.length} OR at.assessment_id = $${params.length})`;
+    filterClauses += ` AND (combined.test_id = $${params.length})`;
   }
   if (batch_id && batch_id !== 'All') {
     params.push(batch_id);
-    sql += ` AND (b.id::text = $${params.length} OR b.batch_name = $${params.length} OR b.name = $${params.length})`;
+    filterClauses += ` AND (combined.batch_id::text = $${params.length} OR combined.batch_name = $${params.length})`;
   }
 
-  sql += ` ORDER BY u.name ASC`;
+  let records = [];
+  try {
+    const result = await query(
+      `WITH student_attempts AS (
+         -- 1. Calendar/AIETS Test Attempts
+         SELECT 
+           u.id AS student_id,
+           u.name AS student_name,
+           COALESCE(u.roll_number, CONCAT('ROLL-', u.id)) AS roll_number,
+           u.batch_id,
+           COALESCE(b.batch_name, b.name, 'General') AS batch_name,
+           ta.test_id,
+           COALESCE(t.test_name, 'AIETS CBT Test') AS test_name,
+           ta.score::numeric(10,2) AS score,
+           COALESCE(ta.max_marks, t.max_marks, 720)::numeric(10,2) AS max_marks,
+           ta.submitted_at,
+           CASE 
+             WHEN ta.submitted_at IS NOT NULL THEN 'Completed'
+             WHEN ta.started_at IS NOT NULL THEN 'In Progress'
+             WHEN t.test_date IS NOT NULL AND t.test_date < CURRENT_DATE THEN 'Missed'
+             ELSE 'Pending'
+           END AS status
+         FROM users u
+         LEFT JOIN batches b ON b.id = u.batch_id
+         JOIN test_attempts ta ON ta.student_id = u.id
+         LEFT JOIN tests t ON t.id = ta.test_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate'
 
-  const result = await query(sql, params);
-  const records = result.rows;
+         UNION ALL
+
+         -- 2. CBT Assessment Attempts
+         SELECT 
+           u.id AS student_id,
+           u.name AS student_name,
+           COALESCE(u.roll_number, CONCAT('ROLL-', u.id)) AS roll_number,
+           u.batch_id,
+           COALESCE(b.batch_name, b.name, 'General') AS batch_name,
+           at.assessment_id AS test_id,
+           COALESCE(a.title, 'CBT Assessment') AS test_name,
+           s.marks_obtained::numeric(10,2) AS score,
+           COALESCE(s.total_marks, 100)::numeric(10,2) AS max_marks,
+           at.submitted_at,
+           CASE 
+             WHEN at.submitted_at IS NOT NULL THEN 'Completed'
+             WHEN at.status = 'in_progress' THEN 'In Progress'
+             ELSE 'Completed'
+           END AS status
+         FROM users u
+         LEFT JOIN batches b ON b.id = u.batch_id
+         JOIN attempts at ON at.candidate_id = u.id
+         LEFT JOIN scores s ON s.attempt_id = at.id
+         LEFT JOIN assessments a ON a.id = at.assessment_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate'
+
+         UNION ALL
+
+         -- 3. Assigned tests not yet attempted
+         SELECT 
+           u.id AS student_id,
+           u.name AS student_name,
+           COALESCE(u.roll_number, CONCAT('ROLL-', u.id)) AS roll_number,
+           u.batch_id,
+           COALESCE(b.batch_name, b.name, 'General') AS batch_name,
+           t.id AS test_id,
+           COALESCE(t.test_name, 'AIETS CBT Test') AS test_name,
+           NULL::numeric AS score,
+           COALESCE(t.max_marks, 720)::numeric(10,2) AS max_marks,
+           NULL::timestamp AS submitted_at,
+           CASE 
+             WHEN t.test_date IS NOT NULL AND t.test_date < CURRENT_DATE THEN 'Missed'
+             ELSE 'Pending'
+           END AS status
+         FROM users u
+         LEFT JOIN batches b ON b.id = u.batch_id
+         JOIN test_assignments tas ON (
+           (tas.assigned_to_type = 'institution' AND tas.assigned_to_id = u.institution_id) OR
+           (tas.assigned_to_type = 'batch' AND tas.assigned_to_id = u.batch_id) OR
+           (tas.assigned_to_type = 'student' AND tas.assigned_to_id = u.id) OR
+           (tas.assigned_to_type = 'all')
+         )
+         JOIN tests t ON t.id = tas.test_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate'
+           AND NOT EXISTS (
+             SELECT 1 FROM test_attempts ta2 WHERE ta2.student_id = u.id AND ta2.test_id = t.id
+           )
+
+         UNION ALL
+
+         -- 4. Fallback enrolled students if no assignments/attempts recorded yet
+         SELECT 
+           u.id AS student_id,
+           u.name AS student_name,
+           COALESCE(u.roll_number, CONCAT('ROLL-', u.id)) AS roll_number,
+           u.batch_id,
+           COALESCE(b.batch_name, b.name, 'General') AS batch_name,
+           0 AS test_id,
+           'General Assessment' AS test_name,
+           NULL::numeric AS score,
+           720::numeric AS max_marks,
+           NULL::timestamp AS submitted_at,
+           'Pending' AS status
+         FROM users u
+         LEFT JOIN batches b ON b.id = u.batch_id
+         WHERE u.institution_id = $1 AND u.role = 'candidate'
+           AND NOT EXISTS (SELECT 1 FROM test_attempts ta3 WHERE ta3.student_id = u.id)
+           AND NOT EXISTS (SELECT 1 FROM attempts at3 WHERE at3.candidate_id = u.id)
+           AND NOT EXISTS (SELECT 1 FROM test_assignments tas3 WHERE (
+             (tas3.assigned_to_type = 'institution' AND tas3.assigned_to_id = u.institution_id) OR
+             (tas3.assigned_to_type = 'batch' AND tas3.assigned_to_id = u.batch_id) OR
+             (tas3.assigned_to_type = 'student' AND tas3.assigned_to_id = u.id) OR
+             (tas3.assigned_to_type = 'all')
+           ))
+       )
+       SELECT DISTINCT ON (combined.student_id, combined.test_id)
+         combined.student_id,
+         combined.student_name,
+         combined.roll_number,
+         combined.batch_id,
+         combined.batch_name,
+         combined.test_id,
+         combined.test_name,
+         combined.score,
+         combined.max_marks,
+         combined.submitted_at,
+         combined.status
+       FROM student_attempts combined
+       WHERE 1=1 ${filterClauses}
+       ORDER BY combined.student_id, combined.test_id, combined.submitted_at DESC NULLS LAST`,
+      params
+    );
+
+    records = result.rows;
+  } catch (err) {
+    console.error('Error fetching test completion status:', err);
+  }
 
   const totalRecords = records.length;
   const completedCount = records.filter(r => r.status === 'Completed').length;

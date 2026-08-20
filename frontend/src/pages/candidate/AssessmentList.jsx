@@ -6,7 +6,11 @@ import { ChevronRight, ShieldCheck, BarChart3, Zap, BookOpen } from 'lucide-reac
 
 export function AssessmentCard({ a }) {
   const assessmentId = a.assessment_id || a.id;
-  const completed = a.attempt_status && a.attempt_status !== 'in_progress';
+  const completed =
+    a.attempt_status === 'submitted' ||
+    a.attempt_status === 'auto_submitted' ||
+    a.attempt_status === 'completed' ||
+    (Boolean(a.submitted_at) && a.attempt_status !== 'in_progress' && a.attempt_status !== 'not_started');
   const inProgress = a.attempt_status === 'in_progress';
   const pending = a.invite_status === 'pending' || a.invite_status === 'accessed';
 
