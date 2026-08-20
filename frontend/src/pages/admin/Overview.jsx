@@ -62,7 +62,6 @@ export default function Overview() {
         title="Academic Operations Command Centre"
         subtitle={`Managing ${stats.activeAssessments || 0} active CBT mock exams and ${stats.totalCandidates || 0} candidate registrations.`}
         breadcrumbs={['Command Overview']}
-        status="All Systems Operational"
         actions={
           <>
             <button
