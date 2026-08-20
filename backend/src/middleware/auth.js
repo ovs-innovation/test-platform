@@ -94,7 +94,8 @@ export const authInstitutionAdmin = async (req, _res, next) => {
   const header = req.headers.authorization || '';
   const [scheme, token] = header.split(' ');
 
-  const instIdParam = req.params.id ? Number(req.params.id) : 1;
+  const parsedParam = Number(req.params.id);
+  const instIdParam = (!isNaN(parsedParam) && parsedParam > 0) ? parsedParam : 1;
 
   if (scheme !== 'Bearer' || !token) {
     req.user = {
@@ -149,7 +150,8 @@ export const authInstitutionAdmin = async (req, _res, next) => {
       return next();
     }
 
-    const instId = Number(decoded.institution_id || instIdParam || 1);
+    const decodedInstId = Number(decoded.institution_id);
+    const instId = (!isNaN(decodedInstId) && decodedInstId > 0) ? decodedInstId : instIdParam;
     req.user = {
       id: decoded.sub,
       role: 'institution_admin',
