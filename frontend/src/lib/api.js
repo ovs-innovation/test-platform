@@ -60,18 +60,12 @@ api.interceptors.response.use(
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
 
-    const isInfrastructureError =
-      !error.response ||
-      status >= 500 ||
-      status === 503 ||
-      (error.message && (error.message.includes('getaddrinfo') || error.message.includes('Network Error')));
-
-    if (isInfrastructureError) {
-      message = 'The service is temporarily unavailable. Please try again.';
-    } else if (typeof rawData === 'string') {
+    if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
+      message = rawData.message || rawData.error;
+    } else if (typeof rawData === 'string' && rawData.trim()) {
       message = rawData;
-    } else if (rawData && typeof rawData === 'object') {
-      message = rawData.message || rawData.error || message;
+    } else if (!error.response || status === 503 || (error.message && (error.message.includes('getaddrinfo') || error.message.includes('Network Error')))) {
+      message = 'The service is temporarily unavailable. Please try again.';
     } else if (error.message) {
       message = error.message;
     }
