@@ -189,13 +189,28 @@ export default function InstitutionDashboard() {
     }
   };
 
+  const [deletingStudentIds, setDeletingStudentIds] = useState(new Set());
+
   const handleDeleteStudent = async (studentId) => {
+    if (!studentId || deletingStudentIds.has(studentId)) return;
+
+    setDeletingStudentIds((prev) => new Set(prev).add(studentId));
     try {
       await institutionDashboardService.deleteStudent(instId, studentId);
       toast.success('Student removed');
       loadDashboardData();
     } catch (err) {
-      toast.error(err.message || 'Failed to delete student');
+      if (err.message && err.message.toLowerCase().includes('not found')) {
+        loadDashboardData();
+      } else {
+        toast.error(err.message || 'Failed to delete student');
+      }
+    } finally {
+      setDeletingStudentIds((prev) => {
+        const next = new Set(prev);
+        next.delete(studentId);
+        return next;
+      });
     }
   };
 

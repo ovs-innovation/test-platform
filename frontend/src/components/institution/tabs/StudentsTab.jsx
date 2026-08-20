@@ -81,6 +81,19 @@ export default function StudentsTab({
 
   // Edit student modal state
   const [editingStudent, setEditingStudent] = useState(null);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleDelete = async (id) => {
+    if (!id || deletingId === id) return;
+    setDeletingId(id);
+    try {
+      if (onDeleteStudent) {
+        await onDeleteStudent(id);
+      }
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   // Helper to extract student target exam with fallback
   const getStudentTargetExam = (st) => {
@@ -499,8 +512,9 @@ export default function StudentsTab({
                     </button>
 
                     <button
-                      onClick={() => onDeleteStudent(student.id)}
-                      className={`p-2 rounded-xl border transition ${
+                      onClick={() => handleDelete(student.id)}
+                      disabled={deletingId === student.id}
+                      className={`p-2 rounded-xl border transition disabled:opacity-40 cursor-pointer ${
                         isDarkMode ? 'border-slate-800 text-rose-400' : 'border-slate-200 text-rose-600 hover:bg-rose-50'
                       }`}
                       title="Delete Student"
@@ -704,8 +718,9 @@ export default function StudentsTab({
                             </button>
 
                             <button
-                              onClick={() => onDeleteStudent(student.id)}
-                              className={`p-1.5 rounded-lg border transition cursor-pointer ${
+                              onClick={() => handleDelete(student.id)}
+                              disabled={deletingId === student.id}
+                              className={`p-1.5 rounded-lg border transition cursor-pointer disabled:opacity-40 ${
                                 isDarkMode
                                   ? 'border-slate-800 text-rose-400 hover:bg-rose-500/10'
                                   : 'border-slate-200 text-rose-600 hover:bg-rose-50 hover:border-rose-300 shadow-2xs'

@@ -272,7 +272,9 @@ export const deleteInstitutionStudent = asyncHandler(async (req, res) => {
     return delRes;
   });
 
-  if (result.rowCount === 0) throw ApiError.notFound('Student not found in this institution');
+  if (result.rowCount === 0) {
+    return res.json({ success: true, message: 'Student removed or already deleted.', id: student_id });
+  }
   res.json({ success: true, message: 'Student deleted successfully and licence freed.', id: student_id });
 });
 
