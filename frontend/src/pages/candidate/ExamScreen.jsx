@@ -17,6 +17,7 @@ import Modal from '../../components/Modal.jsx';
 import CodeEditor from '../../components/CodeEditor.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
+import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 
 const SECTION_LABELS = {
   aptitude: 'Aptitude',
@@ -458,12 +459,15 @@ export default function ExamScreen() {
     <div className="exam-surface flex min-h-screen flex-col select-none">
       <header className="nta-bar sticky top-0 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2">
-          <div className="min-w-0">
-            <p className="truncate text-sm font-bold">{meta?.title}</p>
-            <p className="text-xs text-blue-100">
-              {user?.name} · Roll No: {rollNo}
-              {qCategory ? ` · Subject: ${qCategory}` : ''}
-            </p>
+          <div className="flex items-center gap-3 min-w-0">
+            <AssessmentBranding variant="cbt" />
+            <div className="min-w-0">
+              <p className="truncate text-sm font-bold">{meta?.title}</p>
+              <p className="text-xs text-blue-100">
+                {user?.name} · Roll No: {rollNo}
+                {qCategory ? ` · Subject: ${qCategory}` : ''}
+              </p>
+            </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
             {maxViolations > 0 && (

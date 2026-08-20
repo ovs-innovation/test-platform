@@ -35,6 +35,12 @@ import {
   listInstitutionNotifications,
   markNotificationAsRead,
   sendStudentReminder,
+  getInstitutionBatchDetail,
+  getInstitutionBatchStudents,
+  addStudentsToBatch,
+  removeStudentFromBatch,
+  getBatchTestSeries,
+  getBatchPerformance,
 } from '../controllers/institutionDashboardController.js';
 
 const router = Router();
@@ -64,11 +70,17 @@ router.get('/:id/students/bulk-upload/template', getBulkUploadTemplate);
 // 4. Credentials
 router.post('/:id/students/:student_id/regenerate-credentials', regenerateStudentCredentials);
 
-// 5. Batch Management
+// 5. Batch Management & Sub-resources
 router.get('/:id/batches', listInstitutionBatches);
 router.post('/:id/batches', createInstitutionBatch);
+router.get('/:id/batches/:batch_id', getInstitutionBatchDetail);
 router.put('/:id/batches/:batch_id', updateInstitutionBatch);
 router.delete('/:id/batches/:batch_id', archiveInstitutionBatch);
+router.get('/:id/batches/:batch_id/students', getInstitutionBatchStudents);
+router.post('/:id/batches/:batch_id/students', addStudentsToBatch);
+router.delete('/:id/batches/:batch_id/students/:student_id', removeStudentFromBatch);
+router.get('/:id/batches/:batch_id/test-series', getBatchTestSeries);
+router.get('/:id/batches/:batch_id/performance', getBatchPerformance);
 
 // 6. Test Series Assignment (Package Restricted)
 router.get('/:id/test-series', getAvailableTestSeries);

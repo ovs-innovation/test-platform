@@ -815,9 +815,14 @@ export const me = asyncHandler(async (req, res) => {
     return res.json({ user: req.user });
   }
   const result = await query(
-    `SELECT u.id, u.name, u.email, u.role, u.institution_id, COALESCE(u.avatar_url, sp.avatar_url) AS avatar_url
+    `SELECT u.id, u.name, u.email, u.role, u.institution_id, u.batch_id, u.roll_number,
+            COALESCE(u.avatar_url, sp.avatar_url) AS avatar_url,
+            i.name AS institution_name,
+            CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS institution_logo_url,
+            i.logo_badge AS institution_logo_badge
      FROM users u
      LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     LEFT JOIN institutions i ON i.id = u.institution_id
      WHERE u.id = $1`,
     [req.user.id]
   ).catch(() => query('SELECT id, name, email, role, institution_id FROM users WHERE id = $1', [req.user.id]));

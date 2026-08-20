@@ -1445,6 +1445,242 @@ export const archiveInstitutionBatch = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Batch archived successfully.', id: batch_id });
 });
 
+export const getInstitutionBatchDetail = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+
+  const result = await query(
+    `SELECT b.id, COALESCE(b.batch_name, b.name) AS batch_name, b.name,
+            b.academic_year, b.class_level, b.target_exam, b.start_date, b.end_date,
+            b.faculty_name, COALESCE(b.max_capacity, 50) AS max_capacity, COALESCE(b.status, 'active') AS status,
+            COALESCE(b.archived, FALSE) AS archived,
+            COUNT(DISTINCT u.id)::int AS student_count,
+            COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score
+     FROM batches b
+     LEFT JOIN users u ON u.batch_id = b.id AND u.institution_id = $1 AND u.role = 'candidate'
+     LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+     WHERE b.id = $2 AND b.institution_id = $1
+     GROUP BY b.id, b.name, b.batch_name, b.academic_year, b.class_level, b.target_exam, b.start_date, b.end_date, b.faculty_name, b.max_capacity, b.status, b.archived`,
+    [instId, Number(batch_id)]
+  );
+
+  if (result.rowCount === 0) throw ApiError.notFound('Batch not found in this institution');
+
+  res.json({ success: true, batch: result.rows[0] });
+});
+
+export const getInstitutionBatchStudents = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+  const { search } = req.query;
+
+  let sql = `
+    SELECT u.id, u.name, u.email, u.roll_number, u.is_blocked, u.created_at,
+           sp.phone AS mobile, sp.class AS class_level, sp.target_exam, sp.status AS student_status,
+           COALESCE(att.tests_completed, 0)::int AS tests_completed,
+           COALESCE(att.avg_score, 0)::numeric AS average_score
+    FROM users u
+    LEFT JOIN student_profiles sp ON sp.user_id = u.id
+    LEFT JOIN (
+      SELECT ta.student_id, COUNT(ta.id) AS tests_completed, AVG(ta.percentage) AS avg_score
+      FROM test_attempts ta
+      JOIN users u2 ON u2.id = ta.student_id
+      WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
+      GROUP BY ta.student_id
+    ) att ON att.student_id = u.id
+    WHERE u.institution_id = $1 AND u.batch_id = $2 AND u.role = 'candidate'
+  `;
+  const params = [instId, Number(batch_id)];
+
+  if (search) {
+    params.push(`%${search.trim().toLowerCase()}%`);
+    sql += ` AND (LOWER(u.name) LIKE $3 OR LOWER(u.email) LIKE $3 OR LOWER(COALESCE(u.roll_number, '')) LIKE $3 OR LOWER(COALESCE(sp.phone, '')) LIKE $3)`;
+  }
+
+  sql += ` ORDER BY u.name ASC`;
+
+  const result = await query(sql, params);
+  res.json({ success: true, count: result.rows.length, students: result.rows });
+});
+
+export const addStudentsToBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+  const { student_ids } = req.body;
+
+  if (!Array.isArray(student_ids) || student_ids.length === 0) {
+    throw ApiError.badRequest('Please select at least one student to add.');
+  }
+
+  const batchIdNum = Number(batch_id);
+
+  // 1. Verify batch ownership and capacity
+  const batchRes = await query(
+    `SELECT id, COALESCE(batch_name, name) AS batch_name, COALESCE(max_capacity, 50) AS max_capacity FROM batches WHERE id = $1 AND institution_id = $2`,
+    [batchIdNum, instId]
+  );
+  if (batchRes.rowCount === 0) throw ApiError.notFound('Batch not found');
+  const batch = batchRes.rows[0];
+
+  const countRes = await query(
+    `SELECT COUNT(*)::int AS current_count FROM users WHERE batch_id = $1 AND institution_id = $2 AND role = 'candidate'`,
+    [batchIdNum, instId]
+  );
+  const currentCount = countRes.rows[0]?.current_count || 0;
+
+  // Filter student IDs to only those belonging to this institution
+  const validStudentsRes = await query(
+    `SELECT id FROM users WHERE id = ANY($1::int[]) AND institution_id = $2 AND role = 'candidate'`,
+    [student_ids, instId]
+  );
+  const validStudentIds = validStudentsRes.rows.map(r => r.id);
+
+  if (validStudentIds.length === 0) {
+    throw ApiError.badRequest('No valid institution students found in selection.');
+  }
+
+  // Filter students who are not already in this batch
+  const newStudentsRes = await query(
+    `SELECT id FROM users WHERE id = ANY($1::int[]) AND (batch_id IS NULL OR batch_id != $2)`,
+    [validStudentIds, batchIdNum]
+  );
+  const newStudentsToAdd = newStudentsRes.rows.map(r => r.id);
+
+  if (newStudentsToAdd.length === 0) {
+    return res.json({ success: true, added_count: 0, message: 'All selected students are already in this batch.' });
+  }
+
+  if (currentCount + newStudentsToAdd.length > batch.max_capacity) {
+    const available = Math.max(0, batch.max_capacity - currentCount);
+    throw ApiError.badRequest(
+      `Batch capacity exceeded. ${available} seat(s) available, but ${newStudentsToAdd.length} student(s) selected.`
+    );
+  }
+
+  // Assign students to batch
+  await query(
+    `UPDATE users SET batch_id = $1 WHERE id = ANY($2::int[]) AND institution_id = $3`,
+    [batchIdNum, newStudentsToAdd, instId]
+  );
+  await query(
+    `UPDATE student_profiles SET batch_id = $1 WHERE user_id = ANY($2::int[]) AND institution_id = $3`,
+    [batchIdNum, newStudentsToAdd, instId]
+  );
+
+  res.json({
+    success: true,
+    added_count: newStudentsToAdd.length,
+    message: `${newStudentsToAdd.length} student(s) added to "${batch.batch_name}" successfully.`,
+  });
+});
+
+export const removeStudentFromBatch = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id, student_id } = req.params;
+
+  const batchIdNum = Number(batch_id);
+  const studentIdNum = Number(student_id);
+
+  const result = await query(
+    `UPDATE users SET batch_id = NULL WHERE id = $1 AND institution_id = $2 AND batch_id = $3 RETURNING id, name`,
+    [studentIdNum, instId, batchIdNum]
+  );
+
+  if (result.rowCount === 0) {
+    throw ApiError.notFound('Student not found in this batch.');
+  }
+
+  await query(
+    `UPDATE student_profiles SET batch_id = NULL WHERE user_id = $1 AND institution_id = $2`,
+    [studentIdNum, instId]
+  );
+
+  res.json({
+    success: true,
+    message: `Student "${result.rows[0].name}" removed from batch. Account remains active in master roster.`,
+    student_id: studentIdNum,
+  });
+});
+
+export const getBatchTestSeries = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+
+  const batchIdNum = Number(batch_id);
+
+  const result = await query(
+    `SELECT DISTINCT t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
+            ta.id AS assignment_id, ta.assigned_to_type, ta.assigned_to_id
+     FROM test_assignments ta
+     JOIN tests t ON t.id = ta.test_id
+     WHERE (
+       (ta.assigned_to_type = 'batch' AND ta.assigned_to_id = $1)
+       OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $2)
+       OR (ta.assigned_to_type = 'all')
+     ) AND COALESCE(t.is_deleted, FALSE) = FALSE
+     ORDER BY t.id DESC`,
+    [batchIdNum, instId]
+  );
+
+  res.json({ success: true, count: result.rows.length, tests: result.rows });
+});
+
+export const getBatchPerformance = asyncHandler(async (req, res) => {
+  const instId = req.institution_id;
+  const { batch_id } = req.params;
+
+  const batchIdNum = Number(batch_id);
+
+  const [batchRes, statsRes, studentPerfRes] = await Promise.all([
+    query(
+      `SELECT id, COALESCE(batch_name, name) AS batch_name, COALESCE(max_capacity, 50) AS max_capacity FROM batches WHERE id = $1 AND institution_id = $2`,
+      [batchIdNum, instId]
+    ),
+    query(
+      `SELECT 
+         COUNT(DISTINCT u.id)::int AS total_students,
+         COUNT(DISTINCT ta.test_id)::int AS tests_attempted,
+         COUNT(ta.id)::int AS total_attempts,
+         COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score,
+         COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score
+       FROM users u
+       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+       WHERE u.batch_id = $1 AND u.institution_id = $2 AND u.role = 'candidate'`,
+      [batchIdNum, instId]
+    ),
+    query(
+      `SELECT u.id AS student_id, u.name AS student_name, u.roll_number,
+              COUNT(ta.id)::int AS attempts_count,
+              COALESCE(ROUND(AVG(ta.percentage), 2), 0) AS average_score,
+              COALESCE(ROUND(MAX(ta.percentage), 2), 0) AS highest_score
+       FROM users u
+       LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.submitted_at IS NOT NULL
+       WHERE u.batch_id = $1 AND u.institution_id = $2 AND u.role = 'candidate'
+       GROUP BY u.id, u.name, u.roll_number
+       ORDER BY average_score DESC, u.name ASC`,
+      [batchIdNum, instId]
+    )
+  ]);
+
+  if (batchRes.rowCount === 0) throw ApiError.notFound('Batch not found');
+
+  const stats = statsRes.rows[0] || {};
+
+  res.json({
+    success: true,
+    batch: batchRes.rows[0],
+    performance: {
+      total_students: stats.total_students || 0,
+      tests_attempted: stats.tests_attempted || 0,
+      total_attempts: stats.total_attempts || 0,
+      average_score: Number(stats.average_score) || 0,
+      highest_score: Number(stats.highest_score) || 0,
+      students: studentPerfRes.rows,
+    },
+  });
+});
+
+
 /**
  * 14. INVOICES & BILLING
  * GET /api/institution/:id/invoices & POST /api/institution/:id/invoices/request-licenses

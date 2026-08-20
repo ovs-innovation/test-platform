@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { PALETTE_LEGEND } from '../../lib/examPalette.js';
 import { requestFullscreen } from '../../lib/proctoring.js';
 import { BookOpen, FileText } from 'lucide-react';
+import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 
 const GENERAL_RULES = [
   'Total duration of the examination is fixed. The clock is server-synced and shown at the top of the screen.',
@@ -131,10 +132,9 @@ export default function AssessmentInstructions() {
 
   return (
     <div className="exam-surface min-h-screen bg-slate-50 text-slate-900 dark:bg-[#070c18] dark:text-slate-100 font-sans">
-      {/* Top NTA Blue Header */}
-      <header className="nta-bar px-4 py-2.5">
-        <p className="text-sm font-black uppercase tracking-wide text-white">Computer Based Test — General Instructions</p>
-        <p className="mt-0.5 text-xs font-medium text-blue-100 dark:text-blue-200">Read all instructions carefully before proceeding</p>
+      {/* Top Header with Institution Co-Branding Support */}
+      <header>
+        <AssessmentBranding variant="instructions" />
       </header>
 
       {/* Candidate Metadata Sub-Bar */}

@@ -39,6 +39,7 @@ import InstitutionDashboard, {
   InstNotificationsTabWrapper,
   InstProfileTabWrapper,
   InstSettingsTabWrapper,
+  InstBatchDetailTabWrapper,
 } from './pages/institution/InstitutionDashboard.jsx';
 import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
@@ -137,6 +138,7 @@ export default function App() {
           <Route path="dashboard" element={<InstOverviewTabWrapper />} />
           <Route path="students" element={<InstStudentsTabWrapper />} />
           <Route path="batches" element={<InstBatchesTabWrapper />} />
+          <Route path="batches/:batchId" element={<InstBatchDetailTabWrapper />} />
           <Route path="test-series" element={<InstTestSeriesTabWrapper />} />
           <Route path="test-assignments" element={<Navigate to="/institution/test-series" replace />} />
           <Route path="ebooks" element={<InstEbooksTabWrapper />} />

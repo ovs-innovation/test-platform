@@ -5,6 +5,7 @@ import InstitutionPortalLayout from '../../components/institution/InstitutionPor
 import OverviewTab from '../../components/institution/tabs/OverviewTab.jsx';
 import StudentsTab from '../../components/institution/tabs/StudentsTab.jsx';
 import BatchesTab from '../../components/institution/tabs/BatchesTab.jsx';
+import BatchDetailTab from '../../components/institution/tabs/BatchDetailTab.jsx';
 import TestSeriesTab from '../../components/institution/tabs/TestSeriesTab.jsx';
 import TestAssignmentsTab from '../../components/institution/tabs/TestAssignmentsTab.jsx';
 import EbooksTab from '../../components/institution/tabs/EbooksTab.jsx';
@@ -771,6 +772,19 @@ export function InstSettingsTabWrapper() {
     <SettingsTab
       isDarkMode={ctx.isDarkMode}
       setIsDarkMode={ctx.setIsDarkMode}
+    />
+  );
+}
+
+export function InstBatchDetailTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <BatchDetailTab
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
+      masterStudents={ctx.students}
+      allTestSeries={ctx.availableSeries}
+      allAvailableTests={ctx.availableTests}
+      isDarkMode={ctx.isDarkMode}
     />
   );
 }

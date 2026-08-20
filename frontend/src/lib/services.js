@@ -488,6 +488,12 @@ export const institutionDashboardService = {
   createBatch: (instId, data) => api.post(`/institution/${instId}/batches`, data).then((r) => r.data),
   updateBatch: (instId, batchId, data) => api.put(`/institution/${instId}/batches/${batchId}`, data).then((r) => r.data),
   archiveBatch: (instId, batchId) => api.delete(`/institution/${instId}/batches/${batchId}`).then((r) => r.data),
+  batchDetail: (instId, batchId) => api.get(`/institution/${instId}/batches/${batchId}`).then((r) => r.data),
+  batchStudents: (instId, batchId, params) => api.get(`/institution/${instId}/batches/${batchId}/students`, { params }).then((r) => r.data),
+  addStudentsToBatch: (instId, batchId, studentIds) => api.post(`/institution/${instId}/batches/${batchId}/students`, { student_ids: studentIds }).then((r) => r.data),
+  removeStudentFromBatch: (instId, batchId, studentId) => api.delete(`/institution/${instId}/batches/${batchId}/students/${studentId}`).then((r) => r.data),
+  batchTestSeries: (instId, batchId) => api.get(`/institution/${instId}/batches/${batchId}/test-series`).then((r) => r.data),
+  batchPerformance: (instId, batchId) => api.get(`/institution/${instId}/batches/${batchId}/performance`).then((r) => r.data),
   
   availableTestSeries: (instId) => api.get(`/institution/${instId}/test-series`).then((r) => r.data),
   availableTests: (instId) => api.get(`/institution/${instId}/available-tests`).then((r) => r.data),

@@ -110,6 +110,27 @@ export default function StudentsTab({
     };
   }, [inspectStudent, showMoveBatchModal]);
 
+  // Compute unassigned count dynamically
+  const unassignedCount = useMemo(() => {
+    return students.filter((st) => !st.batch_id).length;
+  }, [students]);
+
+  const batchOptions = useMemo(() => {
+    const opts = [
+      { value: 'All', label: 'All Students' },
+      { value: 'Unassigned', label: `Unassigned Students (${unassignedCount})` },
+    ];
+    batches.forEach((b) => {
+      const countFromRoster = students.filter((st) => String(st.batch_id) === String(b.id)).length;
+      const count = Math.max(countFromRoster, Number(b.student_count || 0));
+      opts.push({
+        value: String(b.id),
+        label: `${b.batch_name || b.name} (${count})`,
+      });
+    });
+    return opts;
+  }, [batches, students, unassignedCount]);
+
   // Filtered Students list
   const filteredStudents = useMemo(() => {
     return students.filter((st) => {
@@ -121,8 +142,10 @@ export default function StudentsTab({
 
       const matchesBatch =
         selectedBatch === 'All' ||
-        String(st.batch_id) === String(selectedBatch) ||
-        (st.batch_name || '').toLowerCase() === String(selectedBatch).toLowerCase();
+        (selectedBatch === 'Unassigned'
+          ? !st.batch_id
+          : String(st.batch_id) === String(selectedBatch) ||
+            (st.batch_name || '').toLowerCase() === String(selectedBatch).toLowerCase());
 
       const matchesStatus =
         selectedStatus === 'All' ||
@@ -241,15 +264,9 @@ export default function StudentsTab({
             <CustomSelectDropdown
               value={selectedBatch}
               onChange={(val) => setSelectedBatch(val)}
-              options={[
-                { value: 'All', label: 'All Batches' },
-                ...batches.map((b) => ({
-                  value: b.id,
-                  label: `${b.batch_name || b.name} (${b.student_count || 0})`,
-                })),
-              ]}
+              options={batchOptions}
               isDarkMode={isDarkMode}
-              placeholder="All Batches"
+              placeholder="All Students"
               className="w-full"
             />
           </div>

@@ -32,7 +32,8 @@ export default function BatchesTab({
     class_level: 'Class 12',
     target_exam: 'NEET',
     faculty_name: '',
-    max_capacity: 100,
+    max_capacity: 50,
+    status: 'active',
   });
 
   const [submitting, setSubmitting] = useState(false);
@@ -60,7 +61,7 @@ export default function BatchesTab({
       }
       setShowCreateModal(false);
       setEditingBatch(null);
-      setForm({ batch_name: '', academic_year: '2026-2027', class_level: 'Class 12', target_exam: 'NEET', faculty_name: '', max_capacity: 100 });
+      setForm({ batch_name: '', academic_year: '2026-2027', class_level: 'Class 12', target_exam: 'NEET', faculty_name: '', max_capacity: 50, status: 'active' });
     } catch (err) {
       setError(err.message || 'Failed to save batch details.');
     } finally {
@@ -76,7 +77,8 @@ export default function BatchesTab({
       class_level: batch.class_level || 'Class 12',
       target_exam: batch.target_exam || 'NEET',
       faculty_name: batch.faculty_name || '',
-      max_capacity: batch.max_capacity || 100,
+      max_capacity: batch.max_capacity || 50,
+      status: batch.status || 'active',
     });
     setShowCreateModal(true);
   };
@@ -123,7 +125,7 @@ export default function BatchesTab({
           <button
             onClick={() => {
               setEditingBatch(null);
-              setForm({ batch_name: '', academic_year: '2026-2027', class_level: 'Class 12', target_exam: 'NEET', faculty_name: '', max_capacity: 100 });
+              setForm({ batch_name: '', academic_year: '2026-2027', class_level: 'Class 12', target_exam: 'NEET', faculty_name: '', max_capacity: 50, status: 'active' });
               setShowCreateModal(true);
             }}
             className="inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-purple-600 via-indigo-600 to-blue-600 px-4 py-2.5 text-xs font-extrabold text-white shadow-md hover:scale-105 transition cursor-pointer shrink-0"
@@ -181,7 +183,7 @@ export default function BatchesTab({
                 <div className={`p-3 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className={`text-[10px] font-bold uppercase block ${textMutedClass}`}>Enrolled Students</span>
                   <span className="text-lg font-black text-cyan-600 dark:text-cyan-400">{batch.student_count || 0}</span>
-                  <span className={`text-[10px] block ${textSubtleClass}`}>/ {batch.max_capacity || 100} seats</span>
+                  <span className={`text-[10px] block ${textSubtleClass}`}>/ {batch.max_capacity || 50} seats</span>
                 </div>
                 <div className={`p-3 rounded-2xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                   <span className={`text-[10px] font-bold uppercase block ${textMutedClass}`}>Batch Avg Score</span>
@@ -194,15 +196,11 @@ export default function BatchesTab({
                 <span className={`text-[11px] ${textMutedClass}`}>Academic Year: {batch.academic_year || '2026-2027'}</span>
                 <button
                   onClick={() => {
-                    if (typeof onNavigateTab === 'function') {
-                      onNavigateTab('students', batch.id);
-                    } else {
-                      navigate(`/institution/students?batch=${batch.id}`);
-                    }
+                    navigate(`/institution/batches/${batch.id}`);
                   }}
                   className="inline-flex items-center gap-1 font-bold text-cyan-600 dark:text-cyan-400 hover:underline transition cursor-pointer"
                 >
-                  <span>View Students</span>
+                  <span>Manage Batch →</span>
                   <ArrowRight className="h-3.5 w-3.5" />
                 </button>
               </div>
@@ -235,7 +233,7 @@ export default function BatchesTab({
                 <input
                   type="text"
                   required
-                  placeholder="e.g. NEET 2027 Achievers Batch A"
+                  placeholder="e.g. NEET 2027 Achievers A"
                   value={form.batch_name}
                   onChange={(e) => setForm({ ...form, batch_name: e.target.value })}
                   className={`w-full py-2.5 px-3 rounded-xl border transition ${
@@ -246,7 +244,7 @@ export default function BatchesTab({
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Target Exam</label>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Target Exam *</label>
                   <select
                     value={form.target_exam}
                     onChange={(e) => setForm({ ...form, target_exam: e.target.value })}
@@ -254,13 +252,15 @@ export default function BatchesTab({
                       isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-800'
                     }`}
                   >
-                    <option value="NEET">NEET UG</option>
-                    <option value="JEE Main & Advanced">JEE Main & Advanced</option>
+                    <option value="NEET UG">NEET UG</option>
+                    <option value="JEE Main">JEE Main</option>
+                    <option value="JEE Advanced">JEE Advanced</option>
+                    <option value="NEET PG">NEET PG</option>
                     <option value="Foundation">Class 9-10</option>
                   </select>
                 </div>
                 <div>
-                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Class Level</label>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Class Level *</label>
                   <select
                     value={form.class_level}
                     onChange={(e) => setForm({ ...form, class_level: e.target.value })}
@@ -271,21 +271,69 @@ export default function BatchesTab({
                     <option value="Class 11">Class 11</option>
                     <option value="Class 12">Class 12</option>
                     <option value="Class 12 Pass">Class 12 Pass</option>
+                    <option value="Class 9">Class 9</option>
+                    <option value="Class 10">Class 10</option>
                   </select>
                 </div>
               </div>
 
-              <div>
-                <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Faculty / Coordinator</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Dr. V. K. Sharma (Physics Lead)"
-                  value={form.faculty_name}
-                  onChange={(e) => setForm({ ...form, faculty_name: e.target.value })}
-                  className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                    isDarkMode ? 'border-slate-800 bg-slate-900 text-white' : 'border-slate-200 bg-slate-50 text-slate-900'
-                  }`}
-                />
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Academic Year *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 2026–2027"
+                    value={form.academic_year}
+                    onChange={(e) => setForm({ ...form, academic_year: e.target.value })}
+                    className={`w-full py-2.5 px-3 rounded-xl border transition ${
+                      isDarkMode ? 'border-slate-800 bg-slate-900 text-white' : 'border-slate-200 bg-slate-50 text-slate-900'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Capacity *</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10000"
+                    required
+                    placeholder="50"
+                    value={form.max_capacity}
+                    onChange={(e) => setForm({ ...form, max_capacity: Number(e.target.value) })}
+                    className={`w-full py-2.5 px-3 rounded-xl border transition ${
+                      isDarkMode ? 'border-slate-800 bg-slate-900 text-white' : 'border-slate-200 bg-slate-50 text-slate-900'
+                    }`}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Faculty / Coordinator</label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Dr. Rakesh"
+                    value={form.faculty_name}
+                    onChange={(e) => setForm({ ...form, faculty_name: e.target.value })}
+                    className={`w-full py-2.5 px-3 rounded-xl border transition ${
+                      isDarkMode ? 'border-slate-800 bg-slate-900 text-white' : 'border-slate-200 bg-slate-50 text-slate-900'
+                    }`}
+                  />
+                </div>
+                <div>
+                  <label className={`block font-semibold uppercase mb-1 ${textMutedClass}`}>Status</label>
+                  <select
+                    value={form.status}
+                    onChange={(e) => setForm({ ...form, status: e.target.value })}
+                    className={`w-full py-2.5 px-3 rounded-xl border transition cursor-pointer ${
+                      isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-50 text-slate-800'
+                    }`}
+                  >
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-2">
