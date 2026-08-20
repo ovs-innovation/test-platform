@@ -1,10 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
-  Star,
-  Heart,
-  GraduationCap,
-  FileText,
   ChevronDown,
   ArrowRight,
   Sparkles,
@@ -225,12 +221,8 @@ function ProgramCard({ section, isOpen, onToggle, onClose }) {
         {/* LAYER 3: INTERACTIVE CONTENT (z-20, text container) */}
         <div className="relative z-20 flex flex-col justify-between p-4 sm:p-5 w-[56%] sm:w-[64%] h-full pointer-events-none pr-1 sm:pr-0">
           
-          {/* UPPER HEADER: ~52px ICON TILE ON MOBILE + TITLES DIRECTLY BESIDE IT */}
+          {/* UPPER HEADER: TITLES */}
           <div className="flex items-center gap-3">
-            <div className={`h-[52px] w-[52px] sm:h-[60px] sm:w-[60px] rounded-2xl flex items-center justify-center shrink-0 shadow-md transition-transform duration-200 group-hover:scale-105 ${section.iconBg}`}>
-              <IconComponent className="h-5.5 w-5.5 sm:h-6.5 sm:w-6.5" />
-            </div>
-
             <div className="min-w-0">
               <h3 className="text-[18px] sm:text-[20px] font-black text-slate-900 leading-tight whitespace-nowrap">
                 {section.title}
