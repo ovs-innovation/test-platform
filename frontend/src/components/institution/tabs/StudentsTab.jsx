@@ -223,10 +223,20 @@ export default function StudentsTab({
           {/* Actions Toolbar */}
           <div className="flex flex-wrap items-center gap-2.5">
             <button
-              onClick={handleOpenUpload}
+              onClick={handleOpenAdd}
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-4 py-2 text-xs font-bold text-white shadow-md hover:scale-[1.02] transition cursor-pointer"
             >
-              <Upload className="h-4 w-4 text-white" />
+              <Plus className="h-4 w-4 text-white" />
+              <span>Add Student</span>
+            </button>
+
+            <button
+              onClick={handleOpenUpload}
+              className={`inline-flex items-center gap-2 rounded-xl border px-3.5 py-2 text-xs font-bold transition cursor-pointer ${
+                isDarkMode ? 'border-slate-700 bg-slate-800/80 text-slate-300 hover:bg-slate-700' : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              <Upload className="h-4 w-4" />
               <span>Bulk CSV Import</span>
             </button>
 
