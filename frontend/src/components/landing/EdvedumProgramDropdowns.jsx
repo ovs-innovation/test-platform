@@ -32,7 +32,6 @@ export const PROGRAM_SECTIONS = [
     borderColor: 'border-blue-200/90 hover:border-blue-500',
     activeBorder: 'border-blue-600 ring-4 ring-blue-500/20',
     iconBg: 'bg-gradient-to-tr from-blue-600 to-cyan-500 text-white shadow-blue-500/25',
-    icon: Star,
     imageStyle: {
       height: '172px',
       right: '-15px',
@@ -53,7 +52,6 @@ export const PROGRAM_SECTIONS = [
     borderColor: 'border-cyan-200/90 hover:border-cyan-500',
     activeBorder: 'border-cyan-500 ring-4 ring-cyan-500/20',
     iconBg: 'bg-gradient-to-tr from-cyan-500 to-teal-500 text-white shadow-cyan-500/25',
-    icon: Heart,
     imageStyle: {
       height: '176px',
       right: '12px',
@@ -75,7 +73,6 @@ export const PROGRAM_SECTIONS = [
     borderColor: 'border-indigo-200/90 hover:border-indigo-400',
     activeBorder: 'border-indigo-500 ring-4 ring-indigo-500/20',
     iconBg: 'bg-gradient-to-tr from-indigo-600 to-purple-600 text-white shadow-indigo-500/25',
-    icon: GraduationCap,
     imageStyle: {
       height: '180px',
       right: '-2px',
@@ -95,7 +92,6 @@ export const PROGRAM_SECTIONS = [
     borderColor: 'border-purple-200/90 hover:border-purple-500',
     activeBorder: 'border-purple-600 ring-4 ring-purple-500/20',
     iconBg: 'bg-gradient-to-tr from-purple-600 to-violet-600 text-white shadow-purple-500/25',
-    icon: FileText,
     imageStyle: {
       height: '180px',
       right: '-4px',
