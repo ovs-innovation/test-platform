@@ -435,6 +435,7 @@ export const adminService = {
   assignTest: (id, data) => api.post(`/admin/tests/${id}/assignments`, data).then((r) => r.data.assignment),
   uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data).then((r) => r.data),
   generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
+  getTestParticipation: (id) => api.get(`/admin/tests/${id}/participation`).then((r) => r.data),
   setMissedTestOverride: (id, data) => api.post(`/admin/tests/${id}/missed-override`, data).then((r) => r.data.override),
   notifyTestReminder: (id, custom_message) => api.post(`/admin/tests/${id}/notify`, { custom_message }).then((r) => r.data),
   // eBook Helpers

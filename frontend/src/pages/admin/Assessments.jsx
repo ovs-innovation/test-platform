@@ -27,7 +27,8 @@ import {
   Download,
   Filter,
   Send,
-  Sparkles
+  Sparkles,
+  Trophy
 } from 'lucide-react';
 
 const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
@@ -74,6 +75,11 @@ export default function AdminAssessments() {
 
   const [batchModalOpen, setBatchModalOpen] = useState(false);
   const [newBatch, setNewBatch] = useState({ name: '', description: '' });
+
+  // Leaderboard / Rank Results Modal State
+  const [leaderboardModalTest, setLeaderboardModalTest] = useState(null);
+  const [leaderboardData, setLeaderboardData] = useState(null);
+  const [leaderboardLoading, setLeaderboardLoading] = useState(false);
 
   // Test Form State
   const [testForm, setTestForm] = useState({
@@ -226,6 +232,20 @@ export default function AdminAssessments() {
     });
   };
 
+  const handleOpenLeaderboard = async (testId) => {
+    const targetTest = tests.find((t) => t.id === testId);
+    setLeaderboardModalTest(targetTest || { id: testId });
+    setLeaderboardLoading(true);
+    try {
+      const data = await adminService.getTestParticipation(testId);
+      setLeaderboardData(data);
+    } catch (err) {
+      toast.error(err.message || 'Failed to load test leaderboard');
+    } finally {
+      setLeaderboardLoading(false);
+    }
+  };
+
   const handleGenerateResults = (testId) => {
     const targetTest = tests.find((t) => t.id === testId);
     setConfirmModal({
@@ -239,6 +259,7 @@ export default function AdminAssessments() {
           const res = await adminService.generateResults(testId);
           toast.success(res.message || 'Results and ranks published successfully!');
           loadData();
+          handleOpenLeaderboard(testId);
         } catch (err) {
           toast.error(err.message || 'Result generation failed');
         } finally {
@@ -586,6 +607,13 @@ export default function AdminAssessments() {
                                 <Award className="h-4 w-4" />
                               </button>
                               <button
+                                onClick={() => handleOpenLeaderboard(t.id)}
+                                className="p-1.5 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-100"
+                                title="View Rank Leaderboard & Scorecards"
+                              >
+                                <Trophy className="h-4 w-4" />
+                              </button>
+                              <button
                                 onClick={() => handleNotifyReminder(t)}
                                 className="p-1.5 rounded-lg border border-cyan-200 dark:border-cyan-800 bg-cyan-50 dark:bg-cyan-950/40 text-cyan-600 dark:text-cyan-400 hover:bg-cyan-100"
                                 title="Send Notification Reminder"
@@ -724,6 +752,13 @@ export default function AdminAssessments() {
                             title="Publish Ranks"
                           >
                             <Award className="h-3.5 w-3.5" />
+                          </button>
+                          <button
+                            onClick={() => handleOpenLeaderboard(t.id)}
+                            className="p-1.5 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-500/10 text-amber-600 dark:text-amber-400"
+                            title="View Leaderboard"
+                          >
+                            <Trophy className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => handleNotifyReminder(t)}
@@ -1517,6 +1552,183 @@ export default function AdminAssessments() {
                 }`}
               >
                 {confirmModal.confirmText}
+              </button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* 3. RANK LEADERBOARD & SCORECARD MODAL */}
+      {leaderboardModalTest && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-full max-w-4xl rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            {/* Header */}
+            <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white flex items-start justify-between">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="bg-white/20 text-white text-[11px] font-extrabold px-2.5 py-0.5 rounded-md backdrop-blur-xs">
+                    🏆 OFFICIAL RANK LEADERBOARD
+                  </span>
+                  {leaderboardData?.test?.result_publish_time && (
+                    <span className="bg-emerald-500/30 text-emerald-200 border border-emerald-400/30 text-[11px] font-bold px-2 py-0.5 rounded-md">
+                      ✓ Published
+                    </span>
+                  )}
+                </div>
+                <h2 className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  {leaderboardModalTest.test_name || 'Assessment Results'}
+                </h2>
+                <p className="text-xs text-blue-100 mt-1">
+                  All India Ranks & Candidate Percentiles calculated across registered institutions
+                </p>
+              </div>
+
+              <button
+                onClick={() => {
+                  setLeaderboardModalTest(null);
+                  setLeaderboardData(null);
+                }}
+                className="rounded-full p-2 text-white/80 hover:text-white hover:bg-white/10 transition cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Stats Summary Bar */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800">
+              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80">
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Total Attempted</p>
+                <p className="text-lg font-black text-slate-900 dark:text-white mt-0.5">
+                  {leaderboardLoading ? '…' : (leaderboardData?.stats?.totalAttempted || 0)} Students
+                </p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80">
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Top Score (AIR #1)</p>
+                <p className="text-lg font-black text-blue-600 dark:text-blue-400 mt-0.5">
+                  {leaderboardLoading ? '…' : `${leaderboardData?.stats?.topScore || 0} / ${leaderboardModalTest.max_marks || 200}`}
+                </p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80">
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Cohort Mean</p>
+                <p className="text-lg font-black text-emerald-600 dark:text-emerald-400 mt-0.5">
+                  {leaderboardLoading ? '…' : `${leaderboardData?.stats?.avgScore || 0}%`}
+                </p>
+              </div>
+              <div className="p-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80">
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">In Progress</p>
+                <p className="text-lg font-black text-amber-600 dark:text-amber-400 mt-0.5">
+                  {leaderboardLoading ? '…' : (leaderboardData?.stats?.totalInProgress || 0)} Students
+                </p>
+              </div>
+            </div>
+
+            {/* Leaderboard Table */}
+            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+              {leaderboardLoading ? (
+                <div className="py-12 text-center space-y-3">
+                  <Spinner className="h-8 w-8 text-blue-600 mx-auto" />
+                  <p className="text-xs font-bold text-slate-500">Loading student scores & AIR rankings…</p>
+                </div>
+              ) : !leaderboardData?.attempts || leaderboardData.attempts.length === 0 ? (
+                <div className="py-12 text-center space-y-2">
+                  <Trophy className="h-10 w-10 text-slate-300 mx-auto" />
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-200">No Student Submissions Yet</p>
+                  <p className="text-xs text-slate-400">Ranks will calculate automatically when students complete this test.</p>
+                </div>
+              ) : (
+                <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <table className="min-w-full divide-y divide-slate-200 dark:divide-slate-800">
+                    <thead className="bg-slate-100 dark:bg-slate-900">
+                      <tr>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Rank</th>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Candidate Name</th>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Institution / Source</th>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Score & Marks</th>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Percentile</th>
+                        <th className="px-4 py-3 text-left text-xs font-extrabold text-slate-500 uppercase">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80 bg-white dark:bg-[#0f172a]">
+                      {leaderboardData.attempts.map((att, idx) => (
+                        <tr key={att.id || idx} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
+                          <td className="px-4 py-3 text-xs font-black">
+                            {att.air_rank === 1 ? (
+                              <span className="inline-flex items-center gap-1 bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 px-2.5 py-0.5 rounded-full font-black">
+                                🥇 AIR #1
+                              </span>
+                            ) : att.air_rank === 2 ? (
+                              <span className="inline-flex items-center gap-1 bg-slate-300/30 text-slate-700 dark:text-slate-300 border border-slate-400/30 px-2.5 py-0.5 rounded-full font-black">
+                                🥈 AIR #2
+                              </span>
+                            ) : att.air_rank === 3 ? (
+                              <span className="inline-flex items-center gap-1 bg-amber-700/15 text-amber-700 dark:text-amber-500 border border-amber-700/30 px-2.5 py-0.5 rounded-full font-black">
+                                🥉 AIR #3
+                              </span>
+                            ) : att.air_rank ? (
+                              <span className="text-slate-600 dark:text-slate-400 font-bold">
+                                AIR #{att.air_rank}
+                              </span>
+                            ) : (
+                              <span className="text-slate-400 font-semibold">—</span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-xs">
+                            <p className="font-extrabold text-slate-900 dark:text-white mb-0.5">{att.student_name}</p>
+                            <p className="text-[11px] text-slate-400 font-medium">{att.student_email}</p>
+                          </td>
+                          <td className="px-4 py-3 text-xs">
+                            {att.institution_name ? (
+                              <span className="inline-flex items-center gap-1 text-[11px] font-extrabold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 px-2 py-0.5 rounded-md">
+                                🏫 {att.institution_name}
+                              </span>
+                            ) : (
+                              <span className="text-[11px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md">
+                                🌐 Direct Signup
+                              </span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-xs">
+                            <p className="font-extrabold text-slate-900 dark:text-white">
+                              {att.score != null ? att.score : `${att.percentage || 0}%`}
+                            </p>
+                            {att.percentage != null && (
+                              <p className="text-[11px] text-slate-400 font-medium">{att.percentage}% Accuracy</p>
+                            )}
+                          </td>
+                          <td className="px-4 py-3 text-xs font-black text-blue-600 dark:text-blue-400">
+                            {att.percentile != null ? `Top ${att.percentile}%` : '—'}
+                          </td>
+                          <td className="px-4 py-3 text-xs">
+                            {att.submitted_at ? (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 px-2 py-0.5 text-[11px] font-bold border border-emerald-500/30">
+                                <CheckCircle2 className="h-3 w-3" /> Submitted
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 text-amber-600 dark:text-amber-400 px-2 py-0.5 text-[11px] font-bold border border-amber-500/30">
+                                <Clock className="h-3 w-3" /> In Progress
+                              </span>
+                            )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="p-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+              <button
+                type="button"
+                onClick={() => {
+                  setLeaderboardModalTest(null);
+                  setLeaderboardData(null);
+                }}
+                className="px-5 py-2 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-bold text-xs hover:opacity-90 transition cursor-pointer"
+              >
+                Close Leaderboard
               </button>
             </div>
           </div>

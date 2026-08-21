@@ -605,27 +605,53 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
   const [testRes, attemptsRes, overridesRes] = await Promise.all([
     query('SELECT * FROM tests WHERE id = $1', [id]),
     query(`
-      SELECT ta.*, u.name AS student_name, u.email AS student_email
+      SELECT 
+        ta.id, ta.test_id, ta.student_id, ta.started_at, ta.submitted_at, 
+        COALESCE(ta.score, 0) AS score, 
+        COALESCE(ta.percentage, 0) AS percentage,
+        u.name AS student_name, u.email AS student_email,
+        COALESCE(i.name, ib.name) AS institution_name,
+        COALESCE(i.code, ib.code) AS institution_code
       FROM test_attempts ta
       JOIN users u ON u.id = ta.student_id
+      LEFT JOIN batches b ON b.id = u.batch_id
+      LEFT JOIN institutions i ON i.id = u.institution_id
+      LEFT JOIN institutions ib ON ib.id = b.institution_id
       WHERE ta.test_id = $1
+      ORDER BY COALESCE(ta.score, ta.percentage, 0) DESC, ta.submitted_at ASC
     `, [id]),
     query('SELECT COUNT(*)::int AS count FROM missed_test_overrides WHERE test_id = $1', [id])
   ]);
 
   if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
 
-  const totalAttempted = attemptsRes.rows.filter(r => r.submitted_at).length;
+  const completedRows = attemptsRes.rows
+    .filter(r => r.submitted_at)
+    .sort((a, b) => Number(b.score || b.percentage || 0) - Number(a.score || a.percentage || 0));
+
+  const totalAttempted = completedRows.length;
   const totalInProgress = attemptsRes.rows.filter(r => r.started_at && !r.submitted_at).length;
+
+  const rankedAttempts = attemptsRes.rows.map(r => {
+    if (!r.submitted_at) return { ...r, air_rank: null, percentile: null };
+    const rankIndex = completedRows.findIndex(cr => cr.id === r.id);
+    const air_rank = rankIndex >= 0 ? rankIndex + 1 : null;
+    const percentile = totalAttempted > 0 
+      ? Number(Math.max(0.1, Math.min(99.9, ((totalAttempted - rankIndex) / totalAttempted) * 100)).toFixed(1)) 
+      : 100;
+    return { ...r, air_rank, percentile };
+  });
 
   res.json({
     test: testRes.rows[0],
     stats: {
       totalAttempted,
       totalInProgress,
-      totalOverrides: overridesRes.rows[0].count
+      totalOverrides: overridesRes.rows[0].count,
+      topScore: completedRows.length > 0 ? (completedRows[0].score || completedRows[0].percentage || 0) : 0,
+      avgScore: completedRows.length > 0 ? Math.round(completedRows.reduce((sum, c) => sum + Number(c.percentage || c.score || 0), 0) / completedRows.length) : 0
     },
-    attempts: attemptsRes.rows
+    attempts: rankedAttempts
   });
 });
 
