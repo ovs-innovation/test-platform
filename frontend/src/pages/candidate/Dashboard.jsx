@@ -83,65 +83,47 @@ export default function CandidateDashboard() {
   return (
     <div className="space-y-6 max-w-6xl mx-auto pb-12">
       {/* 1. CLEAN STUDENT HERO HEADER */}
-      <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 p-6 sm:p-7 text-white shadow-md">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
               {user?.institution?.name && (
-                <span className="inline-flex items-center gap-1.5 rounded-lg border border-blue-500/20 bg-blue-500/10 px-2.5 py-0.5 text-xs font-bold text-blue-600 dark:text-blue-400">
+                <span className="inline-flex items-center gap-1.5 rounded-lg border border-white/20 bg-white/15 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-xs">
                   <Building2 className="h-3.5 w-3.5" />
                   <span>{user.institution.name}</span>
                 </span>
               )}
               {user?.batch && (
-                <span className="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900 px-2.5 py-0.5 text-xs font-bold text-slate-600 dark:text-slate-400">
+                <span className="inline-flex items-center gap-1 rounded-lg border border-white/20 bg-white/15 px-2.5 py-0.5 text-xs font-bold text-white backdrop-blur-xs">
                   <School className="h-3.5 w-3.5" />
                   <span>{user.batch}</span>
                 </span>
               )}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-              Hello, {firstName} 👋
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+              Hello, {firstName}
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
+            <p className="text-xs sm:text-sm text-blue-100 max-w-xl leading-relaxed font-medium">
               Welcome to your assessment dashboard. Track your test readiness, view AI diagnostic analytics, and attempt mock exams.
             </p>
           </div>
 
           {/* Direct Main Call-to-Action */}
           <div className="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-            {resume ? (
-              <Link
-                to={`/exam/${resume.attempt_id}`}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 px-5 py-3 text-xs font-black text-amber-950 shadow-md shadow-amber-500/20 transition-all active:scale-[0.98]"
-              >
-                <Zap className="h-4 w-4 fill-amber-950" />
-                <span>Resume Active Test</span>
-              </Link>
-            ) : pending.length > 0 ? (
-              <Link
-                to={`/assessments/${pending[0].id}/instructions`}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 px-5 py-3 text-xs font-black text-white shadow-md shadow-blue-600/20 transition-all active:scale-[0.98]"
-              >
-                <BookOpen className="h-4 w-4" />
-                <span>Start Next Test</span>
-              </Link>
-            ) : (
-              <Link
-                to="/my-tests"
-                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-600 hover:bg-blue-700 px-5 py-3 text-xs font-black text-white shadow-md shadow-blue-600/20 transition-all active:scale-[0.98]"
-              >
-                <BookOpen className="h-4 w-4" />
-                <span>View My Tests</span>
-              </Link>
-            )}
+            <Link
+              to="/my-tests"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-white hover:bg-blue-50 px-5 py-3 text-xs font-black text-blue-700 shadow-md transition-all active:scale-[0.98]"
+            >
+              <BookOpen className="h-4 w-4 text-blue-700" />
+              <span>View My Tests</span>
+            </Link>
 
             <Link
               to="/analytics"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-4 py-3 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/25 bg-white/10 px-4 py-3 text-xs font-bold text-white hover:bg-white/20 transition-all backdrop-blur-xs"
             >
-              <BarChart3 className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <BarChart3 className="h-4 w-4 text-white" />
               <span>Analytics</span>
             </Link>
           </div>

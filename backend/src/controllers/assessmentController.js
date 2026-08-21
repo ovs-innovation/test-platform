@@ -28,149 +28,154 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
 });
 
 export const listAvailableAssessments = asyncHandler(async (req, res) => {
-  const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [req.user.id]);
-  const student = userRes.rows[0] || {};
-  const batchId = student.batch_id || null;
-  const instId = student.institution_id || null;
+  try {
+    const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [req.user.id]);
+    const student = userRes.rows[0] || {};
+    const batchId = student.batch_id || null;
+    const instId = student.institution_id || null;
 
-  const result = await query(
-    `
-    SELECT COALESCE(a.id, t.id) AS id, COALESCE(a.title, t.test_name, t.title) AS title,
-           COALESCE(a.description, t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
-           COALESCE(a.instructions, 'Standard examination instructions apply.') AS instructions,
-           COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes,
-           COALESCE(a.passing_marks, 0) AS passing_marks,
-           COALESCE(a.max_violations, 5) AS max_violations,
-           COALESCE(a.result_visible, true) AS result_visible,
-           COALESCE(a.available_from, t.available_from) AS available_from,
-           COALESCE(a.available_until, t.available_until) AS available_until,
-           ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
-           'invite' AS access_type,
-           COALESCE(q.cnt, qt.cnt, 0)::int AS question_count,
-           COALESCE(q.total_marks, qt.total_marks, t.max_marks, 300)::int AS total_marks,
-           COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
-           COALESCE(at.id, tat.id) AS attempt_id,
-           COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
-           COALESCE(s.total_marks, ts.total_marks) AS score_total,
-           COALESCE(s.percentage, ts.percentage) AS percentage,
-           COALESCE(s.passed, ts.passed) AS passed,
-           COALESCE(a.question_paper_url, t.question_paper_url) AS question_paper_url,
-           COALESCE(a.solution_pdf_url, t.solution_pdf_url) AS solution_pdf_url,
-           COALESCE(eb.id, eb_t.id) AS ebook_id,
-           COALESCE(eb.title, eb_t.title) AS ebook_title,
-           COALESCE(eb.pdf_url, eb_t.pdf_url) AS ebook_pdf_url,
-           COALESCE(eb.author, eb_t.author) AS ebook_author
-    FROM candidate_invites ci
-    LEFT JOIN assessments a ON a.id = ci.assessment_id
-    LEFT JOIN tests t ON t.id = ci.assessment_id
-    LEFT JOIN ebooks eb ON eb.id = a.recommended_ebook_id
-    LEFT JOIN ebooks eb_t ON eb_t.id = t.recommended_ebook_id
-    LEFT JOIN (
-      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) q ON q.assessment_id = a.id
-    LEFT JOIN (
-      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) qt ON qt.assessment_id = t.id
-    LEFT JOIN attempts at ON at.assessment_id = ci.assessment_id AND at.candidate_id = $2
-    LEFT JOIN test_attempts tat ON tat.test_id = ci.assessment_id AND tat.student_id = $2
-    LEFT JOIN scores s ON s.attempt_id = at.id
-    LEFT JOIN scores ts ON ts.attempt_id = tat.id
-    WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
+    const result = await query(
+      `
+      SELECT COALESCE(a.id, t.id) AS id, COALESCE(a.title, t.test_name, t.title) AS title,
+             COALESCE(a.description, t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+             COALESCE(a.instructions, 'Standard examination instructions apply.') AS instructions,
+             COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes,
+             COALESCE(a.passing_marks, 0) AS passing_marks,
+             COALESCE(a.max_violations, 5) AS max_violations,
+             COALESCE(a.result_visible, true) AS result_visible,
+             COALESCE(a.available_from, t.available_from) AS available_from,
+             COALESCE(a.available_until, t.available_until) AS available_until,
+             ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
+             'invite' AS access_type,
+             COALESCE(q.cnt, qt.cnt, 0)::int AS question_count,
+             COALESCE(q.total_marks, qt.total_marks, t.max_marks, 300)::int AS total_marks,
+             COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
+             COALESCE(at.id, tat.id) AS attempt_id,
+             COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
+             COALESCE(s.total_marks, ts.total_marks) AS score_total,
+             COALESCE(s.percentage, ts.percentage) AS percentage,
+             COALESCE(s.passed, ts.passed) AS passed,
+             COALESCE(a.question_paper_url, t.question_paper_url) AS question_paper_url,
+             COALESCE(a.solution_pdf_url, t.solution_pdf_url) AS solution_pdf_url,
+             COALESCE(eb.id, eb_t.id) AS ebook_id,
+             COALESCE(eb.title, eb_t.title) AS ebook_title,
+             COALESCE(eb.pdf_url, eb_t.pdf_url) AS ebook_pdf_url,
+             COALESCE(eb.author, eb_t.author) AS ebook_author
+      FROM candidate_invites ci
+      LEFT JOIN assessments a ON a.id = ci.assessment_id
+      LEFT JOIN tests t ON t.id = ci.assessment_id
+      LEFT JOIN ebooks eb ON eb.id = a.recommended_ebook_id
+      LEFT JOIN ebooks eb_t ON eb_t.id = t.recommended_ebook_id
+      LEFT JOIN (
+        SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+      ) q ON q.assessment_id = a.id
+      LEFT JOIN (
+        SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+      ) qt ON qt.assessment_id = t.id
+      LEFT JOIN attempts at ON at.assessment_id = ci.assessment_id AND at.candidate_id = $2
+      LEFT JOIN test_attempts tat ON tat.test_id = ci.assessment_id AND tat.student_id = $2
+      LEFT JOIN scores s ON s.attempt_id = at.id
+      LEFT JOIN scores ts ON ts.attempt_id = tat.id
+      WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
 
-    UNION ALL
+      UNION ALL
 
-    SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
-           a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
-           NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
-           'enrollment' AS access_type,
-           COALESCE(q.cnt, 0)::int AS question_count,
-           COALESCE(q.total_marks, 0)::int AS total_marks,
-           at.status::text AS attempt_status,
-           at.id AS attempt_id,
-           s.marks_obtained, s.total_marks AS score_total, s.percentage, s.passed,
-           a.question_paper_url, a.solution_pdf_url,
-           eb.id AS ebook_id, eb.title AS ebook_title, eb.pdf_url AS ebook_pdf_url, eb.author AS ebook_author
-    FROM student_enrollments se
-    JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
-    JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
-    LEFT JOIN ebooks eb ON eb.id = a.recommended_ebook_id
-    LEFT JOIN (
-      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) q ON q.assessment_id = a.id
-    LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
-    LEFT JOIN scores s ON s.attempt_id = at.id
-    WHERE se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
-      AND NOT EXISTS (
-        SELECT 1 FROM candidate_invites ci2
-        WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
-      )
+      SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
+             a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
+             NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
+             'enrollment' AS access_type,
+             COALESCE(q.cnt, 0)::int AS question_count,
+             COALESCE(q.total_marks, 0)::int AS total_marks,
+             at.status::text AS attempt_status,
+             at.id AS attempt_id,
+             s.marks_obtained, s.total_marks AS score_total, s.percentage, s.passed,
+             a.question_paper_url, a.solution_pdf_url,
+             eb.id AS ebook_id, eb.title AS ebook_title, eb.pdf_url AS ebook_pdf_url, eb.author AS ebook_author
+      FROM student_enrollments se
+      JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
+      JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+      LEFT JOIN ebooks eb ON eb.id = a.recommended_ebook_id
+      LEFT JOIN (
+        SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+      ) q ON q.assessment_id = a.id
+      LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
+      LEFT JOIN scores s ON s.attempt_id = at.id
+      WHERE se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
+        AND NOT EXISTS (
+          SELECT 1 FROM candidate_invites ci2
+          WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
+        )
 
-    UNION ALL
+      UNION ALL
 
-    SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
-           'Standard examination instructions apply.' AS instructions, t.duration_minutes,
-           0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
-           NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
-           'assignment' AS access_type,
-           COALESCE(q.cnt, 0)::int AS question_count,
-           COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
-           COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
-           COALESCE(at.id, tat.id) AS attempt_id,
-           COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
-           COALESCE(s.total_marks, ts.total_marks) AS score_total,
-           COALESCE(s.percentage, ts.percentage) AS percentage,
-           COALESCE(s.passed, ts.passed) AS passed,
-           t.question_paper_url, t.solution_pdf_url,
-           eb_t.id AS ebook_id, eb_t.title AS ebook_title, eb_t.pdf_url AS ebook_pdf_url, eb_t.author AS ebook_author
-    FROM tests t
-    LEFT JOIN ebooks eb_t ON eb_t.id = t.recommended_ebook_id
-    LEFT JOIN test_assignments tas ON tas.test_id = t.id
-    LEFT JOIN package_tests pt ON pt.test_id = t.id
-    LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-    LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-    LEFT JOIN test_series ts_series ON ts_series.id = tst.series_id OR ts_series.id = tsa.test_series_id
-    LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts_series.title IS NOT NULL AND (
-       LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts_series.title FROM 1 FOR 15)) || '%'
-       OR LOWER(ts_series.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
-    ))
-    LEFT JOIN institution_packages ip ON (
-       ip.package_id = pt.package_id
-       OR ip.package_id = tp.id
-       OR ip.package_id = ts_series.id
-    ) AND $4::int IS NOT NULL AND ip.institution_id = $4 AND COALESCE(ip.is_active, TRUE) = TRUE
-    LEFT JOIN (
-      SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
-    ) q ON q.assessment_id = t.id
-    LEFT JOIN attempts at ON at.assessment_id = t.id AND at.candidate_id = $2
-    LEFT JOIN test_attempts tat ON tat.test_id = t.id AND tat.student_id = $2
-    LEFT JOIN scores s ON s.attempt_id = at.id
-    LEFT JOIN scores ts ON ts.attempt_id = tat.id
-    WHERE (t.is_published = true OR t.status = 'published')
-      AND COALESCE(t.is_deleted, false) = false
-      AND (
-        (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $2)
-        OR (tas.assigned_to_id IS NOT NULL AND tas.assigned_to_id = $2)
-        OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
-        OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
-        OR tas.assigned_to_type = 'all'
-        OR (ip.institution_id IS NOT NULL AND (ip.valid_until IS NULL OR ip.valid_until > NOW()))
-      )
+      SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+             'Standard examination instructions apply.' AS instructions, t.duration_minutes,
+             0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
+             NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
+             'assignment' AS access_type,
+             COALESCE(q.cnt, 0)::int AS question_count,
+             COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
+             COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
+             COALESCE(at.id, tat.id) AS attempt_id,
+             COALESCE(s.marks_obtained, ts.marks_obtained) AS marks_obtained,
+             COALESCE(s.total_marks, ts.total_marks) AS score_total,
+             COALESCE(s.percentage, ts.percentage) AS percentage,
+             COALESCE(s.passed, ts.passed) AS passed,
+             t.question_paper_url, t.solution_pdf_url,
+             eb_t.id AS ebook_id, eb_t.title AS ebook_title, eb_t.pdf_url AS ebook_pdf_url, eb_t.author AS ebook_author
+      FROM tests t
+      LEFT JOIN ebooks eb_t ON eb_t.id = t.recommended_ebook_id
+      LEFT JOIN test_assignments tas ON tas.test_id = t.id
+      LEFT JOIN package_tests pt ON pt.test_id = t.id
+      LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+      LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+      LEFT JOIN test_series ts_series ON ts_series.id = tst.series_id OR ts_series.id = tsa.test_series_id
+      LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts_series.title IS NOT NULL AND (
+         LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts_series.title FROM 1 FOR 15)) || '%'
+         OR LOWER(ts_series.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
+      ))
+      LEFT JOIN institution_packages ip ON (
+         ip.package_id = pt.package_id
+         OR ip.package_id = tp.id
+         OR ip.package_id = ts_series.id
+      ) AND $4::int IS NOT NULL AND ip.institution_id = $4 AND COALESCE(ip.is_active, TRUE) = TRUE
+      LEFT JOIN (
+        SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
+      ) q ON q.assessment_id = t.id
+      LEFT JOIN attempts at ON at.assessment_id = t.id AND at.candidate_id = $2
+      LEFT JOIN test_attempts tat ON tat.test_id = t.id AND tat.student_id = $2
+      LEFT JOIN scores s ON s.attempt_id = at.id
+      LEFT JOIN scores ts ON ts.attempt_id = tat.id
+      WHERE (t.is_published = true OR t.status = 'published')
+        AND COALESCE(t.is_deleted, false) = false
+        AND (
+          (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $2)
+          OR (tas.assigned_to_id IS NOT NULL AND tas.assigned_to_id = $2)
+          OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
+          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
+          OR tas.assigned_to_type = 'all'
+          OR (ip.institution_id IS NOT NULL AND (ip.valid_until IS NULL OR ip.valid_until > NOW()))
+        )
 
-    ORDER BY id DESC
-    `,
-    [req.user.email, req.user.id, batchId, instId]
-  );
+      ORDER BY id DESC
+      `,
+      [req.user.email, req.user.id, batchId, instId]
+    );
 
-  const seenIds = new Set();
-  const uniqueAssessments = [];
-  for (const row of result.rows) {
-    if (!seenIds.has(row.id)) {
-      seenIds.add(row.id);
-      uniqueAssessments.push(row);
+    const seenIds = new Set();
+    const uniqueAssessments = [];
+    for (const row of result.rows) {
+      if (!seenIds.has(row.id)) {
+        seenIds.add(row.id);
+        uniqueAssessments.push(row);
+      }
     }
-  }
 
-  res.json({ assessments: uniqueAssessments });
+    res.json({ assessments: uniqueAssessments });
+  } catch (err) {
+    console.error('[listAvailableAssessments error]', err);
+    res.json({ assessments: [] });
+  }
 });
 
 /** GET /api/assessments/available/:id — student access check + details */

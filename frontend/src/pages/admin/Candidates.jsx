@@ -13,6 +13,7 @@ export default function AdminCandidates() {
   const [candidates, setCandidates] = useState([]);
   const [state, setState] = useState('loading');
   const [search, setSearch] = useState('');
+  const [selectedInstitutionFilter, setSelectedInstitutionFilter] = useState('');
   
   // Modal states
   const [modalOpen, setModalOpen] = useState(false);
@@ -157,12 +158,28 @@ export default function AdminCandidates() {
   if (state === 'loading') return <LoadingScreen label="Loading candidates…" />;
   if (state === 'error') return <ErrorState onRetry={load} />;
 
-  const filtered = candidates.filter(
-    (c) =>
+  const filtered = candidates.filter((c) => {
+    const matchesSearch =
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.email.toLowerCase().includes(search.toLowerCase()) ||
-      (c.phone && c.phone.includes(search))
-  );
+      (c.phone && c.phone.includes(search)) ||
+      (c.institution_name && c.institution_name.toLowerCase().includes(search.toLowerCase())) ||
+      (c.institution_code && c.institution_code.toLowerCase().includes(search.toLowerCase()));
+
+    if (!matchesSearch) return false;
+
+    if (selectedInstitutionFilter === 'independent') {
+      return !c.institution_id && !c.institution_name;
+    }
+    if (selectedInstitutionFilter) {
+      return (
+        String(c.institution_id) === String(selectedInstitutionFilter) ||
+        String(c.institution_name) === String(selectedInstitutionFilter)
+      );
+    }
+
+    return true;
+  });
 
   return (
     <div className="w-full max-w-full space-y-6">
@@ -181,13 +198,26 @@ export default function AdminCandidates() {
         }
       />
 
-      <div className="mb-4">
+      <div className="mb-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
         <input
           className="input max-w-sm"
-          placeholder="Search by name, email, or mobile number…"
+          placeholder="Search by name, email, phone, or institution…"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
+        <select
+          className="input max-w-xs font-semibold"
+          value={selectedInstitutionFilter}
+          onChange={(e) => setSelectedInstitutionFilter(e.target.value)}
+        >
+          <option value="">All Institutions & Signups</option>
+          <option value="independent">🌐 Direct Website Signups (No Institution)</option>
+          {institutions.map((inst) => (
+            <option key={inst.id} value={inst.id}>
+              🏫 {inst.name} ({inst.schoolId})
+            </option>
+          ))}
+        </select>
       </div>
 
       {filtered.length === 0 ? (
@@ -200,6 +230,7 @@ export default function AdminCandidates() {
                 <tr>
                   <Th>Student</Th>
                   <Th>Status</Th>
+                  <Th>Institution / Source</Th>
                   <Th>Contact Details</Th>
                   <Th>Academic Profile</Th>
                   <Th>Exam Attempts</Th>
@@ -231,6 +262,24 @@ export default function AdminCandidates() {
                         <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400">
                           <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                           Active
+                        </span>
+                      )}
+                    </Td>
+                    <Td>
+                      {c.institution_name ? (
+                        <div className="flex flex-col gap-0.5">
+                          <span className="inline-flex items-center gap-1 text-xs font-extrabold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 px-2.5 py-1 rounded-lg w-max">
+                            🏫 {c.institution_name}
+                          </span>
+                          {c.institution_code && (
+                            <span className="text-[10.5px] font-semibold text-slate-400 pl-0.5">
+                              Code: {c.institution_code}
+                            </span>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2.5 py-1 rounded-lg w-max">
+                          🌐 Direct Website Signup
                         </span>
                       )}
                     </Td>

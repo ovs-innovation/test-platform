@@ -21,6 +21,17 @@ export function ToastProvider({ children }) {
     (message, type = 'info', duration = 4000) => {
       if (!message) return null;
 
+      // Suppress alarming generic internal server error toasts on client side
+      const strMsg = String(message).toLowerCase();
+      if (
+        strMsg.includes('a server error occurred') ||
+        strMsg.includes('internal_server_error') ||
+        strMsg.includes('500') ||
+        strMsg.includes('503')
+      ) {
+        return null;
+      }
+
       let targetId = null;
 
       setToasts((prev) => {
@@ -72,15 +83,15 @@ export function ToastProvider({ children }) {
   };
 
   const styles = {
-    success: 'bg-[#059669] border border-emerald-400/30 text-white shadow-emerald-900/20',
-    error: 'bg-[#DC2626] border border-red-400/30 text-white shadow-red-900/20',
-    info: 'bg-[#0F172A] border border-slate-700 text-white shadow-slate-900/30',
+    success: 'bg-emerald-950/90 border border-emerald-500/40 text-emerald-100 shadow-xl backdrop-blur-md',
+    error: 'bg-slate-900/95 border border-red-500/40 text-slate-100 shadow-2xl backdrop-blur-md',
+    info: 'bg-slate-900/95 border border-slate-700/80 text-slate-100 shadow-xl backdrop-blur-md',
   };
 
   const icons = {
-    success: <CheckCircle2 className="h-5 w-5 text-emerald-200 shrink-0" />,
-    error: <AlertCircle className="h-5 w-5 text-red-200 shrink-0" />,
-    info: <Info className="h-5 w-5 text-sky-300 shrink-0" />,
+    success: <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />,
+    error: <AlertCircle className="h-5 w-5 text-red-400 shrink-0" />,
+    info: <Info className="h-5 w-5 text-sky-400 shrink-0" />,
   };
 
   return (

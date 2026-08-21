@@ -21,7 +21,10 @@ export default function Login() {
     setError('');
     try {
       const user = await login(form);
-      toast.success(`Welcome back, ${user.name ? user.name.split(' ')[0] : 'Admin'}!`);
+      const greetingName = (user.role === 'admin' || user.role === 'superadmin' || user.name?.toLowerCase().includes('platform'))
+        ? 'Admin'
+        : (user.name ? user.name.split(' ')[0] : 'Admin');
+      toast.success(`Welcome back, ${greetingName}!`);
       const dest = location.state?.from?.pathname;
       const defaultDest = user.redirectTo || (user.role === 'institution_admin' ? '/for-schools' : '/admin');
       navigate(dest || defaultDest, { replace: true });
