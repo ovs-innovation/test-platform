@@ -150,9 +150,19 @@ export const createFaculty = asyncHandler(async (req, res) => {
   );
   const fac = await query(
     `INSERT INTO faculty (user_id, department, bio) VALUES ($1,$2,$3) RETURNING *`,
-    [user.rows[0].id, department || '', bio || '']
-  );
   res.status(201).json({ faculty: { ...fac.rows[0], ...user.rows[0] } });
+});
+
+export const deleteFaculty = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const fac = await query('SELECT * FROM faculty WHERE id = $1', [id]);
+  if (!fac.rowCount) throw ApiError.notFound('Faculty member not found');
+  const userId = fac.rows[0].user_id;
+
+  await query('DELETE FROM faculty WHERE id = $1', [id]);
+  await query('DELETE FROM users WHERE id = $1', [userId]);
+
+  res.json({ message: 'Faculty member deleted successfully' });
 });
 
 // ─── Subjects / Chapters / Topics ───────────────────────────────────────────

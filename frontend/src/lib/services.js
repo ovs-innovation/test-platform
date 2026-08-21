@@ -398,6 +398,10 @@ export const adminService = {
     clearCache();
     return api.post('/admin/faculty', data).then((r) => r.data);
   },
+  deleteFaculty: (id) => {
+    clearCache();
+    return api.delete('/admin/faculty/' + id).then((r) => r.data);
+  },
   subjects: () => withCache('admin_subjects', () => api.get('/admin/subjects').then((r) => r.data.subjects)),
   createSubject: (data) => {
     clearCache();

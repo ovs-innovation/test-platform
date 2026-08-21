@@ -62,7 +62,7 @@ import { listBatches, createBatch, deleteBatch } from '../controllers/batchContr
 import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
   listCoupons, createCoupon, toggleCoupon, deleteCoupon,
-  listFaculty, createFaculty,
+  listFaculty, createFaculty, deleteFaculty,
   adminListSubjects, createSubject, deleteSubject, createChapter, deleteChapter, listChapters, createTopic, deleteTopic,
   getSettings, updateSettings, broadcastNotification,
 } from '../controllers/platformController.js';
@@ -127,6 +127,7 @@ router.patch('/coupons/:id/toggle', toggleCoupon);
 router.delete('/coupons/:id', deleteCoupon);
 router.get('/faculty', listFaculty);
 router.post('/faculty', createFaculty);
+router.delete('/faculty/:id', deleteFaculty);
 router.get('/subjects', adminListSubjects);
 router.post('/subjects', createSubject);
 router.delete('/subjects/:id', deleteSubject);
