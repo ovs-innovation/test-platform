@@ -19,7 +19,6 @@ import {
   ChevronRight,
   Menu,
   X,
-  Search,
   Sun,
   Moon,
   Plus,
@@ -334,23 +333,7 @@ export default function InstitutionPortalLayout({
             </div>
           </div>
 
-          {/* Middle: Global Portal Search */}
-          <div className="hidden md:flex flex-1 max-w-lg lg:max-w-xl mx-4 relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400 pointer-events-none" />
-            <input
-              type="text"
-              placeholder="Search students, roll numbers, batches or tests..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery && setSearchQuery(e.target.value)}
-              className={`w-full py-2.5 pl-11 pr-16 text-xs sm:text-sm font-semibold rounded-2xl border transition-all focus:outline-none ${isDarkMode
-                ? 'border-slate-800 bg-slate-900/90 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/10'
-                : 'border-slate-200 bg-slate-100/90 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-indigo-600 focus:ring-4 focus:ring-indigo-500/10 shadow-inner'
-                }`}
-            />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 hidden xl:flex items-center gap-1 px-2 py-0.5 rounded-lg border text-[10px] font-mono font-bold text-slate-400 pointer-events-none border-slate-200 bg-slate-100 dark:border-slate-800 dark:bg-slate-900">
-              <span>⌘K</span>
-            </div>
-          </div>
+
 
           {/* Right Toolbar Controls */}
           <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
