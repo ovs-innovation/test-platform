@@ -606,35 +606,91 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
     query('SELECT * FROM tests WHERE id = $1', [id]),
     query(`
       SELECT 
-        ta.id, ta.test_id, ta.student_id, ta.started_at, ta.submitted_at, 
-        COALESCE(ta.score, 0) AS score, 
-        COALESCE(ta.percentage, 0) AS percentage,
-        u.name AS student_name, u.email AS student_email,
-        COALESCE(i.name, ib.name) AS institution_name,
-        COALESCE(i.code, ib.code) AS institution_code
-      FROM test_attempts ta
-      JOIN users u ON u.id = ta.student_id
-      LEFT JOIN batches b ON b.id = u.batch_id
-      LEFT JOIN institutions i ON i.id = u.institution_id
-      LEFT JOIN institutions ib ON ib.id = b.institution_id
-      WHERE ta.test_id = $1
-      ORDER BY COALESCE(ta.score, ta.percentage, 0) DESC, ta.submitted_at ASC
+        attempt_id,
+        test_id,
+        student_id,
+        started_at,
+        submitted_at,
+        score,
+        percentage,
+        max_marks,
+        student_name,
+        student_email,
+        institution_name,
+        institution_code
+      FROM (
+        SELECT 
+          at.id AS attempt_id,
+          t.id AS test_id,
+          at.candidate_id AS student_id,
+          at.started_at,
+          at.submitted_at,
+          COALESCE(s.marks_obtained, s.percentage, 0)::numeric AS score,
+          COALESCE(s.percentage, 0)::numeric AS percentage,
+          COALESCE(s.total_marks, a.total_marks, t.max_marks, 200)::numeric AS max_marks,
+          u.name AS student_name,
+          u.email AS student_email,
+          COALESCE(i.name, ib.name) AS institution_name,
+          COALESCE(i.code, ib.code) AS institution_code
+        FROM attempts at
+        JOIN users u ON u.id = at.candidate_id
+        LEFT JOIN assessments a ON a.id = at.assessment_id
+        LEFT JOIN tests t ON (t.id = at.assessment_id OR LOWER(t.test_name) = LOWER(a.title))
+        LEFT JOIN scores s ON s.attempt_id = at.id
+        LEFT JOIN batches b ON b.id = u.batch_id
+        LEFT JOIN institutions i ON i.id = u.institution_id
+        LEFT JOIN institutions ib ON ib.id = b.institution_id
+        WHERE (at.assessment_id = $1 OR t.id = $1)
+
+        UNION ALL
+
+        SELECT 
+          ta.id AS attempt_id,
+          ta.test_id,
+          ta.student_id,
+          ta.started_at,
+          ta.submitted_at,
+          COALESCE(ta.score, ts.marks_obtained, ta.percentage, 0)::numeric AS score,
+          COALESCE(ta.percentage, ts.percentage, 0)::numeric AS percentage,
+          COALESCE(ta.max_marks, ts.total_marks, 200)::numeric AS max_marks,
+          u.name AS student_name,
+          u.email AS student_email,
+          COALESCE(i.name, ib.name) AS institution_name,
+          COALESCE(i.code, ib.code) AS institution_code
+        FROM test_attempts ta
+        JOIN users u ON u.id = ta.student_id
+        LEFT JOIN scores ts ON ts.attempt_id = ta.id
+        LEFT JOIN batches b ON b.id = u.batch_id
+        LEFT JOIN institutions i ON i.id = u.institution_id
+        LEFT JOIN institutions ib ON ib.id = b.institution_id
+        WHERE ta.test_id = $1
+      ) sub
+      ORDER BY COALESCE(score, percentage, 0) DESC, submitted_at ASC NULLS LAST
     `, [id]),
-    query('SELECT COUNT(*)::int AS count FROM missed_test_overrides WHERE test_id = $1', [id])
+    query('SELECT COUNT(*)::int AS count FROM missed_test_overrides WHERE test_id = $1', [id]).catch(() => ({ rows: [{ count: 0 }] }))
   ]);
 
   if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
 
-  const completedRows = attemptsRes.rows
+  const seenStudents = new Set();
+  const uniqueAttempts = [];
+  for (const r of attemptsRes.rows) {
+    if (!seenStudents.has(r.student_id)) {
+      seenStudents.add(r.student_id);
+      uniqueAttempts.push(r);
+    }
+  }
+
+  const completedRows = uniqueAttempts
     .filter(r => r.submitted_at)
     .sort((a, b) => Number(b.score || b.percentage || 0) - Number(a.score || a.percentage || 0));
 
   const totalAttempted = completedRows.length;
-  const totalInProgress = attemptsRes.rows.filter(r => r.started_at && !r.submitted_at).length;
+  const totalInProgress = uniqueAttempts.filter(r => r.started_at && !r.submitted_at).length;
 
-  const rankedAttempts = attemptsRes.rows.map(r => {
+  const rankedAttempts = uniqueAttempts.map(r => {
     if (!r.submitted_at) return { ...r, air_rank: null, percentile: null };
-    const rankIndex = completedRows.findIndex(cr => cr.id === r.id);
+    const rankIndex = completedRows.findIndex(cr => cr.attempt_id === r.attempt_id);
     const air_rank = rankIndex >= 0 ? rankIndex + 1 : null;
     const percentile = totalAttempted > 0 
       ? Number(Math.max(0.1, Math.min(99.9, ((totalAttempted - rankIndex) / totalAttempted) * 100)).toFixed(1)) 
@@ -647,7 +703,7 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
     stats: {
       totalAttempted,
       totalInProgress,
-      totalOverrides: overridesRes.rows[0].count,
+      totalOverrides: overridesRes.rows[0]?.count || 0,
       topScore: completedRows.length > 0 ? (completedRows[0].score || completedRows[0].percentage || 0) : 0,
       avgScore: completedRows.length > 0 ? Math.round(completedRows.reduce((sum, c) => sum + Number(c.percentage || c.score || 0), 0) / completedRows.length) : 0
     },

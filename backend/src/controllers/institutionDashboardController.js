@@ -98,11 +98,32 @@ export const listInstitutionStudents = asyncHandler(async (req, res) => {
     LEFT JOIN batches b ON b.id = u.batch_id
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
     LEFT JOIN (
-      SELECT ta.student_id, COUNT(ta.id) AS tests_completed, AVG(ta.percentage) AS avg_score
-      FROM test_attempts ta
-      JOIN users u2 ON u2.id = ta.student_id
-      WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
-      GROUP BY ta.student_id
+      SELECT 
+        student_id, 
+        COUNT(DISTINCT attempt_id)::int AS tests_completed, 
+        COALESCE(ROUND(AVG(percentage), 1), 0)::numeric AS avg_score
+      FROM (
+        SELECT 
+          at.id AS attempt_id, 
+          at.candidate_id AS student_id, 
+          COALESCE(s.percentage, 0)::numeric AS percentage
+        FROM attempts at
+        JOIN users u2 ON u2.id = at.candidate_id
+        LEFT JOIN scores s ON s.attempt_id = at.id
+        WHERE u2.institution_id = $1 AND at.submitted_at IS NOT NULL
+
+        UNION ALL
+
+        SELECT 
+          ta.id AS attempt_id, 
+          ta.student_id, 
+          COALESCE(ta.percentage, ts.percentage, 0)::numeric AS percentage
+        FROM test_attempts ta
+        JOIN users u2 ON u2.id = ta.student_id
+        LEFT JOIN scores ts ON ts.attempt_id = ta.id
+        WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
+      ) combined
+      GROUP BY student_id
     ) att ON att.student_id = u.id
     WHERE u.institution_id = $1 AND u.role = 'candidate'
   `;
@@ -969,11 +990,39 @@ export const getStudentProgress = asyncHandler(async (req, res) => {
   const student = userRes.rows[0];
 
   const attemptsRes = await query(
-    `SELECT ta.id, ta.test_id, t.test_name, ta.score, ta.max_marks, ta.percentage, ta.submitted_at, ta.institute_rank
-     FROM test_attempts ta
-     JOIN tests t ON t.id = ta.test_id
-     WHERE ta.student_id = $1 AND ta.submitted_at IS NOT NULL
-     ORDER BY ta.submitted_at ASC`,
+    `SELECT * FROM (
+       SELECT 
+         at.id, 
+         at.assessment_id AS test_id, 
+         COALESCE(a.title, t.test_name, 'Assessment') AS test_name, 
+         COALESCE(s.marks_obtained, s.percentage, 0)::numeric AS score, 
+         COALESCE(s.total_marks, a.total_marks, 200)::numeric AS max_marks, 
+         COALESCE(s.percentage, 0)::numeric AS percentage, 
+         at.submitted_at, 
+         COALESCE(s.rank, 1) AS institute_rank
+       FROM attempts at
+       LEFT JOIN assessments a ON a.id = at.assessment_id
+       LEFT JOIN tests t ON t.id = at.assessment_id
+       LEFT JOIN scores s ON s.attempt_id = at.id
+       WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
+
+       UNION ALL
+
+       SELECT 
+         ta.id, 
+         ta.test_id, 
+         t.test_name, 
+         COALESCE(ta.score, ts.marks_obtained, 0)::numeric AS score, 
+         COALESCE(ta.max_marks, ts.total_marks, 200)::numeric AS max_marks, 
+         COALESCE(ta.percentage, ts.percentage, 0)::numeric AS percentage, 
+         ta.submitted_at, 
+         ta.institute_rank
+       FROM test_attempts ta
+       JOIN tests t ON t.id = ta.test_id
+       LEFT JOIN scores ts ON ts.attempt_id = ta.id
+       WHERE ta.student_id = $1 AND ta.submitted_at IS NOT NULL
+     ) sub
+     ORDER BY submitted_at ASC`,
     [Number(student_id)]
   );
 
@@ -1664,11 +1713,32 @@ export const getInstitutionBatchStudents = asyncHandler(async (req, res) => {
     FROM users u
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
     LEFT JOIN (
-      SELECT ta.student_id, COUNT(ta.id) AS tests_completed, AVG(ta.percentage) AS avg_score
-      FROM test_attempts ta
-      JOIN users u2 ON u2.id = ta.student_id
-      WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
-      GROUP BY ta.student_id
+      SELECT 
+        student_id, 
+        COUNT(DISTINCT attempt_id)::int AS tests_completed, 
+        COALESCE(ROUND(AVG(percentage), 1), 0)::numeric AS avg_score
+      FROM (
+        SELECT 
+          at.id AS attempt_id, 
+          at.candidate_id AS student_id, 
+          COALESCE(s.percentage, 0)::numeric AS percentage
+        FROM attempts at
+        JOIN users u2 ON u2.id = at.candidate_id
+        LEFT JOIN scores s ON s.attempt_id = at.id
+        WHERE u2.institution_id = $1 AND at.submitted_at IS NOT NULL
+
+        UNION ALL
+
+        SELECT 
+          ta.id AS attempt_id, 
+          ta.student_id, 
+          COALESCE(ta.percentage, ts.percentage, 0)::numeric AS percentage
+        FROM test_attempts ta
+        JOIN users u2 ON u2.id = ta.student_id
+        LEFT JOIN scores ts ON ts.attempt_id = ta.id
+        WHERE u2.institution_id = $1 AND ta.submitted_at IS NOT NULL
+      ) combined
+      GROUP BY student_id
     ) att ON att.student_id = u.id
     WHERE u.institution_id = $1 AND u.batch_id = $2 AND u.role = 'candidate'
   `;

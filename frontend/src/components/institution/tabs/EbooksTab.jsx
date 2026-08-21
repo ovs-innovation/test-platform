@@ -311,11 +311,6 @@ export default function EbooksTab({
               <span className={`text-[10px] font-extrabold uppercase tracking-wider block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Digital Library</span>
               <span className="text-base font-black text-purple-600 dark:text-purple-400">{booksList.length} eBooks</span>
             </div>
-
-            <span className="hidden sm:inline-flex items-center gap-1.5 rounded-2xl bg-purple-500/10 border border-purple-500/20 px-3.5 py-2 text-xs font-extrabold text-purple-600 dark:text-purple-400 shrink-0">
-              <Sparkles className="h-4 w-4" />
-              <span>Full Access Unlocked</span>
-            </span>
           </div>
         </div>
 
