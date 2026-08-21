@@ -8,7 +8,7 @@ export const COMPANY = {
   industry: 'Education Technology (EdTech)',
   businessType: 'Digital Learning Platform',
   founder: 'Sumit Pandey',
-  headquarters: 'Sagarpur, New Delhi, India',
+  headquarters: '',
   website: 'www.edvedum.com',
   tagline: 'Empowering Future Doctors & Engineers',
   slogan: 'Inspiring Minds. Building Futures.',

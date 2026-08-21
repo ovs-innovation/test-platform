@@ -43,7 +43,7 @@ export default function PublicLayout() {
               <p className="mt-2.5 max-w-sm text-[12px] leading-relaxed text-white/60">
                 {COMPANY.tagline}. {COMPANY.slogan}
               </p>
-              <p className="mt-1.5 text-[11px] text-white/50">{COMPANY.headquarters}</p>
+              {COMPANY.headquarters && <p className="mt-1.5 text-[11px] text-white/50">{COMPANY.headquarters}</p>}
 
               {/* Social Media Icons */}
               <div className="mt-3.5 flex items-center gap-2">

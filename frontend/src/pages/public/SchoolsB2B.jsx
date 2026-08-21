@@ -1637,7 +1637,7 @@ export default function SchoolsB2B() {
                   Email: <a href="mailto:edvedum@gmail.com" className="text-[#2563EB] font-bold hover:underline">edvedum@gmail.com</a>
                 </p>
                 <p className="text-xs text-[#475467]">
-                  Phone: <a href="tel:18003383386" className="text-[#2563EB] font-bold hover:underline">1800-EDVEDUM (3383386)</a>
+                  Phone: <a href="tel:+919151424445" className="text-[#2563EB] font-bold hover:underline">+91 91514 24445</a>
                 </p>
               </div>
             </div>

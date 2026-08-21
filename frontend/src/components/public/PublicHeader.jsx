@@ -244,11 +244,11 @@ export default function PublicHeader({ onHeightChange }) {
       <div className="bg-[#0a1628] text-white">
         <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-xs whitespace-nowrap overflow-x-hidden">
           <div className="flex items-center gap-3 shrink-0">
-            <a href="tel:18003383386" className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors text-[10px] sm:text-xs font-semibold">
-              1800-EDVEDUM (3383386)
+            <a href={CONTACT.phoneHref} className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors text-[10px] sm:text-xs font-semibold">
+              {CONTACT.phone}
             </a>
-            <a href="mailto:edvedum@gmail.com" className="hidden text-white/85 hover:text-white sm:inline transition-colors">
-              edvedum@gmail.com
+            <a href={`mailto:${CONTACT.supportEmail}`} className="hidden text-white/85 hover:text-white sm:inline transition-colors">
+              {CONTACT.supportEmail}
             </a>
           </div>
           <div className="flex items-center gap-1.5 sm:gap-3.5 shrink-0 text-[10px] sm:text-xs">

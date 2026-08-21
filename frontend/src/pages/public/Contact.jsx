@@ -27,7 +27,7 @@ const CONTACT_ROWS = [
     href: null,
     note: COMPANY.legalName,
   },
-];
+].filter((row) => Boolean(row.value));
 
 const SHORTCUTS = [
   { to: '/test-series', label: 'Test series' },

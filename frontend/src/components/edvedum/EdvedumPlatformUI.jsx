@@ -244,7 +244,7 @@ export function EdvedumCtaStrip({
   secondary,
   quickContact = {
     email: "edvedum@gmail.com",
-    phone: "1800-EDVEDUM (3383386)",
+    phone: "+91 91514 24445",
   },
 }) {
   return (

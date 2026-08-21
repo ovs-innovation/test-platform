@@ -179,7 +179,7 @@ export default function About() {
       <section className="edvedum-page-bg py-10">
         <div className="edvedum-section-wrap max-w-3xl">
           <p className="text-[14px] leading-relaxed text-slate-600">{PHILOSOPHY}</p>
-          <p className="mt-2 text-[13px] text-slate-500">{COMPANY.headquarters} · {COMPANY.website}</p>
+          <p className="mt-2 text-[13px] text-slate-500">{COMPANY.headquarters ? `${COMPANY.headquarters} · ${COMPANY.website}` : COMPANY.website}</p>
         </div>
       </section>
 

@@ -6,6 +6,7 @@ import {
   EdvedumHowItWorks,
   EdvedumMiniFaq,
 } from "../../components/landing/EdvedumHomeExtended.jsx";
+import { CONTACT } from "../../data/edvedumContent.js";
 
 export default function Home() {
   return (
@@ -21,8 +22,8 @@ export default function Home() {
         desc="Reach out for admissions, technical support, or test series queries."
         primary={{ to: "/contact", label: "Contact Us" }}
         quickContact={{
-          email: "edvedum@gmail.com",
-          phone: "1800-EDVEDUM (3383386)",
+          email: CONTACT.supportEmail,
+          phone: CONTACT.phone,
         }}
       />
     </>
