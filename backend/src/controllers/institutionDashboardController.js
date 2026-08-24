@@ -586,35 +586,76 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
   const instId = req.institution_id || req.params.id;
 
   const result = await query(
-    `SELECT DISTINCT ON (t.id)
-            t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
-            COALESCE(tp.id, pt.package_id, ts.id, 1) AS package_id,
-            COALESCE(tp.package_name, ts.title, 'Institutional Test') AS package_name
-     FROM tests t
-     LEFT JOIN package_tests pt ON pt.test_id = t.id
-     LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-     LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-     LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id
-     LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts.title IS NOT NULL AND (
-        LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts.title FROM 1 FOR 15)) || '%'
-        OR LOWER(ts.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
-     ))
-     LEFT JOIN institution_packages ip ON (
-        ip.package_id = pt.package_id 
-        OR ip.package_id = tp.id 
-        OR ip.package_id = ts.id
-     ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
-     LEFT JOIN test_assignments ta ON ta.test_id = t.id
-     WHERE COALESCE(t.is_published, TRUE) = TRUE
-       AND COALESCE(t.is_deleted, FALSE) = FALSE
-       AND (
-         ip.institution_id IS NOT NULL
-         OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
-         OR (ta.assigned_to_type = 'all')
-       )
-     ORDER BY t.id DESC`,
+    `SELECT DISTINCT ON (item.id)
+            item.id,
+            item.test_name,
+            item.test_type,
+            item.test_date,
+            item.duration_minutes,
+            item.max_marks,
+            item.package_id,
+            item.package_name
+     FROM (
+       SELECT 
+         t.id,
+         t.test_name,
+         t.test_type,
+         t.test_date::text AS test_date,
+         t.duration_minutes,
+         t.max_marks,
+         COALESCE(pt.package_id, tst.series_id, tsa.test_series_id, tp.id, ts.id, 1) AS package_id,
+         COALESCE(tp.package_name, ts.title, 'Institutional Test') AS package_name
+       FROM tests t
+       LEFT JOIN package_tests pt ON pt.test_id = t.id
+       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+       LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+       LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id
+       LEFT JOIN test_packages tp ON tp.id = pt.package_id OR tp.id = ts.id
+       LEFT JOIN institution_packages ip ON (
+          ip.package_id = pt.package_id 
+          OR ip.package_id = tp.id 
+          OR ip.package_id = ts.id
+          OR ip.package_id = tst.series_id
+          OR ip.package_id = tsa.test_series_id
+       ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+       LEFT JOIN test_assignments ta ON ta.test_id = t.id
+       WHERE COALESCE(t.is_published, TRUE) = TRUE
+         AND COALESCE(t.is_deleted, FALSE) = FALSE
+         AND (
+           ip.institution_id IS NOT NULL
+           OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
+           OR (ta.assigned_to_type = 'all')
+         )
+
+       UNION ALL
+
+       SELECT
+         a.id,
+         COALESCE(tsa.label, a.title) AS test_name,
+         'CBT Assessment' AS test_type,
+         COALESCE(a.created_at::date::text, NOW()::date::text) AS test_date,
+         COALESCE(a.duration_minutes, 180) AS duration_minutes,
+         COALESCE(a.passing_marks, 300) AS max_marks,
+         COALESCE(tsa.test_series_id, ts.id, tp.id, 1) AS package_id,
+         COALESCE(ts.title, tp.package_name, 'Institutional Test') AS package_name
+       FROM assessments a
+       JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
+       LEFT JOIN test_series ts ON ts.id = tsa.test_series_id
+       LEFT JOIN test_packages tp ON tp.id = ts.id
+       LEFT JOIN institution_packages ip ON (
+          ip.package_id = tsa.test_series_id 
+          OR ip.package_id = ts.id
+          OR ip.package_id = tp.id
+       ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+       WHERE COALESCE(a.is_published, TRUE) = TRUE
+         AND ip.institution_id IS NOT NULL
+     ) item
+     ORDER BY item.id DESC`,
     [instId]
-  ).catch(() => ({ rowCount: 0, rows: [] }));
+  ).catch((err) => {
+    console.error('Error in getAvailablePackageTests:', err);
+    return { rowCount: 0, rows: [] };
+  });
 
   res.json({ success: true, count: result?.rows?.length || 0, tests: result?.rows || [] });
 });
@@ -658,6 +699,14 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
        JOIN institution_packages ip ON ip.package_id = pt.package_id
        WHERE ip.institution_id = $1 AND pt.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
        UNION
+       SELECT 1 FROM test_series_tests tst
+       JOIN institution_packages ip ON ip.package_id = tst.series_id
+       WHERE ip.institution_id = $1 AND tst.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       UNION
+       SELECT 1 FROM test_series_assessments tsa
+       JOIN institution_packages ip ON ip.package_id = tsa.test_series_id
+       WHERE ip.institution_id = $1 AND tsa.assessment_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       UNION
        SELECT 1 FROM test_assignments ta
        WHERE ta.test_id = $2 AND (
          (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1) OR ta.assigned_to_type = 'all'
@@ -677,17 +726,25 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   let testIdsToAssign = [];
   if (!isNaN(testIdNum) && testIdNum > 0) {
     const linkedTests = await query(
-      `SELECT DISTINCT t.id FROM tests t
-       LEFT JOIN package_tests pt ON pt.test_id = t.id
-       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-       LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-       WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1`,
+      `SELECT DISTINCT item.id FROM (
+         SELECT t.id FROM tests t
+         LEFT JOIN package_tests pt ON pt.test_id = t.id
+         LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+         LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+         WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1
+
+         UNION
+
+         SELECT a.id FROM assessments a
+         JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
+         WHERE tsa.test_series_id = $1
+       ) item`,
       [testIdNum]
     );
     if (linkedTests.rowCount > 0) {
       testIdsToAssign = linkedTests.rows.map((r) => r.id);
     } else {
-      const singleTest = await query('SELECT id FROM tests WHERE id = $1', [testIdNum]);
+      const singleTest = await query('SELECT id FROM tests WHERE id = $1 UNION SELECT id FROM assessments WHERE id = $1', [testIdNum]);
       if (singleTest.rowCount > 0) {
         testIdsToAssign = [testIdNum];
       }
@@ -2094,7 +2151,8 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
             365 AS validity_days,
             COALESCE(
               NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = tp.id), 0),
-              (SELECT COUNT(*)::int FROM tests t WHERE COALESCE(t.is_deleted, false) = false AND COALESCE(t.is_published, true) = true),
+              NULLIF((SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = tp.id), 0),
+              NULLIF((SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = tp.id), 0),
               15
             )::int AS total_tests_count,
             'Assigned Package' AS status,
@@ -2114,7 +2172,15 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
   const seriesRes = await query(
     `SELECT ts.id, ts.title, ts.title AS package_name, ts.description, ts.exam_type,
             2027 AS target_year, ts.validity_days,
-            (SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = ts.id) AS total_tests_count,
+            COALESCE(
+              NULLIF(
+                (SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = ts.id) +
+                (SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = ts.id),
+                0
+              ),
+              NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = ts.id), 0),
+              1
+            )::int AS total_tests_count,
             'Available Series' AS status,
             FALSE AS is_assigned
      FROM test_series ts
