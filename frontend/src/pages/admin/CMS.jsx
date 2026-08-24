@@ -84,12 +84,48 @@ export default function AdminCMS() {
   const load = () => adminService.cms().then(setPages).finally(() => setLoading(false));
   useEffect(() => { load(); }, []);
 
+  const sanitizeSlugStr = (val, fallbackTitle) => {
+    let str = String(val || '').trim();
+    str = str.replace(/^(https?:\/\/[^\/]+)?(\/blog\/|\/)?/gi, '');
+    if (!str && fallbackTitle) {
+      str = String(fallbackTitle).trim();
+    }
+    return str
+      .toLowerCase()
+      .replace(/[^a-z0-9-_]/g, '-')
+      .replace(/-+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  };
+
+  const handleTitleChange = (e) => {
+    const titleVal = e.target.value;
+    setForm((f) => {
+      const isSlugEmptyOrAuto = !f.slug || f.slug === sanitizeSlugStr('', f.title);
+      return {
+        ...f,
+        title: titleVal,
+        slug: isSlugEmptyOrAuto ? sanitizeSlugStr('', titleVal) : f.slug,
+      };
+    });
+  };
+
+  const handleSlugBlur = () => {
+    setForm((f) => ({
+      ...f,
+      slug: sanitizeSlugStr(f.slug, f.title),
+    }));
+  };
+
   const save = async (e) => {
     e.preventDefault();
     setSaving(true);
+    const cleanedForm = {
+      ...form,
+      slug: sanitizeSlugStr(form.slug, form.title),
+    };
     try {
-      await adminService.saveCms(form);
-      toast.success('Saved');
+      await adminService.saveCms(cleanedForm);
+      toast.success('Page / Blog Post Saved');
       setForm({ slug: '', title: '', content: '', page_type: 'blog', excerpt: '' });
       load();
     } catch (err) { toast.error(err.message); }
@@ -97,6 +133,8 @@ export default function AdminCMS() {
   };
 
   if (loading) return <LoadingScreen label="Loading CMS articles..." />;
+
+  const displaySlug = sanitizeSlugStr(form.slug, form.title);
 
   return (
     <div className="w-full max-w-full space-y-6">
@@ -107,8 +145,28 @@ export default function AdminCMS() {
       />
       <form onSubmit={save} className="rounded-2xl mb-6 space-y-3 p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
         <div className="grid gap-3 sm:grid-cols-3">
-          <input className="input rounded-xl" placeholder="slug-url" value={form.slug} onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))} required />
-          <input className="input rounded-xl" placeholder="Title" value={form.title} onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))} required />
+          <div>
+            <input
+              className="input rounded-xl w-full font-mono text-xs"
+              placeholder="url-slug (e.g. ai-exam-prep)"
+              value={form.slug}
+              onChange={(e) => setForm((f) => ({ ...f, slug: e.target.value }))}
+              onBlur={handleSlugBlur}
+              required
+            />
+            {displaySlug && (
+              <p className="mt-1 text-[11px] font-mono text-blue-600 dark:text-blue-400 truncate">
+                Preview: edvedum.com/{form.page_type === 'blog' ? 'blog/' : ''}{displaySlug}
+              </p>
+            )}
+          </div>
+          <input
+            className="input rounded-xl"
+            placeholder="Title"
+            value={form.title}
+            onChange={handleTitleChange}
+            required
+          />
           <CustomPageTypeDropdown
             value={form.page_type}
             onChange={(val) => setForm((f) => ({ ...f, page_type: val }))}

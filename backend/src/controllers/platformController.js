@@ -16,9 +16,34 @@ export const listCmsPages = asyncHandler(async (req, res) => {
   res.json({ pages: result.rows });
 });
 
+function sanitizeSlug(rawSlug, fallbackTitle) {
+  let str = String(rawSlug || '').trim();
+  str = str.replace(/^(https?:\/\/[^\/]+)?(\/blog\/|\/)?/gi, '');
+  if (!str && fallbackTitle) {
+    str = String(fallbackTitle).trim();
+  }
+  str = str.toLowerCase()
+    .replace(/[^a-z0-9-_]/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  return str || 'post-' + Date.now();
+}
+
 export const getCmsPage = asyncHandler(async (req, res) => {
   const { slug } = req.params;
-  const result = await query('SELECT * FROM cms_pages WHERE slug = $1 AND is_published = true', [slug]);
+  const cleanSlug = sanitizeSlug(slug);
+  const result = await query(
+    `SELECT * FROM cms_pages 
+     WHERE (LOWER(slug) = $1 OR LOWER(slug) = $2 OR LOWER(slug) LIKE $3 OR LOWER(slug) LIKE $4) 
+       AND is_published = true 
+     LIMIT 1`,
+    [
+      slug.toLowerCase(),
+      cleanSlug,
+      `%${cleanSlug}%`,
+      `%${slug.toLowerCase()}%`
+    ]
+  );
   if (!result.rowCount) throw ApiError.notFound('Page not found');
   res.json({ page: result.rows[0] });
 });
@@ -35,13 +60,15 @@ export const listPublicCms = asyncHandler(async (req, res) => {
 
 export const upsertCmsPage = asyncHandler(async (req, res) => {
   const { slug, title, content, page_type, excerpt, is_published } = req.body;
+  const cleanSlug = sanitizeSlug(slug, title);
+
   const result = await query(
     `INSERT INTO cms_pages (slug, title, content, page_type, excerpt, is_published)
      VALUES ($1,$2,$3,$4,$5,$6)
      ON CONFLICT (slug) DO UPDATE SET title = EXCLUDED.title, content = EXCLUDED.content,
        page_type = EXCLUDED.page_type, excerpt = EXCLUDED.excerpt, is_published = EXCLUDED.is_published, updated_at = NOW()
      RETURNING *`,
-    [slug, title, content || '', page_type || 'page', excerpt || '', is_published !== false]
+    [cleanSlug, title, content || '', page_type || 'page', excerpt || '', is_published !== false]
   );
   res.json({ page: result.rows[0] });
 });

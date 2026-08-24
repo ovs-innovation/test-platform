@@ -102,6 +102,7 @@ export default function App() {
           <Route path="/test-series/:slug" element={<TestSeriesDetail />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
+          <Route path="/blog/*" element={<BlogPost />} />
           <Route path="/faqs" element={<FAQs />} />
           <Route path="/free-mock" element={<FreeMock />} />
           <Route path="/pricing" element={<EdvedumLegalPage title="Pricing"><p>Flexible plans for every aspirant. Free diagnostic mock available. Premium test series for JEE & NEET preparation.</p><p className="mt-4">Contact <a href={`mailto:${CONTACT.businessEmail}`} className="text-[#2563eb]">{CONTACT.businessEmail}</a> for institute & bulk pricing.</p></EdvedumLegalPage>} />
