@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
 import pdfParse from 'pdf-parse';
+import { createAdminNotification } from '../utils/createAdminNotification.js';
 
 
 /**
@@ -2010,7 +2011,7 @@ export const getBatchPerformance = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/invoices & POST /api/institution/:id/invoices/request-licenses
  */
 export const listInstitutionInvoices = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id);
   const result = await query(
     `SELECT * FROM institution_invoices WHERE institution_id = $1 ORDER BY id DESC`,
     [instId]
@@ -2019,30 +2020,73 @@ export const listInstitutionInvoices = asyncHandler(async (req, res) => {
 });
 
 export const requestAdditionalLicenses = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id);
   const { requested_quantity, message } = req.body;
 
   if (!requested_quantity || Number(requested_quantity) <= 0) {
     throw ApiError.badRequest('Please enter a valid licence quantity.');
   }
 
-  const instRes = await query('SELECT name, contact_email, contact_person FROM institutions WHERE id = $1', [instId]);
+  const instRes = await query(
+    `SELECT name, COALESCE(contact_email, email) AS email, contact_person, contact_mobile, city, state 
+     FROM institutions WHERE id = $1`,
+    [instId]
+  );
   const inst = instRes.rows[0];
+  const instName = inst?.name || `Institution #${instId}`;
+  const contactEmail = inst?.email || 'admin@institution.edu';
+  const contactPerson = inst?.contact_person || 'Institution Admin';
+  const mobileNumber = inst?.contact_mobile || 'N/A';
+  const city = inst?.city || 'N/A';
+  const state = inst?.state || 'N/A';
+  const refCode = `LIC-REQ-${Date.now()}`;
 
-  // Log in notifications
+  // 1. Log in institution_notifications (so Institution Portal shows it in Notifications tab)
   await query(
     `INSERT INTO institution_notifications (institution_id, title, message, type)
      VALUES ($1, $2, $3, 'license')`,
     [
       instId,
       `Licence Expansion Request (${requested_quantity} seats)`,
-      `Your request for ${requested_quantity} additional student seats has been submitted to Edvedum Billing Team. Reference code: LIC-REQ-${Date.now()}`,
+      `Your request for ${requested_quantity} additional student seats has been submitted to Edvedum Billing Team. Reference code: ${refCode}`,
     ]
-  );
+  ).catch((err) => console.error('Error inserting institution notification:', err));
+
+  // 2. Insert into b2b_enquiries (so Admin Panel B2B/Leads panel sees the request)
+  await query(
+    `INSERT INTO b2b_enquiries (
+      reference_code, institution_name, contact_person, designation, mobile_number, email,
+      city, state, institution_type, student_count, target_exam,
+      interested_package, message, status
+    ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)`,
+    [
+      refCode,
+      instName,
+      contactPerson,
+      'Administrator',
+      mobileNumber,
+      contactEmail,
+      city,
+      state,
+      'Active Institution',
+      `${requested_quantity} Additional Seats`,
+      'Licence Expansion',
+      `Licence Request for ${requested_quantity} Seats`,
+      message ? message.trim() : `Request for ${requested_quantity} additional student licences for ${instName}.`,
+      'Licence Request',
+    ]
+  ).catch((err) => console.error('Error inserting b2b_enquiry for licence request:', err));
+
+  // 3. Create persistent Admin Notification (so Admin Portal notification bell gets notified)
+  await createAdminNotification({
+    title: `🏫 Licence Expansion Request: ${instName}`,
+    body: `${instName} requested ${requested_quantity} additional student seats. ${message ? `Message: "${message.trim()}"` : ''} [Ref: ${refCode}]`,
+    type: 'licence_request',
+  }).catch((err) => console.error('Error creating admin notification for licence request:', err));
 
   res.status(201).json({
     success: true,
-    message: `Licence request for ${requested_quantity} seats submitted successfully. Our team will contact ${inst?.contact_email || 'your email'} shortly.`,
+    message: `Licence request for ${requested_quantity} seats submitted successfully. Our team will contact ${contactEmail} shortly.`,
   });
 });
 
@@ -2051,7 +2095,7 @@ export const requestAdditionalLicenses = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/notifications & POST /api/institution/:id/notifications/send-reminder
  */
 export const listInstitutionNotifications = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id);
   const result = await query(
     `SELECT * FROM institution_notifications WHERE institution_id = $1 ORDER BY id DESC LIMIT 50`,
     [instId]
@@ -2066,7 +2110,7 @@ export const listInstitutionNotifications = asyncHandler(async (req, res) => {
 });
 
 export const markNotificationAsRead = asyncHandler(async (req, res) => {
-  const instId = req.institution_id;
+  const instId = req.institution_id || Number(req.params.id);
   const { notif_id } = req.params;
 
   await query(

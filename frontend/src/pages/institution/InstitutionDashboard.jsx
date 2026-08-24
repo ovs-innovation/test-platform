@@ -333,10 +333,13 @@ export default function InstitutionDashboard() {
 
   const handleRequestLicenses = async (data) => {
     try {
-      await institutionDashboardService.requestLicenses(instId, data);
-      toast.success('Licence expansion request sent to Edvedum Billing');
+      const res = await institutionDashboardService.requestLicenses(instId, data);
+      toast.success(res?.message || 'Licence expansion request sent to Edvedum Billing');
+      loadDashboardData();
+      return res;
     } catch (err) {
-      toast.error(err.message || 'Request sent to Billing panel');
+      toast.error(err?.message || 'Failed to send licence expansion request');
+      throw err;
     }
   };
 
