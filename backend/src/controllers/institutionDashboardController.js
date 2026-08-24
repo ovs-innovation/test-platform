@@ -585,7 +585,7 @@ export const regenerateStudentCredentials = asyncHandler(async (req, res) => {
 export const getAvailablePackageTests = asyncHandler(async (req, res) => {
   const instId = req.institution_id || req.params.id;
 
-  let result = await query(
+  const result = await query(
     `SELECT DISTINCT ON (t.id)
             t.id, t.test_name, t.test_type, t.test_date, t.duration_minutes, t.max_marks,
             COALESCE(tp.id, pt.package_id, ts.id, 1) AS package_id,
@@ -611,21 +611,10 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
          ip.institution_id IS NOT NULL
          OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
          OR (ta.assigned_to_type = 'all')
-         OR EXISTS (SELECT 1 FROM institution_packages ip2 WHERE ip2.institution_id = $1 AND COALESCE(ip2.is_active, TRUE) = TRUE)
        )
      ORDER BY t.id DESC`,
     [instId]
   ).catch(() => ({ rowCount: 0, rows: [] }));
-
-  if (!result || result.rowCount === 0 || result.rows.length === 0) {
-    result = await query(
-      `SELECT id, test_name, test_type, test_date, COALESCE(duration_minutes, 180) AS duration_minutes, COALESCE(max_marks, 720) AS max_marks
-       FROM tests
-       WHERE COALESCE(is_published, TRUE) = TRUE
-         AND COALESCE(is_deleted, FALSE) = FALSE
-       ORDER BY id DESC`
-    ).catch(() => ({ rowCount: 0, rows: [] }));
-  }
 
   res.json({ success: true, count: result?.rows?.length || 0, tests: result?.rows || [] });
 });
@@ -659,6 +648,31 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
 
   const testIdNum = Number(test_id);
 
+  // Check institution entitlement: verify if test_id or package belongs to an assigned package for this institution
+  if (!isNaN(testIdNum) && testIdNum > 0) {
+    const isAuthorized = await query(
+      `SELECT 1 FROM institution_packages ip
+       WHERE ip.institution_id = $1 AND ip.package_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       UNION
+       SELECT 1 FROM package_tests pt
+       JOIN institution_packages ip ON ip.package_id = pt.package_id
+       WHERE ip.institution_id = $1 AND pt.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       UNION
+       SELECT 1 FROM test_assignments ta
+       WHERE ta.test_id = $2 AND (
+         (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1) OR ta.assigned_to_type = 'all'
+       )`,
+      [instId, testIdNum]
+    ).catch(() => ({ rowCount: 0 }));
+
+    if (isAuthorized.rowCount === 0) {
+      return res.status(403).json({
+        success: false,
+        message: 'This test series or package has not been assigned to your institution by the administrator.'
+      });
+    }
+  }
+
   // Determine list of test IDs to assign (handles single test or full package/series)
   let testIdsToAssign = [];
   if (!isNaN(testIdNum) && testIdNum > 0) {
@@ -676,14 +690,15 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
       const singleTest = await query('SELECT id FROM tests WHERE id = $1', [testIdNum]);
       if (singleTest.rowCount > 0) {
         testIdsToAssign = [testIdNum];
-      } else {
-        const allTests = await query(`SELECT id FROM tests WHERE COALESCE(is_published, TRUE) = TRUE AND COALESCE(is_deleted, FALSE) = FALSE`);
-        testIdsToAssign = allTests.rows.map((r) => r.id);
       }
     }
-  } else {
-    const allTests = await query(`SELECT id FROM tests WHERE COALESCE(is_published, TRUE) = TRUE AND COALESCE(is_deleted, FALSE) = FALSE`);
-    testIdsToAssign = allTests.rows.map((r) => r.id);
+  }
+
+  if (testIdsToAssign.length === 0) {
+    return res.status(400).json({
+      success: false,
+      message: 'No valid tests found in this package to assign.'
+    });
   }
 
   let assignedCount = 0;

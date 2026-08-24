@@ -105,7 +105,7 @@ export default function TestAssignmentsTab({
       toast.success(`Test "${selectedTest.test_name}" assigned successfully.`);
       setSelectedTest(null);
     } catch (err) {
-      toast.error(err.message || 'Test assignment completed.');
+      toast.error(err.message || 'Failed to assign test.');
       setSelectedTest(null);
     } finally {
       setAssigning(false);

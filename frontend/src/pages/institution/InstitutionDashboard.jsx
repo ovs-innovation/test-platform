@@ -287,11 +287,11 @@ export default function InstitutionDashboard() {
   // Test & eBook Assignments
   const handleAssignTest = async (testId, data) => {
     try {
-      await institutionDashboardService.assignTest(instId, testId, data);
-      toast.success('Test series assigned to batch');
+      const res = await institutionDashboardService.assignTest(instId, testId, data);
       loadDashboardData();
+      return res;
     } catch (err) {
-      toast.error(err.message || 'Test assigned to target roster.');
+      throw err;
     }
   };
 

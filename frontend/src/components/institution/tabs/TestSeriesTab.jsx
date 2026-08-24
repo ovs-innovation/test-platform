@@ -85,11 +85,9 @@ export default function TestSeriesTab({
         const isAssigned =
           Boolean(s.is_assigned) ||
           s.status === 'Assigned Package' ||
-          s.status === 'Purchased' ||
-          (s.title && s.title.toLowerCase().includes('package')) ||
-          (s.package_name && s.package_name.toLowerCase().includes('package'));
+          s.status === 'Purchased';
 
-        const statusText = isAssigned ? 'Assigned Package' : s.status || 'Active Package';
+        const statusText = isAssigned ? 'Assigned Package' : s.status || 'Catalog Series';
 
         return {
           id: s.id || s.slug,
@@ -178,7 +176,7 @@ export default function TestSeriesTab({
       toast.success(`"${assignModalItem.title}" assigned to ${targetLabel} successfully.`);
       setAssignModalItem(null);
     } catch (err) {
-      toast.error(err.message || 'Test assignment completed.');
+      toast.error(err.message || 'Failed to assign test series.');
       setAssignModalItem(null);
     } finally {
       setAssigning(false);
@@ -467,13 +465,27 @@ export default function TestSeriesTab({
                       <span>View Tests</span>
                     </button>
 
-                    <button
-                      onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
-                      className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
-                    >
-                      <Send className="h-3.5 w-3.5" />
-                      <span>Assign to Batch</span>
-                    </button>
+                    {pkg.isAssigned ? (
+                      <button
+                        onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
+                        className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
+                      >
+                        <Send className="h-3.5 w-3.5" />
+                        <span>Assign to Batch</span>
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className={`flex-1 py-2 rounded-xl text-xs font-bold border cursor-not-allowed flex items-center justify-center gap-1.5 opacity-65 ${
+                          isDarkMode
+                            ? 'border-slate-800 bg-slate-900/60 text-slate-500'
+                            : 'border-slate-200 bg-slate-100 text-slate-400'
+                        }`}
+                        title="Contact Platform Admin to assign this test package to your institution"
+                      >
+                        <span>Not Assigned by Admin</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
@@ -566,8 +578,23 @@ export default function TestSeriesTab({
 
             <div className="space-y-3">
               <p className={`text-xs ${textMutedClass}`}>Included Mock Examinations in this package:</p>
-              {availableTests.length > 0 ? (
-                availableTests.map((t, idx) => (
+              {(() => {
+                const modalTests = (selectedSeries.tests && selectedSeries.tests.length > 0)
+                  ? selectedSeries.tests
+                  : availableTests.filter((t) => (t.package_id && Number(t.package_id) === Number(selectedSeries.id)));
+                
+                const listToDisplay = modalTests.length > 0 ? modalTests : (selectedSeries.isAssigned ? availableTests : []);
+
+                if (listToDisplay.length === 0) {
+                  return (
+                    <div className={`text-center py-8 text-xs space-y-1 ${textMutedClass}`}>
+                      <p className="font-semibold text-slate-300">Package Not Assigned by Admin</p>
+                      <p>Contact your Platform Administrator to unlock this test series package for your institution.</p>
+                    </div>
+                  );
+                }
+
+                return listToDisplay.map((t, idx) => (
                   <div
                     key={t.id || idx}
                     className={`p-3.5 rounded-2xl border flex items-center justify-between gap-3 ${
@@ -587,23 +614,33 @@ export default function TestSeriesTab({
                         {t.duration_minutes || 180} Mins • {t.max_marks || 300} Marks • NTA CBT Pattern
                       </p>
                     </div>
-                    <button
-                      onClick={() => {
-                        setSelectedSeries(null);
-                        handleOpenAssignModal({ id: t.id, title: t.test_name || t.title, type: 'test' });
-                      }}
-                      className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition cursor-pointer flex items-center gap-1 shrink-0"
-                    >
-                      <Send className="h-3 w-3" />
-                      <span>Assign</span>
-                    </button>
+                    {selectedSeries.isAssigned ? (
+                      <button
+                        onClick={() => {
+                          setSelectedSeries(null);
+                          handleOpenAssignModal({ id: t.id, title: t.test_name || t.title, type: 'test' });
+                        }}
+                        className="px-3.5 py-1.5 rounded-xl text-xs font-bold bg-indigo-600 text-white hover:bg-indigo-500 transition cursor-pointer flex items-center gap-1 shrink-0"
+                      >
+                        <Send className="h-3 w-3" />
+                        <span>Assign</span>
+                      </button>
+                    ) : (
+                      <button
+                        disabled
+                        className={`px-3.5 py-1.5 rounded-xl text-xs font-bold border cursor-not-allowed flex items-center gap-1 shrink-0 opacity-60 ${
+                          isDarkMode
+                            ? 'border-slate-800 bg-slate-900/60 text-slate-500'
+                            : 'border-slate-200 bg-slate-100 text-slate-400'
+                        }`}
+                        title="Contact Platform Admin to assign this test package to your institution"
+                      >
+                        <span>Not Assigned by Admin</span>
+                      </button>
+                    )}
                   </div>
-                ))
-              ) : (
-                <div className={`text-center py-8 text-xs ${textMutedClass}`}>
-                  All tests in this series are active and automatically enabled for assigned batches.
-                </div>
-              )}
+                ));
+              })()}
             </div>
           </div>
         </div>
