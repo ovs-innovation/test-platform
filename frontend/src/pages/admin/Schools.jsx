@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Building2, Plus, Search, Key, Mail, School, Users, CheckCircle2, ExternalLink, Trash2, Copy, Eye, EyeOff, Image as ImageIcon, Sparkles, X, Phone, Inbox, Check, FileText, Pencil, Package, BarChart3 } from 'lucide-react';
-import { Badge } from '../../components/ui.jsx';
+import { Badge, ConfirmModal } from '../../components/ui.jsx';
 import InstituteComparisonModal from '../../components/admin/InstituteComparisonModal.jsx';
 
 export default function Schools() {
@@ -27,6 +27,16 @@ export default function Schools() {
   const [newNote, setNewNote] = useState('');
   const [showPasswords, setShowPasswords] = useState({});
   const [copiedId, setCopiedId] = useState(null);
+  
+  // Custom Confirmation Modal State
+  const [confirmModalState, setConfirmModalState] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    confirmText: 'Delete',
+    onConfirm: null,
+    loading: false,
+  });
   
   // Page 5.5 Multi-School Comparison State
   const [selectedSchoolIds, setSelectedSchoolIds] = useState([]);
@@ -279,16 +289,26 @@ export default function Schools() {
     }
   };
 
-  const handleDeleteLead = async (id) => {
-    if (window.confirm('Delete this demo request lead?')) {
-      try {
-        await adminService.deleteLead(id);
-        setLeads((prev) => prev.filter((l) => l.id !== id));
-        toast?.success('Demo request lead deleted');
-      } catch (err) {
-        toast?.error(err.message || 'Failed to delete lead');
-      }
-    }
+  const handleDeleteLead = (id) => {
+    setConfirmModalState({
+      isOpen: true,
+      title: 'Delete Demo Request Lead?',
+      message: 'Are you sure you want to delete this incoming school demo request? This action cannot be undone.',
+      confirmText: 'Delete Lead',
+      loading: false,
+      onConfirm: async () => {
+        setConfirmModalState((prev) => ({ ...prev, loading: true }));
+        try {
+          await adminService.deleteLead(id);
+          setLeads((prev) => prev.filter((l) => l.id !== id));
+          toast?.success('Demo request lead deleted');
+        } catch (err) {
+          toast?.error(err.message || 'Failed to delete lead');
+        } finally {
+          setConfirmModalState({ isOpen: false, title: '', message: '', confirmText: 'Delete', onConfirm: null, loading: false });
+        }
+      },
+    });
   };
 
   const handleFileUpload = (e) => {
@@ -341,16 +361,26 @@ export default function Schools() {
     }
   };
 
-  const handleDelete = async (id, name) => {
-    if (window.confirm(`Are you sure you want to remove "${name}" partner school?`)) {
-      try {
-        await adminService.deletePartnerSchool(id);
-        toast?.success(`Partner School "${name}" deleted`);
-        loadAllData();
-      } catch (err) {
-        toast?.error(err.message || 'Failed to delete partner school');
-      }
-    }
+  const handleDelete = (id, name) => {
+    setConfirmModalState({
+      isOpen: true,
+      title: 'Remove Partner School?',
+      message: `Are you sure you want to remove "${name}" partner school? All associated licenses for this school will be unlinked.`,
+      confirmText: 'Remove School',
+      loading: false,
+      onConfirm: async () => {
+        setConfirmModalState((prev) => ({ ...prev, loading: true }));
+        try {
+          await adminService.deletePartnerSchool(id);
+          toast?.success(`Partner School "${name}" deleted`);
+          loadAllData();
+        } catch (err) {
+          toast?.error(err.message || 'Failed to delete partner school');
+        } finally {
+          setConfirmModalState({ isOpen: false, title: '', message: '', confirmText: 'Delete', onConfirm: null, loading: false });
+        }
+      },
+    });
   };
 
   const filteredSchools = schools.filter(
@@ -1491,6 +1521,17 @@ export default function Schools() {
           isDarkMode={true}
         />
       )}
+
+      <ConfirmModal
+        isOpen={confirmModalState.isOpen}
+        onClose={() => setConfirmModalState((prev) => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmModalState.onConfirm}
+        title={confirmModalState.title}
+        message={confirmModalState.message}
+        confirmText={confirmModalState.confirmText}
+        loading={confirmModalState.loading}
+        variant="danger"
+      />
 
     </div>
   );

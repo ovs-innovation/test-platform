@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link2 as LinkIcon, Search, Clock, Award, Calendar } from 'lucide-react';
 import { testSeriesService, adminService } from '../../lib/services.js';
-import { LoadingScreen, ErrorState, Spinner, Badge } from '../../components/ui.jsx';
+import { LoadingScreen, ErrorState, Spinner, Badge, ConfirmModal } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -12,6 +12,7 @@ export default function AdminTestSeries() {
   const [list, setList] = useState([]);
   const [availableTests, setAvailableTests] = useState([]);
   const [state, setState] = useState('loading');
+  const [confirmState, setConfirmState] = useState({ isOpen: false, title: '', message: '', confirmText: 'Unlink', onConfirm: null, loading: false });
   
   // Series Modal
   const [modal, setModal] = useState(false);
@@ -619,6 +620,17 @@ export default function AdminTestSeries() {
           </div>
         </div>
       </Modal>
+
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={() => setConfirmState((prev) => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmState.onConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        loading={confirmState.loading}
+        variant="danger"
+      />
     </div>
   );
 }

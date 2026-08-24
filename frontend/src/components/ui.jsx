@@ -1,5 +1,6 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
-import { Eye, EyeOff, Key, ChevronDown, Check } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Eye, EyeOff, Key, ChevronDown, Check, AlertTriangle, Trash2 } from 'lucide-react';
 import { EmptyLineArt } from './landing/LineArtIllustrations.jsx';
 
 export function PasswordInput({
@@ -484,3 +485,79 @@ export function CustomSelectDropdown({
     </div>
   );
 }
+
+export function ConfirmModal({
+  isOpen,
+  onClose,
+  onConfirm,
+  title = 'Are you sure?',
+  message = 'This action cannot be undone.',
+  confirmText = 'Delete',
+  cancelText = 'Cancel',
+  variant = 'danger',
+  loading = false,
+}) {
+  if (!isOpen) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="absolute inset-0" onClick={onClose} />
+      <div
+        className="relative z-10 w-full max-w-md rounded-2xl border border-slate-700/80 bg-[#0B1528] text-white p-6 shadow-2xl shadow-black/60 space-y-5 animate-in zoom-in-95 duration-200 overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div
+          className={`absolute top-0 left-0 right-0 h-[2px] ${
+            variant === 'danger'
+              ? 'bg-gradient-to-r from-rose-500 via-red-500 to-amber-500'
+              : 'bg-gradient-to-r from-blue-500 via-cyan-400 to-indigo-500'
+          }`}
+        />
+
+        <div className="flex items-start gap-4 pt-1">
+          <div
+            className={`p-3 rounded-2xl shrink-0 ${
+              variant === 'danger'
+                ? 'bg-rose-500/10 text-rose-400 border border-rose-500/20'
+                : 'bg-blue-500/10 text-cyan-400 border border-blue-500/20'
+            }`}
+          >
+            {variant === 'danger' ? <AlertTriangle className="h-6 w-6" /> : <Trash2 className="h-6 w-6" />}
+          </div>
+
+          <div className="space-y-1.5 min-w-0 flex-1">
+            <h3 className="text-lg font-extrabold text-white tracking-tight leading-snug">{title}</h3>
+            <p className="text-xs text-slate-300 leading-relaxed">{message}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+          <button
+            type="button"
+            onClick={onClose}
+            disabled={loading}
+            className="rounded-xl border border-slate-700/80 bg-slate-800/80 px-4 py-2.5 text-xs font-extrabold text-slate-300 hover:bg-slate-700 hover:text-white transition cursor-pointer disabled:opacity-50"
+          >
+            {cancelText}
+          </button>
+          <button
+            type="button"
+            onClick={async () => {
+              if (onConfirm) await onConfirm();
+            }}
+            disabled={loading}
+            className={`rounded-xl px-5 py-2.5 text-xs font-extrabold text-white shadow-lg transition cursor-pointer disabled:opacity-50 ${
+              variant === 'danger'
+                ? 'bg-gradient-to-r from-rose-600 via-red-600 to-rose-700 hover:from-rose-500 hover:to-red-500 shadow-rose-600/30 active:scale-95'
+                : 'bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 hover:from-blue-500 hover:to-indigo-500 shadow-blue-600/30 active:scale-95'
+            }`}
+          >
+            {loading ? <Spinner className="h-4 w-4 text-white mx-auto" /> : confirmText}
+          </button>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
+}
+

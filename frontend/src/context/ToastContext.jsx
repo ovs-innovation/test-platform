@@ -83,15 +83,15 @@ export function ToastProvider({ children }) {
   };
 
   const styles = {
-    success: 'bg-emerald-950/90 border border-emerald-500/40 text-emerald-100 shadow-xl backdrop-blur-md',
+    success: 'bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-blue-400/30 text-white shadow-2xl shadow-blue-500/30 backdrop-blur-md',
     error: 'bg-slate-900/95 border border-red-500/40 text-slate-100 shadow-2xl backdrop-blur-md',
-    info: 'bg-slate-900/95 border border-slate-700/80 text-slate-100 shadow-xl backdrop-blur-md',
+    info: 'bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-blue-400/30 text-white shadow-xl shadow-blue-500/30 backdrop-blur-md',
   };
 
   const icons = {
-    success: <CheckCircle2 className="h-5 w-5 text-emerald-400 shrink-0" />,
+    success: <CheckCircle2 className="h-5 w-5 text-white shrink-0" />,
     error: <AlertCircle className="h-5 w-5 text-red-400 shrink-0" />,
-    info: <Info className="h-5 w-5 text-sky-400 shrink-0" />,
+    info: <Info className="h-5 w-5 text-white shrink-0" />,
   };
 
   return (
