@@ -564,25 +564,11 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 group flex items-center gap-2.5 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 text-white px-4 py-3 rounded-2xl shadow-xl shadow-blue-600/30 hover:shadow-blue-500/50 transition-all duration-300 hover:scale-105 active:scale-95 border border-blue-400/30 backdrop-blur-md cursor-pointer overflow-hidden"
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-2.5 rounded-xl shadow-lg hover:shadow-blue-600/30 transition-all duration-200 cursor-pointer"
           aria-label="Solve Your Doubt"
         >
-          {/* Ambient Soft Glow Aura */}
-          <span className="absolute -inset-1 rounded-2xl bg-blue-500/40 opacity-75 blur-md animate-pulse group-hover:opacity-100 transition-opacity" />
-
-          {/* Shimmer Light Sweep Animation */}
-          <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 -translate-x-full group-hover:translate-x-[300%] transition-transform duration-1000 ease-in-out" />
-
-          {/* Icon Badge */}
-          <div className="relative flex items-center justify-center h-8 w-8 rounded-xl bg-white/15 text-white shrink-0 group-hover:bg-white/25 transition-colors">
-            <Sparkles className="w-4 h-4 text-cyan-300 animate-pulse group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300" />
-            <span className="absolute -top-0.5 -right-0.5 flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-300"></span>
-            </span>
-          </div>
-
-          <span className="relative font-extrabold text-xs tracking-wide text-white drop-shadow-xs">Solve Your Doubt</span>
+          <Sparkles className="w-4 h-4 text-blue-200" />
+          <span className="font-bold text-xs text-white">Solve Doubt</span>
         </button>
       )}
 
