@@ -604,14 +604,14 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
          t.test_date::text AS test_date,
          t.duration_minutes,
          t.max_marks,
-         COALESCE(pt.package_id, tst.series_id, tsa.test_series_id, tp.id, ts.id, 1) AS package_id,
-         COALESCE(tp.package_name, ts.title, 'Institutional Test') AS package_name
+         COALESCE(ts.id, tp.id, pt.package_id, tst.series_id, tsa.test_series_id, 1) AS package_id,
+         COALESCE(ts.title, tp.package_name, 'Institutional Test') AS package_name
        FROM tests t
        LEFT JOIN package_tests pt ON pt.test_id = t.id
        LEFT JOIN test_series_tests tst ON tst.test_id = t.id
        LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-       LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id
-       LEFT JOIN test_packages tp ON tp.id = pt.package_id OR tp.id = ts.id
+       LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id OR (pt.package_id IS NOT NULL AND LOWER(ts.title) = (SELECT LOWER(package_name) FROM test_packages WHERE id = pt.package_id LIMIT 1))
+       LEFT JOIN test_packages tp ON tp.id = pt.package_id OR LOWER(tp.package_name) = LOWER(ts.title) OR tp.id = ts.id
        LEFT JOIN institution_packages ip ON (
           ip.package_id = pt.package_id 
           OR ip.package_id = tp.id 
@@ -637,12 +637,12 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
          COALESCE(a.created_at::date::text, NOW()::date::text) AS test_date,
          COALESCE(a.duration_minutes, 180) AS duration_minutes,
          COALESCE(a.passing_marks, 300) AS max_marks,
-         COALESCE(tsa.test_series_id, ts.id, tp.id, 1) AS package_id,
+         COALESCE(ts.id, tp.id, tsa.test_series_id, 1) AS package_id,
          COALESCE(ts.title, tp.package_name, 'Institutional Test') AS package_name
        FROM assessments a
        JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
        LEFT JOIN test_series ts ON ts.id = tsa.test_series_id
-       LEFT JOIN test_packages tp ON tp.id = ts.id
+       LEFT JOIN test_packages tp ON tp.id = ts.id OR LOWER(tp.package_name) = LOWER(ts.title)
        LEFT JOIN institution_packages ip ON (
           ip.package_id = tsa.test_series_id 
           OR ip.package_id = ts.id
@@ -2181,7 +2181,9 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
   const instId = req.institution_id || req.params.id;
 
   const assignedRes = await query(
-    `SELECT tp.id,
+    `SELECT COALESCE(ts.id, tp.id) AS id,
+            tp.id AS package_id,
+            ts.id AS series_id,
             tp.package_name AS title,
             tp.package_name,
             tp.description,
@@ -2195,8 +2197,8 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
             365 AS validity_days,
             COALESCE(
               NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = tp.id), 0),
-              NULLIF((SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = tp.id), 0),
-              NULLIF((SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = tp.id), 0),
+              NULLIF((SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = tp.id OR (ts.id IS NOT NULL AND tst.series_id = ts.id)), 0),
+              NULLIF((SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = tp.id OR (ts.id IS NOT NULL AND tsa.test_series_id = ts.id)), 0),
               15
             )::int AS total_tests_count,
             'Assigned Package' AS status,
@@ -2205,6 +2207,7 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
             ip.valid_until
      FROM institution_packages ip
      JOIN test_packages tp ON tp.id = ip.package_id
+     LEFT JOIN test_series ts ON LOWER(ts.title) = LOWER(tp.package_name) OR ts.id = tp.id
      WHERE ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
      ORDER BY ip.id DESC`,
     [instId]

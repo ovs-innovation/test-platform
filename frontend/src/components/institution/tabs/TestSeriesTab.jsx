@@ -76,11 +76,20 @@ export default function TestSeriesTab({
           ? 'bg-blue-500/10 text-cyan-400 border-cyan-500/20'
           : 'bg-purple-500/10 text-purple-400 border-purple-500/20';
 
-        const matchingTests = availableTests.filter(
-          (t) =>
-            (t.category || t.test_type || t.test_name || '').toLowerCase().includes(examName.toLowerCase()) ||
-            (t.package_id && Number(t.package_id) === Number(s.id))
-        );
+        const matchingTests = availableTests.filter((t) => {
+          const testPkgId = Number(t.package_id);
+          const seriesId = Number(s.id);
+          const rawId = Number(s.raw?.id || s.raw?.series_id || s.raw?.package_id);
+
+          const idMatch = Boolean(testPkgId && (testPkgId === seriesId || testPkgId === rawId));
+          const titleMatch = Boolean(
+            s.title &&
+            t.package_name &&
+            s.title.toLowerCase().trim() === t.package_name.toLowerCase().trim()
+          );
+
+          return idMatch || titleMatch;
+        });
 
         const isAssigned =
           Boolean(s.is_assigned) ||
@@ -581,7 +590,20 @@ export default function TestSeriesTab({
               {(() => {
                 const modalTests = (selectedSeries.tests && selectedSeries.tests.length > 0)
                   ? selectedSeries.tests
-                  : availableTests.filter((t) => (t.package_id && Number(t.package_id) === Number(selectedSeries.id)));
+                  : availableTests.filter((t) => {
+                      const testPkgId = Number(t.package_id);
+                      const seriesId = Number(selectedSeries.id);
+                      const rawId = Number(selectedSeries.raw?.id || selectedSeries.raw?.series_id || selectedSeries.raw?.package_id);
+
+                      const idMatch = Boolean(testPkgId && (testPkgId === seriesId || testPkgId === rawId));
+                      const titleMatch = Boolean(
+                        selectedSeries.title &&
+                        t.package_name &&
+                        selectedSeries.title.toLowerCase().trim() === t.package_name.toLowerCase().trim()
+                      );
+
+                      return idMatch || titleMatch;
+                    });
                 
                 const listToDisplay = modalTests.length > 0 ? modalTests : (selectedSeries.isAssigned ? availableTests : []);
 
