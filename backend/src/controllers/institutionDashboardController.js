@@ -1069,7 +1069,7 @@ export const getStudentProgress = asyncHandler(async (req, res) => {
          at.assessment_id AS test_id, 
          COALESCE(a.title, t.test_name, 'Assessment') AS test_name, 
          COALESCE(s.marks_obtained, s.percentage, 0)::numeric AS score, 
-         COALESCE(s.total_marks, a.total_marks, 200)::numeric AS max_marks, 
+         COALESCE(s.total_marks, t.max_marks, 200)::numeric AS max_marks, 
          COALESCE(s.percentage, 0)::numeric AS percentage, 
          at.submitted_at, 
          COALESCE(s.rank, 1) AS institute_rank

@@ -643,6 +643,9 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown })
             <Badge color="blue">{typeLabel}</Badge>
             {q.section_name && <Badge color="slate">{q.section_name}</Badge>}
             <Badge color="green">{q.marks} mk</Badge>
+            {q.needs_review && (
+              <Badge color="amber">⚠️ Review Answer Key</Badge>
+            )}
             {(q.topic || q.subject) && (
               <Badge color="amber">
                 {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}

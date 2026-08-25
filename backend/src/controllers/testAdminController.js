@@ -4,7 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
-import { parsePdfQuestions } from '../utils/pdfQuestionParser.js';
+import { parsePdfQuestions, parseAnswerKeyOnly } from '../utils/pdfQuestionParser.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 
 /**
@@ -504,6 +504,19 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
           }
         }
+
+        // Also check for standalone Answer Key entries (e.g. 1. A, 2. B, 3. C) and update existing questions
+        const answerKeyMap = parseAnswerKeyOnly(pdfData.text);
+        const keyEntries = Object.entries(answerKeyMap);
+        if (keyEntries.length > 0) {
+          for (const [qNumStr, correctIdx] of keyEntries) {
+            const qPos = parseInt(qNumStr, 10);
+            await query(
+              'UPDATE questions SET correct_index = $1 WHERE assessment_id = $2 AND position = $3',
+              [correctIdx, id, qPos]
+            );
+          }
+        }
       }
     } catch (err) {
       console.error('PDF Question Extraction Warning:', err.message);
@@ -627,7 +640,7 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
           at.submitted_at,
           COALESCE(s.marks_obtained, s.percentage, 0)::numeric AS score,
           COALESCE(s.percentage, 0)::numeric AS percentage,
-          COALESCE(s.total_marks, a.total_marks, t.max_marks, 200)::numeric AS max_marks,
+          COALESCE(s.total_marks, t.max_marks, 200)::numeric AS max_marks,
           u.name AS student_name,
           u.email AS student_email,
           COALESCE(i.name, ib.name) AS institution_name,

@@ -5,6 +5,7 @@ import { isMultiSelectQuestion } from '../../lib/examPalette.js';
 import { Skeleton, ErrorState } from '../../components/ui.jsx';
 import { SubjectBar } from '../../components/design.jsx';
 import { formatDateTime, attemptStatusLabel } from '../../lib/format.js';
+import { FileText } from 'lucide-react';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 
 export default function ResultPage() {
@@ -499,15 +500,29 @@ export default function ResultPage() {
               <Link to={`/certificates/${attempt.id}`} className="btn btn-primary mt-4 inline-block">Download certificate</Link>
             )}
 
-            {solutions?.length > 0 && (
-              <div className="mt-6">
-                <button
-                  type="button"
-                  className="btn btn-secondary w-full py-3 shadow-xs"
-                  onClick={() => setShowSolutions((s) => !s)}
-                >
-                  {showSolutions ? 'Hide solutions' : 'View solutions & answers'}
-                </button>
+            {(solutions?.length > 0 || assessment?.solution_pdf_url) && (
+              <div className="mt-6 space-y-3">
+                {assessment?.solution_pdf_url && (
+                  <a
+                    href={assessment.solution_pdf_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-outline w-full border-blue-500 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/40 py-3 font-bold flex items-center justify-center gap-2"
+                  >
+                    <FileText className="h-4 w-4" />
+                    <span>Download Official Solution Booklet (PDF)</span>
+                  </a>
+                )}
+
+                {solutions?.length > 0 && (
+                  <button
+                    type="button"
+                    className="btn btn-secondary w-full py-3 shadow-xs font-bold"
+                    onClick={() => setShowSolutions((s) => !s)}
+                  >
+                    {showSolutions ? 'Hide Detailed Solutions' : 'View Online Solutions & Answers'}
+                  </button>
+                )}
 
                 {showSolutions && (
                   <div className="mt-4 space-y-4">

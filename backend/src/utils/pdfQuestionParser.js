@@ -75,7 +75,17 @@ export function parsePdfQuestions(text) {
       }
       for (const m of inlineOptMatches) {
         let optText = m[2].replace(/Marks:\s*[^\n]+/gi, '').trim();
-        optText = optText.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '').trim();
+        const correctMatch = optText.match(/(\d|[A-D])\s*Correct\s*Answer/i);
+        if (correctMatch) {
+          const val = correctMatch[1].toUpperCase();
+          if (['A', 'B', 'C', 'D'].includes(val)) {
+            inlineCorrectIndex = val.charCodeAt(0) - 65;
+          } else if (['1', '2', '3', '4'].includes(val)) {
+            inlineCorrectIndex = parseInt(val, 10) - 1;
+          }
+        }
+        optText = optText.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
+        optText = optText.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
         if (optText && !options.includes(optText)) {
           options.push(optText);
         }
@@ -91,7 +101,17 @@ export function parsePdfQuestions(text) {
         const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*(?:\(([A-D])\)|([A-D])[\.\)])\s*([^\n]+)/gi);
         for (const m of optMatches) {
           let t = m[3].trim();
-          t = t.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '').trim();
+          const correctMatch = t.match(/(\d|[A-D])\s*Correct\s*Answer/i);
+          if (correctMatch) {
+            const val = correctMatch[1].toUpperCase();
+            if (['A', 'B', 'C', 'D'].includes(val)) {
+              inlineCorrectIndex = val.charCodeAt(0) - 65;
+            } else if (['1', '2', '3', '4'].includes(val)) {
+              inlineCorrectIndex = parseInt(val, 10) - 1;
+            }
+          }
+          t = t.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
+          t = t.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
           if (t && !options.includes(t)) options.push(t);
         }
       }
@@ -178,4 +198,33 @@ export function parsePdfQuestions(text) {
   }
 
   return questions;
+}
+
+/**
+ * Standalone Answer Key Parser for extracted PDF / raw text.
+ * Returns an object mapping question number (1, 2, 3...) to correct_index (0=A, 1=B, 2=C, 3=D).
+ */
+export function parseAnswerKeyOnly(text) {
+  if (!text || typeof text !== 'string') return {};
+
+  const keyMap = {};
+
+  const matches = text.matchAll(/(?:Q|Question\s*)?(\d+)[\.\)\:\-\s]+\s*(?:\(|\[)?([A-D1-4])(?:\)|\])?/gi);
+  for (const m of matches) {
+    const qNum = parseInt(m[1], 10);
+    const ansChar = m[2].toUpperCase();
+    let correctIndex = -1;
+
+    if (['A', 'B', 'C', 'D'].includes(ansChar)) {
+      correctIndex = ansChar.charCodeAt(0) - 65;
+    } else if (['1', '2', '3', '4'].includes(ansChar)) {
+      correctIndex = parseInt(ansChar, 10) - 1;
+    }
+
+    if (qNum > 0 && correctIndex >= 0) {
+      keyMap[qNum] = correctIndex;
+    }
+  }
+
+  return keyMap;
 }

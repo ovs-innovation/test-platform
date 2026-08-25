@@ -1275,15 +1275,24 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const normalizedEmail = (email || '').trim().toLowerCase();
   if (!normalizedEmail) throw ApiError.badRequest('Email address is required');
 
-  const userRes = await query(
-    "SELECT id, name, email FROM users WHERE LOWER(email) = $1 AND role = 'candidate'",
+  // 1. Look up user across users, institution_admins, and institutions in 1 indexed roundtrip
+  const accountRes = await query(
+    `SELECT 'user' AS source, id, name, email FROM users WHERE LOWER(email) = $1
+     UNION ALL
+     SELECT 'admin' AS source, NULL as id, name, email FROM institution_admins WHERE LOWER(email) = $1
+     UNION ALL
+     SELECT 'institution' AS source, NULL as id, name, COALESCE(email, contact_email) AS email FROM institutions WHERE LOWER(email) = $1 OR LOWER(contact_email) = $1
+     LIMIT 1`,
     [normalizedEmail]
   );
-  if (!userRes.rowCount) {
+
+  if (!accountRes.rowCount) {
     return res.json({ message: 'If an account exists with that email, a password reset code has been sent.' });
   }
 
-  const user = userRes.rows[0];
+  const account = accountRes.rows[0];
+  const name = account.name || 'User';
+  const userId = account.id || null;
 
   const otp = generateOtp(); // 6-digit OTP
   const token = crypto.randomBytes(32).toString('hex');
@@ -1291,16 +1300,22 @@ export const forgotPassword = asyncHandler(async (req, res) => {
   const tokenHash = crypto.createHash('sha256').update(token).digest('hex');
   const expires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
-  // Delete previous unused reset records for this user
-  await query('DELETE FROM password_resets WHERE user_id = $1 AND used_at IS NULL', [user.id]);
+  // Delete previous unused reset records for this user/email
+  if (userId) {
+    await query('DELETE FROM password_resets WHERE (user_id = $1 OR LOWER(email) = $2) AND used_at IS NULL', [userId, normalizedEmail]);
+  } else {
+    await query('DELETE FROM password_resets WHERE LOWER(email) = $1 AND used_at IS NULL', [normalizedEmail]);
+  }
 
-  await query(`INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES ($1,$2,$3)`, [
-    user.id,
+  await query(`INSERT INTO password_resets (user_id, email, token_hash, expires_at) VALUES ($1,$2,$3,$4)`, [
+    userId,
+    normalizedEmail,
     tokenHash,
     expires,
   ]);
-  await query(`INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES ($1,$2,$3)`, [
-    user.id,
+  await query(`INSERT INTO password_resets (user_id, email, token_hash, expires_at) VALUES ($1,$2,$3,$4)`, [
+    userId,
+    normalizedEmail,
     otpHash,
     expires,
   ]);
@@ -1313,22 +1328,22 @@ export const forgotPassword = asyncHandler(async (req, res) => {
     baseUrl = `https://${baseUrl}`;
   }
 
-  const resetUrl = `${baseUrl}/reset-password?token=${otp}&email=${encodeURIComponent(user.email)}`;
+  const resetUrl = `${baseUrl}/reset-password?token=${otp}&email=${encodeURIComponent(normalizedEmail)}`;
 
   let emailSent = true;
   let devOtpVal = null;
   try {
     const tpl = passwordResetEmailTemplate({
-      name: user.name,
+      name,
       resetUrl,
       otp,
       expiresMinutes: 60,
     });
-    await sendEmail({ to: user.email, ...tpl });
+    await sendEmail({ to: normalizedEmail, ...tpl });
   } catch (err) {
     emailSent = false;
     // eslint-disable-next-line no-console
-    console.warn(`[email] Password reset email failed for ${user.email}: ${err.message}`);
+    console.warn(`[email] Password reset email failed for ${normalizedEmail}: ${err.message}`);
     devOtpVal = otp;
   }
 
@@ -1352,8 +1367,10 @@ export const resetPassword = asyncHandler(async (req, res) => {
   const codeHash = crypto.createHash('sha256').update(rawCode).digest('hex');
 
   const resetRes = await query(
-    `SELECT pr.* FROM password_resets pr JOIN users u ON u.id = pr.user_id
-     WHERE LOWER(u.email) = $1 AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
+    `SELECT pr.* FROM password_resets pr
+     LEFT JOIN users u ON u.id = pr.user_id
+     WHERE (LOWER(pr.email) = $1 OR LOWER(u.email) = $1)
+       AND pr.token_hash = $2 AND pr.used_at IS NULL AND pr.expires_at > NOW()
      ORDER BY pr.created_at DESC LIMIT 1`,
     [normalizedEmail, codeHash]
   );
@@ -1361,8 +1378,21 @@ export const resetPassword = asyncHandler(async (req, res) => {
   if (!resetRes.rowCount) throw ApiError.badRequest('Invalid or expired reset code / token. Please request a new code.');
 
   const password_hash = await hashPassword(password);
-  await query('UPDATE users SET password_hash = $1 WHERE id = $2', [password_hash, resetRes.rows[0].user_id]);
-  await query('UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL', [resetRes.rows[0].user_id]);
+
+  // Synchronize password update across ALL tables where an account exists for this email
+  await query('UPDATE users SET password_hash = $1 WHERE LOWER(email) = $2', [password_hash, normalizedEmail]);
+  await query('UPDATE institution_admins SET password_hash = $1 WHERE LOWER(email) = $2', [password_hash, normalizedEmail]);
+  await query(
+    'UPDATE institutions SET password_hash = $1, raw_password = $2 WHERE LOWER(email) = $3 OR LOWER(contact_email) = $3',
+    [password_hash, password, normalizedEmail]
+  );
+
+  const resetRow = resetRes.rows[0];
+  await query(
+    `UPDATE password_resets SET used_at = NOW()
+     WHERE (LOWER(email) = $1 OR (user_id IS NOT NULL AND user_id = $2)) AND used_at IS NULL`,
+    [normalizedEmail, resetRow.user_id || -1]
+  );
 
   res.json({ message: 'Password updated successfully. You can now log in with your new password.' });
 });

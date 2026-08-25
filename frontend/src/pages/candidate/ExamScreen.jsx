@@ -12,7 +12,7 @@ import {
   PALETTE_LEGEND,
   timerClass,
 } from '../../lib/examPalette.js';
-import { Skeleton } from '../../components/ui.jsx';
+import { Skeleton, Spinner } from '../../components/ui.jsx';
 import Modal from '../../components/Modal.jsx';
 import CodeEditor from '../../components/CodeEditor.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -48,6 +48,7 @@ export default function ExamScreen() {
   const [violations, setViolations] = useState(0);
   const [maxViolations, setMaxViolations] = useState(0);
   const [savingId, setSavingId] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [needsFullscreen, setNeedsFullscreen] = useState(false);
   const [warning, setWarning] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -132,13 +133,20 @@ export default function ExamScreen() {
   const finishExam = useCallback(async (reason) => {
     if (finishedRef.current) return;
     finishedRef.current = true;
-    try { await attemptService.submit(attemptId, reason); } catch { /* may auto-submit */ }
-    await exitFullscreen().catch(() => {});
+    setIsSubmitting(true);
+    setWarning(null);
+    setNeedsFullscreen(false);
+    try {
+      await attemptService.submit(attemptId, reason);
+    } catch { /* ignore submit error if already submitted */ }
+    try {
+      await exitFullscreen();
+    } catch { /* ignore fullscreen error */ }
     navigate(`/results/${attemptId}`, { replace: true });
   }, [attemptId, navigate]);
 
   useEffect(() => {
-    if (loading) return undefined;
+    if (loading || isSubmitting) return undefined;
     const id = setInterval(() => {
       const secs = Math.max(0, Math.round((endsAtRef.current - Date.now()) / 1000));
       setRemaining(secs);
@@ -149,10 +157,10 @@ export default function ExamScreen() {
       }
     }, 1000);
     return () => clearInterval(id);
-  }, [loading, finishExam, toast]);
+  }, [loading, isSubmitting, finishExam, toast]);
 
   const handleViolation = useCallback(async (type) => {
-    if (finishedRef.current) return;
+    if (finishedRef.current || isSubmitting) return;
     if (type === 'fullscreen_exit') setNeedsFullscreen(true);
     setWarning({ type });
     try {
@@ -163,9 +171,9 @@ export default function ExamScreen() {
         finishExam('violations');
       }
     } catch { /* ignore */ }
-  }, [attemptId, finishExam, toast]);
+  }, [attemptId, isSubmitting, finishExam, toast]);
 
-  useProctoring({ active: !loading && !finishedRef.current, onViolation: handleViolation });
+  useProctoring({ active: !loading && !finishedRef.current && !isSubmitting, onViolation: handleViolation });
 
   useEffect(() => {
     if (!warning) return undefined;
@@ -871,8 +879,22 @@ export default function ExamScreen() {
           <p className="mt-3 text-xs text-slate-500">You will not be able to change answers after submission.</p>
         </div>
         <div className="mt-6 flex justify-end gap-3">
-          <button type="button" className="nta-btn" onClick={() => setConfirmOpen(false)}>No, go back</button>
-          <button type="button" className="nta-btn nta-btn-danger" onClick={() => finishExam('manual')}>Yes, submit</button>
+          <button type="button" disabled={isSubmitting} className="nta-btn" onClick={() => setConfirmOpen(false)}>No, go back</button>
+          <button
+            type="button"
+            disabled={isSubmitting}
+            className="nta-btn nta-btn-danger flex items-center gap-2 disabled:opacity-50 cursor-pointer"
+            onClick={() => finishExam('manual')}
+          >
+            {isSubmitting ? (
+              <>
+                <Spinner className="h-4 w-4 animate-spin text-white" />
+                <span>Submitting test...</span>
+              </>
+            ) : (
+              <span>Yes, submit</span>
+            )}
+          </button>
         </div>
       </Modal>
 

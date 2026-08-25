@@ -32,16 +32,39 @@ export default function AddStudentModal({
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
+      // Reset state on every modal open
+      setCreatedCredential(null);
+      setError('');
+      setCopied(false);
+      setForm({
+        name: '',
+        email: '',
+        mobile: '',
+        class: 'Class 12',
+        target_exam: 'NEET',
+        batch_id: '',
+        roll_number: '',
+        password: '',
+        gender: 'Male',
+        dob: '',
+      });
+
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') onClose();
+      };
+      window.addEventListener('keydown', handleKeyDown);
+
+      return () => {
+        document.body.style.overflow = '';
+        window.removeEventListener('keydown', handleKeyDown);
+      };
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [isOpen]);
+  }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleFormSubmit = async (e) => {
@@ -55,6 +78,13 @@ export default function AddStudentModal({
     if (!form.email.trim() || !form.email.includes('@')) {
       setError('Please enter a valid email address.');
       return;
+    }
+    if (form.mobile.trim()) {
+      const cleanMobile = form.mobile.replace(/\D/g, '');
+      if (cleanMobile.length < 10) {
+        setError('Please enter a valid 10-digit mobile number.');
+        return;
+      }
     }
 
     if (availableLicenses <= 0) {
@@ -92,7 +122,12 @@ export default function AddStudentModal({
   };
 
   return createPortal(
-    <div className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="add-student-modal-title"
+      className="fixed inset-0 z-[100] bg-black/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+    >
       <div className={`w-full max-w-lg rounded-2xl border shadow-2xl p-6 sm:p-7 space-y-6 relative my-auto ${
         isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
       }`}>
@@ -104,7 +139,7 @@ export default function AddStudentModal({
               <UserPlus className="h-5 w-5" />
             </div>
             <div>
-              <h3 className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Enroll New Student</h3>
+              <h3 id="add-student-modal-title" className={`text-lg font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Enroll New Student</h3>
               <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Available Licences: <span className="font-bold text-indigo-600 dark:text-indigo-400">{availableLicenses} Seats</span></p>
             </div>
           </div>

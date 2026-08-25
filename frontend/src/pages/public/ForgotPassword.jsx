@@ -108,9 +108,12 @@ export default function ForgotPassword() {
             </button>
           </div>
 
-          <div className="border-t border-[#2A354A]/60 pt-4 text-center">
-            <Link to="/student-login" className="text-xs font-semibold text-slate-400 hover:text-[#00F0FF] hover:underline">
-              ← Back to Student Login
+          <div className="border-t border-[#2A354A]/60 pt-4 flex items-center justify-between text-xs font-semibold text-slate-400">
+            <Link to="/student-login" className="hover:text-[#00F0FF] hover:underline">
+              ← Student Login
+            </Link>
+            <Link to="/institution-login" className="hover:text-[#00F0FF] hover:underline">
+              Institution Login →
             </Link>
           </div>
         </form>

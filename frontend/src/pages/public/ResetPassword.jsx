@@ -24,6 +24,8 @@ export default function ResetPassword() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const [success, setSuccess] = useState(false);
+
   const onSubmit = async (e) => {
     e.preventDefault();
     if (!form.email) {
@@ -51,8 +53,8 @@ export default function ResetPassword() {
         token: tokenToSubmit,
         password: form.password,
       });
-      toast.success('Password updated successfully! Please log in.');
-      navigate('/student-login', { replace: true });
+      toast.success('Password updated successfully!');
+      setSuccess(true);
     } catch (err) {
       setError(err.message || 'Password reset failed. Check your reset code.');
     } finally {
@@ -62,92 +64,124 @@ export default function ResetPassword() {
 
   return (
     <AuthShell title="Set New Password" subtitle="Enter your 6-digit reset code and choose a new password.">
-      <form onSubmit={onSubmit} className="space-y-4">
-        {urlToken && (
-          <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-xs font-semibold text-emerald-400 flex items-center gap-2">
-            <span>✓</span> {isShortCode ? '6-Digit reset code loaded from email link.' : 'Security verification link loaded from email.'}
+      {success ? (
+        <div className="space-y-6 text-center py-2">
+          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500/20 text-emerald-400 text-2xl font-bold border border-emerald-500/40">
+            ✓
           </div>
-        )}
-
-        {error && (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-semibold text-red-400">
-            {error}
+          <div className="space-y-2">
+            <h3 className="text-lg font-bold text-white">Password Updated Successfully!</h3>
+            <p className="text-xs text-slate-300">Your password has been changed. You can now log in using your new credentials.</p>
           </div>
-        )}
 
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-            Email Address
-          </label>
-          <input
-            className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-            type="email"
-            required
-            placeholder="name@example.com"
-            value={form.email}
-            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
-          />
+          <div className="space-y-3 pt-2">
+            <button
+              type="button"
+              onClick={() => navigate('/institution-login')}
+              className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer"
+            >
+              Log In to Institution Portal →
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate('/student-login')}
+              className="w-full rounded-xl border border-slate-700 bg-slate-900/60 py-3 text-xs font-bold text-slate-200 transition-all duration-200 hover:border-slate-500 hover:bg-slate-800 cursor-pointer"
+            >
+              Log In to Student Portal →
+            </button>
+          </div>
         </div>
+      ) : (
+        <form onSubmit={onSubmit} className="space-y-4">
+          {urlToken && (
+            <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-xs font-semibold text-emerald-400 flex items-center gap-2">
+              <span>✓</span> {isShortCode ? '6-Digit reset code loaded from email link.' : 'Security verification link loaded from email.'}
+            </div>
+          )}
 
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-            6-Digit Reset Code {isLongHash && <span className="text-slate-500 font-normal lowercase">(or leave blank to use email link)</span>}
-          </label>
-          <input
-            className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35 font-bold tracking-wider text-center text-lg"
-            required={!isLongHash}
-            placeholder={isLongHash ? 'Link verified (or enter 6-digit code)' : '000000'}
-            maxLength={10}
-            value={form.code}
-            onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))}
-          />
-        </div>
+          {error && (
+            <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-semibold text-red-400">
+              {error}
+            </div>
+          )}
 
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-            New Password
-          </label>
-          <PasswordInput
-            className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-            required
-            minLength={6}
-            autoComplete="new-password"
-            placeholder="At least 6 characters"
-            value={form.password}
-            onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
-          />
-        </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Email Address
+            </label>
+            <input
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+              type="email"
+              required
+              placeholder="name@example.com"
+              value={form.email}
+              onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+            />
+          </div>
 
-        <div>
-          <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
-            Confirm New Password
-          </label>
-          <PasswordInput
-            className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
-            required
-            autoComplete="new-password"
-            placeholder="Re-enter new password"
-            value={form.confirm}
-            onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}
-          />
-        </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              6-Digit Reset Code {isLongHash && <span className="text-slate-500 font-normal lowercase">(or leave blank to use email link)</span>}
+            </label>
+            <input
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35 font-bold tracking-wider text-center text-lg"
+              required={!isLongHash}
+              placeholder={isLongHash ? 'Link verified (or enter 6-digit code)' : '000000'}
+              maxLength={10}
+              value={form.code}
+              onChange={(e) => setForm((f) => ({ ...f, code: e.target.value }))}
+            />
+          </div>
 
-        <div className="pt-2">
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
-          >
-            {loading ? 'Updating Password…' : 'Update Password & Log in'}
-          </button>
-        </div>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              New Password
+            </label>
+            <PasswordInput
+              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+              required
+              minLength={6}
+              autoComplete="new-password"
+              placeholder="At least 6 characters"
+              value={form.password}
+              onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+            />
+          </div>
 
-        <div className="border-t border-[#2A354A]/60 pt-4 text-center">
-          <Link to="/student-login" className="text-xs font-semibold text-slate-400 hover:text-[#00F0FF] hover:underline">
-            ← Back to Student Login
-          </Link>
-        </div>
-      </form>
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Confirm New Password
+            </label>
+            <PasswordInput
+              className="rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+              required
+              autoComplete="new-password"
+              placeholder="Re-enter new password"
+              value={form.confirm}
+              onChange={(e) => setForm((f) => ({ ...f, confirm: e.target.value }))}
+            />
+          </div>
+
+          <div className="pt-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
+            >
+              {loading ? 'Updating Password…' : 'Update Password & Log in'}
+            </button>
+          </div>
+
+          <div className="border-t border-[#2A354A]/60 pt-4 flex items-center justify-between text-xs font-semibold text-slate-400">
+            <Link to="/student-login" className="hover:text-[#00F0FF] hover:underline">
+              ← Student Login
+            </Link>
+            <Link to="/institution-login" className="hover:text-[#00F0FF] hover:underline">
+              Institution Login →
+            </Link>
+          </div>
+        </form>
+      )}
     </AuthShell>
   );
 }

@@ -269,6 +269,22 @@ export default function AdminAssessments() {
     });
   };
 
+  const handleDirectPublishAndRefresh = async (testId) => {
+    if (!testId) return;
+    try {
+      setLeaderboardLoading(true);
+      const res = await adminService.generateResults(testId);
+      toast.success(res.message || 'Results and ranks published successfully!');
+      loadData();
+      const updatedData = await adminService.getTestParticipation(testId);
+      setLeaderboardData(updatedData);
+    } catch (err) {
+      toast.error(err.message || 'Result generation failed');
+    } finally {
+      setLeaderboardLoading(false);
+    }
+  };
+
   const handleNotifyReminder = (test) => {
     const testObj = typeof test === 'object' ? test : tests.find((t) => t.id === test);
     if (!testObj) return;
@@ -1584,15 +1600,27 @@ export default function AdminAssessments() {
                 </p>
               </div>
 
-              <button
-                onClick={() => {
-                  setLeaderboardModalTest(null);
-                  setLeaderboardData(null);
-                }}
-                className="rounded-full p-2 text-white/80 hover:text-white hover:bg-white/10 transition cursor-pointer"
-              >
-                <X className="h-5 w-5" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleDirectPublishAndRefresh(leaderboardModalTest.id)}
+                  className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold text-xs shadow-md transition cursor-pointer flex items-center gap-1.5"
+                  title="Trigger manual rank calculation & publish results to students"
+                >
+                  <Award className="h-4 w-4" />
+                  <span>Publish / Re-calculate Ranks</span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    setLeaderboardModalTest(null);
+                    setLeaderboardData(null);
+                  }}
+                  className="rounded-full p-2 text-white/80 hover:text-white hover:bg-white/10 transition cursor-pointer"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
             </div>
 
             {/* Stats Summary Bar */}
@@ -1719,7 +1747,16 @@ export default function AdminAssessments() {
             </div>
 
             {/* Footer */}
-            <div className="p-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+            <div className="p-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() => handleDirectPublishAndRefresh(leaderboardModalTest.id)}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs shadow-md shadow-emerald-500/20 transition cursor-pointer flex items-center gap-1.5"
+              >
+                <Award className="h-4 w-4" />
+                <span>{leaderboardData?.test?.result_publish_time ? 'Re-Calculate Ranks & Publish' : 'Publish Results & Ranks Now'}</span>
+              </button>
+
               <button
                 type="button"
                 onClick={() => {
