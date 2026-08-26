@@ -18,6 +18,7 @@ import {
   Sparkles,
   ClipboardList
 } from 'lucide-react';
+import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 
 export default function CandidateDashboard() {
   const { user } = useAuth();
@@ -163,6 +164,11 @@ export default function CandidateDashboard() {
           color="text-amber-600 dark:text-amber-400"
           bg="bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-800/50"
         />
+      </div>
+
+      {/* SCHEDULED AI BOOSTER TESTS WIDGET */}
+      <div>
+        <ScheduledTestsWidget studentId={user?.id} />
       </div>
 
       {/* 3. ACTIVE & PENDING TESTS */}

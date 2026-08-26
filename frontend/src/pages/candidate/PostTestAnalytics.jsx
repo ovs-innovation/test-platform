@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { studentService } from '../../lib/services.js';
+import { studentService, aiTestService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState } from '../../components/ui.jsx';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import AIMentorReportView from '../../components/candidate/AIMentorReportView.jsx';
+import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
+import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
 import {
   Trophy,
   Award,
@@ -41,6 +43,26 @@ export default function PostTestAnalytics() {
   const [state, setState] = useState('loading');
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   const [questionFilter, setQuestionFilter] = useState('ALL'); // ALL | WRONG | CORRECT | UNATTEMPTED
+  const [generatingAiTest, setGeneratingAiTest] = useState(false);
+  const [aiTestResult, setAiTestResult] = useState(null);
+  const [aiTestError, setAiTestError] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
+  const handleGenerateAiTest = async () => {
+    setGeneratingAiTest(true);
+    setAiTestError(null);
+    try {
+      const studentId = data?.student_id || data?.user_id;
+      const res = await aiTestService.generateTest(studentId, testId);
+      setAiTestResult(res);
+      setRefreshTrigger((prev) => prev + 1);
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Unable to generate AI booster test.';
+      setAiTestError(msg);
+    } finally {
+      setGeneratingAiTest(false);
+    }
+  };
 
   const loadAnalytics = async () => {
     if (!testId) return;
@@ -214,7 +236,8 @@ export default function PostTestAnalytics() {
       {/* GEMINI 2.5 AI DIAGNOSTIC & PERSONALISED REVISION HUB */}
       <AIInsightsCard isDarkMode={false} testId={testId} testData={data} />
 
-      {/* ----------------------------------------------------------------- */}
+
+
       {/* COMPREHENSIVE RANKS BREAKDOWN (AIR, State, City, Inst, Batch)    */}
       {/* ----------------------------------------------------------------- */}
       <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] p-6 shadow-xs space-y-4">
@@ -684,6 +707,75 @@ export default function PostTestAnalytics() {
           </div>
         );
       })()}
+
+      {/* WEAK TOPIC BOOSTER TEST GENERATOR CARD */}
+      <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 shrink-0">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div className="space-y-0.5">
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Booster Test</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
+                Generate fresh, NTA-pattern questions targeting weak areas identified in this test. Scheduled with 2–3 days spaced repetition so you have time to revise first.
+              </p>
+            </div>
+          </div>
+
+          <div className="shrink-0">
+            <button
+              type="button"
+              disabled={generatingAiTest}
+              onClick={handleGenerateAiTest}
+              className={`px-4 py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center gap-2 transition ${
+                generatingAiTest
+                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-200 dark:border-slate-700'
+                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+              }`}
+            >
+              {generatingAiTest ? (
+                <>
+                  <Sparkles className="h-4 w-4 animate-spin" />
+                  <span>Generating Test...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4" />
+                  <span>Generate AI Improvement Test</span>
+                </>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {aiTestError && (
+          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
+            <ShieldAlert className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
+            <span>{aiTestError}</span>
+          </div>
+        )}
+
+        {aiTestResult && (
+          <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
+            <div className="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-300 text-sm">
+              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+              <span>Booster Test Scheduled</span>
+            </div>
+            <p className="leading-relaxed">
+              {aiTestResult.message || `Your personalized test is ready and will unlock on ${new Date(aiTestResult.unlockAt).toLocaleDateString()}.`}
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* SCHEDULED TESTS WIDGET */}
+      <div>
+        <ScheduledTestsWidget
+          studentId={data?.student_id || data?.user_id}
+          onRefreshTrigger={refreshTrigger}
+        />
+      </div>
 
       {/* ----------------------------------------------------------------- */}
       {/* SECTION 8: TIME MANAGEMENT REPORT                                 */}

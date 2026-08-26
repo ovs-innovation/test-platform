@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { attemptService } from '../../lib/services.js';
+import { attemptService, aiTestService } from '../../lib/services.js';
 import { useProctoring } from '../../hooks/useProctoring.js';
 import { requestFullscreen, exitFullscreen, isFullscreen, VIOLATION_LABELS } from '../../lib/proctoring.js';
 import { formatDuration } from '../../lib/format.js';
@@ -67,6 +67,33 @@ export default function ExamScreen() {
     setLoading(true);
     (async () => {
       try {
+        if (attemptId && attemptId.startsWith('ai-')) {
+          const testId = attemptId.replace(/^ai-/, '');
+          let session = null;
+          try {
+            const raw = sessionStorage.getItem(`ai_test_session_${testId}`);
+            if (raw) session = JSON.parse(raw);
+          } catch (_) {}
+
+          if (!session) {
+            session = await aiTestService.startTest(testId);
+          }
+
+          if (cancelled) return;
+          setSections([]);
+          setQuestions(session.questions || []);
+          setMeta({
+            title: session.test?.test_name || 'AI Weak Topic Booster Test',
+            duration_minutes: session.test?.duration_minutes || 45,
+            max_violations: 5,
+          });
+          setMaxViolations(5);
+          setViolations(0);
+          setRemaining((session.test?.duration_minutes || 45) * 60);
+          setLoading(false);
+          return;
+        }
+
         const data = await attemptService.getState(attemptId);
         if (cancelled) return;
         if (data.expired || data.attempt.status !== 'in_progress') {
@@ -147,6 +174,27 @@ export default function ExamScreen() {
     setIsSubmitting(true);
     setWarning(null);
     setNeedsFullscreen(false);
+
+    if (attemptId && attemptId.startsWith('ai-')) {
+      const testId = attemptId.replace(/^ai-/, '');
+      const answersList = (questions || []).map((q) => {
+        const qId = q.id || q.question_id;
+        return {
+          questionId: qId,
+          selectedOption: answers[qId] !== undefined ? answers[qId] : null,
+        };
+      });
+      try {
+        const submitRes = await aiTestService.submitTest(testId, answersList, user?.id);
+        sessionStorage.setItem(`ai_test_result_${testId}`, JSON.stringify(submitRes));
+      } catch (err) {
+        console.warn('AI Test Submission error:', err);
+      }
+      try { await exitFullscreen(); } catch (_) {}
+      navigate(`/results/${attemptId}`, { replace: true });
+      return;
+    }
+
     try {
       await attemptService.submit(attemptId, reason);
     } catch { /* ignore submit error if already submitted */ }
@@ -154,7 +202,7 @@ export default function ExamScreen() {
       await exitFullscreen();
     } catch { /* ignore fullscreen error */ }
     navigate(`/results/${attemptId}`, { replace: true });
-  }, [attemptId, navigate]);
+  }, [attemptId, navigate, questions, answers, user]);
 
   useEffect(() => {
     if (loading || isSubmitting) return undefined;

@@ -26,6 +26,7 @@ import institutionReportRoutes from './routes/institutionReportRoutes.js';
 import institutionRoutes from './routes/institutionRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import ebookRoutes from './routes/ebookRoutes.js';
+import aiTestRoutes from './routes/aiTestRoutes.js';
 
 const app = express();
 
@@ -91,6 +92,7 @@ app.use('/api/institution', institutionReportRoutes);
 app.use('/api/institution', institutionRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/ebooks', ebookRoutes);
+app.use('/api/tests', aiTestRoutes);
 
 // 404 + error handling (must be last)
 app.use(notFoundHandler);

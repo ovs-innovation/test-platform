@@ -1,26 +1,75 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { attemptService } from '../../lib/services.js';
+import { attemptService, aiTestService } from '../../lib/services.js';
 import { isMultiSelectQuestion } from '../../lib/examPalette.js';
 import { Skeleton, ErrorState } from '../../components/ui.jsx';
 import { SubjectBar } from '../../components/design.jsx';
 import { formatDateTime, attemptStatusLabel } from '../../lib/format.js';
-import { FileText } from 'lucide-react';
+import { FileText, Sparkles, Clock, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
+import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
+import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
 
 export default function ResultPage() {
   const { attemptId } = useParams();
   const [data, setData] = useState(null);
   const [state, setState] = useState('loading');
   const [showSolutions, setShowSolutions] = useState(false);
+  const [generatingAiTest, setGeneratingAiTest] = useState(false);
+  const [aiTestResult, setAiTestResult] = useState(null);
+  const [aiTestError, setAiTestError] = useState(null);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const load = async () => {
     setState('loading');
     try {
+      if (attemptId && attemptId.startsWith('ai-')) {
+        const testId = attemptId.replace(/^ai-/, '');
+        let storedResult = null;
+        try {
+          const raw = sessionStorage.getItem(`ai_test_result_${testId}`);
+          if (raw) storedResult = JSON.parse(raw);
+        } catch (_) {}
+
+        if (storedResult) {
+          setData({
+            resultVisible: true,
+            assessment: { title: 'AI Weak Topic Booster Test' },
+            attempt: {
+              submitted_at: new Date().toISOString(),
+              status: 'submitted',
+              before_after_topics: storedResult.beforeAfterComparison,
+              question_responses: storedResult.questionsWithExplanations,
+            },
+            score: storedResult.score,
+            beforeAfterComparison: storedResult.beforeAfterComparison,
+            questionsWithExplanations: storedResult.questionsWithExplanations,
+          });
+          setState('done');
+          return;
+        }
+      }
+
       setData(await attemptService.getResult(attemptId));
       setState('done');
     } catch {
       setState('error');
+    }
+  };
+
+  const handleGenerateAiTest = async () => {
+    setGeneratingAiTest(true);
+    setAiTestError(null);
+    try {
+      const studentId = data?.attempt?.candidate_id || data?.attempt?.student_id;
+      const res = await aiTestService.generateTest(studentId, attemptId);
+      setAiTestResult(res);
+      setRefreshTrigger((prev) => prev + 1);
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Unable to generate AI booster test.';
+      setAiTestError(msg);
+    } finally {
+      setGeneratingAiTest(false);
     }
   };
 
@@ -282,6 +331,17 @@ export default function ResultPage() {
     return result;
   }, [solutions, assessment]);
 
+  const hasWeakTopics = useMemo(() => {
+    if (!topicScores || Object.keys(topicScores).length === 0) return true;
+    let found = false;
+    Object.values(topicScores).forEach((topicsArr) => {
+      topicsArr.forEach((t) => {
+        if (t.accuracy < 60) found = true;
+      });
+    });
+    return found;
+  }, [topicScores]);
+
   useEffect(() => {
     if (assessment && score) {
       const weakTopicsList = [];
@@ -493,6 +553,91 @@ export default function ResultPage() {
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* WEAK TOPIC BOOSTER TEST GENERATOR CARD */}
+            <div className="mt-6 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3">
+                  <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 shrink-0">
+                    <Sparkles className="h-5 w-5" />
+                  </div>
+                  <div className="space-y-0.5">
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Booster Test</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
+                      Generate fresh questions targeting your weak areas (&lt;60% accuracy). Scheduled with 2–3 days spaced repetition so you have time to revise first.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="shrink-0">
+                  <button
+                    type="button"
+                    disabled={generatingAiTest || !hasWeakTopics}
+                    onClick={handleGenerateAiTest}
+                    className={`px-4 py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center gap-2 transition ${
+                      generatingAiTest || !hasWeakTopics
+                        ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-200 dark:border-slate-700'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                    }`}
+                  >
+                    {generatingAiTest ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span>Generating Test...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles className="h-4 w-4" />
+                        <span>Generate AI Improvement Test</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {!hasWeakTopics && (
+                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
+                  ℹ️ All topics currently show high accuracy (≥60%). Great job!
+                </div>
+              )}
+
+              {aiTestError && (
+                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
+                  <span>{aiTestError}</span>
+                </div>
+              )}
+
+              {aiTestResult && (
+                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
+                  <div className="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-300 text-sm">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                    <span>Booster Test Scheduled</span>
+                  </div>
+                  <p className="leading-relaxed">
+                    {aiTestResult.message || `Your personalized test is ready and will unlock on ${new Date(aiTestResult.unlockAt).toLocaleDateString()}.`}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* SCHEDULED TESTS WIDGET */}
+            <div className="mt-6">
+              <ScheduledTestsWidget
+                studentId={attempt?.candidate_id || data?.attempt?.candidate_id}
+                onRefreshTrigger={refreshTrigger}
+              />
+            </div>
+
+            {/* BEFORE VS AFTER ACCURACY COMPARISON (For AI Weak Topic Tests) */}
+            {(data?.attempt?.before_after_topics || data?.beforeAfterComparison) && (
+              <div className="mt-6">
+                <AiTestResultsCard
+                  beforeAfterComparison={data?.attempt?.before_after_topics || data?.beforeAfterComparison}
+                  questionsWithExplanations={data?.attempt?.question_responses || data?.questionsWithExplanations}
+                />
               </div>
             )}
 

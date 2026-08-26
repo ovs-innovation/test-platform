@@ -2,6 +2,7 @@ import app from './app.js';
 import { env } from './config/env.js';
 import { pool } from './config/db.js';
 import { verifySmtpConnection } from './utils/email.js';
+import { initScheduler } from './jobs/scheduler.js';
 
 const LISTEN_RETRIES = 15;
 const LISTEN_RETRY_MS = 400;
@@ -92,6 +93,9 @@ const start = async () => {
   if (!dbConnected) {
     // eslint-disable-next-line no-console
     console.warn('[db] Could not connect to PostgreSQL after 5 retries. Starting server in fallback mode...');
+  } else {
+    // Initialize background cron scheduler for AI booster tests
+    initScheduler();
   }
 
   // Asynchronously verify SMTP connection without blocking server startup
