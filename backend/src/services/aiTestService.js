@@ -46,13 +46,22 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
 
   let weakTopics = [];
 
-  // 1. If attemptId is provided, query weak topics SPECIFICALLY for questions in that test attempt first
+  // 1. If attemptId is provided, query questions & weak topics SPECIFICALLY for that test attempt/assessment
   if (numAttemptId && !isNaN(numAttemptId)) {
     const attemptResult = await query(
-      `WITH attempt_question_stats AS (
+      `WITH target_info AS (
+         SELECT assessment_id FROM attempts WHERE id = $1
+         UNION
+         SELECT COALESCE(assessment_id, test_id) AS assessment_id FROM test_attempts WHERE id = $1
+         UNION
+         SELECT id AS assessment_id FROM assessments WHERE id = $1
+         UNION
+         SELECT id AS assessment_id FROM tests WHERE id = $1
+       ),
+       attempt_question_stats AS (
          SELECT 
-           COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
-           COALESCE(c.name, q.topic, q.bank_category, 'General Topic') AS topic,
+           COALESCE(s.name, q.bank_category, a.title, t.test_name, 'General Subject') AS subject,
+           COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
            COALESCE(q.subtopic, 'Core Concepts') AS subtopic,
            CASE 
              WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = COALESCE(q.correct_option_index, q.correct_index))
@@ -64,11 +73,15 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
              WHEN ans.selected_index IS NOT NULL OR ans.selected_indices IS NOT NULL OR ans.numeric_answer IS NOT NULL 
              THEN 1 ELSE 0 
            END AS is_attempted
-         FROM answers ans
-         JOIN questions q ON q.id = ans.question_id
+         FROM questions q
          LEFT JOIN subjects s ON s.id = q.subject_id
          LEFT JOIN chapters c ON c.id = q.chapter_id
-         WHERE ans.attempt_id = $1
+         LEFT JOIN assessments a ON a.id = q.assessment_id
+         LEFT JOIN tests t ON t.id = q.assessment_id OR t.id = q.test_id
+         LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = $1
+         WHERE q.assessment_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
+            OR q.test_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
+            OR ans.attempt_id = $1
        )
        SELECT 
          subject,
@@ -86,16 +99,27 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
     ).catch(() => ({ rows: [] }));
 
     if (attemptResult.rows && attemptResult.rows.length > 0) {
-      const weakFromAttempt = attemptResult.rows.filter(r => Number(r.accuracy) < threshold);
+      const cleanedRows = attemptResult.rows.map((r) => {
+        let topicName = r.topic;
+        if (!topicName || topicName === 'General Topic') {
+          topicName = r.subject !== 'General Subject' ? `${r.subject} Core Principles` : 'Target Weak Areas';
+        }
+        return {
+          ...r,
+          topic: topicName,
+        };
+      });
+
+      const weakFromAttempt = cleanedRows.filter((r) => Number(r.accuracy) < threshold);
       if (weakFromAttempt.length > 0) {
         weakTopics = weakFromAttempt;
       } else {
-        weakTopics = attemptResult.rows.slice(0, limit);
+        weakTopics = cleanedRows.slice(0, limit);
       }
     }
   }
 
-  // 2. If no attemptId provided or no topics in attempt, query student's overall test attempts history
+  // 2. If no attemptId provided or no topics in attempt, query candidate's recent overall test attempts history
   if (weakTopics.length === 0) {
     const dbResult = await query(
       `WITH student_question_stats AS (
@@ -139,47 +163,56 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
     weakTopics = dbResult.rows || [];
   }
 
-  // 3. Smart subject-aware fallback if DB yields 0 weak topics
+  // 3. Smart subject-aware fallback matching target test title & subject
   if (weakTopics.length === 0) {
-    let testSubject = null;
+    let testTitle = '';
+    let testSubject = '';
 
     if (numAttemptId) {
-      const subjRes = await query(
-        `SELECT DISTINCT COALESCE(s.name, q.bank_category) AS subject_name
+      const testInfoRes = await query(
+        `SELECT a.title AS test_name, s.name AS subject_name
          FROM questions q
+         LEFT JOIN assessments a ON a.id = q.assessment_id
          LEFT JOIN subjects s ON s.id = q.subject_id
-         LEFT JOIN attempts at ON at.assessment_id = q.assessment_id
-         WHERE at.id = $1 LIMIT 1`,
+         LEFT JOIN attempts at ON at.assessment_id = a.id
+         WHERE at.id = $1 OR a.id = $1 OR q.test_id = $1 LIMIT 1`,
         [numAttemptId]
       ).catch(() => ({ rows: [] }));
-      testSubject = subjRes.rows[0]?.subject_name;
+
+      testTitle = testInfoRes.rows[0]?.test_name || '';
+      testSubject = testInfoRes.rows[0]?.subject_name || '';
     }
 
     const userRes = await query('SELECT exam_type FROM users WHERE id = $1', [numId]).catch(() => ({ rows: [] }));
     const examType = userRes.rows[0]?.exam_type || 'JEE';
 
-    const isBio = testSubject && /bio|botany|zoology|genetics/i.test(testSubject);
-    const isPhysics = testSubject && /physics|optics|mechanics/i.test(testSubject);
-    const isChem = testSubject && /chem/i.test(testSubject);
+    const textToMatch = `${testTitle} ${testSubject}`.toLowerCase();
 
-    if (isBio || (examType === 'NEET' && !isPhysics && !isChem)) {
+    if (textToMatch.includes('genetics') || textToMatch.includes('inheritance') || textToMatch.includes('botany') || textToMatch.includes('biology') || textToMatch.includes('zoology')) {
       weakTopics = [
         { subject: 'Botany', topic: 'Genetics & Inheritance', subtopic: 'Mendelian Principles & Linkage', accuracy: 35.0, correct_count: 2, total_questions: 8 },
         { subject: 'Botany', topic: 'Molecular Basis of Inheritance', subtopic: 'DNA Replication & Transcription', accuracy: 42.0, correct_count: 3, total_questions: 7 },
         { subject: 'Zoology', topic: 'Biotechnology Principles', subtopic: 'Recombinant DNA Technology', accuracy: 50.0, correct_count: 4, total_questions: 8 },
-        { subject: 'Zoology', topic: 'Human Physiology', subtopic: 'Neural Conduction & Synapses', accuracy: 55.0, correct_count: 5, total_questions: 9 },
       ];
-    } else if (isPhysics) {
+    } else if (textToMatch.includes('physics') || textToMatch.includes('optics') || textToMatch.includes('electrostatics')) {
       weakTopics = [
         { subject: 'Physics', topic: 'Ray & Wave Optics', subtopic: 'Interference & Diffraction', accuracy: 35.0, correct_count: 2, total_questions: 8 },
         { subject: 'Physics', topic: 'Electrostatics', subtopic: 'Electric Field & Gauss Law', accuracy: 42.0, correct_count: 3, total_questions: 7 },
-        { subject: 'Physics', topic: 'Rotational Motion', subtopic: 'Moment of Inertia & Torque', accuracy: 50.0, correct_count: 4, total_questions: 8 },
+      ];
+    } else if (textToMatch.includes('chem')) {
+      weakTopics = [
+        { subject: 'Chemistry', topic: 'Chemical Bonding', subtopic: 'VSEPR Theory & Hybridization', accuracy: 40.0, correct_count: 3, total_questions: 8 },
+        { subject: 'Chemistry', topic: 'Ionic Equilibrium', subtopic: 'pH & Buffer Solutions', accuracy: 45.0, correct_count: 3, total_questions: 7 },
+      ];
+    } else if (examType === 'NEET') {
+      weakTopics = [
+        { subject: 'Botany', topic: 'Genetics & Inheritance', subtopic: 'Mendelian Principles & Linkage', accuracy: 35.0, correct_count: 2, total_questions: 8 },
+        { subject: 'Zoology', topic: 'Human Physiology', subtopic: 'Neural Conduction & Synapses', accuracy: 45.0, correct_count: 3, total_questions: 7 },
       ];
     } else {
       weakTopics = [
         { subject: 'Physics', topic: 'Electrostatics', subtopic: 'Electric Field & Gauss Law', accuracy: 30.0, correct_count: 2, total_questions: 8 },
         { subject: 'Chemistry', topic: 'Chemical Bonding', subtopic: 'VSEPR Theory & Hybridization', accuracy: 40.0, correct_count: 3, total_questions: 8 },
-        { subject: 'Mathematics', topic: 'Definite Integration', subtopic: 'Properties of Integrals & Area', accuracy: 45.0, correct_count: 3, total_questions: 7 },
       ];
     }
   }

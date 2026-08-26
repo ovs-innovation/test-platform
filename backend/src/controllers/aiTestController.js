@@ -72,8 +72,26 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
   const unlockAt = new Date(now.getTime() + delayDays * 24 * 60 * 60 * 1000);
   const expiresAt = new Date(unlockAt.getTime() + 7 * 24 * 60 * 60 * 1000); // 7 days post unlock
 
+  let sourceTestTitle = null;
+  if (attemptId) {
+    const titleRes = await query(
+      `SELECT title AS name FROM assessments WHERE id = $1
+       UNION
+       SELECT test_name AS name FROM tests WHERE id = $1
+       UNION
+       SELECT a.title AS name FROM attempts at JOIN assessments a ON a.id = at.assessment_id WHERE at.id = $1
+       UNION
+       SELECT COALESCE(t.test_name, a.title) AS name FROM test_attempts ta LEFT JOIN tests t ON t.id = ta.test_id LEFT JOIN assessments a ON a.id = ta.assessment_id WHERE ta.id = $1
+       LIMIT 1`,
+      [attemptId]
+    ).catch(() => ({ rows: [] }));
+    sourceTestTitle = titleRes.rows[0]?.name;
+  }
+
   const topicNames = Array.from(new Set(weakTopics.map((w) => w.topic)));
-  const testTitle = `AI Booster: ${topicNames.join(', ')}`;
+  const testTitle = sourceTestTitle
+    ? `AI Booster: ${sourceTestTitle} (${topicNames.join(', ')})`
+    : `AI Booster: ${topicNames.join(', ')}`;
 
   // 6. Save test in `tests` table
   const weakTopicsPayload = weakTopics.map((w) => ({
