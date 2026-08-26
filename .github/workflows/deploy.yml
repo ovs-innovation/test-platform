@@ -57,20 +57,12 @@ jobs:
             fi
             cd "$PROJECT_DIR"
 
-            # Configure safe directory to avoid dubious ownership errors on VPS
-            git config --global --add safe.directory "$PROJECT_DIR" || true
-            git config --global --add safe.directory "*" || true
-
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             echo "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
-            # Backup production-specific files & SSL certificates before git reset
+            # Backup production-specific files before git reset
             mkdir -p "$BACKUP_DIR"
 
-            if [ -d "certbot" ]; then
-              mkdir -p "$BACKUP_DIR/certbot"
-              cp -rL certbot/* "$BACKUP_DIR/certbot/" 2>/dev/null || true
-            fi
             if [ -f "backend/src/config/db.js" ]; then
               mkdir -p "$BACKUP_DIR/backend/src/config"
               cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
@@ -86,23 +78,16 @@ jobs:
               cp -r frontend/dist "$BACKUP_DIR/frontend_dist_backup" || true
             fi
 
-            # Clean any stale git lock files and abort ongoing merge/rebase
-            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/*.lock .git/refs/remotes/origin/*.lock 2>/dev/null || true
-            git merge --abort 2>/dev/null || true
-            git rebase --abort 2>/dev/null || true
-            git stash 2>/dev/null || true
+            # Clean any stale git lock files
+            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock 2>/dev/null || true
+            git merge --abort >/dev/null 2>&1 || true
+            git rebase --abort >/dev/null 2>&1 || true
 
-            # Fetch and reset to target commit safely
-            git fetch origin main || git fetch --all --prune || true
-            git checkout -f main 2>/dev/null || git checkout -b main 2>/dev/null || true
-            git reset --hard "${{ github.sha }}" || git reset --hard origin/main || git reset --hard HEAD || true
-            git clean -fd || true
+            # Fetch and reset to target commit
+            git fetch origin main || git fetch --all || true
+            git reset --hard "${{ github.sha }}" || git reset --hard origin/main
 
-            # Restore production files and certbot SSL certificates
-            if [ -d "$BACKUP_DIR/certbot" ]; then
-              mkdir -p certbot
-              cp -rL "$BACKUP_DIR/certbot/"* certbot/ 2>/dev/null || true
-            fi
+            # Restore production files
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
             fi
@@ -190,11 +175,6 @@ jobs:
             log "Backing up production-specific files and dist bundle to /tmp..."
             mkdir -p "$BACKUP_DIR"
 
-            if [ -d "certbot" ]; then
-              mkdir -p "$BACKUP_DIR/certbot"
-              cp -rL certbot/* "$BACKUP_DIR/certbot/" 2>/dev/null || true
-              log "Backed up certbot directory"
-            fi
             if [ -f "backend/src/config/db.js" ]; then
               mkdir -p "$BACKUP_DIR/backend/src/config"
               cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
@@ -220,11 +200,6 @@ jobs:
 
             # Restore production files from backup
             log "Restoring production-specific files..."
-            if [ -d "$BACKUP_DIR/certbot" ]; then
-              mkdir -p certbot
-              cp -rL "$BACKUP_DIR/certbot/"* certbot/ 2>/dev/null || true
-              log "Restored certbot directory"
-            fi
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
               cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
               log "Restored backend/src/config/db.js"
@@ -284,35 +259,21 @@ jobs:
             ls -lah frontend/dist
 
             # 5. Detect active Let's Encrypt certificate directory & Build images
-            log "Step 5/8: Detecting SSL certificates and ensuring Nginx certificate availability..."
-
-            # Sync from host /etc/letsencrypt if present
-            if [ -d "/etc/letsencrypt/live" ]; then
-              mkdir -p certbot/conf/live
-              cp -rL /etc/letsencrypt/* certbot/conf/ 2>/dev/null || true
-            fi
-
+            log "Step 5/8: Detecting SSL certificates and building Docker images..."
             CERT_DIR=""
-            if [ -d "certbot/conf/live/edvedum.com" ] && [ -f "certbot/conf/live/edvedum.com/fullchain.pem" ]; then
+            if [ -d "certbot/conf/live/edvedum.com" ]; then
               CERT_DIR="edvedum.com"
-            elif [ -d "certbot/conf/live/cbt.prosperrainfra.com" ] && [ -f "certbot/conf/live/cbt.prosperrainfra.com/fullchain.pem" ]; then
+            elif [ -d "certbot/conf/live/cbt.prosperrainfra.com" ]; then
               CERT_DIR="cbt.prosperrainfra.com"
             else
-              CERT_DIR=$(ls -d certbot/conf/live/*/ 2>/dev/null | head -n 1 | xargs -r basename 2>/dev/null || echo "")
+              CERT_DIR=$(ls certbot/conf/live 2>/dev/null | head -n 1 || echo "")
             fi
 
-            if [ -n "$CERT_DIR" ] && [ -f "certbot/conf/live/${CERT_DIR}/fullchain.pem" ]; then
+            if [ -n "$CERT_DIR" ]; then
               log "Detected active SSL certificate directory: ${CERT_DIR}"
               sed -i "s|/etc/letsencrypt/live/[^/]*|/etc/letsencrypt/live/${CERT_DIR}|g" frontend/nginx.conf || true
             else
-              TARGET_CERT_DIR="certbot/conf/live/edvedum.com"
-              log "No active SSL certificate found in certbot/conf/live. Creating self-signed fallback SSL certificate in ${TARGET_CERT_DIR}..."
-              mkdir -p "${TARGET_CERT_DIR}"
-              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-                -keyout "${TARGET_CERT_DIR}/privkey.pem" \
-                -out "${TARGET_CERT_DIR}/fullchain.pem" \
-                -subj "/CN=edvedum.com/O=EDVEDUM/OU=Production" 2>/dev/null || true
-              log "Fallback self-signed SSL certificate created successfully."
+              log "WARNING: No active certificate directory found in certbot/conf/live! Preserving default nginx.conf configuration."
             fi
 
             log "Building docker containers..."
