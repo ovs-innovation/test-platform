@@ -13,7 +13,7 @@ const GENERAL_RULES = [
   'Total duration of the examination is fixed. The clock is server-synced and shown at the top of the screen.',
   'The clock will be set at the server. The countdown in the top right corner displays the time remaining.',
   'When the timer reaches zero, the examination will end automatically and your responses will be submitted.',
-  'The Question Palette on the right shows the status of each question using standard NTA colour codes.',
+  'The Question Palette on the right shows the status of each question using standard CBT colour codes.',
   'You can click on the question number in the palette to navigate directly to that question.',
   'Use Save & Next to save your answer and move to the next question. Use Save & Mark for Review to flag a question.',
   'Use Clear Response to remove your selected answer for the current question.',
@@ -29,35 +29,67 @@ export default function AssessmentInstructions() {
   const { user } = useAuth();
 
   const [assessment, setAssessment] = useState(null);
+  const [institutionBranding, setInstitutionBranding] = useState(null);
   const [backTo, setBackTo] = useState('/assessments');
   const [state, setState] = useState('loading');
   const [agreed, setAgreed] = useState(false);
   const [starting, setStarting] = useState(false);
 
-  const load = async () => {
+  useEffect(() => {
+    let cancelled = false;
+    setInstitutionBranding(null);
+    setAssessment(null);
     setState('loading');
+
+    const load = async () => {
+      try {
+        const found = await assessmentService.getStudent(assessmentId);
+        if (cancelled) return;
+        setAssessment(found);
+        if (found?.institution || found?.institution_name || found?.institution_id) {
+          setInstitutionBranding(found.institution || {
+            id: found.institution_id,
+            name: found.institution_name,
+            logo_url: found.institution_logo_url,
+            logo_badge: found.institution_logo_badge,
+          });
+        }
+        const returnPath =
+          found.access_type === 'enrollment' && found.series_slug
+            ? `/my-tests/${found.series_slug}`
+            : found.access_type === 'enrollment'
+            ? '/my-tests'
+            : '/assessments';
+        setBackTo(returnPath);
+        sessionStorage.setItem('assessmentReturn', returnPath);
+        setState('done');
+      } catch (err) {
+        if (cancelled) return;
+        if (err.status === 403 || err.status === 404) setState('notfound');
+        else setState('error');
+      }
+    };
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [assessmentId]);
+
+  const load = async () => {
     try {
       const found = await assessmentService.getStudent(assessmentId);
       setAssessment(found);
-      const returnPath =
-        found.access_type === 'enrollment' && found.series_slug
-          ? `/my-tests/${found.series_slug}`
-          : found.access_type === 'enrollment'
-          ? '/my-tests'
-          : '/assessments';
-      setBackTo(returnPath);
-      sessionStorage.setItem('assessmentReturn', returnPath);
-      setState('done');
-    } catch (err) {
-      if (err.status === 403 || err.status === 404) setState('notfound');
-      else setState('error');
-    }
+      if (found?.institution || found?.institution_name || found?.institution_id) {
+        setInstitutionBranding(found.institution || {
+          id: found.institution_id,
+          name: found.institution_name,
+          logo_url: found.institution_logo_url,
+          logo_badge: found.institution_logo_badge,
+        });
+      }
+    } catch (_) {}
   };
-
-  useEffect(() => {
-    load();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [assessmentId]);
 
   const onStart = async () => {
     setStarting(true);
@@ -134,7 +166,7 @@ export default function AssessmentInstructions() {
     <div className="exam-surface min-h-screen bg-slate-50 text-slate-900 dark:bg-[#070c18] dark:text-slate-100 font-sans">
       {/* Top Header with Institution Co-Branding Support */}
       <header>
-        <AssessmentBranding variant="instructions" />
+        <AssessmentBranding variant="instructions" customInstitution={institutionBranding || assessment?.institution} />
       </header>
 
       {/* Candidate Metadata Sub-Bar */}

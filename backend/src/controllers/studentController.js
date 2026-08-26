@@ -425,7 +425,7 @@ When the student asks about their score, percentage, rank, or performance in ANY
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    const systemPrompt = `You are an expert STEM tutor, examination mentor, and NTA CBT test analyst for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
+    const systemPrompt = `You are an expert STEM tutor, examination mentor, and NEET / JEE CBT test analyst for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
 
 Student Name: ${studentName}
 ${subject ? `Subject Context: ${subject}` : ''}

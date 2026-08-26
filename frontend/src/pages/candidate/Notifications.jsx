@@ -153,7 +153,7 @@ export default function Notifications() {
                 <BookOpen className="h-4 w-4" />
               </div>
               <h3 className="font-extrabold text-slate-900 dark:text-white text-xs group-hover:text-blue-600">My Test Series →</h3>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Access your enrolled NTA CBT mock test packages and practice papers.</p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">Access your enrolled NEET / JEE CBT mock test packages and practice papers.</p>
             </Link>
 
             <Link

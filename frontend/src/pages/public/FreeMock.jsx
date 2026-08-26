@@ -119,7 +119,7 @@ export default function FreeMock() {
             <div className="max-w-xl">
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00F0FF] backdrop-blur-sm">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
-                ₹0 · Full NTA CBT Pattern
+                ₹0 · Full NEET / JEE CBT Pattern
               </div>
 
               <h1 className="mt-3.5 text-3xl font-extrabold tracking-tight text-[#F5F6FA] sm:text-4xl lg:text-5xl">
@@ -130,7 +130,7 @@ export default function FreeMock() {
               </h1>
 
               <p className="mt-3 text-sm sm:text-base leading-relaxed text-[#94A3B8]">
-                Experience real NTA CBT environment — live countdown timer, question palette, rank predictor, and instant answer keys. Select your target track below.
+                Experience authentic CBT environment — live countdown timer, question palette, rank predictor, and instant answer keys. Select your target track below.
               </p>
             </div>
 
@@ -172,7 +172,7 @@ export default function FreeMock() {
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {[
-                  'NTA-style exam screen',
+                  'Authentic CBT exam screen',
                   'Live timer & section switch',
                   'Instant All India Rank',
                   'Detailed step solutions',

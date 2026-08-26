@@ -6,7 +6,7 @@ export default function TestSeriesCard({ series }) {
   const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
   const price = Number(series.price).toLocaleString('en-IN');
-  const tags = theme.tags || ['NTA CBT Screen', 'All India Rank', 'Step Solutions'];
+  const tags = theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
 
   return (
     <Link

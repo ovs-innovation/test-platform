@@ -18,7 +18,7 @@ import GeoPatternFlow from './auth/GeoPatternFlow.jsx';
 
 const STUDENT_POINTS = [
   'Structured mocks for JEE, NEET and Foundation',
-  'Real NTA CBT timer, palette & step solutions',
+  'Real NEET / JEE CBT timer, palette & step solutions',
   'Instant All India Ranks & performance analytics',
 ];
 

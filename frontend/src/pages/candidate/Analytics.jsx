@@ -679,7 +679,7 @@ export default function Analytics() {
         <div className="rounded-2xl bg-amber-500/10 border border-amber-500/20 p-4 flex items-start gap-3 text-xs text-amber-900 dark:text-amber-200">
           <Brain className="w-5 h-5 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
           <div>
-            <p className="font-bold text-amber-800 dark:text-amber-300 mb-0.5">Recommended NTA Exam Time Allocation Strategy</p>
+            <p className="font-bold text-amber-800 dark:text-amber-300 mb-0.5">Recommended Exam Time Allocation Strategy</p>
             <p className="text-amber-800/90 dark:text-amber-200/80 leading-relaxed font-medium">
               Aim for ~50 seconds on single choice MCQs, ~90 seconds on multi-select/assertion-reason, and 2 minutes on numerical problems.
               Reserve the final 15 minutes to review marked-for-review questions.

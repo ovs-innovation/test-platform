@@ -296,7 +296,7 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
       </label>
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" name="negative_marking" checked={settings.negative_marking} onChange={onChange} className="h-4 w-4 rounded" />
-        Enable negative marking (NTA-style)
+        Enable negative marking (Standard CBT style)
       </label>
       {settings.negative_marking && (
         <div className="max-w-xs">

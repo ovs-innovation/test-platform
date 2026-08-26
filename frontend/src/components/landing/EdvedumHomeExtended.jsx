@@ -16,8 +16,8 @@ const STEPS = [
 
 const MINI_FAQ = [
   {
-    q: 'Does the interface match NTA CBT?',
-    a: 'Yes. Navigation, timer, palette colors, mark-for-review and submit flow strictly follow the official NTA exam pattern.',
+    q: 'Does the interface match NEET / JEE CBT?',
+    a: 'Yes. Navigation, timer, palette colors, mark-for-review and submit flow strictly follow the official NEET / JEE exam pattern.',
   },
   {
     q: 'Can I attempt a free mock first?',

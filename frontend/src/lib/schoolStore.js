@@ -476,7 +476,7 @@ export function getAssignedTestSeriesForCourse(courseName = '') {
       id: 'ts-101',
       title: 'AIETS 2026 National Level CBT Test Series',
       totalTests: 39,
-      type: 'NTA Pattern Full CBT',
+      type: 'NEET / JEE Pattern Full CBT',
       validity: 'June 2026',
       status: 'Active License',
     },

@@ -10,7 +10,7 @@ export default function HeroSection({ seriesCount = 0 }) {
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
             <p className="text-caption font-bold uppercase tracking-widest text-brand-600">
-              NTA mock tests · JEE · NEET UG · NEET PG
+              NEET / JEE mock tests · JEE · NEET UG · NEET PG
             </p>
 
             <h1 className="text-display mt-4 text-balance">
@@ -19,7 +19,7 @@ export default function HeroSection({ seriesCount = 0 }) {
             </h1>
 
             <p className="mt-6 text-lg leading-relaxed text-slate-600">
-              AssessPro is built for one job: put you inside the real NTA computer-based test —
+              AssessPro is built for one job: put you inside the real NEET / JEE computer-based test —
               white canvas, timer, palette, sections — before exam day.
             </p>
 

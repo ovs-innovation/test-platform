@@ -37,7 +37,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
     const result = await query(
       `
       SELECT COALESCE(a.id, t.id) AS id, COALESCE(a.title, t.test_name, t.title) AS title,
-             COALESCE(a.description, t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+             COALESCE(a.description, t.syllabus, 'Proctored NEET / JEE CBT format diagnostic mock exam.') AS description,
              COALESCE(a.instructions, 'Standard examination instructions apply.') AS instructions,
              COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes,
              COALESCE(a.passing_marks, 0) AS passing_marks,
@@ -108,7 +108,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
 
       UNION ALL
 
-      SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NTA CBT format diagnostic mock exam.') AS description,
+      SELECT t.id, COALESCE(t.test_name, t.title) AS title, COALESCE(t.syllabus, 'Proctored NEET / JEE CBT format diagnostic mock exam.') AS description,
              'Standard examination instructions apply.' AS instructions, t.duration_minutes,
              0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
@@ -320,11 +320,34 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
     series_slug = slugRes.rows[0].slug;
   }
 
+  let institutionObj = null;
+  if (instId) {
+    const instRes = await query(
+      `SELECT id, name, logo_url, logo_badge, code FROM institutions WHERE id = $1`,
+      [instId]
+    ).catch(() => ({ rows: [] }));
+    if (instRes.rows.length > 0) {
+      const row = instRes.rows[0];
+      institutionObj = {
+        id: row.id,
+        name: row.name,
+        logo_url: row.logo_url || '',
+        logo_badge: row.logo_badge || (row.name ? row.name.substring(0, 3).toUpperCase() : 'INST'),
+        code: row.code || '',
+      };
+    }
+  }
+
   res.json({
     assessment: {
       ...assessmentRow,
       access_type: invite.rowCount ? 'invite' : 'enrollment',
       series_slug,
+      institution: institutionObj,
+      institution_id: institutionObj?.id || null,
+      institution_name: institutionObj?.name || null,
+      institution_logo_url: institutionObj?.logo_url || null,
+      institution_logo_badge: institutionObj?.logo_badge || null,
     },
   });
 });
@@ -508,8 +531,8 @@ export const importScheduleCsv = asyncHandler(async (req, res) => {
         RETURNING *`,
         [
           title,
-          `${item.phase || 'CONCEPT_BUILDING'} Phase - NTA Pattern ${item.type}`,
-          'Authentic NTA-pattern CBT test.',
+          `${item.phase || 'CONCEPT_BUILDING'} Phase - NEET / JEE Pattern ${item.type}`,
+          'Authentic NEET / JEE pattern CBT test.',
           item.sequence || 0,
           item.type,
           item.phase || 'CONCEPT_BUILDING',

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const TILES = [
   {
-    title: 'NTA-style CBT',
+    title: 'NEET / JEE CBT',
     desc: 'Sections, timer, palette, mark for review — same patterns as the real exam.',
     to: '/free-mock',
     label: 'Try free mock',

@@ -55,6 +55,7 @@ export default function ExamScreen() {
   const [imgZoom, setImgZoom] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
   const [pdfMode, setPdfMode] = useState('hidden'); // 'split' | 'full' | 'hidden'
+  const [institutionBranding, setInstitutionBranding] = useState(null);
 
   const finishedRef = useRef(false);
   const endsAtRef = useRef(null);
@@ -62,6 +63,8 @@ export default function ExamScreen() {
 
   useEffect(() => {
     let cancelled = false;
+    setInstitutionBranding(null);
+    setLoading(true);
     (async () => {
       try {
         const data = await attemptService.getState(attemptId);
@@ -70,6 +73,13 @@ export default function ExamScreen() {
           navigate(`/results/${attemptId}`, { replace: true });
           return;
         }
+        const inst = data.institution || data.assessment?.institution || (data.assessment?.institution_id || data.assessment?.institution_name ? {
+          id: data.assessment.institution_id,
+          name: data.assessment.institution_name,
+          logo_url: data.assessment.institution_logo_url,
+          logo_badge: data.assessment.institution_logo_badge,
+        } : null);
+        setInstitutionBranding(inst);
         setSections(data.sections || []);
         setQuestions(data.questions);
         setMeta(data.assessment);
@@ -123,6 +133,7 @@ export default function ExamScreen() {
         const ok = await requestFullscreen().then(() => true).catch(() => false);
         if (!ok && !isFullscreen()) setNeedsFullscreen(true);
       } catch (err) {
+        if (cancelled) return;
         toast.error(err.message || 'Could not load assessment');
         navigate('/assessments', { replace: true });
       }
@@ -468,7 +479,7 @@ export default function ExamScreen() {
       <header className="nta-bar sticky top-0 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2">
           <div className="flex items-center gap-3 min-w-0">
-            <AssessmentBranding variant="cbt" />
+            <AssessmentBranding variant="cbt" customInstitution={institutionBranding || meta?.institution} />
             <div className="min-w-0">
               <p className="truncate text-sm font-bold">{meta?.title}</p>
               <p className="text-xs text-blue-100">

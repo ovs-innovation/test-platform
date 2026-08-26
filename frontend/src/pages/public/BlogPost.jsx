@@ -65,7 +65,7 @@ export default function BlogPost() {
       <EdvedumCtaStrip
         badge="STUDENT PREPARATION"
         title="Ready to test your exam preparation?"
-        desc="Take NTA-level CBT mock tests, analyze weak areas, and boost your score."
+        desc="Take NEET / JEE level CBT mock tests, analyze weak areas, and boost your score."
         primary={{ to: "/test-series", label: "Explore Test Series" }}
         secondary={{ to: "/free-mock", label: "Take Free Mock" }}
       />

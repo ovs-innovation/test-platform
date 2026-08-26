@@ -32,7 +32,7 @@ const WHY_JOIN = [
   {
     icon: Zap,
     title: 'Innovation & AI First',
-    description: 'Build and leverage real-time diagnostic AI, authentic NTA CBT simulators, and high-scale analytics.',
+    description: 'Build and leverage real-time diagnostic AI, authentic NEET / JEE CBT simulators, and high-scale analytics.',
     glowColor: 'border-blue-500/30 bg-blue-50 text-[#0D6EFD]',
   },
   {
@@ -94,7 +94,7 @@ export default function Careers() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="mt-5 mx-auto max-w-2xl text-lg sm:text-xl leading-relaxed text-[#94A3B8]"
           >
-            Join the team building India’s future doctors &amp; engineers with AI-powered CBT test analytics and authentic NTA mock exam preparation.
+            Join the team building India’s future doctors &amp; engineers with AI-powered CBT test analytics and authentic NEET / JEE mock exam preparation.
           </motion.p>
         </div>
       </section>

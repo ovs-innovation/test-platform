@@ -19,7 +19,7 @@ const SLIDES = [
     shortBadge: 'NEET',
     image: '/edvedum/neet-student-ai.png',
     fallbackImage: '/edvedum/student-neet.png',
-    alt: 'NEET aspirant preparing with EDVEDUM NTA mocks',
+    alt: 'NEET aspirant preparing with EDVEDUM NEET / JEE mocks',
     badgeStyle: 'bg-gradient-to-r from-[#1d4ed8] to-[#1e40af] text-white border-blue-300/60 shadow-blue-500/35',
     accentText: 'text-[#93c5fd]',
     sub: 'NCERT-Aligned Biology & Physics Track',

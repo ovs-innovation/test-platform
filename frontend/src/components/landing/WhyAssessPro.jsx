@@ -6,7 +6,7 @@ const WRONG = [
 ];
 
 const RIGHT = [
-  'NTA white-screen CBT',
+  'NEET / JEE white-screen CBT',
   'Fullscreen + proctoring',
   'Section tabs & palette',
   'Rank after every mock',
@@ -18,7 +18,7 @@ export default function WhyAssessPro() {
       <div className="container-app">
         <div className="max-w-2xl">
           <p className="text-sm font-semibold text-red-500">The problem</p>
-          <h2 className="mt-1 text-3xl font-bold text-slate-900">Coaching tests ≠ NTA exam day</h2>
+          <h2 className="mt-1 text-3xl font-bold text-slate-900">Coaching tests ≠ NEET / JEE exam day</h2>
           <p className="mt-4 text-slate-600">
             Students practice one way and write the exam another. That gap costs marks — and confidence.
           </p>

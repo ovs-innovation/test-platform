@@ -80,7 +80,7 @@ const PAID_SERIES = [
   {
     title: 'AIETS JEE Main Full-Length Mock Test Pack',
     slug: 'aiets-jee-main-mock-pack',
-    description: '8 full-length NTA CBT mock tests for JEE Main with Physics, Chemistry and Mathematics, All India Rank and detailed solutions.',
+    description: '8 full-length JEE CBT mock tests for JEE Main with Physics, Chemistry and Mathematics, All India Rank and detailed solutions.',
     price: 999.00,
     is_free: false,
     validity_days: 180,
@@ -142,7 +142,7 @@ const FREE_SERIES = [
   {
     title: 'JEE Main Full-Length Diagnostic Mock',
     slug: 'jee-main-diagnostic-free',
-    description: 'Full-length JEE Main diagnostic mock covering Physics, Chemistry and Mathematics with NTA CBT pattern, All India Rank and instant score analysis.',
+    description: 'Full-length JEE Main diagnostic mock covering Physics, Chemistry and Mathematics with JEE CBT pattern, All India Rank and instant score analysis.',
     price: 0.00,
     is_free: true,
     validity_days: 365,

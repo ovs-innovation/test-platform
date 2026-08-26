@@ -22,7 +22,7 @@ export const B2B_PACKAGES = [
     baseRetailPrice: 1999,
     popular: true,
     features: [
-      '39 NTA-Pattern Full CBT Tests',
+      '39 NEET UG-Pattern Full CBT Tests',
       'All India Student Ranking & State Benchmark',
       'Detailed Subject-Wise & Chapter-Wise Reports',
       'Curated eBooks & Digital Solution PDFs',
@@ -50,7 +50,7 @@ export const B2B_PACKAGES = [
     baseRetailPrice: 3999,
     popular: false,
     features: [
-      '60 NTA-Pattern Full CBT Tests across 2 Years',
+      '60 NEET UG-Pattern Full CBT Tests across 2 Years',
       'Continuous 24-Month Progress Tracking',
       'Chapter-by-Chapter Foundation Drills',
       'All India & Regional Peer Benchmarking',
@@ -125,7 +125,7 @@ export const INTERESTED_PACKAGES = [
 export const B2B_FAQS = [
   {
     q: 'What is AIETS and how does it benefit our institution?',
-    a: 'AIETS (All India Edvedum Test Series) is Edvedum’s national-level testing program designed to provide structured assessments, realistic NTA-pattern CBT practice, national rankings, subject-wise analytics, detailed solution PDFs, and personalized improvement insights for NEET aspirants.',
+    a: 'AIETS (All India Edvedum Test Series) is Edvedum’s national-level testing program designed to provide structured assessments, realistic NEET / JEE-pattern CBT practice, national rankings, subject-wise analytics, detailed solution PDFs, and personalized improvement insights for NEET aspirants.',
   },
   {
     q: 'How does bulk student onboarding work for partner institutions?',

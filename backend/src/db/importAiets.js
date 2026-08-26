@@ -113,7 +113,7 @@ export const importAietsRecords = async (clientOrPool = pool) => {
     image_url: '/test-series/neet.svg',
     highlights: JSON.stringify(['AIETS', 'AIR Ranking', 'Performance Analytics']),
     learning_outcomes: JSON.stringify([
-      'Master NTA time allocation and section navigation',
+      'Master NEET / JEE time allocation and section navigation',
       'Identify chapter-wise knowledge gaps and weak areas'
     ]),
     included_resources: JSON.stringify([
@@ -230,8 +230,8 @@ export const importAietsRecords = async (clientOrPool = pool) => {
       RETURNING id`,
       [
         title,
-        `${item.phase.replace('_', ' ')} Phase - NTA Pattern ${item.type.replace('_', ' ')}`,
-        'Authentic NTA-pattern CBT test. Ensure stable connection.',
+        `${item.phase.replace('_', ' ')} Phase - NEET / JEE Pattern ${item.type.replace('_', ' ')}`,
+        'Authentic NEET / JEE-pattern CBT test. Ensure stable connection.',
         item.sequence,
         item.type,
         item.phase,

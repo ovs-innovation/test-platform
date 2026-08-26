@@ -38,7 +38,7 @@ const THEMES = {
     accentText: 'text-[#0D6EFD]',
     chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
     btnGradient: 'bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8] text-white shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/40',
-    tags: ['Physics, Chem & Maths', 'NTA CBT Interface', 'AIR Rank'],
+    tags: ['Physics, Chem & Maths', 'JEE CBT Interface', 'AIR Rank'],
   },
   neet: {
     categoryKey: 'neet',
@@ -108,7 +108,7 @@ const THEMES = {
     accentText: 'text-[#0891b2]',
     chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
     btnGradient: 'bg-gradient-to-r from-[#06b6d4] via-[#0891b2] to-[#0e7490] text-white shadow-lg shadow-cyan-500/25 hover:shadow-xl hover:shadow-cyan-500/40',
-    tags: ['No Cost', 'NTA Screen', 'Instant AIR'],
+    tags: ['No Cost', 'CBT Screen', 'Instant AIR'],
   },
 };
 
@@ -203,7 +203,7 @@ export function getSeriesBlurb(series) {
     return `${count} NEET PG mocks with clinical focus, rank, and solution review.`;
   }
   if (isNeetUg(text)) {
-    return `${count} NEET UG mocks with PCB sections, rank, and NTA-style interface.`;
+    return `${count} NEET UG mocks with PCB sections, rank, and NEET UG-style interface.`;
   }
   return `${count} proctored mocks over ${days} days — rank, analytics, and solutions included.`;
 }

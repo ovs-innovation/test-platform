@@ -28,7 +28,7 @@ const SERIES = [
   {
     title: 'JEE Main Full Test Series 2026',
     slug: 'jee-main-2026',
-    description: '10 full-length JEE Main mock tests with NTA-style CBT interface, detailed solutions and analytics.',
+    description: '10 full-length JEE Main mock tests with JEE CBT interface, detailed solutions and analytics.',
     price: 999,
     validity_days: 365,
     exam_type: 'JEE Main',
@@ -117,7 +117,7 @@ export const seedPlatform = async (client) => {
 
     const chs = await client.query('SELECT id, name FROM chapters');
     for (const ch of chs.rows) {
-      const list = TOPIC_SEED[ch.name] || ['Fundamental Concepts', 'Advanced Problem Solving', 'NTA PYQ Drills'];
+      const list = TOPIC_SEED[ch.name] || ['Fundamental Concepts', 'Advanced Problem Solving', 'PYQ Drills'];
       for (let i = 0; i < list.length; i++) {
         await client.query(
           'INSERT INTO topics (chapter_id, name, position) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',

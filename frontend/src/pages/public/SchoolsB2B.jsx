@@ -564,7 +564,7 @@ export default function SchoolsB2B() {
                   Power Your Institution’s Results with AIETS
                 </h1>
                 <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
-                  NTA-Pattern CBT Test Series
+                  NEET / JEE-Pattern CBT Test Series
                 </p>
               </div>
 
@@ -793,12 +793,12 @@ export default function SchoolsB2B() {
               </div>
 
               <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
-                AIETS is Edvedum’s national-level testing program designed to provide structured assessments, realistic NTA-pattern CBT practice, All India ranking, granular performance analytics, detailed step-by-step solution PDFs, and personalized improvement insights for NEET aspirants.
+                AIETS is Edvedum’s national-level testing program designed to provide structured assessments, realistic NEET / JEE-pattern CBT practice, All India ranking, granular performance analytics, detailed step-by-step solution PDFs, and personalized improvement insights for NEET aspirants.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-4 pt-1">
                 <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
-                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Authentic NTA CBT Interface</h4>
+                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Authentic NEET / JEE CBT Interface</h4>
                   <p className="text-xs text-[#5D6B82]">Exact timer, question palette, section navigation, and proctoring controls.</p>
                 </div>
                 <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
@@ -821,7 +821,7 @@ export default function SchoolsB2B() {
                     <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
                       <Check className="h-4 w-4" />
                     </div>
-                    <span><strong className="text-[#101828]">NTA-Style Practice Interface:</strong> Authentic exam environment builds student confidence.</span>
+                    <span><strong className="text-[#101828]">NEET / JEE Practice Interface:</strong> Authentic exam environment builds student confidence.</span>
                   </li>
                   <li className="flex items-start gap-3">
                     <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
@@ -984,7 +984,7 @@ export default function SchoolsB2B() {
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: 'National-Level Test Series', desc: '39 NTA-style practice CBT assessments curated by senior academic faculty.', icon: Award, color: 'blue', isFuture: false },
+              { title: 'National-Level Test Series', desc: '39 NEET UG practice CBT assessments curated by senior academic faculty.', icon: Award, color: 'blue', isFuture: false },
               { title: 'AI-Based Performance Analytics', desc: 'Evaluates student speed, accuracy, question time distribution, and topic mastery.', icon: Sparkles, color: 'cyan', isFuture: false },
               { title: 'All India Student Ranking', desc: 'Benchmarks scores nationally via AIR, State, City, and Institute rank cards.', icon: TrendingUp, color: 'purple', isFuture: false },
               { title: 'Subject-Wise & Chapter Reports', desc: 'Granular analytics breakdown across Physics, Chemistry, Botany, and Zoology.', icon: BarChart3, color: 'emerald', isFuture: false },
@@ -1260,7 +1260,7 @@ export default function SchoolsB2B() {
                         <TrendingUp className="h-3.5 w-3.5 text-cyan-600" />
                         <span>Batch Progress</span>
                       </span>
-                      <span className="text-[10px] font-mono text-[#2563EB] font-bold">100% NTA</span>
+                      <span className="text-[10px] font-mono text-[#2563EB] font-bold">100% NEET UG</span>
                     </div>
                     <div className="space-y-1.5 text-[10.5px] text-[#5D6B82]">
                       <div className="p-1.5 rounded-lg bg-white border border-[#DCE5F1] space-y-1">
@@ -1596,7 +1596,7 @@ export default function SchoolsB2B() {
               </div>
 
               <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
-                Transform your institution's results with NTA-style CBT mock assessments, All India Ranks, and real-time student performance analytics.
+                Transform your institution's results with NEET / JEE CBT mock assessments, All India Ranks, and real-time student performance analytics.
               </p>
 
               <div className="space-y-2.5 pt-1">

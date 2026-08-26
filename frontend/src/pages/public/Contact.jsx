@@ -124,7 +124,7 @@ export default function Contact() {
 
       <EdvedumCtaStrip
         title="Need help during a mock?"
-        desc="Our platform follows the NTA CBT pattern. Contact support if anything does not work as expected."
+        desc="Our platform follows the NEET / JEE CBT pattern. Contact support if anything does not work as expected."
         primary={{ to: '/faqs', label: 'View FAQs' }}
         secondary={{ to: '/free-mock', label: 'Try free mock' }}
       />

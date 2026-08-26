@@ -30,7 +30,7 @@ export default function Blog() {
               Articles, Exam Strategies & Updates
             </h1>
             <p className="max-w-2xl text-sm sm:text-base font-medium text-slate-600">
-              Expert insights, preparation guides, and NTA CBT exam tips curated for JEE, NEET & Foundation aspirants.
+              Expert insights, preparation guides, and NEET / JEE CBT exam tips curated for JEE, NEET & Foundation aspirants.
             </p>
           </div>
         </div>
@@ -103,7 +103,7 @@ export default function Blog() {
       <EdvedumCtaStrip
         badge="STUDENT PREPARATION"
         title="Ready to test your exam preparation?"
-        desc="Take NTA-level CBT mock tests, analyze weak areas, and boost your score."
+        desc="Take NEET / JEE level CBT mock tests, analyze weak areas, and boost your score."
         primary={{ to: "/test-series", label: "Explore Test Series" }}
         secondary={{ to: "/free-mock", label: "Take Free Mock" }}
       />

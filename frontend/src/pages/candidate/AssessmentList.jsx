@@ -32,7 +32,7 @@ export function AssessmentCard({ a }) {
           )}
         </div>
         <p className="mt-1.5 line-clamp-2 text-[11px] text-slate-500 dark:text-slate-400 font-normal">
-          {a.description || 'Proctored NTA CBT format diagnostic mock exam.'}
+          {a.description || 'Proctored CBT format diagnostic mock exam.'}
         </p>
 
         {(a.ebook_pdf_url || a.ebook_title) && (
@@ -162,7 +162,7 @@ export default function AssessmentList() {
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-300">
                 <ShieldCheck className="h-4 w-4" />
               </div>
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-xs">Real NTA CBT Simulation</h3>
+              <h3 className="font-extrabold text-slate-900 dark:text-white text-xs">Real CBT Mock Simulation</h3>
               <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
                 Full-screen proctored environment with live timer, question palette grid, and violation logging.
               </p>

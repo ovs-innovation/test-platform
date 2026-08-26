@@ -309,7 +309,7 @@ export const CUSTOMER_CARE_FAQS = [
   },
   {
     title: 'What is the CBT exam interface like?',
-    content: 'Our platform mirrors the NTA exam interface — timer, question palette, mark for review, and section navigation — so you practice in a real exam-like environment.',
+    content: 'Our platform mirrors the NEET / JEE exam interface — timer, question palette, mark for review, and section navigation — so you practice in a real exam-like environment.',
   },
   {
     title: 'How can I contact support?',

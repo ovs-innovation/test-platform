@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const STEPS = [
   { title: 'Create account', desc: 'Free signup. No card needed for your first mock.' },
   { title: 'Enroll in a series', desc: 'JEE, NEET UG, NEET PG packs — or start with a free test.' },
-  { title: 'Sit the NTA mock', desc: 'Fullscreen CBT with timer, palette and proctoring.' },
+  { title: 'Sit the NEET / JEE mock', desc: 'Fullscreen CBT with timer, palette and proctoring.' },
   { title: 'Review & improve', desc: 'Score, rank, solutions and topic-wise breakdown.' },
 ];
 

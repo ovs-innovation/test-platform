@@ -25,7 +25,7 @@ const seedTestSeriesTests = async () => {
              VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id`,
             [
               'JEE Main Practice Mock 1',
-              'Full syllabus practice mock test matching NTA standards.',
+              'Full syllabus practice mock test matching NEET / JEE standards.',
               'Instructions: Attempt all questions. Each correct MCQ gets 4 marks. No negative marking is configured in this practice mock.',
               180,
               100,

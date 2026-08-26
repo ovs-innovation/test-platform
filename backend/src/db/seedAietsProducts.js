@@ -8,7 +8,7 @@ export const seedAietsProducts = async () => {
         title: 'NEET-UG 2027 Comprehensive Test Series',
         code: 'AIETS-NEET-2027-1Y',
         slug: 'neet-ug-2027-comprehensive-test-series',
-        description: 'All India Edvedum Test Series (AIETS) 1-Year Program for Class XII & Droppers. Authentic NTA-pattern CBT test series with All India Ranks, detailed step-by-step solution PDFs, and subject analytics.',
+        description: 'All India Edvedum Test Series (AIETS) 1-Year Program for Class XII & Droppers. Authentic NEET UG-pattern CBT test series with All India Ranks, detailed step-by-step solution PDFs, and subject analytics.',
         price: 1999.00,
         validity_days: 365,
         exam_type: 'NEET',
@@ -25,14 +25,14 @@ export const seedAietsProducts = async () => {
         is_featured: true,
         is_active: true,
         highlights: JSON.stringify([
-          '39 Authentic NTA-Pattern CBT Assessments',
+          '39 Authentic NEET UG-Pattern CBT Assessments',
           '14 AIETS + 12 Unit + 4 Part + 2 Cumulative + 7 Full Mocks',
           'All India Rank & State Level Peer Benchmarking',
           'Subject-Wise Speed & Accuracy Analytics',
-          'Complete NCERT-Aligned Solution PDFs'
+          'Curated eBooks & Digital Solution PDFs'
         ]),
         learning_outcomes: JSON.stringify([
-          'Master NTA time allocation and section navigation',
+          'Master NEET UG time allocation and section navigation',
           'Identify chapter-wise knowledge gaps and weak areas',
           'Improve problem-solving accuracy in Physics, Chemistry, Botany & Zoology'
         ]),
@@ -104,7 +104,7 @@ export const seedAietsProducts = async () => {
         is_featured: true,
         is_active: true,
         highlights: JSON.stringify([
-          '60 NTA-Pattern CBT Assessments over 24 Months',
+          '60 NEET UG-Pattern CBT Assessments over 24 Months',
           '22 AIETS + 15 Unit + 12 Part + 2 Cumulative + 9 Full Mocks',
           'Multilingual Support: English, Hindi & Bilingual',
           '2-Year Phased Syllabus Progression (Class 11 & Class 12)',

@@ -283,7 +283,7 @@ export default function Overview() {
                     </span>
                     <div className="min-w-0">
                       <p className="font-bold text-slate-900 dark:text-white truncate">{p.candidate_name || p.name || 'Candidate'}</p>
-                      <p className="text-[10px] text-slate-500 truncate">{p.assessment_title || 'NTA CBT Test'}</p>
+                      <p className="text-[10px] text-slate-500 truncate">{p.assessment_title || 'CBT Mock Test'}</p>
                     </div>
                   </div>
                   <div className="text-right">

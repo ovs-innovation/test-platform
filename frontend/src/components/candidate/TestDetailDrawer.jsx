@@ -170,6 +170,20 @@ export default function TestDetailDrawer({ test, onClose }) {
 
   const syllabusSections = getSyllabusSections(test);
 
+  const examTypeStr = `${test.exam_type || ''} ${test.title || ''} ${test.name || ''} ${test.series_title || ''}`.toLowerCase();
+  let formatLabel = 'CBT Interface';
+  let instructionBullet = 'Full CBT computer-based test platform interface.';
+  if (examTypeStr.includes('neet pg') || examTypeStr.includes('neet-pg')) {
+    formatLabel = 'NEET PG CBT Interface';
+    instructionBullet = 'Full NEET PG CBT computer-based test platform interface.';
+  } else if (examTypeStr.includes('neet') || examTypeStr.includes('biology')) {
+    formatLabel = 'NEET UG CBT Interface';
+    instructionBullet = 'Full NEET UG CBT computer-based test platform interface.';
+  } else if (examTypeStr.includes('jee')) {
+    formatLabel = 'JEE CBT Interface';
+    instructionBullet = 'Full JEE CBT computer-based test platform interface.';
+  }
+
   const drawerContent = (
     <div className="fixed inset-0 z-[999] overflow-hidden bg-slate-950/60 dark:bg-slate-950/80 backdrop-blur-md flex justify-end animate-in fade-in duration-200">
       {/* Full Backdrop Click Handler */}
@@ -249,7 +263,7 @@ export default function TestDetailDrawer({ test, onClose }) {
                 <Layers className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
                 <span>Format</span>
               </div>
-              <p className="text-sm font-extrabold text-slate-900 dark:text-white">NTA CBT Interface</p>
+              <p className="text-sm font-extrabold text-slate-900 dark:text-white">{formatLabel}</p>
             </div>
           </div>
 
@@ -280,7 +294,7 @@ export default function TestDetailDrawer({ test, onClose }) {
               <span>Exam Environment Instructions</span>
             </p>
             <ul className="list-disc list-inside space-y-1 text-slate-700 dark:text-slate-300">
-              <li>Full NTA CBT computer-based test platform interface.</li>
+              <li>{instructionBullet}</li>
               <li>Camera proctoring & tab-switch tracking enabled.</li>
               <li>Detailed All India Rank (AIR) and analysis after test window completion.</li>
             </ul>

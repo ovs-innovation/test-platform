@@ -161,7 +161,7 @@ export default function Settings() {
               <label className="flex items-center justify-between p-3 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 cursor-pointer">
                 <div>
                   <p className="text-xs font-bold text-slate-900 dark:text-white">CBT Test Schedule Reminders</p>
-                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Get alerts 1 hour before scheduled NTA mock tests start.</p>
+                  <p className="text-[10.5px] text-slate-500 dark:text-slate-400">Get alerts 1 hour before scheduled NEET / JEE mock tests start.</p>
                 </div>
                 <input
                   type="checkbox"

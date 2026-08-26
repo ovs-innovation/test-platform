@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { Building2 } from 'lucide-react';
 
@@ -13,13 +13,60 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
   const { user } = useAuth();
   const [imgError, setImgError] = useState(false);
 
-  // Authoritative server student institution relationship
-  const instId = customInstitution?.id || user?.institution_id || user?.institutionId;
-  const instName = customInstitution?.name || user?.institution_name || user?.institutionName;
-  const logoUrl = customInstitution?.logo_url || user?.institution_logo_url || user?.logoUrl;
-  const logoBadge = customInstitution?.logo_badge || user?.institution_logo_badge || (instName ? instName.substring(0, 3).toUpperCase() : 'INST');
+  let activeStudent = null;
+  if (!user?.institution_id && !user?.institution && !customInstitution) {
+    try {
+      const saved = localStorage.getItem('edvedum_active_student');
+      if (saved) activeStudent = JSON.parse(saved);
+    } catch (_) {}
+  }
 
-  const isInstitutionLinked = Boolean(instId && instName);
+  // Authoritative server student institution relationship
+  const instId =
+    customInstitution?.id ||
+    customInstitution?.institution_id ||
+    user?.institution?.id ||
+    user?.institution_id ||
+    user?.institutionId ||
+    activeStudent?.institution?.id ||
+    activeStudent?.institution_id;
+
+  const instName =
+    customInstitution?.name ||
+    customInstitution?.institution_name ||
+    user?.institution?.name ||
+    user?.institution_name ||
+    user?.institutionName ||
+    activeStudent?.institution?.name ||
+    activeStudent?.institution_name;
+
+  const logoUrl =
+    customInstitution?.logo_url ||
+    customInstitution?.logoUrl ||
+    user?.institution?.logo_url ||
+    user?.institution?.logoUrl ||
+    user?.institution_logo_url ||
+    user?.logoUrl ||
+    activeStudent?.institution?.logo_url ||
+    activeStudent?.institution_logo_url;
+
+  const logoBadge =
+    customInstitution?.logo_badge ||
+    customInstitution?.badge ||
+    customInstitution?.logoBadge ||
+    user?.institution?.logo_badge ||
+    user?.institution?.badge ||
+    user?.institution?.logoBadge ||
+    user?.institution_logo_badge ||
+    activeStudent?.institution?.logo_badge ||
+    activeStudent?.institution?.badge ||
+    (instName ? instName.substring(0, 3).toUpperCase() : 'INST');
+
+  useEffect(() => {
+    setImgError(false);
+  }, [logoUrl, instId, instName]);
+
+  const isInstitutionLinked = Boolean(instId || instName);
 
   // Fallback logo renderer (safely handles missing or broken logo images)
   const renderLogo = (sizeClass = 'h-8 w-8') => {
@@ -55,7 +102,7 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
             {renderLogo('h-9 w-9')}
             <div className="min-w-0">
               <h2 className="truncate text-sm font-extrabold tracking-wide uppercase text-white">
-                {instName}
+                {instName || 'INSTITUTION'}
               </h2>
               <p className="text-[11px] font-medium text-slate-300">
                 Computer Based Test — General Instructions
@@ -72,13 +119,19 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
 
     // Default Direct EDVEDUM Student Header
     return (
-      <div className="nta-bar px-4 py-2.5">
-        <p className="text-sm font-black uppercase tracking-wide text-white">
-          Computer Based Test — General Instructions
-        </p>
-        <p className="mt-0.5 text-xs font-medium text-blue-100 dark:text-blue-200">
-          Read all instructions carefully before proceeding
-        </p>
+      <div className="nta-bar px-4 py-2.5 flex items-center justify-between">
+        <div>
+          <p className="text-sm font-black uppercase tracking-wide text-white">
+            Computer Based Test — General Instructions
+          </p>
+          <p className="mt-0.5 text-xs font-medium text-blue-100 dark:text-blue-200">
+            Read all instructions carefully before proceeding
+          </p>
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-200 bg-blue-950/60 px-3 py-1 rounded-full border border-blue-800/60">
+          <span className="text-slate-400 font-normal">Powered by</span>
+          <span className="font-extrabold tracking-wide text-white">EDVEDUM</span>
+        </div>
       </div>
     );
   }
@@ -105,5 +158,21 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
   }
 
   // Default Direct EDVEDUM Student CBT Brand
-  return null;
+  return (
+    <div className="flex items-center gap-2.5 min-w-0">
+      <div className="h-8 w-8 flex items-center justify-center rounded-md bg-gradient-to-br from-blue-600 to-indigo-700 font-extrabold text-xs text-white shadow-xs">
+        EDV
+      </div>
+      <div className="min-w-0">
+        <div className="flex items-center gap-2">
+          <h2 className="truncate text-xs font-black uppercase tracking-wider text-amber-300">
+            EDVEDUM ACADEMY
+          </h2>
+          <span className="hidden sm:inline-block text-[10px] font-bold text-blue-200 bg-blue-900/50 px-1.5 py-0.5 rounded border border-blue-700/50">
+            Powered by EDVEDUM
+          </span>
+        </div>
+      </div>
+    </div>
+  );
 }

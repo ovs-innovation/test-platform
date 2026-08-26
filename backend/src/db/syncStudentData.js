@@ -88,7 +88,7 @@ export async function syncStudentData() {
       const notifItems = [
         {
           title: 'Welcome to EDVEDUM Academy',
-          body: 'Explore test series and start your NTA CBT preparation journey.',
+          body: 'Explore test series and start your NEET / JEE CBT preparation journey.',
           type: 'welcome'
         },
         {

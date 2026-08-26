@@ -25,7 +25,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getTestSeriesCover } from '../../lib/testSeriesCover.js';
 
-const INCLUDES = ['NTA CBT Screen', 'Live Timer', 'Question Palette', 'AIR Rank & Solutions'];
+
 
 const loadRazorpay = () =>
   new Promise((resolve) => {
@@ -221,6 +221,31 @@ export default function TestSeriesDetail() {
     ? { aiets: 22, unit: 15, part: 12, cumulative: 2, fullMock: 9, duration: '24 Months' }
     : { aiets: 14, unit: 12, part: 4, cumulative: 2, fullMock: 7, duration: 'October 2026 – April 2027' };
 
+  const examTypeStr = `${series?.exam_type || ''} ${series?.title || ''} ${series?.slug || ''}`.toLowerCase();
+  let examCategoryLabel = 'CBT';
+  let includesCbtTag = 'CBT Interface';
+  let simulatorTitle = 'CBT Exam Simulator';
+  let simulatorDesc = 'Exact reproduction of CBT testing UI, question palette, timer, and section navigation.';
+
+  if (examTypeStr.includes('neet pg') || examTypeStr.includes('neet-pg')) {
+    examCategoryLabel = 'NEET PG';
+    includesCbtTag = 'NEET PG CBT Interface';
+    simulatorTitle = 'NEET PG CBT Exam Simulator';
+    simulatorDesc = 'Exact reproduction of NEET PG testing UI, question palette, timer, and section navigation.';
+  } else if (examTypeStr.includes('neet')) {
+    examCategoryLabel = 'NEET UG';
+    includesCbtTag = 'NEET UG CBT Interface';
+    simulatorTitle = 'NEET UG CBT Exam Simulator';
+    simulatorDesc = 'Exact reproduction of NEET UG testing UI, question palette, timer, and section navigation.';
+  } else if (examTypeStr.includes('jee')) {
+    examCategoryLabel = 'JEE';
+    includesCbtTag = 'JEE CBT Interface';
+    simulatorTitle = 'JEE CBT Exam Simulator';
+    simulatorDesc = 'Exact reproduction of JEE testing UI, question palette, timer, and section navigation.';
+  }
+
+  const includesList = [includesCbtTag, 'Live Timer', 'Question Palette', 'AIR Rank & Solutions'];
+
   return (
     <div className="bg-slate-50 min-h-screen pb-20">
       {/* Top Notification Context Strip for Institutional Mode */}
@@ -297,7 +322,7 @@ export default function TestSeriesDetail() {
             <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{blurb}</p>
 
             <div className="flex flex-wrap gap-2 pt-1">
-              {INCLUDES.map((item) => (
+              {includesList.map((item) => (
                 <span
                   key={item}
                   className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 shadow-2xs"
@@ -529,7 +554,7 @@ export default function TestSeriesDetail() {
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
                   <span className="text-xs font-extrabold text-[#2563EB] uppercase">Exam Pattern</span>
-                  <p className="text-sm font-bold text-[#071833]">100% NTA NEET CBT Standard</p>
+                  <p className="text-sm font-bold text-[#071833]">100% NEET CBT Standard</p>
                 </div>
                 <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
                   <span className="text-xs font-extrabold text-[#2563EB] uppercase">Ranking & Analytics</span>
@@ -545,7 +570,7 @@ export default function TestSeriesDetail() {
               <div className="space-y-2">
                 <h3 className="text-xl font-extrabold text-[#071833]">Curriculum Test Structure</h3>
                 <p className="text-sm text-slate-600">
-                  Comprehensive assessment distribution designed for systematic syllabus coverage and NTA CBT mastery.
+                  Comprehensive assessment distribution designed for systematic syllabus coverage and {examCategoryLabel} CBT mastery.
                 </p>
               </div>
 
@@ -604,7 +629,7 @@ export default function TestSeriesDetail() {
               <div className="grid sm:grid-cols-2 gap-4">
                 {[
                   { title: 'All India Student Ranking', desc: 'Real-time percentile and rank calculation across thousands of aspirants nationwide.' },
-                  { title: 'NTA CBT Exam Simulator', desc: 'Exact reproduction of NTA testing UI, question palette, timer, and section navigation.' },
+                  { title: simulatorTitle, desc: simulatorDesc },
                   { title: 'Chapter-Wise Reports', desc: 'Deep diagnostic analysis pinpointing strong and weak topics for targeted improvement.' },
                   { title: 'Curated Solution PDFs', desc: 'Step-by-step step solutions, shortcut techniques, and NCERT page references.' },
                 ].map((b, i) => (

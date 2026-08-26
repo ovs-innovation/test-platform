@@ -633,7 +633,7 @@ export default function TestSeriesTab({
                         <h4 className={`text-xs font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{t.test_name || t.title || `AIETS Full Length Mock Test #${idx + 1}`}</h4>
                       </div>
                       <p className={`text-[11px] ${textMutedClass}`}>
-                        {t.duration_minutes || 180} Mins • {t.max_marks || 300} Marks • NTA CBT Pattern
+                        {t.duration_minutes || 180} Mins • {t.max_marks || 300} Marks • NEET / JEE CBT Pattern
                       </p>
                     </div>
                     {selectedSeries.isAssigned ? (

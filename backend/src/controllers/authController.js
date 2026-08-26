@@ -841,8 +841,8 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
         {
           id: 'test-101',
           assessment_id: 'test-101',
-          title: 'NTA JEE Main Full Mock Test #04 (AIETS Diagnostic)',
-          description: 'Comprehensive 3-hour NTA pattern examination with national ranking analytics.',
+          title: 'JEE Main Full Mock Test #04 (AIETS Diagnostic)',
+          description: 'Comprehensive 3-hour NEET / JEE pattern examination with national ranking analytics.',
           duration_minutes: 180,
           question_count: 75,
           total_marks: 300,

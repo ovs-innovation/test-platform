@@ -824,7 +824,7 @@ export const getTestPackages = asyncHandler(async (_req, res) => {
   // Ensure default institutional test packages exist
   const defaultPkgs = [
     { name: 'NEET-UG 2027 AIETS One-Year Complete Package', desc: 'Full access to 24 AIETS unit tests, part tests and cumulative grand mocks for NEET-UG 2027.', price: 49999.00 },
-    { name: 'JEE Main & Advanced 2026 AIETS Complete Test Package', desc: 'Comprehensive JEE Main and Advanced NTA CBT mock tests with video/PDF solutions.', price: 44999.00 },
+    { name: 'JEE Main & Advanced 2026 AIETS Complete Test Package', desc: 'Comprehensive JEE Main and Advanced CBT mock tests with video/PDF solutions.', price: 44999.00 },
     { name: 'NEET PG Clinical & High-Yield AIETS Test Package', desc: 'Clinical pattern mocks, image-based questions, and national rank benchmarking for NEET PG.', price: 29999.00 },
     { name: 'Foundation Class 10 Board & NTSE Mock Package', desc: 'Complete board preparation and NTSE/Olympiad foundation test series.', price: 14999.00 },
   ];

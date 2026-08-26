@@ -69,7 +69,7 @@ export default function About() {
           </h1>
           <div className="edvedum-title-accent mt-3 !from-cyan-400 !to-blue-400" aria-hidden />
           <p className="mt-4 max-w-2xl text-[15px] leading-relaxed text-white/65">
-            {COMPANY.tagline}. We combine classroom expertise with an NTA-style CBT platform so students practice under real exam conditions.
+            {COMPANY.tagline}. We combine classroom expertise with a NEET / JEE CBT platform so students practice under real exam conditions.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to="/test-series" className="edvedum-btn-gradient rounded-lg px-6 py-2.5 text-sm font-semibold text-white shadow-lg">

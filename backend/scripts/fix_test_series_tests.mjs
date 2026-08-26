@@ -24,7 +24,7 @@ async function fixTestSeriesData() {
         {
           slug: 'jee-main-2026',
           title: 'JEE Main 2026 Full Length Mock Test 1',
-          desc: 'Comprehensive 180-min NTA CBT Mock covering Physics, Chemistry, and Mathematics.',
+          desc: 'Comprehensive 180-min NEET / JEE CBT Mock covering Physics, Chemistry, and Mathematics.',
           duration: 180,
           passMarks: 100,
           label: 'Mock Test 1',
@@ -40,7 +40,7 @@ async function fixTestSeriesData() {
         {
           slug: 'jee-main-2026',
           title: 'JEE Main 2026 Full Length Mock Test 2',
-          desc: 'Practice Mock Test 2 matching latest NTA question distribution and numerical input formatting.',
+          desc: 'Practice Mock Test 2 matching latest NEET / JEE question distribution and numerical input formatting.',
           duration: 180,
           passMarks: 100,
           label: 'Mock Test 2',
@@ -54,7 +54,7 @@ async function fixTestSeriesData() {
         {
           slug: 'neet-ug-mock',
           title: 'NEET UG 2026 Full Mock Test 1',
-          desc: 'NTA NTA NCERT-based Biology, Physics, and Chemistry Mock test.',
+          desc: 'NCERT-based Biology, Physics, and Chemistry Mock test.',
           duration: 200,
           passMarks: 180,
           label: 'Mock Test 1',

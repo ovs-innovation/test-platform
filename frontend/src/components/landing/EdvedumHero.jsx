@@ -159,11 +159,11 @@ export default function EdvedumHero() {
               </span>
             </div>
 
-            {/* Badge 2: NTA Pattern Live (Desktop/Tablet only, hidden on mobile per specs) */}
+            {/* Badge 2: NEET / JEE Pattern Live (Desktop/Tablet only, hidden on mobile per specs) */}
             <div className="hidden md:inline-flex items-center gap-1.5 rounded-full border border-[#7C3AED]/40 bg-slate-950/80 px-3 py-1 sm:px-4 sm:py-1.5 backdrop-blur-xl shadow-sm">
               <Sparkles className="h-3.5 w-3.5 text-[#7C3AED]" />
               <span className="text-[10px] sm:text-[11px] font-semibold text-purple-300">
-                NTA Pattern Live
+                NEET / JEE Pattern Live
               </span>
             </div>
           </motion.div>

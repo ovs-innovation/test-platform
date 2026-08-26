@@ -18,7 +18,7 @@ const EXAM_TRACKS = [
   },
   {
     label: 'NEET UG',
-    desc: 'PCB · NTA pattern tests',
+    desc: 'PCB · NEET pattern tests',
     src: '/test-series/neet.svg',
     to: '/test-series?filter=neet',
     borderStyle: 'border-[#00F0FF]/40 hover:border-[#00F0FF] hover:shadow-lg hover:shadow-cyan-500/10',
@@ -55,7 +55,7 @@ export default function CatalogHero({ seriesCount = 0 }) {
           <div className="max-w-xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-[#00F0FF] backdrop-blur-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-[#00F0FF] animate-pulse" />
-              NTA-Style Full-Length Mocks
+              NEET / JEE Full-Length Mocks
             </div>
 
             <h1 className="mt-4 text-3xl font-extrabold leading-[1.12] tracking-tight sm:text-4xl lg:text-4xl text-[#F5F6FA]">
@@ -93,7 +93,7 @@ export default function CatalogHero({ seriesCount = 0 }) {
                 </div>
                 <div>
                   <p className="text-2xl font-extrabold text-white">CBT</p>
-                  <p className="text-xs font-medium text-[#94A3B8]">NTA interface</p>
+                  <p className="text-xs font-medium text-[#94A3B8]">NEET / JEE interface</p>
                 </div>
               </div>
             )}

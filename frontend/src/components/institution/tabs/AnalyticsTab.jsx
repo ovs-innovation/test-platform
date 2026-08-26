@@ -525,7 +525,7 @@ export default function AnalyticsTab({
             Detailed Analytics Populated Post Examination
           </h3>
           <p className={`text-xs max-w-md mx-auto leading-relaxed ${textMutedClass}`}>
-            As students complete full-length NTA CBT mock tests, chapterwise strength/weakness heatmaps and comparative accuracy curves will update here automatically.
+            As students complete full-length NEET / JEE CBT mock tests, chapterwise strength/weakness heatmaps and comparative accuracy curves will update here automatically.
           </p>
         </div>
       )}

@@ -128,7 +128,7 @@ export default function NotificationsTab({
               </label>
               <textarea
                 rows="3"
-                placeholder="Reminder: AIETS NTA Mock Test #05 is live this Sunday at 10:00 AM."
+                placeholder="Reminder: AIETS NEET / JEE Mock Test #05 is live this Sunday at 10:00 AM."
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 className={`w-full py-2.5 px-3 rounded-xl border font-medium transition focus:outline-none ${isDarkMode

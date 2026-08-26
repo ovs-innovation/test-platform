@@ -311,7 +311,7 @@ export default function AietsCalendar() {
                   <span className="font-bold text-slate-500">{test.phase}</span>
                 </div>
                 <h4 className="font-extrabold text-slate-900 dark:text-white text-sm sm:text-base">{test.name}</h4>
-                <p className="text-xs text-slate-500">180 Mins • 720 Marks • NTA Pattern CBT</p>
+                <p className="text-xs text-slate-500">180 Mins • 720 Marks • NEET / JEE Pattern CBT</p>
               </div>
             </div>
           ))}

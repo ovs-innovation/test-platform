@@ -55,7 +55,7 @@ export const authService = {
                 id: 'test-101',
                 assessment_id: 'test-101',
                 title: `${studentObj?.institution?.name || 'Institutional'} - AIETS Grand Mock Test #04`,
-                description: 'Full syllabus diagnostic examination with Instant NTA Rank & Solution Key.',
+                description: 'Full syllabus diagnostic examination with Instant NEET / JEE Rank & Solution Key.',
                 duration_minutes: 180,
                 question_count: 75,
                 total_marks: 300,
@@ -67,7 +67,7 @@ export const authService = {
               {
                 id: 'test-102',
                 assessment_id: 'test-102',
-                title: 'NTA All-India Grand Test Series (Phase 2)',
+                title: 'NEET / JEE All-India Grand Test Series (Phase 2)',
                 description: 'National level live test series with detailed performance reports.',
                 available_from: new Date(Date.now() + 86400000).toISOString(),
                 duration_minutes: 180,

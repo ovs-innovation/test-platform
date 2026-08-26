@@ -55,13 +55,13 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
     return {
       summary_observation: `Based on ${total_tests || 1} evaluated CBT test series, ${student_name} demonstrates strong performance in ${strongList[0] || 'foundation topics'} (${average_score}% mean accuracy), but requires targeted intervention in ${primaryWeak} and ${secondaryWeak}.`,
       strong_topics: strongList.map((topic) => ({ topic, status: 'Mastered', accuracy: '85%+', recommendation: 'Maintain accuracy with weekly timed practice drills.' })),
-      weak_topics: weakList.map((topic) => ({ topic, status: 'Needs Focused Revision', concept_gap: `Concept application and numerical calculation accuracy require revision in ${topic}.`, suggested_action: `Review core formulas and solve 25 NTA-pattern past year questions.` })),
+      weak_topics: weakList.map((topic) => ({ topic, status: 'Needs Focused Revision', concept_gap: `Concept application and numerical calculation accuracy require revision in ${topic}.`, suggested_action: `Review core formulas and solve 25 NEET / JEE past year questions.` })),
       improvement_plan: [
         { day: 'Day 1 - 2', focus_area: `Concept Mastery: ${primaryWeak}`, recommended_action: `Read foundational eBook theory notes and solve 20 Level-1 practice problems on ${primaryWeak}.`, target_time_minutes: 90 },
         { day: 'Day 3 - 4', focus_area: `Problem Solving: ${secondaryWeak}`, recommended_action: `Practice timed sub-topic drills on ${secondaryWeak} focusing on speed under 90 seconds per question.`, target_time_minutes: 75 },
         { day: 'Day 5', focus_area: 'Mixed Formula & Shortcut Drill', recommended_action: 'Consolidate key formulas and short trick methods across all Physics & Chemistry topics.', target_time_minutes: 60 },
         { day: 'Day 6', focus_area: 'Weak Topic Retest', recommended_action: `Take a 30-minute chapterwise mock test specifically covering ${primaryWeak} and ${secondaryWeak}.`, target_time_minutes: 45 },
-        { day: 'Day 7', focus_area: 'Full Mock Test & Pacing Audit', recommended_action: 'Attempt a full-length NTA CBT mock test, applying strict 2-pass question selection.', target_time_minutes: 180 },
+        { day: 'Day 7', focus_area: 'Full Mock Test & Pacing Audit', recommended_action: 'Attempt a full-length NEET / JEE CBT mock test, applying strict 2-pass question selection.', target_time_minutes: 180 },
       ],
       revision_strategy: [
         { title: 'Strict 2-Pass Question Selection', rule: 'First pass: Answer all direct, formula-based questions under 60s. Second pass: Attempt complex multi-step numerical calculations.' },
@@ -70,7 +70,7 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
       ],
       recommended_ebooks: weakList.slice(0, 3).map((topic, i) => ({
         title: `Edvedum AIETS Master Class: ${topic}`,
-        chapter: `Chapter ${i + 4}: Advanced ${topic} Concepts & Solved NTA PYQs`,
+        chapter: `Chapter ${i + 4}: Advanced ${topic} Concepts & Solved NEET / JEE PYQs`,
         priority: i === 0 ? 'High Priority' : 'Recommended',
         reason: `Targeted practice module to bridge accuracy gaps identified in recent AIETS assessments.`,
       })),
@@ -78,14 +78,14 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
         observation: time_analysis?.avg_time_per_question
           ? `Average time spent per question is ${time_analysis.avg_time_per_question} seconds.`
           : 'Pacing audit indicates moderate time spent on complex numerical questions.',
-        pacing_tip: 'Allocate 45 minutes for Physics, 40 minutes for Chemistry, and 80 minutes for Math/Biology in full NTA CBT papers.',
+        pacing_tip: 'Allocate 45 minutes for Physics, 40 minutes for Chemistry, and 80 minutes for Math/Biology in full NEET / JEE CBT papers.',
       },
     };
   };
 
   if (!openRouterKey) return buildFallbackPlan();
 
-  const prompt = `You are an elite academic mentor and NTA CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
+  const prompt = `You are an elite academic mentor and NEET / JEE CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
 
 Analyze the following student test metrics and return a JSON object with personalized, actionable AI insights:
 
@@ -203,7 +203,7 @@ export async function generateAIMentorReport(testData = {}) {
           focus_chapter: ch.chapter_name,
           subject: ch.subject,
           current_accuracy: ch.accuracy_percent,
-          task: `Revise core concepts of ${ch.chapter_name}. Attempt ${Math.max(20, Math.floor((100 - ch.accuracy_percent) / 3))} NTA-pattern practice questions. Target 75%+ accuracy.`,
+          task: `Revise core concepts of ${ch.chapter_name}. Attempt ${Math.max(20, Math.floor((100 - ch.accuracy_percent) / 3))} NEET / JEE practice questions. Target 75%+ accuracy.`,
           practice_questions: Math.max(20, Math.floor((100 - ch.accuracy_percent) / 3)),
           revision_duration_minutes: 90,
           daily_goal: `Raise ${ch.chapter_name} accuracy from ${ch.accuracy_percent}% to 75%+.`,
@@ -252,10 +252,10 @@ export async function generateAIMentorReport(testData = {}) {
 
       recommended_ebooks: weakChapters.slice(0, 4).map((ch, i) => ({
         title: `AIETS ${ch.subject} Master Module: ${ch.chapter_name}`,
-        chapter: `${ch.chapter_name} — NTA PYQs, Concept Notes & Solved Examples`,
+        chapter: `${ch.chapter_name} — NEET / JEE PYQs, Concept Notes & Solved Examples`,
         subject: ch.subject,
         priority: i === 0 ? 'Urgent — High Priority' : i === 1 ? 'High Priority' : 'Recommended',
-        reason: `You scored ${ch.accuracy_percent}% accuracy on ${ch.chapter_name} with ${ch.wrong} wrong answers. This module provides targeted NTA-pattern drills directly addressing your gaps.`,
+        reason: `You scored ${ch.accuracy_percent}% accuracy on ${ch.chapter_name} with ${ch.wrong} wrong answers. This module provides targeted NEET / JEE practice drills directly addressing your gaps.`,
       })),
 
       topic_diagnostics: {
@@ -377,7 +377,7 @@ export async function generateAIMentorReport(testData = {}) {
     return buildDataDrivenFallback();
   }
 
-  const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NTA-pattern CBT test series for NEET UG and JEE students in India.
+  const prompt = `You are an expert AI Academic Mentor for AIETS (All India Edvedum Test Series) — a national NEET / JEE CBT test series for NEET UG and JEE students in India.
 
 A student just completed an AIETS mock examination. Analyze the REAL test data below and generate a comprehensive 8-section personalized AI Mentor Report.
 
@@ -1171,7 +1171,7 @@ function buildSmartAcademicResolution({ questionText = '', imageBase64 = null, s
     ],
     final_answer: `Target query evaluated under ${guessedSubject} principles.`,
     pro_tips: [
-      'NEET/JEE Tip: Practice NTA Past Year Questions (PYQs) under timed exam conditions.',
+      'NEET/JEE Tip: Practice NEET / JEE Past Year Questions (PYQs) under timed exam conditions.',
       'Exam Strategy: Use dimensional analysis to quickly eliminate incorrect multi-choice options.'
     ]
   };
@@ -1825,7 +1825,7 @@ For Academic Doubts:
 • **Mathematics (JEE):** Calculus (30-35%), Algebra & Quadratic Equations (25%), Coordinate Geometry & Vectors/3D (30%).
 • **Biology (NEET):** Human Physiology (20%), Genetics & Evolution (18%), Plant Physiology (15%), Ecology & Biotech (20%).
 
-*Note: Weightages are trend-based historical estimates; official NTA/NMC paper structures may vary.*
+*Note: Weightages are trend-based historical estimates; official NEET / JEE paper structures may vary.*
 
 ---
 
@@ -1837,10 +1837,10 @@ For Academic Doubts:
 
 #### 3. High-Yield Revision Plan
 1. **NEET Candidates:** Focus 80% of biology revision directly on NCERT line-by-line reading.
-2. **JEE Candidates:** Practice past 5 years' NTA Past Year Questions (PYQs) under timed 3-hour exam conditions.
+2. **JEE Candidates:** Practice past 5 years' NEET / JEE Past Year Questions (PYQs) under timed 3-hour exam conditions.
 3. Apply a strict 2-Pass question selection strategy during mock tests.
 
-⚠️ *Official Caveat: Always cross-check against official NTA (JEE) and NMC (NEET) syllabi as patterns evolve yearly.*`
+⚠️ *Official Caveat: Always cross-check against official JEE and NMC (NEET) syllabi as patterns evolve yearly.*`
     };
   }
 

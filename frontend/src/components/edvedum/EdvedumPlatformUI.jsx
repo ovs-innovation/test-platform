@@ -362,7 +362,7 @@ export function PlatformIcon({ type }) {
 export const PLATFORM_PILLARS = [
   {
     icon: "cbt",
-    title: "NTA CBT Mocks",
+    title: "NEET / JEE CBT Mocks",
     desc: "Real exam interface — timer, palette, sections & proctoring.",
     to: "/test-series",
   },

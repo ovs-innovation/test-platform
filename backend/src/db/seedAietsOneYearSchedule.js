@@ -64,8 +64,8 @@ export const seedOneYearSchedule = async () => {
           RETURNING id`,
           [
             title,
-            `${item.phase.replace('_', ' ')} Phase - NTA Pattern ${item.type.replace('_', ' ')}`,
-            'Authentic NTA-pattern CBT test. Ensure stable connection.',
+            `${item.phase.replace('_', ' ')} Phase - NEET / JEE Pattern ${item.type.replace('_', ' ')}`,
+            'Authentic NEET / JEE-pattern CBT test. Ensure stable connection.',
             item.sequence,
             item.type,
             item.phase,

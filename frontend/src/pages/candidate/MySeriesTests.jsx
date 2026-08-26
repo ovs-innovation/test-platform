@@ -28,7 +28,7 @@ export default function MySeriesTests() {
       <div>
         <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Available CBT Mock Tests</h1>
         <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400">
-          Launch NTA CBT format mock tests, attempt diagnostic questions, and view instant score analytics.
+          Launch CBT format mock tests, attempt diagnostic questions, and view instant score analytics.
         </p>
       </div>
 
@@ -68,7 +68,7 @@ export default function MySeriesTests() {
                     <Clock className="h-3 w-3" /> {t.duration_minutes} Mins
                   </span>
                   <span>•</span>
-                  <span>NTA CBT Mode</span>
+                  <span>CBT Mode</span>
                 </div>
               </div>
               <div className="flex items-center gap-2">

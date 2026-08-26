@@ -626,6 +626,26 @@ export const getAttemptState = asyncHandler(async (req, res) => {
     [id]
   );
 
+  let institutionObj = null;
+  const userInstRes = await query('SELECT institution_id FROM users WHERE id = $1', [attempt.candidate_id]).catch(() => ({ rows: [] }));
+  const candInstId = userInstRes.rows[0]?.institution_id;
+  if (candInstId) {
+    const instRes = await query(
+      'SELECT id, name, logo_url, logo_badge, code FROM institutions WHERE id = $1',
+      [candInstId]
+    ).catch(() => ({ rows: [] }));
+    if (instRes.rows.length > 0) {
+      const row = instRes.rows[0];
+      institutionObj = {
+        id: row.id,
+        name: row.name,
+        logo_url: row.logo_url || '',
+        logo_badge: row.logo_badge || (row.name ? row.name.substring(0, 3).toUpperCase() : 'INST'),
+        code: row.code || '',
+      };
+    }
+  }
+
   res.json({
     attempt,
     assessment: {
@@ -636,7 +656,13 @@ export const getAttemptState = asyncHandler(async (req, res) => {
       question_paper_url: assessmentObj.question_paper_url || null,
       solution_pdf_url: assessmentObj.solution_pdf_url || null,
       answer_key_url: assessmentObj.answer_key_url || null,
+      institution: institutionObj,
+      institution_id: institutionObj?.id || null,
+      institution_name: institutionObj?.name || null,
+      institution_logo_url: institutionObj?.logo_url || null,
+      institution_logo_badge: institutionObj?.logo_badge || null,
     },
+    institution: institutionObj,
     sections: sectionsRes.rows,
     questions: questionsRes.rows.map(sanitizeQuestion),
     answers: answersRes.rows,
