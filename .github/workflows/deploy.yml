@@ -57,6 +57,10 @@ jobs:
             fi
             cd "$PROJECT_DIR"
 
+            # Configure safe directory to avoid dubious ownership errors on VPS
+            git config --global --add safe.directory "$PROJECT_DIR" || true
+            git config --global --add safe.directory "*" || true
+
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             echo "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
@@ -78,14 +82,17 @@ jobs:
               cp -r frontend/dist "$BACKUP_DIR/frontend_dist_backup" || true
             fi
 
-            # Clean any stale git lock files
-            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock 2>/dev/null || true
-            git merge --abort >/dev/null 2>&1 || true
-            git rebase --abort >/dev/null 2>&1 || true
+            # Clean any stale git lock files and abort ongoing merge/rebase
+            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/*.lock .git/refs/remotes/origin/*.lock 2>/dev/null || true
+            git merge --abort 2>/dev/null || true
+            git rebase --abort 2>/dev/null || true
+            git stash 2>/dev/null || true
 
-            # Fetch and reset to target commit
-            git fetch origin main || git fetch --all || true
-            git reset --hard "${{ github.sha }}" || git reset --hard origin/main
+            # Fetch and reset to target commit safely
+            git fetch origin main || git fetch --all --prune || true
+            git checkout -f main 2>/dev/null || git checkout -b main 2>/dev/null || true
+            git reset --hard "${{ github.sha }}" || git reset --hard origin/main || git reset --hard HEAD || true
+            git clean -fd || true
 
             # Restore production files
             if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
