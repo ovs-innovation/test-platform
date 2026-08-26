@@ -73,7 +73,7 @@ const run = async () => {
 
     const allFiles = fs.readdirSync(__dirname);
     const migrationFiles = allFiles
-      .filter((f) => f === 'schema.sql' || /^migration_v\d+\.sql$/.test(f))
+      .filter((f) => f === 'schema.sql' || /^migration_v\d+.*\.sql$/.test(f))
       .sort((a, b) => {
         if (a === 'schema.sql') return -1;
         if (b === 'schema.sql') return 1;

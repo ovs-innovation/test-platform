@@ -26,36 +26,36 @@ const coverFor = (examType) => {
 
 const SERIES = [
   {
-    title: 'JEE Main Full Test Series 2026',
-    slug: 'jee-main-2026',
-    description: '10 full-length JEE Main mock tests with JEE CBT interface, detailed solutions and analytics.',
+    title: 'AIETS JEE Main Class 12 One-Year CBT Program',
+    slug: 'aiets-jee-main-mock-pack',
+    description: 'One-year AIETS CBT program designed for Class 12 JEE aspirants with structured assessments, performance analytics and exam-focused practice.',
     price: 999,
     validity_days: 365,
     exam_type: 'JEE Main',
     is_featured: true,
-    test_count: 10,
+    test_count: 0,
     image_url: '/test-series/jee.svg',
   },
   {
-    title: 'NEET UG Mock Test Pack',
+    title: 'AIETS NEET-UG Class 12 One-Year CBT Program',
     slug: 'neet-ug-mock',
-    description: '8 NEET pattern full mocks with Biology-heavy sections and rank prediction.',
-    price: 799,
-    validity_days: 180,
+    description: 'One-year AIETS CBT program designed for Class 12 NEET-UG aspirants with structured assessments, NCERT-focused practice and detailed performance analytics.',
+    price: 999,
+    validity_days: 365,
     exam_type: 'NEET',
     is_featured: true,
-    test_count: 8,
+    test_count: 0,
     image_url: '/test-series/neet.svg',
   },
   {
-    title: 'NEET PG Mock Test Pack',
+    title: 'AIETS NEET-PG One-Year CBT Test Series',
     slug: 'neet-pg-mock',
-    description: '8 full-length NEET PG pattern mocks with clinical focus and detailed solutions.',
-    price: 699,
-    validity_days: 180,
+    description: 'One-year AIETS CBT test series for NEET-PG aspirants covering all 19 medical subjects with clinical vignettes, structured assessments, grand mocks and performance analytics.',
+    price: 999,
+    validity_days: 365,
     exam_type: 'NEET PG',
     is_featured: false,
-    test_count: 8,
+    test_count: 0,
     image_url: '/test-series/neet-pg.svg',
   },
   {
@@ -142,12 +142,13 @@ export const seedPlatform = async (client) => {
 
   await client.query(`
     UPDATE test_series SET
-      title = 'NEET PG Mock Test Pack',
+      title = 'AIETS NEET-PG One-Year CBT Test Series',
       slug = 'neet-pg-mock',
-      description = '8 full-length NEET PG pattern mocks with clinical focus and detailed solutions.',
+      description = 'One-year AIETS CBT test series for NEET-PG aspirants covering all 19 medical subjects with clinical vignettes, structured assessments, grand mocks and performance analytics.',
       exam_type = 'NEET PG',
       image_url = '/test-series/neet-pg.svg',
-      test_count = GREATEST(test_count, 8)
+      validity_days = 365,
+      test_count = 0
     WHERE slug = 'ssc-cgl-tier1' OR exam_type ILIKE '%ssc%' OR exam_type ILIKE '%cgl%'
   `);
 

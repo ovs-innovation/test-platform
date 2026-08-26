@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowLeft, 
-  ShieldCheck, 
-  KeyRound, 
-  BarChart3, 
-  BookOpen, 
-  Activity, 
+import {
+  ArrowLeft,
+  ShieldCheck,
+  KeyRound,
+  BarChart3,
+  BookOpen,
+  Activity,
   Lock,
   CheckCircle2,
   ChevronDown,
@@ -109,7 +109,7 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
 
   return (
     <div className={`relative min-h-screen bg-[#051329] overflow-x-hidden text-slate-100 flex flex-col items-center justify-between lg:justify-center p-3.5 sm:p-5 lg:p-6 select-none font-sans ${isAdmin ? 'admin-cbt-auth-env' : ''}`}>
-      
+
       {/* GEO PATTERN FLOW BACKGROUND */}
       <GeoPatternFlow />
 
@@ -117,7 +117,7 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
       {/* DESKTOP LAYOUT (>= 1024px) - 100% UNTOUCHED APPROVED DESIGN               */}
       {/* ========================================================================= */}
       <div className="hidden lg:flex relative z-10 w-full max-w-5xl rounded-3xl border border-slate-800/90 bg-[#080f24]/95 shadow-[0_24px_70px_rgba(0,0,0,0.35)] flex-row overflow-hidden my-auto max-h-full">
-        
+
         {/* Floating Back to Home Link (Desktop Full Button) */}
         <Link
           to="/"
@@ -131,10 +131,10 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
         <div className="w-[48%] xl:w-[46%] relative bg-gradient-to-br from-[#060c1e] via-[#0b1736] to-[#040816] p-6 xl:p-7 flex flex-col justify-between border-r border-slate-800/80 overflow-y-auto">
           {/* Logo Header */}
           <Link to="/" className="inline-flex items-center gap-3 w-fit">
-            <img 
-              src={EDVEDUM_LOGO} 
-              alt={EDVEDUM_LOGO_ALT} 
-              className="h-9 w-auto max-w-[40px] object-contain shrink-0" 
+            <img
+              src={EDVEDUM_LOGO}
+              alt={EDVEDUM_LOGO_ALT}
+              className="h-9 w-auto max-w-[40px] object-contain shrink-0"
               style={{ height: '36px', width: 'auto', maxWidth: '40px', objectFit: 'contain' }}
             />
             <div className="text-left leading-none space-y-1">
@@ -193,7 +193,7 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
       {/* MOBILE & TABLET LAYOUT (< 1024px) - ENHANCED BRANDING & DROPPED CARD      */}
       {/* ========================================================================= */}
       <div className="lg:hidden relative z-10 w-full max-w-[420px] sm:max-w-[540px] mx-auto px-1 pt-1 pb-3 flex flex-col justify-between min-h-[calc(100vh-2rem)]">
-        
+
         <div>
           {/* ROW 1: Small Circular Icon-Only Back Button (40x40) */}
           <div className="flex items-center justify-start mt-0.5">
@@ -209,10 +209,10 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
           {/* ROW 2: EDVEDUM Logo & Branding Header (Enhanced Size) */}
           <div className="text-center mt-3 mb-7 sm:mb-8">
             <Link to="/" className="inline-flex items-center justify-center gap-3 max-w-[210px] mx-auto">
-              <img 
-                src={EDVEDUM_LOGO} 
-                alt={EDVEDUM_LOGO_ALT} 
-                className="h-10 sm:h-11 w-auto max-w-[44px] max-h-[44px] object-contain shrink-0 flex-shrink-0" 
+              <img
+                src={EDVEDUM_LOGO}
+                alt={EDVEDUM_LOGO_ALT}
+                className="h-10 sm:h-11 w-auto max-w-[44px] max-h-[44px] object-contain shrink-0 flex-shrink-0"
                 style={{ height: '42px', width: 'auto', maxWidth: '44px', maxHeight: '44px', objectFit: 'contain' }}
               />
               <div className="text-left leading-none space-y-0.5 shrink-0">
