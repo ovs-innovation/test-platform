@@ -78,16 +78,16 @@ const PAID_SERIES = [
   },
   // 6. JEE Main Full-Length Mock Test Pack
   {
-    title: 'AIETS JEE Main Full-Length Mock Test Pack',
+    title: 'AIETS JEE Main Class 12 One-Year CBT Program',
     slug: 'aiets-jee-main-mock-pack',
-    description: '8 full-length JEE CBT mock tests for JEE Main with Physics, Chemistry and Mathematics, All India Rank and detailed solutions.',
+    description: 'One-year AIETS CBT program designed for Class 12 JEE aspirants with structured assessments, performance analytics and exam-focused practice.',
     price: 999.00,
     is_free: false,
-    validity_days: 180,
+    validity_days: 365,
     exam_type: 'JEE Main',
     is_featured: false,
-    test_count: 8,
-    planned_tests: 8,
+    test_count: 0,
+    planned_tests: null,
     display_order: 6,
     image_url: '/edvedum/banners/banner-jee-male2.png',
   },
@@ -108,31 +108,30 @@ const PAID_SERIES = [
   },
   // 8. NEET UG Full-Length Mock Test Pack
   {
-    title: 'AIETS NEET-UG Full-Length Mock Test Pack',
+    title: 'AIETS NEET-UG Class 12 One-Year CBT Program',
     slug: 'neet-ug-mock',
-    description: '8 NEET pattern full-length CBT mocks with NCERT-focused Physics, Chemistry & Biology questions, All India Rank & step-by-step solutions.',
+    description: 'One-year AIETS CBT program designed for Class 12 NEET-UG aspirants with structured assessments, NCERT-focused practice and detailed performance analytics.',
     price: 999.00,
     is_free: false,
-    validity_days: 180,
+    validity_days: 365,
     exam_type: 'NEET',
     is_featured: false,
-    test_count: 8,
-    planned_tests: 8,
+    test_count: 0,
+    planned_tests: null,
     display_order: 8,
     image_url: '/edvedum/banners/banner-neet-bio.png',
   },
-  // 9. NEET PG Full-Length Mock Test Pack
   {
-    title: 'AIETS NEET-PG Full-Length Mock Test Pack',
+    title: 'AIETS NEET-PG One-Year CBT Test Series',
     slug: 'neet-pg-mock',
-    description: '8 full-length NEET PG pattern CBT mocks covering all 19 medical subjects with clinical scenarios, image-based questions, All India Rank & explanations.',
+    description: 'One-year AIETS CBT test series for NEET-PG aspirants covering all 19 medical subjects with clinical vignettes, structured assessments, grand mocks and performance analytics.',
     price: 999.00,
     is_free: false,
-    validity_days: 180,
+    validity_days: 365,
     exam_type: 'NEET PG',
     is_featured: false,
-    test_count: 8,
-    planned_tests: 8,
+    test_count: 0,
+    planned_tests: null,
     display_order: 9,
     image_url: '/edvedum/banners/banner-neet-pg.png',
   },
@@ -207,8 +206,8 @@ export const runCatalogueSync = async () => {
     // 1. Rename existing legacy production titles/slugs to preserve existing record IDs & relations
     await client.query(`
       UPDATE test_series
-      SET title = 'AIETS JEE Main Full-Length Mock Test Pack', slug = 'aiets-jee-main-mock-pack'
-      WHERE title ILIKE 'JEE Main Full Test Series%' OR slug ILIKE 'jee-main-full-test-series%' OR slug = 'jee-main-2026';
+      SET title = 'AIETS JEE Main Class 12 One-Year CBT Program', slug = 'aiets-jee-main-mock-pack'
+      WHERE title ILIKE 'JEE Main Full Test Series%' OR slug ILIKE 'jee-main-full-test-series%' OR slug = 'jee-main-2026' OR slug = 'aiets-jee-main-mock-pack';
 
       UPDATE test_series
       SET title = 'AIETS NEET-UG Two-Year Online CBT Program', slug = 'aiets-neet-ug-2028-two-year-online-cbt-program'
@@ -219,11 +218,11 @@ export const runCatalogueSync = async () => {
       WHERE title ILIKE 'NEET-UG 2027 Comprehensive%' OR (slug ILIKE 'neet-ug-2027-comprehensive%' AND slug != 'neet-ug-2027-aiets-comprehensive-test-series');
 
       UPDATE test_series
-      SET title = 'AIETS NEET-UG Full-Length Mock Test Pack', slug = 'neet-ug-mock'
+      SET title = 'AIETS NEET-UG Class 12 One-Year CBT Program', slug = 'neet-ug-mock'
       WHERE title ILIKE 'NEET UG Mock Test Pack%' OR slug ILIKE 'neet-ug-mock-test-pack%' OR slug = 'neet-ug-mock';
 
       UPDATE test_series
-      SET title = 'AIETS NEET-PG Full-Length Mock Test Pack', slug = 'neet-pg-mock'
+      SET title = 'AIETS NEET-PG One-Year CBT Test Series', slug = 'neet-pg-mock'
       WHERE title ILIKE 'NEET PG Mock Test Pack%' OR slug ILIKE 'neet-pg-mock-test-pack%' OR slug = 'neet-pg-mock';
     `);
 

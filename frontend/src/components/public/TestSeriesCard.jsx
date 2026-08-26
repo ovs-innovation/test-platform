@@ -6,7 +6,8 @@ export default function TestSeriesCard({ series }) {
   const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
   const price = Number(series.price).toLocaleString('en-IN');
-  const tags = theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
+  const cardTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
+  const testCount = Number(series.planned_tests || series.test_count || 0);
 
   return (
     <Link
@@ -53,10 +54,12 @@ export default function TestSeriesCard({ series }) {
 
           {/* Integrated Mock & Validity Stat Chips */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
-              <span>⚡</span>
-              <span>{series.planned_tests || series.test_count || 0} CBT Tests</span>
-            </span>
+            {testCount > 0 && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
+                <span>⚡</span>
+                <span>{testCount} CBT Tests</span>
+              </span>
+            )}
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
               <span>⏳</span>
               <span>{series.validity_days || 365}D</span>
@@ -74,7 +77,7 @@ export default function TestSeriesCard({ series }) {
 
         {/* Feature Tags Row */}
         <div className="mt-3 flex flex-wrap gap-1.5">
-          {tags.map((t) => (
+          {cardTags.map((t) => (
             <span
               key={t}
               className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-[11px] font-bold ${theme.chipBg}`}
