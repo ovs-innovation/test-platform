@@ -6,8 +6,23 @@ export default function TestSeriesCard({ series }) {
   const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
   const price = Number(series.price).toLocaleString('en-IN');
+  const slug = (series?.slug || '').toLowerCase();
   const cardTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
   const testCount = Number(series.planned_tests || series.test_count || 0);
+
+  let overlayBadge1 = null;
+  let overlayBadge2 = `${series.validity_days || 365}D`;
+
+  if (slug === 'neet-pg-mock') {
+    overlayBadge1 = '19 SUBJECTS';
+    overlayBadge2 = '1 YEAR';
+  } else if (slug === 'aiets-jee-main-mock-pack' || slug === 'neet-ug-mock') {
+    overlayBadge1 = null;
+    overlayBadge2 = `${series.validity_days || 365}D`;
+  } else if (testCount > 0) {
+    overlayBadge1 = `${testCount} CBT Tests`;
+    overlayBadge2 = `${series.validity_days || 365}D`;
+  }
 
   return (
     <Link
@@ -54,15 +69,15 @@ export default function TestSeriesCard({ series }) {
 
           {/* Integrated Mock & Validity Stat Chips */}
           <div className="flex flex-wrap items-center gap-2">
-            {testCount > 0 && (
+            {overlayBadge1 && (
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
                 <span>⚡</span>
-                <span>{testCount} CBT Tests</span>
+                <span>{overlayBadge1}</span>
               </span>
             )}
             <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
               <span>⏳</span>
-              <span>{series.validity_days || 365}D</span>
+              <span>{overlayBadge2}</span>
             </span>
           </div>
         </div>
