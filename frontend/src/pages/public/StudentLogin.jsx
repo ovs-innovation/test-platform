@@ -94,12 +94,27 @@ export default function StudentLogin() {
     setMobileTimer(0);
   };
 
+  const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   // Handle Send Email OTP
   const handleSendEmailOtp = async (e) => {
     e?.preventDefault();
     const cleanEmail = emailOtp.trim().toLowerCase();
-    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
-      setError('Please enter a valid Gmail or Email address.');
+
+    if (!cleanEmail) {
+      setError('Please enter your Gmail or registered Email address.');
+      return;
+    }
+    if (/^[._%+-]/.test(cleanEmail)) {
+      setError('Email address cannot start with special characters like ., -, _, or +.');
+      return;
+    }
+    if (/^\d+$/.test(cleanEmail)) {
+      setError('It looks like you entered a numeric code or phone number. Please switch to the "Mobile OTP" or "Code & ID" tab above.');
+      return;
+    }
+    if (!EMAIL_REGEX.test(cleanEmail)) {
+      setError('Please enter a valid Gmail or Email address format (e.g. student@gmail.com).');
       return;
     }
     setLoading(true);
@@ -283,13 +298,35 @@ export default function StudentLogin() {
                   Gmail / Registered Email Address *
                 </label>
                 <input
-                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+                  className={`w-full rounded-xl border px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none transition-colors ${
+                    emailOtp.trim() && !EMAIL_REGEX.test(emailOtp.trim().toLowerCase())
+                      ? 'border-amber-500/60 bg-[#0c101d] focus:border-amber-400'
+                      : 'border-[#2A354A] bg-[#070c18] focus:border-[#00F0FF]'
+                  }`}
                   type="email"
                   required
                   placeholder="student@gmail.com"
                   value={emailOtp}
-                  onChange={(e) => setEmailOtp(e.target.value)}
+                  onChange={(e) => {
+                    const sanitized = e.target.value.trimStart().replace(/^[._%+-]+/, '');
+                    setEmailOtp(sanitized);
+                    if (error) setError('');
+                  }}
                 />
+                {emailOtp.trim().length > 0 && /^\d+$/.test(emailOtp.trim()) && (
+                  <div className="mt-1.5 p-2 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-start gap-1.5">
+                    <span>💡</span>
+                    <span>
+                      Looks like a numeric ID or phone number. Switch to the <strong>Mobile OTP</strong> or <strong>Code & ID</strong> tab above.
+                    </span>
+                  </div>
+                )}
+                {emailOtp.trim().length > 0 && !/^\d+$/.test(emailOtp.trim()) && !EMAIL_REGEX.test(emailOtp.trim().toLowerCase()) && (
+                  <p className="mt-1.5 text-xs text-rose-400 font-medium flex items-center gap-1">
+                    <span>⚠️</span>
+                    <span>Please enter a valid email address format (e.g. student@gmail.com).</span>
+                  </p>
+                )}
               </div>
 
               <button

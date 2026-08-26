@@ -648,10 +648,18 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
  * POST /api/auth/otp/send-login
  */
 export const sendLoginOtp = asyncHandler(async (req, res) => {
+  const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const inputVal = (req.body.identifier || req.body.phone || req.body.email || '').trim();
   if (!inputVal) throw ApiError.badRequest('Mobile number or Email is required');
 
-  const isEmail = inputVal.includes('@');
+  if (req.body.email) {
+    const cleanEmail = String(req.body.email).trim().toLowerCase();
+    if (!EMAIL_REGEX.test(cleanEmail)) {
+      throw ApiError.badRequest('Please provide a valid Gmail or Email address (e.g. student@gmail.com).');
+    }
+  }
+
+  const isEmail = EMAIL_REGEX.test(inputVal);
   const cleanPhone = inputVal.replace(/\D/g, '');
   const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
 
@@ -732,13 +740,21 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
  * POST /api/auth/otp/verify-login
  */
 export const verifyLoginOtp = asyncHandler(async (req, res) => {
+  const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const { otp } = req.body;
   const inputVal = (req.body.identifier || req.body.phone || req.body.email || '').trim();
   if (!inputVal) throw ApiError.badRequest('Mobile number or Email is required');
   if (!otp || String(otp).trim().length !== 6) throw ApiError.badRequest('A 6-digit OTP code is required');
 
+  if (req.body.email) {
+    const cleanEmail = String(req.body.email).trim().toLowerCase();
+    if (!EMAIL_REGEX.test(cleanEmail)) {
+      throw ApiError.badRequest('Please provide a valid Gmail or Email address (e.g. student@gmail.com).');
+    }
+  }
+
   const cleanOtp = String(otp).trim();
-  const isEmail = inputVal.includes('@');
+  const isEmail = EMAIL_REGEX.test(inputVal);
   const cleanPhone = inputVal.replace(/\D/g, '');
   const last10 = cleanPhone.length >= 10 ? cleanPhone.slice(-10) : cleanPhone;
 

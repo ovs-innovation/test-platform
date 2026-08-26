@@ -18,11 +18,17 @@ export default function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   // Send OTP to Email for registration
   const onSendOtp = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.phone || !form.class || !form.target_exam) {
       setError('Please fill in all required fields.');
+      return;
+    }
+    if (!EMAIL_REGEX.test(form.email.trim().toLowerCase())) {
+      setError('Please enter a valid Gmail or Email address format (e.g. student@gmail.com).');
       return;
     }
     setLoading(true);
@@ -99,7 +105,7 @@ export default function Signup() {
                 required
                 placeholder="name@example.com"
                 value={form.email}
-                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+                onChange={(e) => setForm((f) => ({ ...f, email: e.target.value.trimStart().replace(/^[._%+-]+/, '') }))}
               />
             </div>
 

@@ -167,20 +167,38 @@ export const otpVerifySchema = z.object({
   invite_token: z.string().uuid('Invalid invitation token'),
 });
 
+const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 export const otpSendLoginSchema = z.object({
   identifier: z.string().trim().optional(),
   phone: z.string().trim().optional(),
-  email: z.string().trim().toLowerCase().optional(),
-}).refine((d) => d.identifier || d.phone || d.email, {
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .refine((val) => !val || EMAIL_REGEX.test(val), {
+      message: 'Please provide a valid Gmail or Email address format (e.g. student@gmail.com)',
+    })
+    .optional()
+    .or(z.literal('')),
+}).refine((d) => d.identifier || d.phone || (d.email && d.email.trim()), {
   message: 'Mobile number or Email is required',
 });
 
 export const otpVerifyLoginSchema = z.object({
   identifier: z.string().trim().optional(),
   phone: z.string().trim().optional(),
-  email: z.string().trim().toLowerCase().optional(),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .refine((val) => !val || EMAIL_REGEX.test(val), {
+      message: 'Please provide a valid Gmail or Email address format (e.g. student@gmail.com)',
+    })
+    .optional()
+    .or(z.literal('')),
   otp: z.string().length(6, 'OTP must be 6 digits'),
-}).refine((d) => d.identifier || d.phone || d.email, {
+}).refine((d) => d.identifier || d.phone || (d.email && d.email.trim()), {
   message: 'Mobile number or Email is required',
 });
 

@@ -1,29 +1,74 @@
+import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import PublicLayout from './components/PublicLayout.jsx';
 import Layout from './components/Layout.jsx';
 import AdminLayout from './components/admin/AdminLayout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
+import { LoadingScreen } from './components/ui.jsx';
 
-import Login from './pages/Login.jsx';
-import InvitePage from './pages/InvitePage.jsx';
 import Home from './pages/public/Home.jsx';
-import TestSeriesCatalog from './pages/public/TestSeriesCatalog.jsx';
-import TestSeriesDetail from './pages/public/TestSeriesDetail.jsx';
-import Signup from './pages/public/Signup.jsx';
-import StudentLogin from './pages/public/StudentLogin.jsx';
-import ForgotPassword from './pages/public/ForgotPassword.jsx';
-import ResetPassword from './pages/public/ResetPassword.jsx';
-import Blog from './pages/public/Blog.jsx';
-import BlogPost from './pages/public/BlogPost.jsx';
-import FAQs from './pages/public/FAQs.jsx';
-import FreeMock from './pages/public/FreeMock.jsx';
-import About from './pages/public/About.jsx';
-import Contact from './pages/public/Contact.jsx';
-import Careers from './pages/public/Careers.jsx';
-import SchoolsB2B from './pages/public/SchoolsB2B.jsx';
-import InstitutionLogin from './pages/public/InstitutionLogin.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
 import InstitutionProtectedRoute from './components/institution/InstitutionProtectedRoute.jsx';
+
+// Lazy-loaded routes for code splitting & bundle size optimization
+const Login = lazy(() => import('./pages/Login.jsx'));
+const InvitePage = lazy(() => import('./pages/InvitePage.jsx'));
+const TestSeriesCatalog = lazy(() => import('./pages/public/TestSeriesCatalog.jsx'));
+const TestSeriesDetail = lazy(() => import('./pages/public/TestSeriesDetail.jsx'));
+const Signup = lazy(() => import('./pages/public/Signup.jsx'));
+const StudentLogin = lazy(() => import('./pages/public/StudentLogin.jsx'));
+const ForgotPassword = lazy(() => import('./pages/public/ForgotPassword.jsx'));
+const ResetPassword = lazy(() => import('./pages/public/ResetPassword.jsx'));
+const Blog = lazy(() => import('./pages/public/Blog.jsx'));
+const BlogPost = lazy(() => import('./pages/public/BlogPost.jsx'));
+const FAQs = lazy(() => import('./pages/public/FAQs.jsx'));
+const FreeMock = lazy(() => import('./pages/public/FreeMock.jsx'));
+const About = lazy(() => import('./pages/public/About.jsx'));
+const Contact = lazy(() => import('./pages/public/Contact.jsx'));
+const Careers = lazy(() => import('./pages/public/Careers.jsx'));
+const SchoolsB2B = lazy(() => import('./pages/public/SchoolsB2B.jsx'));
+const InstitutionLogin = lazy(() => import('./pages/public/InstitutionLogin.jsx'));
+const EdvedumLegalPage = lazy(() => import('./components/edvedum/EdvedumLegalPage.jsx'));
+
+// Candidate Portal pages
+const CandidateDashboard = lazy(() => import('./pages/candidate/Dashboard.jsx'));
+const MyTests = lazy(() => import('./pages/candidate/MyTests.jsx'));
+const MyEbooks = lazy(() => import('./pages/candidate/MyEbooks.jsx'));
+const MySeriesTests = lazy(() => import('./pages/candidate/MySeriesTests.jsx'));
+const AietsCalendarPage = lazy(() => import('./pages/candidate/AietsCalendarPage.jsx'));
+const Analytics = lazy(() => import('./pages/candidate/Analytics.jsx'));
+const PostTestAnalytics = lazy(() => import('./pages/candidate/PostTestAnalytics.jsx'));
+const Notifications = lazy(() => import('./pages/candidate/Notifications.jsx'));
+const PaymentHistory = lazy(() => import('./pages/candidate/PaymentHistory.jsx'));
+const Profile = lazy(() => import('./pages/candidate/Profile.jsx'));
+const Settings = lazy(() => import('./pages/candidate/Settings.jsx'));
+const Leaderboard = lazy(() => import('./pages/candidate/Leaderboard.jsx'));
+const Certificate = lazy(() => import('./pages/candidate/Certificate.jsx'));
+const Forum = lazy(() => import('./pages/candidate/Forum.jsx'));
+const AssessmentList = lazy(() => import('./pages/candidate/AssessmentList.jsx'));
+const AssessmentInstructions = lazy(() => import('./pages/candidate/AssessmentInstructions.jsx'));
+const ExamScreen = lazy(() => import('./pages/candidate/ExamScreen.jsx'));
+const ResultPage = lazy(() => import('./pages/candidate/ResultPage.jsx'));
+
+// Admin Command Center pages
+const AdminOverview = lazy(() => import('./pages/admin/Overview.jsx'));
+const AdminAssessments = lazy(() => import('./pages/admin/Assessments.jsx'));
+const AdminAssessmentEditor = lazy(() => import('./pages/admin/AssessmentEditor.jsx'));
+const AdminTestSeries = lazy(() => import('./pages/admin/TestSeries.jsx'));
+const AdminPayments = lazy(() => import('./pages/admin/Payments.jsx'));
+const AdminQuestionBank = lazy(() => import('./pages/admin/QuestionBank.jsx'));
+const AdminSubjects = lazy(() => import('./pages/admin/Subjects.jsx'));
+const AdminCoupons = lazy(() => import('./pages/admin/Coupons.jsx'));
+const AdminCMS = lazy(() => import('./pages/admin/CMS.jsx'));
+const AdminFaculty = lazy(() => import('./pages/admin/Faculty.jsx'));
+const AdminSettings = lazy(() => import('./pages/admin/Settings.jsx'));
+const AdminCandidates = lazy(() => import('./pages/admin/Candidates.jsx'));
+const AdminReports = lazy(() => import('./pages/admin/Reports.jsx'));
+const AdminAttemptDetail = lazy(() => import('./pages/admin/AttemptDetail.jsx'));
+const AdminSchools = lazy(() => import('./pages/admin/Schools.jsx'));
+const AdminSchoolDetail = lazy(() => import('./pages/admin/SchoolDetail.jsx'));
+
 import InstitutionDashboard, {
   InstOverviewTabWrapper,
   InstStudentsTabWrapper,
@@ -41,48 +86,8 @@ import InstitutionDashboard, {
   InstSettingsTabWrapper,
   InstBatchDetailTabWrapper,
 } from './pages/institution/InstitutionDashboard.jsx';
-import EdvedumLegalPage from './components/edvedum/EdvedumLegalPage.jsx';
 
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
-
-import CandidateDashboard from './pages/candidate/Dashboard.jsx';
-import MyTests from './pages/candidate/MyTests.jsx';
-import MyEbooks from './pages/candidate/MyEbooks.jsx';
-import MySeriesTests from './pages/candidate/MySeriesTests.jsx';
-import AietsCalendarPage from './pages/candidate/AietsCalendarPage.jsx';
-import Analytics from './pages/candidate/Analytics.jsx';
-import PostTestAnalytics from './pages/candidate/PostTestAnalytics.jsx';
-import Notifications from './pages/candidate/Notifications.jsx';
-import PaymentHistory from './pages/candidate/PaymentHistory.jsx';
-import Profile from './pages/candidate/Profile.jsx';
-import Settings from './pages/candidate/Settings.jsx';
-import Leaderboard from './pages/candidate/Leaderboard.jsx';
-import Certificate from './pages/candidate/Certificate.jsx';
-import Forum from './pages/candidate/Forum.jsx';
-import AssessmentList from './pages/candidate/AssessmentList.jsx';
-import AssessmentInstructions from './pages/candidate/AssessmentInstructions.jsx';
-import ExamScreen from './pages/candidate/ExamScreen.jsx';
-import ResultPage from './pages/candidate/ResultPage.jsx';
-
-import AdminOverview from './pages/admin/Overview.jsx';
-import AdminTestManager from './pages/admin/AdminTestManager.jsx';
-import AdminAssessments from './pages/admin/Assessments.jsx';
-import AdminAssessmentEditor from './pages/admin/AssessmentEditor.jsx';
-import AdminTestSeries from './pages/admin/TestSeries.jsx';
-import AdminPayments from './pages/admin/Payments.jsx';
-import AdminQuestionBank from './pages/admin/QuestionBank.jsx';
-import AdminSubjects from './pages/admin/Subjects.jsx';
-import AdminCoupons from './pages/admin/Coupons.jsx';
-import AdminCMS from './pages/admin/CMS.jsx';
-import AdminFaculty from './pages/admin/Faculty.jsx';
-import AdminSettings from './pages/admin/Settings.jsx';
-import AdminCandidates from './pages/admin/Candidates.jsx';
-import AdminReports from './pages/admin/Reports.jsx';
-import AdminAttemptDetail from './pages/admin/AttemptDetail.jsx';
-import AdminSchools from './pages/admin/Schools.jsx';
-import AdminSchoolDetail from './pages/admin/SchoolDetail.jsx';
-
-import ScrollToTop from './components/ScrollToTop.jsx';
 
 const Shell = ({ children }) => <Layout>{children}</Layout>;
 
@@ -94,7 +99,8 @@ export default function App() {
   return (
     <>
       <ScrollToTop />
-      <Routes>
+      <Suspense fallback={<LoadingScreen label="Loading..." />}>
+        <Routes>
         {/* PUBLIC WEBSITE ROUTES - Rendered inside PublicLayout */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<AppHome />} />
@@ -208,6 +214,7 @@ export default function App() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      </Suspense>
     </>
   );
 }

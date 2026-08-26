@@ -15,6 +15,8 @@ import {
   ArrowUpDown,
   ChevronUp,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   FileText,
   AlertTriangle
 } from 'lucide-react';
@@ -36,6 +38,10 @@ export default function AdminReports() {
   const [sortDirection, setSortDirection] = useState('desc');
   const [exporting, setExporting] = useState(false);
 
+  // Pagination state (10 attempts per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 10;
+
   const load = async () => {
     setState('loading');
     try {
@@ -50,6 +56,11 @@ export default function AdminReports() {
   useEffect(() => {
     load();
   }, []);
+
+  // Reset page to 1 when filter or search changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [filter, searchQuery]);
 
   const handleExportCSV = async () => {
     setExporting(true);
@@ -122,6 +133,12 @@ export default function AdminReports() {
     });
     return data;
   }, [filtered, sortField, sortDirection]);
+
+  const totalItems = sortedAndFiltered.length;
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE) || 1;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
+  const paginatedReports = sortedAndFiltered.slice(startIndex, endIndex);
 
   const handleSort = (field) => {
     if (sortField === field) {
@@ -275,7 +292,7 @@ export default function AdminReports() {
 
               {/* Body */}
               <tbody className="divide-y divide-slate-100 bg-white dark:divide-slate-800/50 dark:bg-[#111827]">
-                {sortedAndFiltered.map((r) => (
+                {paginatedReports.map((r) => (
                   <tr
                     key={r.attempt_id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition-colors duration-150"
@@ -372,11 +389,57 @@ export default function AdminReports() {
             </table>
           </div>
 
-          {/* Table Footer */}
-          <div className="flex items-center justify-between border-t border-slate-200/80 bg-slate-50/50 px-4 py-3 text-xs font-medium text-slate-500 dark:border-slate-800 dark:bg-slate-900/40 dark:text-slate-400">
-            <span>Showing <strong className="text-slate-900 dark:text-white font-semibold">{sortedAndFiltered.length}</strong> of {reports.length} audit logs</span>
-            <span className="text-[11px] text-slate-400 font-normal">Realtime records</span>
-          </div>
+          {/* Pagination Controls Bar (10 items per page) */}
+          {totalItems > 0 && (
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 py-4 border-t border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 text-xs font-semibold text-slate-600 dark:text-slate-400">
+              <div>
+                Showing <span className="font-extrabold text-slate-900 dark:text-white">{totalItems === 0 ? 0 : startIndex + 1}</span> to{' '}
+                <span className="font-extrabold text-slate-900 dark:text-white">{endIndex}</span> of{' '}
+                <span className="font-extrabold text-slate-900 dark:text-white">{totalItems}</span> attempt logs
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </button>
+
+                  <div className="flex items-center gap-1 px-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => setCurrentPage(page)}
+                        className={`h-8 min-w-[32px] px-2.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                          currentPage === page
+                            ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                            : 'bg-slate-200/60 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors text-slate-700 dark:text-slate-300 font-bold cursor-pointer"
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>

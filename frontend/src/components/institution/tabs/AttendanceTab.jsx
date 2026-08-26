@@ -9,6 +9,8 @@ import {
   FileText,
   Loader2,
   RefreshCw,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 import { downloadCsv } from '../../../lib/csv.js';
 import { CustomSelectDropdown } from '../../ui.jsx';
@@ -30,9 +32,18 @@ export default function AttendanceTab({
   const [selectedStatus, setSelectedStatus] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Pagination state (10 records per page)
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
   const [currentRecords, setCurrentRecords] = useState([]);
   const [currentSummary, setCurrentSummary] = useState(null);
   const [loading, setLoading] = useState(false);
+
+  // Reset page to 1 when filters or search change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedStatus, selectedTest, selectedBatch]);
 
   const resolveInstId = () => {
     if (instId && !isNaN(Number(instId))) return Number(instId);
@@ -104,6 +115,15 @@ export default function AttendanceTab({
       return matchesSearch && matchesStatus;
     });
   }, [currentRecords, searchQuery, selectedStatus]);
+
+  // Paginated slice (10 records per page)
+  const totalItems = filteredParticipation.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, totalItems);
+  const paginatedParticipation = useMemo(() => {
+    return filteredParticipation.slice(startIndex, endIndex);
+  }, [filteredParticipation, startIndex, endIndex]);
 
   // Compute live attendance statistics
   const stats = useMemo(() => {
@@ -338,7 +358,8 @@ export default function AttendanceTab({
         </div>
 
         {filteredParticipation.length > 0 ? (
-          <div className="overflow-x-auto">
+          <>
+            <div className="overflow-x-auto">
             <table className="w-full text-left text-xs border-collapse">
               <thead
                 className={`border-b text-[11px] font-black uppercase tracking-wider ${
@@ -362,7 +383,7 @@ export default function AttendanceTab({
                   isDarkMode ? 'divide-slate-800/60' : 'divide-slate-200'
                 }`}
               >
-                {filteredParticipation.map((row, index) => {
+                {paginatedParticipation.map((row, index) => {
                   const studentName = row.student_name || row.name || 'Student';
                   const rollNo = row.roll_number || row.rollNo || 'N/A';
                   const batchName = row.batch_name || row.batch || 'General';
@@ -438,6 +459,71 @@ export default function AttendanceTab({
               </tbody>
             </table>
           </div>
+
+          {/* PAGINATION CONTROL BAR */}
+          {totalItems > 0 && (
+            <div className={`p-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs ${
+              isDarkMode ? 'border-slate-800/80 bg-slate-950/40 text-slate-400' : 'border-slate-200 bg-slate-50/60 text-slate-600'
+            }`}>
+              <div>
+                Showing <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{totalItems === 0 ? 0 : startIndex + 1}</span> to{' '}
+                <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{endIndex}</span> of{' '}
+                <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{totalItems}</span> attendance records
+              </div>
+
+              {totalPages > 1 && (
+                <div className="flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
+                      isDarkMode
+                        ? 'border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    Previous
+                  </button>
+
+                  <div className="flex items-center gap-1 px-1">
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                      <button
+                        key={page}
+                        type="button"
+                        onClick={() => setCurrentPage(page)}
+                        className={`h-8 min-w-[32px] px-2.5 rounded-lg text-xs font-bold transition cursor-pointer ${
+                          currentPage === page
+                            ? 'bg-blue-600 text-white shadow-xs'
+                            : isDarkMode
+                            ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
+                            : 'bg-slate-200/70 text-slate-700 hover:bg-slate-300'
+                        }`}
+                      >
+                        {page}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={currentPage >= totalPages}
+                    onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
+                      isDarkMode
+                        ? 'border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                    }`}
+                  >
+                    Next
+                    <ChevronRight className="h-4 w-4" />
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
+          </>
         ) : (
           /* EMPTY STATE */
           <div className={`p-12 text-center space-y-3 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>

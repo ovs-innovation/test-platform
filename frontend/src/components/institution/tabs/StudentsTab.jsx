@@ -178,6 +178,11 @@ export default function StudentsTab({
     });
   }, [students, search, selectedBatch, selectedStatus, selectedCourse]);
 
+  // Reset page to 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedBatch, selectedStatus, selectedCourse]);
+
   // Paginated slice
   const totalPages = Math.ceil(filteredStudents.length / itemsPerPage) || 1;
   const paginatedStudents = useMemo(() => {
