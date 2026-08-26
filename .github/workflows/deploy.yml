@@ -266,21 +266,35 @@ jobs:
             ls -lah frontend/dist
 
             # 5. Detect active Let's Encrypt certificate directory & Build images
-            log "Step 5/8: Detecting SSL certificates and building Docker images..."
-            CERT_DIR=""
-            if [ -d "certbot/conf/live/edvedum.com" ]; then
-              CERT_DIR="edvedum.com"
-            elif [ -d "certbot/conf/live/cbt.prosperrainfra.com" ]; then
-              CERT_DIR="cbt.prosperrainfra.com"
-            else
-              CERT_DIR=$(ls certbot/conf/live 2>/dev/null | head -n 1 || echo "")
+            log "Step 5/8: Detecting SSL certificates and ensuring Nginx certificate availability..."
+
+            # Sync from host /etc/letsencrypt if present
+            if [ -d "/etc/letsencrypt/live" ]; then
+              mkdir -p certbot/conf/live
+              cp -rL /etc/letsencrypt/* certbot/conf/ 2>/dev/null || true
             fi
 
-            if [ -n "$CERT_DIR" ]; then
+            CERT_DIR=""
+            if [ -d "certbot/conf/live/edvedum.com" ] && [ -f "certbot/conf/live/edvedum.com/fullchain.pem" ]; then
+              CERT_DIR="edvedum.com"
+            elif [ -d "certbot/conf/live/cbt.prosperrainfra.com" ] && [ -f "certbot/conf/live/cbt.prosperrainfra.com/fullchain.pem" ]; then
+              CERT_DIR="cbt.prosperrainfra.com"
+            else
+              CERT_DIR=$(ls -d certbot/conf/live/*/ 2>/dev/null | head -n 1 | xargs -r basename 2>/dev/null || echo "")
+            fi
+
+            if [ -n "$CERT_DIR" ] && [ -f "certbot/conf/live/${CERT_DIR}/fullchain.pem" ]; then
               log "Detected active SSL certificate directory: ${CERT_DIR}"
               sed -i "s|/etc/letsencrypt/live/[^/]*|/etc/letsencrypt/live/${CERT_DIR}|g" frontend/nginx.conf || true
             else
-              log "WARNING: No active certificate directory found in certbot/conf/live! Preserving default nginx.conf configuration."
+              TARGET_CERT_DIR="certbot/conf/live/edvedum.com"
+              log "No active SSL certificate found in certbot/conf/live. Creating self-signed fallback SSL certificate in ${TARGET_CERT_DIR}..."
+              mkdir -p "${TARGET_CERT_DIR}"
+              openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+                -keyout "${TARGET_CERT_DIR}/privkey.pem" \
+                -out "${TARGET_CERT_DIR}/fullchain.pem" \
+                -subj "/CN=edvedum.com/O=EDVEDUM/OU=Production" 2>/dev/null || true
+              log "Fallback self-signed SSL certificate created successfully."
             fi
 
             log "Building docker containers..."
