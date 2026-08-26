@@ -10,6 +10,10 @@ SET description = REPLACE(REPLACE(description, 'NEET / JEE CBT', 'JEE CBT'), 'NT
 WHERE (exam_type ILIKE '%JEE%' OR title ILIKE '%JEE%' OR slug ILIKE '%jee%');
 
 UPDATE test_series
+SET description = 'Full-length JEE Main diagnostic mock covering Physics, Chemistry and Mathematics with JEE CBT pattern, All India Rank and instant score analysis.'
+WHERE slug = 'jee-main-diagnostic-free';
+
+UPDATE test_series
 SET description = REPLACE(description, 'NEET / JEE-pattern', 'JEE-pattern')
 WHERE (exam_type ILIKE '%JEE%' OR title ILIKE '%JEE%' OR slug ILIKE '%jee%');
 
