@@ -1,6 +1,49 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+
+export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
+  try {
+    const notifTitle = `New Test Assigned: ${testName}`;
+    const notifBody = `A new test "${testName}" has been assigned to your portal. Go to My Tests to start!`;
+
+    let targetStudentIds = [];
+
+    if (assigned_to_type === 'individual' && assigned_to_id) {
+      targetStudentIds = [Number(assigned_to_id)];
+    } else if (assigned_to_type === 'batch' && assigned_to_id) {
+      const batchStudents = await query(
+        'SELECT id FROM users WHERE batch_id = $1 AND role = $2',
+        [assigned_to_id, 'candidate']
+      );
+      targetStudentIds = batchStudents.rows.map((s) => s.id);
+    } else if (assigned_to_type === 'institution' && assigned_to_id) {
+      const instStudents = await query(
+        'SELECT id FROM users WHERE institution_id = $1 AND role = $2',
+        [assigned_to_id, 'candidate']
+      );
+      targetStudentIds = instStudents.rows.map((s) => s.id);
+    } else if (assigned_to_type === 'all') {
+      const allStudents = await query(
+        'SELECT id FROM users WHERE role = $1',
+        ['candidate']
+      );
+      targetStudentIds = allStudents.rows.map((s) => s.id);
+    }
+
+    const uniqueIds = Array.from(new Set(targetStudentIds.filter((id) => id && !isNaN(Number(id)))));
+
+    for (const sid of uniqueIds) {
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type, created_at)
+         VALUES ($1, $2, $3, 'test_assigned', NOW())`,
+        [sid, notifTitle, notifBody]
+      ).catch(() => {});
+    }
+  } catch (err) {
+    console.error('Failed to deliver candidate notifications for test assignment:', err.message);
+  }
+}
 import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
@@ -119,6 +162,7 @@ export const createTest = asyncHandler(async (req, res) => {
          VALUES ($1, $2, $3)`,
         [createdTest.id, assigned_to_type, assigned_to_id || null]
       );
+      sendStudentAssignmentNotifications(createdTest.id, createdTest.test_name || createdTest.title || 'Test', assigned_to_type, assigned_to_id).catch(() => {});
     }
 
     return createdTest;
@@ -319,19 +363,6 @@ export const assignTest = asyncHandler(async (req, res) => {
         id,
       ]
     ).catch((err) => console.error('Failed to create institution notification:', err));
-
-    const studentsRes = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [assigned_to_id, 'candidate']);
-    for (const s of studentsRes.rows) {
-      await query(
-        `INSERT INTO notifications (user_id, title, body, type)
-         VALUES ($1, $2, $3, 'test_assigned')`,
-        [
-          s.id,
-          'New Test Assigned',
-          `A new test "${testName}" has been assigned to your institution.`,
-        ]
-      ).catch(() => { });
-    }
   } else if (assigned_to_type === 'all') {
     const instRes = await query('SELECT id FROM institutions WHERE is_active = TRUE');
     for (const inst of instRes.rows) {
@@ -347,6 +378,9 @@ export const assignTest = asyncHandler(async (req, res) => {
       ).catch(() => { });
     }
   }
+
+  // Deliver notifications to all targeted candidates
+  await sendStudentAssignmentNotifications(id, testName, assigned_to_type, assigned_to_id);
 
   res.status(201).json({ assignment: result.rows[0] });
 });

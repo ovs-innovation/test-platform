@@ -15,7 +15,7 @@ export async function notifyStudent(studentId, message) {
        VALUES ($1, $2, $3, $4, NOW())`,
       [
         numId,
-        '⚡ Weak Topic Booster Test Unlocked!',
+        '⚡ Weak Topic Improvement Test Unlocked!',
         message,
         'ai_booster_unlocked',
       ]

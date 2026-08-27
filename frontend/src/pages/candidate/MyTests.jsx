@@ -87,7 +87,7 @@ export default function MyTests() {
               <Link
                 key={e.id}
                 to={`/my-tests/${e.slug}`}
-                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs transition-all duration-200 hover:border-blue-500/60 hover:shadow-md"
+                className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-300 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs transition-all duration-200 hover:-translate-y-1 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/5"
               >
                 {/* Upper Banner Image */}
                 <div className="relative aspect-[21/9] w-full overflow-hidden bg-slate-950">

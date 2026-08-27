@@ -2,17 +2,25 @@ import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
+import { autoClassifyQuestion } from '../utils/questionClassifier.js';
 
 const ensureAssessment = async (assessmentId) => {
   const a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
   if (a.rowCount === 0) throw ApiError.notFound('Assessment not found');
 };
 
-async function resolveSubjectAndChapter({ subject_id, subject, chapter_id, topic }) {
+async function resolveSubjectAndChapter({ subject_id, subject, chapter_id, topic, question_text, options }) {
   let finalSubjectId = subject_id ? (Number(subject_id) || null) : null;
   let finalSubjectName = subject || null;
   let finalChapterId = chapter_id ? (Number(chapter_id) || null) : null;
   let finalTopicName = topic || null;
+
+  // Auto-classify if subject or topic is missing
+  if (!finalSubjectName || !finalTopicName) {
+    const auto = autoClassifyQuestion(question_text, options, finalSubjectName);
+    if (!finalSubjectName) finalSubjectName = auto.subject;
+    if (!finalTopicName) finalTopicName = auto.topic;
+  }
 
   if (finalSubjectId) {
     const sRes = await query('SELECT name FROM subjects WHERE id = $1', [finalSubjectId]);
@@ -309,10 +317,19 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
   for (const row of rows) {
     position += 1;
     try {
+      const resolved = await resolveSubjectAndChapter({
+        subject_id: row.subject_id,
+        subject: row.subject || row.category,
+        chapter_id: row.chapter_id,
+        topic: row.topic,
+        question_text: row.question_text,
+        options: row.options,
+      });
+
       const result = await query(
         `INSERT INTO questions
-           (assessment_id, question_type, question_text, options, correct_index, correct_indices, marks, position, solution, image_url)
-         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING id, question_text`,
+           (assessment_id, question_type, question_text, options, correct_index, correct_indices, marks, position, solution, image_url, subject_id, chapter_id, subject, topic, bank_category)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) RETURNING id, question_text, subject, topic`,
         [
           assessmentId,
           row.question_type,
@@ -324,6 +341,11 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
           position,
           row.solution || '',
           row.image_url || '',
+          resolved.subject_id,
+          resolved.chapter_id,
+          resolved.subject,
+          resolved.topic,
+          resolved.subject,
         ]
       );
       created.push(result.rows[0]);

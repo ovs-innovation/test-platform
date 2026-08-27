@@ -77,7 +77,10 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
   const imageUrlIdx = headerCandidates.indexOf('image_url');
 
   const hasStandardHeader = textIdx !== -1;
-  const startIndex = hasStandardHeader ? 1 : 0;
+  const isGenericHeader = headerCandidates.some((h) =>
+    ['question', 'question_text', 'question text', 'correct answer', 'correct_answer', 'option a', 'option 1', 'answer'].includes(h.trim())
+  );
+  const startIndex = (hasStandardHeader || isGenericHeader) ? 1 : 0;
 
   const rows = [];
   const errors = [];
@@ -170,15 +173,42 @@ export const parseQuestionCsv = (csv, { requireCategory = false } = {}) => {
         category = cols[3] ? cols[3].trim() : null;
       }
 
-      let correct_index = 0;
-      if (answerRaw === 'A' || answerRaw === '0' || answerRaw === '1ST') correct_index = 0;
-      else if (answerRaw === 'B' || answerRaw === '1' || answerRaw === '2ND') correct_index = 1;
-      else if (answerRaw === 'C' || answerRaw === '2' || answerRaw === '3RD') correct_index = 2;
-      else if (answerRaw === 'D' || answerRaw === '3' || answerRaw === '4TH') correct_index = 3;
-      else if (!isNaN(Number(answerRaw))) {
-        const num = Number(answerRaw);
-        correct_index = num >= 1 && num <= options.length ? num - 1 : Math.max(0, num);
+      let correct_index = -1;
+      const rawAnsOriginal = (cols.length >= 6 ? (cols[5] || '') : (cols[2] || '')).trim();
+      const cleanUpper = answerRaw.replace(/^OPTION\s*/i, '').trim();
+
+      // 1. Check letter A/B/C/D or 1st/2nd/3rd/4th
+      if (cleanUpper === 'A' || cleanUpper === '0' || cleanUpper === '1ST') correct_index = 0;
+      else if (cleanUpper === 'B' || cleanUpper === '1' || cleanUpper === '2ND') correct_index = 1;
+      else if (cleanUpper === 'C' || cleanUpper === '2' || cleanUpper === '3RD') correct_index = 2;
+      else if (cleanUpper === 'D' || cleanUpper === '3' || cleanUpper === '4TH') correct_index = 3;
+
+      // 2. Numeric index check
+      if (correct_index === -1 && !isNaN(Number(cleanUpper)) && cleanUpper !== '') {
+        const num = Number(cleanUpper);
+        if (num >= 1 && num <= options.length) correct_index = num - 1;
+        else if (num >= 0 && num < options.length) correct_index = Math.floor(num);
       }
+
+      // 3. Exact text match against options
+      if (correct_index === -1 && rawAnsOriginal) {
+        const matchIdx = options.findIndex(
+          (opt) => opt.trim().toLowerCase() === rawAnsOriginal.toLowerCase()
+        );
+        if (matchIdx !== -1) correct_index = matchIdx;
+      }
+
+      // 4. Substring / Partial match fallback
+      if (correct_index === -1 && rawAnsOriginal) {
+        const matchIdx = options.findIndex(
+          (opt) =>
+            opt.trim().toLowerCase().includes(rawAnsOriginal.toLowerCase()) ||
+            rawAnsOriginal.toLowerCase().includes(opt.trim().toLowerCase())
+        );
+        if (matchIdx !== -1) correct_index = matchIdx;
+      }
+
+      if (correct_index === -1) correct_index = 0;
 
       if (options.length < 2) {
         errors.push({ line: i + 1, error: 'Need at least 2 options' });

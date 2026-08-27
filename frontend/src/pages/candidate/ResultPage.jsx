@@ -34,7 +34,7 @@ export default function ResultPage() {
         if (storedResult) {
           setData({
             resultVisible: true,
-            assessment: { title: 'AI Weak Topic Booster Test' },
+            assessment: { title: 'AI Weak Topic Improvement Test' },
             attempt: {
               submitted_at: new Date().toISOString(),
               status: 'submitted',
@@ -66,7 +66,7 @@ export default function ResultPage() {
       setAiTestResult(res);
       setRefreshTrigger((prev) => prev + 1);
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Unable to generate AI booster test.';
+      const msg = err.response?.data?.message || err.message || 'Unable to generate AI improvement test.';
       setAiTestError(msg);
     } finally {
       setGeneratingAiTest(false);
@@ -564,7 +564,7 @@ export default function ResultPage() {
                     <Sparkles className="h-5 w-5" />
                   </div>
                   <div className="space-y-0.5">
-                    <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Booster Test</h3>
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Improvement Test</h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
                       Generate fresh questions targeting your weak areas (&lt;60% accuracy). Scheduled with 2–3 days spaced repetition so you have time to revise first.
                     </p>
@@ -614,7 +614,7 @@ export default function ResultPage() {
                 <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
                   <div className="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-300 text-sm">
                     <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <span>Booster Test Scheduled</span>
+                    <span>Improvement Test Scheduled</span>
                   </div>
                   <p className="leading-relaxed">
                     {aiTestResult.message || `Your personalized test is ready and will unlock on ${new Date(aiTestResult.unlockAt).toLocaleDateString()}.`}

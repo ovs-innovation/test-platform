@@ -79,7 +79,7 @@ export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm">Scheduled Booster Tests</h3>
+              <h3 className="font-bold text-slate-900 dark:text-white text-sm">Scheduled Improvement Tests</h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">Personalized spaced-repetition revision tests</p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
             <Sparkles className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white text-sm">Scheduled AI Booster Tests</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white text-sm">Scheduled AI Improvement Tests</h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">Targeted spaced-repetition tests for weak areas</p>
           </div>
         </div>
@@ -137,7 +137,7 @@ export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
                 <div className="space-y-1.5">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-bold text-slate-900 dark:text-white text-sm">
-                      {t.test_name}
+                      {(t.test_name || '').replace(/AI Booster/gi, 'AI Improvement Test')}
                     </span>
 
                     {/* Status Pills */}

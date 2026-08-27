@@ -90,8 +90,8 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
 
   const topicNames = Array.from(new Set(weakTopics.map((w) => w.topic)));
   const testTitle = sourceTestTitle
-    ? `AI Booster: ${sourceTestTitle} (${topicNames.join(', ')})`
-    : `AI Booster: ${topicNames.join(', ')}`;
+    ? `AI Improvement Test: ${sourceTestTitle} (${topicNames.join(', ')})`
+    : `AI Improvement Test: ${topicNames.join(', ')}`;
 
   // 6. Save test in `tests` table
   const weakTopicsPayload = weakTopics.map((w) => ({
@@ -173,7 +173,7 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     expiresAt: expiresAt.toISOString(),
     delayDays,
     topics: weakTopicsPayload,
-    message: `Your personalized AI booster test on ${topicNames.join(', ')} is ready! It will unlock on ${unlockAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} (${delayDays} days revision time).`,
+    message: `Your personalized AI improvement test on ${topicNames.join(', ')} is ready! It will unlock on ${unlockAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} (${delayDays} days revision time).`,
   });
 });
 
@@ -182,14 +182,20 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
  * Returns list of scheduled & available AI tests for the student.
  */
 export const getScheduledTests = asyncHandler(async (req, res) => {
-  const studentId = Number(req.params.studentId || req.user?.id);
+  let studentId = req.params.studentId;
+  if (!studentId || studentId === 'undefined' || studentId === 'null' || studentId === 'me' || isNaN(Number(studentId))) {
+    studentId = req.user?.id;
+  } else {
+    studentId = Number(studentId);
+  }
+
   if (!studentId || isNaN(studentId)) {
     return res.json({ tests: [] });
   }
 
-  // Fetch tests assigned to candidate of type 'ai_weak_topic'
+  // Fetch tests assigned to candidate of type 'ai_weak_topic' or matching AI test title
   const result = await query(
-    `SELECT 
+    `SELECT DISTINCT ON (t.id)
        t.id AS test_id,
        t.test_name,
        t.test_type,
@@ -202,12 +208,20 @@ export const getScheduledTests = asyncHandler(async (req, res) => {
        t.max_marks,
        ta.id AS attempt_id,
        ta.submitted_at,
-       ta.score
+       ta.score,
+       t.created_at
      FROM tests t
-     JOIN test_assignments tas ON tas.test_id = t.id AND tas.assigned_to_id = $1
+     LEFT JOIN test_assignments tas ON tas.test_id = t.id
+     LEFT JOIN candidate_invites ci ON ci.assessment_id = t.id
      LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $1
-     WHERE t.type = 'ai_weak_topic' AND t.is_deleted IS NOT TRUE
-     ORDER BY t.created_at DESC`,
+     WHERE (t.type = 'ai_weak_topic' OR t.test_name LIKE 'AI Booster%' OR t.test_name LIKE 'AI Improvement%')
+       AND (
+         tas.assigned_to_id = $1 
+         OR ci.candidate_email = (SELECT email FROM users WHERE id = $1)
+         OR tas.assigned_to_id IS NULL
+       )
+       AND COALESCE(t.is_deleted, false) = false
+     ORDER BY t.id, t.created_at DESC`,
     [studentId]
   );
 

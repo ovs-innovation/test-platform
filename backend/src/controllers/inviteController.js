@@ -12,10 +12,16 @@ export const getInvite = asyncHandler(async (req, res) => {
   const result = await query(
     `
     SELECT ci.id, ci.candidate_name, ci.candidate_email, ci.status, ci.invited_at, ci.expires_at,
-           a.id AS assessment_id, a.title, a.description, a.duration_minutes, a.instructions,
-           a.max_violations, a.is_published
+           COALESCE(a.id, t.id) AS assessment_id,
+           COALESCE(a.title, t.test_name, t.title) AS title,
+           COALESCE(a.description, t.syllabus, 'Proctored NEET / JEE CBT format diagnostic mock exam.') AS description,
+           COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes,
+           COALESCE(a.instructions, 'Standard examination instructions apply.') AS instructions,
+           COALESCE(a.max_violations, 5) AS max_violations,
+           COALESCE(a.is_published, t.is_published, true) AS is_published
     FROM candidate_invites ci
-    JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN tests t ON t.id = ci.assessment_id
     WHERE ci.token = $1
     `,
     [token]
@@ -55,10 +61,19 @@ export const getInvite = asyncHandler(async (req, res) => {
 export const createInvite = asyncHandler(async (req, res) => {
   const { assessment_id, candidate_name, candidate_email } = req.body;
 
-  const aRes = await query('SELECT id, title, duration_minutes, is_published FROM assessments WHERE id = $1', [assessment_id]);
+  const aRes = await query(
+    `SELECT id, title, duration_minutes, is_published FROM assessments WHERE id = $1
+     UNION ALL
+     SELECT id, COALESCE(test_name, title) AS title, duration_minutes, is_published FROM tests WHERE id = $1
+     LIMIT 1`,
+    [assessment_id]
+  );
   if (aRes.rowCount === 0) throw ApiError.notFound('Assessment not found');
 
-  const qCount = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [assessment_id]);
+  const qCount = await query(
+    `SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1 OR test_id = $1`,
+    [assessment_id]
+  );
   if (qCount.rows[0].c === 0) {
     throw ApiError.badRequest('Assessment must have at least one question before inviting candidates');
   }
@@ -69,7 +84,12 @@ export const createInvite = asyncHandler(async (req, res) => {
   );
 
   const assessment = aRes.rows[0];
-  const inviteUrlFor = (token) => `${env.inviteBaseUrl}/invite/${token}`;
+  const requestOrigin = req.get('origin') || req.get('referer');
+  let baseUrl = env.inviteBaseUrl;
+  if (requestOrigin) {
+    try { baseUrl = new URL(requestOrigin).origin; } catch (_) {}
+  }
+  const inviteUrlFor = (token) => `${baseUrl}/invite/${token}`;
 
   const sendInvite = async (invite) => {
     try {
@@ -139,11 +159,12 @@ export const listInvites = asyncHandler(async (req, res) => {
 
   const result = await query(
     `
-    SELECT ci.*, a.title AS assessment_title,
+    SELECT ci.*, COALESCE(a.title, t.test_name, t.title) AS assessment_title,
            at.id AS attempt_id, at.status AS attempt_status,
            s.percentage, s.passed
     FROM candidate_invites ci
-    JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN assessments a ON a.id = ci.assessment_id
+    LEFT JOIN tests t ON t.id = ci.assessment_id
     LEFT JOIN attempts at ON at.invite_id = ci.id
     LEFT JOIN scores s ON s.attempt_id = at.id
     ${where}
@@ -160,9 +181,10 @@ export const listInvites = asyncHandler(async (req, res) => {
 export const resendInvite = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const result = await query(
-    `SELECT ci.*, a.title AS assessment_title, a.duration_minutes
+    `SELECT ci.*, COALESCE(a.title, t.test_name, t.title) AS assessment_title, COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes
      FROM candidate_invites ci
-     JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN tests t ON t.id = ci.assessment_id
      WHERE ci.id = $1`,
     [id]
   );
@@ -172,7 +194,12 @@ export const resendInvite = asyncHandler(async (req, res) => {
     throw ApiError.conflict('Assessment already completed');
   }
 
-  const inviteUrl = `${env.inviteBaseUrl}/invite/${invite.token}`;
+  const requestOrigin = req.get('origin') || req.get('referer');
+  let baseUrl = env.inviteBaseUrl;
+  if (requestOrigin) {
+    try { baseUrl = new URL(requestOrigin).origin; } catch (_) {}
+  }
+  const inviteUrl = `${baseUrl}/invite/${invite.token}`;
   try {
     await sendInviteEmail(
       invite.candidate_email,

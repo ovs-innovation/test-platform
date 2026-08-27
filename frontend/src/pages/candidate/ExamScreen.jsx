@@ -83,7 +83,7 @@ export default function ExamScreen() {
           setSections([]);
           setQuestions(session.questions || []);
           setMeta({
-            title: session.test?.test_name || 'AI Weak Topic Booster Test',
+            title: session.test?.test_name || 'AI Weak Topic Improvement Test',
             duration_minutes: session.test?.duration_minutes || 45,
             max_violations: 5,
           });

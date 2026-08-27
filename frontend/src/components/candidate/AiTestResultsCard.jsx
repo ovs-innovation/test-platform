@@ -20,7 +20,7 @@ export default function AiTestResultsCard({ beforeAfterComparison = [], question
                 Topic Accuracy Progress (Before vs After)
               </h3>
               <p className="text-xs text-slate-500 dark:text-slate-400">
-                Accuracy score before AI generation compared to after completing this booster test
+                Accuracy score before AI generation compared to after completing this improvement test
               </p>
             </div>
           </div>

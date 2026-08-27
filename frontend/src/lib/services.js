@@ -624,8 +624,10 @@ export const aiTestService = {
     clearCache();
     return api.post('/tests/generate-ai-weak-topic-test', { studentId, attemptId }).then((r) => r.data);
   },
-  getScheduledTests: (studentId) =>
-    api.get(`/tests/scheduled/${studentId}`).then((r) => r.data.tests || []),
+  getScheduledTests: (studentId) => {
+    const validId = studentId && studentId !== 'undefined' ? studentId : 'me';
+    return api.get(`/tests/scheduled/${validId}`).then((r) => r.data.tests || []);
+  },
   startTest: (testId) => api.post(`/tests/${testId}/start`).then((r) => r.data),
   submitTest: (testId, answers, studentId) => {
     clearCache();

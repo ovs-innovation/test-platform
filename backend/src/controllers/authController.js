@@ -501,9 +501,10 @@ export const sendOtp = asyncHandler(async (req, res) => {
   const normalizedEmail = email.toLowerCase();
 
   const inviteRes = await query(
-    `SELECT ci.*, a.title AS assessment_title
+    `SELECT ci.*, COALESCE(a.title, t.test_name, t.title) AS assessment_title
      FROM candidate_invites ci
-     JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN tests t ON t.id = ci.assessment_id
      WHERE ci.token = $1`,
     [invite_token]
   );
@@ -596,9 +597,10 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
 
   const inviteRes = await query(
-    `SELECT ci.*, a.title AS assessment_title
+    `SELECT ci.*, COALESCE(a.title, t.test_name, t.title) AS assessment_title
      FROM candidate_invites ci
-     JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN tests t ON t.id = ci.assessment_id
      WHERE ci.token = $1`,
     [invite_token]
   );

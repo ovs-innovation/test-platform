@@ -166,7 +166,7 @@ export default function CandidateDashboard() {
         />
       </div>
 
-      {/* SCHEDULED AI BOOSTER TESTS WIDGET */}
+      {/* SCHEDULED AI IMPROVEMENT TESTS WIDGET */}
       <div>
         <ScheduledTestsWidget studentId={user?.id} />
       </div>
