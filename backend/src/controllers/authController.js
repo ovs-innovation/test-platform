@@ -300,12 +300,12 @@ export const register = asyncHandler(async (req, res) => {
   if (otp) {
     const otpRes = await query(
       `SELECT * FROM otp_verifications
-       WHERE LOWER(email) = $1 AND purpose = 'student_signup' AND verified_at IS NULL AND expires_at > NOW()
+       WHERE LOWER(email) = $1 AND purpose = 'student_signup' AND verified_at IS NULL
        ORDER BY created_at DESC LIMIT 1`,
       [normalizedEmail]
     );
     const record = otpRes.rows[0];
-    if (!record) {
+    if (!record || new Date(record.expires_at) <= new Date() || (Date.now() - new Date(record.created_at).getTime()) > 5 * 60 * 1000) {
       throw ApiError.badRequest('Verification OTP code has expired or does not exist. Please request a new code.');
     }
 
@@ -570,12 +570,14 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
 
   const otpRes = await query(
     `SELECT * FROM otp_verifications
-     WHERE email = $1 AND invite_token = $2 AND verified_at IS NULL AND expires_at > NOW()
+     WHERE email = $1 AND invite_token = $2 AND verified_at IS NULL
      ORDER BY created_at DESC LIMIT 1`,
     [normalizedEmail, invite_token]
   );
   const record = otpRes.rows[0];
-  if (!record) throw ApiError.badRequest('Invalid or expired verification code');
+  if (!record || new Date(record.expires_at) <= new Date() || (Date.now() - new Date(record.created_at).getTime()) > 5 * 60 * 1000) {
+    throw ApiError.badRequest('Verification code has expired. Please request a new code.');
+  }
 
   if (record.verify_attempts >= env.otpMaxVerifyAttempts) {
     await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);
@@ -709,9 +711,16 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
     );
   }
 
+  // Invalidate any existing active OTPs for this student
+  await query(
+    `UPDATE otp_verifications SET expires_at = NOW()
+     WHERE (LOWER(email) = LOWER($1) OR (phone <> '' AND phone = $2)) AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()`,
+    [normalizedEmail, targetPhone]
+  );
+
   const otp = generateOtp();
   const otpHash = await hashOtp(otp);
-  const expiresAt = new Date(Date.now() + env.otpExpiresMinutes * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 2 * 60 * 1000); // 2 minutes validity
 
   await query(
     `INSERT INTO otp_verifications (email, phone, otp_hash, purpose, expires_at)
@@ -791,12 +800,17 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
   const otpRes = await query(
     `SELECT * FROM otp_verifications
      WHERE (LOWER(email) = LOWER($1) OR (phone <> '' AND phone = $2))
-       AND purpose = 'student_login' AND verified_at IS NULL AND expires_at > NOW()
+       AND purpose = 'student_login' AND verified_at IS NULL
      ORDER BY created_at DESC LIMIT 1`,
     [normalizedEmail, targetPhone]
   );
   const record = otpRes.rows[0];
-  if (!record) throw ApiError.badRequest('Invalid or expired verification code');
+  if (!record) throw ApiError.badRequest('No verification OTP code request found. Please request a code first.');
+
+  if (new Date(record.expires_at) <= new Date() || (Date.now() - new Date(record.created_at).getTime()) > 2 * 60 * 1000) {
+    await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);
+    throw ApiError.badRequest('Verification code has expired. Please click Resend OTP to request a fresh code.');
+  }
 
   if (record.verify_attempts >= env.otpMaxVerifyAttempts) {
     await query('UPDATE otp_verifications SET expires_at = NOW() WHERE id = $1', [record.id]);

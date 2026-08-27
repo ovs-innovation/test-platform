@@ -7,6 +7,14 @@ export const notFoundHandler = (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 export const errorHandler = (err, _req, res, _next) => {
+  // Log detailed error internally for server administration and debugging
+  console.error('[Internal Error Log]', {
+    message: err?.message,
+    name: err?.name,
+    code: err?.code,
+    stack: err?.stack,
+  });
+
   // Known PostgreSQL unique-violation -> 409
   if (err && err.code === '23505') {
     return res.status(409).json({ message: 'A record with these values already exists.' });
@@ -22,8 +30,6 @@ export const errorHandler = (err, _req, res, _next) => {
       (err.message && (err.message.includes('getaddrinfo') || err.message.includes('connection terminated'))));
 
   if (isDbConnectionError) {
-    // eslint-disable-next-line no-console
-    console.error('[Database Connection Error]', err?.message || err);
     return res.status(503).json({
       success: false,
       code: 'SERVICE_TEMPORARILY_UNAVAILABLE',
@@ -43,11 +49,10 @@ export const errorHandler = (err, _req, res, _next) => {
     });
   }
 
-  // eslint-disable-next-line no-console
-  console.error('[Unhandled Server Error]', err);
+  // Hide stack trace and unhandled raw server details from users
   return res.status(500).json({
     success: false,
     code: 'INTERNAL_SERVER_ERROR',
-    message: 'Unable to process request right now. Please try again.',
+    message: 'Unable to process request right now. Please try again later.',
   });
 };

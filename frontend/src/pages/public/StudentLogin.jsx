@@ -124,7 +124,7 @@ export default function StudentLogin() {
         await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
       }
       setEmailOtpSent(true);
-      setEmailTimer(30);
+      setEmailTimer(60);
       setEmailOtpCode('');
       toast.success(`Verification OTP sent to ${cleanEmail}`);
     } catch (err) {
@@ -137,6 +137,10 @@ export default function StudentLogin() {
   // Handle Verify Email OTP Submit
   const handleVerifyEmailOtpSubmit = async (e) => {
     e?.preventDefault();
+    if (emailTimer <= 0) {
+      setError('Verification OTP has expired. Please click "Resend OTP" to request a new code.');
+      return;
+    }
     const fullCode = emailOtpCode.trim();
     if (fullCode.length !== 6) {
       setError('Please enter the full 6-digit OTP code sent to your email.');
@@ -176,7 +180,7 @@ export default function StudentLogin() {
         await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone });
       }
       setMobileOtpSent(true);
-      setMobileTimer(30);
+      setMobileTimer(60);
       toast.success(`OTP sent to +91 ${cleanPhone}`);
     } catch (err) {
       setError(err.message || 'Failed to send OTP to mobile number.');
@@ -188,6 +192,10 @@ export default function StudentLogin() {
   // Handle Verify Mobile OTP Submit
   const handleVerifyMobileOtpSubmit = async (e) => {
     e?.preventDefault();
+    if (mobileTimer <= 0) {
+      setError('Verification OTP has expired. Please click "Resend OTP" to request a new code.');
+      return;
+    }
     const cleanCode = mobileOtpCode.trim();
     if (cleanCode.length < 4) {
       setError('Please enter the verification OTP code sent to your mobile.');
@@ -414,14 +422,20 @@ export default function StudentLogin() {
                     Resend OTP in <strong>{emailTimer}s</strong>
                   </span>
                 ) : (
-                  <button
-                    type="button"
-                    disabled={loading}
-                    onClick={handleSendEmailOtp}
-                    className="text-[#00F0FF] hover:underline font-bold cursor-pointer disabled:opacity-50"
-                  >
-                    Resend OTP
-                  </button>
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-amber-400 text-[11px] font-semibold flex items-center gap-1">
+                      <span>⏰</span>
+                      <span>OTP expired. Request a new code.</span>
+                    </span>
+                    <button
+                      type="button"
+                      disabled={loading}
+                      onClick={handleSendEmailOtp}
+                      className="text-[#00F0FF] hover:underline font-bold cursor-pointer disabled:opacity-50"
+                    >
+                      Resend OTP
+                    </button>
+                  </div>
                 )}
               </div>
 
@@ -506,13 +520,20 @@ export default function StudentLogin() {
                     Resend OTP in <strong>{mobileTimer}s</strong>
                   </span>
                 ) : (
-                  <button
-                    type="button"
-                    onClick={handleSendMobileOtp}
-                    className="text-[#00F0FF] hover:underline font-bold cursor-pointer"
-                  >
-                    Resend OTP
-                  </button>
+                  <div className="flex items-center justify-between w-full">
+                    <span className="text-amber-400 text-[11px] font-semibold flex items-center gap-1">
+                      <span>⏰</span>
+                      <span>OTP expired. Request a new code.</span>
+                    </span>
+                    <button
+                      type="button"
+                      disabled={loading}
+                      onClick={handleSendMobileOtp}
+                      className="text-[#00F0FF] hover:underline font-bold cursor-pointer disabled:opacity-50"
+                    >
+                      Resend OTP
+                    </button>
+                  </div>
                 )}
               </div>
 
