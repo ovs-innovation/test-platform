@@ -37,6 +37,10 @@ export default function TestSeriesCard({ series }) {
             <img
               src={theme.studentImage}
               alt={theme.label}
+              loading="lazy"
+              decoding="async"
+              width="400"
+              height="192"
               className="h-full w-full object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
             />
             {/* Category Gradient Overlay Mask (Left to Right) for legibility & smooth blend */}

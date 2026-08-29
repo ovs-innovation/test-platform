@@ -273,11 +273,11 @@
   }
 
   .nta-option {
-    @apply flex w-full items-start gap-3 border border-slate-400 bg-white px-4 py-3 text-left text-sm text-slate-900 transition hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800;
+    @apply flex w-full items-start gap-3 border border-slate-400 bg-white px-4 py-3 text-left text-sm text-slate-900 font-medium transition hover:bg-slate-100 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800;
   }
 
   .nta-option-selected {
-    @apply border-[#1a4480] bg-[#eef4fc] ring-1 ring-[#1a4480] dark:border-blue-500 dark:bg-blue-950/50 dark:ring-blue-500;
+    @apply border-[#1a4480] bg-[#eef4fc] text-slate-900 font-bold ring-1 ring-[#1a4480] dark:border-blue-500 dark:bg-blue-950/60 dark:text-slate-100 dark:ring-blue-500;
   }
 
   .nta-instructions-scroll {

@@ -102,7 +102,7 @@ export default function CandidateDashboard() {
             </div>
 
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-              Welcome back, {firstName} 👋
+              Welcome back, {firstName}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
               Track your assigned test series, view analytical diagnostic reports, and attempt scheduled exams.

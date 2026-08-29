@@ -111,7 +111,15 @@ export default function CatalogHero({ seriesCount = 0 }) {
                   className={`group flex items-center gap-4 rounded-2xl border bg-slate-900/80 p-3.5 backdrop-blur-xl transition-all duration-300 ${track.borderStyle}`}
                 >
                   <div className="h-14 w-24 shrink-0 overflow-hidden rounded-xl ring-1 ring-white/15 sm:h-16 sm:w-28 bg-slate-950 flex items-center justify-center">
-                    <img src={track.src} alt={track.label} className="h-full w-full object-cover" />
+                    <img
+                      src={track.src}
+                      alt={track.label}
+                      loading="eager"
+                      decoding="async"
+                      width="112"
+                      height="64"
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2">

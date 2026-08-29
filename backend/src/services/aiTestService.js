@@ -41,179 +41,226 @@ export const QuestionArraySchema = z.array(QuestionSchema).min(1);
  */
 export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemptId = null) {
   const numId = Number(studentId);
-  const numAttemptId = attemptId ? Number(attemptId) : null;
   if (!numId || isNaN(numId)) return [];
+
+  let targetAttemptId = attemptId ? Number(attemptId) : null;
+
+  // 1. If attemptId is not provided, resolve candidate's MOST RECENT submitted test attempt
+  if (!targetAttemptId) {
+    const latestAttemptRes = await query(
+      `(SELECT id, assessment_id, submitted_at, 'attempts' AS attempt_type 
+        FROM attempts 
+        WHERE candidate_id = $1 AND submitted_at IS NOT NULL 
+        ORDER BY submitted_at DESC LIMIT 1)
+       UNION ALL
+       (SELECT id, COALESCE(assessment_id, test_id) AS assessment_id, submitted_at, 'test_attempts' AS attempt_type 
+        FROM test_attempts 
+        WHERE student_id = $1 AND submitted_at IS NOT NULL 
+        ORDER BY submitted_at DESC LIMIT 1)
+       ORDER BY submitted_at DESC LIMIT 1`,
+      [numId]
+    ).catch(() => ({ rows: [] }));
+
+    if (latestAttemptRes.rows && latestAttemptRes.rows.length > 0) {
+      targetAttemptId = Number(latestAttemptRes.rows[0].id);
+    }
+  }
+
+  // 2. Fetch topics ALREADY targeted in active/scheduled AI Improvement tests for this student (to exclude past-week topics)
+  const existingAiTestsRes = await query(
+    `SELECT t.source_weak_topics 
+     FROM tests t
+     LEFT JOIN test_assignments tas ON tas.test_id = t.id
+     WHERE (t.type = 'ai_weak_topic' OR t.test_name LIKE 'AI Improvement%' OR t.test_name LIKE 'AI Booster%')
+       AND (tas.assigned_to_id = $1 OR tas.assigned_to_id IS NULL)
+       AND COALESCE(t.is_deleted, false) = false`,
+    [numId]
+  ).catch(() => ({ rows: [] }));
+
+  const alreadyTargetedTopics = new Set();
+  for (const row of existingAiTestsRes.rows || []) {
+    try {
+      const parsed = typeof row.source_weak_topics === 'string' ? JSON.parse(row.source_weak_topics) : (row.source_weak_topics || []);
+      if (Array.isArray(parsed)) {
+        for (const item of parsed) {
+          if (item.topic) alreadyTargetedTopics.add(item.topic.trim().toLowerCase());
+        }
+      }
+    } catch (_) {}
+  }
 
   let weakTopics = [];
 
-  // 1. If attemptId is provided, query questions & weak topics SPECIFICALLY for that test attempt/assessment
-  if (numAttemptId && !isNaN(numAttemptId)) {
-    const attemptResult = await query(
-      `WITH target_info AS (
-         SELECT assessment_id FROM attempts WHERE id = $1
-         UNION
-         SELECT COALESCE(assessment_id, test_id) AS assessment_id FROM test_attempts WHERE id = $1
-         UNION
-         SELECT id AS assessment_id FROM assessments WHERE id = $1
-         UNION
-         SELECT id AS assessment_id FROM tests WHERE id = $1
-       ),
-       attempt_question_stats AS (
-         SELECT 
-           COALESCE(s.name, q.bank_category, a.title, t.test_name, 'General Subject') AS subject,
-           COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
-           COALESCE(q.subtopic, 'Core Concepts') AS subtopic,
-           CASE 
-             WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = COALESCE(q.correct_option_index, q.correct_index))
-                  OR (ans.selected_indices::text = q.correct_indices::text)
-                  OR (ans.numeric_answer::text = q.numeric_answer::text)
-             THEN 1 ELSE 0 
-           END AS is_correct,
-           CASE 
-             WHEN ans.selected_index IS NOT NULL OR ans.selected_indices IS NOT NULL OR ans.numeric_answer IS NOT NULL 
-             THEN 1 ELSE 0 
-           END AS is_attempted
-         FROM questions q
-         LEFT JOIN subjects s ON s.id = q.subject_id
-         LEFT JOIN chapters c ON c.id = q.chapter_id
-         LEFT JOIN assessments a ON a.id = q.assessment_id
-         LEFT JOIN tests t ON t.id = q.assessment_id OR t.id = q.test_id
-         LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = $1
-         WHERE q.assessment_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
-            OR q.test_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
-            OR ans.attempt_id = $1
-       )
-       SELECT 
-         subject,
-         topic,
-         subtopic,
-         COUNT(*)::int AS total_questions,
-         SUM(is_attempted)::int AS attempted_count,
-         SUM(is_correct)::int AS correct_count,
-         ROUND((SUM(is_correct)::numeric / GREATEST(COUNT(*), 1) * 100)::numeric, 1)::float AS accuracy
-       FROM attempt_question_stats
-       GROUP BY subject, topic, subtopic
-       ORDER BY accuracy ASC, attempted_count DESC
-       LIMIT $2`,
-      [numAttemptId, limit]
+  // 3. Query weak topics SPECIFICALLY for targetAttemptId
+  if (targetAttemptId && !isNaN(targetAttemptId)) {
+    // Check test_attempts question_responses JSONB first
+    const testAttemptRes = await query(
+      `SELECT question_responses, assessment_id, test_id FROM test_attempts WHERE id = $1`,
+      [targetAttemptId]
     ).catch(() => ({ rows: [] }));
 
-    if (attemptResult.rows && attemptResult.rows.length > 0) {
-      const cleanedRows = attemptResult.rows.map((r) => {
-        let topicName = r.topic;
-        if (!topicName || topicName === 'General Topic') {
-          topicName = r.subject !== 'General Subject' ? `${r.subject} Core Principles` : 'Target Weak Areas';
-        }
-        return {
-          ...r,
-          topic: topicName,
-        };
-      });
+    if (testAttemptRes.rows && testAttemptRes.rows.length > 0) {
+      const row = testAttemptRes.rows[0];
+      let responses = [];
+      try {
+        responses = typeof row.question_responses === 'string'
+          ? JSON.parse(row.question_responses)
+          : (row.question_responses || []);
+      } catch (_) {}
 
-      const weakFromAttempt = cleanedRows.filter((r) => Number(r.accuracy) < threshold);
-      if (weakFromAttempt.length > 0) {
-        weakTopics = weakFromAttempt;
-      } else {
-        weakTopics = cleanedRows.slice(0, limit);
+      if (Array.isArray(responses) && responses.length > 0) {
+        const topicStatsMap = {};
+        for (const r of responses) {
+          const tName = (r.topic || r.subtopic || 'General Topic').trim();
+          const sName = (r.subject || 'Biology').trim();
+          if (!topicStatsMap[tName]) {
+            topicStatsMap[tName] = { topic: tName, subtopic: r.subtopic || 'Core Concepts', subject: sName, correct: 0, attempted: 0, total: 0 };
+          }
+          topicStatsMap[tName].total += 1;
+          if (r.isAttempted) {
+            topicStatsMap[tName].attempted += 1;
+            if (r.isCorrect) topicStatsMap[tName].correct += 1;
+          }
+        }
+
+        const calculated = Object.values(topicStatsMap).map((ts) => {
+          const accuracy = ts.total > 0 ? Math.round((ts.correct / ts.total) * 100) : 0;
+          return {
+            topic: ts.topic,
+            subtopic: ts.subtopic,
+            subject: ts.subject,
+            accuracy,
+            correctCount: ts.correct,
+            attemptedCount: ts.attempted,
+            totalCount: ts.total,
+          };
+        });
+
+        // Filter for weak topics (accuracy < threshold)
+        weakTopics = calculated.filter((t) => t.accuracy < threshold);
+        if (weakTopics.length === 0 && calculated.length > 0) {
+          calculated.sort((a, b) => a.accuracy - b.accuracy);
+          weakTopics = calculated.slice(0, limit);
+        }
+      }
+    }
+
+    // If test_attempts JSONB yielded no topics, query `answers` table for this specific attemptId
+    if (weakTopics.length === 0) {
+      const attemptResult = await query(
+        `WITH target_info AS (
+           SELECT assessment_id FROM attempts WHERE id = $1
+           UNION
+           SELECT COALESCE(assessment_id, test_id) AS assessment_id FROM test_attempts WHERE id = $1
+           UNION
+           SELECT id AS assessment_id FROM assessments WHERE id = $1
+           UNION
+           SELECT id AS assessment_id FROM tests WHERE id = $1
+         ),
+         attempt_question_stats AS (
+           SELECT 
+             COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
+             COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
+             COALESCE(q.subtopic, 'Core Concepts') AS subtopic,
+             CASE 
+               WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = COALESCE(q.correct_option_index, q.correct_index))
+                    OR (ans.selected_indices::text = q.correct_indices::text)
+                    OR (ans.numeric_answer::text = q.numeric_answer::text)
+               THEN 1 ELSE 0 
+             END AS is_correct,
+             CASE 
+               WHEN ans.selected_index IS NOT NULL OR ans.selected_indices IS NOT NULL OR ans.numeric_answer IS NOT NULL 
+               THEN 1 ELSE 0 
+             END AS is_attempted
+           FROM questions q
+           LEFT JOIN subjects s ON s.id = q.subject_id
+           LEFT JOIN chapters c ON c.id = q.chapter_id
+           LEFT JOIN answers ans ON ans.question_id = q.id AND (ans.attempt_id = $1)
+           WHERE q.assessment_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
+              OR q.test_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
+              OR ans.attempt_id = $1
+         )
+         SELECT 
+           subject,
+           topic,
+           subtopic,
+           COUNT(*)::int AS total_questions,
+           SUM(is_attempted)::int AS attempted_count,
+           SUM(is_correct)::int AS correct_count,
+           ROUND((SUM(is_correct)::numeric / GREATEST(COUNT(*), 1) * 100)::numeric, 1)::float AS accuracy
+         FROM attempt_question_stats
+         GROUP BY subject, topic, subtopic
+         ORDER BY accuracy ASC, attempted_count DESC
+         LIMIT $2`,
+        [targetAttemptId, limit]
+      ).catch(() => ({ rows: [] }));
+
+      if (attemptResult.rows && attemptResult.rows.length > 0) {
+        const cleanedRows = attemptResult.rows.map((r) => {
+          let topicName = r.topic;
+          if (!topicName || topicName === 'General Topic') {
+            topicName = r.subject !== 'General Subject' ? `${r.subject} Core Principles` : 'Target Weak Areas';
+          }
+          return {
+            topic: topicName,
+            subtopic: r.subtopic || 'Core Concepts',
+            subject: r.subject || 'Biology',
+            accuracy: Number(r.accuracy) || 35,
+            correctCount: Number(r.correct_count) || 0,
+            attemptedCount: Number(r.attempted_count) || Number(r.total_questions) || 0,
+            totalCount: Number(r.total_questions) || 0,
+          };
+        });
+
+        const weakFromAttempt = cleanedRows.filter((r) => r.accuracy < threshold);
+        weakTopics = weakFromAttempt.length > 0 ? weakFromAttempt : cleanedRows.slice(0, limit);
       }
     }
   }
 
-  // 2. If no attemptId provided or no topics in attempt, query candidate's recent overall test attempts history
-  if (weakTopics.length === 0) {
-    const dbResult = await query(
-      `WITH student_question_stats AS (
-         SELECT 
-           COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
-           COALESCE(c.name, q.topic, q.bank_category, 'General Topic') AS topic,
-           COALESCE(q.subtopic, 'Core Concepts') AS subtopic,
-           CASE 
-             WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = COALESCE(q.correct_option_index, q.correct_index))
-                  OR (ans.selected_indices::text = q.correct_indices::text)
-                  OR (ans.numeric_answer::text = q.numeric_answer::text)
-             THEN 1 ELSE 0 
-           END AS is_correct,
-           CASE 
-             WHEN ans.selected_index IS NOT NULL OR ans.selected_indices IS NOT NULL OR ans.numeric_answer IS NOT NULL 
-             THEN 1 ELSE 0 
-           END AS is_attempted
-         FROM answers ans
-         JOIN attempts at ON at.id = ans.attempt_id
-         JOIN questions q ON q.id = ans.question_id
-         LEFT JOIN subjects s ON s.id = q.subject_id
-         LEFT JOIN chapters c ON c.id = q.chapter_id
-         WHERE at.candidate_id = $1 AND at.submitted_at IS NOT NULL
-       )
-       SELECT 
-         subject,
-         topic,
-         subtopic,
-         COUNT(*)::int AS total_questions,
-         SUM(is_attempted)::int AS attempted_count,
-         SUM(is_correct)::int AS correct_count,
-         ROUND((SUM(is_correct)::numeric / GREATEST(COUNT(*), 1) * 100)::numeric, 1)::float AS accuracy
-       FROM student_question_stats
-       GROUP BY subject, topic, subtopic
-       HAVING ROUND((SUM(is_correct)::numeric / GREATEST(COUNT(*), 1) * 100)::numeric, 1)::float < $2
-       ORDER BY accuracy ASC, attempted_count DESC
-       LIMIT $3`,
-      [numId, threshold, limit]
-    ).catch(() => ({ rows: [] }));
-
-    weakTopics = dbResult.rows || [];
+  // 4. Exclude topics that were ALREADY targeted in previously generated improvement tests
+  if (weakTopics.length > 0 && alreadyTargetedTopics.size > 0) {
+    const freshTopics = weakTopics.filter((t) => !alreadyTargetedTopics.has(t.topic.trim().toLowerCase()));
+    // Only apply filter if there are remaining fresh topics for the newly tested week
+    if (freshTopics.length > 0) {
+      weakTopics = freshTopics;
+    }
   }
 
-  // 3. Smart subject-aware fallback matching target test title & subject
-  if (weakTopics.length === 0) {
-    let testTitle = '';
-    let testSubject = '';
+  // 5. Fallback: Query questions of the latest test attempt directly (never pull unrelated past week topics)
+  if (weakTopics.length === 0 && targetAttemptId) {
+    const testQuestionsRes = await query(
+      `SELECT DISTINCT 
+         COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
+         COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
+         COALESCE(q.subtopic, 'Core Concepts') AS subtopic
+       FROM questions q
+       LEFT JOIN subjects s ON s.id = q.subject_id
+       LEFT JOIN chapters c ON c.id = q.chapter_id
+       WHERE q.assessment_id IN (
+         SELECT assessment_id FROM attempts WHERE id = $1
+         UNION
+         SELECT COALESCE(assessment_id, test_id) FROM test_attempts WHERE id = $1
+       )
+       OR q.test_id IN (
+         SELECT assessment_id FROM attempts WHERE id = $1
+         UNION
+         SELECT COALESCE(assessment_id, test_id) FROM test_attempts WHERE id = $1
+       )
+       LIMIT $2`,
+      [targetAttemptId, limit]
+    ).catch(() => ({ rows: [] }));
 
-    if (numAttemptId) {
-      const testInfoRes = await query(
-        `SELECT a.title AS test_name, s.name AS subject_name
-         FROM questions q
-         LEFT JOIN assessments a ON a.id = q.assessment_id
-         LEFT JOIN subjects s ON s.id = q.subject_id
-         LEFT JOIN attempts at ON at.assessment_id = a.id
-         WHERE at.id = $1 OR a.id = $1 OR q.test_id = $1 LIMIT 1`,
-        [numAttemptId]
-      ).catch(() => ({ rows: [] }));
-
-      testTitle = testInfoRes.rows[0]?.test_name || '';
-      testSubject = testInfoRes.rows[0]?.subject_name || '';
-    }
-
-    const userRes = await query('SELECT exam_type FROM users WHERE id = $1', [numId]).catch(() => ({ rows: [] }));
-    const examType = userRes.rows[0]?.exam_type || 'JEE';
-
-    const textToMatch = `${testTitle} ${testSubject}`.toLowerCase();
-
-    if (textToMatch.includes('genetics') || textToMatch.includes('inheritance') || textToMatch.includes('botany') || textToMatch.includes('biology') || textToMatch.includes('zoology')) {
-      weakTopics = [
-        { subject: 'Botany', topic: 'Genetics & Inheritance', subtopic: 'Mendelian Principles & Linkage', accuracy: 35.0, correct_count: 2, total_questions: 8 },
-        { subject: 'Botany', topic: 'Molecular Basis of Inheritance', subtopic: 'DNA Replication & Transcription', accuracy: 42.0, correct_count: 3, total_questions: 7 },
-        { subject: 'Zoology', topic: 'Biotechnology Principles', subtopic: 'Recombinant DNA Technology', accuracy: 50.0, correct_count: 4, total_questions: 8 },
-      ];
-    } else if (textToMatch.includes('physics') || textToMatch.includes('optics') || textToMatch.includes('electrostatics')) {
-      weakTopics = [
-        { subject: 'Physics', topic: 'Ray & Wave Optics', subtopic: 'Interference & Diffraction', accuracy: 35.0, correct_count: 2, total_questions: 8 },
-        { subject: 'Physics', topic: 'Electrostatics', subtopic: 'Electric Field & Gauss Law', accuracy: 42.0, correct_count: 3, total_questions: 7 },
-      ];
-    } else if (textToMatch.includes('chem')) {
-      weakTopics = [
-        { subject: 'Chemistry', topic: 'Chemical Bonding', subtopic: 'VSEPR Theory & Hybridization', accuracy: 40.0, correct_count: 3, total_questions: 8 },
-        { subject: 'Chemistry', topic: 'Ionic Equilibrium', subtopic: 'pH & Buffer Solutions', accuracy: 45.0, correct_count: 3, total_questions: 7 },
-      ];
-    } else if (examType === 'NEET') {
-      weakTopics = [
-        { subject: 'Botany', topic: 'Genetics & Inheritance', subtopic: 'Mendelian Principles & Linkage', accuracy: 35.0, correct_count: 2, total_questions: 8 },
-        { subject: 'Zoology', topic: 'Human Physiology', subtopic: 'Neural Conduction & Synapses', accuracy: 45.0, correct_count: 3, total_questions: 7 },
-      ];
-    } else {
-      weakTopics = [
-        { subject: 'Physics', topic: 'Electrostatics', subtopic: 'Electric Field & Gauss Law', accuracy: 30.0, correct_count: 2, total_questions: 8 },
-        { subject: 'Chemistry', topic: 'Chemical Bonding', subtopic: 'VSEPR Theory & Hybridization', accuracy: 40.0, correct_count: 3, total_questions: 8 },
-      ];
+    if (testQuestionsRes.rows && testQuestionsRes.rows.length > 0) {
+      weakTopics = testQuestionsRes.rows.map((r) => ({
+        topic: r.topic !== 'General Topic' ? r.topic : `${r.subject} Concepts`,
+        subtopic: r.subtopic || 'Core Principles',
+        subject: r.subject || 'Biology',
+        accuracy: 35.0,
+        correctCount: 0,
+        attemptedCount: 5,
+        totalCount: 5,
+      }));
     }
   }
 
@@ -222,9 +269,9 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
     subtopic: t.subtopic || 'Core Principles',
     subject: t.subject || 'Biology',
     accuracy: Number(t.accuracy) || 35,
-    correctCount: Number(t.correct_count) || 0,
-    attemptedCount: Number(t.attempted_count) || Number(t.total_questions) || 0,
-    totalCount: Number(t.total_questions) || 0,
+    correctCount: Number(t.correctCount || t.correct_count) || 0,
+    attemptedCount: Number(t.attemptedCount || t.attempted_count || t.total_questions) || 0,
+    totalCount: Number(t.totalCount || t.total_questions) || 0,
   }));
 }
 

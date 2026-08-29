@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { comparePassword, hashPassword } from '../utils/password.js';
-import { signToken } from '../utils/token.js';
+import { signToken, signAccessToken, signRefreshToken, hashToken, generateFamilyId, verifyToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
 import { sendOtpEmail, sendEmail } from '../utils/email.js';
 import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
@@ -21,16 +21,31 @@ const publicUser = (u) => ({
   roll_number: u.roll_number || null,
 });
 
+const issueAuthSession = async (req, user, extra = {}) => {
+  const familyId = generateFamilyId();
+  const accessToken = signAccessToken(user, undefined, extra);
+  const refreshToken = signRefreshToken(user, familyId);
+  const refreshTokenHash = hashToken(refreshToken);
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  if (user && user.id && !isNaN(Number(user.id))) {
+    await query(
+      `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [Number(user.id), refreshTokenHash, familyId, expiresAt, req.headers['user-agent'] || '', req.ip || '']
+    ).catch(() => {});
+  }
+
+  return {
+    token: accessToken,
+    accessToken,
+    refreshToken,
+    expiresIn: 900,
+  };
+};
+
 const issueToken = (user, extra = {}) =>
-  signToken({
-    sub: user.id,
-    role: user.role,
-    email: user.email,
-    name: user.name,
-    institution_id: user.institution_id || extra.institution_id || null,
-    batch_id: user.batch_id || extra.batch_id || null,
-    ...extra,
-  });
+  signAccessToken(user, undefined, extra);
 
 /**
  * POST /api/auth/login  (Platform Admin Sign In — Admin Role Only)
@@ -61,7 +76,8 @@ export const login = asyncHandler(async (req, res) => {
       ok = true;
     }
     if (ok) {
-      return res.json({ token: issueToken(user), user: publicUser(user), redirectTo: '/admin' });
+      const session = await issueAuthSession(req, user);
+      return res.json({ ...session, user: publicUser(user), redirectTo: '/admin' });
     }
   }
 
@@ -176,19 +192,20 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     }).catch(() => {});
   }
 
-  const token = signToken({
-    sub: admin.id,
+  const instUser = {
+    id: admin.id,
     role: 'institution_admin',
     institution_id: admin.institution_id,
     email: admin.email,
     name: admin.name,
-  });
+  };
+  const session = await issueAuthSession(req, instUser);
 
   const fullInstRes = await query('SELECT * FROM institutions WHERE id = $1', [admin.institution_id]);
   const fullInst = fullInstRes.rows[0] || {};
 
   res.json({
-    token,
+    ...session,
     user: {
       id: admin.id,
       institution_id: admin.institution_id,
@@ -357,7 +374,8 @@ export const register = asyncHandler(async (req, res) => {
     return u;
   });
 
-  res.status(201).json({ token: issueToken(user), user: publicUser(user) });
+  const session = await issueAuthSession(req, user);
+  res.status(201).json({ ...session, user: publicUser(user) });
 });
 
 /**
@@ -636,8 +654,9 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
     return userRes.rows[0];
   });
 
+  const session = await issueAuthSession(req, user, { inviteId: invite.id, assessmentId: invite.assessment_id });
   res.json({
-    token: issueToken(user, { inviteId: invite.id, assessmentId: invite.assessment_id }),
+    ...session,
     user: publicUser(user),
     invite: {
       id: invite.id,
@@ -831,9 +850,10 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
 
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
 
+  const session = await issueAuthSession(req, user);
   res.json({
     success: true,
-    token: issueToken(user),
+    ...session,
     user: publicUser(user),
     redirectTo: '/dashboard',
   });
@@ -1496,8 +1516,126 @@ export const firebaseLogin = asyncHandler(async (req, res) => {
     });
   }
 
+  const session = await issueAuthSession(req, user);
   res.json({
-    token: issueToken(user),
+    ...session,
     user: publicUser(user),
   });
 });
+
+/**
+ * POST /api/auth/refresh (Refresh Token Rotation - RTR with Reuse Detection)
+ */
+export const refreshTokens = asyncHandler(async (req, res) => {
+  const incomingRefreshToken = (req.body.refreshToken || req.headers['x-refresh-token'] || '').trim();
+
+  if (!incomingRefreshToken) {
+    throw ApiError.badRequest('Refresh token is required');
+  }
+
+  const decoded = verifyToken(incomingRefreshToken);
+  if (!decoded || decoded.type !== 'refresh' || !decoded.family_id) {
+    throw ApiError.unauthorized('Invalid or expired refresh token');
+  }
+
+  const tokenHash = hashToken(incomingRefreshToken);
+
+  const sessionRes = await query(
+    'SELECT id, user_id, family_id, is_revoked, expires_at FROM refresh_tokens WHERE refresh_token_hash = $1',
+    [tokenHash]
+  );
+
+  if (sessionRes.rowCount === 0) {
+    throw ApiError.unauthorized('Session not found or revoked');
+  }
+
+  const session = sessionRes.rows[0];
+
+  // REUSE / REPLAY ATTACK DETECTION
+  if (session.is_revoked) {
+    await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE family_id = $1', [session.family_id]).catch(() => {});
+    throw ApiError.unauthorized('Security Alert: Attempted reuse of revoked refresh token. All sessions revoked for security.');
+  }
+
+  if (new Date() >= new Date(session.expires_at)) {
+    throw ApiError.unauthorized('Refresh token has expired. Please log in again.');
+  }
+
+  const userRes = await query('SELECT id, name, email, role, is_blocked FROM users WHERE id = $1', [session.user_id]);
+  if (userRes.rowCount === 0 || userRes.rows[0].is_blocked) {
+    await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE family_id = $1', [session.family_id]).catch(() => {});
+    throw ApiError.forbidden('User account is invalid or blocked.');
+  }
+
+  const user = userRes.rows[0];
+
+  // Revoke current refresh token (RTR)
+  await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE id = $1', [session.id]);
+
+  // Issue NEW Access Token + NEW Refresh Token in SAME family_id
+  const newAccessToken = signAccessToken(user);
+  const newRefreshToken = signRefreshToken(user, session.family_id);
+  const newHash = hashToken(newRefreshToken);
+  const newExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+
+  await query(
+    `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [user.id, newHash, session.family_id, newExpiresAt, req.headers['user-agent'] || '', req.ip || '']
+  );
+
+  res.json({
+    success: true,
+    token: newAccessToken,
+    accessToken: newAccessToken,
+    refreshToken: newRefreshToken,
+    expiresIn: 900,
+    user: publicUser(user),
+  });
+});
+
+/**
+ * POST /api/auth/logout (Revoke Current Session & Blacklist Access Token)
+ */
+export const logout = asyncHandler(async (req, res) => {
+  const header = req.headers.authorization || '';
+  const [scheme, token] = header.split(' ');
+  const incomingRefreshToken = (req.body.refreshToken || req.headers['x-refresh-token'] || '').trim();
+
+  // Blacklist access token if jti is present
+  if (scheme === 'Bearer' && token) {
+    const decoded = verifyToken(token);
+    if (decoded && decoded.jti) {
+      const expDate = decoded.exp ? new Date(decoded.exp * 1000) : new Date(Date.now() + 15 * 60 * 1000);
+      await query(
+        `INSERT INTO token_blacklist (token_jti, user_id, expires_at)
+         VALUES ($1, $2, $3)
+         ON CONFLICT (token_jti) DO NOTHING`,
+        [decoded.jti, decoded.sub || null, expDate]
+      ).catch(() => {});
+    }
+  }
+
+  // Revoke refresh token
+  if (incomingRefreshToken) {
+    const tokenHash = hashToken(incomingRefreshToken);
+    await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE refresh_token_hash = $1', [tokenHash]).catch(() => {});
+  }
+
+  res.json({ success: true, message: 'Logged out successfully' });
+});
+
+/**
+ * POST /api/auth/logout-all (Revoke All Sessions for Authenticated User)
+ */
+export const logoutAllDevices = asyncHandler(async (req, res) => {
+  const userId = req.user?.id;
+  if (!userId) {
+    throw ApiError.unauthorized('Authentication required');
+  }
+
+  await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE user_id = $1', [userId]);
+
+  res.json({ success: true, message: 'All active sessions revoked across all devices' });
+});
+

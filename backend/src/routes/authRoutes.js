@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, sendSignupOtp, firebaseLogin, me, candidateDashboard, forgotPassword, resetPassword } from '../controllers/authController.js';
+import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, sendSignupOtp, firebaseLogin, me, candidateDashboard, forgotPassword, resetPassword, refreshTokens, logout, logoutAllDevices } from '../controllers/authController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { authLimiter } from '../middleware/rateLimiter.js';
@@ -18,7 +18,14 @@ router.post('/otp/send-login', authLimiter, validate(otpSendLoginSchema), sendLo
 router.post('/otp/send-signup', authLimiter, validate(otpSendSignupSchema), sendSignupOtp);
 router.post('/otp/verify-login', authLimiter, validate(otpVerifyLoginSchema), verifyLoginOtp);
 router.post('/firebase-login', authLimiter, validate(firebaseLoginSchema), firebaseLogin);
+
+// Session Security & Token Rotation Routes
+router.post('/refresh', refreshTokens);
+router.post('/logout', logout);
+router.post('/logout-all', authenticate, logoutAllDevices);
+
 router.get('/me', authenticate, me);
 router.get('/candidate/dashboard', authenticate, authorize('candidate'), candidateDashboard);
 
 export default router;
+

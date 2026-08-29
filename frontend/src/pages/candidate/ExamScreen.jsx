@@ -654,8 +654,10 @@ export default function ExamScreen() {
                   onClick={() => selectAnswer(q.id, idx)}
                   className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
                 >
-                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-bold ${
-                    answers[q.id] === idx ? 'border-[#1a4480] bg-[#1a4480] text-white' : 'border-slate-500 bg-white'
+                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                    answers[q.id] === idx
+                      ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                      : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
                   }`}>
                     {String.fromCharCode(65 + idx)}
                   </span>
@@ -692,8 +694,10 @@ export default function ExamScreen() {
                     onClick={() => selectAnswer(q.id, idx)}
                     className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
                   >
-                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-bold ${
-                      answers[q.id] === idx ? 'border-[#1a4480] bg-[#1a4480] text-white' : 'border-slate-500 bg-white'
+                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                      answers[q.id] === idx
+                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
                     }`}>
                       {String.fromCharCode(65 + idx)}
                     </span>
@@ -761,8 +765,10 @@ export default function ExamScreen() {
                     onClick={() => toggleMulti(q.id, idx)}
                     className={`nta-option ${selected ? 'nta-option-selected' : ''}`}
                   >
-                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-bold ${
-                      selected ? 'border-[#1a4480] bg-[#1a4480] text-white' : 'border-slate-500 bg-white'
+                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                      selected
+                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
                     }`}>
                       {selected ? '✓' : String.fromCharCode(65 + idx)}
                     </span>

@@ -5,6 +5,7 @@ const baseURL = import.meta.env.VITE_API_URL || '/api';
 const api = axios.create({ baseURL });
 
 const TOKEN_KEYS = ['assesspro_token', 'token', 'institutionToken', 'edvedum_institution_token'];
+const REFRESH_TOKEN_KEY = 'edvedum_refresh_token';
 
 export const tokenStore = {
   get: () => {
@@ -21,24 +22,41 @@ export const tokenStore = {
     } catch (_) {}
     return null;
   },
-  set: (token) => {
-    if (!token) return;
-    localStorage.setItem('assesspro_token', token);
-    localStorage.setItem('token', token);
-    localStorage.setItem('institutionToken', token);
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  getRefreshToken: () => {
+    try {
+      return localStorage.getItem(REFRESH_TOKEN_KEY) || null;
+    } catch (_) {
+      return null;
+    }
+  },
+  set: (data) => {
+    if (!data) return;
+    const token = typeof data === 'object' ? (data.accessToken || data.token) : data;
+    const refreshToken = typeof data === 'object' ? data.refreshToken : null;
+
+    if (token) {
+      localStorage.setItem('assesspro_token', token);
+      localStorage.setItem('token', token);
+      localStorage.setItem('institutionToken', token);
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+
+    if (refreshToken) {
+      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
+    }
   },
   clear: () => {
     TOKEN_KEYS.forEach((key) => {
       try { localStorage.removeItem(key); } catch (_) {}
     });
+    try { localStorage.removeItem(REFRESH_TOKEN_KEY); } catch (_) {}
     try { localStorage.removeItem('edvedum_active_institution'); } catch (_) {}
     try { localStorage.removeItem('edvedum_active_school'); } catch (_) {}
     delete api.defaults.headers.common['Authorization'];
   },
 };
 
-// Attach JWT to every request
+// Attach JWT access token to every request
 api.interceptors.request.use((config) => {
   const token = tokenStore.get();
   if (token) {
@@ -47,15 +65,37 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Global response interceptor: Normalize errors & handle genuine 401s without crashing on server/network 503s
+// Automatic Refresh Token Rotation (RTR) interceptor state
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+// Global response interceptor: Background Refresh Token Rotation (RTR) on 401s
 let sessionRedirecting = false;
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
+  (response) => {
+    // If login or auth response returned refresh tokens, store them automatically
+    if (response.data && typeof response.data === 'object' && (response.data.accessToken || response.data.refreshToken)) {
+      tokenStore.set(response.data);
+    }
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
     const status = error.response?.status;
-    const url = error.config?.url || '';
-    const isAuthAttempt = /\/auth\/(login|student-login|register|otp|me)(\/|$)/.test(url) || url.includes('/institution/login');
+    const url = originalRequest?.url || '';
+    const isAuthAttempt = /\/auth\/(login|student-login|register|otp|me|refresh)(\/|$)/.test(url) || url.includes('/institution/login');
 
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
@@ -70,8 +110,44 @@ api.interceptors.response.use(
       message = error.message;
     }
 
-    // ONLY logout or redirect on genuine HTTP 401 (Unauthorized), NEVER on 500/503 or network errors!
-    if (status === 401 && !isAuthAttempt) {
+    // Handle 401 Unauthorized with automatic Refresh Token Rotation (RTR)
+    if (status === 401 && !isAuthAttempt && originalRequest && !originalRequest._retry) {
+      const refreshToken = tokenStore.getRefreshToken();
+
+      if (refreshToken) {
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          })
+            .then((newToken) => {
+              originalRequest.headers.Authorization = `Bearer ${newToken}`;
+              return api(originalRequest);
+            })
+            .catch((err) => Promise.reject(err));
+        }
+
+        originalRequest._retry = true;
+        isRefreshing = true;
+
+        try {
+          const refreshRes = await axios.post(`${baseURL}/auth/refresh`, { refreshToken });
+          const newAccessToken = refreshRes.data?.accessToken || refreshRes.data?.token;
+          const newRefreshToken = refreshRes.data?.refreshToken;
+
+          if (newAccessToken) {
+            tokenStore.set({ accessToken: newAccessToken, refreshToken: newRefreshToken });
+            processQueue(null, newAccessToken);
+            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+            isRefreshing = false;
+            return api(originalRequest);
+          }
+        } catch (refreshErr) {
+          processQueue(refreshErr, null);
+          isRefreshing = false;
+          tokenStore.clear();
+        }
+      }
+
       const activeToken = tokenStore.get();
       const isInstSession = activeToken && (
         activeToken.startsWith('mock_student_token_') ||
@@ -112,3 +188,4 @@ api.interceptors.response.use(
 );
 
 export default api;
+

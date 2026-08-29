@@ -29,6 +29,13 @@ export const authenticate = async (req, _res, next) => {
       return next(ApiError.unauthorized('Invalid or expired token'));
     }
 
+    if (decoded.jti) {
+      const blRes = await query('SELECT 1 FROM token_blacklist WHERE token_jti = $1', [decoded.jti]).catch(() => ({ rowCount: 0 }));
+      if (blRes.rowCount > 0) {
+        return next(ApiError.unauthorized('Token has been revoked. Please log in again.'));
+      }
+    }
+
     if (decoded.role === 'institution_admin' || decoded.role === 'institution') {
       req.user = {
         id: decoded.sub,

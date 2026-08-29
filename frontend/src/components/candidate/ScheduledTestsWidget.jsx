@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { aiTestService } from '../../lib/services.js';
-import { Sparkles, Clock, Play, CheckCircle2, AlertCircle, RefreshCw, ChevronRight } from 'lucide-react';
+import { Sparkles, Clock, Play, CheckCircle2, AlertCircle, ChevronRight } from 'lucide-react';
 
 export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
   const [tests, setTests] = useState([]);
@@ -102,15 +102,6 @@ export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
             <p className="text-xs text-slate-500 dark:text-slate-400">Targeted spaced-repetition tests for weak areas</p>
           </div>
         </div>
-
-        <button
-          type="button"
-          onClick={loadTests}
-          className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition"
-          title="Refresh scheduled tests"
-        >
-          <RefreshCw className="h-3.5 w-3.5" />
-        </button>
       </div>
 
       {errorMsg && (

@@ -295,6 +295,10 @@ export default function TestSeriesDetail() {
             <img
               src={getTestSeriesCover(series)}
               alt={`${series.title} cover`}
+              loading="eager"
+              decoding="async"
+              width="500"
+              height="375"
               className="aspect-[4/3] w-full object-cover object-left"
             />
           </div>

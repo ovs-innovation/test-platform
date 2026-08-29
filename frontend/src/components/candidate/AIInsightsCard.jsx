@@ -163,8 +163,8 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
           focus: focusText,
           tasks: tasksList,
           activities: tasksList,
-          recommendedMinutes: item.recommendedMinutes || (item.estimatedHours ? item.estimatedHours * 60 : 60),
-          estimatedHours: item.estimatedHours || 1
+          recommendedMinutes: item.recommendedMinutes || item.revision_duration_minutes || (item.estimatedHours ? item.estimatedHours * 60 : 90),
+          estimatedHours: item.estimatedHours || Math.round((item.recommendedMinutes || item.revision_duration_minutes || 90) / 60)
         };
       });
     }
@@ -326,7 +326,16 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
               <div className="space-y-3">
                 {sevenDayPlan.map((item, idx) => {
                   const tasksList = item.tasks || item.activities || [item.task || 'Revise core concepts'];
-                  const durationStr = item.recommendedMinutes ? `${item.recommendedMinutes}m` : (item.estimatedHours ? `${item.estimatedHours}h` : '60m');
+                  const rawMins = item.recommendedMinutes || item.revision_duration_minutes || (item.estimatedHours ? item.estimatedHours * 60 : 90);
+                  let durationStr = `${rawMins}m`;
+                  if (rawMins >= 60) {
+                    if (rawMins % 60 === 0) {
+                      durationStr = `${rawMins / 60}h`;
+                    } else {
+                      const hrs = (rawMins / 60).toFixed(1).replace('.0', '');
+                      durationStr = `${hrs}h`;
+                    }
+                  }
 
                   return (
                     <div
