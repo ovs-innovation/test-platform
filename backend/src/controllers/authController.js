@@ -1106,7 +1106,8 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
       const ahead = Number(cohortRes.rows[0]?.ahead_students || 0);
       const totalCohort = Math.max(1, Number(cohortRes.rows[0]?.total_students || 1));
 
-      airRank = bestRank > 0 ? bestRank : (ahead + 1);
+      // Calculate actual platform cohort AIR rank based on overall average performance (ahead + 1)
+      airRank = ahead + 1;
       topPercentile = Number(Math.max(0.1, Math.min(99.9, ((totalCohort - ahead) / totalCohort) * 100)).toFixed(1));
     }
 
