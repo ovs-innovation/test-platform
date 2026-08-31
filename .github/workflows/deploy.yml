@@ -68,13 +68,8 @@ jobs:
             PREV_COMMIT=$(git rev-parse HEAD 2>/dev/null || echo "")
             echo "Currently active VPS commit: ${PREV_COMMIT:-'Initial Deployment'}"
 
-            # Backup production-specific files before git reset
+            # Backup production-specific runtime files (env files only)
             mkdir -p "$BACKUP_DIR"
-
-            if [ -f "backend/src/config/db.js" ]; then
-              mkdir -p "$BACKUP_DIR/backend/src/config"
-              cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
-            fi
             if [ -f ".env" ]; then
               cp ".env" "$BACKUP_DIR/.env" || true
             fi
@@ -87,18 +82,21 @@ jobs:
             fi
 
             # Clean any stale git lock files
-            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock 2>/dev/null || true
+            rm -f .git/index.lock .git/HEAD.lock .git/refs/heads/main.lock .git/gc.pid 2>/dev/null || true
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
 
-            # Fetch and reset to target commit
-            git fetch origin main || git fetch --all || true
-            git reset --hard "${{ github.sha }}" || git reset --hard origin/main
+            # Configure git safe directory & remote URL
+            git config --global --add safe.directory "$PROJECT_DIR" 2>/dev/null || true
+            git remote set-url origin "https://github.com/ovs-innovation/test-platform.git" 2>/dev/null || true
 
-            # Restore production files
-            if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
-              cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
-            fi
+            # Fetch and reset to target commit safely
+            echo "Fetching latest commits from origin..."
+            git fetch origin main || git fetch --all --tags || true
+            echo "Resetting repository to target commit: ${{ github.sha }}"
+            git reset --hard "${{ github.sha }}" || git reset --hard origin/main || git reset --hard HEAD
+
+            # Restore production environment files
             if [ -f "$BACKUP_DIR/.env" ]; then
               cp "$BACKUP_DIR/.env" ".env" || true
             fi
@@ -183,11 +181,6 @@ jobs:
             log "Backing up production-specific files and dist bundle to /tmp..."
             mkdir -p "$BACKUP_DIR"
 
-            if [ -f "backend/src/config/db.js" ]; then
-              mkdir -p "$BACKUP_DIR/backend/src/config"
-              cp "backend/src/config/db.js" "$BACKUP_DIR/backend/src/config/db.js" || true
-              log "Backed up backend/src/config/db.js"
-            fi
             if [ -f ".env" ]; then
               cp ".env" "$BACKUP_DIR/.env" || true
               log "Backed up .env"
@@ -208,10 +201,6 @@ jobs:
 
             # Restore production files from backup
             log "Restoring production-specific files..."
-            if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
-              cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
-              log "Restored backend/src/config/db.js"
-            fi
             if [ -f "$BACKUP_DIR/.env" ]; then
               cp "$BACKUP_DIR/.env" ".env" || true
               log "Restored .env"
@@ -237,9 +226,6 @@ jobs:
                 log "Initiating automatic rollback to commit ${PREV_COMMIT}..."
                 git reset --hard "$PREV_COMMIT" || true
 
-                if [ -f "$BACKUP_DIR/backend/src/config/db.js" ]; then
-                  cp "$BACKUP_DIR/backend/src/config/db.js" "backend/src/config/db.js" || true
-                fi
                 if [ -d "$BACKUP_DIR/frontend_dist_backup" ]; then
                   log "Restoring previous frontend/dist bundle for rollback..."
                   mkdir -p "frontend/dist"
