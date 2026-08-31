@@ -89,7 +89,9 @@ export default function ExamScreen() {
           });
           setMaxViolations(5);
           setViolations(0);
-          setRemaining((session.test?.duration_minutes || 45) * 60);
+          const durationMins = session.test?.duration_minutes || 45;
+          endsAtRef.current = Date.now() + durationMins * 60 * 1000;
+          setRemaining(durationMins * 60);
           setLoading(false);
           return;
         }

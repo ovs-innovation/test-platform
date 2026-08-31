@@ -669,9 +669,9 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       previous_accuracy: prevAcc,
       current_accuracy: currAcc,
       accuracy_change: accDiff >= 0 ? `+${accDiff}%` : `${accDiff}%`,
-      subject_wise_change: ['Physics', 'Chemistry', 'Botany', 'Zoology'].map((sub) => {
+      subject_wise_change: (Object.keys(subjectStats).length > 0 ? Object.keys(subjectStats) : ['Physics', 'Chemistry', 'Mathematics']).map((sub) => {
         const pScore = Number(prevSubj[sub]) || 0;
-        const cScore = Math.max(0, subjectStats[sub].score);
+        const cScore = Math.max(0, subjectStats[sub]?.score || 0);
         const diff = cScore - pScore;
         return {
           subject: sub,

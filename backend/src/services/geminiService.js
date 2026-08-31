@@ -1634,13 +1634,12 @@ async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 =
   if (!openRouterKey) return null;
 
   const openRouterModels = [
-    'nvidia/nemotron-3-super-120b-a12b:free',
-    'google/gemini-2.0-flash-lite-001',
-    'google/gemini-2.0-flash-001',
-    'meta-llama/llama-3.3-70b-instruct',
-    'deepseek/deepseek-r1',
-    'qwen/qwen-2.5-72b-instruct',
-    'mistralai/mistral-small-24b-instruct-2501:free'
+    'google/gemini-2.0-flash-exp:free',
+    'openrouter/auto',
+    'meta-llama/llama-3.3-70b-instruct:free',
+    'qwen/qwen-2.5-72b-instruct:free',
+    'deepseek/deepseek-r1:free',
+    'mistralai/mistral-small-24b-instruct-2501:free',
   ];
 
   let messagesPayload = [
@@ -1679,9 +1678,9 @@ async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 =
 
   for (const modelName of openRouterModels) {
     try {
-      console.log(`[OpenRouter] Attempting AI solution with free model: ${modelName}...`);
+      console.log(`[OpenRouter] Attempting AI solution with model: ${modelName}...`);
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second per-model timeout
+      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s per-model fast timeout
 
       const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
         method: 'POST',
@@ -1704,12 +1703,16 @@ async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 =
       const resData = await res.json();
       if (!res.ok) {
         console.warn(`[OpenRouter] Model ${modelName} returned HTTP ${res.status}:`, resData?.error?.message || resData);
+        if (res.status === 402) {
+          console.warn('[OpenRouter] Account has insufficient credits (HTTP 402). Early exit to data-driven engine.');
+          break; // Stop spinning through models if account has 0 credits
+        }
         continue;
       }
 
       const text = resData.choices?.[0]?.message?.content;
       if (text && text.trim()) {
-        console.log(`[OpenRouter] Successfully generated doubt solution using ${modelName}`);
+        console.log(`[OpenRouter] Successfully generated solution using ${modelName}`);
         return text.trim();
       }
     } catch (err) {
@@ -2058,15 +2061,31 @@ export async function generateExamMentorStrategyReport(testData = {}) {
       : `Test analysis complete (${score}/${total_marks} marks). Target your priority topics below to build concept accuracy.`;
     const noteText = `Focusing on your priority revision plan over the next ${daysCount} days will unlock your target score!`;
 
+    const formattedWeaknesses = weakTopicsList.length > 0
+      ? weakTopicsList
+      : (rootCauses.length > 0 ? rootCauses.map((r) => `${r.topic}: ${r.issue}`) : ['Calculation speed & numerical verification']);
+
+    const formattedStrengths = strongTopicsList.length > 0
+      ? strongTopicsList
+      : ['Strong conceptual foundation in attempted topics'];
+
     return {
       examType: cleanExamType,
       coveredSubjects: coveredSubjectsList,
       performanceSummary: summaryText,
+      strengths: formattedStrengths,
+      strong_topics: formattedStrengths,
+      weaknesses: formattedWeaknesses,
+      weak_topics: formattedWeaknesses,
       rootCauseAnalysis: rootCauses,
       priorityTopics: topPriorities,
+      priority_topics: topPriorities,
       dailyPlan,
+      sevenDayPlan: dailyPlan,
+      seven_day_revision_plan: dailyPlan,
       examStrategyTips: tips,
-      motivationalNote: noteText
+      upcomingTestStrategy: tips,
+      motivationalNote: noteText,
     };
   };
 

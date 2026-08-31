@@ -206,6 +206,7 @@ export const getScheduledTests = asyncHandler(async (req, res) => {
        t.source_weak_topics,
        t.duration_minutes,
        t.max_marks,
+       COALESCE((SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = t.id), 0) AS question_count,
        ta.id AS attempt_id,
        ta.submitted_at,
        ta.score,
@@ -254,6 +255,11 @@ export const getScheduledTests = asyncHandler(async (req, res) => {
         : (row.source_weak_topics || []);
     } catch (_) {}
 
+    const qCount = Number(row.question_count || 0);
+    // JEE / NEET Standard: Each question is worth +4 marks
+    const dynamicMaxMarks = qCount > 0 ? qCount * 4 : Number(row.max_marks || 36);
+    const passingMarks = Math.round(dynamicMaxMarks * 0.4); // 40% benchmark
+
     testsList.push({
       id: row.test_id,
       test_id: row.test_id,
@@ -265,7 +271,9 @@ export const getScheduledTests = asyncHandler(async (req, res) => {
       unlocksInMs,
       isUnlocked,
       duration_minutes: row.duration_minutes || 45,
-      max_marks: row.max_marks || 80,
+      max_marks: dynamicMaxMarks,
+      passing_marks: passingMarks,
+      question_count: qCount,
       topics,
       attempt_id: row.attempt_id || null,
       submitted_at: row.submitted_at || null,

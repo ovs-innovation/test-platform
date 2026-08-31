@@ -87,17 +87,31 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
     let strengths = dataObj.strengths;
     if (!Array.isArray(strengths) || strengths.length === 0) {
       const strongItems = dataObj.strong_topics || dataObj.strongTopics || dataObj.topic_diagnostics?.strong || dataObj.strong_and_weak_topics?.strong_topics || [];
-      strengths = strongItems.map(s => typeof s === 'string' ? s : `${s.topic || s.chapter_name || s.chapter} (${s.accuracy || s.accuracy_percent || 100}% accuracy)`);
+      strengths = strongItems.map(s => typeof s === 'string' ? s : `${s.topic || s.chapter_name || s.chapter || s.area || 'Strength'}`);
     }
     if ((!strengths || strengths.length === 0) && isPerfectScore) {
       strengths = ['100% Accuracy across all attempted questions', 'Flawless Time Management & Option Elimination', 'Mastery in all covered exam topics'];
+    }
+    if (!strengths || strengths.length === 0) {
+      const topics = dataObj.priorityTopics || dataObj.priority_topics || [];
+      if (topics.length > 0) {
+        strengths = ['Good baseline conceptual foundation in attempted questions'];
+      }
     }
     strengths = (strengths || []).map(s => typeof s === 'string' ? s.replace(/\s*\(\d+%.*?\)/g, '').trim() : s);
 
     let weaknesses = isPerfectScore ? [] : dataObj.weaknesses;
     if (!isPerfectScore && (!Array.isArray(weaknesses) || weaknesses.length === 0)) {
       const weakItems = dataObj.weak_topics || dataObj.weakTopics || dataObj.topic_diagnostics?.weak || dataObj.rootCauseAnalysis || [];
-      weaknesses = weakItems.map(w => typeof w === 'string' ? (w.topic ? `${w.topic}: ${w.issue}` : w) : `${w.topic || w.chapter_name || w.chapter} (${w.accuracy || w.accuracy_percent || 0}% accuracy)`);
+      weaknesses = weakItems.map(w => {
+        if (typeof w === 'string') return w;
+        if (w && w.topic && w.issue) return `${w.topic}: ${w.issue}`;
+        if (w && (w.topic || w.chapter_name || w.chapter)) {
+          const title = w.topic || w.chapter_name || w.chapter;
+          return w.issue ? `${title}: ${w.issue}` : (w.accuracy != null || w.accuracy_percent != null ? `${title} (${w.accuracy || w.accuracy_percent}% accuracy)` : title);
+        }
+        return String(w || '');
+      }).filter(Boolean);
     }
     if (isPerfectScore) {
       weaknesses = [];
@@ -118,14 +132,16 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
     const timeProblems = Array.isArray(timeMgmt.problems) ? timeMgmt.problems : [];
     const timeRecommendations = Array.isArray(timeMgmt.recommendations) ? timeMgmt.recommendations : [];
 
-    let upcomingStrategy = dataObj.upcomingTestStrategy;
+    let upcomingStrategy = dataObj.upcomingTestStrategy || dataObj.upcoming_test_strategy;
     if (!Array.isArray(upcomingStrategy) || upcomingStrategy.length === 0) {
-      upcomingStrategy = (dataObj.examStrategyTips || dataObj.revision_strategy || []).map(s => typeof s === 'string' ? s : `${s.title ? s.title + ': ' : ''}${s.rule || ''}`);
+      const tipsList = dataObj.examStrategyTips || dataObj.exam_strategy_tips || dataObj.revision_strategy || [];
+      const tipsArr = Array.isArray(tipsList) ? tipsList : [tipsList];
+      upcomingStrategy = tipsArr.map(s => typeof s === 'string' ? s : `${s.title ? s.title + ': ' : ''}${s.rule || s.text || s.suggestion || ''}`).filter(Boolean);
     }
 
     let priorityTopics = dataObj.priorityTopics;
     if (!Array.isArray(priorityTopics) || priorityTopics.length === 0) {
-      priorityTopics = dataObj.priority_topics || (dataObj.rootCauseAnalysis || []).map(r => r.topic);
+      priorityTopics = dataObj.priority_topics || (dataObj.rootCauseAnalysis || []).map(r => r.topic || r);
     }
 
     let rawSevenDay = dataObj.seven_day_revision_plan || dataObj.sevenDayPlan || dataObj.seven_day_plan || dataObj.dailyPlan || [];

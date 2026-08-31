@@ -328,6 +328,38 @@ export function distributeQuestionCounts(weakTopics, totalQuestions = 20) {
 }
 
 /**
+ * Fisher-Yates Shuffle for MCQ Options.
+ * Randomly shuffles options while tracking and updating correctOptionIndex.
+ */
+export function shuffleQuestionOptions(q) {
+  if (!q || !Array.isArray(q.options) || q.options.length === 0) {
+    return q;
+  }
+
+  const originalOptions = [...q.options];
+  const origIndex = Number(q.correctOptionIndex) || 0;
+
+  const indexed = originalOptions.map((opt, idx) => ({
+    text: opt,
+    isCorrect: idx === origIndex,
+  }));
+
+  for (let i = indexed.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
+  }
+
+  const newOptions = indexed.map((o) => o.text);
+  const newCorrectIndex = indexed.findIndex((o) => o.isCorrect);
+
+  return {
+    ...q,
+    options: newOptions,
+    correctOptionIndex: newCorrectIndex >= 0 ? newCorrectIndex : 0,
+  };
+}
+
+/**
  * buildQuestionPrompt
  * Constructs the structured AI prompt according to requirements
  */
@@ -335,6 +367,7 @@ export function buildQuestionPrompt(topic, subtopic, examType, difficultyMix, co
   const examLevelStr = examType === 'NEET' ? 'NEET UG' : 'JEE Main / JEE Advanced';
   return `Generate ${count} multiple-choice ${subject} questions on the topic '${topic}' (subtopic: '${subtopic}') at ${examType} difficulty level (${examLevelStr}). Include a mix of ${difficultyMix}. Return ONLY a JSON array, no preamble or markdown fences, with objects of this exact shape:
 { question: string, options: [string, string, string, string], correctOptionIndex: number (0-3), explanation: string, difficulty: "easy"|"medium"|"hard", topic: string, subtopic: string }
+CRITICAL: Randomize the position of the correct answer across indices 0, 1, 2, and 3 so the correct option is evenly distributed across A, B, C, and D.
 Ensure factual and numerical accuracy. Avoid repeating standard textbook examples verbatim. Do not include any text outside the JSON array.`;
 }
 
@@ -400,12 +433,13 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
         const normKey = q.question.toLowerCase().replace(/[^a-z0-9]/g, '');
         if (!seenTexts.has(normKey)) {
           seenTexts.add(normKey);
-          uniqueQuestions.push({
+          const shuffledQ = shuffleQuestionOptions({
             ...q,
             topic: q.topic || topic,
             subtopic: q.subtopic || subtopic,
             subject: subject || 'Physics',
           });
+          uniqueQuestions.push(shuffledQ);
         }
       }
 
@@ -537,7 +571,7 @@ function generateFallbackQuestions(topic, subtopic, examType, count, subject = '
   const results = [];
   for (let i = 0; i < count; i++) {
     const item = bank[i % bank.length];
-    results.push({
+    const qObj = {
       question: item.question,
       options: item.options,
       correctOptionIndex: item.correctOptionIndex,
@@ -546,7 +580,8 @@ function generateFallbackQuestions(topic, subtopic, examType, count, subject = '
       topic,
       subtopic,
       subject,
-    });
+    };
+    results.push(shuffleQuestionOptions(qObj));
   }
   return results;
 }
