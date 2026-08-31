@@ -5,6 +5,8 @@ import App from './App.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { ToastProvider } from './context/ToastContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
+import './index.css';
+
 // Suppress third-party browser extension errors (e.g., Chrome extension reportAllChanges / VM scripts)
 window.addEventListener('error', (event) => {
   if (
