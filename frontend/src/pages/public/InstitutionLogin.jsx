@@ -16,6 +16,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { getPartnerSchools, findPartnerSchool } from '../../lib/schoolStore.js';
 import { institutionDashboardService } from '../../lib/services.js';
 import { tokenStore } from '../../lib/api.js';
+import { validateEmailOrId } from '../../lib/validation.js';
 
 export default function InstitutionLogin() {
   const { login } = useAuth();
@@ -28,6 +29,7 @@ export default function InstitutionLogin() {
   const [rememberMe, setRememberMe] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [idError, setIdError] = useState('');
   const [activeSession, setActiveSession] = useState(null);
 
   useEffect(() => {
@@ -48,15 +50,34 @@ export default function InstitutionLogin() {
     toast.info('Signed out of institution session.');
   };
 
+  const handleIdChange = (val) => {
+    setInstitutionId(val);
+    if (idError) setIdError('');
+    if (error) setError('');
+
+    if (/^[+\-._@=/\\*!#$%^&*()<>?:;"'{}|[\]~`]/.test(val)) {
+      setIdError('Institution ID or Registered Email cannot start with special signs or symbols (like + or -).');
+    }
+  };
+
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setIdError('');
+
     console.log('[Institution Login Page] 1. Submit fired', { institutionId, hasPassword: Boolean(password) });
     const input = institutionId.trim().toLowerCase();
     const pass = password.trim();
 
-    if (!input || !pass) {
-      console.log('[Institution Login Page] 2. Validation failed: missing input or password');
-      setError('Please enter your Institution ID / Email and password.');
+    const valResult = validateEmailOrId(institutionId, 'Institution ID or Registered Email');
+    if (!valResult.isValid) {
+      setIdError(valResult.error);
+      setError(valResult.error);
+      return;
+    }
+
+    if (!pass) {
+      setError('Please enter your password.');
       return;
     }
 
@@ -261,10 +282,15 @@ export default function InstitutionLogin() {
                     autoComplete="username"
                     placeholder="Enter institution ID or registered email"
                     value={institutionId}
-                    onChange={(e) => setInstitutionId(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition"
+                    onChange={(e) => handleIdChange(e.target.value)}
+                    className={`w-full rounded-xl border ${
+                      idError ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/20' : 'border-white/10 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-[#38BDF8]/15'
+                    } bg-white/[0.05] py-2.5 pl-10 pr-4 text-xs sm:text-sm text-white placeholder:text-slate-400 focus:ring-4 focus:outline-none transition`}
                   />
                 </div>
+                {idError && (
+                  <p className="mt-1 text-[11px] text-rose-400 font-medium">{idError}</p>
+                )}
               </div>
 
               <div>

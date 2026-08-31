@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import { institutionAdminLogin } from '../controllers/authController.js';
 import { authInstitutionAdmin } from '../middleware/auth.js';
+import { validate } from '../middleware/validate.js';
+import { institutionLoginSchema } from '../validators/schemas.js';
 import {
   getInstitutionProfile,
   updateInstitutionProfile,
@@ -46,7 +48,7 @@ import {
 const router = Router();
 
 // Public Institution Admin Login
-router.post('/login', institutionAdminLogin);
+router.post('/login', validate(institutionLoginSchema), institutionAdminLogin);
 
 // Protected Institution Admin Routes
 router.use('/:id', authInstitutionAdmin);

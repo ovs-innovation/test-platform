@@ -4,6 +4,7 @@ import AuthShell from '../components/AuthShell.jsx';
 import { Spinner, PasswordInput } from '../components/ui.jsx';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
+import { validateEmailOrId } from '../lib/validation.js';
 
 export default function Login() {
   const { login } = useAuth();
@@ -14,11 +15,32 @@ export default function Login() {
   const [form, setForm] = useState({ email: '', password: '' });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
+  const [emailError, setEmailError] = useState('');
+
+  const handleEmailChange = (val) => {
+    setForm((f) => ({ ...f, email: val }));
+    if (emailError) setEmailError('');
+    if (error) setError('');
+
+    // If input starts with leading special signs/symbols, show instant error
+    if (/^[+\-._@=/\\*!#$%^&*()<>?:;"'{}|[\]~`]/.test(val)) {
+      setEmailError('Email Address / Center ID cannot start with special signs or symbols (like + or -).');
+    }
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true);
+    setEmailError('');
     setError('');
+
+    const valResult = validateEmailOrId(form.email, 'Email Address / Center ID');
+    if (!valResult.isValid) {
+      setEmailError(valResult.error);
+      setError(valResult.error);
+      return;
+    }
+
+    setSubmitting(true);
     try {
       const user = await login(form);
       const greetingName = (user.role === 'admin' || user.role === 'superadmin' || user.name?.toLowerCase().includes('platform'))
@@ -37,7 +59,7 @@ export default function Login() {
 
   return (
     <AuthShell variant="admin" title="Admin & Center Sign In" subtitle="Sign in to manage test series, assessments, and candidates.">
-      <form onSubmit={onSubmit} className="space-y-5">
+      <form onSubmit={onSubmit} noValidate className="space-y-5">
         {error && (
           <div className="rounded-lg bg-red-500/10 border border-red-500/30 px-4 py-3 text-sm font-medium text-red-300">{error}</div>
         )}
@@ -46,14 +68,19 @@ export default function Login() {
           <input
             id="email"
             name="email"
-            type="email"
+            type="text"
             autoComplete="email"
             required
-            className="w-full min-h-[52px] sm:min-h-[54px] rounded-xl border border-slate-300/80 bg-[#EAF0FA] px-4 py-3 text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:border-[#2563eb] focus:bg-white focus:outline-none transition shadow-sm"
-            placeholder="admin@company.com"
+            className={`w-full min-h-[52px] sm:min-h-[54px] rounded-xl border ${
+              emailError ? 'border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-500' : 'border-slate-300/80 focus:border-[#2563eb]'
+            } bg-[#EAF0FA] px-4 py-3 text-xs sm:text-sm font-semibold text-slate-900 placeholder:text-slate-500 focus:bg-white focus:outline-none transition shadow-sm`}
+            placeholder="admin@company.com or Center ID"
             value={form.email}
-            onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
+            onChange={(e) => handleEmailChange(e.target.value)}
           />
+          {emailError && (
+            <p className="mt-1.5 text-xs text-red-400 font-semibold">{emailError}</p>
+          )}
         </div>
         <div>
           <label className="block text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2" htmlFor="password">Password</label>

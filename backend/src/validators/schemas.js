@@ -1,9 +1,35 @@
 import { z } from 'zod';
 
+const validateEmailOrIdFn = (val) => {
+  if (!val) return false;
+  const clean = val.trim();
+  if (/^[+\-._@=/\\*!#$%^&*()<>?:;"'{}|[\]~`]/.test(clean)) return false;
+  if (/^[+\-._@=/\\*!#$%^&*()<>?:;"'{}|[\]~`\s]+$/.test(clean)) return false;
+  if (/[=<>"'`;:(){}[\]\\/\^$*?!]/.test(clean)) return false;
+  if (clean.includes('@')) {
+    return /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(clean);
+  }
+  return /^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(clean) && clean.length >= 2;
+};
+
 export const loginSchema = z.object({
-  email: z.string().trim().toLowerCase().email('A valid email is required'),
+  email: z.string().trim().toLowerCase().refine(validateEmailOrIdFn, {
+    message: 'A valid email address or Center ID is required without leading or isolated signs',
+  }),
   password: z.string().min(1, 'Password is required'),
 });
+
+export const institutionLoginSchema = z.object({
+  identifier: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  email: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  code: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  schoolId: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  institutionId: z.string().trim().toLowerCase().optional().or(z.literal('')),
+  password: z.string().min(1, 'Password is required'),
+}).refine((data) => {
+  const idVal = data.identifier || data.email || data.code || data.schoolId || data.institutionId;
+  return validateEmailOrIdFn(idVal);
+}, { message: 'A valid Institution ID or registered email is required without leading or isolated signs' });
 
 export const studentLoginSchema = z.object({
   email: z.string().trim().toLowerCase().optional().or(z.literal('')),

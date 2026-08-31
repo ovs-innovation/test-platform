@@ -2,6 +2,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
+import { rememberCache, delCache } from '../config/redis.js';
 
 const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
 
@@ -15,30 +16,39 @@ const asJson = (value, fallback) => {
  * GET /api/question-bank/categories
  */
 export const listCategories = asyncHandler(async (_req, res) => {
-  const result = await query(
-    `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
-  );
-  const counts = Object.fromEntries(result.rows.map((r) => [r.category, r.count]));
-  const allCategoryNames = Array.from(new Set([...CATEGORIES, ...result.rows.map((r) => r.category)]));
-  res.json({
-    categories: allCategoryNames.map((c) => ({ name: c, count: counts[c] || 0 })),
+  const payload = await rememberCache('cache:qb:categories', 120, async () => {
+    const result = await query(
+      `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
+    );
+    const counts = Object.fromEntries(result.rows.map((r) => [r.category, r.count]));
+    const allCategoryNames = Array.from(new Set([...CATEGORIES, ...result.rows.map((r) => r.category)]));
+    return {
+      categories: allCategoryNames.map((c) => ({ name: c, count: counts[c] || 0 })),
+    };
   });
+  res.json(payload);
 });
 
 /**
- * GET /api/question-bank?category=JavaScript
+ * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
   const { category } = req.query;
-  let sql = 'SELECT * FROM question_bank';
-  const params = [];
-  if (category) {
-    sql += ' WHERE category = $1';
-    params.push(category);
-  }
-  sql += ' ORDER BY category, id ASC';
-  const result = await query(sql, params);
-  res.json({ questions: result.rows });
+  const cacheKey = `cache:qb:questions:${category || 'all'}`;
+
+  const payload = await rememberCache(cacheKey, 60, async () => {
+    let sql = 'SELECT * FROM question_bank';
+    const params = [];
+    if (category) {
+      sql += ' WHERE category = $1';
+      params.push(category);
+    }
+    sql += ' ORDER BY category, id ASC';
+    const result = await query(sql, params);
+    return { questions: result.rows };
+  });
+
+  res.json(payload);
 });
 
 /**

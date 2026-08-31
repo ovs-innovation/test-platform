@@ -2,11 +2,14 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
+import compression from 'compression';
 
 import { env } from './config/env.js';
 import { razorpayWebhook } from './controllers/paymentController.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
+import { publicCache, privateCache } from './middleware/httpCache.js';
+import { requestLogger } from './middleware/requestLogger.js';
 
 import authRoutes from './routes/authRoutes.js';
 import inviteRoutes from './routes/inviteRoutes.js';
@@ -43,6 +46,15 @@ const allowedOrigins = [
     .filter(Boolean),
 ];
 
+// Response Compression (Gzip / Brotli)
+app.use(compression({
+  threshold: 1024, // Compress responses above 1KB
+  filter: (req, res) => {
+    if (req.headers['x-no-compression']) return false;
+    return compression.filter(req, res);
+  },
+}));
+
 // Security & infrastructure middleware
 app.use(helmet());
 app.use(
@@ -62,6 +74,7 @@ app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), raz
 app.use(express.json({ limit: '20mb' }));
 app.use('/uploads', express.static('uploads'));
 app.use('/ebooks', express.static('public/ebooks'));
+app.use(requestLogger);
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
 import { checkHealth, checkReadiness } from './controllers/healthController.js';
@@ -73,7 +86,13 @@ app.get('/api/health/ready', checkReadiness);
 // Global rate limiting
 app.use('/api', apiLimiter);
 
-// Routes
+// Routes with optimized HTTP Cache-Control headers
+app.use('/api/public', publicCache(60, 300), publicRoutes);
+app.use('/api/ebooks', publicCache(120, 600), ebookRoutes);
+app.use('/api/test-series', publicCache(30, 120), testSeriesRoutes);
+app.use('/api/student', privateCache(15), studentRoutes);
+
+// Other API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/invites', inviteRoutes);
 app.use('/api/assessments', assessmentRoutes);
@@ -82,16 +101,12 @@ app.use('/api/sections', sectionRoutes);
 app.use('/api/attempts', attemptRoutes);
 app.use('/api/question-bank', questionBankRoutes);
 app.use('/api/admin', adminRoutes);
-app.use('/api/public', publicRoutes);
-app.use('/api/test-series', testSeriesRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/student/reports', studentReportRoutes);
-app.use('/api/student', studentRoutes);
 app.use('/api/institution', institutionReportRoutes);
 app.use('/api/institution', institutionRoutes);
 app.use('/api/upload', uploadRoutes);
-app.use('/api/ebooks', ebookRoutes);
 app.use('/api/tests', aiTestRoutes);
 
 // 404 + error handling (must be last)

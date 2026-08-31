@@ -71,6 +71,7 @@ export const env = {
     database: process.env.PGDATABASE || 'interview_platform',
   },
 
+  redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
   jwtSecret: jwtSecret,
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
 

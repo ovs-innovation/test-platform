@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Link, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
+import { validateEmailOrId } from '../../lib/validation.js';
 import {
   Building2,
   GraduationCap,
@@ -78,6 +79,17 @@ export default function SchoolsB2B() {
   const [heroRememberMe, setHeroRememberMe] = useState(false);
   const [heroSubmitting, setHeroSubmitting] = useState(false);
   const [loginError, setLoginError] = useState('');
+  const [loginIdError, setLoginIdError] = useState('');
+
+  const handleLoginIdChange = (val) => {
+    setLoginId(val);
+    if (loginIdError) setLoginIdError('');
+    if (loginError) setLoginError('');
+
+    if (/^[+\-._@=/\\*!#$%^&*()<>?:;"'{}|[\]~`]/.test(val)) {
+      setLoginIdError('Institution ID or registered email cannot start with special signs or symbols (like + or -).');
+    }
+  };
 
   // Dashboard modal states
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -340,13 +352,20 @@ export default function SchoolsB2B() {
     e?.preventDefault();
     console.log('[Institution Login] 1. Submit fired (Button Clicked)', { loginId, hasPassword: Boolean(loginPassword) });
     setLoginError('');
+    setLoginIdError('');
 
     const input = loginId.trim().toLowerCase();
     const pass = loginPassword.trim();
 
-    if (!input || !pass) {
-      console.log('[Institution Login] 2. Validation failed: missing input or password');
-      setLoginError('Please enter your Institution ID / registered email and password.');
+    const valResult = validateEmailOrId(loginId, 'Institution ID or registered email');
+    if (!valResult.isValid) {
+      setLoginIdError(valResult.error);
+      setLoginError(valResult.error);
+      return;
+    }
+
+    if (!pass) {
+      setLoginError('Please enter your password.');
       return;
     }
 
@@ -673,10 +692,15 @@ export default function SchoolsB2B() {
                           autoComplete="username"
                           placeholder="Enter institution ID or registered email"
                           value={loginId}
-                          onChange={(e) => setLoginId(e.target.value)}
-                          className="w-full h-11 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 pl-10 pr-3.5 text-xs sm:text-sm text-white placeholder:text-slate-400 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-4 focus:ring-[#38BDF8]/15 focus:outline-none transition-all duration-200"
+                          onChange={(e) => handleLoginIdChange(e.target.value)}
+                          className={`w-full h-11 rounded-xl border ${
+                            loginIdError ? 'border-rose-500/80 focus:border-rose-500 focus:ring-rose-500/20' : 'border-white/10 hover:border-cyan-400/40 focus:border-[#38BDF8] focus:ring-[#38BDF8]/15'
+                          } bg-white/[0.05] py-2.5 pl-10 pr-3.5 text-xs sm:text-sm text-white placeholder:text-slate-400 focus:ring-4 focus:outline-none transition-all duration-200`}
                         />
                       </div>
+                      {loginIdError && (
+                        <p className="mt-1 text-[11px] text-rose-400 font-medium">{loginIdError}</p>
+                      )}
                     </div>
 
                     {/* Password Field */}
