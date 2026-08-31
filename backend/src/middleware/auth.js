@@ -13,16 +13,6 @@ export const authenticate = async (req, _res, next) => {
     return next(ApiError.unauthorized('Authentication token missing'));
   }
 
-  if (token.startsWith('mock_student_token_') || token.startsWith('mock_token_')) {
-    req.user = {
-      id: 999999,
-      role: 'candidate',
-      email: 'student@edvedum.com',
-      name: 'Institutional Student',
-    };
-    return next();
-  }
-
   try {
     const decoded = verifyToken(token);
     if (!decoded) {
@@ -37,47 +27,42 @@ export const authenticate = async (req, _res, next) => {
     }
 
     if (decoded.role === 'institution_admin' || decoded.role === 'institution') {
+      const instAdminId = Number(decoded.sub);
+      const instId = Number(decoded.institution_id || 1);
       req.user = {
-        id: decoded.sub,
+        id: isNaN(instAdminId) ? decoded.sub : instAdminId,
         role: 'institution_admin',
-        institution_id: Number(decoded.institution_id || 1),
-        email: decoded.email || 'institution@edvedum.com',
+        institution_id: instId,
+        email: decoded.email || '',
         name: decoded.name || 'Institution Admin',
       };
       return next();
     }
 
     const subNum = Number(decoded?.sub);
-    const isNumericId = !isNaN(subNum) && Number.isInteger(subNum) && !String(decoded.sub).startsWith('inst_');
-
-    if (!isNumericId) {
-      req.user = {
-        id: 999999,
-        role: decoded?.role || 'candidate',
-        email: decoded?.email || 'student@institution.edu',
-        name: decoded?.name || 'Institutional Student',
-      };
-      return next();
+    if (isNaN(subNum) || !Number.isInteger(subNum)) {
+      return next(ApiError.unauthorized('Invalid user identity in token'));
     }
 
-    const userRes = await query('SELECT id, role, email, name, is_blocked FROM users WHERE id = $1', [subNum]);
+    const userRes = await query('SELECT id, role, email, name, is_blocked, institution_id, batch_id FROM users WHERE id = $1', [subNum]);
     if (userRes.rowCount === 0) {
-      req.user = {
-        id: subNum,
-        role: decoded.role || 'candidate',
-        email: decoded.email || 'student@institution.edu',
-        name: decoded.name || 'Institutional Student',
-      };
-      return next();
+      return next(ApiError.unauthorized('User not found or session invalid'));
     }
     const user = userRes.rows[0];
     if (user.is_blocked) {
       return next(ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.'));
     }
-    req.user = { id: user.id, role: user.role, email: user.email, name: user.name };
+    req.user = {
+      id: user.id,
+      role: user.role,
+      email: user.email,
+      name: user.name,
+      institution_id: user.institution_id || null,
+      batch_id: user.batch_id || null,
+    };
     return next();
   } catch (err) {
-    if (err.status) return next(err);
+    if (err.status || err.statusCode) return next(err);
     return next(ApiError.unauthorized('Invalid or expired token'));
   }
 };
@@ -101,64 +86,36 @@ export const authInstitutionAdmin = async (req, _res, next) => {
   const header = req.headers.authorization || '';
   const [scheme, token] = header.split(' ');
 
-  const parsedParam = Number(req.params.id);
-  const instIdParam = (!isNaN(parsedParam) && parsedParam > 0) ? parsedParam : 1;
-
   if (scheme !== 'Bearer' || !token) {
-    req.user = {
-      id: 1,
-      role: 'institution_admin',
-      email: 'institution.admin@edvedum.ac.in',
-      name: 'Institution Admin',
-      institution_id: instIdParam,
-    };
-    req.institution_id = instIdParam;
-    return next();
-  }
-
-  if (
-    token.startsWith('mock_') ||
-    token.startsWith('mock_institution_token_') ||
-    token.startsWith('mock_token_') ||
-    token.startsWith('token_inst_') ||
-    token.startsWith('token_') ||
-    token === 'mock_token' ||
-    token === 'mock_institution_token'
-  ) {
-    req.user = {
-      id: 1,
-      role: 'institution_admin',
-      email: 'institution.admin@edvedum.ac.in',
-      name: 'Institution Admin',
-      institution_id: instIdParam,
-    };
-    req.institution_id = instIdParam;
-    return next();
+    return next(ApiError.unauthorized('Authentication token missing'));
   }
 
   try {
     const decoded = verifyToken(token);
     if (!decoded) {
-      req.user = {
-        id: 1,
-        role: 'institution_admin',
-        email: 'institution.admin@edvedum.ac.in',
-        name: 'Institution Admin',
-        institution_id: instIdParam,
-      };
-      req.institution_id = instIdParam;
+      return next(ApiError.unauthorized('Invalid or expired token'));
+    }
+
+    const parsedParam = Number(req.params.id);
+    const targetInstId = (!isNaN(parsedParam) && parsedParam > 0) ? parsedParam : null;
+
+    // Platform Admin has full cross-institution access
+    if (decoded.role === 'admin') {
+      req.user = { id: decoded.sub, role: 'admin', email: decoded.email, name: decoded.name };
+      req.institution_id = targetInstId || Number(decoded.institution_id) || 1;
       return next();
     }
 
-    // Allow Platform Admin full access
-    if (decoded.role === 'admin') {
-      req.user = { id: decoded.sub, role: 'admin', email: decoded.email, name: decoded.name };
-      req.institution_id = instIdParam;
-      return next();
+    if (decoded.role !== 'institution_admin' && decoded.role !== 'institution') {
+      return next(ApiError.forbidden('You do not have permission to access institution resources'));
     }
 
     const decodedInstId = Number(decoded.institution_id);
-    const instId = (!isNaN(decodedInstId) && decodedInstId > 0) ? decodedInstId : instIdParam;
+    if (targetInstId && decodedInstId && decodedInstId !== targetInstId) {
+      return next(ApiError.forbidden('You do not have permission to access this institution'));
+    }
+
+    const instId = targetInstId || decodedInstId;
     req.user = {
       id: decoded.sub,
       role: 'institution_admin',
@@ -169,16 +126,9 @@ export const authInstitutionAdmin = async (req, _res, next) => {
     req.institution_id = instId;
 
     return next();
-  } catch (_err) {
-    req.user = {
-      id: 1,
-      role: 'institution_admin',
-      email: 'institution.admin@edvedum.ac.in',
-      name: 'Institution Admin',
-      institution_id: instIdParam,
-    };
-    req.institution_id = instIdParam;
-    return next();
+  } catch (err) {
+    if (err.status || err.statusCode) return next(err);
+    return next(ApiError.unauthorized('Invalid or expired token'));
   }
 };
 

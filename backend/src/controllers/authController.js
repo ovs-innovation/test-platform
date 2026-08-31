@@ -67,21 +67,15 @@ export const login = asyncHandler(async (req, res) => {
   );
   const user = result.rows[0];
 
-  if (user) {
-    let ok = false;
-    if (user.password_hash) {
-      ok = await comparePassword(rawPass, user.password_hash).catch(() => false);
-    }
-    if (!ok && rawPass === 'Admin@12345') {
-      ok = true;
-    }
+  if (user && user.password_hash) {
+    const ok = await comparePassword(rawPass, user.password_hash).catch(() => false);
     if (ok) {
       const session = await issueAuthSession(req, user);
       return res.json({ ...session, user: publicUser(user), redirectTo: '/admin' });
     }
   }
 
-  // Reject institution/candidate details or invalid passwords with clear 401
+  // Reject invalid credentials with clear 401
   throw ApiError.unauthorized('Invalid email/Center ID or password');
 });
 
@@ -101,52 +95,46 @@ export const institutionLogin = asyncHandler(async (req, res) => {
   let adminRes = await query(
     `SELECT ia.id, ia.institution_id, ia.name, ia.email, ia.password_hash, ia.is_active,
             i.name AS institution_name, i.code AS institution_code, i.email AS institution_email,
-            i.password_hash AS inst_password_hash, i.raw_password AS inst_raw_password,
+            i.password_hash AS inst_password_hash,
             CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS logo_url,
             i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
             (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
             (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
      FROM institution_admins ia
      JOIN institutions i ON i.id = ia.institution_id
-     WHERE (LOWER(ia.email) = $1 OR LOWER(i.email) = $1 OR LOWER(i.code) = $1 OR LOWER(ia.name) = $1 OR LOWER(i.name) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN ia.institution_id = $1::int ELSE FALSE END))
+     WHERE (LOWER(ia.email) = $1 OR LOWER(i.email) = $1 OR LOWER(i.code) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN ia.institution_id = $1::int ELSE FALSE END))
        AND ia.is_active = TRUE`,
     [idClean]
   );
 
   let admin = adminRes.rows[0];
 
-  // 2. Fallback: Check institutions table directly by code, email, contact_email, or name
+  // 2. Fallback: Check institutions table directly by code, email, contact_email
   if (!admin) {
     const instRes = await query(
-      `SELECT i.id, i.name, i.code, i.email, i.password_hash, i.raw_password, i.contact_email, i.contact_person,
+      `SELECT i.id, i.name, i.code, i.email, i.password_hash, i.contact_email, i.contact_person,
               CASE WHEN LENGTH(COALESCE(i.logo_url, '')) > 3000000 THEN '' ELSE i.logo_url END AS logo_url,
               i.logo_badge, i.institution_type, i.total_licenses, i.used_licenses,
               (SELECT tp.package_name FROM institution_packages ip JOIN test_packages tp ON tp.id = ip.package_id WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS package_name,
               (SELECT ip.valid_until FROM institution_packages ip WHERE ip.institution_id = i.id AND ip.is_active = TRUE ORDER BY ip.id DESC LIMIT 1) AS valid_until
        FROM institutions i
-       WHERE (LOWER(i.code) = $1 OR LOWER(i.email) = $1 OR LOWER(i.contact_email) = $1 OR LOWER(i.name) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN i.id = $1::int ELSE FALSE END))
+       WHERE (LOWER(i.code) = $1 OR LOWER(i.email) = $1 OR LOWER(i.contact_email) = $1 OR (CASE WHEN $1 ~ '^[0-9]+$' THEN i.id = $1::int ELSE FALSE END))
          AND i.is_active = TRUE`,
       [idClean]
     );
 
     const inst = instRes.rows[0];
     if (inst) {
-      const passHashToUse = inst.password_hash || (await hashPassword(rawPassword));
-      const adminEmail = inst.email || inst.contact_email || `${inst.code || idClean}@institution.edu`;
-      const newAdmin = await query(
-        `INSERT INTO institution_admins (institution_id, name, email, password_hash, role)
-         VALUES ($1, $2, $3, $4, 'institution_admin')
-         ON CONFLICT (email) DO UPDATE SET password_hash = EXCLUDED.password_hash
-         RETURNING id, institution_id, name, email, password_hash`,
-        [inst.id, inst.contact_person || inst.name, adminEmail, passHashToUse]
-      );
       admin = {
-        ...newAdmin.rows[0],
+        id: `inst_${inst.id}`,
+        institution_id: inst.id,
+        name: inst.contact_person || inst.name,
+        email: inst.email || inst.contact_email || `${inst.code || idClean}@institution.edu`,
+        password_hash: inst.password_hash,
         institution_name: inst.name,
         institution_code: inst.code,
         institution_email: inst.email,
         inst_password_hash: inst.password_hash,
-        inst_raw_password: inst.raw_password,
         logo_url: inst.logo_url,
         logo_badge: inst.logo_badge,
         institution_type: inst.institution_type,
@@ -162,34 +150,17 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     throw ApiError.unauthorized('Invalid Institution ID or Password. Please check your credentials or contact support.');
   }
 
-  // Multi-tier password verification
+  // Password verification
   let passOk = false;
-  let primaryPassMatched = false;
-
   if (admin.password_hash) {
     passOk = await comparePassword(rawPassword, admin.password_hash).catch(() => false);
-    if (passOk) primaryPassMatched = true;
   }
   if (!passOk && admin.inst_password_hash) {
     passOk = await comparePassword(rawPassword, admin.inst_password_hash).catch(() => false);
   }
-  if (!passOk && admin.inst_raw_password) {
-    passOk = rawPassword === admin.inst_raw_password;
-  }
-  if (!passOk && (rawPassword === 'password123' || rawPassword === 'Admin@12345' || rawPassword === 'admin' || rawPassword === 'admin123')) {
-    passOk = true;
-  }
 
   if (!passOk) {
     throw ApiError.unauthorized('Invalid Institution ID or Password. Please check your credentials or contact support.');
-  }
-
-  // Asynchronously sync hashes in background ONLY if primary hash was not matched directly
-  if (!primaryPassMatched) {
-    hashPassword(rawPassword).then((freshHash) => {
-      query('UPDATE institution_admins SET password_hash = $1 WHERE id = $2', [freshHash, admin.id]).catch(() => {});
-      query('UPDATE institutions SET password_hash = $1, raw_password = $2 WHERE id = $3', [freshHash, rawPassword, admin.institution_id]).catch(() => {});
-    }).catch(() => {});
   }
 
   const instUser = {
@@ -410,25 +381,23 @@ export const studentLogin = asyncHandler(async (req, res) => {
       `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked
        FROM users u
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
-       WHERE (sp.phone LIKE $1 OR u.email LIKE $1 OR u.name ILIKE $2) AND u.role = 'candidate'`,
-      [`%${cleanMobile.slice(-10)}%`, `%${cleanMobile}%`]
+       WHERE (sp.phone LIKE $1 OR u.email LIKE $1) AND u.role = 'candidate'`,
+      [`%${cleanMobile.slice(-10)}%`]
     );
     user = result.rows[0];
+
+    if (!user) {
+      throw ApiError.unauthorized('No account found for this mobile number. Please register or use Email OTP login.');
+    }
 
     if (password && user?.password_hash) {
       const ok = await comparePassword(password, user.password_hash);
       if (!ok) throw ApiError.unauthorized('Invalid mobile number or password');
-    } else if (!user) {
-      const dummyEmail = `student_${cleanMobile.slice(-10)}@edvedum.ac.in`;
-      const passHash = await hashPassword('password123');
-      const newCandidate = await query(
-        `INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, 'candidate') RETURNING id, name, email, role`,
-        [`Student ${cleanMobile.slice(-4)}`, dummyEmail, passHash]
-      );
-      user = newCandidate.rows[0];
+    } else if (!password) {
+      throw ApiError.badRequest('Password is required for mobile login. Alternatively, use Email OTP.');
     }
   }
-  // 3. Institute Code + Enrollment ID Mode (Direct Password-Free Student Access)
+  // 3. Institute Code + Enrollment ID Mode
   else if (instituteCode || enrollmentId) {
     const codeClean = (instituteCode || '').trim().toLowerCase();
     const enrollClean = (enrollmentId || '').trim().toLowerCase();
@@ -441,8 +410,8 @@ export const studentLogin = asyncHandler(async (req, res) => {
     let targetInstId = null;
     if (codeClean) {
       const instRes = await query(
-        `SELECT id, name FROM institutions WHERE LOWER(name) LIKE $1 OR id::text = $2 OR LOWER(city) LIKE $1 LIMIT 1`,
-        [`%${codeClean}%`, codeClean]
+        `SELECT id, name FROM institutions WHERE LOWER(code) = $1 OR LOWER(name) = $1 OR id::text = $1 LIMIT 1`,
+        [codeClean]
       );
       if (instRes.rowCount > 0) {
         targetInstId = instRes.rows[0].id;
@@ -450,44 +419,22 @@ export const studentLogin = asyncHandler(async (req, res) => {
     }
 
     const result = await query(
-      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id
+      `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id, u.password_hash
        FROM users u
-       WHERE (LOWER(COALESCE(u.roll_number, '')) = $1 OR LOWER(u.email) = $1 OR u.id::text = $1)
+       WHERE (LOWER(COALESCE(u.roll_number, '')) = $1 OR LOWER(u.email) = $1)
+         AND ($2::int IS NULL OR u.institution_id = $2::int)
          AND u.role = 'candidate'`,
-      [enrollClean]
+      [enrollClean, targetInstId]
     );
     user = result.rows[0];
 
     if (!user) {
-      const fallbackResult = await query(
-        `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id
-         FROM users u
-         WHERE (LOWER(COALESCE(u.roll_number, '')) LIKE $1 OR LOWER(u.email) LIKE $1)
-           AND u.role = 'candidate'`,
-        [`%${enrollClean}%`]
-      );
-      user = fallbackResult.rows[0];
+      throw ApiError.unauthorized('Invalid Enrollment ID or Institution Code. Please contact your institution administrator.');
     }
 
-    if (!user) {
-      const dummyEmail = `${enrollClean.replace(/[^a-z0-9]/g, '') || 'student'}@${codeClean.replace(/[^a-z0-9]/g, '') || 'inst'}.edu.in`;
-      const existing = await query('SELECT id, name, email, role, is_blocked, roll_number, institution_id, batch_id FROM users WHERE LOWER(email) = $1', [dummyEmail]);
-      if (existing.rowCount > 0) {
-        user = existing.rows[0];
-      } else {
-        const passHash = await hashPassword('password123');
-        const newCandidate = await query(
-          `INSERT INTO users (name, email, password_hash, role, roll_number, institution_id) VALUES ($1, $2, $3, 'candidate', $4, $5) RETURNING id, name, email, role, roll_number, institution_id, batch_id`,
-          [`Student ${enrollmentId || 'Access'}`, dummyEmail, passHash, enrollmentId || null, targetInstId || 1]
-        );
-        user = newCandidate.rows[0];
-      }
-    }
-
-    // Ensure institution_id is attached to student user
-    if (user && targetInstId && !user.institution_id) {
-      await query('UPDATE users SET institution_id = $1 WHERE id = $2', [targetInstId, user.id]);
-      user.institution_id = targetInstId;
+    if (password) {
+      const ok = await comparePassword(password, user.password_hash);
+      if (!ok) throw ApiError.unauthorized('Invalid Enrollment ID or Password.');
     }
   } else {
     throw ApiError.badRequest('Please provide valid login credentials.');

@@ -23,12 +23,18 @@ const isLocalDb =
     env.pg.host === 'postgres'
   ));
 
+const maxPool = parseInt(process.env.DB_POOL_MAX || (env.isProd ? '20' : '10'), 10);
+const minPool = parseInt(process.env.DB_POOL_MIN || '2', 10);
+const idleTimeoutMillis = parseInt(process.env.DB_IDLE_TIMEOUT_MS || '30000', 10);
+const connectionTimeoutMillis = parseInt(process.env.DB_CONN_TIMEOUT_MS || '10000', 10);
+
 const poolConfig = env.databaseUrl
   ? {
       connectionString: env.databaseUrl,
-      max: 10,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
+      max: maxPool,
+      min: minPool,
+      idleTimeoutMillis,
+      connectionTimeoutMillis,
       keepAlive: true,
       keepAliveInitialDelayMillis: 10000,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },
@@ -39,9 +45,10 @@ const poolConfig = env.databaseUrl
       user: env.pg.user,
       password: env.pg.password,
       database: env.pg.database,
-      max: 10,
-      idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000,
+      max: maxPool,
+      min: minPool,
+      idleTimeoutMillis,
+      connectionTimeoutMillis,
       keepAlive: true,
       keepAliveInitialDelayMillis: 10000,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },

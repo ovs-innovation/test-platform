@@ -22,9 +22,6 @@ export const getProfile = asyncHandler(async (req, res) => {
     });
   }
 
-  await query(`ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
-  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
-
   const [user, profile] = await Promise.all([
     query('SELECT id, name, email, role, avatar_url, created_at FROM users WHERE id = $1', [numId]).catch(() => query('SELECT id, name, email, role, created_at FROM users WHERE id = $1', [numId])),
     query('SELECT * FROM student_profiles WHERE user_id = $1', [numId]),
@@ -49,9 +46,6 @@ export const updateProfile = asyncHandler(async (req, res) => {
   }
 
   const { name, phone, city, state, target_exam, class: studentClass, avatar_url } = req.body;
-
-  await query(`ALTER TABLE student_profiles ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
-  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS avatar_url TEXT`).catch(() => {});
 
   if (name && avatar_url) {
     await query('UPDATE users SET name = $1, avatar_url = $2 WHERE id = $3', [name, avatar_url, numId]).catch(() => {});

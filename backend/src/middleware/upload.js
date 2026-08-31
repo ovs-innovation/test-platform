@@ -14,9 +14,9 @@ if (!fs.existsSync(uploadDir)) {
 }
 
 /**
- * Utility to save uploaded Base64 or Buffer files to disk safely
+ * Utility to save uploaded Base64 or Buffer files to disk safely and asynchronously
  */
-export const saveUploadedFile = (fileBase64, originalName = 'document.pdf', category = 'doc') => {
+export const saveUploadedFile = async (fileBase64, originalName = 'document.pdf', category = 'doc') => {
   if (!fileBase64) {
     throw ApiError.badRequest('No file data provided');
   }
@@ -47,7 +47,11 @@ export const saveUploadedFile = (fileBase64, originalName = 'document.pdf', cate
   const sanitizedName = `${category}_${Date.now()}_${Math.random().toString(36).substring(2, 8)}${ext}`;
   const filePath = path.join(uploadDir, sanitizedName);
 
-  fs.writeFileSync(filePath, buffer);
+  if (!fs.existsSync(uploadDir)) {
+    await fs.promises.mkdir(uploadDir, { recursive: true });
+  }
+
+  await fs.promises.writeFile(filePath, buffer);
 
   // Return accessible URL path
   return `/uploads/documents/${sanitizedName}`;

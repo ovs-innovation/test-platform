@@ -426,7 +426,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   const testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
   if (testCheck.rowCount === 0) throw ApiError.notFound('Test not found');
 
-  const relativeUrl = saveUploadedFile(file_base64, file_name || 'document.pdf', file_type);
+  const relativeUrl = await saveUploadedFile(file_base64, file_name || 'document.pdf', file_type);
 
   let columnToUpdate = 'solution_pdf_url';
   if (file_type === 'question_paper') columnToUpdate = 'question_paper_url';

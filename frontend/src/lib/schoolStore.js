@@ -6,7 +6,6 @@ const DEFAULT_SCHOOLS = [
     id: 'apex',
     schoolId: 'APEX-DELHI-INST',
     email: 'principal@apexacademy.edu.in',
-    password: 'password123',
     name: 'Apex Educational Academy',
     tagline: 'Premier Partner Institution • New Delhi',
     logoBadge: 'APX',
@@ -31,7 +30,6 @@ const DEFAULT_SCHOOLS = [
     id: 'zenith',
     schoolId: 'ZENITH-KOTA-INST',
     email: 'admin@zenithinstitute.ac.in',
-    password: 'password123',
     name: 'Zenith Career Institute',
     tagline: 'Excellence in CBT Practice • Kota',
     logoBadge: 'ZCI',
@@ -54,7 +52,6 @@ const DEFAULT_SCHOOLS = [
     id: 'horizon',
     schoolId: 'HORIZON-COLLEGE',
     email: 'info@horizoncollege.edu.in',
-    password: 'password123',
     name: 'Horizon Senior Secondary College',
     tagline: 'Empowering Student Results • Jaipur',
     logoBadge: 'HSC',
@@ -76,7 +73,6 @@ const DEFAULT_SCHOOLS = [
     id: 'vedantu',
     schoolId: 'VDN-2026-INST',
     email: 'vedantu@gmail.com',
-    password: 'password123',
     name: 'Vedantu Institute',
     tagline: 'Institutional AIETS Partner • Academic Division',
     logoBadge: 'VDN',
@@ -99,7 +95,6 @@ const DEFAULT_SCHOOLS = [
     id: 'ssc',
     schoolId: 'SSC-PUBLIC-INST',
     email: 'principal@sscpublicschool.edu.in',
-    password: 'password123',
     name: 'S.S.C Public School',
     tagline: 'Premier Educational Institution',
     logoBadge: 'SSC',
@@ -146,11 +141,11 @@ export function findPartnerSchool(input, pass) {
   // Strict match by schoolId, email or name with valid password verification
   const matched = schools.find(
     (s) =>
-      (s.schoolId.toLowerCase() === cleanInput ||
-        s.email.toLowerCase() === cleanInput ||
-        s.name.toLowerCase() === cleanInput ||
-        s.name.toLowerCase().includes(cleanInput)) &&
-      (s.password === rawPass || rawPass === 'password123' || rawPass === 'Admin@12345' || !s.password)
+      (s.schoolId?.toLowerCase() === cleanInput ||
+        s.email?.toLowerCase() === cleanInput ||
+        s.name?.toLowerCase() === cleanInput ||
+        s.name?.toLowerCase().includes(cleanInput)) &&
+      s.password && s.password === rawPass
   );
 
   return matched || null;

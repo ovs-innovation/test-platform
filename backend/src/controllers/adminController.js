@@ -471,13 +471,12 @@ export const updateFeatureFlag = asyncHandler(async (req, res) => {
 });
 
 export const getInstitutions = asyncHandler(async (_req, res) => {
-  let instRes = await query(
+  const instRes = await query(
     `SELECT 
        i.id,
        i.code AS "schoolId",
        i.name,
        i.email,
-       COALESCE(i.raw_password, 'password123') AS "password",
        i.tagline,
        i.logo_badge AS "logoBadge",
        i.logo_url AS "logoUrl",
@@ -493,42 +492,6 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
      GROUP BY i.id
      ORDER BY i.created_at DESC`
   );
-
-  if (instRes.rowCount === 0) {
-    const pwHash = await hashPassword('password123');
-    await query(
-      `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, accent_color, total_licenses, gstin, custom_price, payment_status)
-       VALUES 
-         ('APEX-DELHI-INST', 'Apex Educational Academy', 'principal@apexacademy.edu.in', $1, 'password123', 'Premier Partner Institution • New Delhi', 'APX', '#10b981', 250, '07AAAAA0000A1Z5', 1499.00, 'Paid'),
-         ('ZENITH-KOTA-INST', 'Zenith Career Institute', 'admin@zenithinstitute.ac.in', $1, 'password123', 'Excellence in CBT Practice • Kota', 'ZCI', '#2563eb', 500, '08BBBBB1111B1Z2', 1199.00, 'Paid'),
-         ('HORIZON-COLLEGE', 'Horizon Senior Secondary College', 'info@horizoncollege.edu.in', $1, 'password123', 'Empowering Student Results • Jaipur', 'HSC', '#7c3aed', 150, '08CCCCC2222C1Z9', 1999.00, 'Pending')
-       ON CONFLICT (email) DO NOTHING`,
-      [pwHash]
-    );
-
-    instRes = await query(
-      `SELECT 
-         i.id,
-         i.code AS "schoolId",
-         i.name,
-         i.email,
-         COALESCE(i.raw_password, 'password123') AS "password",
-         i.tagline,
-         i.logo_badge AS "logoBadge",
-         i.logo_url AS "logoUrl",
-         i.accent_color AS "accentColor",
-         COALESCE(i.total_licenses, 100)::int AS "totalLicenses",
-         COALESCE(i.gstin, '') AS "gstin",
-         COALESCE(i.custom_price, 1999.00)::numeric AS "customPrice",
-         COALESCE(i.payment_status, 'Paid') AS "paymentStatus",
-         COUNT(u.id)::int AS "activeStudents",
-         i.created_at AS "createdAt"
-       FROM institutions i
-       LEFT JOIN users u ON u.institution_id = i.id AND u.role = 'candidate'
-       GROUP BY i.id
-       ORDER BY i.created_at DESC`
-    );
-  }
 
   const institutions = instRes.rows;
   const totalInstitutions = institutions.length;
@@ -565,15 +528,14 @@ export const createInstitution = asyncHandler(async (req, res) => {
   const uploadedLogoUrl = logoUrl ? await processAndUploadImage(logoUrl, 'edvedum/institutions') : '';
 
   const insertRes = await query(
-    `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus", created_at AS "createdAt"`,
+    `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+     RETURNING id, code AS "schoolId", name, email, tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus", created_at AS "createdAt"`,
     [
       schoolId.toUpperCase(),
       name,
       email.toLowerCase(),
       pwHash,
-      password,
       tagline || 'Premier Educational Institution',
       badge,
       uploadedLogoUrl,

@@ -1,41 +1,13 @@
 import { query } from '../config/db.js';
 
-let isTableInitialized = false;
-
 /**
- * Initializes the test_ai_reports table in Neon PostgreSQL if it does not already exist.
- */
-export async function initAICacheTable() {
-  if (isTableInitialized) return;
-  try {
-    await query(`
-      CREATE TABLE IF NOT EXISTS test_ai_reports (
-        id SERIAL PRIMARY KEY,
-        student_id INT NOT NULL,
-        test_id INT NOT NULL,
-        attempt_id INT,
-        ai_response JSONB NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-        CONSTRAINT unique_student_test_ai UNIQUE (student_id, test_id)
-      );
-    `);
-    isTableInitialized = true;
-    console.log('[AICache] Neon DB test_ai_reports table verified/initialized.');
-  } catch (err) {
-    console.warn('[AICache] Table initialization notice:', err.message);
-  }
-}
-
-/**
- * Retrieves existing AI analysis from Neon DB for a student's test attempt.
+ * Retrieves existing AI analysis from PostgreSQL for a student's test attempt.
  * Returns null if no cached analysis exists.
  */
 export async function getCachedAIReport(studentId, testId) {
   const sId = Number(studentId);
   const tId = Number(testId);
   if (!sId || isNaN(sId) || !tId || isNaN(tId)) return null;
-
-  await initAICacheTable();
 
   try {
     const res = await query(
@@ -64,8 +36,6 @@ export async function saveCachedAIReport(studentId, testId, attemptId, aiRespons
   const sId = Number(studentId);
   const tId = Number(testId);
   if (!sId || isNaN(sId) || !tId || isNaN(tId) || !aiResponse) return;
-
-  await initAICacheTable();
 
   try {
     const jsonStr = typeof aiResponse === 'string' ? aiResponse : JSON.stringify(aiResponse);

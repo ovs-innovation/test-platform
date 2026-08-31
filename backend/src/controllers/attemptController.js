@@ -322,30 +322,9 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       [attemptId, marksObtained, totalMarks, percentage, passed, correctCount, wrongCount, unattemptedCount]
     );
 
-    await client.query(
-      `WITH ranked AS (
-         SELECT s.attempt_id,
-                CASE WHEN cnt.total <= 1 THEN NULL ELSE RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) END AS rk,
-                CASE WHEN cnt.total <= 1 THEN NULL ELSE ROUND((below.c::numeric / cnt.total) * 100, 2) END AS pct
-         FROM scores s
-         JOIN attempts a ON a.id = s.attempt_id
-         CROSS JOIN (SELECT COUNT(*)::int AS total FROM scores s2 JOIN attempts a2 ON a2.id = s2.attempt_id WHERE a2.assessment_id = $1) cnt
-         LEFT JOIN LATERAL (
-           SELECT COUNT(*)::int AS c FROM scores s3
-           JOIN attempts a3 ON a3.id = s3.attempt_id
-           WHERE a3.assessment_id = $1 AND s3.marks_obtained <= s.marks_obtained
-         ) below ON true
-         WHERE a.assessment_id = $1
-       )
-       UPDATE scores SET rank = ranked.rk, percentile = ranked.pct
-       FROM ranked WHERE scores.attempt_id = ranked.attempt_id`,
-      [attempt.assessment_id]
-    );
-
-    const refreshed = await client.query('SELECT * FROM scores WHERE attempt_id = $1', [attemptId]);
     return {
       alreadyDone: false,
-      score: refreshed.rows[0] || scoreRes.rows[0],
+      score: scoreRes.rows[0],
       attempt,
       assessment,
       durationSeconds,
@@ -354,6 +333,34 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
   });
 
   if (result && !result.alreadyDone && result.score) {
+    // Asynchronously compute background ranks without blocking user response
+    setImmediate(async () => {
+      try {
+        await query(
+          `WITH ranked AS (
+             SELECT s.attempt_id,
+                    CASE WHEN cnt.total <= 1 THEN NULL ELSE RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) END AS rk,
+                    CASE WHEN cnt.total <= 1 THEN NULL ELSE ROUND((below.c::numeric / cnt.total) * 100, 2) END AS pct
+             FROM scores s
+             JOIN attempts a ON a.id = s.attempt_id
+             CROSS JOIN (SELECT COUNT(*)::int AS total FROM scores s2 JOIN attempts a2 ON a2.id = s2.attempt_id WHERE a2.assessment_id = $1) cnt
+             LEFT JOIN LATERAL (
+               SELECT COUNT(*)::int AS c FROM scores s3
+               JOIN attempts a3 ON a3.id = s3.attempt_id
+               WHERE a3.assessment_id = $1 AND s3.marks_obtained <= s.marks_obtained
+             ) below ON true
+             WHERE a.assessment_id = $1
+           )
+           UPDATE scores SET rank = ranked.rk, percentile = ranked.pct
+           FROM ranked WHERE scores.attempt_id = ranked.attempt_id`,
+          [result.attempt.assessment_id]
+        );
+      } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('[RankComputation] Background rank update error:', e.message);
+      }
+    });
+
     // Trigger background rank recomputation for candidate's institution if candidate is B2B
     (async () => {
       try {
@@ -654,8 +661,8 @@ export const getAttemptState = asyncHandler(async (req, res) => {
       duration_minutes: assessmentObj.duration_minutes,
       max_violations: assessmentObj.max_violations || 5,
       question_paper_url: assessmentObj.question_paper_url || null,
-      solution_pdf_url: assessmentObj.solution_pdf_url || null,
-      answer_key_url: assessmentObj.answer_key_url || null,
+      solution_pdf_url: attempt.status === 'in_progress' ? null : (assessmentObj.solution_pdf_url || null),
+      answer_key_url: attempt.status === 'in_progress' ? null : (assessmentObj.answer_key_url || null),
       institution: institutionObj,
       institution_id: institutionObj?.id || null,
       institution_name: institutionObj?.name || null,

@@ -828,19 +828,6 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
  */
 export const getAvailableEbooks = asyncHandler(async (_req, res) => {
   try {
-    await query(`
-      CREATE TABLE IF NOT EXISTS ebooks (
-        id SERIAL PRIMARY KEY,
-        title VARCHAR(255) NOT NULL UNIQUE,
-        description TEXT,
-        subject VARCHAR(100),
-        author VARCHAR(200),
-        class_level VARCHAR(100),
-        pdf_url TEXT,
-        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-      )
-    `).catch(() => {});
-
     let result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC').catch(() => null);
     if (!result || result.rowCount === 0) {
       try {
@@ -886,30 +873,6 @@ export const assignEbook = asyncHandler(async (req, res) => {
   const assignedTargetId = assign_to === 'institution' ? instId : Number(target_id || instId);
   let ebookId = Number(ebook_id);
 
-  // Auto-create tables if missing
-  await query(`
-    CREATE TABLE IF NOT EXISTS ebooks (
-      id SERIAL PRIMARY KEY,
-      title VARCHAR(255) NOT NULL UNIQUE,
-      description TEXT,
-      subject VARCHAR(100),
-      author VARCHAR(200),
-      class_level VARCHAR(100),
-      pdf_url TEXT,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    )
-  `).catch(() => {});
-
-  await query(`
-    CREATE TABLE IF NOT EXISTS ebook_assignments (
-      id SERIAL PRIMARY KEY,
-      ebook_id INT REFERENCES ebooks(id) ON DELETE CASCADE,
-      assigned_to_type VARCHAR(50) NOT NULL,
-      assigned_to_id INT NOT NULL,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    )
-  `).catch(() => {});
-
   // Ensure ebook exists in ebooks table so foreign key constraint is satisfied
   const checkEbook = await query('SELECT id FROM ebooks WHERE id = $1', [ebookId]).catch(() => ({ rowCount: 0, rows: [] }));
   if (checkEbook.rowCount === 0) {
@@ -921,37 +884,46 @@ export const assignEbook = asyncHandler(async (req, res) => {
     const defaultTitle = titleMap[ebookId] || `Digital Study Material #${ebookId}`;
     try {
       await query(
-        `INSERT INTO ebooks (id, title, subject, author, class_level)
-         VALUES ($1, $2, 'General', 'Edvedum Academic Panel', 'Class 11 & 12')
+        `INSERT INTO ebooks (id, title, author, subject, class_level, pdf_url)
+         VALUES ($1, $2, 'Edvedum Academic Panel', 'General', 'Class 11 & 12', '/ebooks/sample.pdf')
          ON CONFLICT (id) DO NOTHING`,
         [ebookId, defaultTitle]
       );
     } catch (_) {}
   }
 
-  let assignment = null;
-  try {
-    assignment = await query(
-      `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id)
-       VALUES ($1, $2, $3) RETURNING *`,
-      [ebookId, assign_to, assignedTargetId]
-    );
-  } catch (err) {
-    console.warn('[assignEbook] Insert warning:', err.message);
-  }
+  // Remove existing assignment of this type to prevent duplicates
+  await query(
+    `DELETE FROM ebook_assignments 
+     WHERE ebook_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
+    [ebookId, assign_to, assignedTargetId]
+  ).catch(() => {});
 
-  res.status(200).json({
+  const insertRes = await query(
+    `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id)
+     VALUES ($1, $2, $3)
+     RETURNING id, ebook_id, assigned_to_type, assigned_to_id, created_at`,
+    [ebookId, assign_to, assignedTargetId]
+  );
+
+  res.status(201).json({
     success: true,
-    assignment: assignment?.rows?.[0] || { ebook_id: ebookId, assigned_to_type: assign_to, assigned_to_id: assignedTargetId },
-    message: `eBook successfully assigned to ${assign_to}.`,
+    assignment: insertRes.rows[0],
+    message: `eBook successfully assigned to ${assign_to}`
   });
 });
 
+/**
+ * 7. CREATE / UPLOAD NEW STUDY MATERIAL (eBOOK)
+ * POST /api/institution/:id/ebooks
+ */
 export const createInstitutionEbook = asyncHandler(async (req, res) => {
   let { title, author, description, subject, class_level, pdf_url } = req.body;
-  if (!title || !pdf_url) throw ApiError.badRequest('Title and PDF file URL are required');
+  if (!title || !pdf_url) throw ApiError.badRequest('Title and pdf_url are required');
 
   let sanitizedPdfUrl = pdf_url.trim();
+
+  // If local file path or file:/// URL is provided
   if (sanitizedPdfUrl.startsWith('file:///') || sanitizedPdfUrl.startsWith('file://') || /^[a-zA-Z]:[\\/]/.test(sanitizedPdfUrl)) {
     const rawFilePath = sanitizedPdfUrl.replace(/^file:\/\/\//, '').replace(/^file:\/\//, '');
     const fileName = path.basename(rawFilePath);
@@ -989,24 +961,6 @@ export const createInstitutionEbook = asyncHandler(async (req, res) => {
       console.warn('[createInstitutionEbook] Could not parse PDF metadata:', err.message);
     }
   }
-
-  await query(`
-    CREATE TABLE IF NOT EXISTS ebooks (
-      id SERIAL PRIMARY KEY,
-      title VARCHAR(255) NOT NULL,
-      description TEXT,
-      subject VARCHAR(100),
-      author VARCHAR(200),
-      class_level VARCHAR(100),
-      pdf_url TEXT,
-      created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    )
-  `).catch(() => {});
-
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS subject VARCHAR(100)').catch(() => {});
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS class_level VARCHAR(100)').catch(() => {});
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS pages INT').catch(() => {});
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS file_size VARCHAR(50)').catch(() => {});
 
   const result = await query(
     `INSERT INTO ebooks (title, author, description, subject, class_level, pdf_url, pages, file_size)

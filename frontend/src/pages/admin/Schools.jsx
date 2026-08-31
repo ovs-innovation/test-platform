@@ -268,7 +268,7 @@ export default function Schools() {
       name: lead.schoolName,
       schoolId: `${lead.schoolName.substring(0, 4).toUpperCase()}-2026`,
       email: lead.email,
-      password: 'password123',
+      password: '',
       tagline: 'Premier Educational Institution',
       logoBadge: lead.schoolName.substring(0, 3).toUpperCase(),
       logoUrl: '',

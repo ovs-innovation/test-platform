@@ -6,21 +6,23 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
-const DEFAULT_PROD_JWT_SECRET = 'edvedum_production_secure_fallback_jwt_secret_key_9876543210_v2_key';
-
 export const validateJwtSecretInProduction = (nodeEnv, secret) => {
   const isProduction = nodeEnv === 'production';
   const knownPlaceholders = ['dev_insecure_secret_change_me', 'secret', 'change_me', '1234567890'];
 
   if (isProduction) {
     const cleanSecret = (secret || '').trim();
-    if (!cleanSecret || knownPlaceholders.includes(cleanSecret) || cleanSecret.length < 32) {
-      // eslint-disable-next-line no-console
-      console.warn('[config warning] Insecure or missing JWT_SECRET in production. Using safe fallback secret.');
-      return DEFAULT_PROD_JWT_SECRET;
+    if (!cleanSecret) {
+      throw new Error('JWT_SECRET is missing in production environment. A secure 32+ char secret is required.');
+    }
+    if (knownPlaceholders.includes(cleanSecret)) {
+      throw new Error(`JWT_SECRET is an insecure or placeholder value (${cleanSecret}) in production.`);
+    }
+    if (cleanSecret.length < 32) {
+      throw new Error(`JWT_SECRET must have a minimum length of 32 characters in production (got ${cleanSecret.length}).`);
     }
   }
-  return secret;
+  return secret || 'dev_insecure_secret_change_me';
 };
 
 export const validateSeedCredentialsInProduction = (nodeEnv, seedConfig, runSeed = false) => {
@@ -32,15 +34,14 @@ export const validateSeedCredentialsInProduction = (nodeEnv, seedConfig, runSeed
       !seedConfig.candidatePassword ||
       defaultPasswords.includes(seedConfig.candidatePassword)
     ) {
-      // eslint-disable-next-line no-console
-      console.warn('[config warning] Default or missing seed credentials used when RUN_SEED=true in production environment.');
+      throw new Error('Default or missing seed credentials cannot be used when RUN_SEED=true in production environment.');
     }
   }
 };
 
 const nodeEnv = process.env.NODE_ENV || 'development';
-const rawJwtSecret = process.env.JWT_SECRET || DEFAULT_PROD_JWT_SECRET;
-const jwtSecret = validateJwtSecretInProduction(nodeEnv, rawJwtSecret) || rawJwtSecret;
+const rawJwtSecret = process.env.JWT_SECRET || (nodeEnv === 'production' ? '' : 'dev_insecure_secret_change_me');
+const jwtSecret = validateJwtSecretInProduction(nodeEnv, rawJwtSecret);
 const runSeed = process.env.RUN_SEED === 'true';
 
 const seedConfig = {

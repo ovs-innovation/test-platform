@@ -345,16 +345,19 @@ export default function ExamScreen() {
     } finally { setSavingId(null); }
   };
 
-  const saveNumericAnswer = async (questionId, val) => {
+  const saveNumericAnswer = (questionId, val) => {
     setNumericAnswers((prev) => ({ ...prev, [questionId]: val }));
-    setSavingId(questionId);
-    try {
-      const numVal = val != null && val !== '' ? Number(val) : null;
-      await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
-    } catch (err) {
-      if (err.status === 409) finishExam('timeout');
-      else toast.error('Failed to save numeric answer');
-    } finally { setSavingId(null); }
+    clearTimeout(codingDebounce.current[`num-${questionId}`]);
+    codingDebounce.current[`num-${questionId}`] = setTimeout(async () => {
+      setSavingId(questionId);
+      try {
+        const numVal = val != null && val !== '' ? Number(val) : null;
+        await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
+      } catch (err) {
+        if (err.status === 409) finishExam('timeout');
+        else toast.error('Failed to save numeric answer');
+      } finally { setSavingId(null); }
+    }, 400);
   };
 
   const toggleMulti = async (questionId, index) => {

@@ -62,9 +62,6 @@ export const createEbook = asyncHandler(async (req, res) => {
     }
   }
 
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS pages INT').catch(() => {});
-  await query('ALTER TABLE ebooks ADD COLUMN IF NOT EXISTS file_size VARCHAR(50)').catch(() => {});
-
   const result = await query(
     `INSERT INTO ebooks (title, author, description, pdf_url, subject_id, chapter_id, pages, file_size)
      VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
