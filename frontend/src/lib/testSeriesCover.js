@@ -167,19 +167,9 @@ export function getExamTheme(series) {
   return { ...theme, studentImage: bannerImage };
 }
 
-/** Cover image — used on detail page, not catalog cards. */
+/** Cover image — used on detail page and candidate dashboard. */
 export function getTestSeriesCover(series) {
-  const slug = (series?.slug || '').toLowerCase();
-  const title = `${series?.exam_type || ''} ${series?.title || ''}`.toLowerCase();
-  const isFreeSeries = Number(series?.price) === 0 || slug.includes('free') || title.includes('diagnostic');
-
-  if (isFreeSeries) return '/edvedum/students-group.png';
-
-  const custom = series?.image_url?.trim();
-  if (custom) return custom;
-
-  const key = examCoverKey(title);
-  return COVER_IMAGES[key] || COVER_IMAGES.general;
+  return getSeriesBannerImage(series);
 }
 
 /** One-line card description. */

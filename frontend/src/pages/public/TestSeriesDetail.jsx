@@ -23,7 +23,7 @@ import { publicService, paymentService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
-import { getSeriesBlurb, getTestSeriesCover } from '../../lib/testSeriesCover.js';
+import { getSeriesBlurb, getExamTheme, getTestSeriesCover } from '../../lib/testSeriesCover.js';
 
 
 
@@ -211,6 +211,7 @@ export default function TestSeriesDetail() {
 
   const tests = Array.isArray(series.tests) ? series.tests : [];
   const isFree = Number(series.price) === 0;
+  const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
   const plannedTestCount = Number(series.planned_test_count || series.planned_tests || series.test_count || (slug.includes('2028') ? 60 : 39));
 
@@ -290,17 +291,63 @@ export default function TestSeriesDetail() {
 
         {/* Hero Product Banner */}
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Cover Image */}
+          {/* Cover Hero Banner */}
           <div className="lg:col-span-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm ring-1 ring-slate-900/5">
-            <img
-              src={getTestSeriesCover(series)}
-              alt={`${series.title} cover`}
-              loading="eager"
-              decoding="async"
-              width="500"
-              height="375"
-              className="aspect-[4/3] w-full object-cover object-left"
-            />
+            <div className={`relative aspect-[16/11] sm:aspect-[4/3] w-full overflow-hidden bg-gradient-to-r ${theme.heroGradient} text-white shadow-inner`}>
+              {theme.studentImage && (
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={theme.studentImage}
+                    alt={`${series.title} cover`}
+                    loading="eager"
+                    decoding="async"
+                    width="600"
+                    height="450"
+                    className="h-full w-full object-cover object-top"
+                  />
+                  {/* Category Gradient Overlay Mask */}
+                  <div className={`absolute inset-y-0 left-0 w-full sm:w-3/4 bg-gradient-to-r ${theme.heroGradient} via-slate-950/70 to-transparent opacity-95`} />
+                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
+                </div>
+              )}
+
+              {/* Floating Banner Badges & Overlay Items */}
+              <div className="relative z-20 flex flex-col justify-between h-full p-5 max-w-[65%] sm:max-w-[70%]">
+                <div className="flex flex-col gap-2">
+                  <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white backdrop-blur-md border border-white/25 shadow-xs">
+                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                    <span>{theme.label}</span>
+                  </span>
+
+                  <div className="flex items-center gap-1.5">
+                    {series.is_featured && (
+                      <span className="rounded-full bg-amber-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-amber-950 shadow-xs">
+                        ★ Featured
+                      </span>
+                    )}
+                    {isFree && (
+                      <span className="rounded-full bg-emerald-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-emerald-950 shadow-xs">
+                        Free Access
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                {/* Test Count & Validity Stats */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {plannedTestCount > 0 && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
+                      <span>⚡</span>
+                      <span>{plannedTestCount} CBT Tests</span>
+                    </span>
+                  )}
+                  <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
+                    <span>⏳</span>
+                    <span>{series.validity_days || 365}D</span>
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Details & Action Card */}
