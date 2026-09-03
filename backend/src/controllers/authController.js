@@ -10,6 +10,7 @@ import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
+import { setAuthCookies, clearAuthCookies } from '../utils/cookie.js';
 
 const publicUser = (u) => ({
   id: u.id,
@@ -21,7 +22,7 @@ const publicUser = (u) => ({
   roll_number: u.roll_number || null,
 });
 
-const issueAuthSession = async (req, user, extra = {}) => {
+const issueAuthSession = async (req, res, user, extra = {}) => {
   const familyId = generateFamilyId();
   const accessToken = signAccessToken(user, undefined, extra);
   const refreshToken = signRefreshToken(user, familyId);
@@ -32,8 +33,12 @@ const issueAuthSession = async (req, user, extra = {}) => {
     await query(
       `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
        VALUES ($1, $2, $3, $4, $5, $6)`,
-      [Number(user.id), refreshTokenHash, familyId, expiresAt, req.headers['user-agent'] || '', req.ip || '']
+      [Number(user.id), refreshTokenHash, familyId, expiresAt, req?.headers?.['user-agent'] || '', req?.ip || '']
     ).catch(() => {});
+  }
+
+  if (res) {
+    setAuthCookies(res, { accessToken, refreshToken });
   }
 
   return {
@@ -70,7 +75,7 @@ export const login = asyncHandler(async (req, res) => {
   if (user && user.password_hash) {
     const ok = await comparePassword(rawPass, user.password_hash).catch(() => false);
     if (ok) {
-      const session = await issueAuthSession(req, user);
+      const session = await issueAuthSession(req, res, user);
       return res.json({ ...session, user: publicUser(user), redirectTo: '/admin' });
     }
   }
@@ -170,7 +175,7 @@ export const institutionLogin = asyncHandler(async (req, res) => {
     email: admin.email,
     name: admin.name,
   };
-  const session = await issueAuthSession(req, instUser);
+  const session = await issueAuthSession(req, res, instUser);
 
   const fullInstRes = await query('SELECT * FROM institutions WHERE id = $1', [admin.institution_id]);
   const fullInst = fullInstRes.rows[0] || {};
@@ -345,7 +350,7 @@ export const register = asyncHandler(async (req, res) => {
     return u;
   });
 
-  const session = await issueAuthSession(req, user);
+  const session = await issueAuthSession(req, res, user);
   res.status(201).json({ ...session, user: publicUser(user) });
 });
 
@@ -444,10 +449,10 @@ export const studentLogin = asyncHandler(async (req, res) => {
     throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
   }
 
-  const token = issueToken(user);
+  const session = await issueAuthSession(req, res, user);
   res.json({
     success: true,
-    token,
+    ...session,
     user: {
       ...publicUser(user),
       role: 'candidate',
@@ -601,7 +606,7 @@ export const verifyOtpCode = asyncHandler(async (req, res) => {
     return userRes.rows[0];
   });
 
-  const session = await issueAuthSession(req, user, { inviteId: invite.id, assessmentId: invite.assessment_id });
+  const session = await issueAuthSession(req, res, user, { inviteId: invite.id, assessmentId: invite.assessment_id });
   res.json({
     ...session,
     user: publicUser(user),
@@ -797,7 +802,7 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
 
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
 
-  const session = await issueAuthSession(req, user);
+  const session = await issueAuthSession(req, res, user);
   res.json({
     success: true,
     ...session,
@@ -1464,7 +1469,7 @@ export const firebaseLogin = asyncHandler(async (req, res) => {
     });
   }
 
-  const session = await issueAuthSession(req, user);
+  const session = await issueAuthSession(req, res, user);
   res.json({
     ...session,
     user: publicUser(user),
@@ -1475,7 +1480,13 @@ export const firebaseLogin = asyncHandler(async (req, res) => {
  * POST /api/auth/refresh (Refresh Token Rotation - RTR with Reuse Detection)
  */
 export const refreshTokens = asyncHandler(async (req, res) => {
-  const incomingRefreshToken = (req.body.refreshToken || req.headers['x-refresh-token'] || '').trim();
+  const incomingRefreshToken = (
+    req.cookies?.refresh_token ||
+    req.cookies?.edvedum_refresh_token ||
+    req.body?.refreshToken ||
+    req.headers['x-refresh-token'] ||
+    ''
+  ).trim();
 
   if (!incomingRefreshToken) {
     throw ApiError.badRequest('Refresh token is required');
@@ -1502,16 +1513,19 @@ export const refreshTokens = asyncHandler(async (req, res) => {
   // REUSE / REPLAY ATTACK DETECTION
   if (session.is_revoked) {
     await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE family_id = $1', [session.family_id]).catch(() => {});
+    clearAuthCookies(res);
     throw ApiError.unauthorized('Security Alert: Attempted reuse of revoked refresh token. All sessions revoked for security.');
   }
 
   if (new Date() >= new Date(session.expires_at)) {
+    clearAuthCookies(res);
     throw ApiError.unauthorized('Refresh token has expired. Please log in again.');
   }
 
   const userRes = await query('SELECT id, name, email, role, is_blocked FROM users WHERE id = $1', [session.user_id]);
   if (userRes.rowCount === 0 || userRes.rows[0].is_blocked) {
     await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE family_id = $1', [session.family_id]).catch(() => {});
+    clearAuthCookies(res);
     throw ApiError.forbidden('User account is invalid or blocked.');
   }
 
@@ -1529,8 +1543,11 @@ export const refreshTokens = asyncHandler(async (req, res) => {
   await query(
     `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
      VALUES ($1, $2, $3, $4, $5, $6)`,
-    [user.id, newHash, session.family_id, newExpiresAt, req.headers['user-agent'] || '', req.ip || '']
+    [user.id, newHash, session.family_id, newExpiresAt, req?.headers?.['user-agent'] || '', req?.ip || '']
   );
+
+  // Set updated HttpOnly cookies
+  setAuthCookies(res, { accessToken: newAccessToken, refreshToken: newRefreshToken });
 
   res.json({
     success: true,
@@ -1543,16 +1560,17 @@ export const refreshTokens = asyncHandler(async (req, res) => {
 });
 
 /**
- * POST /api/auth/logout (Revoke Current Session & Blacklist Access Token)
+ * POST /api/auth/logout (Revoke Current Session & Blacklist Access Token & Clear Cookies)
  */
 export const logout = asyncHandler(async (req, res) => {
   const header = req.headers.authorization || '';
   const [scheme, token] = header.split(' ');
-  const incomingRefreshToken = (req.body.refreshToken || req.headers['x-refresh-token'] || '').trim();
+  const incomingAccessToken = (scheme === 'Bearer' && token) ? token : (req.cookies?.access_token || req.cookies?.token || '');
+  const incomingRefreshToken = (req.cookies?.refresh_token || req.cookies?.edvedum_refresh_token || req.body?.refreshToken || req.headers['x-refresh-token'] || '').trim();
 
   // Blacklist access token if jti is present
-  if (scheme === 'Bearer' && token) {
-    const decoded = verifyToken(token);
+  if (incomingAccessToken) {
+    const decoded = verifyToken(incomingAccessToken);
     if (decoded && decoded.jti) {
       const expDate = decoded.exp ? new Date(decoded.exp * 1000) : new Date(Date.now() + 15 * 60 * 1000);
       await query(
@@ -1570,11 +1588,14 @@ export const logout = asyncHandler(async (req, res) => {
     await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE refresh_token_hash = $1', [tokenHash]).catch(() => {});
   }
 
+  // Clear all auth cookies
+  clearAuthCookies(res);
+
   res.json({ success: true, message: 'Logged out successfully' });
 });
 
 /**
- * POST /api/auth/logout-all (Revoke All Sessions for Authenticated User)
+ * POST /api/auth/logout-all (Revoke All Sessions for Authenticated User & Clear Cookies)
  */
 export const logoutAllDevices = asyncHandler(async (req, res) => {
   const userId = req.user?.id;
@@ -1583,6 +1604,7 @@ export const logoutAllDevices = asyncHandler(async (req, res) => {
   }
 
   await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE user_id = $1', [userId]);
+  clearAuthCookies(res);
 
   res.json({ success: true, message: 'All active sessions revoked across all devices' });
 });

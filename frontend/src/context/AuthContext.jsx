@@ -18,28 +18,13 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const init = async () => {
-      const token = tokenStore.get();
-      if (!token) {
-        tokenStore.clear();
-        try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
-        setUser(null);
-        setLoading(false);
-        return;
-      }
       try {
+        // Authenticate via secure HttpOnly cookie sent automatically with credentials
         const { user: me } = await authService.me();
         setUser(me);
       } catch (err) {
-        if (err?.status === 401) {
-          tokenStore.clear();
-          try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
-          setUser(null);
-        } else {
-          const savedSt = localStorage.getItem('edvedum_active_student');
-          if (savedSt) {
-            try { setUser(JSON.parse(savedSt)); } catch (_) {}
-          }
-        }
+        tokenStore.clear();
+        setUser(null);
       } finally {
         setLoading(false);
       }
@@ -50,8 +35,8 @@ export function AuthProvider({ children }) {
   const login = useCallback(async (credentials) => {
     try {
       const res = await authService.login(credentials);
-      const { token, user: u, redirectTo } = res;
-      tokenStore.set(token);
+      const { user: u, redirectTo } = res;
+      tokenStore.set();
       setUser(u);
       return { ...u, redirectTo };
     } catch (err) {
@@ -66,7 +51,6 @@ export function AuthProvider({ children }) {
           institution_id: null,
           batch_id: null,
         };
-        tokenStore.set('mock_token_admin_demo');
         setUser(mockAdminUser);
         return mockAdminUser;
       }
@@ -75,8 +59,9 @@ export function AuthProvider({ children }) {
   }, []);
 
   const verifyOtp = useCallback(async (data) => {
-    const { token, user: u } = await authService.verifyOtp(data);
-    tokenStore.set(token);
+    const res = await authService.verifyOtp(data);
+    const u = res.user;
+    tokenStore.set();
     setUser(u);
     return u;
   }, []);
@@ -90,28 +75,33 @@ export function AuthProvider({ children }) {
   }, []);
 
   const verifyLoginOtp = useCallback(async (data) => {
-    const { token, user: u } = await authService.verifyLoginOtp(data);
-    tokenStore.set(token);
+    const res = await authService.verifyLoginOtp(data);
+    const u = res.user;
+    tokenStore.set();
     setUser(u);
     return u;
   }, []);
 
   const firebaseLogin = useCallback(async (data) => {
-    const { token, user: u } = await authService.firebaseLogin(data);
-    tokenStore.set(token);
+    const res = await authService.firebaseLogin(data);
+    const u = res.user;
+    tokenStore.set();
     setUser(u);
     return u;
   }, []);
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try {
+      await authService.logout();
+    } catch (_) {}
     tokenStore.clear();
-    try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
     setUser(null);
   }, []);
 
   const register = useCallback(async (data) => {
-    const { token, user: u } = await authService.register(data);
-    tokenStore.set(token);
+    const res = await authService.register(data);
+    const u = res.user;
+    tokenStore.set();
     setUser(u);
     return u;
   }, []);
@@ -121,9 +111,7 @@ export function AuthProvider({ children }) {
     if (!result || !result.user) {
       throw new Error('Invalid login response from server');
     }
-    if (result.token) {
-      tokenStore.set(result.token);
-    }
+    tokenStore.set();
     const u = result.user;
     setUser(u);
     try { localStorage.setItem('edvedum_active_student', JSON.stringify(u)); } catch (_) {}

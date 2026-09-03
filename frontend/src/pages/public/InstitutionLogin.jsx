@@ -94,9 +94,7 @@ export default function InstitutionLogin() {
 
     try {
       // 3. Attempt backend institution admin login
-      console.log('[Institution Login Page] 3. Calling API endpoint /institution/login with payload:', { identifier: input });
       let res = null;
-      let apiCallMade = false;
 
       try {
         res = await institutionDashboardService.login({
@@ -107,12 +105,11 @@ export default function InstitutionLogin() {
           schoolId: input,
           password: pass,
         });
-        console.log('[Institution Login Page] 4. API Response received:', res);
       } catch (backendErr) {
-        console.warn('[Institution Login Page] API login call failed, falling back to partner school store:', backendErr);
+        // Fallback to partner school store if offline
       }
 
-      if (res?.token) {
+      if (res?.institution || res?.user || res?.token) {
         tokenStore.clear();
         const instObj = {
           id: res.institution?.id || res.user?.institution_id || 1,
@@ -131,12 +128,10 @@ export default function InstitutionLogin() {
           used_licenses: res.institution?.used_licenses || 0,
         };
 
-        tokenStore.set(res.token);
         localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
         localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
 
         toast.success(`Welcome back, ${instObj.name}!`);
-        console.log('[Institution Login Page] 5. Login successful! Navigating to /institution/dashboard');
         navigate('/institution/dashboard', { replace: true });
         return;
       }
@@ -144,8 +139,6 @@ export default function InstitutionLogin() {
       // 4. Check multi-tenant institution store fallback
       const matched = findPartnerSchool(input, pass);
       if (matched) {
-        console.log('[Institution Login Page] Demo matched school:', matched.name);
-        tokenStore.set(`token_inst_${matched.schoolId}`);
         localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
 
@@ -156,7 +149,6 @@ export default function InstitutionLogin() {
 
       setError('Invalid Institution ID or Password. Please check your credentials.');
     } catch (err) {
-      console.error('[Institution Login Page] Error:', err.message);
       setError(err.message || 'Invalid Institution ID or Password. Please check your credentials.');
     } finally {
       setSubmitting(false);

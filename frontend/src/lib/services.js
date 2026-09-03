@@ -36,6 +36,7 @@ export const authService = {
   sendSignupOtp: (data) => api.post('/auth/otp/send-signup', data).then((r) => r.data),
   verifyLoginOtp: (data) => api.post('/auth/otp/verify-login', data).then((r) => r.data),
   firebaseLogin: (data) => api.post('/auth/firebase-login', data).then((r) => r.data),
+  logout: () => api.post('/auth/logout').then((r) => r.data).catch(() => ({ success: true })),
   me: () => api.get('/auth/me').then((r) => r.data),
   candidateDashboard: () =>
     withCache('candidate_dashboard', () =>
@@ -567,15 +568,14 @@ export const studentReportService = {
   getInsights: (params) => api.get('/student/reports/insights', { params }).then((r) => r.data),
   askAIDoubt: (data) => api.post('/student/doubt-solver', data).then((r) => r.data),
   askAIDoubtStream: async (data, onToken) => {
-    const token = tokenStore.get();
     const baseURL = import.meta.env.VITE_API_URL || '/api';
     
     try {
       const response = await fetch(`${baseURL}/student/doubt-solver?stream=true`, {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
-          ...(token ? { Authorization: `Bearer ${token}` } : {})
         },
         body: JSON.stringify({ ...data, stream: true })
       });

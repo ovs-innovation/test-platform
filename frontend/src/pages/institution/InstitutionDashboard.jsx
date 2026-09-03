@@ -22,7 +22,7 @@ import AddStudentModal from '../../components/institution/modals/AddStudentModal
 import BulkUploadModal from '../../components/institution/modals/BulkUploadModal.jsx';
 
 import { institutionDashboardService } from '../../lib/services.js';
-import { tokenStore } from '../../lib/api.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { downloadStudentCsvTemplate } from '../../lib/csv.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
@@ -30,22 +30,16 @@ import { Key, Copy, CheckCircle2, X } from 'lucide-react';
 
 export default function InstitutionDashboard() {
   const { id } = useParams();
+  const { user } = useAuth();
 
-  // Dynamically resolve active institution ID from URL param -> JWT Token -> localStorage
+  // Dynamically resolve active institution ID from URL param -> AuthContext user -> localStorage
   const getActiveInstId = () => {
     if (id) {
       return id;
     }
-    try {
-      const token = tokenStore.get();
-      if (token && token.includes('.')) {
-        const parts = token.split('.');
-        if (parts.length === 3) {
-          const payload = JSON.parse(atob(parts[1]));
-          if (payload?.institution_id) return payload.institution_id;
-        }
-      }
-    } catch (_) {}
+    if (user?.institution_id) {
+      return user.institution_id;
+    }
 
     try {
       const saved = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');

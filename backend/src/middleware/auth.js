@@ -3,13 +3,33 @@ import { ApiError } from '../utils/ApiError.js';
 import { query } from '../config/db.js';
 
 /**
- * Verifies the JWT from the Authorization header and attaches req.user.
+ * Extracts JWT token from HttpOnly cookie first, falling back to Authorization Bearer header.
  */
-export const authenticate = async (req, _res, next) => {
+export const extractToken = (req) => {
+  // 1. Primary: Secure HttpOnly cookie
+  if (req.cookies) {
+    if (req.cookies.access_token) return req.cookies.access_token;
+    if (req.cookies.token) return req.cookies.token;
+    if (req.cookies.institutionToken) return req.cookies.institutionToken;
+  }
+
+  // 2. Secondary fallback: Authorization Bearer header (for test suites, scripts, non-browser clients)
   const header = req.headers.authorization || '';
   const [scheme, token] = header.split(' ');
+  if (scheme === 'Bearer' && token) {
+    return token.trim();
+  }
 
-  if (scheme !== 'Bearer' || !token) {
+  return null;
+};
+
+/**
+ * Verifies the JWT from HttpOnly cookie or Authorization header and attaches req.user.
+ */
+export const authenticate = async (req, _res, next) => {
+  const token = extractToken(req);
+
+  if (!token) {
     return next(ApiError.unauthorized('Authentication token missing'));
   }
 
@@ -83,10 +103,9 @@ export const authorize = (...roles) => (req, _res, next) => {
  * extracts institution_id, and cross-checks req.params.id against req.institution_id.
  */
 export const authInstitutionAdmin = async (req, _res, next) => {
-  const header = req.headers.authorization || '';
-  const [scheme, token] = header.split(' ');
+  const token = extractToken(req);
 
-  if (scheme !== 'Bearer' || !token) {
+  if (!token) {
     return next(ApiError.unauthorized('Authentication token missing'));
   }
 
@@ -131,4 +150,3 @@ export const authInstitutionAdmin = async (req, _res, next) => {
     return next(ApiError.unauthorized('Invalid or expired token'));
   }
 };
-

@@ -381,9 +381,7 @@ export default function SchoolsB2B() {
 
     try {
       // 3. Attempt backend institution login
-      console.log('[Institution Login] 3. Calling API endpoint /institution/login with payload:', { identifier: input });
       let res = null;
-      let apiCallMade = false;
 
       try {
         res = await institutionDashboardService.login({
@@ -394,12 +392,11 @@ export default function SchoolsB2B() {
           schoolId: input,
           password: pass,
         });
-        console.log('[Institution Login] 4. API Response received:', res);
       } catch (backendErr) {
-        console.warn('[Institution Login] API login call failed, falling back to partner school store:', backendErr);
+        // Fallback to partner school store if offline
       }
 
-      if (res?.token) {
+      if (res?.institution || res?.user || res?.token) {
         const instObj = {
           id: res.institution?.id || res.user?.institution_id || 1,
           name: res.institution?.name || res.user?.institution_name || 'Partner Institution',
@@ -415,12 +412,10 @@ export default function SchoolsB2B() {
           inactiveCount: res.institution?.inactiveCount || 0,
           students: res.institution?.students || [],
         };
-        tokenStore.set(res.token);
         localStorage.setItem('edvedum_active_institution', JSON.stringify(instObj));
         localStorage.setItem('edvedum_active_school', JSON.stringify(instObj));
         setActiveSchool(instObj);
         setLoginError('');
-        console.log('[Institution Login] 5. Login successful! Navigating to /institution/dashboard');
         navigate('/institution/dashboard', { replace: true });
         return;
       }
@@ -428,8 +423,6 @@ export default function SchoolsB2B() {
       // 4. Fallback to multi-tenant school store for offline / demo support
       const matched = findPartnerSchool(input, pass);
       if (matched) {
-        console.log('[Institution Login] Partner school matched:', matched.name);
-        tokenStore.set(`token_inst_${matched.schoolId}`);
         localStorage.setItem('edvedum_active_school', JSON.stringify(matched));
         localStorage.setItem('edvedum_active_institution', JSON.stringify(matched));
         setActiveSchool(matched);
@@ -440,7 +433,6 @@ export default function SchoolsB2B() {
 
       setLoginError('Invalid Institution ID or Password. Please check your credentials or contact support.');
     } catch (err) {
-      console.error('[Institution Login] Error:', err.message);
       setLoginError(err.message || 'Invalid Institution ID or Password. Please check your credentials or contact support.');
     } finally {
       setHeroSubmitting(false);

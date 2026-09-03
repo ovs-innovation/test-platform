@@ -2,66 +2,51 @@ import axios from 'axios';
 
 const baseURL = import.meta.env.VITE_API_URL || '/api';
 
-const api = axios.create({ baseURL });
+// Create central Axios instance with credentialed cookies enabled
+const api = axios.create({
+  baseURL,
+  withCredentials: true,
+});
 
-const TOKEN_KEYS = ['assesspro_token', 'token', 'institutionToken', 'edvedum_institution_token'];
-const REFRESH_TOKEN_KEY = 'edvedum_refresh_token';
+const LEGACY_TOKEN_KEYS = [
+  'assesspro_token',
+  'token',
+  'institutionToken',
+  'edvedum_institution_token',
+  'edvedum_refresh_token',
+];
+
+// Clean up legacy localStorage tokens to ensure no credentials remain in browser storage
+const scrubLegacyTokens = () => {
+  if (typeof window === 'undefined') return;
+  LEGACY_TOKEN_KEYS.forEach((key) => {
+    try {
+      localStorage.removeItem(key);
+    } catch (_) {}
+  });
+};
+
+scrubLegacyTokens();
 
 export const tokenStore = {
-  get: () => {
-    for (const key of TOKEN_KEYS) {
-      const val = localStorage.getItem(key);
-      if (val) return val;
-    }
-    try {
-      const raw = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed?.token) return parsed.token;
-      }
-    } catch (_) {}
-    return null;
-  },
-  getRefreshToken: () => {
-    try {
-      return localStorage.getItem(REFRESH_TOKEN_KEY) || null;
-    } catch (_) {
-      return null;
-    }
-  },
-  set: (data) => {
-    if (!data) return;
-    const token = typeof data === 'object' ? (data.accessToken || data.token) : data;
-    const refreshToken = typeof data === 'object' ? data.refreshToken : null;
-
-    if (token) {
-      localStorage.setItem('assesspro_token', token);
-      localStorage.setItem('token', token);
-      localStorage.setItem('institutionToken', token);
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-
-    if (refreshToken) {
-      localStorage.setItem(REFRESH_TOKEN_KEY, refreshToken);
-    }
+  get: () => null,
+  getRefreshToken: () => null,
+  set: () => {
+    // Tokens are securely held in HttpOnly cookies by the browser.
+    scrubLegacyTokens();
   },
   clear: () => {
-    TOKEN_KEYS.forEach((key) => {
-      try { localStorage.removeItem(key); } catch (_) {}
-    });
-    try { localStorage.removeItem(REFRESH_TOKEN_KEY); } catch (_) {}
+    scrubLegacyTokens();
+    try { localStorage.removeItem('edvedum_active_student'); } catch (_) {}
     try { localStorage.removeItem('edvedum_active_institution'); } catch (_) {}
     try { localStorage.removeItem('edvedum_active_school'); } catch (_) {}
     delete api.defaults.headers.common['Authorization'];
   },
 };
 
-// Attach JWT access token to every request
+// Request interceptor: ensure withCredentials is always true for cookie transmission
 api.interceptors.request.use((config) => {
-  const token = tokenStore.get();
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
+  config.withCredentials = true;
   return config;
 });
 
@@ -85,10 +70,6 @@ let sessionRedirecting = false;
 
 api.interceptors.response.use(
   (response) => {
-    // If login or auth response returned refresh tokens, store them automatically
-    if (response.data && typeof response.data === 'object' && (response.data.accessToken || response.data.refreshToken)) {
-      tokenStore.set(response.data);
-    }
     return response;
   },
   async (error) => {
@@ -110,76 +91,49 @@ api.interceptors.response.use(
       message = error.message;
     }
 
-    // Handle 401 Unauthorized with automatic Refresh Token Rotation (RTR)
+    // Handle 401 Unauthorized with automatic HttpOnly Refresh Token Rotation (RTR)
     if (status === 401 && !isAuthAttempt && originalRequest && !originalRequest._retry) {
-      const refreshToken = tokenStore.getRefreshToken();
-
-      if (refreshToken) {
-        if (isRefreshing) {
-          return new Promise((resolve, reject) => {
-            failedQueue.push({ resolve, reject });
-          })
-            .then((newToken) => {
-              originalRequest.headers.Authorization = `Bearer ${newToken}`;
-              return api(originalRequest);
-            })
-            .catch((err) => Promise.reject(err));
-        }
-
-        originalRequest._retry = true;
-        isRefreshing = true;
-
-        try {
-          const refreshRes = await axios.post(`${baseURL}/auth/refresh`, { refreshToken });
-          const newAccessToken = refreshRes.data?.accessToken || refreshRes.data?.token;
-          const newRefreshToken = refreshRes.data?.refreshToken;
-
-          if (newAccessToken) {
-            tokenStore.set({ accessToken: newAccessToken, refreshToken: newRefreshToken });
-            processQueue(null, newAccessToken);
-            originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-            isRefreshing = false;
-            return api(originalRequest);
-          }
-        } catch (refreshErr) {
-          processQueue(refreshErr, null);
-          isRefreshing = false;
-          tokenStore.clear();
-        }
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => api(originalRequest))
+          .catch((err) => Promise.reject(err));
       }
 
-      const activeToken = tokenStore.get();
-      const isInstSession = activeToken && (
-        activeToken.startsWith('mock_student_token_') ||
-        activeToken.startsWith('mock_token_') ||
-        activeToken.startsWith('token_inst_') ||
-        activeToken.startsWith('token_') ||
-        window.location.pathname.startsWith('/institution')
-      );
+      originalRequest._retry = true;
+      isRefreshing = true;
 
-      if (isInstSession) {
-        return Promise.reject({ status, message, details: error.response?.data?.details });
-      }
+      try {
+        // Post to refresh endpoint with withCredentials: true so browser sends HttpOnly refresh_token cookie
+        await axios.post(`${baseURL}/auth/refresh`, {}, { withCredentials: true });
+        processQueue(null);
+        isRefreshing = false;
+        return api(originalRequest);
+      } catch (refreshErr) {
+        processQueue(refreshErr, null);
+        isRefreshing = false;
+        tokenStore.clear();
 
-      tokenStore.clear();
-      window.dispatchEvent(new CustomEvent('auth:session-expired'));
+        window.dispatchEvent(new CustomEvent('auth:session-expired'));
 
-      const path = window.location.pathname;
-      const onAuthPage =
-        path.startsWith('/student-login') ||
-        path.startsWith('/admin-login') ||
-        path.startsWith('/institution-login') ||
-        path.startsWith('/signup') ||
-        path.startsWith('/invite/');
+        const path = window.location.pathname;
+        const onAuthPage =
+          path.startsWith('/student-login') ||
+          path.startsWith('/admin-login') ||
+          path.startsWith('/institution-login') ||
+          path.startsWith('/signup') ||
+          path.startsWith('/invite/');
 
-      if (!onAuthPage && !sessionRedirecting) {
-        sessionRedirecting = true;
-        const targetLogin = path.startsWith('/admin')
-          ? '/admin-login'
-          : path.startsWith('/institution') || path.startsWith('/school')
-          ? '/institution-login'
-          : '/student-login';
-        window.location.replace(targetLogin);
+        if (!onAuthPage && !sessionRedirecting) {
+          sessionRedirecting = true;
+          const targetLogin = path.startsWith('/admin')
+            ? '/admin-login'
+            : path.startsWith('/institution') || path.startsWith('/school')
+            ? '/institution-login'
+            : '/student-login';
+          window.location.replace(targetLogin);
+        }
       }
     }
 
@@ -188,4 +142,3 @@ api.interceptors.response.use(
 );
 
 export default api;
-

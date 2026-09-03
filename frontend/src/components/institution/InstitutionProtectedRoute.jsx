@@ -1,6 +1,5 @@
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext.jsx';
-import { tokenStore } from '../../lib/api.js';
 
 export function isInstitutionRole(role) {
   if (!role) return false;
@@ -20,21 +19,14 @@ export default function InstitutionProtectedRoute({ children }) {
   const { user, loading } = useAuth();
   const location = useLocation();
 
-  // 1. Check local session storage for active institution token or session
   let activeInstitution = null;
-  const token = tokenStore.get();
   try {
     const raw = localStorage.getItem('edvedum_active_institution') || localStorage.getItem('edvedum_active_school');
     if (raw) activeInstitution = JSON.parse(raw);
   } catch (_) {}
 
-  const hasInstSession = !!(token || activeInstitution);
-
-  // 2. Validate role if user object exists in AuthContext
-  const isAuthorizedRole = isInstitutionRole(user?.role);
-
-  // 3. Hydration State: Do NOT redirect while AuthContext is restoring session
-  if (loading && hasInstSession) {
+  // 1. Hydration State: Show loading spinner while AuthContext is verifying session
+  if (loading) {
     return (
       <div className="min-h-screen bg-[#071126] text-white flex flex-col items-center justify-center space-y-4">
         <div className="h-10 w-10 border-4 border-cyan-400 border-t-transparent rounded-full animate-spin" />
@@ -45,13 +37,16 @@ export default function InstitutionProtectedRoute({ children }) {
     );
   }
 
-  // 4. Block candidates/students attempting to open institution portal
-  if (!hasInstSession && user && !isAuthorizedRole) {
+  // 2. Validate role if user object exists in AuthContext
+  const isAuthorizedRole = isInstitutionRole(user?.role);
+
+  // 3. Block candidates/students attempting to open institution portal
+  if (user && !isAuthorizedRole) {
     return <Navigate to="/dashboard" replace />;
   }
 
-  // 5. Unauthenticated access: Redirect to Center Login (/institution-login) ONLY when hydration is complete and no session exists
-  if (!loading && !hasInstSession && (!user || !isAuthorizedRole)) {
+  // 4. Unauthenticated access: Redirect to Center Login (/institution-login)
+  if (!user && !activeInstitution) {
     return <Navigate to="/institution-login" state={{ from: location }} replace />;
   }
 

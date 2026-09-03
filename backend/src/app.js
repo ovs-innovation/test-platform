@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
+import cookieParser from 'cookie-parser';
 
 import { env } from './config/env.js';
 import { razorpayWebhook } from './controllers/paymentController.js';
@@ -72,6 +73,7 @@ app.use(
 );
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
 app.use(express.json({ limit: '20mb' }));
+app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 app.use('/ebooks', express.static('public/ebooks'));
 app.use(requestLogger);
