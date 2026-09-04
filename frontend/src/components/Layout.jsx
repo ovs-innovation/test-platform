@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 import ThemeToggle from './ThemeToggle.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../data/edvedumContent.js';
 import { notificationService, adminService } from '../lib/services.js';
+import { tokenStore } from '../lib/api.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
@@ -35,6 +36,7 @@ const candidateNav = [
 
 const adminNav = [
   { to: '/admin', label: 'Dashboard', icon: 'grid' },
+  { to: '/admin/discussion-hub', label: 'Discussion Hub', icon: 'chat' },
   { to: '/admin/schools', label: 'Institutions', icon: 'bank' },
   { to: '/admin/candidates', label: 'Students', icon: 'users' },
   { to: '/admin/assessments', label: 'Tests & Exams', icon: 'calendar' },
@@ -167,6 +169,7 @@ export default function Layout({ children }) {
   }, []);
 
   const fetchUnread = useCallback(() => {
+    if (!tokenStore.get()) return;
     const isUserAdmin = user?.role === 'admin' || user?.role === 'superadmin';
     notificationService.unreadCount().then((c) => {
       const adminNotifs = isUserAdmin ? getAdminNotifications() : [];

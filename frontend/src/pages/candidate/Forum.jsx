@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, PageHeader, Spinner } from '../../components/ui.jsx';
 import { formatDateTime } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
-import { MessageSquare, Send, User, Sparkles } from 'lucide-react';
+import { MessageSquare, Send, User, Sparkles, Paperclip, X, ImageIcon, ZoomIn } from 'lucide-react';
 
 export default function Forum() {
   const toast = useToast();
@@ -12,9 +12,15 @@ export default function Forum() {
   const [detail, setDetail] = useState(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
+  const [topicImage, setTopicImage] = useState(null); // base64
   const [reply, setReply] = useState('');
+  const [replyImage, setReplyImage] = useState(null); // base64
+  const [previewModalUrl, setPreviewModalUrl] = useState(null);
   const [loading, setLoading] = useState(true);
   const [posting, setPosting] = useState(false);
+
+  const topicFileRef = useRef(null);
+  const replyFileRef = useRef(null);
 
   const load = () => studentService.forum().then(setTopics).finally(() => setLoading(false));
   useEffect(() => { load(); }, []);
@@ -24,25 +30,44 @@ export default function Forum() {
     setDetail(await studentService.forumTopic(id));
   };
 
+  const handleImagePick = (e, setImgState) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.error('Please select an image file (PNG, JPG, WebP)');
+      return;
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      toast.error('Image size must be less than 8MB');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      setImgState(ev.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const create = async (e) => {
     e.preventDefault();
     setPosting(true);
     try {
-      await studentService.createTopic({ title, body });
-      setTitle(''); setBody('');
-      toast.success('Question topic created successfully');
+      await studentService.createTopic({ title, body, imageUrl: topicImage });
+      setTitle(''); setBody(''); setTopicImage(null);
+      toast.success('Question topic posted successfully!');
       load();
     } catch (err) { toast.error(err.message); }
     finally { setPosting(false); }
   };
 
   const sendReply = async () => {
-    if (!reply.trim()) return;
+    if (!reply.trim() && !replyImage) return;
     setPosting(true);
     try {
-      await studentService.replyTopic(active, reply);
-      setReply('');
+      await studentService.replyTopic(active, reply, replyImage);
+      setReply(''); setReplyImage(null);
       setDetail(await studentService.forumTopic(active));
+      toast.success('Answer posted successfully!');
     } catch (err) { toast.error(err.message); }
     finally { setPosting(false); }
   };
@@ -50,12 +75,27 @@ export default function Forum() {
   if (loading) return <LoadingScreen label="Loading forum..." />;
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-12">
+    <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans">
+      {/* Modal Image Zoom Viewer */}
+      {previewModalUrl && (
+        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">
+          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl">
+            <button
+              onClick={() => setPreviewModalUrl(null)}
+              className="absolute top-3 right-3 p-2 bg-black/60 hover:bg-black/80 text-white rounded-full transition cursor-pointer"
+            >
+              <X className="w-5 h-5" />
+            </button>
+            <img src={previewModalUrl} alt="Zoomed view" className="max-w-full max-h-[85vh] object-contain rounded-xl" />
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200/80 dark:border-slate-800 pb-4">
         <div>
           <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white">Discussion Hub & Peer Q&A</h1>
           <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
-            Ask doubts, discuss mock test questions, and share problem-solving techniques with fellow aspirants.
+            Ask doubts, upload textbook diagrams/formulas, and discuss solutions with fellow aspirants and official faculty.
           </p>
         </div>
       </div>
@@ -66,14 +106,14 @@ export default function Forum() {
           <form onSubmit={create} className="p-5 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-3 shadow-xs">
             <h2 className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center gap-2">
               <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-              <span>Ask a Question</span>
+              <span>Ask a Question / Upload Doubt</span>
             </h2>
             
             <div>
               <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1">Question Title</label>
               <input
                 className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
-                placeholder="e.g. How to solve Integration by parts in JEE Math?"
+                placeholder="e.g. Prove Theorem or Solve Integration numerical formula..."
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -85,20 +125,53 @@ export default function Forum() {
               <textarea
                 className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 px-3.5 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
                 rows={3}
-                placeholder="Describe your question or difficulty in detail..."
+                placeholder="Describe your doubt, step difficulty, or theorem in detail..."
                 value={body}
                 onChange={(e) => setBody(e.target.value)}
                 required
               />
             </div>
 
-            <button
-              type="submit"
-              className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition cursor-pointer disabled:opacity-50"
-              disabled={posting}
-            >
-              {posting ? <Spinner className="h-4 w-4" /> : 'Post Question'}
-            </button>
+            {/* Hidden File Picker & Attachment Preview */}
+            <input
+              type="file"
+              ref={topicFileRef}
+              accept="image/*"
+              className="hidden"
+              onChange={(e) => handleImagePick(e, setTopicImage)}
+            />
+
+            {topicImage && (
+              <div className="relative inline-block border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden max-w-xs">
+                <img src={topicImage} alt="Doubt Preview" className="h-24 w-auto object-cover" />
+                <button
+                  type="button"
+                  onClick={() => setTopicImage(null)}
+                  className="absolute top-1 right-1 p-1 bg-black/70 hover:bg-black text-white rounded-full"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+
+            <div className="flex items-center justify-between pt-1">
+              <button
+                type="button"
+                onClick={() => topicFileRef.current?.click()}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-700 dark:text-slate-300 rounded-xl text-xs font-bold transition cursor-pointer"
+              >
+                <Paperclip className="w-3.5 h-3.5 text-blue-600" />
+                <span>{topicImage ? 'Change Image' : 'Attach Question Photo'}</span>
+              </button>
+
+              <button
+                type="submit"
+                className="rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-xs hover:bg-blue-500 transition cursor-pointer disabled:opacity-50"
+                disabled={posting}
+              >
+                {posting ? <Spinner className="h-4 w-4" /> : 'Post Question'}
+              </button>
+            </div>
           </form>
 
           {/* Topics List Cards */}
@@ -114,13 +187,21 @@ export default function Forum() {
                   key={t.id}
                   type="button"
                   onClick={() => openTopic(t.id)}
-                  className={`w-full rounded-xl border p-3.5 text-left transition-all duration-200 ${
+                  className={`w-full rounded-xl border p-3.5 text-left transition-all duration-200 cursor-pointer ${
                     active === t.id
                       ? 'border-blue-500 bg-blue-50/50 dark:bg-blue-950/40 text-slate-900 dark:text-white shadow-xs'
                       : 'border-slate-200/80 dark:border-slate-800/80 bg-white dark:bg-[#111827] text-slate-800 dark:text-slate-200 hover:border-slate-300 dark:hover:border-slate-700'
                   }`}
                 >
-                  <p className="font-extrabold text-slate-900 dark:text-white text-xs leading-snug">{t.title}</p>
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="font-extrabold text-slate-900 dark:text-white text-xs leading-snug">{t.title}</p>
+                    {t.image_url && (
+                      <span className="p-1 bg-blue-50 dark:bg-blue-950 text-blue-600 rounded shrink-0" title="Has image attachment">
+                        <ImageIcon className="w-3.5 h-3.5" />
+                      </span>
+                    )}
+                  </div>
+                  
                   <div className="mt-2 flex items-center justify-between text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                     <span>Asked by <strong className="text-slate-700 dark:text-slate-300">{t.author_name}</strong></span>
                     <span className="rounded-md bg-blue-500/10 px-2 py-0.5 text-[10px] font-bold text-blue-600 dark:text-cyan-300 border border-blue-500/20">
@@ -154,43 +235,127 @@ export default function Forum() {
                 </div>
 
                 <h2 className="text-sm font-extrabold text-slate-900 dark:text-white mt-2">{detail.topic.title}</h2>
-                <div className="mt-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-800">
-                  {detail.topic.body}
+                
+                <div className="mt-2 text-xs text-slate-700 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200/80 dark:border-slate-800 space-y-2">
+                  <p className="whitespace-pre-wrap">{detail.topic.body}</p>
+                  
+                  {detail.topic.image_url && (
+                    <div className="pt-2 border-t border-slate-200/60 dark:border-slate-800">
+                      <div className="relative inline-block group rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700 max-w-full">
+                        <img
+                          src={detail.topic.image_url}
+                          alt="Question attachment"
+                          className="max-h-60 w-auto object-cover rounded-xl cursor-pointer hover:opacity-95"
+                          onClick={() => setPreviewModalUrl(detail.topic.image_url)}
+                        />
+                        <div
+                          className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center text-white text-xs font-bold transition cursor-pointer"
+                          onClick={() => setPreviewModalUrl(detail.topic.image_url)}
+                        >
+                          <ZoomIn className="w-4 h-4 mr-1" /> Click to enlarge
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
+
                 <p className="mt-1.5 text-[11px] font-semibold text-slate-500 dark:text-slate-400">
                   Asked by <strong className="text-slate-900 dark:text-slate-200">{detail.topic.author_name}</strong>
                 </p>
 
                 <div className="mt-4 space-y-2 border-t border-slate-100 dark:border-slate-800/60 pt-3">
-                  <h4 className="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Replies ({detail.replies.length})</h4>
+                  <h4 className="text-[10.5px] font-bold uppercase tracking-wider text-slate-400">Replies & Solutions ({detail.replies.length})</h4>
                   {detail.replies.length === 0 ? (
                     <p className="text-xs text-slate-400 italic py-1">No replies yet. Be the first to answer!</p>
                   ) : (
                     detail.replies.map((r) => (
-                      <div key={r.id} className="rounded-xl border border-slate-100 dark:border-slate-800/60 bg-slate-50/80 dark:bg-slate-900/40 p-3 text-xs text-slate-800 dark:text-slate-200">
-                        <span className="font-bold text-blue-600 dark:text-cyan-300 block mb-0.5">{r.author_name}</span>
-                        <p className="leading-relaxed">{r.body}</p>
+                      <div
+                        key={r.id}
+                        className={`rounded-xl p-3.5 text-xs space-y-2 border transition-all ${
+                          r.author_role === 'admin'
+                            ? 'bg-gradient-to-r from-amber-50/90 to-orange-50/90 dark:from-amber-950/30 dark:to-orange-950/30 border-amber-300 dark:border-amber-800/80 text-slate-900 dark:text-amber-200 shadow-xs'
+                            : 'bg-slate-50/80 dark:bg-slate-900/40 border-slate-100 dark:border-slate-800/60 text-slate-800 dark:text-slate-200'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-extrabold text-slate-900 dark:text-white">{r.author_name}</span>
+                            {r.author_role === 'admin' && (
+                              <span className="inline-flex items-center gap-1 bg-amber-500 text-slate-950 text-[9.5px] px-2 py-0.5 rounded-full font-black tracking-wide uppercase shadow-2xs">
+                                🎓 Official Faculty Answer
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        <p className="leading-relaxed whitespace-pre-wrap">{r.body}</p>
+
+                        {/* Reply Image Attachment */}
+                        {r.image_url && (
+                          <div className="pt-1">
+                            <img
+                              src={r.image_url}
+                              alt="Solution step"
+                              className="max-h-48 w-auto object-cover rounded-xl border border-slate-200 dark:border-slate-700 cursor-pointer hover:opacity-95"
+                              onClick={() => setPreviewModalUrl(r.image_url)}
+                            />
+                          </div>
+                        )}
                       </div>
                     ))
                   )}
                 </div>
               </div>
 
-              <div className="mt-3 flex gap-2 pt-3 border-t border-slate-100 dark:border-slate-800/60">
+              {/* Reply Form */}
+              <div className="mt-3 pt-3 border-t border-slate-100 dark:border-slate-800/60 space-y-2">
+                {replyImage && (
+                  <div className="relative inline-block border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden max-w-xs">
+                    <img src={replyImage} alt="Reply Image Preview" className="h-20 w-auto object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setReplyImage(null)}
+                      className="absolute top-1 right-1 p-1 bg-black/70 text-white rounded-full"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
+                )}
+
                 <input
-                  className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
-                  placeholder="Write your answer or explanation..."
-                  value={reply}
-                  onChange={(e) => setReply(e.target.value)}
+                  type="file"
+                  ref={replyFileRef}
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(e) => handleImagePick(e, setReplyImage)}
                 />
-                <button
-                  type="button"
-                  className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-500 transition"
-                  onClick={sendReply}
-                  disabled={posting}
-                >
-                  <Send className="h-3.5 w-3.5" />
-                </button>
+
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => replyFileRef.current?.click()}
+                    className="p-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-blue-600 rounded-lg cursor-pointer transition shrink-0"
+                    title="Attach solution image / proof photo"
+                  >
+                    <Paperclip className="w-4 h-4" />
+                  </button>
+
+                  <input
+                    className="flex-1 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-3 py-2 text-xs font-medium text-slate-900 dark:text-white placeholder:text-slate-400 focus:border-blue-500 focus:outline-none"
+                    placeholder="Write your answer or explanation..."
+                    value={reply}
+                    onChange={(e) => setReply(e.target.value)}
+                  />
+
+                  <button
+                    type="button"
+                    className="rounded-lg bg-blue-600 px-4 py-2 text-xs font-bold text-white shadow-2xs hover:bg-blue-500 transition cursor-pointer disabled:opacity-50"
+                    onClick={sendReply}
+                    disabled={posting}
+                  >
+                    <Send className="h-3.5 w-3.5" />
+                  </button>
+                </div>
               </div>
             </div>
           )}

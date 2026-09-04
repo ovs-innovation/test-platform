@@ -299,10 +299,10 @@ export const studentService = {
     clearCache('student_forum');
     return api.post('/student/forum', data).then((r) => r.data);
   },
-  replyTopic: (id, body) => {
+  replyTopic: (id, body, imageUrl = null) => {
     clearCache(`student_forum_topic_${id}`);
     clearCache('student_forum');
-    return api.post(`/student/forum/${id}/reply`, { body }).then((r) => r.data);
+    return api.post(`/student/forum/${id}/reply`, { body, imageUrl }).then((r) => r.data);
   },
   calendar: () => withCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
 };
@@ -430,6 +430,13 @@ export const adminService = {
     return api.delete(`/admin/topics/${id}`).then((r) => r.data);
   },
   broadcast: (data) => api.post('/admin/notifications/broadcast', data).then((r) => r.data),
+  // Discussion Hub & Forum Helpers
+  forumTopics: (filter = 'all', q = '') => api.get('/admin/forum', { params: { filter, q } }).then((r) => r.data),
+  forumTopic: (id) => api.get(`/admin/forum/${id}`).then((r) => r.data),
+  replyForumTopic: (id, body, imageUrl = null) => api.post(`/student/forum/${id}/reply`, { body, imageUrl }).then((r) => r.data),
+  lockForumTopic: (id) => api.patch(`/admin/forum/${id}/lock`).then((r) => r.data),
+  deleteForumTopic: (id) => api.delete(`/admin/forum/${id}`).then((r) => r.data),
+  deleteForumReply: (replyId) => api.delete(`/admin/forum/replies/${replyId}`).then((r) => r.data),
   // Test Management Helpers
   tests: (params) => api.get('/admin/tests', { params }).then((r) => r.data.tests),
   createTest: (data) => api.post('/admin/tests', data).then((r) => r.data.test),

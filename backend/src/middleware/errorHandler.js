@@ -7,13 +7,17 @@ export const notFoundHandler = (req, res) => {
 
 // eslint-disable-next-line no-unused-vars
 export const errorHandler = (err, _req, res, _next) => {
-  // Log detailed error internally for server administration and debugging
-  console.error('[Internal Error Log]', {
-    message: err?.message,
-    name: err?.name,
-    code: err?.code,
-    stack: err?.stack,
-  });
+  const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
+
+  // Only log detailed stack traces for unexpected 5xx server exceptions
+  if (statusCode >= 500 && !(err instanceof ApiError)) {
+    console.error('[Internal Error Log]', {
+      message: err?.message,
+      name: err?.name,
+      code: err?.code,
+      stack: err?.stack,
+    });
+  }
 
   // Known PostgreSQL unique-violation -> 409
   if (err && err.code === '23505') {
@@ -36,8 +40,6 @@ export const errorHandler = (err, _req, res, _next) => {
       message: 'The service is temporarily unavailable. Please try again.',
     });
   }
-
-  const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
 
   if (statusCode < 500 || err instanceof ApiError) {
     const detailedMsg = Array.isArray(err.details) && err.details.length > 0

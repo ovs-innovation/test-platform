@@ -138,6 +138,14 @@ router.post('/topics', createTopic);
 router.delete('/topics/:id', deleteTopic);
 router.post('/notifications/broadcast', broadcastNotification);
 
+import {
+  listAdminForumTopics,
+  getAdminForumTopic,
+  lockAdminForumTopic,
+  deleteAdminForumTopic,
+  deleteAdminForumReply,
+} from '../controllers/adminController.js';
+
 router.get('/feature-flags', getFeatureFlags);
 router.put('/feature-flags/:flag_name', updateFeatureFlag);
 
@@ -171,5 +179,12 @@ router.get('/schools/:id/reports/rankings', getInstitutionRankingsReport);
 router.get('/schools/:id/reports/batch-comparison', getBatchComparisonReport);
 router.get('/schools/:id/reports/trends', getInstitutionTrendsReport);
 router.get('/schools/:id/reports/improvement', getImprovementAnalyticsReport);
+
+// Admin Discussion Hub & Moderation Endpoints
+router.get('/forum', listAdminForumTopics);
+router.get('/forum/:id', getAdminForumTopic);
+router.patch('/forum/:id/lock', lockAdminForumTopic);
+router.delete('/forum/:id', deleteAdminForumTopic);
+router.delete('/forum/replies/:replyId', deleteAdminForumReply);
 
 export default router;

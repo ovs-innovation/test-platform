@@ -68,6 +68,7 @@ const AdminReports = lazy(() => import('./pages/admin/Reports.jsx'));
 const AdminAttemptDetail = lazy(() => import('./pages/admin/AttemptDetail.jsx'));
 const AdminSchools = lazy(() => import('./pages/admin/Schools.jsx'));
 const AdminSchoolDetail = lazy(() => import('./pages/admin/SchoolDetail.jsx'));
+const AdminDiscussionHub = lazy(() => import('./pages/admin/AdminDiscussionHub.jsx'));
 
 import InstitutionDashboard, {
   InstOverviewTabWrapper,
@@ -195,6 +196,7 @@ export default function App() {
 
         {/* PLATFORM ADMIN PROTECTED ROUTES */}
         <Route path="/admin" element={<ProtectedRoute role="admin"><AdminLayout><AdminOverview /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/discussion-hub" element={<ProtectedRoute role="admin"><AdminLayout><AdminDiscussionHub /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/tests" element={<Navigate to="/admin/assessments" replace />} />
         <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessments /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/assessments/:assessmentId" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessmentEditor /></AdminLayout></ProtectedRoute>} />

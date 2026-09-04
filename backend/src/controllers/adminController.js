@@ -949,3 +949,111 @@ export const assignStudentInstitution = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Student institution allocation updated successfully.' });
 });
 
+// Admin Discussion Hub & Moderation Controllers
+export const listAdminForumTopics = asyncHandler(async (req, res) => {
+  const { filter = 'all', q = '' } = req.query;
+
+  let whereClauses = [];
+  let params = [];
+
+  if (q && q.trim()) {
+    params.push(`%${q.trim().toLowerCase()}%`);
+    whereClauses.push(`(LOWER(ft.title) LIKE $${params.length} OR LOWER(ft.body) LIKE $${params.length} OR LOWER(u.name) LIKE $${params.length})`);
+  }
+
+  if (filter === 'unanswered') {
+    whereClauses.push(`(SELECT COUNT(*) FROM forum_replies fr JOIN users u2 ON u2.id = fr.user_id WHERE fr.topic_id = ft.id AND u2.role = 'admin') = 0`);
+  } else if (filter === 'answered') {
+    whereClauses.push(`(SELECT COUNT(*) FROM forum_replies fr JOIN users u2 ON u2.id = fr.user_id WHERE fr.topic_id = ft.id AND u2.role = 'admin') > 0`);
+  } else if (filter === 'locked') {
+    whereClauses.push(`ft.is_locked = TRUE`);
+  }
+
+  const whereSql = whereClauses.length ? `WHERE ${whereClauses.join(' AND ')}` : '';
+
+  const topicsRes = await query(
+    `SELECT ft.*, u.name AS author_name, u.email AS author_email, u.role AS author_role,
+            COUNT(fr.id)::int AS reply_count,
+            COUNT(CASE WHEN u_reply.role = 'admin' THEN 1 END)::int AS faculty_reply_count
+     FROM forum_topics ft 
+     JOIN users u ON u.id = ft.user_id
+     LEFT JOIN forum_replies fr ON fr.topic_id = ft.id
+     LEFT JOIN users u_reply ON u_reply.id = fr.user_id
+     ${whereSql}
+     GROUP BY ft.id, u.name, u.email, u.role 
+     ORDER BY ft.created_at DESC 
+     LIMIT 100`,
+    params
+  );
+
+  // Compute overall stats metrics for Admin header
+  const statsRes = await query(
+    `SELECT 
+        COUNT(ft.id)::int AS total_topics,
+        COUNT(CASE WHEN (SELECT COUNT(*) FROM forum_replies fr JOIN users u2 ON u2.id = fr.user_id WHERE fr.topic_id = ft.id AND u2.role = 'admin') = 0 THEN 1 END)::int AS unanswered_count,
+        COUNT(CASE WHEN (SELECT COUNT(*) FROM forum_replies fr JOIN users u2 ON u2.id = fr.user_id WHERE fr.topic_id = ft.id AND u2.role = 'admin') > 0 THEN 1 END)::int AS faculty_answered_count,
+        COUNT(CASE WHEN ft.is_locked = TRUE THEN 1 END)::int AS locked_count
+     FROM forum_topics ft`
+  );
+
+  res.json({
+    success: true,
+    topics: topicsRes.rows,
+    stats: statsRes.rows[0] || { total_topics: 0, unanswered_count: 0, faculty_answered_count: 0, locked_count: 0 }
+  });
+});
+
+export const getAdminForumTopic = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const topic = await query(
+    `SELECT ft.*, u.name AS author_name, u.email AS author_email, u.role AS author_role 
+     FROM forum_topics ft 
+     JOIN users u ON u.id = ft.user_id 
+     WHERE ft.id = $1`,
+    [id]
+  );
+  if (!topic.rowCount) throw ApiError.notFound('Topic not found');
+
+  const replies = await query(
+    `SELECT fr.*, u.name AS author_name, u.email AS author_email, u.role AS author_role 
+     FROM forum_replies fr 
+     JOIN users u ON u.id = fr.user_id
+     WHERE fr.topic_id = $1 
+     ORDER BY fr.created_at ASC`,
+    [id]
+  );
+
+  res.json({ success: true, topic: topic.rows[0], replies: replies.rows });
+});
+
+export const lockAdminForumTopic = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const topic = await query('SELECT id, is_locked FROM forum_topics WHERE id = $1', [id]);
+  if (!topic.rowCount) throw ApiError.notFound('Topic not found');
+
+  const newLockStatus = !topic.rows[0].is_locked;
+  await query('UPDATE forum_topics SET is_locked = $1 WHERE id = $2', [newLockStatus, id]);
+
+  res.json({
+    success: true,
+    is_locked: newLockStatus,
+    message: newLockStatus ? 'Discussion thread locked.' : 'Discussion thread unlocked.'
+  });
+});
+
+export const deleteAdminForumTopic = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const topic = await query('DELETE FROM forum_topics WHERE id = $1 RETURNING id', [id]);
+  if (!topic.rowCount) throw ApiError.notFound('Topic not found');
+
+  res.json({ success: true, message: 'Question topic deleted successfully.' });
+});
+
+export const deleteAdminForumReply = asyncHandler(async (req, res) => {
+  const { replyId } = req.params;
+  const reply = await query('DELETE FROM forum_replies WHERE id = $1 RETURNING id, topic_id', [replyId]);
+  if (!reply.rowCount) throw ApiError.notFound('Reply not found');
+
+  res.json({ success: true, message: 'Reply deleted successfully.', topicId: reply.rows[0].topic_id });
+});
+

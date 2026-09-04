@@ -27,6 +27,6 @@ router.get('/certificates/:attemptId', authenticate, authorize('candidate'), get
 router.get('/forum', authenticate, listForumTopics);
 router.get('/forum/:id', authenticate, getForumTopic);
 router.post('/forum', authenticate, authorize('candidate'), createForumTopic);
-router.post('/forum/:id/reply', authenticate, authorize('candidate'), replyForumTopic);
+router.post('/forum/:id/reply', authenticate, authorize('candidate', 'admin'), replyForumTopic);
 
 export default router;

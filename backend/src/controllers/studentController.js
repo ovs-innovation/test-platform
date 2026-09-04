@@ -204,13 +204,22 @@ export const getCertificate = asyncHandler(async (req, res) => {
   res.json({ certificate: cert.rows[0], attempt: attempt.rows[0] });
 });
 
+import { processAndUploadImage } from '../services/cloudinaryService.js';
+
 export const listForumTopics = asyncHandler(async (_req, res) => {
+  // Ensure image_url columns exist
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+  await query(`ALTER TABLE forum_replies ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+
   const result = await query(
-    `SELECT ft.*, u.name AS author_name,
-            COUNT(fr.id)::int AS reply_count
-     FROM forum_topics ft JOIN users u ON u.id = ft.user_id
+    `SELECT ft.*, u.name AS author_name, u.role AS author_role,
+            COUNT(fr.id)::int AS reply_count,
+            COUNT(CASE WHEN u_reply.role = 'admin' THEN 1 END)::int AS faculty_reply_count
+     FROM forum_topics ft 
+     JOIN users u ON u.id = ft.user_id
      LEFT JOIN forum_replies fr ON fr.topic_id = ft.id
-     GROUP BY ft.id, u.name ORDER BY ft.created_at DESC LIMIT 50`
+     LEFT JOIN users u_reply ON u_reply.id = fr.user_id
+     GROUP BY ft.id, u.name, u.role ORDER BY ft.created_at DESC LIMIT 50`
   );
   res.json({ topics: result.rows });
 });
@@ -218,12 +227,12 @@ export const listForumTopics = asyncHandler(async (_req, res) => {
 export const getForumTopic = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const topic = await query(
-    `SELECT ft.*, u.name AS author_name FROM forum_topics ft JOIN users u ON u.id = ft.user_id WHERE ft.id = $1`,
+    `SELECT ft.*, u.name AS author_name, u.role AS author_role FROM forum_topics ft JOIN users u ON u.id = ft.user_id WHERE ft.id = $1`,
     [id]
   );
   if (!topic.rowCount) throw ApiError.notFound('Topic not found');
   const replies = await query(
-    `SELECT fr.*, u.name AS author_name FROM forum_replies fr JOIN users u ON u.id = fr.user_id
+    `SELECT fr.*, u.name AS author_name, u.role AS author_role FROM forum_replies fr JOIN users u ON u.id = fr.user_id
      WHERE fr.topic_id = $1 ORDER BY fr.created_at ASC`,
     [id]
   );
@@ -231,23 +240,48 @@ export const getForumTopic = asyncHandler(async (req, res) => {
 });
 
 export const createForumTopic = asyncHandler(async (req, res) => {
-  const { title, body } = req.body;
+  const { title, body, imageUrl } = req.body;
+
+  let finalImageUrl = null;
+  if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim()) {
+    try {
+      finalImageUrl = await processAndUploadImage(imageUrl, 'edvedum/forum');
+    } catch (_) {
+      finalImageUrl = imageUrl;
+    }
+  }
+
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+
   const result = await query(
-    `INSERT INTO forum_topics (user_id, title, body) VALUES ($1,$2,$3) RETURNING *`,
-    [req.user.id, title, body]
+    `INSERT INTO forum_topics (user_id, title, body, image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
+    [req.user.id, title, body, finalImageUrl]
   );
   res.status(201).json({ topic: result.rows[0] });
 });
 
 export const replyForumTopic = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { body } = req.body;
+  const { body, imageUrl } = req.body;
+
+  let finalImageUrl = null;
+  if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim()) {
+    try {
+      finalImageUrl = await processAndUploadImage(imageUrl, 'edvedum/forum');
+    } catch (_) {
+      finalImageUrl = imageUrl;
+    }
+  }
+
+  await query(`ALTER TABLE forum_replies ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+
   const topic = await query('SELECT id, is_locked FROM forum_topics WHERE id = $1', [id]);
   if (!topic.rowCount) throw ApiError.notFound('Topic not found');
   if (topic.rows[0].is_locked) throw ApiError.badRequest('Topic is locked');
+
   const result = await query(
-    `INSERT INTO forum_replies (topic_id, user_id, body) VALUES ($1,$2,$3) RETURNING *`,
-    [id, req.user.id, body]
+    `INSERT INTO forum_replies (topic_id, user_id, body, image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
+    [id, req.user.id, body, finalImageUrl]
   );
   res.status(201).json({ reply: result.rows[0] });
 });
@@ -419,7 +453,7 @@ When the student asks about their score, percentage, rank, or performance in ANY
     res.setHeader('Cache-Control', 'no-cache');
     res.setHeader('Connection', 'keep-alive');
 
-    const systemPrompt = `You are an expert STEM tutor, examination mentor, and NEET / JEE CBT test analyst for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
+    const systemPrompt = `You are "Ask Edvedum", an expert STEM tutor, examination mentor, and NEET / JEE CBT test analyst for AIETS (All India Edvedum Test Series), specializing in Physics, Chemistry, Mathematics, and Biology at the JEE (Main & Advanced) and NEET level.
 
 Student Name: ${studentName}
 ${subject ? `Subject Context: ${subject}` : ''}
