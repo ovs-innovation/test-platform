@@ -341,8 +341,8 @@ export default function InstitutionLogin() {
               </div>
               <p className="text-[11px] leading-relaxed">
                 Need account assistance? Email{' '}
-                <a href="mailto:edvedum@gmail.com" className="text-cyan-400 font-medium hover:underline">
-                  edvedum@gmail.com
+                <a href="mailto:support@edvedum.com" className="text-cyan-400 font-medium hover:underline">
+                  support@edvedum.com
                 </a>
               </p>
             </div>

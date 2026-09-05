@@ -17,7 +17,7 @@ export default function AdminSettings() {
     setLoading(true);
     try {
       const [sRes, flagsRes] = await Promise.all([
-        adminService.settings().catch(() => ({ site_name: 'EDVEDUM Academy', support_email: 'support@edvedum.ac.in' })),
+        adminService.settings().catch(() => ({ site_name: 'EDVEDUM Academy', support_email: 'support@edvedum.com' })),
         adminService.getFeatureFlags().catch(() => ({ feature_flags: [] })),
       ]);
       setSettings(sRes || {});

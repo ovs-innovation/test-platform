@@ -764,7 +764,7 @@ export default function SchoolsB2B() {
 
                   {/* Support Email Footer */}
                   <div className="pt-3 border-t border-white/10 text-center text-[11px] text-slate-300">
-                    Need portal assistance? Email <a href="mailto:edvedum@gmail.com" className="text-cyan-400 font-semibold hover:underline">edvedum@gmail.com</a>
+                    Need portal assistance? Email <a href="mailto:support@edvedum.com" className="text-cyan-400 font-semibold hover:underline">support@edvedum.com</a>
                   </div>
 
                 </div>
@@ -1650,10 +1650,10 @@ export default function SchoolsB2B() {
               <div className="p-4 sm:p-5 rounded-2xl bg-white border border-[#DCE5F1] space-y-1.5 shadow-xs">
                 <p className="text-xs font-extrabold text-[#071833]">Need Direct Institutional Support?</p>
                 <p className="text-xs text-[#475467]">
-                  Email: <a href="mailto:edvedum@gmail.com" className="text-[#2563EB] font-bold hover:underline">edvedum@gmail.com</a>
+                  Email: <a href="mailto:support@edvedum.com" className="text-[#2563EB] font-bold hover:underline">support@edvedum.com</a>
                 </p>
                 <p className="text-xs text-[#475467]">
-                  Phone: <a href="tel:+919151424445" className="text-[#2563EB] font-bold hover:underline">+91 91514 24445</a>
+                  Phone: <a href="tel:+919560201524" className="text-[#2563EB] font-bold hover:underline">+91 95602 01524</a>
                 </p>
               </div>
             </div>

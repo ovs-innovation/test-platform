@@ -24,7 +24,7 @@ export default function WhatsAppSupportButton({
         href={targetHref}
         target="_blank"
         rel="noopener noreferrer"
-        title="Chat on WhatsApp (+91 91514 24445)"
+        title={`Chat on WhatsApp (${CONTACT.whatsappNumber || CONTACT.phone})`}
         aria-label="Chat on WhatsApp"
         className={`fixed bottom-6 right-6 z-[9999] group flex items-center justify-center ${className}`}
       >
