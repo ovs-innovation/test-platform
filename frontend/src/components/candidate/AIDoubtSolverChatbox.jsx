@@ -333,7 +333,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
     {
       id: 'msg-welcome',
       sender: 'ai',
-      text: '👋 Hello! I am Ask Edvedum. How can I assist your NEET / JEE preparation today?',
+      text: '👋 Hello! I am Ask Vedum. How can I assist your NEET / JEE preparation today?',
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     }
   ]);
@@ -446,7 +446,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
       {
         id: 'msg-welcome',
         sender: 'ai',
-        text: '👋 Hello! I am Ask Edvedum. How can I assist your NEET / JEE preparation today?',
+        text: '👋 Hello! I am Ask Vedum. How can I assist your NEET / JEE preparation today?',
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
       }
     ]);
@@ -617,13 +617,13 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
         <button
           onClick={() => setIsOpen(true)}
           className="fixed bottom-6 right-6 z-40 flex items-center gap-2.5 bg-slate-900 hover:bg-slate-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:shadow-2xl border border-slate-700/80 transition-all duration-300 hover:scale-105 group cursor-pointer"
-          aria-label="Ask Edvedum AI Chat"
+          aria-label="Ask Vedum AI Chat"
         >
           <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center shadow-xs group-hover:rotate-12 transition-transform">
             <Sparkles className="w-3.5 h-3.5 text-white" />
           </div>
           <div className="flex flex-col items-start text-left">
-            <span className="font-extrabold text-xs text-white tracking-wide">Ask Edvedum</span>
+            <span className="font-extrabold text-xs text-white tracking-wide">Ask Vedum</span>
             <span className="text-[9px] text-indigo-300 font-semibold">Instant AI Mentor</span>
           </div>
         </button>
@@ -648,7 +648,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-extrabold text-white text-sm tracking-tight">Ask Edvedum</h3>
+                  <h3 className="font-extrabold text-white text-sm tracking-tight">Ask Vedum</h3>
                   <span className="inline-flex items-center gap-1 bg-indigo-500/15 text-indigo-300 text-[10px] px-2 py-0.5 rounded-full font-bold border border-indigo-500/30">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> v2.5 AI
                   </span>
@@ -872,7 +872,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                       <div className="space-y-3">
                         <div className="flex items-center justify-between border-b border-slate-100 pb-2">
                           <span className="text-[10px] font-extrabold uppercase tracking-wider text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full border border-indigo-100">
-                            Ask Edvedum AI
+                            Ask Vedum AI
                           </span>
                           <span className="text-[10px] text-slate-400 font-mono">{msg.timestamp}</span>
                         </div>
@@ -1052,7 +1052,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                 type="text"
                 value={questionText}
                 onChange={(e) => setQuestionText(e.target.value)}
-                placeholder="Ask Edvedum any doubt, question, or formula..."
+                placeholder="Ask Vedum any doubt, question, or formula..."
                 className="flex-1 bg-transparent border-none text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none px-2 py-1.5"
                 disabled={isSending}
               />
