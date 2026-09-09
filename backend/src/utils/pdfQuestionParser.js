@@ -204,8 +204,9 @@ export function parseAnswerKeyOnly(text) {
 
   const keyMap = {};
 
-  const matches = text.matchAll(/(?:Q|Question\s*)?(\d+)[\.\)\:\-\s]+\s*(?:\(|\[)?([A-D1-4])(?:\)|\])?/gi);
-  for (const m of matches) {
+  // Pattern 1: Standard delimited format (e.g., "1. A", "1: B", "1 - C", "Q1. D", "1 (A)")
+  const delimitedMatches = text.matchAll(/(?:Q(?:uestion)?\.?\s*)?(\d+)\*?[\.\)\:\-\–\—\s]+\s*(?:\(|\[)?([A-Da-d1-4])(?:\)|\])?/gi);
+  for (const m of delimitedMatches) {
     const qNum = parseInt(m[1], 10);
     const ansChar = m[2].toUpperCase();
     let correctIndex = -1;
@@ -216,7 +217,25 @@ export function parseAnswerKeyOnly(text) {
       correctIndex = parseInt(ansChar, 10) - 1;
     }
 
-    if (qNum > 0 && correctIndex >= 0) {
+    if (qNum > 0 && correctIndex >= 0 && keyMap[qNum] === undefined) {
+      keyMap[qNum] = correctIndex;
+    }
+  }
+
+  // Pattern 2: Dense compact tables without delimiters (e.g., "1B2B3A", "4B5C6B", "9*B10B11B")
+  const denseMatches = text.matchAll(/(?:Q(?:uestion)?\.?\s*)?(\d+)\*?[\.\)\:\-\–\—\s]*\s*(?:\(|\[)?([A-Da-d1-4])(?:\)|\])?/gi);
+  for (const m of denseMatches) {
+    const qNum = parseInt(m[1], 10);
+    const ansChar = m[2].toUpperCase();
+    let correctIndex = -1;
+
+    if (['A', 'B', 'C', 'D'].includes(ansChar)) {
+      correctIndex = ansChar.charCodeAt(0) - 65;
+    } else if (['1', '2', '3', '4'].includes(ansChar)) {
+      correctIndex = parseInt(ansChar, 10) - 1;
+    }
+
+    if (qNum > 0 && correctIndex >= 0 && keyMap[qNum] === undefined) {
       keyMap[qNum] = correctIndex;
     }
   }

@@ -476,11 +476,6 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       const pdfBuffer = Buffer.from(base64Data, 'base64');
       const includeAnswers = include_answers !== false && include_answers !== 'false';
 
-      const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
-      extractedBy = pdfExtraction.extractedBy || 'pdf-parse-regex';
-      extractionStats = pdfExtraction.stats || null;
-      const parsedQs = pdfExtraction.rows || [];
-
       if (file_type === 'solution_pdf') {
         await query('UPDATE assessments SET solution_pdf_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
         return res.json({
@@ -492,13 +487,35 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
       if (file_type === 'answer_key') {
         let answerKeyMap = {};
-        if (pdfExtraction.text_preview) {
-          answerKeyMap = parseAnswerKeyOnly(pdfExtraction.text_preview);
+
+        // 1. Extract raw text directly using robust PDF parser with fallback
+        try {
+          const { extractPdfText } = await import('../utils/pdfQuestions.js');
+          const rawText = await extractPdfText(pdfBuffer);
+          if (rawText) {
+            answerKeyMap = parseAnswerKeyOnly(rawText);
+          }
+        } catch (textErr) {
+          console.warn('[uploadTestFile] Direct text extraction for answer key failed:', textErr.message);
         }
-        for (const q of parsedQs) {
-          const qNum = q.questionNumber || q.line;
-          if (qNum && q.correct_index !== null && q.correct_index !== undefined && answerKeyMap[qNum] === undefined) {
-            answerKeyMap[qNum] = q.correct_index;
+
+        // 2. Fallback to Gemini if text extraction yielded no entries
+        if (!answerKeyMap || Object.keys(answerKeyMap).length === 0) {
+          try {
+            const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: true });
+            if (pdfExtraction.text_preview) {
+              answerKeyMap = parseAnswerKeyOnly(pdfExtraction.text_preview);
+            }
+            if (Object.keys(answerKeyMap).length === 0 && Array.isArray(pdfExtraction.rows)) {
+              for (const q of pdfExtraction.rows) {
+                const qNum = q.questionNumber || q.line;
+                if (qNum && q.correct_index !== null && q.correct_index !== undefined) {
+                  answerKeyMap[qNum] = q.correct_index;
+                }
+              }
+            }
+          } catch (geminiErr) {
+            console.warn('[uploadTestFile] Gemini fallback for answer key failed:', geminiErr.message);
           }
         }
 
@@ -521,13 +538,21 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         await query('UPDATE assessments SET answer_key_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
 
         return res.json({
-          message: `Answer key PDF uploaded successfully. Updated ${updatedCount} question answer key(s).`,
+          message: updatedCount > 0
+            ? `Answer key PDF uploaded successfully. Updated ${updatedCount} question answer key(s).`
+            : 'Answer key PDF uploaded, but no valid answer key mappings could be detected.',
           url: relativeUrl,
           file_type,
           updatedCount,
           answerKeyMap
         });
       }
+
+      const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
+      extractedBy = pdfExtraction.extractedBy || 'pdf-parse-regex';
+      extractionStats = pdfExtraction.stats || null;
+      const parsedQs = pdfExtraction.rows || [];
+
 
       if (file_type === 'question_paper' && parsedQs.length > 0) {
         extractedCount = parsedQs.length;

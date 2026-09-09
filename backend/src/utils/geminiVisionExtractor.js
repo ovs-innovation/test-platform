@@ -89,6 +89,18 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
 
   if (width < 15 || height < 15) return null; // Ignore invalid tiny crops
 
+  // Guard against horizontal single-line text strips / question title pills mistakenly classified as diagrams:
+  const normHeight = ymax - ymin;
+  const aspectRatio = width / Math.max(height, 1);
+  if (normHeight < 32 && aspectRatio > 3.5) {
+    console.log(`[geminiVisionExtractor] Skipping text-strip crop for Q${qNum} (normHeight: ${normHeight}, aspect: ${aspectRatio.toFixed(1)}). Not a diagram.`);
+    return null;
+  }
+  if (height < 40 && aspectRatio > 3.5) {
+    console.log(`[geminiVisionExtractor] Skipping thin text banner for Q${qNum} (${width}x${height}px). Not a diagram.`);
+    return null;
+  }
+
   try {
     const croppedBuffer = await sharp(pageImage.buffer)
       .extract({ left, top, width, height })
@@ -295,8 +307,12 @@ STAGE 1: QUESTION PAPER EXTRACTION:
 - Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
 - Record the 1-based page numbers where each question appears in 'sourcePages' (e.g. [${batchStartPage}] or [${batchStartPage}, ${batchEndPage}]).
 - Handle question continuations across page boundaries seamlessly into a single question.
-- Convert math notation and equations to standard LaTeX ($...$).
-- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
+- Preserve ONLY actual graphical illustrations (such as biological diagrams, circuit schematics, physics graphs, apparatus setups, geometry figures, charts, and chemical molecular structures) under 'visualElements'. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000.
+- CRITICAL NEGATIVE CONSTRAINT FOR visualElements:
+  * NEVER, UNDER ANY CIRCUMSTANCES, treat question text, sentences, question titles/numbers (like "Q1.", "Q2."), or options as visualElements!
+  * If a question or its heading is inside a box, border, rounded pill, or outline, it is STILL REGULAR TEXT. DO NOT extract a bounding box for it! Extract it strictly as 'questionText'.
+  * If a question is purely text-based without any actual drawing/figure/circuit/graph, 'visualElements' MUST BE an empty array ([]).
+  * Do NOT extract math equations as visualElements; write them in LaTeX ($...$) inside questionText.
 - For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
 
 STAGE 2: ANSWER KEY EXTRACTION:
@@ -326,7 +342,12 @@ QUESTION PAPER EXTRACTION:
 - Record the 1-based page numbers in 'sourcePages'.
 - Handle question continuations across page boundaries seamlessly into a single question.
 - Convert math notation and equations to standard LaTeX ($...$).
-- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
+- Preserve ONLY actual graphical illustrations (such as biological diagrams, circuit schematics, physics graphs, apparatus setups, geometry figures, charts, and chemical molecular structures) under 'visualElements'. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000.
+- CRITICAL NEGATIVE CONSTRAINT FOR visualElements:
+  * NEVER, UNDER ANY CIRCUMSTANCES, treat question text, sentences, question titles/numbers (like "Q1.", "Q2."), or options as visualElements!
+  * If a question or its heading is inside a box, border, rounded pill, or outline, it is STILL REGULAR TEXT. DO NOT extract a bounding box for it! Extract it strictly as 'questionText'.
+  * If a question is purely text-based without any actual drawing/figure/circuit/graph, 'visualElements' MUST BE an empty array ([]).
+  * Do NOT extract math equations as visualElements; write them in LaTeX ($...$) inside questionText.
 - For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
 - IMPORTANT: DO NOT extract, guess, or assign any answer keys, solutions, or explanations. The user explicitly wants ONLY the question paper without answers. Leave correct answers and explanations null/empty.
 
@@ -508,7 +529,28 @@ Return structured JSON output strictly following the JSON schema.
         const pageImg = pageImages.find((p) => p.pageIndex === pageIdx) || pageImages[0];
 
         if (pageImg && vis.box_2d) {
-          const elemType = vis.type || 'diagram';
+          const rawType = String(vis.type || 'diagram').toLowerCase().trim();
+          const IGNORED_TYPES = ['question', 'text', 'title', 'heading', 'question_box', 'header', 'statement', 'paragraph', 'equation'];
+          if (IGNORED_TYPES.includes(rawType)) {
+            console.log(`[geminiVisionExtractor] Skipping non-diagram visualElement type "${rawType}" for Q${qNum}`);
+            continue;
+          }
+
+          const desc = String(vis.description || '').toLowerCase();
+          if (
+            desc.includes('question text') ||
+            desc.includes('question title') ||
+            desc.includes('question box') ||
+            desc.includes('question heading') ||
+            desc.includes('heading') ||
+            desc.startsWith('question ') ||
+            desc === `question for question ${qNum}`
+          ) {
+            console.log(`[geminiVisionExtractor] Skipping question-text description "${vis.description}" for Q${qNum}`);
+            continue;
+          }
+
+          const elemType = rawType;
           const fileTarget = `question-diagram-${vIdx + 1}.png`;
           const croppedUrl = await cropAndSaveVisualElement(pageImg, vis.box_2d, qNum, elemType, vIdx + 1, fileTarget);
 
