@@ -13,6 +13,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
+import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
 import { ChevronDown, Check, Copy, Download, Code, Zap } from 'lucide-react';
 
 const toDatetimeLocal = (isoString) => {
@@ -282,14 +283,22 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
           <input name="max_violations" type="number" min={0} className="input" value={settings.max_violations} onChange={onChange} />
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         <div>
           <label className="label">Available from (optional start time)</label>
-          <input name="available_from" type="datetime-local" className="input" value={settings.available_from || ''} onChange={onChange} />
+          <DateTimePickerWithAmPm
+            name="available_from"
+            value={settings.available_from || ''}
+            onChange={onChange}
+          />
         </div>
         <div>
           <label className="label">Available until (optional end time)</label>
-          <input name="available_until" type="datetime-local" className="input" value={settings.available_until || ''} onChange={onChange} />
+          <DateTimePickerWithAmPm
+            name="available_until"
+            value={settings.available_until || ''}
+            onChange={onChange}
+          />
         </div>
       </div>
       <label className="flex items-center gap-2 text-sm">

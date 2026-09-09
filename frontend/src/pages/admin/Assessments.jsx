@@ -5,6 +5,7 @@ import { adminService } from '../../lib/services.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
+import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
 import {
   CalendarDays,
   Plus,
@@ -1281,23 +1282,19 @@ export default function AdminAssessments() {
 
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Access Valid From *</label>
-                <input
-                  type="datetime-local"
-                  required
+                <DateTimePickerWithAmPm
+                  name="overrideValidFrom"
                   value={overrideValidFrom}
                   onChange={(e) => setOverrideValidFrom(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                 />
               </div>
 
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Access Valid Until *</label>
-                <input
-                  type="datetime-local"
-                  required
+                <DateTimePickerWithAmPm
+                  name="overrideValidUntil"
                   value={overrideValidUntil}
                   onChange={(e) => setOverrideValidUntil(e.target.value)}
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                 />
               </div>
 
