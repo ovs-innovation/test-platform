@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Upload, X, Image as ImageIcon, Loader2, ZoomIn } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
+import { getMediaUrl } from '../../lib/media.js';
 
 export default function QuestionImageUploader({
   value = '',
@@ -92,7 +93,7 @@ export default function QuestionImageUploader({
         <div className="relative group rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3 flex flex-col sm:flex-row items-center gap-4">
           <div className="relative overflow-hidden rounded-lg border border-slate-300 dark:border-slate-700 max-h-36 max-w-full sm:max-w-xs bg-white dark:bg-slate-950 flex items-center justify-center p-1">
             <img
-              src={value}
+              src={getMediaUrl(value)}
               alt="Question Diagram Preview"
               className="max-h-32 object-contain rounded cursor-pointer"
               onClick={() => setShowZoom(true)}
@@ -200,7 +201,7 @@ export default function QuestionImageUploader({
               Question Diagram Preview
             </h4>
             <img
-              src={value}
+              src={getMediaUrl(value)}
               alt="Enlarged Diagram"
               className="max-h-[75vh] max-w-full object-contain rounded-lg border border-slate-200 dark:border-slate-800"
             />

@@ -550,12 +550,15 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           console.warn(`[PDF Import Warning] ${reviewWarnings.length} warning(s)/flag(s):`, reviewWarnings);
         }
 
+        console.log(`[PDF Extraction Pipeline] STAGE 5: Questions Before DB Save = ${parsedQs.length} question(s)`);
+
         // Retrieve test details for context
         const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
         const currentTest = currentTestRes.rows[0] || {};
 
         await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
         let calcTotalMarks = 0;
+        let savedCount = 0;
         const detectedSubjects = new Set();
 
         for (let i = 0; i < parsedQs.length; i++) {
@@ -607,29 +610,6 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           };
           const extractionMetaJson = JSON.stringify(extractionMetaObj);
 
-          await query(
-            `INSERT INTO questions (
-              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, media, tables, extraction_meta
-            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
-            [
-              id,
-              q.question?.text || q.question_text || q.questionText,
-              JSON.stringify(q.options),
-              dbCorrectIndex,
-              q.marks || 4,
-              i + 1,
-              finalSubject || 'General',
-              q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''),
-              finalSubject,
-              finalChapter,
-              finalChapter,
-              primaryMediaUrl,
-              mediaArrayJson,
-              tablesArrayJson,
-              extractionMetaJson
-            ]
-          );
-
           // Build question media
           const questionMedia = Array.isArray(q.question?.media)
             ? q.question.media
@@ -662,6 +642,33 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
               media: [],
             }));
           }
+
+          // Preserve options format with media in DB
+          const optionsToStore = formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : q.options;
+
+          await query(
+            `INSERT INTO questions (
+              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, media, tables, extraction_meta
+            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+            [
+              id,
+              q.question?.text || q.question_text || q.questionText,
+              JSON.stringify(optionsToStore),
+              dbCorrectIndex,
+              q.marks || 4,
+              i + 1,
+              finalSubject || 'General',
+              q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''),
+              finalSubject,
+              finalChapter,
+              finalChapter,
+              primaryMediaUrl,
+              mediaArrayJson,
+              tablesArrayJson,
+              extractionMetaJson
+            ]
+          );
+          savedCount++;
 
           // Build explanation
           const explanationText = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
@@ -708,6 +715,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           );
           await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
         }
+
+        console.log(`[PDF Extraction Pipeline] STAGE 6: Questions Actually Saved = ${savedCount} question(s)`);
       }
 
       // Check standalone Answer Key fallback if regex parsed text (only if answers are requested)
@@ -753,6 +762,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       }
     }
   }
+
+  console.log(`[PDF Extraction Pipeline] STAGE 7: Questions Returned by API = ${extractedQuestionsJson.length} question(s)`);
 
   res.json({
     message: `${file_type} uploaded successfully`,

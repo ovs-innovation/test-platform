@@ -11,6 +11,7 @@ const slugify = (t) =>
 export const listTestSeries = asyncHandler(async (_req, res) => {
   const result = await query(
     `SELECT ts.*,
+            ts.is_active::boolean AS is_active,
             COUNT(DISTINCT se.id)::int AS enrollment_count,
             COUNT(DISTINCT tst.test_id)::int AS linked_tests,
             COUNT(DISTINCT tst.test_id)::int AS planned_tests,
@@ -126,18 +127,23 @@ export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { is_active } = req.body;
 
+  const seriesId = Number(id);
+  if (!seriesId || isNaN(seriesId)) throw ApiError.badRequest('Invalid series id');
+
   let targetState;
   if (typeof is_active === 'boolean') {
     targetState = is_active;
+  } else if (is_active === 'true' || is_active === 'false') {
+    targetState = is_active === 'true';
   } else {
-    const check = await query('SELECT is_active FROM test_series WHERE id = $1', [id]);
+    const check = await query('SELECT is_active FROM test_series WHERE id = $1', [seriesId]);
     if (!check.rowCount) throw ApiError.notFound('Test series not found');
     targetState = !check.rows[0].is_active;
   }
 
   const result = await query(
     'UPDATE test_series SET is_active = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
-    [targetState, id]
+    [targetState, seriesId]
   );
   if (!result.rowCount) throw ApiError.notFound('Test series not found');
 

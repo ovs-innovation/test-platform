@@ -150,12 +150,28 @@ export const createQuestion = asyncHandler(async (req, res) => {
   const finalChapterId = resolved.chapter_id;
   const finalTopicName = resolved.topic;
 
+  const allMedia = [];
+  if (image_url) allMedia.push({ type: 'question', url: image_url, id: 'q-diagram' });
+  if (solution_image_url) allMedia.push({ type: 'solution', url: solution_image_url, id: 'sol-diagram' });
+  if (Array.isArray(options)) {
+    options.forEach((opt, idx) => {
+      if (typeof opt === 'object' && opt !== null) {
+        if (Array.isArray(opt.media) && opt.media.length > 0) {
+          allMedia.push(...opt.media);
+        } else if (opt.image_url) {
+          allMedia.push({ type: 'diagram', url: opt.image_url, id: `opt-${idx}-img` });
+        }
+      }
+    });
+  }
+  const mediaToStore = JSON.stringify(allMedia);
+
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
      RETURNING *`,
     [
       assessmentId,
@@ -183,6 +199,7 @@ export const createQuestion = asyncHandler(async (req, res) => {
       difficulty || 'medium',
       finalSubjectName,
       finalTopicName,
+      mediaToStore,
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -237,17 +254,43 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const chapter_id = resolved.chapter_id;
   const topic = resolved.topic;
 
+  let media = q.media;
+  if (body.options !== undefined || body.image_url !== undefined || body.solution_image_url !== undefined || body.media !== undefined) {
+    if (body.media !== undefined) {
+      media = typeof body.media === 'string' ? body.media : JSON.stringify(body.media);
+    } else {
+      const qImg = body.image_url !== undefined ? body.image_url : q.image_url;
+      const solImg = body.solution_image_url !== undefined ? body.solution_image_url : q.solution_image_url;
+      const allMedia = [];
+      if (qImg) allMedia.push({ type: 'question', url: qImg, id: 'q-diagram' });
+      if (solImg) allMedia.push({ type: 'solution', url: solImg, id: 'sol-diagram' });
+      const optsToCheck = body.options !== undefined ? body.options : (typeof q.options === 'string' ? JSON.parse(q.options) : (q.options || []));
+      if (Array.isArray(optsToCheck)) {
+        optsToCheck.forEach((opt, idx) => {
+          if (typeof opt === 'object' && opt !== null) {
+            if (Array.isArray(opt.media) && opt.media.length > 0) {
+              allMedia.push(...opt.media);
+            } else if (opt.image_url) {
+              allMedia.push({ type: 'diagram', url: opt.image_url, id: `opt-${idx}-img` });
+            }
+          }
+        });
+      }
+      media = JSON.stringify(allMedia);
+    }
+  }
+
   const result = await query(
     `UPDATE questions SET
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
        numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
        marks = $10, position = $11, section_id = $12, starter_code = $13, test_cases = $14, language = $15,
        bank_category = $16, solution = $17, image_url = $18, solution_image_url = $19, subject_id = $20, chapter_id = $21, difficulty = $22,
-       subject = $23, topic = $24
-     WHERE id = $25 RETURNING *`,
+       subject = $23, topic = $24, media = $25
+     WHERE id = $26 RETURNING *`,
     [question_text, question_type, options, correct_index, correct_indices,
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
-      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, id]
+      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, id]
   );
   res.json({ question: result.rows[0] });
 });

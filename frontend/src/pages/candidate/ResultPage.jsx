@@ -9,6 +9,8 @@ import { FileText, Sparkles, Clock, CheckCircle2, AlertCircle, Loader2 } from 'l
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
+import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 
 export default function ResultPage() {
   const { attemptId } = useParams();
@@ -677,7 +679,9 @@ export default function ResultPage() {
                       return (
                         <div key={q.id} className={`card p-5 border-l-4 ${q.is_correct ? 'border-l-emerald-500 dark:border-l-emerald-400' : 'border-l-rose-500 dark:border-l-rose-400'}`}>
                           <div className="flex items-start justify-between gap-3">
-                            <p className="font-bold text-slate-900 dark:text-slate-100 leading-relaxed text-sm sm:text-base">Q{i + 1}. {q.question_text}</p>
+                            <p className="font-bold text-slate-900 dark:text-slate-100 leading-relaxed text-sm sm:text-base">
+                              Q{i + 1}. <MathRenderer text={q.question_text} />
+                            </p>
                             <span className={`shrink-0 inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
                               q.is_correct 
                                 ? 'bg-emerald-500/15 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-500/30' 
@@ -689,10 +693,10 @@ export default function ResultPage() {
                           {q.image_url && (
                             <div className="mt-3">
                               <img
-                                src={q.image_url}
+                                src={getMediaUrl(q.image_url)}
                                 alt="Question diagram"
                                 className="max-h-64 rounded-lg border border-slate-300 dark:border-slate-700 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
-                                onClick={() => window.open(q.image_url, '_blank')}
+                                onClick={() => window.open(getMediaUrl(q.image_url), '_blank')}
                               />
                             </div>
                           )}
@@ -710,6 +714,9 @@ export default function ResultPage() {
                                   isYours = q.your_answer !== null && q.your_answer !== undefined && Number(q.your_answer) === oi;
                                 }
 
+                                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+
                                 return (
                                   <li
                                     key={oi}
@@ -721,11 +728,22 @@ export default function ResultPage() {
                                         : 'text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800/60'
                                     }`}
                                   >
-                                    <span className="flex items-center gap-2">
-                                      <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-slate-200 dark:bg-slate-800 text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                                    <span className="flex items-center gap-2 flex-1">
+                                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md bg-slate-200 dark:bg-slate-800 text-[11px] font-bold text-slate-700 dark:text-slate-300">
                                         {String.fromCharCode(65 + oi)}
                                       </span>
-                                      <span>{opt}</span>
+                                      <div className="flex-1">
+                                        <MathRenderer text={optText} />
+                                        {optMedia.length > 0 && optMedia[0]?.url && (
+                                          <div className="mt-1">
+                                            <img
+                                              src={getMediaUrl(optMedia[0].url)}
+                                              alt={`Option ${String.fromCharCode(65 + oi)} diagram`}
+                                              className="max-h-24 rounded border border-slate-300 object-contain bg-white p-0.5"
+                                            />
+                                          </div>
+                                        )}
+                                      </div>
                                     </span>
                                     <span className="shrink-0 font-extrabold text-xs flex items-center gap-2">
                                       {isCorrect && <span className="text-emerald-600 dark:text-emerald-400">✓ Correct</span>}
@@ -758,17 +776,17 @@ export default function ResultPage() {
                               {q.solution && (
                                 <div>
                                   <strong className="text-blue-700 dark:text-blue-400 block mb-1">Step-by-Step Explanation:</strong>
-                                  <p className="leading-relaxed whitespace-pre-line">{q.solution}</p>
+                                  <div className="leading-relaxed whitespace-pre-line"><MathRenderer text={q.solution} /></div>
                                 </div>
                               )}
                               {q.solution_image_url && (
                                 <div className="pt-2 border-t border-blue-200/60 dark:border-blue-800/40">
                                   <strong className="text-blue-700 dark:text-blue-400 block mb-1">Solution Diagram & Formula Sheet:</strong>
                                   <img
-                                    src={q.solution_image_url}
+                                    src={getMediaUrl(q.solution_image_url)}
                                     alt="Solution Diagram"
                                     className="max-h-80 rounded-lg border border-blue-200 dark:border-blue-800 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
-                                    onClick={() => window.open(q.solution_image_url, '_blank')}
+                                    onClick={() => window.open(getMediaUrl(q.solution_image_url), '_blank')}
                                   />
                                   <span className="text-[11px] text-blue-600 dark:text-blue-400 block mt-1">Click diagram to open full high-resolution image</span>
                                 </div>

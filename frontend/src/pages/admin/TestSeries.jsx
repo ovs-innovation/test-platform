@@ -154,7 +154,9 @@ export default function AdminTestSeries() {
 
     try {
       const res = await testSeriesService.toggleActive(s.id, nextState);
-      const actualState = res?.test_series?.is_active ?? nextState;
+      const actualState = typeof res?.test_series?.is_active === 'boolean'
+        ? res.test_series.is_active
+        : nextState;
       setList((prev) =>
         prev.map((item) => (item.id === s.id ? { ...item, is_active: actualState } : item))
       );

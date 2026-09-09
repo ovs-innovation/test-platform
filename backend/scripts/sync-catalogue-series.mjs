@@ -226,15 +226,8 @@ export const runCatalogueSync = async () => {
       WHERE title ILIKE 'NEET PG Mock Test Pack%' OR slug ILIKE 'neet-pg-mock-test-pack%' OR slug = 'neet-pg-mock';
     `);
 
-    const activeSlugs = [...PAID_SERIES, ...FREE_SERIES].map((s) => s.slug);
+    // 2. Upsert Paid Series
 
-    // 2. Safe Deactivation of outdated/duplicate series (does NOT delete data or break enrollments)
-    await client.query(
-      `UPDATE test_series SET is_active = false WHERE slug NOT IN (${activeSlugs.map((_, i) => `$${i + 1}`).join(',')})`,
-      activeSlugs
-    );
-
-    // 3. Upsert Paid Series
     for (const s of PAID_SERIES) {
       const existing = await client.query('SELECT id FROM test_series WHERE slug = $1', [s.slug]);
       if (existing.rowCount > 0) {

@@ -4,12 +4,15 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 import { env } from './config/env.js';
 import { razorpayWebhook } from './controllers/paymentController.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
-import { publicCache, privateCache } from './middleware/httpCache.js';
+import { publicCache, privateCache, noCache } from './middleware/httpCache.js';
 import { requestLogger } from './middleware/requestLogger.js';
 
 import authRoutes from './routes/authRoutes.js';
@@ -56,8 +59,19 @@ app.use(compression({
   },
 }));
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const uploadsDir = path.resolve(__dirname, '../uploads');
+const ebooksDir = path.resolve(__dirname, '../public/ebooks');
+
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 // Security & infrastructure middleware
-app.use(helmet());
+app.use(helmet({
+  crossOriginResourcePolicy: { policy: 'cross-origin' },
+}));
 app.use(
   cors({
     origin(origin, callback) {
@@ -74,8 +88,8 @@ app.use(
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());
-app.use('/uploads', express.static('uploads'));
-app.use('/ebooks', express.static('public/ebooks'));
+app.use('/uploads', express.static(uploadsDir));
+app.use('/ebooks', express.static(ebooksDir));
 app.use(requestLogger);
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 
@@ -91,7 +105,7 @@ app.use('/api', apiLimiter);
 // Routes with optimized HTTP Cache-Control headers
 app.use('/api/public', publicCache(60, 300), publicRoutes);
 app.use('/api/ebooks', publicCache(120, 600), ebookRoutes);
-app.use('/api/test-series', publicCache(30, 120), testSeriesRoutes);
+app.use('/api/test-series', noCache, testSeriesRoutes);
 app.use('/api/student', privateCache(15), studentRoutes);
 
 // Other API Routes

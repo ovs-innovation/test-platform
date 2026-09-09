@@ -63,6 +63,7 @@ const run = async () => {
       // eslint-disable-next-line no-console
       console.log('[migrate] Dropping existing tables (--reset)...');
       await pool.query(`
+        DROP TABLE IF EXISTS schema_migrations CASCADE;
         DROP VIEW IF EXISTS violation_logs;
         DROP TABLE IF EXISTS otp_verifications, coding_answers, subjective_answers,
           candidate_invites, assessment_sections, violations, scores, answers,
@@ -70,6 +71,16 @@ const run = async () => {
         DROP TYPE IF EXISTS invite_status, question_type, section_type, attempt_status, user_role CASCADE;
       `);
     }
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS schema_migrations (
+        filename VARCHAR(255) PRIMARY KEY,
+        applied_at TIMESTAMPTZ DEFAULT NOW()
+      );
+    `);
+
+    const appliedRes = await pool.query('SELECT filename FROM schema_migrations');
+    const appliedFiles = new Set(appliedRes.rows.map((r) => r.filename));
 
     const allFiles = fs.readdirSync(__dirname);
     const migrationFiles = allFiles
@@ -83,8 +94,16 @@ const run = async () => {
       });
 
     for (const file of migrationFiles) {
+      if (appliedFiles.has(file)) {
+        continue;
+      }
       await executeMigrationFile(file);
+      await pool.query(
+        'INSERT INTO schema_migrations (filename) VALUES ($1) ON CONFLICT (filename) DO NOTHING',
+        [file]
+      );
     }
+
 
     try {
       await syncSequences(pool);

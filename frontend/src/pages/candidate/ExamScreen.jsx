@@ -18,6 +18,8 @@ import CodeEditor from '../../components/CodeEditor.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
+import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 
 const SECTION_LABELS = {
   aptitude: 'Aptitude',
@@ -636,15 +638,15 @@ export default function ExamScreen() {
 
           <div className="text-base leading-relaxed text-slate-900">
             <span className="mr-2 font-bold">Q{current + 1}.</span>
-            {q.question_text}
+            <MathRenderer text={q.question_text} />
           </div>
 
           {q.image_url && (
-            <button type="button" onClick={() => setImgZoom(q.image_url)} className="mt-4 block text-left">
+            <button type="button" onClick={() => setImgZoom(getMediaUrl(q.image_url))} className="mt-4 block text-left">
               <img
-                src={q.image_url}
+                src={getMediaUrl(q.image_url)}
                 alt="Question diagram"
-                className="max-h-64 cursor-zoom-in border border-slate-400"
+                className="max-h-64 cursor-zoom-in border border-slate-400 bg-white p-1 rounded"
               />
               <span className="mt-1 block text-[11px] text-slate-500">Click image to enlarge</span>
             </button>
@@ -652,23 +654,38 @@ export default function ExamScreen() {
 
           {(!isMultiSelectQuestion(q) && (q.question_type === 'mcq' || q.question_type === 'single_choice')) && (
             <div className="mt-5 space-y-2">
-              {(q.options || []).map((opt, idx) => (
-                <button
-                  key={idx}
-                  type="button"
-                  onClick={() => selectAnswer(q.id, idx)}
-                  className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
-                >
-                  <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
-                    answers[q.id] === idx
-                      ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
-                      : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
-                  }`}>
-                    {String.fromCharCode(65 + idx)}
-                  </span>
-                  <span>{opt}</span>
-                </button>
-              ))}
+              {(q.options || []).map((opt, idx) => {
+                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => selectAnswer(q.id, idx)}
+                    className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
+                  >
+                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                      answers[q.id] === idx
+                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
+                    }`}>
+                      {String.fromCharCode(65 + idx)}
+                    </span>
+                    <div className="flex-1 text-left">
+                      <MathRenderer text={optText} />
+                      {optMedia.length > 0 && optMedia[0]?.url && (
+                        <div className="mt-2">
+                          <img
+                            src={getMediaUrl(optMedia[0].url)}
+                            alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
+                            className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           )}
 
@@ -763,6 +780,8 @@ export default function ExamScreen() {
               <p className="text-xs font-semibold text-slate-600">Select all that apply</p>
               {(q.options || []).map((opt, idx) => {
                 const selected = (multiAnswers[q.id] || []).includes(idx);
+                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
                 return (
                   <button
                     key={idx}
@@ -777,7 +796,18 @@ export default function ExamScreen() {
                     }`}>
                       {selected ? '✓' : String.fromCharCode(65 + idx)}
                     </span>
-                    <span>{opt}</span>
+                    <div className="flex-1 text-left">
+                      <MathRenderer text={optText} />
+                      {optMedia.length > 0 && optMedia[0]?.url && (
+                        <div className="mt-2">
+                          <img
+                            src={getMediaUrl(optMedia[0].url)}
+                            alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
+                            className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
+                          />
+                        </div>
+                      )}
+                    </div>
                   </button>
                 );
               })}

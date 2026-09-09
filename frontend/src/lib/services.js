@@ -219,7 +219,7 @@ export const publicService = {
 };
 
 export const testSeriesService = {
-  list: () => withCache('test_series_list', () => api.get('/test-series').then((r) => r.data.test_series)),
+  list: () => api.get('/test-series').then((r) => r.data.test_series),
   create: (data) => {
     clearCache();
     return api.post('/test-series', data).then((r) => r.data.test_series);
@@ -230,7 +230,6 @@ export const testSeriesService = {
   },
   toggleActive: (id, is_active) =>
     api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => {
-      clearCache('test_series_list');
       clearCache();
       return r.data;
     }),

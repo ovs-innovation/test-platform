@@ -105,21 +105,3 @@ ON CONFLICT (slug) DO UPDATE SET
   image_url = EXCLUDED.image_url,
   display_order = EXCLUDED.display_order,
   is_active = true;
-
--- 3. Deactivate old/duplicate series (e.g. slug = 'free-diagnostic')
-UPDATE test_series
-SET is_active = false
-WHERE slug NOT IN (
-  'aiets-neet-pg-2027-comprehensive',
-  'aiets-jee-main-2027-comprehensive',
-  'neet-ug-2027-aiets-comprehensive-test-series',
-  'aiets-neet-pg-complete-program',
-  'aiets-jee-main-2028-two-year',
-  'aiets-jee-main-mock-pack',
-  'aiets-neet-ug-2028-two-year-online-cbt-program',
-  'neet-ug-mock',
-  'neet-pg-mock',
-  'jee-main-diagnostic-free',
-  'neet-ug-diagnostic-free',
-  'neet-pg-clinical-free'
-);

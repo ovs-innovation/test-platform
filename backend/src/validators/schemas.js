@@ -108,7 +108,10 @@ export const testSeriesSchema = z.object({
   test_count: z.number().int().min(0).default(0),
   is_featured: z.boolean().optional().default(false),
   is_active: z.boolean().optional().default(true),
+  is_free: z.boolean().optional().default(false),
+  display_order: z.number().int().min(0).optional().default(0),
   image_url: z.string().max(2000).optional().default(''),
+  tags: z.any().optional(),
 });
 
 export const testSeriesUpdateSchema = testSeriesSchema.partial();
@@ -245,8 +248,18 @@ export const sectionSchema = z.object({
   position: z.number().int().min(0).optional(),
 });
 
+const optionItemSchema = z.union([
+  z.string().trim(),
+  z.object({
+    key: z.string().optional(),
+    text: z.string().optional().default(''),
+    image_url: z.string().nullable().optional(),
+    media: z.array(z.any()).optional(),
+  }).passthrough(),
+]);
+
 const optionsSchema = z
-  .array(z.string().trim().min(1))
+  .array(optionItemSchema)
   .min(2)
   .max(6);
 
@@ -277,6 +290,7 @@ const questionBaseSchema = z.object({
   chapter_id: z.number().int().positive().nullable().optional(),
   topic: z.string().max(200).optional().nullable(),
   difficulty: z.string().max(20).optional().default('medium'),
+  media: z.any().optional(),
 });
 
 export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {

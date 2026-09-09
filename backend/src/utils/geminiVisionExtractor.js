@@ -108,6 +108,12 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
     const filePath = path.join(targetDir, fileName);
     await fs.promises.writeFile(filePath, croppedBuffer);
 
+    // Verify that the file was actually written and is non-empty
+    if (!fs.existsSync(filePath) || fs.statSync(filePath).size === 0) {
+      console.warn(`[geminiVisionExtractor] Image file missing or empty after write: ${filePath}`);
+      return null;
+    }
+
     // Also persist legacy copy in diagramsDir for older readers
     try {
       const legacyPath = path.join(diagramsDir, `q${qNum}_${fileName}`);
@@ -138,67 +144,10 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
   if (!pageImages.length) {
     throw new Error('Failed to render PDF pages into images.');
   }
+  console.log(`[PDF Extraction Pipeline] STAGE 1: Pages Processed = ${pageImages.length} page(s)`);
 
   // Step 2: Initialize Google GenAI client
   const ai = new GoogleGenAI({ apiKey });
-
-  const promptText = includeAnswers ? `
-You are an expert exam layout analyzer and question extractor for competitive examinations (Physics, Chemistry, Mathematics, Biology, General Aptitude).
-
-Analyze the attached document page images thoroughly and extract content in THREE SEPARATE STAGES:
-
-STAGE 1: QUESTION PAPER EXTRACTION:
-- Extract all questions, question numbers (1, 2, 3, Q1, Q14, etc.), question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
-- Record the 1-based page numbers where this question appears in 'sourcePages' (e.g. [12] or [12, 13] if it spans multiple pages).
-- Handle question continuations across page boundaries seamlessly into a single question.
-- Convert math notation and equations to standard LaTeX ($...$).
-- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
-- For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
-
-STAGE 2: ANSWER KEY EXTRACTION:
-- Inspect the document for an ANSWER KEY section (often at the end of the document or after questions).
-- Extract question number to correct answer mappings. Support all answer key formats such as:
-  * 1. A  or  1. (A)  or  1 - A  or  1: A
-  * 2. C  or  2 (C)
-  * Q1 - A  or  Q.1 (A)
-  * Question 1: A
-  * Tabular key grids (Q.No -> Answer)
-
-STAGE 3: SOLUTIONS & EXPLANATIONS EXTRACTION:
-- Inspect the document for HINTS, SOLUTIONS, or EXPLANATIONS sections (often following the answer key or at the end).
-- Extract solution/explanation text for each question number.
-- Record the 1-based page numbers in 'sourcePages' where each solution appears.
-- Extract any solution diagrams, circuits, or graphs under 'visualElements' with normalized 2D bounding boxes.
-- Record their matching questionNumber.
-
-Return structured JSON output strictly following the JSON schema.
-` : `
-You are an expert exam layout analyzer and question extractor for competitive examinations (Physics, Chemistry, Mathematics, Biology, General Aptitude).
-
-Analyze the attached document page images thoroughly to extract the question paper content:
-
-QUESTION PAPER EXTRACTION:
-- Extract all questions, question numbers (1, 2, 3, Q1, Q14, etc.), question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
-- Record the 1-based page numbers where this question appears in 'sourcePages'.
-- Handle question continuations across page boundaries seamlessly into a single question.
-- Convert math notation and equations to standard LaTeX ($...$).
-- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
-- For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
-- IMPORTANT: DO NOT extract, guess, or assign any answer keys, solutions, or explanations. The user explicitly wants ONLY the question paper without answers. Leave correct answers and explanations null/empty.
-
-Return structured JSON output strictly following the JSON schema.
-`;
-
-  // Build input content parts
-  const contents = [
-    promptText,
-    ...pageImages.map((pageImg) => ({
-      inlineData: {
-        data: pageImg.buffer.toString('base64'),
-        mimeType: 'image/png',
-      },
-    })),
-  ];
 
   // Gemini Structured Output Schema supporting Stage 1 (questions), Stage 2 (answerKeyEntries), and Stage 3 (solutions)
   const responseSchema = {
@@ -316,43 +265,181 @@ Return structured JSON output strictly following the JSON schema.
     required: ['questions'],
   };
 
-  const response = await ai.models.generateContent({
-    model: modelName,
-    contents,
-    config: {
-      responseMimeType: 'application/json',
-      responseSchema,
-      temperature: 0.1,
-    },
-  });
+  // Step 3: Split document pages into smaller batches to prevent Gemini output token exhaustion
+  const BATCH_SIZE = 3;
+  const batches = [];
+  for (let i = 0; i < pageImages.length; i += BATCH_SIZE) {
+    batches.push(pageImages.slice(i, i + BATCH_SIZE));
+  }
+  console.log(`[PDF Extraction Pipeline] STAGE 2: Gemini Batches Processed = ${batches.length} batch(es)`);
 
-  const responseText = response.text || '';
-  if (!responseText.trim()) {
-    throw new Error('Gemini Vision returned empty response.');
+  const allRawQuestions = [];
+  const allRawAnswerKeyEntries = [];
+  const allRawSolutions = [];
+
+  for (let bIdx = 0; bIdx < batches.length; bIdx++) {
+    const batch = batches[bIdx];
+    const batchStartPage = batch[0].pageIndex;
+    const batchEndPage = batch[batch.length - 1].pageIndex;
+
+    const batchPrompt = includeAnswers ? `
+You are an expert exam layout analyzer and question extractor for competitive examinations (Physics, Chemistry, Mathematics, Biology, General Aptitude).
+
+You are analyzing Pages ${batchStartPage} to ${batchEndPage} of the examination paper.
+
+Analyze the attached document page images thoroughly and extract content in THREE SEPARATE STAGES:
+
+STAGE 1: QUESTION PAPER EXTRACTION:
+- Extract all questions appearing on these pages (Pages ${batchStartPage} to ${batchEndPage}).
+- Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
+- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
+- Record the 1-based page numbers where each question appears in 'sourcePages' (e.g. [${batchStartPage}] or [${batchStartPage}, ${batchEndPage}]).
+- Handle question continuations across page boundaries seamlessly into a single question.
+- Convert math notation and equations to standard LaTeX ($...$).
+- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
+- For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
+
+STAGE 2: ANSWER KEY EXTRACTION:
+- If an ANSWER KEY section appears on these pages, extract question number to correct answer mappings under 'answerKeyEntries'. Support all formats such as:
+  * 1. A  or  1. (A)  or  1 - A  or  1: A
+  * 2. C  or  2 (C)
+  * Q1 - A  or  Q.1 (A)
+  * Question 1: A
+  * Tabular key grids (Q.No -> Answer)
+
+STAGE 3: SOLUTIONS & EXPLANATIONS EXTRACTION:
+- If HINTS, SOLUTIONS, or EXPLANATIONS sections appear on these pages, extract solution/explanation text for each question number under 'solutions'.
+- Record their matching questionNumber, sourcePages, and any solution diagrams under 'visualElements' with normalized 2D bounding boxes.
+
+Return structured JSON output strictly following the JSON schema.
+` : `
+You are an expert exam layout analyzer and question extractor for competitive examinations (Physics, Chemistry, Mathematics, Biology, General Aptitude).
+
+You are analyzing Pages ${batchStartPage} to ${batchEndPage} of the examination paper.
+
+Analyze the attached document page images thoroughly to extract the question paper content:
+
+QUESTION PAPER EXTRACTION:
+- Extract all questions appearing on these pages (Pages ${batchStartPage} to ${batchEndPage}).
+- Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
+- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic.
+- Record the 1-based page numbers in 'sourcePages'.
+- Handle question continuations across page boundaries seamlessly into a single question.
+- Convert math notation and equations to standard LaTeX ($...$).
+- Preserve diagrams, circuits, graphs, charts, geometry figures, visual equations, and data tables. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000 for each page image under question 'visualElements'.
+- For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
+- IMPORTANT: DO NOT extract, guess, or assign any answer keys, solutions, or explanations. The user explicitly wants ONLY the question paper without answers. Leave correct answers and explanations null/empty.
+
+Return structured JSON output strictly following the JSON schema.
+`;
+
+    const contents = [
+      batchPrompt,
+      ...batch.map((pageImg) => ({
+        inlineData: {
+          data: pageImg.buffer.toString('base64'),
+          mimeType: 'image/png',
+        },
+      })),
+    ];
+
+    try {
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents,
+        config: {
+          responseMimeType: 'application/json',
+          responseSchema,
+          temperature: 0.1,
+        },
+      });
+
+      const responseText = response.text || '';
+      let parsedOutput = null;
+      if (responseText.trim()) {
+        try {
+          parsedOutput = JSON.parse(responseText);
+        } catch (jsonErr) {
+          console.warn(`[geminiVisionExtractor] Malformed JSON in batch ${bIdx + 1} (pages ${batchStartPage}-${batchEndPage}):`, jsonErr.message);
+        }
+      }
+
+      const batchQuestions = Array.isArray(parsedOutput)
+        ? parsedOutput
+        : (Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : []);
+      const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
+      const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
+
+      console.log(`[PDF Extraction Pipeline] STAGE 3: Questions returned by Batch ${bIdx + 1}/${batches.length} (Pages ${batchStartPage}-${batchEndPage}) = ${batchQuestions.length} question(s)`);
+
+      allRawQuestions.push(...batchQuestions);
+      allRawAnswerKeyEntries.push(...batchAnswerKeyEntries);
+      allRawSolutions.push(...batchSolutions);
+    } catch (batchErr) {
+      console.error(`[geminiVisionExtractor] Error processing batch ${bIdx + 1} (pages ${batchStartPage}-${batchEndPage}):`, batchErr.message);
+    }
   }
 
-  let parsedOutput;
-  try {
-    parsedOutput = JSON.parse(responseText);
-  } catch (err) {
-    throw new Error(`Malformed Gemini JSON response: ${err.message}`);
+  // Helper to merge duplicate instances of questions across batch boundaries
+  function mergeQuestionInstances(q1, q2) {
+    const text1 = (q1.questionText || '').trim();
+    const text2 = (q2.questionText || '').trim();
+    const bestText = text1.length >= text2.length ? text1 : text2;
+
+    const pages1 = Array.isArray(q1.sourcePages) ? q1.sourcePages : [];
+    const pages2 = Array.isArray(q2.sourcePages) ? q2.sourcePages : [];
+    const combinedPages = Array.from(new Set([...pages1, ...pages2])).sort((a, b) => a - b);
+
+    const opts1 = Array.isArray(q1.options) ? q1.options : [];
+    const opts2 = Array.isArray(q2.options) ? q2.options : [];
+    const bestOptions = opts1.length >= opts2.length ? opts1 : opts2;
+
+    const vis1 = Array.isArray(q1.visualElements) ? q1.visualElements : [];
+    const vis2 = Array.isArray(q2.visualElements) ? q2.visualElements : [];
+    const combinedVis = [...vis1, ...vis2];
+
+    const subject = (q1.subject && q1.subject !== 'General') ? q1.subject : (q2.subject || 'General');
+    const chapter = (q1.chapter && q1.chapter !== 'General') ? q1.chapter : (q2.chapter || 'General');
+
+    return {
+      ...q1,
+      ...q2,
+      questionNumber: q1.questionNumber || q2.questionNumber,
+      questionText: bestText,
+      sourcePages: combinedPages,
+      options: bestOptions,
+      visualElements: combinedVis,
+      subject,
+      chapter,
+      inlineCorrectAnswer: q1.inlineCorrectAnswer || q2.inlineCorrectAnswer,
+      inlineExplanation: q1.inlineExplanation || q2.inlineExplanation,
+    };
   }
 
-  // Handle case where Gemini returned array directly or object
-  const rawQuestions = Array.isArray(parsedOutput)
-    ? parsedOutput
-    : (Array.isArray(parsedOutput.questions) ? parsedOutput.questions : []);
+  // Deduplicate and merge raw questions by questionNumber
+  const questionMap = new Map();
+  for (const rawQ of allRawQuestions) {
+    const qNum = Number(rawQ.questionNumber);
+    if (!qNum || isNaN(qNum)) continue;
 
-  const rawAnswerKeyEntries = Array.isArray(parsedOutput.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
-  const rawSolutions = Array.isArray(parsedOutput.solutions) ? parsedOutput.solutions : [];
+    if (!questionMap.has(qNum)) {
+      questionMap.set(qNum, rawQ);
+    } else {
+      const existing = questionMap.get(qNum);
+      questionMap.set(qNum, mergeQuestionInstances(existing, rawQ));
+    }
+  }
+
+  // Sort by question number ascending
+  const rawQuestions = Array.from(questionMap.values()).sort((a, b) => Number(a.questionNumber) - Number(b.questionNumber));
 
   if (!rawQuestions.length) {
-    throw new Error('Gemini Vision returned no questions.');
+    throw new Error('Gemini Vision returned no questions across all page batches.');
   }
 
-  // Build Answer Key map (QNumber -> CorrectAnswer)
+  // Build Answer Key map (QNumber -> CorrectAnswer) from all batches
   const answerKeyMap = new Map();
-  for (const entry of rawAnswerKeyEntries) {
+  for (const entry of allRawAnswerKeyEntries) {
     if (entry && entry.questionNumber && entry.correctAnswer) {
       const cleanAns = String(entry.correctAnswer).trim().toUpperCase().replace(/[\(\)\[\]\.\:]/g, '');
       if (['A', 'B', 'C', 'D', '1', '2', '3', '4'].includes(cleanAns)) {
@@ -364,13 +451,14 @@ Return structured JSON output strictly following the JSON schema.
     }
   }
 
-  // Build Solutions map (QNumber -> Solution Object)
+  // Build Solutions map (QNumber -> Solution Object) from all batches
   const solutionMap = new Map();
-  for (const sol of rawSolutions) {
+  for (const sol of allRawSolutions) {
     if (sol && sol.questionNumber) {
       solutionMap.set(Number(sol.questionNumber), {
         explanation: (sol.explanation || '').trim(),
         visualElements: Array.isArray(sol.visualElements) ? sol.visualElements : [],
+        sourcePages: Array.isArray(sol.sourcePages) ? sol.sourcePages : [],
       });
     }
   }
@@ -588,6 +676,8 @@ Return structured JSON output strictly following the JSON schema.
       warnings.push(`Explanation found for Q${solQNum} but question statement was not detected in question paper section.`);
     }
   }
+
+  console.log(`[PDF Extraction Pipeline] STAGE 4: Total Questions After Merge = ${finalStructuredQuestions.length} question(s)`);
 
   // Build Extraction Statistics
   const stats = {

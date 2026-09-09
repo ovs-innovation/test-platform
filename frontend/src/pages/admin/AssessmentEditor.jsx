@@ -14,7 +14,9 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X } from 'lucide-react';
+import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 
 const toDatetimeLocal = (isoString) => {
   if (!isoString) return '';
@@ -56,10 +58,41 @@ const SECTION_TYPES = [
   { value: 'subjective', label: 'Subjective' },
 ];
 
+const normalizeOptions = (rawList, type) => {
+  let list = Array.isArray(rawList) ? rawList : [];
+  if (typeof rawList === 'string') {
+    try {
+      list = JSON.parse(rawList);
+    } catch {
+      list = [];
+    }
+  }
+  if (!list.length) {
+    list = type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', ''];
+  }
+  return list.map((opt, idx) => {
+    if (typeof opt === 'object' && opt !== null) {
+      const img = opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '';
+      return {
+        key: opt.key || String.fromCharCode(65 + idx),
+        text: opt.text != null ? String(opt.text) : '',
+        image_url: img,
+        media: Array.isArray(opt.media) && opt.media.length > 0 ? opt.media : (img ? [{ id: `opt-${idx}-img`, type: 'diagram', url: img }] : []),
+      };
+    }
+    return {
+      key: String.fromCharCode(65 + idx),
+      text: String(opt ?? ''),
+      image_url: '',
+      media: [],
+    };
+  });
+};
+
 const emptyForm = (type) => ({
   question_type: type,
   question_text: '',
-  options: type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', ''],
+  options: normalizeOptions([], type),
   correct_index: 0,
   correct_indices: [],
   numeric_answer: type === 'integer' || type === 'numerical' ? 0 : null,
@@ -557,6 +590,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     const sec = sections.find((s) => s.section_type.includes(type === 'mcq' || type === 'multi_select' ? 'mcq' : type)) || sections[0];
     setForm({
       ...f,
+      options: normalizeOptions(f.options, type),
       section_id: sec?.id || null,
       subject_id: lastSubjectId || form.subject_id || null,
       chapter_id: lastChapterId || form.chapter_id || null,
@@ -566,7 +600,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
   const openEdit = (q) => {
     setEditing(q);
-    const opts = Array.isArray(q.options) ? q.options : (typeof q.options === 'string' ? JSON.parse(q.options) : []);
+    const opts = normalizeOptions(q.options, q.question_type);
     const indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
     const subjId = q.subject_id ? Number(q.subject_id) : null;
     const chapId = q.chapter_id ? Number(q.chapter_id) : null;
@@ -576,7 +610,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text,
-      options: opts.length ? [...opts] : (q.question_type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', '']),
+      options: opts,
       correct_index: q.correct_index ?? 0,
       correct_indices: indices,
       numeric_answer: q.numeric_answer ?? (q.question_type === 'integer' || q.question_type === 'numerical' ? 0 : null),
@@ -606,6 +640,22 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       if (form.subject_id) setLastSubjectId(form.subject_id);
       if (form.chapter_id) setLastChapterId(form.chapter_id);
 
+      const processedOptions = (form.options || []).map((o, idx) => {
+        const text = typeof o === 'object' ? (o.text ?? '') : String(o ?? '');
+        const imgUrl = typeof o === 'object' ? (o.image_url || (Array.isArray(o.media) && o.media[0]?.url) || '') : '';
+        const key = (typeof o === 'object' && o.key) ? o.key : String.fromCharCode(65 + idx);
+        const media = (typeof o === 'object' && Array.isArray(o.media) && o.media.length > 0)
+          ? o.media.map((m) => (typeof m === 'object' ? { ...m, url: imgUrl || m.url } : { type: 'diagram', url: imgUrl }))
+          : (imgUrl ? [{ id: `opt-${idx}-img`, type: 'diagram', url: imgUrl }] : []);
+
+        return {
+          key,
+          text: String(text).trim(),
+          image_url: imgUrl.trim() || null,
+          media,
+        };
+      }).filter((o) => o.text || o.image_url);
+
       const payload = {
         ...form,
         image_url: form.image_url || null,
@@ -615,7 +665,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         chapter_id: form.chapter_id || null,
         topic: form.topic || '',
         section_id: form.section_id || null,
-        options: form.options.map((o) => o.trim()).filter(Boolean),
+        options: processedOptions,
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
         numerical_tolerance: form.numerical_tolerance != null && form.numerical_tolerance !== '' ? Number(form.numerical_tolerance) : 0,
       };
@@ -1371,15 +1421,17 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
               </span>
             )}
           </div>
-          <p className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{q.question_text}</p>
+          <p className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">
+            <MathRenderer text={q.question_text} />
+          </p>
           
           {q.image_url && (
             <div className="mt-2 max-w-sm">
               <img
-                src={q.image_url}
+                src={getMediaUrl(q.image_url)}
                 alt="Question Diagram"
                 className="max-h-40 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90"
-                onClick={() => window.open(q.image_url, '_blank')}
+                onClick={() => window.open(getMediaUrl(q.image_url), '_blank')}
                 title="Click to view full diagram"
               />
             </div>
@@ -1388,7 +1440,9 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
           {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
             <ul className="mt-2 space-y-1 text-sm">
               {opts.map((opt, i) => {
-                const optText = typeof opt === 'object' ? (opt.text || JSON.stringify(opt)) : String(opt || '');
+                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
                 const isCorrect = hasAnswerKey && (
                   q.question_type === 'multi_select'
                     ? (q.correct_indices || []).includes(i)
@@ -1399,12 +1453,26 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                     key={i}
                     className={
                       isCorrect
-                        ? 'font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5'
-                        : 'text-slate-600 dark:text-slate-300'
+                        ? 'font-medium text-emerald-600 dark:text-emerald-400 flex flex-col gap-1'
+                        : 'text-slate-600 dark:text-slate-300 flex flex-col gap-1'
                     }
                   >
-                    {isCorrect && <span className="text-xs font-bold">✓</span>}
-                    {optText}
+                    <div className="flex items-center gap-1.5">
+                      {isCorrect && <span className="text-xs font-bold">✓</span>}
+                      <span className="font-semibold text-slate-500 dark:text-slate-400">({String.fromCharCode(65 + i)})</span>
+                      {optText ? <MathRenderer text={optText} /> : (!optImg && <span className="italic text-slate-400">Empty option</span>)}
+                    </div>
+                    {optImg && (
+                      <div className="ml-5 mt-0.5">
+                        <img
+                          src={getMediaUrl(optImg)}
+                          alt={`Option ${String.fromCharCode(65 + i)} diagram`}
+                          className="max-h-24 rounded border border-slate-300 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-0.5 cursor-pointer hover:opacity-90"
+                          onClick={() => window.open(getMediaUrl(optImg), '_blank')}
+                          title="Click to view full image"
+                        />
+                      </div>
+                    )}
                   </li>
                 );
               })}
@@ -1589,6 +1657,61 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
     });
   };
 
+  const handleOptionImageUpload = async (index, file) => {
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      alert('Please select a valid image file (PNG, JPG, WEBP)');
+      return;
+    }
+    if (file.size > 10 * 1024 * 1024) {
+      alert('Image size should be under 10MB');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      const dataUri = reader.result;
+      let finalUrl = dataUri;
+      try {
+        const res = await adminService.uploadImage(dataUri, 'edvedum/options');
+        if (res?.url) {
+          finalUrl = res.url;
+        }
+      } catch (err) {
+        console.warn('Option image upload fallback to data URI:', err);
+      }
+      setForm((f) => ({
+        ...f,
+        options: f.options.map((o, j) => {
+          if (j !== index) return o;
+          const optObj = typeof o === 'object' && o !== null ? o : { text: String(o ?? '') };
+          return {
+            ...optObj,
+            key: optObj.key || String.fromCharCode(65 + j),
+            image_url: finalUrl,
+            media: [{ id: `opt-${j}-img`, type: 'diagram', url: finalUrl }],
+          };
+        }),
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveOptionImage = (index) => {
+    setForm((f) => ({
+      ...f,
+      options: f.options.map((o, j) => {
+        if (j !== index) return o;
+        const optObj = typeof o === 'object' && o !== null ? o : { text: String(o ?? '') };
+        return {
+          ...optObj,
+          image_url: '',
+          media: [],
+        };
+      }),
+    }));
+  };
+
   return (
     <Modal open={open} onClose={onClose} title={editing ? 'Edit question' : 'Add question'} size="lg">
       <form onSubmit={onSubmit} className="space-y-4">
@@ -1686,26 +1809,178 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
         </div>
 
         {isChoice && (
-          <div>
-            <label className="label">{form.question_type === 'multi_select' ? 'Options (check all correct)' : 'Options (select one correct)'}</label>
-            <div className="space-y-2">
-              {form.options.map((opt, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  {form.question_type === 'multi_select' ? (
-                    <input type="checkbox" checked={(form.correct_indices || []).includes(i)} onChange={() => toggleMulti(i)} />
-                  ) : (
-                    <input type="radio" name="correct" checked={form.correct_index === i} onChange={() => setForm((f) => ({ ...f, correct_index: i }))} />
-                  )}
-                  <input className="input flex-1" value={opt}
-                    onChange={(e) => setForm((f) => ({ ...f, options: f.options.map((o, j) => (j === i ? e.target.value : o)) }))} />
-                  {form.options.length > 2 && (
-                    <button type="button" className="text-red-500" onClick={() => setForm((f) => ({ ...f, options: f.options.filter((_, j) => j !== i) }))}>×</button>
-                  )}
-                </div>
-              ))}
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="label mb-0">
+                {form.question_type === 'multi_select'
+                  ? 'Options (check all correct; diagram/image upload available per option)'
+                  : 'Options (select one correct; diagram/image upload available per option)'}
+              </label>
+              <span className="text-xs text-slate-500 dark:text-slate-400">
+                LaTeX math & Option diagrams supported
+              </span>
+            </div>
+            <div className="space-y-3">
+              {form.options.map((opt, i) => {
+                const optObj = typeof opt === 'object' && opt !== null ? opt : { key: String.fromCharCode(65 + i), text: String(opt ?? ''), image_url: '', media: [] };
+                const optText = optObj.text ?? '';
+                const optImg = optObj.image_url || (Array.isArray(optObj.media) && optObj.media[0]?.url) || '';
+                const optKey = optObj.key || String.fromCharCode(65 + i);
+
+                return (
+                  <div
+                    key={i}
+                    className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 p-3 space-y-2 transition-all hover:border-slate-300 dark:hover:border-slate-700"
+                  >
+                    <div className="flex items-center gap-2.5">
+                      {form.question_type === 'multi_select' ? (
+                        <input
+                          type="checkbox"
+                          className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                          checked={(form.correct_indices || []).includes(i)}
+                          onChange={() => toggleMulti(i)}
+                        />
+                      ) : (
+                        <input
+                          type="radio"
+                          name="correct"
+                          className="h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                          checked={form.correct_index === i}
+                          onChange={() => setForm((f) => ({ ...f, correct_index: i }))}
+                        />
+                      )}
+                      <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-200 dark:bg-slate-800 text-xs font-black text-slate-700 dark:text-slate-300 shrink-0">
+                        {optKey}
+                      </span>
+                      <input
+                        className="input flex-1 text-sm py-1.5"
+                        placeholder={`Option ${optKey} text (optional if diagram only)...`}
+                        value={optText}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setForm((f) => ({
+                            ...f,
+                            options: f.options.map((o, j) =>
+                              j === i
+                                ? {
+                                    ...(typeof o === 'object' ? o : { key: optKey }),
+                                    text: val,
+                                  }
+                                : o
+                            ),
+                          }));
+                        }}
+                      />
+                      {form.options.length > 2 && (
+                        <button
+                          type="button"
+                          className="text-slate-400 hover:text-red-500 p-1 text-lg leading-none cursor-pointer"
+                          title="Remove option"
+                          onClick={() => setForm((f) => ({ ...f, options: f.options.filter((_, j) => j !== i) }))}
+                        >
+                          ×
+                        </button>
+                      )}
+                    </div>
+
+                    {/* Option Diagram uploader & preview */}
+                    <div className="flex flex-wrap items-center gap-2 pl-9 text-xs">
+                      {optImg ? (
+                        <div className="flex items-center gap-2.5 bg-white dark:bg-slate-950 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-800 shadow-2xs">
+                          <img
+                            src={getMediaUrl(optImg)}
+                            alt={`Option ${optKey} Diagram`}
+                            className="h-10 max-w-[120px] object-contain rounded border border-slate-200 dark:border-slate-700 cursor-pointer"
+                            onClick={() => window.open(getMediaUrl(optImg), '_blank')}
+                            title="Click to view full image"
+                          />
+                          <div className="flex flex-col gap-0.5">
+                            <span className="font-semibold text-slate-700 dark:text-slate-300">
+                              Diagram attached
+                            </span>
+                            <div className="flex items-center gap-2">
+                              <label className="text-blue-600 dark:text-blue-400 hover:underline cursor-pointer font-medium">
+                                Change
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  onChange={(e) => handleOptionImageUpload(i, e.target.files?.[0])}
+                                />
+                              </label>
+                              <span className="text-slate-300 dark:text-slate-700">•</span>
+                              <button
+                                type="button"
+                                className="text-red-500 hover:underline font-medium cursor-pointer"
+                                onClick={() => handleRemoveOptionImage(i)}
+                              >
+                                Remove
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <label className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-950 hover:bg-slate-50 dark:hover:bg-slate-900 cursor-pointer text-slate-600 dark:text-slate-300 hover:text-blue-600 transition-colors">
+                            <ImageIcon className="w-3.5 h-3.5 text-blue-500" />
+                            <span>Upload diagram for Option {optKey}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => handleOptionImageUpload(i, e.target.files?.[0])}
+                            />
+                          </label>
+                          <span className="text-slate-400">or URL:</span>
+                          <input
+                            type="text"
+                            placeholder="https://... or /uploads/..."
+                            className="text-xs py-1 px-2 border border-slate-200 dark:border-slate-700 rounded bg-white dark:bg-slate-950 w-44 text-slate-700 dark:text-slate-300"
+                            value={optImg}
+                            onChange={(e) => {
+                              const urlVal = e.target.value;
+                              setForm((f) => ({
+                                ...f,
+                                options: f.options.map((o, j) =>
+                                  j === i
+                                    ? {
+                                        ...(typeof o === 'object' ? o : { key: optKey, text: String(o ?? '') }),
+                                        image_url: urlVal,
+                                        media: urlVal ? [{ id: `opt-${i}-img`, type: 'diagram', url: urlVal }] : [],
+                                      }
+                                    : o
+                                ),
+                              }));
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
             {form.options.length < 6 && (
-              <button type="button" className="mt-2 text-sm text-brand-600" onClick={() => setForm((f) => ({ ...f, options: [...f.options, ''] }))}>+ Add option</button>
+              <button
+                type="button"
+                className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 cursor-pointer"
+                onClick={() =>
+                  setForm((f) => ({
+                    ...f,
+                    options: [
+                      ...f.options,
+                      {
+                        key: String.fromCharCode(65 + f.options.length),
+                        text: '',
+                        image_url: '',
+                        media: [],
+                      },
+                    ],
+                  }))
+                }
+              >
+                + Add option ({String.fromCharCode(65 + form.options.length)})
+              </button>
             )}
           </div>
         )}
@@ -1725,7 +2000,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
               <div className="space-y-1.5 pt-1">
                 {ASSERTION_REASON_OPTIONS.map((opt, i) => (
                   <label key={i} className="flex items-start gap-2 rounded p-1.5 hover:bg-white text-xs text-slate-800 cursor-pointer border border-transparent hover:border-slate-200">
-                    <input type="radio" name="ar_correct" checked={form.correct_index === i} onChange={() => setForm((f) => ({ ...f, correct_index: i, options: [...ASSERTION_REASON_OPTIONS] }))} />
+                    <input type="radio" name="ar_correct" checked={form.correct_index === i} onChange={() => setForm((f) => ({ ...f, correct_index: i, options: normalizeOptions(ASSERTION_REASON_OPTIONS, 'assertion_reason') }))} />
                     <span><strong>({String.fromCharCode(65 + i)})</strong> {opt}</span>
                   </label>
                 ))}
