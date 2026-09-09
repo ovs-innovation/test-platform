@@ -12,7 +12,7 @@ import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
-import { ChevronDown, Check } from 'lucide-react';
+import { ChevronDown, Check, Zap } from 'lucide-react';
 
 const toDatetimeLocal = (isoString) => {
   if (!isoString) return '';
@@ -327,6 +327,93 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   const [uploading, setUploading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const fileRef = useRef(null);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [bulkMarksOpen, setBulkMarksOpen] = useState(false);
+  const [bulkMarksValue, setBulkMarksValue] = useState(4);
+  const [bulkScope, setBulkScope] = useState('all');
+  const [bulkSectionId, setBulkSectionId] = useState('all');
+  const [bulkQuestionType, setBulkQuestionType] = useState('all');
+  const [bulkUpdating, setBulkUpdating] = useState(false);
+  const [inlineMarkInput, setInlineMarkInput] = useState(4);
+  const [inlineUpdating, setInlineUpdating] = useState(false);
+
+  const toggleSelectQuestion = (id) => {
+    setSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const handleSelectAll = () => {
+    if (selectedIds.length === questions.length) {
+      setSelectedIds([]);
+    } else {
+      setSelectedIds(questions.map((q) => q.id));
+    }
+  };
+
+  const handleApplyBulkMarks = async () => {
+    const marksNum = Number(bulkMarksValue);
+    if (isNaN(marksNum) || marksNum <= 0) {
+      toast.error('Please enter a valid marks value (> 0)');
+      return;
+    }
+    setBulkUpdating(true);
+    try {
+      const payload = { marks: marksNum };
+      if (bulkScope === 'selected') {
+        if (!selectedIds.length) {
+          toast.error('No questions selected');
+          setBulkUpdating(false);
+          return;
+        }
+        payload.question_ids = selectedIds;
+      } else if (bulkScope === 'section') {
+        if (bulkSectionId !== 'all') {
+          payload.section_id = bulkSectionId === 'none' ? null : Number(bulkSectionId);
+        }
+      } else if (bulkScope === 'type') {
+        if (bulkQuestionType !== 'all') {
+          payload.question_type = bulkQuestionType;
+        }
+      }
+
+      const res = await questionService.bulkUpdateMarks(assessmentId, payload);
+      toast.success(res.message || `Updated marks to ${marksNum} for ${res.updated_count} questions`);
+      setBulkMarksOpen(false);
+      setSelectedIds([]);
+      onReload();
+    } catch (err) {
+      toast.error(err.message || 'Failed to bulk update marks');
+    } finally {
+      setBulkUpdating(false);
+    }
+  };
+
+  const handleQuickInlineMarks = async (marksVal) => {
+    const marksNum = Number(marksVal);
+    if (isNaN(marksNum) || marksNum <= 0) {
+      toast.error('Please enter a valid marks value (> 0)');
+      return;
+    }
+    if (selectedIds.length === 0) {
+      toast.error('Please select at least one question');
+      return;
+    }
+    setInlineUpdating(true);
+    try {
+      const res = await questionService.bulkUpdateMarks(assessmentId, {
+        marks: marksNum,
+        question_ids: selectedIds,
+      });
+      toast.success(res.message || `Updated marks to ${marksNum} for ${selectedIds.length} questions`);
+      setSelectedIds([]);
+      onReload();
+    } catch (err) {
+      toast.error(err.message || 'Failed to update marks');
+    } finally {
+      setInlineUpdating(false);
+    }
+  };
 
   useEffect(() => {
     questionBankService.categories().then((res) => {
@@ -524,7 +611,22 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       <div>
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           <h2 className="text-lg font-semibold">Question builder</h2>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              className="btn-secondary text-xs font-bold text-amber-600 dark:text-amber-400 border-amber-300 dark:border-amber-800 bg-amber-50/60 dark:bg-amber-950/30 hover:bg-amber-100 dark:hover:bg-amber-900/40 flex items-center gap-1.5"
+              onClick={() => {
+                if (selectedIds.length > 0) {
+                  setBulkScope('selected');
+                } else {
+                  setBulkScope('all');
+                }
+                setBulkMarksOpen(true);
+              }}
+            >
+              <Zap className="h-3.5 w-3.5 text-amber-500 fill-amber-500/20" />
+              Bulk Update Marks
+            </button>
             <button type="button" className="btn-secondary text-xs" onClick={() => setCsvOpen(true)}>CSV Import</button>
             <button type="button" className="btn-secondary text-xs" onClick={exportCsv} disabled={exporting || !questions.length}>
               {exporting ? <Spinner className="h-3 w-3" /> : 'CSV Export'}
@@ -539,20 +641,102 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
           <EmptyState title="No questions yet" message="Add questions manually or import from the question bank."
             action={<button type="button" className="btn-primary" onClick={() => openAdd('mcq')}>Add first question</button>} />
         ) : (
-          <div className="space-y-3">
-            {[...questions].sort((a, b) => a.position - b.position).map((q, idx) => (
-              <QuestionCard key={q.id} q={q} idx={idx} total={questions.length}
-                onEdit={() => openEdit(q)}
-                onDelete={async () => {
-                  if (!window.confirm('Delete this question?')) return;
-                  await questionService.remove(q.id);
-                  toast.success('Deleted');
-                  onReload();
-                }}
-                onMoveUp={() => moveQuestion(idx, -1)}
-                onMoveDown={() => moveQuestion(idx, 1)}
-              />
-            ))}
+          <div>
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/90 dark:bg-slate-900/90 p-2.5 text-xs shadow-xs">
+              <div className="flex items-center gap-2.5">
+                <input
+                  type="checkbox"
+                  id="select-all-questions"
+                  checked={questions.length > 0 && selectedIds.length === questions.length}
+                  onChange={handleSelectAll}
+                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 cursor-pointer"
+                />
+                <label htmlFor="select-all-questions" className="cursor-pointer font-bold text-slate-700 dark:text-slate-200 select-none">
+                  {selectedIds.length > 0
+                    ? `${selectedIds.length} of ${questions.length} selected`
+                    : `Select all (${questions.length} questions)`}
+                </label>
+                {selectedIds.length > 0 && (
+                  <button
+                    type="button"
+                    className="ml-1 font-semibold text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white underline cursor-pointer"
+                    onClick={() => setSelectedIds([])}
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
+              {selectedIds.length > 0 ? (
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="font-bold text-slate-600 dark:text-slate-300">Set marks:</span>
+                  {[1, 2, 4, 5].map((preset) => (
+                    <button
+                      key={preset}
+                      type="button"
+                      disabled={inlineUpdating}
+                      onClick={() => handleQuickInlineMarks(preset)}
+                      className="rounded-lg px-2.5 py-1 text-xs font-extrabold border border-blue-300 dark:border-blue-800 bg-white dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/50 transition cursor-pointer"
+                    >
+                      {preset} mk
+                    </button>
+                  ))}
+                  <div className="flex items-center gap-1">
+                    <input
+                      type="number"
+                      min={0.25}
+                      max={100}
+                      step={0.25}
+                      className="h-7 w-16 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-0.5 text-center text-xs font-bold"
+                      value={inlineMarkInput}
+                      onChange={(e) => setInlineMarkInput(e.target.value)}
+                    />
+                    <button
+                      type="button"
+                      disabled={inlineUpdating}
+                      onClick={() => handleQuickInlineMarks(inlineMarkInput)}
+                      className="btn-primary h-7 px-3 text-xs"
+                    >
+                      {inlineUpdating ? <Spinner className="h-3 w-3" /> : 'Apply'}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="flex items-center gap-3">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:inline">
+                    Want to change marks for all questions at once?
+                  </span>
+                  <button
+                    type="button"
+                    className="font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer flex items-center gap-1"
+                    onClick={() => {
+                      setBulkScope('all');
+                      setBulkMarksOpen(true);
+                    }}
+                  >
+                    ⚡ Change all marks
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-3">
+              {[...questions].sort((a, b) => a.position - b.position).map((q, idx) => (
+                <QuestionCard key={q.id} q={q} idx={idx} total={questions.length}
+                  isSelected={selectedIds.includes(q.id)}
+                  onToggleSelect={() => toggleSelectQuestion(q.id)}
+                  onEdit={() => openEdit(q)}
+                  onDelete={async () => {
+                    if (!window.confirm('Delete this question?')) return;
+                    await questionService.remove(q.id);
+                    toast.success('Deleted');
+                    onReload();
+                  }}
+                  onMoveUp={() => moveQuestion(idx, -1)}
+                  onMoveDown={() => moveQuestion(idx, 1)}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -576,6 +760,24 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
       <QuestionBuilderModal open={modalOpen} onClose={() => setModalOpen(false)} editing={editing}
         form={form} setForm={setForm} sections={sections} onSubmit={saveQuestion} saving={saving} />
+
+      <BulkMarksModal
+        open={bulkMarksOpen}
+        onClose={() => setBulkMarksOpen(false)}
+        questions={questions}
+        sections={sections}
+        selectedIds={selectedIds}
+        bulkMarksValue={bulkMarksValue}
+        setBulkMarksValue={setBulkMarksValue}
+        bulkScope={bulkScope}
+        setBulkScope={setBulkScope}
+        bulkSectionId={bulkSectionId}
+        setBulkSectionId={setBulkSectionId}
+        bulkQuestionType={bulkQuestionType}
+        setBulkQuestionType={setBulkQuestionType}
+        onApply={handleApplyBulkMarks}
+        loading={bulkUpdating}
+      />
 
       <Modal open={bankOpen} onClose={() => setBankOpen(false)} title={`Question bank — ${bankCategory}`} size="lg">
         {bankQuestions.length === 0 ? (
@@ -626,14 +828,253 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   );
 }
 
-function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown }) {
+function BulkMarksModal({
+  open,
+  onClose,
+  questions,
+  sections,
+  selectedIds,
+  bulkMarksValue,
+  setBulkMarksValue,
+  bulkScope,
+  setBulkScope,
+  bulkSectionId,
+  setBulkSectionId,
+  bulkQuestionType,
+  setBulkQuestionType,
+  onApply,
+  loading,
+}) {
+  const getAffectedQuestions = () => {
+    if (bulkScope === 'selected') {
+      return questions.filter((q) => selectedIds.includes(q.id));
+    }
+    if (bulkScope === 'section') {
+      if (bulkSectionId === 'all') return questions;
+      if (bulkSectionId === 'none') return questions.filter((q) => !q.section_id);
+      return questions.filter((q) => String(q.section_id) === String(bulkSectionId));
+    }
+    if (bulkScope === 'type') {
+      if (bulkQuestionType === 'all') return questions;
+      return questions.filter((q) => q.question_type === bulkQuestionType);
+    }
+    return questions; // 'all'
+  };
+
+  const affectedQuestions = getAffectedQuestions();
+  const affectedCount = affectedQuestions.length;
+  const unaffectedQuestions = questions.filter((q) => !affectedQuestions.some((aq) => aq.id === q.id));
+  const unaffectedMarksSum = unaffectedQuestions.reduce((sum, q) => sum + (Number(q.marks) || 0), 0);
+  const targetMarkNum = Number(bulkMarksValue) || 0;
+  const projectedTotalMarks = (affectedCount * targetMarkNum) + unaffectedMarksSum;
+  const currentTotalMarks = questions.reduce((sum, q) => sum + (Number(q.marks) || 0), 0);
+
+  return (
+    <Modal open={open} onClose={onClose} title="⚡ Bulk Update Question Marks" size="md">
+      <div className="space-y-4">
+        <p className="text-xs text-slate-500 dark:text-slate-400">
+          Update marks across multiple or all questions at once without having to edit each question individually.
+        </p>
+
+        <div>
+          <label className="label">Target Questions</label>
+          <div className="grid grid-cols-2 gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => setBulkScope('all')}
+              className={`rounded-xl border p-2.5 text-left font-bold transition cursor-pointer ${
+                bulkScope === 'all'
+                  ? 'border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300 ring-1 ring-blue-500/40'
+                  : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-850'
+              }`}
+            >
+              <div>All Questions</div>
+              <div className="text-[11px] font-normal text-slate-500 dark:text-slate-400">{questions.length} questions</div>
+            </button>
+
+            <button
+              type="button"
+              disabled={selectedIds.length === 0}
+              onClick={() => setBulkScope('selected')}
+              className={`rounded-xl border p-2.5 text-left font-bold transition ${
+                selectedIds.length === 0
+                  ? 'opacity-40 cursor-not-allowed border-slate-200 dark:border-slate-800'
+                  : bulkScope === 'selected'
+                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300 ring-1 ring-blue-500/40 cursor-pointer'
+                    : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-850 cursor-pointer'
+              }`}
+            >
+              <div>Selected Only</div>
+              <div className="text-[11px] font-normal text-slate-500 dark:text-slate-400">
+                {selectedIds.length > 0 ? `${selectedIds.length} questions selected` : 'None selected'}
+              </div>
+            </button>
+
+            {sections?.length > 0 && (
+              <button
+                type="button"
+                onClick={() => setBulkScope('section')}
+                className={`rounded-xl border p-2.5 text-left font-bold transition cursor-pointer ${
+                  bulkScope === 'section'
+                    ? 'border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300 ring-1 ring-blue-500/40'
+                    : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-850'
+                }`}
+              >
+                <div>By Section</div>
+                <div className="text-[11px] font-normal text-slate-500 dark:text-slate-400">Specific test section</div>
+              </button>
+            )}
+
+            <button
+              type="button"
+              onClick={() => setBulkScope('type')}
+              className={`rounded-xl border p-2.5 text-left font-bold transition cursor-pointer ${
+                bulkScope === 'type'
+                  ? 'border-blue-600 bg-blue-50 text-blue-700 dark:border-blue-400 dark:bg-blue-950/50 dark:text-blue-300 ring-1 ring-blue-500/40'
+                  : 'border-slate-200 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-850'
+              }`}
+            >
+              <div>By Question Type</div>
+              <div className="text-[11px] font-normal text-slate-500 dark:text-slate-400">MCQ, Numerical, etc.</div>
+            </button>
+          </div>
+        </div>
+
+        {bulkScope === 'section' && sections?.length > 0 && (
+          <div>
+            <label className="label">Select Section</label>
+            <select
+              className="input text-xs"
+              value={bulkSectionId}
+              onChange={(e) => setBulkSectionId(e.target.value)}
+            >
+              <option value="all">All Sections ({questions.length} questions)</option>
+              {sections.map((sec) => {
+                const count = questions.filter((q) => String(q.section_id) === String(sec.id)).length;
+                return (
+                  <option key={sec.id} value={sec.id}>
+                    {sec.name} ({count} questions)
+                  </option>
+                );
+              })}
+              <option value="none">
+                No Section Assigned ({questions.filter((q) => !q.section_id).length} questions)
+              </option>
+            </select>
+          </div>
+        )}
+
+        {bulkScope === 'type' && (
+          <div>
+            <label className="label">Select Question Type</label>
+            <select
+              className="input text-xs"
+              value={bulkQuestionType}
+              onChange={(e) => setBulkQuestionType(e.target.value)}
+            >
+              <option value="all">All Types ({questions.length} questions)</option>
+              {QUESTION_TYPES.map((t) => {
+                const count = questions.filter((q) => q.question_type === t.id).length;
+                return (
+                  <option key={t.id} value={t.id}>
+                    {t.label} ({count} questions)
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+        )}
+
+        <div>
+          <label className="label">New Marks Per Question</label>
+          <div className="flex items-center gap-2">
+            <input
+              type="number"
+              min={0.25}
+              max={100}
+              step={0.25}
+              className="input text-sm font-bold w-28 text-center"
+              value={bulkMarksValue}
+              onChange={(e) => setBulkMarksValue(e.target.value)}
+            />
+            <div className="flex flex-wrap gap-1.5">
+              {[1, 2, 4, 5].map((preset) => (
+                <button
+                  key={preset}
+                  type="button"
+                  onClick={() => setBulkMarksValue(preset)}
+                  className={`rounded-xl px-3 py-2 text-xs font-bold transition border cursor-pointer ${
+                    Number(bulkMarksValue) === preset
+                      ? 'border-blue-600 bg-blue-600 text-white shadow-sm'
+                      : 'border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800'
+                  }`}
+                >
+                  +{preset} mk
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-2xl border border-blue-100 bg-blue-50/50 p-4 dark:border-blue-900/50 dark:bg-blue-950/20">
+          <div className="flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">Questions affected:</span>
+            <span className="font-extrabold text-blue-600 dark:text-blue-400">{affectedCount} of {questions.length}</span>
+          </div>
+          <div className="mt-2 flex items-center justify-between text-xs">
+            <span className="text-slate-500 dark:text-slate-400">Current total marks:</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">{currentTotalMarks} marks</span>
+          </div>
+          <div className="mt-2 flex items-center justify-between text-xs border-t border-blue-200/60 dark:border-blue-800/60 pt-2">
+            <span className="font-bold text-slate-800 dark:text-slate-200">New total marks:</span>
+            <span className="text-sm font-extrabold text-emerald-600 dark:text-emerald-400">
+              {projectedTotalMarks} marks
+              {projectedTotalMarks !== currentTotalMarks && (
+                <span className="ml-1 text-[11px] font-normal text-slate-500 dark:text-slate-400">
+                  ({projectedTotalMarks > currentTotalMarks ? `+${projectedTotalMarks - currentTotalMarks}` : projectedTotalMarks - currentTotalMarks})
+                </span>
+              )}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex justify-end gap-2 pt-2">
+          <button type="button" className="btn-secondary" onClick={onClose} disabled={loading}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn-primary"
+            onClick={onApply}
+            disabled={loading || affectedCount === 0}
+          >
+            {loading ? <Spinner className="h-4 w-4" /> : `Update ${affectedCount} Questions to ${bulkMarksValue} mk`}
+          </button>
+        </div>
+      </div>
+    </Modal>
+  );
+}
+
+function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, isSelected, onToggleSelect }) {
   const opts = Array.isArray(q.options) ? q.options : [];
   const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
 
   return (
-    <div className="card p-4 bg-white dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800">
+    <div className={`card p-4 transition-all border ${
+      isSelected
+        ? 'bg-blue-50/40 dark:bg-blue-950/30 border-blue-400 dark:border-blue-600 ring-1 ring-blue-400/40 shadow-sm'
+        : 'bg-white dark:bg-slate-900/90 border-slate-200 dark:border-slate-800'
+    }`}>
       <div className="flex gap-3">
-        <div className="flex flex-col gap-1">
+        <div className="flex flex-col items-center gap-1 pt-0.5">
+          <input
+            type="checkbox"
+            checked={Boolean(isSelected)}
+            onChange={onToggleSelect}
+            className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 cursor-pointer"
+            title="Select question"
+          />
           <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveUp} disabled={idx === 0} title="Move up">↑</button>
           <span className="text-center text-xs font-bold text-slate-400 dark:text-slate-500">{idx + 1}</span>
           <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveDown} disabled={idx === total - 1} title="Move down">↓</button>

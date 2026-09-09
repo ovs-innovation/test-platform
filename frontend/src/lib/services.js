@@ -196,6 +196,8 @@ export const questionService = {
     api.put(`/assessments/${assessmentId}/questions/reorder`, { order }).then((r) => r.data),
   bulkUpload: (assessmentId, csv) =>
     api.post(`/assessments/${assessmentId}/questions/bulk`, { csv }).then((r) => r.data),
+  bulkUpdateMarks: (assessmentId, data) =>
+    api.patch(`/assessments/${assessmentId}/questions/bulk-marks`, data).then((r) => r.data),
   exportCsv: (assessmentId) =>
     import('./csv.js').then(({ downloadFromApi }) =>
       downloadFromApi(`/assessments/${assessmentId}/questions/export`, 'questions.csv')

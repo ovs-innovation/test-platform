@@ -11,11 +11,11 @@ import {
   deleteAssessment,
   importScheduleCsv,
 } from '../controllers/assessmentController.js';
-import { listQuestions, createQuestion, reorderQuestions, bulkUploadQuestions, exportQuestions } from '../controllers/questionController.js';
+import { listQuestions, createQuestion, reorderQuestions, bulkUploadQuestions, exportQuestions, bulkUpdateQuestionMarks } from '../controllers/questionController.js';
 import { listSections, createSection } from '../controllers/sectionController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { assessmentSchema, assessmentUpdateSchema, questionSchema, sectionSchema, reorderQuestionsSchema, bulkUploadSchema } from '../validators/schemas.js';
+import { assessmentSchema, assessmentUpdateSchema, questionSchema, sectionSchema, reorderQuestionsSchema, bulkUploadSchema, bulkUpdateMarksSchema } from '../validators/schemas.js';
 
 const router = Router();
 
@@ -36,6 +36,7 @@ router.get('/:assessmentId/questions', authorize('admin'), listQuestions);
 router.post('/:assessmentId/questions', authorize('admin'), validate(questionSchema), createQuestion);
 router.post('/:assessmentId/questions/bulk', authorize('admin'), validate(bulkUploadSchema), bulkUploadQuestions);
 router.put('/:assessmentId/questions/reorder', authorize('admin'), validate(reorderQuestionsSchema), reorderQuestions);
+router.patch('/:assessmentId/questions/bulk-marks', authorize('admin'), validate(bulkUpdateMarksSchema), bulkUpdateQuestionMarks);
 
 router.get('/:id/preview', authorize('admin'), previewAssessment);
 router.get('/:id', authorize('admin'), getAssessmentAdmin);

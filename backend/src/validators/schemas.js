@@ -309,6 +309,13 @@ export const reorderQuestionsSchema = z.object({
   order: z.array(z.object({ id: z.number().int().positive(), position: z.number().int().min(0) })).min(1),
 });
 
+export const bulkUpdateMarksSchema = z.object({
+  marks: z.coerce.number().min(0.25).max(100),
+  question_ids: z.array(z.coerce.number().int().positive()).optional(),
+  section_id: z.union([z.coerce.number().int().positive(), z.literal('all'), z.null()]).optional(),
+  question_type: z.string().optional(),
+});
+
 export const assessmentSchema = z.object({
   title: z.string().trim().min(3).max(200),
   description: z.string().trim().max(2000).optional().default(''),

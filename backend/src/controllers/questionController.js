@@ -356,3 +356,67 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
 
   res.status(201).json({ created: created.length, questions: created, errors });
 });
+
+/**
+ * PATCH /api/assessments/:assessmentId/questions/bulk-marks
+ * Bulk update question marks for an assessment
+ * Optional filters: question_ids (array), section_id, question_type
+ */
+export const bulkUpdateQuestionMarks = asyncHandler(async (req, res) => {
+  const { assessmentId } = req.params;
+  const { marks, question_ids, section_id, question_type } = req.body;
+
+  await ensureAssessment(assessmentId);
+
+  const clauses = ['assessment_id = $1'];
+  const values = [assessmentId, marks];
+
+  if (Array.isArray(question_ids) && question_ids.length > 0) {
+    values.push(question_ids);
+    clauses.push(`id = ANY($${values.length})`);
+  }
+
+  if (section_id !== undefined && section_id !== 'all') {
+    if (section_id === null) {
+      clauses.push('section_id IS NULL');
+    } else {
+      values.push(section_id);
+      clauses.push(`section_id = $${values.length}`);
+    }
+  }
+
+  if (question_type && question_type !== 'all') {
+    values.push(question_type);
+    clauses.push(`question_type = $${values.length}`);
+  }
+
+  const updateQuery = `
+    UPDATE questions
+    SET marks = $2
+    WHERE ${clauses.join(' AND ')}
+    RETURNING id, marks
+  `;
+
+  const updateRes = await query(updateQuery, values);
+  const updatedCount = updateRes.rowCount;
+
+  // Recalculate total marks for the assessment
+  const totalRes = await query(
+    'SELECT COALESCE(SUM(marks), 0) AS total_marks FROM questions WHERE assessment_id = $1',
+    [assessmentId]
+  );
+  const totalMarks = Number(totalRes.rows[0]?.total_marks || 0);
+
+  // Synchronize tests table max_marks if test row exists
+  await query(
+    'UPDATE tests SET max_marks = $1, updated_at = NOW() WHERE id = $2',
+    [totalMarks, assessmentId]
+  ).catch(() => {});
+
+  res.json({
+    message: `Updated marks to ${marks} for ${updatedCount} question${updatedCount === 1 ? '' : 's'}`,
+    updated_count: updatedCount,
+    total_marks: totalMarks,
+  });
+});
+
