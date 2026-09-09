@@ -21,7 +21,7 @@ export const signAccessToken = (user, jti = generateJti(), extra = {}) => {
     batch_id: user.batch_id || extra.batch_id || null,
     ...extra,
   };
-  return jwt.sign(payload, env.jwtSecret, { expiresIn: '15m' });
+  return jwt.sign(payload, env.jwtSecret, { expiresIn: env.jwtExpiresIn || '30d' });
 };
 
 export const signRefreshToken = (user, familyId = generateFamilyId()) => {
@@ -33,7 +33,7 @@ export const signRefreshToken = (user, familyId = generateFamilyId()) => {
     family_id: familyId,
     type: 'refresh',
   };
-  return jwt.sign(payload, env.jwtSecret, { expiresIn: '7d' });
+  return jwt.sign(payload, env.jwtSecret, { expiresIn: '90d' });
 };
 
 export const signToken = (payload) =>

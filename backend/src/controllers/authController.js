@@ -27,7 +27,7 @@ const issueAuthSession = async (req, res, user, extra = {}) => {
   const accessToken = signAccessToken(user, undefined, extra);
   const refreshToken = signRefreshToken(user, familyId);
   const refreshTokenHash = hashToken(refreshToken);
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
 
   if (user && user.id && !isNaN(Number(user.id))) {
     await query(
@@ -45,7 +45,7 @@ const issueAuthSession = async (req, res, user, extra = {}) => {
     token: accessToken,
     accessToken,
     refreshToken,
-    expiresIn: 900,
+    expiresIn: 30 * 24 * 3600,
   };
 };
 
@@ -1538,7 +1538,7 @@ export const refreshTokens = asyncHandler(async (req, res) => {
   const newAccessToken = signAccessToken(user);
   const newRefreshToken = signRefreshToken(user, session.family_id);
   const newHash = hashToken(newRefreshToken);
-  const newExpiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+  const newExpiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
 
   await query(
     `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
@@ -1554,7 +1554,7 @@ export const refreshTokens = asyncHandler(async (req, res) => {
     token: newAccessToken,
     accessToken: newAccessToken,
     refreshToken: newRefreshToken,
-    expiresIn: 900,
+    expiresIn: 30 * 24 * 3600,
     user: publicUser(user),
   });
 });

@@ -8,8 +8,8 @@ export const getCookieOptions = (isRefresh = false) => {
       httpOnly: true,
       secure: isProd,
       sameSite: isProd ? 'lax' : 'lax',
-      path: '/api/auth',
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in ms
+      path: '/',
+      maxAge: 90 * 24 * 60 * 60 * 1000, // 90 days in ms
     };
   }
 
@@ -18,7 +18,7 @@ export const getCookieOptions = (isRefresh = false) => {
     secure: isProd,
     sameSite: isProd ? 'lax' : 'lax',
     path: '/',
-    maxAge: 15 * 60 * 1000, // 15 minutes in ms
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days in ms
   };
 };
 

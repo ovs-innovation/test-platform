@@ -73,7 +73,7 @@ export const env = {
 
   redisUrl: process.env.REDIS_URL || 'redis://127.0.0.1:6379',
   jwtSecret: jwtSecret,
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '2h',
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30d',
 
   seed: seedConfig,
 
