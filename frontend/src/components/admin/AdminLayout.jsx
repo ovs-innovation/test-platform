@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { Bell } from 'lucide-react';
+import { Bell, Home } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { notificationService } from '../../lib/services.js';
@@ -282,6 +282,17 @@ export default function AdminLayout({ children }) {
                   ✕
                 </button>
               </div>
+              {/* Back to Home Link (Mobile Drawer) */}
+              <div className="mb-3">
+                <Link
+                  to="/"
+                  onClick={() => setMobileDrawerOpen(false)}
+                  className="flex items-center gap-2.5 rounded-xl border border-slate-200/90 bg-slate-50/80 px-3 py-2 text-xs font-bold text-slate-700 hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all"
+                >
+                  <Home className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                  <span>Back to Home</span>
+                </Link>
+              </div>
               <nav className="space-y-3.5">
                 {ADMIN_NAV_GROUPS.map((grp, gIdx) => (
                   <div key={gIdx} className="space-y-0.5">
@@ -392,6 +403,16 @@ export default function AdminLayout({ children }) {
 
             {/* Right Action Toolbar */}
             <div className="flex items-center gap-2.5">
+              {/* Back to Home Button */}
+              <Link
+                to="/"
+                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
+                title="Back to Public Home Page"
+              >
+                <Home className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <span className="hidden sm:inline">Back to Home</span>
+              </Link>
+
               {/* Quick Actions Dropdown */}
               <div className="relative" ref={quickActionsRef}>
                 <button
