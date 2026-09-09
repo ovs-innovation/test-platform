@@ -6,14 +6,28 @@ const slugify = (t) =>
   t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 200);
 
 /**
- * List all test series for admin, including dynamically calculated linked/planned test counts.
+ * List all test series for admin, including dynamically calculated linked/planned test counts and tests list.
  */
 export const listTestSeries = asyncHandler(async (_req, res) => {
   const result = await query(
     `SELECT ts.*,
             COUNT(DISTINCT se.id)::int AS enrollment_count,
             COUNT(DISTINCT tst.test_id)::int AS linked_tests,
-            COUNT(DISTINCT tst.test_id)::int AS planned_tests
+            COUNT(DISTINCT tst.test_id)::int AS planned_tests,
+            COALESCE(
+              (
+                SELECT json_agg(
+                  json_build_object(
+                    'id', t.id,
+                    'title', COALESCE(t.test_name, t.title),
+                    'test_type', t.test_type
+                  )
+                )
+                FROM test_series_tests tst2
+                JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                WHERE tst2.series_id = ts.id
+              ), '[]'::json
+            ) AS tests
      FROM test_series ts
      LEFT JOIN student_enrollments se ON se.test_series_id = ts.id
      LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
@@ -84,12 +98,24 @@ export const unlinkTest = asyncHandler(async (req, res) => {
 });
 
 /**
- * Delete a test series.
+ * Delete a test series cleanly across all dependent relations.
  */
 export const deleteTestSeries = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const result = await query('DELETE FROM test_series WHERE id = $1 RETURNING id', [id]);
-  if (!result.rowCount) throw ApiError.notFound('Test series not found');
+
+  await withTransaction(async (client) => {
+    // Delete dependent references in join tables & enrollments to prevent foreign key errors
+    await client.query('DELETE FROM test_series_tests WHERE series_id = $1', [id]);
+    await client.query('DELETE FROM test_series_assessments WHERE test_series_id = $1', [id]);
+    await client.query('DELETE FROM student_enrollments WHERE test_series_id = $1', [id]);
+    await client.query('DELETE FROM payments WHERE test_series_id = $1', [id]);
+    await client.query('DELETE FROM institution_packages WHERE package_id = $1', [id]).catch(() => {});
+    await client.query('DELETE FROM package_tests WHERE package_id = $1', [id]).catch(() => {});
+
+    const result = await client.query('DELETE FROM test_series WHERE id = $1 RETURNING id', [id]);
+    if (!result.rowCount) throw ApiError.notFound('Test series not found');
+  });
+
   res.json({ message: 'Test series permanently deleted' });
 });
 
@@ -99,11 +125,22 @@ export const deleteTestSeries = asyncHandler(async (req, res) => {
 export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { is_active } = req.body;
+
+  let targetState;
+  if (typeof is_active === 'boolean') {
+    targetState = is_active;
+  } else {
+    const check = await query('SELECT is_active FROM test_series WHERE id = $1', [id]);
+    if (!check.rowCount) throw ApiError.notFound('Test series not found');
+    targetState = !check.rows[0].is_active;
+  }
+
   const result = await query(
-    'UPDATE test_series SET is_active = COALESCE($1, NOT is_active), updated_at = NOW() WHERE id = $2 RETURNING *',
-    [typeof is_active === 'boolean' ? is_active : null, id]
+    'UPDATE test_series SET is_active = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
+    [targetState, id]
   );
   if (!result.rowCount) throw ApiError.notFound('Test series not found');
+
   res.json({
     message: `Test series ${result.rows[0].is_active ? 'activated' : 'deactivated'} successfully`,
     test_series: result.rows[0],

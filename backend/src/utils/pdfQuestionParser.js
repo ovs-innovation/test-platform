@@ -13,10 +13,10 @@ export function parsePdfQuestions(text) {
   let questionPaperPart = cleanText;
   let answerKeyPart = '';
 
-  const headerRegex = /(?:\n\s*|\n?\s*)(?:Answer\s*Key(?:\s*&(?:amp;)?\s*(?:Explanations|Solutions))?|Answers\s*&(?:amp;)?\s*Explanations|Solutions\s*&(?:amp;)?\s*Explanations|ANSWER\s*KEY)(?:\s*\n|\s*:)/i;
+  const headerRegex = /(?:\n\s*|\n?\s*)(?:Answer\s*Key(?:\s*&(?:amp;)?\s*(?:Explanations|Solutions))?|Answers\s*&(?:amp;)?\s*Explanations|Solutions\s*&(?:amp;)?\s*Explanations|HINTS\s*&(?:amp;)?\s*SOLUTIONS|ANSWER\s*KEY|HINTS\s*\|\s*SOLUTIONS|EXPLANATIONS|SOLUTIONS)(?:\s*\n|\s*:)/i;
   const answerKeyMatch = cleanText.match(headerRegex);
 
-  if (answerKeyMatch && answerKeyMatch.index > 100) {
+  if (answerKeyMatch && answerKeyMatch.index > 50) {
     questionPaperPart = cleanText.substring(0, answerKeyMatch.index);
     answerKeyPart = cleanText.substring(answerKeyMatch.index);
   }
@@ -153,47 +153,42 @@ export function parsePdfQuestions(text) {
 
   // Parse Answer Key & Explanations if available at end of document
   if (answerKeyPart && questions.length > 0) {
-    const solutionBlocks = answerKeyPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)])/gi);
-    let currentCategory = 'General';
-    let qIndexCounter = 0;
+    const keyMap = parseAnswerKeyOnly(answerKeyPart);
+
+    // Extract solutions from Hints & Solutions section
+    const solMap = new Map();
+    const solutionBlocks = answerKeyPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)\:\-])/gi);
 
     for (const sBlock of solutionBlocks) {
-      const sMatch = sBlock.match(/^\s*(?:Q|Question\s*)?(\d+)[\.\)]\s*([\s\S]+)/i);
+      const sMatch = sBlock.match(/^\s*(?:Q|Question\s*)?(\d+)[\.\)\:\-]\s*([\s\S]+)/i);
       if (!sMatch) continue;
 
       const qNum = parseInt(sMatch[1], 10);
       const sBody = sMatch[2].trim();
 
-      const catMatch = sBody.match(/\(([A-Za-z\s]+)\)/);
-      if (catMatch && ['Physics', 'Chemistry', 'Biology', 'Mathematics', 'Maths'].includes(catMatch[1].trim())) {
-        currentCategory = catMatch[1].trim();
+      // Skip single-letter lines like "A" or "1. A" if they are just answer keys
+      if (/^[A-D1-4]\s*$/i.test(sBody)) continue;
+
+      let expText = '';
+      const expMatch = sBody.match(/(?:Explanation|Solution|Sol|Hint):\s*([\s\S]+)/i);
+      if (expMatch) {
+        expText = expMatch[1].trim();
+      } else {
+        expText = sBody.replace(/^(?:Correct Answer|Answer|Ans):\s*(?:\(|\[)?[A-D1-4](?:\)|\])?/gi, '').trim();
       }
 
-      const ansMatch = sBody.match(/(?:Correct Answer|Answer|Ans):\s*(?:\(|\[)?([A-D])(?:\)|\])?/i);
-      const expMatch = sBody.match(/(?:Explanation|Solution):\s*([^\n]+)/i);
+      if (expText && expText.length > 2 && !/^[A-D1-4]$/i.test(expText)) {
+        solMap.set(qNum, expText);
+      }
+    }
 
-      let targetQ = questions.find(q => q.num === qNum && q.bank_category === currentCategory && !q.matchedKey);
-      if (!targetQ) {
-        targetQ = questions.find(q => q.num === qNum && !q.matchedKey);
+    for (const q of questions) {
+      if (keyMap[q.num] !== undefined) {
+        q.correct_index = keyMap[q.num];
       }
-      if (!targetQ && qIndexCounter < questions.length) {
-        targetQ = questions[qIndexCounter];
+      if (solMap.has(q.num)) {
+        q.solution = solMap.get(q.num);
       }
-
-      if (targetQ) {
-        targetQ.matchedKey = true;
-        if (ansMatch) {
-          const letter = ansMatch[1].toUpperCase();
-          const charCode = letter.charCodeAt(0) - 65;
-          if (charCode >= 0 && charCode < targetQ.options.length) {
-            targetQ.correct_index = charCode;
-          }
-        }
-        if (expMatch) {
-          targetQ.solution = expMatch[1].trim();
-        }
-      }
-      qIndexCounter++;
     }
   }
 

@@ -118,8 +118,9 @@ export default function AdminTestManager() {
   const [editingTest, setEditingTest] = useState(null);
 
   const [uploadModalTest, setUploadModalTest] = useState(null);
-  const [uploadType, setUploadType] = useState('solution_pdf');
+  const [uploadType, setUploadType] = useState('question_paper');
   const [uploadFile, setUploadFile] = useState(null);
+  const [uploadIncludeAnswers, setUploadIncludeAnswers] = useState(true);
   const [uploading, setUploading] = useState(false);
 
   const [assignModalTest, setAssignModalTest] = useState(null);
@@ -341,6 +342,7 @@ export default function AdminTestManager() {
           file_type: uploadType,
           file_name: uploadFile.name,
           file_base64: uploadEvent.target.result,
+          include_answers: uploadType === 'question_paper' ? uploadIncludeAnswers : true,
         });
         toast.success('File uploaded successfully & test parameters updated!');
         setUploadModalTest(null);
@@ -942,6 +944,28 @@ export default function AdminTestManager() {
                   className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-semibold"
                 />
               </div>
+
+              {uploadType === 'question_paper' && (
+                <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3 bg-slate-50 dark:bg-slate-900/60">
+                  <label className="flex items-start gap-2.5 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={uploadIncludeAnswers}
+                      onChange={(e) => setUploadIncludeAnswers(e.target.checked)}
+                      disabled={uploading}
+                      className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                    />
+                    <div className="text-xs">
+                      <span className="font-bold text-slate-800 dark:text-slate-200">
+                        Include answer key / Detect correct options
+                      </span>
+                      <p className="text-slate-500 dark:text-slate-400 mt-0.5 font-normal">
+                        Uncheck if uploading a question paper without answers. Questions will be imported without highlighting any answer in green.
+                      </p>
+                    </div>
+                  </label>
+                </div>
+              )}
 
               <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
                 <button

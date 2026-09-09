@@ -48,6 +48,7 @@ import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly } from '../utils/pdfQuestionParser.js';
+import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 
 /**
@@ -416,7 +417,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
     total_questions,
     duration_minutes,
     max_marks,
-    passing_marks
+    passing_marks,
+    include_answers
   } = req.body; // file_type: 'question_paper' | 'answer_key' | 'solution_pdf'
 
   if (!['question_paper', 'answer_key', 'solution_pdf'].includes(file_type)) {
@@ -456,91 +458,261 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
     [relativeUrl, cleanDuration, cleanPass, id]
   ).catch(() => { });
 
-  // Automatic PDF Question Extraction
+  // Automatic PDF Question Extraction (Gemini Vision + Fallback Regex)
   let extractedCount = 0;
+  let extractedBy = 'none';
   let reviewWarnings = [];
-  if (file_base64 && typeof file_base64 === 'string') {
+  let extractedQuestionsJson = [];
+  let extractionStats = null;
+
+  const isDocxFile = file_name && (file_name.toLowerCase().endsWith('.docx') || file_name.toLowerCase().endsWith('.doc'));
+  if (isDocxFile) {
+    reviewWarnings.push('Selected file is a Word document (.docx/.doc). Automatic AI question extraction requires a standard PDF (.pdf) file. Please export your Word document as PDF and re-upload.');
+  }
+
+  if (file_base64 && typeof file_base64 === 'string' && !isDocxFile) {
     try {
       const base64Data = file_base64.replace(/^data:[^;]+;base64,/, '');
       const pdfBuffer = Buffer.from(base64Data, 'base64');
-      const pdfData = await pdfParse(pdfBuffer).catch(() => null);
+      const includeAnswers = include_answers !== false && include_answers !== 'false';
 
-      if (pdfData && pdfData.text) {
-        console.log('\n===================================================================');
-        console.log('[PDF EXTRACTION LOG] Raw PDF Extracted Text (First 1000 chars):');
-        console.log(pdfData.text.substring(0, 1000));
-        console.log('===================================================================\n');
+      const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
+      extractedBy = pdfExtraction.extractedBy || 'pdf-parse-regex';
+      extractionStats = pdfExtraction.stats || null;
+      const parsedQs = pdfExtraction.rows || [];
 
-        const parsedQs = parsePdfQuestions(pdfData.text);
-        if (parsedQs.length > 0) {
-          extractedCount = parsedQs.length;
-          reviewWarnings = parsedQs.filter(q => q.needs_review).map(q => q.review_reason);
-          if (reviewWarnings.length > 0) {
-            console.warn(`[PDF Import Warning] ${reviewWarnings.length} question(s) flagged for manual review:`, reviewWarnings);
-          }
+      if (file_type === 'solution_pdf') {
+        await query('UPDATE assessments SET solution_pdf_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
+        return res.json({
+          message: 'Solution PDF uploaded and attached successfully.',
+          url: relativeUrl,
+          file_type
+        });
+      }
 
-          // Retrieve test details for context
-          const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
-          const currentTest = currentTestRes.rows[0] || {};
-
-          await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
-          let calcTotalMarks = 0;
-          const detectedSubjects = new Set();
-
-          for (let i = 0; i < parsedQs.length; i++) {
-            const q = parsedQs[i];
-            calcTotalMarks += (q.marks || 4);
-
-            // Infer subject & topic from test name, syllabus, pdf text, and question text
-            const classification = inferSubjectAndTopic({
-              testName: currentTest.test_name,
-              syllabus: currentTest.syllabus,
-              questionText: q.question_text,
-              pdfText: pdfData.text
-            });
-
-            const qSubject = (q.bank_category && q.bank_category !== 'General') ? q.bank_category : classification.subject;
-            const qTopic = classification.topic;
-            if (qSubject && qSubject !== 'General') detectedSubjects.add(qSubject);
-
-            await query(
-              `INSERT INTO questions (
-                assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic
-              ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10)`,
-              [
-                id,
-                q.question_text,
-                JSON.stringify(q.options),
-                q.correct_index || 0,
-                q.marks || 4,
-                i + 1,
-                qSubject || 'General',
-                q.solution || '',
-                qSubject,
-                qTopic
-              ]
-            );
-          }
-
-          const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
-          const subjectsArray = Array.from(detectedSubjects);
-
-          if (calcTotalMarks > 0 || primarySubject) {
-            await query(
-              `UPDATE tests SET 
-                max_marks = GREATEST(max_marks, $1),
-                subject = COALESCE(subject, $2),
-                subjects = COALESCE(subjects, $3::jsonb),
-                updated_at = NOW()
-               WHERE id = $4`,
-              [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
-            );
-            await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
+      if (file_type === 'answer_key') {
+        let answerKeyMap = {};
+        if (pdfExtraction.text_preview) {
+          answerKeyMap = parseAnswerKeyOnly(pdfExtraction.text_preview);
+        }
+        for (const q of parsedQs) {
+          const qNum = q.questionNumber || q.line;
+          if (qNum && q.correct_index !== null && q.correct_index !== undefined && answerKeyMap[qNum] === undefined) {
+            answerKeyMap[qNum] = q.correct_index;
           }
         }
 
-        // Also check for standalone Answer Key entries (e.g. 1. A, 2. B, 3. C) and update existing questions
-        const answerKeyMap = parseAnswerKeyOnly(pdfData.text);
+        const keyEntries = Object.entries(answerKeyMap);
+        let updatedCount = 0;
+        if (keyEntries.length > 0) {
+          for (const [qNumStr, correctIdx] of keyEntries) {
+            const qPos = parseInt(qNumStr, 10);
+            const upd = await query(
+              `UPDATE questions 
+               SET correct_index = $1, 
+                   extraction_meta = COALESCE(extraction_meta, '{}'::jsonb) || '{"hasAnswerKey": true}'::jsonb
+               WHERE assessment_id = $2 AND position = $3`,
+              [correctIdx, id, qPos]
+            );
+            if (upd.rowCount > 0) updatedCount += upd.rowCount;
+          }
+        }
+
+        await query('UPDATE assessments SET answer_key_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
+
+        return res.json({
+          message: `Answer key PDF uploaded successfully. Updated ${updatedCount} question answer key(s).`,
+          url: relativeUrl,
+          file_type,
+          updatedCount,
+          answerKeyMap
+        });
+      }
+
+      if (file_type === 'question_paper' && parsedQs.length > 0) {
+        extractedCount = parsedQs.length;
+        reviewWarnings = parsedQs.filter((q) => q.needs_review || q.extraction?.needsReview).map((q) => q.review_reason || `Question ${q.questionNumber || q.line}: Needs manual review.`);
+        if (pdfExtraction.warnings && pdfExtraction.warnings.length > 0) {
+          reviewWarnings.push(...pdfExtraction.warnings);
+        }
+
+        // Also ensure question_paper_url is populated on test & assessment if missing
+        await query(
+          'UPDATE tests SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
+          [relativeUrl, id]
+        );
+        await query(
+          'UPDATE assessments SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
+          [relativeUrl, id]
+        ).catch(() => {});
+
+        if (reviewWarnings.length > 0) {
+          console.warn(`[PDF Import Warning] ${reviewWarnings.length} warning(s)/flag(s):`, reviewWarnings);
+        }
+
+        // Retrieve test details for context
+        const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
+        const currentTest = currentTestRes.rows[0] || {};
+
+        await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
+        let calcTotalMarks = 0;
+        const detectedSubjects = new Set();
+
+        for (let i = 0; i < parsedQs.length; i++) {
+          const q = parsedQs[i];
+          calcTotalMarks += (q.marks || 4);
+
+          const classification = inferSubjectAndTopic({
+            testName: currentTest.test_name,
+            syllabus: currentTest.syllabus,
+            questionText: q.question_text || q.questionText,
+            pdfText: pdfExtraction.text_preview || ''
+          });
+
+          const qSubject = (q.subject && q.subject !== 'General') ? q.subject : (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
+          const qTopic = classification.topic;
+          if (qSubject && qSubject !== 'General') detectedSubjects.add(qSubject);
+
+          const qNum = q.questionNumber || i + 1;
+          const finalSubject = (q.subject && q.subject !== 'General') ? q.subject : (qSubject || 'General');
+          const finalChapter = (q.chapter && q.chapter !== 'General') ? q.chapter : (qTopic || classification.topic || 'General');
+
+          const hasAnswer = Boolean(
+            includeAnswers &&
+            (q.correctAnswer || (q.correct_index !== null && q.correct_index !== undefined)) &&
+            q.extraction?.hasAnswerKey !== false
+          );
+          const dbCorrectIndex = hasAnswer && q.correct_index !== null && q.correct_index !== undefined
+            ? Number(q.correct_index)
+            : null;
+          const finalCorrectAnswer = hasAnswer
+            ? (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null))
+            : null;
+
+          const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
+          const allMedia = [
+            ...(q.question?.media || []),
+            ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
+            ...(q.explanation?.media || []),
+          ];
+          const mediaArrayJson = JSON.stringify(allMedia.length > 0 ? allMedia : (q.media || []));
+          const tablesArrayJson = JSON.stringify(q.tables || []);
+          const extractionMetaObj = {
+            confidence: q.extraction?.confidence || (q.needs_review ? 0.60 : 0.96),
+            needsReview: Boolean(q.extraction?.needsReview ?? q.needs_review),
+            sourcePages: q.extraction?.sourcePages || [1],
+            extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
+            hasAnswerKey: hasAnswer,
+            ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
+          };
+          const extractionMetaJson = JSON.stringify(extractionMetaObj);
+
+          await query(
+            `INSERT INTO questions (
+              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, media, tables, extraction_meta
+            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+            [
+              id,
+              q.question?.text || q.question_text || q.questionText,
+              JSON.stringify(q.options),
+              dbCorrectIndex,
+              q.marks || 4,
+              i + 1,
+              finalSubject || 'General',
+              q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''),
+              finalSubject,
+              finalChapter,
+              finalChapter,
+              primaryMediaUrl,
+              mediaArrayJson,
+              tablesArrayJson,
+              extractionMetaJson
+            ]
+          );
+
+          // Build question media
+          const questionMedia = Array.isArray(q.question?.media)
+            ? q.question.media
+            : (Array.isArray(q.media) && q.media.length > 0 ? q.media : (primaryMediaUrl ? [{
+                id: `q${qNum}-img-1`,
+                type: 'diagram',
+                url: primaryMediaUrl,
+                description: `Diagram for question ${qNum}`,
+                sourcePage: q.extraction?.sourcePages?.[0] || 1,
+              }] : []));
+
+          // Build options with media
+          let formattedOptionsWithMedia = [];
+          if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
+            formattedOptionsWithMedia = q.options.map((opt) => ({
+              key: String(opt.key).toUpperCase().trim(),
+              text: String(opt.text || ''),
+              media: Array.isArray(opt.media) ? opt.media : [],
+            }));
+          } else if (Array.isArray(q.rawOptions)) {
+            formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
+              key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
+              text: typeof opt === 'object' && opt.text !== undefined ? String(opt.text) : String(opt || ''),
+              media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
+            }));
+          } else if (Array.isArray(q.options)) {
+            formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
+              key: String.fromCharCode(65 + optIdx),
+              text: String(optText || ''),
+              media: [],
+            }));
+          }
+
+          // Build explanation
+          const explanationText = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
+          const explanationMedia = Array.isArray(q.explanation?.media) ? q.explanation.media : [];
+
+          // Build standardized structured JSON format matching requested schema exactly
+          extractedQuestionsJson.push({
+            questionNumber: qNum,
+            subject: finalSubject,
+            chapter: finalChapter,
+
+            question: {
+              text: q.question?.text || q.question_text || q.questionText || '',
+              media: questionMedia,
+            },
+
+            options: formattedOptionsWithMedia,
+
+            explanation: {
+              text: explanationText,
+              media: explanationMedia,
+            },
+
+            tables: Array.isArray(q.tables) ? q.tables : [],
+
+            correctAnswer: finalCorrectAnswer,
+
+            extraction: extractionMetaObj,
+          });
+        }
+
+        const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
+        const subjectsArray = Array.from(detectedSubjects);
+
+        if (calcTotalMarks > 0 || primarySubject) {
+          await query(
+            `UPDATE tests SET 
+              max_marks = GREATEST(max_marks, $1),
+              subject = COALESCE(subject, $2),
+              subjects = COALESCE(subjects, $3::jsonb),
+              updated_at = NOW()
+             WHERE id = $4`,
+            [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
+          );
+          await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
+        }
+      }
+
+      // Check standalone Answer Key fallback if regex parsed text (only if answers are requested)
+      if (includeAnswers && pdfExtraction.text_preview) {
+        const answerKeyMap = parseAnswerKeyOnly(pdfExtraction.text_preview);
         const keyEntries = Object.entries(answerKeyMap);
         if (keyEntries.length > 0) {
           for (const [qNumStr, correctIdx] of keyEntries) {
@@ -553,7 +725,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         }
       }
     } catch (err) {
-      console.error('PDF Question Extraction Warning:', err.message);
+      console.error('PDF Question Extraction Error:', err.message);
     }
   }
 
@@ -562,16 +734,18 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   if (qNum > 0 && extractedCount === 0) {
     const qCheck = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [id]);
     if (qCheck.rows[0].c === 0) {
+      const includeAnswers = include_answers !== false && include_answers !== 'false';
       const marksPerQ = cleanMarks && qNum ? Math.max(1, Math.floor(cleanMarks / qNum)) : 4;
       for (let i = 1; i <= qNum; i++) {
         await query(
           `INSERT INTO questions (
             assessment_id, question_text, question_type, options, correct_index, marks, position
-          ) VALUES ($1, $2, 'mcq', $3, 0, $4, $5)`,
+          ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6)`,
           [
             id,
             `Question ${i}: Select the correct option for this question statement.`,
             JSON.stringify(['(A) Option 1', '(B) Option 2', '(C) Option 3', '(D) Option 4']),
+            includeAnswers ? 0 : null,
             marksPerQ,
             i
           ]
@@ -584,6 +758,10 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
     message: `${file_type} uploaded successfully`,
     url: relativeUrl,
     file_type,
+    extractedBy,
+    extractedCount,
+    stats: extractionStats,
+    extractedQuestions: extractedQuestionsJson,
     warnings: reviewWarnings.length > 0 ? reviewWarnings : undefined
   });
 });
@@ -808,5 +986,129 @@ export const notifyTestReminder = asyncHandler(async (req, res) => {
     message: `Test reminder notification broadcasted to ${candidates.length} candidates.`,
     dashboard_notifications_created: candidates.length,
     emails_sent: emailsSent
+  });
+});
+
+/**
+ * 15. GET /api/admin/tests/:id/extracted-questions
+ * Retrieve all questions for a test formatted in the standardized JSON schema
+ */
+export const getTestExtractedQuestions = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const questionsRes = await query(
+    'SELECT * FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+    [id]
+  );
+
+  const formattedQuestions = questionsRes.rows.map((q, idx) => {
+    const qNum = q.position || idx + 1;
+    let parsedOpts = [];
+    try {
+      parsedOpts = typeof q.options === 'string' ? JSON.parse(q.options) : (q.options || []);
+    } catch (_) {
+      parsedOpts = [];
+    }
+
+    let parsedMedia = [];
+    try {
+      parsedMedia = typeof q.media === 'string' ? JSON.parse(q.media) : (q.media || []);
+    } catch (_) {
+      parsedMedia = [];
+    }
+
+    let parsedTables = [];
+    try {
+      parsedTables = typeof q.tables === 'string' ? JSON.parse(q.tables) : (q.tables || []);
+    } catch (_) {
+      parsedTables = [];
+    }
+
+    let parsedExtraction = {};
+    try {
+      parsedExtraction = typeof q.extraction_meta === 'string' ? JSON.parse(q.extraction_meta) : (q.extraction_meta || {});
+    } catch (_) {
+      parsedExtraction = {};
+    }
+
+    // Filter question media
+    const questionMedia = parsedMedia
+      .filter((m) => !m.type?.includes('solution') && !m.id?.includes('exp'))
+      .map((m, mIdx) => ({
+        id: m.id || `q${qNum}-img-${mIdx + 1}`,
+        type: m.type || 'diagram',
+        url: m.url,
+        description: m.description || `Diagram for question ${qNum}`,
+        sourcePage: m.sourcePage || parsedExtraction.sourcePages?.[0] || 1,
+      }));
+
+    if (questionMedia.length === 0 && q.image_url) {
+      questionMedia.push({
+        id: `q${qNum}-img-1`,
+        type: 'diagram',
+        url: q.image_url,
+        description: `Diagram for question ${qNum}`,
+        sourcePage: parsedExtraction.sourcePages?.[0] || 1,
+      });
+    }
+
+    // Filter explanation media
+    const explanationMedia = parsedMedia
+      .filter((m) => m.type?.includes('solution') || m.id?.includes('exp'))
+      .map((m, mIdx) => ({
+        id: m.id || `q${qNum}-exp-${mIdx + 1}`,
+        type: m.type || 'diagram',
+        url: m.url,
+        description: m.description || 'Solution circuit diagram',
+        sourcePage: m.sourcePage || parsedExtraction.sourcePages?.[0] || 1,
+      }));
+
+    // Format options
+    const optionsList = parsedOpts.map((opt, oIdx) => {
+      const optKey = typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + oIdx);
+      const optText = typeof opt === 'object' && opt.text !== undefined ? String(opt.text) : String(opt);
+      const optMedia = typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [];
+      return {
+        key: optKey,
+        text: optText,
+        media: optMedia,
+      };
+    });
+
+    return {
+      questionNumber: qNum,
+      subject: q.subject || q.bank_category || 'General',
+      chapter: q.chapter || q.topic || 'General',
+
+      question: {
+        text: q.question_text || '',
+        media: questionMedia,
+      },
+
+      options: optionsList,
+
+      explanation: {
+        text: q.solution || '',
+        media: explanationMedia,
+      },
+
+      tables: parsedTables,
+
+      correctAnswer: String.fromCharCode(65 + (q.correct_index || 0)),
+
+      extraction: {
+        confidence: parsedExtraction.confidence || 0.96,
+        needsReview: Boolean(parsedExtraction.needsReview),
+        sourcePages: parsedExtraction.sourcePages || [1],
+        extractedBy: parsedExtraction.extractedBy || 'gemini-vision',
+        ...(parsedExtraction.reviewReason ? { reviewReason: parsedExtraction.reviewReason } : {}),
+      },
+    };
+  });
+
+  res.json({
+    success: true,
+    test_id: Number(id),
+    questionCount: formattedQuestions.length,
+    questions: formattedQuestions,
   });
 });

@@ -101,8 +101,8 @@ export const importToAssessment = asyncHandler(async (req, res) => {
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
      RETURNING *`,
     [
       assessmentId,
@@ -124,6 +124,7 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       b.category,
       b.solution || '',
       b.image_url || '',
+      b.solution_image_url || '',
       subject_id,
       chapter_id,
       b.difficulty || 'medium',
@@ -135,10 +136,10 @@ export const importToAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createBankQuestion = asyncHandler(async (req, res) => {
-  const { category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
+  const { category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url } = req.body;
   const result = await query(
-    `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16) RETURNING *`,
+    `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *`,
     [
       category,
       question_type || 'mcq',
@@ -156,6 +157,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       chapter_id || null,
       difficulty || 'medium',
       image_url || '',
+      solution_image_url || '',
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -163,7 +165,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
 
 export const updateBankQuestion = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url } = req.body;
+  const { question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url } = req.body;
   
   const existing = await query('SELECT * FROM question_bank WHERE id = $1', [id]);
   if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
@@ -184,8 +186,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        subject_id = $11,
        chapter_id = $12,
        difficulty = $13,
-       image_url = $14
-     WHERE id = $15 RETURNING *`,
+       image_url = $14,
+       solution_image_url = $15
+     WHERE id = $16 RETURNING *`,
     [
       question_text ?? q.question_text,
       options ? asJson(options, []) : q.options,
@@ -200,7 +203,8 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       subject_id !== undefined ? (subject_id || null) : q.subject_id,
       chapter_id !== undefined ? (chapter_id || null) : q.chapter_id,
       difficulty ?? q.difficulty,
-      image_url ?? q.image_url,
+      image_url !== undefined ? image_url : q.image_url,
+      solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
       id
     ]
   );

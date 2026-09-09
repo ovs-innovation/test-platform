@@ -7,6 +7,7 @@ import ActionDropdown from '../../components/ActionDropdown.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
+import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 
 const tryParseArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -184,6 +185,8 @@ export default function AdminQuestionBank() {
       correct_option: 0,
       solution_text: '',
       explanation_url: '',
+      image_url: '',
+      solution_image_url: '',
     });
     setModalOpen(true);
   };
@@ -198,6 +201,8 @@ export default function AdminQuestionBank() {
       correct_option: q.correct_option ?? 0,
       solution_text: q.solution_text || '',
       explanation_url: q.explanation_url || '',
+      image_url: q.image_url || '',
+      solution_image_url: q.solution_image_url || '',
       subject_id: q.subject_id || null,
       subject: q.subject || '',
       chapter_id: q.chapter_id || null,
@@ -208,15 +213,8 @@ export default function AdminQuestionBank() {
     setModalOpen(true);
   };
 
-  const removeQuestion = async (id) => {
-    if (!window.confirm('Delete this question permanently?')) return;
-    try {
-      await questionBankService.delete(id);
-      toast.success('Question deleted');
-      load();
-    } catch (err) {
-      toast.error(err.message || 'Delete failed');
-    }
+  const removeQuestion = (id) => {
+    setDeleteQuestionId(id);
   };
 
   const saveQuestion = async (e) => {
@@ -225,6 +223,8 @@ export default function AdminQuestionBank() {
     try {
       const payload = {
         ...form,
+        image_url: form.image_url || null,
+        solution_image_url: form.solution_image_url || null,
         subject: category,
         correct_option: Number(form.correct_option),
       };
@@ -506,15 +506,21 @@ export default function AdminQuestionBank() {
             </div>
           )}
 
-          <div>
-            <label className="label">Image URL (optional)</label>
-            <input className="input" placeholder="e.g. /images/q1.png" value={form.image_url || ''} onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))} />
-          </div>
+          <QuestionImageUploader
+            value={form.image_url || ''}
+            onChange={(url) => setForm((f) => ({ ...f, image_url: url }))}
+          />
 
           <div>
             <label className="label">Detailed Solution Explanation (optional)</label>
             <textarea rows={3} className="input" placeholder="Explain the step-by-step solution..." value={form.solution || ''} onChange={(e) => setForm((f) => ({ ...f, solution: e.target.value }))} />
           </div>
+
+          <QuestionImageUploader
+            label="Solution Diagram / Step-by-Step Image (Optional)"
+            value={form.solution_image_url || ''}
+            onChange={(url) => setForm((f) => ({ ...f, solution_image_url: url }))}
+          />
 
           <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-4">
             <button type="button" className="btn-secondary" onClick={() => setModalOpen(false)}>Cancel</button>

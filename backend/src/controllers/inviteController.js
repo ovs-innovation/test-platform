@@ -71,7 +71,7 @@ export const createInvite = asyncHandler(async (req, res) => {
   if (aRes.rowCount === 0) throw ApiError.notFound('Assessment not found');
 
   const qCount = await query(
-    `SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1 OR test_id = $1`,
+    `SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1`,
     [assessment_id]
   );
   if (qCount.rows[0].c === 0) {
@@ -101,9 +101,8 @@ export const createInvite = asyncHandler(async (req, res) => {
         assessment.duration_minutes
       );
     } catch (err) {
-      if (env.isProd) throw err;
       // eslint-disable-next-line no-console
-      console.warn('[email] Invite email failed (SMTP not configured):', err.message);
+      console.warn('[email] Invite email failed:', err.message);
     }
   };
 
@@ -136,7 +135,7 @@ export const createInvite = asyncHandler(async (req, res) => {
     `INSERT INTO candidate_invites (assessment_id, candidate_name, candidate_email, created_by)
      VALUES ($1, $2, $3, $4)
      RETURNING *`,
-    [assessment_id, candidate_name, candidate_email.toLowerCase(), req.user.id]
+    [assessment_id, candidate_name, candidate_email.toLowerCase(), req.user?.id || null]
   );
   const invite = result.rows[0];
 
@@ -209,9 +208,8 @@ export const resendInvite = asyncHandler(async (req, res) => {
       invite.duration_minutes
     );
   } catch (err) {
-    if (env.isProd) throw err;
     // eslint-disable-next-line no-console
-    console.warn('[email] Resend failed (SMTP not configured):', err.message);
+    console.warn('[email] Resend failed:', err.message);
   }
   res.json({ message: 'Invitation resent', invite_url: inviteUrl });
 });

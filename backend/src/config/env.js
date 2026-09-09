@@ -107,5 +107,6 @@ export const env = {
   },
   firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
   geminiApiKey: process.env.GEMINI_API_KEY || '',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-3-flash-preview',
   openrouterApiKey: process.env.OPENROUTER_API_KEY || '',
 };

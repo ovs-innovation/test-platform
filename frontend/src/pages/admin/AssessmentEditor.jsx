@@ -12,7 +12,8 @@ import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
-import { ChevronDown, Check, Zap } from 'lucide-react';
+import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
+import { ChevronDown, Check, Copy, Download, Code, Zap } from 'lucide-react';
 
 const toDatetimeLocal = (isoString) => {
   if (!isoString) return '';
@@ -70,6 +71,7 @@ const emptyForm = (type) => ({
   test_cases: [{ input: '', expected: '' }],
   solution: '',
   image_url: '',
+  solution_image_url: '',
   subject_id: null,
   chapter_id: null,
   difficulty: 'medium',
@@ -326,6 +328,17 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   const [csvText, setCsvText] = useState(CSV_TEMPLATE);
   const [uploading, setUploading] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [pdfOpen, setPdfOpen] = useState(false);
+  const [pdfFile, setPdfFile] = useState(null);
+  const [includeAnswers, setIncludeAnswers] = useState(true);
+  const [pdfUploading, setPdfUploading] = useState(false);
+  const [keyModalOpen, setKeyModalOpen] = useState(false);
+  const [keyFile, setKeyFile] = useState(null);
+  const [keyUploading, setKeyUploading] = useState(false);
+  const [jsonModalOpen, setJsonModalOpen] = useState(false);
+  const [jsonQuestionsData, setJsonQuestionsData] = useState(null);
+  const [jsonLoading, setJsonLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
   const fileRef = useRef(null);
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkMarksOpen, setBulkMarksOpen] = useState(false);
@@ -415,6 +428,112 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
     }
   };
 
+  const handleKeyUpload = async (e) => {
+    e.preventDefault();
+    if (!keyFile) return toast.error('Please select an answer key PDF file');
+    setKeyUploading(true);
+    const reader = new FileReader();
+    reader.onload = async (uploadEvent) => {
+      try {
+        const res = await adminService.uploadTestFile(assessmentId, {
+          file_type: 'answer_key',
+          file_name: keyFile.name,
+          file_base64: uploadEvent.target.result,
+        });
+        toast.success(res.message || 'Answer key uploaded and applied successfully!');
+        setKeyModalOpen(false);
+        setKeyFile(null);
+        onReload();
+      } catch (err) {
+        toast.error(err.message || 'Answer key upload failed');
+      } finally {
+        setKeyUploading(false);
+      }
+    };
+    reader.readAsDataURL(keyFile);
+  };
+
+  const handlePdfUpload = async (e) => {
+    e.preventDefault();
+    if (!pdfFile) return toast.error('Please select a PDF file');
+    if (!pdfFile.name.toLowerCase().endsWith('.pdf')) {
+      return toast.error('Selected file is not a PDF (.pdf). Please upload a valid PDF file.');
+    }
+
+    setPdfUploading(true);
+    const reader = new FileReader();
+    reader.onload = async (uploadEvent) => {
+      try {
+        const res = await adminService.uploadTestFile(assessmentId, {
+          file_type: 'question_paper',
+          file_name: pdfFile.name,
+          file_base64: uploadEvent.target.result,
+          include_answers: includeAnswers,
+        });
+
+        toast.success(res.message || `Successfully extracted ${res.extractedCount || 0} questions via Gemini Vision!`);
+        if (res.warnings && res.warnings.length > 0) {
+          toast.warning(`Note: ${res.warnings.length} question(s) flagged for review.`);
+        }
+        setPdfOpen(false);
+        setPdfFile(null);
+        if (res.extractedQuestions && res.extractedQuestions.length > 0) {
+          setJsonQuestionsData(res.extractedQuestions);
+          setJsonModalOpen(true);
+        }
+        onReload();
+      } catch (err) {
+        toast.error(err.message || 'PDF extraction failed');
+      } finally {
+        setPdfUploading(false);
+      }
+    };
+    reader.readAsDataURL(pdfFile);
+  };
+
+  const handleOpenExtractedJson = async () => {
+    if (jsonQuestionsData && jsonQuestionsData.length > 0) {
+      setJsonModalOpen(true);
+      return;
+    }
+    setJsonLoading(true);
+    try {
+      const res = await adminService.getTestExtractedQuestions(assessmentId);
+      if (res.questions && res.questions.length > 0) {
+        setJsonQuestionsData(res.questions);
+        setJsonModalOpen(true);
+      } else {
+        toast.error('No extracted questions found for this test yet. Please upload a PDF first.');
+      }
+    } catch (err) {
+      toast.error(err.message || 'Failed to fetch extracted JSON data');
+    } finally {
+      setJsonLoading(false);
+    }
+  };
+
+  const handleCopyJson = () => {
+    if (!jsonQuestionsData) return;
+    const jsonStr = JSON.stringify(jsonQuestionsData, null, 2);
+    navigator.clipboard.writeText(jsonStr);
+    setCopied(true);
+    toast.success('Extracted JSON copied to clipboard!');
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownloadJson = () => {
+    if (!jsonQuestionsData) return;
+    const jsonStr = JSON.stringify(jsonQuestionsData, null, 2);
+    const blob = new Blob([jsonStr], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `assessment_${assessmentId}_extracted_questions.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success('Downloaded questions JSON file');
+  };
+
   useEffect(() => {
     questionBankService.categories().then((res) => {
       if (res?.categories?.length) {
@@ -461,6 +580,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       test_cases: q.test_cases?.length ? q.test_cases : [{ input: '', expected: '' }],
       solution: q.solution || '',
       image_url: q.image_url || '',
+      solution_image_url: q.solution_image_url || '',
       subject_id: subjId,
       subject: q.subject || '',
       chapter_id: chapId,
@@ -479,6 +599,8 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
       const payload = {
         ...form,
+        image_url: form.image_url || null,
+        solution_image_url: form.solution_image_url || null,
         subject_id: form.subject_id || null,
         subject: form.subject || '',
         chapter_id: form.chapter_id || null,
@@ -626,6 +748,21 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
             >
               <Zap className="h-3.5 w-3.5 text-amber-500 fill-amber-500/20" />
               Bulk Update Marks
+            </button>
+            <button type="button" className="btn-secondary text-xs font-bold text-blue-600 dark:text-blue-400" onClick={() => setPdfOpen(true)}>
+              📄 PDF Question Import
+            </button>
+            <button type="button" className="btn-secondary text-xs font-bold text-emerald-600 dark:text-emerald-400" onClick={() => setKeyModalOpen(true)}>
+              🔑 Upload Answer Key PDF
+            </button>
+            <button
+              type="button"
+              className="btn-secondary text-xs font-semibold text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5"
+              onClick={handleOpenExtractedJson}
+              disabled={jsonLoading}
+            >
+              {jsonLoading ? <Spinner className="h-3 w-3" /> : <Code className="h-3.5 w-3.5" />}
+              View Extracted JSON
             </button>
             <button type="button" className="btn-secondary text-xs" onClick={() => setCsvOpen(true)}>CSV Import</button>
             <button type="button" className="btn-secondary text-xs" onClick={exportCsv} disabled={exporting || !questions.length}>
@@ -822,6 +959,124 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
           <button type="button" className="btn-primary" onClick={uploadCsv} disabled={uploading}>
             {uploading ? <Spinner className="h-4 w-4" /> : 'Import questions'}
           </button>
+        </div>
+      </Modal>
+
+      <Modal open={pdfOpen} onClose={() => setPdfOpen(false)} title="Gemini Vision PDF Question Import" size="md">
+        <form onSubmit={handlePdfUpload} className="space-y-4">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Upload a PDF question paper. Gemini Vision will analyze visual layouts, questions, options, diagrams, graphs, tables, equations, and answer keys, then automatically import them into this assessment.
+          </p>
+          <div>
+            <label className="label">Select PDF Question Paper (.pdf)</label>
+            <input
+              type="file"
+              accept=".pdf"
+              className="input text-xs"
+              onChange={(e) => setPdfFile(e.target.files[0] || null)}
+              disabled={pdfUploading}
+            />
+          </div>
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 p-3 bg-slate-50 dark:bg-slate-900/60">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={includeAnswers}
+                onChange={(e) => setIncludeAnswers(e.target.checked)}
+                disabled={pdfUploading}
+                className="mt-0.5 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+              />
+              <div className="text-xs">
+                <span className="font-semibold text-slate-800 dark:text-slate-200">
+                  Detect & include answer key / correct options
+                </span>
+                <p className="text-slate-500 dark:text-slate-400 mt-0.5 font-normal">
+                  Uncheck if this PDF is a question paper without answers. The options will not highlight any answer in green.
+                </p>
+              </div>
+            </label>
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <button type="button" className="btn-secondary text-xs" onClick={() => setPdfOpen(false)} disabled={pdfUploading}>Cancel</button>
+            <button type="submit" className="btn-primary text-xs" disabled={pdfUploading || !pdfFile}>
+              {pdfUploading ? (
+                <>
+                  <Spinner className="mr-1.5 h-3 w-3 text-white" />
+                  Analyzing PDF & Extracting Questions...
+                </>
+              ) : (
+                'Start Gemini Vision Extraction'
+              )}
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      <Modal open={keyModalOpen} onClose={() => setKeyModalOpen(false)} title="Upload Answer Key PDF" size="md">
+        <form onSubmit={handleKeyUpload} className="space-y-4">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Upload an Answer Key PDF containing question numbers and corresponding answers (e.g., 1. A, 2. B, 3. C, or key tables). The system will automatically map the correct answers to all questions in this assessment and update them.
+          </p>
+          <div>
+            <label className="label">Select Answer Key PDF (.pdf)</label>
+            <input
+              type="file"
+              accept=".pdf"
+              className="input text-xs"
+              onChange={(e) => setKeyFile(e.target.files[0] || null)}
+              disabled={keyUploading}
+            />
+          </div>
+          <div className="flex justify-end gap-2 pt-2">
+            <button type="button" className="btn-secondary text-xs" onClick={() => setKeyModalOpen(false)} disabled={keyUploading}>Cancel</button>
+            <button type="submit" className="btn-primary text-xs" disabled={keyUploading || !keyFile}>
+              {keyUploading ? (
+                <>
+                  <Spinner className="mr-1.5 h-3 w-3 text-white" />
+                  Applying Answer Key...
+                </>
+              ) : (
+                'Upload & Apply Answer Key'
+              )}
+            </button>
+          </div>
+        </form>
+      </Modal>
+      {/* Extracted JSON Data Modal */}
+      <Modal open={jsonModalOpen} onClose={() => setJsonModalOpen(false)} title="Extracted Questions JSON" size="xl">
+        <div className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 dark:border-slate-800 pb-3">
+            <div>
+              <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                {Array.isArray(jsonQuestionsData) ? `${jsonQuestionsData.length} Question(s) Formatted in Standardized JSON` : 'Extracted JSON Data'}
+              </p>
+              <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                Includes questions, options with diagrams, explanations, and Gemini Vision extraction metadata.
+              </p>
+            </div>
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                className="btn-secondary text-xs flex items-center gap-1.5"
+                onClick={handleCopyJson}
+              >
+                {copied ? <Check className="h-3.5 w-3.5 text-emerald-500" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied ? 'Copied!' : 'Copy JSON'}
+              </button>
+              <button
+                type="button"
+                className="btn-primary text-xs flex items-center gap-1.5"
+                onClick={handleDownloadJson}
+              >
+                <Download className="h-3.5 w-3.5" />
+                Download JSON
+              </button>
+            </div>
+          </div>
+
+          <pre className="max-h-[62vh] overflow-auto rounded-xl bg-slate-950 p-4 text-xs font-mono text-emerald-400 border border-slate-800 leading-relaxed select-text shadow-inner">
+            {jsonQuestionsData ? JSON.stringify(jsonQuestionsData, null, 2) : 'No extracted JSON data loaded.'}
+          </pre>
         </div>
       </Modal>
     </div>
@@ -1060,6 +1315,12 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
   const opts = Array.isArray(q.options) ? q.options : [];
   const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
 
+  const hasAnswerKey = Boolean(
+    q.question_type === 'multi_select'
+      ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
+      : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false)
+  );
+
   return (
     <div className={`card p-4 transition-all border ${
       isSelected
@@ -1084,6 +1345,9 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
             <Badge color="blue">{typeLabel}</Badge>
             {q.section_name && <Badge color="slate">{q.section_name}</Badge>}
             <Badge color="green">{q.marks} mk</Badge>
+            {!hasAnswerKey && (
+              <Badge color="slate">No Answer Key</Badge>
+            )}
             {q.needs_review && (
               <Badge color="amber">⚠️ Review Answer Key</Badge>
             )}
@@ -1092,15 +1356,48 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                 {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}
               </Badge>
             )}
+            {q.image_url && (
+              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                🖼️ Diagram
+              </span>
+            )}
           </div>
           <p className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">{q.question_text}</p>
+          
+          {q.image_url && (
+            <div className="mt-2 max-w-sm">
+              <img
+                src={q.image_url}
+                alt="Question Diagram"
+                className="max-h-40 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90"
+                onClick={() => window.open(q.image_url, '_blank')}
+                title="Click to view full diagram"
+              />
+            </div>
+          )}
+
           {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
-            <ul className="mt-2 space-y-0.5 text-sm text-slate-600 dark:text-slate-300">
+            <ul className="mt-2 space-y-1 text-sm">
               {opts.map((opt, i) => {
-                const correct = q.question_type === 'multi_select'
-                  ? (q.correct_indices || []).includes(i)
-                  : i === q.correct_index;
-                return <li key={i} className={correct ? 'font-semibold text-emerald-600 dark:text-emerald-400' : ''}>{opt}</li>;
+                const optText = typeof opt === 'object' ? (opt.text || JSON.stringify(opt)) : String(opt || '');
+                const isCorrect = hasAnswerKey && (
+                  q.question_type === 'multi_select'
+                    ? (q.correct_indices || []).includes(i)
+                    : i === Number(q.correct_index)
+                );
+                return (
+                  <li
+                    key={i}
+                    className={
+                      isCorrect
+                        ? 'font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5'
+                        : 'text-slate-600 dark:text-slate-300'
+                    }
+                  >
+                    {isCorrect && <span className="text-xs font-bold">✓</span>}
+                    {optText}
+                  </li>
+                );
               })}
             </ul>
           )}
@@ -1303,6 +1600,8 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                 difficulty: f.difficulty,
                 marks: f.marks,
                 image_url: f.image_url,
+                solution_image_url: f.solution_image_url,
+                solution: f.solution,
                 explanation: f.explanation
               }))}
             />
@@ -1473,21 +1772,26 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           <p className="text-sm text-slate-500">Candidates will provide a written answer. Graded when answer meets minimum length.</p>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
-          <div>
-            <label className="label">Marks</label>
-            <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
-          </div>
-          <div>
-            <label className="label">Image URL (optional)</label>
-            <input className="input" placeholder="e.g. /images/q1.png" value={form.image_url || ''} onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))} />
-          </div>
+        <div>
+          <label className="label">Marks</label>
+          <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
         </div>
+
+        <QuestionImageUploader
+          value={form.image_url || ''}
+          onChange={(url) => setForm((f) => ({ ...f, image_url: url }))}
+        />
 
         <div>
           <label className="label">Detailed Solution Explanation (optional)</label>
           <textarea rows={3} className="input" placeholder="Explain the step-by-step solution..." value={form.solution || ''} onChange={(e) => setForm((f) => ({ ...f, solution: e.target.value }))} />
         </div>
+
+        <QuestionImageUploader
+          label="Solution Diagram / Step-by-Step Image (Optional)"
+          value={form.solution_image_url || ''}
+          onChange={(url) => setForm((f) => ({ ...f, solution_image_url: url }))}
+        />
 
         <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-4">
           <button type="button" className="btn-secondary" onClick={onClose}>Cancel</button>
@@ -1720,13 +2024,28 @@ function PreviewModal({ open, onClose, data }) {
                   <p className="mt-2 font-medium">Q{i + 1}. {q.question_text}</p>
                   {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
                     <ul className="mt-2 text-sm">
-                      {opts.map((o, j) => (
-                        <li key={j} className={
+                      {opts.map((o, j) => {
+                        const hasAnswerKey = Boolean(
                           q.question_type === 'multi_select'
-                            ? (q.correct_indices || []).includes(j) ? 'text-emerald-700 font-medium' : 'text-slate-600'
-                            : j === q.correct_index ? 'text-emerald-700 font-medium' : 'text-slate-600'
-                        }>{o}</li>
-                      ))}
+                            ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
+                            : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false)
+                        );
+                        const isCorrect = hasAnswerKey && (
+                          q.question_type === 'multi_select'
+                            ? (q.correct_indices || []).includes(j)
+                            : j === Number(q.correct_index)
+                        );
+                        const optText = typeof o === 'object' ? (o.text || JSON.stringify(o)) : o;
+                        return (
+                          <li
+                            key={j}
+                            className={isCorrect ? 'text-emerald-700 font-medium' : 'text-slate-600'}
+                          >
+                            {isCorrect && '✓ '}
+                            {optText}
+                          </li>
+                        );
+                      })}
                     </ul>
                   )}
                   {q.question_type === 'coding' && (

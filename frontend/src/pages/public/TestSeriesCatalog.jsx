@@ -12,7 +12,6 @@ const FILTERS = [
   { id: 'free', label: 'Free' },
   { id: 'jee', label: 'JEE' },
   { id: 'neet', label: 'NEET UG' },
-  { id: 'neetpg', label: 'NEET PG' },
   { id: 'featured', label: 'Featured' },
 ];
 
@@ -73,12 +72,11 @@ export default function TestSeriesCatalog() {
     const isFree = Number(s.price) === 0;
 
     if (filter === 'free') return isFree;
-    // For all other tabs (all, jee, neet, neetpg, featured), include ONLY paid series
+    // For all other tabs (all, jee, neet, featured), include ONLY paid series
     if (isFree) return false;
 
     if (filter === 'jee') return /jee/i.test(text);
     if (filter === 'neet') return isNeetUg(text);
-    if (filter === 'neetpg') return isNeetPg(text);
     if (filter === 'featured') return Boolean(s.is_featured);
     return true;
   }), [list, filter]);
@@ -89,7 +87,6 @@ export default function TestSeriesCatalog() {
       free: 0,
       jee: 0,
       neet: 0,
-      neetpg: 0,
       featured: 0,
     };
     list.forEach((s) => {
@@ -101,7 +98,6 @@ export default function TestSeriesCatalog() {
         counts.all++;
         if (/jee/i.test(text)) counts.jee++;
         if (isNeetUg(text)) counts.neet++;
-        if (isNeetPg(text)) counts.neetpg++;
         if (s.is_featured) counts.featured++;
       }
     });

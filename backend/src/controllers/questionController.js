@@ -118,6 +118,7 @@ export const createQuestion = asyncHandler(async (req, res) => {
     bank_category,
     solution,
     image_url,
+    solution_image_url,
     subject_id,
     chapter_id,
     difficulty,
@@ -153,8 +154,8 @@ export const createQuestion = asyncHandler(async (req, res) => {
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
      RETURNING *`,
     [
       assessmentId,
@@ -176,6 +177,7 @@ export const createQuestion = asyncHandler(async (req, res) => {
       bank_category || null,
       solution || '',
       image_url || '',
+      solution_image_url || '',
       finalSubjectId,
       finalChapterId,
       difficulty || 'medium',
@@ -212,6 +214,7 @@ export const updateQuestion = asyncHandler(async (req, res) => {
   const bank_category = body.bank_category !== undefined ? body.bank_category : q.bank_category;
   const solution = body.solution !== undefined ? body.solution : q.solution;
   const image_url = body.image_url !== undefined ? body.image_url : q.image_url;
+  const solution_image_url = body.solution_image_url !== undefined ? body.solution_image_url : q.solution_image_url;
   let rawSubjectId = body.subject_id !== undefined ? (Number(body.subject_id) || null) : q.subject_id;
   let rawChapterId = body.chapter_id !== undefined ? (Number(body.chapter_id) || null) : q.chapter_id;
   const difficulty = body.difficulty !== undefined ? body.difficulty : q.difficulty;
@@ -239,12 +242,12 @@ export const updateQuestion = asyncHandler(async (req, res) => {
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
        numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
        marks = $10, position = $11, section_id = $12, starter_code = $13, test_cases = $14, language = $15,
-       bank_category = $16, solution = $17, image_url = $18, subject_id = $19, chapter_id = $20, difficulty = $21,
-       subject = $22, topic = $23
-     WHERE id = $24 RETURNING *`,
+       bank_category = $16, solution = $17, image_url = $18, solution_image_url = $19, subject_id = $20, chapter_id = $21, difficulty = $22,
+       subject = $23, topic = $24
+     WHERE id = $25 RETURNING *`,
     [question_text, question_type, options, correct_index, correct_indices,
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
-      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic, id]
+      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, id]
   );
   res.json({ question: result.rows[0] });
 });

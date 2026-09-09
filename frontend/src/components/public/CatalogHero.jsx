@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 const QUICK_LINKS = [
   { label: 'JEE Main', to: '/test-series?filter=jee' },
   { label: 'NEET UG', to: '/test-series?filter=neet' },
-  { label: 'NEET PG', to: '/test-series?filter=neetpg' },
   { label: 'Free mocks', to: '/test-series?filter=free' },
 ];
 
@@ -23,14 +22,6 @@ const EXAM_TRACKS = [
     to: '/test-series?filter=neet',
     borderStyle: 'border-[#00F0FF]/40 hover:border-[#00F0FF] hover:shadow-lg hover:shadow-cyan-500/10',
     tagBg: 'bg-cyan-500/15 text-[#00F0FF] border-cyan-400/30',
-  },
-  {
-    label: 'NEET PG',
-    desc: 'Clinical · post-grad prep',
-    src: '/test-series/neet-pg.svg',
-    to: '/test-series?filter=neetpg',
-    borderStyle: 'border-[#7C3AED]/35 hover:border-[#7C3AED] hover:shadow-lg hover:shadow-purple-500/10',
-    tagBg: 'bg-purple-500/15 text-[#c084fc] border-purple-400/30',
   },
 ];
 

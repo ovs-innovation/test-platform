@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { adminService } from '../../lib/services.js';
-import { LoadingScreen, Spinner } from '../../components/ui.jsx';
+import { LoadingScreen, Spinner, ConfirmModal } from '../../components/ui.jsx';
 import { formatDateTime } from '../../lib/format.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import {
@@ -39,6 +39,14 @@ export default function AdminDiscussionHub() {
   const [loading, setLoading] = useState(true);
   const [detailLoading, setDetailLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [confirmState, setConfirmState] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    confirmText: 'Confirm',
+    loading: false,
+    onConfirm: null,
+  });
 
   const fileInputRef = useRef(null);
 
@@ -130,34 +138,67 @@ export default function AdminDiscussionHub() {
     }
   };
 
-  const handleDeleteTopic = async () => {
-    if (!activeTopicId || !window.confirm('Are you sure you want to delete this student question topic and all its replies?')) return;
-    try {
-      await adminService.deleteForumTopic(activeTopicId);
-      toast.success('Question topic deleted successfully.');
-      setActiveTopicId(null);
-      setTopicDetail(null);
-      fetchTopics();
-    } catch (err) {
-      toast.error(err.message || 'Failed to delete topic');
-    }
+  const handleDeleteTopic = () => {
+    if (!activeTopicId) return;
+    setConfirmState({
+      isOpen: true,
+      title: 'Delete Question Topic',
+      message: 'Are you sure you want to delete this student question topic and all its replies? This action cannot be undone.',
+      confirmText: 'Delete Topic',
+      loading: false,
+      onConfirm: async () => {
+        setConfirmState((prev) => ({ ...prev, loading: true }));
+        try {
+          await adminService.deleteForumTopic(activeTopicId);
+          toast.success('Question topic deleted successfully.');
+          setActiveTopicId(null);
+          setTopicDetail(null);
+          setConfirmState((prev) => ({ ...prev, isOpen: false, loading: false }));
+          fetchTopics();
+        } catch (err) {
+          toast.error(err.message || 'Failed to delete topic');
+          setConfirmState((prev) => ({ ...prev, loading: false }));
+        }
+      },
+    });
   };
 
-  const handleDeleteReply = async (replyId) => {
-    if (!window.confirm('Delete this reply?')) return;
-    try {
-      await adminService.deleteForumReply(replyId);
-      toast.success('Reply removed.');
-      const updated = await adminService.forumTopic(activeTopicId);
-      if (updated.success) setTopicDetail(updated);
-      fetchTopics();
-    } catch (err) {
-      toast.error(err.message || 'Failed to delete reply');
-    }
+  const handleDeleteReply = (replyId) => {
+    setConfirmState({
+      isOpen: true,
+      title: 'Delete Reply',
+      message: 'Are you sure you want to delete this reply?',
+      confirmText: 'Delete Reply',
+      loading: false,
+      onConfirm: async () => {
+        setConfirmState((prev) => ({ ...prev, loading: true }));
+        try {
+          await adminService.deleteForumReply(replyId);
+          toast.success('Reply removed.');
+          setConfirmState((prev) => ({ ...prev, isOpen: false, loading: false }));
+          const updated = await adminService.forumTopic(activeTopicId);
+          if (updated.success) setTopicDetail(updated);
+          fetchTopics();
+        } catch (err) {
+          toast.error(err.message || 'Failed to delete reply');
+          setConfirmState((prev) => ({ ...prev, loading: false }));
+        }
+      },
+    });
   };
 
   return (
     <div className="space-y-6 max-w-7xl mx-auto pb-12 font-sans">
+      <ConfirmModal
+        isOpen={confirmState.isOpen}
+        onClose={() => setConfirmState((prev) => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmState.onConfirm}
+        title={confirmState.title}
+        message={confirmState.message}
+        confirmText={confirmState.confirmText}
+        loading={confirmState.loading}
+      />
+
       {/* Modal Image Zoom Viewer */}
       {previewModalUrl && (
         <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4">

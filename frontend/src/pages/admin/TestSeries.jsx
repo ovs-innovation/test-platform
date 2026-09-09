@@ -123,23 +123,47 @@ export default function AdminTestSeries() {
     }
   };
 
-  const handleUnlinkTest = async (seriesId, testId, testTitle) => {
-    if (!window.confirm(`Unlink test "${testTitle}" from this series?`)) return;
-    try {
-      await testSeriesService.unlink(seriesId, testId);
-      toast.success('Test unlinked successfully');
-      load();
-    } catch (err) {
-      toast.error(err.message || 'Failed to unlink test');
-    }
+  const handleUnlinkTest = (seriesId, testId, testTitle) => {
+    setConfirmState({
+      isOpen: true,
+      title: 'Unlink Assessment from Series',
+      message: `Are you sure you want to unlink test "${testTitle}" from this series? It will remain available in the main assessments repository.`,
+      confirmText: 'Unlink Test',
+      loading: false,
+      onConfirm: async () => {
+        setConfirmState((prev) => ({ ...prev, loading: true }));
+        try {
+          await testSeriesService.unlink(seriesId, testId);
+          toast.success('Test unlinked successfully');
+          setConfirmState((prev) => ({ ...prev, isOpen: false, loading: false }));
+          load();
+        } catch (err) {
+          toast.error(err.message || 'Failed to unlink test');
+          setConfirmState((prev) => ({ ...prev, loading: false }));
+        }
+      },
+    });
   };
 
   const handleToggleActive = async (s) => {
+    const nextState = !s.is_active;
+    // Optimistic UI update for instantaneous badge & button status change
+    setList((prev) =>
+      prev.map((item) => (item.id === s.id ? { ...item, is_active: nextState } : item))
+    );
+
     try {
-      await testSeriesService.toggleActive(s.id, !s.is_active);
-      toast.success(`Series marked as ${!s.is_active ? 'Active' : 'Inactive'}`);
-      load();
+      const res = await testSeriesService.toggleActive(s.id, nextState);
+      const actualState = res?.test_series?.is_active ?? nextState;
+      setList((prev) =>
+        prev.map((item) => (item.id === s.id ? { ...item, is_active: actualState } : item))
+      );
+      toast.success(`Series marked as ${actualState ? 'Active' : 'Inactive'}`);
     } catch (err) {
+      // Revert state if failed
+      setList((prev) =>
+        prev.map((item) => (item.id === s.id ? { ...item, is_active: s.is_active } : item))
+      );
       toast.error(err.message || 'Failed to toggle status');
     }
   };
@@ -255,6 +279,26 @@ export default function AdminTestSeries() {
                 {' · '}
                 {s.enrollment_count || 0} enrollments
               </p>
+              {Array.isArray(s.tests) && s.tests.length > 0 && (
+                <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                  {s.tests.map((t) => (
+                    <span
+                      key={t.id}
+                      className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-[11px] font-medium text-slate-700 dark:text-slate-300"
+                    >
+                      <span className="truncate max-w-[160px]">{t.title}</span>
+                      <button
+                        type="button"
+                        onClick={() => handleUnlinkTest(s.id, t.id, t.title)}
+                        className="text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 font-bold ml-0.5 transition"
+                        title="Unlink test from series"
+                      >
+                        ✕
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="flex flex-wrap gap-2">
               <button
@@ -563,7 +607,7 @@ export default function AdminTestSeries() {
       {/* CONFIRM DELETE MODAL */}
       <Modal
         open={deleteConfirmOpen}
-        onClose={() => setDeleteConfirmOpen(false)}
+        onClose={() => !saving && setDeleteConfirmOpen(false)}
         title="Confirm Deletion"
         size="sm"
       >
@@ -594,28 +638,32 @@ export default function AdminTestSeries() {
             <button
               type="button"
               className="btn-secondary text-sm"
-              onClick={() => setDeleteConfirmOpen(false)}
+              disabled={saving}
+              onClick={() => !saving && setDeleteConfirmOpen(false)}
             >
               Cancel
             </button>
             <button
               type="button"
-              className="btn-primary border-transparent bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium text-sm px-4 py-2 rounded-lg transition"
+              disabled={saving}
+              className="btn-primary border-transparent bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-medium text-sm px-4 py-2 rounded-lg transition disabled:opacity-50 flex items-center gap-2"
               onClick={async () => {
-                if (!seriesToDelete) return;
+                if (!seriesToDelete || saving) return;
+                setSaving(true);
                 try {
                   await testSeriesService.remove(seriesToDelete.id);
                   toast.success('Test series deleted successfully');
-                  load();
+                  setDeleteConfirmOpen(false);
+                  setSeriesToDelete(null);
+                  await load();
                 } catch (err) {
                   toast.error(err.message || 'Failed to delete test series');
                 } finally {
-                  setDeleteConfirmOpen(false);
-                  setSeriesToDelete(null);
+                  setSaving(false);
                 }
               }}
             >
-              Permanently Delete
+              {saving ? <Spinner className="h-4 w-4 text-white" /> : 'Permanently Delete'}
             </button>
           </div>
         </div>

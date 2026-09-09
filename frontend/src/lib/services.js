@@ -228,10 +228,12 @@ export const testSeriesService = {
     clearCache();
     return api.put(`/test-series/${id}`, data).then((r) => r.data.test_series);
   },
-  toggleActive: (id, is_active) => {
-    clearCache();
-    return api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => r.data);
-  },
+  toggleActive: (id, is_active) =>
+    api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => {
+      clearCache('test_series_list');
+      clearCache();
+      return r.data;
+    }),
   link: (id, test_id) => api.post(`/test-series/${id}/link`, { test_id }).then((r) => r.data),
   unlink: (id, testId) => api.delete(`/test-series/${id}/link/${testId}`).then((r) => r.data),
   myEnrollments: () => withCache('my_enrollments', () => api.get('/test-series/my/enrollments').then((r) => r.data)),
@@ -448,6 +450,7 @@ export const adminService = {
   togglePublishTest: (id, is_published) => api.patch(`/admin/tests/${id}/publish`, { is_published }).then((r) => r.data),
   assignTest: (id, data) => api.post(`/admin/tests/${id}/assignments`, data).then((r) => r.data.assignment),
   uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data).then((r) => r.data),
+  getTestExtractedQuestions: (id) => api.get(`/admin/tests/${id}/extracted-questions`).then((r) => r.data),
   generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
   getTestParticipation: (id) => api.get(`/admin/tests/${id}/participation`).then((r) => r.data),
   setMissedTestOverride: (id, data) => api.post(`/admin/tests/${id}/missed-override`, data).then((r) => r.data.override),
@@ -482,6 +485,7 @@ export const adminService = {
   getSchoolInvoices: (id) => api.get(`/admin/institutions/${id}/invoices`).then((r) => r.data),
   assignCandidateInstitution: (id, data) => api.patch(`/admin/candidates/${id}/institution`, data).then((r) => r.data),
   compareInstitutes: (schoolIds) => api.get('/admin/schools/reports/compare', { params: { schoolIds: Array.isArray(schoolIds) ? schoolIds.join(',') : schoolIds } }).then((r) => r.data),
+  uploadImage: (image, folder = 'edvedum/questions') => api.post('/upload/image', { image, folder }).then((r) => r.data),
 };
 
 export const institutionDashboardService = {

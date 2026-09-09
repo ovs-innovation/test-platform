@@ -686,6 +686,16 @@ export default function ResultPage() {
                               {q.is_correct ? 'Correct' : 'Wrong'}
                             </span>
                           </div>
+                          {q.image_url && (
+                            <div className="mt-3">
+                              <img
+                                src={q.image_url}
+                                alt="Question diagram"
+                                className="max-h-64 rounded-lg border border-slate-300 dark:border-slate-700 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
+                                onClick={() => window.open(q.image_url, '_blank')}
+                              />
+                            </div>
+                          )}
                           {opts.length > 0 && (
                             <ul className="mt-4 space-y-2 text-sm">
                               {opts.map((opt, oi) => {
@@ -743,9 +753,26 @@ export default function ResultPage() {
                           {['coding', 'subjective'].includes(q.question_type) && q.your_answer && (
                             <pre className="mt-3.5 overflow-x-auto rounded-xl bg-slate-100 dark:bg-slate-900/80 p-3.5 text-xs text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 font-mono">{q.your_answer}</pre>
                           )}
-                          {q.solution && (
-                            <div className="mt-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 p-3.5 text-sm text-blue-950 dark:text-blue-200">
-                              <strong className="text-blue-700 dark:text-blue-400">Solution:</strong> <span className="leading-relaxed">{q.solution}</span>
+                          {(q.solution || q.solution_image_url) && (
+                            <div className="mt-3.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/40 p-3.5 text-sm text-blue-950 dark:text-blue-200 space-y-2">
+                              {q.solution && (
+                                <div>
+                                  <strong className="text-blue-700 dark:text-blue-400 block mb-1">Step-by-Step Explanation:</strong>
+                                  <p className="leading-relaxed whitespace-pre-line">{q.solution}</p>
+                                </div>
+                              )}
+                              {q.solution_image_url && (
+                                <div className="pt-2 border-t border-blue-200/60 dark:border-blue-800/40">
+                                  <strong className="text-blue-700 dark:text-blue-400 block mb-1">Solution Diagram & Formula Sheet:</strong>
+                                  <img
+                                    src={q.solution_image_url}
+                                    alt="Solution Diagram"
+                                    className="max-h-80 rounded-lg border border-blue-200 dark:border-blue-800 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
+                                    onClick={() => window.open(q.solution_image_url, '_blank')}
+                                  />
+                                  <span className="text-[11px] text-blue-600 dark:text-blue-400 block mt-1">Click diagram to open full high-resolution image</span>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>

@@ -10,7 +10,7 @@ export default function HeroSection({ seriesCount = 0 }) {
         <div className="grid items-center gap-14 lg:grid-cols-2 lg:gap-16">
           <div className="max-w-xl">
             <p className="text-caption font-bold uppercase tracking-widest text-brand-600">
-              NEET / JEE mock tests · JEE · NEET UG · NEET PG
+              NEET / JEE mock tests · JEE · NEET UG
             </p>
 
             <h1 className="text-display mt-4 text-balance">

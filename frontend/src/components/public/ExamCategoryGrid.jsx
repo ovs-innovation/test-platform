@@ -18,13 +18,6 @@ const CATEGORIES = [
     href: '/test-series?filter=neet',
   },
   {
-    id: 'neetpg',
-    label: 'NEET PG',
-    tagline: 'Postgraduate medical mocks',
-    cover: '/test-series/neet-pg.svg',
-    href: '/test-series?filter=neetpg',
-  },
-  {
     id: 'free',
     label: 'Free mock',
     tagline: 'Start without paying',

@@ -15,14 +15,6 @@ export const EXAM_NAV_ITEMS = [
     catalogTo: '/test-series?filter=neet',
     freeTo: '/free-mock?exam=neet',
   },
-  {
-    id: 'neetpg',
-    label: 'NEET PG',
-    tagline: 'Clinical · post-grad',
-    cover: '/test-series/neet-pg.svg',
-    catalogTo: '/test-series?filter=neetpg',
-    freeTo: '/free-mock?exam=neetpg',
-  },
 ];
 
 export function matchExamSeries(series, examId) {

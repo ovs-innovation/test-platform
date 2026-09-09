@@ -177,7 +177,6 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
            LEFT JOIN chapters c ON c.id = q.chapter_id
            LEFT JOIN answers ans ON ans.question_id = q.id AND (ans.attempt_id = $1)
            WHERE q.assessment_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
-              OR q.test_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
               OR ans.attempt_id = $1
          )
          SELECT 
@@ -238,11 +237,6 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
        LEFT JOIN subjects s ON s.id = q.subject_id
        LEFT JOIN chapters c ON c.id = q.chapter_id
        WHERE q.assessment_id IN (
-         SELECT assessment_id FROM attempts WHERE id = $1
-         UNION
-         SELECT COALESCE(assessment_id, test_id) FROM test_attempts WHERE id = $1
-       )
-       OR q.test_id IN (
          SELECT assessment_id FROM attempts WHERE id = $1
          UNION
          SELECT COALESCE(assessment_id, test_id) FROM test_attempts WHERE id = $1

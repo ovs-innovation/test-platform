@@ -1,4 +1,6 @@
 import { createRequire } from 'module';
+import { extractQuestionsWithGeminiVision } from './geminiVisionExtractor.js';
+import { env } from '../config/env.js';
 
 const require = createRequire(import.meta.url);
 const pdfParse = require('pdf-parse/lib/pdf-parse.js');
@@ -219,8 +221,184 @@ export function parseQuestionsFromText(text) {
   return { rows, errors, question_count: rows.length };
 }
 
-export async function parseQuestionsFromPdf(buffer) {
+export async function parseQuestionsFromPdf(buffer, options = {}) {
+  const includeAnswers = options.includeAnswers !== false;
+  const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
+
+  if (apiKey) {
+    try {
+      console.log(`[pdfQuestions] Attempting Gemini Vision PDF extraction pipeline (includeAnswers: ${includeAnswers})...`);
+      const visionResult = await extractQuestionsWithGeminiVision(buffer, { includeAnswers });
+      const visionQuestions = visionResult.questions || [];
+      const stats = visionResult.stats || {};
+      const warnings = visionResult.warnings || [];
+
+      if (Array.isArray(visionQuestions) && visionQuestions.length > 0) {
+        const rows = visionQuestions.map((q) => {
+          let correctIndex = null;
+          if (includeAnswers && q.correctAnswer && typeof q.correctAnswer === 'string') {
+            const letter = q.correctAnswer.trim().toUpperCase();
+            if (['A', 'B', 'C', 'D'].includes(letter)) {
+              correctIndex = letter.charCodeAt(0) - 65;
+            }
+          }
+
+          const optionStrings = (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
+          const qText = q.question?.text || q.questionText || '';
+          const primaryMediaUrl = q.question?.media && q.question.media.length > 0
+            ? q.question.media[0].url
+            : (q.media && q.media.length > 0 ? q.media[0].url : null);
+
+          // Collect all media across question, options, and explanation
+          const allMedia = [
+            ...(q.question?.media || []),
+            ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
+            ...(q.explanation?.media || []),
+          ];
+
+          const hasAnswerKey = Boolean(correctIndex !== null);
+
+          return {
+            ...q,
+            line: q.questionNumber,
+            question_text: qText,
+            questionText: qText,
+            question_type: 'mcq',
+            marks: 4,
+            bank_category: q.subject || 'General',
+            options: optionStrings,
+            rawOptions: q.options,
+            correct_index: correctIndex,
+            correctAnswer: hasAnswerKey ? q.correctAnswer : null,
+            solution: hasAnswerKey ? (q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '')) : '',
+            image_url: primaryMediaUrl,
+            media: allMedia,
+            tables: q.tables || [],
+            extraction: {
+              ...(q.extraction || {
+                confidence: 0.96,
+                needsReview: false,
+                sourcePages: [1],
+                extractedBy: 'gemini-vision',
+              }),
+              hasAnswerKey,
+            },
+          };
+        });
+
+        console.log(`[pdfQuestions] Successfully extracted ${rows.length} question(s) via Gemini Vision.`);
+        return {
+          extractedBy: 'gemini-vision',
+          rows,
+          rawVisionOutput: visionQuestions,
+          stats,
+          warnings,
+          errors: [],
+          question_count: rows.length,
+        };
+      }
+    } catch (err) {
+      console.warn('[pdfQuestions] Gemini Vision extraction failed. Falling back to pdf-parse + regex parser:', err.message);
+    }
+  } else {
+    console.log('[pdfQuestions] GEMINI_API_KEY not configured. Falling back to pdf-parse + regex parser.');
+  }
+
+  // Fallback: Existing pdf-parse + Regex parser
   const text = await extractPdfText(buffer);
-  return { ...parseQuestionsFromText(text), text_preview: text.slice(0, 1500) };
+  const parsed = parseQuestionsFromText(text);
+  const rawRows = parsed.rows || [];
+  const errors = parsed.errors || [];
+
+  const rows = rawRows.map((r, idx) => {
+    const qNum = r.line || (idx + 1);
+    const hasAnswer = Boolean(includeAnswers && r.correct_index !== undefined && r.correct_index !== null);
+    const correctLetter = hasAnswer ? String.fromCharCode(65 + r.correct_index) : null;
+    const optList = (r.options || []).map((optText, oIdx) => ({
+      key: String.fromCharCode(65 + oIdx),
+      text: String(optText),
+      media: [],
+    }));
+
+    const qMedia = r.image_url ? [{
+      id: `q${qNum}-img-1`,
+      type: 'diagram',
+      url: r.image_url,
+      description: `Diagram for question ${qNum}`,
+      sourcePage: 1,
+    }] : [];
+
+    return {
+      questionNumber: qNum,
+      subject: r.bank_category || 'General',
+      chapter: r.topic || 'General',
+
+      question: {
+        text: r.question_text || '',
+        media: qMedia,
+      },
+
+      options: optList,
+
+      explanation: {
+        text: hasAnswer ? (r.solution || '') : '',
+        media: [],
+      },
+
+      tables: [],
+
+      correctAnswer: correctLetter,
+
+      extraction: {
+        confidence: 0.88,
+        needsReview: Boolean(r.error),
+        sourcePages: [1],
+        extractedBy: 'pdf-parse-regex',
+        hasAnswerKey: hasAnswer,
+      },
+
+      // Flat properties for DB insert
+      line: qNum,
+      question_text: r.question_text,
+      questionText: r.question_text,
+      question_type: 'mcq',
+      marks: r.marks || 4,
+      bank_category: r.bank_category || 'General',
+      options: r.options || [],
+      rawOptions: optList,
+      correct_index: hasAnswer ? r.correct_index : null,
+      solution: hasAnswer ? (r.solution || '') : '',
+      image_url: r.image_url || null,
+      media: qMedia,
+      tables: [],
+    };
+  });
+
+  let optionsExtractedCount = 0;
+  let explanationsMatchedCount = 0;
+  for (const r of rows) {
+    if (Array.isArray(r.options)) optionsExtractedCount += r.options.length;
+    if (r.solution && r.solution.trim()) explanationsMatchedCount++;
+  }
+
+  const fallbackStats = {
+    questionsDetected: rows.length + errors.length,
+    questionsExtracted: rows.length,
+    optionsExtracted: optionsExtractedCount,
+    diagramsDetected: 0,
+    explanationsMatched: explanationsMatchedCount,
+    questionsNeedingReview: errors.length,
+  };
+
+  return {
+    extractedBy: 'pdf-parse-regex',
+    rows,
+    errors,
+    question_count: rows.length,
+    stats: fallbackStats,
+    text_preview: text.slice(0, 1500),
+  };
 }
+
+
 

@@ -15,7 +15,6 @@ const SENIOR_CLASS_OPTIONS = [
 const TEST_SERIES_OPTIONS = [
   { label: 'JEE Test Series', filter: 'jee' },
   { label: 'NEET UG Test Series', filter: 'neet' },
-  { label: 'NEET PG Test Series', filter: 'neetpg' },
 ];
 
 export const PROGRAM_SECTIONS = [
