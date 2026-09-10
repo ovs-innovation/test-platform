@@ -195,17 +195,15 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
          COALESCE(q.difficulty, 'medium') AS difficulty_level,
          q.subject_id,
          q.chapter_id,
-         COALESCE(c.name, q.topic, NULLIF(q.bank_category, ''), 'Electrodynamics & Magnetism') AS chapter_name,
+         COALESCE(c.name, q.chapter, q.topic, NULLIF(q.bank_category, ''), 'General Topics') AS chapter_name,
          CASE 
-           WHEN LOWER(COALESCE(s.name, '')) IN ('physics') THEN 'Physics'
-           WHEN LOWER(COALESCE(s.name, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
-           WHEN LOWER(COALESCE(s.name, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
-           WHEN LOWER(COALESCE(s.name, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
-           WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
-           ELSE COALESCE(s.name, q.bank_category, 'Physics')
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%chem%' OR LOWER(COALESCE(q.subject, '')) LIKE '%chem%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%chem%' OR LOWER(COALESCE(a.subject, '')) LIKE '%chem%' THEN 'Chemistry'
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%phys%' OR LOWER(COALESCE(q.subject, '')) LIKE '%phys%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%phys%' OR LOWER(COALESCE(a.subject, '')) LIKE '%phys%' THEN 'Physics'
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%math%' OR LOWER(COALESCE(q.subject, '')) LIKE '%math%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%math%' OR LOWER(COALESCE(a.subject, '')) LIKE '%math%' THEN 'Mathematics'
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%botany%' OR LOWER(COALESCE(q.subject, '')) LIKE '%botany%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%botany%' OR LOWER(COALESCE(a.subject, '')) LIKE '%botany%' THEN 'Botany'
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%zoology%' OR LOWER(COALESCE(q.subject, '')) LIKE '%zoology%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%zoology%' OR LOWER(COALESCE(a.subject, '')) LIKE '%zoology%' THEN 'Zoology'
+           WHEN LOWER(COALESCE(s.name, '')) LIKE '%bio%' OR LOWER(COALESCE(q.subject, '')) LIKE '%bio%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%bio%' OR LOWER(COALESCE(a.subject, '')) LIKE '%bio%' THEN 'Biology'
+           ELSE COALESCE(s.name, q.subject, a.subject, NULLIF(q.bank_category, ''), 'General')
          END AS subject_name,
          ans.attempt_id,
          ans.selected_index,
@@ -223,6 +221,7 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
        FROM questions q
        LEFT JOIN subjects s ON s.id = q.subject_id
        LEFT JOIN chapters c ON c.id = q.chapter_id
+       LEFT JOIN assessments a ON a.id = q.assessment_id
        LEFT JOIN attempts at ON at.assessment_id = q.assessment_id AND at.submitted_at IS NOT NULL
        LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = at.id
        WHERE q.assessment_id = $1
@@ -885,15 +884,19 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   const correctQuestions = (questionWiseAnalysis || []).filter(q => q.is_attempted && q.is_correct);
 
   const getSubTopicName = (q) => {
-    const text = (q.question_text || '').toLowerCase();
-    if (text.includes('induced emf') || text.includes('faraday') || text.includes('magnetic flux')) return "Faraday's Law & Induced EMF Rate";
-    if (text.includes('capacitor') || text.includes('capacitance') || text.includes('distance between the plates')) return "Parallel Plate Capacitance Parameter Scaling";
-    if (text.includes('resistor') || text.includes('series') || text.includes('parallel')) return "Resistor Networks & Ohm's Law";
-    if (text.includes('coulomb') || text.includes('point charges') || text.includes('electric field inside')) return "Coulomb's Law & Electrostatics";
-    if (text.includes('magnetic force') || text.includes('parallel to a magnetic field') || text.includes('conductor carrying current')) return "Magnetic Forces on Charges & Conductors";
-    if (text.includes('lenz')) return "Lenz's Law & Energy Conservation";
-    if (text.includes('circular') || text.includes('loop')) return "Magnetic Field at Circular Loop Center";
-    return q.chapter_name || q.topic || q.subject || "Physics Concept";
+    if (q.topic && !['general', 'general topics', 'default', 'uncategorized'].includes(q.topic.toLowerCase())) {
+      return q.topic;
+    }
+    if (q.chapter_name && !['general', 'general topics', 'electrodynamics & magnetism', 'default'].includes(q.chapter_name.toLowerCase())) {
+      return q.chapter_name;
+    }
+    if (q.chapter && !['general', 'general topics', 'default'].includes(q.chapter.toLowerCase())) {
+      return q.chapter;
+    }
+    if (q.bank_category && !['general', 'general topics', 'default'].includes(q.bank_category.toLowerCase())) {
+      return q.bank_category;
+    }
+    return `${q.subject || 'Core'} Concepts`;
   };
 
   let strongTopicsList = [];

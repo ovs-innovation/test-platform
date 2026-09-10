@@ -860,10 +860,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, s.name AS section_name, subj.name AS subject_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, q.subject, q.chapter, s.name AS section_name, subj.name AS subject_name, c.name AS chapter_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        LEFT JOIN subjects subj ON subj.id = q.subject_id
+       LEFT JOIN chapters c ON c.id = q.chapter_id
        WHERE q.assessment_id = $1
        ORDER BY q.position ASC, q.id ASC`,
       [attempt.assessment_id]
@@ -879,6 +880,38 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const negEnabled = assessment.negative_marking === true;
   const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
+
+  const normalizeSubject = (str) => {
+    if (!str || typeof str !== 'string') return null;
+    const clean = str.trim();
+    const lower = clean.toLowerCase();
+    if (['general', 'general aptitude', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3', 'all'].includes(lower)) {
+      return null;
+    }
+    if (lower.includes('chem')) return 'Chemistry';
+    if (lower.includes('phys')) return 'Physics';
+    if (lower.includes('math')) return 'Mathematics';
+    if (lower.includes('botany')) return 'Botany';
+    if (lower.includes('zoology')) return 'Zoology';
+    if (lower.includes('bio')) return 'Biology';
+    return clean;
+  };
+
+  const defaultAssessmentSubject = normalizeSubject(assessment.subject) || normalizeSubject(assessment.title);
+
+  // Detect dominant subject across questions if test has one
+  let dominantSubject = defaultAssessmentSubject;
+  if (!dominantSubject && questionsRes.rows.length > 0) {
+    const counts = {};
+    for (const q of questionsRes.rows) {
+      const s = normalizeSubject(q.subject_name) || normalizeSubject(q.subject) || normalizeSubject(q.bank_category);
+      if (s) counts[s] = (counts[s] || 0) + 1;
+    }
+    const detected = Object.keys(counts);
+    if (detected.length === 1) {
+      dominantSubject = detected[0];
+    }
+  }
 
   const solutions = questionsRes.rows.map((q) => {
     const ans = ansMap.get(q.id);
@@ -946,6 +979,15 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       }
     }
 
+    const resolvedSubject = normalizeSubject(q.subject_name)
+      || normalizeSubject(q.subject)
+      || normalizeSubject(q.section_name)
+      || normalizeSubject(q.bank_category)
+      || dominantSubject
+      || 'General';
+
+    const resolvedTopic = q.topic || q.chapter || q.chapter_name || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : `${resolvedSubject} Concepts`);
+
     return {
       id: q.id,
       question_type: q.question_type,
@@ -962,10 +1004,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       is_correct: correct,
       your_answer: yourAnswer,
       solution: q.solution,
-      topic: q.topic || null,
-      subject_name: q.subject_name || null,
-      bank_category: q.subject_name || q.bank_category || null,
-      section_name: q.subject_name || q.bank_category || q.section_name || 'General',
+      topic: resolvedTopic,
+      chapter: q.chapter || q.chapter_name || resolvedTopic,
+      subject_name: resolvedSubject,
+      bank_category: q.bank_category || resolvedSubject,
+      section_name: q.section_name || resolvedSubject,
     };
   });
 
@@ -980,7 +1023,13 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       duration_seconds: attempt.duration_seconds,
       violation_count: attempt.violation_count,
     },
-    assessment: { id: assessment.id, title: assessment.title, passing_marks: assessment.passing_marks },
+    assessment: {
+      id: assessment.id,
+      title: assessment.title,
+      subject: assessment.subject || dominantSubject || null,
+      test_type: assessment.test_type || null,
+      passing_marks: assessment.passing_marks
+    },
     score: scoreRes.rows[0] || null,
     solutions,
     formattedReport,

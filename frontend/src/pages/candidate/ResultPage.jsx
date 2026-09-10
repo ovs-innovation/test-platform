@@ -230,52 +230,67 @@ export default function ResultPage() {
     );
   }, [score]);
 
+  const cleanSubjectName = (str) => {
+    if (!str || typeof str !== 'string') return null;
+    const clean = str.trim();
+    const lower = clean.toLowerCase();
+    if (['general', 'general aptitude', 'general topics', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3', 'all'].includes(lower)) {
+      return null;
+    }
+    if (/chem/i.test(lower) || /organic|inorganic|physical chemistry|stoichiometry|bonding|chemical|electrochemistry|coordination|p-block|d-block|s-block|hydrocarbons/i.test(lower)) {
+      return 'Chemistry';
+    }
+    if (/phys/i.test(lower) || /waves|optics|modern physics|mechanics|thermodynamics|electromagnetism|kinematics|gravitation|electrostatics|magnetism|current electricity|ac|units|measurements|fluid|work energy|rotation/i.test(lower)) {
+      return 'Physics';
+    }
+    if (/math/i.test(lower) || /calculus|algebra|coordinate|trigonometry|vectors|3d|matrices|probability|statistics/i.test(lower)) {
+      return 'Mathematics';
+    }
+    if (/botany/i.test(lower)) return 'Botany';
+    if (/zoology/i.test(lower)) return 'Zoology';
+    if (/bio/i.test(lower) || /genetics|ecology|human physiology|plant physiology|biotechnology|cell biology/i.test(lower)) {
+      return 'Biology';
+    }
+    return clean;
+  };
+
+  const detectedPrimarySubject = useMemo(() => {
+    const testTitle = (assessment?.title || assessment?.test_name || '').toLowerCase();
+    let primary = cleanSubjectName(assessment?.subject);
+    if (!primary) {
+      if (/chem/i.test(testTitle)) primary = 'Chemistry';
+      else if (/phys/i.test(testTitle)) primary = 'Physics';
+      else if (/math/i.test(testTitle)) primary = 'Mathematics';
+      else if (/botany/i.test(testTitle)) primary = 'Botany';
+      else if (/zoology/i.test(testTitle)) primary = 'Zoology';
+      else if (/bio/i.test(testTitle)) primary = 'Biology';
+    }
+    if (!primary && Array.isArray(solutions) && solutions.length > 0) {
+      const detected = {};
+      solutions.forEach((q) => {
+        const s = cleanSubjectName(q.subject_name) || cleanSubjectName(q.subject) || cleanSubjectName(q.bank_category) || cleanSubjectName(q.section_name);
+        if (s) detected[s] = (detected[s] || 0) + 1;
+      });
+      const keys = Object.keys(detected);
+      if (keys.length === 1) {
+        primary = keys[0];
+      }
+    }
+    return primary;
+  }, [assessment, solutions]);
+
   const subjectScores = useMemo(() => {
     if (!solutions || solutions.length === 0) return [];
 
-    const testTitle = (assessment?.title || assessment?.test_name || '').toLowerCase();
-    let primarySubject = null;
-    if (/chem/i.test(testTitle)) primarySubject = 'Chemistry';
-    else if (/phys/i.test(testTitle)) primarySubject = 'Physics';
-    else if (/math/i.test(testTitle)) primarySubject = 'Mathematics';
-    else if (/bio|botany|zoology/i.test(testTitle)) primarySubject = 'Biology';
-
-    const getSubjectName = (q, index) => {
-      const cat = q.subject_name || q.bank_category || q.category || q.section_name || '';
-      const catClean = cat.toLowerCase().trim();
-      if (catClean && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3'].includes(catClean)) {
-        if (/waves|optics|modern physics|mechanics|thermodynamics|electromagnetism|kinematics|gravitation|electrostatics|magnetism|current electricity|ac|units|measurements|fluid|work energy|rotation/i.test(catClean)) {
-          return 'Physics';
-        }
-        if (/organic|inorganic|physical chemistry|stoichiometry|bonding|chemical|electrochemistry|coordination|p-block|d-block|s-block|hydrocarbons|thermodynamics/i.test(catClean)) {
-          return 'Chemistry';
-        }
-        if (/calculus|algebra|coordinate|trigonometry|vectors|3d|matrices|probability|statistics/i.test(catClean)) {
-          return 'Mathematics';
-        }
-        if (/botany|zoology|genetics|ecology|human physiology|plant physiology|biotechnology|cell biology/i.test(catClean)) {
-          return 'Biology';
-        }
-        return cat;
-      }
-
-      if (primarySubject) return primarySubject;
-
-      const text = (q.question_text || '').toLowerCase();
-      if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed|wave|wavelength|frequency|sound|optics|light|refract|reflect|lens|mirror|prism|photoelectric|photon|bohr|radioactive|half-life|decay|nucle|quanta|modern physics|spectrum|doppler|interfer|diffract|polariz|focal|ray|amperes|volt|tesla|flux|induction|friction|torque|momentum/i.test(text)) {
-        return 'Physics';
-      }
-      if (/chemistry|electron|atom|hybridization|exothermic|endothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired|iupac|propan|ester|isomer|oxidation|reduction|titration|molar|molarity|normality|polymer|valency/i.test(text)) {
-        return 'Chemistry';
-      }
-      if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|tan\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of|permutation|combination|vector|parabola|ellipse|hyperbola/i.test(text)) {
-        return 'Mathematics';
-      }
-      if (/biology|zoology|botany|chromosome|gene\b|dna|rna|organism|photosynthesis|mitochondria|respiration|ribosome|mitosis|meiosis|ecosystem|heredity|chloroplast|xylem|phloem/i.test(text)) {
-        return 'Biology';
-      }
-
-      return 'Physics';
+    const getSubjectName = (q) => {
+      const explicit = cleanSubjectName(q.subject_name)
+        || cleanSubjectName(q.subject)
+        || cleanSubjectName(q.bank_category)
+        || cleanSubjectName(q.category)
+        || cleanSubjectName(q.section_name);
+      if (explicit) return explicit;
+      if (detectedPrimarySubject) return detectedPrimarySubject;
+      return 'General';
     };
 
     const map = {};
@@ -327,75 +342,27 @@ export default function ResultPage() {
       }
     });
     return Object.values(map);
-  }, [solutions]);
+  }, [solutions, detectedPrimarySubject]);
 
   const topicScores = useMemo(() => {
     if (!solutions || solutions.length === 0) return {};
 
-    const testTitle = (assessment?.title || assessment?.test_name || '').toLowerCase();
-    let primarySubject = null;
-    if (/chem/i.test(testTitle)) primarySubject = 'Chemistry';
-    else if (/phys/i.test(testTitle)) primarySubject = 'Physics';
-    else if (/math/i.test(testTitle)) primarySubject = 'Mathematics';
-    else if (/bio|botany|zoology/i.test(testTitle)) primarySubject = 'Biology';
-
-    const getSubjectName = (q, index) => {
-      const cat = q.subject_name || q.bank_category || q.category || q.section_name || '';
-      const catClean = cat.toLowerCase().trim();
-      if (catClean && !['general', 'general aptitude', 'general topics', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3'].includes(catClean)) {
-        if (/waves|optics|modern physics|mechanics|thermodynamics|electromagnetism|kinematics|gravitation|electrostatics|magnetism|current electricity|ac|units|measurements|fluid|work energy|rotation/i.test(catClean)) {
-          return 'Physics';
-        }
-        if (/organic|inorganic|physical chemistry|stoichiometry|bonding|chemical|electrochemistry|coordination|p-block|d-block|s-block|hydrocarbons|thermodynamics/i.test(catClean)) {
-          return 'Chemistry';
-        }
-        if (/calculus|algebra|coordinate|trigonometry|vectors|3d|matrices|probability|statistics/i.test(catClean)) {
-          return 'Mathematics';
-        }
-        if (/botany|zoology|genetics|ecology|human physiology|plant physiology|biotechnology|cell biology/i.test(catClean)) {
-          return 'Biology';
-        }
-        return cat;
-      }
-      if (primarySubject) return primarySubject;
-      const text = (q.question_text || '').toLowerCase();
-      if (/physics|planck|velocity|acceleration|kinetic|potential energy|harmonic|shm|capacit|magnetic|newton|joule|ohm|satellite|orbit|speed|wave|wavelength|frequency|sound|optics|light|refract|reflect|lens|mirror|prism|photoelectric|photon|bohr|radioactive|half-life|decay|nucle|quanta|modern physics|spectrum|doppler|interfer|diffract|polariz|focal|ray|amperes|volt|tesla|flux|induction|friction|torque|momentum/i.test(text)) {
-        return 'Physics';
-      }
-      if (/chemistry|electron|atom|hybridization|exothermic|endothermic|carbocation|ionization|boil|reaction|element|periodic|acid|base|equilibrium|mole|xef4|combustion|unpaired|iupac|propan|ester|isomer|oxidation|reduction|titration|molar|molarity|normality|polymer|valency/i.test(text)) {
-        return 'Chemistry';
-      }
-      if (/math|matrix|quadratic|equation|roots|derivative|integral|sum of|progression|sin\(|cos\(|tan\(|triangle|circle|logarithm|determinant|probability|parallel lines|value of|permutation|combination|vector|parabola|ellipse|hyperbola/i.test(text)) {
-        return 'Mathematics';
-      }
-      if (/biology|zoology|botany|chromosome|gene\b|dna|rna|organism|photosynthesis|mitochondria|respiration|ribosome|mitosis|meiosis|ecosystem|heredity|chloroplast|xylem|phloem/i.test(text)) {
-        return 'Biology';
-      }
-      return 'Physics';
+    const getSubjectName = (q) => {
+      const explicit = cleanSubjectName(q.subject_name)
+        || cleanSubjectName(q.subject)
+        || cleanSubjectName(q.bank_category)
+        || cleanSubjectName(q.category)
+        || cleanSubjectName(q.section_name);
+      if (explicit) return explicit;
+      if (detectedPrimarySubject) return detectedPrimarySubject;
+      return 'General';
     };
 
     const getTopicName = (q, subjName) => {
-      let raw = q.topic || q.bank_category || q.section_name || '';
+      let raw = q.topic || q.chapter || q.chapter_name || q.bank_category || '';
       let clean = raw.trim();
       if (!clean || ['general', 'general aptitude', 'default', 'uncategorized', 'section 1', 'section 2', 'section 3'].includes(clean.toLowerCase())) {
-        const text = (q.question_text || '').toLowerCase();
-        if (/kinematic|velocity|acceleration|projectile|motion in/i.test(text)) return 'Kinematics';
-        if (/newton|nlm|law of motion|friction|force/i.test(text)) return 'NLM';
-        if (/rotation|torque|moment of inertia|angular|center of mass/i.test(text)) return 'Rotation';
-        if (/electrostatic|charge|coulomb|electric field|potential|capacit/i.test(text)) return 'Electrostatics';
-        if (/magnet|current|ampere|biot|solenoid|magnetic field|flux/i.test(text)) return 'Magnetism & EMI';
-        if (/optics|lens|mirror|light|refract|reflect|prism/i.test(text)) return 'Optics';
-        if (/thermodynamic|heat|temperature|entropy|carnot/i.test(text)) return 'Thermodynamics';
-        if (/organic|iupac|hydrocarbon|alkene|alkyne|benzene|isomer/i.test(text)) return 'Organic Chemistry';
-        if (/periodic|element|bonding|hybridization|octet/i.test(text)) return 'Chemical Bonding';
-        if (/mole|stoichiometry|molarity|normality|solution/i.test(text)) return 'Mole Concept';
-        if (/matrix|determinant/i.test(text)) return 'Matrices & Determinants';
-        if (/calculus|derivative|integral|limit|continuity/i.test(text)) return 'Calculus';
-        if (/quadratic|equation|root/i.test(text)) return 'Quadratic Equations';
-        if (/genetics|dna|rna|chromosome/i.test(text)) return 'Genetics';
-        if (/cell|mitochondria|ribosome/i.test(text)) return 'Cell Biology';
-        if (/physiology|kidney|nephron|heart|blood/i.test(text)) return 'Human Physiology';
-        return `${subjName} Fundamentals`;
+        return `${subjName} Core`;
       }
       if (clean.includes('_')) {
         clean = clean.split('_').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
@@ -405,7 +372,7 @@ export default function ResultPage() {
 
     const map = {};
     solutions.forEach((q, idx) => {
-      const subj = getSubjectName(q, idx);
+      const subj = getSubjectName(q);
       const topic = getTopicName(q, subj);
 
       if (!map[subj]) map[subj] = {};
@@ -424,17 +391,21 @@ export default function ResultPage() {
         isAttempted = q.your_answer !== null && q.your_answer !== undefined && q.your_answer !== '';
       } else if (q.question_type === 'coding' || q.question_type === 'subjective') {
         isAttempted = Boolean(q.your_answer && q.your_answer.trim());
+      } else {
+        isAttempted = q.your_answer !== null && q.your_answer !== undefined;
       }
 
       if (isAttempted) {
         t.attempted += 1;
-        if (q.is_correct) t.correct += 1;
+        if (q.is_correct) {
+          t.correct += 1;
+        }
       }
     });
 
     const result = {};
-    Object.keys(map).forEach((subj) => {
-      const topicsArr = Object.values(map[subj]).map((t) => {
+    Object.entries(map).forEach(([subj, topicsMap]) => {
+      result[subj] = Object.values(topicsMap).map((t) => {
         const accuracy = t.attempted > 0 ? Math.round((t.correct / t.attempted) * 100) : 0;
         return {
           name: t.name,
@@ -444,11 +415,9 @@ export default function ResultPage() {
           total: t.total,
         };
       });
-      result[subj] = topicsArr;
     });
-
     return result;
-  }, [solutions, assessment]);
+  }, [solutions, detectedPrimarySubject]);
 
   const hasWeakTopics = useMemo(() => {
     if (!topicScores || Object.keys(topicScores).length === 0) return true;
@@ -752,7 +721,7 @@ export default function ResultPage() {
 
             {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
             <div>
-              <AIInsightsCard isDarkMode={isDarkMode} testId={attemptId} />
+              <AIInsightsCard isDarkMode={isDarkMode} testId={attemptId} testData={data} />
             </div>
 
             {/* Performance Breakdown Progress Bar */}

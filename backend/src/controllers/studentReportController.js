@@ -503,8 +503,16 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
   // 2. Query REAL chapter performance from student question attempts (optionally filtered by testId)
   let chapterQueryStr = `
     SELECT 
-      COALESCE(c.name, NULLIF(q.bank_category, ''), s.name, 'General') AS chapter_name,
-      COALESCE(s.name, 'General') AS subject_name,
+      COALESCE(c.name, q.chapter, q.topic, NULLIF(q.bank_category, ''), s.name, 'General') AS chapter_name,
+      CASE 
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%chem%' OR LOWER(COALESCE(q.subject, '')) LIKE '%chem%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%chem%' THEN 'Chemistry'
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%phys%' OR LOWER(COALESCE(q.subject, '')) LIKE '%phys%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%phys%' THEN 'Physics'
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%math%' OR LOWER(COALESCE(q.subject, '')) LIKE '%math%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%math%' THEN 'Mathematics'
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%botany%' OR LOWER(COALESCE(q.subject, '')) LIKE '%botany%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%botany%' THEN 'Botany'
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%zoology%' OR LOWER(COALESCE(q.subject, '')) LIKE '%zoology%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%zoology%' THEN 'Zoology'
+        WHEN LOWER(COALESCE(s.name, '')) LIKE '%bio%' OR LOWER(COALESCE(q.subject, '')) LIKE '%bio%' OR LOWER(COALESCE(q.bank_category, '')) LIKE '%bio%' THEN 'Biology'
+        ELSE COALESCE(s.name, q.subject, NULLIF(q.bank_category, ''), 'General')
+      END AS subject_name,
       COUNT(*)::int AS total,
       COUNT(*) FILTER (WHERE 
         (ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index) OR
@@ -521,7 +529,7 @@ export const getPersonalizedAIPlan = asyncHandler(async (req, res) => {
   const queryParams = [userId];
 
   if (testId && !isNaN(testId)) {
-    chapterQueryStr += ` AND (at.assessment_id = $2 OR at.test_id = $2)`;
+    chapterQueryStr += ` AND (at.assessment_id = $2 OR at.test_id = $2 OR at.id = $2)`;
     queryParams.push(testId);
   }
 
