@@ -96,7 +96,6 @@ export default function SchoolsB2B() {
   const [showAddModal, setShowAddModal] = useState(false);
   const [showRankingModal, setShowRankingModal] = useState(false);
   const [showAssignTestModal, setShowAssignTestModal] = useState(false);
-  const [showAssignEbookModal, setShowAssignEbookModal] = useState(false);
   const [showAnalyticsModal, setShowAnalyticsModal] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
   const [showResultsModal, setShowResultsModal] = useState(false);

@@ -189,7 +189,7 @@ export default function InstitutionLogin() {
           </h1>
 
           <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-xl">
-            Access your institution’s student roster, batches, AIETS test series assignments, performance analytics, reports, eBooks, payments, and GST invoices.
+            Access your institution’s student roster, batches, AIETS test series assignments, performance analytics, reports, payments, and GST invoices.
           </p>
 
           <div className="space-y-3.5 pt-2">

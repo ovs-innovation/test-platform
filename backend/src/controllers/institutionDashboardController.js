@@ -827,174 +827,22 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
  * GET /api/institution/:id/available-ebooks & POST /api/institution/:id/ebooks/:ebook_id/assign
  */
 export const getAvailableEbooks = asyncHandler(async (_req, res) => {
-  try {
-    let result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC').catch(() => null);
-    if (!result || result.rowCount === 0) {
-      try {
-        await query(`
-          INSERT INTO ebooks (title, subject, author, class_level, pdf_url) VALUES
-          ('NEET-UG High-Yield Physics Formula Handbook 2027', 'Physics', 'Edvedum Academic Panel', 'Class 11 & 12', '/ebooks/neet-physics-handbook.pdf'),
-          ('JEE Main Organic Chemistry Mechanism Shortcuts', 'Chemistry', 'Kota Subject Experts', 'Class 12', '/ebooks/jee-chemistry-shortcuts.pdf'),
-          ('Class 10 Olympiad Mathematics & Logical Reasoning', 'Mathematics', 'Foundation Division', 'Class 10', '/ebooks/class10-olympiad-math.pdf')
-          ON CONFLICT (title) DO NOTHING
-        `);
-        result = await query('SELECT id, title, author, description, subject, class_level, created_at FROM ebooks ORDER BY id ASC').catch(() => null);
-      } catch (_) {}
-    }
-    res.json({
-      success: true,
-      ebooks: (result?.rows && result.rows.length > 0) ? result.rows : [
-        { id: 1, title: 'NEET-UG High-Yield Physics Formula Handbook 2027', subject: 'Physics', author: 'Edvedum Academic Panel', class_level: 'Class 11 & 12' },
-        { id: 2, title: 'JEE Main Organic Chemistry Mechanism Shortcuts', subject: 'Chemistry', author: 'Kota Subject Experts', class_level: 'Class 12' },
-        { id: 3, title: 'Class 10 Olympiad Mathematics & Logical Reasoning', subject: 'Mathematics', author: 'Foundation Division', class_level: 'Class 10' }
-      ]
-    });
-  } catch (_) {
-    res.json({
-      success: true,
-      ebooks: [
-        { id: 1, title: 'NEET-UG High-Yield Physics Formula Handbook 2027', subject: 'Physics', author: 'Edvedum Academic Panel', class_level: 'Class 11 & 12' },
-        { id: 2, title: 'JEE Main Organic Chemistry Mechanism Shortcuts', subject: 'Chemistry', author: 'Kota Subject Experts', class_level: 'Class 12' },
-        { id: 3, title: 'Class 10 Olympiad Mathematics & Logical Reasoning', subject: 'Mathematics', author: 'Foundation Division', class_level: 'Class 10' }
-      ]
-    });
-  }
-});
-
-export const assignEbook = asyncHandler(async (req, res) => {
-  const instId = req.institution_id || Number(req.params.id);
-  const { ebook_id } = req.params;
-  const { assign_to, target_id } = req.body;
-
-  if (!assign_to || !['institution', 'batch', 'student'].includes(assign_to)) {
-    throw ApiError.badRequest('assign_to must be one of: institution, batch, student');
-  }
-
-  const assignedTargetId = assign_to === 'institution' ? instId : Number(target_id || instId);
-  let ebookId = Number(ebook_id);
-
-  // Ensure ebook exists in ebooks table so foreign key constraint is satisfied
-  const checkEbook = await query('SELECT id FROM ebooks WHERE id = $1', [ebookId]).catch(() => ({ rowCount: 0, rows: [] }));
-  if (checkEbook.rowCount === 0) {
-    const titleMap = {
-      1: 'NEET-UG High-Yield Physics Formula Handbook 2027',
-      2: 'JEE Main Organic Chemistry Mechanism Shortcuts',
-      3: 'Class 10 Olympiad Mathematics & Logical Reasoning',
-    };
-    const defaultTitle = titleMap[ebookId] || `Digital Study Material #${ebookId}`;
-    try {
-      await query(
-        `INSERT INTO ebooks (id, title, author, subject, class_level, pdf_url)
-         VALUES ($1, $2, 'Edvedum Academic Panel', 'General', 'Class 11 & 12', '/ebooks/sample.pdf')
-         ON CONFLICT (id) DO NOTHING`,
-        [ebookId, defaultTitle]
-      );
-    } catch (_) {}
-  }
-
-  // Remove existing assignment of this type to prevent duplicates
-  await query(
-    `DELETE FROM ebook_assignments 
-     WHERE ebook_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
-    [ebookId, assign_to, assignedTargetId]
-  ).catch(() => {});
-
-  const insertRes = await query(
-    `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id)
-     VALUES ($1, $2, $3)
-     RETURNING id, ebook_id, assigned_to_type, assigned_to_id, created_at`,
-    [ebookId, assign_to, assignedTargetId]
-  );
-
-  res.status(201).json({
+  res.json({
     success: true,
-    assignment: insertRes.rows[0],
-    message: `eBook successfully assigned to ${assign_to}`
+    ebooks: []
   });
 });
 
-/**
- * 7. CREATE / UPLOAD NEW STUDY MATERIAL (eBOOK)
- * POST /api/institution/:id/ebooks
- */
-export const createInstitutionEbook = asyncHandler(async (req, res) => {
-  let { title, author, description, subject, class_level, pdf_url } = req.body;
-  if (!title || !pdf_url) throw ApiError.badRequest('Title and pdf_url are required');
-
-  let sanitizedPdfUrl = pdf_url.trim();
-
-  // If local file path or file:/// URL is provided
-  if (sanitizedPdfUrl.startsWith('file:///') || sanitizedPdfUrl.startsWith('file://') || /^[a-zA-Z]:[\\/]/.test(sanitizedPdfUrl)) {
-    const rawFilePath = sanitizedPdfUrl.replace(/^file:\/\/\//, '').replace(/^file:\/\//, '');
-    const fileName = path.basename(rawFilePath);
-    const destDir = path.resolve('public/ebooks');
-    const destPath = path.join(destDir, fileName);
-
-    if (fs.existsSync(rawFilePath)) {
-      try {
-        if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true });
-        fs.copyFileSync(rawFilePath, destPath);
-      } catch (err) {
-        console.warn('[createInstitutionEbook] Could not copy local file:', err.message);
-      }
-    }
-    sanitizedPdfUrl = `/ebooks/${fileName}`;
-  }
-
-  let detectedPages = null;
-  let detectedFileSize = null;
-
-  const targetPath = sanitizedPdfUrl.startsWith('/ebooks/')
-    ? path.resolve('public', sanitizedPdfUrl.substring(1))
-    : null;
-
-  if (targetPath && fs.existsSync(targetPath)) {
-    try {
-      const stats = fs.statSync(targetPath);
-      const sizeMb = (stats.size / (1024 * 1024)).toFixed(1);
-      detectedFileSize = `${sizeMb} MB`;
-
-      const pdfBuffer = fs.readFileSync(targetPath);
-      const pdfData = await pdfParse(pdfBuffer);
-      detectedPages = pdfData.numpages || null;
-    } catch (err) {
-      console.warn('[createInstitutionEbook] Could not parse PDF metadata:', err.message);
-    }
-  }
-
-  const result = await query(
-    `INSERT INTO ebooks (title, author, description, subject, class_level, pdf_url, pages, file_size)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-    [
-      title,
-      author || 'Institute Faculty',
-      description || null,
-      subject || 'General',
-      class_level || 'Class 11 & 12',
-      sanitizedPdfUrl,
-      detectedPages,
-      detectedFileSize
-    ]
-  );
-
-  res.status(201).json({ success: true, ebook: result.rows[0], message: 'Study material created successfully' });
+export const assignEbook = asyncHandler(async (_req, _res) => {
+  throw ApiError.forbidden('eBooks and study materials can only be assigned by platform administrators.');
 });
 
-export const deleteInstitutionEbook = asyncHandler(async (req, res) => {
-  const ebookId = Number(req.params.ebook_id);
+export const createInstitutionEbook = asyncHandler(async (_req, _res) => {
+  throw ApiError.forbidden('eBooks and study materials can only be uploaded and managed by platform administrators.');
+});
 
-  // Unlink references in tests or assessments if present
-  await query('UPDATE tests SET recommended_ebook_id = NULL WHERE recommended_ebook_id = $1', [ebookId]).catch(() => {});
-  await query('UPDATE assessments SET recommended_ebook_id = NULL WHERE recommended_ebook_id = $1', [ebookId]).catch(() => {});
-
-  // Delete ebook assignments
-  await query('DELETE FROM ebook_assignments WHERE ebook_id = $1', [ebookId]).catch(() => {});
-
-  // Delete ebook row
-  const result = await query('DELETE FROM ebooks WHERE id = $1', [ebookId]);
-  if (result.rowCount === 0) throw ApiError.notFound('eBook not found or already deleted');
-
-  res.json({ success: true, message: 'eBook deleted successfully', id: ebookId });
+export const deleteInstitutionEbook = asyncHandler(async (_req, _res) => {
+  throw ApiError.forbidden('eBooks and study materials can only be deleted by platform administrators.');
 });
 
 /**

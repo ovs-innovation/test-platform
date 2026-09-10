@@ -15,7 +15,6 @@ import {
   Key,
   Layers,
   FileText,
-  BookOpen,
   Eye,
   CheckSquare,
   Square,
@@ -41,7 +40,6 @@ export default function StudentsTab({
   onRegenerateCredentials,
   onMoveBatch,
   onAssignTests,
-  onAssignEbooks,
   onOpenAddModal,
   onOpenAddStudent,
   onOpenUploadModal,
@@ -351,14 +349,6 @@ export default function StudentsTab({
             >
               <FileText className="h-3.5 w-3.5" />
               <span>Assign Tests</span>
-            </button>
-
-            <button
-              onClick={() => onAssignEbooks(selectedStudentIds)}
-              className="inline-flex items-center gap-1.5 rounded-xl bg-white/20 hover:bg-white/30 px-3 py-1.5 text-xs font-bold text-white transition cursor-pointer"
-            >
-              <BookOpen className="h-3.5 w-3.5" />
-              <span>Assign eBooks</span>
             </button>
 
             <button

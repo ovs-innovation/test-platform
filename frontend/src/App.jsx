@@ -76,7 +76,6 @@ import InstitutionDashboard, {
   InstBatchesTabWrapper,
   InstTestSeriesTabWrapper,
   InstTestAssignmentsTabWrapper,
-  InstEbooksTabWrapper,
   InstAnalyticsTabWrapper,
   InstRankingsTabWrapper,
   InstReportsTabWrapper,
@@ -149,7 +148,7 @@ export default function App() {
           <Route path="batches/:batchId" element={<InstBatchDetailTabWrapper />} />
           <Route path="test-series" element={<InstTestSeriesTabWrapper />} />
           <Route path="test-assignments" element={<Navigate to="/institution/test-series" replace />} />
-          <Route path="ebooks" element={<InstEbooksTabWrapper />} />
+          <Route path="ebooks" element={<Navigate to="/institution/dashboard" replace />} />
           <Route path="analytics" element={<InstAnalyticsTabWrapper />} />
           <Route path="rankings" element={<InstRankingsTabWrapper />} />
           <Route path="reports" element={<InstReportsTabWrapper />} />
