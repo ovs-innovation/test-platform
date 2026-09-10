@@ -244,6 +244,15 @@ export default function ExamScreen() {
     return () => clearTimeout(id);
   }, [warning]);
 
+  useEffect(() => {
+    // Enforce crisp white NTA CBT exam theme
+    const wasDark = document.documentElement.classList.contains('dark');
+    document.documentElement.classList.remove('dark');
+    return () => {
+      if (wasDark) document.documentElement.classList.add('dark');
+    };
+  }, []);
+
   const activeQuestions = useMemo(() => {
     if (Array.isArray(questions) && questions.length > 0) return questions;
     const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
@@ -334,6 +343,11 @@ export default function ExamScreen() {
   };
 
   const saveAndMarkReview = async () => {
+    await toggleReview(true);
+    goNext();
+  };
+
+  const markForReviewAndNext = async () => {
     await toggleReview(true);
     goNext();
   };
@@ -530,7 +544,7 @@ export default function ExamScreen() {
   const hasPdf = Boolean(pdfUrl);
 
   return (
-    <div className="exam-surface flex min-h-screen flex-col select-none">
+    <div className="exam-surface flex min-h-screen flex-col select-none bg-white text-slate-900">
       <header className="nta-bar sticky top-0 z-30">
         <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2">
           <div className="flex items-center gap-3 min-w-0">
@@ -620,8 +634,9 @@ export default function ExamScreen() {
           </div>
         )}
 
-        <div className="border-b border-r border-slate-400 bg-white p-5 lg:border-b-0">
-          <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
+        <div className="border-b border-r border-slate-300 bg-white text-slate-900 p-5 lg:border-b-0">
+          <div className="space-y-4">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
             <div>
               <p className="text-[11px] font-bold uppercase text-[#1a4480] flex items-center gap-1.5">
                 <span>{getSubjectIcon(qCategory)}</span>
@@ -827,19 +842,85 @@ export default function ExamScreen() {
 
           {q.question_type === 'subjective' && (
             <textarea
-              className="input mt-5 min-h-[200px] resize-y rounded-none border-slate-400"
+              className="input mt-5 min-h-[200px] resize-y rounded-none border-slate-400 dark:border-slate-600 bg-white dark:bg-slate-800"
               placeholder="Type your answer here…"
               value={subjectiveAnswers[q.id] || ''}
               onChange={(e) => saveSubjective(q.id, e.target.value)}
             />
           )}
+          </div>
+
+          {/* Action Buttons — Positioned just below options and centered */}
+          <div className="mt-6 border-t border-slate-300 pt-4 pb-4 flex flex-col items-center">
+            {/* Row 1: Save / Clear / Review actions */}
+            <div className="flex flex-wrap items-center justify-center gap-2">
+              <button
+                type="button"
+                onClick={saveAndNext}
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#27ae60] hover:bg-[#219150] active:bg-[#1e824c] border border-[#27ae60] rounded-xs shadow-2xs cursor-pointer transition-colors"
+              >
+                Save &amp; Next
+              </button>
+              <button
+                type="button"
+                onClick={clearResponse}
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-slate-800 bg-white hover:bg-slate-100 active:bg-slate-200 border border-slate-400 rounded-xs shadow-2xs cursor-pointer transition-colors"
+              >
+                Clear
+              </button>
+              <button
+                type="button"
+                onClick={saveAndMarkReview}
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#f39c12] hover:bg-[#d68910] active:bg-[#b9770e] border border-[#f39c12] rounded-xs shadow-2xs cursor-pointer transition-colors"
+              >
+                Save &amp; Mark For Review
+              </button>
+              <button
+                type="button"
+                onClick={markForReviewAndNext}
+                className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#2980b9] hover:bg-[#2471a3] active:bg-[#1f618d] border border-[#2980b9] rounded-xs shadow-2xs cursor-pointer transition-colors"
+              >
+                Mark For Review &amp; Next
+              </button>
+            </div>
+
+            {/* Row 2: Back / Next Navigation & Submit (Centered) */}
+            <div className="mt-3 flex flex-wrap items-center justify-center gap-3 pt-1">
+              <div className="flex items-center">
+                <button
+                  type="button"
+                  disabled={current === 0}
+                  onClick={() => setCurrent((c) => Math.max(0, c - 1))}
+                  className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 bg-white border border-slate-400 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs cursor-pointer transition-colors border-r-0 rounded-l-xs"
+                >
+                  &lt;&lt; Back
+                </button>
+                <button
+                  type="button"
+                  disabled={current >= activeQuestions.length - 1}
+                  onClick={goNext}
+                  className="px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-slate-700 bg-white border border-slate-400 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs cursor-pointer transition-colors rounded-r-xs"
+                >
+                  Next &gt;&gt;
+                </button>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setConfirmOpen(true)}
+                className="px-6 py-1.5 text-xs font-bold uppercase tracking-wider text-white bg-[#27ae60] hover:bg-[#219150] active:bg-[#1e824c] border border-[#27ae60] rounded-xs shadow-2xs cursor-pointer transition-colors"
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
 
-        <aside className="border-b border-slate-400 bg-[#f3f6fb] p-3 lg:border-b-0 overflow-y-auto max-h-[calc(100vh-120px)]">
+        <aside className="border-b border-slate-300 bg-[#f3f6fb] text-slate-800 p-3 lg:border-b-0 overflow-y-auto max-h-[calc(100vh-100px)] flex flex-col">
           <p className="text-center text-xs font-bold uppercase text-slate-800 tracking-wide">Question Palette</p>
           <div className="mt-2 space-y-1">
             {PALETTE_LEGEND.map((item) => (
-              <div key={item.key} className="flex items-center gap-2 text-[10px] font-semibold text-slate-700 dark:text-slate-200">
+              <div key={item.key} className="flex items-center gap-2 text-[10px] font-semibold text-slate-700">
                 <span className={`h-4 w-4 shrink-0 ${item.swatch}`}>
                   {item.num}
                 </span>
@@ -848,7 +929,7 @@ export default function ExamScreen() {
             ))}
           </div>
 
-          <div className="mt-3 space-y-3">
+          <div className="mt-3 space-y-3 flex-1">
             {effectiveSections.map((secItem) => {
               const secQuestions = getSecQuestions(secItem);
               if (secQuestions.length === 0) return null;
@@ -859,34 +940,34 @@ export default function ExamScreen() {
               return (
                 <div
                   key={secItem.id}
-                  className={`rounded-xl border p-2.5 transition-all ${
-                    isCurrentSec
-                      ? 'border-[#1a4480] bg-white shadow-sm ring-1 ring-[#1a4480]'
-                      : 'border-slate-300 bg-slate-50/70'
-                  }`}
+                  className="rounded-xl border border-slate-300 bg-white p-2.5 shadow-2xs"
                 >
                   <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-1.5">
                     <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
                       <span>{secItem.icon}</span> {secItem.name}
                     </span>
-                    <span className="text-[10px] font-bold text-slate-600 bg-slate-200/80 px-1.5 py-0.5 rounded">
+                    <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
                       {secAnswered}/{secQuestions.length} Answered
                     </span>
                   </div>
-                  <div className="grid grid-cols-5 gap-1.5">
-                    {secQuestions.map(({ item, idx }) => {
-                      const status = getQStatus(item);
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => setCurrent(idx)}
-                          className={`flex h-8 w-full items-center justify-center text-xs font-bold ${paletteCellClass(status, idx === current)}`}
-                        >
-                          {idx + 1}
-                        </button>
-                      );
-                    })}
+
+                  {/* The questions numbers inside a box */}
+                  <div className="rounded border border-slate-300 p-2 max-h-[380px] overflow-y-auto bg-white">
+                    <div className="grid grid-cols-5 gap-1.5">
+                      {secQuestions.map(({ item, idx }) => {
+                        const status = getQStatus(item);
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => setCurrent(idx)}
+                            className={`flex h-8 w-full items-center justify-center text-xs font-bold rounded-sm border transition-all ${paletteCellClass(status, idx === current)}`}
+                          >
+                            {idx + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               );
@@ -899,40 +980,6 @@ export default function ExamScreen() {
           </div>
         </aside>
       </div>
-
-      <footer className="sticky bottom-0 z-20 border-t border-slate-500 bg-[#e8ecf1] px-4 py-2.5">
-        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-2">
-          <button
-            type="button"
-            className="nta-btn"
-            disabled={current === 0}
-            onClick={() => setCurrent((c) => c - 1)}
-          >
-            &lt;&lt; Back
-          </button>
-          <div className="flex flex-wrap justify-center gap-2">
-            <button type="button" className="nta-btn" onClick={clearResponse}>
-              Clear Response
-            </button>
-            <button
-              type="button"
-              className={`nta-btn ${reviewed[q.id] ? 'ring-2 ring-[#8e44ad]' : ''}`}
-              onClick={() => toggleReview(!reviewed[q.id])}
-            >
-              {reviewed[q.id] ? 'Unmark Review' : 'Mark for Review'}
-            </button>
-            <button type="button" className="nta-btn" onClick={saveAndMarkReview}>
-              Save &amp; Mark for Review
-            </button>
-            <button type="button" className="nta-btn nta-btn-primary" onClick={saveAndNext}>
-              Save &amp; Next &gt;&gt;
-            </button>
-          </div>
-          <button type="button" className="nta-btn nta-btn-danger" onClick={() => setConfirmOpen(true)}>
-            Submit
-          </button>
-        </div>
-      </footer>
 
       {needsFullscreen && (
         <div className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-slate-900/95 p-6 text-center text-white">

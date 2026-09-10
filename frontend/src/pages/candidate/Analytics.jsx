@@ -13,7 +13,9 @@ import {
   Zap,
   Brain,
   Filter,
-  Layers
+  Layers,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 export default function Analytics() {
@@ -22,6 +24,8 @@ export default function Analytics() {
   const [hoveredScoreTrend, setHoveredScoreTrend] = useState(null);
   const [hoveredAccuracyTrend, setHoveredAccuracyTrend] = useState(null);
   const [selectedSubjectFilter, setSelectedSubjectFilter] = useState('ALL');
+  const [chapterPage, setChapterPage] = useState(1);
+  const [chapterPageSize, setChapterPageSize] = useState(6);
 
   const load = async () => {
     setState('loading');
@@ -93,6 +97,32 @@ export default function Analytics() {
     if (selectedSubjectFilter === 'ALL') return chapter_breakdown || [];
     return (chapter_breakdown || []).filter(c => c.subject === selectedSubjectFilter);
   }, [chapter_breakdown, selectedSubjectFilter]);
+
+  // Pagination for Chapter-wise Performance
+  const totalChapters = filteredChapters.length;
+  const totalChapterPages = Math.ceil(totalChapters / chapterPageSize) || 1;
+  const chapterStartIndex = (chapterPage - 1) * chapterPageSize;
+  const chapterEndIndex = Math.min(chapterStartIndex + chapterPageSize, totalChapters);
+  const paginatedChapters = useMemo(() => {
+    return filteredChapters.slice(chapterStartIndex, chapterEndIndex);
+  }, [filteredChapters, chapterStartIndex, chapterEndIndex]);
+
+  useEffect(() => {
+    setChapterPage(1);
+  }, [selectedSubjectFilter, chapterPageSize]);
+
+  const getPageNumbers = (current, total) => {
+    if (total <= 7) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    if (current <= 4) {
+      return [1, 2, 3, 4, 5, '...', total];
+    }
+    if (current >= total - 3) {
+      return [1, '...', total - 4, total - 3, total - 2, total - 1, total];
+    }
+    return [1, '...', current - 1, current, current + 1, '...', total];
+  };
 
   // Score Improvement Summary calculation
   const scoreImprovementSummary = useMemo(() => {
@@ -423,7 +453,7 @@ export default function Analytics() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60">
-                  {filteredChapters.map((ch, idx) => {
+                  {paginatedChapters.map((ch, idx) => {
                     const acc = ch.accuracy || 0;
                     const isWeak = acc < 60;
                     return (
@@ -468,7 +498,7 @@ export default function Analytics() {
 
             {/* Mobile View Card List (shown on mobile, hidden on desktop) */}
             <div className="block md:hidden space-y-3">
-              {filteredChapters.map((ch, idx) => {
+              {paginatedChapters.map((ch, idx) => {
                 const acc = ch.accuracy || 0;
                 const isWeak = acc < 60;
                 return (
@@ -518,6 +548,81 @@ export default function Analytics() {
                   </div>
                 );
               })}
+            </div>
+
+            {/* Pagination Controls */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-xs text-slate-500 dark:text-slate-400">
+              <div className="flex items-center justify-between sm:justify-start gap-3 w-full sm:w-auto">
+                <span>
+                  Showing <span className="font-bold text-slate-900 dark:text-white">{totalChapters === 0 ? 0 : chapterStartIndex + 1}</span> to{' '}
+                  <span className="font-bold text-slate-900 dark:text-white">{chapterEndIndex}</span> of{' '}
+                  <span className="font-bold text-slate-900 dark:text-white">{totalChapters}</span> chapters
+                </span>
+                <div className="flex items-center gap-1.5 border-l border-slate-200 dark:border-slate-800 pl-3">
+                  <span className="text-[11px] text-slate-400 font-medium">Per page:</span>
+                  <select
+                    value={chapterPageSize}
+                    onChange={(e) => {
+                      setChapterPageSize(Number(e.target.value));
+                      setChapterPage(1);
+                    }}
+                    className="rounded-lg border border-slate-200 bg-white px-2 py-1 text-xs font-semibold text-slate-700 focus:border-cyan-500 focus:outline-none dark:border-slate-700 dark:bg-[#070c18] dark:text-slate-300 cursor-pointer"
+                  >
+                    <option value={6}>6</option>
+                    <option value={10}>10</option>
+                    <option value={20}>20</option>
+                  </select>
+                </div>
+              </div>
+
+              {totalChapterPages > 1 && (
+                <div className="flex items-center justify-center sm:justify-end gap-1.5 w-full sm:w-auto">
+                  <button
+                    type="button"
+                    disabled={chapterPage === 1}
+                    onClick={() => setChapterPage((p) => Math.max(p - 1, 1))}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition font-semibold text-xs cursor-pointer shadow-2xs"
+                    aria-label="Previous page"
+                  >
+                    <ChevronLeft className="h-3.5 w-3.5" />
+                    <span>Prev</span>
+                  </button>
+
+                  <div className="flex items-center gap-1">
+                    {getPageNumbers(chapterPage, totalChapterPages).map((p, i) =>
+                      p === '...' ? (
+                        <span key={`ellipsis-${i}`} className="px-1.5 py-0.5 text-slate-400 font-bold text-xs">
+                          …
+                        </span>
+                      ) : (
+                        <button
+                          key={p}
+                          type="button"
+                          onClick={() => setChapterPage(p)}
+                          className={`h-7 min-w-[28px] px-2 rounded-lg text-xs font-bold transition cursor-pointer ${
+                            chapterPage === p
+                              ? 'bg-cyan-600 text-white shadow-xs'
+                              : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                          }`}
+                        >
+                          {p}
+                        </button>
+                      )
+                    )}
+                  </div>
+
+                  <button
+                    type="button"
+                    disabled={chapterPage >= totalChapterPages}
+                    onClick={() => setChapterPage((p) => Math.min(p + 1, totalChapterPages))}
+                    className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/90 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 disabled:opacity-30 disabled:cursor-not-allowed transition font-semibold text-xs cursor-pointer shadow-2xs"
+                    aria-label="Next page"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              )}
             </div>
           </>
         ) : (
