@@ -1,352 +1,280 @@
 import { useState, useMemo, useEffect } from 'react';
 import {
   BookOpen,
-  Download,
-  Users,
-  Layers,
-  Sparkles,
   FileText,
-  CheckCircle2,
   Search,
   Filter,
-  Atom,
-  FlaskConical,
-  Binary,
-  Dna,
-  Send,
   Eye,
-  Building2,
-  User,
-  X,
-  BookMarked,
+  ExternalLink,
   ShieldCheck,
-  ChevronRight,
-  Plus,
-  Upload,
-  Trash2,
-  AlertTriangle
+  Sparkles,
+  Download,
+  Calendar,
+  RefreshCw,
+  X,
+  Maximize2,
+  Info,
+  CheckCircle2,
+  Layers,
+  FileDown,
+  User,
+  Users,
+  UserPlus,
+  Send,
+  Trash2
 } from 'lucide-react';
-import { useToast } from '../../../context/ToastContext.jsx';
+import { institutionDashboardService } from '../../../lib/services.js';
 
 export default function EbooksTab({
   availableEbooks = [],
   batches = [],
   students = [],
   onAssignEbook,
-  onCreateEbook,
-  onDeleteEbook,
+  onUnassignEbook,
+  instId,
   isDarkMode = true,
 }) {
-  const toast = useToast();
-  const [selectedEbook, setSelectedEbook] = useState(null);
+  const [ebooks, setEbooks] = useState(availableEbooks);
+  const [loading, setLoading] = useState(false);
   const [previewEbook, setPreviewEbook] = useState(null);
-  const [deletingBook, setDeletingBook] = useState(null);
-  const [deleting, setDeleting] = useState(false);
-  const [targetType, setTargetType] = useState('batch'); // 'batch' | 'student' | 'institution'
-  const [targetId, setTargetId] = useState('');
-  const [assigning, setAssigning] = useState(false);
-
-  // Search & Filter state
+  const [modalTab, setModalTab] = useState('reader'); // 'reader' | 'info'
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('All');
 
-  const [showCreateModal, setShowCreateModal] = useState(false);
-  const [creating, setCreating] = useState(false);
-  const [createForm, setCreateForm] = useState({
-    title: '',
-    author: '',
-    description: '',
-    subject: 'Physics',
-    class_level: 'Class 11 & 12',
-    pdf_url: '',
-  });
+  // Assignment Modal States
+  const [assignModalBook, setAssignModalBook] = useState(null);
+  const [assignScope, setAssignScope] = useState('batch'); // 'batch' | 'student' | 'all'
+  const [targetId, setTargetId] = useState('');
+  const [studentSearch, setStudentSearch] = useState('');
+  const [assigning, setAssigning] = useState(false);
 
-  const confirmDelete = async () => {
-    if (!deletingBook) return;
-    setDeleting(true);
-    try {
-      if (onDeleteEbook) {
-        await onDeleteEbook(deletingBook.id);
+  const deduplicateBooks = (list) => {
+    if (!Array.isArray(list)) return [];
+    const map = new Map();
+    for (const item of list) {
+      if (item && item.id) {
+        if (!map.has(item.id)) {
+          map.set(item.id, item);
+        } else {
+          const existing = map.get(item.id);
+          const combinedRoster = [...(existing.roster_assignments || []), ...(item.roster_assignments || [])];
+          const uniqueRoster = Array.from(
+            new Map(combinedRoster.map((r) => [r.assignment_id || `${r.assigned_to_type}-${r.assigned_to_id}`, r])).values()
+          );
+          map.set(item.id, { ...existing, roster_assignments: uniqueRoster });
+        }
       }
-      toast.success(`"${deletingBook.title}" deleted successfully.`);
-      setDeletingBook(null);
+    }
+    return Array.from(map.values());
+  };
+
+  useEffect(() => {
+    if (availableEbooks && availableEbooks.length > 0) {
+      setEbooks(deduplicateBooks(availableEbooks));
+    }
+  }, [availableEbooks]);
+
+  const loadAssignedEbooks = async () => {
+    if (!instId) return;
+    setLoading(true);
+    try {
+      const res = await institutionDashboardService.availableEbooks(instId);
+      if (res?.ebooks) {
+        setEbooks(deduplicateBooks(res.ebooks));
+      }
     } catch (err) {
-      toast.error(err.message || 'Failed to delete eBook.');
+      console.error('Failed to load assigned ebooks:', err);
     } finally {
-      setDeleting(false);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (selectedEbook || previewEbook || showCreateModal || deletingBook) {
-      document.body.style.overflow = 'hidden';
+    loadAssignedEbooks();
+  }, [instId]);
+
+  useEffect(() => {
+    if (assignModalBook) {
+      if (assignScope === 'batch' && batches.length > 0) {
+        setTargetId(String(batches[0].id));
+      } else if (assignScope === 'student' && students.length > 0) {
+        setTargetId(String(students[0].id));
+      } else {
+        setTargetId('');
+      }
     }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [selectedEbook, previewEbook, showCreateModal, deletingBook]);
-
-  const defaultBooks = [
-    {
-      id: 1,
-      title: 'NEET-UG High-Yield Physics Formula Handbook 2027',
-      subject: 'Physics',
-      author: 'Edvedum Academic Panel',
-      class_level: 'Class 11 & 12',
-      pages: 164,
-      file_size: '8.4 MB',
-      target_exam: 'NEET-UG 2027',
-      description: 'Comprehensive quick-revision formula guide, key derivations, and high-yield solved examples for NEET physics prep.',
-      color: 'from-blue-600 via-indigo-600 to-cyan-500',
-      badgeBg: 'bg-blue-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/20',
-      icon: Atom
-    },
-    {
-      id: 2,
-      title: 'JEE Main Organic Chemistry Mechanism Shortcuts',
-      subject: 'Chemistry',
-      author: 'Kota Subject Experts',
-      class_level: 'Class 12',
-      pages: 142,
-      file_size: '12.1 MB',
-      target_exam: 'JEE Main 2027',
-      description: 'Master organic reaction mechanisms, reagent cheat sheets, and step-by-step synthetic conversions.',
-      color: 'from-emerald-600 via-teal-600 to-cyan-500',
-      badgeBg: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
-      icon: FlaskConical
-    },
-    {
-      id: 3,
-      title: 'Class 10 Olympiad Mathematics & Logical Reasoning',
-      subject: 'Mathematics',
-      author: 'Foundation Division',
-      class_level: 'Class 10',
-      pages: 210,
-      file_size: '15.6 MB',
-      target_exam: 'Foundation & NTSE',
-      description: 'Advanced problem sets, number theory, algebraic geometry, and speed arithmetic strategies for competitive foundation math.',
-      color: 'from-purple-600 via-indigo-600 to-blue-500',
-      badgeBg: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20',
-      icon: Binary
-    },
-    {
-      id: 4,
-      title: 'NEET Biology 360/360 NCERT Diagrammatic Review',
-      subject: 'Biology',
-      author: 'Edvedum Medical Faculty',
-      class_level: 'Class 11 & 12',
-      pages: 280,
-      file_size: '22.0 MB',
-      target_exam: 'NEET-UG 2027',
-      description: 'Full NCERT line-by-line summary, high-resolution labeled biological diagrams, and high-probability assertion-reason notes.',
-      color: 'from-rose-600 via-pink-600 to-purple-500',
-      badgeBg: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/20',
-      icon: Dna
-    },
-    {
-      id: 5,
-      title: 'JEE Advanced Calculus & Coordinate Geometry Set',
-      subject: 'Mathematics',
-      author: 'IITian Faculty Wing',
-      class_level: 'Class 12',
-      pages: 195,
-      file_size: '11.2 MB',
-      target_exam: 'JEE Advanced',
-      description: 'Differential & integral calculus problem bank, conic sections shortcuts, and multi-concept practice problems.',
-      color: 'from-indigo-600 via-blue-600 to-cyan-500',
-      badgeBg: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
-      icon: Binary
-    },
-    {
-      id: 6,
-      title: 'Class 9 Science Foundation Concept Map & Manual',
-      subject: 'Science',
-      author: 'Foundation Academic Board',
-      class_level: 'Class 9',
-      pages: 130,
-      file_size: '6.8 MB',
-      target_exam: 'Class 9 Board & NTSE',
-      description: 'Interactive concept mindmaps, practical lab exercise guide, and foundational physics/chemistry problem worksheets.',
-      color: 'from-amber-600 via-orange-500 to-yellow-500',
-      badgeBg: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20',
-      icon: BookMarked
-    }
-  ];
-
-  const booksList = availableEbooks && availableEbooks.length > 0
-    ? availableEbooks.map((b, i) => ({
-        ...b,
-        color: b.color || defaultBooks[i % defaultBooks.length].color,
-        badgeBg: b.badgeBg || defaultBooks[i % defaultBooks.length].badgeBg,
-        icon: b.subject?.toLowerCase().includes('chem') ? FlaskConical : b.subject?.toLowerCase().includes('math') ? Binary : b.subject?.toLowerCase().includes('bio') ? Dna : Atom
-      }))
-    : defaultBooks;
-
-  const filteredBooks = useMemo(() => {
-    return booksList.filter((b) => {
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch =
-        (b.title || '').toLowerCase().includes(q) ||
-        (b.subject || '').toLowerCase().includes(q) ||
-        (b.author || '').toLowerCase().includes(q) ||
-        (b.target_exam || '').toLowerCase().includes(q);
-
-      const matchesCat =
-        categoryFilter === 'All' ||
-        (b.subject || '').toLowerCase().includes(categoryFilter.toLowerCase()) ||
-        (categoryFilter === 'Class 11 & 12' && ((b.class_level || '').includes('11') || (b.class_level || '').includes('12'))) ||
-        (categoryFilter === 'Foundation' && ((b.class_level || '').includes('9') || (b.class_level || '').includes('10')));
-
-      return matchesSearch && matchesCat;
-    });
-  }, [booksList, searchQuery, categoryFilter]);
-
-  const handleOpenAssignModal = (book) => {
-    setSelectedEbook(book);
-    if (batches.length > 0) {
-      setTargetType('batch');
-      setTargetId(String(batches[0].id));
-    } else {
-      setTargetType('institution');
-      setTargetId('');
-    }
-  };
+  }, [assignModalBook, assignScope, batches, students]);
 
   const handleAssignSubmit = async (e) => {
-    e.preventDefault();
-    if (!selectedEbook) return;
+    if (e) e.preventDefault();
+    if (!assignModalBook) return;
 
     setAssigning(true);
     try {
-      if (onAssignEbook) {
-        await onAssignEbook(selectedEbook.id, {
-          assign_to: targetType,
-          target_id: targetType === 'institution' ? null : targetId,
-        });
-      }
-      const targetLabel =
-        targetType === 'batch'
-          ? batches.find((b) => Number(b.id) === Number(targetId))?.batch_name || 'Batch'
-          : targetType === 'student'
-          ? students.find((s) => Number(s.id) === Number(targetId))?.name || 'Student'
-          : 'Entire Institution';
+      const payload = {
+        assign_to: assignScope,
+        target_id: assignScope === 'all' ? null : Number(targetId || (assignScope === 'batch' ? batches[0]?.id : students[0]?.id)),
+      };
 
-      toast.success(`"${selectedEbook.title}" distributed to ${targetLabel} successfully.`);
-      setSelectedEbook(null);
+      if (onAssignEbook) {
+        await onAssignEbook(assignModalBook.id, payload);
+      } else {
+        await institutionDashboardService.assignEbook(instId, assignModalBook.id, payload);
+      }
+      setAssignModalBook(null);
+      await loadAssignedEbooks();
     } catch (err) {
-      toast.error(err.message || 'Failed to distribute eBook.');
-      setSelectedEbook(null);
+      console.error('Failed to assign ebook:', err);
     } finally {
       setAssigning(false);
     }
   };
 
-  const handleCreateSubmit = async (e) => {
-    e.preventDefault();
-    if (!createForm.title || !createForm.pdf_url) {
-      toast.error('Title and PDF File / Path are required.');
-      return;
-    }
-
-    setCreating(true);
+  const handleRevokeAssignment = async (ebookId, assignmentId) => {
+    if (!window.confirm('Are you sure you want to revoke this eBook assignment?')) return;
     try {
-      if (onCreateEbook) {
-        await onCreateEbook(createForm);
+      if (onUnassignEbook) {
+        await onUnassignEbook(ebookId, assignmentId);
+      } else {
+        await institutionDashboardService.unassignEbook(instId, ebookId, assignmentId);
       }
-      setShowCreateModal(false);
-      setCreateForm({
-        title: '',
-        author: '',
-        description: '',
-        subject: 'Physics',
-        class_level: 'Class 11 & 12',
-        pdf_url: '',
-      });
+      await loadAssignedEbooks();
+      if (previewEbook && previewEbook.id === ebookId) {
+        setPreviewEbook((prev) => ({
+          ...prev,
+          roster_assignments: (prev.roster_assignments || []).filter((a) => a.assignment_id !== assignmentId),
+        }));
+      }
     } catch (err) {
-      toast.error(err.message || 'Failed to create study material.');
-    } finally {
-      setCreating(false);
+      console.error('Failed to revoke assignment:', err);
     }
   };
 
-  const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-medium';
+  useEffect(() => {
+    if (previewEbook) {
+      document.body.style.overflow = 'hidden';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [previewEbook]);
+
+  const categories = ['All', 'Physics', 'Chemistry', 'Biology', 'Mathematics', 'General'];
+
+  const getPdfUrl = (url) => {
+    if (!url) return '#';
+    if (url.startsWith('http')) return url;
+    return url.startsWith('/') ? url : `/${url}`;
+  };
+
+  const getSubjectMeta = (subject = '') => {
+    const s = subject.toLowerCase();
+    if (s.includes('phys')) return {
+      gradient: 'from-blue-600 to-indigo-600',
+      badge: 'bg-blue-500/10 text-blue-500 border-blue-500/20'
+    };
+    if (s.includes('chem')) return {
+      gradient: 'from-emerald-600 to-teal-600',
+      badge: 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20'
+    };
+    if (s.includes('bio')) return {
+      gradient: 'from-rose-600 to-pink-600',
+      badge: 'bg-rose-500/10 text-rose-500 border-rose-500/20'
+    };
+    if (s.includes('math')) return {
+      gradient: 'from-amber-600 to-orange-600',
+      badge: 'bg-amber-500/10 text-amber-500 border-amber-500/20'
+    };
+    return {
+      gradient: 'from-purple-600 to-indigo-600',
+      badge: 'bg-purple-500/10 text-purple-500 border-purple-500/20'
+    };
+  };
+
+  const filteredBooks = useMemo(() => {
+    return ebooks.filter((b) => {
+      const matchesCategory = categoryFilter === 'All' || (b.subject && b.subject.toLowerCase() === categoryFilter.toLowerCase());
+      const matchesSearch =
+        !searchQuery ||
+        b.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (b.author && b.author.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (b.description && b.description.toLowerCase().includes(searchQuery.toLowerCase()));
+      return matchesCategory && matchesSearch;
+    });
+  }, [ebooks, categoryFilter, searchQuery]);
 
   return (
-    <div className="space-y-6 animate-in fade-in duration-300">
-      
-      {/* =========================================================================
-          1. HEADER STRIP & SEARCH TOOLBAR
-         ========================================================================= */}
-      <div className={`rounded-3xl border p-5 sm:p-6 shadow-sm space-y-4 ${
-        isDarkMode ? 'bg-[#0E1726] border-slate-800 text-white' : 'bg-white border-slate-200/90 text-slate-900'
-      }`}>
+    <div className="space-y-6 animate-in fade-in duration-200">
+      {/* HEADER & ADMIN ASSIGNMENT NOTICE */}
+      <div className={`p-6 rounded-3xl border shadow-sm ${isDarkMode ? 'bg-[#0b1329] border-slate-800' : 'bg-white border-slate-200'}`}>
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-          <div>
-            <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold border mb-2 ${
-              isDarkMode ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-purple-50 text-purple-700 border-purple-200'
-            }`}>
-              <BookOpen className="h-3.5 w-3.5" />
-              <span>Digital Study Library & Handbooks</span>
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2.5">
+              <div className="h-10 w-10 rounded-2xl bg-purple-500/10 text-purple-500 flex items-center justify-center border border-purple-500/20">
+                <BookOpen className="h-5 w-5" />
+              </div>
+              <div>
+                <h2 className={`text-xl font-extrabold tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  Assigned eBooks & Study Material
+                </h2>
+                <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  Curated digital modules, formula handbooks, and revision materials assigned to your institution by Platform Administrators.
+                </p>
+              </div>
             </div>
-            <h2 className={`text-xl sm:text-2xl font-black tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-              eBooks & Digital Study Material
-            </h2>
-            <p className={`text-xs mt-1 ${textMutedClass}`}>
-              Distribute platform-approved eBooks, NEET & JEE practice modules, and formula handbooks to batches or individual students.
-            </p>
           </div>
 
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 self-start md:self-auto">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-purple-500/10 text-purple-500 border border-purple-500/20">
+              <ShieldCheck className="h-3.5 w-3.5" />
+              <span>Admin Assigned Only</span>
+            </span>
+            <span className={`text-xs font-extrabold px-3 py-1.5 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'}`}>
+              {ebooks.length} Resources Unlocked
+            </span>
             <button
-              onClick={() => setShowCreateModal(true)}
-              className="inline-flex items-center gap-2 rounded-xl bg-purple-600 px-4 py-2 text-xs font-extrabold text-white shadow-md hover:bg-purple-500 transition cursor-pointer"
+              onClick={loadAssignedEbooks}
+              disabled={loading}
+              title="Refresh assigned eBooks"
+              className={`p-2 rounded-xl border transition-colors flex items-center justify-center cursor-pointer ${
+                isDarkMode
+                  ? 'bg-slate-900 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800'
+                  : 'bg-slate-100 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-200'
+              }`}
             >
-              <Plus className="h-4 w-4" />
-              <span>Upload Study Material</span>
+              <RefreshCw className={`h-3.5 w-3.5 ${loading ? 'animate-spin text-purple-400' : ''}`} />
             </button>
-
-            <div className={`px-4 py-2 rounded-2xl border text-center ${
-              isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200/80 shadow-2xs'
-            }`}>
-              <span className={`text-[10px] font-extrabold uppercase tracking-wider block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Digital Library</span>
-              <span className="text-base font-black text-purple-600 dark:text-purple-400">{booksList.length} eBooks</span>
-            </div>
           </div>
         </div>
 
-        {/* SEARCH AND CATEGORY FILTERS ROW */}
-        <div className={`pt-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3 ${
-          isDarkMode ? 'border-slate-800/80' : 'border-slate-200'
-        }`}>
-          {/* High-Contrast Search Input */}
-          <div className="relative w-full sm:w-96">
-            <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} />
+        {/* SEARCH & FILTERS */}
+        <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800/80 flex flex-col md:flex-row gap-3 items-center justify-between">
+          <div className="relative w-full md:w-80">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Search eBooks, formula handbooks, topics..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full pl-10 pr-4 py-2.5 text-xs font-semibold rounded-xl border transition ${
+              placeholder="Search books, topics, authors..."
+              className={`w-full pl-10 pr-4 py-2 rounded-xl text-xs font-semibold border transition ${
                 isDarkMode
-                  ? 'bg-slate-950 border-slate-800 text-white placeholder-slate-500 focus:border-purple-400'
-                  : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-purple-600 focus:bg-white shadow-2xs'
-              }`}
+                  ? 'bg-slate-900/80 border-slate-800 text-white placeholder:text-slate-500 focus:border-purple-500'
+                  : 'bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400 focus:border-purple-500'
+              } focus:outline-none`}
             />
           </div>
 
-          {/* Subject Filter Pills */}
-          <div className="flex items-center gap-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-            <Filter className={`h-4 w-4 shrink-0 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`} />
-            {['All', 'Physics', 'Chemistry', 'Mathematics', 'Biology', 'Foundation'].map((cat) => (
+          <div className="flex items-center gap-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0">
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setCategoryFilter(cat)}
-                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition shrink-0 cursor-pointer ${
+                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition whitespace-nowrap cursor-pointer ${
                   categoryFilter === cat
-                    ? 'bg-purple-600 text-white shadow-md font-black'
+                    ? 'bg-purple-600 text-white shadow-sm'
                     : isDarkMode
-                    ? 'bg-slate-900 text-slate-300 hover:text-white border border-slate-800'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200/90'
+                    ? 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'
+                    : 'bg-slate-100 text-slate-600 hover:text-slate-900 border border-slate-200'
                 }`}
               >
                 {cat}
@@ -356,226 +284,471 @@ export default function EbooksTab({
         </div>
       </div>
 
-      {/* =========================================================================
-          2. EBOOKS CARD GRID (UNCONGESTED SPACIOUS LAYOUT WITH PROPER BADGES & COVER)
-         ========================================================================= */}
-      {filteredBooks.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredBooks.map((book) => {
-            const IconComponent = book.icon || BookOpen;
-
+      {/* EBOOKS GRID */}
+      {loading && ebooks.length === 0 ? (
+        <div className={`p-16 text-center rounded-3xl border ${isDarkMode ? 'bg-[#0b1329] border-slate-800' : 'bg-white border-slate-200'}`}>
+          <RefreshCw className="h-8 w-8 text-purple-500 animate-spin mx-auto mb-3" />
+          <h3 className={`text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            Loading Assigned eBooks...
+          </h3>
+          <p className={`text-xs max-w-md mx-auto mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+            Fetching latest study materials assigned to your institution...
+          </p>
+        </div>
+      ) : filteredBooks.length === 0 ? (
+        <div className={`p-12 text-center rounded-3xl border ${isDarkMode ? 'bg-[#0b1329] border-slate-800' : 'bg-white border-slate-200'}`}>
+          <div className="h-14 w-14 rounded-3xl bg-purple-500/10 text-purple-500 mx-auto flex items-center justify-center border border-purple-500/20 mb-3">
+            <BookOpen className="h-7 w-7" />
+          </div>
+          <h3 className={`text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+            {searchQuery || categoryFilter !== 'All' ? 'No matching eBooks found' : 'No eBooks Assigned Yet'}
+          </h3>
+          <p className={`text-xs max-w-md mx-auto mt-1 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+            {searchQuery || categoryFilter !== 'All'
+              ? 'Try resetting your search query or subject filters to view other materials.'
+              : 'Your platform administrator has not assigned any digital study modules or formula books to this institution yet. Contact admin to request materials.'}
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {filteredBooks.map((b) => {
+            const meta = getSubjectMeta(b.subject);
             return (
               <div
-                key={book.id}
-                className={`group rounded-3xl border-2 p-5 sm:p-6 space-y-4 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between relative overflow-hidden ${
+                key={b.id}
+                className={`rounded-3xl border overflow-hidden transition-all duration-200 hover:shadow-lg flex flex-col justify-between ${
                   isDarkMode
-                    ? 'bg-[#0E1726] border-slate-800 text-white hover:border-purple-500/40'
-                    : 'bg-white border-slate-200/90 text-slate-900 shadow-sm hover:border-purple-300'
+                    ? 'bg-[#0b1329] border-slate-800 hover:border-slate-700'
+                    : 'bg-white border-slate-200 hover:border-slate-300'
                 }`}
               >
-                {/* CARD TOP ROW: SUBJECT BADGE + EXAM BADGE */}
-                <div className="flex items-center justify-between gap-2">
-                  <div className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xl text-xs font-extrabold uppercase tracking-wider border ${book.badgeBg}`}>
-                    <IconComponent className="h-3.5 w-3.5 shrink-0" />
-                    <span>{book.subject}</span>
-                  </div>
-                  <span className={`text-[10px] font-bold px-2.5 py-1 rounded-xl border ${
-                    isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
-                  }`}>
-                    {book.target_exam || 'NEET / JEE'}
-                  </span>
-                </div>
-
-                {/* BOOK VISUAL COVER + TITLE & AUTHOR */}
-                <div className="flex items-center gap-4 py-1">
-                  {/* Compact 16x20 Cover Badge */}
-                  <div className={`h-20 w-16 rounded-2xl bg-gradient-to-tr ${book.color} text-white p-2 flex flex-col justify-between shadow-md shrink-0 border border-white/20 relative overflow-hidden`}>
-                    <span className="text-[9px] font-black uppercase tracking-wider opacity-90">{book.subject?.substring(0, 3)}</span>
-                    <IconComponent className="h-6 w-6 opacity-90 mx-auto my-auto" />
-                    <span className="text-[7px] font-mono font-bold opacity-80 uppercase text-center">PDF MODULE</span>
+                {/* CARD HEADER COVER */}
+                <div className={`p-5 bg-gradient-to-tr ${meta.gradient} text-white relative overflow-hidden`}>
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white">
+                      {b.subject || 'General'}
+                    </span>
+                    <span className="text-[10px] font-extrabold text-white/90">
+                      {b.class_level || 'Class 11 & 12'}
+                    </span>
                   </div>
 
-                  {/* Title & Author info */}
-                  <div className="min-w-0 flex-1 space-y-1">
-                    <h3 className={`text-sm font-black leading-snug tracking-tight ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                      {book.title}
+                  <div className="mt-6 mb-1 relative z-10">
+                    <h3 className="text-base font-black leading-snug drop-shadow-sm line-clamp-2">
+                      {b.title}
                     </h3>
-                    <p className={`text-xs ${textMutedClass}`}>
-                      Author: <span className={isDarkMode ? 'text-slate-200 font-bold' : 'text-slate-800 font-bold'}>{book.author || 'Edvedum Faculty'}</span>
+                    <p className="text-xs text-white/80 font-semibold mt-1">
+                      {b.author || 'Academic Panel'}
                     </p>
                   </div>
+
+                  <BookOpen className="absolute -bottom-4 -right-4 h-24 w-24 text-white/10" />
                 </div>
 
-                {/* Description */}
-                <p className={`text-xs leading-relaxed line-clamp-2 ${isDarkMode ? 'text-slate-300' : 'text-slate-600 font-medium'}`}>
-                  {book.description}
-                </p>
+                {/* CARD BODY */}
+                <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+                  <p className={`text-xs line-clamp-3 leading-relaxed ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                    {b.description || 'Comprehensive digital study material and test-series revision handbook curated for competitive success.'}
+                  </p>
 
-                {/* Format Specs Grid */}
-                <div className={`grid grid-cols-2 gap-3 p-3 rounded-2xl border text-xs ${
-                  isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/80'
-                }`}>
-                  <div>
-                    <span className={`block text-[10px] font-extrabold uppercase ${textMutedClass}`}>Target Class</span>
-                    <strong className={`text-xs font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{book.class_level || 'Class 11 & 12'}</strong>
+                  <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500 font-semibold'}>
+                        Pages & Format
+                      </span>
+                      <span className={`font-extrabold ${isDarkMode ? 'text-slate-200' : 'text-slate-800'}`}>
+                        {b.pages ? `${b.pages} Pages` : 'PDF Document'} {b.file_size ? `(${b.file_size})` : ''}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center justify-between text-[11px]">
+                      <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500 font-semibold'}>
+                        Assigned By
+                      </span>
+                      <span className="font-extrabold text-purple-500 flex items-center gap-1">
+                        <ShieldCheck className="h-3 w-3" />
+                        Admin
+                      </span>
+                    </div>
                   </div>
-                  <div>
-                    <span className={`block text-[10px] font-extrabold uppercase ${textMutedClass}`}>Format & Volume</span>
-                    <strong className="text-xs font-extrabold text-purple-600 dark:text-purple-400">{book.pages ? `${book.pages} Pages` : 'PDF Document'}{book.file_size ? ` • ${book.file_size}` : ''}</strong>
+
+                  {/* ACTIVE ROSTER ASSIGNMENTS ON CARD */}
+                  {b.roster_assignments && b.roster_assignments.length > 0 && (
+                    <div className="pt-2 border-t border-slate-100 dark:border-slate-800/80">
+                      <p className="text-[10px] font-bold text-slate-400 mb-1 flex items-center gap-1">
+                        <Users className="h-3 w-3 text-indigo-400" />
+                        <span>Allocated Roster ({b.roster_assignments.length}):</span>
+                      </p>
+                      <div className="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto">
+                        {b.roster_assignments.map((ra) => (
+                          <span
+                            key={ra.assignment_id}
+                            className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-indigo-500/10 text-indigo-400 border border-indigo-500/20"
+                          >
+                            <span>{ra.assigned_to_type === 'batch' ? `Batch: ${ra.batch_name}` : `Student: ${ra.student_name}`}</span>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleRevokeAssignment(b.id, ra.assignment_id);
+                              }}
+                              title="Revoke access"
+                              className="text-indigo-400 hover:text-red-400 cursor-pointer ml-0.5"
+                            >
+                              <X className="h-2.5 w-2.5" />
+                            </button>
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* ACTION BUTTONS */}
+                  <div className="flex items-center gap-2 pt-2">
+                    <button
+                      onClick={() => {
+                        setPreviewEbook(b);
+                        setModalTab('reader');
+                      }}
+                      className="flex-1 py-2 px-3 rounded-xl text-xs font-extrabold bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white transition flex items-center justify-center gap-1.5 shadow-md hover:shadow-purple-500/20 cursor-pointer"
+                    >
+                      <BookOpen className="h-3.5 w-3.5" />
+                      <span>Read</span>
+                    </button>
+
+                    <button
+                      onClick={() => {
+                        setAssignModalBook(b);
+                        setAssignScope('batch');
+                        if (batches.length > 0) setTargetId(String(batches[0].id));
+                      }}
+                      className="py-2 px-3 rounded-xl text-xs font-extrabold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center justify-center gap-1.5 shadow-md hover:shadow-indigo-500/20 cursor-pointer"
+                      title="Assign this eBook to a batch or student"
+                    >
+                      <UserPlus className="h-3.5 w-3.5" />
+                      <span>Assign</span>
+                    </button>
+
+                    <a
+                      href={getPdfUrl(b.pdf_url)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`py-2 px-2.5 rounded-xl text-xs font-extrabold border transition flex items-center justify-center cursor-pointer ${
+                        isDarkMode
+                          ? 'bg-slate-900/90 border-slate-800 text-slate-300 hover:text-white hover:bg-slate-800'
+                          : 'bg-slate-50 border-slate-200 text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+                      }`}
+                      title="Open in new tab"
+                    >
+                      <ExternalLink className="h-3.5 w-3.5" />
+                    </a>
                   </div>
-                </div>
-
-                {/* Actions Footer */}
-                <div className={`pt-3 border-t flex items-center gap-2 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
-                  <button
-                    onClick={() => setPreviewEbook(book)}
-                    className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                      isDarkMode
-                        ? 'border-slate-800 bg-slate-900 text-slate-300 hover:bg-slate-800 hover:text-white'
-                        : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200 hover:text-slate-900 shadow-2xs'
-                    }`}
-                  >
-                    <Eye className="h-3.5 w-3.5 text-purple-500 dark:text-purple-400" />
-                    <span>Preview</span>
-                  </button>
-
-                  <button
-                    onClick={() => handleOpenAssignModal(book)}
-                    className="flex-1 py-2 px-3 rounded-xl text-xs font-black bg-gradient-to-r from-purple-600 via-purple-500 to-indigo-600 text-white shadow-md hover:brightness-110 active:scale-98 transition flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Send className="h-3.5 w-3.5" />
-                    <span>Assign eBook</span>
-                  </button>
                 </div>
               </div>
             );
           })}
         </div>
-      ) : (
-        /* EMPTY STATE */
-        <div className={`rounded-3xl border p-12 text-center space-y-4 ${
-          isDarkMode ? 'bg-[#0E1726] border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700 shadow-sm'
-        }`}>
-          <div className="h-16 w-16 rounded-2xl bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center mx-auto">
-            <BookOpen className="h-8 w-8" />
-          </div>
-          <h3 className={`text-lg font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>No eBooks match your search or filter</h3>
-          <p className={`text-xs max-w-sm mx-auto ${textMutedClass}`}>
-            Try searching for a different subject, class level, or clear your subject filters.
-          </p>
-          <button
-            onClick={() => { setSearchQuery(''); setCategoryFilter('All'); }}
-            className="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs shadow-md hover:bg-purple-500 transition cursor-pointer"
-          >
-            Reset Filters
-          </button>
-        </div>
       )}
 
-      {/* PREVIEW MODAL */}
+      {/* COMPREHENSIVE INTERACTIVE eBOOK READER & DOCUMENT VIEWER MODAL */}
       {previewEbook && (
-        <div className="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-          <div className={`w-full max-w-lg rounded-3xl border shadow-2xl p-6 sm:p-7 space-y-5 my-auto ${
-            isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
-          }`}>
-            <div className={`flex items-start justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
-              <div className="flex items-center gap-3">
-                <div className={`h-12 w-12 rounded-2xl bg-gradient-to-tr ${previewEbook.color} text-white flex items-center justify-center shadow-md shrink-0`}>
-                  <BookOpen className="h-6 w-6" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md animate-in fade-in duration-200">
+          <div className="w-[96vw] max-w-6xl h-[92vh] max-h-[950px] rounded-3xl border border-slate-700/80 bg-[#0B132B] shadow-2xl flex flex-col overflow-hidden text-white relative animate-in zoom-in-95 duration-200">
+            {/* TOP CONTROL BAR */}
+            <div className="px-5 py-3.5 border-b border-slate-800/90 bg-[#0E1838] flex flex-wrap items-center justify-between gap-3 shrink-0">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className={`h-10 w-10 rounded-2xl bg-gradient-to-tr ${getSubjectMeta(previewEbook.subject).gradient} text-white flex items-center justify-center shadow-md shrink-0`}>
+                  <BookOpen className="h-5 w-5" />
                 </div>
-                <div>
-                  <span className={`text-[10px] font-extrabold uppercase px-2 py-0.5 rounded border ${previewEbook.badgeBg}`}>
-                    {previewEbook.subject}
-                  </span>
-                  <h3 className={`text-base font-black mt-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded border ${getSubjectMeta(previewEbook.subject).badge}`}>
+                      {previewEbook.subject || 'General'}
+                    </span>
+                    <span className="text-[11px] font-bold text-slate-400">
+                      {previewEbook.class_level || 'Class 11 & 12'}
+                    </span>
+                    <span className="hidden sm:inline text-slate-600">•</span>
+                    <span className="hidden sm:inline text-[11px] text-slate-400 font-medium">
+                      by <strong className="text-slate-200">{previewEbook.author || 'Edvedum Academic Panel'}</strong>
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black tracking-tight text-white truncate max-w-md md:max-w-xl">
                     {previewEbook.title}
                   </h3>
                 </div>
               </div>
 
-              <button
-                onClick={() => setPreviewEbook(null)}
-                className={`p-1.5 rounded-xl transition ${isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'}`}
-              >
-                <X className="h-5 w-5" />
-              </button>
+              {/* ACTION TOOLBAR */}
+              <div className="flex items-center gap-2">
+                {/* MOBILE VIEW TOGGLE */}
+                <div className="flex lg:hidden bg-slate-900 border border-slate-800 rounded-xl p-0.5 text-xs">
+                  <button
+                    onClick={() => setModalTab('reader')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition ${
+                      modalTab === 'reader' ? 'bg-purple-600 text-white shadow' : 'text-slate-400'
+                    }`}
+                  >
+                    Reader
+                  </button>
+                  <button
+                    onClick={() => setModalTab('info')}
+                    className={`px-2.5 py-1 rounded-lg font-bold transition ${
+                      modalTab === 'info' ? 'bg-purple-600 text-white shadow' : 'text-slate-400'
+                    }`}
+                  >
+                    Details
+                  </button>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setAssignModalBook(previewEbook);
+                    setAssignScope('batch');
+                    if (batches.length > 0) setTargetId(String(batches[0].id));
+                  }}
+                  className="px-3 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-1.5 shadow-md cursor-pointer"
+                  title="Assign to Batch or Student"
+                >
+                  <UserPlus className="h-3.5 w-3.5" />
+                  <span>Assign</span>
+                </button>
+
+                <a
+                  href={getPdfUrl(previewEbook.pdf_url)}
+                  download
+                  className="px-3 py-2 rounded-xl text-xs font-bold bg-slate-900/90 border border-slate-700/80 hover:bg-slate-800 text-slate-200 hover:text-white transition flex items-center gap-1.5 cursor-pointer"
+                  title="Download PDF"
+                >
+                  <Download className="h-3.5 w-3.5 text-slate-300" />
+                  <span className="hidden md:inline">Download</span>
+                </a>
+
+                <a
+                  href={getPdfUrl(previewEbook.pdf_url)}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-3.5 py-2 rounded-xl text-xs font-bold bg-purple-600 hover:bg-purple-500 text-white transition flex items-center gap-1.5 shadow-md cursor-pointer"
+                  title="Open full document in new tab"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Pop Out</span>
+                </a>
+
+                <button
+                  onClick={() => setPreviewEbook(null)}
+                  className="p-2 rounded-xl bg-slate-900/80 border border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+                  title="Close viewer"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
             </div>
 
-            <div className="space-y-4 text-xs">
-              <div className={`p-4 rounded-2xl border space-y-2 ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'
+            {/* MAIN CONTENT AREA */}
+            <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 overflow-hidden bg-[#060D1E]">
+              {/* DOCUMENT VIEWER STAGE */}
+              <div className={`lg:col-span-8 xl:col-span-9 flex flex-col h-full bg-slate-900/50 relative ${
+                modalTab === 'reader' ? 'flex' : 'hidden lg:flex'
               }`}>
-                <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Summary & Course Scope</span>
-                <p className={`text-xs leading-relaxed ${isDarkMode ? 'text-slate-300' : 'text-slate-700 font-medium'}`}>{previewEbook.description}</p>
+                <div className="flex-1 w-full h-full relative overflow-hidden bg-slate-950 flex flex-col">
+                  {previewEbook.pdf_url ? (
+                    <object
+                      data={`${getPdfUrl(previewEbook.pdf_url)}#toolbar=1&navpanes=0`}
+                      type="application/pdf"
+                      className="w-full h-full border-0 bg-white"
+                    >
+                      <iframe
+                        src={`${getPdfUrl(previewEbook.pdf_url)}#toolbar=1&navpanes=0`}
+                        className="w-full h-full border-0 bg-white"
+                        title={previewEbook.title}
+                      >
+                        <div className="flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
+                          <FileText className="h-16 w-16 text-slate-600 mx-auto" />
+                          <p className="text-sm font-bold text-slate-400">PDF Reader</p>
+                          <a
+                            href={getPdfUrl(previewEbook.pdf_url)}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs"
+                          >
+                            Open PDF in New Window
+                          </a>
+                        </div>
+                      </iframe>
+                    </object>
+                  ) : (
+                    <div className="flex-1 flex flex-col items-center justify-center text-center p-8 space-y-4">
+                      <FileText className="h-16 w-16 text-slate-600" />
+                      <p className="text-sm font-bold text-slate-400">PDF document link is being processed.</p>
+                      <a
+                        href={getPdfUrl(previewEbook.pdf_url)}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="px-4 py-2 rounded-xl bg-purple-600 text-white font-bold text-xs"
+                      >
+                        Try Opening in Browser
+                      </a>
+                    </div>
+                  )}
+                </div>
+
+                <div className="px-4 py-2 bg-[#091124] border-t border-slate-800 text-[11px] text-slate-400 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5 truncate">
+                    <Sparkles className="h-3 w-3 text-purple-400" />
+                    <span>Unlocked for your institution • Synchronized with enrolled candidate accounts</span>
+                  </span>
+                  <span className="hidden sm:inline font-mono font-bold text-slate-500">
+                    {previewEbook.pages ? `${previewEbook.pages} Pages` : 'PDF'}
+                  </span>
+                </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
-                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Author / Faculty</span>
-                  <p className={`font-bold mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{previewEbook.author}</p>
+              {/* METADATA & INSTITUTION DETAILS SIDEBAR */}
+              <div className={`lg:col-span-4 xl:col-span-3 border-l border-slate-800/90 bg-[#0B1428] flex flex-col justify-between overflow-y-auto p-5 space-y-5 ${
+                modalTab === 'info' ? 'flex' : 'hidden lg:flex'
+              }`}>
+                <div className="space-y-5">
+                  {/* ABOUT SECTION */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
+                      <Info className="h-3.5 w-3.5 text-purple-400" />
+                      Curated Overview
+                    </span>
+                    <p className="text-xs text-slate-300 leading-relaxed font-medium bg-slate-900/60 p-3.5 rounded-2xl border border-slate-800">
+                      {previewEbook.description || 'Curated high-yield study material designed for in-depth conceptual revision and competitive examination problem solving.'}
+                    </p>
+                  </div>
+
+                  {/* SPECIFICATION PILLS */}
+                  <div className="space-y-2">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-slate-400">
+                      Handbook Specifications
+                    </span>
+                    <div className="grid grid-cols-2 gap-2.5">
+                      <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+                        <p className="text-[10px] font-bold text-slate-400">Subject</p>
+                        <p className="text-xs font-extrabold text-white mt-0.5">{previewEbook.subject || 'General'}</p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+                        <p className="text-[10px] font-bold text-slate-400">Target Standard</p>
+                        <p className="text-xs font-extrabold text-white mt-0.5">{previewEbook.class_level || 'Class 11 & 12'}</p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+                        <p className="text-[10px] font-bold text-slate-400">Length & Size</p>
+                        <p className="text-xs font-extrabold text-emerald-400 mt-0.5">
+                          {previewEbook.pages ? `${previewEbook.pages} Pages` : 'PDF'} {previewEbook.file_size ? `(${previewEbook.file_size})` : ''}
+                        </p>
+                      </div>
+
+                      <div className="p-3 rounded-2xl bg-slate-900/80 border border-slate-800/80">
+                        <p className="text-[10px] font-bold text-slate-400">Faculty / Author</p>
+                        <p className="text-xs font-extrabold text-purple-300 mt-0.5 truncate">{previewEbook.author || 'Academic Panel'}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ACCESS BADGE CARD & ROSTER ASSIGNMENT */}
+                  <div className="p-4 rounded-2xl border border-purple-500/20 bg-purple-500/5 space-y-3">
+                    <div className="flex items-center justify-between text-purple-400">
+                      <div className="flex items-center gap-2">
+                        <ShieldCheck className="h-4 w-4 shrink-0" />
+                        <h4 className="text-xs font-extrabold">Institution Entitlement</h4>
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-purple-500/10 px-2 py-0.5 rounded-md border border-purple-500/20">Unlocked</span>
+                    </div>
+                    <p className="text-[11px] text-slate-300 leading-normal">
+                      Assigned by platform administrators. You can allocate this study material directly to your batches or individual students.
+                    </p>
+
+                    <button
+                      onClick={() => {
+                        setAssignModalBook(previewEbook);
+                        setAssignScope('batch');
+                        if (batches.length > 0) setTargetId(String(batches[0].id));
+                      }}
+                      className="w-full py-2.5 px-3 rounded-xl font-extrabold text-xs bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                    >
+                      <UserPlus className="h-3.5 w-3.5" />
+                      <span>Assign to Batch or Student</span>
+                    </button>
+
+                    {previewEbook.roster_assignments && previewEbook.roster_assignments.length > 0 && (
+                      <div className="pt-2 border-t border-purple-500/20 space-y-1.5">
+                        <p className="text-[10px] font-bold text-slate-400">Active Roster Access ({previewEbook.roster_assignments.length}):</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {previewEbook.roster_assignments.map((ra) => (
+                            <span
+                              key={ra.assignment_id}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30"
+                            >
+                              <span>{ra.assigned_to_type === 'batch' ? `Batch: ${ra.batch_name}` : `Student: ${ra.student_name}`}</span>
+                              <button
+                                onClick={() => handleRevokeAssignment(previewEbook.id, ra.assignment_id)}
+                                title="Revoke access"
+                                className="hover:text-red-400 cursor-pointer ml-0.5"
+                              >
+                                <X className="h-2.5 w-2.5" />
+                              </button>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Target Exam</span>
-                  <p className="font-bold text-purple-600 dark:text-purple-400 mt-0.5">{previewEbook.target_exam || 'NEET / JEE'}</p>
-                </div>
-                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>Target Class</span>
-                  <p className={`font-bold mt-0.5 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{previewEbook.class_level}</p>
-                </div>
-                <div className={`p-3 rounded-xl border ${isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
-                  <span className={`text-[10px] font-extrabold uppercase block ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>PDF Document Size</span>
-                  <p className="font-bold text-emerald-600 dark:text-emerald-400 mt-0.5">{previewEbook.pages ? `${previewEbook.pages} Pages` : 'PDF Document'}{previewEbook.file_size ? ` (${previewEbook.file_size})` : ''}</p>
+
+                {/* BOTTOM QUICK ACTIONS */}
+                <div className="space-y-2 pt-4 border-t border-slate-800/80">
+                  <a
+                    href={getPdfUrl(previewEbook.pdf_url)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="w-full py-2.5 px-4 rounded-xl font-extrabold text-xs bg-purple-600 hover:bg-purple-500 text-white transition flex items-center justify-center gap-2 shadow-lg shadow-purple-600/20 cursor-pointer"
+                  >
+                    <ExternalLink className="h-3.5 w-3.5" />
+                    <span>Open in Fullscreen Tab</span>
+                  </a>
+
+                  <button
+                    onClick={() => setPreviewEbook(null)}
+                    className="w-full py-2.5 px-4 rounded-xl font-bold text-xs bg-slate-900 hover:bg-slate-800 border border-slate-800 text-slate-300 transition cursor-pointer"
+                  >
+                    Done & Close
+                  </button>
                 </div>
               </div>
-            </div>
-
-            <div className={`pt-3 border-t flex items-center justify-end gap-3 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
-              <button
-                type="button"
-                onClick={() => setPreviewEbook(null)}
-                className={`px-4 py-2 rounded-xl border text-xs font-bold ${
-                  isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  const b = previewEbook;
-                  setPreviewEbook(null);
-                  handleOpenAssignModal(b);
-                }}
-                className="px-5 py-2 rounded-xl bg-purple-600 text-white text-xs font-extrabold hover:bg-purple-500 shadow-md flex items-center gap-1.5 cursor-pointer"
-              >
-                <Send className="h-3.5 w-3.5" />
-                <span>Assign eBook to Batch</span>
-              </button>
             </div>
           </div>
         </div>
       )}
 
-      {/* ASSIGN EBOOK MODAL */}
-      {selectedEbook && (
-        <div className="fixed inset-0 z-[110] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+      {/* ASSIGN eBOOK TO BATCH / STUDENT MODAL */}
+      {assignModalBook && (
+        <div className="fixed inset-0 z-[120] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto animate-in fade-in duration-150">
           <div
             className={`w-full max-w-lg rounded-3xl border p-6 sm:p-7 space-y-5 shadow-2xl relative my-auto animate-in zoom-in-95 ${
               isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
             }`}
           >
+            {/* MODAL HEADER */}
             <div className={`flex items-center justify-between border-b pb-4 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
               <div className="flex items-center gap-3">
-                <div className="p-2.5 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-md">
-                  <Send className="h-5 w-5" />
+                <div className="p-2.5 rounded-2xl bg-gradient-to-tr from-indigo-600 to-purple-600 text-white shadow-md">
+                  <UserPlus className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className={`text-base font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Distribute eBook Study Material</h3>
-                  <p className={`text-xs ${textMutedClass}`}>Select target academic batch or student group</p>
+                  <h3 className={`text-base font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                    Assign eBook to Roster
+                  </h3>
+                  <p className={`text-xs ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    Allocate material to batches or individual students
+                  </p>
                 </div>
               </div>
               <button
-                onClick={() => setSelectedEbook(null)}
+                onClick={() => setAssignModalBook(null)}
                 className={`p-1.5 rounded-xl transition cursor-pointer ${
                   isDarkMode ? 'text-slate-400 hover:text-white hover:bg-slate-800' : 'text-slate-500 hover:text-slate-900 hover:bg-slate-100'
                 }`}
@@ -584,26 +757,39 @@ export default function EbooksTab({
               </button>
             </div>
 
-            <div className={`p-4 rounded-2xl border space-y-1 ${
+            {/* TARGET eBOOK PILL */}
+            <div className={`p-3.5 rounded-2xl border flex items-center gap-3 ${
               isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
-              <span className="text-[10px] font-extrabold uppercase text-purple-600 dark:text-purple-400 tracking-wider">Target Digital Resource</span>
-              <h4 className={`text-sm font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{selectedEbook.title}</h4>
+              <div className={`h-9 w-9 rounded-xl bg-gradient-to-tr ${getSubjectMeta(assignModalBook.subject).gradient} text-white flex items-center justify-center shadow-sm shrink-0`}>
+                <BookOpen className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <h4 className={`text-xs font-black truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+                  {assignModalBook.title}
+                </h4>
+                <p className={`text-[11px] truncate ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  {assignModalBook.subject} • {assignModalBook.class_level || 'Class 11 & 12'} • by {assignModalBook.author || 'Academic Panel'}
+                </p>
+              </div>
             </div>
 
             <form onSubmit={handleAssignSubmit} className="space-y-4 text-xs">
+              {/* SCOPE SELECTION BUTTONS */}
               <div>
-                <label className={`block font-extrabold uppercase mb-1.5 ${textMutedClass}`}>Distribution Scope</label>
+                <label className={`block font-extrabold uppercase text-[10px] tracking-wider mb-2 ${isDarkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                  Assignment Target Scope
+                </label>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     type="button"
                     onClick={() => {
-                      setTargetType('batch');
+                      setAssignScope('batch');
                       if (batches.length > 0) setTargetId(String(batches[0].id));
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                      targetType === 'batch'
-                        ? 'bg-purple-600 text-white border-purple-500 shadow-md'
+                      assignScope === 'batch'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -616,12 +802,12 @@ export default function EbooksTab({
                   <button
                     type="button"
                     onClick={() => {
-                      setTargetType('student');
+                      setAssignScope('student');
                       if (students.length > 0) setTargetId(String(students[0].id));
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                      targetType === 'student'
-                        ? 'bg-purple-600 text-white border-purple-500 shadow-md'
+                      assignScope === 'student'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
@@ -634,265 +820,145 @@ export default function EbooksTab({
                   <button
                     type="button"
                     onClick={() => {
-                      setTargetType('institution');
+                      setAssignScope('all');
                       setTargetId('');
                     }}
                     className={`py-2 px-3 rounded-xl border text-xs font-extrabold transition flex items-center justify-center gap-1.5 cursor-pointer ${
-                      targetType === 'institution'
-                        ? 'bg-purple-600 text-white border-purple-500 shadow-md'
+                      assignScope === 'all'
+                        ? 'bg-indigo-600 text-white border-indigo-500 shadow-md'
                         : isDarkMode
                         ? 'bg-slate-900 text-slate-400 border-slate-800 hover:text-white'
                         : 'bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200'
                     }`}
                   >
-                    <Building2 className="h-3.5 w-3.5" />
-                    <span>School</span>
+                    <Users className="h-3.5 w-3.5" />
+                    <span>All Students</span>
                   </button>
                 </div>
               </div>
 
-              {targetType === 'batch' && (
-                <div>
-                  <label className={`block font-extrabold uppercase mb-1.5 ${textMutedClass}`}>Target Academic Batch</label>
-                  <select
-                    value={targetId}
-                    onChange={(e) => setTargetId(e.target.value)}
-                    required
-                    className={`w-full py-2.5 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
-                      isDarkMode
-                        ? 'border-slate-800 bg-slate-900 text-slate-200'
-                        : 'border-slate-300 bg-slate-50 text-slate-900'
-                    }`}
-                  >
-                    {batches.map((b) => (
-                      <option key={b.id} value={b.id}>
-                        {b.batch_name || b.name}
-                      </option>
-                    ))}
-                  </select>
+              {/* TARGET DETAILS: BATCH SELECTOR */}
+              {assignScope === 'batch' && (
+                <div className="space-y-1.5">
+                  <label className={`block font-bold text-[11px] ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Select Target Batch
+                  </label>
+                  {batches.length === 0 ? (
+                    <p className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs">
+                      No academic batches found in your institution. Create a batch first under the Batches tab.
+                    </p>
+                  ) : (
+                    <select
+                      value={targetId}
+                      onChange={(e) => setTargetId(e.target.value)}
+                      className={`w-full px-3.5 py-2.5 rounded-xl border font-bold text-xs focus:outline-none focus:border-indigo-500 transition cursor-pointer ${
+                        isDarkMode
+                          ? 'bg-slate-900 border-slate-800 text-white'
+                          : 'bg-white border-slate-300 text-slate-900'
+                      }`}
+                    >
+                      {batches.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.batch_name || b.name || `Batch #${b.id}`} ({b.student_count || b.students_count || 0} students enrolled)
+                        </option>
+                      ))}
+                    </select>
+                  )}
                 </div>
               )}
 
-              {targetType === 'student' && (
-                <div>
-                  <label className={`block font-extrabold uppercase mb-1.5 ${textMutedClass}`}>Target Enrolled Student</label>
-                  <select
-                    value={targetId}
-                    onChange={(e) => setTargetId(e.target.value)}
-                    required
-                    className={`w-full py-2.5 px-3 rounded-xl border text-xs font-bold transition cursor-pointer ${
-                      isDarkMode
-                        ? 'border-slate-800 bg-slate-900 text-slate-200'
-                        : 'border-slate-300 bg-slate-50 text-slate-900'
-                    }`}
-                  >
-                    {students.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.name} ({s.roll_number || s.email})
-                      </option>
-                    ))}
-                  </select>
+              {/* TARGET DETAILS: STUDENT SELECTOR */}
+              {assignScope === 'student' && (
+                <div className="space-y-2">
+                  <label className={`block font-bold text-[11px] ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                    Select Candidate / Student
+                  </label>
+                  {students.length === 0 ? (
+                    <p className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs">
+                      No enrolled students found in your institution roster.
+                    </p>
+                  ) : (
+                    <>
+                      <input
+                        type="text"
+                        placeholder="Search student by name or roll number..."
+                        value={studentSearch}
+                        onChange={(e) => setStudentSearch(e.target.value)}
+                        className={`w-full px-3.5 py-2 rounded-xl border text-xs focus:outline-none focus:border-indigo-500 transition ${
+                          isDarkMode
+                            ? 'bg-slate-900 border-slate-800 text-white placeholder-slate-500'
+                            : 'bg-white border-slate-300 text-slate-900 placeholder-slate-400'
+                        }`}
+                      />
+                      <select
+                        value={targetId}
+                        onChange={(e) => setTargetId(e.target.value)}
+                        className={`w-full px-3.5 py-2.5 rounded-xl border font-bold text-xs focus:outline-none focus:border-indigo-500 transition cursor-pointer ${
+                          isDarkMode
+                            ? 'bg-slate-900 border-slate-800 text-white'
+                            : 'bg-white border-slate-300 text-slate-900'
+                        }`}
+                        size={students.filter((s) => !studentSearch || s.name.toLowerCase().includes(studentSearch.toLowerCase()) || (s.roll_number && s.roll_number.toLowerCase().includes(studentSearch.toLowerCase()))).length > 5 ? 5 : undefined}
+                      >
+                        {students
+                          .filter((s) => !studentSearch || s.name.toLowerCase().includes(studentSearch.toLowerCase()) || (s.roll_number && s.roll_number.toLowerCase().includes(studentSearch.toLowerCase())))
+                          .map((s) => (
+                            <option key={s.id} value={s.id}>
+                              {s.name} {s.roll_number ? `(${s.roll_number})` : `(${s.email})`} • {s.batch_name || 'No Batch'}
+                            </option>
+                          ))}
+                      </select>
+                    </>
+                  )}
                 </div>
               )}
 
-              <div className={`pt-3 border-t flex justify-end gap-3 ${isDarkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+              {/* TARGET DETAILS: ALL STUDENTS */}
+              {assignScope === 'all' && (
+                <div className="p-3.5 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 space-y-1">
+                  <p className="font-extrabold flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-indigo-400" />
+                    <span>Institute-Wide Distribution</span>
+                  </p>
+                  <p className="text-[11px] leading-relaxed text-slate-300">
+                    All currently enrolled students across every batch in your institution will immediately be able to view and read this handbook under their "My eBooks & Notes" section.
+                  </p>
+                </div>
+              )}
+
+              {/* FOOTER ACTIONS */}
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-800">
                 <button
                   type="button"
-                  onClick={() => setSelectedEbook(null)}
-                  className={`px-4 py-2 rounded-xl border font-bold ${
-                    isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
+                  onClick={() => setAssignModalBook(null)}
                   disabled={assigning}
-                  className="px-5 py-2 rounded-xl bg-purple-600 font-bold text-white shadow-md hover:bg-purple-500 disabled:opacity-50 flex items-center gap-1.5 cursor-pointer"
-                >
-                  <span>{assigning ? 'Distributing...' : 'Confirm eBook Distribution'}</span>
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* CREATE / UPLOAD STUDY MATERIAL MODAL */}
-      {showCreateModal && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-lg rounded-3xl border shadow-2xl p-6 space-y-5 ${
-            isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
-          }`}>
-            <div className="flex items-center justify-between border-b border-slate-800/60 pb-3">
-              <h3 className={`text-lg font-extrabold flex items-center gap-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                <Upload className="h-5 w-5 text-purple-400" />
-                <span>Upload Custom Study Material</span>
-              </h3>
-              <button
-                onClick={() => setShowCreateModal(false)}
-                className="text-slate-400 hover:text-white text-base font-bold"
-              >
-                ✕
-              </button>
-            </div>
-
-            <form onSubmit={handleCreateSubmit} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-semibold uppercase text-slate-400 mb-1">Title *</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Physics Formula & Short Notes 2027"
-                  value={createForm.title}
-                  onChange={(e) => setCreateForm({ ...createForm, title: e.target.value })}
-                  required
-                  className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                    isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                  }`}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div>
-                  <label className="block font-semibold uppercase text-slate-400 mb-1">Subject</label>
-                  <select
-                    value={createForm.subject}
-                    onChange={(e) => setCreateForm({ ...createForm, subject: e.target.value })}
-                    className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                      isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                    }`}
-                  >
-                    <option value="Physics">Physics</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Biology">Biology</option>
-                    <option value="Mathematics">Mathematics</option>
-                    <option value="General">General / All Subjects</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="block font-semibold uppercase text-slate-400 mb-1">Class Level</label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Class 11 & 12"
-                    value={createForm.class_level}
-                    onChange={(e) => setCreateForm({ ...createForm, class_level: e.target.value })}
-                    className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                      isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block font-semibold uppercase text-slate-400 mb-1">Author / Faculty Name</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Institute HOD / Kota Faculty"
-                  value={createForm.author}
-                  onChange={(e) => setCreateForm({ ...createForm, author: e.target.value })}
-                  className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                    isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                  }`}
-                />
-              </div>
-
-              <div>
-                <label className="block font-semibold uppercase text-slate-400 mb-1">PDF File Path or URL *</label>
-                <input
-                  type="text"
-                  placeholder="e.g. C:\Users\Downloads\genetics_notes.pdf OR /ebooks/physics_handbook.pdf"
-                  value={createForm.pdf_url}
-                  onChange={(e) => setCreateForm({ ...createForm, pdf_url: e.target.value })}
-                  required
-                  className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                    isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                  }`}
-                />
-                <p className="text-[10px] text-slate-400 mt-1">
-                  You can enter a web URL or paste a local computer file path (e.g. C:\Users\...\document.pdf).
-                </p>
-              </div>
-
-              <div>
-                <label className="block font-semibold uppercase text-slate-400 mb-1">Description (Optional)</label>
-                <textarea
-                  rows={2}
-                  placeholder="Brief summary of syllabus coverage or chapter highlights..."
-                  value={createForm.description}
-                  onChange={(e) => setCreateForm({ ...createForm, description: e.target.value })}
-                  className={`w-full py-2.5 px-3 rounded-xl border transition ${
-                    isDarkMode ? 'border-slate-800 bg-slate-900 text-slate-200' : 'border-slate-200 bg-slate-100 text-slate-800'
-                  }`}
-                />
-              </div>
-
-              <div className="flex justify-end gap-3 pt-2">
-                <button
-                  type="button"
-                  onClick={() => setShowCreateModal(false)}
-                  className={`px-4 py-2 rounded-xl border font-bold ${
-                    isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-700 hover:bg-slate-100'
+                  className={`px-4 py-2.5 rounded-xl border text-xs font-bold transition cursor-pointer ${
+                    isDarkMode
+                      ? 'border-slate-800 text-slate-400 hover:text-white hover:bg-slate-800'
+                      : 'border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                   }`}
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  disabled={creating}
-                  className="px-5 py-2.5 rounded-xl bg-purple-600 font-bold text-white hover:bg-purple-500 shadow-md flex items-center gap-1.5"
+                  disabled={assigning || (assignScope === 'batch' && batches.length === 0) || (assignScope === 'student' && students.length === 0)}
+                  className="px-5 py-2.5 rounded-xl font-extrabold text-xs bg-indigo-600 hover:bg-indigo-500 text-white transition flex items-center gap-2 shadow-lg shadow-indigo-600/20 disabled:opacity-50 cursor-pointer"
                 >
-                  <Upload className="h-3.5 w-3.5" />
-                  <span>{creating ? 'Uploading...' : 'Save & Publish eBook'}</span>
+                  {assigning ? (
+                    <>
+                      <RefreshCw className="h-3.5 w-3.5 animate-spin" />
+                      <span>Assigning...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-3.5 w-3.5" />
+                      <span>Confirm Assignment</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
-
-      {/* DELETE CONFIRMATION MODAL */}
-      {deletingBook && (
-        <div className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className={`w-full max-w-md rounded-3xl border shadow-2xl p-6 space-y-5 ${
-            isDarkMode ? 'bg-[#0B1730] border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
-          }`}>
-            <div className="flex items-center gap-3 text-rose-400">
-              <div className="p-2.5 rounded-2xl bg-rose-500/10 border border-rose-500/20">
-                <AlertTriangle className="h-6 w-6" />
-              </div>
-              <div>
-                <h3 className={`text-base font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
-                  Delete Study Material?
-                </h3>
-                <p className="text-xs text-slate-400">This action cannot be undone.</p>
-              </div>
-            </div>
-
-            <p className="text-xs text-slate-300 leading-relaxed">
-              Are you sure you want to permanently delete <strong className="text-white">"{deletingBook.title}"</strong> from the institution digital library?
-            </p>
-
-            <div className="flex justify-end gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setDeletingBook(null)}
-                className={`px-4 py-2 rounded-xl border font-bold text-xs ${
-                  isDarkMode ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-700 hover:bg-slate-100'
-                }`}
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                onClick={confirmDelete}
-                disabled={deleting}
-                className="px-5 py-2.5 rounded-xl bg-rose-600 font-bold text-xs text-white hover:bg-rose-500 shadow-md flex items-center gap-1.5"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-                <span>{deleting ? 'Deleting...' : 'Delete Permanently'}</span>
-              </button>
-            </div>
           </div>
         </div>
       )}

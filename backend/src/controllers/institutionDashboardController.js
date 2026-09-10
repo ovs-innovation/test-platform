@@ -826,15 +826,255 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
  * 6. ASSIGN eBOOKS
  * GET /api/institution/:id/available-ebooks & POST /api/institution/:id/ebooks/:ebook_id/assign
  */
-export const getAvailableEbooks = asyncHandler(async (_req, res) => {
+export const getAvailableEbooks = asyncHandler(async (req, res) => {
+  let instId = Number(req.institution_id || req.params.id);
+  if (!instId || isNaN(instId)) {
+    const raw = String(req.params.id || req.institution_id || '');
+    const findInst = await query('SELECT id FROM institutions WHERE code = $1 OR id::text = $1', [raw]).catch(() => ({ rows: [] }));
+    if (findInst.rows?.[0]) instId = findInst.rows[0].id;
+  }
+  if (!instId || isNaN(instId)) instId = 1;
+
+  const result = await query(
+    `SELECT DISTINCT ON (e.id)
+       e.id, 
+       e.title, 
+       e.author, 
+       e.description, 
+       COALESCE(e.subject, 'General') AS subject, 
+       COALESCE(e.class_level, 'Class 11 & 12') AS class_level, 
+       e.pdf_url, 
+       e.pages, 
+       e.file_size, 
+       e.created_at, 
+       ea.assigned_at
+     FROM ebooks e
+     JOIN ebook_assignments ea ON ea.ebook_id = e.id
+     WHERE (
+       (ea.assigned_to_type = 'institution' AND ea.assigned_to_id = $1)
+       OR ea.assigned_to_type = 'all'
+       OR (ea.assigned_to_type = 'batch' AND ea.assigned_to_id IN (SELECT id FROM batches WHERE institution_id = $1))
+     )
+     ORDER BY e.id DESC, ea.assigned_at ASC`,
+    [instId]
+  ).catch((err) => {
+    console.error('Failed to fetch assigned ebooks for institution:', err);
+    return { rows: [] };
+  });
+
+  // Fetch specific batch and student assignments made within this institution
+  const subAssignments = await query(
+    `SELECT 
+       ea.id AS assignment_id,
+       ea.ebook_id,
+       ea.assigned_to_type,
+       ea.assigned_to_id,
+       ea.assigned_at,
+       COALESCE(b.batch_name, b.name) AS batch_name,
+       u.name AS student_name,
+       u.roll_number
+     FROM ebook_assignments ea
+     LEFT JOIN batches b ON ea.assigned_to_type = 'batch' AND b.id = ea.assigned_to_id
+     LEFT JOIN users u ON ea.assigned_to_type = 'student' AND u.id = ea.assigned_to_id
+     WHERE (
+       (ea.assigned_to_type = 'batch' AND b.institution_id = $1)
+       OR (ea.assigned_to_type = 'student' AND u.institution_id = $1)
+     )
+     ORDER BY ea.id DESC`,
+    [instId]
+  ).catch(() => ({ rows: [] }));
+
+  const assignmentsMap = {};
+  for (const row of subAssignments.rows || []) {
+    if (!assignmentsMap[row.ebook_id]) assignmentsMap[row.ebook_id] = [];
+    assignmentsMap[row.ebook_id].push(row);
+  }
+
+  const seenIds = new Set();
+  const uniqueEbooks = [];
+  for (const b of result.rows || []) {
+    if (!seenIds.has(b.id)) {
+      seenIds.add(b.id);
+      uniqueEbooks.push({
+        ...b,
+        roster_assignments: assignmentsMap[b.id] || [],
+      });
+    }
+  }
+
   res.json({
     success: true,
-    ebooks: []
+    ebooks: uniqueEbooks
   });
 });
 
-export const assignEbook = asyncHandler(async (_req, _res) => {
-  throw ApiError.forbidden('eBooks and study materials can only be assigned by platform administrators.');
+export const assignEbook = asyncHandler(async (req, res) => {
+  let instId = Number(req.institution_id || req.params.id);
+  if (!instId || isNaN(instId)) {
+    const raw = String(req.params.id || req.institution_id || '');
+    const findInst = await query('SELECT id FROM institutions WHERE code = $1 OR id::text = $1', [raw]).catch(() => ({ rows: [] }));
+    if (findInst.rows?.[0]) instId = findInst.rows[0].id;
+  }
+  if (!instId || isNaN(instId)) instId = 1;
+
+  const ebookId = Number(req.params.ebook_id);
+  if (!ebookId || isNaN(ebookId)) {
+    throw ApiError.badRequest('Invalid eBook ID');
+  }
+
+  // 1. Verify institution entitlement to this eBook
+  const checkAuth = await query(
+    `SELECT 1 FROM ebook_assignments ea
+     WHERE ea.ebook_id = $1
+       AND (
+         (ea.assigned_to_type = 'institution' AND ea.assigned_to_id = $2)
+         OR ea.assigned_to_type = 'all'
+         OR (ea.assigned_to_type = 'batch' AND ea.assigned_to_id IN (SELECT id FROM batches WHERE institution_id = $2))
+       )`,
+    [ebookId, instId]
+  ).catch(() => ({ rowCount: 0 }));
+
+  if (checkAuth.rowCount === 0) {
+    throw ApiError.forbidden('This eBook has not been assigned to your institution by platform administrators.');
+  }
+
+  // 2. Parse target
+  const rawAssignTo = (req.body.assign_to || req.body.assigned_to_type || 'batch').toString().toLowerCase().trim();
+  const assign_to = ['batch', 'student', 'institution', 'all'].includes(rawAssignTo) ? rawAssignTo : 'batch';
+  const rawTargetId = req.body.target_id || req.body.assigned_to_id || req.body.batch_id || req.body.student_id;
+
+  let assignedTargetId = 0;
+  let targetName = 'Institution';
+
+  if (assign_to === 'batch') {
+    const bId = Number(rawTargetId);
+    const batchRes = await query('SELECT id, batch_name, name FROM batches WHERE id = $1 AND institution_id = $2', [bId, instId]);
+    if (batchRes.rowCount === 0) {
+      throw ApiError.badRequest('Selected batch does not exist or does not belong to your institution.');
+    }
+    assignedTargetId = bId;
+    targetName = batchRes.rows[0].batch_name || batchRes.rows[0].name || `Batch #${bId}`;
+  } else if (assign_to === 'student') {
+    const sId = Number(rawTargetId);
+    const studentRes = await query('SELECT id, name, email FROM users WHERE id = $1 AND institution_id = $2', [sId, instId]);
+    if (studentRes.rowCount === 0) {
+      throw ApiError.badRequest('Selected student does not exist or is not enrolled in your institution.');
+    }
+    assignedTargetId = sId;
+    targetName = studentRes.rows[0].name || `Student #${sId}`;
+  } else {
+    // institution / all
+    assignedTargetId = instId;
+    targetName = 'All Batches & Students';
+  }
+
+  // 3. Remove duplicate assignment if exists
+  await query(
+    `DELETE FROM ebook_assignments 
+     WHERE ebook_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
+    [ebookId, assign_to, assignedTargetId]
+  ).catch(() => {});
+
+  // 4. Insert assignment record
+  const insertRes = await query(
+    `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id, assigned_at)
+     VALUES ($1, $2, $3, NOW())
+     RETURNING id, ebook_id, assigned_to_type, assigned_to_id, assigned_at`,
+    [ebookId, assign_to, assignedTargetId]
+  );
+
+  // 5. Notify Institution Activity Log and Affected Students
+  try {
+    const ebRes = await query('SELECT title FROM ebooks WHERE id = $1', [ebookId]).catch(() => ({ rows: [] }));
+    const ebookTitle = ebRes.rows[0]?.title || 'Study Material';
+
+    // Insert audit record into institution_notifications
+    await query(
+      `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id, is_read, created_at)
+       VALUES ($1, $2, $3, 'ebook_assigned', 'ebook', $4, FALSE, NOW())`,
+      [
+        instId,
+        'eBook Assigned to Roster',
+        `Successfully allocated eBook "${ebookTitle}" to ${targetName}.`,
+        ebookId
+      ]
+    ).catch(() => {});
+
+    // Dispatch student in-app notifications
+    let studentIds = [];
+    if (assign_to === 'student' && assignedTargetId) {
+      studentIds = [assignedTargetId];
+    } else if (assign_to === 'batch' && assignedTargetId) {
+      const sRes = await query(
+        'SELECT id FROM users WHERE batch_id = $1 AND institution_id = $2 AND role = $3',
+        [assignedTargetId, instId, 'candidate']
+      );
+      studentIds = sRes.rows.map(r => r.id);
+    } else {
+      const allRes = await query(
+        'SELECT id FROM users WHERE institution_id = $1 AND role = $2',
+        [instId, 'candidate']
+      );
+      studentIds = allRes.rows.map(r => r.id);
+    }
+
+    for (const sid of studentIds) {
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type, created_at)
+         VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
+        [
+          sid,
+          `New eBook Assigned: ${ebookTitle}`,
+          `Your institution has allocated eBook "${ebookTitle}" to your account. Open E-Books to read now!`
+        ]
+      ).catch(() => {});
+    }
+  } catch (notifErr) {
+    console.error('[assignEbook] Error sending notifications:', notifErr.message);
+  }
+
+  res.status(201).json({
+    success: true,
+    assignment: insertRes.rows[0],
+    message: `eBook successfully assigned to ${targetName}.`
+  });
+});
+
+export const unassignEbook = asyncHandler(async (req, res) => {
+  let instId = Number(req.institution_id || req.params.id);
+  if (!instId || isNaN(instId)) {
+    const raw = String(req.params.id || req.institution_id || '');
+    const findInst = await query('SELECT id FROM institutions WHERE code = $1 OR id::text = $1', [raw]).catch(() => ({ rows: [] }));
+    if (findInst.rows?.[0]) instId = findInst.rows[0].id;
+  }
+  if (!instId || isNaN(instId)) instId = 1;
+
+  const { ebook_id, assignment_id } = req.params;
+
+  // Verify that this assignment belongs to a batch or student of this institution (cannot delete admin-level institution assignment)
+  const assignRes = await query(
+    `SELECT ea.id, ea.assigned_to_type, ea.assigned_to_id
+     FROM ebook_assignments ea
+     LEFT JOIN batches b ON ea.assigned_to_type = 'batch' AND b.id = ea.assigned_to_id
+     LEFT JOIN users u ON ea.assigned_to_type = 'student' AND u.id = ea.assigned_to_id
+     WHERE ea.id = $1 AND ea.ebook_id = $2
+       AND (
+         (ea.assigned_to_type = 'batch' AND b.institution_id = $3)
+         OR (ea.assigned_to_type = 'student' AND u.institution_id = $3)
+       )`,
+    [Number(assignment_id), Number(ebook_id), instId]
+  );
+
+  if (assignRes.rowCount === 0) {
+    throw ApiError.forbidden('Assignment not found or cannot be removed by institution.');
+  }
+
+  await query('DELETE FROM ebook_assignments WHERE id = $1', [Number(assignment_id)]);
+
+  res.json({
+    success: true,
+    message: 'eBook assignment revoked successfully.'
+  });
 });
 
 export const createInstitutionEbook = asyncHandler(async (_req, _res) => {

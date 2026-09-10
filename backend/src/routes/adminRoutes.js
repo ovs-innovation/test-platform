@@ -58,7 +58,14 @@ import {
   notifyTestReminder,
   getTestExtractedQuestions,
 } from '../controllers/testAdminController.js';
-import { listEbooks, createEbook, deleteEbook } from '../controllers/ebookController.js';
+import {
+  listEbooks,
+  createEbook,
+  deleteEbook,
+  assignEbookToAudience,
+  getEbookAssignments,
+  deleteEbookAssignment,
+} from '../controllers/ebookController.js';
 import { listBatches, createBatch, deleteBatch } from '../controllers/batchController.js';
 import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
@@ -112,6 +119,9 @@ router.post('/tests/:id/notify', notifyTestReminder);
 router.get('/ebooks', listEbooks);
 router.post('/ebooks', createEbook);
 router.delete('/ebooks/:id', deleteEbook);
+router.get('/ebooks/:id/assignments', getEbookAssignments);
+router.post('/ebooks/:id/assignments', assignEbookToAudience);
+router.delete('/ebooks/assignments/:assignmentId', deleteEbookAssignment);
 
 // Batches Endpoints
 router.get('/batches', listBatches);

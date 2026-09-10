@@ -75,6 +75,13 @@ export default function AdminAssessments() {
   const [ebookModalOpen, setEbookModalOpen] = useState(false);
   const [newEbook, setNewEbook] = useState({ title: '', author: '', description: '', pdf_url: '' });
 
+  const [schools, setSchools] = useState([]);
+  const [assignModalEbook, setAssignModalEbook] = useState(null);
+  const [assignEbookType, setAssignEbookType] = useState('all');
+  const [assignEbookTargetId, setAssignEbookTargetId] = useState('');
+  const [ebookAssignmentsList, setEbookAssignmentsList] = useState([]);
+  const [loadingEbookAssignments, setLoadingEbookAssignments] = useState(false);
+
   const [batchModalOpen, setBatchModalOpen] = useState(false);
   const [newBatch, setNewBatch] = useState({ name: '', description: '' });
 
@@ -101,17 +108,19 @@ export default function AdminAssessments() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [testsList, ebooksList, batchesList, instAnalytics] = await Promise.all([
+      const [testsList, ebooksList, batchesList, instAnalytics, instList] = await Promise.all([
         adminService.tests(),
         adminService.ebooks().catch(() => []),
         adminService.batches().catch(() => []),
-        adminService.institutionAnalytics().catch(() => ({ students: [] }))
+        adminService.institutionAnalytics().catch(() => ({ students: [] })),
+        adminService.partnerSchools().catch(() => ({ institutions: [] }))
       ]);
 
       setTests(testsList || []);
       setEbooks(ebooksList || []);
       setBatches(batchesList || []);
       setInstitutionAnalytics(instAnalytics?.students || []);
+      setSchools(instList?.institutions || []);
     } catch (err) {
       console.error('Failed to load admin assessments data:', err);
     } finally {
@@ -394,6 +403,65 @@ export default function AdminAssessments() {
       loadData();
     } catch (err) {
       toast.error(err.message || 'Failed to create eBook');
+    }
+  };
+
+  const handleOpenAssignEbook = async (ebook) => {
+    setAssignModalEbook(ebook);
+    setAssignEbookType('all');
+    setAssignEbookTargetId('');
+    setLoadingEbookAssignments(true);
+    try {
+      const res = await adminService.ebookAssignments(ebook.id);
+      setEbookAssignmentsList(res || []);
+    } catch (_) {
+      setEbookAssignmentsList([]);
+    } finally {
+      setLoadingEbookAssignments(false);
+    }
+  };
+
+  const handleAssignEbookSubmit = async (e) => {
+    e.preventDefault();
+    if (!assignModalEbook) return;
+    if (assignEbookType !== 'all' && !assignEbookTargetId) {
+      return toast.error('Please select or enter the target ID');
+    }
+    try {
+      await adminService.assignEbook(assignModalEbook.id, {
+        assigned_to_type: assignEbookType,
+        assigned_to_id: assignEbookType === 'all' ? null : Number(assignEbookTargetId),
+      });
+      toast.success(`eBook assigned to ${assignEbookType} successfully!`);
+      const res = await adminService.ebookAssignments(assignModalEbook.id).catch(() => []);
+      setEbookAssignmentsList(res || []);
+      setAssignEbookTargetId('');
+    } catch (err) {
+      toast.error(err.message || 'Assignment failed');
+    }
+  };
+
+  const handleDeleteEbookAssignment = async (assignmentId) => {
+    try {
+      await adminService.deleteEbookAssignment(assignmentId);
+      toast.success('Assignment removed');
+      if (assignModalEbook) {
+        const res = await adminService.ebookAssignments(assignModalEbook.id).catch(() => []);
+        setEbookAssignmentsList(res || []);
+      }
+    } catch (err) {
+      toast.error(err.message || 'Failed to remove assignment');
+    }
+  };
+
+  const handleDeleteEbook = async (ebookId) => {
+    if (!window.confirm('Are you sure you want to delete this eBook? This will remove all active assignments as well.')) return;
+    try {
+      await adminService.deleteEbook(ebookId);
+      toast.success('eBook deleted successfully');
+      loadData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to delete eBook');
     }
   };
 
@@ -824,21 +892,47 @@ export default function AdminAssessments() {
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {ebooks.map((e) => (
-                  <div key={e.id} className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] space-y-2">
-                    <BookOpen className="h-6 w-6 text-blue-600" />
-                    <h4 className="font-extrabold text-sm text-slate-900 dark:text-white">{e.title}</h4>
-                    {e.author && <p className="text-xs font-semibold text-slate-500">Author: {e.author}</p>}
-                    {e.pdf_url && (
-                      <a
-                        href={e.pdf_url.startsWith('http') ? e.pdf_url : `http://127.0.0.1:5000${e.pdf_url.startsWith('/') ? '' : '/'}${e.pdf_url}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 truncate"
+                  <div key={e.id} className="p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] space-y-3 flex flex-col justify-between shadow-sm">
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <BookOpen className="h-6 w-6 text-blue-600" />
+                        <span className="text-[10px] font-extrabold uppercase px-2 py-0.5 rounded bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+                          {e.subject_name || e.subject || 'General'}
+                        </span>
+                      </div>
+                      <h4 className="font-extrabold text-sm text-slate-900 dark:text-white leading-snug">{e.title}</h4>
+                      {e.author && <p className="text-xs font-semibold text-slate-500">Author: {e.author}</p>}
+                      {e.description && <p className="text-xs text-slate-400 line-clamp-2">{e.description}</p>}
+                      {e.pdf_url && (
+                        <a
+                          href={e.pdf_url.startsWith('http') ? e.pdf_url : `http://127.0.0.1:5000${e.pdf_url.startsWith('/') ? '' : '/'}${e.pdf_url}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 truncate pt-1"
+                        >
+                          <FileText className="h-3.5 w-3.5 shrink-0" />
+                          <span>Open PDF</span>
+                        </a>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+                      <button
+                        onClick={() => handleOpenAssignEbook(e)}
+                        className="flex-1 py-1.5 px-3 bg-purple-600 hover:bg-purple-500 text-white text-xs font-extrabold rounded-xl shadow-sm transition flex items-center justify-center gap-1.5 cursor-pointer"
+                        title="Assign to Students or Institutions"
                       >
-                        <FileText className="h-3.5 w-3.5 shrink-0" />
-                        <span>Open PDF</span>
-                      </a>
-                    )}
+                        <UserCheck className="h-3.5 w-3.5" />
+                        <span>Assign Audience</span>
+                      </button>
+                      <button
+                        onClick={() => handleDeleteEbook(e.id)}
+                        className="p-1.5 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 transition cursor-pointer"
+                        title="Delete eBook"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1393,6 +1487,167 @@ export default function AdminAssessments() {
                 </button>
               </div>
             </form>
+          </div>
+        </div>,
+        document.body
+      )}
+
+      {/* ASSIGN EBOOK MODAL */}
+      {assignModalEbook && createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md animate-in fade-in duration-150">
+          <div className="w-full max-w-lg rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 space-y-5 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+              <div>
+                <h3 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                  <UserCheck className="h-4 w-4 text-purple-600" />
+                  Assign eBook & Study Material
+                </h3>
+                <p className="text-xs text-slate-500 truncate max-w-sm mt-0.5">{assignModalEbook.title}</p>
+              </div>
+              <button onClick={() => setAssignModalEbook(null)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white">
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* FORM */}
+            <form onSubmit={handleAssignEbookSubmit} className="space-y-4 text-xs font-semibold">
+              <div>
+                <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Target Audience Type *</label>
+                <select
+                  value={assignEbookType}
+                  onChange={(e) => {
+                    setAssignEbookType(e.target.value);
+                    setAssignEbookTargetId('');
+                  }}
+                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                >
+                  <option value="all">All Registered Students (Platform-Wide Open)</option>
+                  <option value="institution">Partner School / Institution</option>
+                  <option value="batch">Specific Batch</option>
+                  <option value="individual">Individual Student</option>
+                </select>
+              </div>
+
+              {assignEbookType === 'institution' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Partner School / Institution *</label>
+                  <select
+                    required
+                    value={assignEbookTargetId}
+                    onChange={(e) => setAssignEbookTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Institution --</option>
+                    {schools.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name} (Code: {s.schoolId || s.code || s.id})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {assignEbookType === 'batch' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Batch *</label>
+                  <select
+                    required
+                    value={assignEbookTargetId}
+                    onChange={(e) => setAssignEbookTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Batch --</option>
+                    {batches.map((b) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              {assignEbookType === 'individual' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Student User ID *</label>
+                  <input
+                    type="number"
+                    required
+                    placeholder="Enter Student User ID (e.g. 12)"
+                    value={assignEbookTargetId}
+                    onChange={(e) => setAssignEbookTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  />
+                </div>
+              )}
+
+              <div className="flex justify-end pt-2">
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 rounded-xl bg-purple-600 text-white font-extrabold hover:bg-purple-500 shadow-md transition flex items-center gap-1.5 cursor-pointer"
+                >
+                  <Plus className="h-4 w-4" />
+                  <span>Assign eBook</span>
+                </button>
+              </div>
+            </form>
+
+            {/* CURRENT ASSIGNMENTS LIST */}
+            <div className="border-t border-slate-200 dark:border-slate-800 pt-4 space-y-3">
+              <h4 className="font-extrabold text-xs text-slate-900 dark:text-white uppercase tracking-wider">
+                Current Active Assignments ({ebookAssignmentsList.length})
+              </h4>
+              {loadingEbookAssignments ? (
+                <div className="p-4 text-center text-xs text-slate-400">Loading assignments...</div>
+              ) : ebookAssignmentsList.length === 0 ? (
+                <div className="p-3 text-center rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/60 dark:border-slate-800 text-xs text-slate-500 font-medium">
+                  No active assignments. Assign above to distribute to students or institutes.
+                </div>
+              ) : (
+                <div className="space-y-2 max-h-48 overflow-y-auto pr-1">
+                  {ebookAssignmentsList.map((asg) => (
+                    <div
+                      key={asg.id}
+                      className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 text-xs"
+                    >
+                      <div className="truncate">
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-extrabold uppercase px-1.5 py-0.5 rounded text-[10px] bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+                            {asg.assigned_to_type}
+                          </span>
+                          <span className="font-bold text-slate-800 dark:text-slate-200 truncate">
+                            {asg.assigned_to_type === 'all' && 'All Registered Students'}
+                            {asg.assigned_to_type === 'institution' && (asg.institution_name || `Institution #${asg.assigned_to_id}`)}
+                            {asg.assigned_to_type === 'batch' && (asg.batch_name || `Batch #${asg.assigned_to_id}`)}
+                            {(asg.assigned_to_type === 'student' || asg.assigned_to_type === 'individual') &&
+                              (asg.student_name ? `${asg.student_name} (ID: ${asg.assigned_to_id})` : `Student #${asg.assigned_to_id}`)}
+                          </span>
+                        </div>
+                        <p className="text-[10px] text-slate-400 mt-0.5">
+                          Assigned: {new Date(asg.created_at).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => handleDeleteEbookAssignment(asg.id)}
+                        className="p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/40 rounded-lg transition shrink-0 cursor-pointer"
+                        title="Revoke Assignment"
+                      >
+                        <Trash2 className="h-3.5 w-3.5" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            <div className="flex justify-end pt-2 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => setAssignModalEbook(null)}
+                className="px-4 py-2 rounded-xl border border-slate-300 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>,
         document.body

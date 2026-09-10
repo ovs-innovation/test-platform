@@ -71,6 +71,8 @@ if (!fs.existsSync(uploadsDir)) {
 // Security & infrastructure middleware
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
+  crossOriginEmbedderPolicy: false,
+  frameguard: false,
 }));
 app.use(
   cors({
@@ -88,8 +90,18 @@ app.use(
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());
-app.use('/uploads', express.static(uploadsDir));
-app.use('/ebooks', express.static(ebooksDir));
+app.use('/uploads', (req, res, next) => {
+  res.removeHeader('X-Frame-Options');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Content-Security-Policy', "frame-ancestors *");
+  next();
+}, express.static(uploadsDir));
+app.use('/ebooks', (req, res, next) => {
+  res.removeHeader('X-Frame-Options');
+  res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+  res.setHeader('Content-Security-Policy', "frame-ancestors *");
+  next();
+}, express.static(ebooksDir));
 app.use(requestLogger);
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 

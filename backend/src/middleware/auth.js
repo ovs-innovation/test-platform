@@ -116,7 +116,14 @@ export const authInstitutionAdmin = async (req, _res, next) => {
     }
 
     const parsedParam = Number(req.params.id);
-    const targetInstId = (!isNaN(parsedParam) && parsedParam > 0) ? parsedParam : null;
+    let targetInstId = (!isNaN(parsedParam) && parsedParam > 0) ? parsedParam : null;
+
+    if (!targetInstId && req.params.id) {
+      const findInst = await query('SELECT id FROM institutions WHERE code = $1 OR id::text = $1', [String(req.params.id)]).catch(() => ({ rows: [] }));
+      if (findInst.rows?.[0]) {
+        targetInstId = findInst.rows[0].id;
+      }
+    }
 
     // Platform Admin has full cross-institution access
     if (decoded.role === 'admin') {

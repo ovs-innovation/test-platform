@@ -8,6 +8,7 @@ import BatchesTab from '../../components/institution/tabs/BatchesTab.jsx';
 import BatchDetailTab from '../../components/institution/tabs/BatchDetailTab.jsx';
 import TestSeriesTab from '../../components/institution/tabs/TestSeriesTab.jsx';
 import TestAssignmentsTab from '../../components/institution/tabs/TestAssignmentsTab.jsx';
+import EbooksTab from '../../components/institution/tabs/EbooksTab.jsx';
 import AnalyticsTab from '../../components/institution/tabs/AnalyticsTab.jsx';
 import RankingsTab from '../../components/institution/tabs/RankingsTab.jsx';
 import ReportsTab from '../../components/institution/tabs/ReportsTab.jsx';
@@ -66,6 +67,7 @@ export default function InstitutionDashboard() {
   const [batches, setBatches] = useState([]);
   const [availableSeries, setAvailableSeries] = useState([]);
   const [availableTests, setAvailableTests] = useState([]);
+  const [availableEbooks, setAvailableEbooks] = useState([]);
   const [analytics, setAnalytics] = useState(null);
   const [rankings, setRankings] = useState([]);
   const [invoices, setInvoices] = useState([]);
@@ -124,12 +126,20 @@ export default function InstitutionDashboard() {
       const secondaryPromise = Promise.all([
         institutionDashboardService.availableTestSeries(instId).catch(() => null),
         institutionDashboardService.availableTests(instId).catch(() => null),
+        institutionDashboardService.availableEbooks(instId).catch(() => null),
         institutionDashboardService.rankings(instId).catch(() => null),
         institutionDashboardService.invoices(instId).catch(() => null),
         institutionDashboardService.notifications(instId).catch(() => null),
-      ]).then(([seriesRes, testsRes, rankRes, invRes, notifRes]) => {
+      ]).then(([seriesRes, testsRes, ebooksRes, rankRes, invRes, notifRes]) => {
         if (seriesRes?.packages) setAvailableSeries(seriesRes.packages);
         if (testsRes?.tests) setAvailableTests(testsRes.tests);
+        if (ebooksRes?.ebooks) {
+          const uniqueMap = new Map();
+          for (const eb of ebooksRes.ebooks) {
+            if (eb && eb.id && !uniqueMap.has(eb.id)) uniqueMap.set(eb.id, eb);
+          }
+          setAvailableEbooks(Array.from(uniqueMap.values()));
+        }
         if (rankRes?.rankings) setRankings(rankRes.rankings);
         if (invRes?.invoices) setInvoices(invRes.invoices);
         if (notifRes?.notifications) {
@@ -274,13 +284,37 @@ export default function InstitutionDashboard() {
     }
   };
 
-  // Test Assignments
+  // Test & eBook Assignments
   const handleAssignTest = async (testId, data) => {
     try {
       const res = await institutionDashboardService.assignTest(instId, testId, data);
       loadDashboardData();
       return res;
     } catch (err) {
+      throw err;
+    }
+  };
+
+  const handleAssignEbook = async (ebookId, data) => {
+    try {
+      const res = await institutionDashboardService.assignEbook(instId, ebookId, data);
+      toast.success(res?.message || 'eBook assigned to target roster successfully');
+      loadDashboardData();
+      return res;
+    } catch (err) {
+      toast.error(err?.message || 'Failed to assign eBook');
+      throw err;
+    }
+  };
+
+  const handleUnassignEbook = async (ebookId, assignmentId) => {
+    try {
+      const res = await institutionDashboardService.unassignEbook(instId, ebookId, assignmentId);
+      toast.success(res?.message || 'eBook assignment revoked');
+      loadDashboardData();
+      return res;
+    } catch (err) {
+      toast.error(err?.message || 'Failed to revoke eBook assignment');
       throw err;
     }
   };
@@ -351,6 +385,7 @@ export default function InstitutionDashboard() {
     batches,
     availableSeries,
     availableTests,
+    availableEbooks,
     analytics,
     rankings,
     invoices,
@@ -370,6 +405,8 @@ export default function InstitutionDashboard() {
     onUpdateBatch: handleUpdateBatch,
     onArchiveBatch: handleArchiveBatch,
     onAssignTest: handleAssignTest,
+    onAssignEbook: handleAssignEbook,
+    onUnassignEbook: handleUnassignEbook,
     onRequestLicenses: handleRequestLicenses,
     onSendReminder: handleSendReminder,
     onMarkNotificationRead: handleMarkNotificationRead,
@@ -656,6 +693,21 @@ export function InstRankingsTabWrapper() {
   );
 }
 
+export function InstEbooksTabWrapper() {
+  const ctx = useOutletContext();
+  return (
+    <EbooksTab
+      availableEbooks={ctx.availableEbooks}
+      batches={ctx.batches}
+      students={ctx.students}
+      onAssignEbook={ctx.onAssignEbook}
+      onUnassignEbook={ctx.onUnassignEbook}
+      instId={ctx.instId || ctx.profile?.id || ctx.institution?.id || 1}
+      isDarkMode={ctx.isDarkMode}
+    />
+  );
+}
+
 export function InstReportsTabWrapper() {
   const ctx = useOutletContext();
   return (
@@ -703,6 +755,7 @@ export function InstNotificationsTabWrapper() {
       batches={ctx.batches}
       students={ctx.students}
       onSendReminder={ctx.onSendReminder}
+      onMarkRead={ctx.onMarkNotificationRead}
       isDarkMode={ctx.isDarkMode}
     />
   );

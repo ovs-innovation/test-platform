@@ -458,6 +458,9 @@ export const adminService = {
   ebooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
   createEbook: (data) => api.post('/admin/ebooks', data).then((r) => r.data.ebook),
   deleteEbook: (id) => api.delete(`/admin/ebooks/${id}`).then((r) => r.data),
+  assignEbook: (id, data) => api.post(`/admin/ebooks/${id}/assignments`, data).then((r) => r.data),
+  ebookAssignments: (id) => api.get(`/admin/ebooks/${id}/assignments`).then((r) => r.data.assignments),
+  deleteEbookAssignment: (assignmentId) => api.delete(`/admin/ebooks/assignments/${assignmentId}`).then((r) => r.data),
   // Batch Helpers
   batches: () => api.get('/admin/batches').then((r) => r.data.batches),
   createBatch: (data) => api.post('/admin/batches', data).then((r) => r.data.batch),
@@ -520,6 +523,7 @@ export const institutionDashboardService = {
   availableEbooks: (instId) => api.get(`/institution/${instId}/available-ebooks`).then((r) => r.data),
   createEbook: (instId, data) => api.post(`/institution/${instId}/ebooks`, data).then((r) => r.data),
   assignEbook: (instId, ebookId, data) => api.post(`/institution/${instId}/ebooks/${ebookId}/assign`, data).then((r) => r.data),
+  unassignEbook: (instId, ebookId, assignmentId) => api.delete(`/institution/${instId}/ebooks/${ebookId}/assign/${assignmentId}`).then((r) => r.data),
   deleteEbook: (instId, ebookId) => api.delete(`/institution/${instId}/ebooks/${ebookId}`).then((r) => r.data),
   
   studentProgress: (instId, studentId) => api.get(`/institution/${instId}/students/${studentId}/progress`).then((r) => r.data),

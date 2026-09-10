@@ -81,9 +81,149 @@ export const createEbook = asyncHandler(async (req, res) => {
 
 export const deleteEbook = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  await query('UPDATE tests SET recommended_ebook_id = NULL WHERE recommended_ebook_id = $1', [id]).catch(() => {});
+  await query('DELETE FROM ebook_assignments WHERE ebook_id = $1', [id]).catch(() => {});
   const result = await query('DELETE FROM ebooks WHERE id = $1 RETURNING id', [id]);
   if (result.rowCount === 0) throw ApiError.notFound('eBook not found');
   res.json({ message: 'eBook deleted successfully', id });
+});
+
+export const assignEbookToAudience = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { assigned_to_type, assigned_to_id } = req.body;
+
+  if (!assigned_to_type || !['all', 'institution', 'batch', 'student', 'individual'].includes(assigned_to_type)) {
+    throw ApiError.badRequest('assigned_to_type must be one of: all, institution, batch, student, individual');
+  }
+
+  const ebookId = Number(id);
+  const targetId = assigned_to_type === 'all' ? 0 : (assigned_to_id ? Number(assigned_to_id) : 0);
+
+  if (assigned_to_type !== 'all' && !targetId) {
+    throw ApiError.badRequest('Target ID is required when assigning to specific institution, batch, or student.');
+  }
+
+  const checkEbook = await query('SELECT id, title FROM ebooks WHERE id = $1', [ebookId]);
+  if (checkEbook.rowCount === 0) {
+    throw ApiError.notFound('eBook not found');
+  }
+  const ebookTitle = checkEbook.rows[0].title || 'Study Material';
+
+  await query(
+    `DELETE FROM ebook_assignments 
+     WHERE ebook_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
+    [ebookId, assigned_to_type, targetId]
+  ).catch(() => {});
+
+  const insertRes = await query(
+    `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id)
+     VALUES ($1, $2, $3)
+     RETURNING *`,
+    [ebookId, assigned_to_type, targetId]
+  );
+
+  // Dispatch Notifications to Target Audience
+  try {
+    if (assigned_to_type === 'institution' && targetId) {
+      await query(
+        `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id, is_read, created_at)
+         VALUES ($1, $2, $3, 'ebook_assigned', 'ebook', $4, FALSE, NOW())`,
+        [
+          targetId,
+          'New Study Material / eBook Assigned',
+          `Platform administrator assigned eBook "${ebookTitle}" to your institution. You can now access it and assign it to your student batches.`,
+          ebookId
+        ]
+      ).catch((err) => console.error('Failed to create institution notification for ebook:', err));
+    } else if (assigned_to_type === 'all') {
+      const instRes = await query('SELECT id FROM institutions WHERE is_active = TRUE');
+      for (const inst of instRes.rows) {
+        await query(
+          `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id, is_read, created_at)
+           VALUES ($1, $2, $3, 'ebook_assigned', 'ebook', $4, FALSE, NOW())`,
+          [
+            inst.id,
+            'New Study Material / eBook Assigned',
+            `Platform administrator assigned eBook "${ebookTitle}" to all partner institutions.`,
+            ebookId
+          ]
+        ).catch(() => {});
+      }
+    }
+
+    // Deliver candidate/student notifications
+    let targetStudentIds = [];
+    if (['student', 'individual'].includes(assigned_to_type) && targetId) {
+      targetStudentIds = [Number(targetId)];
+    } else if (assigned_to_type === 'batch' && targetId) {
+      const batchStudents = await query(
+        'SELECT id FROM users WHERE batch_id = $1 AND role = $2',
+        [targetId, 'candidate']
+      );
+      targetStudentIds = batchStudents.rows.map((s) => s.id);
+    } else if (assigned_to_type === 'institution' && targetId) {
+      const instStudents = await query(
+        'SELECT id FROM users WHERE institution_id = $1 AND role = $2',
+        [targetId, 'candidate']
+      );
+      targetStudentIds = instStudents.rows.map((s) => s.id);
+    } else if (assigned_to_type === 'all') {
+      const allStudents = await query(
+        'SELECT id FROM users WHERE role = $1',
+        ['candidate']
+      );
+      targetStudentIds = allStudents.rows.map((s) => s.id);
+    }
+
+    const uniqueIds = Array.from(new Set(targetStudentIds.filter((id) => id && !isNaN(Number(id)))));
+    for (const sid of uniqueIds) {
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type, created_at)
+         VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
+        [
+          sid,
+          `New eBook Assigned: ${ebookTitle}`,
+          `Admin assigned eBook "${ebookTitle}" to your digital library. Open E-Books to read now!`
+        ]
+      ).catch(() => {});
+    }
+  } catch (notifErr) {
+    console.error('[assignEbookToAudience] Error delivering notifications:', notifErr.message);
+  }
+
+  res.status(201).json({
+    success: true,
+    message: `eBook assigned to ${assigned_to_type} successfully`,
+    assignment: insertRes.rows[0]
+  });
+});
+
+export const getEbookAssignments = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const ebookId = Number(id);
+
+  const result = await query(
+    `SELECT ea.*,
+            inst.name AS institution_name,
+            b.name AS batch_name,
+            u.name AS student_name,
+            u.email AS student_email
+     FROM ebook_assignments ea
+     LEFT JOIN institutions inst ON ea.assigned_to_type = 'institution' AND ea.assigned_to_id = inst.id
+     LEFT JOIN batches b ON ea.assigned_to_type = 'batch' AND ea.assigned_to_id = b.id
+     LEFT JOIN users u ON (ea.assigned_to_type IN ('student', 'individual')) AND ea.assigned_to_id = u.id
+     WHERE ea.ebook_id = $1
+     ORDER BY ea.id DESC`,
+    [ebookId]
+  ).catch(() => ({ rows: [] }));
+
+  res.json({ success: true, assignments: result.rows });
+});
+
+export const deleteEbookAssignment = asyncHandler(async (req, res) => {
+  const { assignmentId } = req.params;
+  await query('DELETE FROM ebook_assignments WHERE id = $1', [assignmentId]);
+  res.json({ success: true, message: 'Assignment removed successfully' });
 });
 
 export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
