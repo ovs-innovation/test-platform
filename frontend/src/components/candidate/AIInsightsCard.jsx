@@ -25,10 +25,24 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
       try {
         const cachedStr = sessionStorage.getItem(`ai_plan_${testId}`);
         if (cachedStr) {
-          const cachedObj = JSON.parse(cachedStr);
-          setAiPlan(cachedObj);
-          setLoading(false);
-          return;
+          if (cachedStr.includes("Resistor Networks & Ohm's Law") || cachedStr.includes('No major strengths recorded')) {
+            sessionStorage.removeItem(`ai_plan_${testId}`);
+          } else {
+            const cachedObj = JSON.parse(cachedStr);
+            const hasContent = cachedObj && (
+              (Array.isArray(cachedObj.strengths) && cachedObj.strengths.length > 0) ||
+              (Array.isArray(cachedObj.weak_topics) && cachedObj.weak_topics.length > 0) ||
+              (Array.isArray(cachedObj.weaknesses) && cachedObj.weaknesses.length > 0) ||
+              (Array.isArray(cachedObj.strong_topics) && cachedObj.strong_topics.length > 0) ||
+              (Array.isArray(cachedObj.seven_day_plan) && cachedObj.seven_day_plan.length > 0) ||
+              (Array.isArray(cachedObj.revision_strategy) && cachedObj.revision_strategy.length > 0)
+            );
+            if (hasContent) {
+              setAiPlan(cachedObj);
+              setLoading(false);
+              return;
+            }
+          }
         }
       } catch (_) {}
     }
@@ -54,7 +68,17 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
   };
 
   useEffect(() => {
-    if (!testData) {
+    const hasValidTestData = !!(
+      testData?.analysis ||
+      testData?.ai_mentor_report ||
+      testData?.exam_mentor_strategy ||
+      testData?.data?.analysis ||
+      testData?.plan ||
+      (Array.isArray(testData?.strengths) && testData.strengths.length > 0) ||
+      (Array.isArray(testData?.weaknesses) && testData.weaknesses.length > 0)
+    );
+
+    if (!hasValidTestData) {
       fetchAIPlan();
     } else {
       setLoading(false);

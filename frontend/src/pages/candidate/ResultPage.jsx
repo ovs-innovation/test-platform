@@ -721,7 +721,7 @@ export default function ResultPage() {
 
             {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
             <div>
-              <AIInsightsCard isDarkMode={isDarkMode} testId={attemptId} testData={data} />
+              <AIInsightsCard isDarkMode={isDarkMode} testId={attemptId} />
             </div>
 
             {/* Performance Breakdown Progress Bar */}

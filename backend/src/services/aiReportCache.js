@@ -17,6 +17,11 @@ export async function getCachedAIReport(studentId, testId) {
 
     if (res.rowCount > 0 && res.rows[0].ai_response) {
       const raw = res.rows[0].ai_response;
+      const strVal = typeof raw === 'string' ? raw : JSON.stringify(raw);
+      if (strVal.includes("Resistor Networks & Ohm's Law")) {
+        console.log(`[AICache] INVALIDATING outdated report for student ${sId}, test ${tId} containing obsolete Resistor Networks bug.`);
+        return null;
+      }
       const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
       console.log(`[AICache] HIT: Retrieved existing AI analysis from Neon DB for student ${sId}, test ${tId}. AI call skipped.`);
       return parsed;
