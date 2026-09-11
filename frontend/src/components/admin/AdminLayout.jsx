@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { Bell, Home } from 'lucide-react';
+import { Bell, Home, Search } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { notificationService } from '../../lib/services.js';
@@ -357,7 +357,7 @@ export default function AdminLayout({ children }) {
         <div className="pt-3 px-3 sm:px-4 lg:px-6">
           <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
             {/* Mobile Drawer Trigger & Breadcrumb / Mobile Logo */}
-            <div className="flex items-center gap-2 min-w-0">
+            <div className="flex items-center gap-2 min-w-0 shrink-0">
               <button
                 onClick={() => setMobileDrawerOpen(true)}
                 className="shrink-0 rounded-xl border border-slate-200 bg-slate-100 p-2 text-slate-700 hover:bg-slate-200 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 lg:hidden cursor-pointer"
@@ -375,7 +375,7 @@ export default function AdminLayout({ children }) {
                 </span>
               </Link>
 
-              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">
                 <span className="uppercase text-[10px] tracking-wider text-slate-400">Admin</span>
                 <span>/</span>
                 <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbLabel()}</span>
@@ -383,34 +383,43 @@ export default function AdminLayout({ children }) {
             </div>
 
             {/* Center Search Trigger */}
-            <div className="hidden md:block flex-1 max-w-md mx-6">
+            <div className="hidden md:block flex-1 min-w-0 max-w-xs md:max-w-sm lg:max-w-md mx-2 sm:mx-3 lg:mx-4">
               <button
                 type="button"
                 onClick={() => setCommandPaletteOpen(true)}
-                className="w-full flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3.5 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50"
+                className="w-full h-9 flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 transition cursor-pointer min-w-0"
               >
-                <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <span>Search students, tests, questions, schools...</span>
+                <div className="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                  <Search className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
+                  <span className="truncate text-left whitespace-nowrap hidden xl:inline">Search students, tests, questions, schools...</span>
+                  <span className="truncate text-left whitespace-nowrap inline xl:hidden">Search platform...</span>
                 </div>
-                <kbd className="rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                <kbd className="hidden lg:inline-flex shrink-0 items-center rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
                   Ctrl K
                 </kbd>
               </button>
             </div>
 
             {/* Right Action Toolbar */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+              {/* Mobile Search Icon Button (<md) */}
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition cursor-pointer"
+                title="Search"
+              >
+                <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              </button>
+
               {/* Back to Home Button */}
               <Link
                 to="/"
-                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
+                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-2.5 sm:px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
                 title="Back to Public Home Page"
               >
                 <Home className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <span className="hidden sm:inline">Back to Home</span>
+                <span className="hidden xl:inline">Back to Home</span>
               </Link>
 
               {/* Quick Actions Dropdown */}
@@ -418,7 +427,7 @@ export default function AdminLayout({ children }) {
                 <button
                   type="button"
                   onClick={() => setQuickActionsOpen(!quickActionsOpen)}
-                  className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3.5 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white transition-all shadow-xs cursor-pointer"
+                  className="hidden sm:inline-flex items-center gap-1.5 h-9 px-3 sm:px-3.5 text-xs font-bold rounded-xl bg-blue-600 hover:bg-blue-700 active:scale-95 text-white transition-all shadow-xs cursor-pointer shrink-0"
                 >
                   <span>+ Quick Action</span>
                 </button>

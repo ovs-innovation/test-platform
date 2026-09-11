@@ -9,7 +9,7 @@ import { tokenStore } from '../lib/api.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home } from 'lucide-react';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home, Search } from 'lucide-react';
 import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 
 
@@ -463,7 +463,7 @@ export default function Layout({ children }) {
                 </span>
               </Link>
 
-              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
+              <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">
                 <span className="uppercase text-[10px] tracking-wider text-slate-400">
                   {isAdmin ? 'Admin Portal' : 'Student Portal'}
                 </span>
@@ -473,34 +473,47 @@ export default function Layout({ children }) {
             </div>
 
             {/* Center: Search Trigger */}
-            <div className="hidden md:block flex-1 max-w-md mx-6">
+            <div className="hidden md:block flex-1 min-w-0 max-w-xs md:max-w-sm lg:max-w-md mx-2 sm:mx-3 lg:mx-4">
               <button
                 type="button"
                 onClick={() => setCommandPaletteOpen(true)}
-                className="w-full flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3.5 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 cursor-pointer"
+                className="w-full h-9 flex items-center justify-between rounded-xl border border-slate-200/80 bg-slate-100/70 px-3 py-1.5 text-xs font-medium text-slate-500 hover:border-blue-500/50 hover:bg-slate-100 dark:border-slate-800 dark:bg-slate-900/60 dark:text-slate-400 dark:hover:border-blue-500/50 cursor-pointer min-w-0 transition"
               >
-                <div className="flex items-center gap-2">
-                  <svg className="h-4 w-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                  <span>{isAdmin ? 'Search students, tests, questions, schools...' : 'Search tests, series, eBooks, results...'}</span>
+                <div className="flex items-center gap-2 min-w-0 flex-1 mr-2">
+                  <Search className="h-4 w-4 shrink-0 text-blue-600 dark:text-blue-400" />
+                  <span className="truncate text-left whitespace-nowrap hidden xl:inline">
+                    {isAdmin ? 'Search students, tests, questions, schools...' : 'Search tests, series, eBooks, results...'}
+                  </span>
+                  <span className="truncate text-left whitespace-nowrap inline xl:hidden">
+                    {isAdmin ? 'Search admin...' : 'Search tests, eBooks...'}
+                  </span>
                 </div>
-                <kbd className="rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                <kbd className="hidden lg:inline-flex shrink-0 items-center rounded-md border border-slate-300 bg-slate-200/80 px-1.5 py-0.5 text-[10px] font-bold text-slate-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-400">
                   Ctrl K
                 </kbd>
               </button>
             </div>
 
             {/* Right Controls */}
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
+              {/* Mobile Search Icon Button (<md) */}
+              <button
+                type="button"
+                onClick={() => setCommandPaletteOpen(true)}
+                className="md:hidden flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition cursor-pointer"
+                title="Search"
+              >
+                <Search className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              </button>
+
               {/* Back to Home Button */}
               <Link
                 to="/"
-                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
+                className="flex h-9 items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white/90 px-2.5 sm:px-3 text-xs font-extrabold text-slate-700 shadow-2xs hover:border-blue-500/50 hover:bg-blue-50/60 hover:text-blue-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-blue-500/50 dark:hover:bg-slate-800 dark:hover:text-blue-400 transition-all duration-200 cursor-pointer shrink-0"
                 title="Back to Public Home Page"
               >
                 <Home className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <span className="hidden sm:inline">Back to Home</span>
+                <span className="hidden xl:inline">Back to Home</span>
               </Link>
 
               {/* Notification Bell */}
