@@ -4,6 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
+import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS } from '../utils/neetPattern.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -140,6 +141,11 @@ const sanitizeQuestion = (q) => {
     image_url: q.image_url || '',
     marks: q.marks || 4,
     position: q.position || 1,
+    subject: q.subject || q.bank_category || null,
+    section: q.section || null,
+    bank_category: q.bank_category || null,
+    topic: q.topic || null,
+    chapter: q.chapter || null,
   };
   if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'multi_select' || q.question_type === 'assertion_reason' || !q.question_type) {
     return { ...base, options: cleanOpts };
@@ -189,95 +195,113 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     const subjectiveMap = new Map(subjectiveRes.rows.map((a) => [a.question_id, a.answer_text]));
 
     const negEnabled = assessment.negative_marking === true;
-    const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
+    const isNeet = isNeetTest(assessment, questionsRes.rows);
+    const negPenalty = isNeet
+      ? (Number(assessment.negative_marks_per_wrong) || 1)
+      : (Number(assessment.negative_marks_per_wrong) || 0.25);
 
     let totalMarks = 0;
     let marksObtained = 0;
     let correctCount = 0;
     let wrongCount = 0;
     let unattemptedCount = 0;
+    let percentage = 0;
 
-    for (const q of questionsRes.rows) {
-      totalMarks += q.marks;
-      const type = q.question_type || 'mcq';
-      const ans = answerMap.get(q.id);
+    if (isNeet) {
+      const neetEval = evaluateNeetAttempt({
+        questions: questionsRes.rows,
+        answers: answersRes.rows,
+        negEnabled,
+        negPenalty,
+      });
+      totalMarks = neetEval.totalMarks; // 720
+      marksObtained = neetEval.marksObtained;
+      correctCount = neetEval.correctCount;
+      wrongCount = neetEval.wrongCount;
+      unattemptedCount = neetEval.unattemptedCount;
+      percentage = neetEval.percentage;
+    } else {
+      for (const q of questionsRes.rows) {
+        totalMarks += q.marks;
+        const type = q.question_type || 'mcq';
+        const ans = answerMap.get(q.id);
 
-      if (isMultiSelectQuestion(q)) {
-        const correct = ensureArray(q.correct_indices);
-        let selected = ensureArray(ans?.selected_indices);
-        if (!selected.length && ans?.selected_index != null) {
-          selected = [ans.selected_index];
-        }
-        if (!selected.length) unattemptedCount += 1;
-        else if (arraysEqual(selected, correct)) {
-          correctCount += 1;
-          marksObtained += q.marks;
-        } else {
-          wrongCount += 1;
-          if (negEnabled) marksObtained -= negPenalty;
-        }
-      } else if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
-        const sel = ans?.selected_index;
-        if (sel === undefined || sel === null) unattemptedCount += 1;
-        else if (sel === q.correct_index) {
-          correctCount += 1;
-          marksObtained += q.marks;
-        } else {
-          wrongCount += 1;
-          if (negEnabled) marksObtained -= negPenalty;
-        }
-      } else if (type === 'integer') {
-        const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
-        const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
-        if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
-        else if (targetVal !== null && Math.round(userVal) === Math.round(targetVal)) {
-          correctCount += 1;
-          marksObtained += q.marks;
-        } else {
-          wrongCount += 1;
-          if (negEnabled) marksObtained -= negPenalty;
-        }
-      } else if (type === 'numerical') {
-        const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
-        const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
-        const tol = Number(q.numerical_tolerance) || 0.01;
-        if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
-        else if (targetVal !== null && Math.abs(userVal - targetVal) <= tol) {
-          correctCount += 1;
-          marksObtained += q.marks;
-        } else {
-          wrongCount += 1;
-          if (negEnabled) marksObtained -= negPenalty;
-        }
-      } else if (type === 'coding') {
-        const code = codingMap.get(q.id);
-        const tests = Array.isArray(q.test_cases) ? q.test_cases : [];
-        if (!code?.source_code?.trim()) unattemptedCount += 1;
-        else {
-          const grade = gradeCodingAnswer(code.source_code, tests);
-          if (grade.passed) {
+        if (isMultiSelectQuestion(q)) {
+          const correct = ensureArray(q.correct_indices);
+          let selected = ensureArray(ans?.selected_indices);
+          if (!selected.length && ans?.selected_index != null) {
+            selected = [ans.selected_index];
+          }
+          if (!selected.length) unattemptedCount += 1;
+          else if (arraysEqual(selected, correct)) {
             correctCount += 1;
             marksObtained += q.marks;
-          } else if (grade.total > 0) {
-            const partial = Math.round((grade.passedCount / grade.total) * q.marks);
-            marksObtained += partial;
-            if (partial > 0) correctCount += 1;
-            else wrongCount += 1;
-          } else wrongCount += 1;
-        }
-      } else if (type === 'subjective') {
-        const text = subjectiveMap.get(q.id) || '';
-        if (text.trim().length < 20) unattemptedCount += 1;
-        else {
-          correctCount += 1;
-          marksObtained += q.marks;
+          } else {
+            wrongCount += 1;
+            if (negEnabled) marksObtained -= negPenalty;
+          }
+        } else if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
+          const sel = ans?.selected_index;
+          if (sel === undefined || sel === null) unattemptedCount += 1;
+          else if (sel === q.correct_index) {
+            correctCount += 1;
+            marksObtained += q.marks;
+          } else {
+            wrongCount += 1;
+            if (negEnabled) marksObtained -= negPenalty;
+          }
+        } else if (type === 'integer') {
+          const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
+          const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+          if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
+          else if (targetVal !== null && Math.round(userVal) === Math.round(targetVal)) {
+            correctCount += 1;
+            marksObtained += q.marks;
+          } else {
+            wrongCount += 1;
+            if (negEnabled) marksObtained -= negPenalty;
+          }
+        } else if (type === 'numerical') {
+          const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
+          const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+          const tol = Number(q.numerical_tolerance) || 0.01;
+          if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
+          else if (targetVal !== null && Math.abs(userVal - targetVal) <= tol) {
+            correctCount += 1;
+            marksObtained += q.marks;
+          } else {
+            wrongCount += 1;
+            if (negEnabled) marksObtained -= negPenalty;
+          }
+        } else if (type === 'coding') {
+          const code = codingMap.get(q.id);
+          const tests = Array.isArray(q.test_cases) ? q.test_cases : [];
+          if (!code?.source_code?.trim()) unattemptedCount += 1;
+          else {
+            const grade = gradeCodingAnswer(code.source_code, tests);
+            if (grade.passed) {
+              correctCount += 1;
+              marksObtained += q.marks;
+            } else if (grade.total > 0) {
+              const partial = Math.round((grade.passedCount / grade.total) * q.marks);
+              marksObtained += partial;
+              if (partial > 0) correctCount += 1;
+              else wrongCount += 1;
+            } else wrongCount += 1;
+          }
+        } else if (type === 'subjective') {
+          const text = subjectiveMap.get(q.id) || '';
+          if (text.trim().length < 20) unattemptedCount += 1;
+          else {
+            correctCount += 1;
+            marksObtained += q.marks;
+          }
         }
       }
+
+      marksObtained = Math.max(0, Number(marksObtained.toFixed(2)));
+      percentage = totalMarks > 0 ? Number(((marksObtained / totalMarks) * 100).toFixed(2)) : 0;
     }
-
-    marksObtained = Math.max(0, Number(marksObtained.toFixed(2)));
-
-    const percentage = totalMarks > 0 ? Number(((marksObtained / totalMarks) * 100).toFixed(2)) : 0;
     const passed = marksObtained >= assessment.passing_marks;
     const durationSeconds = Math.round((Date.now() - new Date(attempt.started_at).getTime()) / 1000);
 
@@ -653,6 +677,26 @@ export const getAttemptState = asyncHandler(async (req, res) => {
     }
   }
 
+  const isNeet = isNeetTest(assessmentObj, questionsRes.rows);
+  const totalQCount = questionsRes.rows.length;
+
+  const sanitizedQuestions = questionsRes.rows.map((q, idx) => {
+    const clean = sanitizeQuestion(q);
+    if (isNeet) {
+      const neetMeta = resolveQuestionNeetMeta(q, idx, totalQCount);
+      return {
+        ...clean,
+        subject: neetMeta.subject,
+        section: neetMeta.section,
+        questionNumber: neetMeta.subjectQuestionNumber,
+        overallQuestionNumber: neetMeta.overallQuestionNumber,
+        is_neet: true,
+        is_section_b: neetMeta.isSectionB,
+      };
+    }
+    return clean;
+  });
+
   res.json({
     attempt,
     assessment: {
@@ -668,10 +712,12 @@ export const getAttemptState = asyncHandler(async (req, res) => {
       institution_name: institutionObj?.name || null,
       institution_logo_url: institutionObj?.logo_url || null,
       institution_logo_badge: institutionObj?.logo_badge || null,
+      is_neet: isNeet,
+      total_marks: isNeet ? 720 : (assessmentObj.total_marks || null),
     },
     institution: institutionObj,
     sections: sectionsRes.rows,
-    questions: questionsRes.rows.map(sanitizeQuestion),
+    questions: sanitizedQuestions,
     answers: answersRes.rows,
     coding_answers: codingRes.rows,
     subjective_answers: subjectiveRes.rows,
@@ -913,7 +959,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     }
   }
 
-  const solutions = questionsRes.rows.map((q) => {
+  const solutions = questionsRes.rows.map((q, idx) => {
     const ans = ansMap.get(q.id);
     let yourAnswer = null;
     let correct = false;
@@ -1005,8 +1051,15 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       || (Array.isArray(mediaArr) ? mediaArr.find((m) => m && (m.id?.includes('-img-') || m.type === 'diagram' || m.type === 'question'))?.url : null)
       || null;
 
+    const isNeet = isNeetTest(assessment, questionsRes.rows);
+    let neetMeta = null;
+    if (isNeet) {
+      neetMeta = resolveQuestionNeetMeta(q, idx, questionsRes.rows.length);
+    }
+
     return {
       id: q.id,
+      position: q.position || idx + 1,
       question_type: q.question_type,
       question_text: q.question_text,
       assertion_text: q.assertion_text || null,
@@ -1026,13 +1079,18 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       media: mediaArr,
       topic: resolvedTopic,
       chapter: q.chapter || q.chapter_name || resolvedTopic,
-      subject_name: resolvedSubject,
-      bank_category: q.bank_category || resolvedSubject,
-      section_name: q.section_name || resolvedSubject,
+      subject_name: isNeet && neetMeta?.subject ? neetMeta.subject : resolvedSubject,
+      bank_category: isNeet && neetMeta?.subject ? neetMeta.subject : (q.bank_category || resolvedSubject),
+      section_name: isNeet && neetMeta?.section ? `Section ${neetMeta.section}` : (q.section_name || resolvedSubject),
+      section: isNeet ? neetMeta?.section : (q.section || null),
+      is_neet: isNeet,
+      is_section_b: isNeet ? neetMeta?.isSectionB : false,
+      subject_question_number: isNeet ? neetMeta?.subjectQuestionNumber : (idx + 1),
     };
   });
 
-  const formattedReport = buildFormattedResult(attempt, assessment, scoreRes.rows[0] || null, solutions);
+  const isNeetAssessment = isNeetTest(assessment, questionsRes.rows);
+  const formattedReport = buildFormattedResult(attempt, assessment, scoreRes.rows[0] || null, solutions, isNeetAssessment, answersRes.rows);
 
   res.json({
     attempt: {
@@ -1058,7 +1116,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   });
 });
 
-const buildFormattedResult = (attempt, assessment, score, solutions) => {
+const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = false, rawAnswers = []) => {
   const correct = Number(score?.correct_count || 0);
   const incorrect = Number(score?.wrong_count || 0);
   const unattempted = Number(score?.unattempted_count || 0);
@@ -1118,6 +1176,25 @@ const buildFormattedResult = (attempt, assessment, score, solutions) => {
     t.accuracy = t.attempted > 0 ? Number(((t.correct / t.attempted) * 100).toFixed(2)) : 0;
   }
 
+  let neetBreakdown = null;
+  if (isNeet) {
+    const neetEval = evaluateNeetAttempt({
+      questions: solutions,
+      answers: rawAnswers,
+      negEnabled: assessment.negative_marking !== false,
+      negPenalty: Number(assessment.negative_marks_per_wrong) || 1,
+    });
+    neetBreakdown = {
+      isNeet: true,
+      maxMarks: 720,
+      totalMarks: 720,
+      marksObtained: neetEval.marksObtained,
+      percentage: neetEval.percentage,
+      evaluatedQuestionsCount: neetEval.evaluatedQuestionsCount, // Max 180
+      subjectResults: neetEval.subjectResults,
+    };
+  }
+
   const durationSec = Number(attempt.duration_seconds || 0);
   const totalQuestions = solutions.length;
   const avgTimePerQ = totalQuestions > 0 ? Math.round(durationSec / totalQuestions) : 0;
@@ -1136,11 +1213,13 @@ const buildFormattedResult = (attempt, assessment, score, solutions) => {
     },
     test: {
       name: assessment.title || 'Assessment Test',
-      totalMarks: Number(score?.total_marks || assessment.total_marks || 0),
-      durationMinutes: Number(assessment.duration_minutes || 0)
+      totalMarks: isNeet ? 720 : Number(score?.total_marks || assessment.total_marks || 0),
+      durationMinutes: Number(assessment.duration_minutes || 0),
+      isNeet,
     },
     overall: {
       marks: Number(score?.marks_obtained || 0),
+      totalMarks: isNeet ? 720 : Number(score?.total_marks || assessment.total_marks || 0),
       percentage: Number(score?.percentage || 0),
       correct,
       incorrect,
@@ -1149,7 +1228,8 @@ const buildFormattedResult = (attempt, assessment, score, solutions) => {
     },
     subjects,
     topics,
-    timeAnalysis
+    timeAnalysis,
+    neetBreakdown,
   };
 };
 

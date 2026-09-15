@@ -43,6 +43,7 @@ export default function ResultPage() {
   const [generatingAiTest, setGeneratingAiTest] = useState(false);
   const [aiTestResult, setAiTestResult] = useState(null);
   const [aiTestError, setAiTestError] = useState(null);
+  const [loadError, setLoadError] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const themeContext = useTheme();
@@ -50,6 +51,7 @@ export default function ResultPage() {
 
   const load = async () => {
     setState('loading');
+    setLoadError(null);
     try {
       if (attemptId && attemptId.startsWith('ai-')) {
         const testId = attemptId.replace(/^ai-/, '');
@@ -78,9 +80,14 @@ export default function ResultPage() {
         }
       }
 
-      setData(await attemptService.getResult(attemptId));
+      const resData = await attemptService.getResult(attemptId);
+      setData(resData);
       setState('done');
-    } catch {
+    } catch (err) {
+      console.error('Failed to load test result:', err);
+      const message = err.response?.data?.message || err.message || 'An unexpected error occurred while fetching data.';
+      const statusCode = err.response?.status || (err.message?.includes('401') ? 401 : err.message?.includes('403') ? 403 : 500);
+      setLoadError({ message, statusCode });
       setState('error');
     }
   };
@@ -213,6 +220,20 @@ export default function ResultPage() {
     };
   }, [score]);
 
+  const isNeetExam = useMemo(() => {
+    if (data?.neetBreakdown || data?.test?.isNeet || assessment?.is_neet) return true;
+    const title = String(assessment?.title || assessment?.test_name || '').toUpperCase();
+    const type = String(assessment?.test_type || '').toUpperCase();
+    if (title.includes('NEET') || type.includes('NEET')) return true;
+    if (solutions && (solutions.length === 200 || solutions.length === 180)) return true;
+    return Boolean(solutions?.some((q) => q.is_neet || q.section === 'B' || q.is_section_b));
+  }, [data, assessment, solutions]);
+
+  const displayTotalMarks = useMemo(() => {
+    if (isNeetExam) return 720;
+    return Number(score?.total_marks || assessment?.total_marks || 0);
+  }, [isNeetExam, score, assessment]);
+
   const formattedScoreDisplay = useMemo(() => {
     if (!score) return '—';
     const formatVal = (val) => {
@@ -222,14 +243,14 @@ export default function ResultPage() {
       return Number.isInteger(num) ? num.toString() : num.toFixed(1);
     };
     const obtained = formatVal(score.marks_obtained);
-    const total = formatVal(score.total_marks);
+    const total = formatVal(displayTotalMarks);
     return (
       <span className="inline-flex items-baseline gap-1 truncate max-w-full">
         <span className="text-xl sm:text-2xl font-black">{obtained}</span>
         <span className="text-xs sm:text-sm font-semibold text-slate-400 dark:text-slate-500">/ {total}</span>
       </span>
     );
-  }, [score]);
+  }, [score, displayTotalMarks]);
 
   const cleanSubjectName = (str) => {
     if (!str || typeof str !== 'string') return null;
@@ -420,6 +441,95 @@ export default function ResultPage() {
     return result;
   }, [solutions, detectedPrimarySubject]);
 
+  const neetSectionAnalytics = useMemo(() => {
+    if (!isNeetExam || !solutions || solutions.length === 0) return null;
+
+    if (data?.neetBreakdown?.subjectResults) {
+      return data.neetBreakdown.subjectResults;
+    }
+
+    const subjects = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
+    const breakdownMap = {};
+    subjects.forEach((s) => {
+      breakdownMap[s] = {
+        subject: s,
+        totalMarks: 180,
+        marksObtained: 0,
+        sectionA: { maxMarks: 140, totalQuestions: 35, attempted: 0, correct: 0, incorrect: 0, unattempted: 35, marks: 0 },
+        sectionB: { maxMarks: 40, totalQuestions: 15, maxAttemptAllowed: 10, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, unattempted: 10, marks: 0 },
+      };
+    });
+
+    const isQAttempted = (q) => {
+      if (isMultiSelectQuestion(q)) return Array.isArray(q.your_answer) && q.your_answer.length > 0;
+      if (['mcq', 'single_choice', 'assertion_reason'].includes(q.question_type)) return q.your_answer !== null && q.your_answer !== undefined;
+      if (['integer', 'numerical'].includes(q.question_type)) return q.your_answer !== null && q.your_answer !== undefined && q.your_answer !== '';
+      return q.your_answer !== null && q.your_answer !== undefined;
+    };
+
+    solutions.forEach((q, idx) => {
+      const pos = q.position || (idx + 1);
+      let subj = 'Physics';
+      let sec = 'A';
+      if (pos >= 1 && pos <= 50) { subj = 'Physics'; sec = pos <= 35 ? 'A' : 'B'; }
+      else if (pos >= 51 && pos <= 100) { subj = 'Chemistry'; sec = pos <= 85 ? 'A' : 'B'; }
+      else if (pos >= 101 && pos <= 150) { subj = 'Botany'; sec = pos <= 135 ? 'A' : 'B'; }
+      else if (pos >= 151 && pos <= 200) { subj = 'Zoology'; sec = pos <= 185 ? 'A' : 'B'; }
+
+      if (q.subject_name && subjects.some((s) => q.subject_name.toLowerCase().includes(s.toLowerCase()))) {
+        subj = subjects.find((s) => q.subject_name.toLowerCase().includes(s.toLowerCase()));
+      }
+      if (q.section === 'B' || q.is_section_b) sec = 'B';
+      else if (q.section === 'A') sec = 'A';
+
+      const target = breakdownMap[subj];
+      if (!target) return;
+
+      const attempted = isQAttempted(q);
+      const isCorrect = Boolean(q.is_correct);
+
+      if (sec === 'A') {
+        if (attempted) {
+          target.sectionA.attempted += 1;
+          target.sectionA.unattempted = Math.max(0, target.sectionA.unattempted - 1);
+          if (isCorrect) {
+            target.sectionA.correct += 1;
+            target.sectionA.marks += 4;
+          } else {
+            target.sectionA.incorrect += 1;
+            target.sectionA.marks -= 1;
+          }
+        }
+      } else {
+        // Section B (max 10 evaluated)
+        if (attempted) {
+          target.sectionB.totalAttempted += 1;
+          if (target.sectionB.evaluatedAttempted < 10) {
+            target.sectionB.evaluatedAttempted += 1;
+            target.sectionB.unattempted = Math.max(0, target.sectionB.unattempted - 1);
+            if (isCorrect) {
+              target.sectionB.correct += 1;
+              target.sectionB.marks += 4;
+            } else {
+              target.sectionB.incorrect += 1;
+              target.sectionB.marks -= 1;
+            }
+          }
+        }
+      }
+    });
+
+    subjects.forEach((s) => {
+      const b = breakdownMap[s];
+      b.sectionA.marks = Number(Math.max(0, b.sectionA.marks).toFixed(2));
+      b.sectionB.marks = Number(Math.max(0, b.sectionB.marks).toFixed(2));
+      b.marksObtained = Number((b.sectionA.marks + b.sectionB.marks).toFixed(2));
+      b.totalEvaluated = b.sectionA.totalQuestions + b.sectionB.evaluatedAttempted;
+    });
+
+    return breakdownMap;
+  }, [isNeetExam, solutions, data]);
+
   const hasWeakTopics = useMemo(() => {
     if (!topicScores || Object.keys(topicScores).length === 0) return true;
     let found = false;
@@ -480,7 +590,48 @@ export default function ResultPage() {
       </div>
     );
   }
-  if (state === 'error') return <ErrorState onRetry={load} />;
+  if (state === 'error') {
+    const isAuthError = loadError?.statusCode === 401 || loadError?.statusCode === 403;
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-[#070c18]">
+        <div className="max-w-md w-full text-center space-y-4 p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0f172a] shadow-xl">
+          <div className="w-12 h-12 mx-auto rounded-full bg-rose-100 dark:bg-rose-950/50 flex items-center justify-center text-rose-600 dark:text-rose-400">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <h2 className="text-lg font-black text-slate-900 dark:text-white">
+            {isAuthError ? 'Authentication Required' : 'Unable to Load Content'}
+          </h2>
+          <p className="text-sm text-slate-500 dark:text-slate-400">
+            {loadError?.message || 'An unexpected error occurred while fetching data.'}
+          </p>
+          <div className="flex flex-wrap justify-center gap-3 pt-2">
+            {isAuthError ? (
+              <Link
+                to="/login"
+                className="px-5 py-2.5 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-700 text-white transition shadow-sm"
+              >
+                Log In to Account
+              </Link>
+            ) : (
+              <button
+                type="button"
+                onClick={load}
+                className="px-5 py-2.5 rounded-xl font-bold text-xs bg-blue-600 hover:bg-blue-700 text-white transition shadow-sm cursor-pointer"
+              >
+                Try Again
+              </button>
+            )}
+            <Link
+              to="/dashboard"
+              className="px-4 py-2.5 rounded-xl font-bold text-xs border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition"
+            >
+              Go to Dashboard
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const backTo = sessionStorage.getItem('assessmentReturn') || '/assessments';
   const backLabel = backTo.startsWith('/my-tests') ? 'Back to my tests' : 'Back to invited assessments';
@@ -569,7 +720,10 @@ export default function ResultPage() {
                       {score ? `${score.percentage}%` : '0%'}
                     </span>
                     <span className="mt-1 text-sm font-bold text-slate-500 dark:text-slate-400">
-                      Scored <span className="text-slate-900 dark:text-white font-extrabold">{score ? (Number.isInteger(Number(score.marks_obtained)) ? Number(score.marks_obtained) : Number(score.marks_obtained).toFixed(1)) : 0}</span> out of <span className="text-slate-900 dark:text-white font-extrabold">{score ? (Number.isInteger(Number(score.total_marks)) ? Number(score.total_marks) : Number(score.total_marks).toFixed(1)) : 0}</span> Marks
+                      Scored <span className="text-slate-900 dark:text-white font-extrabold">{score ? (Number.isInteger(Number(score.marks_obtained)) ? Number(score.marks_obtained) : Number(score.marks_obtained).toFixed(1)) : 0}</span> out of <span className="text-slate-900 dark:text-white font-extrabold">{Number.isInteger(Number(displayTotalMarks)) ? Number(displayTotalMarks) : Number(displayTotalMarks).toFixed(1)}</span> Marks
+                      {isNeetExam && (
+                        <span className="ml-2 text-xs text-blue-600 dark:text-blue-400 font-semibold">(NEET UG Pattern · 720 Max)</span>
+                      )}
                     </span>
                   </div>
 
@@ -741,6 +895,100 @@ export default function ResultPage() {
                   {breakdown.map((b) => (
                     <SubjectBar key={b.label} label={b.label} value={b.value} variant={b.variant} />
                   ))}
+                </div>
+              </div>
+            )}
+
+            {/* NEET UG Section-wise Breakdown (Section A 35 Qs + Section B 10/15 Qs) */}
+            {isNeetExam && neetSectionAnalytics && (
+              <div className="rounded-3xl border border-blue-200/90 dark:border-blue-900/60 bg-gradient-to-br from-blue-50/50 via-white to-indigo-50/30 dark:from-[#081226] dark:via-[#0c1836] dark:to-[#071020] p-5 sm:p-6 shadow-xs space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-blue-100 dark:border-blue-900/40 pb-3">
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-600 text-white shadow-2xs">
+                        NEET UG Pattern
+                      </span>
+                      <h3 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
+                        Section-wise Evaluation (720 Marks Max)
+                      </h3>
+                    </div>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">
+                      Section A: 35 Compulsory (+4, -1) · Section B: Strictly first 10 attempted evaluated (+4, -1)
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-xs font-bold text-slate-500 dark:text-slate-400">Total Evaluated Qs:</span>
+                    <p className="text-sm font-black text-blue-700 dark:text-blue-300">Max 180 / 200</p>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                  {['Physics', 'Chemistry', 'Botany', 'Zoology'].map((subj) => {
+                    const data = neetSectionAnalytics[subj] || {
+                      totalMarks: 180,
+                      marksObtained: 0,
+                      sectionA: { maxMarks: 140, totalQuestions: 35, attempted: 0, correct: 0, incorrect: 0, marks: 0 },
+                      sectionB: { maxMarks: 40, totalQuestions: 15, maxAttemptAllowed: 10, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, marks: 0 },
+                    };
+                    const secA = data.sectionA;
+                    const secB = data.sectionB;
+                    const totalSubjMarks = data.marksObtained;
+                    const subjPct = Math.round((totalSubjMarks / 180) * 100);
+
+                    return (
+                      <div
+                        key={subj}
+                        className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-[#071124] p-4 space-y-3 shadow-2xs"
+                      >
+                        <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800/80 pb-2">
+                          <div>
+                            <p className="text-sm font-black text-slate-900 dark:text-white">{subj}</p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 font-bold">
+                              {totalSubjMarks} <span className="text-[10px] text-slate-400">/ 180 Marks</span>
+                            </p>
+                          </div>
+                          <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-lg border ${
+                            subjPct >= 65
+                              ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30'
+                              : subjPct >= 40
+                              ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30'
+                              : 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30'
+                          }`}>
+                            {subjPct}%
+                          </span>
+                        </div>
+
+                        {/* Section A metrics */}
+                        <div className="rounded-xl bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 p-2.5 text-xs space-y-1">
+                          <div className="flex items-center justify-between font-bold text-blue-950 dark:text-blue-200">
+                            <span>Section A (35 Qs)</span>
+                            <span className="text-blue-700 dark:text-blue-400">{secA.marks} / 140</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                            <span>Attempted: <strong>{secA.attempted}</strong> / 35</span>
+                            <span>✓ {secA.correct} · ✗ {secA.incorrect}</span>
+                          </div>
+                        </div>
+
+                        {/* Section B metrics */}
+                        <div className="rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 p-2.5 text-xs space-y-1">
+                          <div className="flex items-center justify-between font-bold text-amber-950 dark:text-amber-200">
+                            <span>Section B (Any 10)</span>
+                            <span className="text-amber-700 dark:text-amber-400">{secB.marks} / 40</span>
+                          </div>
+                          <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
+                            <span>Evaluated: <strong>{secB.evaluatedAttempted || secB.correct + secB.incorrect}</strong> / 10</span>
+                            <span>✓ {secB.correct} · ✗ {secB.incorrect}</span>
+                          </div>
+                          {secB.totalAttempted > 10 && (
+                            <p className="text-[10px] text-rose-600 font-semibold pt-0.5">
+                              * {secB.totalAttempted - 10} excess question(s) ignored as per rules
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
