@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import katex from 'katex';
 import 'katex/dist/katex.min.css';
+import { formatQuestionStructure } from '../../lib/questionFormatter.js';
 
 /**
  * Render an individual LaTeX math formula using KaTeX
@@ -39,11 +40,11 @@ function KaTeXFormula({ math, displayMode = false }) {
  */
 export default function MathRenderer({ text, className = '' }) {
   if (text == null || text === '') return null;
-  const content = String(text);
+  const content = useMemo(() => formatQuestionStructure(String(text)), [text]);
 
   // If there are no math delimiters at all, render text directly for performance
   if (!content.includes('$') && !content.includes('\\(') && !content.includes('\\[')) {
-    return <span className={className}>{content}</span>;
+    return <span className={`whitespace-pre-line ${className}`}>{content}</span>;
   }
 
   // Regex to split by LaTeX delimiters:
@@ -86,7 +87,7 @@ export default function MathRenderer({ text, className = '' }) {
   }, [content]);
 
   return (
-    <span className={className}>
+    <span className={`whitespace-pre-line ${className}`}>
       {tokens.map((token, idx) => {
         if (token.type === 'math-display') {
           return <KaTeXFormula key={idx} math={token.value} displayMode={true} />;

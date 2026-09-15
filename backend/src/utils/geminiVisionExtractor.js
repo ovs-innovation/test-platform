@@ -6,6 +6,7 @@ import { createCanvas } from '@napi-rs/canvas';
 import sharp from 'sharp';
 import { GoogleGenAI, Type } from '@google/genai';
 import { env } from '../config/env.js';
+import { formatQuestionStructure } from './questionFormatter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -305,6 +306,14 @@ STAGE 1: QUESTION PAPER EXTRACTION:
 - Extract all questions appearing on these pages (Pages ${batchStartPage} to ${batchEndPage}).
 - Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
 - Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
+- CRITICAL FORMATTING FOR STATEMENTS & LISTS:
+  * For structured questions with Statements (Statement I, Statement II), Assertion & Reason, sub-statements (A., B., C., D.), or Match Lists (List-I, List-II), PRESERVE their line breaks exactly one-by-one as printed in the exam using newlines (\\n).
+  * DO NOT combine them into a single continuous run-on paragraph!
+  * Example:
+    Given below are two statements:
+    Statement I: [statement 1 text]
+    Statement II: [statement 2 text]
+    In the light of the above statements, choose the most appropriate answer...
 - Record the 1-based page numbers where each question appears in 'sourcePages' (e.g. [${batchStartPage}] or [${batchStartPage}, ${batchEndPage}]).
 - Handle question continuations across page boundaries seamlessly into a single question.
 - Preserve ONLY actual graphical illustrations (such as biological diagrams, circuit schematics, physics graphs, apparatus setups, geometry figures, charts, and chemical molecular structures) under 'visualElements'. Return normalized integer 2D bounding boxes in [ymin, xmin, ymax, xmax] on a scale of 0 to 1000.
@@ -507,7 +516,7 @@ Return structured JSON output strictly following the JSON schema.
     seenQuestionNumbers.add(qNum);
 
     // Validation Check 2: Missing question text
-    const cleanQText = (rawQ.questionText || '').trim();
+    const cleanQText = formatQuestionStructure((rawQ.questionText || '').trim());
     if (!cleanQText || cleanQText.length < 5) {
       needsReview = true;
       reviewReasons.push(`Question Q${qNum} has missing or empty question text.`);

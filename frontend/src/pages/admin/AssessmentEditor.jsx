@@ -1420,9 +1420,9 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
               </span>
             )}
           </div>
-          <p className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100">
+          <div className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100 whitespace-pre-line leading-relaxed">
             <MathRenderer text={q.question_text} />
-          </p>
+          </div>
           
           {q.image_url && (
             <div className="mt-2 max-w-sm">

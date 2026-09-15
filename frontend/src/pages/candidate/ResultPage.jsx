@@ -1046,7 +1046,7 @@ export default function ResultPage() {
                             </div>
                           </div>
 
-                          <div className="text-slate-900 dark:text-slate-100 leading-relaxed font-semibold text-sm sm:text-base">
+                          <div className="text-slate-900 dark:text-slate-100 leading-relaxed font-semibold text-sm sm:text-base whitespace-pre-line">
                             <MathRenderer text={q.question_text} />
                           </div>
 

@@ -651,7 +651,7 @@ export default function ExamScreen() {
             </p>
           </div>
 
-          <div className="text-base leading-relaxed text-slate-900">
+          <div className="text-base leading-relaxed text-slate-900 whitespace-pre-line">
             <span className="mr-2 font-bold">Q{current + 1}.</span>
             <MathRenderer text={q.question_text} />
           </div>

@@ -50,6 +50,7 @@ import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
+import { formatQuestionStructure } from '../utils/questionFormatter.js';
 
 /**
  * 1. GET /api/admin/tests
@@ -695,7 +696,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
             [
               id,
-              q.question?.text || q.question_text || q.questionText,
+              formatQuestionStructure(q.question?.text || q.question_text || q.questionText || ''),
               JSON.stringify(optionsToStore),
               dbCorrectIndex,
               q.marks || 4,
