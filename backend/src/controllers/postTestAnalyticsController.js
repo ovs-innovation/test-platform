@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { generateExamMentorStrategyReport } from '../services/geminiService.js';
 import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
+import { getCache, setCache } from '../config/redis.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -37,6 +38,16 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
   if (!rawId || isNaN(rawId)) {
     throw ApiError.badRequest('Invalid test ID parameter');
   }
+
+  // Check Redis/memory cache first for instant response
+  const analyticsCacheKey = `analytics:${studentId}:${rawId}`;
+  try {
+    const cachedAnalytics = await getCache(analyticsCacheKey);
+    if (cachedAnalytics) {
+      console.log(`[PostTestAnalytics] CACHE HIT: Returning cached analytics for student ${studentId}, test/attempt ${rawId}`);
+      return res.json(cachedAnalytics);
+    }
+  } catch (_) {}
 
   // 0. Resolve whether rawId is an ATTEMPT_ID or an ASSESSMENT_ID / TEST_ID
   let realAttemptId = null;
@@ -945,40 +956,20 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
 
   try {
     let cachedStrategy = await getCachedAIReport(studentId, testId);
-
-    if (!cachedStrategy) {
-      console.log(`[PostTestAnalytics] Generating fresh exam_mentor_strategy for student ${studentId}, test ${testId}...`);
-      cachedStrategy = await generateExamMentorStrategyReport({
-        exam_type: test.test_type || 'JEE Main',
-        test_date: test.test_date ? new Date(test.test_date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-        days_remaining: 7,
-        score: actualStudentScore,
-        total_marks: calculatedMaxMarks > 0 ? calculatedMaxMarks : (Number(test.max_marks) || 300),
-        percentile: currentAttemptRank.percentile ?? null,
-        rank: currentAttemptRank.air ?? null,
-        covered_subjects: coveredSubjects,
-        subject_wise_breakdown: subjectWiseStr,
-        strong_topics: strongTopicsList,
-        weak_topics: weakTopicsList,
-        moderate_topics: moderateTopicsList,
-        avg_time_per_question: avgTimeFormatted,
-        unattempted_count: totalUnattempted,
-        rushed_wrong_count: rushedWrongCount,
-        raw_chapter_performance: chapterPerformanceList,
-        raw_subject_analysis: subjectAnalysisList
-      });
-
-      if (cachedStrategy) {
-        await saveCachedAIReport(studentId, testId, realAttemptId, cachedStrategy);
-      }
+    if (cachedStrategy) {
+      console.log(`[PostTestAnalytics] DB Cache Hit: Loaded cached exam_mentor_strategy for student ${studentId}, test ${testId}.`);
+      responseData.exam_mentor_strategy = cachedStrategy;
     } else {
-      console.log(`[PostTestAnalytics] DB Cache Hit: Loaded cached exam_mentor_strategy for student ${studentId}, test ${testId} in <15ms.`);
+      responseData.exam_mentor_strategy = null;
     }
-
-    responseData.exam_mentor_strategy = cachedStrategy;
   } catch (err) {
-    console.error('[PostTestAnalytics] Failed to compute exam_mentor_strategy:', err);
+    console.error('[PostTestAnalytics] Failed to fetch cached strategy:', err);
   }
+
+  // Cache response for subsequent requests (1 hour)
+  try {
+    await setCache(analyticsCacheKey, responseData, 3600);
+  } catch (_) {}
 
   res.json(responseData);
 });

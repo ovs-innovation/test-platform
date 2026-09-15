@@ -28,6 +28,7 @@ import {
   X
 } from 'lucide-react';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
+import SevenDayRevisionPlanCard from '../../components/candidate/SevenDayRevisionPlanCard.jsx';
 import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
@@ -719,9 +720,9 @@ export default function ResultPage() {
               </div>
             </div>
 
-            {/* AIETS GEMINI 2.5 AI REVISION & DIAGNOSTIC HUB */}
+            {/* AI 7-DAY REVISION PLAN (ON-DEMAND) */}
             <div>
-              <AIInsightsCard isDarkMode={isDarkMode} testId={attemptId} />
+              <SevenDayRevisionPlanCard attemptId={attemptId} testData={data} isDarkMode={isDarkMode} />
             </div>
 
             {/* Performance Breakdown Progress Bar */}

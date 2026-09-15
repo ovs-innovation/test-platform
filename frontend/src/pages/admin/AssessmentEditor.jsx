@@ -513,7 +513,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
           include_answers: includeAnswers,
         });
 
-        toast.success(res.message || `Successfully extracted ${res.extractedCount || 0} questions via Gemini Vision!`);
+        toast.success(res.message || `Successfully extracted ${res.extractedCount || 0} questions with options!`);
         if (res.warnings && res.warnings.length > 0) {
           toast.warning(`Note: ${res.warnings.length} question(s) flagged for review.`);
         }
@@ -521,9 +521,8 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         setPdfFile(null);
         if (res.extractedQuestions && res.extractedQuestions.length > 0) {
           setJsonQuestionsData(res.extractedQuestions);
-          setJsonModalOpen(true);
         }
-        onReload();
+        await onReload();
       } catch (err) {
         toast.error(err.message || 'PDF extraction failed');
       } finally {
@@ -1440,7 +1439,8 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
           {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
             <ul className="mt-2 space-y-1 text-sm">
               {opts.map((opt, i) => {
-                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                const rawOptText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                const optText = rawOptText.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim();
                 const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
                 const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
                 const isCorrect = hasAnswerKey && (
@@ -1460,7 +1460,7 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                     <div className="flex items-center gap-1.5">
                       {isCorrect && <span className="text-xs font-bold">✓</span>}
                       <span className="font-semibold text-slate-500 dark:text-slate-400">({String.fromCharCode(65 + i)})</span>
-                      {optText ? <MathRenderer text={optText} /> : (!optImg && <span className="italic text-slate-400">Empty option</span>)}
+                      {optText || rawOptText ? <MathRenderer text={optText || rawOptText} /> : (!optImg && <span className="italic text-slate-400">Empty option</span>)}
                     </div>
                     {optImg && (
                       <div className="ml-5 mt-0.5">

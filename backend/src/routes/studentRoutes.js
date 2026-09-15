@@ -5,13 +5,15 @@ import {
   getProfile, updateProfile, changePassword,
   getLeaderboard, getLeaderboardAssessments, getCertificate,
   listForumTopics, getForumTopic, createForumTopic, replyForumTopic,
-  getInstituteRank, askAIDoubt,
+  getInstituteRank, askAIDoubt, generateStudent7DayPlan, getStudent7DayPlan,
 } from '../controllers/studentController.js';
 import { getStudentCalendar } from '../controllers/calendarController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
 const router = Router();
 
+router.get('/7-day-plan', authenticate, authorize('candidate'), getStudent7DayPlan);
+router.post('/generate-7-day-plan', authenticate, authorize('candidate'), generateStudent7DayPlan);
 router.post('/doubt-solver', authenticate, authorize('candidate', 'admin', 'institution_admin'), askAIDoubt);
 router.get('/dashboard/institute-rank', authenticate, authorize('candidate'), getInstituteRank);
 router.get('/calendar', authenticate, authorize('candidate'), getStudentCalendar);

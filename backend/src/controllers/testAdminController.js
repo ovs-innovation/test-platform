@@ -425,8 +425,20 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('file_type must be question_paper, answer_key, or solution_pdf');
   }
 
-  const testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
-  if (testCheck.rowCount === 0) throw ApiError.notFound('Test not found');
+  let testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
+  if (testCheck.rowCount === 0) {
+    const assessCheck = await query('SELECT id, title, duration_minutes, passing_marks FROM assessments WHERE id = $1', [id]);
+    if (assessCheck.rowCount === 0) {
+      throw ApiError.notFound('Test or assessment not found');
+    }
+    const a = assessCheck.rows[0];
+    await query(
+      `INSERT INTO tests (id, test_name, title, test_type, test_date, start_time, end_time, duration_minutes, max_marks)
+       VALUES ($1, $2, $2, 'mock', CURRENT_DATE, '00:00:00', '23:59:59', COALESCE($3, 180), COALESCE($4, 720))
+       ON CONFLICT (id) DO UPDATE SET updated_at = NOW()`,
+      [id, a.title, a.duration_minutes, a.passing_marks]
+    ).catch(() => {});
+  }
 
   const relativeUrl = await saveUploadedFile(file_base64, file_name || 'document.pdf', file_type);
 
@@ -618,6 +630,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             : null;
 
           const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
+          const solutionMediaUrl = q.solution_image_url || (q.explanation?.media && q.explanation.media.length > 0 ? q.explanation.media[0].url : null);
           const allMedia = [
             ...(q.question?.media || []),
             ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
@@ -646,24 +659,29 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                 sourcePage: q.extraction?.sourcePages?.[0] || 1,
               }] : []));
 
-          // Build options with media
+          // Build options with media (clean any redundant leading key like "(A) " from option text)
+          const cleanOptionText = (raw) => {
+            const s = String(raw || '').trim();
+            return s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
+          };
+
           let formattedOptionsWithMedia = [];
           if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
             formattedOptionsWithMedia = q.options.map((opt) => ({
               key: String(opt.key).toUpperCase().trim(),
-              text: String(opt.text || ''),
+              text: cleanOptionText(opt.text),
               media: Array.isArray(opt.media) ? opt.media : [],
             }));
           } else if (Array.isArray(q.rawOptions)) {
             formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
               key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
-              text: typeof opt === 'object' && opt.text !== undefined ? String(opt.text) : String(opt || ''),
+              text: cleanOptionText(typeof opt === 'object' && opt.text !== undefined ? opt.text : opt),
               media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
             }));
           } else if (Array.isArray(q.options)) {
             formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
               key: String.fromCharCode(65 + optIdx),
-              text: String(optText || ''),
+              text: cleanOptionText(optText),
               media: [],
             }));
           }
@@ -673,8 +691,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
           await query(
             `INSERT INTO questions (
-              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, media, tables, extraction_meta
-            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)`,
+              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta
+            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
             [
               id,
               q.question?.text || q.question_text || q.questionText,
@@ -688,6 +706,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
               finalChapter,
               finalChapter,
               primaryMediaUrl,
+              solutionMediaUrl,
               mediaArrayJson,
               tablesArrayJson,
               extractionMetaJson
@@ -763,9 +782,9 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
     }
   }
 
-  // Fallback placeholder questions if extraction produced no matches and qNum specified
+  // Fallback placeholder questions ONLY if no file was uploaded and qNum explicitly specified
   const qNum = total_questions ? parseInt(total_questions, 10) : 0;
-  if (qNum > 0 && extractedCount === 0) {
+  if (qNum > 0 && extractedCount === 0 && (!file_base64 || file_type !== 'question_paper')) {
     const qCheck = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [id]);
     if (qCheck.rows[0].c === 0) {
       const includeAnswers = include_answers !== false && include_answers !== 'false';
@@ -777,8 +796,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6)`,
           [
             id,
-            `Question ${i}: Select the correct option for this question statement.`,
-            JSON.stringify(['(A) Option 1', '(B) Option 2', '(C) Option 3', '(D) Option 4']),
+            `Question ${i}: Select the correct option.`,
+            JSON.stringify(['Option 1', 'Option 2', 'Option 3', 'Option 4']),
             includeAnswers ? 0 : null,
             marksPerQ,
             i

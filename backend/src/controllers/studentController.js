@@ -2,8 +2,8 @@ import crypto from 'crypto';
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
-import { hashPassword, comparePassword } from '../utils/password.js';
-import { solveStudentDoubt, callOpenRouterAIStream } from '../services/geminiService.js';
+import { solveStudentDoubt, callGeminiAIStream, callOpenRouterAIStream, generatePersonalized7DayPlan } from '../services/geminiService.js';
+import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
 
 
 export const getProfile = asyncHandler(async (req, res) => {
@@ -468,7 +468,7 @@ CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
 4. AVOID messy raw LaTeX command noise like \\frac{a}{b} or \\text{...}. Use clean standard math symbols like (a / b) or clean math formatting.
 5. Keep explanations clear, elegant, well-structured, and easy for students to read.`;
 
-    const success = await callOpenRouterAIStream({
+    const success = await (callGeminiAIStream || callOpenRouterAIStream)({
       systemPrompt,
       questionText,
       imageBase64,
@@ -523,5 +523,136 @@ CRITICAL PRESENTATION RULES (STRICT COMPLIANCE REQUIRED):
     timestamp: new Date().toISOString()
   });
 });
+
+/**
+ * GET /api/student/7-day-plan
+ * Retrieves cached 7-day revision plan from cache or PostgreSQL if already generated.
+ */
+export const getStudent7DayPlan = asyncHandler(async (req, res) => {
+  const studentId = Number(req.user?.id);
+  const attemptId = req.query.attemptId;
+  const testId = req.query.testId;
+
+  let resolvedTestId = Number(testId);
+  let resolvedAttemptId = Number(attemptId);
+
+  if ((!resolvedTestId || isNaN(resolvedTestId)) && resolvedAttemptId && !isNaN(resolvedAttemptId)) {
+    try {
+      const attCheck = await query(
+        `SELECT test_id, assessment_id FROM test_attempts WHERE id = $1 UNION ALL SELECT assessment_id as test_id, assessment_id FROM attempts WHERE id = $1 LIMIT 1`,
+        [resolvedAttemptId]
+      );
+      if (attCheck.rowCount > 0) {
+        resolvedTestId = Number(attCheck.rows[0].test_id || attCheck.rows[0].assessment_id) || null;
+      }
+    } catch (_) {}
+  }
+
+  const cached = await getCachedAIReport(studentId, resolvedTestId, resolvedAttemptId);
+  if (cached && (cached.daily_plan || cached.seven_day_plan_data?.daily_plan)) {
+    const plan = cached.seven_day_plan_data || cached;
+    return res.json({
+      success: true,
+      plan,
+      cached: true,
+    });
+  }
+
+  return res.json({
+    success: false,
+    plan: null,
+    cached: false,
+  });
+});
+
+/**
+ * POST /api/student/generate-7-day-plan
+ * Explicit on-demand 7-day revision plan generator based on test performance.
+ * Checks cache first so repeated calls never re-invoke Gemini unless regenerate=true.
+ */
+export const generateStudent7DayPlan = asyncHandler(async (req, res) => {
+  const studentId = Number(req.user?.id);
+  const studentName = req.user?.name || 'Student';
+  const { attemptId, testId, testPerformance, regenerate } = req.body || {};
+
+  let resolvedTestId = Number(testId);
+  let resolvedAttemptId = Number(attemptId);
+
+  if ((!resolvedTestId || isNaN(resolvedTestId)) && resolvedAttemptId && !isNaN(resolvedAttemptId)) {
+    try {
+      const attCheck = await query(
+        `SELECT test_id, assessment_id FROM test_attempts WHERE id = $1 UNION ALL SELECT assessment_id as test_id, assessment_id FROM attempts WHERE id = $1 LIMIT 1`,
+        [resolvedAttemptId]
+      );
+      if (attCheck.rowCount > 0) {
+        resolvedTestId = Number(attCheck.rows[0].test_id || attCheck.rows[0].assessment_id) || null;
+      }
+    } catch (_) {}
+  }
+
+  console.log(`[7DayPlan] Plan request: student ${studentId}, testId: ${resolvedTestId}, attemptId: ${resolvedAttemptId}, regenerate: ${regenerate}`);
+
+  // 1. Check existing cached 7-day plan if not explicitly regenerating
+  if (!regenerate) {
+    const cached = await getCachedAIReport(studentId, resolvedTestId, resolvedAttemptId);
+    if (cached && (cached.daily_plan || cached.seven_day_plan_data?.daily_plan)) {
+      const plan = cached.seven_day_plan_data || cached;
+      console.log(`[7DayPlan] Returning CACHED 7-day plan for student ${studentId}. No AI call needed.`);
+      return res.json({
+        success: true,
+        plan,
+        cached: true,
+      });
+    }
+  }
+
+  // 2. Build performance metrics
+  let metrics = {
+    student_name: studentName,
+    ...(testPerformance || {})
+  };
+
+  // Augment from DB if performance details are missing
+  if ((!metrics.score && metrics.score !== 0) && resolvedAttemptId) {
+    try {
+      const attRes = await query(
+        `SELECT ta.*, t.test_name, t.test_type, t.max_marks as t_max_marks,
+                a.title as a_title, a.type as a_type, a.max_marks as a_max_marks
+         FROM test_attempts ta
+         LEFT JOIN tests t ON t.id = ta.test_id
+         LEFT JOIN assessments a ON a.id = ta.assessment_id
+         WHERE ta.id = $1 AND ta.student_id = $2`,
+        [resolvedAttemptId, studentId]
+      );
+      if (attRes.rowCount > 0) {
+        const row = attRes.rows[0];
+        metrics.test_name = metrics.test_name || row.test_name || row.a_title || 'CBT Assessment';
+        metrics.exam_type = metrics.exam_type || row.test_type || row.a_type || 'JEE / NEET CBT';
+        metrics.score = Number(row.total_score || 0);
+        metrics.max_marks = Number(row.t_max_marks || row.a_max_marks || 300);
+      }
+    } catch (dbErr) {
+      console.warn('[7DayPlan] DB query error:', dbErr.message);
+    }
+  }
+
+  // 3. Generate 7-day plan with Gemini
+  const plan = await generatePersonalized7DayPlan(metrics);
+
+  // 4. Cache generated plan persistently in DB and Redis
+  const saveKeyTestId = resolvedTestId || resolvedAttemptId;
+  if (saveKeyTestId) {
+    await saveCachedAIReport(studentId, saveKeyTestId, resolvedAttemptId, { seven_day_plan_data: plan, ...plan });
+  }
+
+  return res.json({
+    success: true,
+    plan,
+    cached: false,
+    generated_at: new Date().toISOString()
+  });
+});
+
+
 
 

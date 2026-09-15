@@ -285,8 +285,20 @@ export const notificationService = {
 
 export const studentService = {
   analytics: () => withCache('student_analytics', () => api.get('/student/analytics').then((r) => r.data)),
-  postTestAnalytics: (testId) => api.get(`/student/analytics/${testId}`).then((r) => r.data),
-  getAIMentorReport: (testId) => api.get(`/student/analytics/${testId}/ai-mentor-report`).then((r) => r.data),
+  postTestAnalytics: (testId) => withCache(`post_test_analytics_${testId}`, () => api.get(`/student/analytics/${testId}`).then((r) => r.data)),
+  getAIMentorReport: (testId) => withCache(`ai_mentor_report_${testId}`, () => api.get(`/student/analytics/${testId}/ai-mentor-report`).then((r) => r.data)),
+  get7DayPlan: (params) => withCache(`7day_plan_${params?.attemptId || params?.testId}`, () => api.get('/student/7-day-plan', { params }).then((r) => r.data)),
+  generate7DayPlan: (data) => {
+    if (data?.regenerate) {
+      clearCache(`7day_plan_${data?.attemptId || data?.testId}`);
+    }
+    return api.post('/student/generate-7-day-plan', data).then((r) => {
+      if (r.data?.plan) {
+        cache.set(`7day_plan_${data?.attemptId || data?.testId}`, { data: r.data, timestamp: Date.now() });
+      }
+      return r.data;
+    });
+  },
   profile: () => withCache('student_profile', () => api.get('/student/profile').then((r) => r.data)),
   updateProfile: (data) => {
     clearCache('student_profile');

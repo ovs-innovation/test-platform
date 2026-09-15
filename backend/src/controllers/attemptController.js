@@ -860,7 +860,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, q.subject, q.chapter, s.name AS section_name, subj.name AS subject_name, c.name AS chapter_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, q.subject, q.chapter, q.image_url, q.solution_image_url, q.media, s.name AS section_name, subj.name AS subject_name, c.name AS chapter_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        LEFT JOIN subjects subj ON subj.id = q.subject_id
@@ -988,6 +988,23 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
     const resolvedTopic = q.topic || q.chapter || q.chapter_name || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : `${resolvedSubject} Concepts`);
 
+    let mediaArr = [];
+    if (Array.isArray(q.media)) {
+      mediaArr = q.media;
+    } else if (typeof q.media === 'string') {
+      try {
+        mediaArr = JSON.parse(q.media);
+      } catch (_) {}
+    }
+
+    const solImg = q.solution_image_url
+      || (Array.isArray(mediaArr) ? mediaArr.find((m) => m && (m.id?.includes('-exp-') || m.type === 'solution' || m.type === 'explanation'))?.url : null)
+      || null;
+
+    const questionImg = q.image_url
+      || (Array.isArray(mediaArr) ? mediaArr.find((m) => m && (m.id?.includes('-img-') || m.type === 'diagram' || m.type === 'question'))?.url : null)
+      || null;
+
     return {
       id: q.id,
       question_type: q.question_type,
@@ -1004,6 +1021,9 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       is_correct: correct,
       your_answer: yourAnswer,
       solution: q.solution,
+      image_url: questionImg,
+      solution_image_url: solImg,
+      media: mediaArr,
       topic: resolvedTopic,
       chapter: q.chapter || q.chapter_name || resolvedTopic,
       subject_name: resolvedSubject,

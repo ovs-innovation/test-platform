@@ -1,5 +1,42 @@
 import { z } from 'zod';
+import { GoogleGenAI } from '@google/genai';
 import { env } from '../config/env.js';
+
+function getGeminiClient() {
+  const apiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
+  if (!apiKey) return null;
+  return new GoogleGenAI({ apiKey });
+}
+
+function getGeminiModel() {
+  return env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+}
+
+function prepareGeminiContents(systemPrompt, questionText, imageBase64, mimeType = 'image/jpeg') {
+  const parts = [];
+  if (systemPrompt) {
+    parts.push({ text: `System Instructions:\n${systemPrompt}\n\n` });
+  }
+  if (questionText) {
+    parts.push({ text: questionText });
+  }
+  if (imageBase64) {
+    let cleanBase64 = imageBase64;
+    let detectedMime = mimeType || 'image/jpeg';
+    if (imageBase64.includes(';base64,')) {
+      const splitParts = imageBase64.split(';base64,');
+      detectedMime = splitParts[0].replace('data:', '') || detectedMime;
+      cleanBase64 = splitParts[1];
+    }
+    parts.push({
+      inlineData: {
+        mimeType: detectedMime,
+        data: cleanBase64,
+      }
+    });
+  }
+  return [{ role: 'user', parts }];
+}
 
 /**
  * Zod Schema for Structured Academic Doubt Solutions & Strategy Output
@@ -28,7 +65,7 @@ export const DoubtSolutionZodSchema = z.object({
  * Generates a personalized post-test AI study plan based on aggregated student metrics.
  */
 export async function generateStudentAIPlan(studentMetrics = {}) {
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  const geminiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
 
   const {
     student_name = 'Student',
@@ -83,7 +120,7 @@ export async function generateStudentAIPlan(studentMetrics = {}) {
     };
   };
 
-  if (!openRouterKey) return buildFallbackPlan();
+  if (!geminiKey) return buildFallbackPlan();
 
   const prompt = `You are an elite academic mentor and NEET / JEE CBT examination strategist for AIETS (All India Edvedum Test Series) preparing students for JEE Main, JEE Advanced, and NEET UG.
 
@@ -109,15 +146,15 @@ Return a strict JSON object with this EXACT structure:
   "time_management_advice": { "observation": "string", "pacing_tip": "string" }
 }`;
 
-  if (openRouterKey) {
+  if (geminiKey) {
     try {
-      const openRouterText = await callOpenRouterAI({ systemPrompt: prompt, questionText: 'Generate structured study plan JSON object' });
-      if (openRouterText) {
-        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+      const geminiText = await callGeminiAI({ systemPrompt: prompt, questionText: 'Generate structured study plan JSON object' });
+      if (geminiText) {
+        const jsonMatch = geminiText.match(/\{[\s\S]*\}/);
         if (jsonMatch) return JSON.parse(jsonMatch[0]);
       }
     } catch (err) {
-      console.warn('[AIService] OpenRouter generateStudentAIPlan failed:', err.message);
+      console.warn('[GeminiService] generateStudentAIPlan failed:', err.message);
     }
   }
 
@@ -131,7 +168,7 @@ Return a strict JSON object with this EXACT structure:
  * NEVER uses generic or hardcoded content — every insight references real metrics.
  */
 export async function generateAIMentorReport(testData = {}) {
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  const geminiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
 
   const {
     student_name = 'Student',
@@ -372,8 +409,8 @@ export async function generateAIMentorReport(testData = {}) {
     };
   };
 
-  if (!openRouterKey) {
-    console.log('[GeminiService] No OpenRouter API key configured — using data-driven mentor report fallback.');
+  if (!geminiKey) {
+    console.log('[GeminiService] No Gemini API key configured — using data-driven mentor report fallback.');
     return buildDataDrivenFallback();
   }
 
@@ -448,15 +485,15 @@ Return ONLY valid JSON with this exact structure:
   }
 }`;
 
-  if (openRouterKey) {
+  if (geminiKey) {
     try {
-      const openRouterText = await callOpenRouterAI({ systemPrompt: prompt, questionText: 'Generate 8-section AI mentor report JSON object' });
-      if (openRouterText) {
-        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+      const geminiText = await callGeminiAI({ systemPrompt: prompt, questionText: 'Generate 8-section AI mentor report JSON object' });
+      if (geminiText) {
+        const jsonMatch = geminiText.match(/\{[\s\S]*\}/);
         if (jsonMatch) return JSON.parse(jsonMatch[0]);
       }
     } catch (err) {
-      console.warn('[AIService] OpenRouter generateAIMentorReport failed:', err.message);
+      console.warn('[GeminiService] generateAIMentorReport failed:', err.message);
     }
   }
 
@@ -1492,236 +1529,78 @@ $$a \\int_{0}^{s} ds = \\int_{0}^{v} v \\cdot dv \\implies a s = \\frac{v^2 - u^
 }
 
 /**
- * callOpenRouterAIStream
+ * callGeminiAIStream
  * Streams AI doubt solution token by token via SSE callback onToken(chunk)
  */
-export async function callOpenRouterAIStream({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg', onToken }) {
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
-  if (!openRouterKey) return false;
+export async function callGeminiAIStream({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg', onToken }) {
+  const ai = getGeminiClient();
+  if (!ai) return false;
+  const modelName = getGeminiModel();
 
-  const openRouterModels = [
-    'google/gemini-2.0-flash-exp:free',
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'qwen/qwen-2.5-72b-instruct:free',
-    'nvidia/nemotron-3-super-120b-a12b:free',
-    'deepseek/deepseek-r1:free'
-  ];
-
-  let messagesPayload = [
-    { role: 'system', content: systemPrompt }
-  ];
-
-  if (imageBase64) {
-    let cleanBase64 = imageBase64;
-    let detectedMime = mimeType || 'image/jpeg';
-    if (imageBase64.includes(';base64,')) {
-      const parts = imageBase64.split(';base64,');
-      detectedMime = parts[0].replace('data:', '') || detectedMime;
-      cleanBase64 = parts[1];
-    }
-    const fullDataUrl = `data:${detectedMime};base64,${cleanBase64}`;
-
-    messagesPayload.push({
-      role: 'user',
-      content: [
-        {
-          type: 'text',
-          text: questionText ? `Question: "${questionText}"` : 'Please read and solve the STEM doubt in this attached image step-by-step.'
-        },
-        {
-          type: 'image_url',
-          image_url: { url: fullDataUrl }
-        }
-      ]
-    });
-  } else {
-    messagesPayload.push({
-      role: 'user',
-      content: questionText || 'Solve this doubt.'
-    });
-  }
-
-  for (const modelName of openRouterModels) {
-    try {
-      console.log(`[OpenRouter Stream] Attempting AI solution with free model: ${modelName}...`);
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openRouterKey}`,
-          'HTTP-Referer': 'http://localhost:5173',
-          'X-Title': 'Edvedum AI Platform',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          model: modelName,
-          messages: messagesPayload,
-          temperature: 0.3,
-          max_tokens: 1200,
-          stream: true
-        })
-      });
-
-      if (!res.ok || !res.body) {
-        console.warn(`[OpenRouter Stream] Model ${modelName} returned HTTP ${res.status}`);
-        continue;
+  try {
+    console.log(`[Gemini Stream] Attempting AI solution with model: ${modelName}...`);
+    const contents = prepareGeminiContents(systemPrompt, questionText, imageBase64, mimeType);
+    const stream = await ai.models.generateContentStream({
+      model: modelName,
+      contents,
+      config: {
+        temperature: 0.3,
+        maxOutputTokens: 2500,
       }
+    });
 
-      const decoder = new TextDecoder();
-      let buffer = '';
-
-      if (res.body.getReader) {
-        const reader = res.body.getReader();
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || trimmed.startsWith(':')) continue;
-            if (trimmed === 'data: [DONE]') break;
-            if (trimmed.startsWith('data: ')) {
-              try {
-                const parsed = JSON.parse(trimmed.slice(6));
-                const token = parsed.choices?.[0]?.delta?.content || '';
-                if (token && onToken) {
-                  onToken(token);
-                }
-              } catch (_) { }
-            }
-          }
-        }
-      } else {
-        for await (const chunk of res.body) {
-          buffer += decoder.decode(chunk, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() || '';
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || trimmed.startsWith(':')) continue;
-            if (trimmed === 'data: [DONE]') break;
-            if (trimmed.startsWith('data: ')) {
-              try {
-                const parsed = JSON.parse(trimmed.slice(6));
-                const token = parsed.choices?.[0]?.delta?.content || '';
-                if (token && onToken) {
-                  onToken(token);
-                }
-              } catch (_) { }
-            }
-          }
-        }
+    for await (const chunk of stream) {
+      const token = chunk.text || '';
+      if (token && onToken) {
+        onToken(token);
       }
-
-      console.log(`[OpenRouter Stream] Stream completed successfully with model ${modelName}`);
-      return true;
-    } catch (err) {
-      console.warn(`[OpenRouter Stream] Error streaming model ${modelName}:`, err.message);
     }
-  }
 
-  return false;
+    console.log(`[Gemini Stream] Stream completed successfully with model ${modelName}`);
+    return true;
+  } catch (err) {
+    console.warn(`[Gemini Stream] Error streaming model ${modelName}:`, err.message);
+    return false;
+  }
 }
+
+// Backward-compatible alias
+export const callOpenRouterAIStream = callGeminiAIStream;
 
 /**
- * Helper to call OpenRouter API (supports free models like nemotron 3 super, gemini 2.0 flash, llama 3.3, deepseek r1, qwen 2.5)
+ * Helper to call Gemini API
  */
-async function callOpenRouterAI({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg' }) {
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
-  if (!openRouterKey) return null;
+export async function callGeminiAI({ systemPrompt, questionText = '', imageBase64 = null, mimeType = 'image/jpeg' }) {
+  const ai = getGeminiClient();
+  if (!ai) return null;
+  const modelName = getGeminiModel();
 
-  const openRouterModels = [
-    'google/gemini-2.0-flash-exp:free',
-    'openrouter/auto',
-    'meta-llama/llama-3.3-70b-instruct:free',
-    'qwen/qwen-2.5-72b-instruct:free',
-    'deepseek/deepseek-r1:free',
-    'mistralai/mistral-small-24b-instruct-2501:free',
-  ];
-
-  let messagesPayload = [
-    { role: 'system', content: systemPrompt }
-  ];
-
-  if (imageBase64) {
-    let cleanBase64 = imageBase64;
-    let detectedMime = mimeType || 'image/jpeg';
-    if (imageBase64.includes(';base64,')) {
-      const parts = imageBase64.split(';base64,');
-      detectedMime = parts[0].replace('data:', '') || detectedMime;
-      cleanBase64 = parts[1];
-    }
-    const fullDataUrl = `data:${detectedMime};base64,${cleanBase64}`;
-
-    messagesPayload.push({
-      role: 'user',
-      content: [
-        {
-          type: 'text',
-          text: questionText ? `Question: "${questionText}"` : 'Please read and solve the STEM doubt in this attached image step-by-step.'
-        },
-        {
-          type: 'image_url',
-          image_url: { url: fullDataUrl }
-        }
-      ]
-    });
-  } else {
-    messagesPayload.push({
-      role: 'user',
-      content: questionText || 'Solve this doubt.'
-    });
-  }
-
-  for (const modelName of openRouterModels) {
-    try {
-      console.log(`[OpenRouter] Attempting AI solution with model: ${modelName}...`);
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500); // 3.5s per-model fast timeout
-
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openRouterKey}`,
-          'HTTP-Referer': 'http://localhost:5173',
-          'X-Title': 'Edvedum AI Platform',
-          'Content-Type': 'application/json'
-        },
-        signal: controller.signal,
-        body: JSON.stringify({
-          model: modelName,
-          messages: messagesPayload,
-          temperature: 0.3,
-          max_tokens: 1200
-        })
-      });
-      clearTimeout(timeoutId);
-
-      const resData = await res.json();
-      if (!res.ok) {
-        console.warn(`[OpenRouter] Model ${modelName} returned HTTP ${res.status}:`, resData?.error?.message || resData);
-        if (res.status === 402) {
-          console.warn('[OpenRouter] Account has insufficient credits (HTTP 402). Early exit to data-driven engine.');
-          break; // Stop spinning through models if account has 0 credits
-        }
-        continue;
+  try {
+    console.log(`[GeminiService] Attempting AI generation with model: ${modelName}...`);
+    const contents = prepareGeminiContents(systemPrompt, questionText, imageBase64, mimeType);
+    const res = await ai.models.generateContent({
+      model: modelName,
+      contents,
+      config: {
+        temperature: 0.3,
+        maxOutputTokens: 3000,
       }
+    });
 
-      const text = resData.choices?.[0]?.message?.content;
-      if (text && text.trim()) {
-        console.log(`[OpenRouter] Successfully generated solution using ${modelName}`);
-        return text.trim();
-      }
-    } catch (err) {
-      console.warn(`[OpenRouter] Error calling OpenRouter model ${modelName}:`, err.message);
+    const text = res.text;
+    if (text && text.trim()) {
+      console.log(`[GeminiService] Successfully generated output using ${modelName}`);
+      return text.trim();
     }
+    return null;
+  } catch (err) {
+    console.warn(`[GeminiService] Error calling Gemini model ${modelName}:`, err.message);
+    return null;
   }
-
-  return null;
 }
+
+// Backward-compatible internal alias
+const callOpenRouterAI = callGeminiAI;
 
 /**
  * solveStudentDoubt
@@ -1771,14 +1650,14 @@ For Academic Doubts:
 ✅ **Final Answer:** [Boxed/Bold result with standard SI units]
 ⚠️ **Exam Tip & Common Trap:** [1-2 lines on common student mistakes]`;
 
-  // 2. OpenRouter API integration (if OPENROUTER_API_KEY is configured)
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
-  if (openRouterKey) {
-    const openRouterText = await callOpenRouterAI({ systemPrompt, questionText, imageBase64, mimeType });
-    if (openRouterText) {
+  // 2. Gemini API integration (if GEMINI_API_KEY is configured)
+  const geminiKey = (process.env.GEMINI_API_KEY || env.geminiApiKey || '').trim();
+  if (geminiKey) {
+    const geminiText = await callGeminiAI({ systemPrompt, questionText, imageBase64, mimeType });
+    if (geminiText) {
       let jsonParsed = null;
-      if (openRouterText.startsWith('{') && openRouterText.endsWith('}')) {
-        try { jsonParsed = JSON.parse(openRouterText); } catch (_) { }
+      if (geminiText.startsWith('{') && geminiText.endsWith('}')) {
+        try { jsonParsed = JSON.parse(geminiText); } catch (_) { }
       }
 
       if (jsonParsed) {
@@ -1805,7 +1684,7 @@ For Academic Doubts:
 
       return {
         success: true,
-        text: openRouterText
+        text: geminiText
       };
     }
   }  // 3. Fallback to Smart Academic & Strategy Engine
@@ -1912,7 +1791,7 @@ For Academic Doubts:
  * Output: Strict JSON matching the UI rendering schema.
  */
 export async function generateExamMentorStrategyReport(testData = {}) {
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env?.openrouterApiKey || '').trim();
+  const geminiKey = (process.env.GEMINI_API_KEY || env?.geminiApiKey || '').trim();
 
   const {
     exam_type = 'JEE Main',
@@ -2187,28 +2066,284 @@ Return valid JSON only, no text outside it:
 Before finalizing your response, verify: (1) every topic mentioned belongs to ${coveredSubjectsText} only, (2) no two days in dailyPlan have the same focus or activities, (3) percentile/rank are only stated if valid data was provided. If any check fails, correct it before returning the JSON.`;
 
   console.log('\n===================================================================');
-  console.log('=== [STEP 4 LOG] FULL FINAL PROMPT TEXT BEING SENT TO OPENROUTER ===');
+  console.log('=== [STEP 4 LOG] FULL FINAL PROMPT TEXT BEING SENT TO GEMINI ===');
   console.log(systemPrompt);
   console.log('===================================================================\n');
 
-  if (openRouterKey) {
+  if (geminiKey) {
     try {
-      const openRouterText = await callOpenRouterAI({ systemPrompt, questionText: 'Generate exam mentor strategy report JSON object' });
+      const geminiText = await callGeminiAI({ systemPrompt, questionText: 'Generate exam mentor strategy report JSON object' });
       console.log('\n===================================================================');
       console.log('=== [STEP 5 LOG] AI RAW RESPONSE TEXT (BEFORE JSON PARSING) ===');
-      console.log(openRouterText);
+      console.log(geminiText);
       console.log('===================================================================\n');
-      if (openRouterText) {
-        const jsonMatch = openRouterText.match(/\{[\s\S]*\}/);
+      if (geminiText) {
+        const jsonMatch = geminiText.match(/\{[\s\S]*\}/);
         if (jsonMatch) return JSON.parse(jsonMatch[0]);
       }
     } catch (err) {
-      console.warn('[AIService] OpenRouter generateExamMentorStrategyReport failed:', err.message);
+      console.warn('[AIService] Gemini generateExamMentorStrategyReport failed:', err.message);
     }
   }
 
   return buildDataDrivenReport();
 }
+
+/**
+ * generatePersonalized7DayPlan
+ * Generates an actionable, highly customized 7-day revision schedule tailored to
+ * the student's exact performance metrics, weak topics, and mistakes from a CBT test.
+ */
+export async function generatePersonalized7DayPlan(testPerformance = {}) {
+  const geminiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
+
+  const {
+    student_name = 'Student',
+    exam_type = 'JEE / NEET CBT',
+    test_name = 'Mock Examination',
+    score = 0,
+    max_marks = 300,
+    percentage = 0,
+    accuracy_percent = 0,
+    total_questions = 0,
+    correct_count = 0,
+    incorrect_count = 0,
+    unattempted_count = 0,
+    weak_chapters = [],
+    strong_chapters = [],
+    wrong_questions = [],
+    subject_analysis = [],
+    time_per_question = '2m 0s',
+  } = testPerformance;
+
+  const buildDataDriven7DayPlan = () => {
+    const defaultWeak = ['Mechanics & Rotational Dynamics', 'Organic Reactions & Mechanisms', 'Calculus & Algebra', 'Physical Chemistry Numericals'];
+    const weakList = Array.isArray(weak_chapters) && weak_chapters.length > 0
+      ? weak_chapters.map(c => typeof c === 'string' ? c : (c.name || c.chapter || c.topic || 'Core Concept'))
+      : defaultWeak;
+
+    const primaryWeak = weakList[0] || 'Core Subject Concepts';
+    const secondaryWeak = weakList[1] || 'Problem Solving Speed';
+    const tertiaryWeak = weakList[2] || 'High-Yield Formula Accuracy';
+
+    return {
+      summary: `In ${test_name}, you achieved ${score}/${max_marks} (${accuracy_percent}% accuracy). Your main score bottlenecks are in ${primaryWeak} and ${secondaryWeak}, where negative marks were lost.`,
+      target_score_boost: '+20 to +35 marks',
+      primary_weakness: `${primaryWeak} & ${secondaryWeak}`,
+      daily_plan: [
+        {
+          day: 1,
+          title: `Concept Recovery: ${primaryWeak}`,
+          subject: primaryWeak.includes('Dynamics') || primaryWeak.includes('Physics') ? 'Physics' : 'Primary Weakness',
+          focus_chapter: primaryWeak,
+          why_focus: `Identified as your lowest accuracy topic in this test with critical negative marks lost.`,
+          daily_goal: `Re-establish foundational definitions, laws, and master primary formulas.`,
+          tasks: [
+            `Read NCERT / theory notes on foundational ${primaryWeak} formulas (25 mins)`,
+            `Solve 15 Level-1 single-step application problems with a 90s timer (45 mins)`,
+            `Review your incorrect attempts from this mock test and log them in your mistake book (20 mins)`
+          ],
+          estimated_minutes: 90,
+          pro_tip: `Never rush into calculations without drawing a clean diagram or identifying given variables.`
+        },
+        {
+          day: 2,
+          title: `Targeted Drills: ${secondaryWeak}`,
+          subject: secondaryWeak.includes('Organic') || secondaryWeak.includes('Chemistry') ? 'Chemistry' : 'Secondary Focus',
+          focus_chapter: secondaryWeak,
+          why_focus: `Multiple marks missed due to procedural or conceptual application errors.`,
+          daily_goal: `Eliminate confusion between similar formulas and reaction/problem patterns.`,
+          tasks: [
+            `Consolidate formula cheat-sheet and key rules for ${secondaryWeak} (25 mins)`,
+            `Attempt 15 past-year exam questions focusing specifically on ${secondaryWeak} (45 mins)`,
+            `Self-check solutions without looking at hints until the final answer is reached (20 mins)`
+          ],
+          estimated_minutes: 90,
+          pro_tip: `Eliminate 2 obvious wrong options first before performing detailed algebra.`
+        },
+        {
+          day: 3,
+          title: `Pacing & Speed Calibration: ${tertiaryWeak}`,
+          subject: tertiaryWeak.includes('Math') || tertiaryWeak.includes('Calculus') ? 'Mathematics' : 'High-Yield Focus',
+          focus_chapter: tertiaryWeak,
+          why_focus: `Average time per question was ${time_per_question}, indicating pacing delays on multi-step problems.`,
+          daily_goal: `Build rapid question classification and speed under 100 seconds per question.`,
+          tasks: [
+            `Timed sprint: solve 12 numerical questions in 20 minutes (25 mins)`,
+            `Analyze time traps: mark which questions took >2.5 minutes and identify why (25 mins)`,
+            `Practice mental math and quick approximation shortcuts (25 mins)`
+          ],
+          estimated_minutes: 75,
+          pro_tip: `If no clear calculation step emerges within 60 seconds, bookmark the question and move forward immediately.`
+        },
+        {
+          day: 4,
+          title: `Consolidation & Moderate Topic Reinforcement`,
+          subject: 'Mixed Subjects',
+          focus_chapter: `${primaryWeak} & ${secondaryWeak}`,
+          why_focus: `Combines weak concepts into multi-topic problem scenarios common in competitive exams.`,
+          daily_goal: `Solve multi-step questions linking both weak chapters.`,
+          tasks: [
+            `Solve 10 mixed multi-concept problems combining ${primaryWeak} and ${secondaryWeak} (45 mins)`,
+            `Timed sub-topic drill without notes or formula sheets (30 mins)`,
+            `Update mistake notebook with error classification: Silly vs Concept vs Speed (15 mins)`
+          ],
+          estimated_minutes: 90,
+          pro_tip: `Double-check standard SI units before bubbling or selecting numerical answers.`
+        },
+        {
+          day: 5,
+          title: `High-Yield PYQ Sprint (Past 5 Years)`,
+          subject: 'Exam PYQ Bank',
+          focus_chapter: 'All Tested Weak Areas',
+          why_focus: `Past year exam questions reflect the exact difficulty calibration of official papers.`,
+          daily_goal: `Achieve 80%+ accuracy on 25 real previous year questions.`,
+          tasks: [
+            `Attempt 25 real PYQs under strict exam-condition timer (50 mins)`,
+            `Detailed answer key analysis and self-scoring (25 mins)`,
+            `Formula flashcard review across all subjects (20 mins)`
+          ],
+          estimated_minutes: 95,
+          pro_tip: `Questions repeated from past patterns are easy scoring opportunities—don't lose marks on familiar themes.`
+        },
+        {
+          day: 6,
+          title: `Timed Sectional Mock Test & Negative Marking Control`,
+          subject: 'Full Sectional Mock',
+          focus_chapter: 'Sectional Calibration',
+          why_focus: `Lost ${incorrect_count} marks to negative penalty. Practicing selective skipping is essential.`,
+          daily_goal: `Zero unforced negative marking mistakes across 30 questions.`,
+          tasks: [
+            `Take a 45-minute timed sectional test covering weak and moderate topics (45 mins)`,
+            `Post-test negative mark audit: identify which wrong answers were random guesses (25 mins)`,
+            `Re-solve all wrong questions from scratch (20 mins)`
+          ],
+          estimated_minutes: 90,
+          pro_tip: `Apply strict 2-pass strategy: pass 1 for guaranteed answers, pass 2 for calculated attempts.`
+        },
+        {
+          day: 7,
+          title: `Mistake Notebook Audit & Mental Warm-Up`,
+          subject: 'Comprehensive Strategy',
+          focus_chapter: 'Formula Summary & Error Log',
+          why_focus: `Final consolidation ensures peak memory retention before your next CBT assessment.`,
+          daily_goal: `Review 100% of logged mistakes from the week and memorize all formula triggers.`,
+          tasks: [
+            `Review full week's mistake notebook entries and re-read all core formulas (35 mins)`,
+            `Quick-fire formula recall drill: write down 30 formulas from memory without checking notes (30 mins)`,
+            `Pacing strategy visualization: review test time allocation for your next assessment (15 mins)`
+          ],
+          estimated_minutes: 80,
+          pro_tip: `Trust your preparation. Disciplined question selection beats frantic rushing every time.`
+        }
+      ],
+      exam_strategy_rules: [
+        'Strict 2-Pass Rule: First pass guarantees 100% accurate easy questions; second pass tackles multi-step numericals.',
+        'Negative Mark Zero-Tolerance: Never guess between 50-50 options unless at least 2 distractors are scientifically eliminated.',
+        'Time-Trap Emergency Exit: If stuck on a question for over 2 minutes with no clear solution path, bookmark and skip immediately.'
+      ],
+      motivational_note: `Executing this 7-day revision plan with discipline will directly convert your missed marks into confident accuracy!`
+    };
+  };
+
+  if (!geminiKey) {
+    return buildDataDriven7DayPlan();
+  }
+
+  const prompt = `You are an elite academic mentor and competitive examination strategist (JEE Main, JEE Advanced, NEET UG).
+A student just completed a CBT test. Analyze their REAL test results below and generate a clean, highly actionable 7-Day Day-by-Day Revision Plan.
+
+=== REAL TEST PERFORMANCE ===
+Student: ${student_name}
+Exam: ${exam_type}
+Test Name: ${test_name}
+Score: ${score} / ${max_marks} (${percentage}%)
+Accuracy: ${accuracy_percent}%
+Breakdown: ${correct_count} Correct, ${incorrect_count} Wrong, ${unattempted_count} Unattempted (Total: ${total_questions} Qs)
+Negative Marks Lost: ${incorrect_count} marks
+Average Time per Question: ${time_per_question}
+Subject Analysis: ${JSON.stringify(subject_analysis)}
+Identified Weak Topics / Gaps: ${JSON.stringify(weak_chapters)}
+Mastered Strong Topics: ${JSON.stringify(strong_chapters)}
+Recent Wrong Questions: ${JSON.stringify((wrong_questions || []).slice(0, 8))}
+
+=== MANDATORY RULES ===
+1. Return an EXACT 7-day plan (Day 1 to Day 7).
+2. The plan MUST directly target the student's real weak topics and mistakes listed above.
+3. Every day must be unique and have distinct goals:
+   - Day 1: Primary high-priority weakness chapter (concept recovery & formula foundation)
+   - Day 2: Secondary weakness chapter & calculation practice
+   - Day 3: Pacing drill & resolving topics where student lost negative marks
+   - Day 4: Third weakness chapter / Moderate topic reinforcement
+   - Day 5: Multi-concept problem solving & past-year exam questions (PYQs)
+   - Day 6: Timed sectional mock test & negative marking control drill
+   - Day 7: Error notebook audit, formula cheat-sheet recap, and pacing strategy calibration
+4. Each day must include 3 concrete, step-by-step tasks with specific time allotments (e.g. 25 mins, 45 mins).
+5. Output valid JSON only adhering to the schema.
+
+=== JSON SCHEMA ===
+{
+  "summary": "2 concise sentences analyzing the student's exact performance bottlenecks in this test",
+  "target_score_boost": "e.g. +20 to +35 marks",
+  "primary_weakness": "Key weak areas identified",
+  "daily_plan": [
+    {
+      "day": 1,
+      "title": "Clear day title",
+      "subject": "Physics / Chemistry / Mathematics / Biology",
+      "focus_chapter": "Specific Chapter Name",
+      "why_focus": "Specific reason explaining why this was selected based on test data",
+      "daily_goal": "One-line measurable target",
+      "tasks": [
+        "Step 1: Specific activity with time (e.g. 25 mins)",
+        "Step 2: Specific problem solving task with count & time (e.g. 45 mins)",
+        "Step 3: Review / test drill with time (e.g. 20 mins)"
+      ],
+      "estimated_minutes": 90,
+      "pro_tip": "High-yield competitive exam shortcut or trap avoidance rule"
+    }
+  ],
+  "exam_strategy_rules": [
+    "Pacing and question selection rule tailored to their time data",
+    "Negative marking prevention rule",
+    "Formula retention & revision rule"
+  ],
+  "motivational_note": "A powerful, personalized encouraging statement"
+}`;
+
+  try {
+    const ai = getGeminiClient();
+    if (!ai) return buildDataDriven7DayPlan();
+    const modelName = getGeminiModel();
+
+    console.log(`[GeminiService] Generating 7-day plan with model ${modelName}...`);
+    const res = await ai.models.generateContent({
+      model: modelName,
+      contents: prompt,
+      config: {
+        responseMimeType: 'application/json',
+        temperature: 0.2,
+        maxOutputTokens: 6000,
+      }
+    });
+
+    const text = res.text;
+    if (text) {
+      const match = text.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (Array.isArray(parsed.daily_plan) && parsed.daily_plan.length >= 7) {
+          return parsed;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('[GeminiService] generatePersonalized7DayPlan failed:', err.message);
+  }
+
+  return buildDataDriven7DayPlan();
+}
+
 
 
 

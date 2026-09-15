@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { GoogleGenAI } from '@google/genai';
 import { query } from '../config/db.js';
 import { env } from '../config/env.js';
 
@@ -452,11 +453,11 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
 
 /**
  * callClaudeAPI
- * Integrates with Claude API (Claude 3.7 / 3.5 Sonnet / OpenRouter / Anthropic Direct API)
+ * Integrates with Gemini API / Claude API (Gemini 3.6 Flash / Claude 3.7 / Anthropic Direct API)
  */
 async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 2500 }) {
   const anthropicKey = process.env.ANTHROPIC_API_KEY || '';
-  const openRouterKey = (process.env.OPENROUTER_API_KEY || env.openrouterApiKey || '').trim();
+  const geminiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
 
   // 1. Direct Anthropic Claude API if key present
   if (anthropicKey) {
@@ -484,31 +485,26 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
     }
   }
 
-  // 2. OpenRouter API fallback with Claude / Gemini model
-  if (openRouterKey) {
+  // 2. Gemini API integration (Gemini 3.6 Flash)
+  if (geminiKey) {
     try {
-      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${openRouterKey}`,
-          'HTTP-Referer': 'http://localhost:5173',
-          'X-Title': 'Edvedum AI Platform',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          model: 'anthropic/claude-3.5-sonnet',
-          messages: [{ role: 'user', content: prompt }],
+      const ai = new GoogleGenAI({ apiKey: geminiKey });
+      const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+      const response = await ai.models.generateContent({
+        model: modelName,
+        contents: prompt,
+        config: {
           temperature: 0.3,
-          max_tokens: maxTokens,
-        }),
+          maxOutputTokens: maxTokens,
+        },
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        return data.choices?.[0]?.message?.content || '';
+      const text = response.text || '';
+      if (text && text.trim()) {
+        return text.trim();
       }
     } catch (e) {
-      console.warn('[OpenRouter Claude API fetch error]:', e.message);
+      console.warn('[Gemini API Question Generator fetch error]:', e.message);
     }
   }
 

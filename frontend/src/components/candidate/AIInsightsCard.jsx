@@ -17,7 +17,7 @@ import { studentReportService } from '../../lib/services.js';
 
 export default function AIInsightsCard({ isDarkMode = false, testId = null, testData = null }) {
   const [aiPlan, setAiPlan] = useState(null);
-  const [loading, setLoading] = useState(!testData);
+  const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState('summary'); // 'summary' | 'detailed'
 
   const fetchAIPlan = async () => {
@@ -67,23 +67,30 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
     }
   };
 
-  useEffect(() => {
-    const hasValidTestData = !!(
-      testData?.analysis ||
-      testData?.ai_mentor_report ||
-      testData?.exam_mentor_strategy ||
-      testData?.data?.analysis ||
-      testData?.plan ||
-      (Array.isArray(testData?.strengths) && testData.strengths.length > 0) ||
-      (Array.isArray(testData?.weaknesses) && testData.weaknesses.length > 0)
-    );
+  const hasValidTestData = !!(
+    testData?.analysis ||
+    testData?.ai_mentor_report ||
+    testData?.exam_mentor_strategy ||
+    testData?.data?.analysis ||
+    testData?.plan ||
+    (Array.isArray(testData?.strengths) && testData.strengths.length > 0) ||
+    (Array.isArray(testData?.weaknesses) && testData.weaknesses.length > 0)
+  );
 
-    if (!hasValidTestData) {
-      fetchAIPlan();
-    } else {
-      setLoading(false);
+  useEffect(() => {
+    // Only load if already cached in session storage; never auto-call API on load
+    if (testId) {
+      try {
+        const cachedStr = sessionStorage.getItem(`ai_plan_${testId}`);
+        if (cachedStr) {
+          const cachedObj = JSON.parse(cachedStr);
+          if (cachedObj) {
+            setAiPlan(cachedObj);
+          }
+        }
+      } catch (_) {}
     }
-  }, [testId, testData]);
+  }, [testId]);
 
   const schema = useMemo(() => {
     const rawObj = testData?.analysis || testData?.ai_mentor_report?.analysis || testData?.ai_mentor_report || testData?.exam_mentor_strategy?.analysis || testData?.exam_mentor_strategy || testData?.data?.analysis || testData?.data || testData?.plan?.analysis || testData?.plan || aiPlan?.analysis || aiPlan || {};
