@@ -33,10 +33,11 @@ export const listCategories = asyncHandler(async (_req, res) => {
  * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
-  const { category } = req.query;
+  const { category, skip_cache } = req.query;
+  const shouldSkipCache = skip_cache === 'true' || req.headers['cache-control'] === 'no-cache';
   const cacheKey = `cache:qb:questions:${category || 'all'}`;
 
-  const payload = await rememberCache(cacheKey, 60, async () => {
+  const fetchQuestions = async () => {
     let sql = 'SELECT * FROM question_bank';
     const params = [];
     if (category) {
@@ -46,8 +47,14 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     sql += ' ORDER BY category, id ASC';
     const result = await query(sql, params);
     return { questions: result.rows };
-  });
+  };
 
+  if (shouldSkipCache) {
+    const payload = await fetchQuestions();
+    return res.json(payload);
+  }
+
+  const payload = await rememberCache(cacheKey, 60, fetchQuestions);
   res.json(payload);
 });
 
@@ -160,6 +167,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       solution_image_url || '',
     ]
   );
+  await delCache('cache:qb:*');
   res.status(201).json({ question: result.rows[0] });
 });
 
@@ -208,13 +216,35 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       id
     ]
   );
+  await delCache('cache:qb:*');
   res.json({ question: result.rows[0] });
 });
 
 export const deleteBankQuestion = asyncHandler(async (req, res) => {
-  const result = await query('DELETE FROM question_bank WHERE id = $1 RETURNING id', [req.params.id]);
+  const { id } = req.params;
+  if (id === 'all') {
+    return deleteAllBankQuestions(req, res);
+  }
+  const result = await query('DELETE FROM question_bank WHERE id = $1 RETURNING id', [id]);
   if (!result.rowCount) throw ApiError.notFound('Question not found');
+  await delCache('cache:qb:*');
   res.json({ message: 'Deleted' });
+});
+
+export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
+  const { category, scope } = req.query;
+  let sql = 'DELETE FROM question_bank';
+  const params = [];
+  if (scope !== 'all' && category && category !== 'all' && category !== 'All') {
+    sql += ' WHERE category = $1';
+    params.push(category);
+  }
+  const result = await query(sql, params);
+  await delCache('cache:qb:*');
+  res.json({
+    message: 'Questions deleted successfully',
+    count: result.rowCount,
+  });
 });
 
 /**
@@ -277,6 +307,7 @@ export const bulkUploadBankQuestions = asyncHandler(async (req, res) => {
     }
   }
 
+  await delCache('cache:qb:*');
   res.status(201).json({ created: created.length, questions: created, errors });
 });
 

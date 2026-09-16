@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Pencil, Trash2, ChevronDown, Check } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -119,6 +119,9 @@ export default function AdminQuestionBank() {
   const [editing, setEditing] = useState(null);
   const [deleteQuestionId, setDeleteQuestionId] = useState(null);
   const [deleting, setDeleting] = useState(false);
+  const [deleteAllModalOpen, setDeleteAllModalOpen] = useState(false);
+  const [deleteAllScope, setDeleteAllScope] = useState('category'); // 'category' | 'all'
+  const [deletingAll, setDeletingAll] = useState(false);
   const [form, setForm] = useState({
     question_type: 'mcq',
     question_text: '',
@@ -217,6 +220,43 @@ export default function AdminQuestionBank() {
     setDeleteQuestionId(id);
   };
 
+  const confirmDeleteQuestion = async () => {
+    if (!deleteQuestionId) return;
+    const targetId = deleteQuestionId;
+    setDeleting(true);
+    try {
+      await questionBankService.remove(targetId);
+      // Immediately remove from local state so UI updates without waiting
+      setQuestions((prev) => prev.filter((q) => q.id !== targetId));
+      toast.success('Question deleted from bank');
+      setDeleteQuestionId(null);
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Delete failed');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const confirmDeleteAll = async () => {
+    setDeletingAll(true);
+    try {
+      const res = await questionBankService.deleteAll(category, deleteAllScope);
+      setQuestions([]);
+      toast.success(
+        deleteAllScope === 'all'
+          ? `Deleted all questions across the entire question bank (${res.count ?? 0} removed)`
+          : `Deleted all questions in ${category} (${res.count ?? 0} removed)`
+      );
+      setDeleteAllModalOpen(false);
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Failed to delete questions');
+    } finally {
+      setDeletingAll(false);
+    }
+  };
+
   const saveQuestion = async (e) => {
     e.preventDefault();
     setSaving(true);
@@ -299,6 +339,19 @@ export default function AdminQuestionBank() {
             </button>
             <button type="button" className="btn btn-secondary" onClick={() => exportCsv(true)} disabled={exporting}>
               Export All
+            </button>
+            <button
+              type="button"
+              className="btn bg-rose-50 text-rose-600 hover:bg-rose-100 hover:text-rose-700 dark:bg-rose-950/40 dark:text-rose-400 dark:hover:bg-rose-900/60 border border-rose-200 dark:border-rose-900/50 flex items-center gap-1.5 font-bold transition shadow-xs cursor-pointer"
+              onClick={() => {
+                setDeleteAllScope('category');
+                setDeleteAllModalOpen(true);
+              }}
+              disabled={loading || questions.length === 0}
+              title="Delete questions from repository"
+            >
+              <Trash2 className="h-4 w-4" />
+              <span>Delete All</span>
             </button>
           </>
         )}
@@ -552,50 +605,155 @@ export default function AdminQuestionBank() {
       {deleteQuestionId && (
         <Modal
           open={!!deleteQuestionId}
-          onClose={() => setDeleteQuestionId(null)}
+          onClose={() => !deleting && setDeleteQuestionId(null)}
           title="Delete Question from Bank"
           size="sm"
         >
-          <div className="space-y-4 text-center p-2">
-            <div className="mx-auto h-12 w-12 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center">
-              <Trash2 className="h-6 w-6" />
+          {(() => {
+            const targetQuestion = questions.find((q) => q.id === deleteQuestionId);
+            return (
+              <div className="space-y-4 text-center p-2">
+                <div className="mx-auto h-12 w-12 rounded-2xl bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20 flex items-center justify-center">
+                  <Trash2 className="h-6 w-6" />
+                </div>
+
+                <div className="space-y-1.5">
+                  <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Delete Question</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                    Are you sure you want to delete this question from the question bank? This action cannot be undone.
+                  </p>
+                  {targetQuestion && (
+                    <div className="mt-2 p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-left text-xs font-medium text-slate-700 dark:text-slate-300 line-clamp-3">
+                      "{targetQuestion.question_text}"
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex justify-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                  <button
+                    type="button"
+                    disabled={deleting}
+                    onClick={() => setDeleteQuestionId(null)}
+                    className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    disabled={deleting}
+                    onClick={confirmDeleteQuestion}
+                    className="px-5 py-2.5 rounded-xl font-extrabold text-white bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-500/20 transition cursor-pointer text-xs flex items-center gap-2"
+                  >
+                    {deleting ? <Spinner className="h-4 w-4" /> : null}
+                    <span>Delete Question</span>
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+        </Modal>
+      )}
+
+      {/* Delete All Questions Confirmation Modal */}
+      {deleteAllModalOpen && (
+        <Modal
+          open={deleteAllModalOpen}
+          onClose={() => !deletingAll && setDeleteAllModalOpen(false)}
+          title="Delete Questions from Bank"
+          size="md"
+        >
+          <div className="space-y-5 p-2">
+            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-900/50">
+              <div className="h-10 w-10 shrink-0 rounded-xl bg-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+                <AlertTriangle className="h-5 w-5" />
+              </div>
+              <div className="text-xs">
+                <p className="font-extrabold text-rose-900 dark:text-rose-300">Warning: Permanent Deletion</p>
+                <p className="text-rose-700 dark:text-rose-400/90 leading-relaxed font-medium">
+                  This action permanently removes questions from the repository. Questions already imported into published assessments will remain intact.
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-1.5">
-              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">Delete Question</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
-                Are you sure you want to delete this question from the question bank? This action cannot be undone.
-              </p>
+            <div className="space-y-2.5">
+              <label className="block text-xs font-black uppercase tracking-wider text-slate-600 dark:text-slate-400">
+                Choose Deletion Scope
+              </label>
+
+              <div
+                onClick={() => setDeleteAllScope('category')}
+                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${
+                  deleteAllScope === 'category'
+                    ? 'border-rose-500 bg-rose-50/50 dark:bg-rose-950/20'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="scope"
+                  checked={deleteAllScope === 'category'}
+                  onChange={() => setDeleteAllScope('category')}
+                  className="mt-0.5 text-rose-600 focus:ring-rose-500 cursor-pointer"
+                />
+                <div>
+                  <p className="text-xs font-bold text-slate-900 dark:text-white">
+                    Delete only in "{category}"
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Deletes all {questions.length} questions currently loaded under the {category} category.
+                  </p>
+                </div>
+              </div>
+
+              <div
+                onClick={() => setDeleteAllScope('all')}
+                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${
+                  deleteAllScope === 'all'
+                    ? 'border-rose-600 bg-rose-500/10'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                }`}
+              >
+                <input
+                  type="radio"
+                  name="scope"
+                  checked={deleteAllScope === 'all'}
+                  onChange={() => setDeleteAllScope('all')}
+                  className="mt-0.5 text-rose-600 focus:ring-rose-500 cursor-pointer"
+                />
+                <div>
+                  <p className="text-xs font-bold text-rose-600 dark:text-rose-400">
+                    Delete ENTIRE Question Bank (All Categories)
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400">
+                    Deletes every question across all categories and subjects in the database.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            <div className="flex justify-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+            <div className="flex justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
               <button
                 type="button"
-                onClick={() => setDeleteQuestionId(null)}
+                disabled={deletingAll}
+                onClick={() => setDeleteAllModalOpen(false)}
                 className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs"
               >
                 Cancel
               </button>
               <button
                 type="button"
-                disabled={deleting}
-                onClick={async () => {
-                  setDeleting(true);
-                  try {
-                    await questionBankService.remove(deleteQuestionId);
-                    toast.success('Question deleted from bank');
-                    setDeleteQuestionId(null);
-                    load();
-                  } catch (err) {
-                    toast.error(err.message || 'Delete failed');
-                  } finally {
-                    setDeleting(false);
-                  }
-                }}
+                disabled={deletingAll}
+                onClick={confirmDeleteAll}
                 className="px-5 py-2.5 rounded-xl font-extrabold text-white bg-rose-600 hover:bg-rose-500 shadow-lg shadow-rose-500/20 transition cursor-pointer text-xs flex items-center gap-2"
               >
-                {deleting ? <Spinner className="h-4 w-4" /> : null}
-                <span>Delete Question</span>
+                {deletingAll ? <Spinner className="h-4 w-4" /> : <Trash2 className="h-4 w-4" />}
+                <span>
+                  {deletingAll
+                    ? 'Deleting...'
+                    : deleteAllScope === 'all'
+                    ? 'Delete Entire Question Bank'
+                    : `Delete All in ${category}`}
+                </span>
               </button>
             </div>
           </div>

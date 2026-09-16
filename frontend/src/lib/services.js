@@ -146,9 +146,9 @@ export const assessmentService = {
 };
 
 export const questionBankService = {
-  categories: () => withCache('qb_categories', () => api.get('/question-bank/categories').then((r) => r.data.categories)),
-  list: (category) => withCache(`qb_list_${category || 'all'}`, () => api.get('/question-bank', { params: category ? { category } : {} }).then((r) => r.data.questions)),
-  byCategory: (category) => withCache(`qb_list_${category || 'all'}`, () => api.get('/question-bank', { params: category ? { category } : {} }).then((r) => r.data.questions)),
+  categories: () => api.get('/question-bank/categories', { params: { _t: Date.now() } }).then((r) => r.data.categories),
+  list: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' } }).then((r) => r.data.questions),
+  byCategory: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' } }).then((r) => r.data.questions),
   create: (data) => {
     clearCache();
     return api.post('/question-bank', data).then((r) => r.data.question);
@@ -164,6 +164,11 @@ export const questionBankService = {
   delete: (id) => {
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
+  },
+  deleteAll: (category, scope = 'category') => {
+    clearCache();
+    const params = scope === 'all' ? { scope: 'all' } : { category };
+    return api.delete('/question-bank/all', { params }).then((r) => r.data);
   },
   import: (bankId, assessmentId, section_id) =>
     api.post(`/question-bank/${bankId}/import/${assessmentId}`, { section_id }).then((r) => r.data.question),

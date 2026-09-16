@@ -1,5 +1,16 @@
 import { Router } from 'express';
-import { listCategories, listBankQuestions, importToAssessment, createBankQuestion, updateBankQuestion, deleteBankQuestion, exportBankQuestions, bulkUploadBankQuestions, bulkImportToAssessment } from '../controllers/questionBankController.js';
+import {
+  listCategories,
+  listBankQuestions,
+  importToAssessment,
+  createBankQuestion,
+  updateBankQuestion,
+  deleteBankQuestion,
+  deleteAllBankQuestions,
+  exportBankQuestions,
+  bulkUploadBankQuestions,
+  bulkImportToAssessment,
+} from '../controllers/questionBankController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { bulkUploadSchema, bankBulkImportSchema } from '../validators/schemas.js';
@@ -15,6 +26,7 @@ router.post('/bulk', validate(bulkUploadSchema), bulkUploadBankQuestions);
 router.post('/bulk-import/:assessmentId', validate(bankBulkImportSchema), bulkImportToAssessment);
 router.post('/', createBankQuestion);
 router.put('/:id', updateBankQuestion);
+router.delete('/all', deleteAllBankQuestions);
 router.delete('/:id', deleteBankQuestion);
 router.post('/:id/import/:assessmentId', importToAssessment);
 
