@@ -10,7 +10,14 @@ export default function TestSeriesCard({ series }) {
   const price = Number(series.price).toLocaleString('en-IN');
   const slug = (series?.slug || '').toLowerCase();
   const cardTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
-  const testCount = Number(series.planned_tests || series.test_count || 0);
+  let testCount = Number(series.planned_tests || series.planned_test_count || series.test_count || 0);
+  if (testCount === 0 && series.description) {
+    const numbersInDesc = [...series.description.matchAll(/(\d+)\s*(?:tests|aiets|mocks|assessments)/gi)];
+    if (numbersInDesc.length > 0) {
+      const sum = numbersInDesc.reduce((acc, match) => acc + parseInt(match[1], 10), 0);
+      if (sum > 0) testCount = sum;
+    }
+  }
 
   let overlayBadge1 = null;
   let overlayBadge2 = `${series.validity_days || 365}D`;

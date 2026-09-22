@@ -250,20 +250,38 @@ export const listPublicTestSeries = asyncHandler(async (req, res) => {
     try {
       let sql = `
         SELECT ts.*,
-               COALESCE(ts.planned_tests, ts.test_count, 0)::int AS planned_test_count,
-               COUNT(DISTINCT tsa.assessment_id)::int AS linked_tests,
                COALESCE(
+                 NULLIF(ts.planned_tests, 0),
+                 NULLIF(ts.test_count, 0),
+                 (SELECT COUNT(*)::int FROM test_series_tests WHERE series_id = ts.id),
+                 (SELECT COUNT(*)::int FROM test_series_assessments WHERE test_series_id = ts.id),
+                 0
+               )::int AS planned_test_count,
+               GREATEST(
+                 (SELECT COUNT(*)::int FROM test_series_tests WHERE series_id = ts.id),
+                 (SELECT COUNT(*)::int FROM test_series_assessments WHERE test_series_id = ts.id)
+               )::int AS linked_tests,
+               COALESCE(
+                 (
+                   SELECT JSON_AGG(
+                     JSON_BUILD_OBJECT(
+                       'id', t.id,
+                       'title', COALESCE(t.title, t.test_name),
+                       'duration_minutes', COALESCE(t.duration_minutes, 180),
+                       'is_published', COALESCE(t.is_published, false)
+                     )
+                   )
+                   FROM test_series_tests tst2
+                   JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, false) = false
+                   WHERE tst2.series_id = ts.id
+                 ),
                  (
                    SELECT JSON_AGG(
                      JSON_BUILD_OBJECT(
                        'id', a.id,
                        'title', a.title,
                        'duration_minutes', COALESCE(a.duration_minutes, 180),
-                       'total_marks', COALESCE((SELECT SUM(q.marks)::int FROM questions q WHERE q.assessment_id = a.id), 0),
-                       'is_published', COALESCE(a.is_published, false),
-                       'available_from', a.available_from,
-                       'available_until', a.available_until,
-                       'question_count', COALESCE((SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = a.id), 0)
+                       'is_published', COALESCE(a.is_published, false)
                      ) ORDER BY tsa2.position ASC
                    )
                    FROM test_series_assessments tsa2
@@ -273,10 +291,9 @@ export const listPublicTestSeries = asyncHandler(async (req, res) => {
                  '[]'::json
                ) AS tests
         FROM test_series ts
-        LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
         WHERE ts.is_active = true`;
       if (featured === 'true') sql += ' AND ts.is_featured = true';
-      sql += ' GROUP BY ts.id ORDER BY ts.display_order ASC, ts.is_featured DESC, ts.created_at DESC, ts.id ASC';
+      sql += ' ORDER BY ts.display_order ASC, ts.is_featured DESC, ts.created_at DESC, ts.id ASC';
       const result = await query(sql);
       if (result.rows && result.rows.length > 0) {
         return { test_series: result.rows };
@@ -298,27 +315,58 @@ export const getPublicTestSeries = asyncHandler(async (req, res) => {
   try {
     const result = await query(
       `SELECT ts.*,
-              COALESCE(ts.planned_tests, ts.test_count, 0)::int AS planned_test_count,
-              COALESCE(json_agg(json_build_object(
-                'id', COALESCE(a.id, tsa.assessment_id),
-                'title', COALESCE(a.title, tsa.label, 'Assessment'),
-                'label', COALESCE(tsa.label, a.title),
-                'position', tsa.position,
-                'duration_minutes', COALESCE(a.duration_minutes, 180),
-                'total_marks', COALESCE((SELECT SUM(q.marks)::int FROM questions q WHERE q.assessment_id = a.id), 0),
-                'question_count', COALESCE((SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = a.id), 0),
-                'category', CASE 
-                              WHEN tsa.label LIKE 'AIETS%' THEN 'AIETS Mock'
-                              WHEN tsa.label LIKE 'Unit%' THEN 'Unit Test'
-                              WHEN tsa.label LIKE 'Part%' THEN 'Part Test'
-                              WHEN tsa.label LIKE 'Cumulative%' THEN 'Cumulative Test'
-                              ELSE 'Full-Syllabus Mock'
-                            END,
-                'is_published', COALESCE(a.is_published, false)
-              ) ORDER BY tsa.position ASC) FILTER (WHERE tsa.assessment_id IS NOT NULL), '[]') AS tests
+              COALESCE(
+                NULLIF(ts.planned_tests, 0),
+                NULLIF(ts.test_count, 0),
+                (SELECT COUNT(*)::int FROM test_series_tests WHERE series_id = ts.id),
+                (SELECT COUNT(*)::int FROM test_series_assessments WHERE test_series_id = ts.id),
+                0
+              )::int AS planned_test_count,
+              COALESCE(
+                (
+                  SELECT JSON_AGG(
+                    JSON_BUILD_OBJECT(
+                      'id', t.id,
+                      'title', COALESCE(t.title, t.test_name, 'Test'),
+                      'label', COALESCE(t.title, t.test_name, 'Test'),
+                      'duration_minutes', COALESCE(t.duration_minutes, 180),
+                      'total_marks', COALESCE(t.max_marks, 720),
+                      'question_count', 0,
+                      'category', 'CBT Test',
+                      'is_published', COALESCE(t.is_published, false)
+                    )
+                  )
+                  FROM test_series_tests tst
+                  JOIN tests t ON t.id = tst.test_id AND COALESCE(t.is_deleted, false) = false
+                  WHERE tst.series_id = ts.id
+                ),
+                (
+                  SELECT JSON_AGG(
+                    JSON_BUILD_OBJECT(
+                      'id', a.id,
+                      'title', COALESCE(a.title, tsa.label, 'Assessment'),
+                      'label', COALESCE(tsa.label, a.title),
+                      'position', tsa.position,
+                      'duration_minutes', COALESCE(a.duration_minutes, 180),
+                      'total_marks', COALESCE((SELECT SUM(q.marks)::int FROM questions q WHERE q.assessment_id = a.id), 0),
+                      'question_count', COALESCE((SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = a.id), 0),
+                      'category', CASE 
+                                    WHEN tsa.label LIKE 'AIETS%' THEN 'AIETS Mock'
+                                    WHEN tsa.label LIKE 'Unit%' THEN 'Unit Test'
+                                    WHEN tsa.label LIKE 'Part%' THEN 'Part Test'
+                                    WHEN tsa.label LIKE 'Cumulative%' THEN 'Cumulative Test'
+                                    ELSE 'Full-Syllabus Mock'
+                                  END,
+                      'is_published', COALESCE(a.is_published, false)
+                    ) ORDER BY tsa.position ASC
+                  )
+                  FROM test_series_assessments tsa
+                  JOIN assessments a ON a.id = tsa.assessment_id
+                  WHERE tsa.test_series_id = ts.id
+                ),
+                '[]'::json
+              ) AS tests
        FROM test_series ts
-       LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
-       LEFT JOIN assessments a ON a.id = tsa.assessment_id
        WHERE (ts.slug = $1 OR ts.id::text = $1) AND ts.is_active = true
        GROUP BY ts.id`,
       [slug]

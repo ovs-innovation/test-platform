@@ -41,13 +41,74 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
  * Create a new test series metadata row (No test or schedule creation).
  */
 export const createTestSeries = asyncHandler(async (req, res) => {
-  const { title, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order, brochure_url, brochure_name } = req.body;
+  const {
+    title,
+    description,
+    price,
+    validity_days,
+    exam_type,
+    is_featured,
+    is_active,
+    image_url,
+    is_free,
+    display_order,
+    brochure_url,
+    brochure_name,
+    planned_tests,
+    program_type,
+    target_year,
+    duration_months,
+  } = req.body;
   const slug = slugify(title) + '-' + Date.now().toString(36);
   const calculatedIsFree = typeof is_free === 'boolean' ? is_free : Number(price) === 0;
+
+  // Auto-detect program type if not provided
+  let detectedProgramType = program_type;
+  if (!detectedProgramType) {
+    detectedProgramType = /two[- ]?year|2028|2[- ]year/i.test(title) ? 'Two Year' : 'One Year';
+  }
+
+  // Auto-detect target year if not provided
+  let detectedTargetYear = target_year;
+  if (!detectedTargetYear) {
+    detectedTargetYear = detectedProgramType === 'Two Year' ? '2028' : '2027';
+  }
+
+  // Auto-detect exam type if General or default
+  let detectedExamType = exam_type || 'General';
+  if ((!exam_type || exam_type === 'JEE Main' || exam_type === 'General') && /neet/i.test(title)) {
+    detectedExamType = /neet[- ]?pg/i.test(title) ? 'NEET PG' : 'NEET UG';
+  }
+
+  const numericPlanned = Number(planned_tests) || 0;
+
   const result = await query(
-    `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order, brochure_url, brochure_name)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
-    [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, is_active ?? true, image_url || '', calculatedIsFree, display_order ?? 0, brochure_url || null, brochure_name || null]
+    `INSERT INTO test_series (
+       title, slug, description, price, validity_days, exam_type, is_featured, is_active,
+       image_url, is_free, display_order, brochure_url, brochure_name,
+       planned_tests, test_count, program_type, target_year, duration_months
+     )
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`,
+    [
+      title,
+      slug,
+      description || '',
+      price ?? 0,
+      validity_days ?? 365,
+      detectedExamType,
+      is_featured ?? false,
+      is_active ?? true,
+      image_url || '',
+      calculatedIsFree,
+      display_order ?? 0,
+      brochure_url || null,
+      brochure_name || null,
+      numericPlanned,
+      numericPlanned,
+      detectedProgramType,
+      detectedTargetYear,
+      Number(duration_months) || (detectedProgramType === 'Two Year' ? 24 : 12),
+    ]
   );
   res.status(201).json({ test_series: result.rows[0] });
 });

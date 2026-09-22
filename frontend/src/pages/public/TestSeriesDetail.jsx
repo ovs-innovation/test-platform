@@ -203,14 +203,36 @@ export default function TestSeriesDetail() {
   const isFree = Number(series.price) === 0;
   const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
-  const plannedTestCount = Number(series.planned_test_count || series.planned_tests || series.test_count || (slug.includes('2028') ? 60 : 39));
+  // Planned tests calculation: prioritize series.planned_tests, then planned_test_count, then actual linked tests
+  const rawPlanned = Number(series.planned_tests ?? series.planned_test_count ?? series.test_count ?? 0);
+  const actualTestsLen = tests.length;
+  let plannedTestCount = rawPlanned > 0 ? rawPlanned : (actualTestsLen > 0 ? actualTestsLen : 0);
 
-  const is2028 = (series.code && series.code.includes('2028')) || slug.includes('2028') || series.title.includes('2028');
+  // If still 0, check if description mentions a count, e.g. "Includes 78 AIETS + 1 Pre-NEET test + 30+ personalised tests"
+  if (plannedTestCount === 0 && series.description) {
+    const numbersInDesc = [...series.description.matchAll(/(\d+)\s*(?:tests|aiets|mocks|assessments)/gi)];
+    if (numbersInDesc.length > 0) {
+      const sum = numbersInDesc.reduce((acc, match) => acc + parseInt(match[1], 10), 0);
+      if (sum > 0) plannedTestCount = sum;
+    }
+  }
 
-  // Breakdown metrics
-  const breakdown = is2028
-    ? { aiets: 22, unit: 15, part: 12, cumulative: 2, fullMock: 9, duration: '24 Months' }
-    : { aiets: 14, unit: 12, part: 4, cumulative: 2, fullMock: 7, duration: 'October 2026 – April 2027' };
+  // Program Type & Duration
+  const isTwoYear =
+    series.program_type === 'Two Year' ||
+    (series.code && series.code.includes('2028')) ||
+    /two[- ]?year|2028|2[- ]year/i.test(series.title) ||
+    /two[- ]?year|2028|2[- ]year/i.test(slug);
+
+  const displayProgramType = series.program_type || (isTwoYear ? 'Two-Year Program' : 'One-Year Program');
+  const displayDuration =
+    series.duration_months
+      ? `${series.duration_months} Months`
+      : series.start_date && series.end_date
+      ? `${series.start_date} – ${series.end_date}`
+      : isTwoYear
+      ? '24 Months'
+      : 'October 2026 – April 2027';
 
   const examTypeStr = `${series?.exam_type || ''} ${series?.title || ''} ${series?.slug || ''}`.toLowerCase();
   let includesCbtTag = 'CBT Interface';
@@ -334,7 +356,7 @@ export default function TestSeriesDetail() {
                 {series.exam_type || 'NEET'}
               </span>
               <span className="rounded-full bg-slate-100 border border-slate-200 px-3 py-1 text-xs font-bold text-slate-700">
-                {is2028 ? 'Two-Year Program' : 'One-Year Program'}
+                {displayProgramType}
               </span>
               {isFree && (
                 <span className="rounded-full bg-emerald-500 px-3 py-1 text-xs font-bold text-white">
@@ -391,7 +413,7 @@ export default function TestSeriesDetail() {
                 </div>
                 <div className="sm:pl-4">
                   <p className="text-[10px] font-extrabold uppercase tracking-wide text-slate-400">Duration</p>
-                  <p className="mt-1 text-base sm:text-lg font-extrabold text-slate-800">{breakdown.duration}</p>
+                  <p className="mt-1 text-base sm:text-lg font-extrabold text-slate-800">{displayDuration}</p>
                 </div>
               </div>
 

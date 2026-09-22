@@ -22,7 +22,11 @@ export default function AdminTestSeries() {
     title: '',
     description: '',
     price: 0,
-    exam_type: 'JEE Main',
+    exam_type: 'NEET UG',
+    program_type: 'One Year',
+    target_year: '2027',
+    planned_tests: 0,
+    duration_months: 12,
     is_featured: false,
     is_active: true,
     validity_days: 365,
@@ -68,18 +72,60 @@ export default function AdminTestSeries() {
     setForm({
       title: s.title || '',
       description: s.description || '',
-      price: s.price || 0,
-      exam_type: s.exam_type || 'JEE Main',
+      price: Number(s.price) || 0,
+      exam_type: s.exam_type || 'NEET UG',
+      program_type: s.program_type || (/two[- ]?year|2028/i.test(s.title) ? 'Two Year' : 'One Year'),
+      target_year: s.target_year || (/two[- ]?year|2028/i.test(s.title) ? '2028' : '2027'),
+      planned_tests: s.planned_tests ?? (s.test_count || 0),
+      duration_months: s.duration_months || (/two[- ]?year|2028/i.test(s.title) ? 24 : 12),
       is_featured: Boolean(s.is_featured),
-      is_active: Boolean(s.is_active),
+      is_active: s.is_active !== false,
       validity_days: s.validity_days || 365,
       image_url: s.image_url || '',
-      is_free: Boolean(s.is_free),
+      is_free: Boolean(s.is_free) || Number(s.price) === 0,
       display_order: s.display_order || 0,
       brochure_url: s.brochure_url || '',
       brochure_name: s.brochure_name || '',
     });
     setModal(true);
+  };
+
+  const handleOpenCreate = () => {
+    setEditing(null);
+    setForm({
+      title: '',
+      description: '',
+      price: 0,
+      exam_type: 'NEET UG',
+      program_type: 'One Year',
+      target_year: '2027',
+      planned_tests: 0,
+      duration_months: 12,
+      is_featured: false,
+      is_active: true,
+      validity_days: 365,
+      image_url: '',
+      is_free: false,
+      display_order: 0,
+      brochure_url: '',
+      brochure_name: '',
+    });
+    setModal(true);
+  };
+
+  const handleTitleChange = (val) => {
+    setForm((f) => {
+      const updates = { ...f, title: val };
+      if (/two[- ]?year|2028|2[- ]year/i.test(val) && f.program_type === 'One Year') {
+        updates.program_type = 'Two Year';
+        updates.target_year = '2028';
+        updates.duration_months = 24;
+      }
+      if (/neet/i.test(val) && (f.exam_type === 'JEE Main' || f.exam_type === 'General')) {
+        updates.exam_type = /neet[- ]?pg/i.test(val) ? 'NEET PG' : 'NEET UG';
+      }
+      return updates;
+    });
   };
 
   const handleBrochureFileUpload = async (e) => {
@@ -275,24 +321,7 @@ export default function AdminTestSeries() {
             <button
               type="button"
               className="btn btn-primary"
-              onClick={() => {
-                setEditing(null);
-                setForm({
-                  title: '',
-                  description: '',
-                  price: 0,
-                  exam_type: 'JEE Main',
-                  is_featured: false,
-                  is_active: true,
-                  validity_days: 365,
-                  image_url: '',
-                  is_free: false,
-                  display_order: 0,
-                  brochure_url: '',
-                  brochure_name: '',
-                });
-                setModal(true);
-              }}
+              onClick={handleOpenCreate}
             >
               + Create Series
             </button>
@@ -395,24 +424,7 @@ export default function AdminTestSeries() {
               <button
                 type="button"
                 className="btn-secondary !py-1.5 !px-3 text-xs text-slate-700 dark:text-slate-200"
-                onClick={() => {
-                  setEditing(s);
-                  setForm({
-                    title: s.title,
-                    description: s.description || '',
-                    price: Number(s.price) || 0,
-                    exam_type: s.exam_type || 'JEE Main',
-                    is_featured: s.is_featured || false,
-                    is_active: s.is_active !== false,
-                    validity_days: s.validity_days || 365,
-                    image_url: s.image_url || '',
-                    is_free: s.is_free || Number(s.price) === 0,
-                    display_order: s.display_order || 0,
-                    brochure_url: s.brochure_url || '',
-                    brochure_name: s.brochure_name || '',
-                  });
-                  setModal(true);
-                }}
+                onClick={() => handleOpenEdit(s)}
               >
                 Edit ✏️
               </button>
@@ -453,8 +465,53 @@ export default function AdminTestSeries() {
               placeholder="e.g. NEET UG 2027 Comprehensive Test Series"
               required
               value={form.title}
-              onChange={(e) => setForm((f) => ({ ...f, title: e.target.value }))}
+              onChange={(e) => handleTitleChange(e.target.value)}
             />
+          </div>
+          <div className="grid grid-cols-3 gap-3">
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Planned Tests Count</label>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                placeholder="e.g. 109, 60, 39"
+                value={form.planned_tests}
+                onChange={(e) => setForm((f) => ({ ...f, planned_tests: Number(e.target.value) }))}
+              />
+              <span className="text-[10px] text-slate-400">Total planned in curriculum</span>
+            </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Program Type</label>
+              <select
+                className="input"
+                value={form.program_type}
+                onChange={(e) => {
+                  const pType = e.target.value;
+                  setForm((f) => ({
+                    ...f,
+                    program_type: pType,
+                    target_year: pType === 'Two Year' ? '2028' : '2027',
+                    duration_months: pType === 'Two Year' ? 24 : 12,
+                  }));
+                }}
+              >
+                <option value="One Year">One Year</option>
+                <option value="Two Year">Two Year</option>
+                <option value="Foundation">Foundation</option>
+                <option value="Crash Course">Crash Course</option>
+                <option value="Self-Paced">Self-Paced</option>
+              </select>
+            </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Target Year</label>
+              <input
+                className="input"
+                placeholder="e.g. 2027, 2028"
+                value={form.target_year}
+                onChange={(e) => setForm((f) => ({ ...f, target_year: e.target.value }))}
+              />
+            </div>
           </div>
           <div>
             <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Description</label>
