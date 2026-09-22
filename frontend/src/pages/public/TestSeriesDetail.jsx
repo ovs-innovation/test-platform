@@ -224,15 +224,40 @@ export default function TestSeriesDetail() {
     /two[- ]?year|2028|2[- ]year/i.test(series.title) ||
     /two[- ]?year|2028|2[- ]year/i.test(slug);
 
-  const displayProgramType = series.program_type || (isTwoYear ? 'Two-Year Program' : 'One-Year Program');
+  const isNeetRm =
+    /neet.*(rm|repeater)/i.test(series.title) ||
+    /rm|repeater/i.test(series.title) ||
+    /neet.*(rm|repeater)/i.test(slug) ||
+    /rm|repeater/i.test(slug);
+
+  let displayProgramType = series.program_type;
+  if (!displayProgramType || displayProgramType === 'one-year' || displayProgramType === 'One Year') {
+    displayProgramType = isNeetRm ? 'Repeater (RM) Program' : 'One-Year Program';
+  } else if (displayProgramType === 'Two Year' || isTwoYear) {
+    displayProgramType = 'Two-Year Program';
+  }
+
   const displayDuration =
-    series.duration_months
-      ? `${series.duration_months} Months`
+    series.duration_text ||
+    (isNeetRm
+      ? 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)'
       : series.start_date && series.end_date
       ? `${series.start_date} – ${series.end_date}`
+      : series.duration_months
+      ? `${series.duration_months} Months`
       : isTwoYear
       ? '24 Months'
-      : 'October 2026 – April 2027';
+      : 'October 2026 – April 2027');
+
+  const parseDuration = (durStr) => {
+    if (!durStr) return { main: '', note: null };
+    const match = durStr.match(/^(.*?)\s*(\(.*?\))\s*$/);
+    if (match) {
+      return { main: match[1].trim(), note: match[2].trim() };
+    }
+    return { main: durStr, note: null };
+  };
+  const durationParts = parseDuration(displayDuration);
 
   const examTypeStr = `${series?.exam_type || ''} ${series?.title || ''} ${series?.slug || ''}`.toLowerCase();
   let includesCbtTag = 'CBT Interface';
@@ -413,7 +438,20 @@ export default function TestSeriesDetail() {
                 </div>
                 <div className="sm:pl-4">
                   <p className="text-[10px] font-extrabold uppercase tracking-wide text-slate-400">Duration</p>
-                  <p className="mt-1 text-base sm:text-lg font-extrabold text-slate-800">{displayDuration}</p>
+                  {durationParts.note ? (
+                    <div className="mt-1">
+                      <p className="text-xs sm:text-sm font-extrabold text-slate-800 leading-tight">
+                        {durationParts.main}
+                      </p>
+                      <p className="mt-1 text-[10px] sm:text-[11px] font-medium text-slate-500 leading-snug">
+                        {durationParts.note}
+                      </p>
+                    </div>
+                  ) : (
+                    <p className={`mt-1 font-extrabold text-slate-800 ${displayDuration.length > 20 ? 'text-xs sm:text-sm leading-tight' : 'text-base sm:text-lg'}`}>
+                      {displayDuration}
+                    </p>
+                  )}
                 </div>
               </div>
 

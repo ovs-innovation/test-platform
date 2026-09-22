@@ -116,6 +116,7 @@ export const testSeriesSchema = z.object({
   program_type: z.string().max(60).optional().nullable(),
   target_year: z.string().max(20).optional().nullable(),
   duration_months: z.number().int().min(1).optional().nullable(),
+  duration_text: z.string().max(255).optional().nullable(),
   tags: z.any().optional(),
 });
 

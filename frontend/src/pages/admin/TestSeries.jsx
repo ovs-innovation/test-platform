@@ -27,6 +27,7 @@ export default function AdminTestSeries() {
     target_year: '2027',
     planned_tests: 0,
     duration_months: 12,
+    duration_text: '',
     is_featured: false,
     is_active: true,
     validity_days: 365,
@@ -78,6 +79,7 @@ export default function AdminTestSeries() {
       target_year: s.target_year || (/two[- ]?year|2028/i.test(s.title) ? '2028' : '2027'),
       planned_tests: s.planned_tests ?? (s.test_count || 0),
       duration_months: s.duration_months || (/two[- ]?year|2028/i.test(s.title) ? 24 : 12),
+      duration_text: s.duration_text || '',
       is_featured: Boolean(s.is_featured),
       is_active: s.is_active !== false,
       validity_days: s.validity_days || 365,
@@ -101,6 +103,7 @@ export default function AdminTestSeries() {
       target_year: '2027',
       planned_tests: 0,
       duration_months: 12,
+      duration_text: '',
       is_featured: false,
       is_active: true,
       validity_days: 365,
@@ -120,6 +123,10 @@ export default function AdminTestSeries() {
         updates.program_type = 'Two Year';
         updates.target_year = '2028';
         updates.duration_months = 24;
+      }
+      if (/rm|repeater/i.test(val)) {
+        updates.program_type = 'Repeater / RM';
+        updates.duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
       }
       if (/neet/i.test(val) && (f.exam_type === 'JEE Main' || f.exam_type === 'General')) {
         updates.exam_type = /neet[- ]?pg/i.test(val) ? 'NEET PG' : 'NEET UG';
@@ -493,11 +500,13 @@ export default function AdminTestSeries() {
                     program_type: pType,
                     target_year: pType === 'Two Year' ? '2028' : '2027',
                     duration_months: pType === 'Two Year' ? 24 : 12,
+                    duration_text: pType === 'Repeater / RM' ? (f.duration_text || 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)') : f.duration_text,
                   }));
                 }}
               >
                 <option value="One Year">One Year</option>
                 <option value="Two Year">Two Year</option>
+                <option value="Repeater / RM">Repeater / RM</option>
                 <option value="Foundation">Foundation</option>
                 <option value="Crash Course">Crash Course</option>
                 <option value="Self-Paced">Self-Paced</option>
@@ -510,6 +519,28 @@ export default function AdminTestSeries() {
                 placeholder="e.g. 2027, 2028"
                 value={form.target_year}
                 onChange={(e) => setForm((f) => ({ ...f, target_year: e.target.value }))}
+              />
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Duration (Months)</label>
+              <input
+                className="input"
+                type="number"
+                min={1}
+                max={48}
+                value={form.duration_months}
+                onChange={(e) => setForm((f) => ({ ...f, duration_months: Number(e.target.value) }))}
+              />
+            </div>
+            <div>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Custom Duration Display Text</label>
+              <input
+                className="input"
+                placeholder="e.g. October 2026 – NEET 2027 (Exam Date to be updated...)"
+                value={form.duration_text}
+                onChange={(e) => setForm((f) => ({ ...f, duration_text: e.target.value }))}
               />
             </div>
           </div>

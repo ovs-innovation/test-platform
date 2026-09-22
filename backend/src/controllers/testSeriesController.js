@@ -58,6 +58,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
     program_type,
     target_year,
     duration_months,
+    duration_text,
   } = req.body;
   const slug = slugify(title) + '-' + Date.now().toString(36);
   const calculatedIsFree = typeof is_free === 'boolean' ? is_free : Number(price) === 0;
@@ -86,9 +87,9 @@ export const createTestSeries = asyncHandler(async (req, res) => {
     `INSERT INTO test_series (
        title, slug, description, price, validity_days, exam_type, is_featured, is_active,
        image_url, is_free, display_order, brochure_url, brochure_name,
-       planned_tests, test_count, program_type, target_year, duration_months
+       planned_tests, test_count, program_type, target_year, duration_months, duration_text
      )
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18) RETURNING *`,
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *`,
     [
       title,
       slug,
@@ -108,6 +109,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       detectedProgramType,
       detectedTargetYear,
       Number(duration_months) || (detectedProgramType === 'Two Year' ? 24 : 12),
+      duration_text || null,
     ]
   );
   res.status(201).json({ test_series: result.rows[0] });
