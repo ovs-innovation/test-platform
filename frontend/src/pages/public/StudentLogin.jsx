@@ -32,6 +32,7 @@ export default function StudentLogin() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [devOtp, setDevOtp] = useState('');
 
   const emailOtpInputRef = useRef(null);
 
@@ -121,11 +122,14 @@ export default function StudentLogin() {
     setError('');
     try {
       if (sendLoginOtp) {
-        await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
+        const res = await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
+        if (res?.devOtp) {
+          setDevOtp(res.devOtp);
+          setEmailOtpCode(res.devOtp);
+        }
       }
       setEmailOtpSent(true);
       setEmailTimer(60);
-      setEmailOtpCode('');
       toast.success(`Verification OTP sent to ${cleanEmail}`);
     } catch (err) {
       setError(err.message || 'Failed to send OTP code. Please verify your email.');
@@ -177,7 +181,11 @@ export default function StudentLogin() {
     setError('');
     try {
       if (sendLoginOtp) {
-        await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone });
+        const res = await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone });
+        if (res?.devOtp) {
+          setDevOtp(res.devOtp);
+          setMobileOtpCode(res.devOtp);
+        }
       }
       setMobileOtpSent(true);
       setMobileTimer(60);
@@ -356,6 +364,7 @@ export default function StudentLogin() {
                   onClick={() => {
                     setEmailOtpSent(false);
                     setEmailOtpCode('');
+                    setDevOtp('');
                     setError('');
                   }}
                   className="text-[#00F0FF] hover:underline font-bold cursor-pointer"
@@ -363,6 +372,13 @@ export default function StudentLogin() {
                   Change Email
                 </button>
               </div>
+
+              {devOtp && (
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3 text-center">
+                  <span className="text-[11px] font-semibold text-cyan-300 uppercase tracking-wider">Testing OTP (Dev Mode):</span>
+                  <p className="font-mono text-xl font-bold tracking-widest text-[#00F0FF] mt-0.5">{devOtp}</p>
+                </div>
+              )}
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
@@ -492,12 +508,22 @@ export default function StudentLogin() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setMobileOtpSent(false)}
+                  onClick={() => {
+                    setMobileOtpSent(false);
+                    setDevOtp('');
+                  }}
                   className="text-[#00F0FF] hover:underline font-bold cursor-pointer"
                 >
                   Change
                 </button>
               </div>
+
+              {devOtp && (
+                <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-3 text-center">
+                  <span className="text-[11px] font-semibold text-cyan-300 uppercase tracking-wider">Testing OTP (Dev Mode):</span>
+                  <p className="font-mono text-xl font-bold tracking-widest text-[#00F0FF] mt-0.5">{devOtp}</p>
+                </div>
+              )}
 
               <div>
                 <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">

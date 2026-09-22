@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
+import { Download, FileText } from 'lucide-react';
 import { getExamTheme, getSeriesBlurb } from '../../lib/testSeriesCover.js';
+import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
 
 export default function TestSeriesCard({ series }) {
   const free = Number(series.price) === 0;
@@ -128,10 +130,25 @@ export default function TestSeriesCard({ series }) {
           )}
         </div>
 
-        <span className={`inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-xs font-black tracking-wide text-white transition-all duration-300 group-hover:scale-105 active:scale-95 ${theme.btnGradient}`}>
-          <span>{free ? 'Start Free' : 'View Series'}</span>
-          <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
-        </span>
+        <div className="flex items-center gap-2">
+          {series?.brochure_url && (
+            <a
+              href={getBrochureDownloadUrl(series)}
+              download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+              onClick={(e) => e.stopPropagation()}
+              className="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-600 text-[11px] font-extrabold transition shadow-2xs cursor-pointer"
+              title={`Download Brochure (${series.brochure_name || 'PDF'})`}
+            >
+              <Download className="h-3.5 w-3.5 text-blue-600" />
+              <span className="hidden sm:inline">Brochure</span>
+            </a>
+          )}
+
+          <span className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-black tracking-wide text-white transition-all duration-300 group-hover:scale-105 active:scale-95 ${theme.btnGradient}`}>
+            <span>{free ? 'Start Free' : 'View Series'}</span>
+            <span aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">→</span>
+          </span>
+        </div>
       </div>
     </Link>
   );

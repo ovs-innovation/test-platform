@@ -6,7 +6,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/db/migrate.js && node src/server.js",
-    "dev": "node scripts/free-port.js && node --watch src/server.js",
+    "dev": "node scripts/free-port.js && node --watch --watch-path=.env --watch-path=src src/server.js",
     "test:auth:config": "vitest run tests/integration/config --config vitest.config.config.js",
     "test:auth:db": "vitest run tests/integration/auth tests/integration/student tests/integration/institution tests/integration/admin tests/integration/business --config vitest.config.db.js",
     "test:auth": "npm run test:auth:config && npm run test:auth:db",

@@ -17,13 +17,16 @@ import {
   Check,
   ChevronRight,
   Layers,
-  Tag
+  Tag,
+  Download,
+  ExternalLink,
 } from 'lucide-react';
 import { publicService, paymentService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getExamTheme, getTestSeriesCover } from '../../lib/testSeriesCover.js';
+import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
 
 
 
@@ -434,6 +437,17 @@ export default function TestSeriesDetail() {
                     <span>Calculate Institutional Pricing</span>
                   </button>
 
+                  {series?.brochure_url && (
+                    <a
+                      href={getBrochureDownloadUrl(series)}
+                      download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
+                    >
+                      <Download className="h-4 w-4 text-blue-600" />
+                      <span>Download Test-Series Brochure</span>
+                    </a>
+                  )}
+
                   <div className="flex flex-wrap items-center justify-between text-xs pt-1 gap-2">
                     <button
                       type="button"
@@ -529,6 +543,17 @@ export default function TestSeriesDetail() {
                   >
                     {buying ? 'Processing Order…' : isFree ? 'Enroll for Free' : appliedCoupon ? `Buy for ₹${appliedCoupon.final_amount}` : 'Buy Test Series'}
                   </button>
+
+                  {series?.brochure_url && (
+                    <a
+                      href={getBrochureDownloadUrl(series)}
+                      download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/60 hover:bg-blue-100/80 text-blue-700 py-3 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
+                    >
+                      <Download className="h-4 w-4 text-blue-600" />
+                      <span>Download Test-Series Brochure (PDF)</span>
+                    </a>
+                  )}
 
                   {!user && (
                     <p className="text-center text-xs text-slate-500">
@@ -733,6 +758,35 @@ export default function TestSeriesDetail() {
                 <h3 className="text-xl font-extrabold text-[#071833]">Included Digital Study Resources</h3>
                 <p className="text-sm text-slate-600">Digital resources bundled with this test series package.</p>
               </div>
+
+              {series?.brochure_url && (
+                <div className="flex flex-wrap items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 border border-blue-200/80 shadow-xs">
+                  <div className="flex items-center gap-3.5 min-w-0">
+                    <div className="p-3 rounded-xl bg-blue-600 text-white shadow-xs shrink-0">
+                      <FileText className="h-6 w-6" />
+                    </div>
+                    <div className="min-w-0">
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-100/70 px-2 py-0.5 rounded-md">
+                        Test-Series Overview
+                      </span>
+                      <h4 className="text-sm sm:text-base font-black text-slate-900 mt-1 truncate">
+                        {series.brochure_name || `${series.title} Brochure`}
+                      </h4>
+                      <p className="text-xs text-slate-600 mt-0.5">
+                        Complete test series overview, assessment schedule, pattern, and package details.
+                      </p>
+                    </div>
+                  </div>
+                  <a
+                    href={getBrochureDownloadUrl(series)}
+                    download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-extrabold shadow-sm transition shrink-0"
+                  >
+                    <Download className="h-4 w-4" />
+                    <span>Download Test-Series Brochure</span>
+                  </a>
+                </div>
+              )}
 
               <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
                 <li className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">

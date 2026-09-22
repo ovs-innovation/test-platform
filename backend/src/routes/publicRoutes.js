@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getPublicStats, listPublicTestSeries, getPublicTestSeries, listSubjects } from '../controllers/publicController.js';
+import { getPublicStats, listPublicTestSeries, getPublicTestSeries, listSubjects, downloadPublicBrochure } from '../controllers/publicController.js';
 import { getCmsPage, listPublicCms, validateCoupon, listPublicCoupons } from '../controllers/platformController.js';
 import { createB2bEnquiry } from '../controllers/b2bController.js';
 
@@ -7,6 +7,7 @@ const router = Router();
 
 router.get('/stats', getPublicStats);
 router.get('/test-series', listPublicTestSeries);
+router.get('/test-series/:slug/brochure', downloadPublicBrochure);
 router.get('/test-series/:slug', getPublicTestSeries);
 router.get('/subjects', listSubjects);
 router.get('/cms', listPublicCms);

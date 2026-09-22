@@ -233,6 +233,8 @@ export const testSeriesService = {
     clearCache();
     return api.put(`/test-series/${id}`, data).then((r) => r.data.test_series);
   },
+  uploadBrochure: (fileBase64, fileName) =>
+    api.post('/upload/brochure', { file_base64: fileBase64, file_name: fileName }).then((r) => r.data),
   toggleActive: (id, is_active) =>
     api.patch(`/test-series/${id}/toggle-active`, { is_active }).then((r) => {
       clearCache();
@@ -505,6 +507,8 @@ export const adminService = {
   assignCandidateInstitution: (id, data) => api.patch(`/admin/candidates/${id}/institution`, data).then((r) => r.data),
   compareInstitutes: (schoolIds) => api.get('/admin/schools/reports/compare', { params: { schoolIds: Array.isArray(schoolIds) ? schoolIds.join(',') : schoolIds } }).then((r) => r.data),
   uploadImage: (image, folder = 'edvedum/questions') => api.post('/upload/image', { image, folder }).then((r) => r.data),
+  uploadBrochure: (fileBase64, fileName) =>
+    api.post('/upload/brochure', { file_base64: fileBase64, file_name: fileName }).then((r) => r.data),
 };
 
 export const institutionDashboardService = {

@@ -25,7 +25,7 @@ const getTransporter = () => {
   if (transporter) return transporter;
 
   const user = (env.smtp.user || '').trim();
-  const pass = (env.smtp.pass || '').trim();
+  const pass = (env.smtp.pass || '').trim().replace(/\s+/g, '');
   if (!user || !pass) {
     const err = new Error('SMTP credentials not set. Ensure SMTP_USER and SMTP_PASS environment variables are configured.');
     err.code = 'CONFIG_ERROR';

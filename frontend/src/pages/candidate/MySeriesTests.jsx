@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { testSeriesService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
-import { ArrowLeft, ChevronRight, Zap, Clock, Compass } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Zap, Clock, Compass, Download, FileText } from 'lucide-react';
+import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
 
 export default function MySeriesTests() {
   const { slug } = useParams();
   const [tests, setTests] = useState([]);
+  const [series, setSeries] = useState(null);
   const [state, setState] = useState('loading');
 
   useEffect(() => {
     testSeriesService.mySeriesTests(slug)
-      .then((d) => { setTests(d.tests || []); setState('done'); })
+      .then((d) => {
+        setTests(d.tests || []);
+        setSeries(d.test_series || null);
+        setState('done');
+      })
       .catch(() => setState('error'));
   }, [slug]);
 
@@ -25,11 +31,26 @@ export default function MySeriesTests() {
         <span>Back to My Test Series</span>
       </Link>
       
-      <div>
-        <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">Available CBT Mock Tests</h1>
-        <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400">
-          Launch CBT format mock tests, attempt diagnostic questions, and view instant score analytics.
-        </p>
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+            {series?.title ? `${series.title}` : 'Available CBT Mock Tests'}
+          </h1>
+          <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400">
+            Launch CBT format mock tests, attempt diagnostic questions, and view instant score analytics.
+          </p>
+        </div>
+
+        {series?.brochure_url && (
+          <a
+            href={getBrochureDownloadUrl(series)}
+            download={series.brochure_name || `${(series.title || 'test_series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+            className="inline-flex items-center gap-2 rounded-xl border border-blue-200 dark:border-blue-900 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/50 px-4 py-2 text-xs font-bold text-blue-700 dark:text-blue-300 shadow-2xs transition"
+          >
+            <Download className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+            <span>Download Test-Series Brochure</span>
+          </a>
+        )}
       </div>
 
       {tests.length === 0 ? (

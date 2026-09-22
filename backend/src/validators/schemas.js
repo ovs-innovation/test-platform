@@ -111,6 +111,8 @@ export const testSeriesSchema = z.object({
   is_free: z.boolean().optional().default(false),
   display_order: z.number().int().min(0).optional().default(0),
   image_url: z.string().max(2000).optional().default(''),
+  brochure_url: z.string().max(2000).optional().nullable().or(z.literal('')),
+  brochure_name: z.string().max(255).optional().nullable().or(z.literal('')),
   tags: z.any().optional(),
 });
 

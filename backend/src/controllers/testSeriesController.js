@@ -41,13 +41,13 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
  * Create a new test series metadata row (No test or schedule creation).
  */
 export const createTestSeries = asyncHandler(async (req, res) => {
-  const { title, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order } = req.body;
+  const { title, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order, brochure_url, brochure_name } = req.body;
   const slug = slugify(title) + '-' + Date.now().toString(36);
   const calculatedIsFree = typeof is_free === 'boolean' ? is_free : Number(price) === 0;
   const result = await query(
-    `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *`,
-    [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, is_active ?? true, image_url || '', calculatedIsFree, display_order ?? 0]
+    `INSERT INTO test_series (title, slug, description, price, validity_days, exam_type, is_featured, is_active, image_url, is_free, display_order, brochure_url, brochure_name)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) RETURNING *`,
+    [title, slug, description || '', price ?? 0, validity_days ?? 365, exam_type || 'General', is_featured ?? false, is_active ?? true, image_url || '', calculatedIsFree, display_order ?? 0, brochure_url || null, brochure_name || null]
   );
   res.status(201).json({ test_series: result.rows[0] });
 });
@@ -158,7 +158,7 @@ export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
  */
 export const myEnrollments = asyncHandler(async (req, res) => {
   const result = await query(
-    `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.image_url, ts.code, ts.target_year, ts.program_type,
+    `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.image_url, ts.code, ts.target_year, ts.program_type, ts.brochure_url, ts.brochure_name,
             COUNT(DISTINCT tst.test_id)::int AS planned_tests,
             COUNT(DISTINCT tst.test_id)::int AS linked_tests,
             COUNT(DISTINCT CASE WHEN t.test_date IS NOT NULL THEN t.id END)::int AS scheduled_tests,
@@ -229,7 +229,8 @@ export const enrollTestSeries = asyncHandler(async (req, res) => {
 export const mySeriesTests = asyncHandler(async (req, res) => {
   const { slug } = req.params;
   const enrolled = await query(
-    `SELECT se.id FROM student_enrollments se
+    `SELECT se.id, ts.id AS series_id, ts.title, ts.slug, ts.brochure_url, ts.brochure_name
+     FROM student_enrollments se
      JOIN test_series ts ON ts.id = se.test_series_id
      WHERE se.user_id = $1 AND ts.slug = $2 AND se.status = 'active' AND se.expires_at > NOW()`,
     [req.user.id, slug]
@@ -243,17 +244,17 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
      JOIN test_series_tests tst ON tst.series_id = ts.id
      JOIN tests t ON t.id = tst.test_id AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
      LEFT JOIN LATERAL (
-       SELECT ta.id, ta.started_at, ta.submitted_at
-       FROM test_attempts ta
-       WHERE ta.test_id = t.id AND ta.student_id = $2
-       ORDER BY ta.started_at DESC
-       LIMIT 1
-     ) lat ON true
+        SELECT ta.id, ta.started_at, ta.submitted_at
+        FROM test_attempts ta
+        WHERE ta.test_id = t.id AND ta.student_id = $2
+        ORDER BY ta.started_at DESC
+        LIMIT 1
+      ) lat ON true
      WHERE ts.slug = $1
      ORDER BY t.test_date DESC, t.start_time DESC`,
     [slug, req.user.id]
   );
-  res.json({ tests: testsRes.rows });
+  res.json({ tests: testsRes.rows, test_series: enrolled.rows[0] });
 });
 
 /**

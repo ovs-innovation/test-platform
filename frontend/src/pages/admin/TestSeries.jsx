@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link2 as LinkIcon, Search, Clock, Award, Calendar } from 'lucide-react';
+import { Link2 as LinkIcon, Search, Clock, Award, Calendar, FileText, Upload, Trash2, ExternalLink, FileCheck } from 'lucide-react';
 import { testSeriesService, adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, Spinner, Badge, ConfirmModal } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { getTestSeriesCover } from '../../lib/testSeriesCover.js';
+import { getMediaUrl } from '../../lib/media.js';
 
 export default function AdminTestSeries() {
   const toast = useToast();
@@ -28,7 +29,10 @@ export default function AdminTestSeries() {
     image_url: '',
     is_free: false,
     display_order: 0,
+    brochure_url: '',
+    brochure_name: '',
   });
+  const [uploadingBrochure, setUploadingBrochure] = useState(false);
 
   // Link Test Modal
   const [linkModal, setLinkModal] = useState(null);
@@ -72,8 +76,62 @@ export default function AdminTestSeries() {
       image_url: s.image_url || '',
       is_free: Boolean(s.is_free),
       display_order: s.display_order || 0,
+      brochure_url: s.brochure_url || '',
+      brochure_name: s.brochure_name || '',
     });
     setModal(true);
+  };
+
+  const handleBrochureFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 20 * 1024 * 1024) {
+      toast.error('Brochure file size must not exceed 20MB');
+      return;
+    }
+
+    setUploadingBrochure(true);
+    try {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const base64Data = reader.result;
+          const res = await testSeriesService.uploadBrochure(base64Data, file.name);
+          if (res?.url) {
+            setForm((f) => ({
+              ...f,
+              brochure_url: res.url,
+              brochure_name: file.name,
+            }));
+            toast.success('Brochure uploaded successfully!');
+          } else {
+            throw new Error('Upload returned empty URL');
+          }
+        } catch (err) {
+          toast.error(err.message || 'Failed to upload brochure');
+        } finally {
+          setUploadingBrochure(false);
+        }
+      };
+      reader.onerror = () => {
+        toast.error('Failed to read file');
+        setUploadingBrochure(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      toast.error('Error selecting file');
+      setUploadingBrochure(false);
+    }
+  };
+
+  const handleRemoveBrochure = () => {
+    setForm((f) => ({
+      ...f,
+      brochure_url: '',
+      brochure_name: '',
+    }));
+    toast.info('Brochure detached. Click Save Changes to update.');
   };
 
   const handleOpenDelete = (s) => {
@@ -230,6 +288,8 @@ export default function AdminTestSeries() {
                   image_url: '',
                   is_free: false,
                   display_order: 0,
+                  brochure_url: '',
+                  brochure_name: '',
                 });
                 setModal(true);
               }}
@@ -262,6 +322,24 @@ export default function AdminTestSeries() {
                 {s.is_active && Number(s.linked_tests || 0) === 0 && (
                   <span className="rounded-md bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 text-[11px] font-bold text-amber-600 dark:text-amber-400">
                     ⚠️ Active package — 0 tests linked
+                  </span>
+                )}
+                {s.brochure_url ? (
+                  <a
+                    href={getMediaUrl(s.brochure_url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-md bg-purple-500/10 border border-purple-500/20 px-2 py-0.5 text-[11px] font-bold text-purple-600 dark:text-purple-400 hover:bg-purple-500/20 transition"
+                    title={s.brochure_name || 'Preview Brochure PDF'}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <FileText className="h-3 w-3" />
+                    <span>Brochure</span>
+                    <ExternalLink className="h-2.5 w-2.5 opacity-70" />
+                  </a>
+                ) : (
+                  <span className="rounded-md bg-slate-100 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 px-2 py-0.5 text-[11px] font-medium text-slate-400">
+                    No Brochure
                   </span>
                 )}
               </div>
@@ -330,6 +408,8 @@ export default function AdminTestSeries() {
                     image_url: s.image_url || '',
                     is_free: s.is_free || Number(s.price) === 0,
                     display_order: s.display_order || 0,
+                    brochure_url: s.brochure_url || '',
+                    brochure_name: s.brochure_name || '',
                   });
                   setModal(true);
                 }}
@@ -440,6 +520,98 @@ export default function AdminTestSeries() {
                 onChange={(e) => setForm((f) => ({ ...f, image_url: e.target.value }))}
               />
             </div>
+          </div>
+
+          {/* TEST-SERIES BROCHURE ATTACHMENT SECTION */}
+          <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40 p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <FileText className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+                  <span>Test-Series Brochure (PDF)</span>
+                </label>
+                <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  Upload a PDF or document so prospective students can download the test-series brochure overview.
+                </p>
+              </div>
+              {form.brochure_url && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400">
+                  <FileCheck className="h-3 w-3" /> Attached
+                </span>
+              )}
+            </div>
+
+            {form.brochure_url ? (
+              <div className="flex flex-wrap items-center justify-between gap-2 p-3 rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <div className="flex items-center gap-2.5 min-w-0">
+                  <div className="p-2 rounded-lg bg-purple-50 dark:bg-purple-950/40 text-purple-600 dark:text-purple-400 shrink-0">
+                    <FileText className="h-5 w-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-xs font-bold text-slate-900 dark:text-white truncate max-w-xs sm:max-w-sm">
+                      {form.brochure_name || 'Test_Series_Brochure.pdf'}
+                    </p>
+                    <a
+                      href={getMediaUrl(form.brochure_url)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 mt-0.5"
+                    >
+                      <span>Preview Attached Brochure</span>
+                      <ExternalLink className="h-2.5 w-2.5" />
+                    </a>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleRemoveBrochure}
+                  className="btn-secondary !py-1.5 !px-2.5 text-xs text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-500/10 flex items-center gap-1 cursor-pointer"
+                  title="Remove brochure"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span>Remove</span>
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
+                  <label className={`btn-secondary text-xs flex items-center gap-2 cursor-pointer ${uploadingBrochure ? 'opacity-60 pointer-events-none' : ''}`}>
+                    {uploadingBrochure ? (
+                      <>
+                        <Spinner size="sm" />
+                        <span>Uploading Document…</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="h-3.5 w-3.5 text-purple-600" />
+                        <span>Upload Brochure (PDF/DOC)</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      accept=".pdf,.doc,.docx,.png,.jpg,.jpeg"
+                      className="hidden"
+                      disabled={uploadingBrochure}
+                      onChange={handleBrochureFileUpload}
+                    />
+                  </label>
+                  <span className="text-[11px] text-slate-400">Max 20MB (PDF format recommended)</span>
+                </div>
+
+                <div className="pt-1">
+                  <label className="text-[10.5px] font-semibold text-slate-500 block mb-1">
+                    Or paste direct Brochure URL / Drive Link:
+                  </label>
+                  <input
+                    type="url"
+                    className="input text-xs"
+                    placeholder="https://... or /uploads/documents/brochure.pdf"
+                    value={form.brochure_url}
+                    onChange={(e) => setForm((f) => ({ ...f, brochure_url: e.target.value, brochure_name: f.brochure_name || 'Brochure.pdf' }))}
+                  />
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex flex-wrap gap-4 pt-1">
             <label className="flex items-center gap-2 text-sm text-slate-700 dark:text-slate-300 font-medium">

@@ -1,6 +1,13 @@
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { rememberCache } from '../config/redis.js';
+import { ApiError } from '../utils/ApiError.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const FALLBACK_SERIES = [
   // JEE Main
@@ -339,4 +346,75 @@ export const listSubjects = asyncHandler(async (_req, res) => {
      GROUP BY s.id ORDER BY s.name`
   );
   res.json({ subjects: result.rows });
+});
+
+/**
+ * GET /api/public/test-series/:slug/brochure
+ * Direct reliable download of test series brochure.
+ * Handles local /uploads files, external URLs, and Cloudinary signed authentication fallback.
+ */
+export const downloadPublicBrochure = asyncHandler(async (req, res) => {
+  const { slug } = req.params;
+
+  const result = await query(
+    'SELECT title, brochure_url, brochure_name FROM test_series WHERE slug = $1 OR id::text = $1',
+    [slug]
+  );
+
+  if (!result.rowCount || !result.rows[0].brochure_url) {
+    throw ApiError.notFound('Brochure not found for this test series');
+  }
+
+  const { title, brochure_url, brochure_name } = result.rows[0];
+  const downloadName = brochure_name || `${title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`;
+
+  // Case 1: Local /uploads file
+  if (brochure_url.startsWith('/uploads/') || brochure_url.startsWith('uploads/')) {
+    const relativePath = brochure_url.replace(/^\/?uploads\//, '');
+    const fullPath = path.resolve(__dirname, '../../uploads', relativePath);
+    if (fs.existsSync(fullPath)) {
+      return res.download(fullPath, downloadName);
+    }
+  }
+
+  // Case 2: Cloudinary URL
+  if (brochure_url.includes('cloudinary.com')) {
+    try {
+      const { v2: cloudinary } = await import('cloudinary');
+      const cloudName = process.env.CLOUDINARY_CLOUD_NAME;
+      const apiKey = process.env.CLOUDINARY_API_KEY;
+      const apiSecret = process.env.CLOUDINARY_API_SECRET;
+
+      if (cloudName && apiKey && apiSecret) {
+        cloudinary.config({ cloud_name: cloudName, api_key: apiKey, api_secret: apiSecret, secure: true });
+        const match = brochure_url.match(/\/upload\/(?:v\d+\/)?(.+?)(?:\.pdf|\.[a-zA-Z0-9]+)?$/);
+        const publicId = match ? match[1] : null;
+
+        if (publicId) {
+          const isRaw = brochure_url.includes('/raw/upload/');
+          const privateUrl = cloudinary.utils.private_download_url(publicId, 'pdf', {
+            resource_type: isRaw ? 'raw' : 'image',
+            type: 'upload',
+          });
+          const upstream = await fetch(privateUrl);
+          if (upstream.ok) {
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', `attachment; filename="${downloadName}"`);
+            const arrayBuffer = await upstream.arrayBuffer();
+            return res.send(Buffer.from(arrayBuffer));
+          }
+        }
+      }
+    } catch (cErr) {
+      console.warn('[downloadPublicBrochure] Cloudinary fallback notice:', cErr.message);
+    }
+  }
+
+  // Case 3: Remote external URL redirect
+  if (brochure_url.startsWith('http://') || brochure_url.startsWith('https://')) {
+    return res.redirect(brochure_url);
+  }
+
+  // Fallback send relative path
+  res.redirect(brochure_url);
 });

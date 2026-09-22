@@ -25,3 +25,29 @@ export const uploadImage = asyncHandler(async (req, res) => {
       : 'Image uploaded successfully to Cloudinary CDN.',
   });
 });
+
+/**
+ * POST /api/upload/brochure
+ * Uploads a brochure/syllabus PDF or document safely to server storage (/uploads/documents).
+ * Avoids third-party CDN 401 Unauthorized delivery blocks on PDF files.
+ */
+export const uploadBrochure = asyncHandler(async (req, res) => {
+  const { file, file_base64, file_name = 'brochure.pdf' } = req.body;
+  const fileData = file_base64 || file;
+
+  if (!fileData) {
+    throw ApiError.badRequest('No file data provided for brochure upload.');
+  }
+
+  const { saveUploadedFile } = await import('../middleware/upload.js');
+  const finalUrl = await saveUploadedFile(fileData, file_name, 'brochure');
+
+  res.json({
+    success: true,
+    url: finalUrl,
+    file_name,
+    storage: 'local',
+    message: 'Brochure uploaded successfully',
+  });
+});
+

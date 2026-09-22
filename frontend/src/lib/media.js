@@ -25,3 +25,23 @@ export function getMediaUrl(url) {
   // In local Vite dev or same-origin setups, return relative path directly
   return trimmed.startsWith('/') ? trimmed : `/${trimmed}`;
 }
+
+/**
+ * Returns the direct download URL for a test series brochure.
+ * Uses the backend proxy download endpoint (/api/public/test-series/:slug/brochure)
+ * which guarantees clean PDF attachment download and avoids external CDN 401 blocks.
+ */
+export function getBrochureDownloadUrl(series) {
+  if (!series || !series.brochure_url) return '';
+
+  if (series.slug) {
+    const apiBase = import.meta.env.VITE_API_URL || '/api';
+    const cleanApiBase = apiBase.replace(/\/$/, '');
+    return cleanApiBase.endsWith('/api')
+      ? `${cleanApiBase}/public/test-series/${encodeURIComponent(series.slug)}/brochure`
+      : `${cleanApiBase}/api/public/test-series/${encodeURIComponent(series.slug)}/brochure`;
+  }
+
+  return getMediaUrl(series.brochure_url);
+}
+

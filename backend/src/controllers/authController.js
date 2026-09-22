@@ -255,19 +255,31 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
     [normalizedEmail, phone || '', otpHash, expiresAt]
   );
 
+  if (!env.isProd) {
+    console.log(`\n======================================================`);
+    console.log(`🔑 [DEV MODE OTP] Student Signup -> ${normalizedEmail} | Code: ${otp}`);
+    console.log(`======================================================\n`);
+  }
+
+  let emailSent = true;
   try {
     await sendOtpEmail(normalizedEmail, otp);
   } catch (err) {
+    emailSent = false;
     const emailErrorMsg = err.message || String(err);
-    // eslint-disable-next-line no-console
     console.error(`[email ERROR] Signup OTP email failed for ${normalizedEmail}: ${emailErrorMsg}`);
-    throw ApiError.internal(`Could not send verification email directly to ${normalizedEmail}. Please check your email address or try again.`);
+    if (env.isProd) {
+      throw ApiError.internal(`Could not send verification email directly to ${normalizedEmail}. Please check your email address or try again.`);
+    }
   }
 
   res.json({
-    message: `Verification code sent to your email inbox (${normalizedEmail})`,
-    emailSent: true,
+    message: emailSent
+      ? `Verification code sent to your email inbox (${normalizedEmail})`
+      : 'Could not send verification email directly — check server SMTP credentials or use dev OTP.',
+    emailSent,
     expiresInMinutes: env.otpExpiresMinutes,
+    ...(!env.isProd ? { devOtp: otp } : {}),
   });
 });
 
@@ -512,6 +524,12 @@ export const sendOtp = asyncHandler(async (req, res) => {
     [normalizedEmail, otpHash, invite_token, expiresAt]
   );
 
+  if (!env.isProd) {
+    console.log(`\n======================================================`);
+    console.log(`🔑 [DEV MODE OTP] Assessment Access -> ${normalizedEmail} | Code: ${otp}`);
+    console.log(`======================================================\n`);
+  }
+
   let emailSent = true;
   try {
     await sendOtpEmail(normalizedEmail, otp);
@@ -698,6 +716,12 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
      VALUES ($1, $2, $3, 'student_login', $4)`,
     [normalizedEmail, targetPhone, otpHash, expiresAt]
   );
+
+  if (!env.isProd) {
+    console.log(`\n======================================================`);
+    console.log(`🔑 [DEV MODE OTP] Student Login -> ${normalizedEmail || targetPhone} | Code: ${otp}`);
+    console.log(`======================================================\n`);
+  }
 
   let emailSent = true;
   try {
