@@ -56,7 +56,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT || 22 }}
-          timeout: 60s
+          timeout: 10m
           command_timeout: 15m
           script: |
             set -e
@@ -72,6 +72,7 @@ jobs:
 
             # Clean any stale git lock files
             rm -f .git/*.lock .git/refs/heads/*.lock .git/refs/remotes/origin/*.lock .git/index.lock .git/HEAD.lock .git/gc.pid 2>/dev/null || true
+            find .git -name "*.lock" -delete 2>/dev/null || true
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
 
@@ -107,9 +108,9 @@ jobs:
 
             # Fetch and reset to target commit safely
             echo "Fetching latest commits from origin..."
-            git fetch --prune origin main || git fetch --all --tags || true
+            git fetch --prune origin main || git fetch origin "${{ github.sha }}" || git fetch --all --tags || true
             echo "Resetting repository to target commit: ${{ github.sha }}"
-            git reset --hard "${{ github.sha }}" || git reset --hard origin/main || git reset --hard HEAD
+            git reset --hard "${{ github.sha }}" || git reset --hard FETCH_HEAD || git reset --hard origin/main || git reset --hard HEAD
 
             # Restore public clean URL so token is not retained in local git config
             git remote set-url origin "$CLEAN_URL" 2>/dev/null || true
@@ -132,10 +133,11 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT || 22 }}
-          timeout: 60s
+          timeout: 10m
           command_timeout: 15m
           script: |
             set -e
+            sleep 5
             export GIT_TERMINAL_PROMPT=0
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
@@ -146,18 +148,24 @@ jobs:
             cd "$PROJECT_DIR"
 
             rm -f .git/*.lock .git/refs/heads/*.lock .git/refs/remotes/origin/*.lock .git/index.lock .git/HEAD.lock .git/gc.pid 2>/dev/null || true
+            find .git -name "*.lock" -delete 2>/dev/null || true
             git merge --abort >/dev/null 2>&1 || true
             git rebase --abort >/dev/null 2>&1 || true
 
             AUTH_URL="https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/ovs-innovation/test-platform.git"
             CLEAN_URL="https://github.com/ovs-innovation/test-platform.git"
 
+            if [ ! -d ".git" ]; then
+              echo "Git repository not found in $PROJECT_DIR. Initializing repository..."
+              git init
+            fi
+
             git config --global --add safe.directory "$PROJECT_DIR" 2>/dev/null || true
             git remote set-url origin "$AUTH_URL" 2>/dev/null || git remote add origin "$AUTH_URL" 2>/dev/null || true
 
             echo "Retrying fetch and reset on VPS..."
-            git fetch --prune origin main || git fetch --all --tags || true
-            git reset --hard "${{ github.sha }}" || git reset --hard origin/main || git reset --hard HEAD
+            git fetch --prune origin main || git fetch origin "${{ github.sha }}" || git fetch --all --tags || true
+            git reset --hard "${{ github.sha }}" || git reset --hard FETCH_HEAD || git reset --hard origin/main || git reset --hard HEAD
             git remote set-url origin "$CLEAN_URL" 2>/dev/null || true
             echo "VPS git reset completed successfully on retry."
 
