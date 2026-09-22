@@ -1,32 +1,20 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate, Link, useSearchParams } from 'react-router-dom';
 import {
-  Building2,
-  CheckCircle2,
-  Calculator,
-  BookOpen,
   ArrowLeft,
-  Calendar,
-  Award,
-  FileText,
-  Users,
-  HelpCircle,
-  BarChart3,
-  Sparkles,
-  ShieldCheck,
-  Check,
+  Building2,
+  Calculator,
   ChevronRight,
-  Layers,
-  Tag,
   Download,
-  ExternalLink,
+  Sparkles,
+  Tag,
 } from 'lucide-react';
 import { publicService, paymentService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
-import { getSeriesBlurb, getExamTheme, getTestSeriesCover } from '../../lib/testSeriesCover.js';
-import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
+import { getSeriesBlurb, getExamTheme } from '../../lib/testSeriesCover.js';
+import { getBrochureDownloadUrl } from '../../lib/media.js';
 
 
 
@@ -52,7 +40,6 @@ export default function TestSeriesDetail() {
   const [series, setSeries] = useState(null);
   const [state, setState] = useState('loading');
   const [buying, setBuying] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview');
 
   // Coupon States
   const [couponInput, setCouponInput] = useState('');
@@ -226,26 +213,13 @@ export default function TestSeriesDetail() {
     : { aiets: 14, unit: 12, part: 4, cumulative: 2, fullMock: 7, duration: 'October 2026 – April 2027' };
 
   const examTypeStr = `${series?.exam_type || ''} ${series?.title || ''} ${series?.slug || ''}`.toLowerCase();
-  let examCategoryLabel = 'CBT';
   let includesCbtTag = 'CBT Interface';
-  let simulatorTitle = 'CBT Exam Simulator';
-  let simulatorDesc = 'Exact reproduction of CBT testing UI, question palette, timer, and section navigation.';
-
   if (examTypeStr.includes('neet pg') || examTypeStr.includes('neet-pg')) {
-    examCategoryLabel = 'NEET PG';
     includesCbtTag = 'NEET PG CBT Interface';
-    simulatorTitle = 'NEET PG CBT Exam Simulator';
-    simulatorDesc = 'Exact reproduction of NEET PG testing UI, question palette, timer, and section navigation.';
   } else if (examTypeStr.includes('neet')) {
-    examCategoryLabel = 'NEET UG';
     includesCbtTag = 'NEET UG CBT Interface';
-    simulatorTitle = 'NEET UG CBT Exam Simulator';
-    simulatorDesc = 'Exact reproduction of NEET UG testing UI, question palette, timer, and section navigation.';
   } else if (examTypeStr.includes('jee')) {
-    examCategoryLabel = 'JEE';
     includesCbtTag = 'JEE CBT Interface';
-    simulatorTitle = 'JEE CBT Exam Simulator';
-    simulatorDesc = 'Exact reproduction of JEE testing UI, question palette, timer, and section navigation.';
   }
 
   const includesList = [includesCbtTag, 'Live Timer', 'Question Palette', 'AIR Rank & Solutions'];
@@ -578,255 +552,6 @@ export default function TestSeriesDetail() {
               )}
             </div>
           </div>
-        </div>
-
-        {/* Structured Tabs Navigation */}
-        <div className="border-b border-slate-200 bg-white rounded-2xl p-1.5 shadow-2xs overflow-x-auto">
-          <nav className="flex space-x-1 sm:space-x-2 min-w-max">
-            {[
-              { id: 'overview', label: 'Overview', icon: BookOpen },
-              { id: 'structure', label: 'Test Structure', icon: Layers },
-              { id: 'benefits', label: 'Student Benefits', icon: Award },
-              { id: 'analytics', label: 'Performance Analytics', icon: BarChart3 },
-              { id: 'resources', label: 'Study Resources', icon: FileText },
-              { id: 'faqs', label: 'FAQs', icon: HelpCircle },
-            ].map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
-                    isActive
-                      ? 'bg-[#2563EB] text-white shadow-xs'
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  <span>{tab.label}</span>
-                </button>
-              );
-            })}
-          </nav>
-        </div>
-
-        {/* Structured Tab Content Panels */}
-        <div className="rounded-2xl border border-slate-200/80 bg-white p-6 sm:p-8 shadow-xs">
-          {/* TAB 1: OVERVIEW */}
-          {activeTab === 'overview' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Program Overview</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  {series.description || blurb}
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 pt-2">
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <span className="text-xs font-extrabold text-[#2563EB] uppercase">Target Audience</span>
-                  <p className="text-sm font-bold text-[#071833]">{is2028 ? 'Classes XI and XII students' : 'Class XII and Dropper aspirants'}</p>
-                </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <span className="text-xs font-extrabold text-[#2563EB] uppercase">Exam Pattern</span>
-                  <p className="text-sm font-bold text-[#071833]">100% NEET CBT Standard</p>
-                </div>
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 space-y-1">
-                  <span className="text-xs font-extrabold text-[#2563EB] uppercase">Ranking & Analytics</span>
-                  <p className="text-sm font-bold text-[#071833]">All India & State Peer Rank</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 2: TEST STRUCTURE */}
-          {activeTab === 'structure' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Curriculum Test Structure</h3>
-                <p className="text-sm text-slate-600">
-                  Comprehensive assessment distribution designed for systematic syllabus coverage and {examCategoryLabel} CBT mastery.
-                </p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div className="p-5 rounded-2xl bg-blue-50/70 border border-blue-100 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-[#2563EB]">AIETS National Mocks</span>
-                    <span className="text-xl font-black text-[#2563EB]">{breakdown.aiets} Tests</span>
-                  </div>
-                  <p className="text-xs text-slate-600">National-level full mocks with All India Ranks and real-time percentile scoring.</p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-slate-700">Unit Tests</span>
-                    <span className="text-xl font-black text-slate-800">{breakdown.unit} Tests</span>
-                  </div>
-                  <p className="text-xs text-slate-600">Focused chapter-wise and unit-level assessments for concept foundation.</p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-slate-700">Part Tests</span>
-                    <span className="text-xl font-black text-slate-800">{breakdown.part} Tests</span>
-                  </div>
-                  <p className="text-xs text-slate-600">Multi-unit progressive revision assessments testing combined subject areas.</p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-slate-700">Cumulative Tests</span>
-                    <span className="text-xl font-black text-slate-800">{breakdown.cumulative} Tests</span>
-                  </div>
-                  <p className="text-xs text-slate-600">Half-syllabus midterm mock exams consolidating 11th and 12th topics.</p>
-                </div>
-
-                <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-100 space-y-2 sm:col-span-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-xs font-extrabold uppercase text-emerald-800">Full-Syllabus Mock Tests</span>
-                    <span className="text-xl font-black text-emerald-700">{breakdown.fullMock} Tests</span>
-                  </div>
-                  <p className="text-xs text-slate-600">Complete 720-mark final NEET mock examinations replicating actual exam pressure.</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 3: STUDENT BENEFITS */}
-          {activeTab === 'benefits' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Student & Institutional Benefits</h3>
-                <p className="text-sm text-slate-600">Key advantages delivered to students and partner institutions.</p>
-              </div>
-
-              <div className="grid sm:grid-cols-2 gap-4">
-                {[
-                  { title: 'All India Student Ranking', desc: 'Real-time percentile and rank calculation across thousands of aspirants nationwide.' },
-                  { title: simulatorTitle, desc: simulatorDesc },
-                  { title: 'Chapter-Wise Reports', desc: 'Deep diagnostic analysis pinpointing strong and weak topics for targeted improvement.' },
-                  { title: 'Curated Solution PDFs', desc: 'Step-by-step step solutions, shortcut techniques, and NCERT page references.' },
-                ].map((b, i) => (
-                  <div key={i} className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
-                    <div className="p-1.5 rounded-lg bg-blue-50 text-[#2563EB] border border-blue-100 shrink-0 mt-0.5">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <div>
-                      <h4 className="text-xs font-extrabold text-[#071833]">{b.title}</h4>
-                      <p className="text-xs text-slate-600 mt-0.5">{b.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* TAB 5: PERFORMANCE ANALYTICS */}
-          {activeTab === 'analytics' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Performance Analytics Suite</h3>
-                <p className="text-sm text-slate-600">Actionable analytical insights provided after every CBT mock test.</p>
-              </div>
-
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
-                  <BarChart3 className="h-8 w-8 text-[#2563EB] mx-auto" />
-                  <h4 className="text-xs font-extrabold text-[#071833]">Time & Speed Analytics</h4>
-                  <p className="text-xs text-slate-600">Track average time spent per question and identify speed bottlenecks.</p>
-                </div>
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
-                  <Sparkles className="h-8 w-8 text-[#2563EB] mx-auto" />
-                  <h4 className="text-xs font-extrabold text-[#071833]">Accuracy Metrics</h4>
-                  <p className="text-xs text-slate-600">Monitor negative marking penalties and attempt accuracy percentages.</p>
-                </div>
-                <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-2">
-                  <Award className="h-8 w-8 text-[#2563EB] mx-auto" />
-                  <h4 className="text-xs font-extrabold text-[#071833]">State & National Benchmarking</h4>
-                  <p className="text-xs text-slate-600">Compare batch rank performance against regional peer groups.</p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* TAB 6: STUDY RESOURCES */}
-          {activeTab === 'resources' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Included Digital Study Resources</h3>
-                <p className="text-sm text-slate-600">Digital resources bundled with this test series package.</p>
-              </div>
-
-              {series?.brochure_url && (
-                <div className="flex flex-wrap items-center justify-between gap-4 p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-blue-50 via-indigo-50 to-purple-50 border border-blue-200/80 shadow-xs">
-                  <div className="flex items-center gap-3.5 min-w-0">
-                    <div className="p-3 rounded-xl bg-blue-600 text-white shadow-xs shrink-0">
-                      <FileText className="h-6 w-6" />
-                    </div>
-                    <div className="min-w-0">
-                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-blue-600 bg-blue-100/70 px-2 py-0.5 rounded-md">
-                        Test-Series Overview
-                      </span>
-                      <h4 className="text-sm sm:text-base font-black text-slate-900 mt-1 truncate">
-                        {series.brochure_name || `${series.title} Brochure`}
-                      </h4>
-                      <p className="text-xs text-slate-600 mt-0.5">
-                        Complete test series overview, assessment schedule, pattern, and package details.
-                      </p>
-                    </div>
-                  </div>
-                  <a
-                    href={getBrochureDownloadUrl(series)}
-                    download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-extrabold shadow-sm transition shrink-0"
-                  >
-                    <Download className="h-4 w-4" />
-                    <span>Download Test-Series Brochure</span>
-                  </a>
-                </div>
-              )}
-
-              <ul className="space-y-3 text-xs sm:text-sm text-slate-700">
-                <li className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <FileText className="h-4 w-4 text-[#2563EB] shrink-0" />
-                  <span>Downloadable PDF solutions with step-by-step explanatory notes</span>
-                </li>
-                <li className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <BookOpen className="h-4 w-4 text-[#2563EB] shrink-0" />
-                  <span>NCERT high-yield formula cheat-sheets & quick revision guides</span>
-                </li>
-                <li className="flex items-center gap-2.5 p-3 rounded-xl bg-slate-50 border border-slate-200">
-                  <ShieldCheck className="h-4 w-4 text-[#2563EB] shrink-0" />
-                  <span>Topic-wise error bank highlighting previous attempt mistakes</span>
-                </li>
-              </ul>
-            </div>
-          )}
-
-          {/* TAB 6: FAQS */}
-          {activeTab === 'faqs' && (
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-xl font-extrabold text-[#071833]">Frequently Asked Questions</h3>
-                <p className="text-sm text-slate-600">Common questions about this AIETS program.</p>
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  { q: 'Can students take tests on mobile phones?', a: 'Yes. The test interface is fully responsive and supports laptop, desktop, tablet, and mobile devices.' },
-                  { q: 'How soon are test results generated?', a: 'Instant analysis and scorecards are generated immediately upon test submission.' },
-                  { q: 'What is the validity period of this series?', a: `Access remains active for ${series.validity_days || 365} days from enrollment.` },
-                ].map((faq, i) => (
-                  <div key={i} className="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                    <h4 className="text-xs font-extrabold text-[#071833]">{faq.q}</h4>
-                    <p className="text-xs text-slate-600">{faq.a}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
       </div>
     </div>
