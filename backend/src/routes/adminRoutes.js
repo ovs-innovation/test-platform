@@ -199,4 +199,24 @@ router.patch('/forum/:id/lock', lockAdminForumTopic);
 router.delete('/forum/:id', deleteAdminForumTopic);
 router.delete('/forum/replies/:replyId', deleteAdminForumReply);
 
+// Admin Dynamic Admission Form Builder & Submissions Endpoints
+import {
+  getAdminAdmissionFormConfig,
+  updateAdminAdmissionFormConfig,
+  resetAdminAdmissionFormConfig,
+  listAdminAdmissions,
+  getAdminAdmissionDetail,
+  updateAdminAdmissionStatus,
+  deleteAdminAdmission,
+} from '../controllers/admissionController.js';
+
+router.get('/admission-form', getAdminAdmissionFormConfig);
+router.put('/admission-form', updateAdminAdmissionFormConfig);
+router.post('/admission-form/reset', resetAdminAdmissionFormConfig);
+
+router.get('/admissions', listAdminAdmissions);
+router.get('/admissions/:id', getAdminAdmissionDetail);
+router.patch('/admissions/:id/status', updateAdminAdmissionStatus);
+router.delete('/admissions/:id', deleteAdminAdmission);
+
 export default router;

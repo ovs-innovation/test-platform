@@ -50,16 +50,14 @@ export default function EdvedumHero() {
       {/* 1. EDVEDUM BRANDED STUDENT HERO ARTWORK LAYER (Preserved for screens 768px+ - md:block) */}
       {/* Spans 100% full width (inset-0) with ultra-wide mask transition (35% to 78%) for 0% visible seam */}
       <div
-        className="hidden md:block absolute inset-0 bg-no-repeat opacity-95 transition-all duration-700 pointer-events-none z-[1]"
+        className="hidden md:block absolute inset-0 bg-no-repeat opacity-100 transition-all duration-700 pointer-events-none z-[1]"
         style={{
-          backgroundImage: "url('/edvedum/opt.png')",
+          backgroundImage: "url('/edvedum/opt.png?v=5')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
-          filter: 'drop-shadow(0 20px 35px rgba(2,11,24,0.95)) drop-shadow(0 0 30px rgba(0,240,255,0.14))',
-          maskImage: 'linear-gradient(to right, transparent 0%, transparent 35%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.65) 65%, black 82%, black 100%), linear-gradient(to top, transparent 0%, black 20%)',
-          WebkitMaskImage: '-webkit-linear-gradient(left, transparent 0%, transparent 35%, rgba(0,0,0,0.12) 48%, rgba(0,0,0,0.65) 65%, black 82%, black 100%), -webkit-linear-gradient(bottom, transparent 0%, black 20%)',
-          maskComposite: 'intersect',
-          WebkitMaskComposite: 'destination-in',
+          filter: 'drop-shadow(0 20px 35px rgba(2, 27, 62, 0.95)) drop-shadow(0 0 30px rgba(4, 8, 98, 0.14))',
+          maskImage: 'linear-gradient(to top, transparent 0%, black 20%)',
+          WebkitMaskImage: '-webkit-linear-gradient(bottom, transparent 0%, black 20%)',
         }}
         aria-hidden="true"
       />
@@ -136,7 +134,7 @@ export default function EdvedumHero() {
             }}
           >
             <img
-              src="/edvedum/opt.png"
+              src="/edvedum/opt.png?v=5"
               alt="EDVEDUM student using CBT mock tests on laptop and mobile"
               className="w-full h-auto block object-contain object-center border-none rounded-none"
             />

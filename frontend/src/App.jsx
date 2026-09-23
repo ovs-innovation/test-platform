@@ -29,6 +29,8 @@ const Contact = lazy(() => import('./pages/public/Contact.jsx'));
 const Careers = lazy(() => import('./pages/public/Careers.jsx'));
 const SchoolsB2B = lazy(() => import('./pages/public/SchoolsB2B.jsx'));
 const InstitutionLogin = lazy(() => import('./pages/public/InstitutionLogin.jsx'));
+const AdmissionForm = lazy(() => import('./pages/public/AdmissionForm.jsx'));
+const AdmissionConfirmation = lazy(() => import('./pages/public/AdmissionConfirmation.jsx'));
 const EdvedumLegalPage = lazy(() => import('./components/edvedum/EdvedumLegalPage.jsx'));
 
 // Candidate Portal pages
@@ -69,6 +71,7 @@ const AdminAttemptDetail = lazy(() => import('./pages/admin/AttemptDetail.jsx'))
 const AdminSchools = lazy(() => import('./pages/admin/Schools.jsx'));
 const AdminSchoolDetail = lazy(() => import('./pages/admin/SchoolDetail.jsx'));
 const AdminDiscussionHub = lazy(() => import('./pages/admin/AdminDiscussionHub.jsx'));
+const AdminAdmissionManager = lazy(() => import('./pages/admin/AdmissionManager.jsx'));
 
 import InstitutionDashboard, {
   InstOverviewTabWrapper,
@@ -105,6 +108,8 @@ export default function App() {
         {/* PUBLIC WEBSITE ROUTES - Rendered inside PublicLayout */}
         <Route element={<PublicLayout />}>
           <Route path="/" element={<AppHome />} />
+          <Route path="/admission" element={<AdmissionForm />} />
+          <Route path="/admission/confirmation" element={<AdmissionConfirmation />} />
           <Route path="/test-series" element={<TestSeriesCatalog />} />
           <Route path="/test-series/:slug" element={<TestSeriesDetail />} />
           <Route path="/blog" element={<Blog />} />
@@ -196,6 +201,7 @@ export default function App() {
 
         {/* PLATFORM ADMIN PROTECTED ROUTES */}
         <Route path="/admin" element={<ProtectedRoute role="admin"><AdminLayout><AdminOverview /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/admissions" element={<ProtectedRoute role="admin"><AdminLayout><AdminAdmissionManager /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/discussion-hub" element={<ProtectedRoute role="admin"><AdminLayout><AdminDiscussionHub /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/tests" element={<Navigate to="/admin/assessments" replace />} />
         <Route path="/admin/assessments" element={<ProtectedRoute role="admin"><AdminLayout><AdminAssessments /></AdminLayout></ProtectedRoute>} />

@@ -2,6 +2,12 @@ import { Router } from 'express';
 import { getPublicStats, listPublicTestSeries, getPublicTestSeries, listSubjects, downloadPublicBrochure } from '../controllers/publicController.js';
 import { getCmsPage, listPublicCms, validateCoupon, listPublicCoupons } from '../controllers/platformController.js';
 import { createB2bEnquiry } from '../controllers/b2bController.js';
+import { noCache } from '../middleware/httpCache.js';
+import {
+  getPublicAdmissionFormConfig,
+  submitPublicAdmission,
+  getPublicAdmissionByAppNo
+} from '../controllers/admissionController.js';
 
 const router = Router();
 
@@ -15,6 +21,11 @@ router.get('/cms/:slug', getCmsPage);
 router.get('/coupons/active', listPublicCoupons);
 router.post('/coupons/validate', validateCoupon);
 router.post('/b2b-enquiry', createB2bEnquiry);
+
+// Dynamic Admission Form Public Routes (noCache ensures instant reflection when admin updates schema)
+router.get('/admission-form', noCache, getPublicAdmissionFormConfig);
+router.post('/admission-form/submit', submitPublicAdmission);
+router.get('/admission-form/application/:applicationNo', noCache, getPublicAdmissionByAppNo);
 
 export default router;
 

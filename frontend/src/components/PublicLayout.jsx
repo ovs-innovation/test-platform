@@ -19,7 +19,7 @@ export default function PublicLayout() {
       </main>
 
       {/* FOOTER - Compact SaaS Spacing & Proportional Layout */}
-      <footer className="border-t border-slate-800 bg-[#0a1628] text-white">
+      <footer className="relative z-10 border-t border-slate-800 bg-[#0a1628] text-white">
         <div className="mx-auto max-w-[1280px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
 
           {/* Main Footer Grid - 6 Column Grid giving Legal ample width */}

@@ -672,3 +672,32 @@ export const aiTestService = {
   },
 };
 
+export const admissionService = {
+  // Public
+  getPublicConfig: () =>
+    api
+      .get('/public/admission-form', { params: { _t: Date.now() } })
+      .then((r) => r.data.config),
+  submitAdmission: (data) => api.post('/public/admission-form/submit', data).then((r) => r.data),
+  getApplication: (applicationNo) => api.get(`/public/admission-form/application/${applicationNo}`).then((r) => r.data.submission),
+
+  // Admin Builder & Management
+  getAdminConfig: () =>
+    api
+      .get('/admin/admission-form', { params: { _t: Date.now() } })
+      .then((r) => r.data.config),
+  saveAdminConfig: (data) => {
+    clearCache();
+    return api.put('/admin/admission-form', data).then((r) => r.data);
+  },
+  resetAdminConfig: () => {
+    clearCache();
+    return api.post('/admin/admission-form/reset').then((r) => r.data);
+  },
+  listSubmissions: (params) => api.get('/admin/admissions', { params }).then((r) => r.data),
+  getSubmissionDetail: (id) => api.get(`/admin/admissions/${id}`).then((r) => r.data.submission),
+  updateSubmissionStatus: (id, data) => api.patch(`/admin/admissions/${id}/status`, data).then((r) => r.data),
+  deleteSubmission: (id) => api.delete(`/admin/admissions/${id}`).then((r) => r.data),
+};
+
+

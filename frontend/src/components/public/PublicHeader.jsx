@@ -285,6 +285,10 @@ export default function PublicHeader({ onHeightChange }) {
                   Center Login
                 </Link>
                 <span className="text-white/30 hidden sm:inline" aria-hidden="true">|</span>
+                <Link to="/admission/confirmation" onClick={() => setOpenMenu(null)} className="hidden text-white/85 hover:text-white transition-colors sm:inline font-semibold">
+                  Track Application
+                </Link>
+                <span className="text-white/30 hidden sm:inline" aria-hidden="true">|</span>
                 <Link to="/blog" onClick={() => setOpenMenu(null)} className="hidden text-white/85 hover:text-white transition-colors sm:inline">
                   Blog
                 </Link>
@@ -400,8 +404,17 @@ export default function PublicHeader({ onHeightChange }) {
             })}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <Link to="/signup" className="edvedum-btn-gradient hidden rounded-full px-5 py-2.5 text-sm font-semibold text-white shadow-md sm:inline-flex">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <Link
+              to="/admission"
+              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] hover:from-[#002038] hover:via-[#0b4d7c] hover:to-[#002038] px-3.5 sm:px-4.5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-white shadow-md shadow-[#002B49]/20 hover:shadow-lg hover:shadow-[#002B49]/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 border border-[#C5A059]/35 hover:border-[#C5A059]/70"
+            >
+              <span className="tracking-wide">Admission Form</span>
+            </Link>
+            <Link
+              to="/signup"
+              className="hidden rounded-full bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-[#002B49] shadow-md shadow-[#C5A059]/25 hover:shadow-lg hover:shadow-[#C5A059]/35 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 sm:inline-flex border border-[#DFB76C]/70"
+            >
               Enroll Now
             </Link>
             <button
@@ -476,9 +489,29 @@ export default function PublicHeader({ onHeightChange }) {
                   <SocialIcon type="linkedin" />
                 </div>
               </div>
-              <Link to="/signup" onClick={() => setMenuOpen(false)} className="edvedum-btn-gradient mt-3 rounded-full py-3 text-center text-sm font-semibold text-white">
-                Enroll Now
-              </Link>
+              <div className="mt-4 flex flex-col gap-2">
+                <Link
+                  to="/admission"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-center rounded-full bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] py-2.5 text-center text-sm font-bold text-white shadow-md shadow-[#002B49]/20 border border-[#C5A059]/35 hover:border-[#C5A059]/70 transition-all active:scale-[0.99]"
+                >
+                  <span className="tracking-wide">Admission Form</span>
+                </Link>
+                <Link
+                  to="/admission/confirmation"
+                  onClick={() => setMenuOpen(false)}
+                  className="text-center text-xs font-bold text-slate-600 hover:text-[#002B49] py-1 transition"
+                >
+                  Already Applied? Track / View Application
+                </Link>
+                <Link
+                  to="/signup"
+                  onClick={() => setMenuOpen(false)}
+                  className="rounded-full bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] py-2.5 text-center text-sm font-bold text-[#002B49] shadow-md shadow-[#C5A059]/25 border border-[#DFB76C]/70 transition-all active:scale-[0.99]"
+                >
+                  Enroll Now
+                </Link>
+              </div>
             </nav>
           </div>
         )}
