@@ -30,9 +30,18 @@ export default function AdmissionConfirmation() {
   const [searchInput, setSearchInput] = useState('');
   const [copied, setCopied] = useState(false);
 
+  // Clean up any stale unsubmitted draft keys from legacy sessions
+  useEffect(() => {
+    try {
+      sessionStorage.removeItem('edvedum_admission_draft');
+      sessionStorage.removeItem('edvedum_admission_id');
+    } catch (e) {}
+  }, []);
+
   // Fetch application from database by application number
   const loadApplication = async (appNo) => {
     if (!appNo || !appNo.trim()) {
+      setData(null);
       setLoading(false);
       return;
     }
@@ -43,7 +52,7 @@ export default function AdmissionConfirmation() {
       const cleanAppNo = appNo.trim().toUpperCase();
       const sub = await admissionService.getApplication(cleanAppNo);
 
-      if (sub) {
+      if (sub && sub.application_no) {
         const fData = sub.form_data || {};
         const combined = {
           ...fData,
@@ -59,25 +68,14 @@ export default function AdmissionConfirmation() {
         };
         setData(combined);
         setSubmissionStatus(sub.status || 'pending');
-        sessionStorage.setItem('edvedum_admission_draft', JSON.stringify(combined));
-        sessionStorage.setItem('edvedum_admission_id', sub.application_no);
+        sessionStorage.setItem('edvedum_submitted_application_no', sub.application_no);
         return;
+      } else {
+        throw new Error('Application record not found');
       }
     } catch (err) {
-      console.warn('API lookup returned error, trying sessionStorage fallback:', err);
-      // Fallback to session draft
-      const saved = sessionStorage.getItem('edvedum_admission_draft');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (parsed.applicationNo?.toUpperCase() === appNo.trim().toUpperCase()) {
-            setData(parsed);
-            setSubmissionStatus('pending');
-            return;
-          }
-        } catch (e) {}
-      }
-      setErrorMessage(`No admission application found with Application Number: "${appNo}". Please verify and try again.`);
+      console.warn('API lookup returned error:', err);
+      setErrorMessage(`No admission application found with Application Number: "${appNo}". Please verify the number or submit a new admission form.`);
       setData(null);
     } finally {
       setLoading(false);
@@ -86,23 +84,13 @@ export default function AdmissionConfirmation() {
 
   useEffect(() => {
     const urlAppNo = searchParams.get('appNo');
-    const sessionAppNo = sessionStorage.getItem('edvedum_admission_id');
-    const targetNo = urlAppNo || sessionAppNo;
+    const sessionSubmittedNo = sessionStorage.getItem('edvedum_submitted_application_no');
+    const targetNo = urlAppNo || sessionSubmittedNo;
 
-    if (targetNo) {
-      loadApplication(targetNo);
+    if (targetNo && targetNo.trim()) {
+      loadApplication(targetNo.trim());
     } else {
-      // Check if sessionStorage has a draft
-      const saved = sessionStorage.getItem('edvedum_admission_draft');
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          setData(parsed);
-          setSubmissionStatus('pending');
-          setLoading(false);
-          return;
-        } catch (e) {}
-      }
+      setData(null);
       setLoading(false);
     }
   }, [searchParams]);
@@ -166,22 +154,37 @@ export default function AdmissionConfirmation() {
     );
   }
 
-  // Not found or Search screen
+  // Not filled yet or not found screen
   if (!data) {
     return (
       <div className="min-h-screen bg-[#F8FAFC] py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
         <div className="max-w-xl w-full bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200/80 text-center space-y-6">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#002B49]/5 border border-[#002B49]/10 text-[#002B49]">
-            <Search className="h-8 w-8 text-[#C5A059]" />
+          <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl bg-amber-500/10 border border-amber-500/20 text-amber-600">
+            <FileText className="h-10 w-10 text-amber-600" />
           </div>
 
-          <div>
+          <div className="space-y-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
+              <span className="h-2 w-2 rounded-full bg-amber-500 animate-pulse" />
+              Not Submitted Yet
+            </span>
             <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-              Track &amp; View Admission Application
+              You Haven't Filled the Admission Form Yet
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-              Enter your official EDVEDUM Application Number to view, verify status, and print your admission form.
+            <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed max-w-md mx-auto">
+              No active or submitted admission application was found for your session. Complete the 2-step online application to apply for enrollment at EDVEDUM Academy.
             </p>
+          </div>
+
+          {/* Primary Action Button to Fill the Form */}
+          <div className="pt-2">
+            <Link
+              to="/admission"
+              className="inline-flex items-center justify-center gap-2 w-full sm:w-auto rounded-2xl bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] px-8 py-3.5 text-sm font-bold text-white shadow-lg shadow-[#002B49]/20 hover:from-[#002038] hover:to-[#0b4d7c] transition active:scale-[0.99] border border-[#C5A059]/40"
+            >
+              <Sparkles className="h-4 w-4 text-[#C5A059]" />
+              <span>Fill Admission Form Now</span>
+            </Link>
           </div>
 
           {errorMessage && (
@@ -191,37 +194,48 @@ export default function AdmissionConfirmation() {
             </div>
           )}
 
-          <form onSubmit={handleSearch} className="space-y-3">
-            <div className="relative">
-              <input
-                type="text"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                placeholder="e.g. EDV-2026-34512"
-                className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-3.5 text-center text-sm font-mono font-bold text-[#002B49] placeholder:text-slate-400 placeholder:font-normal focus:border-[#002B49] focus:bg-white focus:outline-none transition uppercase"
-              />
+          {/* Secondary Option: Look up with an Application Number */}
+          <div className="pt-6 border-t border-slate-100 text-left space-y-3">
+            <div>
+              <p className="text-xs font-bold text-slate-800">
+                Already submitted on another device or offline center?
+              </p>
+              <p className="text-[11px] text-slate-500">
+                Enter your official Application Number below to retrieve and print your submitted form:
+              </p>
             </div>
-            <button
-              type="submit"
-              className="w-full rounded-2xl bg-gradient-to-r from-[#002B49] to-[#083e66] py-3.5 text-xs sm:text-sm font-bold text-white shadow-md shadow-[#002B49]/20 hover:from-[#002038] hover:to-[#0b4d7c] transition active:scale-[0.99] border border-[#C5A059]/40"
-            >
-              Find &amp; View Application Slip
-            </button>
-          </form>
 
-          <div className="pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-            <Link
-              to="/admission"
-              className="font-bold text-[#002B49] hover:text-[#C5A059] flex items-center gap-1 transition"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              <span>Apply for New Admission</span>
-            </Link>
+            <form onSubmit={handleSearch} className="flex gap-2">
+              <div className="relative flex-1">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="e.g. EDV-2026-34512"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs font-mono font-bold text-[#002B49] placeholder:text-slate-400 placeholder:font-normal focus:border-[#002B49] focus:bg-white focus:outline-none transition uppercase"
+                />
+              </div>
+              <button
+                type="submit"
+                className="shrink-0 rounded-xl bg-[#002B49] hover:bg-[#083e66] px-5 py-2.5 text-xs font-bold text-white shadow transition"
+              >
+                Track
+              </button>
+            </form>
+          </div>
+
+          <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
             <Link
               to="/"
               className="font-semibold text-slate-500 hover:text-slate-800 transition"
             >
-              Back to Home
+              ← Back to Home
+            </Link>
+            <Link
+              to="/admission"
+              className="font-bold text-[#002B49] hover:text-[#C5A059] transition"
+            >
+              New Admission →
             </Link>
           </div>
         </div>

@@ -192,10 +192,10 @@ export default function AdmissionForm() {
     academicYear: '2026–2027'
   });
 
-  // Load existing draft if any
+  // Load existing input progress if any
   const [formData, setFormData] = useState(() => {
     try {
-      const saved = sessionStorage.getItem('edvedum_admission_draft');
+      const saved = sessionStorage.getItem('edvedum_form_inputs_draft');
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     const today = new Date().toISOString().split('T')[0];
@@ -264,10 +264,10 @@ export default function AdmissionForm() {
     return () => window.removeEventListener('focus', fetchLatestConfig);
   }, []);
 
-  // Sync draft to sessionStorage
+  // Sync in-progress form inputs to sessionStorage
   useEffect(() => {
     try {
-      sessionStorage.setItem('edvedum_admission_draft', JSON.stringify(formData));
+      sessionStorage.setItem('edvedum_form_inputs_draft', JSON.stringify(formData));
     } catch (e) {}
   }, [formData]);
 
@@ -392,16 +392,21 @@ export default function AdmissionForm() {
 
       // Submit to backend
       const res = await admissionService.submitAdmission(payload);
-      if (res.submission) {
-        sessionStorage.setItem('edvedum_admission_draft', JSON.stringify(formData));
-        sessionStorage.setItem('edvedum_admission_id', formData.applicationNo);
-      }
+      sessionStorage.setItem('edvedum_submitted_application_no', formData.applicationNo);
+      try {
+        sessionStorage.removeItem('edvedum_form_inputs_draft');
+        sessionStorage.removeItem('edvedum_admission_draft');
+        sessionStorage.removeItem('edvedum_admission_id');
+      } catch (e) {}
       navigate(`/admission/confirmation?appNo=${encodeURIComponent(formData.applicationNo)}`);
     } catch (err) {
       console.warn('Backend submission warning:', err);
-      // Fallback: save to sessionStorage and proceed
-      sessionStorage.setItem('edvedum_admission_draft', JSON.stringify(formData));
-      sessionStorage.setItem('edvedum_admission_id', formData.applicationNo);
+      sessionStorage.setItem('edvedum_submitted_application_no', formData.applicationNo);
+      try {
+        sessionStorage.removeItem('edvedum_form_inputs_draft');
+        sessionStorage.removeItem('edvedum_admission_draft');
+        sessionStorage.removeItem('edvedum_admission_id');
+      } catch (e) {}
       navigate(`/admission/confirmation?appNo=${encodeURIComponent(formData.applicationNo)}`);
     } finally {
       setSubmitting(false);
