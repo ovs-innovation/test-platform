@@ -407,13 +407,13 @@ export default function PublicHeader({ onHeightChange }) {
           <div className="flex items-center gap-2 sm:gap-3">
             <Link
               to="/admission"
-              className="group inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] hover:from-[#002038] hover:via-[#0b4d7c] hover:to-[#002038] px-3.5 sm:px-4.5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-white shadow-md shadow-[#002B49]/20 hover:shadow-lg hover:shadow-[#002B49]/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 border border-[#C5A059]/35 hover:border-[#C5A059]/70"
+              className="group hidden sm:inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] hover:from-[#002038] hover:via-[#0b4d7c] hover:to-[#002038] px-3.5 sm:px-4.5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-white shadow-md shadow-[#002B49]/20 hover:shadow-lg hover:shadow-[#002B49]/30 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 border border-[#C5A059]/35 hover:border-[#C5A059]/70"
             >
               <span className="tracking-wide">Admission Form</span>
             </Link>
             <Link
               to="/signup"
-              className="hidden rounded-full bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-[#002B49] shadow-md shadow-[#C5A059]/25 hover:shadow-lg hover:shadow-[#C5A059]/35 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 sm:inline-flex border border-[#DFB76C]/70"
+              className="inline-flex rounded-full bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] px-3.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-[13px] font-bold text-[#002B49] shadow-md shadow-[#C5A059]/25 hover:shadow-lg hover:shadow-[#C5A059]/35 transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 border border-[#DFB76C]/70"
             >
               Enroll Now
             </Link>
@@ -503,13 +503,6 @@ export default function PublicHeader({ onHeightChange }) {
                   className="text-center text-xs font-bold text-slate-600 hover:text-[#002B49] py-1 transition"
                 >
                   Already Applied? Track / View Application
-                </Link>
-                <Link
-                  to="/signup"
-                  onClick={() => setMenuOpen(false)}
-                  className="rounded-full bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] py-2.5 text-center text-sm font-bold text-[#002B49] shadow-md shadow-[#C5A059]/25 border border-[#DFB76C]/70 transition-all active:scale-[0.99]"
-                >
-                  Enroll Now
                 </Link>
               </div>
             </nav>

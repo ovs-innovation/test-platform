@@ -155,11 +155,11 @@ function getCtaText(section) {
   return `Explore all ${section.title} tests`;
 }
 
-function ProgramCard({ section, isOpen, onToggle, onClose }) {
+function ProgramCard({ section, index, isOpen, onToggle, onClose }) {
   const theme = THEME_STYLES[section.theme];
   const options = getDropdownOptions(section);
   const isDisabled = Boolean(section.disabled);
-  const IconComponent = section.icon;
+  const isEven = index % 2 === 0;
 
   const handleCardClick = (e) => {
     e.preventDefault();
@@ -170,27 +170,27 @@ function ProgramCard({ section, isOpen, onToggle, onClose }) {
 
   return (
     <div className="relative group overflow-visible">
-      {/* BADGE LAYER ON TOP (z-30: Positioned at -top-3 right-4 above card top border) */}
+      {/* BADGE LAYER ON TOP */}
       {section.badge && (
         <span
-          className={`absolute -top-3 right-4 z-30 inline-flex items-center gap-1 rounded-full px-3 py-0.5 text-[10.5px] font-extrabold uppercase tracking-wider shadow-md ${
+          className={`absolute -top-2.5 sm:-top-3 right-2 sm:right-4 z-30 inline-flex items-center gap-1 rounded-full px-2 sm:px-3 py-0.5 text-[9px] sm:text-[10.5px] font-extrabold uppercase tracking-wider shadow-md ${
             isDisabled
               ? 'bg-amber-500 text-white shadow-amber-500/20 border border-amber-400'
               : 'bg-gradient-to-r from-[#00F0FF] to-[#06b6d4] text-slate-950 shadow-cyan-500/20'
           }`}
         >
-          <span className={`h-1.5 w-1.5 rounded-full ${isDisabled ? 'bg-white' : 'bg-slate-950'} animate-pulse`} />
+          <span className={`h-1 sm:h-1.5 w-1 sm:w-1.5 rounded-full ${isDisabled ? 'bg-white' : 'bg-slate-950'} animate-pulse`} />
           {section.badge}
         </span>
       )}
 
-      {/* CARD MAIN BUTTON CONTAINER (Height: 187px, Rounded: 20px) */}
+      {/* CARD MAIN BUTTON CONTAINER (Height: 165px on mobile, 187px on sm+) */}
       <button
         type="button"
         onClick={handleCardClick}
         disabled={isDisabled}
         aria-disabled={isDisabled}
-        className={`group relative flex w-full h-[187px] overflow-hidden rounded-[20px] border-2 text-left transition-all duration-200 shadow-sm ${
+        className={`group relative flex w-full h-[165px] sm:h-[187px] overflow-hidden rounded-[18px] sm:rounded-[20px] border-2 text-left transition-all duration-200 shadow-sm ${
           section.bgColor
         } ${isDisabled ? 'opacity-90 cursor-not-allowed border-slate-200' : `${section.hoverBg} cursor-pointer hover:shadow-xl hover:-translate-y-0.5 ${
           isOpen ? section.activeBorder : section.borderColor
@@ -199,11 +199,11 @@ function ProgramCard({ section, isOpen, onToggle, onClose }) {
         {/* LAYER 1: PALE CARD BACKGROUND */}
         <div className="absolute inset-0 z-0 pointer-events-none" />
 
-        {/* LAYER 2: ABSOLUTE STUDENT CUTOUT IMAGE (z-10, limited width on mobile to avoid covering text) */}
+        {/* LAYER 2: ABSOLUTE STUDENT CUTOUT IMAGE */}
         <img
           src={section.studentImage}
           alt=""
-          className="absolute z-10 pointer-events-none object-contain object-bottom max-w-[48%] sm:max-w-none transition-transform duration-200 group-hover:-translate-y-1 drop-shadow-sm"
+          className="absolute z-10 pointer-events-none object-contain object-bottom max-w-[50%] sm:max-w-none max-h-[82%] sm:max-h-none transition-transform duration-200 group-hover:-translate-y-1 drop-shadow-sm"
           style={{
             height: section.imageStyle.height,
             right: section.imageStyle.right,
@@ -213,36 +213,36 @@ function ProgramCard({ section, isOpen, onToggle, onClose }) {
           loading="eager"
         />
 
-        {/* LAYER 3: INTERACTIVE CONTENT (z-20, text container) */}
-        <div className="relative z-20 flex flex-col justify-between p-4 sm:p-5 w-[56%] sm:w-[64%] h-full pointer-events-none pr-1 sm:pr-0">
+        {/* LAYER 3: INTERACTIVE CONTENT */}
+        <div className="relative z-20 flex flex-col justify-between p-3 sm:p-5 w-[58%] sm:w-[64%] h-full pointer-events-none pr-0.5 sm:pr-0">
           
           {/* UPPER HEADER: TITLES */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <div className="min-w-0">
-              <h3 className="text-[18px] sm:text-[20px] font-black text-slate-900 leading-tight whitespace-nowrap">
+              <h3 className="text-[16px] sm:text-[20px] font-black text-slate-900 leading-tight truncate">
                 {section.title}
               </h3>
-              <p className="text-[13px] sm:text-[14px] font-semibold text-slate-500 mt-0.5 whitespace-nowrap">
+              <p className="text-[11px] sm:text-[14px] font-semibold text-slate-500 mt-0.5 truncate">
                 {section.subtitle}
               </p>
             </div>
           </div>
 
-          {/* LOWER CONTROL: SELECT LABEL & CIRCULAR ARROW BUTTON (Min 44px touch area) */}
-          <div className="flex items-center gap-2 pt-2 min-h-[44px]">
+          {/* LOWER CONTROL */}
+          <div className="flex items-center gap-1.5 sm:gap-2 pt-1 sm:pt-2 min-h-[38px] sm:min-h-[44px]">
             {isDisabled ? (
-              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300/80 text-[11px] font-extrabold uppercase tracking-wider">
+              <span className="inline-flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300/80 text-[9.5px] sm:text-[11px] font-extrabold uppercase tracking-wider">
                 Coming Soon
               </span>
             ) : (
-              <div className="flex items-center gap-2 py-1">
-                <span className="text-[13px] font-black uppercase tracking-wider text-slate-700 group-hover:text-slate-900">
+              <div className="flex items-center gap-1.5 sm:gap-2 py-1">
+                <span className="text-[11px] sm:text-[13px] font-black uppercase tracking-wider text-slate-700 group-hover:text-slate-900">
                   {isOpen ? 'CLOSE' : 'SELECT'}
                 </span>
-                <div className={`h-[34px] w-[34px] sm:h-[32px] sm:w-[32px] rounded-full border flex items-center justify-center bg-white shadow-xs transition-all duration-200 ${
+                <div className={`h-[28px] w-[28px] sm:h-[32px] sm:w-[32px] rounded-full border flex items-center justify-center bg-white shadow-xs transition-all duration-200 ${
                   isOpen ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 text-slate-600 group-hover:border-slate-400 group-hover:scale-110'
                 }`}>
-                  <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-white' : 'group-hover:translate-x-0.5'}`} />
+                  <ChevronDown className={`h-3 w-3 sm:h-3.5 sm:w-3.5 transition-transform duration-200 ${isOpen ? 'rotate-180 text-white' : 'group-hover:translate-x-0.5'}`} />
                 </div>
               </div>
             )}
@@ -250,10 +250,14 @@ function ProgramCard({ section, isOpen, onToggle, onClose }) {
         </div>
       </button>
 
-      {/* ENHANCED DROPDOWN MENU FOR CLASS/COURSE OPTIONS */}
+      {/* ENHANCED DROPDOWN MENU FOR CLASS/COURSE OPTIONS (Spans 2-cols on mobile) */}
       {isOpen && !isDisabled && (
         <div
-          className={`absolute left-0 right-0 top-full z-50 mt-2 sm:mt-3 w-full min-w-full rounded-3xl border-2 bg-white/95 backdrop-blur-xl p-3 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.22)] animate-in fade-in slide-in-from-top-3 duration-200 ${
+          className={`absolute top-full z-50 mt-2 sm:mt-3 rounded-2xl sm:rounded-3xl border-2 bg-white/95 backdrop-blur-xl p-2.5 sm:p-3 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.22)] animate-in fade-in slide-in-from-top-3 duration-200 ${
+            isEven
+              ? 'left-0 w-[calc(200%+0.75rem)] sm:w-full sm:left-0 sm:right-0'
+              : 'right-0 w-[calc(200%+0.75rem)] sm:w-full sm:left-0 sm:right-0'
+          } ${
             section.theme === 'jee' ? 'border-blue-400/50 shadow-blue-500/10' :
             section.theme === 'neet' ? 'border-cyan-400/50 shadow-cyan-500/10' :
             section.theme === 'foundation' ? 'border-indigo-400/50 shadow-indigo-500/10' :
@@ -340,11 +344,12 @@ export default function EdvedumProgramDropdowns() {
   }, []);
 
   return (
-    <div ref={containerRef} className="grid gap-3.5 sm:gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 overflow-visible relative">
-      {PROGRAM_SECTIONS.map((sec) => (
+    <div ref={containerRef} className="grid gap-3 sm:gap-4 grid-cols-2 lg:grid-cols-4 overflow-visible relative">
+      {PROGRAM_SECTIONS.map((sec, idx) => (
         <ProgramCard
           key={sec.id}
           section={sec}
+          index={idx}
           isOpen={openDropdownId === sec.id}
           onToggle={() => setOpenDropdownId((curr) => (curr === sec.id ? null : sec.id))}
           onClose={() => setOpenDropdownId(null)}
