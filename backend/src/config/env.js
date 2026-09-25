@@ -99,6 +99,16 @@ export const env = {
     keySecret: process.env.RAZORPAY_KEY_SECRET || '',
     webhookSecret: process.env.RAZORPAY_WEBHOOK_SECRET || '',
   },
+  phonepe: {
+    clientId: process.env.PHONEPE_CLIENT_ID || '',
+    clientSecret: process.env.PHONEPE_CLIENT_SECRET || '',
+    merchantId: process.env.PHONEPE_MERCHANT_ID || process.env.MERCHANT_ID || '',
+    clientVersion: parseInt(process.env.PHONEPE_CLIENT_VERSION || '1', 10),
+    env: (process.env.PHONEPE_ENV || 'PRODUCTION').toUpperCase(),
+    merchantHostUrl: process.env.PHONEPE_MERCHANT_HOST_URL || 'https://edvedum.com',
+    webhookUsername: process.env.PHONEPE_WEBHOOK_USERNAME || '',
+    webhookPassword: process.env.PHONEPE_WEBHOOK_PASSWORD || '',
+  },
   cloudinary: {
     cloudName: process.env.CLOUDINARY_CLOUD_NAME || '',
     apiKey: process.env.CLOUDINARY_API_KEY || '',

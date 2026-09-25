@@ -99,6 +99,7 @@ export default function TestSeriesDetail() {
       toast.error('Please login as a student');
       return;
     }
+    if (buying) return;
     setBuying(true);
     try {
       const order = await paymentService.createOrder(
@@ -117,6 +118,24 @@ export default function TestSeriesDetail() {
         return;
       }
 
+      // PhonePe Standard Checkout Flow (Default Production Gateway)
+      if (order.provider === 'phonepe' || order.redirectUrl) {
+        sessionStorage.setItem(
+          'edvedum_pending_payment',
+          JSON.stringify({
+            merchantOrderId: order.merchantOrderId,
+            seriesId: series.id,
+            seriesSlug: slug,
+            seriesTitle: series.title,
+            amount: order.amount,
+          })
+        );
+        // Direct redirect to PhonePe checkout
+        window.location.href = order.redirectUrl;
+        return;
+      }
+
+      // Legacy Razorpay Flow fallback
       const loaded = await loadRazorpay();
       if (!loaded) {
         toast.error('Could not load payment gateway');
@@ -128,7 +147,7 @@ export default function TestSeriesDetail() {
         amount: order.amount,
         currency: order.currency,
         name: 'EDVEDUM ACADEMY',
-        description: order.series.title,
+        description: order.series?.title || series.title,
         order_id: order.orderId,
         handler: async (response) => {
           try {

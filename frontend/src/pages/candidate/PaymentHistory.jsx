@@ -75,10 +75,79 @@ export default function PaymentHistory() {
         <div className="overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] shadow-xs">
           <DataTable
             columns={[
-              { key: 'series_title', label: 'Test Series', render: (p) => <span className="font-bold text-slate-900 dark:text-white text-xs">{p.series_title}</span> },
-              { key: 'amount', label: 'Amount', render: (p) => <span className="font-bold text-blue-600 dark:text-blue-400 text-xs">₹{Number(p.amount).toLocaleString('en-IN')}</span> },
-              { key: 'status', label: 'Status', render: (p) => <Badge color={statusColor[p.status] || 'slate'}>{p.status}</Badge> },
-              { key: 'created_at', label: 'Date', render: (p) => <span className="text-slate-500 dark:text-slate-400 font-medium text-xs">{formatDateTime(p.created_at)}</span> },
+              {
+                key: 'series_title',
+                label: 'Test Series',
+                render: (p) => (
+                  <div>
+                    <span className="font-bold text-slate-900 dark:text-white text-xs block">
+                      {p.series_title || 'Enrolled Course/Mock'}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400">
+                      {p.merchant_order_id || p.razorpay_order_id || `#${p.id}`}
+                    </span>
+                  </div>
+                ),
+              },
+              {
+                key: 'provider',
+                label: 'Gateway',
+                render: (p) => (
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-slate-700 dark:text-slate-300">
+                    <span className="h-1.5 w-1.5 rounded-full bg-blue-500" />
+                    {p.provider === 'phonepe' ? 'PhonePe' : p.provider === 'razorpay' ? 'Razorpay' : p.provider === 'free' ? '100% Scholarship' : 'Payment'}
+                  </span>
+                ),
+              },
+              {
+                key: 'amount',
+                label: 'Amount',
+                render: (p) => (
+                  <span className="font-bold text-blue-600 dark:text-blue-400 text-xs">
+                    ₹{Number(p.amount).toLocaleString('en-IN')}
+                  </span>
+                ),
+              },
+              {
+                key: 'status',
+                label: 'Status',
+                render: (p) => (
+                  <Badge color={statusColor[p.status] || 'slate'}>
+                    {p.status === 'success' ? 'Verified' : p.status}
+                  </Badge>
+                ),
+              },
+              {
+                key: 'created_at',
+                label: 'Date',
+                render: (p) => (
+                  <span className="text-slate-500 dark:text-slate-400 font-medium text-xs">
+                    {formatDateTime(p.created_at)}
+                  </span>
+                ),
+              },
+              {
+                key: 'action',
+                label: 'Action',
+                render: (p) =>
+                  p.status === 'pending' && p.merchant_order_id ? (
+                    <Link
+                      to={`/payment/status?merchantOrderId=${p.merchant_order_id}`}
+                      className="px-2.5 py-1 text-[11px] font-bold rounded-lg bg-amber-500/10 text-amber-600 hover:bg-amber-500/20 transition"
+                    >
+                      Check Status
+                    </Link>
+                  ) : p.status === 'success' ? (
+                    <Link
+                      to="/my-tests"
+                      className="text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:underline"
+                    >
+                      Access Tests →
+                    </Link>
+                  ) : (
+                    <span className="text-[11px] text-slate-400">—</span>
+                  ),
+              },
             ]}
             rows={payments}
           />

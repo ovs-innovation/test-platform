@@ -18,7 +18,7 @@ import { studentReportService } from '../../lib/services.js';
 export default function AIInsightsCard({ isDarkMode = false, testId = null, testData = null }) {
   const [aiPlan, setAiPlan] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('summary'); // 'summary' | 'detailed'
+  const [activeTab, setActiveTab] = useState('summary');
 
   const fetchAIPlan = async () => {
     if (testId) {
@@ -44,7 +44,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
             }
           }
         }
-      } catch (_) {}
+      } catch (_) { }
     }
 
     setLoading(true);
@@ -57,7 +57,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
         if (testId) {
           try {
             sessionStorage.setItem(`ai_plan_${testId}`, JSON.stringify(planObj));
-          } catch (_) {}
+          } catch (_) { }
         }
       }
     } catch (err) {
@@ -88,7 +88,7 @@ export default function AIInsightsCard({ isDarkMode = false, testId = null, test
             setAiPlan(cachedObj);
           }
         }
-      } catch (_) {}
+      } catch (_) { }
     }
   }, [testId]);
 

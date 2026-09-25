@@ -146,13 +146,17 @@ export const importPdfTestSeriesSchema = z.object({
 
 export const enrollSchema = z.object({
   test_series_id: z.number().int().positive(),
+  coupon_code: z.string().trim().optional().nullable(),
 });
 
 export const verifyPaymentSchema = z.object({
-  test_series_id: z.number().int().positive(),
-  razorpay_order_id: z.string().min(1),
-  razorpay_payment_id: z.string().min(1),
-  razorpay_signature: z.string().min(1),
+  test_series_id: z.number().int().positive().optional(),
+  merchantOrderId: z.string().min(1).optional(),
+  razorpay_order_id: z.string().min(1).optional(),
+  razorpay_payment_id: z.string().min(1).optional(),
+  razorpay_signature: z.string().min(1).optional(),
+}).refine((data) => data.merchantOrderId || (data.razorpay_order_id && data.razorpay_payment_id), {
+  message: 'Either merchantOrderId (PhonePe) or razorpay verification details must be provided',
 });
 
 export const forgotPasswordSchema = z.object({

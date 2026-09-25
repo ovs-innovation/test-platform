@@ -261,12 +261,24 @@ export const testSeriesService = {
 export const paymentService = {
   createOrder: (test_series_id, coupon_code) =>
     api.post('/payments/create-order', { test_series_id, coupon_code }).then((r) => r.data),
+  initiatePhonePe: (test_series_id, coupon_code) =>
+    api.post('/payments/phonepe/initiate', { test_series_id, coupon_code }).then((r) => r.data),
   verify: (data) => {
     clearCache();
     return api.post('/payments/verify', data).then((r) => r.data);
   },
+  verifyPhonePe: (merchantOrderId) => {
+    clearCache();
+    return api.post('/payments/phonepe/verify', { merchantOrderId }).then((r) => r.data);
+  },
+  getOrderStatus: (merchantOrderId) =>
+    api.get(`/payments/status/${merchantOrderId}`).then((r) => r.data),
   history: () => withCache('payment_history', () => api.get('/payments/history').then((r) => r.data.payments)),
   admin: () => withCache('payment_admin', () => api.get('/payments/admin').then((r) => r.data)),
+  adminReconcile: () => {
+    clearCache('payment_admin');
+    return api.post('/payments/admin/reconcile').then((r) => r.data);
+  },
 };
 
 export const notificationService = {

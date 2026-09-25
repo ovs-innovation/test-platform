@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import { env } from './config/env.js';
-import { razorpayWebhook } from './controllers/paymentController.js';
+import { razorpayWebhook, phonepeWebhook } from './controllers/paymentController.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 import { notFoundHandler, errorHandler } from './middleware/errorHandler.js';
 import { publicCache, privateCache, noCache } from './middleware/httpCache.js';
@@ -87,6 +87,7 @@ app.use(
     credentials: true,
   })
 );
+app.post('/api/payments/phonepe/webhook', express.raw({ type: '*/*' }), phonepeWebhook);
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
 app.use(express.json({ limit: '20mb' }));
 app.use(cookieParser());

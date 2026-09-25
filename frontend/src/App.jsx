@@ -31,6 +31,7 @@ const SchoolsB2B = lazy(() => import('./pages/public/SchoolsB2B.jsx'));
 const InstitutionLogin = lazy(() => import('./pages/public/InstitutionLogin.jsx'));
 const AdmissionForm = lazy(() => import('./pages/public/AdmissionForm.jsx'));
 const AdmissionConfirmation = lazy(() => import('./pages/public/AdmissionConfirmation.jsx'));
+const PaymentStatus = lazy(() => import('./pages/public/PaymentStatus.jsx'));
 const EdvedumLegalPage = lazy(() => import('./components/edvedum/EdvedumLegalPage.jsx'));
 
 // Candidate Portal pages
@@ -112,6 +113,8 @@ export default function App() {
           <Route path="/admission/confirmation" element={<AdmissionConfirmation />} />
           <Route path="/test-series" element={<TestSeriesCatalog />} />
           <Route path="/test-series/:slug" element={<TestSeriesDetail />} />
+          <Route path="/payment/status" element={<PaymentStatus />} />
+          <Route path="/payments/status" element={<PaymentStatus />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogPost />} />
           <Route path="/blog/*" element={<BlogPost />} />

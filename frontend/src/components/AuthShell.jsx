@@ -55,7 +55,6 @@ function AdminHeroVisual() {
         </span>
       </div>
 
-      {/* Mock Analytics Cards Row */}
       <div className="grid grid-cols-3 gap-2">
         <div className="rounded-xl border border-slate-800 bg-[#0b1430] p-2 text-center">
           <p className="text-[9.5px] font-semibold text-slate-400 uppercase">Series Packs</p>

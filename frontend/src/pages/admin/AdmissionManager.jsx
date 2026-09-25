@@ -469,11 +469,10 @@ export default function AdmissionManager() {
           <button
             type="button"
             onClick={() => setActiveTab('builder')}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${
-              activeTab === 'builder'
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${activeTab === 'builder'
                 ? 'bg-white dark:bg-slate-900 text-[#002B49] dark:text-[#C5A059] shadow-sm'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-            }`}
+              }`}
           >
             <Settings2 className="h-4 w-4" />
             <span>Form Builder</span>
@@ -484,11 +483,10 @@ export default function AdmissionManager() {
           <button
             type="button"
             onClick={() => setActiveTab('submissions')}
-            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${
-              activeTab === 'submissions'
+            className={`flex items-center gap-2 rounded-lg px-4 py-2 text-xs font-bold transition-all ${activeTab === 'submissions'
                 ? 'bg-white dark:bg-slate-900 text-[#002B49] dark:text-[#C5A059] shadow-sm'
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
-            }`}
+              }`}
           >
             <Users className="h-4 w-4" />
             <span>Applications</span>
@@ -584,11 +582,10 @@ export default function AdmissionManager() {
                             {section.title}
                           </h3>
                           <span
-                            className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase ${
-                              section.step === 2
+                            className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase ${section.step === 2
                                 ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300'
                                 : 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300'
-                            }`}
+                              }`}
                           >
                             Step {section.step || 1}
                           </span>
@@ -689,11 +686,10 @@ export default function AdmissionManager() {
                           {fields.map((field, fIdx) => (
                             <div
                               key={field.name || fIdx}
-                              className={`flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl border transition-all ${
-                                field.isEnabled !== false
+                              className={`flex flex-wrap items-center justify-between gap-3 p-3 rounded-xl border transition-all ${field.isEnabled !== false
                                   ? 'border-slate-200/80 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/30'
                                   : 'border-slate-200 dark:border-slate-800 bg-slate-100/50 opacity-60'
-                              }`}
+                                }`}
                             >
                               <div className="flex items-center gap-3 min-w-0">
                                 <span className="h-2 w-2 rounded-full bg-[#C5A059] shrink-0" />
@@ -726,11 +722,10 @@ export default function AdmissionManager() {
                                 <button
                                   type="button"
                                   onClick={() => handleToggleFieldEnabled(secIdx, fIdx)}
-                                  className={`px-2 py-1 text-[11px] font-semibold rounded ${
-                                    field.isEnabled !== false
+                                  className={`px-2 py-1 text-[11px] font-semibold rounded ${field.isEnabled !== false
                                       ? 'text-emerald-700 bg-emerald-50 dark:bg-emerald-950/40'
                                       : 'text-slate-500 bg-slate-200 dark:bg-slate-700'
-                                  }`}
+                                    }`}
                                 >
                                   {field.isEnabled !== false ? 'Enabled' : 'Disabled'}
                                 </button>
