@@ -40,6 +40,22 @@ services:
         sync: false
       - key: RAZORPAY_WEBHOOK_SECRET
         sync: false
+      - key: PHONEPE_CLIENT_ID
+        sync: false
+      - key: PHONEPE_CLIENT_SECRET
+        sync: false
+      - key: MERCHANT_ID
+        sync: false
+      - key: PHONEPE_CLIENT_VERSION
+        value: "1"
+      - key: PHONEPE_ENV
+        value: PRODUCTION
+      - key: PHONEPE_MERCHANT_HOST_URL
+        value: https://edvedum.com
+      - key: PHONEPE_WEBHOOK_USERNAME
+        sync: false
+      - key: PHONEPE_WEBHOOK_PASSWORD
+        sync: false
       - key: SEED_ADMIN_EMAIL
         value: admin@assess.io
       - key: SEED_ADMIN_PASSWORD
