@@ -1,12 +1,35 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import crypto from 'crypto';
 import {
   getPhonePeClient,
+  resetPhonePeClient,
   StandardCheckoutPayRequest,
   Env,
 } from '../../../src/config/phonepe.js';
+import { env } from '../../../src/config/env.js';
 
 describe('PhonePe Checkout Flow, State Machine & Failure Safeguards', () => {
+  const originalConfig = { ...env.phonepe };
+
+  beforeEach(() => {
+    resetPhonePeClient();
+    env.phonepe = {
+      clientId: 'TEST_PHONEPE_CLIENT_ID',
+      clientSecret: 'TEST_PHONEPE_CLIENT_SECRET',
+      merchantId: 'TEST_MERCHANT_ID',
+      clientVersion: 1,
+      env: 'PRODUCTION',
+      merchantHostUrl: 'https://edvedum.com',
+      webhookUsername: 'test_webhook_user',
+      webhookPassword: 'test_webhook_password',
+    };
+  });
+
+  afterEach(() => {
+    resetPhonePeClient();
+    env.phonepe = { ...originalConfig };
+  });
+
   describe('Amount Calculation & Integer Paise Precision', () => {
     it('should correctly convert rupees to integer paise without floating point inaccuracy', () => {
       const priceRupees = 499.99;

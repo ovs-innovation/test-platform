@@ -14,3 +14,11 @@ vi.mock('../src/utils/firebase.js', () => ({
     verifyIdToken: vi.fn().mockResolvedValue({ uid: 'mock_uid', email: 'firebase@test.com' }),
   }),
 }));
+
+// Fallback test credentials for CI test suites where .env is absent
+process.env.PHONEPE_CLIENT_ID = process.env.PHONEPE_CLIENT_ID || 'SU_TEST_CLIENT_ID';
+process.env.PHONEPE_CLIENT_SECRET = process.env.PHONEPE_CLIENT_SECRET || 'TEST_CLIENT_SECRET_KEY';
+process.env.MERCHANT_ID = process.env.MERCHANT_ID || 'TEST_MERCHANT_ID';
+process.env.PHONEPE_CLIENT_VERSION = process.env.PHONEPE_CLIENT_VERSION || '1';
+process.env.PHONEPE_ENV = process.env.PHONEPE_ENV || 'PRODUCTION';
+process.env.PHONEPE_MERCHANT_HOST_URL = process.env.PHONEPE_MERCHANT_HOST_URL || 'https://edvedum.com';
