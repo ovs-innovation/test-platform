@@ -761,14 +761,17 @@ export const adminPayments = asyncHandler(async (_req, res) => {
     query(
       `SELECT p.*,
               ts.title AS series_title,
+              ts.slug AS series_slug,
               u.name AS user_name,
-              u.email AS user_email
+              u.email AS user_email,
+              sp.phone AS user_phone
        FROM payments p
        JOIN users u ON u.id = p.user_id
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
        LEFT JOIN test_series ts ON ts.id = p.test_series_id
        WHERE u.name IS NOT NULL
        ORDER BY p.created_at DESC
-       LIMIT 200`
+       LIMIT 500`
     ),
     query(
       `SELECT COALESCE(SUM(p.amount) FILTER (WHERE p.status = 'success'), 0)::numeric AS total,
@@ -783,3 +786,80 @@ export const adminPayments = asyncHandler(async (_req, res) => {
   ]);
   res.json({ payments: payments.rows, summary: revenue.rows[0] });
 });
+
+/**
+ * DELETE /api/payments/admin/:id
+ * Allows admin to permanently delete any payment record (failed, pending, success, etc.)
+ */
+export const adminDeletePayment = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const payRes = await query('SELECT * FROM payments WHERE id = $1', [id]);
+  if (!payRes.rowCount) throw ApiError.notFound('Payment record not found');
+  
+  const payment = payRes.rows[0];
+
+  // Delete from payments. student_enrollments.payment_id has ON DELETE SET NULL
+  await query('DELETE FROM payments WHERE id = $1', [id]);
+
+  logger?.info?.(
+    `[Admin] Payment #${id} (${payment.merchant_order_id || payment.razorpay_order_id || 'ID_' + id}) deleted by admin #${req.user.id}`
+  );
+
+  res.json({
+    success: true,
+    message: 'Payment record deleted successfully',
+    deletedId: Number(id),
+  });
+});
+
+/**
+ * PATCH /api/payments/admin/:id/status
+ * Allows admin to manually update the status of any payment (success, pending, failed, refunded)
+ */
+export const adminUpdatePaymentStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status, fulfillment_status } = req.body;
+
+  const validStatuses = ['success', 'pending', 'failed', 'refunded'];
+  if (!validStatuses.includes(status)) {
+    throw ApiError.badRequest(`Invalid status. Must be one of: ${validStatuses.join(', ')}`);
+  }
+
+  const payRes = await query('SELECT * FROM payments WHERE id = $1', [id]);
+  if (!payRes.rowCount) throw ApiError.notFound('Payment record not found');
+  const payment = payRes.rows[0];
+
+  if (status === 'success' && payment.status !== 'success') {
+    // If transitioning to success, run standard idempotent fulfillment
+    await fulfillPaymentOrder({
+      paymentId: payment.id,
+      merchantOrderId: payment.merchant_order_id,
+      providerPaymentId: payment.provider_payment_id || `MANUAL_ADMIN_${Date.now()}`,
+    });
+  } else {
+    await query(
+      `UPDATE payments 
+       SET status = $1, 
+           fulfillment_status = COALESCE($2, fulfillment_status),
+           updated_at = NOW() 
+       WHERE id = $3`,
+      [
+        status,
+        fulfillment_status || (status === 'success' ? 'fulfilled' : status === 'refunded' ? 'revoked' : 'failed'),
+        id,
+      ]
+    );
+  }
+
+  logger?.info?.(
+    `[Admin] Payment #${id} status changed to '${status}' by admin #${req.user.id}`
+  );
+
+  res.json({
+    success: true,
+    message: `Payment #${id} status updated to ${status}`,
+    updatedId: Number(id),
+    status,
+  });
+});
+

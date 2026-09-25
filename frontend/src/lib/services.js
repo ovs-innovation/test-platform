@@ -275,6 +275,14 @@ export const paymentService = {
     api.get(`/payments/status/${merchantOrderId}`).then((r) => r.data),
   history: () => withCache('payment_history', () => api.get('/payments/history').then((r) => r.data.payments)),
   admin: () => withCache('payment_admin', () => api.get('/payments/admin').then((r) => r.data)),
+  adminDelete: (id) => {
+    clearCache('payment_admin');
+    return api.delete(`/payments/admin/${id}`).then((r) => r.data);
+  },
+  adminUpdateStatus: (id, status) => {
+    clearCache('payment_admin');
+    return api.patch(`/payments/admin/${id}/status`, { status }).then((r) => r.data);
+  },
   adminReconcile: () => {
     clearCache('payment_admin');
     return api.post('/payments/admin/reconcile').then((r) => r.data);

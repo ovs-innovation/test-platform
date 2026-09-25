@@ -6,6 +6,8 @@ import {
   getOrderStatus,
   paymentHistory,
   adminPayments,
+  adminDeletePayment,
+  adminUpdatePaymentStatus,
 } from '../controllers/paymentController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -71,8 +73,10 @@ router.get(
 // Purchase history
 router.get('/history', authorize('candidate'), paymentHistory);
 
-// Admin reporting and on-demand reconciliation
+// Admin reporting, management, and on-demand reconciliation
 router.get('/admin', authorize('admin'), adminPayments);
+router.delete('/admin/:id', authorize('admin'), adminDeletePayment);
+router.patch('/admin/:id/status', authorize('admin'), adminUpdatePaymentStatus);
 router.post(
   '/admin/reconcile',
   authorize('admin'),
