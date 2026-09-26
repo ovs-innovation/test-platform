@@ -161,7 +161,7 @@ export default function TestSeriesCatalog() {
     }
   }, [searchParams]);
 
-  useEffect(() => {
+  const fetchSeries = () => {
     publicService.testSeries()
       .then((d) => {
         const activeSeries = (d.test_series || []).filter((s) => !isFoundation(s));
@@ -169,6 +169,17 @@ export default function TestSeriesCatalog() {
         setState('done');
       })
       .catch(() => setState('error'));
+  };
+
+  useEffect(() => {
+    fetchSeries();
+
+    // Refetch whenever the tab regains visibility (e.g. admin deleted a series in another tab)
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') fetchSeries();
+    };
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => document.removeEventListener('visibilitychange', handleVisibility);
   }, []);
 
   const updateFilters = (newFilter, newClass) => {

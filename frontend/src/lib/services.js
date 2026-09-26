@@ -213,7 +213,8 @@ export const publicService = {
   stats: () => withCache('public_stats', () => api.get('/public/stats').then((r) => r.data)),
   testSeries: (featured) =>
     withCache(`public_test_series_${featured ? 'feat' : 'all'}`, () =>
-      api.get('/public/test-series', { params: featured ? { featured: 'true' } : {} }).then((r) => r.data)
+      api.get('/public/test-series', { params: featured ? { featured: 'true' } : {} }).then((r) => r.data),
+      0  // TTL=0: always fetch fresh so admin deletions/updates reflect immediately
     ),
   testSeriesDetail: (slug) => api.get(`/public/test-series/${slug}`).then((r) => r.data),
   subjects: () => withCache('public_subjects', () => api.get('/public/subjects').then((r) => r.data)),
