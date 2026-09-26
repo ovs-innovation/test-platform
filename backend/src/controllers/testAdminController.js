@@ -610,13 +610,18 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             pdfText: pdfExtraction.text_preview || ''
           });
 
-          const qSubject = (q.subject && q.subject !== 'General') ? q.subject : (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
+          // Prefer Gemini-extracted subject/chapter; fall back to keyword classifier
+          const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
+          const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
+
+          const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
           const qTopic = classification.topic;
           if (qSubject && qSubject !== 'General') detectedSubjects.add(qSubject);
 
           const qNum = q.questionNumber || i + 1;
-          const finalSubject = (q.subject && q.subject !== 'General') ? q.subject : (qSubject || 'General');
-          const finalChapter = (q.chapter && q.chapter !== 'General') ? q.chapter : (qTopic || classification.topic || 'General');
+          const finalSubject = geminiSubject || qSubject || 'General';
+          // Use Gemini chapter first; then keyword-classifier topic; last resort 'General Concepts'
+          const finalChapter = geminiChapter || qTopic || classification.topic || 'General Concepts';
 
           const hasAnswer = Boolean(
             includeAnswers &&

@@ -151,11 +151,25 @@ function splitQuestionBlocks(text) {
 function parseBlock(block, answerKey) {
   const options = [];
   const questionLines = [];
+  const explanationLines = [];
+  let isInExplanation = false;
   const keyEntry = answerKey.get(block.num);
   let correct_indices = Array.isArray(keyEntry) ? keyEntry : (keyEntry != null ? [keyEntry] : []);
   let correct_index = correct_indices[0] ?? 0;
 
   for (const line of block.lines) {
+    // Check if line starts an explanation/solution
+    const expMatch = line.match(/^(?:exp(?:lanation)?|sol(?:ution)?|hint)\s*[:\-–—]?\s*(.*)$/i);
+    if (expMatch) {
+      isInExplanation = true;
+      if (expMatch[1].trim()) explanationLines.push(expMatch[1].trim());
+      continue;
+    }
+    if (isInExplanation) {
+      explanationLines.push(line);
+      continue;
+    }
+
     const opt = line.match(OPTION_LINE);
     if (opt) {
       options.push(opt[3].trim());
@@ -190,6 +204,8 @@ function parseBlock(block, answerKey) {
     correct_indices = [correct_index];
   }
 
+  const solutionText = explanationLines.join(' ').replace(/\s+/g, ' ').trim();
+
   return {
     line: block.num,
     question_text,
@@ -199,7 +215,7 @@ function parseBlock(block, answerKey) {
     options,
     correct_index,
     correct_indices: isMulti ? correct_indices : (correct_indices.length ? correct_indices : [correct_index]),
-    solution: '',
+    solution: solutionText,
   };
 }
 
@@ -269,8 +285,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             options: optionStrings,
             rawOptions: q.options,
             correct_index: correctIndex,
-            correctAnswer: hasAnswerKey ? q.correctAnswer : null,
-            solution: hasAnswerKey ? (q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '')) : '',
+            correctAnswer: (hasAnswerKey && q.correctAnswer) ? q.correctAnswer : null,
+            solution: q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || '')),
             image_url: primaryMediaUrl,
             media: allMedia,
             tables: q.tables || [],
@@ -341,7 +357,7 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       options: optList,
 
       explanation: {
-        text: hasAnswer ? (r.solution || '') : '',
+        text: r.solution || '',
         media: [],
       },
 
@@ -367,7 +383,7 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       options: r.options || [],
       rawOptions: optList,
       correct_index: hasAnswer ? r.correct_index : null,
-      solution: hasAnswer ? (r.solution || '') : '',
+      solution: r.solution || '',
       image_url: r.image_url || null,
       media: qMedia,
       tables: [],

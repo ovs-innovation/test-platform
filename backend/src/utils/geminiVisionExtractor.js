@@ -249,6 +249,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
           type: Type.OBJECT,
           properties: {
             questionNumber: { type: Type.INTEGER },
+            correctAnswer: { type: Type.STRING },
             explanation: { type: Type.STRING },
             sourcePages: {
               type: Type.ARRAY,
@@ -305,7 +306,13 @@ Analyze the attached document page images thoroughly and extract content in THRE
 STAGE 1: QUESTION PAPER EXTRACTION:
 - Extract all questions appearing on these pages (Pages ${batchStartPage} to ${batchEndPage}).
 - Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
-- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic (e.g. 'Current Electricity', 'Rotational Motion', 'Thermodynamics', 'Chemical Bonding', etc.).
+- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic for each question.
+- CRITICAL - CHAPTER EXTRACTION: Look for chapter/topic information in ALL of the following places:
+  1. Inline tags inside the question text (e.g. '[Animal Kingdom]', '[Current Electricity]', '[Ray Optics]', '[Rotational Motion]'). These brackets at the end or within question text are CHAPTER TAGS - extract the text inside brackets as the chapter.
+  2. Section/column headers above question groups (e.g. 'SECTION A: ANIMAL KINGDOM', 'Chapter: Chemical Bonding').
+  3. Question topic pills or labels visible near the question.
+  4. Infer from question keywords: if a question mentions 'chordate', 'notochord', 'mammalia', 'vertebrate' → chapter is 'Animal Kingdom'; if it mentions 'photosynthesis', 'Calvin cycle' → 'Photosynthesis in Higher Plants'; if it mentions 'current', 'resistor', 'Kirchhoff' → 'Current Electricity'; etc.
+  5. Always provide a specific chapter name (e.g. 'Animal Kingdom', 'Chemical Bonding', 'Ray Optics'). Only use an empty string if absolutely no chapter context can be determined.
 - CRITICAL FORMATTING FOR STATEMENTS & LISTS:
   * For structured questions with Statements (Statement I, Statement II), Assertion & Reason, sub-statements (A., B., C., D.), or Match Lists (List-I, List-II), PRESERVE their line breaks exactly one-by-one as printed in the exam using newlines (\\n).
   * DO NOT combine them into a single continuous run-on paragraph!
@@ -323,18 +330,29 @@ STAGE 1: QUESTION PAPER EXTRACTION:
   * If a question is purely text-based without any actual drawing/figure/circuit/graph, 'visualElements' MUST BE an empty array ([]).
   * Do NOT extract math equations as visualElements; write them in LaTeX ($...$) inside questionText.
 - For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
+- CRITICAL - INLINE ANSWERS & EXPLANATIONS:
+  * If an answer or explanation/solution is printed directly below or within a question (e.g. 'Ans: (B)', 'Ans: 2', 'Explanation: ...', 'Sol: ...', 'Hint: ...'), extract the answer letter ('A', 'B', 'C', 'D') into 'inlineCorrectAnswer'.
+  * Extract the complete explanation/solution reasoning into 'inlineExplanation'.
+  * Remove the inline answer/explanation text from 'questionText' so the question statement remains clean.
 
 STAGE 2: ANSWER KEY EXTRACTION:
-- If an ANSWER KEY section appears on these pages, extract question number to correct answer mappings under 'answerKeyEntries'. Support all formats such as:
-  * 1. A  or  1. (A)  or  1 - A  or  1: A
-  * 2. C  or  2 (C)
+- If an ANSWER KEY section or grid appears on these pages, extract question number to correct answer mappings under 'answerKeyEntries'. Support all formats such as:
+  * 1. A  or  1. (A)  or  1 - A  or  1: A  or  1. (2)
+  * 2. C  or  2 (C)  or  2. (3)
   * Q1 - A  or  Q.1 (A)
   * Question 1: A
   * Tabular key grids (Q.No -> Answer)
 
 STAGE 3: SOLUTIONS & EXPLANATIONS EXTRACTION:
-- If HINTS, SOLUTIONS, or EXPLANATIONS sections appear on these pages, extract solution/explanation text for each question number under 'solutions'.
-- Record their matching questionNumber, sourcePages, and any solution diagrams under 'visualElements' with normalized 2D bounding boxes.
+- CRITICAL: Search thoroughly for any solutions, hints, or explanations sections appearing on these pages. These are commonly titled:
+  * 'HINTS & SOLUTIONS', 'HINTS AND SOLUTIONS', 'SOLUTIONS', 'DETAILED SOLUTIONS'
+  * 'EXPLANATIONS', 'ANSWERS & EXPLANATIONS', 'HINTS', 'SOLUTION KEY'
+  * Or subject-specific headers like 'PHYSICS - HINTS & SOLUTIONS', 'BIOLOGY - SOLUTIONS', etc.
+- For EVERY question solution in these sections:
+  1. Extract the question number into 'questionNumber'.
+  2. If the solution starts with or mentions the correct option (e.g. '1. (2)', '1. (B)', 'Ans. (A)', 'Option (3) is correct', 'Ans: 4'), extract that option letter ('A', 'B', 'C', 'D') into 'correctAnswer'. Convert numeric 1->A, 2->B, 3->C, 4->D.
+  3. Extract the complete, detailed explanation text and reasoning into 'explanation'.
+  4. Record sourcePages and any diagrams/graphs in 'visualElements' with normalized bounding boxes.
 
 Return structured JSON output strictly following the JSON schema.
 ` : `
@@ -347,7 +365,12 @@ Analyze the attached document page images thoroughly to extract the question pap
 QUESTION PAPER EXTRACTION:
 - Extract all questions appearing on these pages (Pages ${batchStartPage} to ${batchEndPage}).
 - Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
-- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic.
+- Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic for each question.
+- CRITICAL - CHAPTER EXTRACTION: Look for chapter/topic in ALL of these places:
+  1. Inline tags inside question text like '[Animal Kingdom]', '[Current Electricity]' → extract as chapter.
+  2. Section headers or labels above question groups.
+  3. Infer from keywords in question text (e.g. 'chordate', 'notochord' → 'Animal Kingdom'; 'photosynthesis' → 'Photosynthesis in Higher Plants').
+  4. Provide a specific chapter name. Only use empty string if no chapter context whatsoever.
 - Record the 1-based page numbers in 'sourcePages'.
 - Handle question continuations across page boundaries seamlessly into a single question.
 - Convert math notation and equations to standard LaTeX ($...$).
@@ -476,7 +499,12 @@ Return structured JSON output strictly following the JSON schema.
         const letter = ['1', '2', '3', '4'].includes(cleanAns)
           ? String.fromCharCode(65 + (parseInt(cleanAns, 10) - 1))
           : cleanAns;
-        answerKeyMap.set(Number(entry.questionNumber), letter);
+        const qNum = typeof entry.questionNumber === 'number'
+          ? entry.questionNumber
+          : parseInt(String(entry.questionNumber).replace(/\D+/g, ''), 10);
+        if (qNum && !isNaN(qNum)) {
+          answerKeyMap.set(qNum, letter);
+        }
       }
     }
   }
@@ -485,11 +513,56 @@ Return structured JSON output strictly following the JSON schema.
   const solutionMap = new Map();
   for (const sol of allRawSolutions) {
     if (sol && sol.questionNumber) {
-      solutionMap.set(Number(sol.questionNumber), {
-        explanation: (sol.explanation || '').trim(),
-        visualElements: Array.isArray(sol.visualElements) ? sol.visualElements : [],
-        sourcePages: Array.isArray(sol.sourcePages) ? sol.sourcePages : [],
-      });
+      const qNum = typeof sol.questionNumber === 'number'
+        ? sol.questionNumber
+        : parseInt(String(sol.questionNumber).replace(/\D+/g, ''), 10);
+      if (!qNum || isNaN(qNum)) continue;
+
+      let solCorrect = null;
+      if (sol.correctAnswer) {
+        const cleanAns = String(sol.correctAnswer).trim().toUpperCase().replace(/[\(\)\[\]\.\:]/g, '');
+        if (['A', 'B', 'C', 'D'].includes(cleanAns)) {
+          solCorrect = cleanAns;
+        } else if (['1', '2', '3', '4'].includes(cleanAns)) {
+          solCorrect = String.fromCharCode(65 + (parseInt(cleanAns, 10) - 1));
+        }
+      }
+
+      const expText = (sol.explanation || '').trim();
+      // If correctAnswer wasn't explicitly extracted, inspect beginning of explanation text (e.g. "(2) ...", "Ans: (B)", "Option 3")
+      if (!solCorrect && expText) {
+        const leadingAnsMatch = expText.match(/^(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*[\(\[]?([A-Da-d1-4])[\)\]]?\s*[:\.\-–—]?\s*/i);
+        if (leadingAnsMatch) {
+          const rawChar = leadingAnsMatch[1].toUpperCase();
+          solCorrect = ['1', '2', '3', '4'].includes(rawChar)
+            ? String.fromCharCode(65 + (parseInt(rawChar, 10) - 1))
+            : rawChar;
+        }
+      }
+
+      if (solCorrect && !answerKeyMap.has(qNum)) {
+        answerKeyMap.set(qNum, solCorrect);
+      }
+
+      const existingSol = solutionMap.get(qNum);
+      if (!existingSol) {
+        solutionMap.set(qNum, {
+          explanation: expText,
+          correctAnswer: solCorrect,
+          visualElements: Array.isArray(sol.visualElements) ? sol.visualElements : [],
+          sourcePages: Array.isArray(sol.sourcePages) ? sol.sourcePages : [],
+        });
+      } else {
+        const bestExp = expText.length > existingSol.explanation.length ? expText : existingSol.explanation;
+        const combinedVis = [...existingSol.visualElements, ...(Array.isArray(sol.visualElements) ? sol.visualElements : [])];
+        const combinedPages = Array.from(new Set([...existingSol.sourcePages, ...(Array.isArray(sol.sourcePages) ? sol.sourcePages : [])]));
+        solutionMap.set(qNum, {
+          explanation: bestExp,
+          correctAnswer: solCorrect || existingSol.correctAnswer,
+          visualElements: combinedVis,
+          sourcePages: combinedPages,
+        });
+      }
     }
   }
 
@@ -691,8 +764,8 @@ Return structured JSON output strictly following the JSON schema.
     // Exact structured JSON output matching user requirements
     finalStructuredQuestions.push({
       questionNumber: qNum,
-      subject: rawQ.subject || 'General',
-      chapter: rawQ.chapter || 'General',
+      subject: rawQ.subject || '',
+      chapter: (rawQ.chapter && rawQ.chapter !== 'General' && rawQ.chapter !== 'Unknown') ? rawQ.chapter : '',
 
       question: {
         text: cleanQText,

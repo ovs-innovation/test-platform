@@ -1478,6 +1478,29 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
               })}
             </ul>
           )}
+
+          {q.solution && (
+            <div className="mt-3 rounded-xl border border-amber-200/80 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/25 p-3 text-xs text-slate-800 dark:text-slate-200">
+              <div className="flex items-center gap-1.5 font-bold text-amber-800 dark:text-amber-400 mb-1">
+                <span>💡</span>
+                <span>Explanation / Solution:</span>
+              </div>
+              <div className="whitespace-pre-line leading-relaxed pl-5 font-normal">
+                <MathRenderer text={q.solution} />
+              </div>
+              {q.solution_image_url && (
+                <div className="mt-2 pl-5 max-w-sm">
+                  <img
+                    src={getMediaUrl(q.solution_image_url)}
+                    alt="Solution diagram"
+                    className="max-h-36 rounded-lg border border-amber-200 dark:border-amber-800 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90"
+                    onClick={() => window.open(getMediaUrl(q.solution_image_url), '_blank')}
+                    title="Click to view full diagram"
+                  />
+                </div>
+              )}
+            </div>
+          )}
         </div>
         <div className="flex shrink-0 flex-col gap-1">
           <button type="button" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline" onClick={onEdit}>Edit</button>
