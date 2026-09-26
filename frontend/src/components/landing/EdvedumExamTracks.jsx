@@ -4,7 +4,7 @@ import { EdvedumSectionHeader } from '../edvedum/EdvedumPlatformUI.jsx';
 const TRACKS = [
   {
     title: 'JEE',
-    subtitle: 'Main + Advanced',
+    subtitle: '',
     desc: 'Full-length mocks in Physics, Chemistry and Mathematics with All India Rank.',
     image: '/edvedum/student-jee.png',
     imageAlt: 'JEE aspirant',
@@ -18,7 +18,7 @@ const TRACKS = [
   },
   {
     title: 'NEET',
-    subtitle: 'UG Medical',
+    subtitle: '',
     desc: 'NCERT-aligned Biology, Physics and Chemistry tests with detailed solutions.',
     image: '/edvedum/student-neet.png',
     imageAlt: 'NEET aspirant',
@@ -75,7 +75,9 @@ export default function EdvedumExamTracks() {
                   </span>
                 )}
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/50 to-transparent px-4 pb-3 pt-10">
-                  <p className="text-[11px] font-medium uppercase tracking-wide text-white/80">{track.subtitle}</p>
+                  {track.subtitle ? (
+                    <p className="text-[11px] font-medium uppercase tracking-wide text-white/80">{track.subtitle}</p>
+                  ) : null}
                   <h3 className="text-lg font-bold text-white">{track.title}</h3>
                 </div>
               </div>

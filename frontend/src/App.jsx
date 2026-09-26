@@ -64,6 +64,7 @@ const AdminQuestionBank = lazy(() => import('./pages/admin/QuestionBank.jsx'));
 const AdminSubjects = lazy(() => import('./pages/admin/Subjects.jsx'));
 const AdminCoupons = lazy(() => import('./pages/admin/Coupons.jsx'));
 const AdminCMS = lazy(() => import('./pages/admin/CMS.jsx'));
+const AdminOffersAchievements = lazy(() => import('./pages/admin/OffersAndAchievements.jsx'));
 const AdminFaculty = lazy(() => import('./pages/admin/Faculty.jsx'));
 const AdminSettings = lazy(() => import('./pages/admin/Settings.jsx'));
 const AdminCandidates = lazy(() => import('./pages/admin/Candidates.jsx'));
@@ -213,6 +214,7 @@ export default function App() {
         <Route path="/admin/question-bank" element={<ProtectedRoute role="admin"><AdminLayout><AdminQuestionBank /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/subjects" element={<ProtectedRoute role="admin"><AdminLayout><AdminSubjects /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/coupons" element={<ProtectedRoute role="admin"><AdminLayout><AdminCoupons /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/offers-achievements" element={<ProtectedRoute role="admin"><AdminLayout><AdminOffersAchievements /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/cms" element={<ProtectedRoute role="admin"><AdminLayout><AdminCMS /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/faculty" element={<ProtectedRoute role="admin"><AdminLayout><AdminFaculty /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute role="admin"><AdminLayout><AdminSettings /></AdminLayout></ProtectedRoute>} />

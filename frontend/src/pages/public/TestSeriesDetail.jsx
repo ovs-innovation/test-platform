@@ -6,10 +6,11 @@ import {
   Calculator,
   ChevronRight,
   Download,
+  FileText,
   Sparkles,
   Tag,
 } from 'lucide-react';
-import { publicService, paymentService } from '../../lib/services.js';
+import { publicService, paymentService, testSeriesService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
@@ -40,6 +41,7 @@ export default function TestSeriesDetail() {
   const [series, setSeries] = useState(null);
   const [state, setState] = useState('loading');
   const [buying, setBuying] = useState(false);
+  const [isEnrolled, setIsEnrolled] = useState(false);
 
   // Coupon States
   const [couponInput, setCouponInput] = useState('');
@@ -61,6 +63,21 @@ export default function TestSeriesDetail() {
       })
       .catch(() => setState('error'));
   }, [slug]);
+
+  useEffect(() => {
+    if (user?.role === 'candidate' && series?.id) {
+      testSeriesService
+        .myEnrollments()
+        .then((res) => {
+          const list = res.enrollments || [];
+          const found = list.some(
+            (e) => Number(e.test_series_id || e.id) === Number(series.id) || e.slug === slug
+          );
+          setIsEnrolled(found);
+        })
+        .catch(() => {});
+    }
+  }, [user, series?.id, slug]);
 
   const applyCodeDirectly = async (code) => {
     setCouponInput(code);
@@ -108,13 +125,10 @@ export default function TestSeriesDetail() {
       );
 
       if (order.free || order.mock) {
-        toast.success(order.message || 'Enrolled successfully!');
-        const firstTestId = series.tests && series.tests.length > 0 ? series.tests[0].id : null;
-        if (firstTestId) {
-          navigate(`/assessments/${firstTestId}/instructions`);
-        } else {
-          navigate('/my-tests');
-        }
+        toast.success(order.message || 'Enrolled successfully! Please complete your admission form.');
+        navigate(
+          `/admission?enrolled=true&series_id=${series.id}&course=${encodeURIComponent(series.title)}&amount=0`
+        );
         return;
       }
 
@@ -157,8 +171,10 @@ export default function TestSeriesDetail() {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
             });
-            toast.success('Payment successful! Test series unlocked.');
-            navigate('/my-tests');
+            toast.success('Payment successful! Please complete your student admission form.');
+            navigate(
+              `/admission?enrolled=true&series_id=${series.id}&course=${encodeURIComponent(series.title)}&amount=${order.amount}&order_id=${response.razorpay_payment_id}`
+            );
           } catch (err) {
             toast.error(err.message || 'Payment verification failed');
           }
@@ -334,63 +350,75 @@ export default function TestSeriesDetail() {
 
         {/* Hero Product Banner */}
         <div className="grid items-start gap-8 lg:grid-cols-12 lg:gap-10">
-          {/* Cover Hero Banner */}
-          <div className="lg:col-span-5 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm ring-1 ring-slate-900/5">
-            <div className={`relative aspect-[16/11] sm:aspect-[4/3] w-full overflow-hidden bg-gradient-to-r ${theme.heroGradient} text-white shadow-inner`}>
-              {theme.studentImage && (
-                <div className="absolute inset-0 overflow-hidden">
-                  <img
-                    src={theme.studentImage}
-                    alt={`${series.title} cover`}
-                    loading="eager"
-                    decoding="async"
-                    width="600"
-                    height="450"
-                    className="h-full w-full object-cover object-top"
-                  />
-                  {/* Category Gradient Overlay Mask */}
-                  <div className={`absolute inset-y-0 left-0 w-full sm:w-3/4 bg-gradient-to-r ${theme.heroGradient} via-slate-950/70 to-transparent opacity-95`} />
-                  <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
-                </div>
-              )}
-
-              {/* Floating Banner Badges & Overlay Items */}
-              <div className="relative z-20 flex flex-col justify-between h-full p-5 max-w-[65%] sm:max-w-[70%]">
-                <div className="flex flex-col gap-2">
-                  <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white backdrop-blur-md border border-white/25 shadow-xs">
-                    <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-                    <span>{theme.label}</span>
-                  </span>
-
-                  <div className="flex items-center gap-1.5">
-                    {series.is_featured && (
-                      <span className="rounded-full bg-amber-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-amber-950 shadow-xs">
-                        ★ Featured
-                      </span>
-                    )}
-                    {isFree && (
-                      <span className="rounded-full bg-emerald-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-emerald-950 shadow-xs">
-                        Free Access
-                      </span>
-                    )}
+          {/* Cover Hero Banner + Brochure */}
+          <div className="lg:col-span-5 space-y-3">
+            <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-sm ring-1 ring-slate-900/5">
+              <div className={`relative aspect-[16/11] sm:aspect-[4/3] w-full overflow-hidden bg-gradient-to-r ${theme.heroGradient} text-white shadow-inner`}>
+                {theme.studentImage && (
+                  <div className="absolute inset-0 overflow-hidden">
+                    <img
+                      src={theme.studentImage}
+                      alt={`${series.title} cover`}
+                      loading="eager"
+                      decoding="async"
+                      width="600"
+                      height="450"
+                      className="h-full w-full object-cover object-top"
+                    />
+                    {/* Category Gradient Overlay Mask */}
+                    <div className={`absolute inset-y-0 left-0 w-full sm:w-3/4 bg-gradient-to-r ${theme.heroGradient} via-slate-950/70 to-transparent opacity-95`} />
+                    <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-slate-950/80 via-slate-950/30 to-transparent" />
                   </div>
-                </div>
+                )}
 
-                {/* Test Count & Validity Stats */}
-                <div className="flex flex-wrap items-center gap-2">
-                  {plannedTestCount > 0 && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
-                      <span>⚡</span>
-                      <span>{plannedTestCount} CBT Tests</span>
+                {/* Floating Banner Badges & Overlay Items */}
+                <div className="relative z-20 flex flex-col justify-between h-full p-5 max-w-[65%] sm:max-w-[70%]">
+                  <div className="flex flex-col gap-2">
+                    <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-white/20 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white backdrop-blur-md border border-white/25 shadow-xs">
+                      <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+                      <span>{theme.label}</span>
                     </span>
-                  )}
-                  <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
-                    <span>⏳</span>
-                    <span>{series.validity_days || 365}D</span>
-                  </span>
+
+                    <div className="flex items-center gap-1.5">
+                      {series.is_featured && (
+                        <span className="rounded-full bg-amber-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-amber-950 shadow-xs">
+                          ★ Featured
+                        </span>
+                      )}
+                      {isFree && (
+                        <span className="rounded-full bg-emerald-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-emerald-950 shadow-xs">
+                          Free Access
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Test Count & Validity Stats */}
+                  <div className="flex flex-wrap items-center gap-2">
+                    {plannedTestCount > 0 && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
+                        <span>⚡</span>
+                        <span>{plannedTestCount} CBT Tests</span>
+                      </span>
+                    )}
+                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
+                      <span>⏳</span>
+                      <span>{series.validity_days || 365}D</span>
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
+
+            {/* Brochure Download Button right below the cover image */}
+            <a
+              href={getBrochureDownloadUrl(series)}
+              download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+              className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/70 hover:bg-blue-100/90 text-blue-700 py-3.5 px-4 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
+            >
+              <Download className="h-4 w-4 text-blue-600" />
+              <span>Download Test-Series Brochure (PDF)</span>
+            </a>
           </div>
 
           {/* Details & Action Card */}
@@ -490,16 +518,14 @@ export default function TestSeriesDetail() {
                     <span>Calculate Institutional Pricing</span>
                   </button>
 
-                  {series?.brochure_url && (
-                    <a
-                      href={getBrochureDownloadUrl(series)}
-                      download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
-                    >
-                      <Download className="h-4 w-4 text-blue-600" />
-                      <span>Download Test-Series Brochure</span>
-                    </a>
-                  )}
+                  <a
+                    href={getBrochureDownloadUrl(series)}
+                    download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
+                  >
+                    <Download className="h-4 w-4 text-blue-600" />
+                    <span>Download Test-Series Brochure (PDF)</span>
+                  </a>
 
                   <div className="flex flex-wrap items-center justify-between text-xs pt-1 gap-2">
                     <button
@@ -588,25 +614,41 @@ export default function TestSeriesDetail() {
                     </div>
                   )}
 
-                  <button
-                    type="button"
-                    className="w-full rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 text-sm font-extrabold text-white shadow-md transition cursor-pointer"
-                    onClick={handleEnroll}
-                    disabled={buying}
-                  >
-                    {buying ? 'Processing Order…' : isFree ? 'Enroll for Free' : appliedCoupon ? `Buy for ₹${appliedCoupon.final_amount}` : 'Buy Test Series'}
-                  </button>
-
-                  {series?.brochure_url && (
-                    <a
-                      href={getBrochureDownloadUrl(series)}
-                      download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-                      className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/60 hover:bg-blue-100/80 text-blue-700 py-3 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
+                  {isEnrolled ? (
+                    <div className="space-y-2.5">
+                      <div className="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                        <span>You are enrolled in this Test Series!</span>
+                      </div>
+                      <button
+                        type="button"
+                        className="w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-3.5 text-sm font-extrabold text-white shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                        onClick={() => navigate('/my-tests')}
+                      >
+                        <span>Go to My Tests</span>
+                        <ChevronRight className="h-4 w-4" />
+                      </button>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="w-full rounded-xl bg-[#2563EB] hover:bg-blue-700 py-3.5 text-sm font-extrabold text-white shadow-md transition cursor-pointer"
+                      onClick={handleEnroll}
+                      disabled={buying}
                     >
-                      <Download className="h-4 w-4 text-blue-600" />
-                      <span>Download Test-Series Brochure (PDF)</span>
-                    </a>
+                      {buying ? 'Processing Order…' : isFree ? 'Enroll for Free' : appliedCoupon ? `Buy for ₹${appliedCoupon.final_amount}` : 'Buy Test Series'}
+                    </button>
                   )}
+
+                  {/* Admission Form Button (Light Background) */}
+                  <Link
+                    to={`/admission?series_id=${series?.id || ''}&course=${encodeURIComponent(series?.title || '')}&amount=${series?.price || ''}${isEnrolled ? '&enrolled=true' : ''}`}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-amber-50/80 hover:bg-amber-100/90 text-[#855D14] hover:text-[#6a490d] py-3.5 px-4 text-xs sm:text-sm font-extrabold shadow-xs hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 active:translate-y-0 border-2 border-[#C5A059]/40 hover:border-[#C5A059]"
+                  >
+                    <FileText className="h-4 w-4 text-[#855D14]" />
+                    <span>Admission Form</span>
+                  </Link>
+
 
                   {!user && (
                     <p className="text-center text-xs text-slate-500">

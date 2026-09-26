@@ -3,6 +3,7 @@ import { query } from '../config/db.js';
 import { hashPassword } from '../utils/password.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { DEFAULT_ACHIEVEMENTS, DEFAULT_OFFERS } from '../db/seedOffersAchievements.js';
 
 // ─── CMS ────────────────────────────────────────────────────────────────────
 
@@ -95,6 +96,59 @@ export const updateSettings = asyncHandler(async (req, res) => {
     );
   }
   res.json({ message: 'Settings updated' });
+});
+
+// ─── Landing Content (Offers & Achievements) ─────────────────────────────────
+
+export async function getLandingContentHelper() {
+  const result = await query(
+    `SELECT key, value FROM settings WHERE key IN ('homepage_achievements', 'homepage_offers')`
+  );
+  const map = Object.fromEntries(result.rows.map((r) => [r.key, r.value]));
+
+  let achievements = DEFAULT_ACHIEVEMENTS;
+  let offers = DEFAULT_OFFERS;
+
+  if (map.homepage_achievements) {
+    try {
+      achievements = JSON.parse(map.homepage_achievements);
+    } catch (_) {}
+  }
+  if (map.homepage_offers) {
+    try {
+      offers = JSON.parse(map.homepage_offers);
+    } catch (_) {}
+  }
+
+  return { achievements, offers };
+}
+
+export const getAdminLandingContent = asyncHandler(async (_req, res) => {
+  const content = await getLandingContentHelper();
+  res.json(content);
+});
+
+export const updateAdminLandingContent = asyncHandler(async (req, res) => {
+  const { achievements, offers } = req.body;
+  if (achievements) {
+    await query(
+      `INSERT INTO settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()`,
+      ['homepage_achievements', JSON.stringify(achievements)]
+    );
+  }
+  if (offers) {
+    await query(
+      `INSERT INTO settings (key, value) VALUES ($1, $2) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = NOW()`,
+      ['homepage_offers', JSON.stringify(offers)]
+    );
+  }
+  const updated = await getLandingContentHelper();
+  res.json({ message: 'Offers and achievements updated successfully', ...updated });
+});
+
+export const getPublicLandingContent = asyncHandler(async (_req, res) => {
+  const content = await getLandingContentHelper();
+  res.json(content);
 });
 
 // ─── Coupons ────────────────────────────────────────────────────────────────

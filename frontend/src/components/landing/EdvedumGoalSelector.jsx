@@ -5,7 +5,7 @@ const GOALS = [
   {
     id: 'neet',
     label: 'Doctor',
-    title: 'NEET (UG)',
+    title: 'NEET',
     desc: 'Medical entrance preparation',
     filter: 'neet',
     accent: 'border-emerald-500 bg-emerald-50/80',
@@ -22,7 +22,7 @@ const GOALS = [
     id: 'jee',
     label: 'Engineer',
     title: 'JEE',
-    desc: 'Main + Advanced preparation',
+    desc: 'Engineering entrance preparation',
     filter: 'jee',
     accent: 'border-blue-500 bg-blue-50/80',
     activeRing: 'ring-blue-500/30',

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getPublicStats, listPublicTestSeries, getPublicTestSeries, listSubjects, downloadPublicBrochure } from '../controllers/publicController.js';
-import { getCmsPage, listPublicCms, validateCoupon, listPublicCoupons } from '../controllers/platformController.js';
+import { getCmsPage, listPublicCms, validateCoupon, listPublicCoupons, getPublicLandingContent } from '../controllers/platformController.js';
 import { createB2bEnquiry } from '../controllers/b2bController.js';
 import { noCache } from '../middleware/httpCache.js';
 import {
@@ -11,6 +11,7 @@ import {
 
 const router = Router();
 
+router.get('/landing-content', noCache, getPublicLandingContent);
 router.get('/stats', getPublicStats);
 router.get('/test-series', listPublicTestSeries);
 router.get('/test-series/:slug/brochure', downloadPublicBrochure);

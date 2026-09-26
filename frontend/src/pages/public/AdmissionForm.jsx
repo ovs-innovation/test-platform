@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import {
   Upload,
   ArrowRight,
@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
 import { admissionService } from '../../lib/services.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
 
 const parseFieldOptions = (raw) => {
@@ -182,6 +183,15 @@ const DEFAULT_SECTIONS = [
 
 export default function AdmissionForm() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const { user } = useAuth();
+
+  const isEnrolled = searchParams.get('enrolled') === 'true';
+  const queryCourse = searchParams.get('course');
+  const queryAmount = searchParams.get('amount');
+  const querySeriesId = searchParams.get('series_id');
+  const queryOrderId = searchParams.get('order_id');
+
   const [currentStep, setCurrentStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
 
@@ -209,16 +219,16 @@ export default function AdmissionForm() {
       currentClass: 'Class 11',
       board: 'CBSE',
       targetExam: 'NEET 2027',
-      courseName: 'NEET UG 2026–2027 Two-Year Comprehensive Batch',
+      courseName: queryCourse || 'NEET UG 2026–2027 Two-Year Comprehensive Batch',
       admissionDate: today,
       academicSession: '2026–2027',
       enrollmentType: 'New',
       leadSource: 'Website',
-      paymentMode: 'UPI',
+      paymentMode: queryOrderId ? 'Online / PhonePe' : 'UPI',
       paymentDate: today,
       paymentStatus: 'Paid',
-      courseFee: '45000',
-      amountPaid: '45000',
+      courseFee: queryAmount || '45000',
+      amountPaid: queryAmount || '45000',
       docPhotoStatus: 'Uploaded',
       docIdProofStatus: 'Uploaded',
       docPaymentProofStatus: 'Uploaded',
@@ -238,6 +248,56 @@ export default function AdmissionForm() {
 
   const [errors, setErrors] = useState({});
   const [photoPreview, setPhotoPreview] = useState(formData.studentPhoto || '');
+
+  // Pre-fill query parameters and user context if available
+  useEffect(() => {
+    setFormData((prev) => {
+      let modified = false;
+      const next = { ...prev };
+
+      if (queryCourse && (!next.courseName || next.courseName === 'NEET UG 2026–2027 Two-Year Comprehensive Batch' || isEnrolled)) {
+        if (next.courseName !== queryCourse) {
+          next.courseName = queryCourse;
+          modified = true;
+        }
+      }
+      if (queryAmount && next.amountPaid !== queryAmount) {
+        next.amountPaid = queryAmount;
+        next.courseFee = queryAmount;
+        modified = true;
+      }
+      if (queryOrderId) {
+        if (next.paymentMode !== 'Online / PhonePe') {
+          next.paymentMode = 'Online / PhonePe';
+          modified = true;
+        }
+        const refNote = `Payment Ref: ${queryOrderId}`;
+        if (!next.docPaymentProofRemarks || !next.docPaymentProofRemarks.includes(queryOrderId)) {
+          next.docPaymentProofRemarks = refNote;
+          modified = true;
+        }
+      }
+      if (isEnrolled && next.paymentStatus !== 'Paid') {
+        next.paymentStatus = 'Paid';
+        modified = true;
+      }
+      if (user?.name && !next.fullName) {
+        next.fullName = user.name;
+        next.declarationName = user.name;
+        modified = true;
+      }
+      if (user?.email && !next.email) {
+        next.email = user.email;
+        modified = true;
+      }
+      if (user?.phone && !next.studentMobile) {
+        next.studentMobile = user.phone;
+        modified = true;
+      }
+
+      return modified ? next : prev;
+    });
+  }, [queryCourse, queryAmount, queryOrderId, isEnrolled, user]);
 
   // Fetch dynamic configuration from API with window focus sync
   const fetchLatestConfig = () => {
@@ -524,6 +584,45 @@ export default function AdmissionForm() {
           </div>
         </div>
 
+        {/* Post-Payment Enrollment Confirmation Banner */}
+        {isEnrolled && (
+          <div className="rounded-2xl sm:rounded-3xl bg-gradient-to-r from-[#002B49] via-[#083e66] to-[#002B49] border-2 border-[#C5A059]/40 p-5 sm:p-6 text-white shadow-xl my-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10">
+              <div className="flex items-start gap-3.5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-emerald-500/20 border border-emerald-400/40 text-emerald-400 shrink-0 shadow-inner">
+                  <CheckCircle2 className="h-6 w-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-black uppercase tracking-widest bg-emerald-500 text-white px-2 py-0.5 rounded-full">
+                      Payment Confirmed
+                    </span>
+                    <span className="text-xs text-[#DFB76C] font-semibold">
+                      Student Admission Step
+                    </span>
+                  </div>
+                  <h2 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                    Welcome to EDVEDUM Academy!
+                  </h2>
+                  <p className="text-xs text-slate-200 mt-1 max-w-xl leading-relaxed">
+                    Your test series {queryCourse ? <strong className="text-[#DFB76C]">"{queryCourse}"</strong> : ''} has been purchased successfully. Please complete your official admission form below to finalize student registration and generate your admission slip.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 w-full sm:w-auto shrink-0 justify-end">
+                <Link
+                  to="/my-tests"
+                  className="w-full sm:w-auto text-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition border border-white/10 cursor-pointer"
+                >
+                  Skip to My Tests →
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* ================= FORM BODY ================= */}
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
 
@@ -627,7 +726,11 @@ export default function AdmissionForm() {
 
                   const fieldError = errors[field.name];
                   const val = formData[field.name] !== undefined && formData[field.name] !== null ? formData[field.name] : '';
-                  const options = parseFieldOptions(field.options);
+                  const rawOptions = parseFieldOptions(field.options);
+                  const options =
+                    field.name === 'courseName' && val && !rawOptions.includes(val)
+                      ? [val, ...rawOptions]
+                      : rawOptions;
 
                   return (
                     <div key={field.name} className={spanClass}>

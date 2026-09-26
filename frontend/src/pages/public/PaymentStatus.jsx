@@ -341,14 +341,52 @@ export default function PaymentStatus() {
                 </div>
               </div>
 
+              {/* Step 2: Student Admission Form Callout */}
+              <div className="rounded-2xl border border-[#C5A059]/40 bg-gradient-to-br from-[#002B49] via-[#083e66] to-[#002B49] p-5 text-left text-white shadow-lg space-y-3 relative overflow-hidden">
+                <div className="flex items-start gap-3">
+                  <div className="h-9 w-9 rounded-xl bg-[#C5A059]/25 border border-[#C5A059]/40 flex items-center justify-center text-[#DFB76C] shrink-0 font-bold">
+                    <FileText className="h-4.5 w-4.5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[10px] font-black uppercase tracking-wider bg-[#C5A059] text-[#002B49] px-2 py-0.5 rounded">
+                        Next Step
+                      </span>
+                      <span className="text-xs font-semibold text-blue-200">
+                        Official Student Registration
+                      </span>
+                    </div>
+                    <h3 className="text-sm font-black text-white mt-1">
+                      Complete Your Admission Form
+                    </h3>
+                    <p className="text-[11px] text-slate-200 mt-0.5 leading-relaxed">
+                      Now that your test series payment is verified, please fill in your student admission details to finalize registration and issue your official student slip.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    navigate(
+                      `/admission?enrolled=true&series_id=${paymentData?.series?.id || paymentData?.order?.seriesId || ''}&course=${encodeURIComponent(seriesTitle)}&amount=${amountPaid || ''}&order_id=${merchantOrderId || ''}`
+                    )
+                  }
+                  className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-[#C5A059] via-[#DFB76C] to-[#B89047] hover:from-[#b89047] hover:via-[#c5a059] hover:to-[#a47b31] text-[#002B49] font-black text-xs sm:text-sm shadow-md transition flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+                >
+                  <span>Fill Admission Form Now</span>
+                  <ArrowRight className="h-4 w-4" />
+                </button>
+              </div>
+
               {/* Actions */}
-              <div className="space-y-2.5 pt-2">
+              <div className="space-y-2.5 pt-1">
                 <button
                   type="button"
                   onClick={() => navigate('/my-tests')}
-                  className="w-full py-3.5 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-extrabold text-sm shadow-lg shadow-blue-600/20 transition flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  <span>Start Practicing Now</span>
+                  <span>Go to My Tests & Assessments</span>
                   <ArrowRight className="h-4 w-4" />
                 </button>
 

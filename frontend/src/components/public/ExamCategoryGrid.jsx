@@ -5,14 +5,14 @@ import { isNeetPg, isNeetUg } from '../../lib/testSeriesCover.js';
 const CATEGORIES = [
   {
     id: 'jee',
-    label: 'JEE Main',
+    label: 'JEE',
     tagline: 'PCM full-length mocks',
     cover: '/test-series/jee.svg',
     href: '/test-series?filter=jee',
   },
   {
     id: 'neet',
-    label: 'NEET UG',
+    label: 'NEET',
     tagline: 'Medical entrance pattern',
     cover: '/test-series/neet.svg',
     href: '/test-series?filter=neet',

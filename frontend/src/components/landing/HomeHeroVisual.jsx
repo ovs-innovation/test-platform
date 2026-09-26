@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 const SLIDES = [
   {
     id: 'jee',
-    label: 'JEE Main & Advanced',
+    label: 'JEE',
     shortBadge: 'JEE',
     image: '/edvedum/jee-student-ai.png',
     fallbackImage: '/edvedum/student-jee.png',
@@ -15,7 +15,7 @@ const SLIDES = [
   },
   {
     id: 'neet',
-    label: 'NEET UG Medical',
+    label: 'NEET',
     shortBadge: 'NEET',
     image: '/edvedum/neet-student-ai.png',
     fallbackImage: '/edvedum/student-neet.png',

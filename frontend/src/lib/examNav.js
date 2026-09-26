@@ -1,7 +1,7 @@
 export const EXAM_NAV_ITEMS = [
   {
     id: 'jee',
-    label: 'JEE Main',
+    label: 'JEE',
     tagline: 'PCM · engineering entrance',
     cover: '/test-series/jee.svg',
     catalogTo: '/test-series?filter=jee',
@@ -9,8 +9,8 @@ export const EXAM_NAV_ITEMS = [
   },
   {
     id: 'neet',
-    label: 'NEET UG',
-    tagline: 'PCB · medical UG',
+    label: 'NEET',
+    tagline: 'PCB · medical entrance',
     cover: '/test-series/neet.svg',
     catalogTo: '/test-series?filter=neet',
     freeTo: '/free-mock?exam=neet',

@@ -221,6 +221,7 @@ export const publicService = {
   cmsList: (type) => api.get('/public/cms', { params: type ? { type } : {} }).then((r) => r.data.pages),
   activeCoupons: () => api.get('/public/coupons/active').then((r) => r.data.coupons),
   validateCoupon: (code, amount) => api.post('/public/coupons/validate', { code, amount }).then((r) => r.data),
+  landingContent: () => api.get('/public/landing-content').then((r) => r.data),
 };
 
 export const testSeriesService = {
@@ -422,6 +423,11 @@ export const adminService = {
   updateSettings: (data) => {
     clearCache();
     return api.put('/admin/settings', data).then((r) => r.data);
+  },
+  landingContent: () => api.get('/admin/landing-content').then((r) => r.data),
+  updateLandingContent: (data) => {
+    clearCache();
+    return api.put('/admin/landing-content', data).then((r) => r.data);
   },
   coupons: () => withCache('admin_coupons', () => api.get('/admin/coupons').then((r) => r.data.coupons)),
   createCoupon: (data) => {

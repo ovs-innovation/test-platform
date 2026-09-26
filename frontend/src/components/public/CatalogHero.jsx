@@ -1,27 +1,27 @@
 import { Link } from 'react-router-dom';
 
 const QUICK_LINKS = [
-  { label: 'JEE Main', to: '/test-series?filter=jee' },
-  { label: 'NEET UG', to: '/test-series?filter=neet' },
+  { label: 'NEET', to: '/test-series?filter=neet' },
+  { label: 'JEE', to: '/test-series?filter=jee' },
   { label: 'Free mocks', to: '/test-series?filter=free' },
 ];
 
 const EXAM_TRACKS = [
   {
-    label: 'JEE Main',
-    desc: 'PCM · full-length CBT mocks',
-    src: '/test-series/jee.svg',
-    to: '/test-series?filter=jee',
-    borderStyle: 'border-[#0D6EFD]/35 hover:border-[#0D6EFD] hover:shadow-lg hover:shadow-blue-500/10',
-    tagBg: 'bg-blue-500/15 text-[#38bdf8] border-blue-400/30',
-  },
-  {
-    label: 'NEET UG',
+    label: 'NEET',
     desc: 'PCB · NEET pattern tests',
     src: '/test-series/neet.svg',
     to: '/test-series?filter=neet',
     borderStyle: 'border-[#00F0FF]/40 hover:border-[#00F0FF] hover:shadow-lg hover:shadow-cyan-500/10',
     tagBg: 'bg-cyan-500/15 text-[#00F0FF] border-cyan-400/30',
+  },
+  {
+    label: 'JEE',
+    desc: 'PCM · full-length CBT mocks',
+    src: '/test-series/jee.svg',
+    to: '/test-series?filter=jee',
+    borderStyle: 'border-[#0D6EFD]/35 hover:border-[#0D6EFD] hover:shadow-lg hover:shadow-blue-500/10',
+    tagBg: 'bg-blue-500/15 text-[#38bdf8] border-blue-400/30',
   },
 ];
 

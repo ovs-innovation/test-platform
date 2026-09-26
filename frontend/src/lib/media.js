@@ -32,16 +32,17 @@ export function getMediaUrl(url) {
  * which guarantees clean PDF attachment download and avoids external CDN 401 blocks.
  */
 export function getBrochureDownloadUrl(series) {
-  if (!series || !series.brochure_url) return '';
-
-  if (series.slug) {
-    const apiBase = import.meta.env.VITE_API_URL || '/api';
-    const cleanApiBase = apiBase.replace(/\/$/, '');
-    return cleanApiBase.endsWith('/api')
-      ? `${cleanApiBase}/public/test-series/${encodeURIComponent(series.slug)}/brochure`
-      : `${cleanApiBase}/api/public/test-series/${encodeURIComponent(series.slug)}/brochure`;
+  if (series && series.brochure_url) {
+    if (series.slug) {
+      const apiBase = import.meta.env.VITE_API_URL || '/api';
+      const cleanApiBase = apiBase.replace(/\/$/, '');
+      return cleanApiBase.endsWith('/api')
+        ? `${cleanApiBase}/public/test-series/${encodeURIComponent(series.slug)}/brochure`
+        : `${cleanApiBase}/api/public/test-series/${encodeURIComponent(series.slug)}/brochure`;
+    }
+    return getMediaUrl(series.brochure_url);
   }
 
-  return getMediaUrl(series.brochure_url);
+  return '/brochures/edvedum-institutional-brochure.pdf';
 }
 

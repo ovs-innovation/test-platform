@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-import { Trash2, ChevronDown, Check, FileText } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Trash2, ChevronDown, Check, FileText, Sparkles } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -142,6 +143,15 @@ export default function AdminCMS() {
         title="Content Management System (CMS)"
         subtitle="Manage blog posts, FAQs, announcements, and static landing page content."
         breadcrumbs={['CMS Content & Ticker']}
+        actions={
+          <Link
+            to="/admin/offers-achievements"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3.5 py-2 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/50 transition shadow-xs"
+          >
+            <Sparkles className="h-4 w-4 text-blue-600" />
+            <span>Manage Offers & Achievements</span>
+          </Link>
+        }
       />
       <form onSubmit={save} className="rounded-2xl mb-6 space-y-3 p-5 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
         <div className="grid gap-3 sm:grid-cols-3">

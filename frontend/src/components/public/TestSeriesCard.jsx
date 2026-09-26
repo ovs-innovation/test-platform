@@ -9,7 +9,29 @@ export default function TestSeriesCard({ series }) {
   const blurb = getSeriesBlurb(series);
   const price = Number(series.price).toLocaleString('en-IN');
   const slug = (series?.slug || '').toLowerCase();
-  const cardTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
+  
+  let classBadge = null;
+  if (series?.target_class) {
+    const tc = series.target_class.trim();
+    if (/classes?\s*(?:xi|11)\s*(?:&|and)\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 11 & 12';
+    else if (/classes?\s*(?:xi|11)/i.test(tc)) classBadge = 'Class 11';
+    else if (/classes?\s*(?:xii|12)\s*(?:&|and)\s*dropper/i.test(tc)) classBadge = 'Class 12 & Droppers';
+    else if (/classes?\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 12';
+    else if (/dropper|rm|repeater/i.test(tc)) classBadge = 'Dropper / RM';
+    else classBadge = tc;
+  } else if (/two[- ]?year|2[- ]?year|\b2028\b/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
+    classBadge = 'Class 11 & 12';
+  } else if (/rm[- ]personalised|\brm\b|dropper/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
+    classBadge = 'Dropper / RM';
+  } else if (/class\s*(?:12|xii)|one[- ]?year|2027/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
+    classBadge = 'Class 12';
+  }
+
+  const rawTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
+  const cardTags = classBadge && !rawTags.some(t => t.toLowerCase() === classBadge.toLowerCase())
+    ? [classBadge, ...rawTags]
+    : rawTags;
+
   let testCount = Number(series.planned_tests || series.planned_test_count || series.test_count || 0);
   if (testCount === 0 && series.description) {
     const numbersInDesc = [...series.description.matchAll(/(\d+)\s*(?:tests|aiets|mocks|assessments)/gi)];
@@ -20,17 +42,13 @@ export default function TestSeriesCard({ series }) {
   }
 
   let overlayBadge1 = null;
-  let overlayBadge2 = `${series.validity_days || 365}D`;
 
   if (slug === 'neet-pg-mock') {
     overlayBadge1 = '19 SUBJECTS';
-    overlayBadge2 = '1 YEAR';
   } else if (slug === 'aiets-jee-main-mock-pack' || slug === 'neet-ug-mock') {
     overlayBadge1 = null;
-    overlayBadge2 = `${series.validity_days || 365}D`;
   } else if (testCount > 0) {
     overlayBadge1 = `${testCount} CBT Tests`;
-    overlayBadge2 = `${series.validity_days || 365}D`;
   }
 
   return (
@@ -66,10 +84,15 @@ export default function TestSeriesCard({ series }) {
               <span>{theme.label}</span>
             </span>
 
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 flex-wrap">
               {series.is_featured && (
                 <span className="rounded-full bg-amber-400 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-amber-950 shadow-xs">
                   ★ Featured
+                </span>
+              )}
+              {classBadge && (
+                <span className="rounded-full bg-white/25 px-2.5 py-0.5 text-[9.5px] font-black uppercase tracking-wide text-white backdrop-blur-md border border-white/30 shadow-xs">
+                  {classBadge}
                 </span>
               )}
               {free && (
@@ -80,19 +103,15 @@ export default function TestSeriesCard({ series }) {
             </div>
           </div>
 
-          {/* Integrated Mock & Validity Stat Chips */}
-          <div className="flex flex-wrap items-center gap-2">
-            {overlayBadge1 && (
+          {/* Integrated Mock Stat Chip */}
+          {overlayBadge1 && (
+            <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white backdrop-blur-md border border-white/20 shadow-xs">
                 <span>⚡</span>
                 <span>{overlayBadge1}</span>
               </span>
-            )}
-            <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
-              <span>⏳</span>
-              <span>{overlayBadge2}</span>
-            </span>
-          </div>
+            </div>
+          )}
         </div>
       </div>
 

@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner } from '../../components/ui.jsx';
 import { AdminHeader, AdminCard } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
-import { Target, GraduationCap, Radio, Sliders, Shield } from 'lucide-react';
+import { Target, GraduationCap, Radio, Sliders, Shield, Sparkles } from 'lucide-react';
 
 export default function AdminSettings() {
   const toast = useToast();
@@ -81,6 +82,15 @@ export default function AdminSettings() {
         subtitle="Global platform branding, AI prediction feature flags, and broadcast candidate announcements."
         breadcrumbs={['System Configuration']}
         status="Operational"
+        actions={
+          <Link
+            to="/admin/offers-achievements"
+            className="inline-flex items-center gap-1.5 rounded-xl border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3.5 py-2 text-xs font-bold hover:bg-blue-100 dark:hover:bg-blue-900/50 transition shadow-xs"
+          >
+            <Sparkles className="h-4 w-4 text-blue-600" />
+            <span>Manage Offers & Achievements</span>
+          </Link>
+        }
       />
 
       {/* 2-Column Grid Layout Filling Desktop Space */}

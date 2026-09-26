@@ -73,6 +73,7 @@ import {
   listFaculty, createFaculty, deleteFaculty,
   adminListSubjects, createSubject, deleteSubject, createChapter, deleteChapter, listChapters, createTopic, deleteTopic,
   getSettings, updateSettings, broadcastNotification,
+  getAdminLandingContent, updateAdminLandingContent,
 } from '../controllers/platformController.js';
 import { createInvite, listInvites, resendInvite } from '../controllers/inviteController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
@@ -133,6 +134,8 @@ router.put('/cms', upsertCmsPage);
 router.delete('/cms/:id', deleteCmsPage);
 router.get('/settings', getSettings);
 router.put('/settings', updateSettings);
+router.get('/landing-content', getAdminLandingContent);
+router.put('/landing-content', updateAdminLandingContent);
 router.get('/coupons', listCoupons);
 router.post('/coupons', createCoupon);
 router.patch('/coupons/:id/toggle', toggleCoupon);

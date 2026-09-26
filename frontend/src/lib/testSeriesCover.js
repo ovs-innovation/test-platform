@@ -28,7 +28,7 @@ const COVER_IMAGES = {
 const THEMES = {
   jee: {
     categoryKey: 'jee',
-    label: 'JEE MAIN & ADVANCED',
+    label: 'JEE',
     tagline: 'PCM CBT Mock Track',
     badgeStyle: 'bg-[#0D6EFD]/10 text-[#0D6EFD] border border-[#0D6EFD]/20',
     heroGradient: 'from-[#0D6EFD] via-[#2563eb] to-[#1e40af]',
@@ -42,7 +42,7 @@ const THEMES = {
   },
   neet: {
     categoryKey: 'neet',
-    label: 'NEET UG MEDICAL',
+    label: 'NEET',
     tagline: 'PCB NCERT Mock Track',
     badgeStyle: 'bg-[#0891b2]/10 text-[#0891b2] border border-[#0891b2]/20',
     heroGradient: 'from-[#0284c7] via-[#06b6d4] to-[#0891b2]',

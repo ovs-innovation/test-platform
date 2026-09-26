@@ -14,14 +14,14 @@ const SENIOR_CLASS_OPTIONS = [
 
 const TEST_SERIES_OPTIONS = [
   { label: 'JEE Test Series', filter: 'jee' },
-  { label: 'NEET UG Test Series', filter: 'neet' },
+  { label: 'NEET Test Series', filter: 'neet' },
 ];
 
 export const PROGRAM_SECTIONS = [
   {
     id: 'jee',
     title: 'JEE',
-    subtitle: 'Main + Advanced',
+    subtitle: '',
     desc: 'Engineering entrance — Physics, Chemistry & Maths',
     filter: 'jee',
     theme: 'jee',
@@ -40,7 +40,7 @@ export const PROGRAM_SECTIONS = [
   {
     id: 'neet',
     title: 'NEET',
-    subtitle: 'UG Medical',
+    subtitle: '',
     desc: 'Medical entrance — Biology, Physics & Chemistry',
     filter: 'neet',
     theme: 'neet',
@@ -222,9 +222,11 @@ function ProgramCard({ section, index, isOpen, onToggle, onClose }) {
               <h3 className="text-[16px] sm:text-[20px] font-black text-slate-900 leading-tight truncate">
                 {section.title}
               </h3>
-              <p className="text-[11px] sm:text-[14px] font-semibold text-slate-500 mt-0.5 truncate">
-                {section.subtitle}
-              </p>
+              {section.subtitle ? (
+                <p className="text-[11px] sm:text-[14px] font-semibold text-slate-500 mt-0.5 truncate">
+                  {section.subtitle}
+                </p>
+              ) : null}
             </div>
           </div>
 
