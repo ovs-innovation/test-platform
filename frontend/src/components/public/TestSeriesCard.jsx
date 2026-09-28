@@ -10,17 +10,31 @@ export default function TestSeriesCard({ series }) {
   const price = Number(series.price).toLocaleString('en-IN');
   const slug = (series?.slug || '').toLowerCase();
   
+  const allText = `${series?.title || ''} ${series?.slug || ''} ${series?.description || ''} ${series?.program_type || ''} ${series?.target_class || ''} ${series?.target_year || ''}`;
+
+  // Prioritize 2-Year (Classes 11 + 12) program detection so bad/default target_class values in DB don't misclassify it as Dropper
+  const isTwoYear = Boolean(
+    series?.program_type === 'Two Year' ||
+    (series?.target_year && String(series.target_year).trim() === '2028') ||
+    /two[- ]?year|2[- ]?year/i.test(series?.title || '') ||
+    /two[- ]?year|2[- ]?year/i.test(series?.slug || '') ||
+    /two[- ]?year|2[- ]?year/i.test(series?.description || '') ||
+    /(?:classes?\s*)?(?:11|xi)\s*(?:&|and|\+)\s*(?:12|xii)/i.test(allText) ||
+    /11\s*(?:&|and|\+)\s*12/i.test(allText) ||
+    /target\s*2028/i.test(allText)
+  );
+
   let classBadge = null;
-  if (series?.target_class) {
+  if (isTwoYear) {
+    classBadge = '11 + 12';
+  } else if (series?.target_class) {
     const tc = series.target_class.trim();
-    if (/classes?\s*(?:xi|11)\s*(?:&|and)\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 11 & 12';
+    if (/classes?\s*(?:xi|11)\s*(?:&|and|\+)\s*(?:xii|12)/i.test(tc)) classBadge = '11 + 12';
     else if (/classes?\s*(?:xi|11)/i.test(tc)) classBadge = 'Class 11';
     else if (/classes?\s*(?:xii|12)\s*(?:&|and)\s*dropper/i.test(tc)) classBadge = 'Class 12 & Droppers';
     else if (/classes?\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 12';
     else if (/dropper|rm|repeater/i.test(tc)) classBadge = 'Dropper / 12 Passed';
     else classBadge = tc;
-  } else if (/two[- ]?year|2[- ]?year|\b2028\b/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
-    classBadge = 'Class 11 & 12';
   } else if (/rm[- ]personalised|\brm\b|dropper/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
     classBadge = 'Dropper / 12 Passed';
   } else if (/class\s*(?:12|xii)|one[- ]?year|2027/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
@@ -28,9 +42,33 @@ export default function TestSeriesCard({ series }) {
   }
 
   const rawTags = (Array.isArray(series?.tags) ? series.tags : typeof series?.tags === 'string' ? JSON.parse(series.tags) : null) || theme.tags || ['CBT Interface', 'All India Rank', 'Step Solutions'];
-  const cardTags = classBadge && !rawTags.some(t => t.toLowerCase() === classBadge.toLowerCase())
-    ? [classBadge, ...rawTags]
-    : rawTags;
+
+  let cardTags;
+  if (isTwoYear) {
+    // In 2-year (Classes 11 + 12) section, remove any legacy 'Dropper/RM' or 'Dropper / 12 Passed' tags
+    const filteredTags = rawTags.filter((t) => {
+      if (typeof t !== 'string') return false;
+      const clean = t.trim();
+      if (/dropper|rm\b|repeater|passed[- ]?12/i.test(clean)) return false;
+      if (/^(?:classes?\s*)?(?:11|xi)\s*(?:&|and|\+)\s*(?:12|xii)$/i.test(clean)) return false;
+      if (/^class\s*(?:11|xi)$/i.test(clean)) return false;
+      if (clean.toLowerCase() === '11 + 12' || clean.toLowerCase() === '11+12') return false;
+      return true;
+    });
+    // Ensure '11 + 12' is the badge at the front
+    cardTags = ['11 + 12', ...filteredTags];
+  } else {
+    // Normalize any legacy 'Dropper / RM' tag to 'Dropper / 12 Passed'
+    const normalizedTags = rawTags.map((t) => {
+      if (typeof t === 'string' && /dropper\s*\/\s*rm/i.test(t)) {
+        return 'Dropper / 12 Passed';
+      }
+      return t;
+    });
+    cardTags = classBadge && !normalizedTags.some((t) => typeof t === 'string' && t.toLowerCase() === classBadge.toLowerCase())
+      ? [classBadge, ...normalizedTags]
+      : normalizedTags;
+  }
 
   let testCount = Number(series.planned_tests || series.planned_test_count || series.test_count || 0);
   if (testCount === 0 && series.description) {

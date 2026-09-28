@@ -25,7 +25,16 @@ export const CLASS_FILTERS = [
 export function normalizeClass(c) {
   if (!c) return 'all';
   const lower = c.toLowerCase().trim();
-  if (lower === '11' || lower === 'class-11' || lower === 'class 11' || lower === 'xi') return '11';
+  if (
+    lower === '11' ||
+    lower === 'class-11' ||
+    lower === 'class 11' ||
+    lower === 'xi' ||
+    lower === '11+12' ||
+    lower === '11 + 12' ||
+    lower === 'two-year' ||
+    lower === '2-year'
+  ) return '11';
   if (lower === '12' || lower === 'class-12' || lower === 'class 12' || lower === 'xii') return '12';
   if (
     lower === 'passed-12' ||
@@ -67,10 +76,13 @@ export function matchesClass(series, targetClass) {
     targetYear === '2028' ||
     targetClassField.includes('xi &') ||
     targetClassField.includes('xi and') ||
-    /classes?\s*(?:11|xi)\b/i.test(allText)
+    targetClassField.includes('11 + 12') ||
+    targetClassField.includes('11&12') ||
+    /classes?\s*(?:11|xi)\b/i.test(allText) ||
+    /11\s*(?:&|and|\+)\s*12/i.test(allText)
   );
 
-  const isDedicatedDropperOrRm = (
+  const isDedicatedDropperOrRm = !isTwoYearProgram && (
     (targetClassField.includes('dropper') && !targetClassField.includes('xii') && !targetClassField.includes('12')) ||
     targetClassField.includes('rm') ||
     programType.includes('repeater') ||
