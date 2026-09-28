@@ -113,6 +113,7 @@ export const testSeriesSchema = z.object({
   image_url: z.string().max(2000).optional().default(''),
   brochure_url: z.string().max(2000).optional().nullable().or(z.literal('')),
   planned_tests: z.number().int().min(0).optional().nullable(),
+  target_class: z.string().max(60).optional().nullable(),
   program_type: z.string().max(60).optional().nullable(),
   target_year: z.string().max(20).optional().nullable(),
   duration_months: z.number().int().min(1).optional().nullable(),

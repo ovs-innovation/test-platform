@@ -19,7 +19,7 @@ export const CLASS_FILTERS = [
   { id: 'all', label: 'All Classes' },
   { id: 'passed-12', label: 'Dropper / 12 Passed' },
   { id: '12', label: 'Class 12' },
-  { id: '11', label: 'Class 11' },
+  { id: '11', label: '11 + 12' },
 ];
 
 export function normalizeClass(c) {
@@ -70,7 +70,13 @@ export function matchesClass(series, targetClass) {
 
   const allText = `${title} ${slug} ${desc} ${targetClassField} ${programType} ${tags} ${targetYear}`;
 
-  const isTwoYearProgram = (
+  const isFoundation = (
+    targetClassField.includes('foundation') ||
+    programType.includes('foundation') ||
+    /foundation/i.test(allText)
+  );
+
+  const isTwoYearProgram = !isFoundation && (
     programType.includes('two') ||
     /two[- ]?year|2[- ]?year/i.test(allText) ||
     targetYear === '2028' ||
@@ -78,26 +84,27 @@ export function matchesClass(series, targetClass) {
     targetClassField.includes('xi and') ||
     targetClassField.includes('11 + 12') ||
     targetClassField.includes('11&12') ||
+    targetClassField.includes('11+12') ||
     /classes?\s*(?:11|xi)\b/i.test(allText) ||
     /11\s*(?:&|and|\+)\s*12/i.test(allText)
   );
 
-  const isDedicatedDropperOrRm = !isTwoYearProgram && (
+  const isDedicatedDropperOrRm = !isFoundation && !isTwoYearProgram && (
     (targetClassField.includes('dropper') && !targetClassField.includes('xii') && !targetClassField.includes('12')) ||
     targetClassField.includes('rm') ||
+    targetClassField.includes('passed') ||
     programType.includes('repeater') ||
     /rm[- ]personalised|\brm\b/i.test(slug) ||
-    /\b(repeater|rm)\b/i.test(title)
+    /\b(repeater|rm|dropper)\b/i.test(title)
   );
 
   if (norm === '11') {
-    if (isDedicatedDropperOrRm) return false;
+    if (isFoundation || isDedicatedDropperOrRm) return false;
     return isTwoYearProgram;
   }
 
   if (norm === '12') {
-    if (isTwoYearProgram) return false;
-    if (isDedicatedDropperOrRm) return false;
+    if (isFoundation || isTwoYearProgram || isDedicatedDropperOrRm) return false;
     return (
       targetClassField.includes('12') ||
       targetClassField.includes('xii') ||
@@ -107,7 +114,7 @@ export function matchesClass(series, targetClass) {
   }
 
   if (norm === 'passed-12') {
-    if (isTwoYearProgram) return false;
+    if (isFoundation || isTwoYearProgram) return false;
     if (isDedicatedDropperOrRm) return true;
     if (targetClassField.includes('dropper') || targetClassField.includes('passed')) return true;
     return false;
@@ -133,7 +140,7 @@ export function getSeriesSortScore(s) {
   return examScore * 100 + classScore * 10;
 }
 
-const isFoundation = (s) => /foundation/i.test(`${s.exam_type || ''} ${s.title || ''}`);
+const isFoundation = (s) => /foundation/i.test(`${s.exam_type || ''} ${s.title || ''} ${s.target_class || ''} ${s.program_type || ''}`);
 
 export default function TestSeriesCatalog() {
   const [searchParams, setSearchParams] = useSearchParams();

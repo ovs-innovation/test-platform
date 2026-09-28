@@ -55,6 +55,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
     brochure_url,
     brochure_name,
     planned_tests,
+    target_class,
     program_type,
     target_year,
     duration_months,
@@ -63,16 +64,31 @@ export const createTestSeries = asyncHandler(async (req, res) => {
   const slug = slugify(title) + '-' + Date.now().toString(36);
   const calculatedIsFree = typeof is_free === 'boolean' ? is_free : Number(price) === 0;
 
+  // Auto-detect target class if not provided
+  let detectedTargetClass = target_class;
+  if (!detectedTargetClass) {
+    if (/two[- ]?year|2028|2[- ]year|11\s*(?:&|and|\+)\s*12/i.test(title)) {
+      detectedTargetClass = '11 + 12';
+    } else if (/rm|repeater|dropper/i.test(title)) {
+      detectedTargetClass = 'Dropper / 12 Passed';
+    } else {
+      detectedTargetClass = 'Class 12';
+    }
+  }
+
   // Auto-detect program type if not provided
   let detectedProgramType = program_type;
   if (!detectedProgramType) {
-    detectedProgramType = /two[- ]?year|2028|2[- ]year/i.test(title) ? 'Two Year' : 'One Year';
+    if (detectedTargetClass === '11 + 12') detectedProgramType = 'Two Year';
+    else if (detectedTargetClass === 'Dropper / 12 Passed') detectedProgramType = 'Repeater';
+    else if (detectedTargetClass === 'Foundation') detectedProgramType = 'Foundation';
+    else detectedProgramType = /two[- ]?year|2028|2[- ]year/i.test(title) ? 'Two Year' : 'One Year';
   }
 
   // Auto-detect target year if not provided
   let detectedTargetYear = target_year;
   if (!detectedTargetYear) {
-    detectedTargetYear = detectedProgramType === 'Two Year' ? '2028' : '2027';
+    detectedTargetYear = (detectedProgramType === 'Two Year' || detectedTargetClass === '11 + 12') ? '2028' : '2027';
   }
 
   // Auto-detect exam type if General or default
@@ -87,9 +103,10 @@ export const createTestSeries = asyncHandler(async (req, res) => {
     `INSERT INTO test_series (
        title, slug, description, price, validity_days, exam_type, is_featured, is_active,
        image_url, is_free, display_order, brochure_url, brochure_name,
-       planned_tests, test_count, program_type, target_year, duration_months, duration_text
+       planned_tests, test_count, program_type, target_year, duration_months, duration_text,
+       target_class
      )
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19) RETURNING *`,
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *`,
     [
       title,
       slug,
@@ -110,6 +127,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       detectedTargetYear,
       Number(duration_months) || (detectedProgramType === 'Two Year' ? 24 : 12),
       duration_text || null,
+      detectedTargetClass,
     ]
   );
   res.status(201).json({ test_series: result.rows[0] });

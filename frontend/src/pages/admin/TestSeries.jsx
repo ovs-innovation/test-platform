@@ -15,6 +15,19 @@ export default function AdminTestSeries() {
   const [state, setState] = useState('loading');
   const [confirmState, setConfirmState] = useState({ isOpen: false, title: '', message: '', confirmText: 'Unlink', onConfirm: null, loading: false });
   
+  // Helper to determine target class
+  const resolveTargetClass = (s) => {
+    const tc = (s?.target_class || '').trim();
+    const pt = (s?.program_type || '').trim();
+    const title = (s?.title || '').trim();
+    const combined = `${tc} ${pt} ${title}`;
+
+    if (/two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12|classes?\s*(?:11|xi)|2028/i.test(combined)) return '11 + 12';
+    if (/dropper|rm|repeater|passed/i.test(combined)) return 'Dropper / 12 Passed';
+    if (/12|xii|one[- ]?year/i.test(combined)) return 'Class 12';
+    return 'Class 12';
+  };
+
   // Series Modal
   const [modal, setModal] = useState(false);
   const [editing, setEditing] = useState(null);
@@ -23,6 +36,7 @@ export default function AdminTestSeries() {
     description: '',
     price: 0,
     exam_type: 'NEET UG',
+    target_class: 'Class 12',
     program_type: 'One Year',
     target_year: '2027',
     planned_tests: 0,
@@ -70,15 +84,17 @@ export default function AdminTestSeries() {
 
   const handleOpenEdit = (s) => {
     setEditing(s);
+    const resolvedClass = resolveTargetClass(s);
     setForm({
       title: s.title || '',
       description: s.description || '',
       price: Number(s.price) || 0,
       exam_type: s.exam_type || 'NEET UG',
-      program_type: s.program_type || (/two[- ]?year|2028/i.test(s.title) ? 'Two Year' : 'One Year'),
-      target_year: s.target_year || (/two[- ]?year|2028/i.test(s.title) ? '2028' : '2027'),
+      target_class: resolvedClass,
+      program_type: s.program_type || (resolvedClass === '11 + 12' ? 'Two Year' : resolvedClass === 'Dropper / 12 Passed' ? 'Repeater' : 'One Year'),
+      target_year: s.target_year || (resolvedClass === '11 + 12' ? '2028' : '2027'),
       planned_tests: s.planned_tests ?? (s.test_count || 0),
-      duration_months: s.duration_months || (/two[- ]?year|2028/i.test(s.title) ? 24 : 12),
+      duration_months: s.duration_months || (resolvedClass === '11 + 12' ? 24 : 12),
       duration_text: s.duration_text || '',
       is_featured: Boolean(s.is_featured),
       is_active: s.is_active !== false,
@@ -99,6 +115,7 @@ export default function AdminTestSeries() {
       description: '',
       price: 0,
       exam_type: 'NEET UG',
+      target_class: 'Class 12',
       program_type: 'One Year',
       target_year: '2027',
       planned_tests: 0,
@@ -116,17 +133,57 @@ export default function AdminTestSeries() {
     setModal(true);
   };
 
+  const handleClassChange = (selectedClass) => {
+    setForm((f) => {
+      let program_type = 'One Year';
+      let target_year = '2027';
+      let duration_months = 12;
+      let duration_text = f.duration_text;
+
+      if (selectedClass === '11 + 12') {
+        program_type = 'Two Year';
+        target_year = '2028';
+        duration_months = 24;
+      } else if (selectedClass === 'Dropper / 12 Passed') {
+        program_type = 'Repeater';
+        target_year = '2027';
+        duration_months = 12;
+        if (!duration_text) {
+          duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
+        }
+      } else {
+        program_type = 'One Year';
+        target_year = '2027';
+        duration_months = 12;
+      }
+
+      return {
+        ...f,
+        target_class: selectedClass,
+        program_type,
+        target_year,
+        duration_months,
+        duration_text,
+      };
+    });
+  };
+
   const handleTitleChange = (val) => {
     setForm((f) => {
       const updates = { ...f, title: val };
-      if (/two[- ]?year|2028|2[- ]year/i.test(val) && f.program_type === 'One Year') {
+      if (/two[- ]?year|2028|2[- ]year|11\s*(?:&|and|\+)\s*12/i.test(val) && f.target_class !== '11 + 12') {
+        updates.target_class = '11 + 12';
         updates.program_type = 'Two Year';
         updates.target_year = '2028';
         updates.duration_months = 24;
-      }
-      if (/rm|repeater/i.test(val)) {
-        updates.program_type = 'Repeater / RM';
-        updates.duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
+      } else if (/rm|repeater|dropper/i.test(val) && f.target_class !== 'Dropper / 12 Passed') {
+        updates.target_class = 'Dropper / 12 Passed';
+        updates.program_type = 'Repeater';
+        updates.target_year = '2027';
+        updates.duration_months = 12;
+        if (!updates.duration_text) {
+          updates.duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
+        }
       }
       if (/neet/i.test(val) && (f.exam_type === 'JEE Main' || f.exam_type === 'General')) {
         updates.exam_type = /neet[- ]?pg/i.test(val) ? 'NEET PG' : 'NEET UG';
@@ -348,6 +405,7 @@ export default function AdminTestSeries() {
             <div className="min-w-0 flex-1">
               <div className="flex flex-wrap gap-2 items-center">
                 <Badge color="blue">{s.exam_type}</Badge>
+                <Badge color="purple">{resolveTargetClass(s)}</Badge>
                 {s.is_free || Number(s.price) === 0 ? <Badge color="cyan">Free Mock</Badge> : <Badge color="indigo">Paid</Badge>}
                 {s.is_featured && <Badge color="amber">Featured</Badge>}
                 {s.is_active ? (
@@ -489,27 +547,15 @@ export default function AdminTestSeries() {
               <span className="text-[10px] text-slate-400">Total planned in curriculum</span>
             </div>
             <div>
-              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Program Type</label>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Class</label>
               <select
-                className="input"
-                value={form.program_type}
-                onChange={(e) => {
-                  const pType = e.target.value;
-                  setForm((f) => ({
-                    ...f,
-                    program_type: pType,
-                    target_year: pType === 'Two Year' ? '2028' : '2027',
-                    duration_months: pType === 'Two Year' ? 24 : 12,
-                    duration_text: pType === 'Repeater / RM' ? (f.duration_text || 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)') : f.duration_text,
-                  }));
-                }}
+                className="input font-semibold"
+                value={form.target_class || 'Class 12'}
+                onChange={(e) => handleClassChange(e.target.value)}
               >
-                <option value="One Year">One Year</option>
-                <option value="Two Year">Two Year</option>
-                <option value="Repeater / RM">Repeater / RM</option>
-                <option value="Foundation">Foundation</option>
-                <option value="Crash Course">Crash Course</option>
-                <option value="Self-Paced">Self-Paced</option>
+                <option value="11 + 12">11 + 12</option>
+                <option value="Class 12">12</option>
+                <option value="Dropper / 12 Passed">dropper/ 12 passed</option>
               </select>
             </div>
             <div>

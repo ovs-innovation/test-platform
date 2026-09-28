@@ -12,8 +12,12 @@ export default function TestSeriesCard({ series }) {
   
   const allText = `${series?.title || ''} ${series?.slug || ''} ${series?.description || ''} ${series?.program_type || ''} ${series?.target_class || ''} ${series?.target_year || ''}`;
 
+  const isFoundation = Boolean(
+    /foundation/i.test(`${series?.target_class || ''} ${series?.program_type || ''} ${series?.title || ''}`)
+  );
+
   // Prioritize 2-Year (Classes 11 + 12) program detection so bad/default target_class values in DB don't misclassify it as Dropper
-  const isTwoYear = Boolean(
+  const isTwoYear = !isFoundation && Boolean(
     series?.program_type === 'Two Year' ||
     (series?.target_year && String(series.target_year).trim() === '2028') ||
     /two[- ]?year|2[- ]?year/i.test(series?.title || '') ||
@@ -25,16 +29,21 @@ export default function TestSeriesCard({ series }) {
   );
 
   let classBadge = null;
-  if (isTwoYear) {
+  if (isFoundation) {
+    classBadge = 'Foundation';
+  } else if (isTwoYear) {
     classBadge = '11 + 12';
   } else if (series?.target_class) {
     const tc = series.target_class.trim();
-    if (/classes?\s*(?:xi|11)\s*(?:&|and|\+)\s*(?:xii|12)/i.test(tc)) classBadge = '11 + 12';
+    if (/foundation/i.test(tc)) classBadge = 'Foundation';
+    else if (/classes?\s*(?:xi|11)\s*(?:&|and|\+)\s*(?:xii|12)/i.test(tc)) classBadge = '11 + 12';
     else if (/classes?\s*(?:xi|11)/i.test(tc)) classBadge = 'Class 11';
     else if (/classes?\s*(?:xii|12)\s*(?:&|and)\s*dropper/i.test(tc)) classBadge = 'Class 12 & Droppers';
     else if (/classes?\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 12';
     else if (/dropper|rm|repeater/i.test(tc)) classBadge = 'Dropper / 12 Passed';
     else classBadge = tc;
+  } else if (/foundation/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
+    classBadge = 'Foundation';
   } else if (/rm[- ]personalised|\brm\b|dropper/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
     classBadge = 'Dropper / 12 Passed';
   } else if (/class\s*(?:12|xii)|one[- ]?year|2027/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
