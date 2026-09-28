@@ -161,10 +161,65 @@ export function getExamTheme(series) {
   if (isNeetPg(text)) theme = THEMES['neet-pg'];
   else if (isNeetUg(text)) theme = THEMES.neet;
   else if (/jee/i.test(text)) theme = THEMES.jee;
-  else if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/i.test(text)) theme = THEMES.foundation;
+  else if (/foundation|class\s*[6-9]|class\s*10/i.test(text)) theme = THEMES.foundation;
   else if (free) theme = THEMES.free;
 
   return { ...theme, studentImage: bannerImage };
+}
+
+/**
+ * Resolves the normalized class ID ('11', '12', or 'passed-12')
+ * mutually exclusively for any given test series.
+ */
+export function getSeriesClass(series) {
+  if (!series) return '12';
+
+  const title = (series.title || '').toLowerCase();
+  const slug = (series.slug || '').toLowerCase();
+  const targetClass = (series.target_class || '').toLowerCase();
+  const programType = (series.program_type || '').toLowerCase();
+  const targetYear = String(series.target_year || '').trim();
+
+  const isRepeaterTitleOrSlug = /\b(repeater|repeaters|rm|dropper|droppers)\b/i.test(`${title} ${slug}`);
+  const isClass12Explicit = /\b(class\s*12|12th|class\s*xii)\b/i.test(title) && !isRepeaterTitleOrSlug;
+  const isTwoYearExplicit = (/two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12/i.test(title) || targetYear === '2028') && !isRepeaterTitleOrSlug;
+
+  // 1. Repeater / RM / Dropper check takes priority if title, slug, or program_type indicates it
+  if (isRepeaterTitleOrSlug || programType.includes('repeater') || programType.includes('rm')) {
+    return 'passed-12';
+  }
+
+  // 2. Two-Year / 11 + 12 check
+  if (
+    isTwoYearExplicit ||
+    programType.includes('two') ||
+    targetClass.includes('11 + 12') ||
+    targetClass.includes('11&12') ||
+    targetClass.includes('11+12') ||
+    /two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12/i.test(slug)
+  ) {
+    return '11';
+  }
+
+  // 3. Dropper check from target_class only if not explicit Class 12
+  if (!isClass12Explicit && (targetClass.includes('dropper') || targetClass.includes('passed') || targetClass.includes('rm'))) {
+    if (!targetClass.includes('xii') && !targetClass.includes('12')) {
+      return 'passed-12';
+    }
+  }
+
+  // 4. Default / Class 12
+  return '12';
+}
+
+/**
+ * Returns user-facing class badge label ('11 + 12', 'Class 12', or 'Dropper / 12 Passed')
+ */
+export function getSeriesClassBadge(series) {
+  const c = getSeriesClass(series);
+  if (c === '11') return '11 + 12';
+  if (c === 'passed-12') return 'Dropper / 12 Passed';
+  return 'Class 12';
 }
 
 /** Cover image — used on detail page and candidate dashboard. */

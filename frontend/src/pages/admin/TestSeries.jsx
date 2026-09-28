@@ -5,7 +5,7 @@ import { LoadingScreen, ErrorState, Spinner, Badge, ConfirmModal } from '../../c
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
-import { getTestSeriesCover } from '../../lib/testSeriesCover.js';
+import { getTestSeriesCover, getSeriesClassBadge } from '../../lib/testSeriesCover.js';
 import { getMediaUrl } from '../../lib/media.js';
 
 export default function AdminTestSeries() {
@@ -16,17 +16,7 @@ export default function AdminTestSeries() {
   const [confirmState, setConfirmState] = useState({ isOpen: false, title: '', message: '', confirmText: 'Unlink', onConfirm: null, loading: false });
   
   // Helper to determine target class
-  const resolveTargetClass = (s) => {
-    const tc = (s?.target_class || '').trim();
-    const pt = (s?.program_type || '').trim();
-    const title = (s?.title || '').trim();
-    const combined = `${tc} ${pt} ${title}`;
-
-    if (/two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12|classes?\s*(?:11|xi)|2028/i.test(combined)) return '11 + 12';
-    if (/dropper|rm|repeater|passed/i.test(combined)) return 'Dropper / 12 Passed';
-    if (/12|xii|one[- ]?year/i.test(combined)) return 'Class 12';
-    return 'Class 12';
-  };
+  const resolveTargetClass = (s) => getSeriesClassBadge(s);
 
   // Series Modal
   const [modal, setModal] = useState(false);

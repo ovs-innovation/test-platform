@@ -5,7 +5,7 @@ import { ErrorState } from '../../components/ui.jsx';
 import TestSeriesCard from '../../components/public/TestSeriesCard.jsx';
 import TestSeriesCardSkeleton from '../../components/public/TestSeriesCardSkeleton.jsx';
 import CatalogHero from '../../components/public/CatalogHero.jsx';
-import { isNeetUg } from '../../lib/testSeriesCover.js';
+import { isNeetUg, getSeriesClass } from '../../lib/testSeriesCover.js';
 
 const FILTERS = [
   { id: 'all', label: 'All series' },
@@ -55,72 +55,7 @@ export function normalizeClass(c) {
 export function matchesClass(series, targetClass) {
   const norm = normalizeClass(targetClass);
   if (norm === 'all') return true;
-
-  const title = (series.title || '').toLowerCase();
-  const slug = (series.slug || '').toLowerCase();
-  const desc = (series.description || '').toLowerCase();
-  const targetClassField = (series.target_class || '').toLowerCase();
-  const programType = (series.program_type || '').toLowerCase();
-  const targetYear = String(series.target_year || '').trim();
-  const tags = Array.isArray(series.tags)
-    ? series.tags.join(' ').toLowerCase()
-    : typeof series.tags === 'string'
-      ? series.tags.toLowerCase()
-      : '';
-
-  const allText = `${title} ${slug} ${desc} ${targetClassField} ${programType} ${tags} ${targetYear}`;
-
-  const isFoundation = (
-    targetClassField.includes('foundation') ||
-    programType.includes('foundation') ||
-    /foundation/i.test(allText)
-  );
-
-  const isTwoYearProgram = !isFoundation && (
-    programType.includes('two') ||
-    /two[- ]?year|2[- ]?year/i.test(allText) ||
-    targetYear === '2028' ||
-    targetClassField.includes('xi &') ||
-    targetClassField.includes('xi and') ||
-    targetClassField.includes('11 + 12') ||
-    targetClassField.includes('11&12') ||
-    targetClassField.includes('11+12') ||
-    /classes?\s*(?:11|xi)\b/i.test(allText) ||
-    /11\s*(?:&|and|\+)\s*12/i.test(allText)
-  );
-
-  const isDedicatedDropperOrRm = !isFoundation && !isTwoYearProgram && (
-    (targetClassField.includes('dropper') && !targetClassField.includes('xii') && !targetClassField.includes('12')) ||
-    targetClassField.includes('rm') ||
-    targetClassField.includes('passed') ||
-    programType.includes('repeater') ||
-    /rm[- ]personalised|\brm\b/i.test(slug) ||
-    /\b(repeater|rm|dropper)\b/i.test(title)
-  );
-
-  if (norm === '11') {
-    if (isFoundation || isDedicatedDropperOrRm) return false;
-    return isTwoYearProgram;
-  }
-
-  if (norm === '12') {
-    if (isFoundation || isTwoYearProgram || isDedicatedDropperOrRm) return false;
-    return (
-      targetClassField.includes('12') ||
-      targetClassField.includes('xii') ||
-      tags.includes('class 12') ||
-      /class\s*(?:12|xii)\b|one[- ]?year|1[- ]?year|2027|comprehensive|mock[- ]pack/i.test(allText)
-    );
-  }
-
-  if (norm === 'passed-12') {
-    if (isFoundation || isTwoYearProgram) return false;
-    if (isDedicatedDropperOrRm) return true;
-    if (targetClassField.includes('dropper') || targetClassField.includes('passed')) return true;
-    return false;
-  }
-
-  return true;
+  return getSeriesClass(series) === norm;
 }
 
 export function getSeriesSortScore(s) {
@@ -230,7 +165,8 @@ export default function TestSeriesCatalog() {
   const filtered = useMemo(() => {
     const result = list.filter((s) => {
       const text = `${s.exam_type || ''} ${s.title || ''}`;
-      const isFree = Number(s.price) === 0;
+      const isFree = Number(s.price) === 0 || Boolean(s.is_free);
+      const isDiagnostic = isFree && /diagnostic|free\s*mock/i.test(text);
 
       // 1. Strict Class filter check
       if (selectedClass !== 'all' && !matchesClass(s, selectedClass)) {
@@ -239,8 +175,8 @@ export default function TestSeriesCatalog() {
 
       // 2. Exam and special tab filter checks
       if (filter === 'free') return isFree;
-      // For all other tabs (all, jee, neet, featured), include ONLY paid series
-      if (isFree) return false;
+      // Diagnostic free mock tests belong strictly in the Free tab
+      if (isDiagnostic) return false;
 
       if (filter === 'jee') return /jee/i.test(text);
       if (filter === 'neet') return isNeetUg(text);
@@ -273,15 +209,16 @@ export default function TestSeriesCatalog() {
         return;
       }
       const text = `${s.exam_type || ''} ${s.title || ''}`;
-      const isFree = Number(s.price) === 0;
-      if (isFree) {
-        counts.free++;
-      } else {
+      const isFree = Number(s.price) === 0 || Boolean(s.is_free);
+      const isDiagnostic = isFree && /diagnostic|free\s*mock/i.test(text);
+
+      if (isFree) counts.free++;
+      if (!isDiagnostic) {
         counts.all++;
         if (/jee/i.test(text)) counts.jee++;
         if (isNeetUg(text)) counts.neet++;
-        if (s.is_featured) counts.featured++;
       }
+      if (s.is_featured) counts.featured++;
     });
     return counts;
   }, [list, selectedClass]);
@@ -295,11 +232,12 @@ export default function TestSeriesCatalog() {
     };
     list.forEach((s) => {
       const text = `${s.exam_type || ''} ${s.title || ''}`;
-      const isFree = Number(s.price) === 0;
+      const isFree = Number(s.price) === 0 || Boolean(s.is_free);
+      const isDiagnostic = isFree && /diagnostic|free\s*mock/i.test(text);
 
       let matchesExam = true;
       if (filter === 'free') matchesExam = isFree;
-      else if (isFree) matchesExam = false;
+      else if (isDiagnostic) matchesExam = false;
       else if (filter === 'jee') matchesExam = /jee/i.test(text);
       else if (filter === 'neet') matchesExam = isNeetUg(text);
       else if (filter === 'featured') matchesExam = Boolean(s.is_featured);
