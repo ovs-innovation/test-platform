@@ -1,3 +1,5 @@
+import { stripHeadersAndFooters } from './questionFormatter.js';
+
 /**
  * Parses raw text extracted from a test question paper PDF
  * Returns an array of formatted question objects:
@@ -6,8 +8,8 @@
 export function parsePdfQuestions(text) {
   if (!text || typeof text !== 'string') return [];
 
-  // Normalize line breaks and clean whitespace
-  const cleanText = text.replace(/\r\n/g, '\n');
+  // Normalize line breaks, clean whitespace, and strip running page headers/footers
+  const cleanText = stripHeadersAndFooters(text.replace(/\r\n/g, '\n'));
 
   // Separate Question Paper and Answer Key parts if present at the end
   let questionPaperPart = cleanText;
@@ -55,7 +57,7 @@ export function parsePdfQuestions(text) {
       const letter = inlineAnsMatch[1].toUpperCase();
       inlineCorrectIndex = letter.charCodeAt(0) - 65;
       if (inlineAnsMatch[2]) {
-        inlineSolution = inlineAnsMatch[2].trim();
+        inlineSolution = stripHeadersAndFooters(inlineAnsMatch[2].trim());
       }
     }
 
@@ -86,6 +88,7 @@ export function parsePdfQuestions(text) {
         }
         optText = optText.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
         optText = optText.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
+        optText = stripHeadersAndFooters(optText);
         if (optText && !options.includes(optText)) {
           options.push(optText);
         }
@@ -112,6 +115,7 @@ export function parsePdfQuestions(text) {
           }
           t = t.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
           t = t.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
+          t = stripHeadersAndFooters(t);
           if (t && !options.includes(t)) options.push(t);
         }
       }
@@ -129,13 +133,15 @@ export function parsePdfQuestions(text) {
       }
     }
 
-    // Clean question text (strip embedded Marks/Time lines, leading subject tag, and chapter tags)
-    let cleanQText = mainText
-      .replace(/Marks:\s*[^\n]+/gi, '')
-      .replace(/Time:\s*[^\n]+/gi, '')
-      .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    // Clean question text (strip embedded Marks/Time lines, leading subject tag, chapter tags, and running headers/footers)
+    let cleanQText = stripHeadersAndFooters(
+      mainText
+        .replace(/Marks:\s*[^\n]+/gi, '')
+        .replace(/Time:\s*[^\n]+/gi, '')
+        .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim()
+    );
 
     cleanQText = cleanQText.replace(/^\(([A-Za-z\s]+)\)\s*/, '');
 
@@ -263,11 +269,7 @@ export function parseAnswerKeyAndSolutions(text) {
         .trim();
     }
 
-    // Clean any bracket tag leftovers and chapter headers from explanation text
-    expText = expText
-      .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
-      .replace(/(?:Chapter|Topic|Unit)\s*[:\-]\s*[^\n]+(?:\n|$)/gi, '')
-      .trim();
+    expText = stripHeadersAndFooters(expText);
 
     if (expText && expText.length > 2 && !/^[A-D1-4]$/i.test(expText)) {
       solutionsMap[qNum] = expText;

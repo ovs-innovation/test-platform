@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parsePdfQuestions, parseQuestionsFromText, parseAnswerKeyOnly, parseAnswerKeyAndSolutions, parseTopicGrid } from '../../../src/utils/pdfQuestionParser.js';
+import { stripHeadersAndFooters } from '../../../src/utils/questionFormatter.js';
 
 describe('Answer-Key & Explanation Processing Pipeline', () => {
   it('parses answer key formats including 1. A, 2. C, Q1 - A, Question 1: A', () => {
@@ -249,6 +250,62 @@ describe('Answer-Key & Explanation Processing Pipeline', () => {
     expect(questions[2].chapter).toBe('Atomic Structure');
     expect(questions[2].topic).toBe('Atomic Structure');
   });
+
+  it('strips running page footers (e.g. EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4) and prevents them from attaching to options or question text', () => {
+    // 1. Direct text cleaner
+    const rawOptionWithFooter = '16 N EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4';
+    expect(stripHeadersAndFooters(rawOptionWithFooter)).toBe('16 N');
+
+    const multiLineFooter = `
+    16 N
+    EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01                                     4
+    `;
+    expect(stripHeadersAndFooters(multiLineFooter)).toBe('16 N');
+
+    // 2. Full question document test matching user screenshot
+    const pdfPageSample = `
+    29. Newton's first law describes?
+    A. inertia
+    B. gravitation
+    C. conservation of charge
+    D. energy quantisation
+
+    30. A 2 kg block accelerates at 3 m/s^2 to the right. Forces of 10 N right and F left act on it. Find F.
+    A. 4 N
+    B. 6 N
+    C. 10 N
+    D. 16 N
+
+    ____________________________________________________________________
+    EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01                                     4
+    `;
+
+    const parsed = parsePdfQuestions(pdfPageSample);
+    expect(parsed).toHaveLength(2);
+
+    const q30 = parsed.find((q) => q.num === 30);
+    expect(q30).toBeDefined();
+    expect(q30.question_text).not.toContain('EDVEDUM ACADEMY');
+    expect(q30.question_text).not.toContain('AIETS');
+    expect(q30.question_text).not.toContain('UT-01');
+
+    // Crucially: Option D must be just "16 N", not containing any footer
+    expect(q30.options[3]).toBe('16 N');
+    expect(q30.options[3]).not.toContain('EDVEDUM ACADEMY');
+
+    // 3. Single-line Option D containing inline footer
+    const singleLineSample = `
+    30. A 2 kg block accelerates at 3 m/s^2 to the right. Forces of 10 N right and F left act on it. Find F.
+    A. 4 N
+    B. 6 N
+    C. 10 N
+    D. 16 N EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4
+    `;
+    const parsedSingleLine = parsePdfQuestions(singleLineSample);
+    expect(parsedSingleLine[0].options[3]).toBe('16 N');
+    expect(parsedSingleLine[0].options[3]).not.toContain('EDVEDUM ACADEMY');
+  });
 });
+
 
 

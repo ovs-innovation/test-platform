@@ -50,7 +50,7 @@ import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
-import { formatQuestionStructure } from '../utils/questionFormatter.js';
+import { formatQuestionStructure, stripHeadersAndFooters } from '../utils/questionFormatter.js';
 
 /**
  * 1. GET /api/admin/tests
@@ -734,10 +734,11 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                 sourcePage: q.extraction?.sourcePages?.[0] || 1,
               }] : []));
 
-          // Build options with media (clean any redundant leading key like "(A) " from option text)
+          // Build options with media (clean any redundant leading key like "(A) " from option text and running footers)
           const cleanOptionText = (raw) => {
             const s = String(raw || '').trim();
-            return s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
+            const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
+            return stripHeadersAndFooters(stripped);
           };
 
           let formattedOptionsWithMedia = [];
@@ -770,13 +771,13 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
             [
               id,
-              formatQuestionStructure(q.question?.text || q.question_text || q.questionText || ''),
+              formatQuestionStructure(stripHeadersAndFooters(q.question?.text || q.question_text || q.questionText || '')),
               JSON.stringify(optionsToStore),
               dbCorrectIndex,
               q.marks || 4,
               i + 1,
               finalSubject || 'General',
-              q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''),
+              stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : '')),
               finalSubject,
               finalChapter,
               finalChapter,

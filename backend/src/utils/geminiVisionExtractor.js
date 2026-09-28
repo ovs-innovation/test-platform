@@ -3,10 +3,9 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas } from '@napi-rs/canvas';
-import sharp from 'sharp';
 import { GoogleGenAI, Type } from '@google/genai';
 import { env } from '../config/env.js';
-import { formatQuestionStructure } from './questionFormatter.js';
+import { formatQuestionStructure, stripHeadersAndFooters } from './questionFormatter.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -344,6 +343,10 @@ STAGE 1: QUESTION PAPER EXTRACTION:
   * If a question is purely text-based without any actual drawing/figure/circuit/graph, 'visualElements' MUST BE an empty array ([]).
   * Do NOT extract math equations as visualElements; write them in LaTeX ($...$) inside questionText.
 - For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
+- CRITICAL - IGNORE RUNNING HEADERS, FOOTERS & PAGE WATERMARKS:
+  * NEVER include running page headers, footers, institute branding, or page numbers in 'questionText', 'options', or 'explanation'!
+  * For example, lines appearing at the bottom or top of the page such as "EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4", "ALLEN", "AAKASH", test series codes, or standalone page numbers are strictly page margins/footers.
+  * DO NOT attach or append these footer lines to the last question on the page or to option D!
 - CRITICAL - INLINE ANSWERS & EXPLANATIONS:
   * If an answer or explanation/solution is printed directly below or within a question (e.g. 'Ans: (B)', 'Ans: 2', 'Explanation: ...', 'Sol: ...', 'Hint: ...'), extract the answer letter ('A', 'B', 'C', 'D') into 'inlineCorrectAnswer'.
   * Extract the complete explanation/solution reasoning into 'inlineExplanation'.
@@ -406,6 +409,10 @@ QUESTION PAPER EXTRACTION:
   * If a question is purely text-based without any actual drawing/figure/circuit/graph, 'visualElements' MUST BE an empty array ([]).
   * Do NOT extract math equations as visualElements; write them in LaTeX ($...$) inside questionText.
 - For each option (key: 'A', 'B', 'C', 'D'), extract the option text. If an individual option contains a diagram, circuit, or graph, extract its normalized 2D bounding box under that option's 'visualElements'.
+- CRITICAL - IGNORE RUNNING HEADERS, FOOTERS & PAGE WATERMARKS:
+  * NEVER include running page headers, footers, institute branding, or page numbers in 'questionText', 'options', or 'explanation'!
+  * For example, lines appearing at the bottom or top of the page such as "EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4", "ALLEN", "AAKASH", test series codes, or standalone page numbers are strictly page margins/footers.
+  * DO NOT attach or append these footer lines to the last question on the page or to option D!
 - IMPORTANT: DO NOT extract, guess, or assign any answer keys, solutions, or explanations. The user explicitly wants ONLY the question paper without answers. Leave correct answers and explanations null/empty.
 
 Return structured JSON output strictly following the JSON schema.
@@ -660,7 +667,7 @@ Return structured JSON output strictly following the JSON schema.
     seenQuestionNumbers.add(qNum);
 
     // Validation Check 2: Missing question text
-    const cleanQText = formatQuestionStructure((rawQ.questionText || '').trim());
+    const cleanQText = stripHeadersAndFooters(formatQuestionStructure((rawQ.questionText || '').trim()));
     if (!cleanQText || cleanQText.length < 5) {
       needsReview = true;
       reviewReasons.push(`Question Q${qNum} has missing or empty question text.`);
@@ -728,9 +735,10 @@ Return structured JSON output strictly following the JSON schema.
       const optKey = (typeof opt === 'object' && opt && opt.key)
         ? String(opt.key).toUpperCase().trim()
         : String.fromCharCode(65 + i);
-      const optText = (typeof opt === 'object' && opt && opt.text !== undefined)
+      const rawOptText = (typeof opt === 'object' && opt && opt.text !== undefined)
         ? String(opt.text).trim()
         : String(opt || '').trim();
+      const optText = stripHeadersAndFooters(rawOptText);
       const optMedia = [];
 
       if (typeof opt === 'object' && Array.isArray(opt.visualElements)) {
@@ -820,6 +828,7 @@ Return structured JSON output strictly following the JSON schema.
         finalExplanation = String(rawQ.inlineExplanation).trim();
         totalExplanationsMatchedCount++;
       }
+      finalExplanation = stripHeadersAndFooters(finalExplanation);
     }
 
     // Compute Source Pages

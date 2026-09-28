@@ -1,10 +1,57 @@
 /**
+ * Strips running page headers, footers, divider lines, watermarks,
+ * and page numbers (e.g. "EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4", "Page 12", etc.)
+ */
+export function stripHeadersAndFooters(text) {
+  if (!text || typeof text !== 'string') return text || '';
+
+  let s = text.replace(/\r\n/g, '\n');
+
+  // Strip page divider lines (e.g. "_______", "-------", "═══════")
+  s = s.replace(/(?:^|\n)\s*[-_—–=]{3,}\s*(?:\n|$)/g, '\n');
+
+  // Strip rough work headers
+  s = s.replace(/(?:^|\n)\s*(?:SPACE\s+FOR\s+ROUGH\s+WORK|ROUGH\s+WORK)\s*(?:\n|$)/gi, '\n');
+
+  // 1. Full-line headers / footers with pipe (|), bullet (•), dash (–), or colon separators
+  // Only matches lines that START with the institute name or exam code (avoid matching options or question text)
+  // e.g. "EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4"
+  s = s.replace(
+    /(?:^|\n)\s*(?:(?:EDVEDUM|AIETS|AIATS|AITS|ALLEN|AAKASH|FIITJEE|RESONANCE|NTA|NEET|JEE|\bUT-\d+\b)\b|(?:[A-Za-z0-9&.'\-]+\s+)?(?:ACADEMY|INSTITUTE|CLASSES|VIDYAPEETH|EDUCATION|TEST\s*SERIES)\b)[^\n]*?[\|•·–—][^\n]*(?:\s+\d{1,3})?\s*(?:\n|$)/gi,
+    '\n'
+  );
+
+  // 2. Full-line institute / exam / test series headers without pipes
+  // e.g. "EDVEDUM ACADEMY", "AIETS NEET 2027", "UT-01"
+  s = s.replace(
+    /(?:^|\n)\s*(?:EDVEDUM(?:\s*ACADEMY)?|AIETS(?:\s*NEET)?(?:\s*\d{4})?|\bUT-\d+\b)(?:\s+\d{1,3})?\s*(?:\n|$)/gi,
+    '\n'
+  );
+
+  // 3. Full-line standalone page numbers or "Page X of Y"
+  s = s.replace(/(?:^|\n)\s*(?:Page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|\b[-–—\s]*\d{1,3}[-–—\s]*$)\s*(?:\n|$)/gi, '\n');
+
+  // 4. Trailing inline header/footer text at the end of an option or question statement
+  // e.g. "16 N EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4" -> "16 N"
+  // e.g. "16 N | AIETS NEET 2027 | UT-01" -> "16 N"
+  s = s.replace(
+    /\s+(?:[\|•·–—]\s*)?(?:EDVEDUM(?:\s*ACADEMY)?|AIETS(?:\s*NEET)?(?:\s*\d{4})?|\bUT-\d+\b|\b(?:[A-Za-z0-9&.'\-]+\s+)?(?:ACADEMY|INSTITUTE|CLASSES|VIDYAPEETH)\b)[^\n]*?(?:\s+\d{1,3})?\s*$/gi,
+    ''
+  );
+
+  // 5. Clean trailing page number if separated by 2 or more spaces at the very end of string (e.g. "16 N    4")
+  s = s.replace(/\s{2,}\d{1,3}\s*$/g, '');
+
+  return s.trim();
+}
+
+/**
  * Formats question statements and prompts into clean, structured line-by-line text.
  * Prevents statement-based questions, Assertion-Reason, and Match Lists from collapsing into run-on paragraphs.
  */
 export function formatQuestionStructure(text) {
   if (!text || typeof text !== 'string') return text || '';
-  let s = text.trim();
+  let s = stripHeadersAndFooters(text).trim();
 
   // Normalize Windows line breaks
   s = s.replace(/\r\n/g, '\n');

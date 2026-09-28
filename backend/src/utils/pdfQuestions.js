@@ -1,5 +1,6 @@
 import { createRequire } from 'module';
 import { extractQuestionsWithGeminiVision } from './geminiVisionExtractor.js';
+import { stripHeadersAndFooters } from './questionFormatter.js';
 import { env } from '../config/env.js';
 
 const require = createRequire(import.meta.url);
@@ -118,6 +119,15 @@ function splitQuestionBlocks(text) {
     const line = rawLine.trim();
     if (!line) continue;
 
+    // Skip running page footers / headers, academy watermarks, divider lines, page numbers
+    if (
+      /^(?:[-_—–=]{3,}|page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|\b\d{1,3}\b|space\s+for\s+rough\s+work|rough\s+work)$/i.test(line) ||
+      /^(?:[A-Za-z0-9\s&.,'()\-–—]+(?:ACADEMY|INSTITUTE|CLASSES|VIDYAPEETH|EDUCATION|TEST\s*SERIES|EDVEDUM|AIETS|AIATS|AITS|ALLEN|AAKASH|FIITJEE|RESONANCE|NTA|NEET|JEE)\b[^\n]*?[\|•·–—][^\n]*)(?:\s+\d{1,3})?$/i.test(line) ||
+      /^(?:EDVEDUM(?:\s*ACADEMY)?|AIETS(?:\s*NEET)?(?:\s*\d{4})?|\bUT-\d+\b)[^\n]*?(?:\s+\d{1,3})?$/i.test(line)
+    ) {
+      continue;
+    }
+
     // Detect standalone subject headers like "SECTION A: PHYSICS", "Chemistry", "Biology"
     if (line.length < 50) {
       const subjectMatch = line.match(/(?:section|part)?\s*[a-z0-9\:\-\|\—\–\s]*?\b(Physics|Chemistry|Mathematics|Maths|Biology|Botany|Zoology|General Aptitude|Aptitude)\b/i);
@@ -172,7 +182,8 @@ function parseBlock(block, answerKey) {
 
     const opt = line.match(OPTION_LINE);
     if (opt) {
-      options.push(opt[3].trim());
+      const cleanOpt = stripHeadersAndFooters(opt[3].trim());
+      if (cleanOpt) options.push(cleanOpt);
       continue;
     }
     // Match inline answer line like "Answer: (A, B, D)" or "Answer: (C)"
@@ -190,7 +201,7 @@ function parseBlock(block, answerKey) {
     questionLines.push(line);
   }
 
-  const question_text = questionLines.join(' ').replace(/\s+/g, ' ').trim();
+  const question_text = stripHeadersAndFooters(questionLines.join(' ').replace(/\s+/g, ' ').trim());
   if (!question_text) return { error: 'Missing question text' };
   if (options.length < 2) return { error: 'Need at least 2 options (use A) B) C) D) format)' };
 
