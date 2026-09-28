@@ -58,7 +58,6 @@ export default function ExamScreen() {
   const [activeSection, setActiveSection] = useState(null);
   const [pdfMode, setPdfMode] = useState('hidden'); // 'split' | 'full' | 'hidden'
   const [institutionBranding, setInstitutionBranding] = useState(null);
-  const [sectionBLimitNotice, setSectionBLimitNotice] = useState(null);
 
   const finishedRef = useRef(false);
   const endsAtRef = useRef(null);
@@ -353,38 +352,7 @@ export default function ExamScreen() {
     goNext();
   };
 
-  const checkSectionBLimit = (targetQ) => {
-    if (!targetQ || !isNeetExam) return true;
-    const isSecB = targetQ.is_section_b || targetQ.section === 'B' || targetQ.neetMeta?.isSectionB;
-    if (!isSecB) return true;
-
-    // If target question is already answered, allow re-selecting / changing without triggering limit
-    if (qAnswered(targetQ)) return true;
-
-    // Count how many questions in the same subject Section B are currently answered
-    const targetSubj = targetQ.subject || targetQ.bank_category || 'General';
-    const attemptedCount = activeQuestions.filter((item) => {
-      const itemSecB = item.is_section_b || item.section === 'B' || item.neetMeta?.isSectionB;
-      const itemSubj = item.subject || item.bank_category || 'General';
-      return itemSecB && itemSubj === targetSubj && qAnswered(item);
-    }).length;
-
-    if (attemptedCount >= 10) {
-      setSectionBLimitNotice({
-        subject: targetSubj,
-        attempted: attemptedCount,
-        maxAllowed: 10,
-        questionNumber: targetQ.questionNumber || targetQ.position || (current + 1),
-      });
-      return false;
-    }
-    return true;
-  };
-
   const selectAnswer = async (questionId, index) => {
-    const targetQ = activeQuestions.find((item) => item.id === questionId) || activeQuestions[current];
-    if (!checkSectionBLimit(targetQ)) return;
-
     setAnswers((prev) => ({ ...prev, [questionId]: index }));
     setSavingId(questionId);
     try {
@@ -396,9 +364,6 @@ export default function ExamScreen() {
   };
 
   const saveNumericAnswer = (questionId, val) => {
-    const targetQ = activeQuestions.find((item) => item.id === questionId) || activeQuestions[current];
-    if (val != null && val !== '' && !checkSectionBLimit(targetQ)) return;
-
     setNumericAnswers((prev) => ({ ...prev, [questionId]: val }));
     clearTimeout(codingDebounce.current[`num-${questionId}`]);
     codingDebounce.current[`num-${questionId}`] = setTimeout(async () => {
@@ -414,10 +379,8 @@ export default function ExamScreen() {
   };
 
   const toggleMulti = async (questionId, index) => {
-    const targetQ = activeQuestions.find((item) => item.id === questionId) || activeQuestions[current];
     const cur = multiAnswers[questionId] || [];
     const isAdding = !cur.includes(index);
-    if (isAdding && !checkSectionBLimit(targetQ)) return;
 
     const next = isAdding ? [...cur, index].sort((a, b) => a - b) : cur.filter((i) => i !== index);
     setMultiAnswers((prev) => ({ ...prev, [questionId]: next }));
@@ -471,69 +434,79 @@ export default function ExamScreen() {
     return '🧠';
   };
 
-  // NEET Pattern Detection
   const isNeetExam = useMemo(() => {
     if (meta?.is_neet) return true;
     const title = String(meta?.title || '').toUpperCase();
     const type = String(meta?.test_type || '').toUpperCase();
     if (title.includes('NEET') || type.includes('NEET')) return true;
     if (activeQuestions.length === 200 || activeQuestions.length === 180) return true;
-    return activeQuestions.some((item) => item.is_neet || item.is_section_b || item.section === 'B');
+    return false;
   }, [meta, activeQuestions]);
+
+  const getSubjectCanonical = (raw = '') => {
+    const s = String(raw || '').toLowerCase().trim();
+    if (s.includes('physic')) return 'Physics';
+    if (s.includes('chem')) return 'Chemistry';
+    if (s.includes('botan')) return 'Botany';
+    if (s.includes('zool')) return 'Zoology';
+    if (s.includes('bio')) return 'Biology';
+    if (s.includes('math')) return 'Mathematics';
+    return raw ? raw.trim() : 'General';
+  };
+
+  const getQuestionSubject = useCallback((item, idx = 0) => {
+    if (!item) return 'General';
+    const explicit = item.subject || item.bank_category || (item.section_id && sectionMap.get(item.section_id)?.name);
+    if (explicit && !['general', 'technical mcq', ''].includes(explicit.toLowerCase())) {
+      return getSubjectCanonical(explicit);
+    }
+    // If standard 180-question NEET paper where questions are sequential:
+    if (activeQuestions.length === 180) {
+      const pos = item.position || idx + 1;
+      if (pos <= 45) return 'Physics';
+      if (pos <= 90) return 'Chemistry';
+      return 'Biology';
+    }
+    return explicit ? getSubjectCanonical(explicit) : 'General';
+  }, [sectionMap, activeQuestions.length]);
 
   // Compute subject-based sections dynamically from activeQuestions
   const effectiveSections = useMemo(() => {
-    if (isNeetExam) {
-      const neetOrder = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
-      const neetMap = new Map();
+    const canonicalOrder = ['Physics', 'Chemistry', 'Biology', 'Botany', 'Zoology', 'Mathematics'];
+    const subjectCountMap = new Map();
+    const firstIndexMap = new Map();
 
-      // Ensure standard 4 subjects exist in canonical NEET order
-      neetOrder.forEach((name) => {
-        neetMap.set(name, {
-          id: `neet-subj-${name}`,
-          name,
-          categoryKey: name,
-          icon: getSubjectIcon(name),
-          isNeet: true,
-        });
-      });
-
-      activeQuestions.forEach((q, idx) => {
-        const cat = q.subject || q.bank_category || 'General';
-        const matched = neetOrder.find((n) => cat.toLowerCase().includes(n.toLowerCase())) || 'General';
-        if (!neetMap.has(matched)) {
-          neetMap.set(matched, {
-            id: `cat-${matched}`,
-            name: matched,
-            categoryKey: matched,
-            icon: getSubjectIcon(matched),
-            startIndex: idx,
-            isNeet: true,
-          });
-        }
-      });
-
-      return Array.from(neetMap.values());
-    }
-
-    const categoryMap = new Map();
     activeQuestions.forEach((q, idx) => {
-      const cat = q.bank_category && !['General', 'Technical MCQ', ''].includes(q.bank_category)
-        ? q.bank_category
-        : (q.section_id && sectionMap.get(q.section_id)?.name) || 'General';
-      if (!categoryMap.has(cat)) {
-        categoryMap.set(cat, {
-          id: `cat-${cat}`,
-          name: cat,
-          categoryKey: cat,
-          icon: getSubjectIcon(cat),
-          startIndex: idx,
-        });
+      const subj = getQuestionSubject(q, idx);
+      subjectCountMap.set(subj, (subjectCountMap.get(subj) || 0) + 1);
+      if (!firstIndexMap.has(subj)) {
+        firstIndexMap.set(subj, idx);
       }
     });
 
-    const categories = Array.from(categoryMap.values());
-    if (categories.length > 0) return categories;
+    // Only include subjects that actually have questions (> 0)
+    const existingSubjects = Array.from(subjectCountMap.keys()).filter(
+      (subj) => (subjectCountMap.get(subj) || 0) > 0
+    );
+
+    existingSubjects.sort((a, b) => {
+      const idxA = canonicalOrder.indexOf(a);
+      const idxB = canonicalOrder.indexOf(b);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return (firstIndexMap.get(a) ?? 0) - (firstIndexMap.get(b) ?? 0);
+    });
+
+    if (existingSubjects.length > 0) {
+      return existingSubjects.map((subj) => ({
+        id: `subj-${subj}`,
+        name: subj,
+        icon: getSubjectIcon(subj),
+        startIndex: firstIndexMap.get(subj) ?? 0,
+        count: subjectCountMap.get(subj) || 0,
+      }));
+    }
 
     if (sections && sections.length > 0) {
       return sections.map((s) => ({
@@ -545,31 +518,21 @@ export default function ExamScreen() {
     }
 
     return [{ id: 'sec-all', name: 'All Questions', icon: '📚' }];
-  }, [activeQuestions, sections, sectionMap, isNeetExam]);
+  }, [activeQuestions, sections, getQuestionSubject]);
 
   const getSecQuestions = useCallback(
     (secItem) => {
       return activeQuestions
         .map((item, idx) => ({ item, idx }))
-        .filter(({ item }) => {
-          if (isNeetExam && secItem.isNeet) {
-            const itemSubj = (item.subject || item.bank_category || '').toLowerCase();
-            const targetSubj = (secItem.name || '').toLowerCase();
-            return itemSubj.includes(targetSubj) || targetSubj.includes(itemSubj);
-          }
-          if (secItem.categoryKey) {
-            const cat = item.bank_category && !['General', 'Technical MCQ', ''].includes(item.bank_category)
-              ? item.bank_category
-              : (item.section_id && sectionMap.get(item.section_id)?.name) || 'General';
-            return cat === secItem.categoryKey;
-          }
+        .filter(({ item, idx }) => {
           if (secItem.sectionId) {
             return item.section_id === secItem.sectionId;
           }
-          return true;
+          const itemSubj = getQuestionSubject(item, idx);
+          return itemSubj.toLowerCase() === (secItem.name || '').toLowerCase();
         });
     },
-    [activeQuestions, sectionMap, isNeetExam]
+    [activeQuestions, getQuestionSubject]
   );
 
   const answeredCount = useMemo(
@@ -597,21 +560,19 @@ export default function ExamScreen() {
     marks: 4,
     bank_category: 'General'
   };
-  const qCategory = q?.subject || q?.bank_category || (q?.section_id && sectionMap.get(q.section_id)?.name) || 'General';
-  const qIsSectionB = Boolean(q?.is_section_b || q?.section === 'B' || q?.neetMeta?.isSectionB);
-  const qSectionLabel = isNeetExam
-    ? (qIsSectionB ? 'Section B (Attempt Any 10 of 15)' : 'Section A (35 Compulsory)')
-    : (q?.section ? `Section ${q.section}` : null);
+  const qCategory = getQuestionSubject(q, current);
 
-  // Section B attempt count for current subject
-  const currentSubjSecBAttempted = useMemo(() => {
-    if (!isNeetExam) return 0;
-    return activeQuestions.filter((item) => {
-      const itemSecB = item.is_section_b || item.section === 'B' || item.neetMeta?.isSectionB;
-      const itemSubj = item.subject || item.bank_category || 'General';
-      return itemSecB && itemSubj === qCategory && qAnswered(item);
-    }).length;
-  }, [isNeetExam, activeQuestions, qCategory, qAnswered]);
+  const currentSubjectInfo = useMemo(() => {
+    const sec = effectiveSections.find((s) => s.name.toLowerCase() === qCategory.toLowerCase());
+    if (!sec) return null;
+    const secQs = getSecQuestions(sec);
+    const qIdx = secQs.findIndex(({ idx }) => idx === current);
+    if (qIdx === -1) return null;
+    return {
+      subjectQNum: qIdx + 1,
+      subjectTotal: secQs.length,
+    };
+  }, [effectiveSections, qCategory, getSecQuestions, current]);
 
   const activeSecItem = effectiveSections.find((s) => s.id === activeSection);
   const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
@@ -740,39 +701,21 @@ export default function ExamScreen() {
           <div className="space-y-4">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
               <div className="flex-1">
-              <div className="flex flex-wrap items-center gap-2">
-                <p className="text-[11px] font-bold uppercase text-[#1a4480] flex items-center gap-1.5">
-                  <span>{getSubjectIcon(qCategory)}</span>
-                  <span>Subject: {qCategory}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-[#1a4480] border border-blue-200">
+                    <span>{getSubjectIcon(qCategory)}</span>
+                    <span>Subject: {qCategory}</span>
+                  </span>
+                </div>
+                <p className="text-sm font-bold text-slate-800 mt-1.5">
+                  Question No. {current + 1} of {activeQuestions.length}
+                  {currentSubjectInfo && (
+                    <span className="text-xs font-semibold text-slate-500 ml-2">
+                      ({qCategory} Q{currentSubjectInfo.subjectQNum} of {currentSubjectInfo.subjectTotal})
+                    </span>
+                  )}
                 </p>
-                {qSectionLabel && (
-                  <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded border ${
-                    qIsSectionB
-                      ? 'bg-amber-50 text-amber-800 border-amber-300'
-                      : 'bg-blue-50 text-blue-800 border-blue-200'
-                  }`}>
-                    {qSectionLabel}
-                  </span>
-                )}
-                {isNeetExam && qIsSectionB && (
-                  <span className={`text-[11px] font-extrabold px-2 py-0.5 rounded-full border ${
-                    currentSubjSecBAttempted >= 10
-                      ? 'bg-emerald-100 text-emerald-800 border-emerald-300 font-black'
-                      : 'bg-slate-100 text-slate-700 border-slate-300'
-                  }`}>
-                    Attempted: <strong>{currentSubjSecBAttempted}</strong> / 10
-                  </span>
-                )}
               </div>
-              <p className="text-sm font-bold text-slate-800 mt-1">
-                Question No. {current + 1} of {activeQuestions.length}
-                {q.questionNumber && isNeetExam && (
-                  <span className="text-xs font-normal text-slate-500 ml-1.5">
-                    ({qCategory} Q{q.questionNumber})
-                  </span>
-                )}
-              </p>
-            </div>
             <div className="text-right">
               <p className="text-xs text-slate-600">
                 Marks: <span className="font-bold text-slate-900">+{q.marks}</span>
@@ -1068,95 +1011,6 @@ export default function ExamScreen() {
 
               const secAnswered = secQuestions.filter(({ item }) => qAnswered(item)).length;
 
-              // If NEET exam, divide into Section A and Section B
-              if (isNeetExam) {
-                const secAQs = secQuestions.filter(({ item }) => !item.is_section_b && item.section !== 'B' && !item.neetMeta?.isSectionB);
-                const secBQs = secQuestions.filter(({ item }) => item.is_section_b || item.section === 'B' || item.neetMeta?.isSectionB);
-
-                const secAAnswered = secAQs.filter(({ item }) => qAnswered(item)).length;
-                const secBAnswered = secBQs.filter(({ item }) => qAnswered(item)).length;
-
-                return (
-                  <div
-                    key={secItem.id}
-                    className="rounded-xl border border-slate-300 bg-white p-2.5 shadow-2xs space-y-2.5"
-                  >
-                    <div className="flex items-center justify-between border-b border-slate-200 pb-1.5">
-                      <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
-                        <span>{secItem.icon}</span> {secItem.name}
-                      </span>
-                      <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                        {secAnswered} / {secQuestions.length}
-                      </span>
-                    </div>
-
-                    {/* Section A */}
-                    {secAQs.length > 0 && (
-                      <div className="rounded border border-blue-200/80 bg-blue-50/30 p-2">
-                        <div className="mb-1.5 flex items-center justify-between">
-                          <span className="text-[10px] font-bold text-[#1a4480] uppercase tracking-wide">
-                            Section A ({secAQs.length} Qs)
-                          </span>
-                          <span className="text-[9px] font-extrabold px-1.5 py-0.2 rounded bg-blue-100 text-blue-800">
-                            {secAAnswered}/{secAQs.length} Attempted
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-5 gap-1">
-                          {secAQs.map(({ item, idx }) => {
-                            const status = getQStatus(item);
-                            return (
-                              <button
-                                key={item.id}
-                                type="button"
-                                onClick={() => setCurrent(idx)}
-                                title={`Q${idx + 1} (Sec A)`}
-                                className={`flex h-7 w-full items-center justify-center text-[11px] font-bold rounded-xs border transition-all ${paletteCellClass(status, idx === current)}`}
-                              >
-                                {idx + 1}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Section B (Attempt Any 10 of 15) */}
-                    {secBQs.length > 0 && (
-                      <div className="rounded border border-amber-300/80 bg-amber-50/40 p-2">
-                        <div className="mb-1.5 flex items-center justify-between">
-                          <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wide">
-                            Section B (Any 10 of {secBQs.length})
-                          </span>
-                          <span className={`text-[9px] font-extrabold px-1.5 py-0.2 rounded ${
-                            secBAnswered >= 10
-                              ? 'bg-emerald-200 text-emerald-900 border border-emerald-400 font-black'
-                              : 'bg-amber-100 text-amber-800'
-                          }`}>
-                            {secBAnswered}/10 Attempted
-                          </span>
-                        </div>
-                        <div className="grid grid-cols-5 gap-1">
-                          {secBQs.map(({ item, idx }) => {
-                            const status = getQStatus(item);
-                            return (
-                              <button
-                                key={item.id}
-                                type="button"
-                                onClick={() => setCurrent(idx)}
-                                title={`Q${idx + 1} (Sec B - Attempt any 10)`}
-                                className={`flex h-7 w-full items-center justify-center text-[11px] font-bold rounded-xs border transition-all ${paletteCellClass(status, idx === current)}`}
-                              >
-                                {idx + 1}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                );
-              }
-
               return (
                 <div
                   key={secItem.id}
@@ -1167,7 +1021,7 @@ export default function ExamScreen() {
                       <span>{secItem.icon}</span> {secItem.name}
                     </span>
                     <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
-                      {secAnswered}/{secQuestions.length} Answered
+                      {secAnswered} / {secQuestions.length} Answered
                     </span>
                   </div>
 
@@ -1227,45 +1081,24 @@ export default function ExamScreen() {
             <li>Marked for review: <strong>{Object.values(reviewed).filter(Boolean).length}</strong></li>
           </ul>
 
-          {isNeetExam ? (
-            <div className="mt-3 space-y-1.5 rounded border border-slate-300 bg-blue-50/50 p-3 text-xs">
-              <p className="font-bold text-slate-800 uppercase tracking-wider mb-1">NEET Section-wise Attempts:</p>
+          {effectiveSections.length > 0 && (
+            <div className="mt-3 space-y-1 rounded border border-slate-300 bg-blue-50/50 p-3 text-xs">
+              <p className="font-bold text-slate-800 uppercase tracking-wider mb-1.5">Subject Breakdown:</p>
               {effectiveSections.map((s) => {
                 const secQs = getSecQuestions(s);
-                const secAQs = secQs.filter(({ item }) => !item.is_section_b && item.section !== 'B' && !item.neetMeta?.isSectionB);
-                const secBQs = secQs.filter(({ item }) => item.is_section_b || item.section === 'B' || item.neetMeta?.isSectionB);
-                const secAAns = secAQs.filter(({ item }) => qAnswered(item)).length;
-                const secBAns = secBQs.filter(({ item }) => qAnswered(item)).length;
-
+                const secAns = secQs.filter(({ item }) => qAnswered(item)).length;
                 return (
-                  <div key={s.id} className="border-b border-blue-200/50 pb-1 text-slate-700 last:border-b-0">
-                    <span className="font-bold text-[#1a4480]">{s.name}:</span>
-                    <div className="flex justify-between pl-2 text-[11px] text-slate-600">
-                      <span>Sec A: <strong>{secAAns}</strong>/35</span>
-                      <span>Sec B: <strong>{secBAns}</strong>/10 (Evaluated max 10)</span>
-                    </div>
-                  </div>
-                );
-              })}
-              <p className="pt-1 text-[10px] text-slate-500 italic">
-                * Maximum achievable score is 720 marks across up to 180 evaluated questions.
-              </p>
-            </div>
-          ) : sections.length > 0 ? (
-            <div className="mt-3 space-y-1 rounded border border-slate-300 bg-blue-50/50 p-3 text-xs">
-              <p className="font-bold text-slate-800 uppercase tracking-wider mb-1.5">Subject Section Breakdown:</p>
-              {sections.map((s) => {
-                const secQs = questions.filter((item) => item.section_id === s.id);
-                const secAns = secQs.filter((item) => qAnswered(item)).length;
-                return (
-                  <div key={s.id} className="flex items-center justify-between text-slate-700">
-                    <span className="font-semibold">{s.name}:</span>
+                  <div key={s.id} className="flex items-center justify-between text-slate-700 py-0.5 border-b border-blue-100 last:border-b-0">
+                    <span className="font-semibold flex items-center gap-1.5">
+                      <span>{s.icon}</span>
+                      <span>{s.name}:</span>
+                    </span>
                     <span><strong>{secAns}</strong> / {secQs.length} Answered</span>
                   </div>
                 );
               })}
             </div>
-          ) : null}
+          )}
 
           <p className="mt-3 text-xs text-slate-500">You will not be able to change answers after submission.</p>
         </div>
@@ -1332,37 +1165,6 @@ export default function ExamScreen() {
           </div>
         </Modal>
       )}
-
-      {/* Section B Attempt Limit Modal */}
-      <Modal
-        open={!!sectionBLimitNotice}
-        onClose={() => setSectionBLimitNotice(null)}
-        title="⚠️ Section B Attempt Limit Reached"
-        size="sm"
-      >
-        <div className="space-y-3 text-slate-700">
-          <div className="rounded-xl border border-amber-300 bg-amber-50 p-3 text-xs text-amber-950 space-y-1.5">
-            <p className="font-extrabold text-amber-900">
-              {sectionBLimitNotice?.subject}: You have already attempted 10 questions in Section B.
-            </p>
-            <p className="leading-relaxed">
-              As per NEET UG guidelines, Section B permits attempting <strong>any 10 out of 15 questions</strong>.
-            </p>
-          </div>
-          <p className="text-xs text-slate-600 leading-relaxed">
-            To attempt Question #{sectionBLimitNotice?.questionNumber} or any other question in Section B, you must first navigate to one of your previously answered Section B questions in <strong>{sectionBLimitNotice?.subject}</strong> and click <strong>&quot;Clear&quot;</strong> to deselect it.
-          </p>
-          <div className="flex justify-end pt-2">
-            <button
-              type="button"
-              onClick={() => setSectionBLimitNotice(null)}
-              className="px-4 py-2 text-xs font-bold uppercase tracking-wider text-white bg-[#1a4480] hover:bg-[#143360] rounded shadow-2xs transition-colors cursor-pointer"
-            >
-              Understood
-            </button>
-          </div>
-        </div>
-      </Modal>
     </div>
   );
 }

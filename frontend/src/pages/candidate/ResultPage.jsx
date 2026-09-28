@@ -442,7 +442,8 @@ export default function ResultPage() {
   }, [solutions, detectedPrimarySubject]);
 
   const neetSectionAnalytics = useMemo(() => {
-    if (!isNeetExam || !solutions || solutions.length === 0) return null;
+    const hasSectionB = solutions?.some((q) => q.is_section_b || q.section === 'B');
+    if (!isNeetExam || !hasSectionB || !solutions || solutions.length === 0) return null;
 
     if (data?.neetBreakdown?.subjectResults) {
       return data.neetBreakdown.subjectResults;

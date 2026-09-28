@@ -80,7 +80,31 @@ export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 200)
     explicitSection = 'A';
   }
 
-  // 2. Default to standard NEET 200 sequential mapping if 180-200 questions or pos in 1..200
+  // If 180-question paper: Physics (45 Qs), Chemistry (45 Qs), Biology (90 Qs), no Section A/B
+  if (totalQuestions === 180) {
+    let fallbackSubject = 'Physics';
+    let subjectQNum = pos;
+    if (pos >= 1 && pos <= 45) {
+      fallbackSubject = 'Physics';
+      subjectQNum = pos;
+    } else if (pos >= 46 && pos <= 90) {
+      fallbackSubject = 'Chemistry';
+      subjectQNum = pos - 45;
+    } else if (pos >= 91 && pos <= 180) {
+      fallbackSubject = 'Biology';
+      subjectQNum = pos - 90;
+    }
+    const finalSubject = explicitSubject || fallbackSubject;
+    return {
+      subject: finalSubject,
+      section: explicitSection || null,
+      subjectQuestionNumber: subjectQNum,
+      overallQuestionNumber: pos,
+      isSectionB: explicitSection === 'B',
+    };
+  }
+
+  // 2. Default to standard NEET 200 sequential mapping if 200 questions or pos in 1..200
   let fallbackSubject = 'Physics';
   let fallbackSection = 'A';
   let subjectQNum = pos;
@@ -173,6 +197,104 @@ export function evaluateNeetAttempt({
   negPenalty = 1,
 }) {
   const ansMap = new Map(answers.map((a) => [a.question_id, a]));
+
+  const hasSecB = questions.some((q, idx) => {
+    const meta = resolveQuestionNeetMeta(q, idx, questions.length);
+    return meta.isSectionB;
+  });
+
+  if (!hasSecB || questions.length === 180) {
+    let totalMarksObtained = 0;
+    let totalCorrect = 0;
+    let totalWrong = 0;
+    let totalUnattempted = 0;
+    const evaluatedQuestionsMap = new Map();
+    const subjectStats = {};
+
+    questions.forEach((q, idx) => {
+      const meta = resolveQuestionNeetMeta(q, idx, questions.length);
+      const subj = meta.subject || 'General';
+      if (!subjectStats[subj]) {
+        subjectStats[subj] = {
+          subject: subj,
+          totalQuestions: 0,
+          totalMarks: 0,
+          marksObtained: 0,
+          attempted: 0,
+          correct: 0,
+          incorrect: 0,
+          unattempted: 0,
+        };
+      }
+      const st = subjectStats[subj];
+      st.totalQuestions++;
+      st.totalMarks += (q.marks || 4);
+
+      const ans = ansMap.get(q.id);
+      const isAtt = isAttemptedAnswer(ans, q.question_type);
+      if (!isAtt) {
+        st.unattempted++;
+        totalUnattempted++;
+        evaluatedQuestionsMap.set(q.id, {
+          evaluated: true,
+          isSectionB: false,
+          isExcess: false,
+          isAttempted: false,
+          isCorrect: false,
+          marksObtained: 0,
+        });
+      } else {
+        st.attempted++;
+        const correct = checkIsCorrect(q, ans);
+        if (correct) {
+          st.correct++;
+          const m = q.marks || 4;
+          st.marksObtained += m;
+          totalCorrect++;
+          totalMarksObtained += m;
+          evaluatedQuestionsMap.set(q.id, {
+            evaluated: true,
+            isSectionB: false,
+            isExcess: false,
+            isAttempted: true,
+            isCorrect: true,
+            marksObtained: m,
+          });
+        } else {
+          st.incorrect++;
+          const penalty = negEnabled ? negPenalty : 0;
+          st.marksObtained -= penalty;
+          totalWrong++;
+          totalMarksObtained -= penalty;
+          evaluatedQuestionsMap.set(q.id, {
+            evaluated: true,
+            isSectionB: false,
+            isExcess: false,
+            isAttempted: true,
+            isCorrect: false,
+            marksObtained: -penalty,
+          });
+        }
+      }
+    });
+
+    const finalMarksObtained = Math.max(0, Number(totalMarksObtained.toFixed(2)));
+    const maxMarks = 720;
+    const percentage = Number(((finalMarksObtained / maxMarks) * 100).toFixed(2));
+
+    return {
+      isNeet: true,
+      totalMarks: maxMarks,
+      marksObtained: finalMarksObtained,
+      percentage,
+      correctCount: totalCorrect,
+      wrongCount: totalWrong,
+      unattemptedCount: totalUnattempted,
+      evaluatedQuestionsCount: questions.length,
+      subjectResults: subjectStats,
+      evaluatedQuestionsMap,
+    };
+  }
 
   // Group questions by subject and section
   const subjectGroups = {
