@@ -17,12 +17,12 @@ export default function TestSeriesCard({ series }) {
     else if (/classes?\s*(?:xi|11)/i.test(tc)) classBadge = 'Class 11';
     else if (/classes?\s*(?:xii|12)\s*(?:&|and)\s*dropper/i.test(tc)) classBadge = 'Class 12 & Droppers';
     else if (/classes?\s*(?:xii|12)/i.test(tc)) classBadge = 'Class 12';
-    else if (/dropper|rm|repeater/i.test(tc)) classBadge = 'Dropper / RM';
+    else if (/dropper|rm|repeater/i.test(tc)) classBadge = 'Dropper / 12 Passed';
     else classBadge = tc;
   } else if (/two[- ]?year|2[- ]?year|\b2028\b/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
     classBadge = 'Class 11 & 12';
   } else if (/rm[- ]personalised|\brm\b|dropper/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
-    classBadge = 'Dropper / RM';
+    classBadge = 'Dropper / 12 Passed';
   } else if (/class\s*(?:12|xii)|one[- ]?year|2027/i.test(`${series?.title || ''} ${series?.slug || ''}`)) {
     classBadge = 'Class 12';
   }

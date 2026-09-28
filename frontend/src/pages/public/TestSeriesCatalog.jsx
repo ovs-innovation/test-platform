@@ -17,7 +17,7 @@ const FILTERS = [
 
 export const CLASS_FILTERS = [
   { id: 'all', label: 'All Classes' },
-  { id: 'passed-12', label: 'Dropper / RM' },
+  { id: 'passed-12', label: 'Dropper / 12 Passed' },
   { id: '12', label: 'Class 12' },
   { id: '11', label: 'Class 11' },
 ];

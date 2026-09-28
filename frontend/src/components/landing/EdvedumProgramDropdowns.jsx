@@ -9,7 +9,7 @@ import {
 const SENIOR_CLASS_OPTIONS = [
   { label: 'Class 11', value: '11' },
   { label: 'Class 12', value: '12' },
-  { label: 'Dropper / Passed 12', value: 'passed-12' },
+  { label: 'Dropper / 12 Passed', value: 'passed-12' },
 ];
 
 const TEST_SERIES_OPTIONS = [
