@@ -39,13 +39,10 @@ function KaTeXFormula({ math, displayMode = false }) {
  * - Plain text around formulas
  */
 export default function MathRenderer({ text, className = '' }) {
-  if (text == null || text === '') return null;
-  const content = useMemo(() => formatQuestionStructure(String(text)), [text]);
-
-  // If there are no math delimiters at all, render text directly for performance
-  if (!content.includes('$') && !content.includes('\\(') && !content.includes('\\[')) {
-    return <span className={`whitespace-pre-line ${className}`}>{content}</span>;
-  }
+  const content = useMemo(() => {
+    if (text == null || text === '') return '';
+    return formatQuestionStructure(String(text));
+  }, [text]);
 
   // Regex to split by LaTeX delimiters:
   // 1. $$...$$ (Display Math)
@@ -53,6 +50,12 @@ export default function MathRenderer({ text, className = '' }) {
   // 3. $...$ (Inline Math)
   // 4. \(...\) (Inline Math)
   const tokens = useMemo(() => {
+    if (!content) return [];
+    // If there are no math delimiters at all, single text token for maximum performance
+    if (!content.includes('$') && !content.includes('\\(') && !content.includes('\\[')) {
+      return [{ type: 'text', value: content }];
+    }
+
     const regex = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\$[^\$\n]+?\$|\\\(.+?\\\))/g;
     const parts = [];
     let lastIndex = 0;
@@ -85,6 +88,12 @@ export default function MathRenderer({ text, className = '' }) {
 
     return parts;
   }, [content]);
+
+  if (text == null || text === '') return null;
+
+  if (tokens.length === 1 && tokens[0].type === 'text') {
+    return <span className={`whitespace-pre-line ${className}`}>{tokens[0].value}</span>;
+  }
 
   return (
     <span className={`whitespace-pre-line ${className}`}>

@@ -589,34 +589,6 @@ export default function ExamScreen() {
 
   const rollNo = String(user?.id || '0').padStart(6, '0');
 
-  if (loading) {
-    return (
-      <div className="exam-surface flex min-h-screen flex-col">
-        <div className="nta-bar px-4 py-3">
-          <Skeleton className="h-5 w-48 bg-white/20" />
-        </div>
-        <div className="flex flex-1">
-          <div className="flex-1 p-6">
-            <Skeleton className="h-6 w-32" />
-            <Skeleton className="mt-6 h-4 w-full" />
-            <div className="mt-8 space-y-3">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <Skeleton key={i} className="h-12 w-full" />
-              ))}
-            </div>
-          </div>
-          <div className="hidden w-56 border-l border-slate-300 p-4 lg:block">
-            <div className="grid grid-cols-5 gap-1.5">
-              {Array.from({ length: 25 }).map((_, i) => (
-                <Skeleton key={i} className="h-8 w-full" />
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const q = activeQuestions[current] || {
     id: current + 1,
     question_text: `Question ${current + 1}: Select the correct option.`,
@@ -644,6 +616,34 @@ export default function ExamScreen() {
   const activeSecItem = effectiveSections.find((s) => s.id === activeSection);
   const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
   const hasPdf = Boolean(pdfUrl);
+
+  if (loading) {
+    return (
+      <div className="exam-surface flex min-h-screen flex-col">
+        <div className="nta-bar px-4 py-3">
+          <Skeleton className="h-5 w-48 bg-white/20" />
+        </div>
+        <div className="flex flex-1">
+          <div className="flex-1 p-6">
+            <Skeleton className="h-6 w-32" />
+            <Skeleton className="mt-6 h-4 w-full" />
+            <div className="mt-8 space-y-3">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <Skeleton key={i} className="h-12 w-full" />
+              ))}
+            </div>
+          </div>
+          <div className="hidden w-56 border-l border-slate-300 p-4 lg:block">
+            <div className="grid grid-cols-5 gap-1.5">
+              {Array.from({ length: 25 }).map((_, i) => (
+                <Skeleton key={i} className="h-8 w-full" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="exam-surface flex min-h-screen flex-col select-none bg-white text-slate-900">
