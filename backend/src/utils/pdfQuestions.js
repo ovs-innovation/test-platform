@@ -204,14 +204,28 @@ function parseBlock(block, answerKey) {
     correct_indices = [correct_index];
   }
 
+  let chapter = null;
+  const bracketMatch = question_text.match(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/);
+  if (bracketMatch) {
+    chapter = bracketMatch[1].trim();
+  } else {
+    const chMatch = question_text.match(/(?:Chapter|Topic|Unit)\s*[:\-]\s*([A-Za-z0-9\s,&'\-\/]{2,80})(?:\n|$)/i);
+    if (chMatch) {
+      chapter = chMatch[1].trim();
+    }
+  }
+  const cleanQuestionText = question_text.replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '').trim() || question_text;
+
   const solutionText = explanationLines.join(' ').replace(/\s+/g, ' ').trim();
 
   return {
     line: block.num,
-    question_text,
+    question_text: cleanQuestionText,
     question_type,
     marks: 4,
     bank_category: block.subject || 'General',
+    chapter: chapter || null,
+    topic: chapter || null,
     options,
     correct_index,
     correct_indices: isMulti ? correct_indices : (correct_indices.length ? correct_indices : [correct_index]),
@@ -307,10 +321,33 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           extractedBy: 'gemini-vision',
           rows,
           rawVisionOutput: visionQuestions,
+          answerKeyMap: visionResult.answerKeyMap || {},
+          solutionMap: visionResult.solutionMap || {},
+          topicGridMap: visionResult.topicGridMap || {},
+          chaptersMap: visionResult.chaptersMap || visionResult.topicGridMap || {},
           stats,
           warnings,
           errors: [],
           question_count: rows.length,
+        };
+      }
+
+      if ((visionResult.answerKeyMap && Object.keys(visionResult.answerKeyMap).length > 0) ||
+          (visionResult.solutionMap && Object.keys(visionResult.solutionMap).length > 0) ||
+          (visionResult.topicGridMap && Object.keys(visionResult.topicGridMap).length > 0)) {
+        console.log('[pdfQuestions] Standalone Answer Key/Solution/Topic Grid extracted via Gemini Vision.');
+        return {
+          extractedBy: 'gemini-vision',
+          rows: [],
+          rawVisionOutput: [],
+          answerKeyMap: visionResult.answerKeyMap || {},
+          solutionMap: visionResult.solutionMap || {},
+          topicGridMap: visionResult.topicGridMap || {},
+          chaptersMap: visionResult.chaptersMap || visionResult.topicGridMap || {},
+          stats: visionResult.stats || {},
+          warnings: visionResult.warnings || [],
+          errors: [],
+          question_count: 0,
         };
       }
     } catch (err) {
@@ -347,7 +384,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
     return {
       questionNumber: qNum,
       subject: r.bank_category || 'General',
-      chapter: r.topic || 'General',
+      chapter: r.chapter || r.topic || 'General',
+      topic: r.topic || r.chapter || 'General',
 
       question: {
         text: r.question_text || '',

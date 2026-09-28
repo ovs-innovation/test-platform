@@ -47,7 +47,7 @@ export async function sendStudentAssignmentNotifications(testId, testName, assig
 import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
-import { parsePdfQuestions, parseAnswerKeyOnly } from '../utils/pdfQuestionParser.js';
+import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 import { formatQuestionStructure } from '../utils/questionFormatter.js';
@@ -489,75 +489,145 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       const pdfBuffer = Buffer.from(base64Data, 'base64');
       const includeAnswers = include_answers !== false && include_answers !== 'false';
 
-      if (file_type === 'solution_pdf') {
-        await query('UPDATE assessments SET solution_pdf_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
-        return res.json({
-          message: 'Solution PDF uploaded and attached successfully.',
-          url: relativeUrl,
-          file_type
-        });
-      }
-
-      if (file_type === 'answer_key') {
+      if (file_type === 'answer_key' || file_type === 'solution_pdf') {
         let answerKeyMap = {};
+        let solutionsMap = {};
+        let chaptersMap = {};
 
         // 1. Extract raw text directly using robust PDF parser with fallback
         try {
           const { extractPdfText } = await import('../utils/pdfQuestions.js');
           const rawText = await extractPdfText(pdfBuffer);
           if (rawText) {
-            answerKeyMap = parseAnswerKeyOnly(rawText);
+            const parsed = parseAnswerKeyAndSolutions(rawText);
+            answerKeyMap = parsed.answerKeyMap || {};
+            solutionsMap = parsed.solutionsMap || {};
+            chaptersMap = parsed.chaptersMap || {};
           }
         } catch (textErr) {
-          console.warn('[uploadTestFile] Direct text extraction for answer key failed:', textErr.message);
+          console.warn('[uploadTestFile] Direct text extraction for answer key/solution failed:', textErr.message);
         }
 
-        // 2. Fallback to Gemini if text extraction yielded no entries
-        if (!answerKeyMap || Object.keys(answerKeyMap).length === 0) {
+        // 2. Fallback to Gemini if text extraction yielded no entries or incomplete solutions
+        if (
+          !answerKeyMap || Object.keys(answerKeyMap).length === 0 ||
+          !solutionsMap || Object.keys(solutionsMap).length === 0
+        ) {
           try {
             const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: true });
-            if (pdfExtraction.text_preview) {
-              answerKeyMap = parseAnswerKeyOnly(pdfExtraction.text_preview);
+            if (pdfExtraction.answerKeyMap) {
+              answerKeyMap = { ...pdfExtraction.answerKeyMap, ...answerKeyMap };
             }
-            if (Object.keys(answerKeyMap).length === 0 && Array.isArray(pdfExtraction.rows)) {
+            if (pdfExtraction.topicGridMap) {
+              chaptersMap = { ...pdfExtraction.topicGridMap, ...chaptersMap };
+            }
+            if (pdfExtraction.chaptersMap) {
+              chaptersMap = { ...pdfExtraction.chaptersMap, ...chaptersMap };
+            }
+            if (pdfExtraction.solutionMap) {
+              for (const [qNum, solObj] of Object.entries(pdfExtraction.solutionMap)) {
+                if (solObj?.explanation && !solutionsMap[qNum]) {
+                  solutionsMap[qNum] = solObj.explanation;
+                }
+                if (solObj?.correctAnswer && answerKeyMap[qNum] === undefined) {
+                  const letter = String(solObj.correctAnswer).trim().toUpperCase();
+                  if (['A', 'B', 'C', 'D'].includes(letter)) {
+                    answerKeyMap[qNum] = letter.charCodeAt(0) - 65;
+                  }
+                }
+                if (solObj?.chapter && !chaptersMap[qNum]) {
+                  chaptersMap[qNum] = solObj.chapter;
+                }
+              }
+            }
+            if (pdfExtraction.text_preview && Object.keys(answerKeyMap).length === 0) {
+              const parsed = parseAnswerKeyAndSolutions(pdfExtraction.text_preview);
+              answerKeyMap = { ...parsed.answerKeyMap, ...answerKeyMap };
+              solutionsMap = { ...parsed.solutionsMap, ...solutionsMap };
+              chaptersMap = { ...parsed.chaptersMap, ...chaptersMap };
+            }
+            if (Array.isArray(pdfExtraction.rows)) {
               for (const q of pdfExtraction.rows) {
                 const qNum = q.questionNumber || q.line;
-                if (qNum && q.correct_index !== null && q.correct_index !== undefined) {
-                  answerKeyMap[qNum] = q.correct_index;
+                if (qNum) {
+                  if (q.correct_index !== null && q.correct_index !== undefined && answerKeyMap[qNum] === undefined) {
+                    answerKeyMap[qNum] = q.correct_index;
+                  }
+                  if (q.solution && !solutionsMap[qNum]) {
+                    solutionsMap[qNum] = q.solution;
+                  }
+                  if (q.chapter && q.chapter !== 'General' && !chaptersMap[qNum]) {
+                    chaptersMap[qNum] = q.chapter;
+                  }
                 }
               }
             }
           } catch (geminiErr) {
-            console.warn('[uploadTestFile] Gemini fallback for answer key failed:', geminiErr.message);
+            console.warn('[uploadTestFile] Gemini fallback for answer key/solution failed:', geminiErr.message);
           }
         }
 
-        const keyEntries = Object.entries(answerKeyMap);
-        let updatedCount = 0;
-        if (keyEntries.length > 0) {
-          for (const [qNumStr, correctIdx] of keyEntries) {
-            const qPos = parseInt(qNumStr, 10);
-            const upd = await query(
+        // Fetch existing questions for this assessment
+        const existingQsRes = await query(
+          'SELECT id, position, correct_index, solution, chapter, topic FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+          [id]
+        );
+        const existingQs = existingQsRes.rows;
+
+        let updatedKeyCount = 0;
+        let updatedSolCount = 0;
+        let updatedChapterCount = 0;
+
+        for (const eq of existingQs) {
+          const qPos = eq.position;
+          const hasKey = answerKeyMap[qPos] !== undefined;
+          const hasSol = Boolean(solutionsMap[qPos]);
+          const hasChapter = Boolean(chaptersMap[qPos]);
+
+          if (hasKey || hasSol || hasChapter) {
+            const newCorrect = hasKey ? answerKeyMap[qPos] : eq.correct_index;
+            const newSol = hasSol ? solutionsMap[qPos] : eq.solution;
+            const newChapter = hasChapter ? chaptersMap[qPos] : eq.chapter;
+            const newTopic = hasChapter ? chaptersMap[qPos] : eq.topic;
+
+            if (hasKey && answerKeyMap[qPos] !== eq.correct_index) updatedKeyCount++;
+            if (hasSol && solutionsMap[qPos] !== eq.solution) updatedSolCount++;
+            if (hasChapter && chaptersMap[qPos] !== eq.chapter) updatedChapterCount++;
+
+            await query(
               `UPDATE questions 
                SET correct_index = $1, 
+                   solution = COALESCE($2, solution),
+                   chapter = COALESCE($3, chapter),
+                   topic = COALESCE($4, topic),
                    extraction_meta = COALESCE(extraction_meta, '{}'::jsonb) || '{"hasAnswerKey": true}'::jsonb
-               WHERE assessment_id = $2 AND position = $3`,
-              [correctIdx, id, qPos]
+               WHERE id = $5`,
+              [newCorrect, newSol, newChapter, newTopic, eq.id]
             );
-            if (upd.rowCount > 0) updatedCount += upd.rowCount;
           }
         }
 
-        await query('UPDATE assessments SET answer_key_url = $1, updated_at = NOW() WHERE id = $2', [relativeUrl, id]).catch(() => {});
+        const urlCol = file_type === 'solution_pdf' ? 'solution_pdf_url' : 'answer_key_url';
+        await query(`UPDATE assessments SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => {});
+        await query(`UPDATE tests SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => {});
+
+        const summaryParts = [];
+        if (updatedKeyCount > 0) summaryParts.push(`${updatedKeyCount} answer key(s)`);
+        if (updatedSolCount > 0) summaryParts.push(`${updatedSolCount} solution/explanation(s)`);
+        if (updatedChapterCount > 0) summaryParts.push(`${updatedChapterCount} chapter tag(s)`);
 
         return res.json({
-          message: updatedCount > 0
-            ? `Answer key PDF uploaded successfully. Updated ${updatedCount} question answer key(s).`
-            : 'Answer key PDF uploaded, but no valid answer key mappings could be detected.',
+          message: summaryParts.length > 0
+            ? `${file_type === 'solution_pdf' ? 'Solution' : 'Answer key'} PDF uploaded successfully. Updated ${summaryParts.join(', ')}.`
+            : `${file_type === 'solution_pdf' ? 'Solution' : 'Answer key'} PDF uploaded and attached successfully.`,
           url: relativeUrl,
           file_type,
-          updatedCount,
-          answerKeyMap
+          updatedCount: updatedKeyCount,
+          updatedSolCount,
+          updatedChapterCount,
+          answerKeyMap,
+          solutionsMap,
+          chaptersMap
         });
       }
 
@@ -607,7 +677,6 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             testName: currentTest.test_name,
             syllabus: currentTest.syllabus,
             questionText: q.question_text || q.questionText,
-            pdfText: pdfExtraction.text_preview || ''
           });
 
           // Prefer Gemini-extracted subject/chapter; fall back to keyword classifier

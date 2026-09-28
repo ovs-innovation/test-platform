@@ -1,460 +1,671 @@
 /**
  * Lightweight Subject & Topic Classifier
  * Automatically infers subject ('Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics')
- * and topic/chapter based on test title, syllabus, or question text.
- * Covers major NEET/JEE chapter keywords for accurate classification.
+ * and specific topic/chapter based primarily on the individual question text,
+ * with fallback to test metadata only for subject level.
  */
-export function inferSubjectAndTopic({ testName = '', syllabus = '', questionText = '', pdfText = '' }) {
-  const combinedText = `${testName} ${syllabus} ${pdfText} ${questionText}`.toLowerCase();
 
-  // ─── ZOOLOGY (Animal Kingdom & Human Physiology chapters) ────────────────────
+function matchExplicitTag(text) {
+  if (!text) return null;
+  const bracketMatch = text.match(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/);
+  if (bracketMatch) return bracketMatch[1].trim();
+  const chMatch = text.match(/(?:Chapter|Topic|Unit)\s*[:\-]\s*([A-Za-z0-9\s,&'\-\/]{2,80})(?:\n|$)/i);
+  if (chMatch) return chMatch[1].trim();
+  return null;
+}
+
+function inferSubjectFromContext(text) {
+  const t = (text || '').toLowerCase();
+  if (/\b(physics|physic|mechanic|thermo|optic|electro|circuit|magnet|kinematic|gravitat|newton)\b/i.test(t)) return 'Physics';
+  if (/\b(chemistry|chem|organic|inorganic|reaction|acid|base|mole|bonding|equilibrium|orbital)\b/i.test(t)) return 'Chemistry';
+  if (/\b(botany|plant|photosynthesis|chloroplast|cell wall|angiosperm|bryophyte|algae|fungi)\b/i.test(t)) return 'Botany';
+  if (/\b(zoology|animal|chordate|mammal|human physiology|nephron|heart|digestion|circulation)\b/i.test(t)) return 'Zoology';
+  if (/\b(math|mathematics|calculus|integral|derivative|matrix|determinant|trigonometry|geometry|algebra)\b/i.test(t)) return 'Mathematics';
+  return 'General';
+}
+
+function classifyQuestionTopic(qText) {
+  if (!qText || typeof qText !== 'string') return null;
+  const t = qText.toLowerCase();
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 1. PHYSICS
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  // Explicit Rotational Motion (ONLY if actual rotational concepts are present in question!)
   if (
-    combinedText.includes('animal kingdom') ||
-    combinedText.includes('chordata') ||
-    combinedText.includes('chordate') ||
-    combinedText.includes('vertebrate') ||
-    combinedText.includes('invertebrate') ||
-    combinedText.includes('mammalia') ||
-    combinedText.includes('mammal') ||
-    combinedText.includes('amphibia') ||
-    combinedText.includes('reptilia') ||
-    combinedText.includes('aves') ||
-    combinedText.includes('pisces') ||
-    combinedText.includes('echinoderm') ||
-    combinedText.includes('arthropod') ||
-    combinedText.includes('mollusca') ||
-    combinedText.includes('annelida') ||
-    combinedText.includes('porifera') ||
-    combinedText.includes('coelenterate') ||
-    combinedText.includes('platyhelminthes') ||
-    combinedText.includes('nematoda') ||
-    combinedText.includes('notochord') ||
-    combinedText.includes('dorsal hollow nerve cord') ||
-    combinedText.includes('pharyngeal gill slits') ||
-    combinedText.includes('post-anal tail') ||
-    combinedText.includes('bilateral symmetry') ||
-    combinedText.includes('radial symmetry') ||
-    combinedText.includes('coelom') ||
-    combinedText.includes('morphology') ||
-    combinedText.includes('taxonomy') ||
-    combinedText.includes('classification of animals') ||
-    combinedText.includes('body plan')
+    t.includes('rotational') ||
+    t.includes('torque') ||
+    t.includes('moment of inertia') ||
+    t.includes('angular momentum') ||
+    t.includes('angular velocity') ||
+    t.includes('angular acceleration') ||
+    t.includes('radius of gyration') ||
+    t.includes('pure rolling') ||
+    t.includes('rolling without slipping') ||
+    t.includes('rolling on inclined') ||
+    t.includes('flywheel')
+  ) {
+    return { subject: 'Physics', topic: 'Rotational Motion', bank_category: 'Physics' };
+  }
+
+  // Gravitation
+  if (
+    t.includes('gravitation') ||
+    t.includes('gravitational') ||
+    t.includes('escape velocity') ||
+    t.includes('orbital velocity') ||
+    t.includes('orbital speed') ||
+    t.includes('kepler') ||
+    t.includes('geostationary') ||
+    t.includes('satellite') ||
+    t.includes('acceleration due to gravity')
+  ) {
+    return { subject: 'Physics', topic: 'Gravitation', bank_category: 'Physics' };
+  }
+
+  // Work, Energy & Power
+  if (
+    t.includes('work done') ||
+    t.includes('work-energy') ||
+    t.includes('work energy') ||
+    t.includes('kinetic energy') ||
+    t.includes('potential energy') ||
+    t.includes('conservative force') ||
+    t.includes('power developed') ||
+    t.includes('power of an engine') ||
+    t.includes('spring potential energy')
+  ) {
+    return { subject: 'Physics', topic: 'Work, Energy & Power', bank_category: 'Physics' };
+  }
+
+  // Center of Mass & Collisions
+  if (
+    t.includes('center of mass') ||
+    t.includes('centre of mass') ||
+    t.includes('elastic collision') ||
+    t.includes('inelastic collision') ||
+    t.includes('coefficient of restitution') ||
+    t.includes('head-on collision') ||
+    t.includes('collision of two')
+  ) {
+    return { subject: 'Physics', topic: 'Center of Mass & Collisions', bank_category: 'Physics' };
+  }
+
+  // Laws of Motion
+  if (
+    t.includes("newton's") ||
+    t.includes('newton law') ||
+    t.includes('newtons law') ||
+    t.includes('limiting friction') ||
+    t.includes('coefficient of friction') ||
+    t.includes('friction') ||
+    t.includes('tension in the string') ||
+    t.includes('pulley') ||
+    t.includes('free body diagram') ||
+    t.includes('normal reaction') ||
+    t.includes('pseudo force') ||
+    t.includes('banking of road')
+  ) {
+    return { subject: 'Physics', topic: 'Laws of Motion', bank_category: 'Physics' };
+  }
+
+  // Kinematics
+  if (
+    t.includes('kinematics') ||
+    t.includes('projectile') ||
+    t.includes('horizontal range') ||
+    t.includes('trajectory') ||
+    t.includes('maximum height') ||
+    t.includes('relative velocity') ||
+    t.includes('velocity-time') ||
+    t.includes('position-time') ||
+    t.includes('acceleration') ||
+    t.includes('displacement') ||
+    t.includes('free fall')
+  ) {
+    return { subject: 'Physics', topic: 'Kinematics', bank_category: 'Physics' };
+  }
+
+  // Electrostatics
+  if (
+    t.includes('coulomb') ||
+    t.includes('electric field') ||
+    t.includes('electric potential') ||
+    t.includes('electric dipole') ||
+    t.includes('dipole moment') ||
+    t.includes('gauss') ||
+    t.includes('electric flux') ||
+    t.includes('equipotential') ||
+    t.includes('capacitor') ||
+    t.includes('capacitance') ||
+    t.includes('dielectric')
+  ) {
+    return { subject: 'Physics', topic: 'Electrostatics', bank_category: 'Physics' };
+  }
+
+  // Current Electricity
+  if (
+    t.includes('current electricity') ||
+    t.includes('resistor') ||
+    t.includes('resistance') ||
+    t.includes('ohm') ||
+    t.includes('kirchhoff') ||
+    t.includes('potentiometer') ||
+    t.includes('wheatstone') ||
+    t.includes('meter bridge') ||
+    t.includes('drift velocity') ||
+    t.includes('internal resistance') ||
+    t.includes('electric current')
+  ) {
+    return { subject: 'Physics', topic: 'Current Electricity', bank_category: 'Physics' };
+  }
+
+  // Magnetism & Magnetic Effects
+  if (
+    t.includes('magnetic field') ||
+    t.includes('biot-savart') ||
+    t.includes('ampere') ||
+    t.includes('lorentz') ||
+    t.includes('solenoid') ||
+    t.includes('toroid') ||
+    t.includes('galvanometer') ||
+    t.includes('cyclotron')
+  ) {
+    return { subject: 'Physics', topic: 'Moving Charges & Magnetism', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('magnetic dipole') ||
+    t.includes('susceptibility') ||
+    t.includes('permeability') ||
+    t.includes('ferromagnet') ||
+    t.includes('paramagnet') ||
+    t.includes('diamagnet') ||
+    t.includes('hysteresis') ||
+    t.includes('earth magnetism')
+  ) {
+    return { subject: 'Physics', topic: 'Magnetism & Matter', bank_category: 'Physics' };
+  }
+
+  // EMI & AC
+  if (
+    t.includes('electromagnetic induction') ||
+    t.includes('faraday') ||
+    t.includes('lenz') ||
+    t.includes('induced emf') ||
+    t.includes('magnetic flux') ||
+    t.includes('self induction') ||
+    t.includes('mutual induction') ||
+    t.includes('inductance')
+  ) {
+    return { subject: 'Physics', topic: 'Electromagnetic Induction', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('alternating current') ||
+    t.includes('ac circuit') ||
+    t.includes('lcr circuit') ||
+    t.includes('impedance') ||
+    t.includes('rms current') ||
+    t.includes('rms voltage') ||
+    t.includes('power factor') ||
+    t.includes('transformer')
+  ) {
+    return { subject: 'Physics', topic: 'Alternating Current', bank_category: 'Physics' };
+  }
+
+  // Optics
+  if (
+    t.includes('ray optics') ||
+    t.includes('refraction') ||
+    t.includes('reflection') ||
+    t.includes('snell') ||
+    t.includes('total internal reflection') ||
+    t.includes('focal length') ||
+    t.includes('lens') ||
+    t.includes('mirror') ||
+    t.includes('prism') ||
+    t.includes('magnifying power') ||
+    t.includes('microscope') ||
+    t.includes('telescope')
+  ) {
+    return { subject: 'Physics', topic: 'Ray Optics', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('wave optics') ||
+    t.includes('diffraction') ||
+    t.includes('interference') ||
+    t.includes('young') ||
+    t.includes('ydse') ||
+    t.includes('polarization') ||
+    t.includes('brewster') ||
+    t.includes('fringe width')
+  ) {
+    return { subject: 'Physics', topic: 'Wave Optics', bank_category: 'Physics' };
+  }
+
+  // Thermal & Thermodynamics
+  if (
+    t.includes('thermodynamics') ||
+    t.includes('heat engine') ||
+    t.includes('carnot') ||
+    t.includes('isothermal') ||
+    t.includes('adiabatic') ||
+    t.includes('entropy') ||
+    t.includes('calorimetry') ||
+    t.includes('latent heat') ||
+    t.includes('specific heat')
+  ) {
+    return { subject: 'Physics', topic: 'Thermodynamics', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('kinetic theory') ||
+    t.includes('ideal gas') ||
+    t.includes('rms speed') ||
+    t.includes('mean free path') ||
+    t.includes('degrees of freedom')
+  ) {
+    return { subject: 'Physics', topic: 'Kinetic Theory of Gases', bank_category: 'Physics' };
+  }
+
+  // Oscillations & Waves
+  if (
+    t.includes('simple harmonic') ||
+    t.includes('shm') ||
+    t.includes('pendulum') ||
+    t.includes('oscillation') ||
+    t.includes('spring mass')
+  ) {
+    return { subject: 'Physics', topic: 'Oscillations', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('sound wave') ||
+    t.includes('doppler') ||
+    t.includes('standing wave') ||
+    t.includes('resonance tube') ||
+    t.includes('organ pipe') ||
+    t.includes('beats')
+  ) {
+    return { subject: 'Physics', topic: 'Waves & Acoustics', bank_category: 'Physics' };
+  }
+
+  // Modern Physics
+  if (
+    t.includes('photoelectric') ||
+    t.includes('work function') ||
+    t.includes('threshold frequency') ||
+    t.includes('de broglie') ||
+    t.includes('photon')
+  ) {
+    return { subject: 'Physics', topic: 'Dual Nature of Radiation & Matter', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('bohr') ||
+    t.includes('rutherford') ||
+    t.includes('hydrogen spectrum') ||
+    t.includes('rydberg') ||
+    t.includes('balmer') ||
+    t.includes('lyman')
+  ) {
+    return { subject: 'Physics', topic: 'Atoms', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('radioactivity') ||
+    t.includes('half life') ||
+    t.includes('binding energy') ||
+    t.includes('mass defect') ||
+    t.includes('nuclear fission') ||
+    t.includes('nuclear fusion')
+  ) {
+    return { subject: 'Physics', topic: 'Nuclei', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('semiconductor') ||
+    t.includes('diode') ||
+    t.includes('transistor') ||
+    t.includes('logic gate') ||
+    t.includes('zener') ||
+    t.includes('p-n junction')
+  ) {
+    return { subject: 'Physics', topic: 'Semiconductor Electronics', bank_category: 'Physics' };
+  }
+
+  // Fluid Mechanics & Solids
+  if (
+    t.includes('viscosity') ||
+    t.includes('surface tension') ||
+    t.includes('bernoulli') ||
+    t.includes('buoyancy') ||
+    t.includes('pascal') ||
+    t.includes('terminal velocity')
+  ) {
+    return { subject: 'Physics', topic: 'Mechanical Properties of Fluids', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('young\'s modulus') ||
+    t.includes('bulk modulus') ||
+    t.includes('stress') ||
+    t.includes('strain') ||
+    t.includes('hooke') ||
+    t.includes('elasticity')
+  ) {
+    return { subject: 'Physics', topic: 'Mechanical Properties of Solids', bank_category: 'Physics' };
+  }
+
+  if (
+    t.includes('dimension') ||
+    t.includes('vernier') ||
+    t.includes('screw gauge') ||
+    t.includes('significant figures')
+  ) {
+    return { subject: 'Physics', topic: 'Units & Measurements', bank_category: 'Physics' };
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 2. BIOLOGY (ZOOLOGY & BOTANY)
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  if (
+    t.includes('animal kingdom') ||
+    t.includes('chordata') ||
+    t.includes('chordate') ||
+    t.includes('vertebrate') ||
+    t.includes('invertebrate') ||
+    t.includes('mammal') ||
+    t.includes('amphibia') ||
+    t.includes('reptil') ||
+    t.includes('aves') ||
+    t.includes('pisces') ||
+    t.includes('echinoderm') ||
+    t.includes('arthropod') ||
+    t.includes('mollusc') ||
+    t.includes('annelid') ||
+    t.includes('porifera') ||
+    t.includes('coelenterat') ||
+    t.includes('cnidaria') ||
+    t.includes('platyhelminthes') ||
+    t.includes('notochord') ||
+    t.includes('water vascular') ||
+    t.includes('coelom')
   ) {
     return { subject: 'Zoology', topic: 'Animal Kingdom', bank_category: 'Zoology' };
   }
 
   if (
-    combinedText.includes('structural organisation') ||
-    combinedText.includes('cockroach') ||
-    combinedText.includes('frog anatomy') ||
-    combinedText.includes('earthworm') ||
-    combinedText.includes('tissue') ||
-    combinedText.includes('epithelial') ||
-    combinedText.includes('connective tissue') ||
-    combinedText.includes('muscle tissue') ||
-    combinedText.includes('neural tissue')
+    t.includes('cockroach') ||
+    t.includes('frog anatomy') ||
+    t.includes('earthworm') ||
+    t.includes('epithelial tissue') ||
+    t.includes('connective tissue')
   ) {
     return { subject: 'Zoology', topic: 'Structural Organisation in Animals', bank_category: 'Zoology' };
   }
 
   if (
-    combinedText.includes('human physiology') ||
-    combinedText.includes('digestion') ||
-    combinedText.includes('absorption') ||
-    combinedText.includes('breathing') ||
-    combinedText.includes('respiration') ||
-    combinedText.includes('circulation') ||
-    combinedText.includes('excretion') ||
-    combinedText.includes('locomotion') ||
-    combinedText.includes('movement') ||
-    combinedText.includes('neural control') ||
-    combinedText.includes('endocrine') ||
-    combinedText.includes('hormone') ||
-    combinedText.includes('kidney') ||
-    combinedText.includes('nephron') ||
-    combinedText.includes('heart') ||
-    combinedText.includes('cardiac') ||
-    combinedText.includes('digestive') ||
-    combinedText.includes('liver') ||
-    combinedText.includes('pancreas') ||
-    combinedText.includes('alveoli') ||
-    combinedText.includes('neuron') ||
-    combinedText.includes('synapse')
+    t.includes('human physiology') ||
+    t.includes('digestion') ||
+    t.includes('respiration in human') ||
+    t.includes('breathing') ||
+    t.includes('circulation') ||
+    t.includes('excretion') ||
+    t.includes('kidney') ||
+    t.includes('nephron') ||
+    t.includes('heart') ||
+    t.includes('neuron') ||
+    t.includes('synapse') ||
+    t.includes('endocrine') ||
+    t.includes('hormone')
   ) {
     let topic = 'Human Physiology';
-    if (combinedText.includes('digestion') || combinedText.includes('liver') || combinedText.includes('pancreas')) topic = 'Digestion & Absorption';
-    else if (combinedText.includes('breathing') || combinedText.includes('respiration') || combinedText.includes('alveoli')) topic = 'Breathing & Exchange of Gases';
-    else if (combinedText.includes('circulation') || combinedText.includes('heart') || combinedText.includes('cardiac')) topic = 'Body Fluids & Circulation';
-    else if (combinedText.includes('excretion') || combinedText.includes('kidney') || combinedText.includes('nephron')) topic = 'Excretory Products & their Elimination';
-    else if (combinedText.includes('neuron') || combinedText.includes('synapse') || combinedText.includes('neural')) topic = 'Neural Control & Coordination';
-    else if (combinedText.includes('endocrine') || combinedText.includes('hormone')) topic = 'Chemical Coordination & Integration';
+    if (t.includes('digestion') || t.includes('alimentary') || t.includes('pancreas')) topic = 'Digestion & Absorption';
+    else if (t.includes('breathing') || t.includes('alveoli')) topic = 'Breathing & Exchange of Gases';
+    else if (t.includes('circulation') || t.includes('cardiac') || t.includes('blood group')) topic = 'Body Fluids & Circulation';
+    else if (t.includes('excretion') || t.includes('nephron') || t.includes('kidney')) topic = 'Excretory Products & their Elimination';
+    else if (t.includes('neuron') || t.includes('synapse') || t.includes('brain')) topic = 'Neural Control & Coordination';
+    else if (t.includes('endocrine') || t.includes('hormone') || t.includes('pituitary') || t.includes('thyroid')) topic = 'Chemical Coordination & Integration';
     return { subject: 'Zoology', topic, bank_category: 'Zoology' };
   }
 
   if (
-    combinedText.includes('zoology') ||
-    combinedText.includes('anatomy') ||
-    combinedText.includes('reproduction') ||
-    combinedText.includes('reproductive')
-  ) {
-    let topic = 'Zoology';
-    if (combinedText.includes('reproduction')) topic = 'Reproduction';
-    return { subject: 'Zoology', topic, bank_category: 'Zoology' };
-  }
-
-  // ─── BOTANY ────────────────────────────────────────────────────────────────
-  if (
-    combinedText.includes('plant kingdom') ||
-    combinedText.includes('algae') ||
-    combinedText.includes('bryophyte') ||
-    combinedText.includes('pteridophyte') ||
-    combinedText.includes('gymnosperm') ||
-    combinedText.includes('angiosperm') ||
-    combinedText.includes('thallophyta') ||
-    combinedText.includes('fungi') ||
-    combinedText.includes('lichen') ||
-    combinedText.includes('virus') ||
-    combinedText.includes('bacteria') ||
-    combinedText.includes('monera') ||
-    combinedText.includes('protista') ||
-    combinedText.includes('kingdom plantae') ||
-    combinedText.includes('five kingdom')
+    t.includes('plant kingdom') ||
+    t.includes('algae') ||
+    t.includes('bryophyte') ||
+    t.includes('pteridophyte') ||
+    t.includes('gymnosperm') ||
+    t.includes('angiosperm') ||
+    t.includes('thallophyta') ||
+    t.includes('lichen')
   ) {
     return { subject: 'Botany', topic: 'Plant Kingdom', bank_category: 'Botany' };
   }
 
   if (
-    combinedText.includes('cell structure') ||
-    combinedText.includes('cell organelle') ||
-    combinedText.includes('mitochondria') ||
-    combinedText.includes('chloroplast') ||
-    combinedText.includes('endoplasmic reticulum') ||
-    combinedText.includes('golgi') ||
-    combinedText.includes('ribosome') ||
-    combinedText.includes('nucleus') ||
-    combinedText.includes('cell membrane') ||
-    combinedText.includes('cell wall') ||
-    combinedText.includes('prokaryotic') ||
-    combinedText.includes('eukaryotic') ||
-    combinedText.includes('cell biology')
+    t.includes('mitochondria') ||
+    t.includes('chloroplast') ||
+    t.includes('endoplasmic reticulum') ||
+    t.includes('golgi') ||
+    t.includes('ribosome') ||
+    t.includes('cell membrane') ||
+    t.includes('cell wall') ||
+    t.includes('prokaryot') ||
+    t.includes('eukaryot') ||
+    t.includes('cell structure')
   ) {
     return { subject: 'Botany', topic: 'Cell: The Unit of Life', bank_category: 'Botany' };
   }
 
   if (
-    combinedText.includes('photosynthesis') ||
-    combinedText.includes('light reaction') ||
-    combinedText.includes('calvin cycle') ||
-    combinedText.includes('c3 plant') ||
-    combinedText.includes('c4 plant') ||
-    combinedText.includes('photorespiration') ||
-    combinedText.includes('stomata') ||
-    combinedText.includes('transpiration') ||
-    combinedText.includes('mineral nutrition')
+    t.includes('photosynthesis') ||
+    t.includes('calvin cycle') ||
+    t.includes('light reaction') ||
+    t.includes('c3 plant') ||
+    t.includes('c4 plant') ||
+    t.includes('photorespiration')
   ) {
     return { subject: 'Botany', topic: 'Photosynthesis in Higher Plants', bank_category: 'Botany' };
   }
 
   if (
-    combinedText.includes('genetics') ||
-    combinedText.includes('heredity') ||
-    combinedText.includes('mendelian') ||
-    combinedText.includes('dna') ||
-    combinedText.includes('rna') ||
-    combinedText.includes('gene') ||
-    combinedText.includes('mutation') ||
-    combinedText.includes('chromosome') ||
-    combinedText.includes('meiosis') ||
-    combinedText.includes('mitosis') ||
-    combinedText.includes('cell cycle') ||
-    combinedText.includes('allele') ||
-    combinedText.includes('dominant') ||
-    combinedText.includes('recessive')
+    t.includes('genetics') ||
+    t.includes('mendel') ||
+    t.includes('dna') ||
+    t.includes('rna') ||
+    t.includes('chromosome') ||
+    t.includes('mutation') ||
+    t.includes('meiosis') ||
+    t.includes('mitosis') ||
+    t.includes('allele')
   ) {
     let topic = 'Genetics & Molecular Biology';
-    if (combinedText.includes('dna') || combinedText.includes('rna') || combinedText.includes('replication')) topic = 'Molecular Basis of Inheritance';
-    if (combinedText.includes('mendelian') || combinedText.includes('heredity') || combinedText.includes('allele')) topic = 'Principles of Inheritance & Variation';
-    if (combinedText.includes('mitosis') || combinedText.includes('meiosis') || combinedText.includes('cell cycle')) topic = 'Cell Cycle & Cell Division';
+    if (t.includes('dna') || t.includes('rna') || t.includes('replication') || t.includes('transcription')) topic = 'Molecular Basis of Inheritance';
+    else if (t.includes('mendel') || t.includes('heredity') || t.includes('allele')) topic = 'Principles of Inheritance & Variation';
+    else if (t.includes('mitosis') || t.includes('meiosis') || t.includes('cell cycle')) topic = 'Cell Cycle & Cell Division';
     return { subject: 'Botany', topic, bank_category: 'Botany' };
   }
 
-  if (
-    combinedText.includes('botany') ||
-    combinedText.includes('plant') ||
-    combinedText.includes('seed') ||
-    combinedText.includes('flower') ||
-    combinedText.includes('leaf') ||
-    combinedText.includes('root') ||
-    combinedText.includes('stem')
-  ) {
-    return { subject: 'Botany', topic: 'Plant Morphology & Anatomy', bank_category: 'Botany' };
-  }
-
-  // ─── PHYSICS ───────────────────────────────────────────────────────────────
-  if (
-    combinedText.includes('electric') ||
-    combinedText.includes('magnetism') ||
-    combinedText.includes('resistor') ||
-    combinedText.includes('capacitor') ||
-    combinedText.includes('capacitance') ||
-    combinedText.includes('current electricity') ||
-    combinedText.includes('electromagnetic') ||
-    combinedText.includes('electrodynamics') ||
-    combinedText.includes('magnetic field') ||
-    combinedText.includes('magnetic flux') ||
-    combinedText.includes('faraday') ||
-    combinedText.includes('lenz') ||
-    combinedText.includes('ohm') ||
-    combinedText.includes('kirchhoff') ||
-    combinedText.includes('ampere')
-  ) {
-    let topic = 'Electrostatics';
-    if (combinedText.includes('current') || combinedText.includes('resistor') || combinedText.includes('ohm') || combinedText.includes('kirchhoff')) topic = 'Current Electricity';
-    else if (combinedText.includes('electromagnetic') || combinedText.includes('faraday') || combinedText.includes('lenz') || combinedText.includes('magnetic flux')) topic = 'Electromagnetic Induction';
-    else if (combinedText.includes('magnetic field') || combinedText.includes('ampere')) topic = 'Moving Charges & Magnetism';
-    else if (combinedText.includes('capacitor') || combinedText.includes('capacitance')) topic = 'Electrostatics';
-    return { subject: 'Physics', topic, bank_category: 'Physics' };
-  }
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 3. CHEMISTRY
+  // ─────────────────────────────────────────────────────────────────────────────
 
   if (
-    combinedText.includes('optics') ||
-    combinedText.includes('refraction') ||
-    combinedText.includes('reflection') ||
-    combinedText.includes('lens') ||
-    combinedText.includes('mirror') ||
-    combinedText.includes('prism') ||
-    combinedText.includes('snell') ||
-    combinedText.includes('total internal reflection') ||
-    combinedText.includes('diffraction') ||
-    combinedText.includes('interference') ||
-    combinedText.includes('polarization') ||
-    combinedText.includes('wave optics')
-  ) {
-    let topic = 'Ray Optics';
-    if (combinedText.includes('diffraction') || combinedText.includes('interference') || combinedText.includes('polarization') || combinedText.includes('wave optics')) topic = 'Wave Optics';
-    return { subject: 'Physics', topic, bank_category: 'Physics' };
-  }
-
-  if (
-    combinedText.includes('kinematics') ||
-    combinedText.includes('projectile') ||
-    combinedText.includes('velocity') ||
-    combinedText.includes('acceleration') ||
-    combinedText.includes('displacement') ||
-    combinedText.includes('newton') ||
-    combinedText.includes('force') ||
-    combinedText.includes('friction') ||
-    combinedText.includes('momentum') ||
-    combinedText.includes('work energy') ||
-    combinedText.includes('collision') ||
-    combinedText.includes('rotational') ||
-    combinedText.includes('torque') ||
-    combinedText.includes('gravitation') ||
-    combinedText.includes('gravitational') ||
-    combinedText.includes('satellite') ||
-    combinedText.includes('circular motion')
-  ) {
-    let topic = 'Mechanics & Kinematics';
-    if (combinedText.includes('rotational') || combinedText.includes('torque') || combinedText.includes('moment of inertia')) topic = 'Rotational Motion';
-    else if (combinedText.includes('gravitation') || combinedText.includes('satellite') || combinedText.includes('orbit')) topic = 'Gravitation';
-    else if (combinedText.includes('work') || combinedText.includes('energy') || combinedText.includes('power')) topic = 'Work, Energy & Power';
-    return { subject: 'Physics', topic, bank_category: 'Physics' };
-  }
-
-  if (
-    combinedText.includes('thermodynamics') ||
-    combinedText.includes('heat') ||
-    combinedText.includes('temperature') ||
-    combinedText.includes('entropy') ||
-    combinedText.includes('carnot') ||
-    combinedText.includes('kinetic theory') ||
-    combinedText.includes('ideal gas')
-  ) {
-    return { subject: 'Physics', topic: 'Thermodynamics & Kinetic Theory', bank_category: 'Physics' };
-  }
-
-  if (
-    combinedText.includes('semiconductor') ||
-    combinedText.includes('transistor') ||
-    combinedText.includes('diode') ||
-    combinedText.includes('logic gate') ||
-    combinedText.includes('communication') ||
-    combinedText.includes('photoelectric') ||
-    combinedText.includes('dual nature') ||
-    combinedText.includes('nuclear') ||
-    combinedText.includes('radioactive') ||
-    combinedText.includes('atom') ||
-    combinedText.includes('bohr')
-  ) {
-    let topic = 'Modern Physics';
-    if (combinedText.includes('semiconductor') || combinedText.includes('transistor') || combinedText.includes('diode')) topic = 'Semiconductor Electronics';
-    else if (combinedText.includes('nuclear') || combinedText.includes('radioactive')) topic = 'Nuclei & Radioactivity';
-    else if (combinedText.includes('atom') || combinedText.includes('bohr')) topic = 'Atoms & Nuclei';
-    return { subject: 'Physics', topic, bank_category: 'Physics' };
-  }
-
-  if (
-    combinedText.includes('physics') ||
-    combinedText.includes('wave') ||
-    combinedText.includes('oscillation') ||
-    combinedText.includes('sound')
-  ) {
-    let topic = 'Physics';
-    if (combinedText.includes('wave') || combinedText.includes('sound') || combinedText.includes('oscillation')) topic = 'Oscillations & Waves';
-    return { subject: 'Physics', topic, bank_category: 'Physics' };
-  }
-
-  // ─── CHEMISTRY ─────────────────────────────────────────────────────────────
-  if (
-    combinedText.includes('organic') ||
-    combinedText.includes('hydrocarbon') ||
-    combinedText.includes('alkane') ||
-    combinedText.includes('alkene') ||
-    combinedText.includes('alkyne') ||
-    combinedText.includes('benzene') ||
-    combinedText.includes('aromatic') ||
-    combinedText.includes('alcohol') ||
-    combinedText.includes('aldehyde') ||
-    combinedText.includes('ketone') ||
-    combinedText.includes('carboxylic') ||
-    combinedText.includes('amine') ||
-    combinedText.includes('polymer') ||
-    combinedText.includes('biomolecule') ||
-    combinedText.includes('nucleic acid') ||
-    combinedText.includes('iupac')
+    t.includes('organic') ||
+    t.includes('hydrocarbon') ||
+    t.includes('alkane') ||
+    t.includes('alkene') ||
+    t.includes('alkyne') ||
+    t.includes('benzene') ||
+    t.includes('alcohol') ||
+    t.includes('aldehyde') ||
+    t.includes('ketone') ||
+    t.includes('carboxylic') ||
+    t.includes('amine') ||
+    t.includes('polymer') ||
+    t.includes('biomolecule') ||
+    t.includes('iupac')
   ) {
     let topic = 'Organic Chemistry';
-    if (combinedText.includes('polymer')) topic = 'Polymers';
-    else if (combinedText.includes('biomolecule') || combinedText.includes('nucleic acid')) topic = 'Biomolecules';
-    else if (combinedText.includes('hydrocarbon') || combinedText.includes('alkane') || combinedText.includes('alkene') || combinedText.includes('alkyne') || combinedText.includes('benzene')) topic = 'Hydrocarbons';
-    else if (combinedText.includes('alcohol') || combinedText.includes('phenol') || combinedText.includes('ether')) topic = 'Alcohols, Phenols & Ethers';
-    else if (combinedText.includes('aldehyde') || combinedText.includes('ketone') || combinedText.includes('carboxylic')) topic = 'Aldehydes, Ketones & Carboxylic Acids';
+    if (t.includes('polymer')) topic = 'Polymers';
+    else if (t.includes('biomolecule')) topic = 'Biomolecules';
+    else if (t.includes('alcohol') || t.includes('phenol') || t.includes('ether')) topic = 'Alcohols, Phenols & Ethers';
+    else if (t.includes('aldehyde') || t.includes('ketone') || t.includes('carboxylic')) topic = 'Aldehydes, Ketones & Carboxylic Acids';
+    else if (t.includes('amine') || t.includes('diazonium')) topic = 'Amines & Nitrogen Compounds';
+    else if (t.includes('hydrocarbon') || t.includes('benzene')) topic = 'Hydrocarbons';
     return { subject: 'Chemistry', topic, bank_category: 'Chemistry' };
   }
 
   if (
-    combinedText.includes('equilibrium') ||
-    combinedText.includes('ionic') ||
-    combinedText.includes('ph') ||
-    combinedText.includes('buffer') ||
-    combinedText.includes('solubility product') ||
-    combinedText.includes('titration') ||
-    combinedText.includes('acid base') ||
-    combinedText.includes('redox') ||
-    combinedText.includes('oxidation') ||
-    combinedText.includes('reduction') ||
-    combinedText.includes('electrochemistry') ||
-    combinedText.includes('galvanic') ||
-    combinedText.includes('electrolysis')
+    t.includes('periodic table') ||
+    t.includes('chemical bonding') ||
+    t.includes('hybridization') ||
+    t.includes('coordination compound') ||
+    t.includes('coordination') ||
+    t.includes('crystal field') ||
+    t.includes('vsepr') ||
+    t.includes('d-block') ||
+    t.includes('p-block') ||
+    t.includes('s-block') ||
+    t.includes('metallurgy')
   ) {
-    let topic = 'Equilibrium';
-    if (combinedText.includes('electrochemistry') || combinedText.includes('galvanic') || combinedText.includes('electrolysis')) topic = 'Electrochemistry';
-    else if (combinedText.includes('redox') || combinedText.includes('oxidation') || combinedText.includes('reduction')) topic = 'Redox Reactions';
+    let topic = 'Inorganic Chemistry';
+    if (t.includes('bonding') || t.includes('hybridization') || t.includes('vsepr')) topic = 'Chemical Bonding & Molecular Structure';
+    else if (t.includes('coordination') || t.includes('ligand')) topic = 'Coordination Compounds';
+    else if (t.includes('periodic')) topic = 'Periodic Classification of Elements';
     return { subject: 'Chemistry', topic, bank_category: 'Chemistry' };
   }
 
   if (
-    combinedText.includes('periodic table') ||
-    combinedText.includes('periodic') ||
-    combinedText.includes('atomic structure') ||
-    combinedText.includes('orbital') ||
-    combinedText.includes('quantum number') ||
-    combinedText.includes('bonding') ||
-    combinedText.includes('vsepr') ||
-    combinedText.includes('hybridization') ||
-    combinedText.includes('coordination') ||
-    combinedText.includes('chemical bond')
+    t.includes('equilibrium') ||
+    t.includes('le chatelier') ||
+    t.includes('ph of') ||
+    t.includes('buffer') ||
+    t.includes('solubility product') ||
+    t.includes('thermodynamics') ||
+    t.includes('enthalpy') ||
+    t.includes('electrochemistry') ||
+    t.includes('nernst') ||
+    t.includes('electrolysis') ||
+    t.includes('chemical kinetics') ||
+    t.includes('rate constant') ||
+    t.includes('order of reaction') ||
+    t.includes('activation energy') ||
+    t.includes('colligative') ||
+    t.includes('molarity') ||
+    t.includes('molality')
   ) {
-    let topic = 'Chemical Bonding & Structure';
-    if (combinedText.includes('atomic structure') || combinedText.includes('orbital') || combinedText.includes('quantum')) topic = 'Atomic Structure';
-    else if (combinedText.includes('periodic')) topic = 'Periodic Table & Properties';
-    else if (combinedText.includes('coordination')) topic = 'Coordination Compounds';
+    let topic = 'Physical Chemistry';
+    if (t.includes('electrochem') || t.includes('nernst') || t.includes('electrolysis')) topic = 'Electrochemistry';
+    else if (t.includes('kinetics') || t.includes('rate of reaction') || t.includes('order of reaction')) topic = 'Chemical Kinetics';
+    else if (t.includes('equilibrium') || t.includes('buffer') || t.includes('le chatelier')) topic = 'Equilibrium';
+    else if (t.includes('colligative') || t.includes('osmotic') || t.includes('molarity')) topic = 'Solutions';
+    else if (t.includes('enthalpy') || t.includes('entropy')) topic = 'Chemical Thermodynamics';
     return { subject: 'Chemistry', topic, bank_category: 'Chemistry' };
   }
 
-  if (
-    combinedText.includes('chemistry') ||
-    combinedText.includes('reaction') ||
-    combinedText.includes('mole') ||
-    combinedText.includes('stoichiometry') ||
-    combinedText.includes('solution') ||
-    combinedText.includes('thermochemistry') ||
-    combinedText.includes('enthalpy') ||
-    combinedText.includes('entropy')
-  ) {
-    let topic = 'General Chemistry';
-    if (combinedText.includes('solution') || combinedText.includes('colligative')) topic = 'Solutions';
-    else if (combinedText.includes('thermochem') || combinedText.includes('enthalpy') || combinedText.includes('entropy')) topic = 'Thermodynamics';
-    return { subject: 'Chemistry', topic, bank_category: 'Chemistry' };
-  }
+  // ─────────────────────────────────────────────────────────────────────────────
+  // 4. MATHEMATICS
+  // ─────────────────────────────────────────────────────────────────────────────
 
-  // ─── MATHEMATICS ────────────────────────────────────────────────────────────
   if (
-    combinedText.includes('integration') ||
-    combinedText.includes('calculus') ||
-    combinedText.includes('differentiation') ||
-    combinedText.includes('derivative') ||
-    combinedText.includes('limit') ||
-    combinedText.includes('continuity') ||
-    combinedText.includes('differential equation')
+    t.includes('integral') ||
+    t.includes('integration') ||
+    t.includes('differentiat') ||
+    t.includes('derivative') ||
+    t.includes('limit') ||
+    t.includes('continuity') ||
+    t.includes('differential equation')
   ) {
-    let topic = 'Calculus & Integration';
-    if (combinedText.includes('differential equation')) topic = 'Differential Equations';
+    let topic = 'Calculus';
+    if (t.includes('differential equation')) topic = 'Differential Equations';
+    else if (t.includes('integral') || t.includes('integration')) topic = 'Integrals';
+    else if (t.includes('limit') || t.includes('continuity')) topic = 'Limits & Continuity';
+    else if (t.includes('derivative') || t.includes('differentiat')) topic = 'Differentiation';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
   }
 
   if (
-    combinedText.includes('matrix') ||
-    combinedText.includes('determinant') ||
-    combinedText.includes('vector') ||
-    combinedText.includes('three dimensional') ||
-    combinedText.includes('3d geometry') ||
-    combinedText.includes('coordinate geometry') ||
-    combinedText.includes('conic') ||
-    combinedText.includes('parabola') ||
-    combinedText.includes('ellipse') ||
-    combinedText.includes('hyperbola') ||
-    combinedText.includes('straight line') ||
-    combinedText.includes('circle')
+    t.includes('matrix') ||
+    t.includes('matrices') ||
+    t.includes('determinant') ||
+    t.includes('vector') ||
+    t.includes('3d geometry') ||
+    t.includes('three dimensional') ||
+    t.includes('conic') ||
+    t.includes('parabola') ||
+    t.includes('ellipse') ||
+    t.includes('hyperbola') ||
+    t.includes('straight line') ||
+    t.includes('circle')
   ) {
     let topic = 'Coordinate Geometry';
-    if (combinedText.includes('matrix') || combinedText.includes('determinant')) topic = 'Matrices & Determinants';
-    else if (combinedText.includes('vector') || combinedText.includes('3d') || combinedText.includes('three dimensional')) topic = 'Vector Algebra & 3D Geometry';
+    if (t.includes('matrix') || t.includes('matrices') || t.includes('determinant')) topic = 'Matrices & Determinants';
+    else if (t.includes('vector') || t.includes('3d')) topic = 'Vector Algebra & 3D Geometry';
+    else if (t.includes('conic') || t.includes('parabola') || t.includes('ellipse') || t.includes('hyperbola')) topic = 'Conic Sections';
+    else if (t.includes('straight line') || t.includes('circle')) topic = 'Straight Lines & Circles';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
   }
 
   if (
-    combinedText.includes('probability') ||
-    combinedText.includes('statistics') ||
-    combinedText.includes('permutation') ||
-    combinedText.includes('combination') ||
-    combinedText.includes('binomial') ||
-    combinedText.includes('sequence') ||
-    combinedText.includes('series') ||
-    combinedText.includes('progression') ||
-    combinedText.includes('complex number') ||
-    combinedText.includes('trigonometry') ||
-    combinedText.includes('inverse trigonometric') ||
-    combinedText.includes('set theory') ||
-    combinedText.includes('function') ||
-    combinedText.includes('relation')
+    t.includes('probability') ||
+    t.includes('permutation') ||
+    t.includes('combination') ||
+    t.includes('binomial theorem') ||
+    t.includes('complex number') ||
+    t.includes('trigonometr') ||
+    t.includes('sin(') ||
+    t.includes('cos(') ||
+    t.includes('tan(') ||
+    t.includes('sequence') ||
+    t.includes('progression') ||
+    t.includes('arithmetic progression') ||
+    t.includes('geometric progression')
   ) {
     let topic = 'Algebra';
-    if (combinedText.includes('probability')) topic = 'Probability';
-    else if (combinedText.includes('trigonometry') || combinedText.includes('sin') || combinedText.includes('cos')) topic = 'Trigonometry';
-    else if (combinedText.includes('complex number')) topic = 'Complex Numbers';
-    else if (combinedText.includes('permutation') || combinedText.includes('combination')) topic = 'Permutations & Combinations';
-    else if (combinedText.includes('sequence') || combinedText.includes('series') || combinedText.includes('progression')) topic = 'Sequences & Series';
+    if (t.includes('probability')) topic = 'Probability';
+    else if (t.includes('trigonometr') || t.includes('sin(') || t.includes('cos(')) topic = 'Trigonometry';
+    else if (t.includes('complex number')) topic = 'Complex Numbers';
+    else if (t.includes('permutation') || t.includes('combination')) topic = 'Permutations & Combinations';
+    else if (t.includes('sequence') || t.includes('progression')) topic = 'Sequences & Series';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
   }
 
-  if (
-    combinedText.includes('math') ||
-    combinedText.includes('geometry') ||
-    combinedText.includes('algebra')
-  ) {
-    return { subject: 'Mathematics', topic: 'Mathematics', bank_category: 'Mathematics' };
+  return null;
+}
+
+export function inferSubjectAndTopic({ testName = '', syllabus = '', questionText = '', pdfText = '' }) {
+  const qClean = (questionText || '').trim();
+
+  // 1. Explicit chapter / topic tags attached to the question statement (e.g. [Animal Kingdom], [Ray Optics])
+  const explicitTag = matchExplicitTag(qClean);
+  if (explicitTag) {
+    const inferredSub = inferSubjectFromContext(`${explicitTag} ${qClean} ${testName} ${syllabus}`);
+    return {
+      subject: inferredSub !== 'General' ? inferredSub : 'General',
+      topic: explicitTag,
+      bank_category: inferredSub !== 'General' ? inferredSub : 'General'
+    };
   }
 
-  return { subject: 'General', topic: 'General Concepts', bank_category: 'General' };
+  // 2. Classify based strictly on the question's OWN text to avoid contamination from document headers
+  const qTopicMatch = classifyQuestionTopic(qClean);
+  if (qTopicMatch) {
+    return qTopicMatch;
+  }
+
+  // 3. Fallback: Determine overarching subject from test metadata, but NEVER default to Rotational Motion
+  const docSubject = inferSubjectFromContext(`${testName} ${syllabus} ${pdfText}`);
+  const defaultTopic = docSubject !== 'General' ? `${docSubject} (General)` : 'General Concepts';
+
+  return {
+    subject: docSubject,
+    topic: defaultTopic,
+    bank_category: docSubject
+  };
 }

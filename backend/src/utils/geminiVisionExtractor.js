@@ -251,6 +251,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
             questionNumber: { type: Type.INTEGER },
             correctAnswer: { type: Type.STRING },
             explanation: { type: Type.STRING },
+            chapter: { type: Type.STRING },
             sourcePages: {
               type: Type.ARRAY,
               items: { type: Type.INTEGER },
@@ -275,6 +276,18 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
           required: ['questionNumber', 'explanation'],
         },
       },
+      topicGridEntries: {
+        type: Type.ARRAY,
+        items: {
+          type: Type.OBJECT,
+          properties: {
+            questionNumber: { type: Type.INTEGER },
+            topicName: { type: Type.STRING },
+            subject: { type: Type.STRING },
+          },
+          required: ['questionNumber', 'topicName'],
+        },
+      },
     },
     required: ['questions'],
   };
@@ -290,6 +303,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
   const allRawQuestions = [];
   const allRawAnswerKeyEntries = [];
   const allRawSolutions = [];
+  const allRawTopicGridEntries = [];
 
   for (let bIdx = 0; bIdx < batches.length; bIdx++) {
     const batch = batches[bIdx];
@@ -354,6 +368,14 @@ STAGE 3: SOLUTIONS & EXPLANATIONS EXTRACTION:
   3. Extract the complete, detailed explanation text and reasoning into 'explanation'.
   4. Record sourcePages and any diagrams/graphs in 'visualElements' with normalized bounding boxes.
 
+STAGE 4: TOPIC GRID & QUESTION-WISE BLUEPRINT EXTRACTION:
+- Search carefully for any table or grid mapping question numbers to topics (e.g. titled 'Q. No. | Topic Name', 'Question No. | Topic', 'Q.No | Chapter', 'Topic-wise Breakdown', or 'Test Blueprint').
+- NOTE: These tables frequently appear in side-by-side multiple columns (e.g., Q 1-30 on the left, Q 61-80 on the right). Extract ALL rows and columns across the full page!
+- For EVERY row in this table:
+  1. Extract the integer question number into 'questionNumber' under 'topicGridEntries'.
+  2. Extract the exact topic/chapter name as printed (e.g. 'Physics & Measurement', 'Kinematics', 'Some Basic Concepts', 'Atomic Structure', 'Periodicity') into 'topicName'.
+  3. If the question statement is on these pages, also assign this exact topic name directly to that question's 'chapter' field.
+
 Return structured JSON output strictly following the JSON schema.
 ` : `
 You are an expert exam layout analyzer and question extractor for competitive examinations (Physics, Chemistry, Mathematics, Biology, General Aptitude).
@@ -367,10 +389,13 @@ QUESTION PAPER EXTRACTION:
 - Record question numbers (1, 2, 3, Q1, Q14, etc.) as printed in the exam.
 - Extract question text, option texts (A, B, C, D), subject sections (e.g. Physics, Chemistry, Mathematics, Biology), and specific chapter/topic for each question.
 - CRITICAL - CHAPTER EXTRACTION: Look for chapter/topic in ALL of these places:
-  1. Inline tags inside question text like '[Animal Kingdom]', '[Current Electricity]' → extract as chapter.
-  2. Section headers or labels above question groups.
-  3. Infer from keywords in question text (e.g. 'chordate', 'notochord' → 'Animal Kingdom'; 'photosynthesis' → 'Photosynthesis in Higher Plants').
-  4. Provide a specific chapter name. Only use empty string if no chapter context whatsoever.
+  1. Question-wise Topic Grid tables ('Q. No. | Topic Name') - extract every row into 'topicGridEntries' and assign each question's chapter to the matching topic!
+  2. Inline tags inside question text like '[Animal Kingdom]', '[Current Electricity]' → extract as chapter.
+  3. Section headers or labels above question groups.
+  4. Infer from keywords in question text (e.g. 'chordate', 'notochord' → 'Animal Kingdom'; 'photosynthesis' → 'Photosynthesis in Higher Plants').
+  5. Provide a specific chapter name. Only use empty string if no chapter context whatsoever.
+- TOPIC GRID EXTRACTION:
+  * If a topic mapping table ('Q. No. | Topic Name') appears on these pages, extract each row into 'topicGridEntries' with 'questionNumber' and 'topicName'.
 - Record the 1-based page numbers in 'sourcePages'.
 - Handle question continuations across page boundaries seamlessly into a single question.
 - Convert math notation and equations to standard LaTeX ($...$).
@@ -422,12 +447,14 @@ Return structured JSON output strictly following the JSON schema.
         : (Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : []);
       const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
       const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
+      const batchTopicGridEntries = Array.isArray(parsedOutput?.topicGridEntries) ? parsedOutput.topicGridEntries : [];
 
-      console.log(`[PDF Extraction Pipeline] STAGE 3: Questions returned by Batch ${bIdx + 1}/${batches.length} (Pages ${batchStartPage}-${batchEndPage}) = ${batchQuestions.length} question(s)`);
+      console.log(`[PDF Extraction Pipeline] STAGE 3: Questions returned by Batch ${bIdx + 1}/${batches.length} (Pages ${batchStartPage}-${batchEndPage}) = ${batchQuestions.length} question(s), ${batchTopicGridEntries.length} topic mapping(s)`);
 
       allRawQuestions.push(...batchQuestions);
       allRawAnswerKeyEntries.push(...batchAnswerKeyEntries);
       allRawSolutions.push(...batchSolutions);
+      allRawTopicGridEntries.push(...batchTopicGridEntries);
     } catch (batchErr) {
       console.error(`[geminiVisionExtractor] Error processing batch ${bIdx + 1} (pages ${batchStartPage}-${batchEndPage}):`, batchErr.message);
     }
@@ -481,13 +508,6 @@ Return structured JSON output strictly following the JSON schema.
       const existing = questionMap.get(qNum);
       questionMap.set(qNum, mergeQuestionInstances(existing, rawQ));
     }
-  }
-
-  // Sort by question number ascending
-  const rawQuestions = Array.from(questionMap.values()).sort((a, b) => Number(a.questionNumber) - Number(b.questionNumber));
-
-  if (!rawQuestions.length) {
-    throw new Error('Gemini Vision returned no questions across all page batches.');
   }
 
   // Build Answer Key map (QNumber -> CorrectAnswer) from all batches
@@ -545,10 +565,12 @@ Return structured JSON output strictly following the JSON schema.
       }
 
       const existingSol = solutionMap.get(qNum);
+      const solChapter = (sol.chapter && sol.chapter !== 'General' && sol.chapter.trim() !== '') ? sol.chapter.trim() : (existingSol?.chapter || '');
       if (!existingSol) {
         solutionMap.set(qNum, {
           explanation: expText,
           correctAnswer: solCorrect,
+          chapter: solChapter,
           visualElements: Array.isArray(sol.visualElements) ? sol.visualElements : [],
           sourcePages: Array.isArray(sol.sourcePages) ? sol.sourcePages : [],
         });
@@ -559,11 +581,60 @@ Return structured JSON output strictly following the JSON schema.
         solutionMap.set(qNum, {
           explanation: bestExp,
           correctAnswer: solCorrect || existingSol.correctAnswer,
+          chapter: solChapter,
           visualElements: combinedVis,
           sourcePages: combinedPages,
         });
       }
     }
+  }
+
+  // Build Topic Grid map (QNumber -> Topic Name) from all batches
+  const topicGridMap = new Map();
+  for (const entry of allRawTopicGridEntries) {
+    if (entry && entry.questionNumber) {
+      const qNum = typeof entry.questionNumber === 'number'
+        ? entry.questionNumber
+        : parseInt(String(entry.questionNumber).replace(/\D+/g, ''), 10);
+      const topic = String(entry.topicName || entry.chapter || '').trim();
+      if (qNum && !isNaN(qNum) && topic) {
+        topicGridMap.set(qNum, topic);
+      }
+    }
+  }
+
+  // Apply topic grid mappings to questions
+  for (const [qNum, rawQ] of questionMap.entries()) {
+    if (topicGridMap.has(qNum)) {
+      rawQ.chapter = topicGridMap.get(qNum);
+      rawQ.topic = topicGridMap.get(qNum);
+    }
+  }
+
+  const rawQuestions = Array.from(questionMap.values());
+
+  // If document was an Answer Key / Solution / Topic Grid PDF with no separate question statements:
+  if (!rawQuestions.length) {
+    if (answerKeyMap.size > 0 || solutionMap.size > 0 || topicGridMap.size > 0) {
+      console.log(`[geminiVisionExtractor] Standalone Answer Key/Solution/Topic Grid PDF detected: ${answerKeyMap.size} answer key(s), ${solutionMap.size} solution(s), ${topicGridMap.size} topic(s).`);
+      return {
+        questions: [],
+        answerKeyMap: Object.fromEntries(answerKeyMap),
+        solutionMap: Object.fromEntries(solutionMap),
+        topicGridMap: Object.fromEntries(topicGridMap),
+        chaptersMap: Object.fromEntries(topicGridMap),
+        stats: {
+          questionsDetected: 0,
+          questionsExtracted: 0,
+          optionsExtracted: 0,
+          diagramsDetected: 0,
+          explanationsMatched: solutionMap.size,
+          questionsNeedingReview: 0,
+        },
+        warnings: [],
+      };
+    }
+    throw new Error('Gemini Vision returned no questions, answer keys, solutions, or topic grids across all page batches.');
   }
 
   // Step 3: Match Stage & Validation Engine
@@ -761,11 +832,14 @@ Return structured JSON output strictly following the JSON schema.
       warnings.push(...reviewReasons);
     }
 
+    const qTopic = topicGridMap.get(qNum) || ((rawQ.chapter && rawQ.chapter !== 'General' && rawQ.chapter !== 'Unknown') ? rawQ.chapter : '');
+
     // Exact structured JSON output matching user requirements
     finalStructuredQuestions.push({
       questionNumber: qNum,
       subject: rawQ.subject || '',
-      chapter: (rawQ.chapter && rawQ.chapter !== 'General' && rawQ.chapter !== 'Unknown') ? rawQ.chapter : '',
+      chapter: qTopic,
+      topic: qTopic,
 
       question: {
         text: cleanQText,
@@ -810,11 +884,16 @@ Return structured JSON output strictly following the JSON schema.
     optionsExtracted: totalOptionsCount,
     diagramsDetected: totalDiagramsCount,
     explanationsMatched: totalExplanationsMatchedCount,
+    topicMappingsDetected: topicGridMap.size,
     questionsNeedingReview: questionsNeedingReviewCount,
   };
 
   return {
     questions: finalStructuredQuestions,
+    answerKeyMap: Object.fromEntries(answerKeyMap),
+    solutionMap: Object.fromEntries(solutionMap),
+    topicGridMap: Object.fromEntries(topicGridMap),
+    chaptersMap: Object.fromEntries(topicGridMap),
     stats,
     warnings,
   };

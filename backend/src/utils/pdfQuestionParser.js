@@ -117,10 +117,23 @@ export function parsePdfQuestions(text) {
       }
     }
 
-    // Clean question text (strip embedded Marks/Time lines and leading subject tag)
+    // Extract Chapter/Topic if present: e.g. [Animal Kingdom], [Current Electricity], Chapter: Electrostatics, Topic: Kinematics
+    let chapter = null;
+    const bracketMatch = body.match(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/);
+    if (bracketMatch) {
+      chapter = bracketMatch[1].trim();
+    } else {
+      const chMatch = body.match(/(?:Chapter|Topic|Unit)\s*[:\-]\s*([A-Za-z0-9\s,&'\-\/]{2,80})(?:\n|$)/i);
+      if (chMatch) {
+        chapter = chMatch[1].trim();
+      }
+    }
+
+    // Clean question text (strip embedded Marks/Time lines, leading subject tag, and chapter tags)
     let cleanQText = mainText
       .replace(/Marks:\s*[^\n]+/gi, '')
       .replace(/Time:\s*[^\n]+/gi, '')
+      .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
       .replace(/\s+/g, ' ')
       .trim();
 
@@ -144,6 +157,8 @@ export function parsePdfQuestions(text) {
         correct_index: inlineCorrectIndex,
         marks,
         bank_category: category,
+        chapter: chapter || null,
+        topic: chapter || null,
         solution: inlineSolution,
         needs_review: needsReview,
         review_reason: needsReview ? `Question ${qNum}: Option text could not be automatically separated. Please review manually.` : null
@@ -153,46 +168,113 @@ export function parsePdfQuestions(text) {
 
   // Parse Answer Key & Explanations if available at end of document
   if (answerKeyPart && questions.length > 0) {
-    const keyMap = parseAnswerKeyOnly(answerKeyPart);
-
-    // Extract solutions from Hints & Solutions section
-    const solMap = new Map();
-    const solutionBlocks = answerKeyPart.split(/(?=\n?\s*(?:Q|Question\s*)?\d+[\.\)\:\-])/gi);
-
-    for (const sBlock of solutionBlocks) {
-      const sMatch = sBlock.match(/^\s*(?:Q|Question\s*)?(\d+)[\.\)\:\-]\s*([\s\S]+)/i);
-      if (!sMatch) continue;
-
-      const qNum = parseInt(sMatch[1], 10);
-      const sBody = sMatch[2].trim();
-
-      // Skip single-letter lines like "A" or "1. A" if they are just answer keys
-      if (/^[A-D1-4]\s*$/i.test(sBody)) continue;
-
-      let expText = '';
-      const expMatch = sBody.match(/(?:Explanation|Solution|Sol|Hint):\s*([\s\S]+)/i);
-      if (expMatch) {
-        expText = expMatch[1].trim();
-      } else {
-        expText = sBody.replace(/^(?:Correct Answer|Answer|Ans):\s*(?:\(|\[)?[A-D1-4](?:\)|\])?/gi, '').trim();
-      }
-
-      if (expText && expText.length > 2 && !/^[A-D1-4]$/i.test(expText)) {
-        solMap.set(qNum, expText);
-      }
-    }
+    const { answerKeyMap, solutionsMap, chaptersMap } = parseAnswerKeyAndSolutions(answerKeyPart);
 
     for (const q of questions) {
-      if (keyMap[q.num] !== undefined) {
-        q.correct_index = keyMap[q.num];
+      if (answerKeyMap[q.num] !== undefined) {
+        q.correct_index = answerKeyMap[q.num];
       }
-      if (solMap.has(q.num)) {
-        q.solution = solMap.get(q.num);
+      if (solutionsMap[q.num]) {
+        q.solution = solutionsMap[q.num];
+      }
+      if (chaptersMap[q.num]) {
+        q.chapter = chaptersMap[q.num];
+        q.topic = chaptersMap[q.num];
+      }
+    }
+  }
+
+  // Also parse any Question vs Topic mapping grid in the entire document (e.g., 'Q. No. | Topic Name')
+  const docTopicGrid = parseTopicGrid(cleanText);
+  if (Object.keys(docTopicGrid).length > 0) {
+    for (const q of questions) {
+      if (docTopicGrid[q.num]) {
+        q.chapter = docTopicGrid[q.num];
+        q.topic = docTopicGrid[q.num];
       }
     }
   }
 
   return questions;
+}
+
+/**
+ * Extracts Answer Key mappings, Explanations/Solutions, and Chapter/Topic tags
+ * from standalone Answer Key & Hints/Solutions text or PDF sections.
+ * Returns: { answerKeyMap, solutionsMap, chaptersMap, topicGridMap }
+ */
+export function parseAnswerKeyAndSolutions(text) {
+  if (!text || typeof text !== 'string') return { answerKeyMap: {}, solutionsMap: {}, chaptersMap: {}, topicGridMap: {} };
+
+  const answerKeyMap = parseAnswerKeyOnly(text);
+  const solutionsMap = {};
+  const chaptersMap = {};
+
+  const cleanText = text.replace(/\r\n/g, '\n');
+
+  // Also parse any question-topic grid tables inside the text
+  const topicGrid = parseTopicGrid(cleanText);
+  Object.assign(chaptersMap, topicGrid);
+  const solutionBlocks = cleanText.split(/(?=(?:^|\n)\s*(?:Q|Question\s*)?\d+[\.\)\:\-]\s+)/gi);
+
+  for (const sBlock of solutionBlocks) {
+    const sMatch = sBlock.match(/(?:^|\n)\s*(?:Q|Question\s*)?(\d+)[\.\)\:\-]\s*([\s\S]+)/i);
+    if (!sMatch) continue;
+
+    const qNum = parseInt(sMatch[1], 10);
+    const sBody = sMatch[2].trim();
+
+    // Check for chapter or topic tag in this solution block (e.g., [Current Electricity], Chapter: Animal Kingdom)
+    const bMatch = sBody.match(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/);
+    if (bMatch) {
+      chaptersMap[qNum] = bMatch[1].trim();
+    } else {
+      const chMatch = sBody.match(/(?:Chapter|Topic|Unit)\s*[:\-]\s*([A-Za-z0-9\s,&'\-\/]{2,80})(?:\n|$)/i);
+      if (chMatch) {
+        chaptersMap[qNum] = chMatch[1].trim();
+      }
+    }
+
+    // Skip single-letter lines like "A" or "1. A" if they are just answer keys
+    if (/^[A-D1-4]\s*$/i.test(sBody)) continue;
+
+    // Check if the solution block has an answer letter like "(B)" or "Ans: B" or "Option 2"
+    if (answerKeyMap[qNum] === undefined) {
+      const ansMatch = sBody.match(/(?:Correct\s*Answer|Answer|Ans|Option)?\s*[:\.\-–—]?\s*[\(\[]?([A-Da-d1-4])[\)\]]?/i);
+      if (ansMatch) {
+        const letter = ansMatch[1].toUpperCase();
+        if (['A', 'B', 'C', 'D'].includes(letter)) {
+          answerKeyMap[qNum] = letter.charCodeAt(0) - 65;
+        } else if (['1', '2', '3', '4'].includes(letter)) {
+          answerKeyMap[qNum] = parseInt(letter, 10) - 1;
+        }
+      }
+    }
+
+    let expText = '';
+    const expMatch = sBody.match(/(?:Explanation|Solution|Sol|Hint):\s*([\s\S]+)/i);
+    if (expMatch) {
+      expText = expMatch[1].trim();
+    } else {
+      expText = sBody
+        .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
+        .replace(/(?:Chapter|Topic|Unit)\s*[:\-]\s*[^\n]+(?:\n|$)/gi, '')
+        .replace(/^\s*(?:Correct\s*Answer|Answer|Ans|Option)?\s*[:\.\-–—]?\s*[\(\[]?[A-Da-d1-4][\)\]]?\s*[:\.\-–—]?\s*/i, '')
+        .trim();
+    }
+
+    // Clean any bracket tag leftovers and chapter headers from explanation text
+    expText = expText
+      .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
+      .replace(/(?:Chapter|Topic|Unit)\s*[:\-]\s*[^\n]+(?:\n|$)/gi, '')
+      .trim();
+
+    if (expText && expText.length > 2 && !/^[A-D1-4]$/i.test(expText)) {
+      solutionsMap[qNum] = expText;
+    }
+  }
+
+  return { answerKeyMap, solutionsMap, chaptersMap, topicGridMap: chaptersMap };
 }
 
 /**
@@ -242,3 +324,57 @@ export function parseAnswerKeyOnly(text) {
 
   return keyMap;
 }
+
+/**
+ * Parses question-to-topic mapping tables (e.g., "Q. No. | Topic Name", "Question No. | Topic", etc.)
+ * Handles both single-column and multi-column side-by-side tables.
+ * Returns a map: { [qNum]: topicName }
+ */
+export function parseTopicGrid(text) {
+  if (!text || typeof text !== 'string') return {};
+  const topicMap = {};
+
+  const cleanText = text.replace(/\r\n/g, '\n');
+  const lines = cleanText.split('\n');
+
+  let inTopicGrid = false;
+
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line) continue;
+
+    // Detect header of topic grid table
+    if (/(?:Q(?:uestion)?\.?\s*No\.?|Question)\s*(?:[\t\|,]|\s{2,})\s*(?:Topic(?:\s*Name)?|Chapter(?:\s*Name)?|Unit)/i.test(line)) {
+      inTopicGrid = true;
+      continue;
+    }
+
+    // If another major section starts, leave topic grid
+    if (inTopicGrid && /^(?:SECTION|PART|INSTRUCTIONS|TEST|QUESTION\s*PAPER)\b/i.test(line)) {
+      inTopicGrid = false;
+      continue;
+    }
+
+    // Match row pattern(s): e.g. "1   Physics & Measurement", "1 | Physics & Measurement"
+    // Also matches multiple columns on same line: "1  Physics & Measurement    61  Some Basic Concepts"
+    const rowMatches = [...line.matchAll(/(?:^|[\t\|]|\s{2,})(?:Q\.?\s*)?(\d{1,3})\s*(?:[\t\|:\-]\s*|\s{2,})([A-Za-z0-9&'\-\/,()]+(?:\s[A-Za-z0-9&'\-\/,()]+)*)/g)];
+    if (rowMatches.length > 0) {
+      for (const match of rowMatches) {
+        const qNum = parseInt(match[1], 10);
+        const topic = match[2].trim();
+        // Ignore single-character option letters, marks, or headers
+        if (
+          qNum > 0 &&
+          topic.length >= 3 &&
+          !/^[A-D1-4]$/i.test(topic) &&
+          !/^(?:Marks|Time|Page|Section|Question|Topic|Q\.?\s*No)\b/i.test(topic)
+        ) {
+          topicMap[qNum] = topic;
+        }
+      }
+    }
+  }
+
+  return topicMap;
+}
+
