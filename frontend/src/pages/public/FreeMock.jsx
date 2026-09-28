@@ -62,13 +62,6 @@ export default function FreeMock() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  const examId = EXAM_NAV_ITEMS.some((e) => e.id === searchParams.get('exam'))
-    ? searchParams.get('exam')
-    : 'jee';
-
-  const activeExam = EXAM_NAV_ITEMS.find((e) => e.id === examId) || EXAM_NAV_ITEMS[0];
-  const theme = EXAM_THEMES[examId] || EXAM_THEMES.jee;
-
   const fetchSeries = () => {
     setLoading(true);
     setError(false);
@@ -83,9 +76,32 @@ export default function FreeMock() {
     fetchSeries();
   }, []);
 
+  // Determine default exam: if URL has ?exam=..., respect it.
+  // Otherwise, default dynamically to the exam track that contains the latest uploaded test!
+  const defaultExamId = useMemo(() => {
+    const free = series.filter((s) => Number(s.price) === 0);
+    if (!free.length) return 'neet';
+    const sorted = [...free].sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+    const latest = sorted[0];
+    if (seriesMatchesExam(latest, 'neet')) return 'neet';
+    if (seriesMatchesExam(latest, 'jee')) return 'jee';
+    if (seriesMatchesExam(latest, 'neetpg')) return 'neetpg';
+    return 'neet';
+  }, [series]);
+
+  const rawExamParam = searchParams.get('exam');
+  const examId = EXAM_NAV_ITEMS.some((e) => e.id === rawExamParam)
+    ? rawExamParam
+    : defaultExamId;
+
+  const activeExam = EXAM_NAV_ITEMS.find((e) => e.id === examId) || EXAM_NAV_ITEMS[0];
+  const theme = EXAM_THEMES[examId] || EXAM_THEMES.jee;
+
   const freeForExam = useMemo(() => {
     const free = series.filter((s) => Number(s.price) === 0);
-    return free.filter((s) => seriesMatchesExam(s, examId));
+    return free
+      .filter((s) => seriesMatchesExam(s, examId))
+      .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
   }, [series, examId]);
 
   const getTabStyle = (id) => {

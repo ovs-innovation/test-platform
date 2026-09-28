@@ -144,13 +144,13 @@ export function getSeriesBannerImage(series) {
 
   // 2. AIETS / STANDARD TEST SERIES
   if (isNeet) {
-    if (free && /diagnostic|free\s*mock/i.test(text)) return '/edvedum/banners/banner-free-mock.png';
+    if (free) return '/edvedum/banners/banner-free-mock.png';
     if (isRepeater) return '/edvedum/banners/banner-neet-bio.png';
     return '/edvedum/banners/banner-neet-mock.png';
   }
 
   if (isJee) {
-    if (free && /diagnostic|free\s*mock/i.test(text)) return '/edvedum/banners/banner-free-mock.png';
+    if (free) return '/edvedum/banners/banner-free-mock.png';
     if (isRepeater) return '/edvedum/banners/banner-jee-male2.png';
     return '/edvedum/banners/banner-jee-full.png';
   }

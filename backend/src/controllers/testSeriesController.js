@@ -1,6 +1,7 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { delCache } from '../config/redis.js';
 
 const slugify = (t) =>
   t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 200);
@@ -130,6 +131,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       detectedTargetClass,
     ]
   );
+  await delCache('cache:public_test_series:*').catch(() => {});
   res.status(201).json({ test_series: result.rows[0] });
 });
 
@@ -149,6 +151,7 @@ export const updateTestSeries = asyncHandler(async (req, res) => {
     values
   );
   if (!result.rowCount) throw ApiError.notFound('Test series not found');
+  await delCache('cache:public_test_series:*').catch(() => {});
   res.json({ test_series: result.rows[0] });
 });
 
@@ -198,6 +201,7 @@ export const deleteTestSeries = asyncHandler(async (req, res) => {
     if (!result.rowCount) throw ApiError.notFound('Test series not found');
   });
 
+  await delCache('cache:public_test_series:*').catch(() => {});
   res.json({ message: 'Test series permanently deleted' });
 });
 
@@ -228,6 +232,7 @@ export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
   );
   if (!result.rowCount) throw ApiError.notFound('Test series not found');
 
+  await delCache('cache:public_test_series:*').catch(() => {});
   res.json({
     message: `Test series ${result.rows[0].is_active ? 'activated' : 'deactivated'} successfully`,
     test_series: result.rows[0],

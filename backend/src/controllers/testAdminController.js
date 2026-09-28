@@ -46,11 +46,74 @@ export async function sendStudentAssignmentNotifications(testId, testName, assig
 }
 import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
+import { delCache } from '../config/redis.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
-import { formatQuestionStructure, stripHeadersAndFooters } from '../utils/questionFormatter.js';
+
+export async function syncFreeTestSeries(test) {
+  if (!test) return;
+  try {
+    const isFree = /free|diagnostic/i.test(`${test.test_name || ''} ${test.title || ''} ${test.test_type || ''}`);
+    if (!isFree) return;
+    const name = test.test_name || test.title;
+    const slug = name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 150);
+    const examType = /jee/i.test(`${test.test_type} ${name}`) ? 'JEE' : (/neet\s*pg|pg\s*neet/i.test(`${test.test_type} ${name}`) ? 'NEET PG' : 'NEET');
+    const isActive = Boolean(test.is_published && !test.is_deleted);
+
+    const existing = await query(
+      'SELECT id FROM test_series WHERE slug = $1 OR id IN (SELECT series_id FROM test_series_tests WHERE test_id = $2)',
+      [slug, test.id]
+    );
+
+    let seriesId;
+    if (existing.rowCount > 0) {
+      seriesId = existing.rows[0].id;
+      await query(
+        `UPDATE test_series SET
+          title = $1,
+          is_active = $2,
+          updated_at = NOW()
+         WHERE id = $3`,
+        [name, isActive, seriesId]
+      );
+    } else {
+      const res = await query(
+        `INSERT INTO test_series (
+          title, slug, description, price, validity_days, exam_type, test_count,
+          planned_tests, is_active, is_featured, is_free, display_order,
+          target_class, target_year, program_type, created_at, updated_at
+        ) VALUES (
+          $1, $2,
+          $3,
+          0.00, 365, $4, 1, 1, $5, true, true, 0,
+          'Class 12', '2027', 'One Year', COALESCE($6, NOW()), NOW()
+        ) RETURNING id`,
+        [
+          name,
+          slug,
+          test.syllabus || 'Full-length authentic CBT format diagnostic mock test with live countdown timer, question palette, and instant All India Rank.',
+          examType,
+          isActive,
+          test.created_at || new Date()
+        ]
+      );
+      seriesId = res.rows[0].id;
+    }
+
+    await query(
+      `INSERT INTO test_series_tests (series_id, test_id)
+       VALUES ($1, $2)
+       ON CONFLICT DO NOTHING`,
+      [seriesId, test.id]
+    );
+
+    await delCache('cache:public_test_series:*').catch(() => {});
+  } catch (err) {
+    console.warn('[syncFreeTestSeries error]', err.message);
+  }
+}
 
 /**
  * 1. GET /api/admin/tests
@@ -170,6 +233,8 @@ export const createTest = asyncHandler(async (req, res) => {
     return createdTest;
   });
 
+  syncFreeTestSeries(test).catch(() => {});
+
   res.status(201).json({ test });
 });
 
@@ -283,6 +348,10 @@ export const updateTest = asyncHandler(async (req, res) => {
     ]
   );
 
+  if (result.rows[0]) {
+    syncFreeTestSeries(result.rows[0]).catch(() => {});
+  }
+
   res.json({ test: result.rows[0] });
 });
 
@@ -299,10 +368,14 @@ export const deleteTest = asyncHandler(async (req, res) => {
   if (hasAttempts) {
     // Soft delete to preserve student attempt records
     await query('UPDATE tests SET is_deleted = TRUE, is_published = FALSE WHERE id = $1', [id]);
+    await query('UPDATE test_series SET is_active = FALSE WHERE id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1) AND price = 0', [id]).catch(() => {});
+    await delCache('cache:public_test_series:*').catch(() => {});
     return res.json({ message: 'Test contains student attempt records and has been soft-deleted/archived.', id, soft_deleted: true });
   } else {
     // Hard delete
+    await query('DELETE FROM test_series WHERE price = 0 AND id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1)', [id]).catch(() => {});
     await query('DELETE FROM tests WHERE id = $1', [id]);
+    await delCache('cache:public_test_series:*').catch(() => {});
     return res.json({ message: 'Test deleted permanently.', id, soft_deleted: false });
   }
 });
@@ -316,11 +389,15 @@ export const togglePublishTest = asyncHandler(async (req, res) => {
   const { is_published } = req.body;
 
   const result = await query(
-    'UPDATE tests SET is_published = $1 WHERE id = $2 RETURNING id, test_name, is_published',
+    'UPDATE tests SET is_published = $1 WHERE id = $2 RETURNING *',
     [Boolean(is_published), id]
   );
 
   if (result.rowCount === 0) throw ApiError.notFound('Test not found');
+
+  if (result.rows[0]) {
+    syncFreeTestSeries(result.rows[0]).catch(() => {});
+  }
 
   res.json({
     message: `Test is now ${result.rows[0].is_published ? 'Published' : 'Unpublished'}.`,
