@@ -52,7 +52,7 @@ export default function EdvedumHero() {
       <div
         className="hidden md:block absolute inset-0 bg-no-repeat opacity-100 transition-all duration-700 pointer-events-none z-[1]"
         style={{
-          backgroundImage: "url('/edvedum/opt.png?v=6')",
+          backgroundImage: "url('/edvedum/opt.png?v=10')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
           filter: 'drop-shadow(0 20px 35px rgba(2, 27, 62, 0.95)) drop-shadow(0 0 30px rgba(4, 8, 98, 0.14))',
@@ -61,6 +61,20 @@ export default function EdvedumHero() {
         }}
         aria-hidden="true"
       />
+
+      {/* 1.5 CENTER-LEFT FLOATING EDVEDUM ACADEMY EMBLEM */}
+      <motion.div
+        initial={{ opacity: 0, y: -10, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+        className="hidden md:flex absolute left-[41%] lg:left-[43%] xl:left-[45%] -translate-x-1/2 top-2 md:top-3 lg:top-3.5 xl:top-4 z-[3] pointer-events-none select-none flex-col items-center"
+      >
+        <img
+          src="/edvedum/banner-logo.png?v=3"
+          alt="EDVEDUM ACADEMY - Empowering Future Doctors & Engineers"
+          className="w-[160px] md:w-[175px] lg:w-[195px] xl:w-[220px] h-auto drop-shadow-[0_16px_35px_rgba(2,11,24,0.95)]"
+        />
+      </motion.div>
 
       {/* 2. SOFT BOTTOM & RIGHT EDGE MASKS FOR SMOOTH SEAMLESS BOUNDARIES */}
       <div
@@ -134,10 +148,18 @@ export default function EdvedumHero() {
             }}
           >
             <img
-              src="/edvedum/opt.png?v=6"
+              src="/edvedum/opt.png?v=10"
               alt="EDVEDUM student using CBT mock tests on laptop and mobile"
               className="w-full h-auto block object-contain object-center border-none rounded-none"
             />
+            {/* Mobile Logo placed above laptop in open space */}
+            <div className="absolute top-2 left-4 sm:left-6 w-24 sm:w-28 h-auto pointer-events-none">
+              <img
+                src="/edvedum/banner-logo.png?v=3"
+                alt="EDVEDUM Academy"
+                className="w-full h-auto drop-shadow-md"
+              />
+            </div>
             {/* Seamless multi-stop bottom fade blending 100% smoothly into #020b18 */}
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-b from-transparent via-[#020b18]/60 via-[#020b18]/90 to-[#020b18] pointer-events-none" />
           </motion.div>
