@@ -114,38 +114,47 @@ const THEMES = {
 
 export function getSeriesBannerImage(series) {
   const custom = series?.image_url?.trim();
-  if (custom && custom !== '/edvedum/banners/banner-free-mock.png') return custom;
+  if (custom && custom !== '/edvedum/banners/banner-free-mock.png' && !custom.includes('banner-free-mock')) return custom;
 
   const slug = (series?.slug || '').toLowerCase();
-  const text = `${series?.slug || ''} ${series?.title || ''} ${series?.exam_type || ''}`.toLowerCase();
+  const title = (series?.title || '').toLowerCase();
+  const text = `${slug} ${title} ${series?.exam_type || ''}`.toLowerCase();
   const free = Number(series?.price) === 0 || Boolean(series?.is_free);
 
-  // Specific Slug Mappings for Maximum Visual Diversity (Boys & Girls)
-  if (slug === 'aiets-jee-main-2027-comprehensive') return '/edvedum/banners/banner-jee-full.png';
-  if (slug === 'aiets-jee-main-2028-two-year') return '/edvedum/banners/banner-jee-female.png';
-  if (slug === 'aiets-jee-main-mock-pack') return '/edvedum/banners/banner-jee-male2.png';
+  const isPersonalised = /personali[sz]ed/i.test(`${title} ${slug}`);
+  const isNeet = /neet/i.test(text);
+  const isJee = /jee/i.test(text);
+  const isRepeater = /repeater|rm|dropper/i.test(`${title} ${slug} ${series?.program_type || ''}`);
+  const isTwoYear = /two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12/i.test(`${title} ${slug}`) || String(series?.target_year || '').trim() === '2028';
 
-  if (slug === 'neet-ug-2027-aiets-comprehensive-test-series') return '/edvedum/banners/banner-neet-mock.png';
-  if (slug === 'aiets-neet-ug-2028-two-year-online-cbt-program') return '/edvedum/banners/banner-neet-male.png';
-  if (slug === 'neet-ug-mock') return '/edvedum/banners/banner-neet-bio.png';
+  // 1. PERSONALISED TEST SERIES (Distinct, premium imagery with modern tablets and mentorship)
+  if (isPersonalised) {
+    if (isNeet) {
+      if (isTwoYear) return '/edvedum/banners/banner-personalized-neet.jpg';
+      if (isRepeater) return '/edvedum/banners/banner-neet-male.png';
+      return '/edvedum/banners/banner-neet-bio.png'; // Class 12
+    }
+    if (isJee) {
+      if (isTwoYear) return '/edvedum/banners/banner-personalized-jee.jpg';
+      if (isRepeater) return '/edvedum/banners/banner-personalized-repeater.jpg';
+      return '/edvedum/banners/banner-jee-female.png'; // Class 12
+    }
+    return '/edvedum/banners/banner-premium-series.png';
+  }
 
-  if (slug === 'aiets-neet-pg-2027-comprehensive') return '/edvedum/banners/banner-neet-pg.png';
-  if (slug === 'aiets-neet-pg-complete-program') return '/edvedum/banners/banner-neetpg-female.png';
-  if (slug === 'neet-pg-mock') return '/edvedum/banners/banner-neet-pg.png';
+  // 2. AIETS / STANDARD TEST SERIES
+  if (isNeet) {
+    if (free && /diagnostic|free\s*mock/i.test(text)) return '/edvedum/banners/banner-free-mock.png';
+    if (isRepeater) return '/edvedum/banners/banner-neet-bio.png';
+    return '/edvedum/banners/banner-neet-mock.png';
+  }
 
-  if (slug === 'jee-main-diagnostic-free') return '/edvedum/banners/banner-free-mock.png';
-  if (slug === 'neet-ug-diagnostic-free') return '/edvedum/banners/banner-neet-bio.png';
-  if (slug === 'neet-pg-clinical-free') return '/edvedum/banners/banner-neetpg-female.png';
+  if (isJee) {
+    if (free && /diagnostic|free\s*mock/i.test(text)) return '/edvedum/banners/banner-free-mock.png';
+    if (isRepeater) return '/edvedum/banners/banner-jee-male2.png';
+    return '/edvedum/banners/banner-jee-full.png';
+  }
 
-  if (text.includes('physics')) return '/edvedum/banners/banner-jee-physics.png';
-  if (text.includes('biology') || text.includes('chemistry') || text.includes('ncert')) return '/edvedum/banners/banner-neet-bio.png';
-  if (isNeetPg(text)) return '/edvedum/banners/banner-neet-pg.png';
-  if (isNeetUg(text) && free) return '/edvedum/banners/banner-free-mock.png';
-  if (isNeetUg(text)) return '/edvedum/banners/banner-neet-mock.png';
-  if (text.includes('jee') && free) return '/edvedum/banners/banner-free-mock.png';
-  if (text.includes('jee')) return '/edvedum/banners/banner-jee-full.png';
-  if (/foundation|class\s*[5-9]|class\s*1[0-2]|\b12\b/.test(text)) return '/edvedum/banners/banner-foundation.png';
-  if (text.includes('aptitude') || text.includes('reasoning') || text.includes('logic')) return '/edvedum/banners/banner-aptitude.png';
   if (free) return '/edvedum/banners/banner-free-mock.png';
   return '/edvedum/banners/banner-premium-series.png';
 }
