@@ -14,7 +14,7 @@ const withCache = (key, fetcher, ttlMs = 60000) => {
     if (now - cached.timestamp > 3000) {
       fetcher()
         .then((data) => cache.set(key, { data, timestamp: Date.now() }))
-        .catch(() => {});
+        .catch(() => { });
     }
     return Promise.resolve(cached.data);
   }
@@ -48,7 +48,7 @@ export const authService = {
           try {
             const savedSt = localStorage.getItem('edvedum_active_student');
             if (savedSt) studentObj = JSON.parse(savedSt);
-          } catch (_) {}
+          } catch (_) { }
 
           return {
             pending: [
@@ -542,14 +542,14 @@ export const institutionDashboardService = {
   login: (data) => api.post('/institution/login', data).then((r) => r.data),
   profile: (instId) => api.get(`/institution/${instId}/profile`).then((r) => r.data),
   updateProfile: (instId, data) => api.put(`/institution/${instId}/profile`, data).then((r) => r.data),
-  
+
   students: (instId, params) => api.get(`/institution/${instId}/students`, { params }).then((r) => r.data),
   addStudent: (instId, data) => api.post(`/institution/${instId}/students`, data).then((r) => r.data),
   updateStudent: (instId, studentId, data) => api.put(`/institution/${instId}/students/${studentId}`, data).then((r) => r.data),
   toggleBlockStudent: (instId, studentId, isBlocked) => api.put(`/institution/${instId}/students/${studentId}/block`, { is_blocked: isBlocked }).then((r) => r.data),
   deleteStudent: (instId, studentId) => api.delete(`/institution/${instId}/students/${studentId}`).then((r) => r.data),
   moveBatch: (instId, data) => api.post(`/institution/${instId}/students/move-batch`, data).then((r) => r.data),
-  
+
   bulkUpload: (instId, rows) => api.post(`/institution/${instId}/students/bulk-upload`, { rows }).then((r) => r.data),
   regenerateCredentials: (instId, studentId) => api.post(`/institution/${instId}/students/${studentId}/regenerate-credentials`).then((r) => r.data),
 
@@ -563,17 +563,17 @@ export const institutionDashboardService = {
   removeStudentFromBatch: (instId, batchId, studentId) => api.delete(`/institution/${instId}/batches/${batchId}/students/${studentId}`).then((r) => r.data),
   batchTestSeries: (instId, batchId) => api.get(`/institution/${instId}/batches/${batchId}/test-series`).then((r) => r.data),
   batchPerformance: (instId, batchId) => api.get(`/institution/${instId}/batches/${batchId}/performance`).then((r) => r.data),
-  
+
   availableTestSeries: (instId) => api.get(`/institution/${instId}/test-series`).then((r) => r.data),
   availableTests: (instId) => api.get(`/institution/${instId}/available-tests`).then((r) => r.data),
   assignTest: (instId, testId, data) => api.post(`/institution/${instId}/tests/${testId}/assign`, data).then((r) => r.data),
-  
+
   availableEbooks: (instId) => api.get(`/institution/${instId}/available-ebooks`).then((r) => r.data),
   createEbook: (instId, data) => api.post(`/institution/${instId}/ebooks`, data).then((r) => r.data),
   assignEbook: (instId, ebookId, data) => api.post(`/institution/${instId}/ebooks/${ebookId}/assign`, data).then((r) => r.data),
   unassignEbook: (instId, ebookId, assignmentId) => api.delete(`/institution/${instId}/ebooks/${ebookId}/assign/${assignmentId}`).then((r) => r.data),
   deleteEbook: (instId, ebookId) => api.delete(`/institution/${instId}/ebooks/${ebookId}`).then((r) => r.data),
-  
+
   studentProgress: (instId, studentId) => api.get(`/institution/${instId}/students/${studentId}/progress`).then((r) => r.data),
   analytics: (instId) => api.get(`/institution/${instId}/analytics`).then((r) => r.data),
   rankings: (instId, params) => api.get(`/institution/${instId}/rankings`, { params }).then((r) => r.data),
@@ -608,7 +608,7 @@ export const institutionReportsService = {
           const text = await err.response.data.text();
           const json = JSON.parse(text);
           throw new Error(json.message || json.error || 'Failed to download report.');
-        } catch (_) {}
+        } catch (_) { }
       }
       throw err;
     }
@@ -633,7 +633,7 @@ export const studentReportService = {
   askAIDoubt: (data) => api.post('/student/doubt-solver', data).then((r) => r.data),
   askAIDoubtStream: async (data, onToken) => {
     const baseURL = import.meta.env.VITE_API_URL || '/api';
-    
+
     try {
       const response = await fetch(`${baseURL}/student/doubt-solver?stream=true`, {
         method: 'POST',
@@ -671,7 +671,7 @@ export const studentReportService = {
                 fullText += parsed.token;
                 if (onToken) onToken(parsed.token, fullText);
               }
-            } catch (_) {}
+            } catch (_) { }
           }
         }
       }

@@ -230,16 +230,18 @@ export const getInstitutionAnalytics = asyncHandler(async (_req, res) => {
       u.email AS student_email,
       sp.city,
       sp.target_exam,
+      COALESCE(i.name, 'Independent') AS institution_name,
       COUNT(at.id)::int AS total_attempts,
       COUNT(at.id) FILTER (WHERE at.submitted_at IS NOT NULL)::int AS completed_attempts,
       COALESCE(ROUND(AVG(s.percentage), 2), 0) AS avg_percentage,
       COUNT(s.id) FILTER (WHERE s.passed)::int AS total_passed
     FROM users u
     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+    LEFT JOIN institutions i ON i.id = u.institution_id
     LEFT JOIN attempts at ON at.candidate_id = u.id
     LEFT JOIN scores s ON s.attempt_id = at.id
     WHERE u.role = 'candidate'
-    GROUP BY u.id, u.name, u.email, sp.city, sp.target_exam
+    GROUP BY u.id, u.name, u.email, sp.city, sp.target_exam, i.name
     ORDER BY avg_percentage DESC;
   `);
 
@@ -250,6 +252,7 @@ export const getInstitutionAnalytics = asyncHandler(async (_req, res) => {
     }
   });
 });
+
 
 export const getAttemptReport = asyncHandler(async (req, res) => {
   const { id } = req.params;

@@ -727,6 +727,7 @@ export default function AdminTestManager() {
                   <tr>
                     <th className="py-3 px-4">Student Name</th>
                     <th className="py-3 px-4">Email</th>
+                    <th className="py-3 px-4">Institution</th>
                     <th className="py-3 px-4">Exam Target</th>
                     <th className="py-3 px-4">Attempts Completed</th>
                     <th className="py-3 px-4">Average Score</th>
@@ -734,9 +735,23 @@ export default function AdminTestManager() {
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                   {institutionAnalytics.map((st) => (
-                    <tr key={st.student_id}>
+                    <tr key={st.student_id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition">
                       <td className="py-3 px-4 font-bold text-slate-900 dark:text-white">{st.student_name}</td>
                       <td className="py-3 px-4 text-slate-500">{st.student_email}</td>
+                      <td className="py-3 px-4">
+                        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold ${
+                          st.institution_name && st.institution_name !== 'Independent'
+                            ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800'
+                            : 'bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700'
+                        }`}>
+                          <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${
+                            st.institution_name && st.institution_name !== 'Independent'
+                              ? 'bg-blue-500'
+                              : 'bg-slate-400'
+                          }`} />
+                          {st.institution_name || 'Independent'}
+                        </span>
+                      </td>
                       <td className="py-3 px-4 font-bold text-blue-600">{st.target_exam || 'JEE / NEET'}</td>
                       <td className="py-3 px-4 font-bold">{st.completed_attempts}</td>
                       <td className="py-3 px-4 font-black text-emerald-600">{st.avg_percentage}%</td>

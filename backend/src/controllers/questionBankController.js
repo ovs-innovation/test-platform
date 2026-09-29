@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 import { rememberCache, delCache } from '../config/redis.js';
+import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 
 const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
 
@@ -143,7 +144,27 @@ export const importToAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createBankQuestion = asyncHandler(async (req, res) => {
-  const { category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url } = req.body;
+  const payload = normalizeQuestionBankPayload(req.body);
+  const {
+    category,
+    question_type,
+    question_text,
+    options,
+    correct_index,
+    correct_indices,
+    numeric_answer,
+    numerical_tolerance,
+    assertion_text,
+    reason_text,
+    marks,
+    solution,
+    subject_id,
+    chapter_id,
+    difficulty,
+    image_url,
+    solution_image_url,
+  } = payload;
+
   const result = await query(
     `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url)
      VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *`,
@@ -152,13 +173,13 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       question_type || 'mcq',
       question_text,
       asJson(options, []),
-      correct_index ?? 0,
+      Number(correct_index ?? 0),
       asJson(correct_indices, []),
       numeric_answer !== undefined ? numeric_answer : null,
       numerical_tolerance !== undefined ? numerical_tolerance : 0,
       assertion_text || null,
       reason_text || null,
-      marks ?? 1,
+      Number(marks ?? 1),
       solution || '',
       subject_id || null,
       chapter_id || null,
@@ -173,8 +194,25 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
 
 export const updateBankQuestion = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url } = req.body;
-  
+  const payload = normalizeQuestionBankPayload(req.body);
+  const {
+    question_text,
+    options,
+    correct_index,
+    correct_indices,
+    numeric_answer,
+    numerical_tolerance,
+    assertion_text,
+    reason_text,
+    marks,
+    solution,
+    subject_id,
+    chapter_id,
+    difficulty,
+    image_url,
+    solution_image_url,
+  } = payload;
+
   const existing = await query('SELECT * FROM question_bank WHERE id = $1', [id]);
   if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
   const q = existing.rows[0];
@@ -200,13 +238,13 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     [
       question_text ?? q.question_text,
       options ? asJson(options, []) : q.options,
-      correct_index ?? q.correct_index,
+      Number(correct_index ?? q.correct_index ?? 0),
       correct_indices ? asJson(correct_indices, []) : q.correct_indices,
       numeric_answer !== undefined ? numeric_answer : q.numeric_answer,
       numerical_tolerance !== undefined ? numerical_tolerance : q.numerical_tolerance,
       assertion_text !== undefined ? assertion_text : q.assertion_text,
       reason_text !== undefined ? reason_text : q.reason_text,
-      marks ?? q.marks,
+      Number(marks ?? q.marks ?? 1),
       solution ?? q.solution,
       subject_id !== undefined ? (subject_id || null) : q.subject_id,
       chapter_id !== undefined ? (chapter_id || null) : q.chapter_id,

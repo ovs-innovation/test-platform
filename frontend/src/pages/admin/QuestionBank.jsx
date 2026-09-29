@@ -63,9 +63,8 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
         type="button"
         disabled={disabled}
         onClick={() => setOpen(!open)}
-        className={`w-full flex items-center justify-between gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2.5 px-3.5 text-xs font-bold text-slate-800 dark:text-slate-100 hover:border-blue-500/80 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${
-          disabled ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
+        className={`w-full flex items-center justify-between gap-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 py-2.5 px-3.5 text-xs font-bold text-slate-800 dark:text-slate-100 hover:border-blue-500/80 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500/20 ${disabled ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
       >
         <span className="truncate">{displayLabel}</span>
         <ChevronDown className={`h-4 w-4 text-slate-400 transition-transform duration-200 shrink-0 ${open ? 'rotate-180 text-blue-500' : ''}`} />
@@ -84,11 +83,10 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
                   onChange(optVal, opt);
                   setOpen(false);
                 }}
-                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
-                  isSelected
-                    ? 'bg-blue-600 text-white font-extrabold shadow-sm'
-                    : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold'
-                }`}
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${isSelected
+                  ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                  : 'hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 font-semibold'
+                  }`}
               >
                 <span>{opt.label || opt.name}</span>
                 {isSelected && <Check className="h-4 w-4 text-white shrink-0 ml-2" />}
@@ -126,8 +124,9 @@ export default function AdminQuestionBank() {
     question_type: 'mcq',
     question_text: '',
     options: 'A|B|C|D',
-    correct_option: 0,
-    solution_text: '',
+    correct_index: 0,
+    correct_indices_str: '',
+    solution: '',
     explanation_url: '',
   });
 
@@ -185,8 +184,9 @@ export default function AdminQuestionBank() {
       question_type: 'mcq',
       question_text: '',
       options: 'A|B|C|D',
-      correct_option: 0,
-      solution_text: '',
+      correct_index: 0,
+      correct_indices_str: '',
+      solution: '',
       explanation_url: '',
       image_url: '',
       solution_image_url: '',
@@ -197,12 +197,15 @@ export default function AdminQuestionBank() {
   const openEdit = (q) => {
     setEditing(q);
     const opts = tryParseArray(q.options);
+    const correctIndex = q.correct_index ?? q.correct_option ?? 0;
+    const correctIndices = Array.isArray(q.correct_indices) ? q.correct_indices : (q.correct_index !== undefined && q.correct_index !== null ? [q.correct_index] : []);
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text || '',
       options: opts.length ? opts.join('|') : (typeof q.options === 'string' ? q.options : 'A|B|C|D'),
-      correct_option: q.correct_option ?? 0,
-      solution_text: q.solution_text || '',
+      correct_index: correctIndex,
+      correct_indices_str: correctIndices.length ? correctIndices.join(',') : '',
+      solution: q.solution || q.solution_text || '',
       explanation_url: q.explanation_url || '',
       image_url: q.image_url || '',
       solution_image_url: q.solution_image_url || '',
@@ -261,12 +264,36 @@ export default function AdminQuestionBank() {
     e.preventDefault();
     setSaving(true);
     try {
+      const safeOptions = String(form.options ?? '')
+        .split('|')
+        .map((opt) => opt.trim())
+        .filter(Boolean);
+
+      const correctIndex = Number(form.correct_index ?? 0);
+      const correctIndices = form.question_type === 'multi_select'
+        ? String(form.correct_indices_str ?? '')
+          .split(/[\s,]+/)
+          .map((value) => Number(value))
+          .filter((value) => Number.isInteger(value) && value >= 0)
+        : [correctIndex];
+
       const payload = {
         ...form,
-        image_url: form.image_url || null,
-        solution_image_url: form.solution_image_url || null,
-        subject: category,
-        correct_option: Number(form.correct_option),
+        category,
+        question_type: form.question_type,
+        question_text: form.question_text?.trim(),
+        options: safeOptions.length ? safeOptions : ['Option A', 'Option B'],
+        correct_index: form.question_type === 'multi_select' ? (correctIndices[0] ?? 0) : correctIndex,
+        correct_indices: form.question_type === 'multi_select' ? correctIndices : [correctIndex],
+        marks: Number(form.marks ?? 1),
+        solution: form.solution ?? '',
+        image_url: form.image_url || '',
+        solution_image_url: form.solution_image_url || '',
+        subject_id: form.subject_id || null,
+        chapter_id: form.chapter_id || null,
+        subject: form.subject || category,
+        topic: form.topic || '',
+        difficulty: form.difficulty || 'medium',
       };
 
       if (editing) {
@@ -362,11 +389,10 @@ export default function AdminQuestionBank() {
           <button
             key={c}
             type="button"
-            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 ${
-              category === c
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
-                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
-            }`}
+            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 ${category === c
+              ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+              : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
+              }`}
             onClick={() => setCategory(c)}
           >
             {c}
@@ -378,41 +404,49 @@ export default function AdminQuestionBank() {
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
             columns={[
-              { key: 'question_text', label: 'Question', render: (q) => (
-                <div className="flex flex-col gap-1 max-w-md">
-                  <span className="line-clamp-2 text-slate-900 dark:text-slate-100 font-extrabold leading-snug">{q.question_text}</span>
-                  {q.solution && <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Sol: {q.solution}</span>}
-                </div>
-              ) },
-              { key: 'question_type', label: 'Type', render: (q) => (
-                <span className="uppercase text-[10px] font-black tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">{q.question_type}</span>
-              ) },
-              { key: 'difficulty', label: 'Difficulty', render: (q) => (
-                <Badge color={q.difficulty === 'hard' ? 'red' : q.difficulty === 'medium' ? 'amber' : 'green'}>
-                  {q.difficulty || 'medium'}
-                </Badge>
-              ) },
+              {
+                key: 'question_text', label: 'Question', render: (q) => (
+                  <div className="flex flex-col gap-1 max-w-md">
+                    <span className="line-clamp-2 text-slate-900 dark:text-slate-100 font-extrabold leading-snug">{q.question_text}</span>
+                    {q.solution && <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Sol: {q.solution}</span>}
+                  </div>
+                )
+              },
+              {
+                key: 'question_type', label: 'Type', render: (q) => (
+                  <span className="uppercase text-[10px] font-black tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">{q.question_type}</span>
+                )
+              },
+              {
+                key: 'difficulty', label: 'Difficulty', render: (q) => (
+                  <Badge color={q.difficulty === 'hard' ? 'red' : q.difficulty === 'medium' ? 'amber' : 'green'}>
+                    {q.difficulty || 'medium'}
+                  </Badge>
+                )
+              },
               { key: 'marks', label: 'Marks', render: (q) => <span className="font-black text-slate-900 dark:text-white text-xs">{q.marks}</span> },
-              { key: 'actions', label: '', render: (q) => (
-                <div className="flex justify-end pr-2">
-                  <ActionDropdown
-                    items={[
-                      {
-                        label: 'Edit Question',
-                        icon: Pencil,
-                        onClick: () => openEdit(q),
-                        color: 'text-blue-600 dark:text-blue-400',
-                      },
-                      {
-                        label: 'Delete Question',
-                        icon: Trash2,
-                        onClick: () => setDeleteQuestionId(q.id),
-                        danger: true,
-                      },
-                    ]}
-                  />
-                </div>
-              ) },
+              {
+                key: 'actions', label: '', render: (q) => (
+                  <div className="flex justify-end pr-2">
+                    <ActionDropdown
+                      items={[
+                        {
+                          label: 'Edit Question',
+                          icon: Pencil,
+                          onClick: () => openEdit(q),
+                          color: 'text-blue-600 dark:text-blue-400',
+                        },
+                        {
+                          label: 'Delete Question',
+                          icon: Trash2,
+                          onClick: () => setDeleteQuestionId(q.id),
+                          danger: true,
+                        },
+                      ]}
+                    />
+                  </div>
+                )
+              },
             ]}
             rows={questions}
             emptyMessage={`No questions in ${category}. Import via CSV or add manually.`}
@@ -682,11 +716,10 @@ export default function AdminQuestionBank() {
 
               <div
                 onClick={() => setDeleteAllScope('category')}
-                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${
-                  deleteAllScope === 'category'
-                    ? 'border-rose-500 bg-rose-50/50 dark:bg-rose-950/20'
-                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
+                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${deleteAllScope === 'category'
+                  ? 'border-rose-500 bg-rose-50/50 dark:bg-rose-950/20'
+                  : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                  }`}
               >
                 <input
                   type="radio"
@@ -707,11 +740,10 @@ export default function AdminQuestionBank() {
 
               <div
                 onClick={() => setDeleteAllScope('all')}
-                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${
-                  deleteAllScope === 'all'
-                    ? 'border-rose-600 bg-rose-500/10'
-                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
-                }`}
+                className={`p-3.5 rounded-xl border-2 cursor-pointer transition flex items-start gap-3 ${deleteAllScope === 'all'
+                  ? 'border-rose-600 bg-rose-500/10'
+                  : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
+                  }`}
               >
                 <input
                   type="radio"
@@ -751,8 +783,8 @@ export default function AdminQuestionBank() {
                   {deletingAll
                     ? 'Deleting...'
                     : deleteAllScope === 'all'
-                    ? 'Delete Entire Question Bank'
-                    : `Delete All in ${category}`}
+                      ? 'Delete Entire Question Bank'
+                      : `Delete All in ${category}`}
                 </span>
               </button>
             </div>
