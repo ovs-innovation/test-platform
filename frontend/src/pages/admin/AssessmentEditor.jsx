@@ -528,7 +528,8 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         }
         await onReload();
       } catch (err) {
-        toast.error(err.message || 'PDF extraction failed');
+        const serverMsg = err?.response?.data?.message || err?.response?.data?.error;
+        toast.error(serverMsg || err.message || 'PDF extraction failed. Please check the file format and try again.');
       } finally {
         setPdfUploading(false);
       }

@@ -741,6 +741,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
         const currentTest = currentTestRes.rows[0] || {};
 
+        // DELETE existing questions ONLY after we have confirmed the new set is ready
         await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
         let calcTotalMarks = 0;
         let savedCount = 0;
@@ -969,9 +970,12 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         }
       }
     } catch (err) {
-      console.error('PDF Question Extraction Error:', err.message);
-      // Re-throw so the API returns the real error instead of a silent false-success response
-      throw err;
+      console.error('PDF Question Extraction Error:', err.message, err.stack);
+      // Return a descriptive 400 error to the client instead of an opaque 500
+      return res.status(400).json({
+        error: true,
+        message: err.message || 'PDF question extraction failed. Please check the file format.',
+      });
     }
   }
 
