@@ -714,7 +714,21 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       const parsedQs = pdfExtraction.rows || [];
 
 
-      if (file_type === 'question_paper' && parsedQs.length > 0) {
+      if (file_type === 'question_paper') {
+        if (parsedQs.length === 0) {
+          const hasKeys = (pdfExtraction.answerKeyMap && Object.keys(pdfExtraction.answerKeyMap).length > 0) ||
+                          (pdfExtraction.solutionMap && Object.keys(pdfExtraction.solutionMap).length > 0);
+          if (hasKeys) {
+            const count = Object.keys(pdfExtraction.answerKeyMap || {}).length || Object.keys(pdfExtraction.solutionMap || {}).length;
+            throw ApiError.badRequest(
+              `The uploaded file is an Answer Key / Solutions PDF (found ${count} answers/solutions), not a Question Paper. Please upload your Question Paper PDF containing question statements and choices, or use the "Upload Answer Key PDF" button to attach answers.`
+            );
+          }
+          throw ApiError.badRequest(
+            'No questions could be extracted from this PDF. Please verify that this is a Question Paper PDF containing question text and options (A, B, C, D).'
+          );
+        }
+
         extractedCount = parsedQs.length;
         reviewWarnings = parsedQs.filter((q) => q.needs_review || q.extraction?.needsReview).map((q) => q.review_reason || `Question ${q.questionNumber || q.line}: Needs manual review.`);
         if (pdfExtraction.warnings && pdfExtraction.warnings.length > 0) {
@@ -976,7 +990,9 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   console.log(`[PDF Extraction Pipeline] STAGE 7: Questions Returned by API = ${extractedQuestionsJson.length} question(s)`);
 
   res.json({
-    message: `${file_type} uploaded successfully`,
+    message: file_type === 'question_paper'
+      ? `Successfully extracted and imported ${extractedCount} question(s)!`
+      : `${file_type} uploaded successfully`,
     url: relativeUrl,
     file_type,
     extractedBy,
