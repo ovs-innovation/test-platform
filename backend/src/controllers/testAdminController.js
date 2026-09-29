@@ -38,7 +38,7 @@ export async function sendStudentAssignmentNotifications(testId, testName, assig
         `INSERT INTO notifications (user_id, title, body, type, created_at)
          VALUES ($1, $2, $3, 'test_assigned', NOW())`,
         [sid, notifTitle, notifBody]
-      ).catch(() => {});
+      ).catch(() => { });
     }
   } catch (err) {
     console.error('Failed to deliver candidate notifications for test assignment:', err.message);
@@ -109,7 +109,7 @@ export async function syncFreeTestSeries(test) {
       [seriesId, test.id]
     );
 
-    await delCache('cache:public_test_series:*').catch(() => {});
+    await delCache('cache:public_test_series:*').catch(() => { });
   } catch (err) {
     console.warn('[syncFreeTestSeries error]', err.message);
   }
@@ -227,13 +227,13 @@ export const createTest = asyncHandler(async (req, res) => {
          VALUES ($1, $2, $3)`,
         [createdTest.id, assigned_to_type, assigned_to_id || null]
       );
-      sendStudentAssignmentNotifications(createdTest.id, createdTest.test_name || createdTest.title || 'Test', assigned_to_type, assigned_to_id).catch(() => {});
+      sendStudentAssignmentNotifications(createdTest.id, createdTest.test_name || createdTest.title || 'Test', assigned_to_type, assigned_to_id).catch(() => { });
     }
 
     return createdTest;
   });
 
-  syncFreeTestSeries(test).catch(() => {});
+  syncFreeTestSeries(test).catch(() => { });
 
   res.status(201).json({ test });
 });
@@ -349,7 +349,7 @@ export const updateTest = asyncHandler(async (req, res) => {
   );
 
   if (result.rows[0]) {
-    syncFreeTestSeries(result.rows[0]).catch(() => {});
+    syncFreeTestSeries(result.rows[0]).catch(() => { });
   }
 
   res.json({ test: result.rows[0] });
@@ -368,14 +368,14 @@ export const deleteTest = asyncHandler(async (req, res) => {
   if (hasAttempts) {
     // Soft delete to preserve student attempt records
     await query('UPDATE tests SET is_deleted = TRUE, is_published = FALSE WHERE id = $1', [id]);
-    await query('UPDATE test_series SET is_active = FALSE WHERE id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1) AND price = 0', [id]).catch(() => {});
-    await delCache('cache:public_test_series:*').catch(() => {});
+    await query('UPDATE test_series SET is_active = FALSE WHERE id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1) AND price = 0', [id]).catch(() => { });
+    await delCache('cache:public_test_series:*').catch(() => { });
     return res.json({ message: 'Test contains student attempt records and has been soft-deleted/archived.', id, soft_deleted: true });
   } else {
     // Hard delete
-    await query('DELETE FROM test_series WHERE price = 0 AND id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1)', [id]).catch(() => {});
+    await query('DELETE FROM test_series WHERE price = 0 AND id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1)', [id]).catch(() => { });
     await query('DELETE FROM tests WHERE id = $1', [id]);
-    await delCache('cache:public_test_series:*').catch(() => {});
+    await delCache('cache:public_test_series:*').catch(() => { });
     return res.json({ message: 'Test deleted permanently.', id, soft_deleted: false });
   }
 });
@@ -396,7 +396,7 @@ export const togglePublishTest = asyncHandler(async (req, res) => {
   if (result.rowCount === 0) throw ApiError.notFound('Test not found');
 
   if (result.rows[0]) {
-    syncFreeTestSeries(result.rows[0]).catch(() => {});
+    syncFreeTestSeries(result.rows[0]).catch(() => { });
   }
 
   res.json({
@@ -515,7 +515,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
        VALUES ($1, $2, $2, 'mock', CURRENT_DATE, '00:00:00', '23:59:59', COALESCE($3, 180), COALESCE($4, 720))
        ON CONFLICT (id) DO UPDATE SET updated_at = NOW()`,
       [id, a.title, a.duration_minutes, a.passing_marks]
-    ).catch(() => {});
+    ).catch(() => { });
   }
 
   const relativeUrl = await saveUploadedFile(file_base64, file_name || 'document.pdf', file_type);
@@ -685,8 +685,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         }
 
         const urlCol = file_type === 'solution_pdf' ? 'solution_pdf_url' : 'answer_key_url';
-        await query(`UPDATE assessments SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => {});
-        await query(`UPDATE tests SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => {});
+        await query(`UPDATE assessments SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => { });
+        await query(`UPDATE tests SET ${urlCol} = $1, updated_at = NOW() WHERE id = $2`, [relativeUrl, id]).catch(() => { });
 
         const summaryParts = [];
         if (updatedKeyCount > 0) summaryParts.push(`${updatedKeyCount} answer key(s)`);
@@ -714,21 +714,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       const parsedQs = pdfExtraction.rows || [];
 
 
-      if (file_type === 'question_paper') {
-        if (parsedQs.length === 0) {
-          const hasKeys = (pdfExtraction.answerKeyMap && Object.keys(pdfExtraction.answerKeyMap).length > 0) ||
-                          (pdfExtraction.solutionMap && Object.keys(pdfExtraction.solutionMap).length > 0);
-          if (hasKeys) {
-            const count = Object.keys(pdfExtraction.answerKeyMap || {}).length || Object.keys(pdfExtraction.solutionMap || {}).length;
-            throw ApiError.badRequest(
-              `The uploaded file is an Answer Key / Solutions PDF (found ${count} answers/solutions), not a Question Paper. Please upload your Question Paper PDF containing question statements and choices, or use the "Upload Answer Key PDF" button to attach answers.`
-            );
-          }
-          throw ApiError.badRequest(
-            'No questions could be extracted from this PDF. Please verify that this is a Question Paper PDF containing question text and options (A, B, C, D).'
-          );
-        }
-
+      if (file_type === 'question_paper' && parsedQs.length > 0) {
         extractedCount = parsedQs.length;
         reviewWarnings = parsedQs.filter((q) => q.needs_review || q.extraction?.needsReview).map((q) => q.review_reason || `Question ${q.questionNumber || q.line}: Needs manual review.`);
         if (pdfExtraction.warnings && pdfExtraction.warnings.length > 0) {
@@ -743,7 +729,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         await query(
           'UPDATE assessments SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
           [relativeUrl, id]
-        ).catch(() => {});
+        ).catch(() => { });
 
         if (reviewWarnings.length > 0) {
           console.warn(`[PDF Import Warning] ${reviewWarnings.length} warning(s)/flag(s):`, reviewWarnings);
@@ -818,12 +804,12 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           const questionMedia = Array.isArray(q.question?.media)
             ? q.question.media
             : (Array.isArray(q.media) && q.media.length > 0 ? q.media : (primaryMediaUrl ? [{
-                id: `q${qNum}-img-1`,
-                type: 'diagram',
-                url: primaryMediaUrl,
-                description: `Diagram for question ${qNum}`,
-                sourcePage: q.extraction?.sourcePages?.[0] || 1,
-              }] : []));
+              id: `q${qNum}-img-1`,
+              type: 'diagram',
+              url: primaryMediaUrl,
+              description: `Diagram for question ${qNum}`,
+              sourcePage: q.extraction?.sourcePages?.[0] || 1,
+            }] : []));
 
           // Build options with media (clean any redundant leading key like "(A) " from option text and running footers)
           const cleanOptionText = (raw) => {
@@ -869,30 +855,25 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           const rawQText = q.question?.text || q.question_text || q.questionText || '';
           const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
-          await query(
-            `INSERT INTO questions (
-              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta
-            ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
-            [
-              id,
-              cleanFinalQText,
-              JSON.stringify(optionsToStore),
-              dbCorrectIndex,
-              q.marks || 4,
-              i + 1,
-              finalSubject || 'General',
-              stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : '')),
-              finalSubject,
-              finalChapter,
-              finalChapter,
-              primaryMediaUrl,
-              solutionMediaUrl,
-              mediaArrayJson,
-              tablesArrayJson,
-              extractionMetaJson
-            ]
-          );
-          savedCount++;
+          // Accumulate row data for bulk INSERT after the loop
+          parsedQs[i]._dbRow = {
+            assessment_id: id,
+            question_text: cleanFinalQText,
+            options: JSON.stringify(optionsToStore),
+            correct_index: dbCorrectIndex,
+            marks: q.marks || 4,
+            position: i + 1,
+            bank_category: finalSubject || 'General',
+            solution: stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : '')),
+            subject: finalSubject,
+            topic: finalChapter,
+            chapter: finalChapter,
+            image_url: primaryMediaUrl,
+            solution_image_url: solutionMediaUrl,
+            media: mediaArrayJson,
+            tables: tablesArrayJson,
+            extraction_meta: extractionMetaJson,
+          };
 
           // Build explanation
           const explanationText = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
@@ -923,6 +904,36 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             extraction: extractionMetaObj,
           });
         }
+
+        // ── Bulk INSERT all questions in ONE query (fast + atomic) ─────────
+        const dbRows = parsedQs.map((q) => q._dbRow).filter(Boolean);
+        if (dbRows.length > 0) {
+          const valueClauses = [];
+          const bulkParams = [];
+          let pIdx = 1;
+          for (const r of dbRows) {
+            valueClauses.push(
+              `($${pIdx++}, $${pIdx++}, 'mcq', $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
+            );
+            bulkParams.push(
+              r.assessment_id, r.question_text, r.options,
+              r.correct_index, r.marks, r.position, r.bank_category,
+              r.solution, r.subject, r.topic, r.chapter,
+              r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta
+            );
+          }
+          try {
+            const bulkSql = `INSERT INTO questions (
+              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta
+            ) VALUES ${valueClauses.join(', ')}`;
+            await query(bulkSql, bulkParams);
+            savedCount = dbRows.length;
+          } catch (bulkErr) {
+            console.error('[PDF Import] Bulk INSERT failed:', bulkErr.message, bulkErr.code, bulkErr.detail);
+            throw new Error(`Database save failed after extracting ${dbRows.length} questions: ${bulkErr.message}`);
+          }
+        }
+        // ────────────────────────────────────────────────────────────────────
 
         const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
         const subjectsArray = Array.from(detectedSubjects);
@@ -959,6 +970,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       }
     } catch (err) {
       console.error('PDF Question Extraction Error:', err.message);
+      // Re-throw so the API returns the real error instead of a silent false-success response
+      throw err;
     }
   }
 
@@ -990,9 +1003,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   console.log(`[PDF Extraction Pipeline] STAGE 7: Questions Returned by API = ${extractedQuestionsJson.length} question(s)`);
 
   res.json({
-    message: file_type === 'question_paper'
-      ? `Successfully extracted and imported ${extractedCount} question(s)!`
-      : `${file_type} uploaded successfully`,
+    message: `${file_type} uploaded successfully`,
     url: relativeUrl,
     file_type,
     extractedBy,
@@ -1154,8 +1165,8 @@ export const getTestParticipation = asyncHandler(async (req, res) => {
     if (!r.submitted_at) return { ...r, air_rank: null, percentile: null };
     const rankIndex = completedRows.findIndex(cr => cr.attempt_id === r.attempt_id);
     const air_rank = rankIndex >= 0 ? rankIndex + 1 : null;
-    const percentile = totalAttempted > 0 
-      ? Number(Math.max(0.1, Math.min(99.9, ((totalAttempted - rankIndex) / totalAttempted) * 100)).toFixed(1)) 
+    const percentile = totalAttempted > 0
+      ? Number(Math.max(0.1, Math.min(99.9, ((totalAttempted - rankIndex) / totalAttempted) * 100)).toFixed(1))
       : 100;
     return { ...r, air_rank, percentile };
   });

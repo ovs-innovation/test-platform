@@ -414,8 +414,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       }
 
       if ((visionResult.answerKeyMap && Object.keys(visionResult.answerKeyMap).length > 0) ||
-          (visionResult.solutionMap && Object.keys(visionResult.solutionMap).length > 0) ||
-          (visionResult.topicGridMap && Object.keys(visionResult.topicGridMap).length > 0)) {
+        (visionResult.solutionMap && Object.keys(visionResult.solutionMap).length > 0) ||
+        (visionResult.topicGridMap && Object.keys(visionResult.topicGridMap).length > 0)) {
         console.log('[pdfQuestions] Standalone Answer Key/Solution/Topic Grid extracted via Gemini Vision.');
         return {
           extractedBy: 'gemini-vision',
