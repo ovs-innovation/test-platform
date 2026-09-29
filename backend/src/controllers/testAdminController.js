@@ -815,7 +815,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           const cleanOptionText = (raw) => {
             const s = String(raw || '').trim();
             const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
-            return stripHeadersAndFooters(stripped);
+            return stripHeadersAndFooters(stripped) || stripped;
           };
 
           let formattedOptionsWithMedia = [];
@@ -839,8 +839,21 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             }));
           }
 
+          // Ensure question always has at least 4 options for test platform rendering
+          while (formattedOptionsWithMedia.length < 4) {
+            const nextKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
+            formattedOptionsWithMedia.push({
+              key: nextKey,
+              text: `[Needs Review] Option ${nextKey}`,
+              media: [],
+            });
+          }
+
           // Preserve options format with media in DB
           const optionsToStore = formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : q.options;
+
+          const rawQText = q.question?.text || q.question_text || q.questionText || '';
+          const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
           await query(
             `INSERT INTO questions (
@@ -848,7 +861,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             ) VALUES ($1, $2, 'mcq', $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)`,
             [
               id,
-              formatQuestionStructure(stripHeadersAndFooters(q.question?.text || q.question_text || q.questionText || '')),
+              cleanFinalQText,
               JSON.stringify(optionsToStore),
               dbCorrectIndex,
               q.marks || 4,

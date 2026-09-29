@@ -5,6 +5,13 @@
 export function stripHeadersAndFooters(text) {
   if (!text || typeof text !== 'string') return text || '';
 
+  const trimmed = text.trim();
+  // Fast path: Pure numbers (e.g. "3", "18", "9", "6", "0", "-5", "2.5"), short values with units ("16 N", "10 m/s"),
+  // chemical formulas ("CO2", "H2O"), or short option strings (<= 3 characters) are legitimate content, never page headers.
+  if (/^[-+]?\d+(?:\.\d+)?(?:\s*[a-zA-Z%°\/^µΩ]+)?$/.test(trimmed) || trimmed.length <= 3) {
+    return trimmed;
+  }
+
   let s = text.replace(/\r\n/g, '\n');
 
   // Strip page divider lines (e.g. "_______", "-------", "═══════")
@@ -28,8 +35,9 @@ export function stripHeadersAndFooters(text) {
     '\n'
   );
 
-  // 3. Full-line standalone page numbers or "Page X of Y"
-  s = s.replace(/(?:^|\n)\s*(?:Page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|\b[-–—\s]*\d{1,3}[-–—\s]*$)\s*(?:\n|$)/gi, '\n');
+  // 3. Explicit page numbers: "Page X", "Page X of Y", or dashed markers like "- 4 -" / "— 4 —"
+  // Do NOT match bare numbers without dashes or "Page" to avoid erasing numeric options
+  s = s.replace(/(?:^|\n)\s*(?:Page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|[-–—]{1,2}\s*\d{1,3}\s*[-–—]{1,2})\s*(?:\n|$)/gi, '\n');
 
   // 4. Trailing inline header/footer text at the end of an option or question statement
   // e.g. "16 N EDVEDUM ACADEMY | AIETS NEET 2027 | UT-01 4" -> "16 N"
@@ -39,10 +47,14 @@ export function stripHeadersAndFooters(text) {
     ''
   );
 
-  // 5. Clean trailing page number if separated by 2 or more spaces at the very end of string (e.g. "16 N    4")
-  s = s.replace(/\s{2,}\d{1,3}\s*$/g, '');
+  // 5. Clean trailing page number if separated by 4 or more spaces at the very end of a multi-word line
+  if (/\S+\s+\S+/.test(s)) {
+    s = s.replace(/\s{4,}\d{1,3}\s*$/g, '');
+  }
 
-  return s.trim();
+  const result = s.trim();
+  // Safe fallback: If stripping accidentally emptied a string that had content, preserve original trimmed
+  return (!result && trimmed) ? trimmed : result;
 }
 
 /**

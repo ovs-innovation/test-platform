@@ -774,7 +774,7 @@ Continue extracting topicGridEntries even though answers are disabled.
       const rawOptText = (typeof opt === 'object' && opt && opt.text !== undefined)
         ? String(opt.text).trim()
         : String(opt || '').trim();
-      const optText = stripHeadersAndFooters(rawOptText);
+      const optText = stripHeadersAndFooters(rawOptText) || rawOptText || `Option ${optKey}`;
       const optMedia = [];
 
       if (typeof opt === 'object' && Array.isArray(opt.visualElements)) {
@@ -807,6 +807,18 @@ Continue extracting topicGridEntries even though answers are disabled.
         text: optText,
         media: optMedia,
       });
+    }
+
+    // Ensure question always has at least 4 options
+    while (formattedOptionsWithMedia.length < 4) {
+      const padKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
+      formattedOptionsWithMedia.push({
+        key: padKey,
+        text: `[Needs Review] Option ${padKey}`,
+        media: [],
+      });
+      needsReview = true;
+      reviewReasons.push(`Question Q${qNum} was padded with fallback Option ${padKey}.`);
     }
     totalOptionsCount += formattedOptionsWithMedia.length;
 
@@ -887,7 +899,7 @@ Continue extracting topicGridEntries even though answers are disabled.
       topic: qTopic,
 
       question: {
-        text: cleanQText,
+        text: cleanQText || (rawQ.questionText || '').trim() || `Question ${qNum}`,
         media: questionMedia,
       },
 

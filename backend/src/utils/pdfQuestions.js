@@ -119,9 +119,9 @@ function splitQuestionBlocks(text) {
     const line = rawLine.trim();
     if (!line) continue;
 
-    // Skip running page footers / headers, academy watermarks, divider lines, page numbers
+    // Skip running page footers / headers, academy watermarks, divider lines, explicit page numbers
     if (
-      /^(?:[-_—–=]{3,}|page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|\b\d{1,3}\b|space\s+for\s+rough\s+work|rough\s+work)$/i.test(line) ||
+      /^(?:[-_—–=]{3,}|page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|[-–—]{1,2}\s*\d{1,3}\s*[-–—]{1,2}|space\s+for\s+rough\s+work|rough\s+work)$/i.test(line) ||
       /^(?:[A-Za-z0-9\s&.,'()\-–—]+(?:ACADEMY|INSTITUTE|CLASSES|VIDYAPEETH|EDUCATION|TEST\s*SERIES|EDVEDUM|AIETS|AIATS|AITS|ALLEN|AAKASH|FIITJEE|RESONANCE|NTA|NEET|JEE)\b[^\n]*?[\|•·–—][^\n]*)(?:\s+\d{1,3})?$/i.test(line) ||
       /^(?:EDVEDUM(?:\s*ACADEMY)?|AIETS(?:\s*NEET)?(?:\s*\d{4})?|\bUT-\d+\b)[^\n]*?(?:\s+\d{1,3})?$/i.test(line)
     ) {
@@ -147,10 +147,15 @@ function splitQuestionBlocks(text) {
 
     const start = line.match(QUESTION_START);
     if (start) {
-      if (current) blocks.push(current);
       const num = Number(start[1] || start[2]);
-      current = { num, subject: currentSubject, lines: [start[3] || ''] };
-      continue;
+      // If we are currently inside a question, check whether this looks like an option number (e.g. 1., 2., 3., 4.)
+      // rather than a genuine new question number.
+      const isLikelyOptionNumber = current && num >= 1 && num <= 4 && (current.num > 4);
+      if (!isLikelyOptionNumber) {
+        if (current) blocks.push(current);
+        current = { num, subject: currentSubject, lines: [start[3] || ''] };
+        continue;
+      }
     }
     if (current) current.lines.push(line);
   }
@@ -180,12 +185,6 @@ function parseBlock(block, answerKey) {
       continue;
     }
 
-    const opt = line.match(OPTION_LINE);
-    if (opt) {
-      const cleanOpt = stripHeadersAndFooters(opt[3].trim());
-      if (cleanOpt) options.push(cleanOpt);
-      continue;
-    }
     // Match inline answer line like "Answer: (A, B, D)" or "Answer: (C)"
     const inlineAns = line.match(/^(?:ans(?:wer)?|correct)\s*[:\-]?\s*(.+)$/i);
     if (inlineAns) {
@@ -198,12 +197,79 @@ function parseBlock(block, answerKey) {
       }
       continue;
     }
+
+    // Check for multiple options on the same line, e.g. "(A) 3  (B) 18  (C) 9  (D) 6" or "A. 3  B. 18"
+    const multiOptMatches = [...line.matchAll(/(?:\(|\[|^|\s{2,}|\t)([A-Da-d1-4])(?:\)|\]|\.|\:)\s+([^(\n]+?)(?=(?:\s{2,}|\t|\s+(?=[A-Da-d1-4][\.\)\:\-–—]|\([A-Da-d1-4]\)|\[[A-Da-d1-4]\])|$))/g)];
+    if (multiOptMatches.length >= 2) {
+      for (const m of multiOptMatches) {
+        const rawOpt = m[2].trim();
+        const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
+        if (cleanOpt) options.push(cleanOpt);
+      }
+      continue;
+    }
+
+    const opt = line.match(OPTION_LINE);
+    if (opt) {
+      const rawOpt = opt[3].trim();
+      const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
+      if (cleanOpt) options.push(cleanOpt);
+      continue;
+    }
+
     questionLines.push(line);
   }
 
-  const question_text = stripHeadersAndFooters(questionLines.join(' ').replace(/\s+/g, ' ').trim());
-  if (!question_text) return { error: 'Missing question text' };
-  if (options.length < 2) return { error: 'Need at least 2 options (use A) B) C) D) format)' };
+  // Fallback: If fewer than 2 options found, search questionLines for embedded/inline options
+  if (options.length < 2) {
+    const fullQText = questionLines.join('\n');
+    const inlineMatches = [...fullQText.matchAll(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*([^\n\(\)\[\]]+)/g)];
+    if (inlineMatches.length >= 2) {
+      options.length = 0;
+      const firstOptIndex = fullQText.search(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*/);
+      if (firstOptIndex !== -1) {
+        questionLines.length = 0;
+        questionLines.push(fullQText.substring(0, firstOptIndex).trim());
+      }
+      for (const m of inlineMatches) {
+        const rawOpt = m[2].trim();
+        const cleanOpt = stripHeadersAndFooters(rawOpt) || rawOpt;
+        if (cleanOpt && !options.includes(cleanOpt)) {
+          options.push(cleanOpt);
+        }
+      }
+    }
+  }
+
+  let rawQuestionText = questionLines.join(' ').replace(/\s+/g, ' ').trim();
+  if (!rawQuestionText) {
+    rawQuestionText = block.lines.filter((l) => l.trim()).join(' ').trim() || `Question ${block.num}`;
+  }
+  const question_text = stripHeadersAndFooters(rawQuestionText) || rawQuestionText;
+
+  // Ensure every question is preserved even if options could not be automatically separated
+  const hasValidOptions = options.length >= 2;
+  const needsReview = !hasValidOptions;
+
+  let finalOptions = [...options];
+  if (finalOptions.length === 0) {
+    finalOptions = [
+      '[Needs Review] Option A',
+      '[Needs Review] Option B',
+      '[Needs Review] Option C',
+      '[Needs Review] Option D',
+    ];
+  } else if (finalOptions.length === 1) {
+    finalOptions.push(
+      '[Needs Review] Option B',
+      '[Needs Review] Option C',
+      '[Needs Review] Option D'
+    );
+  } else if (finalOptions.length < 4) {
+    while (finalOptions.length < 4) {
+      finalOptions.push(`[Needs Review] Option ${String.fromCharCode(65 + finalOptions.length)}`);
+    }
+  }
 
   const isMultiText = /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct/i.test(question_text);
   const isMultiKey = correct_indices.length > 1;
@@ -231,16 +297,18 @@ function parseBlock(block, answerKey) {
 
   return {
     line: block.num,
-    question_text: cleanQuestionText,
+    question_text: cleanQuestionText || `Question ${block.num}`,
     question_type,
     marks: 4,
     bank_category: block.subject || 'General',
     chapter: chapter || null,
     topic: chapter || null,
-    options,
+    options: finalOptions,
     correct_index,
     correct_indices: isMulti ? correct_indices : (correct_indices.length ? correct_indices : [correct_index]),
     solution: solutionText,
+    needs_review: needsReview,
+    review_reason: needsReview ? `Question ${block.num}: Options could not be automatically separated. Please review manually.` : null,
   };
 }
 
@@ -256,8 +324,10 @@ export function parseQuestionsFromText(text) {
   const errors = [];
   for (const block of blocks) {
     const parsed = parseBlock(block, answerKey);
-    if (parsed.error) errors.push({ line: block.num, error: parsed.error });
-    else rows.push(parsed);
+    rows.push(parsed);
+    if (parsed.needs_review) {
+      errors.push({ line: block.num, error: parsed.review_reason });
+    }
   }
   return { rows, errors, question_count: rows.length };
 }
@@ -415,11 +485,12 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       correctAnswer: correctLetter,
 
       extraction: {
-        confidence: 0.88,
-        needsReview: Boolean(r.error),
+        confidence: r.needs_review ? 0.60 : 0.88,
+        needsReview: Boolean(r.needs_review),
         sourcePages: [1],
         extractedBy: 'pdf-parse-regex',
         hasAnswerKey: hasAnswer,
+        ...(r.review_reason ? { reviewReason: r.review_reason } : {}),
       },
 
       // Flat properties for DB insert
@@ -436,6 +507,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       image_url: r.image_url || null,
       media: qMedia,
       tables: [],
+      needs_review: Boolean(r.needs_review),
+      review_reason: r.review_reason || null,
     };
   });
 
@@ -447,12 +520,12 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
   }
 
   const fallbackStats = {
-    questionsDetected: rows.length + errors.length,
+    questionsDetected: rows.length,
     questionsExtracted: rows.length,
     optionsExtracted: optionsExtractedCount,
     diagramsDetected: 0,
     explanationsMatched: explanationsMatchedCount,
-    questionsNeedingReview: errors.length,
+    questionsNeedingReview: rows.filter((r) => r.extraction?.needsReview).length,
   };
 
   return {

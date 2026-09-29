@@ -305,6 +305,93 @@ describe('Answer-Key & Explanation Processing Pipeline', () => {
     expect(parsedSingleLine[0].options[3]).toBe('16 N');
     expect(parsedSingleLine[0].options[3]).not.toContain('EDVEDUM ACADEMY');
   });
+
+  it('correctly extracts questions with pure numeric options (e.g. Q67 & Q68) without excluding them', async () => {
+    const { parseQuestionsFromText } = await import('../../../src/utils/pdfQuestions.js');
+
+    const sample = `
+67. How many orbitals are present in the n=3 shell in total? [Atomic Structure]
+A. 3
+B. 18
+C. 9
+D. 6
+
+68. For n=3 and l=2, how many possible magnetic quantum numbers are there?
+A. 5
+B. 6
+C. 2
+D. 3
+    `;
+
+    // 1. Test parseQuestionsFromText
+    const res = parseQuestionsFromText(sample);
+    expect(res.rows).toHaveLength(2);
+    expect(res.errors).toHaveLength(0);
+
+    const q67 = res.rows.find((q) => q.line === 67);
+    expect(q67).toBeDefined();
+    expect(q67.question_text).toContain('How many orbitals are present in the n=3 shell');
+    expect(q67.chapter).toBe('Atomic Structure');
+    expect(q67.options).toEqual(['3', '18', '9', '6']);
+
+    const q68 = res.rows.find((q) => q.line === 68);
+    expect(q68).toBeDefined();
+    expect(q68.question_text).toContain('how many possible magnetic quantum numbers are there');
+    expect(q68.options).toEqual(['5', '6', '2', '3']);
+
+    // 2. Test parsePdfQuestions
+    const pdfQs = parsePdfQuestions(sample);
+    expect(pdfQs).toHaveLength(2);
+    expect(pdfQs[0].options).toEqual(['3', '18', '9', '6']);
+    expect(pdfQs[1].options).toEqual(['5', '6', '2', '3']);
+  });
+
+  it('extracts multiple options on the same line and preserves all questions', async () => {
+    const { parseQuestionsFromText } = await import('../../../src/utils/pdfQuestions.js');
+
+    const multiOptionSample = `
+1. What is the value of 2 + 2?
+(A) 1    (B) 2    (C) 3    (D) 4
+
+2. What is the value of 5 * 2?
+A. 5    B. 10
+C. 15   D. 20
+    `;
+
+    const res = parseQuestionsFromText(multiOptionSample);
+    expect(res.rows).toHaveLength(2);
+    expect(res.rows[0].options).toEqual(['1', '2', '3', '4']);
+    expect(res.rows[1].options).toEqual(['5', '10', '15', '20']);
+  });
+
+  it('never drops a question even if options could not be automatically separated (pads with review options)', async () => {
+    const { parseQuestionsFromText } = await import('../../../src/utils/pdfQuestions.js');
+
+    const trickySample = `
+10. Describe the working principle of a cyclotron.
+Some non-standard option text that cannot be parsed as A, B, C, D.
+
+11. What is Ohm's law?
+A. V = IR
+B. V = I/R
+C. V = I^2 R
+D. V = R/I
+    `;
+
+    const res = parseQuestionsFromText(trickySample);
+    expect(res.rows).toHaveLength(2);
+
+    const q10 = res.rows.find((q) => q.line === 10);
+    expect(q10).toBeDefined();
+    expect(q10.needs_review).toBe(true);
+    expect(q10.options).toHaveLength(4);
+    expect(q10.options[0]).toContain('[Needs Review]');
+
+    const q11 = res.rows.find((q) => q.line === 11);
+    expect(q11).toBeDefined();
+    expect(q11.needs_review).toBe(false);
+    expect(q11.options).toEqual(['V = IR', 'V = I/R', 'V = I^2 R', 'V = R/I']);
+  });
 });
 
 

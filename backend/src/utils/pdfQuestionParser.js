@@ -68,10 +68,10 @@ export function parsePdfQuestions(text) {
     const options = [];
     let mainText = cleanBodyForOptions;
 
-    // 1. Try matching (A)... (B)... (C)... (D)... or A)... B)... C)... D)...
-    const inlineOptMatches = [...cleanBodyForOptions.matchAll(/(?:\(|\[|\n\s*|^)([A-D])(?:\)|\]|\.|\:)\s*([^(\n]+)/gi)];
+    // 1. Try matching (A)... (B)... (C)... (D)... or A)... B)... C)... D)... or (1)... (2)... (3)... (4)...
+    const inlineOptMatches = [...cleanBodyForOptions.matchAll(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*([^(\n\[\]]+)/gi)];
     if (inlineOptMatches.length >= 2) {
-      const firstIndex = cleanBodyForOptions.search(/(?:\(|\[|\n\s*)([A-D])(?:\)|\]|\.|\:)\s*/i);
+      const firstIndex = cleanBodyForOptions.search(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*/i);
       if (firstIndex !== -1) {
         mainText = cleanBodyForOptions.substring(0, firstIndex).trim();
       }
@@ -88,20 +88,20 @@ export function parsePdfQuestions(text) {
         }
         optText = optText.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
         optText = optText.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
-        optText = stripHeadersAndFooters(optText);
-        if (optText && !options.includes(optText)) {
-          options.push(optText);
+        const cleaned = stripHeadersAndFooters(optText) || optText;
+        if (cleaned && !options.includes(cleaned)) {
+          options.push(cleaned);
         }
       }
     }
 
     // 2. Fallback to multiline options matching
     if (options.length < 2) {
-      const firstOptIndex = cleanBodyForOptions.search(/(?:^|\n)\s*(?:\([A-D]\)|[A-D][\.\)])\s*/i);
+      const firstOptIndex = cleanBodyForOptions.search(/(?:^|\n)\s*(?:\([A-Da-d1-4]\)|[A-Da-d1-4][\.\)])\s*/i);
       if (firstOptIndex !== -1) {
         mainText = cleanBodyForOptions.substring(0, firstOptIndex).trim();
         const optionsBlock = cleanBodyForOptions.substring(firstOptIndex);
-        const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*(?:\(([A-D])\)|([A-D])[\.\)])\s*([^\n]+)/gi);
+        const optMatches = optionsBlock.matchAll(/(?:^|\n)\s*(?:\(([A-Da-d1-4])\)|([A-Da-d1-4])[\.\)])\s*([^\n]+)/gi);
         for (const m of optMatches) {
           let t = m[3].trim();
           const correctMatch = t.match(/(\d|[A-D])\s*Correct\s*Answer/i);
@@ -115,8 +115,8 @@ export function parsePdfQuestions(text) {
           }
           t = t.replace(/(?:Answer|Ans|Correct\s*Answer):\s*[^\n]+/gi, '');
           t = t.replace(/\d*\s*Correct\s*(?:Answer|Option|Ans)?/gi, '').trim();
-          t = stripHeadersAndFooters(t);
-          if (t && !options.includes(t)) options.push(t);
+          const cleaned = stripHeadersAndFooters(t) || t;
+          if (cleaned && !options.includes(cleaned)) options.push(cleaned);
         }
       }
     }
@@ -148,28 +148,35 @@ export function parsePdfQuestions(text) {
     // Instead of silent fake fallbacks like "First Choice Option", flag for review if < 2 options parsed
     const hasValidOptions = options.length >= 2;
     const needsReview = !hasValidOptions;
-    const finalOptions = hasValidOptions ? options : [
-      '[Needs Review] Option A',
-      '[Needs Review] Option B',
-      '[Needs Review] Option C',
-      '[Needs Review] Option D'
-    ];
-
-    if (cleanQText) {
-      questions.push({
-        num: qNum,
-        question_text: cleanQText,
-        options: finalOptions,
-        correct_index: inlineCorrectIndex,
-        marks,
-        bank_category: category,
-        chapter: chapter || null,
-        topic: chapter || null,
-        solution: inlineSolution,
-        needs_review: needsReview,
-        review_reason: needsReview ? `Question ${qNum}: Option text could not be automatically separated. Please review manually.` : null
-      });
+    let finalOptions = [...options];
+    if (finalOptions.length === 0) {
+      finalOptions = [
+        '[Needs Review] Option A',
+        '[Needs Review] Option B',
+        '[Needs Review] Option C',
+        '[Needs Review] Option D',
+      ];
+    } else if (finalOptions.length < 4) {
+      while (finalOptions.length < 4) {
+        finalOptions.push(`[Needs Review] Option ${String.fromCharCode(65 + finalOptions.length)}`);
+      }
     }
+
+    const finalQuestionText = cleanQText || body.split('\n')[0].trim() || `Question ${qNum}`;
+
+    questions.push({
+      num: qNum,
+      question_text: finalQuestionText,
+      options: finalOptions,
+      correct_index: inlineCorrectIndex,
+      marks,
+      bank_category: category,
+      chapter: chapter || null,
+      topic: chapter || null,
+      solution: inlineSolution,
+      needs_review: needsReview,
+      review_reason: needsReview ? `Question ${qNum}: Option text could not be automatically separated. Please review manually.` : null
+    });
   }
 
   // Parse Answer Key & Explanations if available at end of document
