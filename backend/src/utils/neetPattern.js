@@ -1,15 +1,3 @@
-/**
- * NEET UG Pattern Constants, Detection, and Scoring Utilities
- * 
- * NEET UG Exam Structure:
- * - 4 Subjects: Physics, Chemistry, Botany, Zoology (50 questions each, total 200)
- * - Per Subject:
- *   - Section A: 35 questions (all 35 compulsory) -> 140 marks max
- *   - Section B: 15 questions (attempt any 10) -> 40 marks max
- * - Total per subject: 45 questions evaluated -> 180 marks max
- * - Total paper: 180 questions evaluated -> 720 marks maximum
- * - Marking: +4 for correct, -1 for wrong, 0 for unattempted
- */
 
 export const NEET_SUBJECTS = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
 
@@ -52,20 +40,6 @@ export function normalizeNeetSubject(name = '') {
   return null;
 }
 
-/**
- * Resolves the NEET Subject ('Physics', 'Chemistry', 'Botany', 'Zoology'),
- * Section ('A' | 'B'), subject-level Question Number (1 to 50), and overall Question Number (1 to 200).
- *
- * Standard 200-question sequential breakdown:
- * - Q1-Q35:   Physics Section A
- * - Q36-Q50:  Physics Section B
- * - Q51-Q85:  Chemistry Section A
- * - Q86-Q100: Chemistry Section B
- * - Q101-Q135: Botany Section A
- * - Q136-Q150: Botany Section B
- * - Q151-Q185: Zoology Section A
- * - Q186-Q200: Zoology Section B
- */
 export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 200) {
   const pos = Number(q.position || index + 1);
 
