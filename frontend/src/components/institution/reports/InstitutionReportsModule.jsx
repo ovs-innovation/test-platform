@@ -242,7 +242,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                     <span className="text-xs font-extrabold uppercase tracking-wider">Total Enrolled</span>
                     <Users className="h-4 w-4 text-blue-400" />
                   </div>
-                  <p className="text-2xl sm:text-3xl font-black text-white">
+                  <p className={`text-2xl sm:text-3xl font-black mt-1 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                     {overallData?.total_assigned_students || 0}{' '}
                     <span className="text-xs font-normal text-slate-400">/ {overallData?.total_licenses || 50} licenses</span>
                   </p>
@@ -293,15 +293,15 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
 
               {/* PRIMARY VISUAL: SUBJECT-WISE PERFORMANCE BREAKDOWN */}
               <div className={`p-6 sm:p-8 rounded-3xl border shadow-xl ${isDarkMode ? 'bg-[#0B1730] border-slate-800' : 'bg-white border-slate-200'}`}>
-                <h3 className="text-base font-extrabold text-white mb-4">Subject-Wise Mean Accuracy Breakdown</h3>
+                <h3 className={`text-base font-extrabold mb-4 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Subject-Wise Mean Accuracy Breakdown</h3>
                 <div className="space-y-4">
                   {(overallData?.subject_wise_performance || []).map((sub, i) => (
                     <div key={i} className="space-y-1.5">
                       <div className="flex justify-between text-xs font-bold">
-                        <span className="text-slate-300">{sub.subject}</span>
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>{sub.subject}</span>
                         <span className="text-cyan-400">{sub.avg_score}% Avg (Peak: {sub.highest_score}%)</span>
                       </div>
-                      <div className="h-3 w-full rounded-full bg-slate-900 overflow-hidden">
+                      <div className={`h-3 w-full rounded-full overflow-hidden ${isDarkMode ? 'bg-slate-900' : 'bg-slate-200'}`}>
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 transition-all duration-500"
                           style={{ width: `${Math.max(4, sub.avg_score)}%` }}
@@ -358,18 +358,18 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                         <th className="p-4">Trend</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/60">
+                    <tbody className={`divide-y ${isDarkMode ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                       {(rankingsData?.rankings || []).map((st) => (
-                        <tr key={st.student_id} className="hover:bg-slate-800/40 transition">
+                        <tr key={st.student_id} className={`transition ${isDarkMode ? 'hover:bg-slate-800/40' : 'hover:bg-slate-50'}`}>
                           <td className="p-4 font-black text-cyan-400">#{st.institute_rank}</td>
                           <td className="p-4">
-                            <p className="font-extrabold text-white">{st.student_name}</p>
+                            <p className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{st.student_name}</p>
                             <p className="text-[10px] text-slate-400 font-mono">{st.roll_number} • {st.student_email}</p>
                           </td>
-                          <td className="p-4 font-medium text-slate-300">{st.batch_name}</td>
+                          <td className={`p-4 font-medium ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{st.batch_name}</td>
                           <td className="p-4 font-bold text-emerald-400">{st.overall_score}%</td>
                           <td className="p-4 font-mono font-bold text-purple-400">AIR #{st.platform_rank}</td>
-                          <td className="p-4 text-slate-300">{st.tests_attempted} tests</td>
+                          <td className={`p-4 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{st.tests_attempted} tests</td>
                           <td className="p-4">
                             {st.trend === 'up' && (
                               <span className="inline-flex items-center gap-1 text-emerald-400 font-bold">
@@ -403,11 +403,11 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
 
                 {/* PAGINATION CONTROLS */}
                 {rankingsData && rankingsData.total_pages > 1 && (
-                  <div className="flex items-center justify-between p-4 border-t border-slate-800 bg-slate-900/50 text-xs">
+                  <div className={`flex items-center justify-between p-4 border-t text-xs ${isDarkMode ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-slate-50'}`}>
                     <button
                       onClick={() => setRankingsPage((p) => Math.max(1, p - 1))}
                       disabled={rankingsPage <= 1}
-                      className="px-3 py-1.5 rounded-lg border border-slate-700 disabled:opacity-40"
+                      className={`px-3 py-1.5 rounded-lg border disabled:opacity-40 ${isDarkMode ? 'border-slate-700 text-slate-300' : 'border-slate-300 text-slate-700'}`}
                     >
                       Previous
                     </button>
@@ -417,7 +417,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                     <button
                       onClick={() => setRankingsPage((p) => Math.min(rankingsData.total_pages, p + 1))}
                       disabled={rankingsPage >= rankingsData.total_pages}
-                      className="px-3 py-1.5 rounded-lg border border-slate-700 disabled:opacity-40"
+                      className={`px-3 py-1.5 rounded-lg border disabled:opacity-40 ${isDarkMode ? 'border-slate-700 text-slate-300' : 'border-slate-300 text-slate-700'}`}
                     >
                       Next
                     </button>
@@ -436,22 +436,22 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
                 {(batchData?.batches || []).map((b) => (
                   <div key={b.batch_id} className={`p-6 rounded-3xl border shadow-xl relative ${isDarkMode ? 'bg-[#0B1730] border-slate-800' : 'bg-white border-slate-200'}`}>
-                    <h4 className="text-base font-extrabold text-white mb-2">{b.batch_name}</h4>
+                    <h4 className={`text-base font-extrabold mb-2 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{b.batch_name}</h4>
                     <div className="space-y-2 text-xs">
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1.5">
-                        <span className="text-slate-400">Enrolled Students:</span>
-                        <span className="font-bold text-white">{b.total_students}</span>
+                      <div className={`flex justify-between border-b pb-1.5 ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
+                        <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}>Enrolled Students:</span>
+                        <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{b.total_students}</span>
                       </div>
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1.5">
-                        <span className="text-slate-400">Participation Rate:</span>
+                      <div className={`flex justify-between border-b pb-1.5 ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
+                        <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}>Participation Rate:</span>
                         <span className="font-bold text-cyan-400">{b.participation_rate}%</span>
                       </div>
-                      <div className="flex justify-between border-b border-slate-800/60 pb-1.5">
-                        <span className="text-slate-400">Average Score:</span>
+                      <div className={`flex justify-between border-b pb-1.5 ${isDarkMode ? 'border-slate-800/60' : 'border-slate-200'}`}>
+                        <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}>Average Score:</span>
                         <span className="font-black text-emerald-400 text-sm">{b.average_score}%</span>
                       </div>
                       <div className="flex justify-between pt-1">
-                        <span className="text-slate-400">Highest Score:</span>
+                        <span className={isDarkMode ? 'text-slate-400' : 'text-slate-500'}>Highest Score:</span>
                         <span className="font-bold text-purple-400">{b.highest_score}%</span>
                       </div>
                     </div>
@@ -476,12 +476,12 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                         <th className="p-4">Peak Score %</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-800/60">
+                    <tbody className={`divide-y ${isDarkMode ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                       {(batchData?.batches || []).map((b) => (
-                        <tr key={b.batch_id} className="hover:bg-slate-800/40 transition">
-                          <td className="p-4 font-black text-white">{b.batch_name}</td>
-                          <td className="p-4 text-slate-300">{b.total_students}</td>
-                          <td className="p-4 text-slate-300">{b.attempted_students}</td>
+                        <tr key={b.batch_id} className={`transition ${isDarkMode ? 'hover:bg-slate-800/40' : 'hover:bg-slate-50'}`}>
+                          <td className={`p-4 font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{b.batch_name}</td>
+                          <td className={`p-4 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{b.total_students}</td>
+                          <td className={`p-4 ${isDarkMode ? 'text-slate-300' : 'text-slate-600'}`}>{b.attempted_students}</td>
                           <td className="p-4 font-bold text-cyan-400">{b.participation_rate}%</td>
                           <td className="p-4 font-black text-emerald-400">{b.average_score}%</td>
                           <td className="p-4 font-bold text-purple-400">{b.highest_score}%</td>
@@ -505,7 +505,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   <button
                     onClick={() => setTrendMetric('score')}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                      trendMetric === 'score' ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-400'
+                      trendMetric === 'score' ? 'bg-cyan-500 text-white' : isDarkMode ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'
                     }`}
                   >
                     Average Score
@@ -513,7 +513,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   <button
                     onClick={() => setTrendMetric('completion')}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                      trendMetric === 'completion' ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-400'
+                      trendMetric === 'completion' ? 'bg-cyan-500 text-white' : isDarkMode ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'
                     }`}
                   >
                     Completion Rate
@@ -521,7 +521,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   <button
                     onClick={() => setTrendMetric('participation')}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold transition ${
-                      trendMetric === 'participation' ? 'bg-cyan-500 text-white' : 'bg-slate-800 text-slate-400'
+                      trendMetric === 'participation' ? 'bg-cyan-500 text-white' : isDarkMode ? 'bg-slate-800 text-slate-400' : 'bg-slate-200 text-slate-600'
                     }`}
                   >
                     Participation Rate
@@ -532,7 +532,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   <button
                     onClick={() => setTrendInterval('week')}
                     className={`px-3 py-1 rounded-lg text-xs font-bold ${
-                      trendInterval === 'week' ? 'bg-blue-600 text-white' : 'text-slate-400'
+                      trendInterval === 'week' ? 'bg-blue-600 text-white' : isDarkMode ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
                     Weekly
@@ -540,7 +540,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   <button
                     onClick={() => setTrendInterval('month')}
                     className={`px-3 py-1 rounded-lg text-xs font-bold ${
-                      trendInterval === 'month' ? 'bg-blue-600 text-white' : 'text-slate-400'
+                      trendInterval === 'month' ? 'bg-blue-600 text-white' : isDarkMode ? 'text-slate-400' : 'text-slate-600'
                     }`}
                   >
                     Monthly
@@ -550,15 +550,15 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
 
               {/* TREND TIME-SERIES VISUAL */}
               <div className={`p-6 sm:p-8 rounded-3xl border shadow-xl ${isDarkMode ? 'bg-[#0B1730] border-slate-800' : 'bg-white border-slate-200'}`}>
-                <h3 className="text-base font-extrabold text-white mb-6">Performance Evolution vs Platform Benchmark</h3>
+                <h3 className={`text-base font-extrabold mb-6 ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>Performance Evolution vs Platform Benchmark</h3>
                 <div className="space-y-6">
                   {(trendsData?.trends || []).map((t, i) => (
                     <div key={i} className="space-y-2">
                       <div className="flex justify-between text-xs font-bold">
-                        <span className="text-slate-300">{t.period} ({t.test_name})</span>
+                        <span className={isDarkMode ? 'text-slate-300' : 'text-slate-700'}>{t.period} ({t.test_name})</span>
                         <span className="text-cyan-400 font-mono">Inst Avg: {t.institution_average_score}% vs Platform: {t.platform_average_score}%</span>
                       </div>
-                      <div className="h-4 w-full rounded-full bg-slate-900 overflow-hidden relative">
+                      <div className={`h-4 w-full rounded-full overflow-hidden relative ${isDarkMode ? 'bg-slate-900' : 'bg-slate-200'}`}>
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-400"
                           style={{ width: `${Math.max(5, t.institution_average_score)}%` }}
@@ -594,7 +594,7 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                 </div>
                 <div className={`p-5 rounded-3xl border text-center ${isDarkMode ? 'bg-[#0B1730] border-slate-800' : 'bg-white border-slate-200'}`}>
                   <p className="text-xs font-bold text-slate-400 uppercase">Flat / Consistent</p>
-                  <p className="text-2xl font-black text-slate-300 mt-1">{improvementData?.summary?.pct_flat || 17}%</p>
+                  <p className={`text-2xl font-black mt-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>{improvementData?.summary?.pct_flat || 17}%</p>
                 </div>
               </div>
 
@@ -607,9 +607,9 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   </h4>
                   <div className="space-y-3 text-xs">
                     {(improvementData?.top_improvers || []).map((s, idx) => (
-                      <div key={idx} className="flex justify-between items-center p-3 rounded-2xl bg-slate-900/60 border border-slate-800">
+                      <div key={idx} className={`flex justify-between items-center p-3 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                         <div>
-                          <p className="font-extrabold text-white">{s.student_name}</p>
+                          <p className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{s.student_name}</p>
                           <p className="text-[10px] text-slate-400">{s.batch_name}</p>
                         </div>
                         <span className="font-black text-emerald-400 text-sm">+{s.score_change}%</span>
@@ -625,9 +625,9 @@ export default function InstitutionReportsModule({ schoolId, isDarkMode = true, 
                   </h4>
                   <div className="space-y-3 text-xs">
                     {(improvementData?.at_risk_students || []).map((s, idx) => (
-                      <div key={idx} className="flex justify-between items-center p-3 rounded-2xl bg-slate-900/60 border border-slate-800">
+                      <div key={idx} className={`flex justify-between items-center p-3 rounded-2xl border ${isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                         <div>
-                          <p className="font-extrabold text-white">{s.student_name}</p>
+                          <p className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{s.student_name}</p>
                           <p className="text-[10px] text-slate-400">{s.batch_name}</p>
                         </div>
                         <span className="font-black text-rose-400 text-sm">{s.score_change}%</span>

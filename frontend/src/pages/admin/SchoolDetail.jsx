@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { adminService, institutionDashboardService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
+import { useTheme } from '../../context/ThemeContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
 import InstitutionReportsModule from '../../components/institution/reports/InstitutionReportsModule.jsx';
 
@@ -24,6 +25,7 @@ export default function SchoolDetail() {
   const { schoolId } = useParams();
   const navigate = useNavigate();
   const toast = useToast();
+  const { dark } = useTheme();
 
   const numSchoolId = Number(schoolId) || 1;
 
@@ -67,10 +69,10 @@ export default function SchoolDetail() {
 
   if (loading && !schoolInfo) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#060D1A] text-white">
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#060D1A] text-slate-900 dark:text-white">
         <div className="text-center space-y-3">
-          <Spinner className="h-10 w-10 text-cyan-400 mx-auto" />
-          <p className="text-xs font-bold text-slate-400">Loading partner school dashboard...</p>
+          <Spinner className="h-10 w-10 text-blue-500 dark:text-cyan-400 mx-auto" />
+          <p className="text-xs font-bold text-slate-500 dark:text-slate-400">Loading partner school dashboard...</p>
         </div>
       </div>
     );
@@ -84,25 +86,25 @@ export default function SchoolDetail() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#060D1A] text-slate-100 p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#060D1A] text-slate-900 dark:text-slate-100 p-4 sm:p-6 lg:p-8 space-y-6">
       
       {/* TOP BACK BUTTON & HEADER */}
       <div className="flex items-center justify-between gap-4">
         <button
           onClick={() => navigate('/admin/schools')}
-          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs font-bold text-slate-300 hover:text-white hover:bg-slate-800 transition cursor-pointer"
+          className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer shadow-sm"
         >
           <ArrowLeft className="h-4 w-4" />
           <span>Back to Partner Schools</span>
         </button>
 
-        <span className="text-xs font-mono font-bold text-cyan-400 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-500/20">
+        <span className="text-xs font-mono font-bold text-cyan-600 dark:text-cyan-400 bg-cyan-50 dark:bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-200 dark:border-cyan-500/20">
           School ID: {schoolInfo?.code || schoolInfo?.schoolId || `INST-${numSchoolId}`}
         </span>
       </div>
 
       {/* SCHOOL EMBLEM & SUMMARY BANNER */}
-      <div className="rounded-3xl border border-slate-800 bg-[#0A1628] p-6 sm:p-8 shadow-2xl relative overflow-hidden">
+      <div className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0A1628] p-6 sm:p-8 shadow-sm dark:shadow-2xl relative overflow-hidden">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           
           <div className="flex items-center gap-4 sm:gap-5">
@@ -110,7 +112,7 @@ export default function SchoolDetail() {
               <img
                 src={schoolInfo.logo_url}
                 alt={schoolInfo.name}
-                className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-contain bg-white p-2 border border-slate-700 shrink-0"
+                className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl object-contain bg-white p-2 border border-slate-200 dark:border-slate-700 shrink-0"
               />
             ) : (
               <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-600 to-cyan-500 text-white font-black text-xl flex items-center justify-center shadow-xl border border-white/20 shrink-0">
@@ -120,42 +122,42 @@ export default function SchoolDetail() {
 
             <div className="space-y-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 px-3 py-0.5 text-xs font-bold text-cyan-400 border border-cyan-500/20">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-50 dark:bg-cyan-500/10 px-3 py-0.5 text-xs font-bold text-cyan-600 dark:text-cyan-400 border border-cyan-200 dark:border-cyan-500/20">
                   <School className="h-3.5 w-3.5" />
                   Partner Coaching Institute
                 </span>
-                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-400 border border-emerald-500/20">
+                <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-500/10 px-2.5 py-0.5 text-xs font-bold text-emerald-600 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/20">
                   <CheckCircle2 className="h-3 w-3" /> Active Partner
                 </span>
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 {schoolInfo?.name || 'Partner School'}
               </h1>
 
-              <p className="text-xs text-slate-400 font-medium">
-                {schoolInfo?.tagline || 'Institutional CBT Assessment Partner'} • Contact: <span className="text-slate-300 font-bold">{schoolInfo?.contact_email || schoolInfo?.email || 'admin@partner.edu'}</span>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                {schoolInfo?.tagline || 'Institutional CBT Assessment Partner'} • Contact: <span className="text-slate-700 dark:text-slate-300 font-bold">{schoolInfo?.contact_email || schoolInfo?.email || 'admin@partner.edu'}</span>
               </p>
             </div>
           </div>
 
           {/* KPI METRICS CORNER */}
-          <div className="flex items-center gap-4 bg-slate-900/80 p-4 rounded-2xl border border-slate-800 shrink-0">
+          <div className="flex items-center gap-4 bg-slate-50 dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shrink-0">
             <div className="text-right">
-              <p className="text-[11px] font-bold text-slate-400 uppercase">Licenses Issued</p>
-              <p className="text-xl font-black text-cyan-400">{students.length} / {schoolInfo?.total_licenses || schoolInfo?.totalLicenses || 200}</p>
+              <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase">Licenses Issued</p>
+              <p className="text-xl font-black text-cyan-600 dark:text-cyan-400">{students.length} / {schoolInfo?.total_licenses || schoolInfo?.totalLicenses || 200}</p>
             </div>
-            <div className="h-8 w-px bg-slate-800" />
+            <div className="h-8 w-px bg-slate-200 dark:bg-slate-800" />
             <div className="text-right">
-              <p className="text-[11px] font-bold text-slate-400 uppercase">Batches</p>
-              <p className="text-xl font-black text-purple-400">{batches.length}</p>
+              <p className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase">Batches</p>
+              <p className="text-xl font-black text-purple-600 dark:text-purple-400">{batches.length}</p>
             </div>
           </div>
 
         </div>
 
         {/* DETAIL NAVIGATION TABS */}
-        <div className="flex items-center gap-2 pt-6 mt-6 border-t border-slate-800/80 overflow-x-auto">
+        <div className="flex items-center gap-2 pt-6 mt-6 border-t border-slate-200 dark:border-slate-800/80 overflow-x-auto">
           {navTabs.map((t) => {
             const Icon = t.icon;
             const isActive = activeTab === t.id;
@@ -166,7 +168,7 @@ export default function SchoolDetail() {
                 className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                   isActive
                     ? 'bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/25 font-black'
-                    : 'bg-slate-900/60 text-slate-400 hover:text-white hover:bg-slate-800'
+                    : 'bg-slate-100 dark:bg-slate-900/60 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-800'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -179,38 +181,38 @@ export default function SchoolDetail() {
 
       {/* TAB CONTENT VIEWS */}
       {activeTab === 'reports' && (
-        <InstitutionReportsModule schoolId={numSchoolId} batches={batches} isDarkMode={true} />
+        <InstitutionReportsModule schoolId={numSchoolId} batches={batches} isDarkMode={dark} />
       )}
 
       {activeTab === 'overview' && (
-        <div className="p-8 rounded-3xl border border-slate-800 bg-[#0B1730] space-y-4">
-          <h3 className="text-lg font-extrabold text-white">Partner School Overview & Metadata</h3>
+        <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1730] space-y-4 shadow-sm dark:shadow-2xl">
+          <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">Partner School Overview & Metadata</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-              <p className="text-slate-400 font-bold">Contact Email:</p>
-              <p className="text-white font-mono">{schoolInfo?.contact_email || schoolInfo?.email || 'N/A'}</p>
-              <p className="text-slate-400 font-bold mt-3">Contact Mobile:</p>
-              <p className="text-white">{schoolInfo?.contact_mobile || '+91 98765 43210'}</p>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-slate-500 dark:text-slate-400 font-bold">Contact Email:</p>
+              <p className="text-slate-900 dark:text-white font-mono">{schoolInfo?.contact_email || schoolInfo?.email || 'N/A'}</p>
+              <p className="text-slate-500 dark:text-slate-400 font-bold mt-3">Contact Mobile:</p>
+              <p className="text-slate-900 dark:text-white">{schoolInfo?.contact_mobile || '+91 98765 43210'}</p>
             </div>
-            <div className="p-4 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2">
-              <p className="text-slate-400 font-bold">Total Issued Licenses:</p>
-              <p className="text-cyan-400 font-black text-sm">{schoolInfo?.total_licenses || 200} Licenses</p>
-              <p className="text-slate-400 font-bold mt-3">Active Batches:</p>
-              <p className="text-purple-400 font-bold">{batches.length} Active Batches</p>
+            <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2">
+              <p className="text-slate-500 dark:text-slate-400 font-bold">Total Issued Licenses:</p>
+              <p className="text-cyan-600 dark:text-cyan-400 font-black text-sm">{schoolInfo?.total_licenses || 200} Licenses</p>
+              <p className="text-slate-500 dark:text-slate-400 font-bold mt-3">Active Batches:</p>
+              <p className="text-purple-600 dark:text-purple-400 font-bold">{batches.length} Active Batches</p>
             </div>
           </div>
         </div>
       )}
 
       {activeTab === 'batches' && (
-        <div className="p-8 rounded-3xl border border-slate-800 bg-[#0B1730] space-y-4">
-          <h3 className="text-lg font-extrabold text-white">Batches Roster</h3>
+        <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1730] space-y-4 shadow-sm dark:shadow-2xl">
+          <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">Batches Roster</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {batches.map((b) => (
-              <div key={b.id} className="p-5 rounded-2xl bg-slate-900/80 border border-slate-800 space-y-2 text-xs">
-                <p className="font-extrabold text-white text-sm">{b.batch_name || b.name}</p>
-                <p className="text-slate-400">Target Exam: <span className="text-cyan-400 font-bold">{b.target_exam || 'JEE / NEET'}</span></p>
-                <p className="text-slate-400">Students: <span className="text-emerald-400 font-bold">{b.student_count || 0}</span></p>
+              <div key={b.id} className="p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2 text-xs">
+                <p className="font-extrabold text-slate-900 dark:text-white text-sm">{b.batch_name || b.name}</p>
+                <p className="text-slate-500 dark:text-slate-400">Target Exam: <span className="text-cyan-600 dark:text-cyan-400 font-bold">{b.target_exam || 'JEE / NEET'}</span></p>
+                <p className="text-slate-500 dark:text-slate-400">Students: <span className="text-emerald-600 dark:text-emerald-400 font-bold">{b.student_count || 0}</span></p>
               </div>
             ))}
           </div>
@@ -218,9 +220,9 @@ export default function SchoolDetail() {
       )}
 
       {activeTab === 'settings' && (
-        <div className="p-8 rounded-3xl border border-slate-800 bg-[#0B1730] space-y-4">
-          <h3 className="text-lg font-extrabold text-white">License & Account Controls</h3>
-          <p className="text-xs text-slate-400">Manage billing tier, custom package assignments, and administrative access for this partner school.</p>
+        <div className="p-8 rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0B1730] space-y-4 shadow-sm dark:shadow-2xl">
+          <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">License & Account Controls</h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400">Manage billing tier, custom package assignments, and administrative access for this partner school.</p>
         </div>
       )}
 
