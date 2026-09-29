@@ -51,6 +51,7 @@ import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
+import { stripHeadersAndFooters, formatQuestionStructure } from '../utils/questionFormatter.js';
 
 export async function syncFreeTestSeries(test) {
   if (!test) return;
