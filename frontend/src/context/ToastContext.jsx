@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useState, useRef } from 'react';
-import { CheckCircle2, AlertCircle, Info, X } from 'lucide-react';
+import { CheckCircle2, AlertCircle, Info, AlertTriangle, X } from 'lucide-react';
 
 const ToastContext = createContext(null);
 
@@ -80,18 +80,21 @@ export function ToastProvider({ children }) {
     success: (m, d) => push(m, 'success', d),
     error: (m, d) => push(m, 'error', d),
     info: (m, d) => push(m, 'info', d),
+    warning: (m, d) => push(m, 'warning', d),
   };
 
   const styles = {
     success: 'bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-blue-400/30 text-white shadow-2xl shadow-blue-500/30 backdrop-blur-md',
     error: 'bg-slate-900/95 border border-red-500/40 text-slate-100 shadow-2xl backdrop-blur-md',
     info: 'bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] border border-blue-400/30 text-white shadow-xl shadow-blue-500/30 backdrop-blur-md',
+    warning: 'bg-gradient-to-r from-amber-600 to-amber-700 border border-amber-400/40 text-white shadow-xl shadow-amber-500/20 backdrop-blur-md',
   };
 
   const icons = {
     success: <CheckCircle2 className="h-5 w-5 text-white shrink-0" />,
     error: <AlertCircle className="h-5 w-5 text-red-400 shrink-0" />,
     info: <Info className="h-5 w-5 text-white shrink-0" />,
+    warning: <AlertTriangle className="h-5 w-5 text-amber-200 shrink-0" />,
   };
 
   return (

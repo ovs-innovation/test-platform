@@ -515,7 +515,11 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
         toast.success(res.message || `Successfully extracted ${res.extractedCount || 0} questions with options!`);
         if (res.warnings && res.warnings.length > 0) {
-          toast.warning(`Note: ${res.warnings.length} question(s) flagged for review.`);
+          if (typeof toast.warning === 'function') {
+            toast.warning(`Note: ${res.warnings.length} question(s) flagged for review.`);
+          } else if (typeof toast.info === 'function') {
+            toast.info(`Note: ${res.warnings.length} question(s) flagged for review.`);
+          }
         }
         setPdfOpen(false);
         setPdfFile(null);
