@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Download, FileText } from 'lucide-react';
 import { getExamTheme, getSeriesBlurb, getSeriesClassBadge } from '../../lib/testSeriesCover.js';
-import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
+import { getMediaUrl, getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
 
 export default function TestSeriesCard({ series }) {
   const free = Number(series.price) === 0;
@@ -153,7 +153,7 @@ export default function TestSeriesCard({ series }) {
         </div>
 
         <div className="flex items-center gap-2">
-          {series?.brochure_url && (
+          {hasBrochure(series) && (
             <a
               href={getBrochureDownloadUrl(series)}
               download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}

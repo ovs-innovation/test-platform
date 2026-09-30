@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { testSeriesService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
 import { ArrowLeft, ChevronRight, Zap, Clock, Compass, Download, FileText } from 'lucide-react';
-import { getMediaUrl, getBrochureDownloadUrl } from '../../lib/media.js';
+import { getMediaUrl, getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
 
 export default function MySeriesTests() {
   const { slug } = useParams();
@@ -41,7 +41,7 @@ export default function MySeriesTests() {
           </p>
         </div>
 
-        {series?.brochure_url && (
+        {hasBrochure(series) && (
           <a
             href={getBrochureDownloadUrl(series)}
             download={series.brochure_name || `${(series.title || 'test_series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}

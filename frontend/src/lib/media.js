@@ -27,12 +27,26 @@ export function getMediaUrl(url) {
 }
 
 /**
+ * Check if a test series has an admin-uploaded brochure.
+ */
+export function hasBrochure(series) {
+  return Boolean(
+    series &&
+    series.brochure_url &&
+    typeof series.brochure_url === 'string' &&
+    series.brochure_url.trim().length > 0
+  );
+}
+
+/**
  * Returns the direct download URL for a test series brochure.
  * Uses the backend proxy download endpoint (/api/public/test-series/:slug/brochure)
  * which guarantees clean PDF attachment download and avoids external CDN 401 blocks.
+ * Returns empty string if no brochure was uploaded.
  */
 export function getBrochureDownloadUrl(series) {
-  if (series && series.brochure_url) {
+  if (hasBrochure(series)) {
+    const trimmed = series.brochure_url.trim();
     if (series.slug) {
       const apiBase = import.meta.env.VITE_API_URL || '/api';
       const cleanApiBase = apiBase.replace(/\/$/, '');
@@ -40,9 +54,9 @@ export function getBrochureDownloadUrl(series) {
         ? `${cleanApiBase}/public/test-series/${encodeURIComponent(series.slug)}/brochure`
         : `${cleanApiBase}/api/public/test-series/${encodeURIComponent(series.slug)}/brochure`;
     }
-    return getMediaUrl(series.brochure_url);
+    return getMediaUrl(trimmed);
   }
 
-  return '/brochures/edvedum-institutional-brochure.pdf';
+  return '';
 }
 

@@ -409,7 +409,7 @@ export const downloadPublicBrochure = asyncHandler(async (req, res) => {
     [slug]
   );
 
-  if (!result.rowCount || !result.rows[0].brochure_url) {
+  if (!result.rowCount || !result.rows[0].brochure_url || !result.rows[0].brochure_url.trim()) {
     throw ApiError.notFound('Brochure not found for this test series');
   }
 

@@ -120,8 +120,8 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       image_url || '',
       calculatedIsFree,
       display_order ?? 0,
-      brochure_url || null,
-      brochure_name || null,
+      brochure_url && typeof brochure_url === 'string' && brochure_url.trim() ? brochure_url.trim() : null,
+      brochure_name && typeof brochure_name === 'string' && brochure_name.trim() ? brochure_name.trim() : null,
       numericPlanned,
       numericPlanned,
       detectedProgramType,
@@ -140,7 +140,17 @@ export const createTestSeries = asyncHandler(async (req, res) => {
  */
 export const updateTestSeries = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const fields = req.body;
+  const fields = { ...req.body };
+  if ('brochure_url' in fields) {
+    fields.brochure_url = fields.brochure_url && typeof fields.brochure_url === 'string' && fields.brochure_url.trim()
+      ? fields.brochure_url.trim()
+      : null;
+  }
+  if ('brochure_name' in fields) {
+    fields.brochure_name = fields.brochure_name && typeof fields.brochure_name === 'string' && fields.brochure_name.trim()
+      ? fields.brochure_name.trim()
+      : null;
+  }
   const keys = Object.keys(fields);
   if (!keys.length) throw ApiError.badRequest('No fields to update');
   const set = keys.map((k, i) => `${k} = $${i + 1}`);

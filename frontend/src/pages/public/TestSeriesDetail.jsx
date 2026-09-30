@@ -15,7 +15,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getExamTheme } from '../../lib/testSeriesCover.js';
-import { getBrochureDownloadUrl } from '../../lib/media.js';
+import { getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
 
 
 
@@ -410,15 +410,17 @@ export default function TestSeriesDetail() {
               </div>
             </div>
 
-            {/* Brochure Download Button right below the cover image */}
-            <a
-              href={getBrochureDownloadUrl(series)}
-              download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-              className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/70 hover:bg-blue-100/90 text-blue-700 py-3.5 px-4 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
-            >
-              <Download className="h-4 w-4 text-blue-600" />
-              <span>Download Test-Series Brochure (PDF)</span>
-            </a>
+            {/* Brochure Download Button right below the cover image (only when uploaded by admin) */}
+            {hasBrochure(series) && (
+              <a
+                href={getBrochureDownloadUrl(series)}
+                download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/70 hover:bg-blue-100/90 text-blue-700 py-3.5 px-4 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
+              >
+                <Download className="h-4 w-4 text-blue-600" />
+                <span>Download Test-Series Brochure (PDF)</span>
+              </a>
+            )}
           </div>
 
           {/* Details & Action Card */}
@@ -518,14 +520,16 @@ export default function TestSeriesDetail() {
                     <span>Calculate Institutional Pricing</span>
                   </button>
 
-                  <a
-                    href={getBrochureDownloadUrl(series)}
-                    download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-                    className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
-                  >
-                    <Download className="h-4 w-4 text-blue-600" />
-                    <span>Download Test-Series Brochure (PDF)</span>
-                  </a>
+                  {hasBrochure(series) && (
+                    <a
+                      href={getBrochureDownloadUrl(series)}
+                      download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                      className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
+                    >
+                      <Download className="h-4 w-4 text-blue-600" />
+                      <span>Download Test-Series Brochure (PDF)</span>
+                    </a>
+                  )}
 
                   <div className="flex flex-wrap items-center justify-between text-xs pt-1 gap-2">
                     <button
