@@ -245,13 +245,15 @@ export function getSeriesBlurb(series) {
 
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
   const count = series?.test_count || 0;
-  const days = series?.validity_days || 0;
+  const days = Number(series?.validity_days) || 0;
 
   if (Number(series?.price) === 0) {
     return 'Full-length diagnostic mock — enroll free and get your score report instantly.';
   }
   if (/jee/i.test(text)) {
-    return `${count} JEE mocks over ${days} days with national rank and detailed solutions.`;
+    return days > 0
+      ? `${count} JEE mocks over ${days} days with national rank and detailed solutions.`
+      : `${count} JEE mocks with national rank and detailed solutions.`;
   }
   if (isNeetPg(text)) {
     return `${count} NEET PG mocks with clinical focus, rank, and solution review.`;
@@ -259,5 +261,7 @@ export function getSeriesBlurb(series) {
   if (isNeetUg(text)) {
     return `${count} NEET UG mocks with PCB sections, rank, and NEET UG-style interface.`;
   }
-  return `${count} proctored mocks over ${days} days — rank, analytics, and solutions included.`;
+  return days > 0
+    ? `${count} proctored mocks over ${days} days — rank, analytics, and solutions included.`
+    : `${count} proctored mocks — rank, analytics, and solutions included.`;
 }

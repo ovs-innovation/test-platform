@@ -34,7 +34,7 @@ export default function AdminTestSeries() {
     duration_text: '',
     is_featured: false,
     is_active: true,
-    validity_days: 365,
+    validity_days: '',
     image_url: '',
     is_free: false,
     display_order: 0,
@@ -88,7 +88,7 @@ export default function AdminTestSeries() {
       duration_text: s.duration_text || '',
       is_featured: Boolean(s.is_featured),
       is_active: s.is_active !== false,
-      validity_days: s.validity_days || 365,
+      validity_days: (s.validity_days !== null && s.validity_days !== undefined && Number(s.validity_days) > 0) ? Number(s.validity_days) : '',
       image_url: s.image_url || '',
       is_free: Boolean(s.is_free) || Number(s.price) === 0,
       display_order: s.display_order || 0,
@@ -113,7 +113,7 @@ export default function AdminTestSeries() {
       duration_text: '',
       is_featured: false,
       is_active: true,
-      validity_days: 365,
+      validity_days: '',
       image_url: '',
       is_free: false,
       display_order: 0,
@@ -249,11 +249,18 @@ export default function AdminTestSeries() {
     e.preventDefault();
     setSaving(true);
     try {
+      const payload = {
+        ...form,
+        validity_days: (!form.validity_days || Number(form.validity_days) <= 0)
+          ? null
+          : Number(form.validity_days),
+        duration_months: (!form.duration_months || Number(form.duration_months) <= 0) ? null : Number(form.duration_months),
+      };
       if (editing) {
-        await testSeriesService.update(editing.id, form);
+        await testSeriesService.update(editing.id, payload);
         toast.success('Test series updated successfully');
       } else {
-        await testSeriesService.create(form);
+        await testSeriesService.create(payload);
         toast.success('Test series created successfully');
       }
       setModal(false);
@@ -560,14 +567,16 @@ export default function AdminTestSeries() {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Duration (Months)</label>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">
+                Duration (Months) <span className="text-[10px] text-slate-400 font-normal">(Optional)</span>
+              </label>
               <input
                 className="input"
                 type="number"
-                min={1}
-                max={48}
-                value={form.duration_months}
-                onChange={(e) => setForm((f) => ({ ...f, duration_months: Number(e.target.value) }))}
+                min={0}
+                placeholder="12"
+                value={form.duration_months === null || form.duration_months === undefined || form.duration_months === '' ? '' : form.duration_months}
+                onChange={(e) => setForm((f) => ({ ...f, duration_months: e.target.value === '' ? '' : Number(e.target.value) }))}
               />
             </div>
             <div>
@@ -603,16 +612,18 @@ export default function AdminTestSeries() {
               />
             </div>
             <div>
-              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Validity (Days)</label>
+              <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">
+                Validity (Days) <span className="text-[10px] text-slate-400 font-normal">(Optional)</span>
+              </label>
               <input
                 className="input"
                 type="number"
-                min={1}
-                max={730}
-                required
-                value={form.validity_days}
-                onChange={(e) => setForm((f) => ({ ...f, validity_days: Number(e.target.value) }))}
+                min={0}
+                placeholder="365 (Default)"
+                value={form.validity_days === null || form.validity_days === undefined || form.validity_days === '' ? '' : form.validity_days}
+                onChange={(e) => setForm((f) => ({ ...f, validity_days: e.target.value === '' ? '' : Number(e.target.value) }))}
               />
+              <span className="text-[10px] text-slate-400">Default: 365 days if left blank or 0</span>
             </div>
             <div>
               <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Display Order</label>

@@ -401,10 +401,12 @@ export default function TestSeriesDetail() {
                         <span>{plannedTestCount} CBT Tests</span>
                       </span>
                     )}
-                    <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
-                      <span>⏳</span>
-                      <span>{series.validity_days || 365}D</span>
-                    </span>
+                    {Number(series?.validity_days) > 0 && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-950/60 px-3 py-1 text-[11px] sm:text-xs font-extrabold text-white/90 backdrop-blur-md border border-white/20 shadow-xs">
+                        <span>⏳</span>
+                        <span>{series.validity_days}D</span>
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

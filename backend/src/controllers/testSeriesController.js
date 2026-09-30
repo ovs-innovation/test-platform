@@ -100,6 +100,10 @@ export const createTestSeries = asyncHandler(async (req, res) => {
 
   const numericPlanned = Number(planned_tests) || 0;
 
+  const resolvedValidityDays = (validity_days !== undefined && validity_days !== null && validity_days !== '' && Number(validity_days) > 0)
+    ? Number(validity_days)
+    : null;
+
   const result = await query(
     `INSERT INTO test_series (
        title, slug, description, price, validity_days, exam_type, is_featured, is_active,
@@ -113,7 +117,7 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       slug,
       description || '',
       price ?? 0,
-      validity_days ?? 365,
+      resolvedValidityDays,
       detectedExamType,
       is_featured ?? false,
       is_active ?? true,
@@ -141,6 +145,17 @@ export const createTestSeries = asyncHandler(async (req, res) => {
 export const updateTestSeries = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const fields = { ...req.body };
+  if ('validity_days' in fields) {
+    if (fields.validity_days === null || fields.validity_days === '' || Number(fields.validity_days) <= 0) {
+      fields.validity_days = null;
+    } else {
+      fields.validity_days = Number(fields.validity_days);
+    }
+  }
+  if ('duration_months' in fields && fields.duration_months !== undefined && fields.duration_months !== null) {
+    const dm = Number(fields.duration_months);
+    fields.duration_months = (!isNaN(dm) && dm > 0) ? dm : 12;
+  }
   if ('brochure_url' in fields) {
     fields.brochure_url = fields.brochure_url && typeof fields.brochure_url === 'string' && fields.brochure_url.trim()
       ? fields.brochure_url.trim()
@@ -309,7 +324,8 @@ export const enrollTestSeries = asyncHandler(async (req, res) => {
       paymentId = pay.rows[0].id;
     }
 
-    const expires = new Date(Date.now() + series.validity_days * 86400000);
+    const validityDays = (series.validity_days && Number(series.validity_days) > 0) ? Number(series.validity_days) : 365;
+    const expires = new Date(Date.now() + validityDays * 86400000);
     const enroll = await client.query(
       `INSERT INTO student_enrollments (user_id, test_series_id, payment_id, expires_at)
        VALUES ($1,$2,$3,$4) RETURNING *`,
