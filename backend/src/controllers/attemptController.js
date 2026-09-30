@@ -28,6 +28,13 @@ const arraysEqual = (a, b) => {
   return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
 };
 
+const isJeeTest = (assessment = {}, questions = []) => {
+  const type = String(assessment.test_type || '').toUpperCase();
+  const title = String(assessment.title || assessment.test_name || '').toUpperCase();
+  const syllabus = String(assessment.syllabus || '').toUpperCase();
+  return type.includes('JEE') || title.includes('JEE') || syllabus.includes('JEE');
+};
+
 const isMultiSelectQuestion = (q) => {
   if (!q) return false;
   const t = (q.question_type || '').toLowerCase();
@@ -195,10 +202,11 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     const codingMap = new Map(codingRes.rows.map((a) => [a.question_id, a]));
     const subjectiveMap = new Map(subjectiveRes.rows.map((a) => [a.question_id, a.answer_text]));
 
-    const negEnabled = assessment.negative_marking === true;
     const isNeet = isNeetTest(assessment, questionsRes.rows);
-    const negPenalty = isNeet
-      ? (Number(assessment.negative_marks_per_wrong) || 1)
+    const isJee = isJeeTest(assessment, questionsRes.rows);
+    const negEnabled = isNeet || isJee || assessment.negative_marking === true;
+    const negPenalty = isNeet || isJee
+      ? 1
       : (Number(assessment.negative_marks_per_wrong) || 0.25);
 
     let totalMarks = 0;
@@ -907,8 +915,12 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   const codeMap = new Map(codingRes.rows.map((a) => [a.question_id, a.source_code]));
   const subjMap = new Map(subjectiveRes.rows.map((a) => [a.question_id, a.answer_text]));
 
-  const negEnabled = assessment.negative_marking === true;
-  const negPenalty = Number(assessment.negative_marks_per_wrong) || 0.25;
+  const isNeet = isNeetTest(assessment, questionsRes.rows);
+  const isJee = isJeeTest(assessment, questionsRes.rows);
+  const negEnabled = isNeet || isJee || assessment.negative_marking === true;
+  const negPenalty = isNeet || isJee
+    ? 1
+    : (Number(assessment.negative_marks_per_wrong) || 0.25);
 
   const normalizeSubject = (str) => {
     if (!str || typeof str !== 'string') return null;
@@ -1034,7 +1046,6 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       || (Array.isArray(mediaArr) ? mediaArr.find((m) => m && (m.id?.includes('-img-') || m.type === 'diagram' || m.type === 'question'))?.url : null)
       || null;
 
-    const isNeet = isNeetTest(assessment, questionsRes.rows);
     let neetMeta = null;
     if (isNeet) {
       neetMeta = resolveQuestionNeetMeta(q, idx, questionsRes.rows.length);
@@ -1078,7 +1089,39 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   // Compute live ranking data: participant count, ranking availability, rank, percentile, ranking status
   const rankingData = await getAssessmentRankingData(attempt.assessment_id, attempt.candidate_id);
 
-  const rawScore = scoreRes.rows[0] || null;
+  let rawScore = scoreRes.rows[0] || null;
+
+  // Auto-correct any previously stored score that missed negative marking deduction
+  if (rawScore) {
+    let correctedMarks = null;
+    let correctedPercentage = null;
+
+    if (isNeetAssessment && formattedReport?.neetBreakdown) {
+      correctedMarks = formattedReport.neetBreakdown.marksObtained;
+      correctedPercentage = formattedReport.neetBreakdown.percentage;
+    } else if (negEnabled && Number(rawScore.wrong_count) > 0) {
+      const calculatedMarks = Math.max(0, (Number(rawScore.correct_count) * (isJee ? 4 : 4)) - (Number(rawScore.wrong_count) * negPenalty));
+      if (Number(rawScore.marks_obtained) > calculatedMarks) {
+        correctedMarks = calculatedMarks;
+        const total = Number(rawScore.total_marks) || 720;
+        correctedPercentage = Number(((calculatedMarks / total) * 100).toFixed(2));
+      }
+    }
+
+    if (correctedMarks !== null && Number(rawScore.marks_obtained) !== Number(correctedMarks)) {
+      await query(
+        'UPDATE scores SET marks_obtained = $1, percentage = $2 WHERE id = $3',
+        [correctedMarks, correctedPercentage, rawScore.id]
+      );
+      rawScore.marks_obtained = correctedMarks;
+      rawScore.percentage = correctedPercentage;
+      if (formattedReport?.overall) {
+        formattedReport.overall.marks = Number(correctedMarks);
+        formattedReport.overall.percentage = Number(correctedPercentage);
+      }
+    }
+  }
+
   const enhancedScore = rawScore ? {
     ...rawScore,
     total_participants: rankingData.total_participants,
@@ -1188,8 +1231,8 @@ const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = fa
     const neetEval = evaluateNeetAttempt({
       questions: solutions,
       answers: rawAnswers,
-      negEnabled: assessment.negative_marking !== false,
-      negPenalty: Number(assessment.negative_marks_per_wrong) || 1,
+      negEnabled: true,
+      negPenalty: 1,
     });
     neetBreakdown = {
       isNeet: true,
@@ -1225,9 +1268,9 @@ const buildFormattedResult = (attempt, assessment, score, solutions, isNeet = fa
       isNeet,
     },
     overall: {
-      marks: Number(score?.marks_obtained || 0),
+      marks: isNeet && neetBreakdown ? neetBreakdown.marksObtained : Number(score?.marks_obtained || 0),
       totalMarks: isNeet ? 720 : Number(score?.total_marks || assessment.total_marks || 0),
-      percentage: Number(score?.percentage || 0),
+      percentage: isNeet && neetBreakdown ? neetBreakdown.percentage : Number(score?.percentage || 0),
       correct,
       incorrect,
       unattempted,
