@@ -25,7 +25,8 @@ import {
   ChevronUp,
   Filter,
   Check,
-  X
+  X,
+  Users
 } from 'lucide-react';
 import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import SevenDayRevisionPlanCard from '../../components/candidate/SevenDayRevisionPlanCard.jsx';
@@ -130,6 +131,50 @@ export default function ResultPage() {
   const score = data?.score;
   const resultVisible = data?.resultVisible;
   const solutions = data?.solutions;
+
+  // Participant count and threshold-governed ranking metrics
+  const totalParticipants = data?.total_participants ?? data?.totalParticipants ?? score?.total_participants ?? score?.totalParticipants ?? 0;
+  const rankingAvailable = Boolean(data?.ranking_available ?? data?.rankingAvailable ?? score?.ranking_available ?? score?.rankingAvailable);
+  const rankingStatus = data?.ranking_status ?? data?.rankingStatus ?? score?.ranking_status ?? score?.rankingStatus ?? (rankingAvailable ? 'provisional' : 'pending');
+  const rank = data?.rank ?? score?.rank ?? null;
+  const percentile = data?.percentile ?? score?.percentile ?? null;
+
+  // Lightweight polling to keep participant count and rankings current while page is open
+  useEffect(() => {
+    if (!attemptId || attemptId.startsWith('ai-')) return;
+    if (rankingStatus === 'final' || rankingStatus === 'unavailable') return;
+
+    const intervalId = setInterval(async () => {
+      if (typeof document !== 'undefined' && document.visibilityState !== 'visible') return;
+      try {
+        const freshData = await attemptService.getResult(attemptId);
+        if (freshData) {
+          setData((prev) => {
+            if (!prev) return freshData;
+            return {
+              ...prev,
+              total_participants: freshData.total_participants,
+              totalParticipants: freshData.totalParticipants,
+              ranking_available: freshData.ranking_available,
+              rankingAvailable: freshData.rankingAvailable,
+              ranking_status: freshData.ranking_status,
+              rankingStatus: freshData.rankingStatus,
+              rank: freshData.rank,
+              percentile: freshData.percentile,
+              score: {
+                ...prev.score,
+                ...freshData.score,
+              },
+            };
+          });
+        }
+      } catch (_) {
+        // Silent catch for background polling
+      }
+    }, 15000);
+
+    return () => clearInterval(intervalId);
+  }, [attemptId, rankingStatus]);
 
   const accuracy = useMemo(() => {
     if (!score) return null;
@@ -738,23 +783,89 @@ export default function ResultPage() {
                     </p>
                   </div>
 
-                  {/* Rank & Percentile Notice */}
-                  {score?.rank != null && score?.percentile != null ? (
-                    <div className="pt-2 flex items-center justify-center gap-4 text-xs sm:text-sm font-bold">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20">
-                        <Award className="w-4 h-4 text-blue-600" />
-                        All India Rank: #{score.rank}
-                      </span>
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
-                        <Zap className="w-4 h-4 text-indigo-600" />
-                        Percentile: {score.percentile}%
-                      </span>
-                    </div>
-                  ) : (
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium pt-1">
-                      📊 Rank & Percentile will update dynamically once more students complete this test.
-                    </p>
-                  )}
+                  {/* Participant Count, Rank & Percentile Section */}
+                  <div className="pt-2 flex flex-col items-center justify-center gap-2.5">
+                    {/* When ranking is unlocked (>= 50 participants) */}
+                    {rankingAvailable && rank != null && percentile != null ? (
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                            <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                            Total Participants: {totalParticipants}
+                          </span>
+
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 shadow-2xs">
+                            <Award className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                            Your Rank: {rank} / {totalParticipants}
+                          </span>
+
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 shadow-2xs">
+                            <Zap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                            Your Percentile: {Number(percentile).toFixed(2)}
+                          </span>
+
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-extrabold uppercase tracking-wider ${
+                            rankingStatus === 'final'
+                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
+                              : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
+                          }`}>
+                            {rankingStatus === 'final' ? 'Final' : 'Provisional'}
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          {rankingStatus === 'final'
+                            ? 'Official final ranking · Assessment window closed'
+                            : 'Provisional ranking · Submissions remain open'}
+                        </p>
+                      </div>
+                    ) : rankingStatus === 'unavailable' ? (
+                      /* When test closed below internal threshold */
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
+                          {totalParticipants > 0 && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                              <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                              Total Participants: {totalParticipants}
+                            </span>
+                          )}
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                            <Award className="w-4 h-4 text-slate-400" />
+                            Rank: Unavailable
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                            <Zap className="w-4 h-4 text-slate-400" />
+                            Percentile: Unavailable
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          Rank and percentile are unavailable for this test.
+                        </p>
+                      </div>
+                    ) : (
+                      /* When threshold not yet reached (< 50) and test is open / pending */
+                      <div className="flex flex-col items-center gap-2">
+                        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
+                          {totalParticipants > 0 && (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
+                              <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+                              Total Participants: {totalParticipants}
+                            </span>
+                          )}
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 shadow-2xs">
+                            <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+                            Rank: Pending
+                          </span>
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 shadow-2xs">
+                            <Zap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
+                            Percentile: Pending
+                          </span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                          Rank and percentile will be available soon.
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
 

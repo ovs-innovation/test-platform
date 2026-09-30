@@ -5,6 +5,7 @@ import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
 import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS } from '../utils/neetPattern.js';
+import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -357,28 +358,10 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
   });
 
   if (result && !result.alreadyDone && result.score) {
-    // Asynchronously compute background ranks without blocking user response
+    // Asynchronously compute background ranks using unified assessment ranking rules
     setImmediate(async () => {
       try {
-        await query(
-          `WITH ranked AS (
-             SELECT s.attempt_id,
-                    CASE WHEN cnt.total <= 1 THEN NULL ELSE RANK() OVER (ORDER BY s.marks_obtained DESC, s.attempt_id ASC) END AS rk,
-                    CASE WHEN cnt.total <= 1 THEN NULL ELSE ROUND((below.c::numeric / cnt.total) * 100, 2) END AS pct
-             FROM scores s
-             JOIN attempts a ON a.id = s.attempt_id
-             CROSS JOIN (SELECT COUNT(*)::int AS total FROM scores s2 JOIN attempts a2 ON a2.id = s2.attempt_id WHERE a2.assessment_id = $1) cnt
-             LEFT JOIN LATERAL (
-               SELECT COUNT(*)::int AS c FROM scores s3
-               JOIN attempts a3 ON a3.id = s3.attempt_id
-               WHERE a3.assessment_id = $1 AND s3.marks_obtained <= s.marks_obtained
-             ) below ON true
-             WHERE a.assessment_id = $1
-           )
-           UPDATE scores SET rank = ranked.rk, percentile = ranked.pct
-           FROM ranked WHERE scores.attempt_id = ranked.attempt_id`,
-          [result.attempt.assessment_id]
-        );
+        await syncAssessmentRankings(result.attempt.assessment_id);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('[RankComputation] Background rank update error:', e.message);
@@ -1092,6 +1075,22 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   const isNeetAssessment = isNeetTest(assessment, questionsRes.rows);
   const formattedReport = buildFormattedResult(attempt, assessment, scoreRes.rows[0] || null, solutions, isNeetAssessment, answersRes.rows);
 
+  // Compute live ranking data: participant count, ranking availability, rank, percentile, ranking status
+  const rankingData = await getAssessmentRankingData(attempt.assessment_id, attempt.candidate_id);
+
+  const rawScore = scoreRes.rows[0] || null;
+  const enhancedScore = rawScore ? {
+    ...rawScore,
+    total_participants: rankingData.total_participants,
+    totalParticipants: rankingData.total_participants,
+    ranking_available: rankingData.ranking_available,
+    rankingAvailable: rankingData.ranking_available,
+    ranking_status: rankingData.ranking_status,
+    rankingStatus: rankingData.ranking_status,
+    rank: rankingData.rank,
+    percentile: rankingData.percentile,
+  } : null;
+
   res.json({
     attempt: {
       id: attempt.id,
@@ -1108,7 +1107,15 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       test_type: assessment.test_type || null,
       passing_marks: assessment.passing_marks
     },
-    score: scoreRes.rows[0] || null,
+    score: enhancedScore,
+    total_participants: rankingData.total_participants,
+    totalParticipants: rankingData.total_participants,
+    ranking_available: rankingData.ranking_available,
+    rankingAvailable: rankingData.ranking_available,
+    ranking_status: rankingData.ranking_status,
+    rankingStatus: rankingData.ranking_status,
+    rank: rankingData.rank,
+    percentile: rankingData.percentile,
     solutions,
     formattedReport,
     ...formattedReport,

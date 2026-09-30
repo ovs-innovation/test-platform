@@ -1936,7 +1936,7 @@ export async function generateExamMentorStrategyReport(testData = {}) {
     const summaryText = score > 0
       ? (hasValidRank
         ? `Scored ${score}/${total_marks} marks (${percentile}% percentile, AIR #${rank}). Target your priority topics below to boost accuracy.`
-        : `Scored ${score}/${total_marks} marks. Percentile and rank will be available once more students complete this test.`)
+        : `Scored ${score}/${total_marks} marks. Rank and percentile will be available soon.`)
       : `Test analysis complete (${score}/${total_marks} marks). Target your priority topics below to build concept accuracy.`;
     const noteText = `Focusing on your priority revision plan over the next ${daysCount} days will unlock your target score!`;
 
@@ -2018,7 +2018,7 @@ This test covered ONLY these subjects: ${coveredSubjectsText}.
 You MUST NOT mention, reference, or generate topics, root causes, priority items, or study plan content for ANY subject outside ${coveredSubjectsText} — even if you know that subject is part of ${exam_type}'s full syllabus. If ${coveredSubjectsText} is only "Biology," do not mention Physics, Chemistry, or Mathematics anywhere in your response.
 
 --- MISSING DATA RULE ---
-If Percentile or Rank is "Not Available Yet", do NOT state a numerical percentile or rank in your performance summary. Instead state "Percentile and rank will be available once more students complete this test."
+If Percentile or Rank is "Not Available Yet", do NOT state a numerical percentile or rank in your performance summary. Instead state "Rank and percentile will be available soon."
 
 --- ROOT CAUSE ANALYSIS RULE ---
 - For topics tagged as "(0% - Unattempted Entirely)": Explain the root cause as a time-management, pacing, or exam strategy issue (e.g. running out of time, skipping during question selection passes, or unrevised syllabus coverage).

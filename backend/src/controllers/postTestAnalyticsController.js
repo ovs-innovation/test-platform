@@ -190,6 +190,19 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     }
   }
 
+  // Enforce internal 50-participant threshold across all rankings
+  if (totalParticipantsCount < 50) {
+    currentAttemptRank.air = null;
+    currentAttemptRank.state_rank = null;
+    currentAttemptRank.city_rank = null;
+    currentAttemptRank.institute_rank = null;
+    currentAttemptRank.batch_rank = null;
+    currentAttemptRank.percentile = null;
+    currentAttemptRank.ranking_available = false;
+  } else {
+    currentAttemptRank.ranking_available = true;
+  }
+
   // 3. Question-wise answers & peer stats for this test
   const questionPeerStatsRes = await query(
     `WITH question_responses AS (
