@@ -26,11 +26,25 @@ export default function MyTests() {
   }, []);
 
   const completedTests = useMemo(
-    () => availableTests.filter((t) => t.status === 'completed' || t.attempt_status === 'completed'),
+    () =>
+      availableTests.filter(
+        (t) =>
+          t.status === 'completed' ||
+          t.attempt_status === 'completed' ||
+          t.attempt_status === 'submitted' ||
+          t.attempt_status === 'auto_submitted'
+      ),
     [availableTests]
   );
   const upcomingTests = useMemo(
-    () => availableTests.filter((t) => t.status === 'available' || t.status === 'upcoming' || t.attempt_status === 'in_progress'),
+    () =>
+      availableTests.filter(
+        (t) =>
+          (t.status === 'available' || t.status === 'upcoming' || t.attempt_status === 'in_progress') &&
+          t.attempt_status !== 'submitted' &&
+          t.attempt_status !== 'auto_submitted' &&
+          t.attempt_status !== 'completed'
+      ),
     [availableTests]
   );
 
@@ -126,7 +140,11 @@ export default function MyTests() {
                       </span>
                     </p>
                     <p className="mt-0.5 text-[10.5px] font-medium text-slate-500 dark:text-slate-400">
-                      {e.program_type === 'Two Year' || e.planned_tests === 60
+                      {e.completed_tests > 0 && e.completed_tests >= (e.linked_tests || 1)
+                        ? 'All tests completed'
+                        : e.completed_tests > 0
+                        ? `${e.completed_tests} of ${e.linked_tests || e.planned_tests || 1} completed`
+                        : e.program_type === 'Two Year' || e.planned_tests === 60
                         ? 'Schedule published by Admin'
                         : e.scheduled_tests > 0
                         ? 'Schedule available'
@@ -134,9 +152,19 @@ export default function MyTests() {
                     </p>
                   </div>
 
-                  <span className="inline-flex items-center gap-1 rounded-lg bg-blue-600 group-hover:bg-blue-500 px-3 py-1.5 text-xs font-bold text-white shadow-xs transition shrink-0 ml-2">
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-lg px-3 py-1.5 text-xs font-bold text-white shadow-xs transition shrink-0 ml-2 ${
+                      e.completed_tests > 0 && e.completed_tests >= (e.linked_tests || 1)
+                        ? 'bg-emerald-600 group-hover:bg-emerald-500'
+                        : 'bg-blue-600 group-hover:bg-blue-500'
+                    }`}
+                  >
                     <span>
-                      {e.live_tests > 0
+                      {e.completed_tests > 0 && e.completed_tests >= (e.linked_tests || 1)
+                        ? 'View Results'
+                        : e.completed_tests > 0
+                        ? 'View Tests'
+                        : e.live_tests > 0
                         ? 'Start Test'
                         : e.program_type === 'Two Year' || e.planned_tests === 60
                         ? 'Details'

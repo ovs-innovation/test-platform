@@ -244,8 +244,8 @@ export const testSeriesService = {
     }),
   link: (id, test_id) => api.post(`/test-series/${id}/link`, { test_id }).then((r) => r.data),
   unlink: (id, testId) => api.delete(`/test-series/${id}/link/${testId}`).then((r) => r.data),
-  myEnrollments: () => withCache('my_enrollments', () => api.get('/test-series/my/enrollments').then((r) => r.data)),
-  mySeriesTests: (slug) => withCache(`my_series_tests_${slug}`, () => api.get(`/test-series/my/${slug}/tests`).then((r) => r.data)),
+  myEnrollments: () => api.get('/test-series/my/enrollments').then((r) => r.data),
+  mySeriesTests: (slug) => api.get(`/test-series/my/${slug}/tests`).then((r) => r.data),
   enroll: (test_series_id) => {
     clearCache();
     return api.post('/test-series/enroll', { test_series_id }).then((r) => r.data);

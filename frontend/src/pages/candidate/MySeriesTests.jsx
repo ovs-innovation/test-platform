@@ -93,15 +93,19 @@ export default function MySeriesTests() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {t.attempt_status === 'submitted' || t.attempt_status === 'auto_submitted' ? (
+                {t.attempt_status === 'submitted' || t.attempt_status === 'auto_submitted' || t.attempt_status === 'completed' ? (
                   <>
-                    <Badge color="green">{t.percentage != null ? `${t.percentage}% Score` : 'Completed'}</Badge>
+                    <Badge color="green">
+                      {t.percentage != null && t.percentage !== ''
+                        ? `${Math.round(Number(t.percentage))}% Score`
+                        : 'Completed'}
+                    </Badge>
                     {t.attempt_id && (
                       <Link
                         to={`/results/${t.attempt_id}`}
                         className="rounded-lg border border-blue-200 bg-blue-50 px-3 py-1.5 text-xs font-bold text-blue-600 dark:border-blue-900/60 dark:bg-blue-950/40 dark:text-blue-400 hover:bg-blue-600 hover:text-white transition"
                       >
-                        View Solution
+                        View Result
                       </Link>
                     )}
                   </>

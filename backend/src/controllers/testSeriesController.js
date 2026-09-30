@@ -245,15 +245,24 @@ export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
 export const myEnrollments = asyncHandler(async (req, res) => {
   const result = await query(
     `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.image_url, ts.code, ts.target_year, ts.program_type, ts.brochure_url, ts.brochure_name,
-            COUNT(DISTINCT tst.test_id)::int AS planned_tests,
-            COUNT(DISTINCT tst.test_id)::int AS linked_tests,
-            COUNT(DISTINCT CASE WHEN t.test_date IS NOT NULL THEN t.id END)::int AS scheduled_tests,
-            COUNT(DISTINCT CASE WHEN t.is_published = true OR t.status = 'published' THEN t.id END)::int AS published_tests
+            COUNT(DISTINCT COALESCE(tst.test_id, tsa.assessment_id))::int AS planned_tests,
+            COUNT(DISTINCT COALESCE(tst.test_id, tsa.assessment_id))::int AS linked_tests,
+            COUNT(DISTINCT CASE WHEN (t.test_date IS NOT NULL OR a.available_from IS NOT NULL) THEN COALESCE(t.id, a.id) END)::int AS scheduled_tests,
+            COUNT(DISTINCT CASE WHEN (t.is_published = true OR t.status = 'published' OR a.is_published = true) THEN COALESCE(t.id, a.id) END)::int AS published_tests,
+            COUNT(DISTINCT CASE 
+              WHEN (att.status IN ('submitted', 'auto_submitted') AND att.submitted_at IS NOT NULL) 
+                OR tat.submitted_at IS NOT NULL 
+              THEN COALESCE(t.id, a.id) 
+            END)::int AS completed_tests
      FROM student_enrollments se
      JOIN test_series ts ON ts.id = se.test_series_id
      LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
+     LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
      LEFT JOIN tests t ON t.id = tst.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
-     WHERE se.user_id = $1 AND se.status = 'active' AND se.expires_at > NOW()
+     LEFT JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+     LEFT JOIN attempts att ON (att.assessment_id = t.id OR att.assessment_id = a.id) AND att.candidate_id = $1
+     LEFT JOIN test_attempts tat ON (tat.test_id = t.id OR tat.test_id = a.id) AND tat.student_id = $1
+     WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
      GROUP BY se.id, ts.id ORDER BY se.purchased_at DESC`,
     [req.user.id]
   );
@@ -272,7 +281,7 @@ export const enrollTestSeries = asyncHandler(async (req, res) => {
   const series = ts.rows[0];
 
   const existing = await query(
-    `SELECT * FROM student_enrollments WHERE user_id = $1 AND test_series_id = $2 AND status = 'active' AND expires_at > NOW()`,
+    `SELECT * FROM student_enrollments WHERE user_id = $1 AND test_series_id = $2 AND status = 'active' AND (expires_at IS NULL OR expires_at > NOW())`,
     [userId, test_series_id]
   );
   if (existing.rowCount) {
@@ -318,26 +327,85 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
     `SELECT se.id, ts.id AS series_id, ts.title, ts.slug, ts.brochure_url, ts.brochure_name
      FROM student_enrollments se
      JOIN test_series ts ON ts.id = se.test_series_id
-     WHERE se.user_id = $1 AND ts.slug = $2 AND se.status = 'active' AND se.expires_at > NOW()`,
+     WHERE se.user_id = $1 AND ts.slug = $2 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())`,
     [req.user.id, slug]
   );
   if (!enrolled.rowCount) throw ApiError.forbidden('Purchase this test series to access tests');
 
   const testsRes = await query(
-    `SELECT t.*,
-            lat.id AS attempt_id, lat.started_at, lat.submitted_at
+    `WITH raw_items AS (
+        SELECT 
+          tst.series_id,
+          t.id,
+          COALESCE(t.title, t.test_name) AS title,
+          COALESCE(t.title, t.test_name) AS label,
+          COALESCE(t.duration_minutes, 180) AS duration_minutes,
+          COALESCE(t.max_marks, 720) AS max_marks,
+          t.test_date,
+          t.start_time::text AS start_time,
+          t.end_time::text AS end_time,
+          t.available_from,
+          t.available_until,
+          t.question_paper_url,
+          t.solution_pdf_url,
+          t.answer_key_url,
+          1 AS sort_order
+        FROM test_series_tests tst
+        JOIN tests t ON t.id = tst.test_id AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
+
+        UNION ALL
+
+        SELECT 
+          tsa.test_series_id AS series_id,
+          a.id,
+          COALESCE(tsa.label, a.title) AS title,
+          COALESCE(tsa.label, a.title) AS label,
+          COALESCE(a.duration_minutes, 180) AS duration_minutes,
+          COALESCE(a.passing_marks, 720) AS max_marks,
+          a.available_from::date AS test_date,
+          a.start_time::text AS start_time,
+          a.end_time::text AS end_time,
+          a.available_from,
+          a.available_until,
+          a.question_paper_url,
+          a.solution_pdf_url,
+          a.answer_key_url,
+          COALESCE(tsa.position, 1) AS sort_order
+        FROM test_series_assessments tsa
+        JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+     ),
+     series_items AS (
+        SELECT DISTINCT ON (series_id, id) * FROM raw_items
+     )
+     SELECT 
+       item.*,
+       lat.attempt_id,
+       lat.attempt_status,
+       lat.started_at,
+       lat.submitted_at,
+       lat.percentage,
+       lat.marks_obtained
      FROM test_series ts
-     JOIN test_series_tests tst ON tst.series_id = ts.id
-     JOIN tests t ON t.id = tst.test_id AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
+     JOIN series_items item ON item.series_id = ts.id
      LEFT JOIN LATERAL (
-        SELECT ta.id, ta.started_at, ta.submitted_at
-        FROM test_attempts ta
-        WHERE ta.test_id = t.id AND ta.student_id = $2
-        ORDER BY ta.started_at DESC
+        SELECT 
+          COALESCE(att.id, tat.id) AS attempt_id,
+          COALESCE(att.status::text, CASE WHEN tat.submitted_at IS NOT NULL THEN 'submitted' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END) AS attempt_status,
+          COALESCE(att.started_at, tat.started_at) AS started_at,
+          COALESCE(att.submitted_at, tat.submitted_at) AS submitted_at,
+          COALESCE(s.percentage, tat.percentage) AS percentage,
+          COALESCE(s.marks_obtained, tat.score) AS marks_obtained
+        FROM (SELECT 1) dummy
+        LEFT JOIN attempts att ON att.assessment_id = item.id AND att.candidate_id = $2
+        LEFT JOIN scores s ON s.attempt_id = att.id
+        LEFT JOIN test_attempts tat ON tat.test_id = item.id AND tat.student_id = $2
+        ORDER BY 
+          CASE WHEN att.status IN ('submitted', 'auto_submitted') OR tat.submitted_at IS NOT NULL THEN 1 ELSE 2 END ASC,
+          COALESCE(att.submitted_at, tat.submitted_at, att.started_at, tat.started_at) DESC NULLS LAST
         LIMIT 1
-      ) lat ON true
+     ) lat ON true
      WHERE ts.slug = $1
-     ORDER BY t.test_date DESC, t.start_time DESC`,
+     ORDER BY item.sort_order ASC, item.test_date DESC NULLS LAST`,
     [slug, req.user.id]
   );
   res.json({ tests: testsRes.rows, test_series: enrolled.rows[0] });
