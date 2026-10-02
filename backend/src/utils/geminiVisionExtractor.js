@@ -16,6 +16,34 @@ if (!fs.existsSync(diagramsDir)) {
   fs.mkdirSync(diagramsDir, { recursive: true });
 }
 
+/**
+ * Parse numeric answers from raw answer string (e.g. "107 or 108", "5", "2.5, 3.5", "-14").
+ * Preserves multiple accepted answers separately (e.g. [107, 108]) and prevents
+ * naive string stripping logic from removing delimiters and concatenating digits into false numbers like 107108.
+ */
+export function parseNumericAnswers(rawStr) {
+  if (rawStr === null || rawStr === undefined) return { primary: null, acceptedAnswers: [], raw: '' };
+  const str = String(rawStr).trim();
+  if (!str) return { primary: null, acceptedAnswers: [], raw: '' };
+
+  // Match all numbers (including integers, decimals, negative signs)
+  const matches = str.match(/-?\d+(?:\.\d+)?/g);
+  if (!matches || matches.length === 0) {
+    return { primary: null, acceptedAnswers: [], raw: str };
+  }
+
+  const numbers = matches.map(Number).filter((n) => !isNaN(n));
+  if (numbers.length === 0) {
+    return { primary: null, acceptedAnswers: [], raw: str };
+  }
+
+  return {
+    primary: numbers[0],
+    acceptedAnswers: numbers,
+    raw: str,
+  };
+}
+
 class NodeCanvasFactory {
   create(width, height) {
     const canvas = createCanvas(width, height);
@@ -344,38 +372,31 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
     const chunk = pageImages.slice(i, i + PAGE_CONCURRENCY);
     const chunkPromises = chunk.map(async (pageImg) => {
       const pageIndex = pageImg.pageIndex;
-      const isQuestionPage = pageIndex <= 8;
-      const isAnswerKeyPage = pageIndex === 8;
-      const isPage8 = pageIndex === 8;
       const pagePrompt = String.raw`
 You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (JEE Main, JEE Advanced, NEET, BITSAT).
 Analyze the supplied page image representing document Page ${pageIndex}.
 Return valid JSON matching the supplied response schema without markdown fences.
 
-${isPage8 ? String.raw`
-CRITICAL FOR PAGE 8:
-This page contains an "ANSWER KEY" table for Questions 1 to 90.
-You MUST extract ALL 90 answer key items into answerKeyEntries (questionNumber, correctAnswer, numericAnswer, questionType).
-- For MCQs (1-20, 31-50, 61-80): correctAnswer = 'A', 'B', 'C', or 'D'.
-- For Integer/Numerical questions (21-30, 51-60, 81-90): correctAnswer = printed number (e.g. '5', '2890', '107 or 108').
-Also extract any questions printed at the top of Page 8 into questions array.
-` : ''}
+Examine the page content carefully and extract all sections present on this page:
 
-1. EXAM STRUCTURE & QUESTIONS:
-- If questions are printed on this page:
-  - Extract EVERY question: questionNumber (1 to 90), questionType ('mcq' or 'integer'), full question stem in questionText with all formulas in standard LaTeX $...$. NEVER truncate stem or move options into explanation!
-  - MCQ questions have 4 choices: extract into options array with keys 'A', 'B', 'C', 'D' and formulas in LaTeX $...$.
-  - Integer / Numerical questions have fill-in blanks (e.g. "is _____"): set questionType = 'integer', options = [] (empty array). Do NOT invent options.
-  - Chapter & topic: concise NCERT chapter name (< 4 words, e.g. "Binomial Theorem", "3D Geometry", "Definite Integration"). Do NOT repeat words.
-  - Visual Elements: if diagrams, circuits, apparatus, or chemical structures are present in question or options, include in visualElements with box_2d [ymin, xmin, ymax, xmax] (0-1000).
+1. QUESTIONS (if any questions are printed on this page):
+- Extract EVERY question: questionNumber, questionType ('mcq' or 'integer'), full question stem in questionText with all formulas in standard LaTeX $...$. NEVER truncate stem or move options into explanation!
+- MCQ questions: extract into options array with keys 'A', 'B', 'C', 'D' and formulas in LaTeX $...$.
+- Integer / Numerical questions (fill-in-the-blanks / numeric response): set questionType = 'integer', options = [] (empty array). Do NOT invent options.
+- Chapter & topic: concise NCERT chapter name (< 4 words, e.g. "Binomial Theorem", "3D Geometry", "Definite Integration"). Do NOT repeat words.
+- Visual Elements: if diagrams, circuits, apparatus, graphs, or chemical structures are present in question or options, include in visualElements with box_2d [ymin, xmin, ymax, xmax] (0-1000).
 
-2. SOLUTIONS / HINTS (Pages 8 to 17):
-- If solutions or hints are printed on this page:
-  - Extract EVERY solution into the solutions array:
-    - questionNumber: question number it explains (1 to 90).
-    - correctAnswer: printed answer letter or number.
-    - explanation: step-by-step mathematical derivation in Markdown with LaTeX $...$.
-    - visualElements: bounding boxes for diagrams or graphs in solutions.
+2. ANSWER KEY TABLE (if an Answer Key table is printed on this page):
+- Extract ALL answer key items into answerKeyEntries (questionNumber, correctAnswer, numericAnswer, questionType).
+- For MCQs: correctAnswer = 'A', 'B', 'C', or 'D'.
+- For Integer/Numerical questions: correctAnswer = printed number or accepted values (e.g. '5', '2890', '107 or 108').
+
+3. SOLUTIONS / HINTS (if solutions, hints, or explanations are printed on this page):
+- Extract EVERY solution into the solutions array:
+  - questionNumber: question number it explains.
+  - correctAnswer: printed answer letter or number/values (e.g. 'B', '14', '107 or 108').
+  - explanation: step-by-step mathematical derivation in Markdown with LaTeX $...$.
+  - visualElements: bounding boxes for diagrams or graphs in solutions with box_2d [ymin, xmin, ymax, xmax] (0-1000).
 `;
 
       const contents = [
@@ -509,14 +530,15 @@ Also extract any questions printed at the top of Page 8 into questions array.
       const cleanAns = rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim().toUpperCase();
 
       if (['A', 'B', 'C', 'D'].includes(cleanAns)) {
-        answerKeyMap.set(qNum, { type: 'mcq', letter: cleanAns, numeric: null, raw: cleanAns });
+        answerKeyMap.set(qNum, { type: 'mcq', letter: cleanAns, numeric: null, acceptedAnswers: [], raw: cleanAns });
       } else if (cleanAns) {
-        const numVal = parseFloat(cleanAns.replace(/[^\d.-]/g, ''));
+        const parsed = parseNumericAnswers(rawAns);
         answerKeyMap.set(qNum, {
           type: 'integer',
           letter: cleanAns,
-          numeric: isNaN(numVal) ? null : numVal,
-          raw: rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim()
+          numeric: parsed.primary,
+          acceptedAnswers: parsed.acceptedAnswers,
+          raw: rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim(),
         });
       }
     }
@@ -533,14 +555,16 @@ Also extract any questions printed at the top of Page 8 into questions array.
 
       let solCorrect = null;
       let solNumeric = null;
+      let solAcceptedAnswers = [];
       if (sol.correctAnswer || sol.numericAnswer) {
         const rawAns = String(sol.correctAnswer || sol.numericAnswer || '').trim();
         const cleanAns = rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim().toUpperCase();
         if (['A', 'B', 'C', 'D'].includes(cleanAns)) {
           solCorrect = cleanAns;
         } else if (cleanAns) {
-          const numVal = parseFloat(cleanAns.replace(/[^\d.-]/g, ''));
-          solNumeric = isNaN(numVal) ? null : numVal;
+          const parsed = parseNumericAnswers(rawAns);
+          solNumeric = parsed.primary;
+          solAcceptedAnswers = parsed.acceptedAnswers;
           solCorrect = rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim();
         }
       }
@@ -549,24 +573,32 @@ Also extract any questions printed at the top of Page 8 into questions array.
       // If correctAnswer wasn't explicitly extracted, inspect beginning of explanation text:
       // e.g. "(a)", "(b)", "[5]", "[2890]", "Ans: (B)", "21. [5]", "1. (a)", "81. [107 or 108]"
       if (!solCorrect && expText) {
-        const leadingAnsMatch = expText.match(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\(([A-Da-d])\)|\[([0-9\sA-Za-z\-]+)\])\s*[:\.\-–—]?\s*/i);
+        const leadingAnsMatch = expText.match(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\(([A-Da-d])\)|\[([0-9\sA-Za-z\-or/,\.]+)\])\s*[:\.\-–—]?\s*/i);
         if (leadingAnsMatch) {
           if (leadingAnsMatch[1]) {
             solCorrect = leadingAnsMatch[1].toUpperCase();
           } else if (leadingAnsMatch[2]) {
             const rawBracket = leadingAnsMatch[2].trim();
             solCorrect = rawBracket;
-            const numVal = parseFloat(rawBracket.replace(/[^\d.-]/g, ''));
-            solNumeric = isNaN(numVal) ? null : numVal;
+            const parsed = parseNumericAnswers(rawBracket);
+            solNumeric = parsed.primary;
+            solAcceptedAnswers = parsed.acceptedAnswers;
           }
         }
       }
 
       if (solCorrect && !answerKeyMap.has(qNum)) {
         if (['A', 'B', 'C', 'D'].includes(solCorrect)) {
-          answerKeyMap.set(qNum, { type: 'mcq', letter: solCorrect, numeric: null, raw: solCorrect });
+          answerKeyMap.set(qNum, { type: 'mcq', letter: solCorrect, numeric: null, acceptedAnswers: [], raw: solCorrect });
         } else {
-          answerKeyMap.set(qNum, { type: 'integer', letter: solCorrect, numeric: solNumeric, raw: solCorrect });
+          const parsed = parseNumericAnswers(solCorrect);
+          answerKeyMap.set(qNum, {
+            type: 'integer',
+            letter: solCorrect,
+            numeric: solNumeric,
+            acceptedAnswers: solAcceptedAnswers.length > 0 ? solAcceptedAnswers : parsed.acceptedAnswers,
+            raw: solCorrect,
+          });
         }
       }
 
@@ -791,16 +823,10 @@ Also extract any questions printed at the top of Page 8 into questions array.
         });
       }
 
-      // Ensure MCQ question always has at least 4 options
-      while (formattedOptionsWithMedia.length < 4) {
-        const padKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
-        formattedOptionsWithMedia.push({
-          key: padKey,
-          text: `[Needs Review] Option ${padKey}`,
-          media: [],
-        });
+      // Retain actual options; do NOT inject fabricated '[Needs Review]' placeholders
+      if (formattedOptionsWithMedia.length < 4) {
         needsReview = true;
-        reviewReasons.push(`Question Q${qNum} was padded with fallback Option ${padKey}.`);
+        reviewReasons.push(`Question Q${qNum} has only ${formattedOptionsWithMedia.length} options.`);
       }
       totalOptionsCount += formattedOptionsWithMedia.length;
     }
@@ -808,11 +834,16 @@ Also extract any questions printed at the top of Page 8 into questions array.
     // Match Answer Key (Stage 2)
     let finalCorrectAnswer = null;
     let finalNumericAnswer = null;
+    let finalAcceptedAnswers = [];
 
     if (includeAnswers) {
       if (isInteger) {
-        finalNumericAnswer = akEntry?.numeric ?? (akEntry?.raw ? parseFloat(akEntry.raw) : (rawQ.numericAnswer ? parseFloat(rawQ.numericAnswer) : (solEntry?.numericAnswer ? parseFloat(solEntry.numericAnswer) : null)));
-        finalCorrectAnswer = akEntry?.raw || (finalNumericAnswer !== null ? String(finalNumericAnswer) : (rawQ.numericAnswer || solEntry?.numericAnswer || null));
+        const parsed = parseNumericAnswers(akEntry?.raw || rawQ.numericAnswer || solEntry?.numericAnswer || akEntry?.numeric);
+        finalNumericAnswer = (akEntry?.numeric !== undefined && akEntry?.numeric !== null) ? akEntry.numeric : parsed.primary;
+        finalAcceptedAnswers = (akEntry?.acceptedAnswers && akEntry.acceptedAnswers.length > 0)
+          ? akEntry.acceptedAnswers
+          : parsed.acceptedAnswers;
+        finalCorrectAnswer = akEntry?.raw || (finalNumericAnswer !== null ? String(finalNumericAnswer) : null);
       } else {
         finalCorrectAnswer = akEntry?.letter ||
           (rawQ.inlineCorrectAnswer ? String(rawQ.inlineCorrectAnswer).trim().toUpperCase() : null) ||
@@ -914,6 +945,8 @@ Also extract any questions printed at the top of Page 8 into questions array.
       correctAnswer: finalCorrectAnswer,
       numericAnswer: finalNumericAnswer,
       numeric_answer: finalNumericAnswer,
+      acceptedAnswers: finalAcceptedAnswers.length > 0 ? finalAcceptedAnswers : (finalNumericAnswer !== null ? [finalNumericAnswer] : []),
+      accepted_answers: finalAcceptedAnswers.length > 0 ? finalAcceptedAnswers : (finalNumericAnswer !== null ? [finalNumericAnswer] : []),
 
       extraction: {
         confidence: needsReview ? 0.60 : 0.96,
@@ -921,6 +954,7 @@ Also extract any questions printed at the top of Page 8 into questions array.
         sourcePages: combinedSourcePages,
         extractedBy: 'gemini-vision',
         hasAnswerKey,
+        ...(finalAcceptedAnswers.length > 1 ? { acceptedAnswers: finalAcceptedAnswers } : {}),
         ...(reviewReasons.length > 0 ? { reviewReason: reviewReasons.join(' ') } : {}),
       },
     });

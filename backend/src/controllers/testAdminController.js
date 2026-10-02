@@ -50,6 +50,7 @@ import { delCache } from '../config/redis.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
+import { parseNumericAnswers } from '../utils/geminiVisionExtractor.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 import { stripHeadersAndFooters, formatQuestionStructure } from '../utils/questionFormatter.js';
 
@@ -816,9 +817,19 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
           const qType = q.question_type || q.questionType || (q.numeric_answer != null || q.numericAnswer != null ? 'integer' : 'mcq');
           const isInteger = qType === 'integer' || qType === 'numerical';
-          const numericAnswer = q.numeric_answer != null 
-            ? Number(q.numeric_answer) 
-            : (q.numericAnswer != null ? Number(q.numericAnswer) : null);
+
+          const rawNumericInput = q.acceptedAnswers?.length ? q.acceptedAnswers.join(' or ')
+            : (q.accepted_answers?.length ? q.accepted_answers.join(' or ')
+            : (q.numeric_answer ?? q.numericAnswer ?? q.correctAnswer));
+          const parsedNumeric = parseNumericAnswers(rawNumericInput);
+          const numericAnswer = (q.numeric_answer != null && !isNaN(Number(q.numeric_answer)))
+            ? Number(q.numeric_answer)
+            : parsedNumeric.primary;
+          const acceptedAnswers = (Array.isArray(q.acceptedAnswers) && q.acceptedAnswers.length > 0)
+            ? q.acceptedAnswers
+            : (Array.isArray(q.accepted_answers) && q.accepted_answers.length > 0
+              ? q.accepted_answers
+              : (parsedNumeric.acceptedAnswers.length > 0 ? parsedNumeric.acceptedAnswers : (numericAnswer !== null ? [numericAnswer] : [])));
 
           const hasAnswer = Boolean(
             includeAnswers &&
@@ -830,7 +841,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             : null;
           const finalCorrectAnswer = hasAnswer
             ? (isInteger
-                ? (numericAnswer !== null ? String(numericAnswer) : (q.correctAnswer || null))
+                ? (q.correctAnswer || (acceptedAnswers.length > 1 ? acceptedAnswers.join(' or ') : (numericAnswer !== null ? String(numericAnswer) : null)))
                 : (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null)))
             : null;
 
@@ -849,6 +860,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             sourcePages: q.extraction?.sourcePages || [1],
             extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
             hasAnswerKey: hasAnswer,
+            ...(acceptedAnswers.length > 1 ? { acceptedAnswers } : {}),
             ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
           };
           const extractionMetaJson = JSON.stringify(extractionMetaObj);
@@ -939,6 +951,8 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             question_type: qType,
             numericAnswer: numericAnswer,
             numeric_answer: numericAnswer,
+            acceptedAnswers: acceptedAnswers,
+            accepted_answers: acceptedAnswers,
             subject: finalSubject,
             chapter: finalChapter,
             topic: finalTopic,

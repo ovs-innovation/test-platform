@@ -36,7 +36,10 @@ export async function testBiologyReportPipeline(testId = 108, studentId = 14) {
        ans.numeric_answer,
        CASE 
          WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = q.correct_index)
-              OR (q.question_type IN ('integer', 'numerical') AND ans.numeric_answer::text = q.numeric_answer::text)
+              OR (q.question_type IN ('integer', 'numerical') AND (
+                ans.numeric_answer::text = q.numeric_answer::text
+                OR (q.extraction_meta->'acceptedAnswers' IS NOT NULL AND q.extraction_meta->'acceptedAnswers' ? ans.numeric_answer::text)
+              ))
          THEN true ELSE false 
        END AS is_correct,
        CASE WHEN ans.selected_index IS NOT NULL OR ans.numeric_answer IS NOT NULL THEN true ELSE false END AS is_attempted

@@ -437,6 +437,59 @@ D. V = R/I
     expect(res.rows[0].options).toHaveLength(0);
     expect(res.rows[0].needs_review).toBe(false);
   });
+
+  it('safely parses numeric answers with multiple accepted values (e.g. 107 or 108) without string concatenation', async () => {
+    const { parseNumericAnswers } = await import('../../../src/utils/geminiVisionExtractor.js');
+
+    const res1 = parseNumericAnswers('107 or 108');
+    expect(res1.primary).toBe(107);
+    expect(res1.acceptedAnswers).toEqual([107, 108]);
+    expect(res1.acceptedAnswers).not.toContain(107108);
+
+    const res2 = parseNumericAnswers('5');
+    expect(res2.primary).toBe(5);
+    expect(res2.acceptedAnswers).toEqual([5]);
+
+    const res3 = parseNumericAnswers('673');
+    expect(res3.primary).toBe(673);
+    expect(res3.acceptedAnswers).toEqual([673]);
+
+    const res4 = parseNumericAnswers('107, 108');
+    expect(res4.primary).toBe(107);
+    expect(res4.acceptedAnswers).toEqual([107, 108]);
+
+    const res5 = parseNumericAnswers('2.5 / 3.5');
+    expect(res5.primary).toBe(2.5);
+    expect(res5.acceptedAnswers).toEqual([2.5, 3.5]);
+  });
+
+  it('verifies that grading accepts 107 and 108 independently and rejects 107108', async () => {
+    const { checkIsCorrect } = await import('../../../src/utils/neetPattern.js');
+
+    const q = {
+      id: 81,
+      question_type: 'integer',
+      numeric_answer: 107,
+      extraction_meta: {
+        acceptedAnswers: [107, 108],
+      },
+    };
+
+    // Candidate submits 107 -> accepted
+    expect(checkIsCorrect(q, { numeric_answer: '107' })).toBe(true);
+    expect(checkIsCorrect(q, { numeric_answer: 107 })).toBe(true);
+
+    // Candidate submits 108 -> accepted
+    expect(checkIsCorrect(q, { numeric_answer: '108' })).toBe(true);
+    expect(checkIsCorrect(q, { numeric_answer: 108 })).toBe(true);
+
+    // Candidate submits concatenated 107108 -> strictly REJECTED
+    expect(checkIsCorrect(q, { numeric_answer: '107108' })).toBe(false);
+    expect(checkIsCorrect(q, { numeric_answer: 107108 })).toBe(false);
+
+    // Any other number -> rejected
+    expect(checkIsCorrect(q, { numeric_answer: '109' })).toBe(false);
+  });
 });
 
 

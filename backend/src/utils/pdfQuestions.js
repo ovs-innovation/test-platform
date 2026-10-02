@@ -383,6 +383,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             questionType: qType,
             numeric_answer: numericAnswer,
             numericAnswer: numericAnswer,
+            acceptedAnswers: q.acceptedAnswers || (numericAnswer !== null ? [numericAnswer] : []),
+            accepted_answers: q.accepted_answers || (numericAnswer !== null ? [numericAnswer] : []),
             marks: 4,
             bank_category: q.subject || 'General',
             chapter: q.chapter || q.topic || 'General',

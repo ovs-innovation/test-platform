@@ -128,7 +128,7 @@ function isAttemptedAnswer(ans, qType = 'mcq') {
 /**
  * Checks if a response matches correct answer.
  */
-function checkIsCorrect(q, ans) {
+export function checkIsCorrect(q, ans) {
   const type = q.question_type || 'mcq';
   if (type === 'mcq' || type === 'single_choice' || type === 'assertion_reason') {
     return ans?.selected_index === q.correct_index;
@@ -143,12 +143,34 @@ function checkIsCorrect(q, ans) {
   }
   if (type === 'integer') {
     if (ans?.numeric_answer == null) return false;
-    return Math.round(Number(ans.numeric_answer)) === Math.round(Number(q.numeric_answer));
+    const userVal = Number(ans.numeric_answer);
+    const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+    const meta = typeof q.extraction_meta === 'string'
+      ? (() => { try { return JSON.parse(q.extraction_meta); } catch { return null; } })()
+      : q.extraction_meta;
+    const accepted = (
+      Array.isArray(q.accepted_answers) ? q.accepted_answers :
+      Array.isArray(q.acceptedAnswers) ? q.acceptedAnswers :
+      Array.isArray(meta?.acceptedAnswers) ? meta.acceptedAnswers :
+      (targetVal !== null ? [targetVal] : [])
+    ).map(Number);
+    return accepted.length > 0 && accepted.some((acc) => Math.round(userVal) === Math.round(acc));
   }
   if (type === 'numerical') {
     if (ans?.numeric_answer == null) return false;
+    const userVal = Number(ans.numeric_answer);
+    const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
     const tol = Number(q.numerical_tolerance) || 0.01;
-    return Math.abs(Number(ans.numeric_answer) - Number(q.numeric_answer)) <= tol;
+    const meta = typeof q.extraction_meta === 'string'
+      ? (() => { try { return JSON.parse(q.extraction_meta); } catch { return null; } })()
+      : q.extraction_meta;
+    const accepted = (
+      Array.isArray(q.accepted_answers) ? q.accepted_answers :
+      Array.isArray(q.acceptedAnswers) ? q.acceptedAnswers :
+      Array.isArray(meta?.acceptedAnswers) ? meta.acceptedAnswers :
+      (targetVal !== null ? [targetVal] : [])
+    ).map(Number);
+    return accepted.length > 0 && accepted.some((acc) => Math.abs(userVal - acc) <= tol);
   }
   return false;
 }

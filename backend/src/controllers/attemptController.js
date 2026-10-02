@@ -170,6 +170,16 @@ const sanitizeQuestion = (q) => {
   return base;
 };
 
+const getAcceptedNumericAnswers = (q, targetVal) => {
+  const meta = typeof q.extraction_meta === 'string'
+    ? (() => { try { return JSON.parse(q.extraction_meta); } catch { return null; } })()
+    : q.extraction_meta;
+  if (Array.isArray(q.accepted_answers) && q.accepted_answers.length > 0) return q.accepted_answers.map(Number);
+  if (Array.isArray(q.acceptedAnswers) && q.acceptedAnswers.length > 0) return q.acceptedAnswers.map(Number);
+  if (Array.isArray(meta?.acceptedAnswers) && meta.acceptedAnswers.length > 0) return meta.acceptedAnswers.map(Number);
+  return targetVal !== null ? [Number(targetVal)] : [];
+};
+
 const finalizeAttempt = async (attemptId, status = 'submitted') => {
   const result = await withTransaction(async (client) => {
     const attemptRes = await client.query('SELECT * FROM attempts WHERE id = $1 FOR UPDATE', [attemptId]);
@@ -264,8 +274,9 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
         } else if (type === 'integer') {
           const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
           const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
+          const acceptedAnswers = getAcceptedNumericAnswers(q, targetVal);
           if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
-          else if (targetVal !== null && Math.round(userVal) === Math.round(targetVal)) {
+          else if (acceptedAnswers.length > 0 && acceptedAnswers.some((acc) => Math.round(userVal) === Math.round(acc))) {
             correctCount += 1;
             marksObtained += q.marks;
           } else {
@@ -276,8 +287,9 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
           const userVal = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
           const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
           const tol = Number(q.numerical_tolerance) || 0.01;
+          const acceptedAnswers = getAcceptedNumericAnswers(q, targetVal);
           if (userVal === null || Number.isNaN(userVal)) unattemptedCount += 1;
-          else if (targetVal !== null && Math.abs(userVal - targetVal) <= tol) {
+          else if (acceptedAnswers.length > 0 && acceptedAnswers.some((acc) => Math.abs(userVal - acc) <= tol)) {
             correctCount += 1;
             marksObtained += q.marks;
           } else {
@@ -913,7 +925,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(
-      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.section_id, q.subject_id, q.bank_category, q.topic, q.subject, q.chapter, q.image_url, q.solution_image_url, q.media, s.name AS section_name, subj.name AS subject_name, c.name AS chapter_name
+      `SELECT q.id, q.question_type, q.question_text, q.options, q.correct_index, q.correct_indices, q.numeric_answer, q.numerical_tolerance, q.assertion_text, q.reason_text, q.marks, q.position, q.solution, q.test_cases, q.extraction_meta, q.section_id, q.subject_id, q.bank_category, q.topic, q.subject, q.chapter, q.image_url, q.solution_image_url, q.media, s.name AS section_name, subj.name AS subject_name, c.name AS chapter_name
        FROM questions q
        LEFT JOIN assessment_sections s ON s.id = q.section_id
        LEFT JOIN subjects subj ON subj.id = q.subject_id
@@ -1006,9 +1018,16 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
       yourAnswer = ans?.numeric_answer != null ? Number(ans.numeric_answer) : null;
       const targetVal = q.numeric_answer != null ? Number(q.numeric_answer) : null;
       const tol = q.question_type === 'numerical' ? (Number(q.numerical_tolerance) || 0.01) : 0;
+      const acceptedAnswers = getAcceptedNumericAnswers(q, targetVal);
       if (yourAnswer === null || Number.isNaN(yourAnswer)) {
         questionMarksObtained = 0;
-      } else if (targetVal !== null && (q.question_type === 'integer' ? Math.round(yourAnswer) === Math.round(targetVal) : Math.abs(yourAnswer - targetVal) <= tol)) {
+      } else if (
+        acceptedAnswers.length > 0 && (
+          q.question_type === 'integer'
+            ? acceptedAnswers.some((acc) => Math.round(yourAnswer) === Math.round(acc))
+            : acceptedAnswers.some((acc) => Math.abs(yourAnswer - acc) <= tol)
+        )
+      ) {
         correct = true;
         questionMarksObtained = q.marks;
       } else {
