@@ -346,7 +346,7 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             }
           }
 
-          const qType = q.questionType || q.question_type || (q.numericAnswer != null || q.numeric_answer != null ? 'integer' : 'mcq');
+          const qType = q.questionType || q.question_type || ((q.numericAnswer != null || q.numeric_answer != null) && (!q.options || q.options.length === 0) ? 'integer' : 'mcq');
           const isInteger = qType === 'integer' || qType === 'numerical';
           const numericAnswer = q.numericAnswer != null 
             ? Number(q.numericAnswer) 
@@ -420,6 +420,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           chaptersMap: visionResult.chaptersMap || visionResult.topicGridMap || {},
           stats,
           warnings,
+          isPartial: Boolean(visionResult.isPartial),
+          failedPages: visionResult.failedPages || [],
           errors: [],
           question_count: rows.length,
         };

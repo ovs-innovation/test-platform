@@ -52,6 +52,7 @@ import {
   listAssignments,
   removeAssignment,
   uploadTestFile,
+  replayExtractedQuestions,
   generateResults,
   setMissedTestOverride,
   getTestParticipation,
@@ -110,6 +111,7 @@ router.get('/tests/:id/assignments', listAssignments);
 router.post('/tests/:id/assignments', assignTest);
 router.delete('/tests/:id/assignments/:assignmentId', removeAssignment);
 router.post('/tests/:id/upload', uploadTestFile);
+router.post('/tests/:id/replay', replayExtractedQuestions);
 router.get('/tests/:id/extracted-questions', getTestExtractedQuestions);
 router.post('/tests/:id/generate-results', generateResults);
 router.post('/tests/:id/missed-override', setMissedTestOverride);

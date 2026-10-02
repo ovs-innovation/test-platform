@@ -107,7 +107,7 @@ export async function renderPdfToImages(pdfBuffer) {
 /**
  * Crop a visual element (diagram/graph/table/circuit/chemical structure) using normalized 0-1000 bounding box
  */
-export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType, index, customFileName = '') {
+export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType, index, customFileName = '', importNamespace = '') {
   if (!pageImage || !box2d || box2d.length < 4) return null;
 
   const [ymin, xmin, ymax, xmax] = box2d;
@@ -150,8 +150,8 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
 
     if (!croppedBuffer || croppedBuffer.length === 0) return null;
 
-    const qFolder = `q${qNum}`;
-    const targetDir = path.join(__dirname, `../../uploads/${qFolder}`);
+    const folderNamespace = importNamespace ? `${importNamespace}/q${qNum}` : `q${qNum}`;
+    const targetDir = path.join(__dirname, `../../uploads/${folderNamespace}`);
     if (!fs.existsSync(targetDir)) {
       fs.mkdirSync(targetDir, { recursive: true });
     }
@@ -171,11 +171,11 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
 
     // Also persist legacy copy in diagramsDir for older readers
     try {
-      const legacyPath = path.join(diagramsDir, `q${qNum}_${fileName}`);
+      const legacyPath = path.join(diagramsDir, `${importNamespace ? `${importNamespace}_` : ''}q${qNum}_${fileName}`);
       await fs.promises.writeFile(legacyPath, croppedBuffer);
     } catch (_) { }
 
-    return `/uploads/${qFolder}/${fileName}`;
+    return `/uploads/${folderNamespace}/${fileName}`;
   } catch (err) {
     console.warn(`[geminiVisionExtractor] Bounding box crop error for Q${qNum}:`, err.message);
     return null;
@@ -185,14 +185,15 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
 /**
  * Process PDF using Gemini 3 Flash Vision pipeline with separate Answer-Key and Explanation processing stages
  */
-export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswers = true } = {}) {
+export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswers = true, importId = '' } = {}) {
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not configured in environment.');
   }
 
+  const effectiveImportId = importId || `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
   const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
-  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with model: ${modelName} (includeAnswers: ${includeAnswers})`);
+  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with model: ${modelName} (includeAnswers: ${includeAnswers}, importId: ${effectiveImportId})`);
 
   // Step 1: Render PDF pages into high-res images
   const pageImages = await renderPdfToImages(pdfBuffer);
@@ -230,6 +231,22 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
                 properties: {
                   key: { type: Type.STRING },
                   text: { type: Type.STRING },
+                  visualElements: {
+                    type: Type.ARRAY,
+                    items: {
+                      type: Type.OBJECT,
+                      properties: {
+                        type: { type: Type.STRING },
+                        pageIndex: { type: Type.INTEGER },
+                        box_2d: {
+                          type: Type.ARRAY,
+                          items: { type: Type.INTEGER },
+                        },
+                        description: { type: Type.STRING },
+                      },
+                      required: ['type', 'box_2d'],
+                    },
+                  },
                 },
                 required: ['key', 'text'],
               },
@@ -359,15 +376,17 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
     }
   }
 
-  // Step 3: Process PDF page-by-page with concurrency of 2 to guarantee zero token overflow
+  // Step 3: Process PDF page-by-page with concurrency of 3 to optimize speed and guarantee zero token overflow
   console.log(`[PDF Extraction Pipeline] STAGE 2: Processing ${pageImages.length} page(s) page-by-page with concurrency...`);
 
   const allRawQuestions = [];
   const allRawAnswerKeyEntries = [];
   const allRawSolutions = [];
   const allRawTopicGridEntries = [];
+  const failedPages = [];
+  const processedPages = [];
 
-  const PAGE_CONCURRENCY = 2;
+  const PAGE_CONCURRENCY = 3;
   for (let i = 0; i < pageImages.length; i += PAGE_CONCURRENCY) {
     const chunk = pageImages.slice(i, i + PAGE_CONCURRENCY);
     const chunkPromises = chunk.map(async (pageImg) => {
@@ -440,6 +459,12 @@ Examine the page content carefully and extract all sections present on this page
 
       try {
         const parsedOutput = await executePageExtraction();
+        if (!parsedOutput) {
+          console.warn(`[geminiVisionExtractor] Page ${pageIndex} returned null/unparseable JSON after retry.`);
+          failedPages.push(pageIndex);
+          return;
+        }
+
         const batchQuestions = Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : [];
         const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
         const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
@@ -451,8 +476,10 @@ Examine the page content carefully and extract all sections present on this page
         allRawAnswerKeyEntries.push(...batchAnswerKeyEntries);
         allRawSolutions.push(...batchSolutions);
         allRawTopicGridEntries.push(...batchTopicGridEntries);
+        processedPages.push(pageIndex);
       } catch (pageErr) {
         console.error(`[geminiVisionExtractor] Error processing Page ${pageIndex}:`, pageErr.message);
+        failedPages.push(pageIndex);
       }
     });
 
@@ -463,7 +490,19 @@ Examine the page content carefully and extract all sections present on this page
   function mergeQuestionInstances(q1, q2) {
     const text1 = (q1.questionText || '').trim();
     const text2 = (q2.questionText || '').trim();
-    const bestText = text1.length >= text2.length ? text1 : text2;
+    let bestText = text1;
+    if (text1 && text2) {
+      if (text1.includes(text2)) {
+        bestText = text1;
+      } else if (text2.includes(text1)) {
+        bestText = text2;
+      } else {
+        // Question split across page boundary: merge continuation text without discarding either half
+        bestText = `${text1} ${text2}`.trim();
+      }
+    } else {
+      bestText = text1 || text2;
+    }
 
     const pages1 = Array.isArray(q1.sourcePages) ? q1.sourcePages : [];
     const pages2 = Array.isArray(q2.sourcePages) ? q2.sourcePages : [];
@@ -471,7 +510,17 @@ Examine the page content carefully and extract all sections present on this page
 
     const opts1 = Array.isArray(q1.options) ? q1.options : [];
     const opts2 = Array.isArray(q2.options) ? q2.options : [];
-    const bestOptions = opts1.length >= opts2.length ? opts1 : opts2;
+    // Merge options by key across page breaks
+    const optsMap = new Map();
+    for (const opt of [...opts1, ...opts2]) {
+      const key = (typeof opt === 'object' && opt && opt.key) ? String(opt.key).toUpperCase().trim() : '';
+      if (key && !optsMap.has(key)) {
+        optsMap.set(key, opt);
+      } else if (!key && !optsMap.has(String(opt))) {
+        optsMap.set(String(opt), opt);
+      }
+    }
+    const bestOptions = Array.from(optsMap.values());
 
     const vis1 = Array.isArray(q1.visualElements) ? q1.visualElements : [];
     const vis2 = Array.isArray(q2.visualElements) ? q2.visualElements : [];
@@ -714,19 +763,20 @@ Examine the page content carefully and extract all sections present on this page
     const akEntry = answerKeyMap.get(qNum);
     const solEntry = solutionMap.get(qNum);
 
-    const isExplicitInteger = rawQ.questionType === 'integer' || rawQ.questionType === 'numerical';
-    const hasIntegerAnswer = akEntry?.type === 'integer' || (akEntry?.numeric !== undefined && akEntry?.numeric !== null);
-    const stemSuggestsInteger = /(?:is\s*_{2,}|equal\s*to\s*_{2,}|value\s*of\s*.*is\s*_{2,}|will\s*be\s*_{2,}\s*[a-zA-Z%°\/]*\.?$)/i.test(cleanQText);
-    const hasNoPrintedOptions = rawOptions.length === 0;
+    const isExplicitIntegerType = rawQ.questionType === 'integer' || rawQ.questionType === 'numerical';
+    const hasIntegerAnswerKey = akEntry?.type === 'integer' || (akEntry?.numeric !== undefined && akEntry?.numeric !== null && !akEntry?.letter);
+    const hasMcqAnswerKey = akEntry?.type === 'mcq' || (akEntry?.letter && ['A', 'B', 'C', 'D'].includes(String(akEntry.letter).toUpperCase()));
 
-    const isInteger = isExplicitInteger || ((hasNoPrintedOptions || stemSuggestsInteger) && (hasIntegerAnswer || rawOptions.length === 0));
-    const isMulti = rawQ.questionType === 'multi_select' || (Array.isArray(rawQ.correct_indices) && rawQ.correct_indices.length > 1);
+    // Strict classification: An MCQ with missing options must NOT be converted to an integer question.
+    // A blank in the question stem alone is also insufficient because MCQs frequently contain fill-in blanks.
+    const isInteger = !hasMcqAnswerKey && (isExplicitIntegerType || (hasIntegerAnswerKey && rawOptions.length === 0));
+    const isMulti = !isInteger && (rawQ.questionType === 'multi_select' || (Array.isArray(rawQ.correct_indices) && rawQ.correct_indices.length > 1));
     const finalQuestionType = isInteger ? 'integer' : (isMulti ? 'multi_select' : 'mcq');
 
     // Validation Check 3: Options validation (only for MCQs)
     if (!isInteger && rawOptions.length < 2) {
       needsReview = true;
-      reviewReasons.push(`Question Q${qNum} has fewer than 2 options.`);
+      reviewReasons.push(`MCQ question Q${qNum} has fewer than 2 extracted options.`);
     }
 
     // Crop question visual elements
@@ -761,7 +811,7 @@ Examine the page content carefully and extract all sections present on this page
 
           const elemType = rawType;
           const fileTarget = `question-diagram-${vIdx + 1}.png`;
-          const croppedUrl = await cropAndSaveVisualElement(pageImg, vis.box_2d, qNum, elemType, vIdx + 1, fileTarget);
+          const croppedUrl = await cropAndSaveVisualElement(pageImg, vis.box_2d, qNum, elemType, vIdx + 1, fileTarget, effectiveImportId);
 
           if (croppedUrl) {
             questionMedia.push({
@@ -800,7 +850,7 @@ Examine the page content carefully and extract all sections present on this page
             if (pageImg && vis.box_2d) {
               const elemType = vis.type || 'diagram';
               const fileTarget = `option-${optKey.toLowerCase()}${oIdx > 0 ? `-${oIdx + 1}` : ''}.png`;
-              const croppedUrl = await cropAndSaveVisualElement(pageImg, vis.box_2d, qNum, elemType, oIdx + 1, fileTarget);
+              const croppedUrl = await cropAndSaveVisualElement(pageImg, vis.box_2d, qNum, elemType, oIdx + 1, fileTarget, effectiveImportId);
 
               if (croppedUrl) {
                 optMedia.push({
@@ -880,7 +930,7 @@ Examine the page content carefully and extract all sections present on this page
             if (pageImg && sVis.box_2d) {
               const elemType = sVis.type || 'diagram';
               const fileTarget = `explanation-diagram${sIdx > 0 ? `-${sIdx + 1}` : ''}.png`;
-              const sCroppedUrl = await cropAndSaveVisualElement(pageImg, sVis.box_2d, qNum, elemType, sIdx + 1, fileTarget);
+              const sCroppedUrl = await cropAndSaveVisualElement(pageImg, sVis.box_2d, qNum, elemType, sIdx + 1, fileTarget, effectiveImportId);
 
               if (sCroppedUrl) {
                 explanationMedia.push({
@@ -980,13 +1030,26 @@ Examine the page content carefully and extract all sections present on this page
     questionsNeedingReview: questionsNeedingReviewCount,
   };
 
+  if (failedPages.length > 0) {
+    warnings.push(`Incomplete extraction: Document page(s) [${failedPages.sort((a, b) => a - b).join(', ')}] could not be extracted by AI. Partial draft has been preserved.`);
+  }
+
   return {
     questions: finalStructuredQuestions,
     answerKeyMap: Object.fromEntries(Array.from(answerKeyMap.entries()).map(([k, v]) => [k, v.type === 'mcq' ? v.letter : (v.numeric ?? v.raw)])),
     solutionMap: Object.fromEntries(solutionMap),
     topicGridMap: Object.fromEntries(topicGridMap),
     chaptersMap: Object.fromEntries(topicGridMap),
-    stats,
+    isPartial: failedPages.length > 0,
+    failedPages: failedPages.sort((a, b) => a - b),
+    processedPages: processedPages.sort((a, b) => a - b),
+    stats: {
+      ...stats,
+      pagesTotal: pageImages.length,
+      pagesProcessed: processedPages.length,
+      pagesFailed: failedPages.length,
+      isPartial: failedPages.length > 0,
+    },
     warnings,
   };
 }

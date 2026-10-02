@@ -485,6 +485,276 @@ export const removeAssignment = asyncHandler(async (req, res) => {
 });
 
 /**
+ * Persist an array of structured questions into an assessment/test
+ */
+export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
+  includeAnswers = true,
+  relativeUrl = '',
+  extractedBy = 'gemini-vision',
+  pdfExtractionWarnings = []
+} = {}) {
+  let extractedCount = parsedQs.length;
+  let reviewWarnings = parsedQs.filter((q) => q.needs_review || q.extraction?.needsReview).map((q) => q.review_reason || `Question ${q.questionNumber || q.line}: Needs manual review.`);
+  if (pdfExtractionWarnings && pdfExtractionWarnings.length > 0) {
+    reviewWarnings.push(...pdfExtractionWarnings);
+  }
+
+  if (relativeUrl) {
+    await query(
+      'UPDATE tests SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
+      [relativeUrl, id]
+    );
+    await query(
+      'UPDATE assessments SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
+      [relativeUrl, id]
+    ).catch(() => { });
+  }
+
+  if (reviewWarnings.length > 0) {
+    console.warn(`[PDF Import Warning] ${reviewWarnings.length} warning(s)/flag(s):`, reviewWarnings);
+  }
+
+  const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
+  const currentTest = currentTestRes.rows[0] || {};
+
+  await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
+  let calcTotalMarks = 0;
+  let savedCount = 0;
+  const detectedSubjects = new Set();
+  const extractedQuestionsJson = [];
+
+  for (let i = 0; i < parsedQs.length; i++) {
+    const q = parsedQs[i];
+    calcTotalMarks += (q.marks || 4);
+
+    const classification = inferSubjectAndTopic({
+      testName: currentTest.test_name,
+      syllabus: currentTest.syllabus,
+      questionText: q.question_text || q.questionText,
+    });
+
+    const qNum = q.questionNumber || i + 1;
+
+    const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
+    const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
+    const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
+
+    let detectedSectionSubject = null;
+    if (parsedQs.length >= 75) {
+      if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Mathematics';
+      else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Physics';
+      else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Chemistry';
+    }
+
+    const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : (detectedSectionSubject || classification.subject));
+    const finalSubject = qSubject || 'General';
+    if (finalSubject && finalSubject !== 'General') detectedSubjects.add(finalSubject);
+
+    const qTopic = geminiTopic || classification.topic;
+    const finalChapter = geminiChapter || geminiTopic || qTopic || classification.topic || 'General Concepts';
+    const finalTopic = geminiTopic || geminiChapter || qTopic || classification.topic || 'General Concepts';
+
+    const qType = q.question_type || q.questionType || (q.numeric_answer != null || q.numericAnswer != null ? 'integer' : 'mcq');
+    const isInteger = qType === 'integer' || qType === 'numerical';
+
+    const rawNumericInput = q.acceptedAnswers?.length ? q.acceptedAnswers.join(' or ')
+      : (q.accepted_answers?.length ? q.accepted_answers.join(' or ')
+      : (q.numeric_answer ?? q.numericAnswer ?? q.correctAnswer));
+    const parsedNumeric = parseNumericAnswers(rawNumericInput);
+    const numericAnswer = (q.numeric_answer != null && !isNaN(Number(q.numeric_answer)))
+      ? Number(q.numeric_answer)
+      : parsedNumeric.primary;
+    const acceptedAnswers = (Array.isArray(q.acceptedAnswers) && q.acceptedAnswers.length > 0)
+      ? q.acceptedAnswers
+      : (Array.isArray(q.accepted_answers) && q.accepted_answers.length > 0
+        ? q.accepted_answers
+        : (parsedNumeric.acceptedAnswers.length > 0 ? parsedNumeric.acceptedAnswers : (numericAnswer !== null ? [numericAnswer] : [])));
+
+    const hasAnswer = Boolean(
+      includeAnswers &&
+      (q.correctAnswer || (q.correct_index !== null && q.correct_index !== undefined) || numericAnswer !== null) &&
+      q.extraction?.hasAnswerKey !== false
+    );
+    const dbCorrectIndex = (hasAnswer && !isInteger && q.correct_index !== null && q.correct_index !== undefined)
+      ? Number(q.correct_index)
+      : null;
+    const finalCorrectAnswer = hasAnswer
+      ? (isInteger
+          ? (q.correctAnswer || (acceptedAnswers.length > 1 ? acceptedAnswers.join(' or ') : (numericAnswer !== null ? String(numericAnswer) : null)))
+          : (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null)))
+      : null;
+
+    const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
+    const solutionMediaUrl = q.solution_image_url || (q.explanation?.media && q.explanation.media.length > 0 ? q.explanation.media[0].url : null);
+    const allMedia = [
+      ...(q.question?.media || []),
+      ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
+      ...(q.explanation?.media || []),
+    ];
+    const mediaArrayJson = JSON.stringify(allMedia.length > 0 ? allMedia : (q.media || []));
+    const tablesArrayJson = JSON.stringify(q.tables || []);
+    const extractionMetaObj = {
+      confidence: q.extraction?.confidence || (q.needs_review ? 0.60 : 0.96),
+      needsReview: Boolean(q.extraction?.needsReview ?? q.needs_review),
+      sourcePages: q.extraction?.sourcePages || [1],
+      extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
+      hasAnswerKey: hasAnswer,
+      ...(acceptedAnswers.length > 1 ? { acceptedAnswers } : {}),
+      ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
+    };
+    const extractionMetaJson = JSON.stringify(extractionMetaObj);
+
+    const questionMedia = Array.isArray(q.question?.media)
+      ? q.question.media
+      : (Array.isArray(q.media) && q.media.length > 0 ? q.media : (primaryMediaUrl ? [{
+        id: `q${qNum}-img-1`,
+        type: 'diagram',
+        url: primaryMediaUrl,
+        description: `Diagram for question ${qNum}`,
+        sourcePage: q.extraction?.sourcePages?.[0] || 1,
+      }] : []));
+
+    const cleanOptionText = (raw) => {
+      const s = String(raw || '').trim();
+      const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
+      return stripHeadersAndFooters(stripped) || stripped;
+    };
+
+    let formattedOptionsWithMedia = [];
+    if (!isInteger) {
+      if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
+        formattedOptionsWithMedia = q.options.map((opt) => ({
+          key: String(opt.key).toUpperCase().trim(),
+          text: cleanOptionText(opt.text),
+          media: Array.isArray(opt.media) ? opt.media : [],
+        }));
+      } else if (Array.isArray(q.rawOptions)) {
+        formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
+          key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
+          text: cleanOptionText(typeof opt === 'object' && opt.text !== undefined ? opt.text : opt),
+          media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
+        }));
+      } else if (Array.isArray(q.options)) {
+        formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
+          key: String.fromCharCode(65 + optIdx),
+          text: cleanOptionText(optText),
+          media: [],
+        }));
+      }
+
+      if (formattedOptionsWithMedia.length < 4) {
+        q.needs_review = true;
+      }
+    }
+
+    const optionsToStore = isInteger ? [] : (formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : (q.options || []));
+    const rawQText = q.question?.text || q.question_text || q.questionText || '';
+    const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
+
+    parsedQs[i]._dbRow = {
+      assessment_id: id,
+      question_text: cleanFinalQText,
+      question_type: qType,
+      options: JSON.stringify(optionsToStore),
+      correct_index: dbCorrectIndex,
+      numeric_answer: numericAnswer,
+      marks: q.marks || 4,
+      position: i + 1,
+      bank_category: finalSubject || 'General',
+      solution: formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''))),
+      subject: finalSubject,
+      topic: finalTopic,
+      chapter: finalChapter,
+      image_url: primaryMediaUrl,
+      solution_image_url: solutionMediaUrl,
+      media: mediaArrayJson,
+      tables: tablesArrayJson,
+      extraction_meta: extractionMetaJson,
+    };
+
+    const rawExplanation = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
+    const explanationText = formatQuestionStructure(stripHeadersAndFooters(rawExplanation));
+    const explanationMedia = Array.isArray(q.explanation?.media) ? q.explanation.media : [];
+
+    extractedQuestionsJson.push({
+      questionNumber: qNum,
+      questionType: qType,
+      question_type: qType,
+      numericAnswer: numericAnswer,
+      numeric_answer: numericAnswer,
+      acceptedAnswers: acceptedAnswers,
+      accepted_answers: acceptedAnswers,
+      subject: finalSubject,
+      chapter: finalChapter,
+      topic: finalTopic,
+
+      question: {
+        text: q.question?.text || q.question_text || q.questionText || '',
+        media: questionMedia,
+      },
+
+      options: isInteger ? [] : formattedOptionsWithMedia,
+
+      explanation: {
+        text: explanationText,
+        media: explanationMedia,
+      },
+
+      tables: Array.isArray(q.tables) ? q.tables : [],
+      correctAnswer: finalCorrectAnswer,
+      extraction: extractionMetaObj,
+    });
+  }
+
+  const dbRows = parsedQs.map((q) => q._dbRow).filter(Boolean);
+  if (dbRows.length > 0) {
+    const valueClauses = [];
+    const bulkParams = [];
+    let pIdx = 1;
+    for (const r of dbRows) {
+      valueClauses.push(
+        `($${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
+      );
+      bulkParams.push(
+        r.assessment_id, r.question_text, r.question_type || 'mcq', r.options,
+        r.correct_index, r.marks, r.position, r.bank_category,
+        r.solution, r.subject, r.topic, r.chapter,
+        r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta,
+        r.numeric_answer
+      );
+    }
+    const bulkSql = `INSERT INTO questions (
+      assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
+    ) VALUES ${valueClauses.join(', ')}`;
+    await query(bulkSql, bulkParams);
+    savedCount = dbRows.length;
+  }
+
+  const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
+  const subjectsArray = Array.from(detectedSubjects);
+
+  if (calcTotalMarks > 0 || primarySubject) {
+    await query(
+      `UPDATE tests SET 
+        max_marks = GREATEST(max_marks, $1),
+        subject = COALESCE(subject, $2),
+        subjects = COALESCE(subjects, $3::jsonb),
+        updated_at = NOW()
+       WHERE id = $4`,
+      [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
+    );
+    await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
+  }
+
+  return {
+    extractedCount: savedCount,
+    extractedQuestionsJson,
+    reviewWarnings,
+    savedCount
+  };
+}
+
+/**
  * 10. POST /api/admin/tests/:id/upload
  * Upload question paper, answer key, or solution PDF
  */
@@ -747,284 +1017,19 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       extractionStats = pdfExtraction.stats || null;
       const parsedQs = pdfExtraction.rows || [];
 
-
       if (file_type === 'question_paper' && parsedQs.length > 0) {
-        extractedCount = parsedQs.length;
-        reviewWarnings = parsedQs.filter((q) => q.needs_review || q.extraction?.needsReview).map((q) => q.review_reason || `Question ${q.questionNumber || q.line}: Needs manual review.`);
-        if (pdfExtraction.warnings && pdfExtraction.warnings.length > 0) {
-          reviewWarnings.push(...pdfExtraction.warnings);
-        }
-
-        // Also ensure question_paper_url is populated on test & assessment if missing
-        await query(
-          'UPDATE tests SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
-          [relativeUrl, id]
-        );
-        await query(
-          'UPDATE assessments SET question_paper_url = COALESCE(question_paper_url, $1), updated_at = NOW() WHERE id = $2',
-          [relativeUrl, id]
-        ).catch(() => { });
-
-        if (reviewWarnings.length > 0) {
-          console.warn(`[PDF Import Warning] ${reviewWarnings.length} warning(s)/flag(s):`, reviewWarnings);
-        }
-
         console.log(`[PDF Extraction Pipeline] STAGE 5: Questions Before DB Save = ${parsedQs.length} question(s)`);
+        const persistResult = await persistExtractedQuestionsToAssessment(id, parsedQs, {
+          includeAnswers,
+          relativeUrl,
+          extractedBy,
+          pdfExtractionWarnings: pdfExtraction.warnings || []
+        });
 
-        // Retrieve test details for context
-        const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
-        const currentTest = currentTestRes.rows[0] || {};
-
-        // DELETE existing questions ONLY after we have confirmed the new set is ready
-        await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
-        let calcTotalMarks = 0;
-        let savedCount = 0;
-        const detectedSubjects = new Set();
-
-        for (let i = 0; i < parsedQs.length; i++) {
-          const q = parsedQs[i];
-          calcTotalMarks += (q.marks || 4);
-
-          const classification = inferSubjectAndTopic({
-            testName: currentTest.test_name,
-            syllabus: currentTest.syllabus,
-            questionText: q.question_text || q.questionText,
-          });
-
-          const qNum = q.questionNumber || i + 1;
-
-          // Prefer Gemini-extracted subject/chapter/topic; fall back to keyword classifier
-          const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
-          const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
-          const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
-
-          // For standard JEE/NEET competitive tests: infer section subject by question position if subject is unassigned
-          let detectedSectionSubject = null;
-          if (parsedQs.length >= 75) {
-            if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Mathematics';
-            else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Physics';
-            else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Chemistry';
-          }
-
-          const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : (detectedSectionSubject || classification.subject));
-          const finalSubject = qSubject || 'General';
-          if (finalSubject && finalSubject !== 'General') detectedSubjects.add(finalSubject);
-
-          const qTopic = geminiTopic || classification.topic;
-          // Use Gemini chapter/topic first; then keyword-classifier topic; last resort 'General Concepts'
-          const finalChapter = geminiChapter || geminiTopic || qTopic || classification.topic || 'General Concepts';
-          const finalTopic = geminiTopic || geminiChapter || qTopic || classification.topic || 'General Concepts';
-
-          const qType = q.question_type || q.questionType || (q.numeric_answer != null || q.numericAnswer != null ? 'integer' : 'mcq');
-          const isInteger = qType === 'integer' || qType === 'numerical';
-
-          const rawNumericInput = q.acceptedAnswers?.length ? q.acceptedAnswers.join(' or ')
-            : (q.accepted_answers?.length ? q.accepted_answers.join(' or ')
-            : (q.numeric_answer ?? q.numericAnswer ?? q.correctAnswer));
-          const parsedNumeric = parseNumericAnswers(rawNumericInput);
-          const numericAnswer = (q.numeric_answer != null && !isNaN(Number(q.numeric_answer)))
-            ? Number(q.numeric_answer)
-            : parsedNumeric.primary;
-          const acceptedAnswers = (Array.isArray(q.acceptedAnswers) && q.acceptedAnswers.length > 0)
-            ? q.acceptedAnswers
-            : (Array.isArray(q.accepted_answers) && q.accepted_answers.length > 0
-              ? q.accepted_answers
-              : (parsedNumeric.acceptedAnswers.length > 0 ? parsedNumeric.acceptedAnswers : (numericAnswer !== null ? [numericAnswer] : [])));
-
-          const hasAnswer = Boolean(
-            includeAnswers &&
-            (q.correctAnswer || (q.correct_index !== null && q.correct_index !== undefined) || numericAnswer !== null) &&
-            q.extraction?.hasAnswerKey !== false
-          );
-          const dbCorrectIndex = (hasAnswer && !isInteger && q.correct_index !== null && q.correct_index !== undefined)
-            ? Number(q.correct_index)
-            : null;
-          const finalCorrectAnswer = hasAnswer
-            ? (isInteger
-                ? (q.correctAnswer || (acceptedAnswers.length > 1 ? acceptedAnswers.join(' or ') : (numericAnswer !== null ? String(numericAnswer) : null)))
-                : (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null)))
-            : null;
-
-          const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
-          const solutionMediaUrl = q.solution_image_url || (q.explanation?.media && q.explanation.media.length > 0 ? q.explanation.media[0].url : null);
-          const allMedia = [
-            ...(q.question?.media || []),
-            ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
-            ...(q.explanation?.media || []),
-          ];
-          const mediaArrayJson = JSON.stringify(allMedia.length > 0 ? allMedia : (q.media || []));
-          const tablesArrayJson = JSON.stringify(q.tables || []);
-          const extractionMetaObj = {
-            confidence: q.extraction?.confidence || (q.needs_review ? 0.60 : 0.96),
-            needsReview: Boolean(q.extraction?.needsReview ?? q.needs_review),
-            sourcePages: q.extraction?.sourcePages || [1],
-            extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
-            hasAnswerKey: hasAnswer,
-            ...(acceptedAnswers.length > 1 ? { acceptedAnswers } : {}),
-            ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
-          };
-          const extractionMetaJson = JSON.stringify(extractionMetaObj);
-
-          // Build question media
-          const questionMedia = Array.isArray(q.question?.media)
-            ? q.question.media
-            : (Array.isArray(q.media) && q.media.length > 0 ? q.media : (primaryMediaUrl ? [{
-              id: `q${qNum}-img-1`,
-              type: 'diagram',
-              url: primaryMediaUrl,
-              description: `Diagram for question ${qNum}`,
-              sourcePage: q.extraction?.sourcePages?.[0] || 1,
-            }] : []));
-
-          // Build options with media (clean any redundant leading key like "(A) " from option text and running footers)
-          const cleanOptionText = (raw) => {
-            const s = String(raw || '').trim();
-            const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
-            return stripHeadersAndFooters(stripped) || stripped;
-          };
-
-          let formattedOptionsWithMedia = [];
-          if (!isInteger) {
-            if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
-              formattedOptionsWithMedia = q.options.map((opt) => ({
-                key: String(opt.key).toUpperCase().trim(),
-                text: cleanOptionText(opt.text),
-                media: Array.isArray(opt.media) ? opt.media : [],
-              }));
-            } else if (Array.isArray(q.rawOptions)) {
-              formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
-                key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
-                text: cleanOptionText(typeof opt === 'object' && opt.text !== undefined ? opt.text : opt),
-                media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
-              }));
-            } else if (Array.isArray(q.options)) {
-              formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
-                key: String.fromCharCode(65 + optIdx),
-                text: cleanOptionText(optText),
-                media: [],
-              }));
-            }
-
-            // Retain actual extracted options; do NOT inject fabricated '[Needs Review]' placeholders
-            if (formattedOptionsWithMedia.length < 4) {
-              q.needs_review = true;
-            }
-          }
-
-          // Preserve options format with media in DB (empty for integer questions)
-          const optionsToStore = isInteger ? [] : (formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : (q.options || []));
-
-          const rawQText = q.question?.text || q.question_text || q.questionText || '';
-          const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
-
-          // Accumulate row data for bulk INSERT after the loop
-          parsedQs[i]._dbRow = {
-            assessment_id: id,
-            question_text: cleanFinalQText,
-            question_type: qType,
-            options: JSON.stringify(optionsToStore),
-            correct_index: dbCorrectIndex,
-            numeric_answer: numericAnswer,
-            marks: q.marks || 4,
-            position: i + 1,
-            bank_category: finalSubject || 'General',
-            solution: formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''))),
-            subject: finalSubject,
-            topic: finalTopic,
-            chapter: finalChapter,
-            image_url: primaryMediaUrl,
-            solution_image_url: solutionMediaUrl,
-            media: mediaArrayJson,
-            tables: tablesArrayJson,
-            extraction_meta: extractionMetaJson,
-          };
-
-          // Build explanation
-          const rawExplanation = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
-          const explanationText = formatQuestionStructure(stripHeadersAndFooters(rawExplanation));
-          const explanationMedia = Array.isArray(q.explanation?.media) ? q.explanation.media : [];
-
-          // Build standardized structured JSON format matching requested schema exactly
-          extractedQuestionsJson.push({
-            questionNumber: qNum,
-            questionType: qType,
-            question_type: qType,
-            numericAnswer: numericAnswer,
-            numeric_answer: numericAnswer,
-            acceptedAnswers: acceptedAnswers,
-            accepted_answers: acceptedAnswers,
-            subject: finalSubject,
-            chapter: finalChapter,
-            topic: finalTopic,
-
-            question: {
-              text: q.question?.text || q.question_text || q.questionText || '',
-              media: questionMedia,
-            },
-
-            options: isInteger ? [] : formattedOptionsWithMedia,
-
-            explanation: {
-              text: explanationText,
-              media: explanationMedia,
-            },
-
-            tables: Array.isArray(q.tables) ? q.tables : [],
-
-            correctAnswer: finalCorrectAnswer,
-
-            extraction: extractionMetaObj,
-          });
-        }
-
-        // ── Bulk INSERT all questions in ONE query (fast + atomic) ─────────
-        const dbRows = parsedQs.map((q) => q._dbRow).filter(Boolean);
-        if (dbRows.length > 0) {
-          const valueClauses = [];
-          const bulkParams = [];
-          let pIdx = 1;
-          for (const r of dbRows) {
-            valueClauses.push(
-              `($${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
-            );
-            bulkParams.push(
-              r.assessment_id, r.question_text, r.question_type || 'mcq', r.options,
-              r.correct_index, r.marks, r.position, r.bank_category,
-              r.solution, r.subject, r.topic, r.chapter,
-              r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta,
-              r.numeric_answer
-            );
-          }
-          try {
-            const bulkSql = `INSERT INTO questions (
-              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
-            ) VALUES ${valueClauses.join(', ')}`;
-            await query(bulkSql, bulkParams);
-            savedCount = dbRows.length;
-          } catch (bulkErr) {
-            console.error('[PDF Import] Bulk INSERT failed:', bulkErr.message, bulkErr.code, bulkErr.detail);
-            throw new Error(`Database save failed after extracting ${dbRows.length} questions: ${bulkErr.message}`);
-          }
-        }
-        // ────────────────────────────────────────────────────────────────────
-
-        const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
-        const subjectsArray = Array.from(detectedSubjects);
-
-        if (calcTotalMarks > 0 || primarySubject) {
-          await query(
-            `UPDATE tests SET 
-              max_marks = GREATEST(max_marks, $1),
-              subject = COALESCE(subject, $2),
-              subjects = COALESCE(subjects, $3::jsonb),
-              updated_at = NOW()
-             WHERE id = $4`,
-            [calcTotalMarks, primarySubject, JSON.stringify(subjectsArray), id]
-          );
-          await query('UPDATE assessments SET passing_marks = $1 WHERE id = $2', [Math.round(calcTotalMarks * 0.45), id]).catch(() => { });
-        }
-
-        console.log(`[PDF Extraction Pipeline] STAGE 6: Questions Actually Saved = ${savedCount} question(s)`);
+        extractedCount = persistResult.savedCount;
+        reviewWarnings = persistResult.reviewWarnings;
+        extractedQuestionsJson = persistResult.extractedQuestionsJson;
+        console.log(`[PDF Extraction Pipeline] STAGE 6: Questions Actually Saved = ${extractedCount} question(s)`);
       }
 
       // Check standalone Answer Key fallback if regex parsed text (only if answers are requested)
@@ -1078,12 +1083,20 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
   console.log(`[PDF Extraction Pipeline] STAGE 7: Questions Returned by API = ${extractedQuestionsJson.length} question(s)`);
 
+  const isPartialImport = Boolean(extractionStats?.isPartial || (Array.isArray(extractionStats?.pagesFailed) && extractionStats.pagesFailed > 0) || (pdfExtraction && pdfExtraction.isPartial));
+  const failedPageList = (pdfExtraction && pdfExtraction.failedPages) || [];
+  const responseMsg = isPartialImport && failedPageList.length > 0
+    ? `PDF question paper partially extracted (${extractedCount} questions). Pages [${failedPageList.join(', ')}] failed to process. Partial draft has been saved.`
+    : `${file_type} uploaded successfully`;
+
   res.json({
-    message: `${file_type} uploaded successfully`,
+    message: responseMsg,
     url: relativeUrl,
     file_type,
     extractedBy,
     extractedCount,
+    isPartial: isPartialImport,
+    failedPages: failedPageList,
     stats: extractionStats,
     extractedQuestions: extractedQuestionsJson,
     warnings: reviewWarnings.length > 0 ? reviewWarnings : undefined
@@ -1449,5 +1462,44 @@ export const getTestExtractedQuestions = asyncHandler(async (req, res) => {
     test_id: Number(id),
     questionCount: formattedQuestions.length,
     questions: formattedQuestions,
+  });
+});
+
+/**
+ * 16. POST /api/admin/tests/:id/replay
+ * Replay saved extraction questions into an assessment/test without calling Gemini
+ */
+export const replayExtractedQuestions = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { questions, include_answers } = req.body;
+  if (!Array.isArray(questions) || questions.length === 0) {
+    throw ApiError.badRequest('questions array is required');
+  }
+
+  let testCheck = await query('SELECT id FROM tests WHERE id = $1', [id]);
+  if (testCheck.rowCount === 0) {
+    const assessCheck = await query('SELECT id, title, duration_minutes, passing_marks FROM assessments WHERE id = $1', [id]);
+    if (assessCheck.rowCount === 0) {
+      throw ApiError.notFound('Test or assessment not found');
+    }
+    const a = assessCheck.rows[0];
+    await query(
+      `INSERT INTO tests (id, test_name, title, test_type, test_date, start_time, end_time, duration_minutes, max_marks)
+       VALUES ($1, $2, $2, 'mock', CURRENT_DATE, '00:00:00', '23:59:59', COALESCE($3, 180), COALESCE($4, 720))
+       ON CONFLICT (id) DO UPDATE SET updated_at = NOW()`,
+      [id, a.title, a.duration_minutes, a.passing_marks]
+    ).catch(() => { });
+  }
+
+  const result = await persistExtractedQuestionsToAssessment(id, questions, {
+    includeAnswers: include_answers !== false,
+    extractedBy: 'replay-saved-extraction',
+  });
+
+  res.json({
+    message: `Replayed and saved ${result.savedCount} questions into assessment ${id} successfully.`,
+    extractedCount: result.savedCount,
+    extractedQuestions: result.extractedQuestionsJson,
+    warnings: result.reviewWarnings.length > 0 ? result.reviewWarnings : undefined
   });
 });
