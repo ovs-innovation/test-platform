@@ -76,7 +76,7 @@ export const recordAttemptMistakes = async (dbClientOrPool, attemptId, candidate
         [attemptId]
       ),
       db.query(
-        `SELECT id, COALESCE(title, test_name) AS title, subject FROM assessments WHERE id = $1
+        `SELECT id, title, subject FROM assessments WHERE id = $1
          UNION
          SELECT id, COALESCE(test_name, title) AS title, subject FROM tests WHERE id = $1
          LIMIT 1`,
@@ -538,12 +538,16 @@ export const recreateTestFromMistakes = async (candidateId, { question_ids, titl
     );
   }
 
-  // 4. Assign individual access to candidate
-  await query(
-    `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
-     VALUES ($1, 'individual', $2)`,
-    [assessmentId, candidateId]
-  ).catch(() => {});
+  // 4. Assign individual access to candidate via candidate_invites
+  const userRow = await query('SELECT name, email FROM users WHERE id = $1', [candidateId]);
+  if (userRow.rows[0]) {
+    await query(
+      `INSERT INTO candidate_invites (assessment_id, candidate_name, candidate_email, created_by)
+       VALUES ($1, $2, $3, $4)
+       ON CONFLICT (assessment_id, candidate_email) DO NOTHING`,
+      [assessmentId, userRow.rows[0].name || 'Candidate', userRow.rows[0].email, candidateId]
+    ).catch(() => {});
+  }
 
   return {
     success: true,

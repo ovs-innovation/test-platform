@@ -187,7 +187,7 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
     `
     SELECT a.id, a.title, a.description, a.instructions, a.duration_minutes,
            a.passing_marks, a.max_violations, a.result_visible, a.is_published,
-           a.available_from, a.available_until,
+           a.available_from, a.available_until, a.created_by,
            COALESCE(q.cnt, 0)::int AS question_count,
            COALESCE(q.total_marks, 0)::int AS total_marks,
            at.status AS attempt_status, at.id AS attempt_id,
@@ -285,7 +285,9 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
     );
   }
 
-  if (!invite.rowCount && !enr.rowCount && !assign.rowCount && !instPkg.rowCount) {
+  const isCreator = assessmentRow.created_by != null && Number(assessmentRow.created_by) === Number(req.user.id);
+
+  if (!isCreator && !invite.rowCount && !enr.rowCount && !assign.rowCount && !instPkg.rowCount) {
     const freeCheck = await query(
       `SELECT ts.id FROM test_series ts
        LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id

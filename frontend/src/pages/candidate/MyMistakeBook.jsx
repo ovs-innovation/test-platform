@@ -3,6 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { mistakeBookService } from '../../lib/services.js';
 import { formatDateTime } from '../../lib/format.js';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 import {
   Bookmark,
   Sparkles,
@@ -837,7 +838,7 @@ export default function MyMistakeBook() {
                     {q.image_url && (
                       <div className="mb-4">
                         <img
-                          src={q.image_url}
+                          src={getMediaUrl(q.image_url)}
                           alt="Question diagram"
                           className="max-h-64 rounded-xl border border-slate-200 dark:border-slate-800 object-contain bg-white"
                         />
@@ -847,8 +848,11 @@ export default function MyMistakeBook() {
                     {/* Options List: CLEAN NEUTRAL CHOICES ONLY (NO ANSWERS REVEALED) */}
                     {Array.isArray(q.options) && q.options.length > 0 && (
                       <div className="space-y-2 mb-4">
-                        {q.options.map((optText, optIdx) => {
-                          const labelChar = String.fromCharCode(65 + optIdx); // A, B, C, D
+                        {q.options.map((opt, optIdx) => {
+                          const labelChar = (typeof opt === 'object' && opt?.key) ? opt.key : String.fromCharCode(65 + optIdx);
+                          const optText = typeof opt === 'object' && opt !== null ? (opt.text ?? opt.value ?? opt.title ?? '') : String(opt ?? '');
+                          const rawOptImg = typeof opt === 'object' && opt !== null ? (opt.image_url || opt.image || (Array.isArray(opt.media) && opt.media[0]?.url) || '') : '';
+                          const optImg = rawOptImg ? getMediaUrl(rawOptImg) : '';
 
                           return (
                             <div
@@ -860,7 +864,14 @@ export default function MyMistakeBook() {
                               </span>
 
                               <div className="flex-1 min-w-0">
-                                <MathRenderer text={optText} />
+                                {optText && <MathRenderer text={optText} />}
+                                {optImg && (
+                                  <img
+                                    src={optImg}
+                                    alt={`Option ${labelChar}`}
+                                    className="max-h-48 mt-2 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white"
+                                  />
+                                )}
                               </div>
                             </div>
                           );

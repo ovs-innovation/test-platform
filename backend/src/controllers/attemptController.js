@@ -1,4 +1,4 @@
-import { query, withTransaction } from '../config/db.js';
+import { query, pool, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
@@ -369,12 +369,6 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       [attemptId, marksObtained, totalMarks, percentage, passed, correctCount, wrongCount, unattemptedCount]
     );
 
-    try {
-      await recordAttemptMistakes(client, attemptId, attempt.candidate_id, attempt.assessment_id);
-    } catch (mistakeErr) {
-      console.error('[finalizeAttempt] Mistake book recording error:', mistakeErr?.message || mistakeErr);
-    }
-
     return {
       alreadyDone: false,
       score: scoreRes.rows[0],
@@ -393,6 +387,15 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('[RankComputation] Background rank update error:', e.message);
+      }
+    });
+
+    // Record mistake questions asynchronously in background using pool so core score transaction is never blocked
+    setImmediate(async () => {
+      try {
+        await recordAttemptMistakes(pool, attemptId, result.attempt.candidate_id, result.attempt.assessment_id);
+      } catch (mistakeErr) {
+        console.error('[finalizeAttempt] Mistake book recording error:', mistakeErr?.message || mistakeErr);
       }
     });
 
@@ -921,7 +924,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   }
 
   const scoreRes = await query('SELECT * FROM scores WHERE attempt_id = $1', [id]);
-  const score = scoreRes.rows[0] || null;
+  let score = scoreRes.rows[0] || null;
+  if (!score) {
+    const finalized = await finalizeAttempt(id, 'submitted');
+    score = finalized?.score || null;
+  }
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
     query(

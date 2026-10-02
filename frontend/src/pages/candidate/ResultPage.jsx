@@ -226,9 +226,12 @@ export default function ResultPage() {
 
   const accuracy = useMemo(() => {
     if (!score) return null;
-    const attempted = score.correct_count + score.wrong_count;
+    const correct = Number(score.correct_count) || 0;
+    const wrong = Number(score.wrong_count) || 0;
+    const attempted = correct + wrong;
     if (attempted === 0) return '0%';
-    return `${Math.round((score.correct_count / attempted) * 100)}%`;
+    const pct = Math.round((correct / attempted) * 100);
+    return isNaN(pct) ? '0%' : `${pct}%`;
   }, [score]);
 
   const timeTakenStr = useMemo(() => {
@@ -324,8 +327,15 @@ export default function ResultPage() {
 
   const displayTotalMarks = useMemo(() => {
     if (isNeetExam) return 720;
-    return Number(score?.total_marks || assessment?.total_marks || 0);
-  }, [isNeetExam, score, assessment]);
+    const fromScore = Number(score?.total_marks);
+    if (!isNaN(fromScore) && fromScore > 0) return fromScore;
+    const fromAssessment = Number(assessment?.total_marks);
+    if (!isNaN(fromAssessment) && fromAssessment > 0) return fromAssessment;
+    if (Array.isArray(solutions) && solutions.length > 0) {
+      return solutions.reduce((acc, q) => acc + (Number(q.marks) || 4), 0);
+    }
+    return 0;
+  }, [isNeetExam, score, assessment, solutions]);
 
   const formattedScoreDisplay = useMemo(() => {
     if (!score) return '—';
@@ -811,10 +821,10 @@ export default function ResultPage() {
                   {/* Big Percentage & Score */}
                   <div className="py-2 flex flex-col items-center justify-center">
                     <span className="text-5xl sm:text-6xl font-black tracking-tight text-slate-900 dark:text-white tabular-nums">
-                      {score ? `${score.percentage}%` : '0%'}
+                      {score && score.percentage != null && !isNaN(Number(score.percentage)) ? `${Number(score.percentage)}%` : '0%'}
                     </span>
                     <span className="mt-1 text-sm font-bold text-slate-500 dark:text-slate-400">
-                      Scored <span className="text-slate-900 dark:text-white font-extrabold">{score ? (Number.isInteger(Number(score.marks_obtained)) ? Number(score.marks_obtained) : Number(score.marks_obtained).toFixed(1)) : 0}</span> out of <span className="text-slate-900 dark:text-white font-extrabold">{Number.isInteger(Number(displayTotalMarks)) ? Number(displayTotalMarks) : Number(displayTotalMarks).toFixed(1)}</span> Marks
+                      Scored <span className="text-slate-900 dark:text-white font-extrabold">{score && score.marks_obtained != null && !isNaN(Number(score.marks_obtained)) ? (Number.isInteger(Number(score.marks_obtained)) ? Number(score.marks_obtained) : Number(score.marks_obtained).toFixed(1)) : 0}</span> out of <span className="text-slate-900 dark:text-white font-extrabold">{Number.isInteger(Number(displayTotalMarks)) ? Number(displayTotalMarks) : Number(displayTotalMarks).toFixed(1)}</span> Marks
                       {isNeetExam && (
                         <span className="ml-2 text-xs text-blue-600 dark:text-blue-400 font-semibold">(NEET UG Pattern · 720 Max)</span>
                       )}

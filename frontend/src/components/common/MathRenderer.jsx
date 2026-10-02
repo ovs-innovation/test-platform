@@ -41,7 +41,11 @@ function KaTeXFormula({ math, displayMode = false }) {
 export default function MathRenderer({ text, className = '' }) {
   const content = useMemo(() => {
     if (text == null || text === '') return '';
-    return formatQuestionStructure(String(text));
+    let raw = text;
+    if (typeof raw === 'object') {
+      raw = raw.text ?? raw.title ?? raw.value ?? '';
+    }
+    return formatQuestionStructure(String(raw));
   }, [text]);
 
   // Regex to split by LaTeX delimiters:
