@@ -893,14 +893,9 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
               }));
             }
 
-            // Ensure MCQ question always has at least 4 options for test platform rendering
-            while (formattedOptionsWithMedia.length < 4) {
-              const nextKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
-              formattedOptionsWithMedia.push({
-                key: nextKey,
-                text: `[Needs Review] Option ${nextKey}`,
-                media: [],
-              });
+            // Retain actual extracted options; do NOT inject fabricated '[Needs Review]' placeholders
+            if (formattedOptionsWithMedia.length < 4) {
+              q.needs_review = true;
             }
           }
 

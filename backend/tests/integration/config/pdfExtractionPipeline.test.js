@@ -364,7 +364,7 @@ C. 15   D. 20
     expect(res.rows[1].options).toEqual(['5', '10', '15', '20']);
   });
 
-  it('never drops a question even if options could not be automatically separated (pads with review options)', async () => {
+  it('never drops a question even if options could not be automatically separated (flags for review without fabricated options)', async () => {
     const { parseQuestionsFromText } = await import('../../../src/utils/pdfQuestions.js');
 
     const trickySample = `
@@ -384,8 +384,8 @@ D. V = R/I
     const q10 = res.rows.find((q) => q.line === 10);
     expect(q10).toBeDefined();
     expect(q10.needs_review).toBe(true);
-    expect(q10.options).toHaveLength(4);
-    expect(q10.options[0]).toContain('[Needs Review]');
+    // Unresolved questions must remain flagged for review without fabricated placeholder options
+    expect(q10.options.some((opt) => String(opt).includes('[Needs Review]'))).toBe(false);
 
     const q11 = res.rows.find((q) => q.line === 11);
     expect(q11).toBeDefined();

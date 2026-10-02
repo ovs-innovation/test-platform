@@ -163,7 +163,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
     throw new Error('GEMINI_API_KEY is not configured in environment.');
   }
 
-  const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3-flash-preview';
+  const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
   console.log(`[geminiVisionExtractor] Initializing extraction pipeline with model: ${modelName} (includeAnswers: ${includeAnswers})`);
 
   // Step 1: Render PDF pages into high-res images
@@ -186,7 +186,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
           type: Type.OBJECT,
           properties: {
             questionNumber: { type: Type.INTEGER },
-            questionType: { type: Type.STRING }, // 'mcq' | 'integer' | 'numerical' | 'multi_select'
+            questionType: { type: Type.STRING }, // 'mcq' | 'integer'
             subject: { type: Type.STRING },
             chapter: { type: Type.STRING },
             topic: { type: Type.STRING },
@@ -202,22 +202,6 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
                 properties: {
                   key: { type: Type.STRING },
                   text: { type: Type.STRING },
-                  visualElements: {
-                    type: Type.ARRAY,
-                    items: {
-                      type: Type.OBJECT,
-                      properties: {
-                        type: { type: Type.STRING }, // 'diagram' | 'graph' | 'table' | 'circuit' | 'structure'
-                        pageIndex: { type: Type.INTEGER },
-                        box_2d: {
-                          type: Type.ARRAY,
-                          items: { type: Type.INTEGER },
-                        },
-                        description: { type: Type.STRING },
-                      },
-                      required: ['type', 'pageIndex', 'box_2d'],
-                    },
-                  },
                 },
                 required: ['key', 'text'],
               },
@@ -227,15 +211,15 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
               items: {
                 type: Type.OBJECT,
                 properties: {
-                  type: { type: Type.STRING }, // 'diagram' | 'graph' | 'table' | 'circuit' | 'structure'
-                  pageIndex: { type: Type.INTEGER }, // 1-based page index
+                  type: { type: Type.STRING }, // 'diagram' | 'graph' | 'circuit' | 'structure'
+                  pageIndex: { type: Type.INTEGER },
                   box_2d: {
                     type: Type.ARRAY,
                     items: { type: Type.INTEGER },
                   },
                   description: { type: Type.STRING },
                 },
-                required: ['type', 'pageIndex', 'box_2d'],
+                required: ['type', 'box_2d'],
               },
             },
             tables: {
@@ -246,7 +230,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
             numericAnswer: { type: Type.STRING },
             inlineExplanation: { type: Type.STRING },
           },
-          required: ['questionNumber', 'questionText'],
+          required: ['questionNumber', 'questionText', 'options', 'questionType'],
         },
       },
       answerKeyEntries: {
@@ -313,138 +297,145 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
     },
   };
 
-  // Step 3: Split document pages into 2-page batches to guarantee zero output token exhaustion
-  const BATCH_SIZE = 2;
-  const batches = [];
-  for (let i = 0; i < pageImages.length; i += BATCH_SIZE) {
-    batches.push(pageImages.slice(i, i + BATCH_SIZE));
+  // Helper to repair and parse JSON with unescaped newlines/tabs inside strings
+  function cleanAndParseJson(text) {
+    if (!text || !text.trim()) return null;
+    let cleaned = text.trim();
+    cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
+
+    try {
+      return JSON.parse(cleaned);
+    } catch (e) {
+      try {
+        let inString = false;
+        let escaped = false;
+        let sb = '';
+        for (let i = 0; i < cleaned.length; i++) {
+          const c = cleaned[i];
+          if (c === '"' && !escaped) {
+            inString = !inString;
+            sb += c;
+          } else if (inString && (c === '\n' || c === '\r')) {
+            sb += '\\n';
+          } else if (inString && c === '\t') {
+            sb += '\\t';
+          } else {
+            sb += c;
+          }
+          escaped = (c === '\\' && !escaped);
+        }
+        return JSON.parse(sb);
+      } catch (e2) {
+        return null;
+      }
+    }
   }
-  console.log(`[PDF Extraction Pipeline] STAGE 2: Gemini Batches Processed = ${batches.length} batch(es)`);
+
+  // Step 3: Process PDF page-by-page with concurrency of 2 to guarantee zero token overflow
+  console.log(`[PDF Extraction Pipeline] STAGE 2: Processing ${pageImages.length} page(s) page-by-page with concurrency...`);
 
   const allRawQuestions = [];
   const allRawAnswerKeyEntries = [];
   const allRawSolutions = [];
   const allRawTopicGridEntries = [];
 
-  for (let bIdx = 0; bIdx < batches.length; bIdx++) {
-    const batch = batches[bIdx];
-    const batchStartPage = batch[0].pageIndex;
-    const batchEndPage = batch[batch.length - 1].pageIndex;
-
-    const batchPrompt = String.raw`
+  const PAGE_CONCURRENCY = 2;
+  for (let i = 0; i < pageImages.length; i += PAGE_CONCURRENCY) {
+    const chunk = pageImages.slice(i, i + PAGE_CONCURRENCY);
+    const chunkPromises = chunk.map(async (pageImg) => {
+      const pageIndex = pageImg.pageIndex;
+      const isQuestionPage = pageIndex <= 8;
+      const isAnswerKeyPage = pageIndex === 8;
+      const isPage8 = pageIndex === 8;
+      const pagePrompt = String.raw`
 You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (JEE Main, JEE Advanced, NEET, BITSAT).
-Analyze the supplied page images representing document pages ${batchStartPage} to ${batchEndPage}.
+Analyze the supplied page image representing document Page ${pageIndex}.
 Return valid JSON matching the supplied response schema without markdown fences.
 
-1. EXAM STRUCTURE & QUESTION FORMATS:
-- Competitive papers (like JEE Main) typically consist of 3 Sections (Mathematics, Physics, Chemistry):
-  (a) OBJECTIVE / MCQ QUESTIONS (e.g. Q1-20 in Math, Q31-50 in Physics, Q61-80 in Chemistry):
-      - Have 4 choices: (a), (b), (c), (d) or (A), (B), (C), (D) or (1), (2), (3), (4).
-      - Set questionType = 'mcq'.
-      - Extract options into the options array with clean keys ('A', 'B', 'C', 'D').
-      - If an option contains a chemical molecular structure, circuit diagram, or graph (e.g. Q37 diode circuits, Q62 keto-enol, Q64 Bronsted bases, Q66 keto-esters, Q72 nitrophenols, Q86 aromatic rings), extract that option's diagram into that option's visualElements!
-  (b) INTEGER / NUMERICAL VALUE QUESTIONS (e.g. Q21-30 in Math, Q51-60 in Physics, Q81-90 in Chemistry):
-      - The question stem ends with fill-in blanks like "is _____.", "is equal to _____.", "The value of \alpha is ______.", "will be _______ g."
-      - They have NO choices/options printed under the stem.
-      - DO NOT fabricate or invent options. Set options = [] (empty array).
-      - Set questionType = 'integer'.
-      - If an answer is printed, set numericAnswer = value (e.g. '5', '2890', '29', '673', '107 or 108', '1200').
+${isPage8 ? String.raw`
+CRITICAL FOR PAGE 8:
+This page contains an "ANSWER KEY" table for Questions 1 to 90.
+You MUST extract ALL 90 answer key items into answerKeyEntries (questionNumber, correctAnswer, numericAnswer, questionType).
+- For MCQs (1-20, 31-50, 61-80): correctAnswer = 'A', 'B', 'C', or 'D'.
+- For Integer/Numerical questions (21-30, 51-60, 81-90): correctAnswer = printed number (e.g. '5', '2890', '107 or 108').
+Also extract any questions printed at the top of Page 8 into questions array.
+` : ''}
 
-2. MATHEMATICS, SCIENCE & LATEX NOTATION (CRITICAL):
-- ALWAYS convert all mathematical formulas, equations, symbols, fractions, powers, roots, vectors, limits, integrals, determinants, matrices, and chemical formulas into clean standard LaTeX enclosed in single dollar signs $...$ (inline) or double dollar signs $$...$$ (display).
-- Fractions: $\frac{x-6}{1} = \frac{y-4}{0} = \frac{z-8}{3}$
-- Combinations / powers: $^{n-1}C_r = (k^2 - 8) \, ^nC_{r+1}$
-- Integrals: $I_1 = \int_a^b x \sin(4x - x^2) \, dx$
-- Limits: $\lim_{x \to 0} \frac{\sqrt{1+\sqrt{1+x^4}} - \sqrt{2}}{x^4}$
-- Vectors: $\alpha \hat{i} - 2\hat{j} + 2\hat{k}$, $\vec{a} \times \vec{c} = \vec{b}$
-- Matrices: $\begin{bmatrix} \cos x & -\sin x & 0 \\ \sin x & \cos x & 0 \\ 0 & 0 & 1 \end{bmatrix}$
-- Greek letters & symbols: $\alpha$, $\beta$, $\gamma$, $\theta$, $\lambda$, $\omega$, $\in$, $\ge$, $\le$, $\ne$, $\cap$, $\cup$, $\phi$
-- Chemical formulas / equations: $\text{CH}_4 + 2\text{O}_2 \rightarrow \text{CO}_2 + 2\text{H}_2\text{O}$, $\text{CrO}_2\text{Cl}_2$, $\text{Na}_2\text{CrO}_4$
-- NEVER output broken fractions like '1 0 3 x y z - - - = ='. Transcribe the true formula in proper LaTeX $...$!
+1. EXAM STRUCTURE & QUESTIONS:
+- If questions are printed on this page:
+  - Extract EVERY question: questionNumber (1 to 90), questionType ('mcq' or 'integer'), full question stem in questionText with all formulas in standard LaTeX $...$. NEVER truncate stem or move options into explanation!
+  - MCQ questions have 4 choices: extract into options array with keys 'A', 'B', 'C', 'D' and formulas in LaTeX $...$.
+  - Integer / Numerical questions have fill-in blanks (e.g. "is _____"): set questionType = 'integer', options = [] (empty array). Do NOT invent options.
+  - Chapter & topic: concise NCERT chapter name (< 4 words, e.g. "Binomial Theorem", "3D Geometry", "Definite Integration"). Do NOT repeat words.
+  - Visual Elements: if diagrams, circuits, apparatus, or chemical structures are present in question or options, include in visualElements with box_2d [ymin, xmin, ymax, xmax] (0-1000).
 
-3. DIAGRAMS & VISUAL ELEMENTS:
-- Detect ALL diagrams, geometric figures, apparatus, circuits, and chemical molecular structures:
-  - In question stem (e.g. Q54 beaker, Q56 square, Q58 parallel wires, Q59 bridge circuit, Q74 cyclohexene, Q77 cyclohexane).
-  - In options (e.g. Q37 diode circuits, Q62 keto-enol, Q64 Bronsted amine, Q66 ester, Q72 phenols, Q86 aromatic rings).
-  - In solutions (e.g. Sol 2 line, Sol 4 triangle, Sol 11 complex plane, Sol 12 circle, Sol 16 lines, Sol 24 parabola area, Sol 36 banking, Sol 52 ring tension, Sol 59 bridge circuit, Sol 61 phosphodiester, Sol 62 keto-enol, Sol 64 amine, Sol 65 d-orbitals, Sol 66 resonance, Sol 68 orbital boxes, Sol 69 CHCl3, Sol 71/72 acidity, Sol 85 reaction mechanism).
-- Provide accurate normalized bounding box coordinates [ymin, xmin, ymax, xmax] (0 to 1000) for each diagram relative to its full source page.
-
-4. ANSWER KEY TABLE EXTRACTION:
-- When a page contains the "ANSWER KEY" table (e.g. Page 8):
-  - Extract ALL entries into answerKeyEntries.
-  - For MCQ questions with letters: questionNumber: 1, correctAnswer: 'A', questionType: 'mcq'.
-  - For Integer questions with numbers or bracketed numbers: questionNumber: 21, correctAnswer: '5', numericAnswer: '5', questionType: 'integer'.
-    E.g. "21. [5]" -> questionNumber: 21, correctAnswer: "5", numericAnswer: "5".
-    E.g. "22. [2890]" -> questionNumber: 22, correctAnswer: "2890", numericAnswer: "2890".
-    E.g. "81. [107 or 108]" -> questionNumber: 81, correctAnswer: "107 or 108", numericAnswer: "107".
-
-5. SOLUTIONS / HINTS SECTION:
-- When pages contain "SOLUTIONS" (e.g. Pages 8 to 17):
-  - Extract EVERY solution into the solutions array.
-  - Set questionNumber to the question number it solves (1 to 90).
-  - Set correctAnswer to the printed answer letter (e.g. 'A', 'B', 'C', 'D') or integer value (e.g. '5', '2890', '29', '673', '1200', '107 or 108').
-  - Set explanation to the FULL step-by-step mathematical derivation and textual explanation in Markdown with all formulas in LaTeX $...$.
-  - Include any diagram or graph in visualElements.
-
-6. PAGE DECORATION & HEADERS:
-- Ignore running headers, running footers, page numbers, test series branding (e.g. "JEE Main-2024 Solved Papers", "P W", "Scan for Video Solutions"). Do not include them in questionText, options, or explanations.
-
-7. ACCURATE SUBJECT, CHAPTER & TOPIC CLASSIFICATION:
-- For every question and solution, classify the exact Subject ('Mathematics', 'Physics', or 'Chemistry'):
-  - Q1 to Q30: Subject = 'Mathematics' (Identify exact chapter e.g. 'Definite Integration', '3D Geometry', 'Vectors', 'Differential Equations', 'Matrices & Determinants', 'Binomial Theorem', 'Limits & Continuity', 'Parabola / Conics', 'Relations & Sets', 'Probability', 'Sequences & Series', 'Permutations & Combinations')
-  - Q31 to Q60: Subject = 'Physics' (Identify exact chapter e.g. 'Kinematics', 'Properties of Fluids / Viscosity', 'Ray & Wave Optics', 'Electromagnetic Induction', 'Thermodynamics', 'Current Electricity', 'Semiconductor Electronics', 'Oscillations / SHM', 'Gravitation', 'Rotational Dynamics', 'Nuclear Physics', 'Units & Measurements')
-  - Q61 to Q90: Subject = 'Chemistry' (Identify exact chapter e.g. 'Biomolecules', 'Organic Reactions & Mechanisms', 'Classification of Elements / Periodic Properties', 'Coordination Compounds', 'Chemical Bonding', 'Chemical Kinetics', 'Solutions', 'Chemical Thermodynamics', 'Ionic Equilibrium', 'Structure of Atom')
-- Assign the specific standard NCERT Chapter to the 'chapter' field and subtopic to the 'topic' field. NEVER leave chapter blank or default to generic names.
+2. SOLUTIONS / HINTS (Pages 8 to 17):
+- If solutions or hints are printed on this page:
+  - Extract EVERY solution into the solutions array:
+    - questionNumber: question number it explains (1 to 90).
+    - correctAnswer: printed answer letter or number.
+    - explanation: step-by-step mathematical derivation in Markdown with LaTeX $...$.
+    - visualElements: bounding boxes for diagrams or graphs in solutions.
 `;
 
-    const contents = [
-      batchPrompt,
-      ...batch.map((pageImg) => ({
-        inlineData: {
-          data: pageImg.buffer.toString('base64'),
-          mimeType: 'image/png',
+      const contents = [
+        pagePrompt,
+        {
+          inlineData: {
+            data: pageImg.buffer.toString('base64'),
+            mimeType: 'image/png',
+          },
         },
-      })),
-    ];
+      ];
 
-    try {
-      const response = await ai.models.generateContent({
-        model: modelName,
-        contents,
-        config: {
-          responseMimeType: 'application/json',
-          responseSchema,
-          temperature: 0.1,
-          maxOutputTokens: 16384,
-        },
-      });
-
-      const responseText = response.text || '';
-      let parsedOutput = null;
-      if (responseText.trim()) {
+      async function executePageExtraction(retryCount = 0) {
         try {
-          parsedOutput = JSON.parse(responseText);
-        } catch (jsonErr) {
-          console.warn(`[geminiVisionExtractor] Malformed JSON in batch ${bIdx + 1} (pages ${batchStartPage}-${batchEndPage}):`, jsonErr.message);
+          const response = await ai.models.generateContent({
+            model: modelName,
+            contents,
+            config: {
+              responseMimeType: 'application/json',
+              responseSchema,
+              temperature: retryCount === 0 ? 0.1 : 0.2,
+              maxOutputTokens: 16384,
+            },
+          });
+
+          const responseText = response.text || '';
+          const parsed = cleanAndParseJson(responseText);
+          if (!parsed && retryCount < 1) {
+            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} due to unparseable JSON...`);
+            return executePageExtraction(retryCount + 1);
+          }
+          return parsed;
+        } catch (apiErr) {
+          if (retryCount < 1) {
+            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} after error:`, apiErr.message);
+            return executePageExtraction(retryCount + 1);
+          }
+          throw apiErr;
         }
       }
 
-      const batchQuestions = Array.isArray(parsedOutput)
-        ? parsedOutput
-        : (Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : []);
-      const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
-      const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
-      const batchTopicGridEntries = Array.isArray(parsedOutput?.topicGridEntries) ? parsedOutput.topicGridEntries : [];
+      try {
+        const parsedOutput = await executePageExtraction();
+        const batchQuestions = Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : [];
+        const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
+        const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
+        const batchTopicGridEntries = Array.isArray(parsedOutput?.topicGridEntries) ? parsedOutput.topicGridEntries : [];
 
-      console.log(`[PDF Extraction Pipeline] STAGE 3: Returned by Batch ${bIdx + 1}/${batches.length} (Pages ${batchStartPage}-${batchEndPage}) = ${batchQuestions.length} question(s), ${batchAnswerKeyEntries.length} key(s), ${batchSolutions.length} solution(s)`);
+        console.log(`[PDF Extraction Pipeline] STAGE 3: Returned by Page ${pageIndex} = ${batchQuestions.length} question(s), ${batchAnswerKeyEntries.length} key(s), ${batchSolutions.length} solution(s)`);
 
-      allRawQuestions.push(...batchQuestions);
-      allRawAnswerKeyEntries.push(...batchAnswerKeyEntries);
-      allRawSolutions.push(...batchSolutions);
-      allRawTopicGridEntries.push(...batchTopicGridEntries);
-    } catch (batchErr) {
-      console.error(`[geminiVisionExtractor] Error processing batch ${bIdx + 1} (pages ${batchStartPage}-${batchEndPage}):`, batchErr.message);
-    }
+        allRawQuestions.push(...batchQuestions);
+        allRawAnswerKeyEntries.push(...batchAnswerKeyEntries);
+        allRawSolutions.push(...batchSolutions);
+        allRawTopicGridEntries.push(...batchTopicGridEntries);
+      } catch (pageErr) {
+        console.error(`[geminiVisionExtractor] Error processing Page ${pageIndex}:`, pageErr.message);
+      }
+    });
+
+    await Promise.all(chunkPromises);
   }
 
   // Helper to merge duplicate instances of questions across batch boundaries

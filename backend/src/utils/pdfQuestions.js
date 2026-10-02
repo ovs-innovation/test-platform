@@ -6,8 +6,8 @@ import { env } from '../config/env.js';
 const require = createRequire(import.meta.url);
 const pdfParse = require('pdf-parse/lib/pdf-parse.js');
 
-const OPTION_LINE = /^\s*(?:\(?([A-Da-d1-4])\)?[\.\):\-–—]\s*|([A-Da-d1-4])\)\s*)(.+)$/;
-const QUESTION_START = /^(?:Q(?:uestion)?\s*(\d+)[.)]?|(\d+)\.)\s*(.*)$/i;
+const OPTION_LINE = /^\s*(?:\(?([A-Da-d])\)?[\.\):\-–—]\s*|([A-Da-d])\)\s*)(.+)$/;
+const QUESTION_START = /^(?:Q(?:uestion)?\s*(\d+)[\.\)\:\-–—]?|(\d+)\.(?!\d))\s*(.*)$/i;
 
 const answerKeyMap = { a: 0, b: 1, c: 2, d: 3, 1: 0, 2: 1, 3: 2, 4: 3 };
 
@@ -142,8 +142,13 @@ function splitQuestionBlocks(text) {
       }
     }
 
-    // Stop ONLY on explicit "Answer Key" or "Solutions Key" section headers
-    if (/^(answer\s*key|solutions?\s*key)\b/i.test(line)) break;
+    // Stop on explicit "Answer Key" or "Solutions" section headers
+    if (
+      /^(?:answer\s*key|solutions?\s*(?:key|hints?)?|part\s*[-–—]?\s*solutions?)\b/i.test(line) ||
+      /^\s*(?:ANSWER\s*KEY|SOLUTIONS?|HINTS?\s*&\s*SOLUTIONS?)\b/.test(line)
+    ) {
+      break;
+    }
 
     const start = line.match(QUESTION_START);
     if (start) {
@@ -170,11 +175,12 @@ function parseBlock(block, answerKey) {
   let isInExplanation = false;
   const keyEntry = answerKey.get(block.num);
   let correct_indices = Array.isArray(keyEntry) ? keyEntry : (keyEntry != null ? [keyEntry] : []);
-  let correct_index = correct_indices[0] ?? 0;
+  let correct_index = correct_indices[0] ?? null;
 
   for (const line of block.lines) {
-    // Check if line starts an explanation/solution
-    const expMatch = line.match(/^(?:exp(?:lanation)?|sol(?:ution)?|hint)\s*[:\-–—]?\s*(.*)$/i);
+    // Check if line starts an explanation/solution (word boundary prevents matching 'expansion' or 'exposure')
+    const expMatch = line.match(/^(?:explanation|solution|hints?|answer\s*explanation)\b\s*[:\-–—]?\s*(.*)$/i) ||
+      line.match(/^(?:exp|sol)\s*[:\-–—]\s*(.*)$/i);
     if (expMatch) {
       isInExplanation = true;
       if (expMatch[1].trim()) explanationLines.push(expMatch[1].trim());
@@ -198,8 +204,8 @@ function parseBlock(block, answerKey) {
       continue;
     }
 
-    // Check for multiple options on the same line, e.g. "(A) 3  (B) 18  (C) 9  (D) 6" or "A. 3  B. 18"
-    const multiOptMatches = [...line.matchAll(/(?:\(|\[|^|\s{2,}|\t)([A-Da-d1-4])(?:\)|\]|\.|\:)\s+([^(\n]+?)(?=(?:\s{2,}|\t|\s+(?=[A-Da-d1-4][\.\)\:\-–—]|\([A-Da-d1-4]\)|\[[A-Da-d1-4]\])|$))/g)];
+    // Check for multiple options on the same line, e.g. "(A) 3  (B) 18  (C) 9  (D) 6"
+    const multiOptMatches = [...line.matchAll(/(?:\(|\[|^|\s{2,}|\t)([A-Da-d])(?:\)|\]|\.|\:)\s+([^(\n]+?)(?=(?:\s{2,}|\t|\s+(?=[A-Da-d][\.\)\:\-–—]|\([A-Da-d]\)|\[[A-Da-d]\])|$))/g)];
     if (multiOptMatches.length >= 2) {
       for (const m of multiOptMatches) {
         const rawOpt = m[2].trim();
@@ -223,10 +229,10 @@ function parseBlock(block, answerKey) {
   // Fallback: If fewer than 2 options found, search questionLines for embedded/inline options
   if (options.length < 2) {
     const fullQText = questionLines.join('\n');
-    const inlineMatches = [...fullQText.matchAll(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*([^\n\(\)\[\]]+)/g)];
+    const inlineMatches = [...fullQText.matchAll(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d])(?:\)|\]|\.|\:)\s*([^\n\(\)\[\]]+)/g)];
     if (inlineMatches.length >= 2) {
       options.length = 0;
-      const firstOptIndex = fullQText.search(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d1-4])(?:\)|\]|\.|\:)\s*/);
+      const firstOptIndex = fullQText.search(/(?:\(|\[|\n\s*|^|\s{2,})([A-Da-d])(?:\)|\]|\.|\:)\s*/);
       if (firstOptIndex !== -1) {
         questionLines.length = 0;
         questionLines.push(fullQText.substring(0, firstOptIndex).trim());
@@ -247,33 +253,14 @@ function parseBlock(block, answerKey) {
   }
   const question_text = stripHeadersAndFooters(rawQuestionText) || rawQuestionText;
 
-  // Ensure every question is preserved even if options could not be automatically separated
+  // Determine question type without fabricating fake placeholder options
   const hasValidOptions = options.length >= 2;
   const isLikelyIntegerStem = /(?:is\s*_{2,}|equal\s*to\s*_{2,}|value\s*of\s*.*is\s*_{2,}|will\s*be\s*_{2,}\s*[a-zA-Z%°\/]*\.?$)/i.test(question_text);
   const isInteger = options.length === 0 && isLikelyIntegerStem;
   const needsReview = !isInteger && !hasValidOptions;
 
-  let finalOptions = isInteger ? [] : [...options];
-  if (!isInteger) {
-    if (finalOptions.length === 0) {
-      finalOptions = [
-        '[Needs Review] Option A',
-        '[Needs Review] Option B',
-        '[Needs Review] Option C',
-        '[Needs Review] Option D',
-      ];
-    } else if (finalOptions.length === 1) {
-      finalOptions.push(
-        '[Needs Review] Option B',
-        '[Needs Review] Option C',
-        '[Needs Review] Option D'
-      );
-    } else if (finalOptions.length < 4) {
-      while (finalOptions.length < 4) {
-        finalOptions.push(`[Needs Review] Option ${String.fromCharCode(65 + finalOptions.length)}`);
-      }
-    }
-  }
+  // Preserve real options intact; do NOT inject '[Needs Review] Option A-D' placeholders
+  const finalOptions = isInteger ? [] : [...options];
 
   const isMultiText = /one\s*or\s*more\s*options?|more\s*than\s*one\s*correct|multiple\s*correct/i.test(question_text);
   const isMultiKey = correct_indices.length > 1;

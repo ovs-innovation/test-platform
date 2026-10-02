@@ -576,15 +576,19 @@ function classifyQuestionTopic(qText) {
   if (
     t.includes('integral') ||
     t.includes('integration') ||
+    t.includes('\\int') ||
     t.includes('differentiat') ||
     t.includes('derivative') ||
     t.includes('limit') ||
     t.includes('continuity') ||
-    t.includes('differential equation')
+    t.includes('differential equation') ||
+    t.includes('dx/dt') ||
+    t.includes('dy/dt') ||
+    t.includes('dy/dx')
   ) {
     let topic = 'Calculus';
-    if (t.includes('differential equation')) topic = 'Differential Equations';
-    else if (t.includes('integral') || t.includes('integration')) topic = 'Integrals';
+    if (t.includes('differential equation') || t.includes('dx/dt') || t.includes('dy/dt') || t.includes('dy/dx')) topic = 'Differential Equations';
+    else if (t.includes('integral') || t.includes('integration') || t.includes('\\int')) topic = 'Definite Integrals';
     else if (t.includes('limit') || t.includes('continuity')) topic = 'Limits & Continuity';
     else if (t.includes('derivative') || t.includes('differentiat')) topic = 'Differentiation';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
@@ -597,6 +601,11 @@ function classifyQuestionTopic(qText) {
     t.includes('vector') ||
     t.includes('3d geometry') ||
     t.includes('three dimensional') ||
+    t.includes('from the line') ||
+    t.includes('along the line') ||
+    t.includes('orthocentre') ||
+    t.includes('direction ratios') ||
+    t.includes('direction cosines') ||
     t.includes('conic') ||
     t.includes('parabola') ||
     t.includes('ellipse') ||
@@ -606,9 +615,9 @@ function classifyQuestionTopic(qText) {
   ) {
     let topic = 'Coordinate Geometry';
     if (t.includes('matrix') || t.includes('matrices') || t.includes('determinant')) topic = 'Matrices & Determinants';
-    else if (t.includes('vector') || t.includes('3d')) topic = 'Vector Algebra & 3D Geometry';
+    else if (t.includes('vector') || t.includes('3d') || t.includes('from the line') || t.includes('along the line')) topic = 'Vector Algebra & 3D Geometry';
     else if (t.includes('conic') || t.includes('parabola') || t.includes('ellipse') || t.includes('hyperbola')) topic = 'Conic Sections';
-    else if (t.includes('straight line') || t.includes('circle')) topic = 'Straight Lines & Circles';
+    else if (t.includes('straight line') || t.includes('circle') || t.includes('orthocentre')) topic = 'Straight Lines & Circles';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
   }
 
@@ -616,7 +625,12 @@ function classifyQuestionTopic(qText) {
     t.includes('probability') ||
     t.includes('permutation') ||
     t.includes('combination') ||
-    t.includes('binomial theorem') ||
+    t.includes('binomial') ||
+    t.includes('c_r') ||
+    t.includes('c_{r') ||
+    t.includes('^nc_') ||
+    t.includes('expansion of') ||
+    t.includes('coefficients in the expansion') ||
     t.includes('complex number') ||
     t.includes('trigonometr') ||
     t.includes('sin(') ||
@@ -625,14 +639,16 @@ function classifyQuestionTopic(qText) {
     t.includes('sequence') ||
     t.includes('progression') ||
     t.includes('arithmetic progression') ||
-    t.includes('geometric progression')
+    t.includes('geometric progression') ||
+    t.includes('common terms')
   ) {
     let topic = 'Algebra';
     if (t.includes('probability')) topic = 'Probability';
+    else if (t.includes('binomial') || t.includes('expansion of') || t.includes('coefficients in the expansion')) topic = 'Binomial Theorem';
+    else if (t.includes('permutation') || t.includes('combination') || t.includes('c_r') || t.includes('c_{r') || t.includes('^nc_')) topic = 'Permutations & Combinations';
     else if (t.includes('trigonometr') || t.includes('sin(') || t.includes('cos(')) topic = 'Trigonometry';
     else if (t.includes('complex number')) topic = 'Complex Numbers';
-    else if (t.includes('permutation') || t.includes('combination')) topic = 'Permutations & Combinations';
-    else if (t.includes('sequence') || t.includes('progression')) topic = 'Sequences & Series';
+    else if (t.includes('sequence') || t.includes('progression') || t.includes('common terms')) topic = 'Sequences & Series';
     return { subject: 'Mathematics', topic, bank_category: 'Mathematics' };
   }
 
