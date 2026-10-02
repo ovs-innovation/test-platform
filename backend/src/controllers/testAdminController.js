@@ -826,6 +826,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   let reviewWarnings = [];
   let extractedQuestionsJson = [];
   let extractionStats = null;
+  let pdfExtraction = null;
 
   const isDocxFile = file_name && (file_name.toLowerCase().endsWith('.docx') || file_name.toLowerCase().endsWith('.doc'));
   if (isDocxFile) {
@@ -1012,7 +1013,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         });
       }
 
-      const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
+      pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
       extractedBy = pdfExtraction.extractedBy || 'pdf-parse-regex';
       extractionStats = pdfExtraction.stats || null;
       const parsedQs = pdfExtraction.rows || [];
