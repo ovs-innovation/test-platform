@@ -2344,6 +2344,66 @@ Recent Wrong Questions: ${JSON.stringify((wrong_questions || []).slice(0, 8))}
   return buildDataDriven7DayPlan();
 }
 
+/**
+ * extractChapterAndTopicWithGemini
+ * Uses Gemini AI to accurately deduce standard curriculum Chapter and Topic
+ * for JEE (Main & Advanced) and NEET questions.
+ */
+export async function extractChapterAndTopicWithGemini({ questionText, options = [], subject = 'Mathematics', examType = 'JEE' }) {
+  const client = getGeminiClient();
+  if (!client || !questionText) return null;
+
+  try {
+    const model = getGeminiModel();
+    const prompt = `You are a curriculum tagging expert for Indian competitive entrance exams (${examType === 'NEET' ? 'NEET UG' : 'JEE Main & JEE Advanced'}).
+Analyze the following question and assign the exact standard curriculum Chapter and specific Topic/Concept tested.
+
+Subject: ${subject}
+Question:
+${questionText}
+
+Options:
+${(Array.isArray(options) ? options : []).map((o, i) => `${String.fromCharCode(65 + i)}) ${typeof o === 'object' ? (o.text || '') : o}`).join('\n')}
+
+Standard JEE Chapters include:
+- Physics: Kinematics, Laws of Motion, Work Energy Power, Rotational Mechanics, Gravitation, Thermodynamics, Oscillations & Waves, Electrostatics & Capacitance, Current Electricity, Magnetism & EMI, Alternating Current, Ray & Wave Optics, Dual Nature, Atoms & Nuclei, Semiconductors.
+- Chemistry: Mole Concept, Structure of Atom, Chemical Bonding, Thermodynamics, Equilibrium, Solutions, Electrochemistry, Chemical Kinetics, Coordination Compounds, p-Block, d & f Block, General Organic Chemistry, Hydrocarbons, Haloalkanes, Alcohols Phenols, Aldehydes Ketones, Amines, Biomolecules.
+- Mathematics: Sets Relations Functions, Complex Numbers & Quadratic Equations, Matrices & Determinants, Permutations & Combinations, Binomial Theorem, Sequences & Series, Limits Continuity Differentiability, Application of Derivatives, Indefinite & Definite Integrals, Differential Equations, Straight Lines & Circles, Conic Sections (Parabola, Ellipse, Hyperbola), Vectors & 3D Geometry, Probability, Statistics, Trigonometry.
+
+Respond ONLY with valid JSON in this shape without markdown backticks:
+{
+  "subject": "${subject}",
+  "chapter": "Curriculum Chapter Name",
+  "topic": "Specific Topic or Concept Tested"
+}`;
+
+    const res = await client.models.generateContent({
+      model,
+      contents: [{ role: 'user', parts: [{ text: prompt }] }],
+      config: {
+        temperature: 0.1,
+      },
+    });
+
+    const text = res.text?.trim() || '';
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) {
+      const parsed = JSON.parse(match[0]);
+      if (parsed.chapter && parsed.topic) {
+        return {
+          subject: parsed.subject || subject,
+          chapter: parsed.chapter,
+          topic: parsed.topic,
+        };
+      }
+    }
+  } catch (err) {
+    console.warn('[GeminiService] extractChapterAndTopicWithGemini error:', err.message);
+  }
+  return null;
+}
+
+
 
 
 

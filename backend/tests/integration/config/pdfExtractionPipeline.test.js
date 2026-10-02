@@ -392,6 +392,51 @@ D. V = R/I
     expect(q11.needs_review).toBe(false);
     expect(q11.options).toEqual(['V = IR', 'V = I/R', 'V = I^2 R', 'V = R/I']);
   });
+
+  it('wraps raw LaTeX mathematical equations with $...$ delimiters for KaTeX rendering', async () => {
+    const { ensureLatexDelimiters } = await import('../../../src/utils/questionFormatter.js');
+
+    const rawEquation = 'Let f(x) = \\frac{x^2 - 1}{x + 1}, then \\lim_{x \\to 1} f(x) is:';
+    const formatted = ensureLatexDelimiters(rawEquation);
+
+    expect(formatted).toContain('$\\frac{x^2 - 1}{x + 1}$');
+    expect(formatted).toContain('$\\lim_{x \\to 1} f(x)$');
+
+    // Should NOT double wrap already delimited formulas
+    const alreadyDelimited = 'Given $\\alpha + \\beta = 5$ and $\\sqrt{x} = 2$.';
+    const formattedAlready = ensureLatexDelimiters(alreadyDelimited);
+    expect(formattedAlready).toBe(alreadyDelimited);
+  });
+
+  it('strips JEE Main running headers, footers, and video solution labels', async () => {
+    const { stripHeadersAndFooters } = await import('../../../src/utils/questionFormatter.js');
+
+    const sampleWithJeeHeaders = `
+    JEE Main-2024 Solved Papers P W
+    Scan for Video Solutions
+    JEE-MAIN PAPER 27TH JAN-2024 (MORNING)
+    1. The distance of the point (7, –2, 11) from the line is:
+    `;
+
+    const cleaned = stripHeadersAndFooters(sampleWithJeeHeaders);
+    expect(cleaned).not.toContain('JEE Main-2024 Solved Papers');
+    expect(cleaned).not.toContain('Scan for Video Solutions');
+    expect(cleaned).toContain('The distance of the point');
+  });
+
+  it('correctly detects integer questions without fabricating dummy options', async () => {
+    const { parseQuestionsFromText } = await import('../../../src/utils/pdfQuestions.js');
+
+    const integerSample = `
+    21. The least positive integral value of alpha, for which the angle is acute, is _____.
+    `;
+
+    const res = parseQuestionsFromText(integerSample);
+    expect(res.rows).toHaveLength(1);
+    expect(res.rows[0].question_type).toBe('integer');
+    expect(res.rows[0].options).toHaveLength(0);
+    expect(res.rows[0].needs_review).toBe(false);
+  });
 });
 
 

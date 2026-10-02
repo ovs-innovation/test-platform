@@ -37,6 +37,7 @@ const EdvedumLegalPage = lazy(() => import('./components/edvedum/EdvedumLegalPag
 // Candidate Portal pages
 const CandidateDashboard = lazy(() => import('./pages/candidate/Dashboard.jsx'));
 const MyTests = lazy(() => import('./pages/candidate/MyTests.jsx'));
+const MyMistakeBook = lazy(() => import('./pages/candidate/MyMistakeBook.jsx'));
 const MyEbooks = lazy(() => import('./pages/candidate/MyEbooks.jsx'));
 const MySeriesTests = lazy(() => import('./pages/candidate/MySeriesTests.jsx'));
 const AietsCalendarPage = lazy(() => import('./pages/candidate/AietsCalendarPage.jsx'));
@@ -187,6 +188,7 @@ export default function App() {
         <Route path="/dashboard" element={<ProtectedRoute role="candidate"><Shell><CandidateDashboard /></Shell></ProtectedRoute>} />
         <Route path="/aiets-calendar" element={<ProtectedRoute role="candidate"><Shell><AietsCalendarPage /></Shell></ProtectedRoute>} />
         <Route path="/my-tests" element={<ProtectedRoute role="candidate"><Shell><MyTests /></Shell></ProtectedRoute>} />
+        <Route path="/my-mistake-book" element={<ProtectedRoute role="candidate"><Shell><MyMistakeBook /></Shell></ProtectedRoute>} />
         <Route path="/my-ebooks" element={<ProtectedRoute role="candidate"><Shell><MyEbooks /></Shell></ProtectedRoute>} />
         <Route path="/my-tests/:slug" element={<ProtectedRoute role="candidate"><Shell><MySeriesTests /></Shell></ProtectedRoute>} />
         <Route path="/analytics" element={<ProtectedRoute role="candidate"><Shell><Analytics /></Shell></ProtectedRoute>} />

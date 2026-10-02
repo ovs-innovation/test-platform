@@ -94,37 +94,157 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
 
   // 3. Query weak topics SPECIFICALLY for targetAttemptId
   if (targetAttemptId && !isNaN(targetAttemptId)) {
-    // Check test_attempts question_responses JSONB first
-    const testAttemptRes = await query(
-      `SELECT question_responses, assessment_id, test_id FROM test_attempts WHERE id = $1`,
+    // 3A. Resolve assessment_id and candidate_id from attempts or test_attempts
+    let assessmentId = null;
+    let candidateUserId = numId;
+
+    const attRes = await query(
+      `SELECT id, assessment_id, candidate_id FROM attempts WHERE id = $1`,
       [targetAttemptId]
     ).catch(() => ({ rows: [] }));
 
-    if (testAttemptRes.rows && testAttemptRes.rows.length > 0) {
-      const row = testAttemptRes.rows[0];
-      let responses = [];
-      try {
-        responses = typeof row.question_responses === 'string'
-          ? JSON.parse(row.question_responses)
-          : (row.question_responses || []);
-      } catch (_) {}
+    if (attRes.rows && attRes.rows.length > 0) {
+      assessmentId = attRes.rows[0].assessment_id;
+      candidateUserId = attRes.rows[0].candidate_id || numId;
+    } else {
+      const testAttRes = await query(
+        `SELECT id, test_id, student_id FROM test_attempts WHERE id = $1`,
+        [targetAttemptId]
+      ).catch(() => ({ rows: [] }));
 
-      if (Array.isArray(responses) && responses.length > 0) {
-        const topicStatsMap = {};
-        for (const r of responses) {
-          const tName = (r.topic || r.subtopic || 'General Topic').trim();
-          const sName = (r.subject || 'Biology').trim();
-          if (!topicStatsMap[tName]) {
-            topicStatsMap[tName] = { topic: tName, subtopic: r.subtopic || 'Core Concepts', subject: sName, correct: 0, attempted: 0, total: 0 };
+      if (testAttRes.rows && testAttRes.rows.length > 0) {
+        assessmentId = testAttRes.rows[0].test_id;
+        candidateUserId = testAttRes.rows[0].student_id || numId;
+      } else {
+        // targetAttemptId might directly be the assessment_id / test_id
+        assessmentId = targetAttemptId;
+      }
+    }
+
+    if (assessmentId) {
+      // 3B. Query all questions for this specific assessment
+      const questionsRes = await query(
+        `SELECT 
+           q.id,
+           COALESCE(s.name, q.subject, q.bank_category, 'General') AS subject,
+           COALESCE(q.topic, c.name, q.chapter, q.bank_category, 'General Topic') AS topic,
+           COALESCE(q.chapter, c.name, q.topic, 'General Chapter') AS chapter,
+           COALESCE(q.subtopic, 'Core Principles') AS subtopic,
+           q.question_type,
+           q.correct_index,
+           q.correct_option_index,
+           q.correct_indices,
+           q.numeric_answer
+         FROM questions q
+         LEFT JOIN subjects s ON s.id = q.subject_id
+         LEFT JOIN chapters c ON c.id = q.chapter_id
+         WHERE q.assessment_id = $1
+         ORDER BY q.position ASC, q.id ASC`,
+        [assessmentId]
+      ).catch(() => ({ rows: [] }));
+
+      // 3C. Fetch answers and mistake book records for this attempt
+      const [answersRes, codingRes, subjRes, mistakeBookRes] = await Promise.all([
+        query(
+          `SELECT question_id, selected_index, selected_indices, numeric_answer 
+           FROM answers WHERE attempt_id = $1`,
+          [targetAttemptId]
+        ).catch(() => ({ rows: [] })),
+        query(
+          `SELECT question_id, source_code FROM coding_answers WHERE attempt_id = $1`,
+          [targetAttemptId]
+        ).catch(() => ({ rows: [] })),
+        query(
+          `SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1`,
+          [targetAttemptId]
+        ).catch(() => ({ rows: [] })),
+        query(
+          `SELECT question_id, mistake_type, subject, topic, chapter 
+           FROM student_mistake_book 
+           WHERE attempt_id = $1 OR (student_id = $2 AND assessment_id = $3)`,
+          [targetAttemptId, candidateUserId, assessmentId]
+        ).catch(() => ({ rows: [] })),
+      ]);
+
+      const ansMap = new Map((answersRes.rows || []).map((a) => [a.question_id, a]));
+      const codeMap = new Map((codingRes.rows || []).map((c) => [c.question_id, c.source_code]));
+      const subjMap = new Map((subjRes.rows || []).map((s) => [s.question_id, s.answer_text]));
+      const mistakeMap = new Map((mistakeBookRes.rows || []).map((m) => [m.question_id, m]));
+
+      if (questionsRes.rows && questionsRes.rows.length > 0) {
+        const topicStats = {};
+
+        for (const q of questionsRes.rows) {
+          const ans = ansMap.get(q.id);
+          const isMistake = mistakeMap.has(q.id);
+
+          let isAttempted = false;
+          let isCorrect = false;
+
+          if (isMistake) {
+            const m = mistakeMap.get(q.id);
+            isAttempted = m.mistake_type === 'incorrect';
+            isCorrect = false;
+          } else if (ans) {
+            if (ans.selected_index !== null && ans.selected_index !== undefined) {
+              isAttempted = true;
+              const targetIndex = q.correct_option_index != null ? Number(q.correct_option_index) : Number(q.correct_index);
+              isCorrect = Number(ans.selected_index) === targetIndex;
+            } else if (ans.selected_indices !== null && ans.selected_indices !== undefined) {
+              isAttempted = true;
+              const selected = Array.isArray(ans.selected_indices) ? ans.selected_indices : [ans.selected_indices];
+              const correct = Array.isArray(q.correct_indices) ? q.correct_indices : [q.correct_indices];
+              isCorrect = JSON.stringify(selected.sort()) === JSON.stringify(correct.sort());
+            } else if (ans.numeric_answer !== null && ans.numeric_answer !== undefined) {
+              isAttempted = true;
+              isCorrect = Math.abs(Number(ans.numeric_answer) - Number(q.numeric_answer)) <= 0.01;
+            }
+          } else if (codeMap.has(q.id)) {
+            isAttempted = Boolean(codeMap.get(q.id)?.trim());
+            isCorrect = false;
+          } else if (subjMap.has(q.id)) {
+            isAttempted = Boolean(subjMap.get(q.id)?.trim());
+            isCorrect = false;
           }
-          topicStatsMap[tName].total += 1;
-          if (r.isAttempted) {
-            topicStatsMap[tName].attempted += 1;
-            if (r.isCorrect) topicStatsMap[tName].correct += 1;
+
+          let rawTopic = (q.topic || q.chapter || q.bank_category || '').trim();
+          if (!rawTopic || ['general', 'general aptitude', 'default', 'uncategorized'].includes(rawTopic.toLowerCase())) {
+            rawTopic = `${q.subject || 'Core'} Concepts`;
+          }
+
+          let subj = (q.subject || 'Physics').trim();
+          if (/phys/i.test(subj)) subj = 'Physics';
+          else if (/chem/i.test(subj)) subj = 'Chemistry';
+          else if (/math/i.test(subj)) subj = 'Mathematics';
+          else if (/botany|zoology|bio/i.test(subj)) subj = 'Biology';
+
+          if (!topicStats[rawTopic]) {
+            topicStats[rawTopic] = {
+              topic: rawTopic,
+              subtopic: q.subtopic || 'Core Principles',
+              subject: subj,
+              correct: 0,
+              attempted: 0,
+              total: 0,
+              wrong: 0,
+              unattempted: 0,
+            };
+          }
+
+          topicStats[rawTopic].total += 1;
+          if (isAttempted) {
+            topicStats[rawTopic].attempted += 1;
+            if (isCorrect) {
+              topicStats[rawTopic].correct += 1;
+            } else {
+              topicStats[rawTopic].wrong += 1;
+            }
+          } else {
+            topicStats[rawTopic].unattempted += 1;
           }
         }
 
-        const calculated = Object.values(topicStatsMap).map((ts) => {
+        const calculated = Object.values(topicStats).map((ts) => {
           const accuracy = ts.total > 0 ? Math.round((ts.correct / ts.total) * 100) : 0;
           return {
             topic: ts.topic,
@@ -133,136 +253,128 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
             accuracy,
             correctCount: ts.correct,
             attemptedCount: ts.attempted,
+            wrongCount: ts.wrong,
+            unattemptedCount: ts.unattempted,
             totalCount: ts.total,
           };
         });
 
-        // Filter for weak topics (accuracy < threshold)
-        weakTopics = calculated.filter((t) => t.accuracy < threshold);
-        if (weakTopics.length === 0 && calculated.length > 0) {
-          calculated.sort((a, b) => a.accuracy - b.accuracy);
-          weakTopics = calculated.slice(0, limit);
+        if (calculated.length > 0) {
+          // Sort: lowest accuracy first, then highest missed questions
+          calculated.sort((a, b) => {
+            if (a.accuracy !== b.accuracy) return a.accuracy - b.accuracy;
+            return (b.wrongCount + b.unattemptedCount) - (a.wrongCount + a.unattemptedCount);
+          });
+
+          // Topics with accuracy < threshold OR that have wrong/unattempted questions
+          const weakFromThisTest = calculated.filter(
+            (t) => t.accuracy < threshold || (t.wrongCount + t.unattemptedCount) > 0
+          );
+          weakTopics = weakFromThisTest.length > 0 ? weakFromThisTest.slice(0, limit) : calculated.slice(0, limit);
         }
       }
     }
 
-    // If test_attempts JSONB yielded no topics, query `answers` table for this specific attemptId
+    // 3D. Check test_attempts question_responses JSONB if still empty
     if (weakTopics.length === 0) {
-      const attemptResult = await query(
-        `WITH target_info AS (
-           SELECT assessment_id FROM attempts WHERE id = $1
-           UNION
-           SELECT COALESCE(assessment_id, test_id) AS assessment_id FROM test_attempts WHERE id = $1
-           UNION
-           SELECT id AS assessment_id FROM assessments WHERE id = $1
-           UNION
-           SELECT id AS assessment_id FROM tests WHERE id = $1
-         ),
-         attempt_question_stats AS (
-           SELECT 
-             COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
-             COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
-             COALESCE(q.subtopic, 'Core Concepts') AS subtopic,
-             CASE 
-               WHEN (ans.selected_index IS NOT NULL AND ans.selected_index = COALESCE(q.correct_option_index, q.correct_index))
-                    OR (ans.selected_indices::text = q.correct_indices::text)
-                    OR (ans.numeric_answer::text = q.numeric_answer::text)
-               THEN 1 ELSE 0 
-             END AS is_correct,
-             CASE 
-               WHEN ans.selected_index IS NOT NULL OR ans.selected_indices IS NOT NULL OR ans.numeric_answer IS NOT NULL 
-               THEN 1 ELSE 0 
-             END AS is_attempted
-           FROM questions q
-           LEFT JOIN subjects s ON s.id = q.subject_id
-           LEFT JOIN chapters c ON c.id = q.chapter_id
-           LEFT JOIN answers ans ON ans.question_id = q.id AND (ans.attempt_id = $1)
-           WHERE q.assessment_id IN (SELECT assessment_id FROM target_info WHERE assessment_id IS NOT NULL)
-              OR ans.attempt_id = $1
-         )
-         SELECT 
-           subject,
-           topic,
-           subtopic,
-           COUNT(*)::int AS total_questions,
-           SUM(is_attempted)::int AS attempted_count,
-           SUM(is_correct)::int AS correct_count,
-           ROUND((SUM(is_correct)::numeric / GREATEST(COUNT(*), 1) * 100)::numeric, 1)::float AS accuracy
-         FROM attempt_question_stats
-         GROUP BY subject, topic, subtopic
-         ORDER BY accuracy ASC, attempted_count DESC
-         LIMIT $2`,
-        [targetAttemptId, limit]
+      const testAttemptRes = await query(
+        `SELECT question_responses, test_id FROM test_attempts WHERE id = $1`,
+        [targetAttemptId]
       ).catch(() => ({ rows: [] }));
 
-      if (attemptResult.rows && attemptResult.rows.length > 0) {
-        const cleanedRows = attemptResult.rows.map((r) => {
-          let topicName = r.topic;
-          if (!topicName || topicName === 'General Topic') {
-            topicName = r.subject !== 'General Subject' ? `${r.subject} Core Principles` : 'Target Weak Areas';
-          }
-          return {
-            topic: topicName,
-            subtopic: r.subtopic || 'Core Concepts',
-            subject: r.subject || 'Biology',
-            accuracy: Number(r.accuracy) || 35,
-            correctCount: Number(r.correct_count) || 0,
-            attemptedCount: Number(r.attempted_count) || Number(r.total_questions) || 0,
-            totalCount: Number(r.total_questions) || 0,
-          };
-        });
+      if (testAttemptRes.rows && testAttemptRes.rows.length > 0) {
+        const row = testAttemptRes.rows[0];
+        let responses = [];
+        try {
+          responses = typeof row.question_responses === 'string'
+            ? JSON.parse(row.question_responses)
+            : (row.question_responses || []);
+        } catch (_) {}
 
-        const weakFromAttempt = cleanedRows.filter((r) => r.accuracy < threshold);
-        weakTopics = weakFromAttempt.length > 0 ? weakFromAttempt : cleanedRows.slice(0, limit);
+        if (Array.isArray(responses) && responses.length > 0) {
+          const topicStatsMap = {};
+          for (const r of responses) {
+            const tName = (r.topic || r.subtopic || 'General Topic').trim();
+            const sName = (r.subject || 'Physics').trim();
+            if (!topicStatsMap[tName]) {
+              topicStatsMap[tName] = { topic: tName, subtopic: r.subtopic || 'Core Concepts', subject: sName, correct: 0, attempted: 0, total: 0 };
+            }
+            topicStatsMap[tName].total += 1;
+            if (r.isAttempted) {
+              topicStatsMap[tName].attempted += 1;
+              if (r.isCorrect) topicStatsMap[tName].correct += 1;
+            }
+          }
+
+          const calculated = Object.values(topicStatsMap).map((ts) => {
+            const accuracy = ts.total > 0 ? Math.round((ts.correct / ts.total) * 100) : 0;
+            return {
+              topic: ts.topic,
+              subtopic: ts.subtopic,
+              subject: ts.subject,
+              accuracy,
+              correctCount: ts.correct,
+              attemptedCount: ts.attempted,
+              totalCount: ts.total,
+            };
+          });
+
+          weakTopics = calculated.filter((t) => t.accuracy < threshold);
+          if (weakTopics.length === 0 && calculated.length > 0) {
+            calculated.sort((a, b) => a.accuracy - b.accuracy);
+            weakTopics = calculated.slice(0, limit);
+          }
+        }
+      }
+    }
+
+    // 3E. Fallback to student_mistake_book for this attempt/student if still empty
+    if (weakTopics.length === 0) {
+      const mistakeRes = await query(
+        `SELECT subject, topic, chapter, COUNT(*)::int as count 
+         FROM student_mistake_book 
+         WHERE (attempt_id = $1 OR student_id = $2) AND status = 'active'
+         GROUP BY subject, topic, chapter
+         ORDER BY count DESC
+         LIMIT $3`,
+        [targetAttemptId, numId, limit]
+      ).catch(() => ({ rows: [] }));
+
+      if (mistakeRes.rows && mistakeRes.rows.length > 0) {
+        weakTopics = mistakeRes.rows.map((r) => ({
+          topic: r.topic || r.chapter || 'Target Weak Areas',
+          subtopic: 'Core Principles',
+          subject: r.subject || 'Physics',
+          accuracy: 25.0,
+          correctCount: 0,
+          attemptedCount: 5,
+          totalCount: 5,
+        }));
       }
     }
   }
 
-  // 4. Exclude topics that were ALREADY targeted in previously generated improvement tests
-  if (weakTopics.length > 0 && alreadyTargetedTopics.size > 0) {
+  // 4. Exclude previously targeted topics ONLY if NOT generating for a specific test attempt
+  if (!targetAttemptId && weakTopics.length > 0 && alreadyTargetedTopics.size > 0) {
     const freshTopics = weakTopics.filter((t) => !alreadyTargetedTopics.has(t.topic.trim().toLowerCase()));
-    // Only apply filter if there are remaining fresh topics for the newly tested week
     if (freshTopics.length > 0) {
       weakTopics = freshTopics;
     }
   }
 
-  // 5. Fallback: Query questions of the latest test attempt directly (never pull unrelated past week topics)
-  if (weakTopics.length === 0 && targetAttemptId) {
-    const testQuestionsRes = await query(
-      `SELECT DISTINCT 
-         COALESCE(s.name, q.bank_category, 'General Subject') AS subject,
-         COALESCE(c.name, q.topic, q.bank_category, q.subtopic, 'General Topic') AS topic,
-         COALESCE(q.subtopic, 'Core Concepts') AS subtopic
-       FROM questions q
-       LEFT JOIN subjects s ON s.id = q.subject_id
-       LEFT JOIN chapters c ON c.id = q.chapter_id
-       WHERE q.assessment_id IN (
-         SELECT assessment_id FROM attempts WHERE id = $1
-         UNION
-         SELECT COALESCE(assessment_id, test_id) FROM test_attempts WHERE id = $1
-       )
-       LIMIT $2`,
-      [targetAttemptId, limit]
-    ).catch(() => ({ rows: [] }));
-
-    if (testQuestionsRes.rows && testQuestionsRes.rows.length > 0) {
-      weakTopics = testQuestionsRes.rows.map((r) => ({
-        topic: r.topic !== 'General Topic' ? r.topic : `${r.subject} Concepts`,
-        subtopic: r.subtopic || 'Core Principles',
-        subject: r.subject || 'Biology',
-        accuracy: 35.0,
-        correctCount: 0,
-        attemptedCount: 5,
-        totalCount: 5,
-      }));
-    }
+  // 5. Final fallback if student has no attempt data at all
+  if (weakTopics.length === 0) {
+    weakTopics = [
+      { topic: 'Mechanics & Dynamics', subtopic: 'Laws of Motion', subject: 'Physics', accuracy: 35, correctCount: 0, attemptedCount: 5, totalCount: 5 },
+      { topic: 'Chemical Thermodynamics', subtopic: 'Entropy & Enthalpy', subject: 'Chemistry', accuracy: 40, correctCount: 0, attemptedCount: 5, totalCount: 5 },
+      { topic: 'Calculus & Functions', subtopic: 'Limits & Continuity', subject: 'Mathematics', accuracy: 30, correctCount: 0, attemptedCount: 5, totalCount: 5 },
+    ].slice(0, limit);
   }
 
   return weakTopics.map((t) => ({
     topic: t.topic,
     subtopic: t.subtopic || 'Core Principles',
-    subject: t.subject || 'Biology',
+    subject: t.subject || 'Physics',
     accuracy: Number(t.accuracy) || 35,
     correctCount: Number(t.correctCount || t.correct_count) || 0,
     attemptedCount: Number(t.attemptedCount || t.attempted_count || t.total_questions) || 0,
@@ -360,10 +472,27 @@ export function shuffleQuestionOptions(q) {
  */
 export function buildQuestionPrompt(topic, subtopic, examType, difficultyMix, count, subject = 'Physics') {
   const examLevelStr = examType === 'NEET' ? 'NEET UG' : 'JEE Main / JEE Advanced';
-  return `Generate ${count} multiple-choice ${subject} questions on the topic '${topic}' (subtopic: '${subtopic}') at ${examType} difficulty level (${examLevelStr}). Include a mix of ${difficultyMix}. Return ONLY a JSON array, no preamble or markdown fences, with objects of this exact shape:
-{ question: string, options: [string, string, string, string], correctOptionIndex: number (0-3), explanation: string, difficulty: "easy"|"medium"|"hard", topic: string, subtopic: string }
-CRITICAL: Randomize the position of the correct answer across indices 0, 1, 2, and 3 so the correct option is evenly distributed across A, B, C, and D.
-Ensure factual and numerical accuracy. Avoid repeating standard textbook examples verbatim. Do not include any text outside the JSON array.`;
+  return `You are an expert test creator for ${examLevelStr}.
+Generate exactly ${count} multiple-choice questions for ${subject} on the topic "${topic}" (subtopic: "${subtopic}") at ${difficultyMix} difficulty.
+
+Output ONLY a JSON array of ${count} question objects with this exact structure:
+[
+  {
+    "question": "Question text here (use standard LaTeX like \\\\frac{a}{b} if needed)",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "correctOptionIndex": 0,
+    "explanation": "Clear step-by-step solution",
+    "difficulty": "medium",
+    "topic": "${topic}",
+    "subtopic": "${subtopic}"
+  }
+]
+Rules:
+1. Return exactly ${count} objects in the JSON array.
+2. "options" must contain exactly 4 options.
+3. "correctOptionIndex" must be 0, 1, 2, or 3. Randomize the correct option index across 0, 1, 2, 3 evenly.
+4. "difficulty" must be "easy", "medium", or "hard".
+5. Return ONLY the JSON array without any markdown fences or preamble.`;
 }
 
 /**
@@ -386,6 +515,23 @@ export function calculateUnlockDelay(weakTopicsAvgAccuracy) {
  * Calls Claude API (model: claude-sonnet-4-6), parses & strictly validates JSON with retries up to 2 times.
  */
 export async function generateQuestionsForTopic(topic, subtopic, examType, difficultyMix, count, subject = 'Physics') {
+  if (count <= 0) return [];
+
+  // Divide into chunks of at most 4 questions for speed, reliability, and token safety
+  if (count > 4) {
+    const half = Math.ceil(count / 2);
+    const [batch1, batch2] = await Promise.all([
+      generateQuestionsForTopic(topic, subtopic, examType, difficultyMix, half, subject),
+      generateQuestionsForTopic(topic, subtopic, examType, difficultyMix, count - half, subject),
+    ]);
+    const merged = [...batch1, ...batch2];
+    if (merged.length < count) {
+      const pad = generateFallbackQuestions(topic, subtopic, examType, count - merged.length, subject);
+      merged.push(...pad);
+    }
+    return merged.slice(0, count);
+  }
+
   const prompt = buildQuestionPrompt(topic, subtopic, examType, difficultyMix, count, subject);
 
   let attempts = 0;
@@ -407,25 +553,42 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
         continue;
       }
 
-      // Clean JSON fences if present
-      let cleanJson = rawText.trim();
-      if (cleanJson.startsWith('```json')) {
-        cleanJson = cleanJson.replace(/^```json\s*/i, '').replace(/\s*```$/i, '');
-      } else if (cleanJson.startsWith('```')) {
-        cleanJson = cleanJson.replace(/^```\s*/, '').replace(/\s*```$/, '');
+      let parsed = null;
+      try {
+        parsed = JSON.parse(rawText.trim());
+      } catch (_) {}
+
+      if (!parsed) {
+        let cleanJson = rawText.trim();
+        if (cleanJson.startsWith('```json')) {
+          cleanJson = cleanJson.replace(/^```json\s*/i, '').replace(/\s*```$/i, '');
+        } else if (cleanJson.startsWith('```')) {
+          cleanJson = cleanJson.replace(/^```\s*/, '').replace(/\s*```$/, '');
+        }
+
+        try {
+          parsed = JSON.parse(cleanJson);
+        } catch (_) {
+          const match = cleanJson.match(/\[[\s\S]*\]/);
+          if (match) {
+            try {
+              parsed = JSON.parse(match[0]);
+            } catch (_) {}
+          }
+        }
       }
 
-      const match = cleanJson.match(/\[[\s\S]*\]/);
-      if (match) cleanJson = match[0];
+      if (!parsed) {
+        throw new Error('Failed to parse AI JSON response');
+      }
 
-      const parsed = JSON.parse(cleanJson);
       const validated = QuestionArraySchema.parse(parsed);
 
       // Deduplicate near-duplicate questions by question text normalization
       const uniqueQuestions = [];
       const seenTexts = new Set();
       for (const q of validated) {
-        const normKey = q.question.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const normKey = (q.question || '').toLowerCase().replace(/[^a-z0-9]/g, '');
         if (!seenTexts.has(normKey)) {
           seenTexts.add(normKey);
           const shuffledQ = shuffleQuestionOptions({
@@ -439,10 +602,15 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
       }
 
       if (uniqueQuestions.length > 0) {
+        if (uniqueQuestions.length < count) {
+          const needed = count - uniqueQuestions.length;
+          const padQs = generateFallbackQuestions(topic, subtopic, examType, needed, subject);
+          uniqueQuestions.push(...padQs);
+        }
         return uniqueQuestions.slice(0, count);
       }
     } catch (err) {
-      console.warn(`❌ [Claude API Validation Error] Attempt ${attempts} failed:`, err.message);
+      console.warn(`❌ [AI API Validation Error] Attempt ${attempts} failed:`, err.message);
     }
   }
 
@@ -485,7 +653,7 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
     }
   }
 
-  // 2. Gemini API integration (Gemini 3.6 Flash)
+  // 2. Gemini API integration (Gemini 3.6 Flash) with structured JSON enforcement
   if (geminiKey) {
     try {
       const ai = new GoogleGenAI({ apiKey: geminiKey });
@@ -494,8 +662,25 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
         model: modelName,
         contents: prompt,
         config: {
-          temperature: 0.3,
-          maxOutputTokens: maxTokens,
+          responseMimeType: 'application/json',
+          responseSchema: {
+            type: 'ARRAY',
+            items: {
+              type: 'OBJECT',
+              properties: {
+                question: { type: 'STRING' },
+                options: { type: 'ARRAY', items: { type: 'STRING' } },
+                correctOptionIndex: { type: 'INTEGER' },
+                explanation: { type: 'STRING' },
+                difficulty: { type: 'STRING' },
+                topic: { type: 'STRING' },
+                subtopic: { type: 'STRING' },
+              },
+              required: ['question', 'options', 'correctOptionIndex', 'explanation', 'difficulty', 'topic', 'subtopic'],
+            },
+          },
+          temperature: 0.2,
+          maxOutputTokens: 6000,
         },
       });
 
@@ -514,7 +699,7 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
 /**
  * Fallback questions generator ensuring 100% test reliability with exam-level precision
  */
-function generateFallbackQuestions(topic, subtopic, examType, count, subject = 'Physics') {
+export function generateFallbackQuestions(topic, subtopic, examType, count, subject = 'Physics') {
   const bank = [
     {
       question: `In ${topic} (${subtopic}), an object of mass m moves under a central force field. If the potential energy is given by U(r) = a/r^2 - b/r, what is the equilibrium radius r_0?`,

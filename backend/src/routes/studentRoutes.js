@@ -10,7 +10,30 @@ import {
 import { getStudentCalendar } from '../controllers/calendarController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 
+import {
+  getMistakeBook,
+  syncMistakeBook,
+  recreateTest,
+  updateStatus,
+  removeMistake,
+} from '../controllers/studentMistakeBookController.js';
+import {
+  handleTranslateQuestion,
+  handleTranslateBatch,
+} from '../controllers/translationController.js';
+
 const router = Router();
+
+// Multilingual Question Translation Endpoints
+router.post('/translate-question', authenticate, authorize('candidate', 'admin', 'institution_admin'), handleTranslateQuestion);
+router.post('/translate-questions-batch', authenticate, authorize('candidate', 'admin', 'institution_admin'), handleTranslateBatch);
+
+// Mistake Book Endpoints
+router.get('/mistake-book', authenticate, authorize('candidate'), getMistakeBook);
+router.post('/mistake-book/sync', authenticate, authorize('candidate'), syncMistakeBook);
+router.post('/mistake-book/recreate-test', authenticate, authorize('candidate'), recreateTest);
+router.patch('/mistake-book/:id/status', authenticate, authorize('candidate'), updateStatus);
+router.delete('/mistake-book/:id', authenticate, authorize('candidate'), removeMistake);
 
 router.get('/7-day-plan', authenticate, authorize('candidate'), getStudent7DayPlan);
 router.post('/generate-7-day-plan', authenticate, authorize('candidate'), generateStudent7DayPlan);

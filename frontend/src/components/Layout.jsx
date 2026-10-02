@@ -22,6 +22,7 @@ import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 const candidateNav = [
   { to: '/dashboard', label: 'Dashboard', icon: 'grid' },
   { to: '/my-tests', label: 'My Tests', icon: 'doc' },
+  { to: '/my-mistake-book', label: 'My Mistake Book', icon: 'bookmark' },
   { to: '/my-ebooks', label: 'Study Material', icon: 'book' },
   { to: '/aiets-calendar', label: 'AIETS Calendar', icon: 'calendar' },
   { to: '/analytics', label: 'Analytics', icon: 'chart' },
@@ -54,6 +55,7 @@ const adminNav = [
 
 const Icon = ({ name, className = 'h-5 w-5' }) => {
   const paths = {
+    bookmark: 'M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z',
     grid: 'M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 9a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1v-5zm9-9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V5zm0 10a1 1 0 011-1h5a1 1 0 011 1v4a1 1 0 01-1 1h-5a1 1 0 01-1-1v-4z',
     calendar: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
     doc: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',

@@ -249,25 +249,29 @@ function parseBlock(block, answerKey) {
 
   // Ensure every question is preserved even if options could not be automatically separated
   const hasValidOptions = options.length >= 2;
-  const needsReview = !hasValidOptions;
+  const isLikelyIntegerStem = /(?:is\s*_{2,}|equal\s*to\s*_{2,}|value\s*of\s*.*is\s*_{2,}|will\s*be\s*_{2,}\s*[a-zA-Z%°\/]*\.?$)/i.test(question_text);
+  const isInteger = options.length === 0 && isLikelyIntegerStem;
+  const needsReview = !isInteger && !hasValidOptions;
 
-  let finalOptions = [...options];
-  if (finalOptions.length === 0) {
-    finalOptions = [
-      '[Needs Review] Option A',
-      '[Needs Review] Option B',
-      '[Needs Review] Option C',
-      '[Needs Review] Option D',
-    ];
-  } else if (finalOptions.length === 1) {
-    finalOptions.push(
-      '[Needs Review] Option B',
-      '[Needs Review] Option C',
-      '[Needs Review] Option D'
-    );
-  } else if (finalOptions.length < 4) {
-    while (finalOptions.length < 4) {
-      finalOptions.push(`[Needs Review] Option ${String.fromCharCode(65 + finalOptions.length)}`);
+  let finalOptions = isInteger ? [] : [...options];
+  if (!isInteger) {
+    if (finalOptions.length === 0) {
+      finalOptions = [
+        '[Needs Review] Option A',
+        '[Needs Review] Option B',
+        '[Needs Review] Option C',
+        '[Needs Review] Option D',
+      ];
+    } else if (finalOptions.length === 1) {
+      finalOptions.push(
+        '[Needs Review] Option B',
+        '[Needs Review] Option C',
+        '[Needs Review] Option D'
+      );
+    } else if (finalOptions.length < 4) {
+      while (finalOptions.length < 4) {
+        finalOptions.push(`[Needs Review] Option ${String.fromCharCode(65 + finalOptions.length)}`);
+      }
     }
   }
 
@@ -275,7 +279,7 @@ function parseBlock(block, answerKey) {
   const isMultiKey = correct_indices.length > 1;
   const isMulti = isMultiText || isMultiKey;
 
-  const question_type = isMulti ? 'multi_select' : 'mcq';
+  const question_type = isInteger ? 'integer' : (isMulti ? 'multi_select' : 'mcq');
 
   if (isMulti && correct_indices.length === 0) {
     correct_indices = [correct_index];
@@ -304,8 +308,9 @@ function parseBlock(block, answerKey) {
     chapter: chapter || null,
     topic: chapter || null,
     options: finalOptions,
-    correct_index,
-    correct_indices: isMulti ? correct_indices : (correct_indices.length ? correct_indices : [correct_index]),
+    correct_index: isInteger ? null : correct_index,
+    correct_indices: isMulti ? correct_indices : (correct_indices.length ? correct_indices : (isInteger ? [] : [correct_index])),
+    numeric_answer: null,
     solution: solutionText,
     needs_review: needsReview,
     review_reason: needsReview ? `Question ${block.num}: Options could not be automatically separated. Please review manually.` : null,
@@ -354,7 +359,15 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             }
           }
 
-          const optionStrings = (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
+          const qType = q.questionType || q.question_type || (q.numericAnswer != null || q.numeric_answer != null ? 'integer' : 'mcq');
+          const isInteger = qType === 'integer' || qType === 'numerical';
+          const numericAnswer = q.numericAnswer != null 
+            ? Number(q.numericAnswer) 
+            : (q.numeric_answer != null ? Number(q.numeric_answer) : null);
+
+          const optionStrings = isInteger
+            ? []
+            : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
           const qText = q.question?.text || q.questionText || '';
           const primaryMediaUrl = q.question?.media && q.question.media.length > 0
             ? q.question.media[0].url
@@ -367,20 +380,30 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             ...(q.explanation?.media || []),
           ];
 
-          const hasAnswerKey = Boolean(correctIndex !== null);
+          const hasAnswerKey = Boolean(correctIndex !== null || numericAnswer !== null);
+          const finalCorrectAnswer = hasAnswerKey
+            ? (isInteger
+                ? (numericAnswer !== null ? String(numericAnswer) : (q.correctAnswer || null))
+                : (q.correctAnswer || (correctIndex !== null ? String.fromCharCode(65 + correctIndex) : null)))
+            : null;
 
           return {
             ...q,
             line: q.questionNumber,
             question_text: qText,
             questionText: qText,
-            question_type: 'mcq',
+            question_type: qType,
+            questionType: qType,
+            numeric_answer: numericAnswer,
+            numericAnswer: numericAnswer,
             marks: 4,
             bank_category: q.subject || 'General',
+            chapter: q.chapter || q.topic || 'General',
+            topic: q.topic || q.chapter || 'General',
             options: optionStrings,
-            rawOptions: q.options,
-            correct_index: correctIndex,
-            correctAnswer: (hasAnswerKey && q.correctAnswer) ? q.correctAnswer : null,
+            rawOptions: isInteger ? [] : q.options,
+            correct_index: isInteger ? null : correctIndex,
+            correctAnswer: finalCorrectAnswer,
             solution: q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || '')),
             image_url: primaryMediaUrl,
             media: allMedia,
@@ -497,7 +520,10 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       line: qNum,
       question_text: r.question_text,
       questionText: r.question_text,
-      question_type: 'mcq',
+      question_type: r.question_type || 'mcq',
+      questionType: r.question_type || 'mcq',
+      numeric_answer: r.numeric_answer ?? null,
+      numericAnswer: r.numeric_answer ?? null,
       marks: r.marks || 4,
       bank_category: r.bank_category || 'General',
       options: r.options || [],

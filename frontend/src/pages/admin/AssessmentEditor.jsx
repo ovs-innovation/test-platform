@@ -1378,10 +1378,13 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
   const opts = Array.isArray(q.options) ? q.options : [];
   const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
 
+  const isInteger = q.question_type === 'integer' || q.question_type === 'numerical';
   const hasAnswerKey = Boolean(
     q.question_type === 'multi_select'
       ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
-      : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false)
+      : (isInteger
+          ? (q.numeric_answer !== null && q.numeric_answer !== undefined && q.numeric_answer !== '')
+          : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false))
   );
 
   return (
@@ -1438,6 +1441,23 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                 onClick={() => window.open(getMediaUrl(q.image_url), '_blank')}
                 title="Click to view full diagram"
               />
+            </div>
+          )}
+
+          {isInteger && (
+            <div className="mt-2.5 flex items-center gap-2">
+              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                Integer / Numerical Answer:
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/60 font-mono text-sm font-bold text-emerald-700 dark:text-emerald-300 shadow-sm">
+                <span>🎯</span>
+                <span>{q.numeric_answer !== null && q.numeric_answer !== undefined ? q.numeric_answer : (hasAnswerKey ? q.correct_index : 'Not specified')}</span>
+                {q.numerical_tolerance > 0 && (
+                  <span className="text-xs font-normal text-emerald-600 dark:text-emerald-400">
+                    (±{q.numerical_tolerance})
+                  </span>
+                )}
+              </span>
             </div>
           )}
 
@@ -2359,6 +2379,11 @@ function PreviewModal({ open, onClose, data }) {
                         );
                       })}
                     </ul>
+                  )}
+                  {(q.question_type === 'integer' || q.question_type === 'numerical') && (
+                    <div className="mt-2 text-sm text-emerald-700 font-medium">
+                      Integer / Numerical Answer: <strong>{q.numeric_answer !== null && q.numeric_answer !== undefined ? q.numeric_answer : (q.correct_index ?? 'Not specified')}</strong>
+                    </div>
                   )}
                   {q.question_type === 'coding' && (
                     <pre className="mt-2 overflow-x-auto rounded bg-slate-900 p-3 text-xs text-slate-100">{q.starter_code}</pre>

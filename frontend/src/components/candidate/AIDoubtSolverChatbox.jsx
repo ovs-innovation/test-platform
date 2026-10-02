@@ -317,8 +317,48 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
       } catch (_) {}
     };
 
+    const handleOpenDoubtSolver = (e) => {
+      const detail = e.detail || {};
+      setIsOpen(true);
+      if (detail.query) {
+        setQuestionText(detail.query);
+      }
+      if (detail.subject) {
+        setSelectedSubject(detail.subject);
+      }
+      if (detail.testContext) {
+        setActiveTestContext(detail.testContext);
+        setChatMode('test_mentor');
+      }
+      if (detail.imageUrl) {
+        setAttachedImage({
+          base64: null,
+          mimeType: 'image/jpeg',
+          previewUrl: detail.imageUrl,
+          fileName: 'question_diagram.jpg'
+        });
+      }
+
+      // Auto-focus the input box
+      setTimeout(() => {
+        const inputEl = textareaRef.current || document.querySelector('[data-doubt-input]');
+        if (inputEl) {
+          inputEl.focus();
+          if (inputEl.setSelectionRange && inputEl.value) {
+            inputEl.setSelectionRange(inputEl.value.length, inputEl.value.length);
+          }
+        }
+      }, 150);
+    };
+
     window.addEventListener('active_test_context_updated', handleContextUpdate);
-    return () => window.removeEventListener('active_test_context_updated', handleContextUpdate);
+    window.addEventListener('open-ai-doubt-solver', handleOpenDoubtSolver);
+    window.addEventListener('ask-vedum', handleOpenDoubtSolver);
+    return () => {
+      window.removeEventListener('active_test_context_updated', handleContextUpdate);
+      window.removeEventListener('open-ai-doubt-solver', handleOpenDoubtSolver);
+      window.removeEventListener('ask-vedum', handleOpenDoubtSolver);
+    };
   }, []);
 
   useEffect(() => {
@@ -341,6 +381,7 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
   const videoRef = useRef(null);
+  const textareaRef = useRef(null);
 
   // Auto-scroll to bottom of chat
   const scrollToBottom = () => {
@@ -350,8 +391,16 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
   useEffect(() => {
     if (isOpen) {
       scrollToBottom();
+      const timer = setTimeout(() => {
+        if (textareaRef.current) {
+          textareaRef.current.focus();
+          const len = textareaRef.current.value.length;
+          textareaRef.current.setSelectionRange(len, len);
+        }
+      }, 150);
+      return () => clearTimeout(timer);
     }
-  }, [messages, isOpen, isSending]);
+  }, [isOpen, questionText]);
 
   // Clean up camera stream on unmount
   useEffect(() => {
@@ -1047,13 +1096,21 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
                 <Camera className="w-4.5 h-4.5" />
               </button>
 
-              {/* Input Text Box */}
-              <input
-                type="text"
+              {/* Input Text Area (supports multi-line pasted questions) */}
+              <textarea
+                ref={textareaRef}
+                data-doubt-input="true"
                 value={questionText}
                 onChange={(e) => setQuestionText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmitDoubt(e);
+                  }
+                }}
+                rows={Math.min(5, Math.max(1, (questionText.match(/\n/g) || []).length + 1))}
                 placeholder="Ask Vedum any doubt, question, or formula..."
-                className="flex-1 bg-transparent border-none text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-none px-2 py-1.5"
+                className="flex-1 bg-transparent border-none text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:outline-hidden px-2 py-1.5 resize-none max-h-32 min-h-[38px] scrollbar-thin"
                 disabled={isSending}
               />
 
@@ -1061,8 +1118,8 @@ export default function AIDoubtSolverChatbox({ defaultOpen = false, initialQuery
               <button
                 type="submit"
                 disabled={isSending || (!questionText.trim() && !attachedImage)}
-                className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-indigo-600/20 shrink-0 font-semibold text-xs flex items-center gap-1.5 cursor-pointer"
-                title="Send doubt"
+                className="px-3.5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:opacity-95 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-md shadow-indigo-600/20 shrink-0 font-semibold text-xs flex items-center gap-1.5 cursor-pointer self-end mb-0.5"
+                title="Send doubt (or press Enter)"
               >
                 {isSending ? (
                   <RefreshCw className="w-4 h-4 animate-spin text-white" />

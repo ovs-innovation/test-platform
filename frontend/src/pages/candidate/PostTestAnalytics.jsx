@@ -44,6 +44,7 @@ export default function PostTestAnalytics() {
   const [expandedQuestion, setExpandedQuestion] = useState(null);
   const [questionFilter, setQuestionFilter] = useState('ALL'); // ALL | WRONG | CORRECT | UNATTEMPTED
   const [generatingAiTest, setGeneratingAiTest] = useState(false);
+  const [startingAiTest, setStartingAiTest] = useState(false);
   const [aiTestResult, setAiTestResult] = useState(null);
   const [aiTestError, setAiTestError] = useState(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
@@ -57,10 +58,27 @@ export default function PostTestAnalytics() {
       setAiTestResult(res);
       setRefreshTrigger((prev) => prev + 1);
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Unable to generate AI improvement test.';
+      const msg = err.response?.data?.message || err.message || 'Unable to generate 20-question weak topic test.';
       setAiTestError(msg);
     } finally {
       setGeneratingAiTest(false);
+    }
+  };
+
+  const handleStartAiTest = async (newTestId) => {
+    if (!newTestId) return;
+    setStartingAiTest(true);
+    try {
+      const res = await aiTestService.startTest(newTestId);
+      if (res.test && res.questions) {
+        sessionStorage.setItem(`ai_test_session_${newTestId}`, JSON.stringify(res));
+        navigate(`/exam/ai-${newTestId}`);
+      }
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Unable to start test.';
+      setAiTestError(msg);
+    } finally {
+      setStartingAiTest(false);
     }
   };
 
@@ -709,16 +727,21 @@ export default function PostTestAnalytics() {
       })()}
 
       {/* WEAK TOPIC BOOSTER TEST GENERATOR CARD */}
-      <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-4">
+      <div className="rounded-2xl border border-indigo-100 dark:border-indigo-900/50 bg-gradient-to-br from-indigo-50/40 via-white to-sky-50/30 dark:from-[#0F172A] dark:to-[#09101f] p-6 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 shrink-0">
+            <div className="p-3 rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 shrink-0">
               <Sparkles className="h-5 w-5" />
             </div>
-            <div className="space-y-0.5">
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Improvement Test</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
-                Generate fresh, NTA-pattern questions targeting weak areas identified in this test. Scheduled with 2–3 days spaced repetition so you have time to revise first.
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Test Generator</h3>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300">
+                  20 Questions
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+                Generate fresh, targeted questions focusing on your weak and missed topics from this test. Test has 20 questions and is ready to start immediately!
               </p>
             </div>
           </div>
@@ -728,21 +751,21 @@ export default function PostTestAnalytics() {
               type="button"
               disabled={generatingAiTest}
               onClick={handleGenerateAiTest}
-              className={`px-4 py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center gap-2 transition ${
+              className={`px-5 py-2.5 rounded-xl font-bold text-xs shadow-md flex items-center gap-2 transition cursor-pointer ${
                 generatingAiTest
-                  ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-200 dark:border-slate-700'
-                  : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                  ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-300 dark:border-slate-700'
+                  : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-600/25 active:scale-95'
               }`}
             >
               {generatingAiTest ? (
                 <>
                   <Sparkles className="h-4 w-4 animate-spin" />
-                  <span>Generating Test...</span>
+                  <span>Creating 20-Q Test...</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  <span>Generate AI Improvement Test</span>
+                  <span>Create 20-Q Weak Topic Test</span>
                 </>
               )}
             </button>
@@ -750,21 +773,55 @@ export default function PostTestAnalytics() {
         </div>
 
         {aiTestError && (
-          <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
+          <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
             <ShieldAlert className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
             <span>{aiTestError}</span>
           </div>
         )}
 
         {aiTestResult && (
-          <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
-            <div className="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-300 text-sm">
-              <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-              <span>Improvement Test Scheduled</span>
+          <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-900 dark:text-emerald-200 space-y-3">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="space-y-1">
+                <div className="flex items-center gap-1.5 font-extrabold text-emerald-700 dark:text-emerald-300 text-sm">
+                  <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                  <span>20-Question Weak Topic Test Ready!</span>
+                </div>
+                <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                  {aiTestResult.message || 'Your personalized test with 20 targeted questions has been created.'}
+                </p>
+                {Array.isArray(aiTestResult.topics) && aiTestResult.topics.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {aiTestResult.topics.map((t, idx) => (
+                      <span key={idx} className="px-2.5 py-1 rounded-lg bg-emerald-100/80 dark:bg-emerald-900/60 font-semibold text-[11px] text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800/50">
+                        🎯 {t.topic} ({t.accuracyAtGeneration != null ? `${t.accuracyAtGeneration}% accuracy` : 'Weak'})
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="shrink-0 flex items-center gap-2">
+                <button
+                  type="button"
+                  disabled={startingAiTest}
+                  onClick={() => handleStartAiTest(aiTestResult.testId)}
+                  className="px-5 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/25 flex items-center gap-2 transition cursor-pointer active:scale-95"
+                >
+                  {startingAiTest ? (
+                    <>
+                      <Sparkles className="h-4 w-4 animate-spin" />
+                      <span>Launching Exam...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Zap className="h-4 w-4 fill-white" />
+                      <span>Start 20-Q Test Now</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </div>
-            <p className="leading-relaxed">
-              {aiTestResult.message || `Your personalized test is ready and will unlock on ${new Date(aiTestResult.unlockAt).toLocaleDateString()}.`}
-            </p>
           </div>
         )}
       </div>

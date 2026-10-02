@@ -647,7 +647,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
         // Fetch existing questions for this assessment
         const existingQsRes = await query(
-          'SELECT id, position, correct_index, solution, chapter, topic FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+          'SELECT id, position, correct_index, numeric_answer, question_type, solution, chapter, topic FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
           [id]
         );
         const existingQs = existingQsRes.rows;
@@ -663,24 +663,56 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           const hasChapter = Boolean(chaptersMap[qPos]);
 
           if (hasKey || hasSol || hasChapter) {
-            const newCorrect = hasKey ? answerKeyMap[qPos] : eq.correct_index;
+            const rawKey = answerKeyMap[qPos];
+            let newCorrect = eq.correct_index;
+            let newNumeric = eq.numeric_answer;
+            let newType = eq.question_type;
+
+            if (hasKey) {
+              if (typeof rawKey === 'number') {
+                if (rawKey >= 0 && rawKey <= 3) {
+                  newCorrect = rawKey;
+                } else {
+                  newNumeric = rawKey;
+                  newType = 'integer';
+                }
+              } else if (typeof rawKey === 'string') {
+                const upper = rawKey.trim().toUpperCase();
+                if (['A', 'B', 'C', 'D'].includes(upper)) {
+                  newCorrect = upper.charCodeAt(0) - 65;
+                } else if (!isNaN(Number(upper))) {
+                  newNumeric = Number(upper);
+                  newType = 'integer';
+                }
+              } else if (typeof rawKey === 'object' && rawKey !== null) {
+                if (rawKey.numeric !== undefined && rawKey.numeric !== null) {
+                  newNumeric = Number(rawKey.numeric);
+                  newType = 'integer';
+                } else if (rawKey.letter) {
+                  newCorrect = rawKey.letter.toUpperCase().charCodeAt(0) - 65;
+                }
+              }
+            }
+
             const newSol = hasSol ? solutionsMap[qPos] : eq.solution;
             const newChapter = hasChapter ? chaptersMap[qPos] : eq.chapter;
             const newTopic = hasChapter ? chaptersMap[qPos] : eq.topic;
 
-            if (hasKey && answerKeyMap[qPos] !== eq.correct_index) updatedKeyCount++;
+            if (hasKey && (newCorrect !== eq.correct_index || newNumeric !== eq.numeric_answer)) updatedKeyCount++;
             if (hasSol && solutionsMap[qPos] !== eq.solution) updatedSolCount++;
             if (hasChapter && chaptersMap[qPos] !== eq.chapter) updatedChapterCount++;
 
             await query(
               `UPDATE questions 
-               SET correct_index = $1, 
-                   solution = COALESCE($2, solution),
-                   chapter = COALESCE($3, chapter),
-                   topic = COALESCE($4, topic),
+               SET correct_index = $1,
+                   numeric_answer = $2,
+                   question_type = COALESCE($3, question_type),
+                   solution = COALESCE($4, solution),
+                   chapter = COALESCE($5, chapter),
+                   topic = COALESCE($6, topic),
                    extraction_meta = COALESCE(extraction_meta, '{}'::jsonb) || '{"hasAnswerKey": true}'::jsonb
-               WHERE id = $5`,
-              [newCorrect, newSol, newChapter, newTopic, eq.id]
+               WHERE id = $7`,
+              [newCorrect, newNumeric, newType, newSol, newChapter, newTopic, eq.id]
             );
           }
         }
@@ -758,29 +790,48 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             questionText: q.question_text || q.questionText,
           });
 
-          // Prefer Gemini-extracted subject/chapter; fall back to keyword classifier
+          const qNum = q.questionNumber || i + 1;
+
+          // Prefer Gemini-extracted subject/chapter/topic; fall back to keyword classifier
           const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
           const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
+          const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
 
-          const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
-          const qTopic = classification.topic;
-          if (qSubject && qSubject !== 'General') detectedSubjects.add(qSubject);
+          // For standard JEE/NEET competitive tests: infer section subject by question position if subject is unassigned
+          let detectedSectionSubject = null;
+          if (parsedQs.length >= 75) {
+            if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Mathematics';
+            else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Physics';
+            else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Chemistry';
+          }
 
-          const qNum = q.questionNumber || i + 1;
-          const finalSubject = geminiSubject || qSubject || 'General';
-          // Use Gemini chapter first; then keyword-classifier topic; last resort 'General Concepts'
-          const finalChapter = geminiChapter || qTopic || classification.topic || 'General Concepts';
+          const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : (detectedSectionSubject || classification.subject));
+          const finalSubject = qSubject || 'General';
+          if (finalSubject && finalSubject !== 'General') detectedSubjects.add(finalSubject);
+
+          const qTopic = geminiTopic || classification.topic;
+          // Use Gemini chapter/topic first; then keyword-classifier topic; last resort 'General Concepts'
+          const finalChapter = geminiChapter || geminiTopic || qTopic || classification.topic || 'General Concepts';
+          const finalTopic = geminiTopic || geminiChapter || qTopic || classification.topic || 'General Concepts';
+
+          const qType = q.question_type || q.questionType || (q.numeric_answer != null || q.numericAnswer != null ? 'integer' : 'mcq');
+          const isInteger = qType === 'integer' || qType === 'numerical';
+          const numericAnswer = q.numeric_answer != null 
+            ? Number(q.numeric_answer) 
+            : (q.numericAnswer != null ? Number(q.numericAnswer) : null);
 
           const hasAnswer = Boolean(
             includeAnswers &&
-            (q.correctAnswer || (q.correct_index !== null && q.correct_index !== undefined)) &&
+            (q.correctAnswer || (q.correct_index !== null && q.correct_index !== undefined) || numericAnswer !== null) &&
             q.extraction?.hasAnswerKey !== false
           );
-          const dbCorrectIndex = hasAnswer && q.correct_index !== null && q.correct_index !== undefined
+          const dbCorrectIndex = (hasAnswer && !isInteger && q.correct_index !== null && q.correct_index !== undefined)
             ? Number(q.correct_index)
             : null;
           const finalCorrectAnswer = hasAnswer
-            ? (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null))
+            ? (isInteger
+                ? (numericAnswer !== null ? String(numericAnswer) : (q.correctAnswer || null))
+                : (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null)))
             : null;
 
           const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
@@ -821,38 +872,40 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           };
 
           let formattedOptionsWithMedia = [];
-          if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
-            formattedOptionsWithMedia = q.options.map((opt) => ({
-              key: String(opt.key).toUpperCase().trim(),
-              text: cleanOptionText(opt.text),
-              media: Array.isArray(opt.media) ? opt.media : [],
-            }));
-          } else if (Array.isArray(q.rawOptions)) {
-            formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
-              key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
-              text: cleanOptionText(typeof opt === 'object' && opt.text !== undefined ? opt.text : opt),
-              media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
-            }));
-          } else if (Array.isArray(q.options)) {
-            formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
-              key: String.fromCharCode(65 + optIdx),
-              text: cleanOptionText(optText),
-              media: [],
-            }));
+          if (!isInteger) {
+            if (Array.isArray(q.options) && q.options.length > 0 && typeof q.options[0] === 'object' && q.options[0].key) {
+              formattedOptionsWithMedia = q.options.map((opt) => ({
+                key: String(opt.key).toUpperCase().trim(),
+                text: cleanOptionText(opt.text),
+                media: Array.isArray(opt.media) ? opt.media : [],
+              }));
+            } else if (Array.isArray(q.rawOptions)) {
+              formattedOptionsWithMedia = q.rawOptions.map((opt, optIdx) => ({
+                key: typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + optIdx),
+                text: cleanOptionText(typeof opt === 'object' && opt.text !== undefined ? opt.text : opt),
+                media: typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [],
+              }));
+            } else if (Array.isArray(q.options)) {
+              formattedOptionsWithMedia = q.options.map((optText, optIdx) => ({
+                key: String.fromCharCode(65 + optIdx),
+                text: cleanOptionText(optText),
+                media: [],
+              }));
+            }
+
+            // Ensure MCQ question always has at least 4 options for test platform rendering
+            while (formattedOptionsWithMedia.length < 4) {
+              const nextKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
+              formattedOptionsWithMedia.push({
+                key: nextKey,
+                text: `[Needs Review] Option ${nextKey}`,
+                media: [],
+              });
+            }
           }
 
-          // Ensure question always has at least 4 options for test platform rendering
-          while (formattedOptionsWithMedia.length < 4) {
-            const nextKey = String.fromCharCode(65 + formattedOptionsWithMedia.length);
-            formattedOptionsWithMedia.push({
-              key: nextKey,
-              text: `[Needs Review] Option ${nextKey}`,
-              media: [],
-            });
-          }
-
-          // Preserve options format with media in DB
-          const optionsToStore = formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : q.options;
+          // Preserve options format with media in DB (empty for integer questions)
+          const optionsToStore = isInteger ? [] : (formattedOptionsWithMedia.length > 0 ? formattedOptionsWithMedia : (q.options || []));
 
           const rawQText = q.question?.text || q.question_text || q.questionText || '';
           const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
@@ -861,14 +914,16 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           parsedQs[i]._dbRow = {
             assessment_id: id,
             question_text: cleanFinalQText,
+            question_type: qType,
             options: JSON.stringify(optionsToStore),
             correct_index: dbCorrectIndex,
+            numeric_answer: numericAnswer,
             marks: q.marks || 4,
             position: i + 1,
             bank_category: finalSubject || 'General',
-            solution: stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : '')),
+            solution: formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''))),
             subject: finalSubject,
-            topic: finalChapter,
+            topic: finalTopic,
             chapter: finalChapter,
             image_url: primaryMediaUrl,
             solution_image_url: solutionMediaUrl,
@@ -878,21 +933,27 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           };
 
           // Build explanation
-          const explanationText = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
+          const rawExplanation = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
+          const explanationText = formatQuestionStructure(stripHeadersAndFooters(rawExplanation));
           const explanationMedia = Array.isArray(q.explanation?.media) ? q.explanation.media : [];
 
           // Build standardized structured JSON format matching requested schema exactly
           extractedQuestionsJson.push({
             questionNumber: qNum,
+            questionType: qType,
+            question_type: qType,
+            numericAnswer: numericAnswer,
+            numeric_answer: numericAnswer,
             subject: finalSubject,
             chapter: finalChapter,
+            topic: finalTopic,
 
             question: {
               text: q.question?.text || q.question_text || q.questionText || '',
               media: questionMedia,
             },
 
-            options: formattedOptionsWithMedia,
+            options: isInteger ? [] : formattedOptionsWithMedia,
 
             explanation: {
               text: explanationText,
@@ -915,18 +976,19 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           let pIdx = 1;
           for (const r of dbRows) {
             valueClauses.push(
-              `($${pIdx++}, $${pIdx++}, 'mcq', $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
+              `($${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
             );
             bulkParams.push(
-              r.assessment_id, r.question_text, r.options,
+              r.assessment_id, r.question_text, r.question_type || 'mcq', r.options,
               r.correct_index, r.marks, r.position, r.bank_category,
               r.solution, r.subject, r.topic, r.chapter,
-              r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta
+              r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta,
+              r.numeric_answer
             );
           }
           try {
             const bulkSql = `INSERT INTO questions (
-              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta
+              assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
             ) VALUES ${valueClauses.join(', ')}`;
             await query(bulkSql, bulkParams);
             savedCount = dbRows.length;
@@ -1316,7 +1378,8 @@ export const getTestExtractedQuestions = asyncHandler(async (req, res) => {
       }));
 
     // Format options
-    const optionsList = parsedOpts.map((opt, oIdx) => {
+    const isInteger = q.question_type === 'integer' || q.question_type === 'numerical' || (q.numeric_answer !== null && parsedOpts.length === 0);
+    const optionsList = isInteger ? [] : parsedOpts.map((opt, oIdx) => {
       const optKey = typeof opt === 'object' && opt.key ? String(opt.key).toUpperCase().trim() : String.fromCharCode(65 + oIdx);
       const optText = typeof opt === 'object' && opt.text !== undefined ? String(opt.text) : String(opt);
       const optMedia = typeof opt === 'object' && Array.isArray(opt.media) ? opt.media : [];
@@ -1327,10 +1390,23 @@ export const getTestExtractedQuestions = asyncHandler(async (req, res) => {
       };
     });
 
+    const numAnswer = q.numeric_answer !== null && q.numeric_answer !== undefined ? Number(q.numeric_answer) : null;
+    let correctAnswerStr = null;
+    if (isInteger && numAnswer !== null) {
+      correctAnswerStr = String(numAnswer);
+    } else if (q.correct_index !== null && q.correct_index !== undefined) {
+      correctAnswerStr = String.fromCharCode(65 + Number(q.correct_index));
+    }
+
     return {
       questionNumber: qNum,
+      questionType: isInteger ? 'integer' : (q.question_type || 'mcq'),
+      question_type: isInteger ? 'integer' : (q.question_type || 'mcq'),
+      numericAnswer: numAnswer,
+      numeric_answer: numAnswer,
       subject: q.subject || q.bank_category || 'General',
       chapter: q.chapter || q.topic || 'General',
+      topic: q.topic || q.chapter || 'General',
 
       question: {
         text: q.question_text || '',
@@ -1346,13 +1422,14 @@ export const getTestExtractedQuestions = asyncHandler(async (req, res) => {
 
       tables: parsedTables,
 
-      correctAnswer: String.fromCharCode(65 + (q.correct_index || 0)),
+      correctAnswer: correctAnswerStr,
 
       extraction: {
         confidence: parsedExtraction.confidence || 0.96,
         needsReview: Boolean(parsedExtraction.needsReview),
         sourcePages: parsedExtraction.sourcePages || [1],
         extractedBy: parsedExtraction.extractedBy || 'gemini-vision',
+        hasAnswerKey: Boolean(correctAnswerStr !== null),
         ...(parsedExtraction.reviewReason ? { reviewReason: parsedExtraction.reviewReason } : {}),
       },
     };

@@ -380,6 +380,8 @@ export const attemptService = {
   logViolation: (id, violation_type) =>
     api.post(`/attempts/${id}/violation`, { violation_type }).then((r) => r.data),
   getResult: (id) => api.get(`/attempts/${id}/result`).then((r) => r.data),
+  translateQuestion: (data) => api.post('/student/translate-question', data).then((r) => r.data),
+  translateBatch: (data) => api.post('/student/translate-questions-batch', data).then((r) => r.data),
 };
 
 export const adminService = {
@@ -726,6 +728,26 @@ export const admissionService = {
   getSubmissionDetail: (id) => api.get(`/admin/admissions/${id}`).then((r) => r.data.submission),
   updateSubmissionStatus: (id, data) => api.patch(`/admin/admissions/${id}/status`, data).then((r) => r.data),
   deleteSubmission: (id) => api.delete(`/admin/admissions/${id}`).then((r) => r.data),
+};
+
+export const mistakeBookService = {
+  getMistakes: (params) => api.get('/student/mistake-book', { params }).then((r) => r.data),
+  syncMistakes: () => {
+    clearCache();
+    return api.post('/student/mistake-book/sync').then((r) => r.data);
+  },
+  recreateTest: (data) => {
+    clearCache();
+    return api.post('/student/mistake-book/recreate-test', data).then((r) => r.data);
+  },
+  updateStatus: (id, status) => {
+    clearCache();
+    return api.patch(`/student/mistake-book/${id}/status`, { status }).then((r) => r.data);
+  },
+  removeMistake: (id) => {
+    clearCache();
+    return api.delete(`/student/mistake-book/${id}`).then((r) => r.data);
+  },
 };
 
 

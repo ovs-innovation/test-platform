@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { attemptService, aiTestService } from '../../lib/services.js';
 import { isMultiSelectQuestion } from '../../lib/examPalette.js';
 import { Skeleton, ErrorState } from '../../components/ui.jsx';
@@ -20,6 +20,7 @@ import {
   XCircle,
   HelpCircle,
   BookOpen,
+  Bookmark,
   Printer,
   ChevronDown,
   ChevronUp,
@@ -38,10 +39,12 @@ import { useTheme } from '../../context/ThemeContext.jsx';
 
 export default function ResultPage() {
   const { attemptId } = useParams();
+  const navigate = useNavigate();
   const [data, setData] = useState(null);
   const [state, setState] = useState('loading');
   const [showSolutions, setShowSolutions] = useState(false);
   const [generatingAiTest, setGeneratingAiTest] = useState(false);
+  const [startingAiTest, setStartingAiTest] = useState(false);
   const [aiTestResult, setAiTestResult] = useState(null);
   const [aiTestError, setAiTestError] = useState(null);
   const [loadError, setLoadError] = useState(null);
@@ -49,6 +52,34 @@ export default function ResultPage() {
 
   const themeContext = useTheme();
   const isDarkMode = themeContext?.dark ?? false;
+
+  const handleAskAIDoubt = (q) => {
+    const qText = q.question_text || '';
+    const subject = q.subject || data?.assessment?.title || data?.test?.title || '';
+    const assertion = q.assertion_text ? `\nAssertion (A): ${q.assertion_text}` : '';
+    const reason = q.reason_text ? `\nReason (R): ${q.reason_text}` : '';
+    let optionsText = '';
+    if (Array.isArray(q.options) && q.options.length > 0) {
+      optionsText = '\nOptions:\n' + q.options.map((opt, i) => `${String.fromCharCode(65 + i)}) ${typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '')}`).join('\n');
+    }
+
+    const fullDoubtPrompt = `I need help understanding how to solve this ${subject ? `${subject} ` : ''}question:\n\n${qText}${assertion}${reason}${optionsText}\n\nCould you please explain how to approach and solve this step-by-step?`;
+
+    window.dispatchEvent(
+      new CustomEvent('open-ai-doubt-solver', {
+        detail: {
+          query: fullDoubtPrompt,
+          subject: q.subject || '',
+          imageUrl: q.image_url || null,
+          testContext: {
+            questionId: q.question_id || q.id,
+            subject: q.subject || '',
+            topic: q.topic || '',
+          },
+        },
+      })
+    );
+  };
 
   const load = async () => {
     setState('loading');
@@ -97,15 +128,32 @@ export default function ResultPage() {
     setGeneratingAiTest(true);
     setAiTestError(null);
     try {
-      const studentId = data?.attempt?.candidate_id || data?.attempt?.student_id;
+      const studentId = data?.attempt?.candidate_id || data?.attempt?.student_id || data?.student?.id;
       const res = await aiTestService.generateTest(studentId, attemptId);
       setAiTestResult(res);
       setRefreshTrigger((prev) => prev + 1);
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Unable to generate AI improvement test.';
+      const msg = err.response?.data?.message || err.message || 'Unable to generate 20-question weak topic test.';
       setAiTestError(msg);
     } finally {
       setGeneratingAiTest(false);
+    }
+  };
+
+  const handleStartAiTest = async (testId) => {
+    if (!testId) return;
+    setStartingAiTest(true);
+    try {
+      const res = await aiTestService.startTest(testId);
+      if (res.test && res.questions) {
+        sessionStorage.setItem(`ai_test_session_${testId}`, JSON.stringify(res));
+        navigate(`/exam/ai-${testId}`);
+      }
+    } catch (err) {
+      const msg = err.response?.data?.message || err.message || 'Unable to start test.';
+      setAiTestError(msg);
+    } finally {
+      setStartingAiTest(false);
     }
   };
 
@@ -932,6 +980,48 @@ export default function ResultPage() {
               </div>
             </div>
 
+            {/* MISTAKE BOOK CALLOUT BANNER */}
+            {((score?.wrong_count || 0) > 0 || (score?.unattempted_count || 0) > 0) && (
+              <div className="p-4 sm:p-5 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/10 via-orange-500/5 to-rose-500/10 dark:from-amber-950/40 dark:via-slate-900 dark:to-rose-950/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-xs">
+                <div className="flex items-start sm:items-center gap-3.5">
+                  <div className="p-2.5 rounded-2xl bg-amber-500/20 text-amber-600 dark:text-amber-400 shrink-0">
+                    <Bookmark className="h-6 w-6" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">
+                        Added to My Mistake Book
+                      </h3>
+                      <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-700 dark:text-amber-300">
+                        Auto Saved
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
+                      <strong className="text-rose-600 dark:text-rose-400">{score?.wrong_count || 0} Incorrect</strong> and{' '}
+                      <strong className="text-amber-600 dark:text-amber-400">{score?.unattempted_count || 0} Unattempted</strong> questions were added to your Mistake Book. Review solutions or generate a practice test!
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 shrink-0 self-end sm:self-auto">
+                  <Link
+                    to="/my-mistake-book"
+                    className="px-4 py-2.5 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-800 dark:text-slate-100 transition shadow-2xs flex items-center gap-1.5"
+                  >
+                    <Bookmark className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                    <span>Open Mistake Book</span>
+                  </Link>
+                  <Link
+                    to="/my-mistake-book"
+                    className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-xs font-extrabold text-white transition shadow-sm flex items-center gap-1.5"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+                    <span>Practice Mistakes</span>
+                  </Link>
+                </div>
+              </div>
+            )}
+
             {/* STUDENT ACTION SHORTCUTS */}
             <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0f172a] shadow-xs">
               <div className="flex flex-wrap items-center gap-2.5">
@@ -1209,16 +1299,21 @@ export default function ResultPage() {
             )}
 
             {/* WEAK TOPIC BOOSTER TEST GENERATOR CARD */}
-            <div className="rounded-3xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0f172a] p-6 shadow-xs space-y-4">
+            <div className="rounded-3xl border border-indigo-100 dark:border-indigo-900/50 bg-gradient-to-br from-indigo-50/40 via-white to-sky-50/30 dark:from-[#0f172a] dark:to-[#09101f] p-6 shadow-sm space-y-4">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 shrink-0">
+                  <div className="p-3 rounded-2xl bg-indigo-600 text-white shadow-md shadow-indigo-600/20 shrink-0">
                     <Sparkles className="h-5 w-5" />
                   </div>
-                  <div className="space-y-0.5">
-                    <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Improvement Test</h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl leading-relaxed">
-                      Generate fresh questions targeting your weak areas (&lt;60% accuracy). Scheduled with 2–3 days spaced repetition so you have time to revise first.
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Test Generator</h3>
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300">
+                        20 Questions
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+                      Automatically generates a customized 20-question practice test focusing exclusively on the weak topics and mistakes identified in this specific test.
                     </p>
                   </div>
                 </div>
@@ -1226,51 +1321,79 @@ export default function ResultPage() {
                 <div className="shrink-0">
                   <button
                     type="button"
-                    disabled={generatingAiTest || !hasWeakTopics}
+                    disabled={generatingAiTest}
                     onClick={handleGenerateAiTest}
-                    className={`px-4 py-2.5 rounded-xl font-bold text-xs shadow-xs flex items-center gap-2 transition cursor-pointer ${
-                      generatingAiTest || !hasWeakTopics
-                        ? 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-200 dark:border-slate-700'
-                        : 'bg-indigo-600 hover:bg-indigo-700 text-white'
+                    className={`px-5 py-2.5 rounded-xl font-bold text-xs shadow-md flex items-center gap-2 transition cursor-pointer ${
+                      generatingAiTest
+                        ? 'bg-slate-200 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed border border-slate-300 dark:border-slate-700'
+                        : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-indigo-600/25 active:scale-95'
                     }`}
                   >
                     {generatingAiTest ? (
                       <>
                         <Loader2 className="h-4 w-4 animate-spin" />
-                        <span>Generating Test...</span>
+                        <span>Creating 20-Q Test...</span>
                       </>
                     ) : (
                       <>
                         <Sparkles className="h-4 w-4" />
-                        <span>Generate AI Improvement Test</span>
+                        <span>Create 20-Q Weak Topic Test</span>
                       </>
                     )}
                   </button>
                 </div>
               </div>
 
-              {!hasWeakTopics && (
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400">
-                  ℹ️ All topics currently show high accuracy (≥60%). Great job!
-                </div>
-              )}
-
               {aiTestError && (
-                <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
+                <div className="p-3.5 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/60 text-xs font-semibold text-rose-700 dark:text-rose-300 flex items-center gap-2">
                   <AlertCircle className="h-4 w-4 shrink-0 text-rose-600 dark:text-rose-400" />
                   <span>{aiTestError}</span>
                 </div>
               )}
 
               {aiTestResult && (
-                <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-800 dark:text-emerald-300 space-y-1">
-                  <div className="flex items-center gap-1.5 font-bold text-emerald-700 dark:text-emerald-300 text-sm">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                    <span>Improvement Test Scheduled</span>
+                <div className="p-4 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 text-xs text-emerald-900 dark:text-emerald-200 space-y-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-1.5 font-extrabold text-emerald-700 dark:text-emerald-300 text-sm">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+                        <span>20-Question Weak Topic Test Ready!</span>
+                      </div>
+                      <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
+                        {aiTestResult.message || 'Your personalized test with 20 targeted questions has been created.'}
+                      </p>
+                      {Array.isArray(aiTestResult.topics) && aiTestResult.topics.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {aiTestResult.topics.map((t, idx) => (
+                            <span key={idx} className="px-2.5 py-1 rounded-lg bg-emerald-100/80 dark:bg-emerald-900/60 font-semibold text-[11px] text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800/50">
+                              🎯 {t.topic} ({t.accuracyAtGeneration != null ? `${t.accuracyAtGeneration}% accuracy` : 'Weak'})
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="shrink-0 flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={startingAiTest}
+                        onClick={() => handleStartAiTest(aiTestResult.testId)}
+                        className="px-5 py-2.5 rounded-xl font-bold text-xs bg-emerald-600 hover:bg-emerald-700 text-white shadow-md shadow-emerald-600/25 flex items-center gap-2 transition cursor-pointer active:scale-95"
+                      >
+                        {startingAiTest ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>Launching Exam...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Zap className="h-4 w-4 fill-white" />
+                            <span>Start 20-Q Test Now</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
                   </div>
-                  <p className="leading-relaxed">
-                    {aiTestResult.message || `Your personalized test is ready and will unlock on ${new Date(aiTestResult.unlockAt).toLocaleDateString()}.`}
-                  </p>
                 </div>
               )}
             </div>
@@ -1535,6 +1658,20 @@ export default function ResultPage() {
                               )}
                             </div>
                           )}
+
+                          {/* Quick Ask Vedum Button */}
+                          <div className="mt-4 pt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+                            <button
+                              type="button"
+                              onClick={() => handleAskAIDoubt(q)}
+                              className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-blue-600/10 via-indigo-600/10 to-purple-600/10 hover:from-blue-600/20 hover:via-indigo-600/20 hover:to-purple-600/20 border border-blue-500/30 text-blue-600 dark:text-blue-400 font-extrabold transition flex items-center gap-1.5 cursor-pointer text-xs shadow-2xs"
+                              title="Ask Vedum to explain this question"
+                            >
+                              <Sparkles className="h-3.5 w-3.5 text-indigo-500" />
+                              <span>Ask Vedum</span>
+                            </button>
+                            <span className="text-[11px] text-slate-400">Have a doubt? Ask our AI mentor</span>
+                          </div>
                         </div>
                       );
                     })}

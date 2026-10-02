@@ -6,6 +6,7 @@ import { sendCompletionEmail } from '../utils/email.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
 import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS } from '../utils/neetPattern.js';
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
+import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -154,6 +155,7 @@ const sanitizeQuestion = (q) => {
     bank_category: q.bank_category || null,
     topic: q.topic || null,
     chapter: q.chapter || null,
+    translations: q.translations || {},
   };
   if (q.question_type === 'mcq' || q.question_type === 'single_choice' || q.question_type === 'multi_select' || q.question_type === 'assertion_reason' || !q.question_type) {
     return { ...base, options: cleanOpts };
@@ -355,6 +357,12 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       [attemptId, marksObtained, totalMarks, percentage, passed, correctCount, wrongCount, unattemptedCount]
     );
 
+    try {
+      await recordAttemptMistakes(client, attemptId, attempt.candidate_id, attempt.assessment_id);
+    } catch (mistakeErr) {
+      console.error('[finalizeAttempt] Mistake book recording error:', mistakeErr?.message || mistakeErr);
+    }
+
     return {
       alreadyDone: false,
       score: scoreRes.rows[0],
@@ -414,6 +422,14 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
 };
 
 const ensureAssessmentAccess = async (user, assessmentId) => {
+  const creatorCheck = await query(
+    `SELECT id FROM assessments WHERE id = $1 AND created_by = $2`,
+    [assessmentId, user.id]
+  );
+  if (creatorCheck.rowCount > 0) {
+    return { invite: null, source: 'creator' };
+  }
+
   const inviteRes = await query(
     `SELECT * FROM candidate_invites
      WHERE candidate_email = $1 AND assessment_id = $2 AND status <> 'expired'`,

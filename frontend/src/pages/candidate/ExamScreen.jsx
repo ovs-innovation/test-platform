@@ -20,6 +20,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
+import { Languages, Globe } from 'lucide-react';
 
 const SECTION_LABELS = {
   aptitude: 'Aptitude',
@@ -27,6 +28,13 @@ const SECTION_LABELS = {
   coding: 'Coding',
   subjective: 'Subjective',
 };
+
+const HINDI_AR_OPTIONS = [
+  'अभिकथन (A) और कारण (R) दोनों सत्य हैं और कारण (R), अभिकथन (A) का सही स्पष्टीकरण है',
+  'अभिकथन (A) और कारण (R) दोनों सत्य हैं लेकिन कारण (R), अभिकथन (A) का सही स्पष्टीकरण नहीं है',
+  'अभिकथन (A) सत्य है लेकिन कारण (R) असत्य है',
+  'अभिकथन (A) असत्य है लेकिन कारण (R) सत्य है',
+];
 
 export default function ExamScreen() {
   const { attemptId } = useParams();
@@ -58,6 +66,17 @@ export default function ExamScreen() {
   const [activeSection, setActiveSection] = useState(null);
   const [pdfMode, setPdfMode] = useState('hidden'); // 'split' | 'full' | 'hidden'
   const [institutionBranding, setInstitutionBranding] = useState(null);
+
+  // Multilingual Exam Support (English / Hindi toggle)
+  const [examLanguage, setExamLanguage] = useState(() => {
+    try {
+      return sessionStorage.getItem('cbt_exam_lang') || 'en';
+    } catch (_) {
+      return 'en';
+    }
+  });
+  const [translationsCache, setTranslationsCache] = useState({});
+  const [isTranslating, setIsTranslating] = useState(false);
 
   const finishedRef = useRef(false);
   const endsAtRef = useRef(null);
@@ -113,6 +132,15 @@ export default function ExamScreen() {
         setInstitutionBranding(inst);
         setSections(data.sections || []);
         setQuestions(data.questions);
+        const initialTrans = {};
+        for (const question of data.questions || []) {
+          if (question.translations?.hi) {
+            initialTrans[`${question.id}_hi`] = question.translations.hi;
+          }
+        }
+        if (Object.keys(initialTrans).length > 0) {
+          setTranslationsCache((prev) => ({ ...prev, ...initialTrans }));
+        }
         setMeta(data.assessment);
         setMaxViolations(data.assessment.max_violations);
         setViolations(data.attempt.violation_count || 0);
@@ -562,6 +590,85 @@ export default function ExamScreen() {
   };
   const qCategory = getQuestionSubject(q, current);
 
+  const fetchTranslation = useCallback(async (questionObj, targetLang = 'hi') => {
+    if (!questionObj) return null;
+    const qId = questionObj.id || questionObj.question_id;
+    const cacheKey = `${qId || current}_${targetLang}`;
+
+    if (translationsCache[cacheKey]) {
+      return translationsCache[cacheKey];
+    }
+
+    if (questionObj.translations?.[targetLang]) {
+      const cached = questionObj.translations[targetLang];
+      setTranslationsCache((prev) => ({ ...prev, [cacheKey]: cached }));
+      return cached;
+    }
+
+    try {
+      setIsTranslating(true);
+      const res = await attemptService.translateQuestion({
+        question_id: qId,
+        question_text: questionObj.question_text,
+        assertion_text: questionObj.assertion_text,
+        reason_text: questionObj.reason_text,
+        options: questionObj.options,
+        target_lang: targetLang,
+      });
+
+      const transData = {
+        question_text: res.question_text || questionObj.question_text,
+        assertion_text: res.assertion_text || questionObj.assertion_text,
+        reason_text: res.reason_text || questionObj.reason_text,
+        options: res.options || questionObj.options,
+      };
+
+      setTranslationsCache((prev) => ({ ...prev, [cacheKey]: transData }));
+      return transData;
+    } catch (err) {
+      console.warn('[ExamScreen] Translation error:', err);
+      return null;
+    } finally {
+      setIsTranslating(false);
+    }
+  }, [current, translationsCache]);
+
+  const handleLanguageChange = (newLang) => {
+    setExamLanguage(newLang);
+    try {
+      sessionStorage.setItem('cbt_exam_lang', newLang);
+    } catch (_) {}
+  };
+
+  useEffect(() => {
+    if (examLanguage === 'hi' && q) {
+      const key = `${q.id || current}_hi`;
+      if (!translationsCache[key] && !q.translations?.hi) {
+        fetchTranslation(q, 'hi');
+      }
+
+      // Prefetch upcoming 3 questions for zero-latency next navigation
+      for (let offset = 1; offset <= 3; offset++) {
+        const nextQ = activeQuestions[current + offset];
+        if (nextQ) {
+          const nextKey = `${nextQ.id || (current + offset)}_hi`;
+          if (!translationsCache[nextKey] && !nextQ.translations?.hi) {
+            fetchTranslation(nextQ, 'hi');
+          }
+        }
+      }
+    }
+  }, [examLanguage, current, q, activeQuestions, fetchTranslation, translationsCache]);
+
+  const currentTranslation = examLanguage === 'hi'
+    ? (translationsCache[`${q.id || current}_hi`] || q.translations?.hi || null)
+    : null;
+
+  const displayQuestionText = currentTranslation?.question_text || q.question_text;
+  const displayAssertionText = currentTranslation?.assertion_text || q.assertion_text;
+  const displayReasonText = currentTranslation?.reason_text || q.reason_text;
+  const displayOptions = currentTranslation?.options || q.options || [];
+
   const currentSubjectInfo = useMemo(() => {
     const sec = effectiveSections.find((s) => s.name.toLowerCase() === qCategory.toLowerCase());
     if (!sec) return null;
@@ -621,6 +728,35 @@ export default function ExamScreen() {
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+            {/* Top Bar Quick Language Switcher */}
+            <div className="flex items-center rounded border border-white/30 bg-black/20 p-0.5 text-xs text-white">
+              <span className="hidden sm:inline px-1.5 text-[11px] font-bold text-blue-200">Lang:</span>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('en')}
+                className={`px-2 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer ${
+                  examLanguage === 'en'
+                    ? 'bg-white text-[#1a4480] shadow-xs'
+                    : 'text-white hover:text-blue-100'
+                }`}
+                title="Switch test language to English"
+              >
+                EN
+              </button>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange('hi')}
+                className={`px-2 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer flex items-center gap-1 ${
+                  examLanguage === 'hi'
+                    ? 'bg-white text-[#1a4480] shadow-xs'
+                    : 'text-white hover:text-blue-100'
+                }`}
+                title="Switch test language to Hindi"
+              >
+                <span>हिन्दी</span>
+              </button>
+            </div>
+
             {maxViolations > 0 && (
               <span className="hidden rounded border border-white/30 px-2 py-1 text-[10px] font-semibold sm:inline">
                 Warnings {violations}/{maxViolations}
@@ -700,7 +836,7 @@ export default function ExamScreen() {
         <div className="border-b border-r border-slate-300 bg-white text-slate-900 p-5 lg:border-b-0">
           <div className="space-y-4">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
-              <div className="flex-1">
+              <div className="flex-1 min-w-[200px]">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-[#1a4480] border border-blue-200">
                     <span>{getSubjectIcon(qCategory)}</span>
@@ -716,193 +852,255 @@ export default function ExamScreen() {
                   )}
                 </p>
               </div>
-            <div className="text-right">
-              <p className="text-xs text-slate-600">
-                Marks: <span className="font-bold text-slate-900">+{q.marks}</span>
-              </p>
-              {isNeetExam && (
-                <p className="text-[10px] text-rose-600 font-semibold">-1 for incorrect</p>
-              )}
-            </div>
-          </div>
 
-          <div className="text-base leading-relaxed text-slate-900 whitespace-pre-line">
-            <span className="mr-2 font-bold">Q{current + 1}.</span>
-            <MathRenderer text={q.question_text} />
-          </div>
-
-          {q.image_url && (
-            <button type="button" onClick={() => setImgZoom(getMediaUrl(q.image_url))} className="mt-4 block text-left">
-              <img
-                src={getMediaUrl(q.image_url)}
-                alt="Question diagram"
-                className="max-h-64 cursor-zoom-in border border-slate-400 bg-white p-1 rounded"
-              />
-              <span className="mt-1 block text-[11px] text-slate-500">Click image to enlarge</span>
-            </button>
-          )}
-
-          {(!isMultiSelectQuestion(q) && (q.question_type === 'mcq' || q.question_type === 'single_choice')) && (
-            <div className="mt-5 space-y-2">
-              {(q.options || []).map((opt, idx) => {
-                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
-                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
-                return (
+              {/* View in: [ English | हिंदी ] Language Switcher */}
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg p-1 text-xs shadow-2xs">
+                  <span className="font-bold text-slate-600 dark:text-slate-300 px-1 flex items-center gap-1 text-[11px]">
+                    <Languages className="h-3.5 w-3.5 text-blue-600" />
+                    <span>View in:</span>
+                  </span>
                   <button
-                    key={idx}
                     type="button"
-                    onClick={() => selectAnswer(q.id, idx)}
-                    className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
-                  >
-                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
-                      answers[q.id] === idx
-                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
-                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
-                    }`}>
-                      {String.fromCharCode(65 + idx)}
-                    </span>
-                    <div className="flex-1 text-left">
-                      <MathRenderer text={optText} />
-                      {optMedia.length > 0 && optMedia[0]?.url && (
-                        <div className="mt-2">
-                          <img
-                            src={getMediaUrl(optMedia[0].url)}
-                            alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
-                            className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
-
-          {q.question_type === 'assertion_reason' && (
-            <div className="mt-5 space-y-4">
-              <div className="rounded-lg border border-slate-300 bg-slate-50 p-4 space-y-2">
-                {q.assertion_text && (
-                  <p className="text-sm font-semibold text-slate-800">
-                    <span className="text-brand-700">Assertion (A):</span> {q.assertion_text}
-                  </p>
-                )}
-                {q.reason_text && (
-                  <p className="text-sm font-semibold text-slate-800">
-                    <span className="text-brand-700">Reason (R):</span> {q.reason_text}
-                  </p>
-                )}
-              </div>
-              <div className="space-y-2">
-                {(q.options && q.options.length ? q.options : [
-                  'Both Assertion (A) and Reason (R) are true and Reason (R) is the correct explanation of Assertion (A)',
-                  'Both Assertion (A) and Reason (R) are true but Reason (R) is NOT the correct explanation of Assertion (A)',
-                  'Assertion (A) is true but Reason (R) is false',
-                  'Assertion (A) is false but Reason (R) is true',
-                ]).map((opt, idx) => (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => selectAnswer(q.id, idx)}
-                    className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
-                  >
-                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
-                      answers[q.id] === idx
-                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
-                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
-                    }`}>
-                      {String.fromCharCode(65 + idx)}
-                    </span>
-                    <span>{opt}</span>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {q.question_type === 'integer' && (
-            <div className="mt-5 space-y-3">
-              <p className="text-xs font-semibold text-slate-700">Enter integer answer (0-9):</p>
-              <div className="flex flex-wrap gap-2">
-                {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                  <button
-                    key={num}
-                    type="button"
-                    onClick={() => saveNumericAnswer(q.id, String(num))}
-                    className={`h-10 w-10 text-sm font-bold rounded border transition-all ${
-                      String(answers[q.id] ?? numericAnswers[q.id]) === String(num)
-                        ? 'border-[#1a4480] bg-[#1a4480] text-white shadow'
-                        : 'border-slate-400 bg-white text-slate-800 hover:bg-slate-100'
+                    onClick={() => handleLanguageChange('en')}
+                    className={`px-2.5 py-1 rounded text-xs font-bold transition cursor-pointer ${
+                      examLanguage === 'en'
+                        ? 'bg-blue-600 text-white shadow-xs'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
                     }`}
                   >
-                    {num}
+                    English
                   </button>
-                ))}
-              </div>
-              <input
-                type="number"
-                step="1"
-                className="input max-w-xs font-mono text-base font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600 mt-2"
-                placeholder="Or type integer value"
-                value={numericAnswers[q.id] ?? ''}
-                onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
-              />
-            </div>
-          )}
-
-          {q.question_type === 'numerical' && (
-            <div className="mt-5 space-y-3">
-              <p className="text-xs font-semibold text-slate-700">Enter numerical answer (up to 2 decimal places):</p>
-              <input
-                type="number"
-                step="any"
-                className="input font-mono text-lg font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600"
-                placeholder="e.g. 12.5"
-                value={numericAnswers[q.id] ?? ''}
-                onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
-              />
-              <p className="text-[11px] text-slate-500">Decimal values accepted. Saved automatically.</p>
-            </div>
-          )}
-
-          {isMultiSelectQuestion(q) && (
-            <div className="mt-5 space-y-2">
-              <p className="text-xs font-semibold text-slate-600">Select all that apply</p>
-              {(q.options || []).map((opt, idx) => {
-                const selected = (multiAnswers[q.id] || []).includes(idx);
-                const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
-                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
-                return (
                   <button
-                    key={idx}
                     type="button"
-                    onClick={() => toggleMulti(q.id, idx)}
-                    className={`nta-option ${selected ? 'nta-option-selected' : ''}`}
+                    onClick={() => handleLanguageChange('hi')}
+                    className={`px-2.5 py-1 rounded text-xs font-bold transition cursor-pointer flex items-center gap-1 ${
+                      examLanguage === 'hi'
+                        ? 'bg-blue-600 text-white shadow-xs'
+                        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                    }`}
                   >
-                    <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
-                      selected
-                        ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
-                        : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
-                    }`}>
-                      {selected ? '✓' : String.fromCharCode(65 + idx)}
-                    </span>
-                    <div className="flex-1 text-left">
-                      <MathRenderer text={optText} />
-                      {optMedia.length > 0 && optMedia[0]?.url && (
-                        <div className="mt-2">
-                          <img
-                            src={getMediaUrl(optMedia[0].url)}
-                            alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
-                            className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
-                          />
-                        </div>
-                      )}
-                    </div>
+                    <span>हिंदी (Hindi)</span>
                   </button>
-                );
-              })}
+                </div>
+
+                <div className="text-right">
+                  <p className="text-xs text-slate-600">
+                    Marks: <span className="font-bold text-slate-900">+{q.marks}</span>
+                  </p>
+                  {isNeetExam && (
+                    <p className="text-[10px] text-rose-600 font-semibold">-1 for incorrect</p>
+                  )}
+                </div>
+              </div>
             </div>
-          )}
+
+            {/* Translation loading banner */}
+            {isTranslating && (
+              <div className="mb-3 flex items-center gap-2 rounded-lg bg-amber-50 border border-amber-200 px-3 py-1.5 text-xs text-amber-800 font-semibold animate-pulse">
+                <Spinner className="h-3.5 w-3.5 text-amber-600" />
+                <span>हिंदी अनुवाद लोड हो रहा है... (Translating to Hindi...)</span>
+              </div>
+            )}
+
+            <div className="text-base leading-relaxed text-slate-900 whitespace-pre-line">
+              <span className="mr-2 font-bold">Q{current + 1}.</span>
+              <MathRenderer text={displayQuestionText} />
+            </div>
+
+            {q.image_url && (
+              <button type="button" onClick={() => setImgZoom(getMediaUrl(q.image_url))} className="mt-4 block text-left">
+                <img
+                  src={getMediaUrl(q.image_url)}
+                  alt="Question diagram"
+                  className="max-h-64 cursor-zoom-in border border-slate-400 bg-white p-1 rounded"
+                />
+                <span className="mt-1 block text-[11px] text-slate-500">
+                  {examLanguage === 'hi' ? 'बड़ा देखने के लिए चित्र पर क्लिक करें' : 'Click image to enlarge'}
+                </span>
+              </button>
+            )}
+
+            {(!isMultiSelectQuestion(q) && (q.question_type === 'mcq' || q.question_type === 'single_choice')) && (
+              <div className="mt-5 space-y-2">
+                {(displayOptions || []).map((opt, idx) => {
+                  const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                  const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => selectAnswer(q.id, idx)}
+                      className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
+                    >
+                      <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                        answers[q.id] === idx
+                          ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                          : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
+                      }`}>
+                        {String.fromCharCode(65 + idx)}
+                      </span>
+                      <div className="flex-1 text-left">
+                        <MathRenderer text={optText} />
+                        {optMedia.length > 0 && optMedia[0]?.url && (
+                          <div className="mt-2">
+                            <img
+                              src={getMediaUrl(optMedia[0].url)}
+                              alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
+                              className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {q.question_type === 'assertion_reason' && (
+              <div className="mt-5 space-y-4">
+                <div className="rounded-lg border border-slate-300 bg-slate-50 p-4 space-y-2">
+                  {displayAssertionText && (
+                    <div className="text-sm font-semibold text-slate-800 flex items-start gap-1.5">
+                      <span className="text-brand-700 font-extrabold shrink-0">
+                        {examLanguage === 'hi' ? 'अभिकथन (A):' : 'Assertion (A):'}
+                      </span>
+                      <MathRenderer text={displayAssertionText} />
+                    </div>
+                  )}
+                  {displayReasonText && (
+                    <div className="text-sm font-semibold text-slate-800 flex items-start gap-1.5">
+                      <span className="text-brand-700 font-extrabold shrink-0">
+                        {examLanguage === 'hi' ? 'कारण (R):' : 'Reason (R):'}
+                      </span>
+                      <MathRenderer text={displayReasonText} />
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2">
+                  {(displayOptions && displayOptions.length ? displayOptions : (examLanguage === 'hi' ? HINDI_AR_OPTIONS : [
+                    'Both Assertion (A) and Reason (R) are true and Reason (R) is the correct explanation of Assertion (A)',
+                    'Both Assertion (A) and Reason (R) are true but Reason (R) is NOT the correct explanation of Assertion (A)',
+                    'Assertion (A) is true but Reason (R) is false',
+                    'Assertion (A) is false but Reason (R) is true',
+                  ])).map((opt, idx) => {
+                    const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => selectAnswer(q.id, idx)}
+                        className={`nta-option ${answers[q.id] === idx ? 'nta-option-selected' : ''}`}
+                      >
+                        <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                          answers[q.id] === idx
+                            ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                            : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
+                        }`}>
+                          {String.fromCharCode(65 + idx)}
+                        </span>
+                        <div className="flex-1 text-left">
+                          <MathRenderer text={optText} />
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {q.question_type === 'integer' && (
+              <div className="mt-5 space-y-3">
+                <p className="text-xs font-semibold text-slate-700">
+                  {examLanguage === 'hi' ? 'पूर्णांक उत्तर दर्ज करें (0-9):' : 'Enter integer answer (0-9):'}
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                    <button
+                      key={num}
+                      type="button"
+                      onClick={() => saveNumericAnswer(q.id, String(num))}
+                      className={`h-10 w-10 text-sm font-bold rounded border transition-all ${
+                        String(answers[q.id] ?? numericAnswers[q.id]) === String(num)
+                          ? 'border-[#1a4480] bg-[#1a4480] text-white shadow'
+                          : 'border-slate-400 bg-white text-slate-800 hover:bg-slate-100'
+                      }`}
+                    >
+                      {num}
+                    </button>
+                  ))}
+                </div>
+                <input
+                  type="number"
+                  step="1"
+                  className="input max-w-xs font-mono text-base font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600 mt-2"
+                  placeholder={examLanguage === 'hi' ? 'या पूर्णांक मान टाइप करें' : 'Or type integer value'}
+                  value={numericAnswers[q.id] ?? ''}
+                  onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
+                />
+              </div>
+            )}
+
+            {q.question_type === 'numerical' && (
+              <div className="mt-5 space-y-3">
+                <p className="text-xs font-semibold text-slate-700">
+                  {examLanguage === 'hi' ? 'संख्यात्मक उत्तर दर्ज करें (2 दशमलव स्थानों तक):' : 'Enter numerical answer (up to 2 decimal places):'}
+                </p>
+                <input
+                  type="number"
+                  step="any"
+                  className="input font-mono text-lg font-bold text-slate-900 border-2 border-slate-400 focus:border-brand-600"
+                  placeholder={examLanguage === 'hi' ? 'उदा. 12.5' : 'e.g. 12.5'}
+                  value={numericAnswers[q.id] ?? ''}
+                  onChange={(e) => saveNumericAnswer(q.id, e.target.value)}
+                />
+                <p className="text-[11px] text-slate-500">
+                  {examLanguage === 'hi' ? 'दशमलव मान स्वीकार्य हैं। स्वचालित रूप से सहेजा गया।' : 'Decimal values accepted. Saved automatically.'}
+                </p>
+              </div>
+            )}
+
+            {isMultiSelectQuestion(q) && (
+              <div className="mt-5 space-y-2">
+                <p className="text-xs font-semibold text-slate-600">
+                  {examLanguage === 'hi' ? 'सभी लागू विकल्पों का चयन करें' : 'Select all that apply'}
+                </p>
+                {(displayOptions || []).map((opt, idx) => {
+                  const selected = (multiAnswers[q.id] || []).includes(idx);
+                  const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
+                  const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => toggleMulti(q.id, idx)}
+                      className={`nta-option ${selected ? 'nta-option-selected' : ''}`}
+                    >
+                      <span className={`flex h-7 w-7 shrink-0 items-center justify-center border text-xs font-extrabold transition-colors ${
+                        selected
+                          ? 'border-[#1a4480] bg-[#1a4480] text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white shadow-xs'
+                          : 'border-slate-400 bg-white text-slate-900 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100'
+                      }`}>
+                        {selected ? '✓' : String.fromCharCode(65 + idx)}
+                      </span>
+                      <div className="flex-1 text-left">
+                        <MathRenderer text={optText} />
+                        {optMedia.length > 0 && optMedia[0]?.url && (
+                          <div className="mt-2">
+                            <img
+                              src={getMediaUrl(optMedia[0].url)}
+                              alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
+                              className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
           {q.question_type === 'coding' && (
             <div className="mt-5">
