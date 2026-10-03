@@ -170,6 +170,9 @@ export const studentCredentialsEmailTemplate = ({ name, email, studentId, passwo
     </td></tr></table>
     <p style="margin:24px 0 0;color:#94a3b8;font-size:12px;word-break:break-all;">Direct Login URL: ${loginUrl}</p>
   `),
+  text: `Hello ${name},\n\nWelcome to EDVEDUM Academy!\nYour student account has been created.\n\nStudent ID: ${studentId}\nEmail: ${email}\nPassword: ${password}\n\nLogin URL: ${loginUrl}\n\nYou can log in with your Student ID and password.`,
+});
+
 export const studentIdEmailTemplate = ({ name, email, studentId, loginUrl }) => ({
   subject: `Your EDVEDUM Student ID: ${studentId}`,
   html: layout(`
