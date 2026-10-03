@@ -7,6 +7,7 @@ import { createAdminNotification } from '../utils/createAdminNotification.js';
 import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS } from '../utils/neetPattern.js';
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
+import { getTopperComparison } from '../services/topperComparisonService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -1176,6 +1177,30 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     percentile: rankingData.percentile,
   } : null;
 
+  let topperComparison = null;
+  try {
+    topperComparison = await getTopperComparison({
+      assessmentId: assessment.id,
+      attemptId: attempt.id,
+      candidateId: attempt.candidate_id,
+      currentStudentStats: {
+        attempt_id: attempt.id,
+        candidate_id: attempt.candidate_id,
+        marks_obtained: Number(rawScore?.marks_obtained ?? formattedReport?.overall?.marks ?? 0),
+        total_marks: Number(rawScore?.total_marks ?? formattedReport?.overall?.totalMarks ?? 0),
+        percentage: Number(rawScore?.percentage ?? formattedReport?.overall?.percentage ?? 0),
+        duration_seconds: Number(attempt.duration_seconds || 0),
+        correct_count: Number(rawScore?.correct_count ?? formattedReport?.overall?.correct ?? 0),
+        wrong_count: Number(rawScore?.wrong_count ?? formattedReport?.overall?.incorrect ?? 0),
+        unattempted_count: Number(rawScore?.unattempted_count ?? formattedReport?.overall?.unattempted ?? 0),
+        accuracy: Number(rawScore?.accuracy ?? formattedReport?.overall?.accuracy ?? 0),
+        rank: rankingData.rank,
+      }
+    });
+  } catch (err) {
+    console.error('Failed to get topper comparison for attempt result:', err);
+  }
+
   res.json({
     attempt: {
       id: attempt.id,
@@ -1204,6 +1229,8 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     solutions,
     formattedReport,
     ...formattedReport,
+    topper_comparison: topperComparison,
+    topperComparison,
     resultVisible: true,
   });
 });

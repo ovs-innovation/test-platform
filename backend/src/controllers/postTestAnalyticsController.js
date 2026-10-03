@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { generateExamMentorStrategyReport } from '../services/geminiService.js';
 import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
+import { getTopperComparison } from '../services/topperComparisonService.js';
 import { getCache, setCache } from '../config/redis.js';
 import fs from 'fs';
 import path from 'path';
@@ -833,6 +834,35 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     };
   }
 
+  // Calculate Topper Comparison across Score, Speed/Time, Accuracy
+  let topperComparison = null;
+  try {
+    const studentDuration = subjectAnalysisList.reduce((a, b) => a + (b.time_spent_seconds || 0), 0)
+      || (attemptByIdRes.rows[0]?.duration_seconds ? Number(attemptByIdRes.rows[0].duration_seconds) : 0)
+      || Math.round(Number(test.duration_minutes || 180) * 60 * 0.75);
+
+    topperComparison = await getTopperComparison({
+      assessmentId: testId,
+      attemptId: realAttemptId,
+      candidateId: studentId,
+      currentStudentStats: {
+        attempt_id: realAttemptId,
+        candidate_id: studentId,
+        marks_obtained: Number(currentAttemptRank.total_score) || 0,
+        total_marks: Number(test.max_marks) || 720,
+        percentage: Number(test.max_marks) > 0 ? Math.round(((Number(currentAttemptRank.total_score) || 0) / Number(test.max_marks)) * 10000) / 100 : 0,
+        duration_seconds: studentDuration,
+        correct_count: totalCorrect,
+        wrong_count: totalIncorrect,
+        unattempted_count: totalUnattempted,
+        accuracy: (totalCorrect + totalIncorrect) > 0 ? Math.round((totalCorrect / (totalCorrect + totalIncorrect)) * 100) : 0,
+        rank: currentAttemptRank.air || currentAttemptRank.batch_rank || null,
+      }
+    });
+  } catch (err) {
+    console.error('Failed to get topper comparison in post-test analytics:', err);
+  }
+
   // Consolidated JSON response payload
   const responseData = {
     test_info: test,
@@ -861,6 +891,8 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
       batch_rank: currentAttemptRank.batch_rank ?? null,
       total_participants: currentAttemptRank.total_participants || 0
     },
+    topper_comparison: topperComparison,
+    topperComparison,
     national_comparison: nationalComparison,
     previous_test_comparison: previousTestComparison,
     seven_day_revision_plan: sevenDayRevisionPlan,

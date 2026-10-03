@@ -1,3 +1,4 @@
+import './utils/polyfills.js';
 import app from './app.js';
 import { env } from './config/env.js';
 import { pool } from './config/db.js';

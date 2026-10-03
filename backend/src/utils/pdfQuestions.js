@@ -1,3 +1,4 @@
+import './polyfills.js';
 import { createRequire } from 'module';
 import { extractQuestionsWithGeminiVision } from './geminiVisionExtractor.js';
 import { stripHeadersAndFooters } from './questionFormatter.js';
@@ -327,6 +328,7 @@ export function parseQuestionsFromText(text) {
 export async function parseQuestionsFromPdf(buffer, options = {}) {
   const includeAnswers = options.includeAnswers !== false;
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
+  let visionBypassReason = null;
 
   if (apiKey) {
     try {
@@ -446,9 +448,14 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
         };
       }
     } catch (err) {
-      console.warn('[pdfQuestions] Gemini Vision extraction failed. Falling back to pdf-parse + regex parser:', err.message);
+      const sanitizedErrMsg = (err.message || 'Unknown vision error')
+        .replace(/AIza[0-9A-Za-z-_]{35}/g, '[REDACTED]')
+        .replace(/key=[^&\s]+/gi, 'key=[REDACTED]');
+      visionBypassReason = `Gemini Vision error: ${sanitizedErrMsg}`;
+      console.warn('[pdfQuestions] Gemini Vision extraction failed. Falling back to pdf-parse + regex parser:', sanitizedErrMsg);
     }
   } else {
+    visionBypassReason = 'GEMINI_API_KEY is not configured in environment.';
     console.log('[pdfQuestions] GEMINI_API_KEY not configured. Falling back to pdf-parse + regex parser.');
   }
 
@@ -500,11 +507,12 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
 
       extraction: {
         confidence: r.needs_review ? 0.60 : 0.88,
-        needsReview: Boolean(r.needs_review),
+        needsReview: true,
         sourcePages: [1],
         extractedBy: 'pdf-parse-regex',
         hasAnswerKey: hasAnswer,
-        ...(r.review_reason ? { reviewReason: r.review_reason } : {}),
+        ...(visionBypassReason ? { visionBypassReason } : {}),
+        reviewReason: r.review_reason || (visionBypassReason ? `Fallback parser used: ${visionBypassReason}` : 'Options or answer keys may require manual review.'),
       },
 
       // Flat properties for DB insert
@@ -524,8 +532,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
       image_url: r.image_url || null,
       media: qMedia,
       tables: [],
-      needs_review: Boolean(r.needs_review),
-      review_reason: r.review_reason || null,
+      needs_review: true,
+      review_reason: r.review_reason || (visionBypassReason ? `Fallback parser: ${visionBypassReason}` : null),
     };
   });
 
@@ -542,13 +550,22 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
     optionsExtracted: optionsExtractedCount,
     diagramsDetected: 0,
     explanationsMatched: explanationsMatchedCount,
-    questionsNeedingReview: rows.filter((r) => r.extraction?.needsReview).length,
+    questionsNeedingReview: rows.length,
   };
+
+  const warnings = [
+    `AI Vision was bypassed or failed (${visionBypassReason || 'unknown reason'}). Extracted ${rows.length} questions using fallback plain-text parser. Mathematical formulas and answer keys may be missing or unformatted.`,
+    ...errors.map((e) => e.error).filter(Boolean)
+  ];
 
   return {
     extractedBy: 'pdf-parse-regex',
+    isDegraded: true,
+    extractionQuality: 'degraded',
     rows,
     errors,
+    warnings,
+    visionBypassReason,
     question_count: rows.length,
     stats: fallbackStats,
     text_preview: text.slice(0, 1500),

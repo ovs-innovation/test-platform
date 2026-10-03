@@ -6,6 +6,7 @@ import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import AIMentorReportView from '../../components/candidate/AIMentorReportView.jsx';
 import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
+import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx';
 import {
   Trophy,
   Award,
@@ -290,6 +291,23 @@ export default function PostTestAnalytics() {
           </div>
         </div>
       </div>
+
+      {/* ----------------------------------------------------------------- */}
+      {/* COMPARE WITH TOPPER (Score, Speed/Time, Accuracy Benchmark)       */}
+      {/* ----------------------------------------------------------------- */}
+      <CompareWithTopper
+        data={data?.topper_comparison || data?.topperComparison}
+        studentStats={{
+          marks_obtained: summary.total_score,
+          score: summary.total_score,
+          max_marks: summary.max_marks,
+          percentage: summary.percentage,
+          accuracy: summary.overall_accuracy,
+          duration_seconds: data?.time_management_report?.total_time_spent_seconds || 0,
+          correct_count: summary.correct_count,
+          rank: ranks_breakdown.all_india_rank || summary.all_india_rank || 1,
+        }}
+      />
 
       {/* ----------------------------------------------------------------- */}
       {/* NEW ITEM 1: NATIONAL COMPARISON VS TOPPER & AVERAGE               */}

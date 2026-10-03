@@ -1,3 +1,4 @@
+import './polyfills.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -70,6 +71,18 @@ class NodeCanvasFactory {
  * Render all pages of a PDF buffer into array of high-res PNG image buffers
  */
 export async function renderPdfToImages(pdfBuffer) {
+  if (typeof Promise.withResolvers !== 'function') {
+    Promise.withResolvers = function withResolvers() {
+      let resolve;
+      let reject;
+      const promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      return { promise, resolve, reject };
+    };
+  }
+
   const loadingTask = getDocument({
     data: new Uint8Array(pdfBuffer),
     canvasFactory: new NodeCanvasFactory(),
@@ -192,8 +205,15 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
   }
 
   const effectiveImportId = importId || `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
-  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with model: ${modelName} (includeAnswers: ${includeAnswers}, importId: ${effectiveImportId})`);
+  const candidateModels = [
+    env.geminiModel,
+    process.env.GEMINI_MODEL,
+    'gemini-2.5-flash',
+    'gemini-2.0-flash',
+    'gemini-1.5-flash'
+  ].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i);
+  let activeModel = candidateModels[0] || 'gemini-2.5-flash';
+  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with candidate models: [${candidateModels.join(', ')}] (primary: ${activeModel}, includeAnswers: ${includeAnswers}, importId: ${effectiveImportId})`);
 
   // Step 1: Render PDF pages into high-res images
   const pageImages = await renderPdfToImages(pdfBuffer);
@@ -428,10 +448,11 @@ Examine the page content carefully and extract all sections present on this page
         },
       ];
 
-      async function executePageExtraction(retryCount = 0) {
+      async function executePageExtraction(retryCount = 0, modelIdx = 0) {
+        const currentModel = candidateModels[modelIdx] || activeModel;
         try {
           const response = await ai.models.generateContent({
-            model: modelName,
+            model: currentModel,
             contents,
             config: {
               responseMimeType: 'application/json',
@@ -441,17 +462,29 @@ Examine the page content carefully and extract all sections present on this page
             },
           });
 
+          activeModel = currentModel;
           const responseText = response.text || '';
           const parsed = cleanAndParseJson(responseText);
           if (!parsed && retryCount < 1) {
             console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} due to unparseable JSON...`);
-            return executePageExtraction(retryCount + 1);
+            return executePageExtraction(retryCount + 1, modelIdx);
           }
           return parsed;
         } catch (apiErr) {
+          const isModelNotFound = apiErr.status === 404 ||
+            (apiErr.message && (
+              apiErr.message.toLowerCase().includes('not found') ||
+              apiErr.message.toLowerCase().includes('is not supported') ||
+              apiErr.message.toLowerCase().includes('invalid model') ||
+              apiErr.message.toLowerCase().includes('unsupported model')
+            ));
+          if (isModelNotFound && modelIdx + 1 < candidateModels.length) {
+            console.warn(`[geminiVisionExtractor] Model "${currentModel}" not found/unsupported. Falling back to "${candidateModels[modelIdx + 1]}"...`);
+            return executePageExtraction(0, modelIdx + 1);
+          }
           if (retryCount < 1) {
             console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} after error:`, apiErr.message);
-            return executePageExtraction(retryCount + 1);
+            return executePageExtraction(retryCount + 1, modelIdx);
           }
           throw apiErr;
         }

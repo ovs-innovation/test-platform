@@ -600,6 +600,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
       hasAnswerKey: hasAnswer,
       ...(acceptedAnswers.length > 1 ? { acceptedAnswers } : {}),
+      ...(q.extraction?.visionBypassReason ? { visionBypassReason: q.extraction.visionBypassReason } : {}),
       ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
     };
     const extractionMetaJson = JSON.stringify(extractionMetaObj);
@@ -1086,12 +1087,30 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
   const isPartialImport = Boolean(extractionStats?.isPartial || (Array.isArray(extractionStats?.pagesFailed) && extractionStats.pagesFailed > 0) || (pdfExtraction && pdfExtraction.isPartial));
   const failedPageList = (pdfExtraction && pdfExtraction.failedPages) || [];
-  const responseMsg = isPartialImport && failedPageList.length > 0
-    ? `PDF question paper partially extracted (${extractedCount} questions). Pages [${failedPageList.join(', ')}] failed to process. Partial draft has been saved.`
-    : `${file_type} uploaded successfully`;
+  const isFallbackDegraded = extractedBy === 'pdf-parse-regex' || Boolean(pdfExtraction?.visionBypassReason);
+  const sanitizedVisionBypassReason = pdfExtraction?.visionBypassReason
+    ? String(pdfExtraction.visionBypassReason).replace(/AIza[0-9A-Za-z-_]{35}/g, '[REDACTED]').replace(/key=[^&\s]+/gi, 'key=[REDACTED]')
+    : null;
+
+  let responseStatus = 'success';
+  if (isFallbackDegraded) {
+    responseStatus = 'degraded_fallback';
+  } else if (isPartialImport) {
+    responseStatus = 'partial_success';
+  }
+
+  let responseMsg = `${file_type} uploaded successfully`;
+  if (isFallbackDegraded) {
+    responseMsg = `PDF question paper imported via plain-text fallback parser (${sanitizedVisionBypassReason || 'AI Vision unavailable'}). ${extractedCount} question(s) extracted with degraded quality. Mathematical formulas, diagrams, or answer keys may be missing or unformatted.`;
+  } else if (isPartialImport && failedPageList.length > 0) {
+    responseMsg = `PDF question paper partially extracted (${extractedCount} questions). Pages [${failedPageList.join(', ')}] failed to process. Partial draft has been saved.`;
+  }
 
   res.json({
     message: responseMsg,
+    status: responseStatus,
+    isDegraded: isFallbackDegraded,
+    visionBypassReason: sanitizedVisionBypassReason,
     url: relativeUrl,
     file_type,
     extractedBy,
