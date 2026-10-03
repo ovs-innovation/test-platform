@@ -5,6 +5,7 @@ import {
   otpEmailTemplate,
   completionEmailTemplate,
   studentCredentialsEmailTemplate,
+  studentIdEmailTemplate,
 } from './emailTemplates.js';
 
 let transporter;
@@ -221,7 +222,23 @@ export const sendStudentCredentialsEmail = ({ to, name, email, studentId, passwo
       password,
       loginUrl: loginUrl || 'https://edvedum.com/student-login',
     });
-    sendEmail({ to, ...tpl }).then(resolve).catch(reject);
+    sendEmail({ to: to || email, ...tpl }).then(resolve).catch(reject);
   });
 };
+
+/**
+ * Send Official Student ID Notification Email via Promise (Password is set by student during registration)
+ */
+export const sendStudentIdEmail = ({ to, name, email, studentId, loginUrl }) => {
+  return new Promise((resolve, reject) => {
+    const tpl = studentIdEmailTemplate({
+      name,
+      email: email || to,
+      studentId,
+      loginUrl: loginUrl || 'https://edvedum.com/student-login',
+    });
+    sendEmail({ to: to || email, ...tpl }).then(resolve).catch(reject);
+  });
+};
+
 

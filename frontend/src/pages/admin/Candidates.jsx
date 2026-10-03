@@ -36,7 +36,6 @@ export default function AdminCandidates() {
   // Send Credentials modal states
   const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
   const [candidateForCredentials, setCandidateForCredentials] = useState(null);
-  const [credentialsCustomPassword, setCredentialsCustomPassword] = useState('');
   const [credentialsCustomStudentId, setCredentialsCustomStudentId] = useState('');
   const [sendingCredentials, setSendingCredentials] = useState(false);
   const [copiedId, setCopiedId] = useState(null);
@@ -92,7 +91,6 @@ export default function AdminCandidates() {
 
   const handleOpenSendCredentials = (c) => {
     setCandidateForCredentials(c);
-    setCredentialsCustomPassword('');
     setCredentialsCustomStudentId(c.student_id || c.roll_number || '');
     setCredentialsModalOpen(true);
   };
@@ -103,21 +101,20 @@ export default function AdminCandidates() {
     setSendingCredentials(true);
     try {
       const res = await adminService.sendCandidateCredentials(candidateForCredentials.id, {
-        password: credentialsCustomPassword.trim() || undefined,
         student_id: credentialsCustomStudentId.trim() || undefined,
       });
       if (res?.emailSent) {
-        toast.success(`Login credentials sent to ${candidateForCredentials.email}! (Student ID: ${res.student_id})`);
+        toast.success(`Student ID (${res.student_id}) sent to ${candidateForCredentials.email}!`);
       } else if (res?.emailError) {
         toast.warning(`Updated Student ID to ${res.student_id}, but email delivery failed: ${res.emailError}`);
       } else {
-        toast.success(`Student credentials updated! (Student ID: ${res.student_id})`);
+        toast.success(`Student ID updated to ${res.student_id}!`);
       }
       setCredentialsModalOpen(false);
       setCandidateForCredentials(null);
       load();
     } catch (err) {
-      toast.error(err.message || 'Failed to send credentials');
+      toast.error(err.message || 'Failed to send Student ID');
     } finally {
       setSendingCredentials(false);
     }
@@ -202,7 +199,9 @@ export default function AdminCandidates() {
     setSubmitting(true);
     try {
       if (modalMode === 'create') {
-        const res = await adminService.createCandidate(form);
+        const payload = { ...form };
+        if (!payload.institution_id) payload.institution_id = null;
+        const res = await adminService.createCandidate(payload);
         if (res?.emailSent) {
           toast.success(`Student registered and credentials emailed to ${form.email}!`);
         } else if (res?.emailError) {
@@ -213,6 +212,7 @@ export default function AdminCandidates() {
       } else {
         const payload = { ...form };
         if (!payload.password) delete payload.password;
+        if (!payload.institution_id) payload.institution_id = null;
         await adminService.updateCandidate(selectedCandidate.id, payload);
         toast.success('Student details updated!');
       }
@@ -410,7 +410,7 @@ export default function AdminCandidates() {
                         <ActionDropdown
                           items={[
                             {
-                              label: 'Send ID & Password',
+                              label: 'Send Student ID',
                               icon: Mail,
                               onClick: () => handleOpenSendCredentials(c),
                               color: 'text-indigo-600 dark:text-indigo-400 font-semibold',
@@ -563,18 +563,19 @@ export default function AdminCandidates() {
                   </p>
                 </div>
 
-                <div>
-                  <label className="label">
-                    Password {modalMode === 'create' ? <span className="text-rose-500">*</span> : <span className="text-slate-400 font-normal">(Leave blank to keep current)</span>}
-                  </label>
-                  <PasswordInput
-                    required={modalMode === 'create'}
-                    className="input"
-                    placeholder={modalMode === 'create' ? "Min 6 characters" : "Enter new password if changing"}
-                    value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                  />
-                </div>
+                {modalMode === 'create' && (
+                  <div>
+                    <label className="label">
+                      Initial Password <span className="text-slate-400 font-normal">(Optional - auto-generated if left blank)</span>
+                    </label>
+                    <PasswordInput
+                      className="input"
+                      placeholder="Min 6 characters (or leave blank to auto-generate)"
+                      value={form.password}
+                      onChange={(e) => setForm({ ...form, password: e.target.value })}
+                    />
+                  </div>
+                )}
 
                 <div>
                   <label className="label">
@@ -778,11 +779,11 @@ export default function AdminCandidates() {
         </div>
       </Modal>
 
-      {/* Send Student Credentials Modal */}
+      {/* Send Student ID Modal */}
       <Modal
         open={credentialsModalOpen}
         onClose={() => !sendingCredentials && setCredentialsModalOpen(false)}
-        title="Send Student ID & Password"
+        title="Send Student ID to Student"
         size="sm"
       >
         <form onSubmit={handleSendCredentials} className="space-y-4">
@@ -816,18 +817,10 @@ export default function AdminCandidates() {
             />
           </div>
 
-          <div>
-            <label className="label">
-              Set New Password <span className="text-slate-400 font-normal">(Optional)</span>
-            </label>
-            <PasswordInput
-              className="input text-xs"
-              placeholder="Leave blank to auto-generate secure password"
-              value={credentialsCustomPassword}
-              onChange={(e) => setCredentialsCustomPassword(e.target.value)}
-            />
-            <p className="text-[11px] text-slate-400 mt-1">
-              If left blank, an 8-character secure password will be generated, saved, and dispatched to the student's email.
+          <div className="rounded-xl bg-blue-50/70 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900/50 p-3 text-xs text-blue-700 dark:text-blue-300">
+            <p className="font-semibold mb-1">Student Password Policy:</p>
+            <p className="text-[11px] leading-relaxed">
+              Passwords are created exclusively by students during registration. Admin only assigns or verifies the <strong>Student ID</strong>. The student will use this ID along with their registration password to sign in.
             </p>
           </div>
 
@@ -853,7 +846,7 @@ export default function AdminCandidates() {
               ) : (
                 <>
                   <Mail className="h-3.5 w-3.5" />
-                  Send Credentials
+                  Send Student ID Email
                 </>
               )}
             </button>

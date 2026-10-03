@@ -170,6 +170,39 @@ export const studentCredentialsEmailTemplate = ({ name, email, studentId, passwo
     </td></tr></table>
     <p style="margin:24px 0 0;color:#94a3b8;font-size:12px;word-break:break-all;">Direct Login URL: ${loginUrl}</p>
   `),
-  text: `Hello ${name},\n\nWelcome to EDVEDUM Academy!\nYour student account has been created.\n\nStudent ID: ${studentId}\nEmail: ${email}\nPassword: ${password}\n\nLogin URL: ${loginUrl}\n\nYou can log in with your Student ID and password.`,
+export const studentIdEmailTemplate = ({ name, email, studentId, loginUrl }) => ({
+  subject: `Your EDVEDUM Student ID: ${studentId}`,
+  html: layout(`
+    <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Welcome to EDVEDUM Academy!</h2>
+    <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">Hello <strong>${name}</strong>,</p>
+    <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">
+      Your official <strong>Student ID</strong> has been assigned. You can use this ID along with the <strong>password you created during registration</strong> to sign in to the student portal.
+    </p>
+    <div style="margin:24px 0;padding:24px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;">
+      <table width="100%" cellpadding="8" cellspacing="0" style="font-size:14px;color:#334155;">
+        <tr>
+          <td style="font-weight:600;width:140px;color:#64748b;">Student ID:</td>
+          <td style="font-weight:700;font-size:18px;color:#1B4FDB;letter-spacing:0.5px;font-family:monospace;">${studentId}</td>
+        </tr>
+        <tr>
+          <td style="font-weight:600;color:#64748b;">Registered Email:</td>
+          <td style="font-weight:500;">${email}</td>
+        </tr>
+      </table>
+    </div>
+    <div style="margin:0 0 20px;padding:12px 16px;background:#eff6ff;border-left:4px solid #1B4FDB;border-radius:6px;">
+      <p style="margin:0;color:#1e40af;font-size:13px;line-height:1.5;">
+        <strong>Login Instructions:</strong> Enter your Student ID (<strong>${studentId}</strong>) and your account password (which you set during registration) to sign in.
+      </p>
+    </div>
+    <table cellpadding="0" cellspacing="0"><tr><td style="border-radius:8px;background:#1B4FDB;">
+      <a href="${loginUrl}" style="display:inline-block;padding:14px 28px;color:#fff;font-size:15px;font-weight:600;text-decoration:none;border-radius:8px;">
+        Sign In to Student Portal
+      </a>
+    </td></tr></table>
+    <p style="margin:24px 0 0;color:#94a3b8;font-size:12px;word-break:break-all;">Direct Login URL: ${loginUrl}</p>
+  `),
+  text: `Hello ${name},\n\nYour EDVEDUM Student ID has been assigned:\nStudent ID: ${studentId}\nEmail: ${email}\n\nLogin URL: ${loginUrl}\nUse your Student ID and the password you set during registration to log in.`,
 });
+
 

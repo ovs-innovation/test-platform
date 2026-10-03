@@ -5,7 +5,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { comparePassword, hashPassword } from '../utils/password.js';
 import { signToken, signAccessToken, signRefreshToken, hashToken, generateFamilyId, verifyToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
-import { sendOtpEmail, sendEmail, sendStudentCredentialsEmail } from '../utils/email.js';
+import { sendOtpEmail, sendEmail, sendStudentCredentialsEmail, sendStudentIdEmail } from '../utils/email.js';
 import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
@@ -366,14 +366,15 @@ export const register = asyncHandler(async (req, res) => {
     return u;
   });
 
-  if (password && password.trim().length >= 6) {
-    sendStudentCredentialsEmail({
-      email: normalizedEmail,
-      studentName: name,
-      studentId,
-      password: password.trim(),
-    }).catch(err => console.warn('[Auth] Failed to send welcome credentials email:', err?.message));
-  }
+  const origin = req.headers.origin || 'https://edvedum.com';
+  const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
+  sendStudentIdEmail({
+    to: normalizedEmail,
+    name,
+    email: normalizedEmail,
+    studentId,
+    loginUrl,
+  }).catch(err => console.warn('[Auth] Failed to send welcome student ID email:', err?.message));
 
   const session = await issueAuthSession(req, res, user);
   res.status(201).json({ ...session, user: publicUser(user) });

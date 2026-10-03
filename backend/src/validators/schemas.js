@@ -82,8 +82,8 @@ export const adminCreateCandidateSchema = z.object({
     .nullable()
     .or(z.literal('')),
   class: z.string().trim().optional().nullable().or(z.literal('')),
-  target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
-  institution_id: z.any().optional(),
+  target_exam: z.string().trim().max(60).optional().nullable().or(z.literal('')),
+  institution_id: z.any().optional().nullable(),
   student_id: z.string().trim().max(50).optional().nullable().or(z.literal('')),
   roll_number: z.string().trim().max(50).optional().nullable().or(z.literal('')),
   send_credentials: z.boolean().optional(),
@@ -103,8 +103,8 @@ export const adminUpdateCandidateSchema = z.object({
     .nullable()
     .or(z.literal('')),
   class: z.string().trim().optional().nullable().or(z.literal('')),
-  target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
-  institution_id: z.any().optional(),
+  target_exam: z.string().trim().max(60).optional().nullable().or(z.literal('')),
+  institution_id: z.any().optional().nullable(),
   student_id: z.string().trim().max(50).optional().nullable().or(z.literal('')),
   roll_number: z.string().trim().max(50).optional().nullable().or(z.literal('')),
   send_credentials: z.boolean().optional(),

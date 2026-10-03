@@ -4,7 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { toCsvRow } from '../utils/csvQuestions.js';
 import { hashPassword } from '../utils/password.js';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
-import { sendStudentCredentialsEmail } from '../utils/email.js';
+import { sendStudentCredentialsEmail, sendStudentIdEmail } from '../utils/email.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations, testSeriesRes, activeStudentsRes] = await Promise.all([
@@ -396,12 +396,16 @@ export const createCandidate = asyncHandler(async (req, res) => {
   const plainPassword = (password || '').trim() || `Edv@${Math.floor(1000 + Math.random() * 9000)}`;
   const password_hash = await hashPassword(plainPassword);
 
+  const formattedInstId = (institution_id !== undefined && institution_id !== null && String(institution_id).trim() !== '')
+    ? Number(institution_id)
+    : null;
+
   const user = await withTransaction(async (client) => {
     const result = await client.query(
       `INSERT INTO users (name, email, password_hash, role, roll_number, institution_id)
        VALUES ($1, $2, $3, 'candidate', $4, $5)
        RETURNING id, name, email, role, roll_number, institution_id, created_at`,
-      [name, normalizedEmail, password_hash, studentId, institution_id || null]
+      [name, normalizedEmail, password_hash, studentId, formattedInstId]
     );
     const u = result.rows[0];
 
@@ -409,7 +413,7 @@ export const createCandidate = asyncHandler(async (req, res) => {
       `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id)
        VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING phone, class, target_exam, city, state, roll_number`,
-      [u.id, phone || null, studentClass || null, target_exam || null, studentId, institution_id || null]
+      [u.id, phone || null, studentClass || null, target_exam || null, studentId, formattedInstId]
     );
     const profile = profileRes.rows[0];
 
@@ -428,17 +432,16 @@ export const createCandidate = asyncHandler(async (req, res) => {
     try {
       const origin = req.headers.origin || 'https://edvedum.com';
       const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
-      await sendStudentCredentialsEmail({
+      await sendStudentIdEmail({
         to: normalizedEmail,
         name,
         email: normalizedEmail,
         studentId,
-        password: plainPassword,
         loginUrl,
       });
       emailSent = true;
     } catch (mailErr) {
-      console.warn('[createCandidate] Email credentials delivery error:', mailErr.message);
+      console.warn('[createCandidate] Email student ID delivery error:', mailErr.message);
       emailError = mailErr.message;
     }
   }
@@ -454,6 +457,9 @@ export const createCandidate = asyncHandler(async (req, res) => {
 
 export const updateCandidate = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  const candidateId = Number(id);
+  if (!candidateId || isNaN(candidateId)) throw ApiError.badRequest('Invalid candidate ID');
+
   const {
     name,
     email,
@@ -466,29 +472,33 @@ export const updateCandidate = asyncHandler(async (req, res) => {
     institution_id,
   } = req.body;
 
-  const userRes = await query('SELECT id, password_hash, roll_number FROM users WHERE id = $1 AND role = $2', [id, 'candidate']);
+  const userRes = await query('SELECT id, password_hash, roll_number FROM users WHERE id = $1 AND role = $2', [candidateId, 'candidate']);
   if (userRes.rowCount === 0) throw ApiError.notFound('Candidate not found');
 
-  if (email) {
-    const existingEmail = await query('SELECT id FROM users WHERE email = $1 AND id <> $2', [email, id]);
+  if (email && email.trim()) {
+    const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1) AND id <> $2', [email.trim(), candidateId]);
     if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
   }
 
-  if (phone) {
-    const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1 AND user_id <> $2', [phone, id]);
+  if (phone && phone.trim()) {
+    const existingPhone = await query('SELECT user_id FROM student_profiles WHERE phone = $1 AND user_id <> $2', [phone.trim(), candidateId]);
     if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
   }
 
   const finalStudentId = (student_id || roll_number || userRes.rows[0].roll_number || '').trim().toUpperCase();
   if (finalStudentId && finalStudentId !== userRes.rows[0].roll_number) {
-    const dupCheck = await query('SELECT id FROM users WHERE LOWER(roll_number) = LOWER($1) AND id <> $2', [finalStudentId, id]);
+    const dupCheck = await query('SELECT id FROM users WHERE LOWER(roll_number) = LOWER($1) AND id <> $2', [finalStudentId, candidateId]);
     if (dupCheck.rowCount) throw ApiError.conflict(`Student ID "${finalStudentId}" is already assigned to another student.`);
   }
 
   let password_hash = userRes.rows[0].password_hash;
-  if (password) {
-    password_hash = await hashPassword(password);
+  if (password && password.trim().length >= 6) {
+    password_hash = await hashPassword(password.trim());
   }
+
+  const formattedInstId = (institution_id !== undefined && institution_id !== null && String(institution_id).trim() !== '')
+    ? Number(institution_id)
+    : null;
 
   const updatedCandidate = await withTransaction(async (client) => {
     const uRes = await client.query(
@@ -497,10 +507,10 @@ export const updateCandidate = asyncHandler(async (req, res) => {
          email = COALESCE($2, email),
          password_hash = $3,
          roll_number = COALESCE(NULLIF($4, ''), roll_number),
-         institution_id = COALESCE($5, institution_id)
+         institution_id = $5
        WHERE id = $6 AND role = 'candidate'
        RETURNING id, name, email, role, roll_number, institution_id, created_at`,
-      [name, email, password_hash, finalStudentId, institution_id !== undefined ? institution_id : null, id]
+      [name, email ? email.trim() : null, password_hash, finalStudentId, formattedInstId, candidateId]
     );
     const u = uRes.rows[0];
 
@@ -512,10 +522,10 @@ export const updateCandidate = asyncHandler(async (req, res) => {
          class = EXCLUDED.class,
          target_exam = EXCLUDED.target_exam,
          roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number),
-         institution_id = COALESCE(EXCLUDED.institution_id, student_profiles.institution_id),
+         institution_id = EXCLUDED.institution_id,
          updated_at = NOW()
        RETURNING phone, class, target_exam, city, state, roll_number`,
-      [id, phone || null, studentClass || null, target_exam || null, finalStudentId || null, institution_id !== undefined ? institution_id : null]
+      [candidateId, phone ? phone.trim() : null, studentClass || null, target_exam || null, finalStudentId || null, formattedInstId]
     );
     const profile = spRes.rows[0];
 
@@ -527,7 +537,7 @@ export const updateCandidate = asyncHandler(async (req, res) => {
 
 export const sendCandidateCredentials = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { password: customPassword } = req.body || {};
+  const { student_id } = req.body || {};
 
   const userRes = await query(
     `SELECT u.id, u.name, u.email, u.roll_number, sp.phone, sp.roll_number as sp_roll_number
@@ -539,29 +549,29 @@ export const sendCandidateCredentials = asyncHandler(async (req, res) => {
   if (userRes.rowCount === 0) throw ApiError.notFound('Student account not found');
   const u = userRes.rows[0];
 
-  let studentId = (u.roll_number || u.sp_roll_number || '').trim().toUpperCase();
+  let studentId = (student_id || u.roll_number || u.sp_roll_number || '').trim().toUpperCase();
   if (!studentId) {
     const year = new Date().getFullYear().toString().slice(-2);
     studentId = `EDV${year}-${Math.floor(10000 + Math.random() * 90000)}`;
     await query('UPDATE users SET roll_number = $1 WHERE id = $2', [studentId, u.id]);
     await query('UPDATE student_profiles SET roll_number = $1 WHERE user_id = $2', [studentId, u.id]).catch(() => {});
+  } else if (student_id && student_id.trim().toUpperCase() !== (u.roll_number || '').toUpperCase()) {
+    await query('UPDATE users SET roll_number = $1 WHERE id = $2', [studentId, u.id]);
+    await query('UPDATE student_profiles SET roll_number = $1 WHERE user_id = $2', [studentId, u.id]).catch(() => {});
   }
 
-  const newPassword = (customPassword || '').trim() || `Edv@${Math.floor(1000 + Math.random() * 9000)}`;
-  const hash = await hashPassword(newPassword);
-  await query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, u.id]);
+  // NOTE: Password is created by the student during registration. Admin only sends/updates Student ID.
 
   let emailSent = false;
   let emailError = null;
   try {
     const origin = req.headers.origin || 'https://edvedum.com';
     const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
-    await sendStudentCredentialsEmail({
+    await sendStudentIdEmail({
       to: u.email,
       name: u.name,
       email: u.email,
       studentId,
-      password: newPassword,
       loginUrl,
     });
     emailSent = true;
@@ -573,11 +583,10 @@ export const sendCandidateCredentials = asyncHandler(async (req, res) => {
   res.json({
     success: true,
     message: emailSent
-      ? `Student ID (${studentId}) and login credentials sent to ${u.email} successfully!`
-      : `Credentials updated. Student ID: ${studentId}, Password: ${newPassword} (Email delivery notice: ${emailError || 'SMTP pending'})`,
+      ? `Student ID (${studentId}) sent to ${u.email} successfully!`
+      : `Student ID updated to ${studentId}. (Email delivery notice: ${emailError || 'SMTP pending'})`,
     studentId,
     email: u.email,
-    password: newPassword,
     emailSent,
     emailError,
   });
