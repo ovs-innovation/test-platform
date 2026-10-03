@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 import AuthShell from '../../components/AuthShell.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -10,7 +11,17 @@ export default function Signup() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [form, setForm] = useState({ name: '', email: '', phone: '', class: '', target_exam: '' });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
+    class: '',
+    target_exam: '',
+  });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [sentMessage, setSentMessage] = useState('');
@@ -23,12 +34,20 @@ export default function Signup() {
   // Send OTP to Email for registration
   const onSendOtp = async (e) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.phone || !form.class || !form.target_exam) {
+    if (!form.name || !form.email || !form.phone || !form.class || !form.target_exam || !form.password) {
       setError('Please fill in all required fields.');
       return;
     }
     if (!EMAIL_REGEX.test(form.email.trim().toLowerCase())) {
       setError('Please enter a valid Gmail or Email address format (e.g. student@gmail.com).');
+      return;
+    }
+    if (form.password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+    if (form.confirmPassword && form.password !== form.confirmPassword) {
+      setError('Password and Confirm Password do not match.');
       return;
     }
     setLoading(true);
@@ -57,7 +76,9 @@ export default function Signup() {
     setLoading(true);
     setError('');
     try {
-      await register({ ...form, otp });
+      const payload = { ...form, otp };
+      delete payload.confirmPassword;
+      await register(payload);
       toast.success('Account created and verified successfully!');
       const searchParams = new URLSearchParams(location.search);
       const returnUrl = searchParams.get('returnUrl');
@@ -123,6 +144,58 @@ export default function Signup() {
                 value={form.phone}
                 onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
               />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                Password *
+              </label>
+              <div className="relative">
+                <input
+                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 pr-10 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  placeholder="Min 6 characters"
+                  minLength={6}
+                  value={form.password}
+                  onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  onClick={() => setShowPassword(!showPassword)}
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+                Confirm Password *
+              </label>
+              <div className="relative">
+                <input
+                  className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 pr-10 text-sm text-slate-100 placeholder:text-slate-500 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35"
+                  type={showConfirmPassword ? 'text' : 'password'}
+                  required
+                  placeholder="Confirm password"
+                  minLength={6}
+                  value={form.confirmPassword}
+                  onChange={(e) => setForm((f) => ({ ...f, confirmPassword: e.target.value }))}
+                />
+                <button
+                  type="button"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-200 cursor-pointer"
+                  onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                  tabIndex={-1}
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
           </div>
 

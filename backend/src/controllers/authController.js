@@ -5,7 +5,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { comparePassword, hashPassword } from '../utils/password.js';
 import { signToken, signAccessToken, signRefreshToken, hashToken, generateFamilyId, verifyToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
-import { sendOtpEmail, sendEmail } from '../utils/email.js';
+import { sendOtpEmail, sendEmail, sendStudentCredentialsEmail } from '../utils/email.js';
 import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
@@ -336,16 +336,20 @@ export const register = asyncHandler(async (req, res) => {
     password_hash = await hashPassword(crypto.randomBytes(16).toString('hex'));
   }
 
+  const yearSuffix = new Date().getFullYear().toString().slice(-2);
+  const randomSuffix = crypto.randomBytes(3).toString('hex').toUpperCase().slice(0, 5);
+  const studentId = `EDV${yearSuffix}-${randomSuffix}`;
+
   const user = await withTransaction(async (client) => {
     const result = await client.query(
-      `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role`,
-      [name, normalizedEmail, password_hash]
+      `INSERT INTO users (name, email, password_hash, role, roll_number) VALUES ($1,$2,$3,'candidate',$4) RETURNING id, name, email, role, roll_number`,
+      [name, normalizedEmail, password_hash, studentId]
     );
     const u = result.rows[0];
 
     await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam) VALUES ($1, $2, $3, $4)`,
-      [u.id, phone, studentClass, target_exam]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number) VALUES ($1, $2, $3, $4, $5)`,
+      [u.id, phone, studentClass, target_exam, studentId]
     );
 
     await client.query(
@@ -361,6 +365,15 @@ export const register = asyncHandler(async (req, res) => {
 
     return u;
   });
+
+  if (password && password.trim().length >= 6) {
+    sendStudentCredentialsEmail({
+      email: normalizedEmail,
+      studentName: name,
+      studentId,
+      password: password.trim(),
+    }).catch(err => console.warn('[Auth] Failed to send welcome credentials email:', err?.message));
+  }
 
   const session = await issueAuthSession(req, res, user);
   res.status(201).json({ ...session, user: publicUser(user) });
