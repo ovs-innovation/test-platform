@@ -4,6 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { toCsvRow } from '../utils/csvQuestions.js';
 import { hashPassword } from '../utils/password.js';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
+import { sendStudentCredentialsEmail } from '../utils/email.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations, testSeriesRes, activeStudentsRes] = await Promise.all([
@@ -97,6 +98,8 @@ export const getCandidates = asyncHandler(async (_req, res) => {
   const result = await query(`
     SELECT u.id, u.name, u.email, u.created_at, COALESCE(u.is_blocked, false) AS is_blocked,
            u.institution_id,
+           COALESCE(u.roll_number, sp.roll_number, '') AS student_id,
+           COALESCE(u.roll_number, sp.roll_number, '') AS roll_number,
            COALESCE(i.name, ib.name) AS institution_name,
            COALESCE(i.code, ib.code) AS institution_code,
            sp.phone,
@@ -344,9 +347,21 @@ export const getAnalytics = asyncHandler(async (_req, res) => {
 });
 
 export const createCandidate = asyncHandler(async (req, res) => {
-  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+  const {
+    name,
+    email,
+    password,
+    phone,
+    class: studentClass,
+    target_exam,
+    student_id,
+    roll_number,
+    institution_id,
+    send_credentials = true,
+  } = req.body;
 
-  const existingEmail = await query('SELECT id FROM users WHERE email = $1', [email]);
+  const normalizedEmail = (email || '').trim().toLowerCase();
+  const existingEmail = await query('SELECT id FROM users WHERE LOWER(email) = LOWER($1)', [normalizedEmail]);
   if (existingEmail.rowCount) throw ApiError.conflict('An account with this email already exists');
 
   if (phone) {
@@ -354,37 +369,104 @@ export const createCandidate = asyncHandler(async (req, res) => {
     if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
   }
 
-  const password_hash = await hashPassword(password);
+  // Determine or generate unique Student ID
+  let studentId = (student_id || roll_number || '').trim().toUpperCase();
+  if (studentId) {
+    const existingId = await query(
+      'SELECT id FROM users WHERE LOWER(roll_number) = LOWER($1)',
+      [studentId]
+    );
+    if (existingId.rowCount) throw ApiError.conflict(`Student ID "${studentId}" is already assigned to another student.`);
+  } else {
+    const year = new Date().getFullYear().toString().slice(-2);
+    let unique = false;
+    let attempts = 0;
+    while (!unique && attempts < 10) {
+      attempts++;
+      const candidateId = `EDV${year}-${Math.floor(10000 + Math.random() * 90000)}`;
+      const check = await query('SELECT id FROM users WHERE LOWER(roll_number) = LOWER($1)', [candidateId]);
+      if (check.rowCount === 0) {
+        studentId = candidateId;
+        unique = true;
+      }
+    }
+    if (!studentId) studentId = `EDV${year}-${Date.now().toString().slice(-5)}`;
+  }
+
+  const plainPassword = (password || '').trim() || `Edv@${Math.floor(1000 + Math.random() * 9000)}`;
+  const password_hash = await hashPassword(plainPassword);
 
   const user = await withTransaction(async (client) => {
     const result = await client.query(
-      `INSERT INTO users (name, email, password_hash, role) VALUES ($1,$2,$3,'candidate') RETURNING id, name, email, role, created_at`,
-      [name, email, password_hash]
+      `INSERT INTO users (name, email, password_hash, role, roll_number, institution_id)
+       VALUES ($1, $2, $3, 'candidate', $4, $5)
+       RETURNING id, name, email, role, roll_number, institution_id, created_at`,
+      [name, normalizedEmail, password_hash, studentId, institution_id || null]
     );
     const u = result.rows[0];
 
     const profileRes = await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam) VALUES ($1, $2, $3, $4) RETURNING phone, class, target_exam, city, state`,
-      [u.id, phone || null, studentClass || null, target_exam || null]
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING phone, class, target_exam, city, state, roll_number`,
+      [u.id, phone || null, studentClass || null, target_exam || null, studentId, institution_id || null]
     );
     const profile = profileRes.rows[0];
 
     await client.query(
       `INSERT INTO notifications (user_id, title, body, type) VALUES ($1,$2,$3,'welcome')`,
-      [u.id, 'Welcome to EDVEDUM Academy', 'Your student account has been created by the Admin.']
+      [u.id, 'Welcome to EDVEDUM Academy', `Your Student ID is ${studentId}. Welcome to the student portal.`]
     );
 
-    return { ...u, ...profile };
+    return { ...u, ...profile, student_id: studentId };
   });
 
-  res.status(201).json({ candidate: user });
+  // Send credentials email to student
+  let emailSent = false;
+  let emailError = null;
+  if (send_credentials !== false) {
+    try {
+      const origin = req.headers.origin || 'https://edvedum.com';
+      const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
+      await sendStudentCredentialsEmail({
+        to: normalizedEmail,
+        name,
+        email: normalizedEmail,
+        studentId,
+        password: plainPassword,
+        loginUrl,
+      });
+      emailSent = true;
+    } catch (mailErr) {
+      console.warn('[createCandidate] Email credentials delivery error:', mailErr.message);
+      emailError = mailErr.message;
+    }
+  }
+
+  res.status(201).json({
+    candidate: user,
+    studentId,
+    plainPassword,
+    emailSent,
+    emailError,
+  });
 });
 
 export const updateCandidate = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { name, email, password, phone, class: studentClass, target_exam } = req.body;
+  const {
+    name,
+    email,
+    password,
+    phone,
+    class: studentClass,
+    target_exam,
+    student_id,
+    roll_number,
+    institution_id,
+  } = req.body;
 
-  const userRes = await query('SELECT id, password_hash FROM users WHERE id = $1 AND role = $2', [id, 'candidate']);
+  const userRes = await query('SELECT id, password_hash, roll_number FROM users WHERE id = $1 AND role = $2', [id, 'candidate']);
   if (userRes.rowCount === 0) throw ApiError.notFound('Candidate not found');
 
   if (email) {
@@ -397,6 +479,12 @@ export const updateCandidate = asyncHandler(async (req, res) => {
     if (existingPhone.rowCount) throw ApiError.conflict('An account with this mobile number already exists');
   }
 
+  const finalStudentId = (student_id || roll_number || userRes.rows[0].roll_number || '').trim().toUpperCase();
+  if (finalStudentId && finalStudentId !== userRes.rows[0].roll_number) {
+    const dupCheck = await query('SELECT id FROM users WHERE LOWER(roll_number) = LOWER($1) AND id <> $2', [finalStudentId, id]);
+    if (dupCheck.rowCount) throw ApiError.conflict(`Student ID "${finalStudentId}" is already assigned to another student.`);
+  }
+
   let password_hash = userRes.rows[0].password_hash;
   if (password) {
     password_hash = await hashPassword(password);
@@ -404,29 +492,95 @@ export const updateCandidate = asyncHandler(async (req, res) => {
 
   const updatedCandidate = await withTransaction(async (client) => {
     const uRes = await client.query(
-      `UPDATE users SET name = COALESCE($1, name), email = COALESCE($2, email), password_hash = $3
-       WHERE id = $4 AND role = 'candidate' RETURNING id, name, email, role, created_at`,
-      [name, email, password_hash, id]
+      `UPDATE users SET
+         name = COALESCE($1, name),
+         email = COALESCE($2, email),
+         password_hash = $3,
+         roll_number = COALESCE(NULLIF($4, ''), roll_number),
+         institution_id = COALESCE($5, institution_id)
+       WHERE id = $6 AND role = 'candidate'
+       RETURNING id, name, email, role, roll_number, institution_id, created_at`,
+      [name, email, password_hash, finalStudentId, institution_id !== undefined ? institution_id : null, id]
     );
     const u = uRes.rows[0];
 
     const spRes = await client.query(
-      `INSERT INTO student_profiles (user_id, phone, class, target_exam)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO student_profiles (user_id, phone, class, target_exam, roll_number, institution_id)
+       VALUES ($1, $2, $3, $4, $5, $6)
        ON CONFLICT (user_id) DO UPDATE SET
          phone = EXCLUDED.phone,
          class = EXCLUDED.class,
          target_exam = EXCLUDED.target_exam,
+         roll_number = COALESCE(EXCLUDED.roll_number, student_profiles.roll_number),
+         institution_id = COALESCE(EXCLUDED.institution_id, student_profiles.institution_id),
          updated_at = NOW()
-       RETURNING phone, class, target_exam, city, state`,
-      [id, phone || null, studentClass || null, target_exam || null]
+       RETURNING phone, class, target_exam, city, state, roll_number`,
+      [id, phone || null, studentClass || null, target_exam || null, finalStudentId || null, institution_id !== undefined ? institution_id : null]
     );
     const profile = spRes.rows[0];
 
-    return { ...u, ...profile };
+    return { ...u, ...profile, student_id: u.roll_number };
   });
 
   res.json({ candidate: updatedCandidate });
+});
+
+export const sendCandidateCredentials = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { password: customPassword } = req.body || {};
+
+  const userRes = await query(
+    `SELECT u.id, u.name, u.email, u.roll_number, sp.phone, sp.roll_number as sp_roll_number
+     FROM users u
+     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     WHERE u.id = $1 AND u.role = 'candidate'`,
+    [id]
+  );
+  if (userRes.rowCount === 0) throw ApiError.notFound('Student account not found');
+  const u = userRes.rows[0];
+
+  let studentId = (u.roll_number || u.sp_roll_number || '').trim().toUpperCase();
+  if (!studentId) {
+    const year = new Date().getFullYear().toString().slice(-2);
+    studentId = `EDV${year}-${Math.floor(10000 + Math.random() * 90000)}`;
+    await query('UPDATE users SET roll_number = $1 WHERE id = $2', [studentId, u.id]);
+    await query('UPDATE student_profiles SET roll_number = $1 WHERE user_id = $2', [studentId, u.id]).catch(() => {});
+  }
+
+  const newPassword = (customPassword || '').trim() || `Edv@${Math.floor(1000 + Math.random() * 9000)}`;
+  const hash = await hashPassword(newPassword);
+  await query('UPDATE users SET password_hash = $1 WHERE id = $2', [hash, u.id]);
+
+  let emailSent = false;
+  let emailError = null;
+  try {
+    const origin = req.headers.origin || 'https://edvedum.com';
+    const loginUrl = `${origin.replace(/\/$/, '')}/student-login`;
+    await sendStudentCredentialsEmail({
+      to: u.email,
+      name: u.name,
+      email: u.email,
+      studentId,
+      password: newPassword,
+      loginUrl,
+    });
+    emailSent = true;
+  } catch (err) {
+    console.warn('[sendCandidateCredentials] Email send failed:', err.message);
+    emailError = err.message;
+  }
+
+  res.json({
+    success: true,
+    message: emailSent
+      ? `Student ID (${studentId}) and login credentials sent to ${u.email} successfully!`
+      : `Credentials updated. Student ID: ${studentId}, Password: ${newPassword} (Email delivery notice: ${emailError || 'SMTP pending'})`,
+    studentId,
+    email: u.email,
+    password: newPassword,
+    emailSent,
+    emailError,
+  });
 });
 
 export const deleteCandidate = asyncHandler(async (req, res) => {

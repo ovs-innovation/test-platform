@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -32,6 +32,14 @@ export default function AdminCandidates() {
   const [blockConfirmOpen, setBlockConfirmOpen] = useState(false);
   const [candidateToBlock, setCandidateToBlock] = useState(null);
   const [blockActionLoading, setBlockActionLoading] = useState(false);
+
+  // Send Credentials modal states
+  const [credentialsModalOpen, setCredentialsModalOpen] = useState(false);
+  const [candidateForCredentials, setCandidateForCredentials] = useState(null);
+  const [credentialsCustomPassword, setCredentialsCustomPassword] = useState('');
+  const [credentialsCustomStudentId, setCredentialsCustomStudentId] = useState('');
+  const [sendingCredentials, setSendingCredentials] = useState(false);
+  const [copiedId, setCopiedId] = useState(null);
   
   const [institutions, setInstitutions] = useState([]);
 
@@ -40,10 +48,12 @@ export default function AdminCandidates() {
     name: '',
     email: '',
     password: '',
+    student_id: '',
     phone: '',
     class: '',
     target_exam: 'JEE',
-    institution_id: ''
+    institution_id: '',
+    send_credentials: true
   });
   
   const [submitting, setSubmitting] = useState(false);
@@ -72,6 +82,47 @@ export default function AdminCandidates() {
     setCurrentPage(1);
   }, [search, selectedInstitutionFilter]);
 
+  const handleCopyId = (id) => {
+    if (!id) return;
+    navigator.clipboard?.writeText(id);
+    setCopiedId(id);
+    toast.success(`Copied Student ID: ${id}`);
+    setTimeout(() => setCopiedId(null), 2000);
+  };
+
+  const handleOpenSendCredentials = (c) => {
+    setCandidateForCredentials(c);
+    setCredentialsCustomPassword('');
+    setCredentialsCustomStudentId(c.student_id || c.roll_number || '');
+    setCredentialsModalOpen(true);
+  };
+
+  const handleSendCredentials = async (e) => {
+    e?.preventDefault();
+    if (!candidateForCredentials) return;
+    setSendingCredentials(true);
+    try {
+      const res = await adminService.sendCandidateCredentials(candidateForCredentials.id, {
+        password: credentialsCustomPassword.trim() || undefined,
+        student_id: credentialsCustomStudentId.trim() || undefined,
+      });
+      if (res?.emailSent) {
+        toast.success(`Login credentials sent to ${candidateForCredentials.email}! (Student ID: ${res.student_id})`);
+      } else if (res?.emailError) {
+        toast.warning(`Updated Student ID to ${res.student_id}, but email delivery failed: ${res.emailError}`);
+      } else {
+        toast.success(`Student credentials updated! (Student ID: ${res.student_id})`);
+      }
+      setCredentialsModalOpen(false);
+      setCandidateForCredentials(null);
+      load();
+    } catch (err) {
+      toast.error(err.message || 'Failed to send credentials');
+    } finally {
+      setSendingCredentials(false);
+    }
+  };
+
   const handleOpenCreate = () => {
     setModalMode('create');
     setSelectedCandidate(null);
@@ -79,10 +130,12 @@ export default function AdminCandidates() {
       name: '',
       email: '',
       password: '',
+      student_id: '',
       phone: '',
       class: '',
       target_exam: 'JEE',
-      institution_id: ''
+      institution_id: '',
+      send_credentials: true
     });
     setModalOpen(true);
   };
@@ -94,10 +147,12 @@ export default function AdminCandidates() {
       name: c.name || '',
       email: c.email || '',
       password: '',
+      student_id: c.student_id || c.roll_number || '',
       phone: c.phone || '',
       class: c.class || '',
       target_exam: c.target_exam || 'JEE',
-      institution_id: c.institution_id || ''
+      institution_id: c.institution_id || '',
+      send_credentials: false
     });
     setModalOpen(true);
   };
@@ -147,8 +202,14 @@ export default function AdminCandidates() {
     setSubmitting(true);
     try {
       if (modalMode === 'create') {
-        await adminService.createCandidate(form);
-        toast.success('Student registered successfully!');
+        const res = await adminService.createCandidate(form);
+        if (res?.emailSent) {
+          toast.success(`Student registered and credentials emailed to ${form.email}!`);
+        } else if (res?.emailError) {
+          toast.warning(`Student registered, but email delivery issue: ${res.emailError}`);
+        } else {
+          toast.success('Student registered successfully!');
+        }
       } else {
         const payload = { ...form };
         if (!payload.password) delete payload.password;
@@ -171,6 +232,7 @@ export default function AdminCandidates() {
     const matchesSearch =
       c.name.toLowerCase().includes(search.toLowerCase()) ||
       c.email.toLowerCase().includes(search.toLowerCase()) ||
+      ((c.student_id || c.roll_number || '') && String(c.student_id || c.roll_number).toLowerCase().includes(search.toLowerCase())) ||
       (c.phone && c.phone.includes(search)) ||
       (c.institution_name && c.institution_name.toLowerCase().includes(search.toLowerCase())) ||
       (c.institution_code && c.institution_code.toLowerCase().includes(search.toLowerCase()));
@@ -263,7 +325,21 @@ export default function AdminCandidates() {
                         </span>
                         <div>
                           <p className="font-extrabold text-slate-900 dark:text-white leading-none mb-1">{c.name}</p>
-                          <p className="text-[11px] font-semibold text-slate-400">ID: #{c.id}</p>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <button
+                              type="button"
+                              onClick={() => handleCopyId(c.student_id || c.roll_number || c.id)}
+                              title="Click to copy Student ID"
+                              className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded font-mono font-bold text-[10.5px] bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-blue-600 dark:text-blue-400 border border-slate-200 dark:border-slate-700 transition cursor-pointer"
+                            >
+                              <span>ID: {c.student_id || c.roll_number || `#${c.id}`}</span>
+                              {copiedId === (c.student_id || c.roll_number || c.id) ? (
+                                <Check className="h-3 w-3 text-emerald-500" />
+                              ) : (
+                                <Copy className="h-2.5 w-2.5 text-slate-400" />
+                              )}
+                            </button>
+                          </div>
                         </div>
                       </div>
                     </Td>
@@ -333,6 +409,12 @@ export default function AdminCandidates() {
                       <div className="flex justify-end pr-1">
                         <ActionDropdown
                           items={[
+                            {
+                              label: 'Send ID & Password',
+                              icon: Mail,
+                              onClick: () => handleOpenSendCredentials(c),
+                              color: 'text-indigo-600 dark:text-indigo-400 font-semibold',
+                            },
                             {
                               label: 'Edit Profile',
                               icon: Pencil,
@@ -467,6 +549,22 @@ export default function AdminCandidates() {
 
                 <div>
                   <label className="label">
+                    Student ID / Roll Number <span className="text-slate-400 font-normal">({modalMode === 'create' ? 'Optional - auto-generated if left blank' : 'Unique student identifier'})</span>
+                  </label>
+                  <input
+                    type="text"
+                    className="input w-full font-mono uppercase"
+                    placeholder={modalMode === 'create' ? "e.g. EDV26-10023 (or leave blank to auto-generate)" : "Enter Student ID"}
+                    value={form.student_id}
+                    onChange={(e) => setForm({ ...form, student_id: e.target.value })}
+                  />
+                  <p className="text-[11px] text-slate-400 mt-1">
+                    Student can use this ID along with their password to sign in to the student portal.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="label">
                     Password {modalMode === 'create' ? <span className="text-rose-500">*</span> : <span className="text-slate-400 font-normal">(Leave blank to keep current)</span>}
                   </label>
                   <PasswordInput
@@ -537,6 +635,28 @@ export default function AdminCandidates() {
                     ))}
                   </select>
                 </div>
+
+                {modalMode === 'create' && (
+                  <div className="rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/20 p-3.5">
+                    <label className="flex items-start gap-2.5 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        className="checkbox mt-0.5"
+                        checked={form.send_credentials}
+                        onChange={(e) => setForm({ ...form, send_credentials: e.target.checked })}
+                      />
+                      <div className="text-xs">
+                        <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                          <Mail className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                          Email Login Credentials to Student
+                        </span>
+                        <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
+                          Automatically sends an email containing their Student ID, registered email, and password so they can log in immediately.
+                        </p>
+                      </div>
+                    </label>
+                  </div>
+                )}
               </div>
 
               <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
@@ -656,6 +776,89 @@ export default function AdminCandidates() {
             </button>
           </div>
         </div>
+      </Modal>
+
+      {/* Send Student Credentials Modal */}
+      <Modal
+        open={credentialsModalOpen}
+        onClose={() => !sendingCredentials && setCredentialsModalOpen(false)}
+        title="Send Student ID & Password"
+        size="sm"
+      >
+        <form onSubmit={handleSendCredentials} className="space-y-4">
+          <div className="rounded-2xl bg-slate-50 dark:bg-slate-900/60 p-4 border border-slate-200 dark:border-slate-800 text-xs space-y-2">
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 dark:text-slate-400">Student:</span>
+              <span className="font-extrabold text-slate-900 dark:text-white">{candidateForCredentials?.name}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 dark:text-slate-400">Registered Email:</span>
+              <span className="font-mono text-slate-800 dark:text-slate-200 font-semibold">{candidateForCredentials?.email}</span>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="text-slate-500 dark:text-slate-400">Current Student ID:</span>
+              <span className="font-mono font-bold text-blue-600 dark:text-blue-400">
+                {candidateForCredentials?.student_id || candidateForCredentials?.roll_number || 'Will auto-generate'}
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label className="label">
+              Student ID / Roll Number <span className="text-slate-400 font-normal">(Leave blank to keep / auto-generate)</span>
+            </label>
+            <input
+              type="text"
+              className="input w-full font-mono uppercase text-xs"
+              placeholder="e.g. EDV26-10023"
+              value={credentialsCustomStudentId}
+              onChange={(e) => setCredentialsCustomStudentId(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label className="label">
+              Set New Password <span className="text-slate-400 font-normal">(Optional)</span>
+            </label>
+            <PasswordInput
+              className="input text-xs"
+              placeholder="Leave blank to auto-generate secure password"
+              value={credentialsCustomPassword}
+              onChange={(e) => setCredentialsCustomPassword(e.target.value)}
+            />
+            <p className="text-[11px] text-slate-400 mt-1">
+              If left blank, an 8-character secure password will be generated, saved, and dispatched to the student's email.
+            </p>
+          </div>
+
+          <div className="mt-5 flex justify-end gap-2.5 border-t border-slate-200 dark:border-slate-800 pt-4">
+            <button
+              type="button"
+              className="btn-secondary text-xs"
+              onClick={() => setCredentialsModalOpen(false)}
+              disabled={sendingCredentials}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn-primary text-xs flex items-center gap-1.5"
+              disabled={sendingCredentials}
+            >
+              {sendingCredentials ? (
+                <>
+                  <span className="inline-block animate-spin h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full mr-1" />
+                  Sending Email…
+                </>
+              ) : (
+                <>
+                  <Mail className="h-3.5 w-3.5" />
+                  Send Credentials
+                </>
+              )}
+            </button>
+          </div>
+        </form>
       </Modal>
     </div>
   );

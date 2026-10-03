@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Eye, EyeOff } from 'lucide-react';
 import AuthShell from '../../components/AuthShell.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -10,8 +11,13 @@ export default function StudentLogin() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Mode can be: 'email_otp' (default), 'mobile', 'institute'
-  const [loginMode, setLoginMode] = useState('email_otp');
+  // Mode can be: 'id_password' (default), 'email_otp', 'mobile', 'institute'
+  const [loginMode, setLoginMode] = useState('id_password');
+
+  // ID & Password Fields
+  const [studentIdentifier, setStudentIdentifier] = useState('');
+  const [studentPassword, setStudentPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   // Form Fields
   const [instituteCode, setInstituteCode] = useState('');
@@ -93,6 +99,35 @@ export default function StudentLogin() {
     setMobileOtpSent(false);
     setMobileOtpCode('');
     setMobileTimer(0);
+  };
+
+  // Handle ID & Password Login
+  const handleIdPasswordSubmit = async (e) => {
+    e?.preventDefault();
+    const cleanId = studentIdentifier.trim();
+    if (!cleanId) {
+      setError('Please enter your Student ID or registered email.');
+      return;
+    }
+    if (!studentPassword) {
+      setError('Please enter your account password.');
+      return;
+    }
+    setLoading(true);
+    setError('');
+    try {
+      const u = await studentLogin({
+        identifier: cleanId,
+        studentId: cleanId,
+        password: studentPassword,
+      });
+      toast.success(`Welcome back, ${u?.name || 'Student'}!`);
+      navigate(getDestination(u?.role), { replace: true });
+    } catch (err) {
+      setError(err.message || 'Invalid Student ID or password. Please verify your credentials.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -258,11 +293,23 @@ export default function StudentLogin() {
       title="Student Login"
       subtitle="Sign in to your account to access tests, eBooks, and performance reports."
     >
-      {/* 3-Tab Login Mode Switcher */}
-      <div className="grid grid-cols-3 p-1 bg-[#050a18]/80 border border-[#1e293b] rounded-2xl mb-6 gap-1">
+      {/* 4-Tab Login Mode Switcher */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 p-1 bg-[#050a18]/80 border border-[#1e293b] rounded-2xl mb-6 gap-1">
         <button
           type="button"
-          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+          className={`py-2.5 px-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+            loginMode === 'id_password'
+              ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
+              : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
+          }`}
+          onClick={() => handleSwitchTab('id_password')}
+        >
+          <span>🔑</span>
+          <span>ID & Password</span>
+        </button>
+        <button
+          type="button"
+          className={`py-2.5 px-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
             loginMode === 'email_otp'
               ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -274,7 +321,7 @@ export default function StudentLogin() {
         </button>
         <button
           type="button"
-          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+          className={`py-2.5 px-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
             loginMode === 'mobile'
               ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -286,7 +333,7 @@ export default function StudentLogin() {
         </button>
         <button
           type="button"
-          className={`py-2.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
+          className={`py-2.5 px-1.5 text-xs font-semibold rounded-xl transition-all cursor-pointer truncate flex items-center justify-center gap-1.5 ${
             loginMode === 'institute'
               ? 'bg-gradient-to-r from-[#0D6EFD] to-[#00F0FF] text-white font-bold shadow-md shadow-cyan-500/20'
               : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/40'
@@ -302,6 +349,77 @@ export default function StudentLogin() {
         <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-semibold text-red-400">
           {error}
         </div>
+      )}
+
+      {/* MODE 1: ID & PASSWORD LOGIN */}
+      {loginMode === 'id_password' && (
+        <form onSubmit={handleIdPasswordSubmit} className="space-y-4">
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Student ID or Registered Email *
+            </label>
+            <input
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+              type="text"
+              required
+              placeholder="e.g. EDV26-10023 or student@gmail.com"
+              value={studentIdentifier}
+              onChange={(e) => {
+                setStudentIdentifier(e.target.value);
+                if (error) setError('');
+              }}
+            />
+            <p className="mt-1 text-[11px] text-slate-400">
+              Enter the unique Student ID provided by your institute administrator or sent to your email.
+            </p>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Password *
+            </label>
+            <div className="relative">
+              <input
+                className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 pr-10 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+                type={showPassword ? 'text' : 'password'}
+                required
+                placeholder="Enter your password"
+                value={studentPassword}
+                onChange={(e) => {
+                  setStudentPassword(e.target.value);
+                  if (error) setError('');
+                }}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-200 cursor-pointer"
+                onClick={() => setShowPassword(!showPassword)}
+                tabIndex={-1}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-3 text-xs text-blue-300 flex items-start gap-2">
+            <span className="text-sm">💡</span>
+            <span>
+              Don't have your Student ID or password? Check your registered email inbox or ask your administrator to email your credentials.
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading || !studentIdentifier.trim() || !studentPassword}
+            className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
+          >
+            {loading ? 'Logging in…' : 'Log In with Student ID →'}
+          </button>
+        </form>
       )}
 
       {/* MODE 1: EMAIL OTP LOGIN */}

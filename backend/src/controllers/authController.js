@@ -370,24 +370,41 @@ export const register = asyncHandler(async (req, res) => {
  * POST /api/auth/student-login
  */
 export const studentLogin = asyncHandler(async (req, res) => {
-  const { email, mobile, phone, instituteCode, enrollmentId, password } = req.body;
+  const { email, mobile, phone, instituteCode, enrollmentId, studentId, identifier, roll_number, password } = req.body;
 
   let user = null;
 
-  // 1. Email + Password Mode
-  if (email && password) {
-    const normalizedEmail = (email || '').trim().toLowerCase();
+  const targetIdentifier = (studentId || identifier || roll_number || email || '').trim();
+
+  // 1. Student ID / Email + Password Mode
+  if (targetIdentifier && password && !instituteCode) {
+    const cleanId = targetIdentifier.toLowerCase();
     const result = await query(
-      'SELECT id, name, email, role, password_hash, is_blocked FROM users WHERE LOWER(email) = $1 AND role = $2',
-      [normalizedEmail, 'candidate']
+      `SELECT u.id, u.name, u.email, u.role, u.password_hash, u.is_blocked,
+              COALESCE(u.roll_number, sp.roll_number) AS roll_number,
+              u.institution_id, u.batch_id
+       FROM users u
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE (
+         LOWER(u.email) = $1
+         OR LOWER(COALESCE(u.roll_number, '')) = $1
+         OR LOWER(COALESCE(sp.roll_number, '')) = $1
+         OR u.id::text = $1
+       ) AND u.role = 'candidate'`,
+      [cleanId]
     );
     user = result.rows[0];
-    if (!user?.password_hash) throw ApiError.unauthorized('Invalid email or password');
+    if (!user) {
+      throw ApiError.unauthorized('Invalid Student ID / Email or Password.');
+    }
+    if (!user.password_hash) {
+      throw ApiError.unauthorized('No password set for this account. Please use Email OTP or ask your administrator to provide credentials.');
+    }
     if (user.is_blocked) {
       throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
     }
     const ok = await comparePassword(password, user.password_hash);
-    if (!ok) throw ApiError.unauthorized('Invalid email or password');
+    if (!ok) throw ApiError.unauthorized('Invalid Student ID / Email or Password.');
   }
   // 2. Mobile Mode
   else if (mobile || phone) {

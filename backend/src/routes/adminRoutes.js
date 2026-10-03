@@ -6,6 +6,7 @@ import {
   updateCandidate,
   deleteCandidate,
   toggleBlockCandidate,
+  sendCandidateCredentials,
   getReports,
   exportReports,
   getAttemptReport,
@@ -93,6 +94,7 @@ router.post('/candidates', validate(adminCreateCandidateSchema), createCandidate
 router.put('/candidates/:id', validate(adminUpdateCandidateSchema), updateCandidate);
 router.patch('/candidates/:id/block', toggleBlockCandidate);
 router.delete('/candidates/:id', deleteCandidate);
+router.post('/candidates/:id/send-credentials', sendCandidateCredentials);
 router.get('/reports/export', exportReports);
 router.get('/reports', getReports);
 router.get('/attempts/:id', getAttemptReport);

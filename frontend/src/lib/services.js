@@ -390,7 +390,11 @@ export const adminService = {
   candidates: () => withCache('admin_candidates', () => api.get('/admin/candidates').then((r) => r.data.candidates)),
   createCandidate: (data) => {
     clearCache();
-    return api.post('/admin/candidates', data).then((r) => r.data.candidate);
+    return api.post('/admin/candidates', data).then((r) => ({
+      ...(r.data.candidate || {}),
+      emailSent: r.data.emailSent,
+      emailError: r.data.emailError,
+    }));
   },
   updateCandidate: (id, data) => {
     clearCache();
@@ -404,6 +408,8 @@ export const adminService = {
     clearCache();
     return api.delete(`/admin/candidates/${id}`).then((r) => r.data);
   },
+  sendCandidateCredentials: (id, data = {}) =>
+    api.post(`/admin/candidates/${id}/send-credentials`, data).then((r) => r.data),
   reports: () => withCache('admin_reports', () => api.get('/admin/reports').then((r) => r.data.reports)),
   exportReports: () =>
     import('./csv.js').then(({ downloadFromApi }) =>

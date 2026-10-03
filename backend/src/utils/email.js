@@ -4,6 +4,7 @@ import {
   inviteEmailTemplate,
   otpEmailTemplate,
   completionEmailTemplate,
+  studentCredentialsEmailTemplate,
 } from './emailTemplates.js';
 
 let transporter;
@@ -207,3 +208,20 @@ export const sendCompletionEmail = ({
     sendEmail({ to, ...tpl }).then(resolve).catch(reject);
   });
 };
+
+/**
+ * Send Student ID & Password Credentials Email via Promise
+ */
+export const sendStudentCredentialsEmail = ({ to, name, email, studentId, password, loginUrl }) => {
+  return new Promise((resolve, reject) => {
+    const tpl = studentCredentialsEmailTemplate({
+      name,
+      email: email || to,
+      studentId,
+      password,
+      loginUrl: loginUrl || 'https://edvedum.com/student-login',
+    });
+    sendEmail({ to, ...tpl }).then(resolve).catch(reject);
+  });
+};
+

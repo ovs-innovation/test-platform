@@ -66,7 +66,7 @@ export const otpSendSignupSchema = z.object({
 export const adminCreateCandidateSchema = z.object({
   name: z.string().trim().min(2, 'Name must be at least 2 characters').max(120),
   email: z.string().trim().toLowerCase().email('A valid email is required'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string().min(6, 'Password must be at least 6 characters').optional().or(z.literal('')),
   phone: z
     .string()
     .trim()
@@ -79,6 +79,9 @@ export const adminCreateCandidateSchema = z.object({
   class: z.string().trim().optional().nullable().or(z.literal('')),
   target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
   institution_id: z.any().optional(),
+  student_id: z.string().trim().max(50).optional().nullable().or(z.literal('')),
+  roll_number: z.string().trim().max(50).optional().nullable().or(z.literal('')),
+  send_credentials: z.boolean().optional(),
 });
 
 export const adminUpdateCandidateSchema = z.object({
@@ -97,6 +100,9 @@ export const adminUpdateCandidateSchema = z.object({
   class: z.string().trim().optional().nullable().or(z.literal('')),
   target_exam: z.enum(['JEE', 'NEET']).optional().nullable().or(z.literal('')),
   institution_id: z.any().optional(),
+  student_id: z.string().trim().max(50).optional().nullable().or(z.literal('')),
+  roll_number: z.string().trim().max(50).optional().nullable().or(z.literal('')),
+  send_credentials: z.boolean().optional(),
 });
 
 export const testSeriesSchema = z.object({
