@@ -34,18 +34,23 @@ export const institutionLoginSchema = z.object({
 export const studentLoginSchema = z.object({
   email: z.string().trim().toLowerCase().optional().or(z.literal('')),
   password: z.string().optional().or(z.literal('')),
+  studentId: z.string().trim().optional().or(z.literal('')),
+  identifier: z.string().trim().optional().or(z.literal('')),
+  roll_number: z.string().trim().optional().or(z.literal('')),
+  otp: z.string().trim().optional().or(z.literal('')),
   mobile: z.string().trim().optional().or(z.literal('')),
   phone: z.string().trim().optional().or(z.literal('')),
   instituteCode: z.string().trim().optional().or(z.literal('')),
   enrollmentId: z.string().trim().optional().or(z.literal('')),
 }).refine(
   (data) => {
+    const hasStudentId = Boolean((data.studentId && data.studentId.trim()) || (data.identifier && data.identifier.trim()) || (data.roll_number && data.roll_number.trim()));
     const hasEmail = Boolean(data.email && data.email.trim());
     const hasMobile = Boolean(data.mobile || data.phone);
     const hasInst = Boolean(data.instituteCode || data.enrollmentId);
-    return hasEmail || hasMobile || hasInst;
+    return hasStudentId || hasEmail || hasMobile || hasInst;
   },
-  { message: 'Please provide Email, Mobile, or Institute Code & Enrollment ID.' }
+  { message: 'Please provide Student ID, Email, Mobile, or Institute Code & Enrollment ID.' }
 );
 
 export const registerSchema = z.object({
