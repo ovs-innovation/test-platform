@@ -384,7 +384,8 @@ export const listAdminAdmissions = asyncHandler(async (req, res) => {
 
   const queryParams = [...params, l, offset];
   const listRes = await query(
-    `SELECT id, application_no, student_name, father_name, contact_number, email, course_name, status, admin_notes, created_at, updated_at
+    `SELECT id, application_no, student_name, father_name, contact_number, email, course_name, status, admin_notes, created_at, updated_at,
+            (CASE WHEN form_data->>'studentPhoto' IS NOT NULL AND LENGTH(form_data->>'studentPhoto') > 5 THEN true ELSE false END) AS has_photo
      FROM admission_submissions
      ${whereClause}
      ORDER BY created_at DESC
@@ -419,21 +420,35 @@ export const getAdminAdmissionDetail = asyncHandler(async (req, res) => {
 });
 
 /**
- * Admin: Update submission status and notes
+ * Admin: Update submission status and notes (and optionally studentPhoto)
  */
 export const updateAdminAdmissionStatus = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { status, admin_notes } = req.body;
+  const { status, admin_notes, studentPhoto } = req.body;
 
-  const result = await query(
-    `UPDATE admission_submissions
-     SET status = COALESCE($1, status),
-         admin_notes = COALESCE($2, admin_notes),
-         updated_at = NOW()
-     WHERE id = $3
-     RETURNING *`,
-    [status, admin_notes, id]
-  );
+  let result;
+  if (studentPhoto !== undefined) {
+    result = await query(
+      `UPDATE admission_submissions
+       SET status = COALESCE($1, status),
+           admin_notes = COALESCE($2, admin_notes),
+           form_data = COALESCE(form_data, '{}'::jsonb) || jsonb_build_object('studentPhoto', $4::text),
+           updated_at = NOW()
+       WHERE id = $3
+       RETURNING *`,
+      [status, admin_notes, id, studentPhoto]
+    );
+  } else {
+    result = await query(
+      `UPDATE admission_submissions
+       SET status = COALESCE($1, status),
+           admin_notes = COALESCE($2, admin_notes),
+           updated_at = NOW()
+       WHERE id = $3
+       RETURNING *`,
+      [status, admin_notes, id]
+    );
+  }
 
   if (!result.rowCount) {
     throw ApiError.notFound('Submission not found');

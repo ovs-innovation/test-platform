@@ -155,9 +155,8 @@ export default function AdminLayout({ children }) {
     <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#F8FAFC] text-slate-900 transition-colors duration-200 dark:bg-[#080D1A] dark:text-slate-100">
       {/* DESKTOP COMMAND NAVIGATION RAIL */}
       <aside
-        className={`fixed top-0 left-0 bottom-0 z-40 hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${
-          collapsed ? 'w-20' : 'w-[260px]'
-        }`}
+        className={`fixed top-0 left-0 bottom-0 z-40 hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${collapsed ? 'w-20' : 'w-[260px]'
+          }`}
       >
         <div className="relative flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]">
           {/* Minimal Compact Circular Collapse Toggle (24px, Thin Bright Blue Border) */}
@@ -179,9 +178,8 @@ export default function AdminLayout({ children }) {
           </button>
 
           {/* Branding Header */}
-          <div className={`flex h-14 shrink-0 items-center border-b border-slate-200/70 px-4 dark:border-slate-800/70 ${
-            collapsed ? 'justify-center' : 'justify-between'
-          }`}>
+          <div className={`flex h-14 shrink-0 items-center border-b border-slate-200/70 px-4 dark:border-slate-800/70 ${collapsed ? 'justify-center' : 'justify-between'
+            }`}>
             <Link to="/admin" className="flex items-center gap-2.5 overflow-hidden">
               <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-8 w-auto shrink-0 object-contain" />
               {!collapsed && (
@@ -213,17 +211,14 @@ export default function AdminLayout({ children }) {
                       key={item.to}
                       to={item.to}
                       end={item.to === '/admin'}
-                      className={`group relative flex items-center h-10 transition-all duration-150 rounded-lg ${
-                        collapsed ? 'justify-center px-0' : 'gap-3 px-3 text-[13px] font-medium'
-                      } ${
-                        isActive
+                      className={`group relative flex items-center h-10 transition-all duration-150 rounded-lg ${collapsed ? 'justify-center px-0' : 'gap-3 px-3 text-[13px] font-medium'
+                        } ${isActive
                           ? 'bg-blue-50/90 text-blue-600 font-semibold before:absolute before:left-0 before:top-2 before:bottom-2 before:w-1 before:rounded-r-full before:bg-blue-600 dark:bg-blue-950/30 dark:text-blue-400 dark:before:bg-blue-400'
                           : 'text-slate-600 hover:bg-slate-100/70 hover:text-slate-900 dark:text-slate-300/80 dark:hover:bg-slate-800/50 dark:hover:text-white'
-                      }`}
+                        }`}
                     >
-                      <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${
-                        isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 group-hover:text-slate-600 dark:text-slate-400 dark:group-hover:text-slate-200'
-                      }`}>
+                      <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md ${isActive ? 'text-blue-600 dark:text-blue-400' : 'text-slate-400 group-hover:text-slate-600 dark:text-slate-400 dark:group-hover:text-slate-200'
+                        }`}>
                         <NavIcon name={item.icon} className="h-4 w-4" />
                       </div>
                       {!collapsed && <span className="truncate">{item.label}</span>}
@@ -308,9 +303,8 @@ export default function AdminLayout({ children }) {
                           key={item.to}
                           to={item.to}
                           onClick={() => setMobileDrawerOpen(false)}
-                          className={`flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold ${
-                            isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
-                          }`}
+                          className={`flex items-center gap-3 rounded-xl px-3 py-2 text-xs font-semibold ${isActive ? 'bg-blue-600 text-white shadow-xs' : 'text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800'
+                            }`}
                         >
                           <NavIcon name={item.icon} className="h-4 w-4" />
                           <span>{item.label}</span>
@@ -354,12 +348,11 @@ export default function AdminLayout({ children }) {
       )}
 
       {/* MAIN ADMIN WORKSPACE AREA */}
-      <div className={`flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ${
-        collapsed ? 'lg:pl-20' : 'lg:pl-[260px]'
-      }`}>
+      <div className={`flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ${collapsed ? 'lg:pl-20' : 'lg:pl-[260px]'
+        }`}>
         {/* FLOATING ROUNDED NAVBAR CONTAINER */}
-        <div className="pt-3 px-3 sm:px-4 lg:px-6">
-          <header className="sticky top-3 z-30 flex h-14 sm:h-16 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
+        <div className="pt-3 px-3 sm:px-4 lg:px-4">
+          <header className="sticky top-3 z-30 flex h-14 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
             {/* Mobile Drawer Trigger & Breadcrumb / Mobile Logo */}
             <div className="flex items-center gap-2 min-w-0 shrink-0">
               <button
@@ -494,7 +487,7 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* PAGE CONTENT CONTAINER */}
-        <main className="flex-1 p-3 sm:p-4 lg:p-6 w-full max-w-full">
+        <main className="flex-1 p-3 sm:p-4 lg:p-4 w-full max-w-full">
           {children || <Outlet />}
         </main>
       </div>
@@ -618,14 +611,14 @@ function AdminNotificationDrawer({ onClose }) {
   const handleMarkAllRead = async () => {
     try {
       await notificationService.markAllRead();
-    } catch (_) {}
+    } catch (_) { }
     markAllAdminNotificationsRead();
     setNotifications((prev) => prev.map((n) => ({ ...n, read_at: new Date().toISOString() })));
   };
 
   const handleItemClick = async (n) => {
     if (!n.read_at) {
-      try { await notificationService.markRead(n.id); } catch (_) {}
+      try { await notificationService.markRead(n.id); } catch (_) { }
       markAdminNotificationRead(n.id);
       setNotifications((prev) => prev.map((item) => (item.id === n.id ? { ...item, read_at: new Date().toISOString() } : item)));
     }
@@ -672,11 +665,10 @@ function AdminNotificationDrawer({ onClose }) {
               <div
                 key={n.id}
                 onClick={() => handleItemClick(n)}
-                className={`p-3.5 rounded-xl border transition cursor-pointer ${
-                  !n.read_at
+                className={`p-3.5 rounded-xl border transition cursor-pointer ${!n.read_at
                     ? 'bg-blue-50/50 border-blue-200 dark:bg-blue-950/30 dark:border-blue-800'
                     : 'bg-slate-50 border-slate-200 dark:bg-slate-900/40 dark:border-slate-800'
-                }`}
+                  }`}
               >
                 <p className="text-xs font-bold text-slate-900 dark:text-white">{n.title}</p>
                 {n.body && <p className="text-xs text-slate-500 mt-1">{n.body}</p>}
