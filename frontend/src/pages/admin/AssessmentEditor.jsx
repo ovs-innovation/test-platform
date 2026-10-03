@@ -239,7 +239,7 @@ export default function AssessmentEditor() {
                 description: settings.description,
                 instructions: settings.instructions,
                 duration_minutes: settings.duration_minutes,
-                passing_marks: settings.passing_marks,
+                passing_marks: settings.passing_marks === '' || settings.passing_marks === null || isNaN(Number(settings.passing_marks)) ? 0 : Number(settings.passing_marks),
                 max_violations: settings.max_violations,
                 negative_marks_per_wrong: settings.negative_marks_per_wrong,
                 result_visible: settings.result_visible,
@@ -308,8 +308,18 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
           <input name="duration_minutes" type="number" min={1} className="input" value={settings.duration_minutes} onChange={onChange} />
         </div>
         <div>
-          <label className="label">Passing marks</label>
-          <input name="passing_marks" type="number" min={0} className="input" value={settings.passing_marks} onChange={onChange} />
+          <label className="label">
+            Passing Marks <span className="text-[11px] font-normal text-slate-400 dark:text-slate-500">(Optional)</span>
+          </label>
+          <input
+            name="passing_marks"
+            type="number"
+            min={0}
+            className="input"
+            value={settings.passing_marks ?? ''}
+            onChange={onChange}
+            placeholder="0 (None for JEE/NEET)"
+          />
         </div>
         <div>
           <label className="label">Max violations</label>

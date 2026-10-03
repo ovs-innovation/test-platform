@@ -736,7 +736,15 @@ Examine the page content carefully and extract all sections present on this page
     }
   }
 
-  const rawQuestions = Array.from(questionMap.values());
+  // Sort rawQuestions strictly by original questionNumber to prevent concurrency order drift
+  const rawQuestions = Array.from(questionMap.values()).sort((a, b) => {
+    const numA = Number(a.questionNumber) || 0;
+    const numB = Number(b.questionNumber) || 0;
+    if (numA !== numB) return numA - numB;
+    const pageA = (Array.isArray(a.sourcePages) && a.sourcePages[0]) || 0;
+    const pageB = (Array.isArray(b.sourcePages) && b.sourcePages[0]) || 0;
+    return pageA - pageB;
+  });
 
   // If document was an Answer Key / Solution / Topic Grid PDF with no separate question statements:
   if (!rawQuestions.length) {

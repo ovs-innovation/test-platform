@@ -188,9 +188,14 @@ export const createTest = asyncHandler(async (req, res) => {
     assigned_to_id
   } = req.body;
 
-  if (!test_name || !test_type || !test_date || !start_time || !end_time || !duration_minutes || !max_marks) {
-    throw ApiError.badRequest('Missing required test fields (test_name, test_type, test_date, start_time, end_time, duration_minutes, max_marks)');
+  if (!test_name || !test_type || !test_date || !start_time || !end_time || !duration_minutes) {
+    throw ApiError.badRequest('Missing required test fields (test_name, test_type, test_date, start_time, end_time, duration_minutes)');
   }
+
+  // In JEE/NEET CBT exams, max marks are optional and automatically determined by questions or default standard patterns (720 for NEET, 300 for JEE)
+  const resolvedMaxMarks = (max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) && Number(max_marks) > 0)
+    ? Number(max_marks)
+    : (String(test_type || '').toUpperCase().includes('NEET') ? 720 : 300);
 
   const test = await withTransaction(async (client) => {
     const result = await client.query(
@@ -209,7 +214,7 @@ export const createTest = asyncHandler(async (req, res) => {
         end_time,
         duration_minutes,
         syllabus || null,
-        max_marks,
+        resolvedMaxMarks,
         Boolean(is_published),
         is_published ? 'published' : 'draft',
         result_publish_time || null,
@@ -304,7 +309,7 @@ export const updateTest = asyncHandler(async (req, res) => {
 
   const cleanDate = test_date ? String(test_date).split('T')[0] : null;
   const cleanDuration = duration_minutes !== undefined && duration_minutes !== null ? parseInt(duration_minutes, 10) : null;
-  const cleanMarks = max_marks !== undefined && max_marks !== null ? parseInt(max_marks, 10) : null;
+  const cleanMarks = max_marks !== undefined && max_marks !== null && max_marks !== '' && !isNaN(Number(max_marks)) ? parseInt(max_marks, 10) : null;
 
   const result = await query(
     `UPDATE tests SET
@@ -523,8 +528,20 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
   const detectedSubjects = new Set();
   const extractedQuestionsJson = [];
 
-  for (let i = 0; i < parsedQs.length; i++) {
-    const q = parsedQs[i];
+  const sortedParsedQs = [...parsedQs].sort((a, b) => {
+    const numA = Number(a.questionNumber) || 0;
+    const numB = Number(b.questionNumber) || 0;
+    if (numA !== numB) return numA - numB;
+    return 0;
+  });
+
+  const isNeet = String(currentTest.test_name || '').toUpperCase().includes('NEET') ||
+                 String(currentTest.syllabus || '').toUpperCase().includes('NEET') ||
+                 sortedParsedQs.length === 180 || sortedParsedQs.length === 200 ||
+                 sortedParsedQs.some((q) => String(q.subject || '').toUpperCase().includes('BIO'));
+
+  for (let i = 0; i < sortedParsedQs.length; i++) {
+    const q = sortedParsedQs[i];
     calcTotalMarks += (q.marks || 4);
 
     const classification = inferSubjectAndTopic({
@@ -533,14 +550,26 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       questionText: q.question_text || q.questionText,
     });
 
-    const qNum = q.questionNumber || i + 1;
+    const qNum = Number(q.questionNumber || i + 1);
 
     const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
     const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
     const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
 
     let detectedSectionSubject = null;
-    if (parsedQs.length >= 75) {
+    if (isNeet) {
+      if (sortedParsedQs.length === 180) {
+        // Standard NEET 180 paper: Biology (1-90), Physics (91-135), Chemistry (136-180)
+        if (qNum >= 1 && qNum <= 90) detectedSectionSubject = 'Biology';
+        else if (qNum >= 91 && qNum <= 135) detectedSectionSubject = 'Physics';
+        else if (qNum >= 136 && qNum <= 180) detectedSectionSubject = 'Chemistry';
+      } else if (sortedParsedQs.length === 200) {
+        if (qNum >= 1 && qNum <= 50) detectedSectionSubject = 'Physics';
+        else if (qNum >= 51 && qNum <= 100) detectedSectionSubject = 'Chemistry';
+        else if (qNum >= 101 && qNum <= 150) detectedSectionSubject = 'Botany';
+        else if (qNum >= 151 && qNum <= 200) detectedSectionSubject = 'Zoology';
+      }
+    } else if (sortedParsedQs.length >= 75 && sortedParsedQs.length <= 90) {
       if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Mathematics';
       else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Physics';
       else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Chemistry';
@@ -599,6 +628,9 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       sourcePages: q.extraction?.sourcePages || [1],
       extractedBy: q.extraction?.extractedBy || extractedBy || 'gemini-vision',
       hasAnswerKey: hasAnswer,
+      original_question_number: qNum,
+      printed_question_number: qNum,
+      original_subject: finalSubject,
       ...(acceptedAnswers.length > 1 ? { acceptedAnswers } : {}),
       ...(q.extraction?.visionBypassReason ? { visionBypassReason: q.extraction.visionBypassReason } : {}),
       ...(q.extraction?.reviewReason ? { reviewReason: q.extraction.reviewReason } : {})
@@ -652,7 +684,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     const rawQText = q.question?.text || q.question_text || q.questionText || '';
     const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
-    parsedQs[i]._dbRow = {
+    sortedParsedQs[i]._dbRow = {
       assessment_id: id,
       question_text: cleanFinalQText,
       question_type: qType,
@@ -660,7 +692,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       correct_index: dbCorrectIndex,
       numeric_answer: numericAnswer,
       marks: q.marks || 4,
-      position: i + 1,
+      position: qNum || i + 1,
       bank_category: finalSubject || 'General',
       solution: formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''))),
       subject: finalSubject,
@@ -707,7 +739,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     });
   }
 
-  const dbRows = parsedQs.map((q) => q._dbRow).filter(Boolean);
+  const dbRows = sortedParsedQs.map((q) => q._dbRow).filter(Boolean);
   if (dbRows.length > 0) {
     const valueClauses = [];
     const bulkParams = [];

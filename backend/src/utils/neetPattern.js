@@ -54,20 +54,42 @@ export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 200)
     explicitSection = 'A';
   }
 
-  // If 180-question paper: Physics (45 Qs), Chemistry (45 Qs), Biology (90 Qs), no Section A/B
+  // If 180-question paper:
+  // Standard NEET paper layout (e.g. AIETS 2027): Biology (90 Qs, 1-90), Physics (45 Qs, 91-135), Chemistry (45 Qs, 136-180)
   if (totalQuestions === 180) {
-    let fallbackSubject = 'Physics';
+    let fallbackSubject = 'Biology';
     let subjectQNum = pos;
-    if (pos >= 1 && pos <= 45) {
-      fallbackSubject = 'Physics';
-      subjectQNum = pos;
-    } else if (pos >= 46 && pos <= 90) {
-      fallbackSubject = 'Chemistry';
-      subjectQNum = pos - 45;
-    } else if (pos >= 91 && pos <= 180) {
-      fallbackSubject = 'Biology';
-      subjectQNum = pos - 90;
+
+    // Check if the paper follows Biology first (Q1 is Biology) or Physics first
+    const isBioFirst = explicitSubject === 'Biology' ||
+      pos <= 90 ||
+      String(q.bank_category || '').toLowerCase().includes('bio') ||
+      String(q.subject || '').toLowerCase().includes('bio');
+
+    if (isBioFirst) {
+      if (pos >= 1 && pos <= 90) {
+        fallbackSubject = 'Biology';
+        subjectQNum = pos;
+      } else if (pos >= 91 && pos <= 135) {
+        fallbackSubject = 'Physics';
+        subjectQNum = pos - 90;
+      } else if (pos >= 136 && pos <= 180) {
+        fallbackSubject = 'Chemistry';
+        subjectQNum = pos - 135;
+      }
+    } else {
+      if (pos >= 1 && pos <= 45) {
+        fallbackSubject = 'Physics';
+        subjectQNum = pos;
+      } else if (pos >= 46 && pos <= 90) {
+        fallbackSubject = 'Chemistry';
+        subjectQNum = pos - 45;
+      } else if (pos >= 91 && pos <= 180) {
+        fallbackSubject = 'Biology';
+        subjectQNum = pos - 90;
+      }
     }
+
     const finalSubject = explicitSubject || fallbackSubject;
     return {
       subject: finalSubject,

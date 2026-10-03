@@ -148,7 +148,7 @@ export default function AdminTestManager() {
     start_time: '09:00:00',
     end_time: '12:00:00',
     duration_minutes: 180,
-    max_marks: 300,
+    max_marks: '',
     syllabus: '',
     is_published: true,
     result_publish_time: '',
@@ -189,7 +189,7 @@ export default function AdminTestManager() {
       start_time: '09:00:00',
       end_time: '12:00:00',
       duration_minutes: 180,
-      max_marks: 300,
+      max_marks: '',
       syllabus: '',
       is_published: true,
       result_publish_time: '',
@@ -214,7 +214,7 @@ export default function AdminTestManager() {
       start_time: t.start_time ? String(t.start_time).slice(0, 8) : '09:00:00',
       end_time: t.end_time ? String(t.end_time).slice(0, 8) : '12:00:00',
       duration_minutes: Number(t.duration_minutes || t.duration || 180),
-      max_marks: Number(t.max_marks || t.total_marks || 300),
+      max_marks: t.max_marks !== undefined && t.max_marks !== null && t.max_marks !== '' ? Number(t.max_marks) : '',
       syllabus: t.syllabus || '',
       is_published: Boolean(t.is_published),
       result_publish_time: t.result_publish_time ? String(t.result_publish_time).slice(0, 16) : '',
@@ -226,10 +226,16 @@ export default function AdminTestManager() {
   const handleTestSubmit = async (e) => {
     e.preventDefault();
     try {
+      const payload = {
+        ...testForm,
+        max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))
+          ? Number(testForm.max_marks)
+          : null,
+      };
       if (editingTest) {
-        await adminService.updateTest(editingTest.id, testForm);
+        await adminService.updateTest(editingTest.id, payload);
       } else {
-        await adminService.createTest(testForm);
+        await adminService.createTest(payload);
       }
       setTestModalOpen(false);
       loadData();
@@ -864,14 +870,19 @@ export default function AdminTestManager() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Maximum Marks *</label>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">
+                    Maximum Marks <span className="text-[11px] font-normal text-slate-400 dark:text-slate-500">(Optional)</span>
+                  </label>
                   <input
                     type="number"
-                    required
-                    value={testForm.max_marks}
-                    onChange={(e) => setTestForm({ ...testForm, max_marks: Number(e.target.value) })}
-                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                    value={testForm.max_marks ?? ''}
+                    onChange={(e) => setTestForm({ ...testForm, max_marks: e.target.value === '' ? '' : Number(e.target.value) })}
+                    placeholder="Auto-calculated from questions"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold text-slate-900 dark:text-white"
                   />
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">
+                    Optional for JEE/NEET. Max marks are automatically computed from the question paper.
+                  </p>
                 </div>
 
                 <div>
