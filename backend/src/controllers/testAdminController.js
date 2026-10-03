@@ -1010,6 +1010,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             await query(
               `UPDATE questions 
                SET correct_index = $1,
+                   correct_option_index = $1,
                    numeric_answer = $2,
                    question_type = COALESCE($3, question_type),
                    solution = COALESCE($4, solution),

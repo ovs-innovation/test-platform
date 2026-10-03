@@ -253,13 +253,16 @@ export function parseAnswerKeyAndSolutions(text) {
 
     // Check if the solution block has an answer letter like "(B)" or "Ans: B" or "Option 2"
     if (answerKeyMap[qNum] === undefined) {
-      const ansMatch = sBody.match(/(?:Correct\s*Answer|Answer|Ans|Option)?\s*[:\.\-–—]?\s*[\(\[]?([A-Da-d1-4])[\)\]]?/i);
+      const ansMatch = sBody.match(/(?:(?:Correct\s*Answer|Answer|Ans|Option)\s*[:\.\-–—]\s*[\(\[]?([A-Da-d1-4])[\)\]]?(?![a-zA-Z0-9])|^[\(\[]([A-Da-d1-4])[\)\]](?![a-zA-Z0-9])|^\s*([A-Da-d1-4])\s*[\.\:\-](?![a-zA-Z0-9]))/i);
       if (ansMatch) {
-        const letter = ansMatch[1].toUpperCase();
-        if (['A', 'B', 'C', 'D'].includes(letter)) {
-          answerKeyMap[qNum] = letter.charCodeAt(0) - 65;
-        } else if (['1', '2', '3', '4'].includes(letter)) {
-          answerKeyMap[qNum] = parseInt(letter, 10) - 1;
+        const rawLetter = ansMatch[1] || ansMatch[2] || ansMatch[3];
+        if (rawLetter) {
+          const letter = rawLetter.toUpperCase();
+          if (['A', 'B', 'C', 'D'].includes(letter)) {
+            answerKeyMap[qNum] = letter.charCodeAt(0) - 65;
+          } else if (['1', '2', '3', '4'].includes(letter)) {
+            answerKeyMap[qNum] = parseInt(letter, 10) - 1;
+          }
         }
       }
     }
@@ -272,7 +275,9 @@ export function parseAnswerKeyAndSolutions(text) {
       expText = sBody
         .replace(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/g, '')
         .replace(/(?:Chapter|Topic|Unit)\s*[:\-]\s*[^\n]+(?:\n|$)/gi, '')
-        .replace(/^\s*(?:Correct\s*Answer|Answer|Ans|Option)?\s*[:\.\-–—]?\s*[\(\[]?[A-Da-d1-4][\)\]]?\s*[:\.\-–—]?\s*/i, '')
+        .replace(/^\s*(?:Correct\s*Answer|Answer|Ans|Option)\s*[:\.\-–—]?\s*[\(\[]?[A-Da-d1-4][\)\]]?\s*[:\.\-–—]?\s*/i, '')
+        .replace(/^\s*[\(\[][A-Da-d1-4][\)\]]\s*[:\.\-–—]?\s*/i, '')
+        .replace(/^\s*[A-Da-d1-4]\s*[\.\:\-]\s*/i, '')
         .trim();
     }
 
@@ -295,8 +300,8 @@ export function parseAnswerKeyOnly(text) {
 
   const keyMap = {};
 
-  // Pattern 1: Standard delimited format (e.g., "1. A", "1: B", "1 - C", "Q1. D", "1 (A)")
-  const delimitedMatches = text.matchAll(/(?:Q(?:uestion)?\.?\s*)?(\d+)\*?[\.\)\:\-\–\—\s]+\s*(?:\(|\[)?([A-Da-d1-4])(?:\)|\])?/gi);
+  // Pattern 1: Delimited format e.g. "1. A", "1: B", "1 - (C)", "Q1. D", "1 (4)", "1. (2)"
+  const delimitedMatches = text.matchAll(/(?:(?:^|[\n\r;|\t\s])(?:Q(?:uestion)?\.?\s*)?(\d{1,3})\s*(?:[\.\)\:\-\–\—]\s*|\s+)(?:(?:Ans(?:wer)?|Option)?\s*[:\.\-–—]?\s*)?[\(\[]?\s*([A-Da-d1-4])\s*[\)\]\.\:\-]?(?=\s+|$)(?![a-zA-Z0-9]))/gi);
   for (const m of delimitedMatches) {
     const qNum = parseInt(m[1], 10);
     const ansChar = m[2].toUpperCase();
@@ -313,9 +318,9 @@ export function parseAnswerKeyOnly(text) {
     }
   }
 
-  // Pattern 2: Dense compact tables without delimiters (e.g., "1B2B3A", "4B5C6B", "9*B10B11B")
-  const denseMatches = text.matchAll(/(?:Q(?:uestion)?\.?\s*)?(\d+)\*?[\.\)\:\-\–\—\s]*\s*(?:\(|\[)?([A-Da-d1-4])(?:\)|\])?/gi);
-  for (const m of denseMatches) {
+  // Pattern 2: Explicit answer key format e.g. "Question 1 : Answer (B)" or "Q1: Ans C"
+  const explicitMatches = text.matchAll(/\b(?:Q(?:uestion)?\.?\s*)?(\d{1,3})\s*[:\.\-–—]?\s*(?:Correct\s*Answer|Answer|Ans|Option)\s*[:\.\-–—]?\s*[\(\[]?\s*([A-Da-d1-4])\s*[\)\]]?(?![a-zA-Z0-9])/gi);
+  for (const m of explicitMatches) {
     const qNum = parseInt(m[1], 10);
     const ansChar = m[2].toUpperCase();
     let correctIndex = -1;
