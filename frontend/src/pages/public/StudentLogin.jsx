@@ -17,7 +17,9 @@ export default function StudentLogin() {
   // ID & Password Fields
   const [studentIdentifier, setStudentIdentifier] = useState('');
   const [studentPassword, setStudentPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // Form Fields
   const [instituteCode, setInstituteCode] = useState('');
@@ -92,6 +94,9 @@ export default function StudentLogin() {
   const handleSwitchTab = (mode) => {
     setLoginMode(mode);
     setError('');
+    setConfirmPassword('');
+    setShowPassword(false);
+    setShowConfirmPassword(false);
     setEmailOtpSent(false);
     setEmailOtpCode('');
     setEmailOtpFocused(false);
@@ -106,11 +111,23 @@ export default function StudentLogin() {
     e?.preventDefault();
     const cleanId = studentIdentifier.trim();
     if (!cleanId) {
-      setError('Please enter your Student ID or registered email.');
+      setError('Please enter your Student ID.');
+      return;
+    }
+    if (cleanId.includes('@')) {
+      setError('Please enter your Student ID (e.g. EDV26-10023). To log in using your registered email, please switch to the Email OTP tab above.');
       return;
     }
     if (!studentPassword) {
       setError('Please enter your account password.');
+      return;
+    }
+    if (!confirmPassword) {
+      setError('Please confirm your password.');
+      return;
+    }
+    if (studentPassword !== confirmPassword) {
+      setError('Passwords do not match. Please ensure Password and Confirm Password are identical.');
       return;
     }
     setLoading(true);
@@ -356,16 +373,16 @@ export default function StudentLogin() {
         <form onSubmit={handleIdPasswordSubmit} className="space-y-4">
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
-              Student ID or Registered Email *
+              Student ID *
             </label>
             <input
-              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+              className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none font-mono uppercase transition-colors"
               type="text"
               required
-              placeholder="e.g. EDV26-10023 or student@gmail.com"
+              placeholder="e.g. EDV26-10023"
               value={studentIdentifier}
               onChange={(e) => {
-                setStudentIdentifier(e.target.value);
+                setStudentIdentifier(e.target.value.toUpperCase());
                 if (error) setError('');
               }}
             />
@@ -405,6 +422,37 @@ export default function StudentLogin() {
             </div>
           </div>
 
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-1.5">
+              Confirm Password *
+            </label>
+            <div className="relative">
+              <input
+                className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-2.5 pr-10 text-sm text-slate-100 placeholder:text-slate-500 focus:border-[#00F0FF] focus:outline-none transition-colors"
+                type={showConfirmPassword ? 'text' : 'password'}
+                required
+                placeholder="Re-enter your password to confirm"
+                value={confirmPassword}
+                onChange={(e) => {
+                  setConfirmPassword(e.target.value);
+                  if (error) setError('');
+                }}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400 hover:text-slate-200 cursor-pointer"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                tabIndex={-1}
+              >
+                {showConfirmPassword ? (
+                  <EyeOff className="h-4 w-4" />
+                ) : (
+                  <Eye className="h-4 w-4" />
+                )}
+              </button>
+            </div>
+          </div>
+
           <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-3 text-xs text-blue-300 flex items-start gap-2">
             <span className="text-sm">💡</span>
             <span>
@@ -414,7 +462,7 @@ export default function StudentLogin() {
 
           <button
             type="submit"
-            disabled={loading || !studentIdentifier.trim() || !studentPassword}
+            disabled={loading || !studentIdentifier.trim() || !studentPassword || !confirmPassword}
             className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition hover:scale-[1.01] active:scale-[0.99] cursor-pointer disabled:opacity-50 mt-2"
           >
             {loading ? 'Logging in…' : 'Log In with Student ID →'}

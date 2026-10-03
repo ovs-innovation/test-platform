@@ -395,7 +395,7 @@ export const studentLogin = asyncHandler(async (req, res) => {
     );
     user = result.rows[0];
     if (!user) {
-      throw ApiError.unauthorized('Invalid Student ID / Email or Password.');
+      throw ApiError.unauthorized('Invalid Student ID or Password.');
     }
     if (!user.password_hash) {
       throw ApiError.unauthorized('No password set for this account. Please use Email OTP or ask your administrator to provide credentials.');
@@ -404,7 +404,7 @@ export const studentLogin = asyncHandler(async (req, res) => {
       throw ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.');
     }
     const ok = await comparePassword(password, user.password_hash);
-    if (!ok) throw ApiError.unauthorized('Invalid Student ID / Email or Password.');
+    if (!ok) throw ApiError.unauthorized('Invalid Student ID or Password.');
   }
   // 2. Mobile Mode
   else if (mobile || phone) {
