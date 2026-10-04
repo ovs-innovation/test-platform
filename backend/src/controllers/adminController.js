@@ -277,6 +277,7 @@ export const getAttemptReport = asyncHandler(async (req, res) => {
     query('SELECT * FROM scores WHERE attempt_id = $1', [id]),
     query(
       `SELECT q.id AS question_id, q.question_text, q.question_type, q.options, q.correct_index, q.correct_indices, q.marks,
+              q.image_url, q.solution, q.solution_image_url,
               ans.selected_index, ans.selected_indices
        FROM questions q
        LEFT JOIN answers ans ON ans.question_id = q.id AND ans.attempt_id = $1
