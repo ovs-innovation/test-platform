@@ -665,6 +665,11 @@ export default function ExamScreen() {
     : null;
 
   const displayQuestionText = currentTranslation?.question_text || q.question_text;
+  const formattedDisplayQuestionText = useMemo(() => {
+    let text = displayQuestionText || '';
+    if (typeof text === 'object' && text !== null) text = text.text || '';
+    return text.replace(/^Q\s*\d+[\.\:\s\-]+/i, '').trim();
+  }, [displayQuestionText]);
   const displayAssertionText = currentTranslation?.assertion_text || q.assertion_text;
   const displayReasonText = currentTranslation?.reason_text || q.reason_text;
   const displayOptions = currentTranslation?.options || q.options || [];
@@ -905,7 +910,7 @@ export default function ExamScreen() {
 
             <div className="text-base leading-relaxed text-slate-900 whitespace-pre-line">
               <span className="mr-2 font-bold">Q{current + 1}.</span>
-              <MathRenderer text={displayQuestionText} />
+              <MathRenderer text={formattedDisplayQuestionText} />
             </div>
 
             {q.image_url && (
