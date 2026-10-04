@@ -355,7 +355,7 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       });
     }
 
-    const isNeetSubmit = isNeetTest(assessment, questions);
+    const isNeetSubmit = isNeet;
     let initRank = null;
     let initPercentile = null;
     let initRankRange = null;
@@ -943,7 +943,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   let score = scoreRes.rows[0] || null;
   if (!score) {
     const finalized = await finalizeAttempt(id, 'submitted');
-    score = finalized?.score || null;
+    score = (finalized && finalized.score) ? finalized.score : (finalized || null);
   }
 
   const [questionsRes, answersRes, codingRes, subjectiveRes] = await Promise.all([
@@ -1142,12 +1142,11 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
   });
 
   const isNeetAssessment = isNeetTest(assessment, questionsRes.rows);
-  const formattedReport = buildFormattedResult(attempt, assessment, scoreRes.rows[0] || null, solutions, isNeetAssessment, answersRes.rows);
+  let rawScore = score || scoreRes.rows[0] || null;
+  const formattedReport = buildFormattedResult(attempt, assessment, rawScore, solutions, isNeetAssessment, answersRes.rows);
 
   // Compute live ranking data: participant count, ranking availability, rank, percentile, ranking status
   const rankingData = await getAssessmentRankingData(attempt.assessment_id, attempt.candidate_id);
-
-  let rawScore = scoreRes.rows[0] || null;
 
   // Auto-correct any previously stored score that missed negative marking deduction
   if (rawScore) {
@@ -1180,7 +1179,7 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     }
   }
 
-  if (isNeetAssessment) {
+  if (isNeetAssessment && rankingData) {
     const effectiveMarks = rawScore?.marks_obtained ?? formattedReport?.overall?.marks ?? 0;
     const neetPred = predictNeetRank(effectiveMarks);
     rankingData.ranking_available = true;
@@ -1197,18 +1196,18 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
 
   const enhancedScore = rawScore ? {
     ...rawScore,
-    total_participants: rankingData.total_participants,
-    totalParticipants: rankingData.total_participants,
-    ranking_available: rankingData.ranking_available,
-    rankingAvailable: rankingData.ranking_available,
-    ranking_status: rankingData.ranking_status,
-    rankingStatus: rankingData.ranking_status,
-    rank: isNeetAssessment ? (rankingData.rank_range || rankingData.rank) : rankingData.rank,
-    rank_num: rankingData.rank,
-    rank_range: rankingData.rank_range,
-    rankRange: rankingData.rank_range,
-    predicted_rank_range: rankingData.predicted_rank_range,
-    percentile: rankingData.percentile,
+    total_participants: rankingData?.total_participants ?? 0,
+    totalParticipants: rankingData?.total_participants ?? 0,
+    ranking_available: rankingData?.ranking_available ?? false,
+    rankingAvailable: rankingData?.ranking_available ?? false,
+    ranking_status: rankingData?.ranking_status ?? 'pending',
+    rankingStatus: rankingData?.ranking_status ?? 'pending',
+    rank: isNeetAssessment ? (rankingData?.rank_range || rankingData?.rank) : rankingData?.rank,
+    rank_num: rankingData?.rank,
+    rank_range: rankingData?.rank_range,
+    rankRange: rankingData?.rank_range,
+    predicted_rank_range: rankingData?.predicted_rank_range,
+    percentile: rankingData?.percentile,
     is_neet: Boolean(isNeetAssessment),
   } : null;
 
