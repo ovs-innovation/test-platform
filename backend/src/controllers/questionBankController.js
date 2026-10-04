@@ -5,7 +5,7 @@ import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 import { rememberCache, delCache } from '../config/redis.js';
 import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 
-const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
+const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
 
 const asJson = (value, fallback) => {
   if (value == null) return JSON.stringify(fallback);
@@ -448,3 +448,264 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
 
   res.status(201).json({ imported: imported.length, questions: imported });
 });
+
+/**
+ * POST /api/question-bank/upload-pdf
+ * Uploads a question paper PDF (and optional answer key/solutions PDF) to extract
+ * questions, options, answers, and solutions directly into the Question Bank for selected or auto-detected subjects.
+ */
+export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
+  const {
+    file_base64,
+    file_name = 'question_paper.pdf',
+    category = 'auto',
+    answer_key_base64,
+    answer_key_name = 'answer_key.pdf',
+    default_marks = 4,
+    include_answers = true,
+    difficulty = 'medium',
+  } = req.body;
+
+  if (!file_base64 || typeof file_base64 !== 'string') {
+    throw ApiError.badRequest('Question paper PDF is required');
+  }
+
+  // Save question paper file copy to disk if upload middleware is present
+  let savedFileUrl = '';
+  try {
+    const { saveUploadedFile } = await import('../middleware/upload.js');
+    savedFileUrl = await saveUploadedFile(file_base64, file_name, 'qb_paper');
+  } catch (err) {
+    console.warn('[uploadPdfToQuestionBank] Warning: Could not save uploaded PDF copy:', err.message);
+  }
+
+  const base64Data = file_base64.replace(/^data:[^;]+;base64,/, '');
+  const pdfBuffer = Buffer.from(base64Data, 'base64');
+
+  const { parseQuestionsFromPdf, extractPdfText } = await import('../utils/pdfQuestions.js');
+  const { parseAnswerKeyAndSolutions } = await import('../utils/pdfQuestionParser.js');
+
+  console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${file_name})...`);
+  const shouldIncludeAnswers = include_answers !== false && include_answers !== 'false';
+  const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: shouldIncludeAnswers });
+  let extractedQs = pdfExtraction.rows || [];
+
+  if (!extractedQs.length) {
+    throw ApiError.badRequest('No questions could be extracted from the PDF. Please ensure the PDF contains readable text or high quality question pages.');
+  }
+
+  console.log(`[uploadPdfToQuestionBank] Extracted ${extractedQs.length} question(s) from PDF.`);
+
+  // Optional: Merge standalone answer key / solution PDF if provided
+  if (answer_key_base64 && typeof answer_key_base64 === 'string') {
+    try {
+      console.log(`[uploadPdfToQuestionBank] Processing separate answer key PDF (${answer_key_name})...`);
+      const akBase64 = answer_key_base64.replace(/^data:[^;]+;base64,/, '');
+      const akBuffer = Buffer.from(akBase64, 'base64');
+      let akMap = {};
+      let solMap = {};
+      let chMap = {};
+
+      try {
+        const rawAkText = await extractPdfText(akBuffer);
+        if (rawAkText) {
+          const parsedAk = parseAnswerKeyAndSolutions(rawAkText);
+          akMap = parsedAk.answerKeyMap || {};
+          solMap = parsedAk.solutionsMap || {};
+          chMap = parsedAk.chaptersMap || {};
+        }
+      } catch (akTextErr) {
+        console.warn('[uploadPdfToQuestionBank] Raw text extraction for answer key failed:', akTextErr.message);
+      }
+
+      if (Object.keys(akMap).length === 0 || Object.keys(solMap).length === 0) {
+        try {
+          const akVision = await parseQuestionsFromPdf(akBuffer, { includeAnswers: true });
+          if (akVision.answerKeyMap) akMap = { ...akVision.answerKeyMap, ...akMap };
+          if (akVision.solutionMap) {
+            for (const [qNum, sObj] of Object.entries(akVision.solutionMap)) {
+              if (sObj?.explanation && !solMap[qNum]) solMap[qNum] = sObj.explanation;
+              if (sObj?.correctAnswer && akMap[qNum] === undefined) {
+                const letter = String(sObj.correctAnswer).trim().toUpperCase();
+                if (['A', 'B', 'C', 'D'].includes(letter)) {
+                  akMap[qNum] = letter.charCodeAt(0) - 65;
+                }
+              }
+            }
+          }
+          if (akVision.topicGridMap || akVision.chaptersMap) {
+            chMap = { ...(akVision.topicGridMap || akVision.chaptersMap), ...chMap };
+          }
+        } catch (akVisionErr) {
+          console.warn('[uploadPdfToQuestionBank] Vision fallback for answer key failed:', akVisionErr.message);
+        }
+      }
+
+      // Merge into extracted questions
+      for (let i = 0; i < extractedQs.length; i++) {
+        const q = extractedQs[i];
+        const qNum = q.questionNumber || q.line || (i + 1);
+        if (akMap[qNum] !== undefined) {
+          const rawVal = akMap[qNum];
+          if (typeof rawVal === 'number' && rawVal >= 0 && rawVal <= 3) {
+            q.correct_index = rawVal;
+            q.correctAnswer = String.fromCharCode(65 + rawVal);
+          } else if (typeof rawVal === 'string') {
+            const upper = rawVal.trim().toUpperCase();
+            if (['A', 'B', 'C', 'D'].includes(upper)) {
+              q.correct_index = upper.charCodeAt(0) - 65;
+              q.correctAnswer = upper;
+            } else if (!isNaN(Number(upper))) {
+              q.numeric_answer = Number(upper);
+              q.question_type = 'integer';
+              q.correct_index = null;
+            }
+          } else if (typeof rawVal === 'number') {
+            q.numeric_answer = rawVal;
+            q.question_type = 'integer';
+            q.correct_index = null;
+          }
+        }
+        if (solMap[qNum] && (!q.solution || q.solution.length < 5)) {
+          q.solution = solMap[qNum];
+        }
+        if (chMap[qNum] && (!q.chapter || q.chapter === 'General')) {
+          q.chapter = chMap[qNum];
+          q.topic = chMap[qNum];
+        }
+      }
+    } catch (akErr) {
+      console.warn('[uploadPdfToQuestionBank] Answer key processing error:', akErr.message);
+    }
+  }
+
+  // Subject matching: fetch existing subjects from database
+  const subRes = await query('SELECT id, name FROM subjects');
+  const subjects = subRes.rows;
+  const subjectMap = new Map();
+  subjects.forEach((s) => {
+    subjectMap.set(s.name.toLowerCase().trim(), s);
+  });
+
+  // Helper to normalize subject / category name
+  const resolveSubject = (qSubject, preferredCategory) => {
+    if (preferredCategory && preferredCategory.toLowerCase() !== 'auto' && preferredCategory.toLowerCase() !== 'auto-detect') {
+      const match = subjectMap.get(preferredCategory.toLowerCase().trim());
+      return {
+        categoryName: match ? match.name : preferredCategory,
+        subjectId: match ? match.id : null,
+      };
+    }
+
+    const candidate = (qSubject || '').trim().toLowerCase();
+    if (candidate.includes('physic')) {
+      const match = subjectMap.get('physics');
+      return { categoryName: match ? match.name : 'Physics', subjectId: match ? match.id : null };
+    }
+    if (candidate.includes('chem')) {
+      const match = subjectMap.get('chemistry');
+      return { categoryName: match ? match.name : 'Chemistry', subjectId: match ? match.id : null };
+    }
+    if (candidate.includes('botan')) {
+      const match = subjectMap.get('botany');
+      return { categoryName: match ? match.name : 'Botany', subjectId: match ? match.id : null };
+    }
+    if (candidate.includes('zool')) {
+      const match = subjectMap.get('zoology');
+      return { categoryName: match ? match.name : 'Zoology', subjectId: match ? match.id : null };
+    }
+    if (candidate.includes('bio')) {
+      const match = subjectMap.get('biology');
+      return { categoryName: match ? match.name : 'Biology', subjectId: match ? match.id : null };
+    }
+    if (candidate.includes('math')) {
+      const match = subjectMap.get('mathematics');
+      return { categoryName: match ? match.name : 'Mathematics', subjectId: match ? match.id : null };
+    }
+
+    // Direct match against known subjects
+    for (const [nameLower, sObj] of subjectMap.entries()) {
+      if (candidate === nameLower) {
+        return { categoryName: sObj.name, subjectId: sObj.id };
+      }
+    }
+
+    // Fallback to default
+    return { categoryName: 'Physics', subjectId: subjectMap.get('physics')?.id || null };
+  };
+
+  const createdQuestions = [];
+  const affectedCategories = new Set();
+  const errors = [];
+
+  for (let idx = 0; idx < extractedQs.length; idx++) {
+    const q = extractedQs[idx];
+    try {
+      const { categoryName, subjectId } = resolveSubject(q.subject || q.bank_category, category);
+      affectedCategories.add(categoryName);
+
+      const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
+      if (!qText) continue;
+
+      const qType = q.question_type || q.questionType || (q.numeric_answer != null ? 'integer' : 'mcq');
+      const isInteger = qType === 'integer' || qType === 'numerical';
+
+      const options = isInteger
+        ? []
+        : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
+
+      let correctIndex = q.correct_index != null ? Number(q.correct_index) : 0;
+      if (isInteger) correctIndex = 0;
+      const correctIndices = isInteger ? [] : (q.correct_indices || [correctIndex]);
+
+      const numericAnswer = isInteger && q.numeric_answer != null ? Number(q.numeric_answer) : null;
+      const marks = Number(q.marks || default_marks || 4);
+      const solution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
+      const imageUrl = q.image_url || (q.media && q.media[0] ? q.media[0].url : '') || '';
+      const topic = q.topic || q.chapter || '';
+
+      const result = await query(
+        `INSERT INTO question_bank (
+          category, question_type, question_text, options, correct_index, correct_indices,
+          numeric_answer, marks, solution, subject_id, chapter_id, difficulty,
+          image_url, subject, topic
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+        RETURNING id, category, question_text, question_type, marks, solution, subject`,
+        [
+          categoryName,
+          qType,
+          qText,
+          asJson(options, []),
+          correctIndex,
+          asJson(correctIndices, []),
+          numericAnswer,
+          marks,
+          solution,
+          subjectId,
+          null, // chapter_id
+          difficulty || q.difficulty || 'medium',
+          imageUrl,
+          categoryName,
+          topic,
+        ]
+      );
+      createdQuestions.push(result.rows[0]);
+    } catch (err) {
+      console.error('[uploadPdfToQuestionBank] Insert error on question', idx + 1, err.message);
+      errors.push({ line: idx + 1, error: err.message });
+    }
+  }
+
+  await delCache('cache:qb:*');
+
+  res.status(201).json({
+    success: true,
+    created: createdQuestions.length,
+    questions: createdQuestions,
+    categories: Array.from(affectedCategories),
+    warnings: pdfExtraction.warnings || [],
+    errors,
+    file_url: savedFileUrl || null,
+  });
+});
+

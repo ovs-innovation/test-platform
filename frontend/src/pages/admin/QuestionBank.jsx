@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -18,7 +18,7 @@ const tryParseArray = (val) => {
   return [];
 };
 
-const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology'];
+const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
 
 function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false }) {
   const [open, setOpen] = useState(false);
@@ -132,6 +132,94 @@ export default function AdminQuestionBank() {
 
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
+
+  // PDF Upload States
+  const [pdfOpen, setPdfOpen] = useState(false);
+  const [pdfFile, setPdfFile] = useState(null);
+  const [answerKeyFile, setAnswerKeyFile] = useState(null);
+  const [pdfCategory, setPdfCategory] = useState('auto');
+  const [pdfMarks, setPdfMarks] = useState(4);
+  const [pdfDifficulty, setPdfDifficulty] = useState('medium');
+  const [pdfIncludeAnswers, setPdfIncludeAnswers] = useState(true);
+  const [pdfUploading, setPdfUploading] = useState(false);
+  const [pdfProgressStatus, setPdfProgressStatus] = useState('');
+  const [pdfSuccessData, setPdfSuccessData] = useState(null);
+  const pdfInputRef = useRef(null);
+  const answerKeyInputRef = useRef(null);
+
+  const openPdfModal = () => {
+    setPdfFile(null);
+    setAnswerKeyFile(null);
+    setPdfCategory(category || 'auto');
+    setPdfMarks(4);
+    setPdfDifficulty('medium');
+    setPdfIncludeAnswers(true);
+    setPdfProgressStatus('');
+    setPdfSuccessData(null);
+    setPdfOpen(true);
+  };
+
+  const formatBytes = (bytes) => {
+    if (!bytes) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return `${(bytes / Math.pow(k, i)).toFixed(1)} ${sizes[i]}`;
+  };
+
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const uploadPdf = async (e) => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!pdfFile) {
+      toast.error('Please select a question paper PDF file');
+      return;
+    }
+
+    setPdfUploading(true);
+    setPdfSuccessData(null);
+    setPdfProgressStatus('Preparing PDF document...');
+
+    try {
+      const fileBase64 = await fileToBase64(pdfFile);
+      let answerKeyBase64 = null;
+      if (answerKeyFile) {
+        setPdfProgressStatus('Preparing answer key document...');
+        answerKeyBase64 = await fileToBase64(answerKeyFile);
+      }
+
+      setPdfProgressStatus('Analyzing PDF with AI Vision, extracting questions, options, & answers...');
+
+      const payload = {
+        file_base64: fileBase64,
+        file_name: pdfFile.name,
+        category: pdfCategory,
+        answer_key_base64: answerKeyBase64,
+        answer_key_name: answerKeyFile ? answerKeyFile.name : null,
+        default_marks: Number(pdfMarks) || 4,
+        difficulty: pdfDifficulty,
+        include_answers: Boolean(pdfIncludeAnswers),
+      };
+
+      const res = await questionBankService.uploadPdf(payload);
+      setPdfSuccessData(res);
+      toast.success(`Imported ${res.created} question(s) successfully!`);
+      await load();
+    } catch (err) {
+      const msg = err?.response?.data?.message || err?.response?.data?.error || err.message || 'PDF extraction failed. Please check the file.';
+      toast.error(msg);
+    } finally {
+      setPdfUploading(false);
+      setPdfProgressStatus('');
+    }
+  };
 
   const load = async () => {
     setLoading(true);
@@ -360,6 +448,14 @@ export default function AdminQuestionBank() {
         actions={(
           <>
             <button type="button" className="btn btn-primary" onClick={openAdd}>+ Add Question</button>
+            <button
+              type="button"
+              className="btn bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+              onClick={openPdfModal}
+            >
+              <FileUp className="h-4 w-4" />
+              <span>Upload PDF</span>
+            </button>
             <button type="button" className="btn btn-secondary" onClick={() => setCsvOpen(true)}>CSV Import</button>
             <button type="button" className="btn btn-secondary" onClick={() => exportCsv(false)} disabled={exporting}>
               Export {category}
@@ -449,7 +545,7 @@ export default function AdminQuestionBank() {
               },
             ]}
             rows={questions}
-            emptyMessage={`No questions in ${category}. Import via CSV or add manually.`}
+            emptyMessage={`No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
           />
         </div>
       )}
@@ -633,6 +729,326 @@ export default function AdminQuestionBank() {
             {uploading ? <Spinner className="h-4 w-4" /> : 'Import to bank'}
           </button>
         </div>
+      </Modal>
+
+      {/* Upload PDF Modal */}
+      <Modal
+        open={pdfOpen}
+        onClose={() => !pdfUploading && setPdfOpen(false)}
+        title="Upload Questions & Answers from PDF"
+        size="lg"
+      >
+        {pdfSuccessData ? (
+          <div className="space-y-5 p-2 text-center">
+            <div className="mx-auto h-14 w-14 rounded-2xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center justify-center">
+              <CheckCircle2 className="h-8 w-8" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="font-extrabold text-lg text-slate-900 dark:text-white">
+                Import Successful!
+              </h3>
+              <p className="text-xs text-slate-600 dark:text-slate-300 max-w-md mx-auto">
+                Successfully extracted and added <strong className="text-emerald-600 dark:text-emerald-400">{pdfSuccessData.created}</strong> question(s) with options, answers, and solutions into the Question Bank.
+              </p>
+            </div>
+
+            {pdfSuccessData.categories?.length > 0 && (
+              <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 text-left">
+                <span className="text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">
+                  Subjects Updated:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {pdfSuccessData.categories.map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => {
+                        setCategory(cat);
+                        setPdfOpen(false);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-blue-500/10 hover:bg-blue-500/20 text-blue-600 dark:text-blue-400 border border-blue-500/20 text-xs font-bold transition flex items-center gap-1.5 cursor-pointer"
+                    >
+                      <span>{cat}</span>
+                      <span className="text-[10px] bg-blue-600 text-white rounded-full px-1.5 py-0.2">View</span>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <div className="flex justify-center gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={openPdfModal}
+                className="px-5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-bold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer text-xs"
+              >
+                Upload Another PDF
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  if (pdfSuccessData.categories?.[0] && !categoriesList.includes(category)) {
+                    setCategory(pdfSuccessData.categories[0]);
+                  }
+                  setPdfOpen(false);
+                }}
+                className="px-6 py-2.5 rounded-xl font-extrabold text-white bg-blue-600 hover:bg-blue-500 shadow-lg shadow-blue-500/20 transition cursor-pointer text-xs"
+              >
+                Done & View Questions
+              </button>
+            </div>
+          </div>
+        ) : (
+          <form onSubmit={uploadPdf} className="space-y-4">
+            <div className="p-3 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/30 border border-indigo-200/80 dark:border-indigo-900/40 flex items-start gap-3">
+              <div className="h-8 w-8 rounded-xl bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shrink-0 mt-0.5">
+                <Sparkles className="h-4 w-4" />
+              </div>
+              <div className="text-xs">
+                <p className="font-extrabold text-indigo-950 dark:text-indigo-200">
+                  AI-Powered Multi-Subject PDF Question & Solution Extractor
+                </p>
+                <p className="text-indigo-800/80 dark:text-indigo-300/80 mt-0.5 leading-relaxed">
+                  Upload question papers (NEET, JEE, CBSE, etc.). Questions, options, diagrams, formulas, answer keys, and step-by-step solutions are automatically extracted and organized by subject.
+                </p>
+              </div>
+            </div>
+
+            {/* Target Subject Selector */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  Target Subject / Category
+                </label>
+                <span className="text-[11px] text-slate-500 dark:text-slate-400">
+                  Auto-detect separates questions into Physics, Chemistry, Biology, etc.
+                </span>
+              </div>
+              <CustomSelectDropdown
+                value={pdfCategory}
+                options={[
+                  { value: 'auto', label: '✨ Auto-Detect by Subject (Multi-Subject paper)' },
+                  ...categoriesList.map((c) => ({ value: c, label: `${c}` })),
+                ]}
+                onChange={(val) => setPdfCategory(val)}
+                disabled={pdfUploading}
+              />
+            </div>
+
+            {/* Question Paper PDF */}
+            <div>
+              <label className="text-xs font-bold text-slate-800 dark:text-slate-200 block mb-1.5">
+                Question Paper PDF <span className="text-rose-500">*</span>
+              </label>
+
+              <input
+                ref={pdfInputRef}
+                type="file"
+                accept=".pdf,application/pdf"
+                className="hidden"
+                disabled={pdfUploading}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) setPdfFile(f);
+                  e.target.value = '';
+                }}
+              />
+
+              {pdfFile ? (
+                <div className="flex items-center justify-between p-3 rounded-2xl border border-indigo-200 dark:border-indigo-900/60 bg-indigo-50/40 dark:bg-indigo-950/20">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="h-10 w-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center shrink-0">
+                      <FileText className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <p className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                        {pdfFile.name}
+                      </p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                        {formatBytes(pdfFile.size)} • Ready for AI extraction
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={pdfUploading}
+                    onClick={() => setPdfFile(null)}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
+                    title="Remove file"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <div
+                  onClick={() => !pdfUploading && pdfInputRef.current?.click()}
+                  className="border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-indigo-500 dark:hover:border-indigo-500 rounded-2xl p-6 text-center cursor-pointer transition bg-slate-50/50 dark:bg-slate-900/30 group"
+                >
+                  <div className="h-12 w-12 rounded-2xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mx-auto mb-2 group-hover:scale-110 transition-transform">
+                    <UploadCloud className="h-6 w-6" />
+                  </div>
+                  <p className="text-xs font-extrabold text-slate-800 dark:text-slate-200">
+                    Click to choose or drag & drop Question Paper PDF
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
+                    Accepts NEET, JEE, or any exam PDF with questions & answers (up to 20MB)
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Answer Key / Solutions PDF (Optional) */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
+                  Separate Answer Key / Detailed Solutions PDF <span className="text-slate-400 font-normal">(Optional)</span>
+                </label>
+              </div>
+
+              <input
+                ref={answerKeyInputRef}
+                type="file"
+                accept=".pdf,application/pdf"
+                className="hidden"
+                disabled={pdfUploading}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) setAnswerKeyFile(f);
+                  e.target.value = '';
+                }}
+              />
+
+              {answerKeyFile ? (
+                <div className="flex items-center justify-between p-3 rounded-2xl border border-emerald-200 dark:border-emerald-900/60 bg-emerald-50/40 dark:bg-emerald-950/20">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className="h-10 w-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center shrink-0">
+                      <FileText className="h-5 w-5" />
+                    </div>
+                    <div className="min-w-0 text-left">
+                      <p className="text-xs font-extrabold text-slate-900 dark:text-white truncate">
+                        {answerKeyFile.name}
+                      </p>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
+                        {formatBytes(answerKeyFile.size)} • Answer Key & Solutions
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={pdfUploading}
+                    onClick={() => setAnswerKeyFile(null)}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
+                    title="Remove file"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  disabled={pdfUploading}
+                  onClick={() => answerKeyInputRef.current?.click()}
+                  className="w-full py-2.5 px-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 hover:bg-slate-100 dark:hover:bg-slate-800/80 text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center justify-center gap-2 transition cursor-pointer"
+                >
+                  <FileUp className="h-3.5 w-3.5 text-slate-500" />
+                  <span>+ Attach Separate Answer Key or Solutions PDF</span>
+                </button>
+              )}
+            </div>
+
+            {/* Settings Row */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+              <div>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
+                  Default Marks
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  disabled={pdfUploading}
+                  className="input text-xs"
+                  value={pdfMarks}
+                  onChange={(e) => setPdfMarks(Number(e.target.value) || 4)}
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
+                  Default Difficulty
+                </label>
+                <CustomSelectDropdown
+                  value={pdfDifficulty}
+                  disabled={pdfUploading}
+                  options={[
+                    { value: 'easy', label: 'Easy' },
+                    { value: 'medium', label: 'Medium' },
+                    { value: 'hard', label: 'Hard' },
+                  ]}
+                  onChange={(val) => setPdfDifficulty(val)}
+                />
+              </div>
+
+              <div className="col-span-2 sm:col-span-1 flex items-end">
+                <label className="flex items-center gap-2 cursor-pointer pb-2.5">
+                  <input
+                    type="checkbox"
+                    checked={pdfIncludeAnswers}
+                    disabled={pdfUploading}
+                    onChange={(e) => setPdfIncludeAnswers(e.target.checked)}
+                    className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
+                  />
+                  <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    Extract Answers & Solutions
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Progress Box */}
+            {pdfUploading && (
+              <div className="p-4 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-900/60 space-y-2 animate-pulse">
+                <div className="flex items-center gap-3">
+                  <Spinner className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                  <p className="text-xs font-extrabold text-indigo-950 dark:text-indigo-200">
+                    {pdfProgressStatus || 'Extracting questions with AI Vision...'}
+                  </p>
+                </div>
+                <p className="text-[11px] text-indigo-700/80 dark:text-indigo-300/80 pl-8">
+                  Processing pages, formulas, diagrams, and answer keys. This may take 15–40 seconds depending on document length.
+                </p>
+              </div>
+            )}
+
+            <div className="flex justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                className="btn-secondary text-xs"
+                onClick={() => setPdfOpen(false)}
+                disabled={pdfUploading}
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="btn bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs flex items-center gap-2 shadow-md shadow-indigo-500/20"
+                disabled={pdfUploading || !pdfFile}
+              >
+                {pdfUploading ? (
+                  <>
+                    <Spinner className="h-4 w-4" />
+                    <span>Extracting...</span>
+                  </>
+                ) : (
+                  <>
+                    <FileUp className="h-4 w-4" />
+                    <span>Extract & Import Questions</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </form>
+        )}
       </Modal>
 
       {/* Delete Question Confirmation Modal */}

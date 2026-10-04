@@ -10,6 +10,7 @@ import {
   exportBankQuestions,
   bulkUploadBankQuestions,
   bulkImportToAssessment,
+  uploadPdfToQuestionBank,
 } from '../controllers/questionBankController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -22,6 +23,7 @@ router.use(authenticate, authorize('admin'));
 router.get('/export', exportBankQuestions);
 router.get('/categories', listCategories);
 router.get('/', listBankQuestions);
+router.post('/upload-pdf', uploadPdfToQuestionBank);
 router.post('/bulk', validate(bulkUploadSchema), bulkUploadBankQuestions);
 router.post('/bulk-import/:assessmentId', validate(bankBulkImportSchema), bulkImportToAssessment);
 router.post('/', createBankQuestion);
