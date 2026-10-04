@@ -595,6 +595,7 @@ export function predictNeetRank(scoreVal) {
       rank: 1,
       rank_range: '1–10',
       predicted_rank_range: '1–10',
+      rangeDisplay: '1–10',
       percentile: 99.99,
       minRank: 1,
       maxRank: 10,
@@ -613,6 +614,7 @@ export function predictNeetRank(scoreVal) {
         const fraction = span > 0 ? (bracket.maxScore - s) / span : 0;
         rankNumber = Math.round(bracket.minRank + fraction * (bracket.maxRank - bracket.minRank));
       }
+      rankNumber = Math.min(bracket.maxRank, Math.max(bracket.minRank, rankNumber));
 
       let percentile;
       if (s <= 0) {
@@ -626,6 +628,7 @@ export function predictNeetRank(scoreVal) {
         rank: rankNumber,
         rank_range: bracket.rangeDisplay,
         predicted_rank_range: bracket.rangeDisplay,
+        rangeDisplay: bracket.rangeDisplay,
         percentile,
         minRank: bracket.minRank,
         maxRank: bracket.maxRank,
@@ -637,6 +640,7 @@ export function predictNeetRank(scoreVal) {
     rank: 2000000,
     rank_range: 'Above 2,00,000',
     predicted_rank_range: 'Above 2,00,000',
+    rangeDisplay: 'Above 2,00,000',
     percentile: 0.00,
     minRank: 200001,
     maxRank: 2000000,

@@ -69,6 +69,7 @@ export function predictNeetRank(scoreVal) {
         const fraction = span > 0 ? (bracket.maxScore - s) / span : 0;
         rankNumber = Math.round(bracket.minRank + fraction * (bracket.maxRank - bracket.minRank));
       }
+      rankNumber = Math.min(bracket.maxRank, Math.max(bracket.minRank, rankNumber));
 
       let percentile;
       if (s <= 0) {

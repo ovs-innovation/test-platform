@@ -334,10 +334,26 @@ export default function ResultPage() {
     return predictNeetRank(score.marks_obtained);
   }, [isNeetExam, score?.marks_obtained]);
 
+  const exactRank = useMemo(() => {
+    if (rank != null && !isNaN(Number(rank)) && Number(rank) > 0) {
+      return Number(rank);
+    }
+    if (score?.rank != null && !isNaN(Number(score.rank)) && Number(score.rank) > 0) {
+      return Number(score.rank);
+    }
+    if (score?.rank_num != null && !isNaN(Number(score.rank_num)) && Number(score.rank_num) > 0) {
+      return Number(score.rank_num);
+    }
+    if (neetPrediction?.rank != null && !isNaN(Number(neetPrediction.rank))) {
+      return Number(neetPrediction.rank);
+    }
+    return null;
+  }, [rank, score?.rank, score?.rank_num, neetPrediction]);
+
   // For NEET exams, ranking is ALWAYS unlocked and based on official marks table
   const effectiveRankingAvailable = isNeetExam ? true : (rankingAvailable && rank != null && percentile != null);
   const effectiveRankDisplay = isNeetExam
-    ? (rankRangeFromData || (typeof rank === 'string' ? rank : null) || (neetPrediction ? neetPrediction.rangeDisplay : (rank ? `#${rank}` : '—')))
+    ? (exactRank != null ? `#${exactRank.toLocaleString('en-IN')}` : (typeof rank === 'string' && rank !== '—' ? rank : (rankRangeFromData || '—')))
     : (rank != null ? (typeof rank === 'number' ? `#${rank}` : rank) : '—');
   const effectivePercentile = isNeetExam
     ? (percentile != null && !isNaN(Number(percentile)) ? Number(percentile) : (neetPrediction ? neetPrediction.percentile : 0))
@@ -888,7 +904,9 @@ export default function ResultPage() {
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                           {isNeetExam
-                            ? 'All India Predicted Ranking · Based on NEET UG Score'
+                            ? (neetPrediction?.rangeDisplay || rankRangeFromData
+                                ? `All India Predicted Rank (Range: ${neetPrediction?.rangeDisplay || rankRangeFromData}) · Based on NEET UG Score`
+                                : 'All India Predicted Ranking · Based on NEET UG Score')
                             : rankingStatus === 'final'
                               ? 'Official final ranking · Assessment window closed'
                               : 'Provisional ranking · Submissions remain open'}
