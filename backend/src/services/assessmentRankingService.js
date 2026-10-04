@@ -1,4 +1,5 @@
 import { query } from '../config/db.js';
+import { isNeetTest, predictNeetRank } from '../utils/neetPattern.js';
 
 /**
  * Internal threshold for unlocking official assessment rank & percentile.
@@ -91,7 +92,12 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
   const numCandidateId = candidateId ? Number(candidateId) : null;
 
   try {
-    const isClosed = await isAssessmentClosed(numAssessmentId);
+    const [isClosed, aMetaRes] = await Promise.all([
+      isAssessmentClosed(numAssessmentId),
+      query('SELECT id, title, test_type, syllabus_text, subject FROM assessments WHERE id = $1', [numAssessmentId]).catch(() => ({ rows: [] }))
+    ]);
+    const assessmentMeta = aMetaRes.rows[0] || {};
+    const isNeet = isNeetTest(assessmentMeta);
 
     // Fetch all eligible first valid attempts for this assessment
     const eligibleQuery = `
@@ -132,6 +138,44 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
     const result = await query(eligibleQuery, [numAssessmentId]);
     const eligibleRows = result.rows || [];
     const totalParticipants = eligibleRows.length;
+
+    // Find candidate's official first valid attempt
+    const candidateRow = numCandidateId
+      ? eligibleRows.find((r) => Number(r.candidate_id) === numCandidateId)
+      : null;
+
+    // If this is a NEET assessment, rank and percentile are governed by the NEET Rank Predictor table
+    if (isNeet) {
+      let rank = null;
+      let rankRange = null;
+      let percentile = null;
+      let studentScore = null;
+
+      if (candidateRow) {
+        studentScore = Number(candidateRow.marks_obtained);
+        const neetPrediction = predictNeetRank(studentScore);
+        rank = neetPrediction.rank;
+        rankRange = neetPrediction.rank_range;
+        percentile = neetPrediction.percentile;
+      }
+
+      return {
+        total_participants: totalParticipants,
+        totalParticipants,
+        ranking_available: true,
+        rankingAvailable: true,
+        ranking_status: 'predicted',
+        rankingStatus: 'predicted',
+        rank,
+        rank_range: rankRange,
+        rankRange: rankRange,
+        predicted_rank_range: rankRange,
+        percentile,
+        student_score: studentScore,
+        is_neet: true,
+      };
+    }
+
     const thresholdMet = totalParticipants >= PARTICIPANT_THRESHOLD;
 
     // Determine ranking status
@@ -141,11 +185,6 @@ export async function getAssessmentRankingData(assessmentId, candidateId = null)
     } else {
       rankingStatus = isClosed ? 'unavailable' : 'pending';
     }
-
-    // Find candidate's official first valid attempt
-    const candidateRow = numCandidateId
-      ? eligibleRows.find((r) => Number(r.candidate_id) === numCandidateId)
-      : null;
 
     let rank = null;
     let percentile = null;
@@ -206,6 +245,35 @@ export async function syncAssessmentRankings(assessmentId) {
   if (!numId || isNaN(numId) || numId <= 0) return null;
 
   try {
+    const aRes = await query(
+      'SELECT id, title, test_type, syllabus_text, subject FROM assessments WHERE id = $1',
+      [numId]
+    ).catch(() => ({ rows: [] }));
+    const assessmentMeta = aRes.rows[0] || {};
+    const isNeet = isNeetTest(assessmentMeta);
+
+    if (isNeet) {
+      const scoreRows = await query(
+        `SELECT s.id, s.attempt_id, s.marks_obtained
+         FROM scores s
+         JOIN attempts a ON a.id = s.attempt_id
+         WHERE a.assessment_id = $1`,
+        [numId]
+      );
+      for (const row of (scoreRows.rows || [])) {
+        if (row.marks_obtained != null) {
+          const prediction = predictNeetRank(row.marks_obtained);
+          await query(
+            `UPDATE scores 
+             SET rank = $1, percentile = $2, rank_range = $3, predicted_rank_range = $4 
+             WHERE id = $5`,
+            [prediction.rank, prediction.percentile, prediction.rangeDisplay || prediction.rank_range, prediction.predicted_rank_range, row.id]
+          );
+        }
+      }
+      return;
+    }
+
     const updateQuery = `
       WITH ranked_valid_attempts AS (
         SELECT 
@@ -272,3 +340,4 @@ export async function syncAssessmentRankings(assessmentId) {
     console.error(`[AssessmentRankingService] syncAssessmentRankings failed for assessment ${assessmentId}:`, err);
   }
 }
+

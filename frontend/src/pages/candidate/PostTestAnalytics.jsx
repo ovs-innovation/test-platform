@@ -214,7 +214,7 @@ export default function PostTestAnalytics() {
                 <Trophy className="w-4 h-4 text-amber-400" />
               </div>
               <p className="text-2xl sm:text-3xl font-black text-amber-300 tabular-nums">#{summary.all_india_rank || 1}</p>
-              <p className="text-[10px] text-blue-200/80 font-medium">Out of {summary.total_participants || 1} students</p>
+              <p className="text-[10px] text-blue-200/80 font-medium">{summary.rank_range ? `Predicted Range: ${summary.rank_range}` : 'National Standing'}</p>
             </div>
 
             {/* Percentile Card */}

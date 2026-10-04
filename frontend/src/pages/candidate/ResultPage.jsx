@@ -37,6 +37,7 @@ import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx'
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 import { useTheme } from '../../context/ThemeContext.jsx';
+import { predictNeetRank } from '../../lib/neetRankPredictor.js';
 
 export default function ResultPage() {
   const { attemptId } = useParams();
@@ -325,6 +326,23 @@ export default function ResultPage() {
     if (solutions && (solutions.length === 200 || solutions.length === 180)) return true;
     return Boolean(solutions?.some((q) => q.is_neet || q.section === 'B' || q.is_section_b));
   }, [data, assessment, solutions]);
+
+  const rankRangeFromData = data?.rank_range ?? data?.rankRange ?? score?.rank_range ?? score?.rankRange ?? null;
+
+  const neetPrediction = useMemo(() => {
+    if (!isNeetExam || score?.marks_obtained == null) return null;
+    return predictNeetRank(score.marks_obtained);
+  }, [isNeetExam, score?.marks_obtained]);
+
+  // For NEET exams, ranking is ALWAYS unlocked and based on official marks table
+  const effectiveRankingAvailable = isNeetExam ? true : (rankingAvailable && rank != null && percentile != null);
+  const effectiveRankDisplay = isNeetExam
+    ? (rankRangeFromData || (typeof rank === 'string' ? rank : null) || (neetPrediction ? neetPrediction.rangeDisplay : (rank ? `#${rank}` : '—')))
+    : (rank != null ? (typeof rank === 'number' ? `#${rank}` : rank) : '—');
+  const effectivePercentile = isNeetExam
+    ? (percentile != null && !isNaN(Number(percentile)) ? Number(percentile) : (neetPrediction ? neetPrediction.percentile : 0))
+    : percentile;
+
 
   const displayTotalMarks = useMemo(() => {
     if (isNeetExam) return 720;
@@ -842,51 +860,44 @@ export default function ResultPage() {
                     </p>
                   </div>
 
-                  {/* Participant Count, Rank & Percentile Section */}
+                  {/* Rank & Percentile Section */}
                   <div className="pt-2 flex flex-col items-center justify-center gap-2.5">
-                    {/* When ranking is unlocked (>= 50 participants) */}
-                    {rankingAvailable && rank != null && percentile != null ? (
+                    {/* When ranking is unlocked or predicted */}
+                    {effectiveRankingAvailable && effectiveRankDisplay && effectivePercentile != null ? (
                       <div className="flex flex-col items-center gap-2">
                         <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
-                            <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                            Total Participants: {totalParticipants}
-                          </span>
-
                           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-500/10 text-blue-700 dark:text-blue-300 border border-blue-500/20 shadow-2xs">
                             <Award className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                            Your Rank: {rank} / {totalParticipants}
+                            Your Rank: {effectiveRankDisplay}
                           </span>
 
                           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20 shadow-2xs">
                             <Zap className="w-4 h-4 text-indigo-600 dark:text-indigo-400" />
-                            Your Percentile: {Number(percentile).toFixed(2)}
+                            Your Percentile: {Number(effectivePercentile).toFixed(2)}
                           </span>
 
                           <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-xl text-[11px] font-extrabold uppercase tracking-wider ${
-                            rankingStatus === 'final'
-                              ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
-                              : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
+                            isNeetExam
+                              ? 'bg-purple-500/15 text-purple-700 dark:text-purple-300 border border-purple-500/30'
+                              : rankingStatus === 'final'
+                                ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 border border-emerald-500/30'
+                                : 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border border-amber-500/30'
                           }`}>
-                            {rankingStatus === 'final' ? 'Final' : 'Provisional'}
+                            {isNeetExam ? 'All India Rank' : rankingStatus === 'final' ? 'Final' : 'Provisional'}
                           </span>
                         </div>
                         <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                          {rankingStatus === 'final'
-                            ? 'Official final ranking · Assessment window closed'
-                            : 'Provisional ranking · Submissions remain open'}
+                          {isNeetExam
+                            ? 'All India Predicted Ranking · Based on NEET UG Score'
+                            : rankingStatus === 'final'
+                              ? 'Official final ranking · Assessment window closed'
+                              : 'Provisional ranking · Submissions remain open'}
                         </p>
                       </div>
                     ) : rankingStatus === 'unavailable' ? (
                       /* When test closed below internal threshold */
                       <div className="flex flex-col items-center gap-2">
                         <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
-                          {totalParticipants > 0 && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
-                              <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                              Total Participants: {totalParticipants}
-                            </span>
-                          )}
                           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700 shadow-2xs">
                             <Award className="w-4 h-4 text-slate-400" />
                             Rank: Unavailable
@@ -904,12 +915,6 @@ export default function ResultPage() {
                       /* When threshold not yet reached (< 50) and test is open / pending */
                       <div className="flex flex-col items-center gap-2">
                         <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-xs sm:text-sm font-bold">
-                          {totalParticipants > 0 && (
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 shadow-2xs">
-                              <Users className="w-4 h-4 text-slate-500 dark:text-slate-400" />
-                              Total Participants: {totalParticipants}
-                            </span>
-                          )}
                           <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 text-amber-700 dark:text-amber-300 border border-amber-500/20 shadow-2xs">
                             <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                             Rank: Pending

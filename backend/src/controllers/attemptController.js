@@ -4,7 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
-import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS } from '../utils/neetPattern.js';
+import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS, predictNeetRank } from '../utils/neetPattern.js';
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 import { getTopperComparison } from '../services/topperComparisonService.js';
@@ -355,9 +355,20 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
       });
     }
 
+    const isNeetSubmit = isNeetTest(assessment, questions);
+    let initRank = null;
+    let initPercentile = null;
+    let initRankRange = null;
+    if (isNeetSubmit) {
+      const pred = predictNeetRank(marksObtained);
+      initRank = pred.rank;
+      initPercentile = pred.percentile;
+      initRankRange = pred.rank_range;
+    }
+
     const scoreRes = await client.query(
-      `INSERT INTO scores (attempt_id, marks_obtained, total_marks, percentage, passed, correct_count, wrong_count, unattempted_count)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
+      `INSERT INTO scores (attempt_id, marks_obtained, total_marks, percentage, passed, correct_count, wrong_count, unattempted_count, rank, percentile, rank_range, predicted_rank_range)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
        ON CONFLICT (attempt_id) DO UPDATE
          SET marks_obtained = EXCLUDED.marks_obtained,
              total_marks = EXCLUDED.total_marks,
@@ -365,9 +376,13 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
              passed = EXCLUDED.passed,
              correct_count = EXCLUDED.correct_count,
              wrong_count = EXCLUDED.wrong_count,
-             unattempted_count = EXCLUDED.unattempted_count
+             unattempted_count = EXCLUDED.unattempted_count,
+             rank = COALESCE(EXCLUDED.rank, scores.rank),
+             percentile = COALESCE(EXCLUDED.percentile, scores.percentile),
+             rank_range = COALESCE(EXCLUDED.rank_range, scores.rank_range),
+             predicted_rank_range = COALESCE(EXCLUDED.predicted_rank_range, scores.predicted_rank_range)
        RETURNING *`,
-      [attemptId, marksObtained, totalMarks, percentage, passed, correctCount, wrongCount, unattemptedCount]
+      [attemptId, marksObtained, totalMarks, percentage, passed, correctCount, wrongCount, unattemptedCount, initRank, initPercentile, initRankRange, initRankRange]
     );
 
     return {
@@ -1165,6 +1180,21 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     }
   }
 
+  if (isNeetAssessment) {
+    const effectiveMarks = rawScore?.marks_obtained ?? formattedReport?.overall?.marks ?? 0;
+    const neetPred = predictNeetRank(effectiveMarks);
+    rankingData.ranking_available = true;
+    rankingData.rankingAvailable = true;
+    rankingData.ranking_status = 'predicted';
+    rankingData.rankingStatus = 'predicted';
+    rankingData.rank = neetPred.rank;
+    rankingData.rank_range = neetPred.rank_range;
+    rankingData.rankRange = neetPred.rank_range;
+    rankingData.predicted_rank_range = neetPred.predicted_rank_range;
+    rankingData.percentile = neetPred.percentile;
+    rankingData.is_neet = true;
+  }
+
   const enhancedScore = rawScore ? {
     ...rawScore,
     total_participants: rankingData.total_participants,
@@ -1173,8 +1203,13 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     rankingAvailable: rankingData.ranking_available,
     ranking_status: rankingData.ranking_status,
     rankingStatus: rankingData.ranking_status,
-    rank: rankingData.rank,
+    rank: isNeetAssessment ? (rankingData.rank_range || rankingData.rank) : rankingData.rank,
+    rank_num: rankingData.rank,
+    rank_range: rankingData.rank_range,
+    rankRange: rankingData.rank_range,
+    predicted_rank_range: rankingData.predicted_rank_range,
     percentile: rankingData.percentile,
+    is_neet: Boolean(isNeetAssessment),
   } : null;
 
   let topperComparison = null;
@@ -1224,8 +1259,13 @@ export const getAttemptResult = asyncHandler(async (req, res) => {
     rankingAvailable: rankingData.ranking_available,
     ranking_status: rankingData.ranking_status,
     rankingStatus: rankingData.ranking_status,
-    rank: rankingData.rank,
+    rank: isNeetAssessment ? (rankingData.rank_range || rankingData.rank) : rankingData.rank,
+    rank_num: rankingData.rank,
+    rank_range: rankingData.rank_range,
+    rankRange: rankingData.rank_range,
+    predicted_rank_range: rankingData.predicted_rank_range,
     percentile: rankingData.percentile,
+    is_neet: Boolean(isNeetAssessment),
     solutions,
     formattedReport,
     ...formattedReport,

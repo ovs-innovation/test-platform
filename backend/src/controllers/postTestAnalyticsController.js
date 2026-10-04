@@ -1,4 +1,5 @@
 import { query } from '../config/db.js';
+import { isNeetTest, predictNeetRank } from '../utils/neetPattern.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { generateExamMentorStrategyReport } from '../services/geminiService.js';
@@ -191,8 +192,16 @@ export const getPostTestAnalytics = asyncHandler(async (req, res) => {
     }
   }
 
-  // Enforce internal 50-participant threshold across all rankings
-  if (totalParticipantsCount < 50) {
+  // If NEET assessment, apply standard NEET All India Rank prediction rules
+  const isNeetAnalytics = isNeetTest(test);
+  if (isNeetAnalytics) {
+    const neetPred = predictNeetRank(currentAttemptRank.total_score);
+    currentAttemptRank.air = neetPred.rank;
+    currentAttemptRank.rank_range = neetPred.rank_range;
+    currentAttemptRank.percentile = neetPred.percentile;
+    currentAttemptRank.ranking_available = true;
+    currentAttemptRank.is_neet = true;
+  } else if (totalParticipantsCount < 50) {
     currentAttemptRank.air = null;
     currentAttemptRank.state_rank = null;
     currentAttemptRank.city_rank = null;
