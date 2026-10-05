@@ -12,7 +12,7 @@ assessment engine: timed CBT mocks, test series, payments, admin console, and st
 | **Local frontend** | http://localhost:5173 |
 | **Local backend** | http://localhost:5000/api |
 
-**Admin login (after seed):** `admin@assess.io` / `Admin@12345`
+
 
 ---
 
@@ -182,12 +182,7 @@ The Vite dev server proxies `/api` to `http://localhost:5000`, so no extra confi
 
 ---
 
-## Demo Accounts (after `npm run db:seed`)
 
-| Role      | Email                 | Password       |
-|-----------|-----------------------|----------------|
-| Admin     | admin@assess.io       | Admin@12345    |
-| Candidate | candidate@assess.io   | Candidate@123  |
 
 A sample published "JavaScript Fundamentals" assessment is created so you can take a test immediately.
 
@@ -227,4 +222,3 @@ computes the percentage, and stores a `scores` row with `passed = marks_obtained
 - Client-side anti-cheat is a deterrent, not a guarantee — pair it with the server-side violation
   log and human review for high-stakes assessments.
 
-See [`docs/API.md`](docs/API.md) for the full endpoint reference.
