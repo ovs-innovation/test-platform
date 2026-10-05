@@ -29,7 +29,13 @@ function formatSeconds(seconds) {
   return `${s}s`;
 }
 
-export default function CompareWithTopper({ data, studentStats = null, className = '' }) {
+export default function CompareWithTopper({
+  data,
+  studentStats = null,
+  className = '',
+  hasStudentAttempt = true,
+  assessmentId = null,
+}) {
   const [showSubjectDetails, setShowSubjectDetails] = useState(false);
 
   // If no data is provided, return null or fallback
@@ -63,6 +69,12 @@ export default function CompareWithTopper({ data, studentStats = null, className
     rank: studentStats?.rank ?? null,
   };
 
+  const hasAttempt = Boolean(
+    hasStudentAttempt !== false &&
+    comparison.has_student_attempt !== false &&
+    (isTopper || comparison.student?.rank != null || studentStats?.marks_obtained !== undefined || (comparison.student?.score && comparison.student.score > 0))
+  );
+
   const delta = comparison.delta || {
     score_diff: isTopper ? 0 : Number((student.score - topper.score).toFixed(1)),
     accuracy_diff: isTopper ? 0 : Number((student.accuracy - topper.accuracy).toFixed(1)),
@@ -94,16 +106,22 @@ export default function CompareWithTopper({ data, studentStats = null, className
                     <Sparkles className="w-3 h-3 text-amber-500" />
                     Top Scorer · Rank 1
                   </span>
-                ) : (
+                ) : hasAttempt ? (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-slate-600 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700">
                     AIR 1 Benchmark
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold text-amber-700 dark:text-amber-300 bg-amber-500/10 border border-amber-500/20">
+                    Topper Benchmark
                   </span>
                 )}
               </div>
               <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">
                 {isTopper
                   ? 'Congratulations! You achieved the highest score in this test and set the benchmark performance.'
-                  : 'Evaluate your score, speed, and accuracy against the top ranker to identify key growth areas.'}
+                  : hasAttempt
+                  ? 'Evaluate your score, speed, and accuracy against the top ranker to identify key growth areas.'
+                  : 'Review the topper\'s score, speed, and accuracy targets. Attempt this test to see your direct performance comparison!'}
               </p>
             </div>
           </div>
@@ -116,10 +134,25 @@ export default function CompareWithTopper({ data, studentStats = null, className
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
-              <span className="text-slate-600 dark:text-slate-300">Topper</span>
+              <span className="text-slate-600 dark:text-slate-300">{topper.name || 'Topper'}</span>
             </div>
           </div>
         </div>
+
+        {/* Informative banner if student hasn't taken this test */}
+        {!hasAttempt && (
+          <div className="mt-4 p-3.5 rounded-2xl border border-blue-200/80 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/40 flex items-center gap-3">
+            <div className="w-8 h-8 rounded-xl bg-blue-500/15 text-blue-600 dark:text-blue-400 flex items-center justify-center shrink-0">
+              <Sparkles className="w-4 h-4 text-blue-500" />
+            </div>
+            <div className="text-xs">
+              <span className="font-bold text-slate-800 dark:text-slate-200">You haven't attempted this assessment yet. </span>
+              <span className="text-slate-500 dark:text-slate-400">
+                The benchmark values below represent the Rank 1 performer. Complete this test to unlock your live score, pacing, and subject comparison!
+              </span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* CORE 3-METRIC COMPARISON GRID */}
@@ -135,6 +168,10 @@ export default function CompareWithTopper({ data, studentStats = null, className
               {isTopper ? (
                 <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                   Highest Marks
+                </span>
+              ) : !hasAttempt ? (
+                <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
+                  Benchmark Target
                 </span>
               ) : delta.score_diff < 0 ? (
                 <span className="inline-flex items-center text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
@@ -153,15 +190,30 @@ export default function CompareWithTopper({ data, studentStats = null, className
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
                 <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Your Score</span>
-                <div className="mt-1 flex items-baseline gap-1">
-                  <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
-                    {student.score}
-                  </span>
-                  <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">/ {student.max_marks}</span>
-                </div>
-                <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 block mt-0.5">
-                  {student.percentage}%
-                </span>
+                {hasAttempt ? (
+                  <>
+                    <div className="mt-1 flex items-baseline gap-1">
+                      <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
+                        {student.score}
+                      </span>
+                      <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">/ {student.max_marks}</span>
+                    </div>
+                    <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 block mt-0.5">
+                      {student.percentage}%
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-1">
+                      <span className="text-base font-extrabold text-slate-400 dark:text-slate-500 italic">
+                        Not Taken
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                      Max: {topper.max_marks} pts
+                    </span>
+                  </>
+                )}
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
@@ -182,12 +234,16 @@ export default function CompareWithTopper({ data, studentStats = null, className
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 <span>Score Ratio</span>
-                <span>{topper.score > 0 ? Math.round((student.score / topper.score) * 100) : 100}% of Topper</span>
+                <span>
+                  {hasAttempt
+                    ? `${topper.score > 0 ? Math.round((student.score / topper.score) * 100) : 100}% of Topper`
+                    : 'Attempt test to view ratio'}
+                </span>
               </div>
               <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden relative">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-500"
-                  style={{ width: `${Math.min(100, Math.max(0, (student.score / (student.max_marks || 300)) * 100))}%` }}
+                  style={{ width: `${hasAttempt ? Math.min(100, Math.max(0, (student.score / (student.max_marks || 300)) * 100)) : 0}%` }}
                 />
               </div>
             </div>
@@ -202,7 +258,7 @@ export default function CompareWithTopper({ data, studentStats = null, className
               </div>
               <span className="inline-flex items-center text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-purple-500/10 text-purple-700 dark:text-purple-400 border border-purple-500/20">
                 <Gauge className="w-3 h-3 mr-1" />
-                {delta.time_diff_formatted}
+                {hasAttempt ? delta.time_diff_formatted : 'Target Pace'}
               </span>
             </div>
 
@@ -210,14 +266,29 @@ export default function CompareWithTopper({ data, studentStats = null, className
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
                 <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Your Time</span>
-                <div className="mt-1">
-                  <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
-                    {student.time_formatted || '—'}
-                  </span>
-                </div>
-                <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mt-0.5">
-                  Avg {student.avg_time_per_question_formatted || '—'}/Q
-                </span>
+                {hasAttempt ? (
+                  <>
+                    <div className="mt-1">
+                      <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
+                        {student.time_formatted || '—'}
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 block mt-0.5">
+                      Avg {student.avg_time_per_question_formatted || '—'}/Q
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-1">
+                      <span className="text-base font-extrabold text-slate-400 dark:text-slate-500 italic">
+                        —
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                      Not Attempted
+                    </span>
+                  </>
+                )}
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
@@ -236,7 +307,7 @@ export default function CompareWithTopper({ data, studentStats = null, className
             {/* Speed Pacing Summary */}
             <div className="p-2.5 rounded-xl bg-white dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
               <p className="text-[11px] font-medium text-slate-600 dark:text-slate-300 leading-snug">
-                {delta.speed_summary}
+                {hasAttempt ? delta.speed_summary : `Topper completed test in ${topper.time_formatted || '—'} (${topper.avg_time_per_question_formatted || '—'}/question pace)`}
               </p>
             </div>
           </div>
@@ -251,6 +322,10 @@ export default function CompareWithTopper({ data, studentStats = null, className
               {isTopper ? (
                 <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                   Peak Accuracy
+                </span>
+              ) : !hasAttempt ? (
+                <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                  Benchmark Accuracy
                 </span>
               ) : delta.accuracy_diff < 0 ? (
                 <span className="inline-flex items-center text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-amber-500/10 text-amber-700 dark:text-amber-400 border border-amber-500/20">
@@ -269,14 +344,29 @@ export default function CompareWithTopper({ data, studentStats = null, className
             <div className="grid grid-cols-2 gap-3 pt-1">
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
                 <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block">Your Accuracy</span>
-                <div className="mt-1">
-                  <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
-                    {student.accuracy}%
-                  </span>
-                </div>
-                <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 block mt-0.5">
-                  {student.correct_count} Correct
-                </span>
+                {hasAttempt ? (
+                  <>
+                    <div className="mt-1">
+                      <span className="text-2xl font-black text-slate-900 dark:text-white tabular-nums">
+                        {student.accuracy}%
+                      </span>
+                    </div>
+                    <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 block mt-0.5">
+                      {student.correct_count} Correct
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <div className="mt-1">
+                      <span className="text-base font-extrabold text-slate-400 dark:text-slate-500 italic">
+                        —
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500 block mt-0.5">
+                      Not Attempted
+                    </span>
+                  </>
+                )}
               </div>
 
               <div className="p-3 rounded-xl bg-white dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
@@ -296,12 +386,12 @@ export default function CompareWithTopper({ data, studentStats = null, className
             <div className="space-y-1.5 pt-1">
               <div className="flex justify-between text-[11px] font-medium text-slate-500 dark:text-slate-400">
                 <span>Precision Rate</span>
-                <span>{student.accuracy}% of attempts</span>
+                <span>{hasAttempt ? `${student.accuracy}% of attempts` : 'Take test to view'}</span>
               </div>
               <div className="w-full h-2.5 rounded-full bg-slate-200 dark:bg-slate-800 overflow-hidden relative">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-500"
-                  style={{ width: `${Math.min(100, Math.max(0, student.accuracy))}%` }}
+                  style={{ width: `${hasAttempt ? Math.min(100, Math.max(0, student.accuracy)) : 0}%` }}
                 />
               </div>
             </div>
@@ -348,24 +438,36 @@ export default function CompareWithTopper({ data, studentStats = null, className
                             {sub.subject}
                           </td>
                           <td className="p-3 text-center font-bold tabular-nums">
-                            {sub.student_score} <span className="text-[10px] text-slate-400">/ {sub.max_marks}</span>
+                            {hasAttempt ? (
+                              <>{sub.student_score} <span className="text-[10px] text-slate-400">/ {sub.max_marks}</span></>
+                            ) : (
+                              <span className="text-slate-400">—</span>
+                            )}
                           </td>
                           <td className="p-3 text-center font-bold text-amber-600 dark:text-amber-400 tabular-nums">
                             {sub.topper_score} <span className="text-[10px] text-slate-400">/ {sub.max_marks}</span>
                           </td>
                           <td className="p-3 text-center tabular-nums">
-                            <span className="font-semibold">{sub.student_accuracy}%</span>
+                            {hasAttempt ? (
+                              <span className="font-semibold">{sub.student_accuracy}%</span>
+                            ) : (
+                              <span className="text-slate-400">—</span>
+                            )}
                           </td>
                           <td className="p-3 text-center tabular-nums text-amber-600 dark:text-amber-400">
                             <span className="font-semibold">{sub.topper_accuracy}%</span>
                           </td>
                           <td className="p-3 pr-4 text-right tabular-nums">
-                            {diff === 0 ? (
-                              <span className="text-slate-400 font-medium">On Par</span>
-                            ) : diff > 0 ? (
-                              <span className="text-emerald-600 dark:text-emerald-400 font-bold">+{diff}</span>
+                            {hasAttempt ? (
+                              diff === 0 ? (
+                                <span className="text-slate-400 font-medium">On Par</span>
+                              ) : diff > 0 ? (
+                                <span className="text-emerald-600 dark:text-emerald-400 font-bold">+{diff}</span>
+                              ) : (
+                                <span className="text-amber-600 dark:text-amber-400 font-bold">{diff}</span>
+                              )
                             ) : (
-                              <span className="text-amber-600 dark:text-amber-400 font-bold">{diff}</span>
+                              <span className="text-slate-400 font-medium">—</span>
                             )}
                           </td>
                         </tr>

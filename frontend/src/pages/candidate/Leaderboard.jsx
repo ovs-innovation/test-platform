@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PageHeader } from '../../components/ui.jsx';
 import { Trophy, Award, Search, Sparkles, ChevronDown, Check, FileText } from 'lucide-react';
+import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx';
 
 function CustomAssessmentDropdown({ assessments, value, onChange }) {
   const [open, setOpen] = useState(false);
@@ -127,11 +128,11 @@ export default function Leaderboard() {
     }
   }, []);
 
-  const loadLeaderboard = useCallback(async (id) => {
+  const loadLeaderboard = useCallback(async (id, force = false) => {
     setState('loading');
     try {
       const params = id ? { assessment_id: id } : {};
-      const result = await studentService.leaderboard(params);
+      const result = await studentService.leaderboard(params, force);
       setData(result);
       if (result.assessment_id) {
         setAssessmentId(String(result.assessment_id));
@@ -152,7 +153,7 @@ export default function Leaderboard() {
   const handleAssessmentChange = (id) => {
     setAssessmentId(String(id));
     setSearchQuery('');
-    loadLeaderboard(id || undefined);
+    loadLeaderboard(id || undefined, true);
   };
 
   const rows = data?.leaderboard || [];
@@ -421,6 +422,18 @@ export default function Leaderboard() {
               </table>
             </div>
           </div>
+
+          {/* 4. COMPARE WITH TOPPER FEATURE */}
+          {(data?.topper_comparison || data?.topperComparison) && (
+            <div className="pt-2">
+              <CompareWithTopper
+                data={data?.topper_comparison || data?.topperComparison}
+                studentStats={data?.student_stats}
+                hasStudentAttempt={data?.your_rank != null || Boolean(data?.has_student_attempt) || Boolean(data?.topper_comparison?.has_student_attempt)}
+                assessmentId={assessmentId}
+              />
+            </div>
+          )}
         </>
       )}
     </div>

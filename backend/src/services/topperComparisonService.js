@@ -95,7 +95,7 @@ export async function getTopperComparison({
      FROM attempts a
      JOIN scores s ON s.attempt_id = a.id
      JOIN users u ON u.id = a.candidate_id
-     WHERE a.assessment_id = $1 AND a.submitted_at IS NOT NULL
+     WHERE a.assessment_id = $1 AND (a.submitted_at IS NOT NULL OR a.status IN ('submitted', 'auto_submitted'))
      ORDER BY s.marks_obtained DESC, a.duration_seconds ASC, a.submitted_at ASC
      LIMIT 1`,
     [effectiveId, testInfo.max_marks]
@@ -132,6 +132,10 @@ export async function getTopperComparison({
     topper = attRow || testAttRow || null;
   }
 
+  if (topper?.total_marks) {
+    testInfo.max_marks = Number(topper.total_marks) || testInfo.max_marks;
+  }
+
   // 3. Current Student metrics
   let student = currentStudentStats ? { ...currentStudentStats } : null;
 
@@ -160,18 +164,25 @@ export async function getTopperComparison({
         };
       }
     } else if (candidateId) {
-      const stuTestAttRes = await query(
-        `SELECT ta.id AS attempt_id, ta.student_id AS candidate_id,
-                COALESCE(ta.time_taken_seconds, (ta.duration_minutes * 60), 0) AS duration_seconds,
-                ta.score AS marks_obtained, ta.max_marks AS total_marks, ta.percentage,
-                ta.correct_count, ta.incorrect_count AS wrong_count, ta.unattempted_count
-         FROM test_attempts ta
-         WHERE (ta.test_id = $1 OR ta.assessment_id = $1) AND ta.student_id = $2
-         ORDER BY ta.submitted_at DESC LIMIT 1`,
-        [effectiveId, candidateId]
+      // 1. Try attempts + scores (standard for assessments)
+      const stuAttRes = await query(
+        `SELECT a.id AS attempt_id, a.candidate_id, COALESCE(a.duration_seconds, 0) AS duration_seconds,
+                COALESCE(s.marks_obtained, 0) AS marks_obtained,
+                COALESCE(s.total_marks, $2) AS total_marks,
+                COALESCE(s.percentage, 0) AS percentage,
+                COALESCE(s.correct_count, 0) AS correct_count,
+                COALESCE(s.wrong_count, 0) AS wrong_count,
+                COALESCE(s.unattempted_count, 0) AS unattempted_count
+         FROM attempts a
+         LEFT JOIN scores s ON s.attempt_id = a.id
+         WHERE a.assessment_id = $1 AND a.candidate_id = $3
+           AND (a.submitted_at IS NOT NULL OR a.status IN ('submitted', 'auto_submitted'))
+         ORDER BY s.marks_obtained DESC, a.submitted_at DESC LIMIT 1`,
+        [effectiveId, testInfo.max_marks, candidateId]
       ).catch(() => ({ rowCount: 0, rows: [] }));
-      if (stuTestAttRes.rowCount > 0) {
-        const sr = stuTestAttRes.rows[0];
+
+      if (stuAttRes.rowCount > 0) {
+        const sr = stuAttRes.rows[0];
         student = {
           attempt_id: sr.attempt_id,
           candidate_id: sr.candidate_id,
@@ -183,8 +194,40 @@ export async function getTopperComparison({
           wrong_count: Number(sr.wrong_count) || 0,
           unattempted_count: Number(sr.unattempted_count) || 0,
         };
+      } else {
+        const stuTestAttRes = await query(
+          `SELECT ta.id AS attempt_id, ta.student_id AS candidate_id,
+                  COALESCE(ta.time_taken_seconds, (ta.duration_minutes * 60), 0) AS duration_seconds,
+                  ta.score AS marks_obtained, ta.max_marks AS total_marks, ta.percentage,
+                  ta.correct_count, ta.incorrect_count AS wrong_count, ta.unattempted_count
+           FROM test_attempts ta
+           WHERE (ta.test_id = $1 OR ta.assessment_id = $1) AND ta.student_id = $2
+           ORDER BY ta.submitted_at DESC LIMIT 1`,
+          [effectiveId, candidateId]
+        ).catch(() => ({ rowCount: 0, rows: [] }));
+        if (stuTestAttRes.rowCount > 0) {
+          const sr = stuTestAttRes.rows[0];
+          student = {
+            attempt_id: sr.attempt_id,
+            candidate_id: sr.candidate_id,
+            marks_obtained: Number(sr.marks_obtained) || 0,
+            total_marks: Number(sr.total_marks) || testInfo.max_marks,
+            percentage: Number(sr.percentage) || 0,
+            duration_seconds: Number(sr.duration_seconds) || 0,
+            correct_count: Number(sr.correct_count) || 0,
+            wrong_count: Number(sr.wrong_count) || 0,
+            unattempted_count: Number(sr.unattempted_count) || 0,
+          };
+        }
       }
     }
+  }
+
+  const hasStudentAttempt = Boolean(student && (student.attempt_id || student.marks_obtained !== undefined));
+
+  // If no rankers or attempts found at all, return null
+  if (!topper && !student) {
+    return null;
   }
 
   const currentCandidateId = Number(candidateId || student?.candidate_id);
@@ -381,9 +424,12 @@ export async function getTopperComparison({
   } catch (_) {}
 
   return {
+    has_student_attempt: hasStudentAttempt,
     is_topper: isTopper,
     topper: {
-      name: isTopper ? 'You (AIR 1)' : 'Topper (Rank 1)',
+      name: isTopper
+        ? 'You (AIR 1)'
+        : (topper?.candidate_name ? `${topper.candidate_name} (Rank 1)` : 'Topper (Rank 1)'),
       score: topScore,
       max_marks: maxMarks,
       percentage: Number(((topScore / maxMarks) * 100).toFixed(1)),

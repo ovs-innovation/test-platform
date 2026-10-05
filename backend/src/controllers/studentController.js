@@ -4,6 +4,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { solveStudentDoubt, callGeminiAIStream, callOpenRouterAIStream, generatePersonalized7DayPlan } from '../services/geminiService.js';
 import { getCachedAIReport, saveCachedAIReport } from '../services/aiReportCache.js';
+import { getTopperComparison } from '../services/topperComparisonService.js';
 
 
 export const getProfile = asyncHandler(async (req, res) => {
@@ -136,7 +137,16 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   }
 
   if (!assessmentId) {
-    return res.json({ assessment_id: null, assessment_title: null, your_rank: null, leaderboard: [] });
+    return res.json({
+      assessment_id: null,
+      assessment_title: null,
+      your_rank: null,
+      leaderboard: [],
+      topper_comparison: null,
+      topperComparison: null,
+      student_stats: null,
+      has_student_attempt: false,
+    });
   }
 
   const assessmentRes = await query('SELECT id, title FROM assessments WHERE id = $1', [assessmentId]);
@@ -165,6 +175,44 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
 
   const yourRow = result.rows.find((r) => r.candidate_id === userId);
 
+  let currentStudentStats = null;
+  if (yourRow) {
+    const attDetailsRes = await query(
+      `SELECT at.id AS attempt_id, at.duration_seconds, s.correct_count, s.wrong_count, s.unattempted_count, s.accuracy
+       FROM attempts at
+       LEFT JOIN scores s ON s.attempt_id = at.id
+       WHERE at.id = $1`,
+      [yourRow.attempt_id]
+    ).catch(() => ({ rows: [] }));
+    const attDet = attDetailsRes.rows[0] || {};
+    currentStudentStats = {
+      attempt_id: yourRow.attempt_id,
+      candidate_id: userId,
+      marks_obtained: Number(yourRow.marks_obtained),
+      score: Number(yourRow.marks_obtained),
+      total_marks: Number(yourRow.total_marks),
+      percentage: Number(yourRow.percentage),
+      duration_seconds: Number(attDet.duration_seconds || 0),
+      correct_count: Number(attDet.correct_count || 0),
+      wrong_count: Number(attDet.wrong_count || 0),
+      unattempted_count: Number(attDet.unattempted_count || 0),
+      accuracy: attDet.accuracy != null ? Number(attDet.accuracy) : null,
+      rank: yourRow.rank,
+    };
+  }
+
+  let topperComparison = null;
+  try {
+    topperComparison = await getTopperComparison({
+      assessmentId,
+      attemptId: yourRow?.attempt_id || null,
+      candidateId: userId,
+      currentStudentStats,
+    });
+  } catch (err) {
+    console.error('Failed to get topper comparison for leaderboard:', err);
+  }
+
   res.json({
     assessment_id: assessment.id,
     assessment_title: assessment.title,
@@ -174,6 +222,10 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
       ...row,
       is_you: candidate_id === userId,
     })),
+    topper_comparison: topperComparison,
+    topperComparison,
+    student_stats: currentStudentStats,
+    has_student_attempt: Boolean(yourRow),
   });
 });
 
