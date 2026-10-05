@@ -282,8 +282,7 @@ const optionItemSchema = z.union([
 
 const optionsSchema = z
   .array(optionItemSchema)
-  .min(2)
-  .max(6);
+  .max(10);
 
 const questionBaseSchema = z.object({
   question_text: z.string().trim().min(3),
@@ -291,14 +290,14 @@ const questionBaseSchema = z.object({
     .enum(['mcq', 'single_choice', 'multi_select', 'integer', 'numerical', 'assertion_reason', 'coding', 'subjective'])
     .default('mcq'),
   section_id: z.number().int().positive().nullable().optional(),
-  options: optionsSchema.optional(),
-  correct_index: z.number().int().min(0).optional(),
-  correct_indices: z.array(z.number().int().min(0)).optional(),
+  options: optionsSchema.nullable().optional(),
+  correct_index: z.number().int().min(0).nullable().optional(),
+  correct_indices: z.array(z.number().int().min(0)).nullable().optional(),
   numeric_answer: z.number().optional().nullable(),
   numerical_tolerance: z.number().min(0).optional().nullable(),
   assertion_text: z.string().optional().nullable(),
   reason_text: z.string().optional().nullable(),
-  marks: z.number().int().min(1).max(100).default(1),
+  marks: z.number().min(0.25).max(100).default(1),
   position: z.number().int().min(0).optional(),
   starter_code: z.string().max(20000).optional(),
   test_cases: z.array(z.object({ input: z.string(), expected: z.string() })).optional(),
@@ -340,7 +339,26 @@ export const questionSchema = questionBaseSchema.superRefine((data, ctx) => {
   }
 });
 
-export const questionUpdateSchema = questionBaseSchema.partial();
+export const questionUpdateSchema = questionBaseSchema.partial().superRefine((data, ctx) => {
+  if (data.question_type === 'mcq' || data.question_type === 'single_choice' || data.question_type === 'assertion_reason') {
+    if (data.options !== undefined && (!data.options || data.options.length < 2)) {
+      ctx.addIssue({ code: 'custom', message: 'MCQ requires at least 2 options', path: ['options'] });
+    }
+    if (data.correct_index !== undefined && data.options && data.correct_index >= data.options.length) {
+      ctx.addIssue({ code: 'custom', message: 'Invalid correct_index', path: ['correct_index'] });
+    }
+  }
+  if (data.question_type === 'multi_select') {
+    if (data.options !== undefined && (!data.options || data.options.length < 2)) {
+      ctx.addIssue({ code: 'custom', message: 'Multi-select requires at least 2 options', path: ['options'] });
+    }
+  }
+  if ((data.question_type === 'integer' || data.question_type === 'numerical') && data.numeric_answer !== undefined) {
+    if (data.numeric_answer === null || Number.isNaN(data.numeric_answer)) {
+      ctx.addIssue({ code: 'custom', message: 'Numeric answer is required', path: ['numeric_answer'] });
+    }
+  }
+});
 
 export const reorderQuestionsSchema = z.object({
   order: z.array(z.object({ id: z.number().int().positive(), position: z.number().int().min(0) })).min(1),

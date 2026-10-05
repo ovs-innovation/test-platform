@@ -654,21 +654,25 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       if (form.subject_id) setLastSubjectId(form.subject_id);
       if (form.chapter_id) setLastChapterId(form.chapter_id);
 
-      const processedOptions = (form.options || []).map((o, idx) => {
-        const text = typeof o === 'object' ? (o.text ?? '') : String(o ?? '');
-        const imgUrl = typeof o === 'object' ? (o.image_url || (Array.isArray(o.media) && o.media[0]?.url) || '') : '';
-        const key = (typeof o === 'object' && o.key) ? o.key : String.fromCharCode(65 + idx);
-        const media = (typeof o === 'object' && Array.isArray(o.media) && o.media.length > 0)
-          ? o.media.map((m) => (typeof m === 'object' ? { ...m, url: imgUrl || m.url } : { type: 'diagram', url: imgUrl }))
-          : (imgUrl ? [{ id: `opt-${idx}-img`, type: 'diagram', url: imgUrl }] : []);
+      const isChoiceType = ['mcq', 'single_choice', 'multi_select', 'assertion_reason'].includes(form.question_type);
 
-        return {
-          key,
-          text: String(text).trim(),
-          image_url: imgUrl.trim() || null,
-          media,
-        };
-      }).filter((o) => o.text || o.image_url);
+      const processedOptions = isChoiceType
+        ? (form.options || []).map((o, idx) => {
+            const text = typeof o === 'object' ? (o.text ?? '') : String(o ?? '');
+            const imgUrl = typeof o === 'object' ? (o.image_url || (Array.isArray(o.media) && o.media[0]?.url) || '') : '';
+            const key = (typeof o === 'object' && o.key) ? o.key : String.fromCharCode(65 + idx);
+            const media = (typeof o === 'object' && Array.isArray(o.media) && o.media.length > 0)
+              ? o.media.map((m) => (typeof m === 'object' ? { ...m, url: imgUrl || m.url } : { type: 'diagram', url: imgUrl }))
+              : (imgUrl ? [{ id: `opt-${idx}-img`, type: 'diagram', url: imgUrl }] : []);
+
+            return {
+              key,
+              text: String(text).trim(),
+              image_url: imgUrl.trim() || null,
+              media,
+            };
+          }).filter((o) => o.text || o.image_url)
+        : [];
 
       const payload = {
         ...form,
@@ -680,6 +684,8 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         topic: form.topic || '',
         section_id: form.section_id || null,
         options: processedOptions,
+        correct_index: isChoiceType ? (form.correct_index ?? 0) : null,
+        correct_indices: isChoiceType ? (form.correct_indices || []) : [],
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
         numerical_tolerance: form.numerical_tolerance != null && form.numerical_tolerance !== '' ? Number(form.numerical_tolerance) : 0,
       };
