@@ -185,15 +185,16 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     await query(
       `INSERT INTO questions (
          assessment_id, question_text, options, correct_index, correct_option_index,
-         explanation, difficulty, topic, subtopic, subject, source, marks, position, created_at
+         explanation, solution, difficulty, topic, subtopic, subject, source, marks, position, created_at
        )
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, NOW())`,
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, NOW())`,
       [
         testId,
         q.question,
         JSON.stringify(q.options),
         q.correctOptionIndex,
         q.correctOptionIndex,
+        q.explanation,
         q.explanation,
         q.difficulty,
         q.topic,
