@@ -697,9 +697,13 @@ export const studentReportService = {
 };
 
 export const aiTestService = {
-  generateTest: (studentId, attemptId) => {
+  generateTest: (studentId, attemptId, options = {}) => {
     clearCache();
-    return api.post('/tests/generate-ai-weak-topic-test', { studentId, attemptId }).then((r) => r.data);
+    const count = typeof options === 'number' ? options : (options?.questionCount || 50);
+    const payload = typeof options === 'object'
+      ? { studentId, attemptId, questionCount: count, ...options }
+      : { studentId, attemptId, questionCount: count };
+    return api.post('/tests/generate-ai-weak-topic-test', payload).then((r) => r.data);
   },
   getScheduledTests: (studentId) => {
     const validId = studentId && studentId !== 'undefined' ? studentId : 'me';

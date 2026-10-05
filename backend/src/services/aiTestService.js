@@ -38,9 +38,10 @@ export const QuestionArraySchema = z.array(QuestionSchema).min(1);
 /**
  * getWeakTopics
  * 1. Identifies student's weak topics and subtopics from previous test attempt data.
- * Returns topics/subtopics sorted by ascending accuracy below threshold (default 60%).
+ * Returns topics/subtopics sorted by ascending accuracy below threshold (default 75%).
+ * Covers all struggling topics from the attempt.
  */
-export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemptId = null) {
+export async function getWeakTopics(studentId, threshold = 75, limit = 30, attemptId = null) {
   const numId = Number(studentId);
   if (!numId || isNaN(numId)) return [];
 
@@ -391,7 +392,7 @@ export async function getWeakTopics(studentId, threshold = 60, limit = 5, attemp
  * allocating a larger share of the total 20 questions to that specific weak topic.
  * =========================================================================
  */
-export function distributeQuestionCounts(weakTopics, totalQuestions = 20) {
+export function distributeQuestionCounts(weakTopics, totalQuestions = 50) {
   if (!weakTopics || weakTopics.length === 0) return [];
 
   // Calculate inverse weights (weaker accuracy = higher question count)
@@ -470,10 +471,10 @@ export function shuffleQuestionOptions(q) {
  * buildQuestionPrompt
  * Constructs the structured AI prompt according to requirements
  */
-export function buildQuestionPrompt(topic, subtopic, examType, difficultyMix, count, subject = 'Physics') {
+export function buildQuestionPrompt(topic, subtopic, examType, difficultyMix = 'medium to hard', count, subject = 'Physics') {
   const examLevelStr = examType === 'NEET' ? 'NEET UG' : 'JEE Main / JEE Advanced';
   return `You are an expert test creator for ${examLevelStr}.
-Generate exactly ${count} multiple-choice questions for ${subject} on the topic "${topic}" (subtopic: "${subtopic}") at ${difficultyMix} difficulty.
+Generate exactly ${count} multiple-choice questions for ${subject} on the topic "${topic}" (subtopic: "${subtopic}") strictly at ${difficultyMix} difficulty.
 
 Output ONLY a JSON array of ${count} question objects with this exact structure:
 [
@@ -481,8 +482,8 @@ Output ONLY a JSON array of ${count} question objects with this exact structure:
     "question": "Question text here (use standard LaTeX like \\\\frac{a}{b} if needed)",
     "options": ["Option A", "Option B", "Option C", "Option D"],
     "correctOptionIndex": 0,
-    "explanation": "Clear step-by-step solution",
-    "difficulty": "medium",
+    "explanation": "Clear step-by-step solution with all formulas and intermediate calculation steps",
+    "difficulty": "hard",
     "topic": "${topic}",
     "subtopic": "${subtopic}"
   }
@@ -491,7 +492,7 @@ Rules:
 1. Return exactly ${count} objects in the JSON array.
 2. "options" must contain exactly 4 options.
 3. "correctOptionIndex" must be 0, 1, 2, or 3. Randomize the correct option index across 0, 1, 2, 3 evenly.
-4. "difficulty" must be "easy", "medium", or "hard".
+4. "difficulty" must be "medium" or "hard" (STRICT REQUIREMENT: NO easy questions; all questions must test deep conceptual understanding, multi-step derivation, or numerical problem solving typical of ${examLevelStr}).
 5. Return ONLY the JSON array without any markdown fences or preamble.`;
 }
 
@@ -517,8 +518,8 @@ export function calculateUnlockDelay(weakTopicsAvgAccuracy) {
 export async function generateQuestionsForTopic(topic, subtopic, examType, difficultyMix, count, subject = 'Physics') {
   if (count <= 0) return [];
 
-  // Divide into chunks of at most 4 questions for speed, reliability, and token safety
-  if (count > 4) {
+  // Divide into chunks of at most 6 questions for speed, reliability, and token safety
+  if (count > 6) {
     const half = Math.ceil(count / 2);
     const [batch1, batch2] = await Promise.all([
       generateQuestionsForTopic(topic, subtopic, examType, difficultyMix, half, subject),
@@ -540,16 +541,16 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
   while (attempts <= maxRetries) {
     attempts++;
     try {
-      console.log(`🤖 [Claude API] Generating ${count} questions for topic "${topic}" (${examType}). Attempt ${attempts}/${maxRetries + 1}...`);
+      console.log(`🤖 [Claude/Gemini API] Generating ${count} ${difficultyMix} questions for topic "${topic}" (${examType}). Attempt ${attempts}/${maxRetries + 1}...`);
       
       const rawText = await callClaudeAPI({
         prompt,
         model: 'claude-sonnet-4-6',
-        maxTokens: 2500,
+        maxTokens: 3500,
       });
 
       if (!rawText) {
-        console.warn(`⚠️ [Claude API] Attempt ${attempts} returned empty response.`);
+        console.warn(`⚠️ [Claude/Gemini API] Attempt ${attempts} returned empty response.`);
         continue;
       }
 
@@ -593,6 +594,7 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
           seenTexts.add(normKey);
           const shuffledQ = shuffleQuestionOptions({
             ...q,
+            difficulty: q.difficulty === 'easy' ? 'medium' : (q.difficulty || 'medium'),
             topic: q.topic || topic,
             subtopic: q.subtopic || subtopic,
             subject: subject || 'Physics',
@@ -621,9 +623,9 @@ export async function generateQuestionsForTopic(topic, subtopic, examType, diffi
 
 /**
  * callClaudeAPI
- * Integrates with Gemini API / Claude API (Gemini 3.6 Flash / Claude 3.7 / Anthropic Direct API)
+ * Integrates with Gemini API / Claude API (Gemini 3.8 Flash / Claude 3.7 / Anthropic Direct API)
  */
-async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 2500 }) {
+async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 3500 }) {
   const anthropicKey = process.env.ANTHROPIC_API_KEY || '';
   const geminiKey = (env.geminiApiKey || process.env.GEMINI_API_KEY || '').trim();
 
@@ -653,11 +655,11 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
     }
   }
 
-  // 2. Gemini API integration (Gemini 3.6 Flash) with structured JSON enforcement
+  // 2. Gemini API integration (Gemini 3.8 Flash) with structured JSON enforcement
   if (geminiKey) {
     try {
       const ai = new GoogleGenAI({ apiKey: geminiKey });
-      const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.6-flash';
+      const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
       const response = await ai.models.generateContent({
         model: modelName,
         contents: prompt,
@@ -679,8 +681,8 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
               required: ['question', 'options', 'correctOptionIndex', 'explanation', 'difficulty', 'topic', 'subtopic'],
             },
           },
-          temperature: 0.2,
-          maxOutputTokens: 6000,
+          temperature: 0.25,
+          maxOutputTokens: 8000,
         },
       });
 
@@ -697,7 +699,7 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
 }
 
 /**
- * Fallback questions generator ensuring 100% test reliability with exam-level precision
+ * Fallback questions generator ensuring 100% test reliability with exam-level precision (Medium to Hard)
  */
 export function generateFallbackQuestions(topic, subtopic, examType, count, subject = 'Physics') {
   const bank = [
@@ -725,7 +727,7 @@ export function generateFallbackQuestions(topic, subtopic, examType, count, subj
       options: ['[M^1 L^0 T^-2 A^-1]', '[M^1 L^2 T^-2 A^-1]', '[M^0 L^1 T^-1 A^0]', '[M^1 L^-1 T^-2 A^0]'],
       correctOptionIndex: 0,
       explanation: `Magnetic flux density B has dimensions [M T^-2 A^-1]. Combining with area yields [M T^-2 A^-1].`,
-      difficulty: 'easy',
+      difficulty: 'medium',
     },
     {
       question: `Regarding ${subtopic} in ${topic}, if the temperature of an ideal gas is doubled while keeping volume constant, what happens to the root-mean-square speed (v_rms) of the gas molecules?`,
@@ -739,7 +741,7 @@ export function generateFallbackQuestions(topic, subtopic, examType, count, subj
       options: ['At distance L/3 from +q', 'At distance L/2 from +q', 'At distance 2L/3 from +q', 'At distance L/4 from +q'],
       correctOptionIndex: 0,
       explanation: `Setting electrostatic forces equal: k(q)(q_3)/x^2 = k(4q)(q_3)/(L-x)^2. Taking square root: 1/x = 2/(L-x) => L-x = 2x => 3x = L => x = L/3 from +q.`,
-      difficulty: 'easy',
+      difficulty: 'hard',
     },
   ];
 

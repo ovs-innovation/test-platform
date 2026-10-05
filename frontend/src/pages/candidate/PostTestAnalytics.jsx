@@ -55,11 +55,11 @@ export default function PostTestAnalytics() {
     setAiTestError(null);
     try {
       const studentId = data?.student_id || data?.user_id;
-      const res = await aiTestService.generateTest(studentId, testId);
+      const res = await aiTestService.generateTest(studentId, testId, { questionCount: 50 });
       setAiTestResult(res);
       setRefreshTrigger((prev) => prev + 1);
     } catch (err) {
-      const msg = err.response?.data?.message || err.message || 'Unable to generate 20-question weak topic test.';
+      const msg = err.response?.data?.message || err.message || 'Unable to generate 50-question weak topic exam.';
       setAiTestError(msg);
     } finally {
       setGeneratingAiTest(false);
@@ -752,14 +752,14 @@ export default function PostTestAnalytics() {
               <Sparkles className="h-5 w-5" />
             </div>
             <div className="space-y-1">
-              <div className="flex items-center gap-2">
-                <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Test Generator</h3>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-base">Weak Topic Exam Generator</h3>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-indigo-100 dark:bg-indigo-950/70 text-indigo-700 dark:text-indigo-300">
-                  20 Questions
+                  50 Questions · Medium to Hard
                 </span>
               </div>
               <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
-                Generate fresh, targeted questions focusing on your weak and missed topics from this test. Test has 20 questions and is ready to start immediately!
+                Generate fresh, targeted questions focusing on your weak and missed topics from this test. Exam has 50 questions calibrated to Medium-to-Hard difficulty and is ready to start immediately!
               </p>
             </div>
           </div>
@@ -778,12 +778,12 @@ export default function PostTestAnalytics() {
               {generatingAiTest ? (
                 <>
                   <Sparkles className="h-4 w-4 animate-spin" />
-                  <span>Creating 20-Q Test...</span>
+                  <span>Creating 50-Q Exam...</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="h-4 w-4" />
-                  <span>Create 20-Q Weak Topic Test</span>
+                  <span>Create 50-Q Weak Topic Exam</span>
                 </>
               )}
             </button>
@@ -803,10 +803,10 @@ export default function PostTestAnalytics() {
               <div className="space-y-1">
                 <div className="flex items-center gap-1.5 font-extrabold text-emerald-700 dark:text-emerald-300 text-sm">
                   <CheckCircle2 className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
-                  <span>20-Question Weak Topic Test Ready!</span>
+                  <span>50-Question Weak Topic Exam Ready!</span>
                 </div>
                 <p className="text-xs leading-relaxed text-slate-700 dark:text-slate-300">
-                  {aiTestResult.message || 'Your personalized test with 20 targeted questions has been created.'}
+                  {aiTestResult.message || 'Your personalized exam with 50 targeted questions has been created.'}
                 </p>
                 {Array.isArray(aiTestResult.topics) && aiTestResult.topics.length > 0 && (
                   <div className="flex flex-wrap gap-1.5 pt-1">
@@ -834,7 +834,7 @@ export default function PostTestAnalytics() {
                   ) : (
                     <>
                       <Zap className="h-4 w-4 fill-white" />
-                      <span>Start 20-Q Test Now</span>
+                      <span>Start 50-Q Exam Now</span>
                     </>
                   )}
                 </button>

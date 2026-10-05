@@ -50,8 +50,10 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     examType = 'NEET';
   }
 
-  // 2. Identify weak topics for this attempt specifically or student overall (threshold = 60%, limit = 5)
-  let weakTopics = await getWeakTopics(studentId, 60, 5, attemptId);
+  const targetQuestionCount = Math.min(100, Math.max(10, Number(req.body.questionCount) || 50));
+
+  // 2. Identify all weak topics for this attempt specifically or student overall (threshold = 75%, limit = 30)
+  let weakTopics = await getWeakTopics(studentId, 75, 30, attemptId);
 
   if (!weakTopics || weakTopics.length === 0) {
     if (examType === 'NEET') {
@@ -69,37 +71,38 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     }
   }
 
-  // 3. Distribute question counts (total 20 questions) inversely weighted by accuracy
-  const distributedTopics = distributeQuestionCounts(weakTopics, 20);
+  // 3. Distribute question counts (total targetQuestionCount questions) inversely weighted by accuracy
+  const distributedTopics = distributeQuestionCounts(weakTopics, targetQuestionCount);
 
-  // 4. Generate fresh questions for each weak topic using Claude/Gemini AI
-  let allQuestions = [];
-  for (const wt of distributedTopics) {
-    const difficultyMix = wt.accuracy < 40
-      ? '60% easy, 30% medium, 10% hard'
-      : '40% easy, 40% medium, 20% hard';
+  // 4. Generate fresh questions for each weak topic strictly at Medium to Hard difficulty concurrently
+  const difficultyMix = '50% medium, 50% hard (strictly medium or hard competitive exam level; zero easy questions)';
 
-    const questionsForTopic = await generateQuestionsForTopic(
-      wt.topic,
-      wt.subtopic,
-      examType,
-      difficultyMix,
-      wt.count,
-      wt.subject
-    );
+  const topicBatches = await Promise.all(
+    distributedTopics.map((wt) =>
+      generateQuestionsForTopic(
+        wt.topic,
+        wt.subtopic,
+        examType,
+        difficultyMix,
+        wt.count,
+        wt.subject
+      )
+    )
+  );
 
-    allQuestions = allQuestions.concat(questionsForTopic);
+  let allQuestions = topicBatches.flat();
+
+  // Strictly guarantee EXACTLY targetQuestionCount questions (default 50)
+  if (allQuestions.length < targetQuestionCount) {
+    const needed = targetQuestionCount - allQuestions.length;
+    for (let i = 0; i < needed; i++) {
+      const fallbackTopic = weakTopics[i % weakTopics.length] || { topic: 'Core Concepts', subtopic: 'Fundamental Principles', subject: 'Physics' };
+      const padded = generateFallbackQuestions(fallbackTopic.topic, fallbackTopic.subtopic, examType, 1, fallbackTopic.subject);
+      allQuestions.push(...padded);
+    }
   }
-
-  // Strictly guarantee EXACTLY 20 questions
-  if (allQuestions.length < 20) {
-    const needed = 20 - allQuestions.length;
-    const fallbackTopic = weakTopics[0] || { topic: 'Core Concepts', subtopic: 'Fundamental Principles', subject: 'Physics' };
-    const padded = generateFallbackQuestions(fallbackTopic.topic, fallbackTopic.subtopic, examType, needed, fallbackTopic.subject);
-    allQuestions = allQuestions.concat(padded);
-  }
-  if (allQuestions.length > 20) {
-    allQuestions = allQuestions.slice(0, 20);
+  if (allQuestions.length > targetQuestionCount) {
+    allQuestions = allQuestions.slice(0, targetQuestionCount);
   }
 
   // 5. Test availability: Make available immediately with 7 days active window
@@ -124,9 +127,10 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
   }
 
   const topicNames = Array.from(new Set(weakTopics.map((w) => w.topic)));
+  const topicSummary = topicNames.length <= 3 ? topicNames.join(', ') : `${topicNames.slice(0, 3).join(', ')} +${topicNames.length - 3} more`;
   const testTitle = sourceTestTitle
-    ? `Weak Topic Test (20 Qs): ${sourceTestTitle} - ${topicNames.join(', ')}`
-    : `Weak Topic Test (20 Qs): ${topicNames.join(', ')}`;
+    ? `Weak Topic Booster (${allQuestions.length} Qs - Medium/Hard): ${sourceTestTitle} - ${topicSummary}`
+    : `Weak Topic Booster (${allQuestions.length} Qs - Medium/Hard): ${topicSummary}`;
 
   // 6. Save test in `tests` table
   const weakTopicsPayload = weakTopics.map((w) => ({
@@ -135,6 +139,8 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     subject: w.subject,
     accuracyAtGeneration: w.accuracy,
   }));
+
+  const durationMinutes = Math.min(180, Math.max(30, Math.round(allQuestions.length * 1.5))); // 50 Qs -> 75 mins
 
   const testInsertRes = await query(
     `INSERT INTO tests (
@@ -152,7 +158,7 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
       now.toISOString().split('T')[0],
       '00:00:00',
       '23:59:59',
-      40,
+      durationMinutes,
       allQuestions.length * 4,
       true,
       unlockAt,
@@ -173,7 +179,7 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     [testId, studentId]
   ).catch(() => {});
 
-  // 7. Save generated 20 questions in `questions` table
+  // 7. Save generated 50 questions in `questions` table
   for (let i = 0; i < allQuestions.length; i++) {
     const q = allQuestions[i];
     await query(
@@ -210,7 +216,7 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     expiresAt: expiresAt.toISOString(),
     status: 'available',
     topics: weakTopicsPayload,
-    message: `Your 20-question Weak Topic Test covering ${topicNames.join(', ')} is ready to take now!`,
+    message: `Your ${allQuestions.length}-question Weak Topic Booster Exam (Medium to Hard) covering all ${topicNames.length} weak topics is ready to take now!`,
   });
 });
 
