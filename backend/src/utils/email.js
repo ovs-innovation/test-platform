@@ -190,21 +190,29 @@ export const sendCompletionEmail = ({
   marksObtained,
   totalMarks,
   percentage,
-  passed,
   durationSeconds,
+  durationMinutes,
   violationCount,
+  rank = null,
+  percentile = null,
+  attemptId = null,
+  resultUrl = null,
 }) => {
   return new Promise((resolve, reject) => {
-    const durationMinutes = Math.max(1, Math.round((durationSeconds || 0) / 60));
+    const mins = durationMinutes || Math.max(1, Math.round((durationSeconds || 0) / 60));
+    const url = resultUrl || (attemptId ? `https://edvedum.com/results/${attemptId}` : 'https://edvedum.com/dashboard');
     const tpl = completionEmailTemplate({
       name,
       assessmentTitle,
       marksObtained,
       totalMarks,
       percentage,
-      passed,
-      durationMinutes,
+      rank,
+      percentile,
+      durationMinutes: mins,
+      durationSeconds,
       violationCount: violationCount || 0,
+      resultUrl: url,
     });
     sendEmail({ to, ...tpl }).then(resolve).catch(reject);
   });

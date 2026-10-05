@@ -102,39 +102,85 @@ export const completionEmailTemplate = ({
   marksObtained,
   totalMarks,
   percentage,
-  passed,
-  durationMinutes,
-  violationCount,
-}) => ({
-  subject: `Assessment completed: ${assessmentTitle}`,
-  html: layout(`
-    <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;">Assessment Submitted</h2>
-    <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">Hello <strong>${name}</strong>,</p>
-    <p style="margin:0 0 24px;color:#334155;font-size:15px;line-height:1.6;">
-      Your assessment <strong>${assessmentTitle}</strong> has been submitted successfully.
-    </p>
-    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:8px;padding:4px;">
-      <tr><td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">Score</span><br>
-        <strong style="color:#0f172a;font-size:18px;">${marksObtained} / ${totalMarks} (${percentage}%)</strong>
-      </td></tr>
-      <tr><td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">Result</span><br>
-        <strong style="color:${passed ? '#059669' : '#dc2626'};font-size:18px;">${passed ? 'PASSED' : 'NOT PASSED'}</strong>
-      </td></tr>
-      <tr><td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
-        <span style="color:#64748b;font-size:13px;">Duration</span><br>
-        <strong style="color:#0f172a;">${durationMinutes} min</strong>
-      </td></tr>
-      <tr><td style="padding:16px 20px;">
-        <span style="color:#64748b;font-size:13px;">Violations logged</span><br>
-        <strong style="color:#0f172a;">${violationCount}</strong>
-      </td></tr>
-    </table>
-    <p style="margin:24px 0 0;color:#64748b;font-size:13px;">Detailed results may be shared by your hiring team.</p>
-  `),
-  text: `Hello ${name},\n\nAssessment "${assessmentTitle}" submitted.\nScore: ${marksObtained}/${totalMarks} (${percentage}%)\nResult: ${passed ? 'PASSED' : 'NOT PASSED'}\nDuration: ${durationMinutes} min\nViolations: ${violationCount}`,
-});
+  rank = null,
+  percentile = null,
+  durationMinutes = null,
+  durationSeconds = null,
+  violationCount = 0,
+  resultUrl = null,
+}) => {
+  let timeDisplay = `${durationMinutes || 0} min`;
+  if (durationSeconds != null && durationSeconds > 0) {
+    const totalSecs = Math.round(Number(durationSeconds));
+    const hrs = Math.floor(totalSecs / 3600);
+    const mins = Math.floor((totalSecs % 3600) / 60);
+    const secs = totalSecs % 60;
+    if (hrs > 0) {
+      timeDisplay = `${hrs}h ${mins}m`;
+    } else if (mins > 0) {
+      timeDisplay = `${mins} min${secs > 0 ? ` ${secs}s` : ''}`;
+    } else {
+      timeDisplay = `${secs}s`;
+    }
+  }
+
+  const rankDisplay = rank != null ? `#${rank}` : 'Calculated on Leaderboard';
+  const percentileDisplay = percentile != null ? `${percentile}%ile` : '—';
+  const viewUrl = resultUrl || 'https://edvedum.com/dashboard';
+
+  return {
+    subject: `Assessment Completed: ${assessmentTitle} - Score Card`,
+    html: layout(`
+      <h2 style="margin:0 0 16px;color:#0f172a;font-size:20px;font-weight:700;">Assessment Submitted</h2>
+      <p style="margin:0 0 16px;color:#334155;font-size:15px;line-height:1.6;">Hello <strong>${name}</strong>,</p>
+      <p style="margin:0 0 24px;color:#334155;font-size:15px;line-height:1.6;">
+        Your assessment <strong>${assessmentTitle}</strong> has been submitted successfully. Here is your performance summary:
+      </p>
+      <table width="100%" cellpadding="0" cellspacing="0" style="background:#f8fafc;border-radius:12px;border:1px solid #e2e8f0;overflow:hidden;">
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
+            <span style="color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Score</span><br>
+            <strong style="color:#0f172a;font-size:18px;font-weight:800;">${marksObtained} / ${totalMarks} (${percentage}%)</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
+            <span style="color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Rank</span><br>
+            <strong style="color:#1B4FDB;font-size:18px;font-weight:800;">${rankDisplay}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
+            <span style="color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Percentile</span><br>
+            <strong style="color:#059669;font-size:18px;font-weight:800;">${percentileDisplay}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px;border-bottom:1px solid #e2e8f0;">
+            <span style="color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Time</span><br>
+            <strong style="color:#0f172a;font-size:16px;font-weight:700;">${timeDisplay}</strong>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:16px 20px;">
+            <span style="color:#64748b;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Violations logged</span><br>
+            <strong style="color:${Number(violationCount) > 0 ? '#dc2626' : '#0f172a'};font-size:16px;font-weight:700;">${violationCount || 0}</strong>
+          </td>
+        </tr>
+      </table>
+      ${resultUrl ? `
+      <table cellpadding="0" cellspacing="0" style="margin-top:24px;"><tr><td style="border-radius:8px;background:${BRAND};">
+        <a href="${viewUrl}" style="display:inline-block;padding:12px 24px;color:#fff;font-size:14px;font-weight:600;text-decoration:none;border-radius:8px;">
+          View Full Performance Report &rarr;
+        </a>
+      </td></tr></table>` : ''}
+      <p style="margin:24px 0 0;color:#64748b;font-size:13px;line-height:1.5;">
+        Detailed question solutions, subject-wise analytics, and live leaderboard rankings are available on your student portal.
+      </p>
+    `),
+    text: `Hello ${name},\n\nYour assessment "${assessmentTitle}" has been submitted successfully.\n\nScore: ${marksObtained} / ${totalMarks} (${percentage}%)\nRank: ${rankDisplay}\nPercentile: ${percentileDisplay}\nTime: ${timeDisplay}\nViolations logged: ${violationCount || 0}\n\nView details: ${viewUrl}`,
+  };
+};
 
 export const studentCredentialsEmailTemplate = ({ name, email, studentId, password, loginUrl }) => ({
   subject: `Welcome to EDVEDUM Academy - Your Student ID & Login Credentials`,

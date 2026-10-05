@@ -342,6 +342,38 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
     const userRes = await query('SELECT name, email FROM users WHERE id = $1', [result.attempt.candidate_id]);
     const user = userRes.rows[0];
     if (user?.email) {
+      let emailRank = result.score?.rank || null;
+      let emailPercentile = result.score?.percentile != null ? Number(result.score.percentile) : null;
+
+      try {
+        if (!emailRank) {
+          const rkRes = await query(
+            `SELECT 
+               (COUNT(*)::int + 1) AS rank,
+               (SELECT COUNT(DISTINCT a2.candidate_id)::int 
+                FROM attempts a2 
+                WHERE a2.assessment_id = $1 AND a2.status IN ('submitted', 'auto_submitted')) AS total_candidates
+             FROM scores s
+             JOIN attempts a ON a.id = s.attempt_id
+             WHERE a.assessment_id = $1 
+               AND a.status IN ('submitted', 'auto_submitted')
+               AND s.marks_obtained > $2`,
+            [result.attempt.assessment_id, Number(result.score.marks_obtained || 0)]
+          );
+          if (rkRes.rowCount > 0) {
+            emailRank = rkRes.rows[0].rank;
+            const total = Number(rkRes.rows[0].total_candidates) || 1;
+            if (emailPercentile == null && total > 0) {
+              emailPercentile = total > 1
+                ? Math.round(((total - emailRank + 1) / total) * 1000) / 10
+                : 100;
+            }
+          }
+        }
+      } catch (e) {
+        console.error('[email] Rank lookup error for email:', e.message);
+      }
+
       sendCompletionEmail({
         to: user.email,
         name: user.name,
@@ -349,9 +381,11 @@ const finalizeAttempt = async (attemptId, status = 'submitted') => {
         marksObtained: result.score.marks_obtained,
         totalMarks: result.score.total_marks,
         percentage: result.score.percentage,
-        passed: result.score.passed,
         durationSeconds: result.durationSeconds,
         violationCount: result.violationCount,
+        rank: emailRank,
+        percentile: emailPercentile,
+        attemptId: result.attempt.id,
       }).catch((err) => {
         // eslint-disable-next-line no-console
         console.error('[email] Completion email failed:', err.message);
