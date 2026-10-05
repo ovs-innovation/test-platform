@@ -33,7 +33,6 @@ import AIInsightsCard from '../../components/candidate/AIInsightsCard.jsx';
 import SevenDayRevisionPlanCard from '../../components/candidate/SevenDayRevisionPlanCard.jsx';
 import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
-import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 import { useTheme } from '../../context/ThemeContext.jsx';
@@ -1013,21 +1012,6 @@ export default function ResultPage() {
                 </div>
               </div>
             </div>
-
-            {/* COMPARE WITH TOPPER SECTION */}
-            <CompareWithTopper
-              data={data?.topper_comparison || data?.topperComparison}
-              studentStats={{
-                marks_obtained: score?.marks_obtained,
-                score: score?.marks_obtained,
-                max_marks: displayTotalMarks,
-                percentage: score?.percentage,
-                accuracy: accuracy ? parseFloat(accuracy) : 0,
-                duration_seconds: attempt?.duration_seconds,
-                correct_count: score?.correct_count,
-                rank,
-              }}
-            />
 
             {/* MISTAKE BOOK CALLOUT BANNER */}
             {((score?.wrong_count || 0) > 0 || (score?.unattempted_count || 0) > 0) && (
