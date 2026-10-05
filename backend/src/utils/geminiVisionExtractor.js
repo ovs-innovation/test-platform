@@ -208,11 +208,12 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
   const candidateModels = [
     env.geminiModel,
     process.env.GEMINI_MODEL,
-    'gemini-2.5-flash',
+    'gemini-3.8-flash',
+    'gemini-2.5-pro',
     'gemini-2.0-flash',
     'gemini-1.5-flash'
   ].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i);
-  let activeModel = candidateModels[0] || 'gemini-2.5-flash';
+  let activeModel = candidateModels[0] || 'gemini-3.8-flash';
   console.log(`[geminiVisionExtractor] Initializing extraction pipeline with candidate models: [${candidateModels.join(', ')}] (primary: ${activeModel}, includeAnswers: ${includeAnswers}, importId: ${effectiveImportId})`);
 
   // Step 1: Render PDF pages into high-res images
@@ -362,7 +363,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
     },
   };
 
-  // Helper to repair and parse JSON with unescaped newlines/tabs inside strings
+  // Helper to repair and parse JSON with LaTeX backslashes, unescaped newlines/tabs inside strings, and trailing commas
   function cleanAndParseJson(text) {
     if (!text || !text.trim()) return null;
     let cleaned = text.trim();
@@ -380,18 +381,41 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
           if (c === '"' && !escaped) {
             inString = !inString;
             sb += c;
-          } else if (inString && (c === '\n' || c === '\r')) {
-            sb += '\\n';
-          } else if (inString && c === '\t') {
-            sb += '\\t';
+          } else if (inString) {
+            if (escaped) {
+              // Valid standard JSON escape: " \ / b f n r t u[0-9a-fA-F]{4}
+              const isValidEscape = ['"', '\\', '/', 'b', 'f', 'n', 'r', 't'].includes(c) ||
+                (c === 'u' && /^[0-9a-fA-F]{4}/.test(cleaned.substring(i + 1, i + 5)));
+              if (!isValidEscape) {
+                // LaTeX formula backslash like \alpha, \sqrt, \Delta, \text - double it!
+                sb += '\\' + c;
+              } else {
+                sb += c;
+              }
+              escaped = false;
+            } else if (c === '\\') {
+              escaped = true;
+              sb += c;
+            } else if (c === '\n' || c === '\r') {
+              sb += '\\n';
+            } else if (c === '\t') {
+              sb += '\\t';
+            } else {
+              sb += c;
+            }
           } else {
             sb += c;
           }
-          escaped = (c === '\\' && !escaped);
         }
+        if (escaped) sb += '\\';
         return JSON.parse(sb);
       } catch (e2) {
-        return null;
+        try {
+          const trailingFixed = cleaned.replace(/,\s*([}\]])/g, '$1');
+          return JSON.parse(trailingFixed);
+        } catch (e3) {
+          return null;
+        }
       }
     }
   }
@@ -413,29 +437,48 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, { includeAnswe
       const pageIndex = pageImg.pageIndex;
       const pagePrompt = String.raw`
 You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (JEE Main, JEE Advanced, NEET, BITSAT).
-Analyze the supplied page image representing document Page ${pageIndex}.
+Analyze the supplied page image representing document Page ${pageIndex} of ${pageImages.length}.
 Return valid JSON matching the supplied response schema without markdown fences.
 
-Examine the page content carefully and extract all sections present on this page:
+CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER (JEE MAIN / NEET):
+1. CONTINUOUS GLOBAL QUESTION NUMBERING:
+- This is a continuous examination paper. NEVER restart numbering from 1 on this page!
+- Use the actual printed question numbers from 1 to 75 (or 180 for NEET):
+  * Mathematics (Section-I): Questions 1 to 25 (Pages 1 & 2)
+  * Physics (Section-II): Questions 26 to 50 (Page 3 has Q26-33, Page 4 has Q34-49, Page 5 has Q50)
+  * Chemistry (Section-III): Questions 51 to 75 (Page 5 has Q51-56, Page 6 has Q57-66, Page 7 has Q67-75)
+- EVERY question must have its actual printed questionNumber (e.g. 26..33 on page 3, 34..49 on page 4, etc.). NEVER re-number them as 1, 2, 3!
 
-1. QUESTIONS (if any questions are printed on this page):
-- Extract EVERY question: questionNumber, questionType ('mcq' or 'integer'), full question stem in questionText with all formulas in standard LaTeX $...$. NEVER truncate stem or move options into explanation!
-- MCQ questions: extract into options array with keys 'A', 'B', 'C', 'D' and formulas in LaTeX $...$.
-- Integer / Numerical questions (fill-in-the-blanks / numeric response): set questionType = 'integer', options = [] (empty array). Do NOT invent options.
-- Chapter & topic: concise NCERT chapter name (< 4 words, e.g. "Binomial Theorem", "3D Geometry", "Definite Integration"). Do NOT repeat words.
-- Visual Elements: if diagrams, circuits, apparatus, graphs, or chemical structures are present in question or options, include in visualElements with box_2d [ymin, xmin, ymax, xmax] (0-1000).
+2. SUBJECT IDENTIFICATION:
+- Assign the accurate subject ("Mathematics", "Physics", or "Chemistry") to EVERY question on this page:
+  * Questions 1 to 25: subject = 'Mathematics'
+  * Questions 26 to 50: subject = 'Physics'
+  * Questions 51 to 75: subject = 'Chemistry'
+- Never leave the "subject" field blank.
 
-2. ANSWER KEY TABLE (if an Answer Key table is printed on this page):
-- Extract ALL answer key items into answerKeyEntries (questionNumber, correctAnswer, numericAnswer, questionType).
-- For MCQs: correctAnswer = 'A', 'B', 'C', or 'D'.
-- For Integer/Numerical questions: correctAnswer = printed number or accepted values (e.g. '5', '2890', '107 or 108').
+3. MULTI-COLUMN LAYOUT & COMPLETE EXTRACTION:
+- Multi-column Pages: Pages often have 2 columns (left and right). Transcribe questions across both columns in exact numerical order (left column first, then right column).
+- DO NOT skip any questions! Transcribe every question completely with its full stem and formulas in LaTeX $...$.
 
-3. SOLUTIONS / HINTS (if solutions, hints, or explanations are printed on this page):
-- Extract EVERY solution into the solutions array:
-  - questionNumber: question number it explains.
-  - correctAnswer: printed answer letter or number/values (e.g. 'B', '14', '107 or 108').
-  - explanation: step-by-step mathematical derivation in Markdown with LaTeX $...$.
-  - visualElements: bounding boxes for diagrams or graphs in solutions with box_2d [ymin, xmin, ymax, xmax] (0-1000).
+4. CONTINUATION OF QUESTIONS SPLIT ACROSS PAGE BOUNDARIES:
+- TOP-OF-PAGE ORPHAN OPTIONS OR DIAGRAMS:
+  If you see options (e.g. (c), (d) or (a), (b), (c), (d)) or a diagram at the top of this page BEFORE the first newly numbered question:
+  * They belong to the question from the bottom of the previous page!
+  * On Page 5: The beaker diagram at top belongs to Question 49 (from Page 4). Output an entry with questionNumber: 49, questionType: "integer", questionText: "Diagram for Question 49", options: [], visualElements: [bounding box of beaker].
+  * On Page 6: Options (c) and (d) at top left belong to Question 56 (from Page 5). Output an entry with questionNumber: 56, questionType: "mcq", questionText: "Continuation of Question 56", options with keys 'C' and 'D' (and chemical structure visualElements)!
+  * On Page 7: Options (a), (b), (c), (d) at top left belong to Question 66 (from Page 6). Output an entry with questionNumber: 66, questionType: "mcq", questionText: "Continuation of Question 66", options with keys 'A', 'B', 'C', 'D'!
+- BOTTOM-OF-PAGE QUESTIONS:
+  If a question at the bottom is cut off, transcribe whatever question stem, options, or diagram are visible on this page. The system will merge them automatically.
+
+5. QUESTION TYPES:
+- MCQ: options array with keys 'A', 'B', 'C', 'D' and formulas in standard LaTeX $...$.
+- Numerical / Integer (fill-in-the-blanks / numeric value response, e.g. Q21-25, Q46-50, Q71-75):
+  set questionType = 'integer', options = [] (empty array). Do NOT invent MCQ options for integer questions.
+- Visual Elements: diagrams, graphs, circuits, apparatus, or chemical structures must include bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000).
+
+6. ANSWER KEY & SOLUTIONS:
+- If an Answer Key table is printed on this page, extract into answerKeyEntries.
+- If Solutions/Hints are printed on this page, extract into solutions.
 `;
 
       const contents = [
@@ -465,8 +508,9 @@ Examine the page content carefully and extract all sections present on this page
           activeModel = currentModel;
           const responseText = response.text || '';
           const parsed = cleanAndParseJson(responseText);
-          if (!parsed && retryCount < 1) {
-            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} due to unparseable JSON...`);
+          if (!parsed && retryCount < 2) {
+            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} due to unparseable JSON (attempt ${retryCount + 1})...`);
+            await new Promise((r) => setTimeout(r, 1500 * (retryCount + 1)));
             return executePageExtraction(retryCount + 1, modelIdx);
           }
           return parsed;
@@ -476,14 +520,17 @@ Examine the page content carefully and extract all sections present on this page
               apiErr.message.toLowerCase().includes('not found') ||
               apiErr.message.toLowerCase().includes('is not supported') ||
               apiErr.message.toLowerCase().includes('invalid model') ||
-              apiErr.message.toLowerCase().includes('unsupported model')
+              apiErr.message.toLowerCase().includes('unsupported model') ||
+              apiErr.message.toLowerCase().includes('no longer available')
             ));
           if (isModelNotFound && modelIdx + 1 < candidateModels.length) {
             console.warn(`[geminiVisionExtractor] Model "${currentModel}" not found/unsupported. Falling back to "${candidateModels[modelIdx + 1]}"...`);
             return executePageExtraction(0, modelIdx + 1);
           }
-          if (retryCount < 1) {
-            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} after error:`, apiErr.message);
+          if (retryCount < 3) {
+            const delayMs = Math.min(2000 * Math.pow(2, retryCount), 10000);
+            console.warn(`[geminiVisionExtractor] Retrying Page ${pageIndex} after error (attempt ${retryCount + 1}, waiting ${delayMs}ms):`, apiErr.message);
+            await new Promise((r) => setTimeout(r, delayMs));
             return executePageExtraction(retryCount + 1, modelIdx);
           }
           throw apiErr;
@@ -493,7 +540,7 @@ Examine the page content carefully and extract all sections present on this page
       try {
         const parsedOutput = await executePageExtraction();
         if (!parsedOutput) {
-          console.warn(`[geminiVisionExtractor] Page ${pageIndex} returned null/unparseable JSON after retry.`);
+          console.warn(`[geminiVisionExtractor] Page ${pageIndex} returned null/unparseable JSON after retries.`);
           failedPages.push(pageIndex);
           return;
         }
@@ -502,6 +549,13 @@ Examine the page content carefully and extract all sections present on this page
         const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
         const batchSolutions = Array.isArray(parsedOutput?.solutions) ? parsedOutput.solutions : [];
         const batchTopicGridEntries = Array.isArray(parsedOutput?.topicGridEntries) ? parsedOutput.topicGridEntries : [];
+
+        // Ensure sourcePages is tagged
+        for (const q of batchQuestions) {
+          if (!q.sourcePages || !q.sourcePages.length) {
+            q.sourcePages = [pageIndex];
+          }
+        }
 
         console.log(`[PDF Extraction Pipeline] STAGE 3: Returned by Page ${pageIndex} = ${batchQuestions.length} question(s), ${batchAnswerKeyEntries.length} key(s), ${batchSolutions.length} solution(s)`);
 
@@ -519,6 +573,101 @@ Examine the page content carefully and extract all sections present on this page
     await Promise.all(chunkPromises);
   }
 
+  // Dedicated Sequential Recovery Pass for any failed pages:
+  if (failedPages.length > 0) {
+    console.warn(`[geminiVisionExtractor] Initiating sequential fallback retry for failed page(s): [${failedPages.join(', ')}]...`);
+    const pagesToRetry = [...failedPages];
+    failedPages.length = 0;
+    for (const pageIndex of pagesToRetry) {
+      const pageImg = pageImages.find((p) => p.pageIndex === pageIndex);
+      if (!pageImg) continue;
+      await new Promise((r) => setTimeout(r, 2000));
+      try {
+        const retryPrompt = String.raw`
+You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (JEE Main, JEE Advanced, NEET, BITSAT).
+Analyze the supplied page image representing document Page ${pageIndex} of ${pageImages.length}.
+Return valid JSON matching the supplied response schema without markdown fences.
+Transcribe EVERY question completely with LaTeX formulas, options A-D, and integer types.
+`;
+        const retryContents = [
+          retryPrompt,
+          {
+            inlineData: {
+              data: pageImg.buffer.toString('base64'),
+              mimeType: 'image/png',
+            },
+          },
+        ];
+        const response = await ai.models.generateContent({
+          model: activeModel,
+          contents: retryContents,
+          config: {
+            responseMimeType: 'application/json',
+            responseSchema,
+            temperature: 0.1,
+            maxOutputTokens: 16384,
+          },
+        });
+        const parsedOutput = cleanAndParseJson(response.text || '');
+        if (parsedOutput) {
+          const batchQuestions = Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : [];
+          for (const q of batchQuestions) {
+            if (!q.sourcePages || !q.sourcePages.length) {
+              q.sourcePages = [pageIndex];
+            }
+          }
+          allRawQuestions.push(...batchQuestions);
+          if (Array.isArray(parsedOutput?.answerKeyEntries)) allRawAnswerKeyEntries.push(...parsedOutput.answerKeyEntries);
+          if (Array.isArray(parsedOutput?.solutions)) allRawSolutions.push(...parsedOutput.solutions);
+          if (Array.isArray(parsedOutput?.topicGridEntries)) allRawTopicGridEntries.push(...parsedOutput.topicGridEntries);
+          processedPages.push(pageIndex);
+          console.log(`[geminiVisionExtractor] Successfully recovered Page ${pageIndex} with ${batchQuestions.length} question(s)!`);
+        } else {
+          failedPages.push(pageIndex);
+        }
+      } catch (retryErr) {
+        console.error(`[geminiVisionExtractor] Sequential recovery failed for Page ${pageIndex}:`, retryErr.message);
+        failedPages.push(pageIndex);
+      }
+    }
+  }
+
+  // Detect and repair accidental restart of numbering from 1 on multi-page documents
+  const questionsByPage = new Map();
+  for (const q of allRawQuestions) {
+    const p = (Array.isArray(q.sourcePages) && q.sourcePages[0]) || 1;
+    if (!questionsByPage.has(p)) questionsByPage.set(p, []);
+    questionsByPage.get(p).push(q);
+  }
+
+  const sortedPageNumbers = Array.from(questionsByPage.keys()).sort((a, b) => a - b);
+  let highestNumberedQuestionSoFar = 0;
+
+  for (const p of sortedPageNumbers) {
+    const pageQs = questionsByPage.get(p);
+    const nums = pageQs.map((q) => Number(q.questionNumber) || 0).filter((n) => n > 0);
+    if (!nums.length) continue;
+    const minNum = Math.min(...nums);
+    const maxNum = Math.max(...nums);
+
+    // If this page starts at 1, but we already processed previous pages with questions >= 10:
+    // This page incorrectly restarted numbering from 1!
+    if (p > 1 && minNum === 1 && maxNum <= 25 && highestNumberedQuestionSoFar >= 10) {
+      console.warn(`[geminiVisionExtractor] Page ${p} restarted numbering from 1 (${minNum}..${maxNum}). Re-indexing after Q${highestNumberedQuestionSoFar}...`);
+      for (const q of pageQs) {
+        const oldNum = Number(q.questionNumber);
+        if (oldNum > 0) {
+          q.questionNumber = highestNumberedQuestionSoFar + oldNum;
+        }
+      }
+      highestNumberedQuestionSoFar += maxNum;
+    } else {
+      if (maxNum > highestNumberedQuestionSoFar) {
+        highestNumberedQuestionSoFar = maxNum;
+      }
+    }
+  }
+
   // Helper to merge duplicate instances of questions across batch boundaries
   function mergeQuestionInstances(q1, q2) {
     const text1 = (q1.questionText || '').trim();
@@ -529,8 +678,16 @@ Examine the page content carefully and extract all sections present on this page
         bestText = text1;
       } else if (text2.includes(text1)) {
         bestText = text2;
+      } else if (text2.toLowerCase().startsWith('continuation of') || text2.toLowerCase().startsWith('diagram')) {
+        bestText = text1;
+      } else if (text1.toLowerCase().startsWith('continuation of') || text1.toLowerCase().startsWith('diagram')) {
+        bestText = text2;
+      } else if (text2.length < 30 && text1.length >= 30) {
+        bestText = text1;
+      } else if (text1.length < 30 && text2.length >= 30) {
+        bestText = text2;
       } else {
-        // Question split across page boundary: merge continuation text without discarding either half
+        // Genuine split question across page boundary
         bestText = `${text1} ${text2}`.trim();
       }
     } else {
@@ -543,7 +700,6 @@ Examine the page content carefully and extract all sections present on this page
 
     const opts1 = Array.isArray(q1.options) ? q1.options : [];
     const opts2 = Array.isArray(q2.options) ? q2.options : [];
-    // Merge options by key across page breaks
     const optsMap = new Map();
     for (const opt of [...opts1, ...opts2]) {
       const key = (typeof opt === 'object' && opt && opt.key) ? String(opt.key).toUpperCase().trim() : '';
@@ -553,18 +709,22 @@ Examine the page content carefully and extract all sections present on this page
         optsMap.set(String(opt), opt);
       }
     }
-    const bestOptions = Array.from(optsMap.values());
+    const bestOptions = Array.from(optsMap.values()).sort((a, b) => {
+      const keyA = (a && a.key) ? String(a.key).toUpperCase() : '';
+      const keyB = (b && b.key) ? String(b.key).toUpperCase() : '';
+      return keyA.localeCompare(keyB);
+    });
 
     const vis1 = Array.isArray(q1.visualElements) ? q1.visualElements : [];
     const vis2 = Array.isArray(q2.visualElements) ? q2.visualElements : [];
     const combinedVis = [...vis1, ...vis2];
 
-    const subject = (q1.subject && q1.subject !== 'General') ? q1.subject : (q2.subject || 'General');
-    const chapter = (q1.chapter && q1.chapter !== 'General') ? q1.chapter : (q2.chapter || 'General');
-    const topic = (q1.topic && q1.topic !== 'General') ? q1.topic : (q2.topic || chapter || 'General');
+    const subject = (q1.subject && q1.subject !== 'General' && q1.subject.trim() !== '') ? q1.subject : (q2.subject || 'General');
+    const chapter = (q1.chapter && q1.chapter !== 'General' && q1.chapter.trim() !== '') ? q1.chapter : (q2.chapter || 'General');
+    const topic = (q1.topic && q1.topic !== 'General' && q1.topic.trim() !== '') ? q1.topic : (q2.topic || chapter || 'General');
 
     const isExplicitInteger = q1.questionType === 'integer' || q2.questionType === 'integer' || q1.questionType === 'numerical' || q2.questionType === 'numerical';
-    const questionType = isExplicitInteger ? 'integer' : (q1.questionType || q2.questionType || 'mcq');
+    const questionType = isExplicitInteger ? 'integer' : (bestOptions.length > 0 ? 'mcq' : (q1.questionType || q2.questionType || 'mcq'));
     const numericAnswer = q1.numericAnswer || q2.numericAnswer || null;
 
     return {
@@ -745,6 +905,44 @@ Examine the page content carefully and extract all sections present on this page
     const pageB = (Array.isArray(b.sourcePages) && b.sourcePages[0]) || 0;
     return pageA - pageB;
   });
+
+  // Standard Subject Normalization & Question Type Alignment for Indian Competitive Exams
+  const totalQuestionsDetected = rawQuestions.length;
+  const maxQNum = Math.max(0, ...rawQuestions.map((q) => Number(q.questionNumber) || 0));
+  const isJee75 = (totalQuestionsDetected >= 70 && totalQuestionsDetected <= 80) || (maxQNum >= 70 && maxQNum <= 75);
+  const isJee90 = (totalQuestionsDetected >= 85 && totalQuestionsDetected <= 95) || (maxQNum >= 85 && maxQNum <= 90);
+  const isNeet180 = (totalQuestionsDetected >= 170 && totalQuestionsDetected <= 190) || (maxQNum >= 170 && maxQNum <= 180);
+
+  let forwardSubject = 'Mathematics';
+  for (const rawQ of rawQuestions) {
+    const qNum = Number(rawQ.questionNumber) || 0;
+    if (isJee75) {
+      if (qNum >= 1 && qNum <= 25) rawQ.subject = 'Mathematics';
+      else if (qNum >= 26 && qNum <= 50) rawQ.subject = 'Physics';
+      else if (qNum >= 51 && qNum <= 75) rawQ.subject = 'Chemistry';
+
+      // Ensure last 5 questions of each subject are integer type if they have no options
+      if ([21, 22, 23, 24, 25, 46, 47, 48, 49, 50, 71, 72, 73, 74, 75].includes(qNum)) {
+        if (!rawQ.options || rawQ.options.length === 0) {
+          rawQ.questionType = 'integer';
+        }
+      }
+    } else if (isJee90) {
+      if (qNum >= 1 && qNum <= 30) rawQ.subject = 'Mathematics';
+      else if (qNum >= 31 && qNum <= 60) rawQ.subject = 'Physics';
+      else if (qNum >= 61 && qNum <= 90) rawQ.subject = 'Chemistry';
+    } else if (isNeet180) {
+      if (qNum >= 1 && qNum <= 90) rawQ.subject = 'Biology';
+      else if (qNum >= 91 && qNum <= 135) rawQ.subject = 'Physics';
+      else if (qNum >= 136 && qNum <= 180) rawQ.subject = 'Chemistry';
+    } else {
+      if (rawQ.subject && rawQ.subject !== 'General' && rawQ.subject.trim() !== '') {
+        forwardSubject = rawQ.subject;
+      } else {
+        rawQ.subject = forwardSubject;
+      }
+    }
+  }
 
   // If document was an Answer Key / Solution / Topic Grid PDF with no separate question statements:
   if (!rawQuestions.length) {
