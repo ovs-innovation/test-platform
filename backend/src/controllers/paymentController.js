@@ -14,10 +14,169 @@ import {
   fulfillPaymentOrder,
   markPaymentFailed,
 } from '../services/paymentFulfillmentService.js';
+import { toPaise, requireDate, requireRequestKey } from '../utils/paymentValidation.js';
 
 const getRazorpay = () => {
   if (!env.razorpay.keyId || !env.razorpay.keySecret) return null;
   return new Razorpay({ key_id: env.razorpay.keyId, key_secret: env.razorpay.keySecret });
+};
+
+const validPaymentModes = ['cash', 'direct_upi', 'bank_transfer', 'other'];
+
+const getEnrollmentFeeSummaries = async ({ userId = null, enrollmentId = null } = {}) => {
+  const result = await query(
+    `SELECT
+       se.id AS enrollment_id,
+       se.user_id,
+       se.test_series_id,
+       se.status AS enrollment_status,
+       u.name AS user_name,
+       u.email AS user_email,
+       sp.phone AS user_phone,
+       ts.title AS series_title,
+       ts.slug AS series_slug,
+       mf.id AS fee_record_id,
+       mf.agreed_fee_paise,
+       mf.next_due_date,
+       mf.notes AS fee_notes,
+       COALESCE(online.online_paid_paise, 0)::bigint AS online_paid_paise,
+       COALESCE(online.phonepe_paid_paise, 0)::bigint AS phonepe_paid_paise,
+       COALESCE(online.online_payment_count, 0)::int AS online_payment_count,
+       COALESCE(manual.manual_paid_paise, 0)::bigint AS manual_paid_paise,
+       COALESCE(manual.manual_payment_count, 0)::int AS manual_payment_count,
+       GREATEST(online.last_online_payment_date, manual.last_manual_payment_date) AS last_payment_date,
+       COALESCE(history.entries, '[]'::json) AS history,
+       CASE
+         WHEN online.online_payment_count > 0 AND manual.manual_paid_paise > 0 THEN 'mixed'
+         WHEN online.online_payment_count > 0 THEN 'online'
+         ELSE 'manual'
+       END AS source,
+       COALESCE(
+         mf.agreed_fee_paise,
+         NULLIF(online.online_paid_paise, 0),
+         ROUND(ts.price * 100)::bigint,
+         0
+       ) AS total_fee_paise
+     FROM student_enrollments se
+     JOIN users u ON u.id = se.user_id
+     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     JOIN test_series ts ON ts.id = se.test_series_id
+     LEFT JOIN manual_fee_records mf ON mf.enrollment_id = se.id
+     LEFT JOIN LATERAL (
+       SELECT
+         SUM(ROUND(p.amount * 100)::bigint) AS online_paid_paise,
+         SUM(ROUND(p.amount * 100)::bigint) FILTER (WHERE p.provider = 'phonepe') AS phonepe_paid_paise,
+         COUNT(*)::int AS online_payment_count,
+         MAX(p.created_at::date) AS last_online_payment_date
+       FROM payments p
+       WHERE p.enrollment_id = se.id AND p.status = 'success'
+     ) online ON TRUE
+     LEFT JOIN LATERAL (
+       SELECT
+         SUM(e.amount_paise)::bigint AS manual_paid_paise,
+         COUNT(*) FILTER (WHERE e.entry_type = 'payment')::int AS manual_payment_count,
+         MAX(e.paid_at) FILTER (
+           WHERE e.entry_type = 'payment'
+             AND NOT EXISTS (
+               SELECT 1 FROM manual_payment_entries reversal
+               WHERE reversal.reversed_entry_id = e.id
+             )
+         ) AS last_manual_payment_date
+       FROM manual_payment_entries e
+       WHERE e.fee_record_id = mf.id
+     ) manual ON TRUE
+     LEFT JOIN LATERAL (
+       SELECT json_agg(
+         json_build_object(
+           'id', h.id,
+           'source', h.source,
+           'entry_type', h.entry_type,
+           'amount_paise', h.amount_paise,
+           'payment_date', h.payment_date,
+           'payment_mode', h.payment_mode,
+           'reference', h.reference,
+           'notes', h.notes,
+           'correction_reason', h.correction_reason,
+           'reversed_entry_id', h.reversed_entry_id,
+           'replaces_entry_id', h.replaces_entry_id,
+           'admin_name', h.admin_name,
+           'provider', h.provider,
+           'status', h.status
+         ) ORDER BY h.sort_date DESC, h.id DESC
+       ) AS entries
+       FROM (
+         SELECT
+           p.id,
+           'online'::text AS source,
+           'payment'::text AS entry_type,
+           ROUND(p.amount * 100)::bigint AS amount_paise,
+           p.created_at::date AS payment_date,
+           NULL::text AS payment_mode,
+           COALESCE(p.provider_payment_id, p.merchant_order_id, p.razorpay_payment_id)::text AS reference,
+           NULL::text AS notes,
+           NULL::text AS correction_reason,
+           NULL::bigint AS reversed_entry_id,
+           NULL::bigint AS replaces_entry_id,
+           NULL::text AS admin_name,
+           p.provider::text AS provider,
+           p.status::text AS status,
+           p.created_at AS sort_date
+         FROM payments p
+         WHERE p.enrollment_id = se.id AND p.status = 'success'
+         UNION ALL
+         SELECT
+           e.id,
+           'manual'::text AS source,
+           e.entry_type,
+           e.amount_paise,
+           e.paid_at AS payment_date,
+           e.payment_mode,
+           e.reference,
+           e.notes,
+           e.correction_reason,
+           e.reversed_entry_id,
+           e.replaces_entry_id,
+           admin_user.name AS admin_name,
+           NULL::text AS provider,
+           e.entry_type::text AS status,
+           COALESCE(e.paid_at::timestamp, e.created_at) AS sort_date
+         FROM manual_payment_entries e
+         JOIN manual_fee_records record ON record.id = e.fee_record_id
+         JOIN users admin_user ON admin_user.id = e.admin_id
+         WHERE record.enrollment_id = se.id
+       ) h
+     ) history ON TRUE
+     WHERE (online.online_payment_count > 0 OR mf.id IS NOT NULL)
+       AND ($1::integer IS NULL OR se.user_id = $1)
+       AND ($2::integer IS NULL OR se.id = $2)
+     ORDER BY COALESCE(history.entries->0->>'payment_date', se.purchased_at::date::text) DESC, se.id DESC`,
+    [userId, enrollmentId]
+  );
+
+  return result.rows.map((row) => {
+    const onlinePaid = Number(row.online_paid_paise || 0);
+    const manualPaid = Number(row.manual_paid_paise || 0);
+    const totalPaid = onlinePaid + manualPaid;
+    const totalFee = Number(row.total_fee_paise || 0);
+    const remainingFee = Math.max(totalFee - totalPaid, 0);
+    return {
+      ...row,
+      is_fee_summary: true,
+      total_fee_paise: totalFee,
+      online_paid_paise: onlinePaid,
+      phonepe_paid_paise: Number(row.phonepe_paid_paise || 0),
+      manual_paid_paise: manualPaid,
+      total_paid_paise: totalPaid,
+      remaining_fee_paise: remainingFee,
+      source: Number(row.online_payment_count || 0) > 0 && manualPaid > 0
+        ? 'mixed'
+        : Number(row.online_payment_count || 0) > 0
+          ? 'online'
+          : 'manual',
+      status: totalPaid >= totalFee ? 'fully_paid' : totalPaid > 0 ? 'partially_paid' : 'unpaid',
+      history: Array.isArray(row.history) ? row.history : [],
+    };
+  });
 };
 
 /**
@@ -739,27 +898,41 @@ export const razorpayWebhook = async (req, res) => {
  * GET /api/payments/history — student view
  */
 export const paymentHistory = asyncHandler(async (req, res) => {
-  const result = await query(
-    `SELECT p.*,
-            ts.title AS series_title,
-            ts.slug AS series_slug,
-            ts.validity_days
-     FROM payments p
-     LEFT JOIN test_series ts ON ts.id = p.test_series_id
-     WHERE p.user_id = $1
-     ORDER BY p.created_at DESC`,
-    [req.user.id]
-  );
-  res.json({ payments: result.rows });
+  const [result, feeSummaries] = await Promise.all([
+    query(
+      `SELECT p.*,
+              ts.title AS series_title,
+              ts.slug AS series_slug,
+              ts.validity_days
+       FROM payments p
+       LEFT JOIN test_series ts ON ts.id = p.test_series_id
+       WHERE p.user_id = $1
+       ORDER BY p.created_at DESC`,
+      [req.user.id]
+    ),
+    getEnrollmentFeeSummaries({ userId: req.user.id }),
+  ]);
+  res.json({ payments: result.rows, fee_summaries: feeSummaries });
 });
 
 /**
  * GET /api/payments/admin — admin revenue & transactions
  */
 export const adminPayments = asyncHandler(async (_req, res) => {
-  const [payments, revenue] = await Promise.all([
+  const [feeSummaries, attempts, revenue, unmatchedRevenue] = await Promise.all([
+    getEnrollmentFeeSummaries(),
     query(
       `SELECT p.*,
+              p.enrollment_id,
+              ROUND(p.amount * 100)::bigint AS amount_paise,
+              'online'::text AS source,
+              false AS is_fee_summary,
+              NULL::bigint AS total_fee_paise,
+              NULL::bigint AS total_paid_paise,
+              NULL::bigint AS remaining_fee_paise,
+              NULL::date AS next_due_date,
+              NULL::date AS last_payment_date,
+              CASE WHEN p.status = 'success' THEN 'fully_paid' ELSE p.status END AS fee_status,
               ts.title AS series_title,
               ts.slug AS series_slug,
               u.name AS user_name,
@@ -770,6 +943,7 @@ export const adminPayments = asyncHandler(async (_req, res) => {
        LEFT JOIN student_profiles sp ON sp.user_id = u.id
        LEFT JOIN test_series ts ON ts.id = p.test_series_id
        WHERE u.name IS NOT NULL
+         AND (p.status <> 'success' OR p.enrollment_id IS NULL)
        ORDER BY p.created_at DESC
        LIMIT 500`
     ),
@@ -783,8 +957,466 @@ export const adminPayments = asyncHandler(async (_req, res) => {
        FROM payments p
        JOIN users u ON u.id = p.user_id`
     ),
+    query(
+      `SELECT
+         COALESCE(SUM(ROUND(amount * 100)::bigint) FILTER (WHERE status = 'success'), 0)::bigint AS total_paise,
+         COALESCE(SUM(ROUND(amount * 100)::bigint) FILTER (WHERE status = 'success' AND provider = 'phonepe'), 0)::bigint AS phonepe_paise
+       FROM payments
+       WHERE enrollment_id IS NULL`
+    ),
   ]);
-  res.json({ payments: payments.rows, summary: revenue.rows[0] });
+  const unmatchedOnline = Number(unmatchedRevenue.rows[0]?.total_paise || 0);
+  const unmatchedPhonePe = Number(unmatchedRevenue.rows[0]?.phonepe_paise || 0);
+  const onlineCollection = feeSummaries.reduce((total, item) => total + item.online_paid_paise, 0);
+  const phonepeCollection = feeSummaries.reduce((total, item) => total + item.phonepe_paid_paise, 0);
+  const manualCollection = feeSummaries.reduce((total, item) => total + item.manual_paid_paise, 0);
+  const outstanding = feeSummaries.reduce((total, item) => total + item.remaining_fee_paise, 0);
+
+  res.json({
+    payments: [
+       ...feeSummaries,
+       ...attempts.rows.map((row) => ({
+         ...row,
+         status: row.status === 'success' ? 'fully_paid' : row.status,
+         source: 'online',
+       })),
+    ],
+    summary: {
+       ...revenue.rows[0],
+       total: (onlineCollection + unmatchedOnline + manualCollection) / 100,
+       collected_paise: onlineCollection + unmatchedOnline + manualCollection,
+       online_collected_paise: onlineCollection + unmatchedOnline,
+       phonepe_collected_paise: phonepeCollection + unmatchedPhonePe,
+       manual_collected_paise: manualCollection,
+       outstanding_paise: outstanding,
+       fee_records: feeSummaries.length,
+    },
+  });
+});
+
+/**
+ * GET /api/payments/admin/options — registered students and courses for manual billing.
+ */
+export const adminManualPaymentOptions = asyncHandler(async (_req, res) => {
+  const [students, courses, existing] = await Promise.all([
+    query(
+       `SELECT u.id, u.name, u.email, sp.phone
+        FROM users u
+        LEFT JOIN student_profiles sp ON sp.user_id = u.id
+        WHERE u.role::text IN ('candidate', 'student')
+        ORDER BY LOWER(u.name), u.id`
+    ),
+    query(
+       `SELECT id, title, price, validity_days, is_active
+        FROM test_series
+        ORDER BY is_active DESC, display_order ASC, LOWER(title)`
+    ),
+    query(
+       `SELECT se.user_id, se.test_series_id
+        FROM manual_fee_records mf
+        JOIN student_enrollments se ON se.id = mf.enrollment_id`
+    ),
+  ]);
+  res.json({
+    students: students.rows,
+    courses: courses.rows,
+    existing_manual_records: existing.rows,
+  });
+});
+
+/**
+ * GET /api/payments/admin/manual/:id — summary and immutable payment/audit history.
+ */
+export const adminManualPaymentDetail = asyncHandler(async (req, res) => {
+  const feeRecordId = Number(req.params.id);
+  if (!Number.isSafeInteger(feeRecordId) || feeRecordId <= 0) {
+    throw ApiError.badRequest('Invalid manual fee record id');
+  }
+  const result = await query(
+    `SELECT mf.*, se.user_id, se.test_series_id,
+             u.name AS user_name, u.email AS user_email,
+             ts.title AS series_title
+     FROM manual_fee_records mf
+     JOIN student_enrollments se ON se.id = mf.enrollment_id
+     JOIN users u ON u.id = se.user_id
+     JOIN test_series ts ON ts.id = se.test_series_id
+     WHERE mf.id = $1`,
+    [feeRecordId]
+  );
+  if (!result.rowCount) throw ApiError.notFound('Manual fee record not found');
+  const summary = (await getEnrollmentFeeSummaries({ enrollmentId: result.rows[0].enrollment_id }))[0];
+  res.json({ payment: { ...result.rows[0], ...summary } });
+});
+
+/**
+ * POST /api/payments/admin/manual — create one fee record and its initial installment atomically.
+ */
+export const adminCreateManualPayment = asyncHandler(async (req, res) => {
+  const userId = Number(req.body.user_id);
+  const testSeriesId = Number(req.body.test_series_id);
+  if (!Number.isSafeInteger(userId) || userId <= 0 || !Number.isSafeInteger(testSeriesId) || testSeriesId <= 0) {
+    throw ApiError.badRequest('A registered student and course are required');
+  }
+  const agreedFeePaise = toPaise(req.body.total_fee, 'Total agreed fee');
+  const receivedPaise = toPaise(req.body.amount_received ?? '0', 'Amount received now', { allowZero: true });
+  if (receivedPaise > agreedFeePaise) {
+    throw ApiError.badRequest('Amount received now cannot exceed the total agreed fee');
+  }
+  const paidAt = receivedPaise > 0 ? requireDate(req.body.payment_date, 'Payment date') : null;
+  const paymentMode = receivedPaise > 0 ? String(req.body.payment_mode || '') : null;
+  if (receivedPaise > 0 && !validPaymentModes.includes(paymentMode)) {
+    throw ApiError.badRequest('Select a valid payment mode');
+  }
+  const requestKey = requireRequestKey(req.body.request_key);
+  const nextDueDate = requireDate(req.body.next_due_date, 'Next payment due date', { optional: true });
+  const reference = String(req.body.reference || '').trim().slice(0, 160);
+  const notes = String(req.body.notes || '').trim().slice(0, 2000);
+
+  const existingRequest = await query(
+    `SELECT mf.id, mf.enrollment_id, se.user_id, se.test_series_id
+     FROM manual_fee_records mf
+     JOIN student_enrollments se ON se.id = mf.enrollment_id
+     WHERE mf.create_request_key = $1`,
+    [requestKey]
+  );
+  if (existingRequest.rowCount) {
+    if (Number(existingRequest.rows[0].user_id) !== userId || Number(existingRequest.rows[0].test_series_id) !== testSeriesId) {
+      throw ApiError.conflict('This request key has already been used for another fee record');
+    }
+    const summary = (await getEnrollmentFeeSummaries({ enrollmentId: existingRequest.rows[0].enrollment_id }))[0];
+    return res.status(200).json({ success: true, duplicate: true, payment: summary });
+  }
+
+  const result = await withTransaction(async (client) => {
+    await client.query('SELECT pg_advisory_xact_lock($1::integer, $2::integer)', [userId, testSeriesId]);
+    const [student, course] = await Promise.all([
+       client.query(
+         `SELECT id FROM users WHERE id = $1 AND role::text IN ('candidate', 'student') FOR SHARE`,
+         [userId]
+       ),
+       client.query(
+         `SELECT id, validity_days FROM test_series WHERE id = $1 FOR SHARE`,
+         [testSeriesId]
+       ),
+    ]);
+    if (!student.rowCount) throw ApiError.notFound('Registered student not found');
+    if (!course.rowCount) throw ApiError.notFound('Course not found');
+
+    const pending = await client.query(
+       `SELECT id FROM payments
+        WHERE user_id = $1 AND test_series_id = $2
+          AND status = 'pending' AND provider IN ('phonepe', 'razorpay')
+        LIMIT 1`,
+       [userId, testSeriesId]
+    );
+    if (pending.rowCount) {
+       throw ApiError.conflict('This student has a pending online payment for this course. Reconcile it before recording a manual fee.');
+    }
+
+    const validityDays = Number(course.rows[0].validity_days) || 365;
+    const enrollment = await client.query(
+       `INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at)
+        VALUES ($1, $2, 'active', NOW(), NOW() + ($3::text || ' days')::interval)
+        ON CONFLICT (user_id, test_series_id)
+        DO UPDATE SET
+          status = 'active',
+          expires_at = CASE
+            WHEN student_enrollments.status <> 'active' OR student_enrollments.expires_at <= NOW()
+            THEN EXCLUDED.expires_at
+            ELSE student_enrollments.expires_at
+          END
+        RETURNING id`,
+       [userId, testSeriesId, validityDays]
+    );
+    const enrollmentId = enrollment.rows[0]?.id;
+    if (!enrollmentId) throw ApiError.internal('Unable to create or locate course enrollment');
+
+    const onlineResult = await client.query(
+       `SELECT COALESCE(SUM(ROUND(amount * 100)::bigint), 0)::bigint AS paid
+        FROM payments
+        WHERE enrollment_id = $1 AND status = 'success'`,
+       [enrollmentId]
+    );
+    const onlinePaidPaise = Number(onlineResult.rows[0].paid || 0);
+    if (onlinePaidPaise + receivedPaise > agreedFeePaise) {
+       throw ApiError.badRequest('The amount received would exceed the remaining fee after verified online payments');
+    }
+
+    const feeRecord = await client.query(
+       `INSERT INTO manual_fee_records (
+          enrollment_id, agreed_fee_paise, next_due_date, notes,
+          create_request_key, created_by_id, updated_by_id
+        ) VALUES ($1, $2, $3, $4, $5, $6, $6)
+        ON CONFLICT (enrollment_id) DO NOTHING
+        RETURNING *`,
+       [enrollmentId, agreedFeePaise, nextDueDate, notes, requestKey, req.user.id]
+    );
+    if (!feeRecord.rowCount) {
+       const idempotent = await client.query(
+         'SELECT id FROM manual_fee_records WHERE create_request_key = $1 AND enrollment_id = $2',
+         [requestKey, enrollmentId]
+       );
+       if (idempotent.rowCount) return { enrollmentId, duplicate: true };
+       const duplicate = await client.query(
+         'SELECT id FROM manual_fee_records WHERE enrollment_id = $1',
+         [enrollmentId]
+       );
+       if (duplicate.rowCount) throw ApiError.conflict('A manual fee record already exists for this student and course');
+       throw ApiError.conflict('A manual fee record already exists for this enrollment');
+    }
+
+    if (receivedPaise > 0) {
+       await client.query(
+         `INSERT INTO manual_payment_entries (
+            fee_record_id, entry_type, amount_paise, payment_mode, paid_at, reference,
+            notes, idempotency_key, admin_id
+          ) VALUES ($1, 'payment', $2, $3, $4, $5, $6, $7, $8)`,
+         [
+           feeRecord.rows[0].id,
+           receivedPaise,
+           paymentMode,
+           paidAt,
+           reference || null,
+           notes,
+           `${requestKey}:initial`,
+           req.user.id,
+         ]
+       );
+    }
+    await client.query(
+       'UPDATE manual_fee_records SET updated_at = NOW(), updated_by_id = $1 WHERE id = $2',
+       [req.user.id, feeRecord.rows[0].id]
+    );
+    return { enrollmentId, duplicate: false };
+  });
+
+  const summary = (await getEnrollmentFeeSummaries({ enrollmentId: result.enrollmentId }))[0];
+  res.status(result.duplicate ? 200 : 201).json({ success: true, duplicate: result.duplicate, payment: summary });
+});
+
+/**
+ * POST /api/payments/admin/manual/:id/installments — append an immutable installment.
+ */
+export const adminAddManualInstallment = asyncHandler(async (req, res) => {
+  const feeRecordId = Number(req.params.id);
+  if (!Number.isSafeInteger(feeRecordId) || feeRecordId <= 0) {
+    throw ApiError.badRequest('Invalid manual fee record id');
+  }
+  const requestKey = requireRequestKey(req.body.request_key);
+  const amountPaise = toPaise(req.body.amount_received, 'New Amount Received');
+  const paidAt = requireDate(req.body.payment_date, 'Payment date');
+  const paymentMode = String(req.body.payment_mode || '');
+  if (!validPaymentModes.includes(paymentMode)) throw ApiError.badRequest('Select a valid payment mode');
+  const reference = String(req.body.reference || '').trim().slice(0, 160);
+  const notes = String(req.body.notes || '').trim().slice(0, 2000);
+
+  const duplicate = await query(
+    'SELECT fee_record_id FROM manual_payment_entries WHERE idempotency_key = $1',
+    [requestKey]
+  );
+  if (duplicate.rowCount) {
+    if (Number(duplicate.rows[0].fee_record_id) !== feeRecordId) {
+       throw ApiError.conflict('This request key has already been used for another payment');
+    }
+    const summary = (await query('SELECT enrollment_id FROM manual_fee_records WHERE id = $1', [feeRecordId]));
+    const payment = summary.rowCount
+       ? (await getEnrollmentFeeSummaries({ enrollmentId: summary.rows[0].enrollment_id }))[0]
+       : null;
+    return res.status(200).json({ success: true, duplicate: true, payment });
+  }
+
+  const enrollmentId = await withTransaction(async (client) => {
+    const recordResult = await client.query(
+       `SELECT mf.*, se.user_id, se.test_series_id
+        FROM manual_fee_records mf
+        JOIN student_enrollments se ON se.id = mf.enrollment_id
+        WHERE mf.id = $1
+        FOR UPDATE OF mf, se`,
+       [feeRecordId]
+    );
+    if (!recordResult.rowCount) throw ApiError.notFound('Manual fee record not found');
+    const record = recordResult.rows[0];
+    const duplicateWithinTransaction = await client.query(
+      'SELECT fee_record_id FROM manual_payment_entries WHERE idempotency_key = $1',
+      [requestKey]
+    );
+    if (duplicateWithinTransaction.rowCount) {
+      if (Number(duplicateWithinTransaction.rows[0].fee_record_id) !== feeRecordId) {
+        throw ApiError.conflict('This request key has already been used for another payment');
+      }
+      return { enrollmentId: record.enrollment_id, duplicate: true };
+    }
+    const [onlineResult, manualResult] = await Promise.all([
+       client.query(
+         `SELECT COALESCE(SUM(ROUND(amount * 100)::bigint), 0)::bigint AS paid
+          FROM payments WHERE enrollment_id = $1 AND status = 'success'`,
+         [record.enrollment_id]
+       ),
+       client.query(
+         'SELECT COALESCE(SUM(amount_paise), 0)::bigint AS paid FROM manual_payment_entries WHERE fee_record_id = $1',
+         [feeRecordId]
+       ),
+    ]);
+    const alreadyPaid = Number(onlineResult.rows[0].paid || 0) + Number(manualResult.rows[0].paid || 0);
+    if (amountPaise > Number(record.agreed_fee_paise) - alreadyPaid) {
+       throw ApiError.badRequest('New Amount Received cannot exceed the remaining fee');
+    }
+    await client.query(
+       `INSERT INTO manual_payment_entries (
+          fee_record_id, entry_type, amount_paise, payment_mode, paid_at, reference,
+          notes, idempotency_key, admin_id
+        ) VALUES ($1, 'payment', $2, $3, $4, $5, $6, $7, $8)`,
+       [feeRecordId, amountPaise, paymentMode, paidAt, reference || null, notes, requestKey, req.user.id]
+    );
+    await client.query(
+       'UPDATE manual_fee_records SET updated_at = NOW(), updated_by_id = $1 WHERE id = $2',
+       [req.user.id, feeRecordId]
+    );
+    return { enrollmentId: record.enrollment_id, duplicate: false };
+  });
+  const payment = (await getEnrollmentFeeSummaries({ enrollmentId: enrollmentId.enrollmentId }))[0];
+  res.status(enrollmentId.duplicate ? 200 : 201).json({ success: true, duplicate: enrollmentId.duplicate, payment });
+});
+
+/**
+ * POST /api/payments/admin/manual/:id/corrections — reverse and optionally replace an entry.
+ */
+export const adminCorrectManualInstallment = asyncHandler(async (req, res) => {
+  const feeRecordId = Number(req.params.id);
+  const entryId = Number(req.body.entry_id);
+  const requestKey = requireRequestKey(req.body.request_key);
+  const reason = String(req.body.reason || '').trim();
+  if (!Number.isSafeInteger(feeRecordId) || feeRecordId <= 0 || !Number.isSafeInteger(entryId) || entryId <= 0) {
+    throw ApiError.badRequest('A valid manual payment entry is required');
+  }
+  if (reason.length < 5 || reason.length > 1000) {
+    throw ApiError.badRequest('Correction reason is required (5 to 1000 characters)');
+  }
+  const replacementPaise = toPaise(req.body.replacement_amount ?? '0', 'Replacement amount', { allowZero: true });
+  const paidAt = replacementPaise > 0 ? requireDate(req.body.payment_date, 'Replacement payment date') : null;
+  const paymentMode = replacementPaise > 0 ? String(req.body.payment_mode || '') : null;
+  if (replacementPaise > 0 && !validPaymentModes.includes(paymentMode)) {
+    throw ApiError.badRequest('Select a valid payment mode for the replacement payment');
+  }
+  const reference = String(req.body.reference || '').trim().slice(0, 160);
+  const notes = String(req.body.notes || '').trim().slice(0, 2000);
+  const correctionKey = `${requestKey}:reversal`;
+
+  const duplicate = await query(
+    'SELECT fee_record_id FROM manual_payment_entries WHERE idempotency_key = $1',
+    [correctionKey]
+  );
+  if (duplicate.rowCount) {
+    if (Number(duplicate.rows[0].fee_record_id) !== feeRecordId) {
+       throw ApiError.conflict('This request key has already been used for another payment');
+    }
+    const record = await query('SELECT enrollment_id FROM manual_fee_records WHERE id = $1', [feeRecordId]);
+    const payment = record.rowCount
+       ? (await getEnrollmentFeeSummaries({ enrollmentId: record.rows[0].enrollment_id }))[0]
+       : null;
+    return res.status(200).json({ success: true, duplicate: true, payment });
+  }
+
+  const enrollmentId = await withTransaction(async (client) => {
+    const recordResult = await client.query(
+       `SELECT mf.*, se.id AS enrollment_id
+        FROM manual_fee_records mf
+        JOIN student_enrollments se ON se.id = mf.enrollment_id
+        WHERE mf.id = $1
+        FOR UPDATE OF mf, se`,
+       [feeRecordId]
+    );
+    if (!recordResult.rowCount) throw ApiError.notFound('Manual fee record not found');
+    const record = recordResult.rows[0];
+    const duplicateWithinTransaction = await client.query(
+      'SELECT fee_record_id FROM manual_payment_entries WHERE idempotency_key = $1',
+      [correctionKey]
+    );
+    if (duplicateWithinTransaction.rowCount) {
+      if (Number(duplicateWithinTransaction.rows[0].fee_record_id) !== feeRecordId) {
+        throw ApiError.conflict('This request key has already been used for another payment');
+      }
+      return { enrollmentId: record.enrollment_id, duplicate: true };
+    }
+    const entryResult = await client.query(
+       `SELECT e.*,
+               EXISTS (
+                 SELECT 1 FROM manual_payment_entries reversal WHERE reversal.reversed_entry_id = e.id
+               ) AS already_reversed
+        FROM manual_payment_entries e
+        WHERE e.id = $1 AND e.fee_record_id = $2 AND e.entry_type = 'payment'
+        FOR UPDATE`,
+       [entryId, feeRecordId]
+    );
+    if (!entryResult.rowCount) throw ApiError.notFound('Manual payment entry not found');
+    const original = entryResult.rows[0];
+    if (original.already_reversed) throw ApiError.conflict('This manual payment has already been corrected');
+
+    const [onlineResult, manualResult] = await Promise.all([
+       client.query(
+         `SELECT COALESCE(SUM(ROUND(amount * 100)::bigint), 0)::bigint AS paid
+          FROM payments WHERE enrollment_id = $1 AND status = 'success'`,
+         [record.enrollment_id]
+       ),
+       client.query(
+         'SELECT COALESCE(SUM(amount_paise), 0)::bigint AS paid FROM manual_payment_entries WHERE fee_record_id = $1',
+         [feeRecordId]
+       ),
+    ]);
+    const correctedTotal = Number(onlineResult.rows[0].paid || 0)
+       + Number(manualResult.rows[0].paid || 0)
+       - Number(original.amount_paise)
+       + replacementPaise;
+    if (correctedTotal > Number(record.agreed_fee_paise)) {
+       throw ApiError.badRequest('The replacement amount would exceed the remaining fee');
+    }
+
+    await client.query(
+       `INSERT INTO manual_payment_entries (
+          fee_record_id, entry_type, amount_paise, payment_mode, paid_at, reference,
+          notes, correction_reason, reversed_entry_id, idempotency_key, admin_id
+        ) VALUES ($1, 'reversal', $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+       [
+         feeRecordId,
+         -Number(original.amount_paise),
+         original.payment_mode,
+         original.paid_at,
+         original.reference,
+         original.notes,
+         reason,
+         entryId,
+         correctionKey,
+         req.user.id,
+       ]
+    );
+    if (replacementPaise > 0) {
+       await client.query(
+         `INSERT INTO manual_payment_entries (
+            fee_record_id, entry_type, amount_paise, payment_mode, paid_at, reference,
+            notes, correction_reason, replaces_entry_id, idempotency_key, admin_id
+          ) VALUES ($1, 'payment', $2, $3, $4, $5, $6, $7, $8, $9, $10)`,
+         [
+           feeRecordId,
+           replacementPaise,
+           paymentMode,
+           paidAt,
+           reference || null,
+           notes,
+           reason,
+           entryId,
+           `${requestKey}:replacement`,
+           req.user.id,
+         ]
+       );
+    }
+    await client.query(
+       'UPDATE manual_fee_records SET updated_at = NOW(), updated_by_id = $1 WHERE id = $2',
+       [req.user.id, feeRecordId]
+    );
+    return { enrollmentId: record.enrollment_id, duplicate: false };
+  });
+  const payment = (await getEnrollmentFeeSummaries({ enrollmentId: enrollmentId.enrollmentId }))[0];
+  res.status(enrollmentId.duplicate ? 200 : 201).json({ success: true, duplicate: enrollmentId.duplicate, payment });
 });
 
 /**
@@ -797,6 +1429,10 @@ export const adminDeletePayment = asyncHandler(async (req, res) => {
   if (!payRes.rowCount) throw ApiError.notFound('Payment record not found');
   
   const payment = payRes.rows[0];
+
+  if (['phonepe', 'razorpay'].includes(payment.provider)) {
+    throw ApiError.conflict('Online gateway transaction records cannot be deleted');
+  }
 
   // Delete from payments. student_enrollments.payment_id has ON DELETE SET NULL
   await query('DELETE FROM payments WHERE id = $1', [id]);
@@ -828,6 +1464,16 @@ export const adminUpdatePaymentStatus = asyncHandler(async (req, res) => {
   const payRes = await query('SELECT * FROM payments WHERE id = $1', [id]);
   if (!payRes.rowCount) throw ApiError.notFound('Payment record not found');
   const payment = payRes.rows[0];
+
+  if (payment.provider === 'phonepe') {
+    throw ApiError.conflict('PhonePe payment status can only be changed by provider verification');
+  }
+  if (payment.provider === 'razorpay' && payment.status === 'success') {
+    throw ApiError.conflict('Verified online payment statuses cannot be changed manually');
+  }
+  if (payment.provider === 'razorpay' && status === 'success' && payment.status !== 'success') {
+    throw ApiError.conflict('Online payment status must be changed only by provider verification');
+  }
 
   if (status === 'success' && payment.status !== 'success') {
     // If transitioning to success, run standard idempotent fulfillment
@@ -862,4 +1508,3 @@ export const adminUpdatePaymentStatus = asyncHandler(async (req, res) => {
     status,
   });
 });
-

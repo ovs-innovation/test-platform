@@ -2,8 +2,10 @@ import { Link } from 'react-router-dom';
 import { Download, FileText } from 'lucide-react';
 import { getExamTheme, getSeriesBlurb, getSeriesClassBadge } from '../../lib/testSeriesCover.js';
 import { getMediaUrl, getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
+import { useFirstVisitStudentForm } from './FirstVisitStudentForm.jsx';
 
 export default function TestSeriesCard({ series }) {
+  const { requestDetails } = useFirstVisitStudentForm();
   const free = Number(series.price) === 0;
   const theme = getExamTheme(series);
   const blurb = getSeriesBlurb(series);
@@ -157,7 +159,10 @@ export default function TestSeriesCard({ series }) {
             <a
               href={getBrochureDownloadUrl(series)}
               download={series.brochure_name || `${series.title.replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
-              onClick={(e) => e.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation();
+                if (!requestDetails()) event.preventDefault();
+              }}
               className="inline-flex items-center gap-1 px-3 py-2 rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 hover:text-blue-600 text-[11px] font-extrabold transition shadow-2xs cursor-pointer"
               title={`Download Brochure (${series.brochure_name || 'PDF'})`}
             >

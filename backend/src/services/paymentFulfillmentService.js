@@ -118,6 +118,11 @@ export const fulfillPaymentOrder = async ({
       [payment.user_id, payment.test_series_id, payment.id, expires]
     );
 
+    await dbClient.query(
+      'UPDATE payments SET enrollment_id = $1 WHERE id = $2 AND enrollment_id IS DISTINCT FROM $1',
+      [enr.rows[0].id, payment.id]
+    );
+
     // 6. Notifications
     await dbClient.query(
       `INSERT INTO notifications (user_id, title, body, type)

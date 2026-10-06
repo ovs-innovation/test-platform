@@ -1,69 +1,130 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { paymentService, clearCache } from '../../lib/services.js';
-import { LoadingScreen, ErrorState, Badge } from '../../components/ui.jsx';
+import { LoadingScreen, ErrorState } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { formatDateTime } from '../../lib/format.js';
-import {
-  RefreshCw,
-  Search,
-  Trash2,
-  Check,
-  Copy,
-  AlertTriangle,
-  X,
-  CreditCard,
-  CheckCircle2,
-  ShieldCheck,
-} from 'lucide-react';
+import { Plus, RefreshCw, Search, History, Pencil, X } from 'lucide-react';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
+
+const PAYMENT_MODES = [
+  { value: 'cash', label: 'Cash' },
+  { value: 'direct_upi', label: 'Direct UPI' },
+  { value: 'bank_transfer', label: 'Bank Transfer' },
+  { value: 'other', label: 'Other' },
+];
+
+const MODE_LABELS = Object.fromEntries(PAYMENT_MODES.map((mode) => [mode.value, mode.label]));
+
+const today = () => {
+  const date = new Date();
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+};
+
+const money = (paise) => `₹${(Number(paise || 0) / 100).toLocaleString('en-IN', {
+  minimumFractionDigits: Number(paise || 0) % 100 ? 2 : 0,
+  maximumFractionDigits: 2,
+})}`;
+
+const statusLabel = {
+  fully_paid: 'Fully Paid',
+  partially_paid: 'Partially Paid',
+  unpaid: 'Unpaid',
+  pending: 'Pending',
+  failed: 'Failed',
+  refunded: 'Refunded',
+};
+
+const statusClasses = {
+  fully_paid: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300',
+  partially_paid: 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300',
+  unpaid: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
+  pending: 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300',
+  failed: 'bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300',
+  refunded: 'bg-violet-50 text-violet-700 dark:bg-violet-950/40 dark:text-violet-300',
+};
+
+const createRequestKey = () => crypto.randomUUID();
+
+function SourceBadge({ source, provider }) {
+  const label = source === 'mixed'
+    ? 'Mixed'
+    : source === 'manual'
+      ? 'Manual — Admin'
+      : provider === 'razorpay'
+        ? 'Online — Razorpay'
+        : 'Online — PhonePe';
+  const className = source === 'manual'
+    ? 'bg-amber-50 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300'
+    : source === 'mixed'
+      ? 'bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300'
+      : 'bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300';
+  return <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-extrabold ${className}`}>{label}</span>;
+}
+
+function PaymentStatus({ status }) {
+  return (
+    <span className={`inline-flex whitespace-nowrap rounded-full px-2.5 py-1 text-[10px] font-extrabold ${statusClasses[status] || statusClasses.unpaid}`}>
+      {statusLabel[status] || status}
+    </span>
+  );
+}
+
+const INITIAL_MANUAL_FORM = {
+  user_id: '',
+  test_series_id: '',
+  total_fee: '',
+  amount_received: '0',
+  payment_mode: 'cash',
+  payment_date: today(),
+  reference: '',
+  next_due_date: '',
+  notes: '',
+};
+
+const INITIAL_INSTALLMENT_FORM = {
+  amount_received: '',
+  payment_mode: 'cash',
+  payment_date: today(),
+  reference: '',
+  notes: '',
+};
 
 export default function AdminPayments() {
   const toast = useToast();
   const [data, setData] = useState(null);
   const [state, setState] = useState('loading');
-
-  // Filters & Search
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'success' | 'pending' | 'failed'
-
-  // Delete Action Modal
-  const [paymentToDelete, setPaymentToDelete] = useState(null);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [copiedId, setCopiedId] = useState(null);
+  const [sourceFilter, setSourceFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [addOpen, setAddOpen] = useState(false);
+  const [options, setOptions] = useState(null);
+  const [optionsLoading, setOptionsLoading] = useState(false);
+  const [manualForm, setManualForm] = useState(INITIAL_MANUAL_FORM);
+  const [saving, setSaving] = useState(false);
+  const [selectedPayment, setSelectedPayment] = useState(null);
+  const [detailLoading, setDetailLoading] = useState(false);
+  const [installmentForm, setInstallmentForm] = useState(INITIAL_INSTALLMENT_FORM);
+  const [correctingEntry, setCorrectingEntry] = useState(null);
+  const [correctionForm, setCorrectionForm] = useState({
+    replacement_amount: '',
+    payment_mode: 'cash',
+    payment_date: today(),
+    reference: '',
+    notes: '',
+    reason: '',
+  });
 
   const load = async (silent = false) => {
     if (!silent) setState('loading');
     try {
       clearCache('payment_admin');
-      const res = await paymentService.admin();
-      setData(res);
+      const result = await paymentService.admin();
+      setData(result);
       setState('done');
-    } catch {
+    } catch (error) {
       if (!silent) setState('error');
-    }
-  };
-
-  const handleCopy = (text, id) => {
-    if (!text) return;
-    navigator.clipboard?.writeText(text);
-    setCopiedId(id);
-    toast.success('Copied to clipboard');
-    setTimeout(() => setCopiedId(null), 1800);
-  };
-
-  const handleDeletePayment = async () => {
-    if (!paymentToDelete) return;
-    setIsDeleting(true);
-    try {
-      await paymentService.adminDelete(paymentToDelete.id);
-      toast.success(`Payment #${paymentToDelete.id} deleted successfully`);
-      setPaymentToDelete(null);
-      await load(true);
-    } catch (err) {
-      toast.error(err.message || 'Failed to delete payment record');
-    } finally {
-      setIsDeleting(false);
+      else toast.error(error?.message || 'Unable to refresh payment records');
     }
   };
 
@@ -71,488 +132,466 @@ export default function AdminPayments() {
     load();
   }, []);
 
-  // Filtered Payments List
+  useEffect(() => {
+    if (!addOpen || options) return;
+    setOptionsLoading(true);
+    paymentService.adminManualOptions()
+      .then(setOptions)
+      .catch((error) => toast.error(error?.message || 'Unable to load students and courses'))
+      .finally(() => setOptionsLoading(false));
+  }, [addOpen, options]);
+
+  const existingManualKeys = useMemo(
+    () => new Set((options?.existing_manual_records || []).map((record) => `${record.user_id}:${record.test_series_id}`)),
+    [options]
+  );
+
   const filteredPayments = useMemo(() => {
-    if (!data?.payments) return [];
-
-    return data.payments.filter((p) => {
-      // 1. Status Filter
-      if (statusFilter !== 'all' && p.status !== statusFilter) {
-        return false;
+    const payments = data?.payments || [];
+    const query = search.trim().toLowerCase();
+    return payments.filter((payment) => {
+      if (statusFilter !== 'all' && payment.status !== statusFilter) return false;
+      if (sourceFilter !== 'all' && payment.source !== sourceFilter) return false;
+      if (query) {
+        const searchable = [
+          payment.user_name,
+          payment.user_email,
+          payment.user_phone,
+          payment.series_title,
+          payment.merchant_order_id,
+          payment.provider_payment_id,
+        ].filter(Boolean).join(' ').toLowerCase();
+        if (!searchable.includes(query)) return false;
       }
-
-      // 2. Search Filter
-      if (search.trim()) {
-        const query = search.toLowerCase();
-        const studentName = (p.user_name || p.candidate_name || p.name || '').toLowerCase();
-        const studentEmail = (p.user_email || p.candidate_email || p.email || '').toLowerCase();
-        const studentPhone = (p.user_phone || '').toLowerCase();
-        const orderRef = (p.merchant_order_id || p.razorpay_order_id || '').toLowerCase();
-        const seriesTitle = (p.series_title || '').toLowerCase();
-        const idStr = String(p.id);
-
-        return (
-          studentName.includes(query) ||
-          studentEmail.includes(query) ||
-          studentPhone.includes(query) ||
-          orderRef.includes(query) ||
-          seriesTitle.includes(query) ||
-          idStr.includes(query)
-        );
-      }
-
       return true;
     });
-  }, [data?.payments, statusFilter, search]);
+  }, [data?.payments, search, sourceFilter, statusFilter]);
 
-  if (state === 'loading') return <LoadingScreen label="Loading revenue & gateway records…" />;
+  const selectedStudent = options?.students?.find((student) => String(student.id) === manualForm.user_id);
+  const selectedCourse = options?.courses?.find((course) => String(course.id) === manualForm.test_series_id);
+  const duplicateEnrollment = selectedStudent && selectedCourse
+    ? existingManualKeys.has(`${selectedStudent.id}:${selectedCourse.id}`)
+    : false;
+  const initialAmount = Number(manualForm.amount_received || 0);
+  const initialFee = Number(manualForm.total_fee || 0);
+  const initialRemaining = Math.max(initialFee - initialAmount, 0);
+
+  const openManualForm = () => {
+    setManualForm({ ...INITIAL_MANUAL_FORM, payment_date: today() });
+    setAddOpen(true);
+  };
+
+  const updateManualField = (field, value) => {
+    setManualForm((current) => {
+      const next = { ...current, [field]: value };
+      if (field === 'test_series_id') {
+        const course = options?.courses?.find((item) => String(item.id) === value);
+        next.total_fee = course ? String(Number(course.price || 0)) : '';
+      }
+      if (field === 'amount_received' && Number(value) === 0) {
+        next.payment_mode = 'cash';
+      }
+      return next;
+    });
+  };
+
+  const submitManualPayment = async (event) => {
+    event.preventDefault();
+    if (duplicateEnrollment) {
+      toast.error('A manual fee record already exists for this student and course.');
+      return;
+    }
+    setSaving(true);
+    try {
+      await paymentService.adminCreateManual({
+        ...manualForm,
+        request_key: createRequestKey(),
+      });
+      toast.success('Manual fee record saved successfully.');
+      setAddOpen(false);
+      setOptions(null);
+      await load(true);
+    } catch (error) {
+      toast.error(error?.message || 'Unable to save manual payment');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const openPaymentHistory = async (payment) => {
+    setSelectedPayment(payment);
+    setCorrectingEntry(null);
+    setInstallmentForm({ ...INITIAL_INSTALLMENT_FORM, payment_date: today() });
+    if (!payment.fee_record_id) return;
+    setDetailLoading(true);
+    try {
+      const detail = await paymentService.adminManualDetail(payment.fee_record_id);
+      setSelectedPayment(detail);
+    } catch (error) {
+      toast.error(error?.message || 'Unable to load payment history');
+    } finally {
+      setDetailLoading(false);
+    }
+  };
+
+  const submitInstallment = async (event) => {
+    event.preventDefault();
+    if (!selectedPayment?.fee_record_id) return;
+    setSaving(true);
+    try {
+      const result = await paymentService.adminAddManualInstallment(selectedPayment.fee_record_id, {
+        ...installmentForm,
+        request_key: createRequestKey(),
+      });
+      setSelectedPayment(result.payment);
+      setInstallmentForm({ ...INITIAL_INSTALLMENT_FORM, payment_date: today() });
+      toast.success('Further payment added to the existing record.');
+      await load(true);
+    } catch (error) {
+      toast.error(error?.message || 'Unable to add further payment');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const beginCorrection = (entry) => {
+    setCorrectingEntry(entry);
+    setCorrectionForm({
+      replacement_amount: (Number(entry.amount_paise) / 100).toFixed(2),
+      payment_mode: entry.payment_mode || 'cash',
+      payment_date: entry.payment_date ? String(entry.payment_date).slice(0, 10) : today(),
+      reference: entry.reference || '',
+      notes: entry.notes || '',
+      reason: '',
+    });
+  };
+
+  const submitCorrection = async (event) => {
+    event.preventDefault();
+    if (!selectedPayment?.fee_record_id || !correctingEntry) return;
+    setSaving(true);
+    try {
+      const result = await paymentService.adminCorrectManualInstallment(selectedPayment.fee_record_id, {
+        ...correctionForm,
+        entry_id: correctingEntry.id,
+        request_key: createRequestKey(),
+      });
+      setSelectedPayment(result.payment);
+      setCorrectingEntry(null);
+      toast.success('Entry correction recorded with its audit history.');
+      await load(true);
+    } catch (error) {
+      toast.error(error?.message || 'Unable to correct this payment entry');
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  if (state === 'loading') return <LoadingScreen label="Loading payment records…" />;
   if (state === 'error') return <ErrorState onRetry={() => load(false)} />;
 
-  const { summary = {}, payments = [] } = data || {};
-
-  // Status counts
-  const totalCount = payments.length;
-  const successCount = payments.filter((p) => p.status === 'success').length;
-  const pendingCount = payments.filter((p) => p.status === 'pending').length;
-  const failedCount = payments.filter((p) => p.status === 'failed').length;
+  const summary = data?.summary || {};
+  const payments = data?.payments || [];
+  const paymentRows = filteredPayments;
+  const unpaidTotal = Number(summary.outstanding_paise || 0);
+  const phonePeTotal = Number(summary.phonepe_collected_paise || 0);
+  const manualTotal = Number(summary.manual_collected_paise || 0);
+  const history = selectedPayment?.history || [];
+  const reversedEntries = new Set(history.filter((entry) => entry.reversed_entry_id).map((entry) => String(entry.reversed_entry_id)));
 
   return (
     <div className="w-full max-w-full space-y-6">
-      {/* Top Header Bar */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <AdminHeader
-          title="Revenue & Gateway Transactions"
-          subtitle="Manage candidate test series enrollments, PhonePe gateway transactions, and live status."
+          title="Payments"
+          subtitle="Online PhonePe transactions and manually recorded student installments."
           breadcrumbs={['Revenue Operations']}
-          status="PhonePe Standard Checkout v2 Active"
+          status="Online & Manual Payments"
         />
-
-        <div className="flex items-center gap-2.5">
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            onClick={openManualForm}
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-blue-700"
+          >
+            <Plus className="h-4 w-4" /> Add Manual Payment
+          </button>
           <button
             type="button"
             onClick={() => load(false)}
-            title="Refresh payments table"
-            className="p-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/60 shadow-xs transition cursor-pointer"
+            title="Refresh payments"
+            className="rounded-xl border border-slate-200 bg-white p-2.5 text-slate-600 shadow-xs transition hover:bg-slate-50 dark:border-slate-800 dark:bg-[#111827] dark:text-slate-300 dark:hover:bg-slate-800/60"
           >
             <RefreshCw className="h-4 w-4" />
           </button>
         </div>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {/* Metric 1 */}
-        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
-          <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
-            <span>Verified Revenue</span>
-            <div className="h-7 w-7 rounded-lg bg-emerald-50 text-emerald-600 dark:bg-emerald-950/60 dark:text-emerald-400 flex items-center justify-center font-bold">
-              ₹
-            </div>
-          </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            ₹{Number(summary.total || 0).toLocaleString('en-IN')}
-          </p>
-          <p className="text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 mt-1">
-            All-time settled revenue
-          </p>
-        </div>
-
-        {/* Metric 2 */}
-        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
-          <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
-            <span>Successful Orders</span>
-            <div className="h-7 w-7 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 flex items-center justify-center">
-              <CheckCircle2 className="h-4 w-4" />
-            </div>
-          </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            {summary.successful || 0}
-          </p>
-          <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">
-            active test series enrollments
-          </p>
-        </div>
-
-        {/* Metric 3 */}
-        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
-          <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
-            <span>PhonePe Gateway</span>
-            <div className="h-7 w-7 rounded-lg bg-purple-50 text-purple-600 dark:bg-purple-950/60 dark:text-purple-400 flex items-center justify-center">
-              <CreditCard className="h-4 w-4" />
-            </div>
-          </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            {summary.phonepe_orders || 0}
-          </p>
-          <p className="text-[11px] font-semibold text-purple-600 dark:text-purple-400 mt-1">
-            Standard Checkout v2
-          </p>
-        </div>
-
-        {/* Metric 4 */}
-        <div className="p-4 sm:p-5 rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
-          <div className="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider mb-2">
-            <span>Payment Attempts</span>
-            <div className="h-7 w-7 rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300 flex items-center justify-center">
-              <ShieldCheck className="h-4 w-4" />
-            </div>
-          </div>
-          <p className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">
-            {summary.total_orders || 0}
-          </p>
-          <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 mt-1">
-            {failedCount} failed / cancelled
-          </p>
-        </div>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <Metric title="Total Collected" value={money(summary.collected_paise)} accent="text-emerald-600 dark:text-emerald-400" />
+        <Metric title="Outstanding Fees" value={money(unpaidTotal)} accent="text-amber-600 dark:text-amber-400" />
+        <Metric title="Online — PhonePe" value={money(phonePeTotal)} accent="text-purple-600 dark:text-purple-400" />
+        <Metric title="Manual — Admin" value={money(manualTotal)} accent="text-blue-600 dark:text-blue-400" />
       </div>
 
-      {/* Control Bar: Search & Status Filter Tabs (NO DROPDOWN) */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3.5 bg-white dark:bg-[#111827] p-3 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs">
-        {/* Search Input */}
-        <div className="relative flex-1">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+      <div className="flex flex-col gap-3 rounded-2xl border border-slate-200 bg-white p-3 shadow-xs dark:border-slate-800 dark:bg-[#111827] lg:flex-row lg:items-center">
+        <div className="relative min-w-0 flex-1">
+          <Search className="absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
           <input
-            type="text"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by student name, email, order reference, series..."
-            className="w-full pl-10 pr-9 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/60 text-xs font-medium text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search by student, email, phone, course, or reference"
+            className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-xs text-slate-900 outline-none focus:border-blue-500 dark:border-slate-800 dark:bg-slate-900 dark:text-white"
           />
-          {search && (
-            <button
-              type="button"
-              onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5 cursor-pointer"
-            >
-              <X className="h-3.5 w-3.5" />
-            </button>
-          )}
         </div>
-
-        {/* Filter Pills */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-none">
-          <button
-            type="button"
-            onClick={() => setStatusFilter('all')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              statusFilter === 'all'
-                ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm'
-                : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700/80'
-            }`}
-          >
-            <span>All</span>
-            <span className="text-[10px] font-mono opacity-80">({totalCount})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setStatusFilter('success')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              statusFilter === 'success'
-                ? 'bg-emerald-600 text-white shadow-sm'
-                : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-100 dark:hover:bg-emerald-900/50'
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-            <span>Success</span>
-            <span className="text-[10px] font-mono font-bold">({successCount})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setStatusFilter('pending')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              statusFilter === 'pending'
-                ? 'bg-amber-600 text-white shadow-sm'
-                : 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/50'
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-            <span>Pending</span>
-            <span className="text-[10px] font-mono font-bold">({pendingCount})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setStatusFilter('failed')}
-            className={`px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
-              statusFilter === 'failed'
-                ? 'bg-rose-600 text-white shadow-sm'
-                : 'bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/50'
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
-            <span>Failed</span>
-            <span className="text-[10px] font-mono font-bold">({failedCount})</span>
-          </button>
+        <div className="flex flex-wrap gap-2">
+          <select value={sourceFilter} onChange={(event) => setSourceFilter(event.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+            <option value="all">All sources</option>
+            <option value="online">Online — PhonePe</option>
+            <option value="manual">Manual — Admin</option>
+            <option value="mixed">Mixed</option>
+          </select>
+          <select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)} className="rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-bold text-slate-700 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-200">
+            <option value="all">All statuses</option>
+            <option value="unpaid">Unpaid</option>
+            <option value="partially_paid">Partially Paid</option>
+            <option value="fully_paid">Fully Paid</option>
+            <option value="pending">Pending online</option>
+            <option value="failed">Failed online</option>
+          </select>
         </div>
       </div>
 
-      {/* Main Table Card */}
-      <div className="card overflow-hidden p-0 border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-xs">
-        <div className="w-full overflow-x-auto scrollbar-thin">
-          <table className="w-full text-xs min-w-[850px]">
-            <thead className="bg-slate-50 dark:bg-slate-900/80 text-left text-[11px] font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200/80 dark:border-slate-800">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs dark:border-slate-800 dark:bg-[#111827]">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[1180px] text-left text-xs">
+            <thead className="border-b border-slate-200 bg-slate-50 text-[10px] font-black uppercase tracking-wider text-slate-500 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
               <tr>
                 <th className="px-4 py-3.5">Student</th>
-                <th className="px-4 py-3.5">Order Reference</th>
-                <th className="px-4 py-3.5">Gateway</th>
-                <th className="px-4 py-3.5">Series / Pack</th>
-                <th className="px-4 py-3.5">Amount</th>
+                <th className="px-4 py-3.5">Test Series / Course</th>
+                <th className="px-4 py-3.5">Payment Source</th>
+                <th className="px-4 py-3.5">Total Fee</th>
+                <th className="px-4 py-3.5">Total Paid</th>
+                <th className="px-4 py-3.5">Remaining Fee</th>
                 <th className="px-4 py-3.5">Status</th>
-                <th className="px-4 py-3.5">Date</th>
-                <th className="px-4 py-3.5 text-center">Action</th>
+                <th className="px-4 py-3.5">Last Payment</th>
+                <th className="px-4 py-3.5">Next Due</th>
+                <th className="px-4 py-3.5">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/60 bg-white dark:bg-[#111827]">
-              {filteredPayments.length === 0 ? (
-                <tr>
-                  <td colSpan="8" className="px-4 py-12 text-center text-slate-400">
-                    <p className="font-bold text-sm text-slate-700 dark:text-slate-300">
-                      No payment transactions found
-                    </p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      Try adjusting your search query or status filter.
-                    </p>
-                  </td>
-                </tr>
-              ) : (
-                filteredPayments.map((p) => {
-                  const studentName = p.user_name || p.candidate_name || p.name || 'Candidate';
-                  const studentEmail = p.user_email || p.candidate_email || p.email || '—';
-                  const orderRef = p.merchant_order_id || p.razorpay_order_id || `ID_${p.id}`;
-
-                  return (
-                    <tr
-                      key={p.id}
-                      className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition group"
-                    >
-                      {/* 1. Student Name & Email */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-2.5">
-                          <div className="h-8 w-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold flex items-center justify-center text-xs shrink-0">
-                            {studentName.charAt(0).toUpperCase()}
-                          </div>
-                          <div className="min-w-0">
-                            <p className="font-black text-slate-900 dark:text-white truncate">
-                              {studentName}
-                            </p>
-                            <p className="text-[11px] font-medium text-slate-500 dark:text-slate-400 truncate">
-                              {studentEmail}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-
-                      {/* 2. Order Reference with Copy */}
-                      <td className="px-4 py-3.5">
-                        <div className="flex items-center gap-1.5">
-                          <span
-                            className="font-mono text-[11px] font-semibold text-slate-700 dark:text-slate-300 max-w-[150px] truncate"
-                            title={orderRef}
-                          >
-                            {orderRef}
-                          </span>
-                          <button
-                            type="button"
-                            onClick={() => handleCopy(orderRef, p.id)}
-                            title="Copy Order ID"
-                            className="p-1 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition cursor-pointer"
-                          >
-                            {copiedId === p.id ? (
-                              <Check className="h-3.5 w-3.5 text-emerald-600" />
-                            ) : (
-                              <Copy className="h-3.5 w-3.5" />
-                            )}
-                          </button>
-                        </div>
-                      </td>
-
-                      {/* 3. Gateway Provider */}
-                      <td className="px-4 py-3.5">
-                        {p.provider === 'phonepe' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border border-purple-200/70 text-[10.5px] font-extrabold">
-                            <span className="h-1.5 w-1.5 rounded-full bg-purple-600"></span>
-                            PhonePe
-                          </span>
-                        ) : p.provider === 'razorpay' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200/70 text-[10.5px] font-extrabold">
-                            <span className="h-1.5 w-1.5 rounded-full bg-blue-600"></span>
-                            Razorpay
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 text-[10.5px] font-bold">
-                            Direct / Free
-                          </span>
-                        )}
-                      </td>
-
-                      {/* 4. Series Title */}
-                      <td className="px-4 py-3.5">
-                        <p
-                          className="font-bold text-slate-800 dark:text-slate-200 max-w-[220px] truncate"
-                          title={p.series_title}
-                        >
-                          {p.series_title || 'Test Series Pack'}
-                        </p>
-                      </td>
-
-                      {/* 5. Amount */}
-                      <td className="px-4 py-3.5">
-                        <span
-                          className={`font-black text-xs ${
-                            p.status === 'success'
-                              ? 'text-emerald-600 dark:text-emerald-400 font-extrabold text-sm'
-                              : 'text-slate-900 dark:text-slate-100'
-                          }`}
-                        >
-                          ₹{Number(p.amount || 0).toLocaleString('en-IN')}
-                        </span>
-                      </td>
-
-                      {/* 6. Status Badge */}
-                      <td className="px-4 py-3.5">
-                        {p.status === 'success' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800 text-[10.5px] font-black uppercase tracking-wider">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-600"></span>
-                            Success
-                          </span>
-                        ) : p.status === 'pending' ? (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border border-amber-200/80 dark:border-amber-800 text-[10.5px] font-black uppercase tracking-wider">
-                            <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-pulse"></span>
-                            Pending
-                          </span>
-                        ) : (
-                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 border border-rose-200/80 dark:border-rose-800 text-[10.5px] font-black uppercase tracking-wider">
-                            <span className="h-1.5 w-1.5 rounded-full bg-rose-600"></span>
-                            Failed
-                          </span>
-                        )}
-                      </td>
-
-                      {/* 7. Date */}
-                      <td className="px-4 py-3.5 text-slate-500 font-medium whitespace-nowrap">
-                        {formatDateTime(p.created_at)}
-                      </td>
-
-                      {/* 8. Action Column (Direct Delete Button Only) */}
-                      <td className="px-4 py-3.5 text-center">
-                        <button
-                          type="button"
-                          onClick={() => setPaymentToDelete(p)}
-                          title="Delete Payment Record"
-                          className="inline-flex items-center justify-center p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-500 hover:text-rose-600 hover:border-rose-200 dark:hover:border-rose-900 bg-white dark:bg-[#111827] hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer active:scale-95"
-                        >
-                          <Trash2 className="h-4 w-4" />
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
+              {paymentRows.length === 0 ? (
+                <tr><td colSpan={10} className="px-4 py-14 text-center text-slate-500">No payment records match these filters.</td></tr>
+              ) : paymentRows.map((payment) => {
+                const isSummary = payment.is_fee_summary;
+                const studentName = payment.user_name || 'Student';
+                return (
+                  <tr key={isSummary ? `enrollment-${payment.enrollment_id}` : `online-${payment.id}`} className="hover:bg-slate-50/70 dark:hover:bg-slate-800/30">
+                    <td className="px-4 py-3.5">
+                      <p className="font-extrabold text-slate-900 dark:text-white">{studentName}</p>
+                      <p className="mt-0.5 text-[10px] text-slate-500">{payment.user_email || ''}</p>
+                    </td>
+                    <td className="max-w-[220px] px-4 py-3.5 font-bold text-slate-700 dark:text-slate-200">{payment.series_title || 'Test series'}{!isSummary && payment.merchant_order_id && <p className="mt-0.5 max-w-[200px] truncate font-mono text-[9px] font-medium text-slate-400">{payment.merchant_order_id}</p>}</td>
+                    <td className="px-4 py-3.5"><SourceBadge source={payment.source} provider={payment.provider} /></td>
+                    <td className="px-4 py-3.5 font-semibold text-slate-700 dark:text-slate-300">{isSummary ? money(payment.total_fee_paise) : '—'}</td>
+                    <td className="px-4 py-3.5 font-extrabold text-emerald-700 dark:text-emerald-300">
+                      {isSummary ? money(payment.total_paid_paise) : payment.status === 'fully_paid' ? money(payment.amount_paise) : '—'}
+                    </td>
+                    <td className="px-4 py-3.5 font-semibold text-slate-700 dark:text-slate-300">{isSummary ? money(payment.remaining_fee_paise) : '—'}</td>
+                    <td className="px-4 py-3.5"><PaymentStatus status={payment.status} /></td>
+                    <td className="px-4 py-3.5 whitespace-nowrap text-slate-500">{payment.last_payment_date ? formatDateTime(payment.last_payment_date) : !isSummary ? formatDateTime(payment.created_at) : '—'}</td>
+                    <td className="px-4 py-3.5 whitespace-nowrap text-slate-500">{payment.next_due_date ? formatDateTime(payment.next_due_date) : '—'}</td>
+                    <td className="px-4 py-3.5">
+                      {isSummary ? (
+                        <button type="button" onClick={() => openPaymentHistory(payment)} className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg border border-blue-200 px-2.5 py-1.5 text-[10px] font-extrabold text-blue-700 hover:bg-blue-50 dark:border-blue-900 dark:text-blue-300 dark:hover:bg-blue-950/40">
+                          {payment.fee_record_id ? <Pencil className="h-3 w-3" /> : <History className="h-3 w-3" />}
+                          {payment.fee_record_id ? 'Manage Payment' : 'View History'}
                         </button>
-                      </td>
-                    </tr>
-                  );
-                })
-              )}
+                      ) : (
+                        <span className="text-[10px] text-slate-400">Online transaction</span>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </div>
-
-        {/* Footer Count */}
-        <div className="px-4 py-3 bg-slate-50/70 dark:bg-slate-900/50 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-between text-xs text-slate-500 font-medium">
-          <span>
-            Showing <strong className="text-slate-800 dark:text-slate-200">{filteredPayments.length}</strong> of{' '}
-            <strong className="text-slate-800 dark:text-slate-200">{totalCount}</strong> transactions
-          </span>
-          {(statusFilter !== 'all' || search) && (
-            <button
-              type="button"
-              onClick={() => {
-                setStatusFilter('all');
-                setSearch('');
-              }}
-              className="text-blue-600 hover:underline font-bold cursor-pointer"
-            >
-              Reset Filters
-            </button>
-          )}
+        <div className="border-t border-slate-200 bg-slate-50/70 px-4 py-3 text-[11px] text-slate-500 dark:border-slate-800 dark:bg-slate-900/50">
+          Showing {paymentRows.length} of {payments.length} payment records. Collection includes confirmed receipts only; outstanding fees are reported separately.
         </div>
       </div>
 
-      {/* ======================================================== */}
-      {/* DELETE TRANSACTION CONFIRMATION MODAL                     */}
-      {/* ======================================================== */}
+      <Modal open={addOpen} onClose={() => !saving && setAddOpen(false)} title="Add Manual Payment" size="lg">
+        {optionsLoading ? <p className="py-8 text-center text-sm text-slate-500">Loading students and courses…</p> : (
+          <form onSubmit={submitManualPayment} className="space-y-4">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Registered student">
+                <select required value={manualForm.user_id} onChange={(event) => updateManualField('user_id', event.target.value)} className={inputClass}>
+                  <option value="">Select a student</option>
+                  {(options?.students || []).map((student) => <option key={student.id} value={student.id}>{student.name} — {student.email}{student.phone ? ` — ${student.phone}` : ''}</option>)}
+                </select>
+              </Field>
+              <Field label="Test series / course">
+                <select required value={manualForm.test_series_id} onChange={(event) => updateManualField('test_series_id', event.target.value)} className={inputClass}>
+                  <option value="">Select a course</option>
+                  {(options?.courses || []).map((course) => <option key={course.id} value={course.id}>{course.title}{course.is_active ? '' : ' (inactive)'}</option>)}
+                </select>
+              </Field>
+            </div>
+            {duplicateEnrollment && <p className="rounded-xl bg-amber-50 p-3 text-xs font-semibold text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">This student and course already have a manual fee record. Use Manage Payment to add an installment.</p>}
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Total agreed fee (₹)">
+                <input required type="number" min="0.01" step="0.01" value={manualForm.total_fee} onChange={(event) => updateManualField('total_fee', event.target.value)} className={inputClass} placeholder="e.g. 10000" />
+              </Field>
+              <Field label="Amount received now (₹)">
+                <input required type="number" min="0" step="0.01" max={manualForm.total_fee || undefined} value={manualForm.amount_received} onChange={(event) => updateManualField('amount_received', event.target.value)} className={inputClass} placeholder="0 if no installment received" />
+              </Field>
+            </div>
+            {initialFee > 0 && (
+              <div className="grid grid-cols-3 gap-2 rounded-xl bg-slate-50 p-3 text-center dark:bg-slate-900">
+                <ComputedAmount label="Total fee" amount={initialFee} />
+                <ComputedAmount label="Total paid" amount={initialAmount} />
+                <ComputedAmount label="Remaining fee" amount={initialRemaining} />
+              </div>
+            )}
+            {initialAmount > 0 && (
+              <div className="grid gap-4 sm:grid-cols-2">
+                <Field label="Payment mode">
+                  <PaymentModeSelect value={manualForm.payment_mode} onChange={(value) => updateManualField('payment_mode', value)} />
+                </Field>
+                <Field label="Payment date">
+                  <input required type="date" value={manualForm.payment_date} onChange={(event) => updateManualField('payment_date', event.target.value)} className={inputClass} />
+                </Field>
+                <Field label="Reference / UTR (optional)">
+                  <input value={manualForm.reference} maxLength={160} onChange={(event) => updateManualField('reference', event.target.value)} className={inputClass} />
+                </Field>
+                <Field label="Next payment due date (optional)">
+                  <input type="date" value={manualForm.next_due_date} onChange={(event) => updateManualField('next_due_date', event.target.value)} className={inputClass} />
+                </Field>
+              </div>
+            )}
+            {initialAmount === 0 && (
+              <Field label="Next payment due date (optional)">
+                <input type="date" value={manualForm.next_due_date} onChange={(event) => updateManualField('next_due_date', event.target.value)} className={inputClass} />
+              </Field>
+            )}
+            <Field label="Notes (optional)">
+              <textarea rows={2} maxLength={2000} value={manualForm.notes} onChange={(event) => updateManualField('notes', event.target.value)} className={inputClass} />
+            </Field>
+            <div className="flex justify-end gap-2 pt-2">
+              <button type="button" onClick={() => setAddOpen(false)} className="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 dark:border-slate-700 dark:text-slate-300">Cancel</button>
+              <button type="submit" disabled={saving || optionsLoading || duplicateEnrollment} className="rounded-xl bg-blue-600 px-4 py-2.5 text-xs font-extrabold text-white hover:bg-blue-700 disabled:opacity-50">{saving ? 'Saving…' : 'Save Manual Fee'}</button>
+            </div>
+          </form>
+        )}
+      </Modal>
+
       <Modal
-        open={Boolean(paymentToDelete)}
-        onClose={() => setPaymentToDelete(null)}
-        title="Delete Payment Record"
+        open={Boolean(selectedPayment)}
+        onClose={() => {
+          if (!saving) {
+            setSelectedPayment(null);
+            setCorrectingEntry(null);
+          }
+        }}
+        title="Payment History & Management"
+        size="lg"
       >
-        {paymentToDelete && (
-          <div className="space-y-4">
-            <div className="flex items-start gap-3 p-3.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800 text-rose-800 dark:text-rose-200 text-xs">
-              <AlertTriangle className="h-5 w-5 text-rose-600 shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-rose-900 dark:text-rose-100">
-                  Permanent Record Deletion
-                </p>
-                <p className="mt-0.5 leading-relaxed">
-                  Are you sure you want to permanently delete this payment transaction? This action will remove the record from reports and transaction logs.
-                </p>
-              </div>
+        {selectedPayment && (
+          <div className="space-y-5">
+            <div className="grid gap-3 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900 sm:grid-cols-2">
+              <div><p className="text-[10px] font-bold uppercase text-slate-400">Student / Course</p><p className="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">{selectedPayment.user_name} · {selectedPayment.series_title}</p></div>
+              <div><p className="text-[10px] font-bold uppercase text-slate-400">Payment Source</p><div className="mt-1"><SourceBadge source={selectedPayment.source} /></div></div>
+              <ComputedAmount label="Total fee" paise={selectedPayment.total_fee_paise} />
+              <ComputedAmount label="Total paid" paise={selectedPayment.total_paid_paise} />
+              <ComputedAmount label="Remaining fee" paise={selectedPayment.remaining_fee_paise} />
+              <div><p className="text-[10px] font-bold uppercase text-slate-400">Payment status</p><div className="mt-1"><PaymentStatus status={selectedPayment.status} /></div></div>
+              {selectedPayment.next_due_date && <div><p className="text-[10px] font-bold uppercase text-slate-400">Next due date</p><p className="mt-1 text-xs font-semibold text-slate-700 dark:text-slate-200">{formatDateTime(selectedPayment.next_due_date)}</p></div>}
             </div>
 
-            {/* Target Payment Summary */}
-            <div className="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 text-xs space-y-2">
-              <div className="flex justify-between items-center">
-                <span className="text-slate-500">Student</span>
-                <span className="font-extrabold text-slate-900 dark:text-white">
-                  {paymentToDelete.user_name || paymentToDelete.name || 'Candidate'}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-500">Order Reference</span>
-                <span className="font-mono font-bold text-slate-800 dark:text-slate-200">
-                  {paymentToDelete.merchant_order_id || paymentToDelete.razorpay_order_id || `#${paymentToDelete.id}`}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-500">Test Series</span>
-                <span className="font-bold text-slate-800 dark:text-slate-200 truncate max-w-[200px]">
-                  {paymentToDelete.series_title}
-                </span>
-              </div>
-              <div className="flex justify-between items-center">
-                <span className="text-slate-500">Amount</span>
-                <span className="font-extrabold text-slate-900 dark:text-white text-sm">
-                  ₹{Number(paymentToDelete.amount || 0).toLocaleString('en-IN')}
-                </span>
-              </div>
-              <div className="flex justify-between items-center pt-2 border-t border-slate-200 dark:border-slate-800">
-                <span className="text-slate-500">Current Status</span>
-                <span className="font-bold uppercase tracking-wider text-[11px] text-rose-600">
-                  {paymentToDelete.status}
-                </span>
-              </div>
-            </div>
+            <section className="space-y-2">
+              <h3 className="text-xs font-extrabold text-slate-800 dark:text-slate-100">Payment history and audit trail</h3>
+              {detailLoading ? <p className="py-4 text-center text-xs text-slate-500">Loading history…</p> : history.length === 0 ? <p className="rounded-xl border border-dashed border-slate-300 p-4 text-center text-xs text-slate-500 dark:border-slate-700">No payments recorded yet.</p> : (
+                <div className="max-h-64 space-y-2 overflow-y-auto">
+                  {history.map((entry) => {
+                    const reversed = entry.entry_type === 'payment' && reversedEntries.has(String(entry.id));
+                    const isReversal = entry.entry_type === 'reversal';
+                    return (
+                      <div key={`${entry.source}-${entry.id}`} className={`rounded-xl border p-3 ${isReversal || reversed ? 'border-rose-200 bg-rose-50/60 dark:border-rose-900/60 dark:bg-rose-950/20' : 'border-slate-200 dark:border-slate-800'}`}>
+                        <div className="flex flex-wrap items-start justify-between gap-2">
+                          <div>
+                            <p className="text-xs font-extrabold text-slate-800 dark:text-slate-100">
+                              {entry.source === 'online' ? `Online — ${entry.provider === 'razorpay' ? 'Razorpay' : 'PhonePe'}` : isReversal ? `Reversal of manual entry #${entry.reversed_entry_id}` : `Manual — ${MODE_LABELS[entry.payment_mode] || entry.payment_mode}`}
+                              {reversed && <span className="ml-2 text-[10px] text-rose-600">Corrected</span>}
+                            </p>
+                            <p className="mt-1 text-[10px] text-slate-500">{entry.payment_date ? formatDateTime(entry.payment_date) : '—'}{entry.reference ? ` · Ref: ${entry.reference}` : ''}{entry.admin_name ? ` · Recorded by ${entry.admin_name}` : ''}</p>
+                          </div>
+                          <p className={`text-sm font-black ${Number(entry.amount_paise) < 0 ? 'text-rose-600' : 'text-emerald-700 dark:text-emerald-300'}`}>{money(entry.amount_paise)}</p>
+                        </div>
+                        {entry.notes && <p className="mt-1 text-[10px] text-slate-600 dark:text-slate-400">{entry.notes}</p>}
+                        {entry.correction_reason && <p className="mt-1 text-[10px] font-semibold text-rose-700 dark:text-rose-300">Correction reason: {entry.correction_reason}</p>}
+                        {entry.source === 'manual' && entry.entry_type === 'payment' && !reversed && (
+                          <button type="button" onClick={() => beginCorrection(entry)} className="mt-2 text-[10px] font-extrabold text-rose-700 underline dark:text-rose-300">Correct mistaken entry</button>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </section>
 
-            {/* Modal Actions */}
-            <div className="flex items-center justify-end gap-2.5 pt-3">
-              <button
-                type="button"
-                onClick={() => setPaymentToDelete(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 font-bold text-xs transition cursor-pointer"
-              >
-                Cancel
-              </button>
-              <button
-                type="button"
-                disabled={isDeleting}
-                onClick={handleDeletePayment}
-                className="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 active:bg-rose-800 text-white font-extrabold text-xs shadow-md shadow-rose-600/20 transition flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
-              >
-                <Trash2 className="h-3.5 w-3.5" />
-                <span>{isDeleting ? 'Deleting...' : 'Delete Transaction'}</span>
-              </button>
-            </div>
+            {correctingEntry ? (
+              <form onSubmit={submitCorrection} className="space-y-3 rounded-2xl border border-rose-200 p-4 dark:border-rose-900/70">
+                <div className="flex items-center justify-between"><h3 className="text-xs font-extrabold text-rose-800 dark:text-rose-200">Correct manual entry #{correctingEntry.id}</h3><button type="button" onClick={() => setCorrectingEntry(null)} aria-label="Cancel correction"><X className="h-4 w-4 text-slate-500" /></button></div>
+                <p className="text-[10px] leading-relaxed text-slate-500">The original entry will remain in the audit trail and be reversed. Enter zero to reverse without replacing.</p>
+                <Field label="Replacement amount (₹)">
+                  <input type="number" min="0" step="0.01" required value={correctionForm.replacement_amount} onChange={(event) => setCorrectionForm((current) => ({ ...current, replacement_amount: event.target.value }))} className={inputClass} />
+                </Field>
+                {Number(correctionForm.replacement_amount) > 0 && <div className="grid gap-3 sm:grid-cols-2"><Field label="Payment mode"><PaymentModeSelect value={correctionForm.payment_mode} onChange={(value) => setCorrectionForm((current) => ({ ...current, payment_mode: value }))} /></Field><Field label="Payment date"><input type="date" required value={correctionForm.payment_date} onChange={(event) => setCorrectionForm((current) => ({ ...current, payment_date: event.target.value }))} className={inputClass} /></Field><Field label="Reference / UTR"><input value={correctionForm.reference} maxLength={160} onChange={(event) => setCorrectionForm((current) => ({ ...current, reference: event.target.value }))} className={inputClass} /></Field><Field label="Replacement notes"><input value={correctionForm.notes} maxLength={2000} onChange={(event) => setCorrectionForm((current) => ({ ...current, notes: event.target.value }))} className={inputClass} /></Field></div>}
+                <Field label="Required correction reason">
+                  <textarea required minLength={5} maxLength={1000} rows={2} value={correctionForm.reason} onChange={(event) => setCorrectionForm((current) => ({ ...current, reason: event.target.value }))} className={inputClass} placeholder="Explain why this entry needs correction" />
+                </Field>
+                <button type="submit" disabled={saving} className="rounded-xl bg-rose-600 px-4 py-2 text-xs font-extrabold text-white disabled:opacity-50">{saving ? 'Saving audit correction…' : 'Reverse and Replace Entry'}</button>
+              </form>
+            ) : selectedPayment.fee_record_id && selectedPayment.remaining_fee_paise > 0 ? (
+              <form onSubmit={submitInstallment} className="space-y-3 rounded-2xl border border-blue-200 p-4 dark:border-blue-900/70">
+                <h3 className="text-xs font-extrabold text-blue-800 dark:text-blue-200">Add Further Payment</h3>
+                <p className="text-[10px] text-slate-500">Remaining fee: <strong>{money(selectedPayment.remaining_fee_paise)}</strong></p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="New Amount Received (₹)">
+                    <input required type="number" min="0.01" step="0.01" max={Number(selectedPayment.remaining_fee_paise) / 100} value={installmentForm.amount_received} onChange={(event) => setInstallmentForm((current) => ({ ...current, amount_received: event.target.value }))} className={inputClass} placeholder="Enter this installment only" />
+                  </Field>
+                  <Field label="Payment mode"><PaymentModeSelect value={installmentForm.payment_mode} onChange={(value) => setInstallmentForm((current) => ({ ...current, payment_mode: value }))} /></Field>
+                  <Field label="Payment date"><input required type="date" value={installmentForm.payment_date} onChange={(event) => setInstallmentForm((current) => ({ ...current, payment_date: event.target.value }))} className={inputClass} /></Field>
+                  <Field label="Reference / UTR (optional)"><input value={installmentForm.reference} maxLength={160} onChange={(event) => setInstallmentForm((current) => ({ ...current, reference: event.target.value }))} className={inputClass} /></Field>
+                </div>
+                <Field label="Notes (optional)"><textarea rows={2} maxLength={2000} value={installmentForm.notes} onChange={(event) => setInstallmentForm((current) => ({ ...current, notes: event.target.value }))} className={inputClass} /></Field>
+                <button type="submit" disabled={saving} className="rounded-xl bg-blue-600 px-4 py-2 text-xs font-extrabold text-white disabled:opacity-50">{saving ? 'Saving…' : 'Add Payment Installment'}</button>
+              </form>
+            ) : null}
           </div>
         )}
       </Modal>
     </div>
   );
+}
+
+const inputClass = 'w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-xs font-medium text-slate-800 outline-none focus:border-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100';
+
+function Field({ label, children }) {
+  return <label className="block space-y-1.5"><span className="block text-[10px] font-bold uppercase tracking-wide text-slate-500">{label}</span>{children}</label>;
+}
+
+function PaymentModeSelect({ value, onChange }) {
+  return <select required value={value} onChange={(event) => onChange(event.target.value)} className={inputClass}>{PAYMENT_MODES.map((mode) => <option key={mode.value} value={mode.value}>{mode.label}</option>)}</select>;
+}
+
+function ComputedAmount({ label, amount, paise }) {
+  const value = paise === undefined ? Number(amount || 0) * 100 : Number(paise || 0);
+  return <div><p className="text-[9px] font-bold uppercase tracking-wide text-slate-400">{label}</p><p className="mt-1 text-xs font-extrabold text-slate-800 dark:text-slate-100">{money(value)}</p></div>;
+}
+
+function Metric({ title, value, accent }) {
+  return <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-[#111827]"><p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">{title}</p><p className={`mt-2 text-2xl font-black ${accent}`}>{value}</p></div>;
 }

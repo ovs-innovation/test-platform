@@ -6,6 +6,11 @@ import {
   getOrderStatus,
   paymentHistory,
   adminPayments,
+  adminManualPaymentOptions,
+  adminManualPaymentDetail,
+  adminCreateManualPayment,
+  adminAddManualInstallment,
+  adminCorrectManualInstallment,
   adminDeletePayment,
   adminUpdatePaymentStatus,
 } from '../controllers/paymentController.js';
@@ -75,6 +80,11 @@ router.get('/history', authorize('candidate'), paymentHistory);
 
 // Admin reporting, management, and on-demand reconciliation
 router.get('/admin', authorize('admin'), adminPayments);
+router.get('/admin/options', authorize('admin'), adminManualPaymentOptions);
+router.get('/admin/manual/:id', authorize('admin'), adminManualPaymentDetail);
+router.post('/admin/manual', authorize('admin'), paymentLimiter, adminCreateManualPayment);
+router.post('/admin/manual/:id/installments', authorize('admin'), paymentLimiter, adminAddManualInstallment);
+router.post('/admin/manual/:id/corrections', authorize('admin'), paymentLimiter, adminCorrectManualInstallment);
 router.delete('/admin/:id', authorize('admin'), adminDeletePayment);
 router.patch('/admin/:id/status', authorize('admin'), adminUpdatePaymentStatus);
 router.post(

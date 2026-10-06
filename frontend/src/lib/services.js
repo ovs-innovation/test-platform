@@ -280,8 +280,27 @@ export const paymentService = {
   
   getOrderStatus: (merchantOrderId) =>
     api.get(`/payments/status/${merchantOrderId}`).then((r) => r.data),
-  history: () => withCache('payment_history', () => api.get('/payments/history').then((r) => r.data.payments)),
+  history: (forceRefresh = false) => {
+    if (forceRefresh) clearCache('payment_history');
+    return withCache('payment_history', () => api.get('/payments/history').then((r) => r.data));
+  },
   admin: () => withCache('payment_admin', () => api.get('/payments/admin').then((r) => r.data)),
+  adminManualOptions: () => api.get('/payments/admin/options').then((r) => r.data),
+  adminManualDetail: (id) => api.get(`/payments/admin/manual/${id}`).then((r) => r.data.payment),
+  adminCreateManual: (data) => {
+    clearCache('payment_admin');
+    return api.post('/payments/admin/manual', data).then((r) => r.data);
+  },
+  adminAddManualInstallment: (id, data) => {
+    clearCache('payment_admin');
+    clearCache('payment_history');
+    return api.post(`/payments/admin/manual/${id}/installments`, data).then((r) => r.data);
+  },
+  adminCorrectManualInstallment: (id, data) => {
+    clearCache('payment_admin');
+    clearCache('payment_history');
+    return api.post(`/payments/admin/manual/${id}/corrections`, data).then((r) => r.data);
+  },
   adminDelete: (id) => {
     clearCache('payment_admin');
     return api.delete(`/payments/admin/${id}`).then((r) => r.data);
@@ -767,5 +786,3 @@ export const mistakeBookService = {
     return api.delete(`/student/mistake-book/${id}`).then((r) => r.data);
   },
 };
-
-

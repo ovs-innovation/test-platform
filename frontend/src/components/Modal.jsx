@@ -1,6 +1,14 @@
 import { useEffect } from 'react';
 
-export default function Modal({ open, onClose, title, children, size = 'md' }) {
+export default function Modal({
+  open,
+  onClose,
+  title,
+  children,
+  size = 'md',
+  centered = false,
+  closeOnBackdrop = false,
+}) {
   useEffect(() => {
     if (!open) return undefined;
     const onKey = (e) => e.key === 'Escape' && onClose?.();
@@ -13,7 +21,14 @@ export default function Modal({ open, onClose, title, children, size = 'md' }) {
   const sizes = { sm: 'max-w-md', md: 'max-w-lg', lg: 'max-w-2xl', xl: 'max-w-4xl' };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-slate-950/70 p-4 sm:p-8 backdrop-blur-xs animate-in fade-in duration-150">
+    <div
+      className={`fixed inset-0 z-50 flex justify-center overflow-y-auto bg-slate-950/70 p-4 sm:p-8 backdrop-blur-xs animate-in fade-in duration-150 ${
+        centered ? 'items-center pt-16 sm:pt-20' : 'items-start'
+      }`}
+      onClick={(event) => {
+        if (closeOnBackdrop && event.target === event.currentTarget) onClose?.();
+      }}
+    >
       <div className={`w-full ${sizes[size]} my-6 rounded-3xl border border-slate-200 bg-white p-0 shadow-2xl dark:border-slate-800 dark:bg-[#111827] dark:text-slate-100 overflow-hidden transform transition-all`} role="dialog" aria-modal="true">
         <div className="flex items-center justify-between border-b border-slate-200 px-6 py-4 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/40">
           <h2 className="text-base font-extrabold text-slate-900 dark:text-white">{title}</h2>
@@ -33,4 +48,3 @@ export default function Modal({ open, onClose, title, children, size = 'md' }) {
     </div>
   );
 }
-

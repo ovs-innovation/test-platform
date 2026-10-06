@@ -16,6 +16,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getExamTheme } from '../../lib/testSeriesCover.js';
 import { getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
+import { useFirstVisitStudentForm } from '../../components/public/FirstVisitStudentForm.jsx';
 
 
 
@@ -33,6 +34,7 @@ export default function TestSeriesDetail() {
   const { slug } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { user } = useAuth();
+  const { requestDetails } = useFirstVisitStudentForm();
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -417,6 +419,9 @@ export default function TestSeriesDetail() {
               <a
                 href={getBrochureDownloadUrl(series)}
                 download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                onClick={(event) => {
+                  if (!requestDetails()) event.preventDefault();
+                }}
                 className="w-full flex items-center justify-center gap-2 rounded-xl border-2 border-blue-600/30 bg-blue-50/70 hover:bg-blue-100/90 text-blue-700 py-3.5 px-4 text-xs sm:text-sm font-black transition cursor-pointer shadow-xs hover:border-blue-600/60"
               >
                 <Download className="h-4 w-4 text-blue-600" />
@@ -526,6 +531,9 @@ export default function TestSeriesDetail() {
                     <a
                       href={getBrochureDownloadUrl(series)}
                       download={series?.brochure_name || `${(series?.title || 'Test_Series').replace(/[^a-zA-Z0-9_-]/g, '_')}_Brochure.pdf`}
+                      onClick={(event) => {
+                        if (!requestDetails()) event.preventDefault();
+                      }}
                       className="w-full flex items-center justify-center gap-2 rounded-xl border border-blue-200 bg-white hover:bg-blue-50 text-blue-700 py-3 text-xs sm:text-sm font-extrabold transition cursor-pointer shadow-xs"
                     >
                       <Download className="h-4 w-4 text-blue-600" />

@@ -15,6 +15,46 @@ describe('PhonePe Payments Integration & Security Tests', () => {
     expect(res.status).toBe(401);
   });
 
+  it('should keep verified PhonePe payment status immutable to admins', async () => {
+    const adminToken = getAdminToken();
+    const seriesResult = await query('SELECT id FROM test_series LIMIT 1');
+    expect(seriesResult.rowCount).toBeGreaterThan(0);
+    const merchantOrderId = `EDV_ADMIN_IMMUTABLE_${Date.now()}`;
+    const paymentResult = await query(
+      `INSERT INTO payments (
+         user_id, test_series_id, amount, currency, status, fulfillment_status,
+         provider, merchant_order_id
+       ) VALUES ($1, $2, $3, 'INR', 'success', 'fulfilled', 'phonepe', $4)
+       RETURNING id`,
+      [101, seriesResult.rows[0].id, 250, merchantOrderId]
+    );
+    const paymentId = paymentResult.rows[0].id;
+
+    const statusResponse = await request(app)
+      .patch(`/api/payments/admin/${paymentId}/status`)
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({ status: 'failed' });
+    expect(statusResponse.status).toBe(409);
+
+    const deleteResponse = await request(app)
+      .delete(`/api/payments/admin/${paymentId}`)
+      .set('Authorization', `Bearer ${adminToken}`);
+    expect(deleteResponse.status).toBe(409);
+
+    const persisted = await query('SELECT status FROM payments WHERE id = $1', [paymentId]);
+    expect(persisted.rows[0].status).toBe('success');
+    await query('DELETE FROM payments WHERE id = $1', [paymentId]);
+  });
+
+  it('should restrict manual fee APIs to platform admins', async () => {
+    const studentToken = getStudentAToken();
+    const response = await request(app)
+      .post('/api/payments/admin/manual')
+      .set('Authorization', `Bearer ${studentToken}`)
+      .send({});
+    expect(response.status).toBe(403);
+  });
+
   it('should reject payment creation for non-existent test series', async () => {
     const studentToken = getStudentAToken();
     const res = await request(app)

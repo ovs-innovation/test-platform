@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
 import PublicHeader from './public/PublicHeader.jsx';
+import FirstVisitStudentForm from './public/FirstVisitStudentForm.jsx';
 import WhatsAppSupportButton from './common/WhatsAppSupportButton.jsx';
 import { COMPANY, CONTACT, EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, FOOTER_COMPANY, FOOTER_STUDENT, LEGAL_LINKS } from '../data/edvedumContent.js';
+import { useAuth } from '../context/AuthContext.jsx';
 
 export default function PublicLayout() {
   const [headerHeight, setHeaderHeight] = useState(0);
+  const { loading, user } = useAuth();
 
   return (
     <div className="flex min-h-screen flex-col bg-white overflow-x-hidden">
@@ -15,7 +18,9 @@ export default function PublicLayout() {
         className="flex-1 overflow-x-hidden"
         style={{ paddingTop: headerHeight ? `${headerHeight}px` : undefined }}
       >
-        <Outlet />
+        <FirstVisitStudentForm loading={loading} user={user}>
+          <Outlet />
+        </FirstVisitStudentForm>
       </main>
 
       {/* FOOTER - Compact SaaS Spacing & Proportional Layout */}
