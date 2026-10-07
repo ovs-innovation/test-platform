@@ -1,5 +1,30 @@
 import { useEffect, useState } from 'react';
-import { Link2 as LinkIcon, Search, Clock, Award, Calendar, FileText, Upload, Trash2, ExternalLink, FileCheck } from 'lucide-react';
+import {
+  Link2 as LinkIcon,
+  Search,
+  Clock,
+  Award,
+  Calendar,
+  FileText,
+  Upload,
+  Trash2,
+  ExternalLink,
+  FileCheck,
+  Users,
+  UserCheck,
+  Building2,
+  GraduationCap,
+  Globe,
+  Check,
+  AlertCircle,
+  Info,
+  Sparkles,
+  X,
+  ChevronRight,
+  UserPlus,
+  ShieldCheck,
+  Plus,
+} from 'lucide-react';
 import { testSeriesService, adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, Spinner, Badge, ConfirmModal } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -52,6 +77,138 @@ export default function AdminTestSeries() {
   const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
   const [seriesToDelete, setSeriesToDelete] = useState(null);
   const [saving, setSaving] = useState(false);
+
+  // Assign Test Series Modal State
+  const [assignModalSeries, setAssignModalSeries] = useState(null);
+  const [assignTab, setAssignTab] = useState('form'); // 'form' | 'students' | 'rules'
+  const [assignAudienceType, setAssignAudienceType] = useState('student'); // 'student' | 'batch' | 'institution' | 'all'
+  const [assignTargetId, setAssignTargetId] = useState('');
+  const [assignValidityDays, setAssignValidityDays] = useState('365');
+  const [assignNotes, setAssignNotes] = useState('');
+  const [assignNotify, setAssignNotify] = useState(true);
+  const [assigningLoading, setAssigningLoading] = useState(false);
+  const [loadingAssignmentsData, setLoadingAssignmentsData] = useState(false);
+  const [candidatesList, setCandidatesList] = useState([]);
+  const [batchesList, setBatchesList] = useState([]);
+  const [institutionsList, setInstitutionsList] = useState([]);
+  const [currentAssignments, setCurrentAssignments] = useState([]);
+  const [currentEnrollments, setCurrentEnrollments] = useState([]);
+  const [studentSearchQuery, setStudentSearchQuery] = useState('');
+  const [enrollmentSearchQuery, setEnrollmentSearchQuery] = useState('');
+
+  const handleOpenAssign = async (s, initialTab = 'form') => {
+    setAssignModalSeries(s);
+    setAssignTab(initialTab);
+    setAssignAudienceType('student');
+    setAssignTargetId('');
+    setAssignValidityDays((s.validity_days && Number(s.validity_days) > 0) ? String(s.validity_days) : '365');
+    setAssignNotes('');
+    setAssignNotify(true);
+    setStudentSearchQuery('');
+    setEnrollmentSearchQuery('');
+    setLoadingAssignmentsData(true);
+
+    try {
+      const [assignmentsData, candidatesData, batchesData, instData] = await Promise.all([
+        testSeriesService.getAssignments(s.id).catch(() => ({ assignments: [], enrollments: [] })),
+        adminService.candidates().catch(() => []),
+        adminService.batches().catch(() => []),
+        adminService.partnerSchools().catch(() => ({ institutions: [] })),
+      ]);
+
+      setCurrentAssignments(assignmentsData?.assignments || []);
+      setCurrentEnrollments(assignmentsData?.enrollments || []);
+      setCandidatesList(Array.isArray(candidatesData) ? candidatesData : []);
+      setBatchesList(Array.isArray(batchesData) ? batchesData : []);
+      setInstitutionsList(Array.isArray(instData?.institutions) ? instData.institutions : Array.isArray(instData) ? instData : []);
+    } catch {
+      toast.error('Failed to load assignment options');
+    } finally {
+      setLoadingAssignmentsData(false);
+    }
+  };
+
+  const handleAssignSubmit = async (e) => {
+    e.preventDefault();
+    if (!assignModalSeries) return;
+
+    if (assignAudienceType !== 'all' && !assignTargetId) {
+      if (assignAudienceType === 'student') return toast.error('Please select a student candidate');
+      if (assignAudienceType === 'batch') return toast.error('Please select a student batch');
+      if (assignAudienceType === 'institution') return toast.error('Please select a partner school / institution');
+    }
+
+    try {
+      setAssigningLoading(true);
+      const res = await testSeriesService.assign(assignModalSeries.id, {
+        assigned_to_type: assignAudienceType,
+        assigned_to_id: assignAudienceType === 'all' ? null : Number(assignTargetId),
+        validity_days: assignValidityDays ? Number(assignValidityDays) : null,
+        notes: assignNotes || '',
+        notify: assignNotify,
+      });
+
+      toast.success(res?.message || 'Test series assigned successfully!');
+
+      const updated = await testSeriesService.getAssignments(assignModalSeries.id).catch(() => null);
+      if (updated) {
+        setCurrentAssignments(updated.assignments || []);
+        setCurrentEnrollments(updated.enrollments || []);
+      }
+      load();
+
+      setAssignTab('students');
+      setAssignTargetId('');
+      setAssignNotes('');
+    } catch (err) {
+      toast.error(err.message || 'Failed to assign test series');
+    } finally {
+      setAssigningLoading(false);
+    }
+  };
+
+  const handleRevokeEnrollment = (enr) => {
+    setConfirmState({
+      isOpen: true,
+      title: 'Revoke Student Access',
+      message: `Are you sure you want to revoke access to "${assignModalSeries?.title}" for student "${enr.student_name || 'Student'}" (${enr.student_email})?`,
+      confirmText: 'Revoke Access',
+      onConfirm: async () => {
+        try {
+          setConfirmState((prev) => ({ ...prev, loading: true }));
+          await testSeriesService.revokeEnrollment(assignModalSeries.id, enr.id);
+          toast.success(`Access revoked for ${enr.student_name || 'student'}`);
+          setCurrentEnrollments((prev) => prev.filter((item) => item.id !== enr.id));
+          setConfirmState((prev) => ({ ...prev, isOpen: false, loading: false }));
+          load();
+        } catch (err) {
+          toast.error(err.message || 'Failed to revoke student access');
+          setConfirmState((prev) => ({ ...prev, loading: false }));
+        }
+      },
+    });
+  };
+
+  const handleDeleteAssignmentRule = (rule) => {
+    setConfirmState({
+      isOpen: true,
+      title: 'Delete Assignment Rule',
+      message: `Delete assignment rule for "${rule.target_name}"? Existing active student enrollments will remain unless revoked individually.`,
+      confirmText: 'Delete Rule',
+      onConfirm: async () => {
+        try {
+          setConfirmState((prev) => ({ ...prev, loading: true }));
+          await testSeriesService.deleteAssignment(assignModalSeries.id, rule.id);
+          toast.success('Assignment rule deleted');
+          setCurrentAssignments((prev) => prev.filter((item) => item.id !== rule.id));
+          setConfirmState((prev) => ({ ...prev, isOpen: false, loading: false }));
+        } catch (err) {
+          toast.error(err.message || 'Failed to delete assignment rule');
+          setConfirmState((prev) => ({ ...prev, loading: false }));
+        }
+      },
+    });
+  };
 
   const load = async () => {
     setState('loading');
@@ -448,7 +605,14 @@ export default function AdminTestSeries() {
                 {' · '}
                 <span>{s.linked_tests || 0} linked</span>
                 {' · '}
-                {s.enrollment_count || 0} enrollments
+                <button
+                  type="button"
+                  onClick={() => handleOpenAssign(s, 'students')}
+                  className="underline hover:text-indigo-600 dark:hover:text-indigo-400 font-bold transition cursor-pointer"
+                  title="Click to view & manage enrolled students"
+                >
+                  {s.enrollment_count || 0} enrollments
+                </button>
               </p>
               {Array.isArray(s.tests) && s.tests.length > 0 && (
                 <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
@@ -482,6 +646,15 @@ export default function AdminTestSeries() {
                 onClick={() => handleToggleActive(s)}
               >
                 {s.is_active ? 'Deactivate' : 'Activate'}
+              </button>
+              <button
+                type="button"
+                className="btn-secondary !py-1.5 !px-3 text-xs text-indigo-600 dark:text-indigo-400 font-bold hover:bg-indigo-50 dark:hover:bg-indigo-500/20 flex items-center gap-1.5 cursor-pointer"
+                onClick={() => handleOpenAssign(s, 'form')}
+                title="Assign this test series to students, batches, or schools"
+              >
+                <Users className="h-3.5 w-3.5" />
+                <span>Assign 👥</span>
               </button>
               <button
                 type="button"
@@ -976,6 +1149,605 @@ export default function AdminTestSeries() {
             </button>
           </div>
         </div>
+      </Modal>
+
+      {/* ASSIGN TEST SERIES MODAL */}
+      <Modal
+        open={Boolean(assignModalSeries)}
+        onClose={() => setAssignModalSeries(null)}
+        title={assignModalSeries ? `Assign Test Series: ${assignModalSeries.title}` : 'Assign Test Series'}
+        size="xl"
+      >
+        {loadingAssignmentsData ? (
+          <div className="py-16 flex flex-col items-center justify-center gap-3">
+            <Spinner size="lg" />
+            <p className="text-xs text-slate-500 font-bold">Loading assignment targets & enrolled students…</p>
+          </div>
+        ) : (
+          <div>
+            {/* Header Series Info Pill */}
+            <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 mb-5">
+              <div className="flex items-center gap-3">
+                <div className="h-11 w-18 overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 shrink-0 bg-slate-100 dark:bg-slate-800">
+                  <img src={getTestSeriesCover(assignModalSeries)} alt="" className="h-full w-full object-cover" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-tight">
+                    {assignModalSeries?.title}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                    <Badge color="blue">{assignModalSeries?.exam_type}</Badge>
+                    <Badge color="purple">{resolveTargetClass(assignModalSeries)}</Badge>
+                    <span className="text-xs font-black text-blue-600 dark:text-blue-400">
+                      {assignModalSeries?.is_free || Number(assignModalSeries?.price) === 0 ? 'FREE' : `₹${assignModalSeries?.price}`}
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-xs font-bold">
+                <span className="px-3 py-1.5 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20 font-extrabold">
+                  👥 {currentEnrollments.length} Enrolled
+                </span>
+                <span className="px-3 py-1.5 rounded-xl bg-purple-500/10 text-purple-600 dark:text-purple-400 border border-purple-500/20 font-extrabold">
+                  📋 {currentAssignments.length} Active Rules
+                </span>
+              </div>
+            </div>
+
+            {/* Navigation Tabs */}
+            <div className="flex border-b border-slate-200 dark:border-slate-800 mb-5 gap-2">
+              <button
+                type="button"
+                onClick={() => setAssignTab('form')}
+                className={`pb-2.5 px-3.5 text-xs font-extrabold border-b-2 transition flex items-center gap-1.5 cursor-pointer ${
+                  assignTab === 'form'
+                    ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                }`}
+              >
+                <UserPlus className="h-3.5 w-3.5" />
+                <span>Assign to Audience</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setAssignTab('students')}
+                className={`pb-2.5 px-3.5 text-xs font-extrabold border-b-2 transition flex items-center gap-1.5 cursor-pointer ${
+                  assignTab === 'students'
+                    ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                }`}
+              >
+                <Users className="h-3.5 w-3.5" />
+                <span>Enrolled Students ({currentEnrollments.length})</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setAssignTab('rules')}
+                className={`pb-2.5 px-3.5 text-xs font-extrabold border-b-2 transition flex items-center gap-1.5 cursor-pointer ${
+                  assignTab === 'rules'
+                    ? 'border-blue-600 text-blue-600 dark:border-blue-400 dark:text-blue-400'
+                    : 'border-transparent text-slate-500 hover:text-slate-800 dark:hover:text-slate-300'
+                }`}
+              >
+                <ShieldCheck className="h-3.5 w-3.5" />
+                <span>Audience Rules ({currentAssignments.length})</span>
+              </button>
+            </div>
+
+            {/* TAB 1: ASSIGN FORM */}
+            {assignTab === 'form' && (
+              <form onSubmit={handleAssignSubmit} className="space-y-5 text-xs font-semibold">
+                <div>
+                  <label className="block text-slate-800 dark:text-slate-200 font-bold mb-2">
+                    1. Select Target Audience Type *
+                  </label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                    {[
+                      {
+                        type: 'student',
+                        title: 'Individual Student',
+                        desc: 'Assign to a specific candidate',
+                        icon: GraduationCap,
+                        color: 'text-blue-600 dark:text-blue-400',
+                      },
+                      {
+                        type: 'batch',
+                        title: 'Student Batch',
+                        desc: 'Assign to all students in batch',
+                        icon: Users,
+                        color: 'text-purple-600 dark:text-purple-400',
+                      },
+                      {
+                        type: 'institution',
+                        title: 'Partner School',
+                        desc: 'Assign to entire school',
+                        icon: Building2,
+                        color: 'text-emerald-600 dark:text-emerald-400',
+                      },
+                      {
+                        type: 'all',
+                        title: 'All Candidates',
+                        desc: 'Global platform-wide access',
+                        icon: Globe,
+                        color: 'text-amber-600 dark:text-amber-400',
+                      },
+                    ].map((item) => {
+                      const IconComp = item.icon;
+                      const isSelected = assignAudienceType === item.type;
+                      return (
+                        <button
+                          key={item.type}
+                          type="button"
+                          onClick={() => {
+                            setAssignAudienceType(item.type);
+                            setAssignTargetId('');
+                          }}
+                          className={`p-3 rounded-2xl border text-left transition relative cursor-pointer ${
+                            isSelected
+                              ? 'border-blue-600 bg-blue-50/60 dark:bg-blue-950/30 dark:border-blue-500 shadow-sm'
+                              : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/40 hover:border-slate-300 dark:hover:border-slate-700'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between mb-1">
+                            <IconComp className={`h-4 w-4 ${item.color}`} />
+                            {isSelected && (
+                              <span className="h-4 w-4 rounded-full bg-blue-600 text-white flex items-center justify-center text-[10px]">
+                                ✓
+                              </span>
+                            )}
+                          </div>
+                          <div className="font-extrabold text-slate-900 dark:text-white text-xs">{item.title}</div>
+                          <div className="text-[10px] text-slate-400 mt-0.5 leading-tight">{item.desc}</div>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* TARGET AUDIENCE SELECTION CONTROLS */}
+                {assignAudienceType === 'student' && (
+                  <div className="space-y-2 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+                    <label className="block text-slate-800 dark:text-slate-200 font-bold">
+                      2. Choose Candidate Student *
+                    </label>
+
+                    {assignTargetId ? (
+                      (() => {
+                        const selStudent = candidatesList.find((c) => String(c.id) === String(assignTargetId));
+                        return (
+                          <div className="p-3 rounded-xl bg-blue-50 dark:bg-blue-950/40 border border-blue-200 dark:border-blue-800/80 flex items-center justify-between gap-3">
+                            <div className="flex items-center gap-2.5">
+                              <div className="h-9 w-9 rounded-full bg-blue-600 text-white font-extrabold flex items-center justify-center text-xs">
+                                {selStudent?.name ? selStudent.name.charAt(0).toUpperCase() : 'S'}
+                              </div>
+                              <div>
+                                <div className="font-extrabold text-slate-900 dark:text-white text-xs">
+                                  {selStudent?.name || 'Selected Student'}
+                                </div>
+                                <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                                  {selStudent?.email} {selStudent?.student_id || selStudent?.roll_number ? `· ID: ${selStudent.student_id || selStudent.roll_number}` : ''}
+                                  {selStudent?.institution_name ? ` · ${selStudent.institution_name}` : ''}
+                                </div>
+                              </div>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setAssignTargetId('')}
+                              className="px-2.5 py-1 text-[11px] rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 font-bold hover:bg-slate-100 transition cursor-pointer"
+                            >
+                              Change
+                            </button>
+                          </div>
+                        );
+                      })()
+                    ) : (
+                      <div className="space-y-2">
+                        <div className="relative">
+                          <Search className="h-4 w-4 absolute left-3 top-2.5 text-slate-400" />
+                          <input
+                            type="text"
+                            placeholder="Type to search student by name, email, or student ID..."
+                            value={studentSearchQuery}
+                            onChange={(e) => setStudentSearchQuery(e.target.value)}
+                            className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-semibold focus:outline-none focus:border-blue-500"
+                          />
+                        </div>
+
+                        <div className="max-h-52 overflow-y-auto space-y-1 pr-1 border border-slate-200 dark:border-slate-800 rounded-xl p-1.5 bg-white dark:bg-slate-900">
+                          {(() => {
+                            const q = (studentSearchQuery || '').toLowerCase().trim();
+                            const filtered = candidatesList.filter((c) => {
+                              if (!q) return true;
+                              return (
+                                (c.name || '').toLowerCase().includes(q) ||
+                                (c.email || '').toLowerCase().includes(q) ||
+                                (c.student_id || '').toLowerCase().includes(q) ||
+                                (c.roll_number || '').toLowerCase().includes(q) ||
+                                (c.institution_name || '').toLowerCase().includes(q)
+                              );
+                            });
+
+                            if (filtered.length === 0) {
+                              return (
+                                <div className="p-4 text-center text-xs text-slate-400 font-medium">
+                                  No candidates found matching "{studentSearchQuery}".
+                                </div>
+                              );
+                            }
+
+                            return filtered.slice(0, 30).map((cand) => (
+                              <button
+                                key={cand.id}
+                                type="button"
+                                onClick={() => setAssignTargetId(String(cand.id))}
+                                className="w-full p-2 rounded-lg hover:bg-blue-50 dark:hover:bg-blue-950/40 text-left transition flex items-center justify-between gap-2 border border-transparent hover:border-blue-200 dark:hover:border-blue-800/60 cursor-pointer"
+                              >
+                                <div className="min-w-0">
+                                  <div className="font-extrabold text-slate-800 dark:text-slate-100 text-xs truncate">
+                                    {cand.name}
+                                  </div>
+                                  <div className="text-[11px] text-slate-400 truncate">
+                                    {cand.email}
+                                    {cand.student_id || cand.roll_number ? ` · ${cand.student_id || cand.roll_number}` : ''}
+                                    {cand.institution_name ? ` · ${cand.institution_name}` : ''}
+                                  </div>
+                                </div>
+                                <span className="px-2 py-0.5 rounded-md bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 text-[10px] font-extrabold shrink-0">
+                                  Select
+                                </span>
+                              </button>
+                            ));
+                          })()}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {assignAudienceType === 'batch' && (
+                  <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1.5">
+                      2. Choose Student Batch *
+                    </label>
+                    <select
+                      required
+                      value={assignTargetId}
+                      onChange={(e) => setAssignTargetId(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2.5 font-bold text-xs"
+                    >
+                      <option value="">-- Choose Batch ({batchesList.length} available) --</option>
+                      {batchesList.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.name || b.batch_name} {b.academic_year ? `(${b.academic_year})` : ''} {b.description ? `· ${b.description}` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                      All candidate students assigned to this batch will instantly unlock full access to this test series.
+                    </p>
+                  </div>
+                )}
+
+                {assignAudienceType === 'institution' && (
+                  <div className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/30">
+                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1.5">
+                      2. Choose Partner School / Institution *
+                    </label>
+                    <select
+                      required
+                      value={assignTargetId}
+                      onChange={(e) => setAssignTargetId(e.target.value)}
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2.5 font-bold text-xs"
+                    >
+                      <option value="">-- Choose Partner School ({institutionsList.length} available) --</option>
+                      {institutionsList.map((inst) => (
+                        <option key={inst.id} value={inst.id}>
+                          {inst.name} {inst.schoolId || inst.code ? `(Code: ${inst.schoolId || inst.code})` : ''} {inst.activeStudents ? `· ${inst.activeStudents} students` : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-[11px] text-slate-400 mt-1 font-medium">
+                      All students linked to this institution will receive instant enrollment. Institution admin will also be notified.
+                    </p>
+                  </div>
+                )}
+
+                {assignAudienceType === 'all' && (
+                  <div className="p-4 rounded-2xl border border-amber-500/30 bg-amber-500/10 text-amber-700 dark:text-amber-300 space-y-1">
+                    <div className="font-extrabold text-xs flex items-center gap-1.5">
+                      <Globe className="h-4 w-4" />
+                      <span>Global Platform Enrolment</span>
+                    </div>
+                    <p className="text-[11px] leading-relaxed">
+                      Every candidate student on the platform will be granted active access. Any future students will also automatically receive access upon opening their test portal.
+                    </p>
+                  </div>
+                )}
+
+                {/* ACCESS DURATION / VALIDITY */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
+                      Access Validity (Days)
+                    </label>
+                    <input
+                      type="number"
+                      min="1"
+                      max="7300"
+                      value={assignValidityDays}
+                      onChange={(e) => setAssignValidityDays(e.target.value)}
+                      placeholder="e.g. 365"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2.5 font-bold text-xs"
+                    />
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {[
+                        { label: '30d', val: '30' },
+                        { label: '90d', val: '90' },
+                        { label: '180d', val: '180' },
+                        { label: '1 Year (365d)', val: '365' },
+                        { label: '2 Years (730d)', val: '730' },
+                      ].map((preset) => (
+                        <button
+                          key={preset.val}
+                          type="button"
+                          onClick={() => setAssignValidityDays(preset.val)}
+                          className="px-2 py-0.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-[10px] font-bold hover:bg-blue-50 hover:text-blue-600 transition cursor-pointer"
+                        >
+                          {preset.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-slate-800 dark:text-slate-200 font-bold mb-1">
+                      Internal Notes / Reason (Optional)
+                    </label>
+                    <input
+                      type="text"
+                      value={assignNotes}
+                      onChange={(e) => setAssignNotes(e.target.value)}
+                      placeholder="e.g. Scholarship award / Top performer batch grant"
+                      className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 p-2.5 font-semibold text-xs"
+                    />
+                    <div className="mt-3 flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        id="assign_notify_checkbox"
+                        checked={assignNotify}
+                        onChange={(e) => setAssignNotify(e.target.checked)}
+                        className="rounded border-slate-300 text-blue-600 focus:ring-blue-500"
+                      />
+                      <label htmlFor="assign_notify_checkbox" className="text-slate-700 dark:text-slate-300 font-semibold cursor-pointer">
+                        Send in-app notification to student(s)
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                  <button
+                    type="button"
+                    onClick={() => setAssignModalSeries(null)}
+                    className="btn-secondary !py-2 !px-4 text-xs font-bold"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={assigningLoading}
+                    className="btn-primary !py-2 !px-5 text-xs font-extrabold flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white shadow-md cursor-pointer"
+                  >
+                    {assigningLoading ? <Spinner size="sm" /> : <UserPlus className="h-4 w-4" />}
+                    <span>Assign Test Series Now</span>
+                  </button>
+                </div>
+              </form>
+            )}
+
+            {/* TAB 2: ENROLLED STUDENTS LIST */}
+            {assignTab === 'students' && (
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div className="relative flex-1 min-w-[200px]">
+                    <Search className="h-4 w-4 absolute left-3 top-2.5 text-slate-400" />
+                    <input
+                      type="text"
+                      placeholder="Filter enrolled students by name, email, roll number..."
+                      value={enrollmentSearchQuery}
+                      onChange={(e) => setEnrollmentSearchQuery(e.target.value)}
+                      className="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-semibold focus:outline-none focus:border-blue-500"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setAssignTab('form')}
+                    className="btn-primary !py-2 !px-3.5 text-xs flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white font-bold cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>+ Assign More Students</span>
+                  </button>
+                </div>
+
+                {(() => {
+                  const q = (enrollmentSearchQuery || '').toLowerCase().trim();
+                  const filtered = currentEnrollments.filter((enr) => {
+                    if (!q) return true;
+                    return (
+                      (enr.student_name || '').toLowerCase().includes(q) ||
+                      (enr.student_email || '').toLowerCase().includes(q) ||
+                      (enr.roll_number || '').toLowerCase().includes(q) ||
+                      (enr.institution_name || '').toLowerCase().includes(q) ||
+                      (enr.batch_name || '').toLowerCase().includes(q)
+                    );
+                  });
+
+                  if (filtered.length === 0) {
+                    return (
+                      <div className="py-12 text-center rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800">
+                        <Users className="h-10 w-10 text-slate-400 mx-auto mb-2 opacity-50" />
+                        <h4 className="font-extrabold text-sm text-slate-700 dark:text-slate-300">
+                          {enrollmentSearchQuery ? 'No matching enrolled students' : 'No Students Enrolled Yet'}
+                        </h4>
+                        <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1 mb-4">
+                          {enrollmentSearchQuery
+                            ? `Try clearing your search query "${enrollmentSearchQuery}".`
+                            : 'Use the "Assign to Audience" tab to grant access to candidates, batches, or schools.'}
+                        </p>
+                        {!enrollmentSearchQuery && (
+                          <button
+                            type="button"
+                            onClick={() => setAssignTab('form')}
+                            className="btn-primary !py-1.5 !px-4 text-xs font-bold"
+                          >
+                            Assign Students Now
+                          </button>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div className="border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-xs">
+                      <div className="max-h-96 overflow-y-auto">
+                        <table className="w-full text-left text-xs border-collapse">
+                          <thead className="bg-slate-100 dark:bg-slate-800/80 sticky top-0 z-10 text-slate-600 dark:text-slate-300 font-extrabold text-[11px] uppercase tracking-wider">
+                            <tr>
+                              <th className="p-3">Candidate</th>
+                              <th className="p-3">Student ID</th>
+                              <th className="p-3">Batch / School</th>
+                              <th className="p-3">Source</th>
+                              <th className="p-3">Enrolled</th>
+                              <th className="p-3">Expires</th>
+                              <th className="p-3 text-right">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody className="divide-y divide-slate-200 dark:divide-slate-800 font-semibold text-slate-700 dark:text-slate-300">
+                            {filtered.map((enr) => (
+                              <tr key={enr.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/40 transition">
+                                <td className="p-3">
+                                  <div className="font-bold text-slate-900 dark:text-white">{enr.student_name}</div>
+                                  <div className="text-[11px] text-slate-400">{enr.student_email}</div>
+                                </td>
+                                <td className="p-3 font-mono text-[11px] font-bold text-slate-600 dark:text-slate-400">
+                                  {enr.roll_number || '—'}
+                                </td>
+                                <td className="p-3 text-[11px]">
+                                  {enr.batch_name && <Badge color="purple">{enr.batch_name}</Badge>}
+                                  {enr.institution_name && (
+                                    <div className="text-slate-400 text-[10px] mt-0.5 truncate max-w-[130px]">
+                                      {enr.institution_name}
+                                    </div>
+                                  )}
+                                  {!enr.batch_name && !enr.institution_name && <span className="text-slate-400">Direct</span>}
+                                </td>
+                                <td className="p-3 text-[10px]">
+                                  <span className={`px-2 py-0.5 rounded-md font-bold uppercase ${
+                                    enr.assignment_type?.startsWith('admin_')
+                                      ? 'bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300'
+                                      : 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300'
+                                  }`}>
+                                    {enr.assignment_type || 'Purchase'}
+                                  </span>
+                                </td>
+                                <td className="p-3 text-[11px] text-slate-500 whitespace-nowrap">
+                                  {enr.purchased_at ? new Date(enr.purchased_at).toLocaleDateString() : '—'}
+                                </td>
+                                <td className="p-3 text-[11px] text-slate-500 whitespace-nowrap">
+                                  {enr.expires_at ? new Date(enr.expires_at).toLocaleDateString() : 'Lifetime'}
+                                </td>
+                                <td className="p-3 text-right">
+                                  <button
+                                    type="button"
+                                    onClick={() => handleRevokeEnrollment(enr)}
+                                    className="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition cursor-pointer"
+                                    title="Revoke student access"
+                                  >
+                                    <Trash2 className="h-4 w-4" />
+                                  </button>
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
+            {/* TAB 3: AUDIENCE RULES LIST */}
+            {assignTab === 'rules' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Standing audience rules automatically sync access whenever new candidates join an assigned batch or school.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => setAssignTab('form')}
+                    className="btn-primary !py-1.5 !px-3 text-xs flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white font-bold cursor-pointer"
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>+ New Rule</span>
+                  </button>
+                </div>
+
+                {currentAssignments.length === 0 ? (
+                  <div className="py-12 text-center rounded-2xl bg-slate-50 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-800">
+                    <ShieldCheck className="h-10 w-10 text-slate-400 mx-auto mb-2 opacity-50" />
+                    <h4 className="font-extrabold text-sm text-slate-700 dark:text-slate-300">No Audience Rules Configured</h4>
+                    <p className="text-xs text-slate-400 max-w-sm mx-auto mt-1 mb-4">
+                      Create rules to automatically grant this test series to specific student batches, partner schools, or everyone.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setAssignTab('form')}
+                      className="btn-primary !py-1.5 !px-4 text-xs font-bold"
+                    >
+                      Create First Rule
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {currentAssignments.map((rule) => (
+                      <div
+                        key={rule.id}
+                        className="p-3.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60 flex items-center justify-between gap-3 text-xs"
+                      >
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="px-2 py-0.5 rounded-md font-black text-[10px] uppercase bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300">
+                              {rule.assigned_to_type}
+                            </span>
+                            <span className="font-extrabold text-slate-900 dark:text-white text-xs truncate">
+                              {rule.target_name}
+                            </span>
+                          </div>
+                          <div className="text-[11px] text-slate-400 mt-1 flex flex-wrap gap-2">
+                            {rule.target_details && <span>{rule.target_details}</span>}
+                            <span>· Validity: {rule.validity_days || 365} days</span>
+                            <span>· Assigned: {new Date(rule.created_at).toLocaleDateString()}</span>
+                            {rule.notes && <span className="italic text-slate-500">· "{rule.notes}"</span>}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteAssignmentRule(rule)}
+                          className="p-1.5 rounded-lg text-rose-500 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition shrink-0 cursor-pointer"
+                          title="Delete assignment rule"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
       </Modal>
 
       <ConfirmModal

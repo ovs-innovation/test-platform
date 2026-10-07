@@ -161,6 +161,21 @@ export const enrollSchema = z.object({
   coupon_code: z.string().trim().optional().nullable(),
 });
 
+export const assignTestSeriesSchema = z.object({
+  assigned_to_type: z.enum(['student', 'individual', 'batch', 'institution', 'all']),
+  assigned_to_id: z.coerce.number().int().positive().nullable().optional(),
+  validity_days: z.coerce.number().int().min(1).max(7300).optional().nullable(),
+  notes: z.string().max(1000).optional().nullable(),
+  notify: z.boolean().optional().default(true),
+}).refine((data) => {
+  if (data.assigned_to_type !== 'all' && !data.assigned_to_id) {
+    return false;
+  }
+  return true;
+}, {
+  message: 'Target ID is required when assigning to a student, batch, or institution',
+});
+
 export const verifyPaymentSchema = z.object({
   test_series_id: z.number().int().positive().optional(),
   merchantOrderId: z.string().min(1).optional(),

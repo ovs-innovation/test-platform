@@ -268,6 +268,29 @@ export const toggleTestSeriesActive = asyncHandler(async (req, res) => {
  * Student: list my active enrollments.
  */
 export const myEnrollments = asyncHandler(async (req, res) => {
+  // Auto-sync any test series assigned to student's batch, institution, individual, or 'all'
+  await query(`
+    INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at, assignment_type)
+    SELECT 
+      $1, 
+      tsa.test_series_id, 
+      'active', 
+      NOW(), 
+      NOW() + (COALESCE(tsa.validity_days, ts.validity_days, 365) || ' days')::interval,
+      'admin_' || tsa.assigned_to_type
+    FROM test_series_assignments tsa
+    JOIN test_series ts ON ts.id = tsa.test_series_id AND ts.is_active = TRUE
+    JOIN users u ON u.id = $1
+    WHERE (
+      tsa.assigned_to_type = 'all'
+      OR (tsa.assigned_to_type = 'student' AND tsa.assigned_to_id = $1)
+      OR (tsa.assigned_to_type = 'individual' AND tsa.assigned_to_id = $1)
+      OR (tsa.assigned_to_type = 'batch' AND u.batch_id = tsa.assigned_to_id)
+      OR (tsa.assigned_to_type = 'institution' AND u.institution_id = tsa.assigned_to_id)
+    )
+    ON CONFLICT (user_id, test_series_id) DO NOTHING
+  `, [req.user.id]).catch(() => {});
+
   const result = await query(
     `SELECT se.*, ts.title, ts.slug, ts.exam_type, ts.image_url, ts.code, ts.target_year, ts.program_type, ts.brochure_url, ts.brochure_name,
             COUNT(DISTINCT COALESCE(tst.test_id, tsa.assessment_id))::int AS planned_tests,
@@ -454,4 +477,246 @@ export const syncCatalogue = asyncHandler(async (_req, res) => {
      GROUP BY ts.id ORDER BY ts.display_order ASC, ts.created_at DESC`
   );
   res.json({ message: 'Catalogue synced successfully', test_series: updated.rows });
+});
+
+/**
+ * Admin: Assign test series to an individual student, batch, institution, or all candidates.
+ */
+export const assignTestSeries = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const seriesId = Number(id);
+  const { assigned_to_type: rawType, assigned_to_id, validity_days, notes, notify = true } = req.body;
+
+  const assigned_to_type = rawType === 'individual' ? 'student' : rawType;
+
+  // 1. Check if test series exists
+  const tsRes = await query('SELECT * FROM test_series WHERE id = $1', [seriesId]);
+  if (!tsRes.rowCount) throw ApiError.notFound('Test series not found');
+  const series = tsRes.rows[0];
+
+  const targetId = assigned_to_type === 'all' ? null : Number(assigned_to_id);
+  if (assigned_to_type !== 'all' && (!targetId || isNaN(targetId))) {
+    throw ApiError.badRequest('A valid Target ID is required');
+  }
+
+  // 2. Resolve validity days & expiration date
+  const valDays = (validity_days && Number(validity_days) > 0)
+    ? Number(validity_days)
+    : ((series.validity_days && Number(series.validity_days) > 0) ? Number(series.validity_days) : 365);
+  const expiresAt = new Date(Date.now() + valDays * 86400000);
+
+  // 3. Resolve candidate students
+  let candidates = [];
+  let targetDisplayName = '';
+
+  if (assigned_to_type === 'student') {
+    const studentRes = await query(
+      `SELECT id, name, email FROM users WHERE id = $1 AND role = 'candidate'`,
+      [targetId]
+    );
+    if (!studentRes.rowCount) {
+      throw ApiError.notFound('Student candidate not found');
+    }
+    candidates = studentRes.rows;
+    targetDisplayName = `Student "${candidates[0].name}" (${candidates[0].email})`;
+  } else if (assigned_to_type === 'batch') {
+    const batchRes = await query(
+      `SELECT id, COALESCE(batch_name, name) AS name FROM batches WHERE id = $1`,
+      [targetId]
+    );
+    if (!batchRes.rowCount) {
+      throw ApiError.notFound('Batch not found');
+    }
+    targetDisplayName = `Batch "${batchRes.rows[0].name}"`;
+    const studentsRes = await query(
+      `SELECT id, name, email FROM users WHERE batch_id = $1 AND role = 'candidate'`,
+      [targetId]
+    );
+    candidates = studentsRes.rows;
+  } else if (assigned_to_type === 'institution') {
+    const instRes = await query(
+      `SELECT id, name FROM institutions WHERE id = $1`,
+      [targetId]
+    );
+    if (!instRes.rowCount) {
+      throw ApiError.notFound('Partner School / Institution not found');
+    }
+    targetDisplayName = `Institution "${instRes.rows[0].name}"`;
+    const studentsRes = await query(
+      `SELECT DISTINCT u.id, u.name, u.email
+       FROM users u
+       LEFT JOIN batches b ON b.id = u.batch_id
+       WHERE (u.institution_id = $1 OR b.institution_id = $1) AND u.role = 'candidate'`,
+      [targetId]
+    );
+    candidates = studentsRes.rows;
+
+    // Send institution admin notification
+    if (notify) {
+      await query(
+        `INSERT INTO institution_notifications (institution_id, title, message, type, target_type, target_id)
+         VALUES ($1, $2, $3, 'test_series_assigned', 'test_series', $4)`,
+        [
+          targetId,
+          'Test Series Assigned by Platform Admin',
+          `Platform Admin assigned test series "${series.title}" to your institution. All students now have full access.`,
+          seriesId,
+        ]
+      ).catch(() => {});
+    }
+  } else if (assigned_to_type === 'all') {
+    targetDisplayName = 'All Platform Candidates';
+    const studentsRes = await query(
+      `SELECT id, name, email FROM users WHERE role = 'candidate'`
+    );
+    candidates = studentsRes.rows;
+  }
+
+  // 4. Record the assignment rule in test_series_assignments
+  const assignmentRes = await query(
+    `INSERT INTO test_series_assignments (test_series_id, assigned_to_type, assigned_to_id, validity_days, notes)
+     VALUES ($1, $2, $3, $4, $5)
+     RETURNING *`,
+    [seriesId, assigned_to_type, targetId, valDays, notes || null]
+  );
+
+  // 5. Enroll students in student_enrollments
+  const assignmentTypeStr = `admin_${assigned_to_type}`;
+  let enrolledCount = 0;
+
+  for (const student of candidates) {
+    await query(
+      `INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at, assignment_type, notes)
+       VALUES ($1, $2, 'active', NOW(), $3, $4, $5)
+       ON CONFLICT (user_id, test_series_id)
+       DO UPDATE SET
+         status = 'active',
+         expires_at = EXCLUDED.expires_at,
+         assignment_type = EXCLUDED.assignment_type,
+         notes = COALESCE(EXCLUDED.notes, student_enrollments.notes)`,
+      [student.id, seriesId, expiresAt, assignmentTypeStr, notes || null]
+    );
+    enrolledCount++;
+
+    if (notify) {
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type)
+         VALUES ($1, $2, $3, 'test_series')`,
+        [
+          student.id,
+          'Test Series Assigned',
+          `Admin assigned "${series.title}" to you. You can now access and attempt all included mock tests!`,
+        ]
+      ).catch(() => {});
+    }
+  }
+
+  await delCache('cache:public_test_series:*').catch(() => {});
+
+  res.status(201).json({
+    success: true,
+    message: `Assigned "${series.title}" to ${targetDisplayName} (${enrolledCount} student${enrolledCount === 1 ? '' : 's'} enrolled).`,
+    enrolled_count: enrolledCount,
+    assignment: assignmentRes.rows[0],
+  });
+});
+
+/**
+ * Admin: View all assignments and enrolled candidates for a test series.
+ */
+export const getTestSeriesAssignments = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const seriesId = Number(id);
+
+  const seriesRes = await query('SELECT id, title, price, exam_type, validity_days FROM test_series WHERE id = $1', [seriesId]);
+  if (!seriesRes.rowCount) throw ApiError.notFound('Test series not found');
+
+  const assignmentsRes = await query(
+    `SELECT 
+       tsa.*,
+       CASE 
+         WHEN tsa.assigned_to_type = 'student' THEN u.name
+         WHEN tsa.assigned_to_type = 'batch' THEN COALESCE(b.batch_name, b.name)
+         WHEN tsa.assigned_to_type = 'institution' THEN i.name
+         WHEN tsa.assigned_to_type = 'all' THEN 'All Registered Students'
+         ELSE 'Unknown'
+       END AS target_name,
+       CASE 
+         WHEN tsa.assigned_to_type = 'student' THEN u.email
+         WHEN tsa.assigned_to_type = 'batch' THEN COALESCE(b.description, 'Batch')
+         WHEN tsa.assigned_to_type = 'institution' THEN COALESCE(i.code, 'Partner School')
+         ELSE 'Platform-Wide'
+       END AS target_details,
+       u.roll_number AS student_roll_number
+     FROM test_series_assignments tsa
+     LEFT JOIN users u ON u.id = tsa.assigned_to_id AND tsa.assigned_to_type = 'student'
+     LEFT JOIN batches b ON b.id = tsa.assigned_to_id AND tsa.assigned_to_type = 'batch'
+     LEFT JOIN institutions i ON i.id = tsa.assigned_to_id AND tsa.assigned_to_type = 'institution'
+     WHERE tsa.test_series_id = $1
+     ORDER BY tsa.created_at DESC`,
+    [seriesId]
+  );
+
+  const enrollmentsRes = await query(
+    `SELECT 
+       se.id,
+       se.user_id,
+       se.test_series_id,
+       se.status,
+       se.purchased_at,
+       se.expires_at,
+       se.assignment_type,
+       se.notes,
+       u.name AS student_name,
+       u.email AS student_email,
+       COALESCE(u.roll_number, sp.roll_number, '') AS roll_number,
+       COALESCE(i.name, ib.name, '') AS institution_name,
+       COALESCE(b.batch_name, b.name, '') AS batch_name
+     FROM student_enrollments se
+     JOIN users u ON u.id = se.user_id
+     LEFT JOIN student_profiles sp ON sp.user_id = u.id
+     LEFT JOIN batches b ON b.id = u.batch_id
+     LEFT JOIN institutions i ON i.id = u.institution_id
+     LEFT JOIN institutions ib ON ib.id = b.institution_id
+     WHERE se.test_series_id = $1
+     ORDER BY se.purchased_at DESC`,
+    [seriesId]
+  );
+
+  res.json({
+    success: true,
+    test_series: seriesRes.rows[0],
+    assignments: assignmentsRes.rows,
+    enrollments: enrollmentsRes.rows,
+    stats: {
+      total_assignments: assignmentsRes.rows.length,
+      total_enrollments: enrollmentsRes.rows.length,
+    },
+  });
+});
+
+/**
+ * Admin: Delete an assignment rule.
+ */
+export const deleteTestSeriesAssignment = asyncHandler(async (req, res) => {
+  const { id, assignmentId } = req.params;
+  const result = await query(
+    `DELETE FROM test_series_assignments WHERE id = $1 AND test_series_id = $2 RETURNING *`,
+    [assignmentId, id]
+  );
+  if (!result.rowCount) throw ApiError.notFound('Assignment record not found');
+  res.json({ success: true, message: 'Assignment rule removed successfully', deleted: result.rows[0] });
+});
+
+/**
+ * Admin: Revoke a specific student's enrollment from a test series.
+ */
+export const revokeTestSeriesEnrollment = asyncHandler(async (req, res) => {
+  const { id, enrollmentId } = req.params;
+  const result = await query(
+    `DELETE FROM student_enrollments WHERE id = $1 AND test_series_id = $2 RETURNING id, user_id`,
+    [enrollmentId, id]
+  );
+  if (!result.rowCount) throw ApiError.notFound('Student enrollment not found');
+  res.json({ success: true, message: 'Student access revoked successfully', revoked: result.rows[0] });
 });

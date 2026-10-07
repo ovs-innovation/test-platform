@@ -262,6 +262,19 @@ export const testSeriesService = {
     clearCache();
     return api.delete(`/test-series/${id}`).then((r) => r.data);
   },
+  getAssignments: (id) => api.get(`/test-series/${id}/assignments`).then((r) => r.data),
+  assign: (id, data) => {
+    clearCache();
+    return api.post(`/test-series/${id}/assign`, data).then((r) => r.data);
+  },
+  deleteAssignment: (seriesId, assignmentId) => {
+    clearCache();
+    return api.delete(`/test-series/${seriesId}/assignments/${assignmentId}`).then((r) => r.data);
+  },
+  revokeEnrollment: (seriesId, enrollmentId) => {
+    clearCache();
+    return api.delete(`/test-series/${seriesId}/enrollments/${enrollmentId}`).then((r) => r.data);
+  },
 };
 
 export const paymentService = {
