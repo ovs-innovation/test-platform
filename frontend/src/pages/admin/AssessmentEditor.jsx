@@ -1448,17 +1448,39 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
             <MathRenderer text={q.question_text} />
           </div>
           
-          {q.image_url && (
-            <div className="mt-2 max-w-sm">
-              <img
-                src={getMediaUrl(q.image_url)}
-                alt="Question Diagram"
-                className="max-h-40 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90"
-                onClick={() => window.open(getMediaUrl(q.image_url), '_blank')}
-                title="Click to view full diagram"
-              />
-            </div>
-          )}
+          {(() => {
+            let mediaList = [];
+            if (Array.isArray(q.media) && q.media.length > 0) {
+              mediaList = q.media;
+            } else if (typeof q.media === 'string') {
+              try { mediaList = JSON.parse(q.media); } catch (_) { mediaList = []; }
+            }
+            if (!mediaList.length && q.image_url) {
+              mediaList = [{ url: q.image_url }];
+            }
+            if (!mediaList.length) return null;
+
+            return (
+              <div className="mt-2 flex flex-wrap gap-2.5">
+                {mediaList.map((m, mIdx) => {
+                  const mUrl = typeof m === 'string' ? m : m.url;
+                  if (!mUrl) return null;
+                  return (
+                    <div key={mIdx} className="max-w-xs">
+                      <img
+                        src={getMediaUrl(mUrl)}
+                        alt={m.description || `Question Diagram ${mIdx + 1}`}
+                        className="max-h-40 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90 shadow-xs"
+                        onClick={() => window.open(getMediaUrl(mUrl), '_blank')}
+                        title="Click to view full diagram"
+                      />
+                      {m.description && <p className="text-[10px] text-slate-500 mt-0.5 truncate">{m.description}</p>}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()}
 
           {isInteger && (
             <div className="mt-2.5 flex items-center gap-2">
@@ -1480,9 +1502,12 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
           {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
             <ul className="mt-2 space-y-1 text-sm">
               {opts.map((opt, i) => {
-                const rawOptText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
-                const optText = rawOptText.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim();
-                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                const rawOptText = typeof opt === 'object' && opt !== null ? (opt.text ?? '') : String(opt ?? '');
+                const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(rawOptText);
+                const optText = isMatchMapping ? rawOptText : rawOptText.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim();
+                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media))
+                  ? opt.media
+                  : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
                 const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
                 const isCorrect = hasAnswerKey && (
                   q.question_type === 'multi_select'
@@ -1501,7 +1526,17 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                     <div className="flex items-center gap-1.5">
                       {isCorrect && <span className="text-xs font-bold">✓</span>}
                       <span className="font-semibold text-slate-500 dark:text-slate-400">({String.fromCharCode(65 + i)})</span>
-                      {optText || rawOptText ? <MathRenderer text={optText || rawOptText} /> : (!optImg && <span className="italic text-slate-400">Empty option</span>)}
+                      {optText || rawOptText ? (
+                        <MathRenderer text={optText || rawOptText} />
+                      ) : (
+                        optImg ? (
+                          <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+                            [Image Option]
+                          </span>
+                        ) : (
+                          <span className="italic text-slate-400">Empty option</span>
+                        )
+                      )}
                     </div>
                     {optImg && (
                       <div className="ml-5 mt-0.5">

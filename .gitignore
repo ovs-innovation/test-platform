@@ -15,3 +15,6 @@ build/
 *.log
 scratch/
 *.timestamp*.mjs
+scratch_page_*.json
+omr_transcribed.txt
+

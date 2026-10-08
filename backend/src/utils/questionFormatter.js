@@ -97,6 +97,15 @@ export function formatQuestionStructure(text) {
   // Normalize Windows line breaks
   s = s.replace(/\r\n/g, '\n');
 
+  // Safeguard Markdown table blocks (| ... |) so regexes do not break table rows
+  const tableBlocks = [];
+  if (s.includes('|')) {
+    s = s.replace(/((?:^[ \t]*\|[^\n]+\|[ \t]*(?:\n|$))+)/gm, (match) => {
+      tableBlocks.push(match);
+      return `\n__TABLE_BLOCK_${tableBlocks.length - 1}__\n`;
+    });
+  }
+
   // Insert newline before Statement I, Statement II, Statement 1, Statement 2, Statement (A), etc.
   s = s.replace(/([^\n])\s*(Statement\s+(?:[IVX\d]+|\([A-Za-z0-9]+\)|[A-E])\s*[:\-])/gi, '$1\n$2');
   s = s.replace(/([^\n])\s*(Statement\s*\([A-Za-z0-9]+\)\s*[:\-])/gi, '$1\n$2');
@@ -119,6 +128,13 @@ export function formatQuestionStructure(text) {
   s = s.replace(/(?<!\b(?:statements?|above|below)[,:]?)\s+(Choose\s+the\s+(?:correct|most\s+appropriate|incorrect)\s+(?:answer|statement|option)s?\b)/gi, '\n$1');
 
   s = ensureLatexDelimiters(s);
+
+  // Restore safeguarded table blocks
+  if (tableBlocks.length > 0) {
+    tableBlocks.forEach((tb, i) => {
+      s = s.replace(`__TABLE_BLOCK_${i}__`, tb.trim());
+    });
+  }
 
   return s.replace(/\n{3,}/g, '\n\n').trim();
 }

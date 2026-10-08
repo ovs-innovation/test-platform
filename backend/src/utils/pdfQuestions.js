@@ -327,13 +327,19 @@ export function parseQuestionsFromText(text) {
 
 export async function parseQuestionsFromPdf(buffer, options = {}) {
   const includeAnswers = options.includeAnswers !== false;
+  const expectedQuestionCount = options.expectedQuestionCount ? parseInt(options.expectedQuestionCount, 10) : null;
+  const examType = options.examType || null;
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   let visionBypassReason = null;
 
   if (apiKey) {
     try {
-      console.log(`[pdfQuestions] Attempting Gemini Vision PDF extraction pipeline (includeAnswers: ${includeAnswers})...`);
-      const visionResult = await extractQuestionsWithGeminiVision(buffer, { includeAnswers });
+      console.log(`[pdfQuestions] Attempting Gemini Vision PDF extraction pipeline (includeAnswers: ${includeAnswers}, expectedQuestionCount: ${expectedQuestionCount || 'auto'})...`);
+      const visionResult = await extractQuestionsWithGeminiVision(buffer, {
+        includeAnswers,
+        expectedQuestionCount,
+        examType,
+      });
       const visionQuestions = visionResult.questions || [];
       const stats = visionResult.stats || {};
       const warnings = visionResult.warnings || [];
@@ -379,6 +385,10 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           return {
             ...q,
             line: q.questionNumber,
+            printed_question_number: q.printedQuestionNumber || q.questionNumber,
+            printedQuestionNumber: q.printedQuestionNumber || q.questionNumber,
+            internal_id: q.internalId || `q${q.questionNumber}`,
+            internalId: q.internalId || `q${q.questionNumber}`,
             question_text: qText,
             questionText: qText,
             question_type: qType,
@@ -411,7 +421,7 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           };
         });
 
-        console.log(`[pdfQuestions] Successfully extracted ${rows.length} question(s) via Gemini Vision.`);
+        console.log(`[pdfQuestions] Successfully extracted ${rows.length} question(s) via Gemini Vision (coverage: ${visionResult.coverageStatus || 'complete'}).`);
         return {
           extractedBy: 'gemini-vision',
           rows,
@@ -422,8 +432,20 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           chaptersMap: visionResult.chaptersMap || visionResult.topicGridMap || {},
           stats,
           warnings,
-          isPartial: Boolean(visionResult.isPartial),
+          expectedQuestionCount: visionResult.expectedQuestionCount || expectedQuestionCount,
+          extractedQuestionCount: rows.length,
+          savedQuestionCount: rows.length,
+          missingQuestionNumbers: visionResult.missingQuestionNumbers || [],
+          conflictingQuestionIdentifiers: visionResult.conflictingQuestionIdentifiers || [],
+          unresolvedFragments: visionResult.unresolvedFragments || [],
           failedPages: visionResult.failedPages || [],
+          suspiciousPages: visionResult.suspiciousPages || [],
+          questionsNeedingReview: visionResult.questionsNeedingReview || 0,
+          visualsDetected: visionResult.visualsDetected || 0,
+          visualsSaved: visionResult.visualsSaved || 0,
+          unresolvedVisuals: visionResult.unresolvedVisuals || 0,
+          coverageStatus: visionResult.coverageStatus || 'complete',
+          isPartial: Boolean(visionResult.isPartial),
           errors: [],
           question_count: rows.length,
         };

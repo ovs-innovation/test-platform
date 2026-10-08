@@ -522,7 +522,6 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
   const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
   const currentTest = currentTestRes.rows[0] || {};
 
-  await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
   let calcTotalMarks = 0;
   let savedCount = 0;
   const detectedSubjects = new Set();
@@ -534,6 +533,16 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     if (numA !== numB) return numA - numB;
     return 0;
   });
+
+  if (sortedParsedQs.length === 0) {
+    console.warn(`[PDF Import] No parsed questions to persist for assessment ${id}. Existing questions retained.`);
+    return {
+      extractedCount: 0,
+      extractedQuestionsJson: [],
+      reviewWarnings: ['No valid questions could be extracted from the uploaded document.'],
+      savedCount: 0,
+    };
+  }
 
   const isNeet = String(currentTest.test_name || '').toUpperCase().includes('NEET') ||
                  String(currentTest.syllabus || '').toUpperCase().includes('NEET') ||
@@ -558,7 +567,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
 
     let detectedSectionSubject = null;
     if (isNeet) {
-      if (sortedParsedQs.length === 180) {
+      if ((sortedParsedQs.length >= 130 && sortedParsedQs.length <= 190) || (qNum <= 180 && !isJeeTest)) {
         // Standard NEET 180 paper: Biology (1-90), Physics (91-135), Chemistry (136-180)
         if (qNum >= 1 && qNum <= 90) detectedSectionSubject = 'Biology';
         else if (qNum >= 91 && qNum <= 135) detectedSectionSubject = 'Physics';
@@ -663,6 +672,11 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
 
     const cleanOptionText = (raw) => {
       const s = String(raw || '').trim();
+      // Match-the-column / composite mapping pattern: e.g. "(a) - q, (b) - p", "A-1, B-2", "a-F, b-T", "(i) ..., (ii) ..."
+      const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(s);
+      if (isMatchMapping) {
+        return stripHeadersAndFooters(s) || s;
+      }
       const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
       return stripHeadersAndFooters(stripped) || stripped;
     };
@@ -755,6 +769,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
 
   const dbRows = sortedParsedQs.map((q) => q._dbRow).filter(Boolean);
   if (dbRows.length > 0) {
+    await query('DELETE FROM questions WHERE assessment_id = $1', [id]);
     const valueClauses = [];
     const bulkParams = [];
     let pIdx = 1;
@@ -1061,7 +1076,24 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         });
       }
 
-      pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers });
+      const currentTestInfo = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
+      const currentTestRow = currentTestInfo.rows[0] || {};
+      const isNeet = String(currentTestRow.test_name || '').toUpperCase().includes('NEET') || String(currentTestRow.syllabus || '').toUpperCase().includes('NEET');
+      const isJee = String(currentTestRow.test_name || '').toUpperCase().includes('JEE') || String(currentTestRow.syllabus || '').toUpperCase().includes('JEE');
+
+      const targetExpectedCount = req.body.expected_question_count
+        ? parseInt(req.body.expected_question_count, 10)
+        : (req.body.expectedQuestionCount
+          ? parseInt(req.body.expectedQuestionCount, 10)
+          : (total_questions
+            ? parseInt(total_questions, 10)
+            : (isNeet ? 180 : (isJee ? 75 : null))));
+
+      pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, {
+        includeAnswers,
+        expectedQuestionCount: targetExpectedCount,
+        examType: isNeet ? 'NEET' : (isJee ? 'JEE' : null),
+      });
       extractedBy = pdfExtraction.extractedBy || 'pdf-parse-regex';
       extractionStats = pdfExtraction.stats || null;
       const parsedQs = pdfExtraction.rows || [];
@@ -1134,6 +1166,16 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
 
   const isPartialImport = Boolean(extractionStats?.isPartial || (Array.isArray(extractionStats?.pagesFailed) && extractionStats.pagesFailed > 0) || (pdfExtraction && pdfExtraction.isPartial));
   const failedPageList = (pdfExtraction && pdfExtraction.failedPages) || [];
+  const missingNumbers = pdfExtraction?.missingQuestionNumbers || [];
+  const conflictingIds = pdfExtraction?.conflictingQuestionIdentifiers || [];
+  const unresolvedFrags = pdfExtraction?.unresolvedFragments || [];
+  const suspiciousPageList = pdfExtraction?.suspiciousPages || [];
+  const questionsNeedingReview = pdfExtraction?.questionsNeedingReview || 0;
+  const visualsDetected = pdfExtraction?.visualsDetected || 0;
+  const visualsSaved = pdfExtraction?.visualsSaved || 0;
+  const unresolvedVisuals = pdfExtraction?.unresolvedVisuals || 0;
+  const coverageStatus = pdfExtraction?.coverageStatus || (isPartialImport ? 'partial' : 'complete');
+
   const isFallbackDegraded = extractedBy === 'pdf-parse-regex' || Boolean(pdfExtraction?.visionBypassReason);
   const sanitizedVisionBypassReason = pdfExtraction?.visionBypassReason
     ? String(pdfExtraction.visionBypassReason).replace(/AIza[0-9A-Za-z-_]{35}/g, '[REDACTED]').replace(/key=[^&\s]+/gi, 'key=[REDACTED]')
@@ -1142,28 +1184,47 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
   let responseStatus = 'success';
   if (isFallbackDegraded) {
     responseStatus = 'degraded_fallback';
-  } else if (isPartialImport) {
+  } else if (isPartialImport || coverageStatus === 'partial') {
     responseStatus = 'partial_success';
+  } else if (coverageStatus === 'review_required') {
+    responseStatus = 'review_required';
   }
 
-  let responseMsg = `${file_type} uploaded successfully`;
+  let responseMsg = `${file_type} uploaded successfully.`;
   if (isFallbackDegraded) {
     responseMsg = `PDF question paper imported via plain-text fallback parser (${sanitizedVisionBypassReason || 'AI Vision unavailable'}). ${extractedCount} question(s) extracted with degraded quality. Mathematical formulas, diagrams, or answer keys may be missing or unformatted.`;
+  } else if (coverageStatus === 'partial' && (pdfExtraction?.expectedQuestionCount || total_questions)) {
+    const targetQCount = pdfExtraction?.expectedQuestionCount || total_questions;
+    responseMsg = `${extractedCount} of ${targetQCount} expected questions extracted. ${missingNumbers.length} question numbers remain unresolved. Draft saved for review.`;
   } else if (isPartialImport && failedPageList.length > 0) {
     responseMsg = `PDF question paper partially extracted (${extractedCount} questions). Pages [${failedPageList.join(', ')}] failed to process. Partial draft has been saved.`;
+  } else if (questionsNeedingReview > 0) {
+    responseMsg = `${extractedCount} questions extracted. ${questionsNeedingReview} question(s) require manual review.`;
   }
 
   res.json({
     message: responseMsg,
     status: responseStatus,
+    coverageStatus,
     isDegraded: isFallbackDegraded,
     visionBypassReason: sanitizedVisionBypassReason,
     url: relativeUrl,
     file_type,
     extractedBy,
     extractedCount,
-    isPartial: isPartialImport,
+    expectedQuestionCount: pdfExtraction?.expectedQuestionCount || null,
+    extractedQuestionCount: extractedCount,
+    savedQuestionCount: extractedCount,
+    missingQuestionNumbers: missingNumbers,
+    conflictingQuestionIdentifiers: conflictingIds,
+    unresolvedFragments: unresolvedFrags,
     failedPages: failedPageList,
+    suspiciousPages: suspiciousPageList,
+    questionsNeedingReview,
+    visualsDetected,
+    visualsSaved,
+    unresolvedVisuals,
+    isPartial: isPartialImport || coverageStatus === 'partial',
     stats: extractionStats,
     extractedQuestions: extractedQuestionsJson,
     warnings: reviewWarnings.length > 0 ? reviewWarnings : undefined

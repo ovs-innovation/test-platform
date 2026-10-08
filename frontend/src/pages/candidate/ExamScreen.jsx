@@ -913,24 +913,39 @@ export default function ExamScreen() {
               <MathRenderer text={formattedDisplayQuestionText} />
             </div>
 
-            {q.image_url && (
-              <button type="button" onClick={() => setImgZoom(getMediaUrl(q.image_url))} className="mt-4 block text-left">
-                <img
-                  src={getMediaUrl(q.image_url)}
-                  alt="Question diagram"
-                  className="max-h-64 cursor-zoom-in border border-slate-400 bg-white p-1 rounded"
-                />
-                <span className="mt-1 block text-[11px] text-slate-500">
-                  {examLanguage === 'hi' ? 'बड़ा देखने के लिए चित्र पर क्लिक करें' : 'Click image to enlarge'}
-                </span>
-              </button>
-            )}
+            {(() => {
+              const questionMediaList = (Array.isArray(q.media) && q.media.length > 0)
+                ? q.media.filter((m) => m && (m.url || (typeof m === 'string' && m.trim())))
+                : (q.image_url ? [{ url: q.image_url }] : []);
+              if (!questionMediaList.length) return null;
+              return (
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {questionMediaList.map((m, mIdx) => {
+                    const mUrl = typeof m === 'string' ? m : m.url;
+                    return (
+                      <button key={mIdx} type="button" onClick={() => setImgZoom(getMediaUrl(mUrl))} className="block text-left">
+                        <img
+                          src={getMediaUrl(mUrl)}
+                          alt={m.description || `Question diagram ${mIdx + 1}`}
+                          className="max-h-64 cursor-zoom-in border border-slate-400 bg-white p-1 rounded object-contain"
+                        />
+                        <span className="mt-1 block text-[11px] text-slate-500">
+                          {examLanguage === 'hi' ? 'बड़ा देखने के लिए चित्र पर क्लिक करें' : 'Click image to enlarge'}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              );
+            })()}
 
             {(!isMultiSelectQuestion(q) && (q.question_type === 'mcq' || q.question_type === 'single_choice')) && (
               <div className="mt-5 space-y-2">
                 {(displayOptions || []).map((opt, idx) => {
                   const optText = typeof opt === 'object' ? (opt.text ?? '') : String(opt ?? '');
-                  const optMedia = (typeof opt === 'object' && Array.isArray(opt.media)) ? opt.media : [];
+                  const optMedia = (typeof opt === 'object' && Array.isArray(opt.media))
+                    ? opt.media
+                    : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
                   return (
                     <button
                       key={idx}
@@ -946,16 +961,20 @@ export default function ExamScreen() {
                         {String.fromCharCode(65 + idx)}
                       </span>
                       <div className="flex-1 text-left">
-                        <MathRenderer text={optText} />
-                        {optMedia.length > 0 && optMedia[0]?.url && (
-                          <div className="mt-2">
-                            <img
-                              src={getMediaUrl(optMedia[0].url)}
-                              alt={`Option ${String.fromCharCode(65 + idx)} diagram`}
-                              className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
-                            />
-                          </div>
-                        )}
+                        {optText ? <MathRenderer text={optText} /> : null}
+                        {optMedia.length > 0 && optMedia.map((om, omIdx) => {
+                          const omUrl = typeof om === 'string' ? om : om?.url;
+                          if (!omUrl) return null;
+                          return (
+                            <div key={omIdx} className="mt-2">
+                              <img
+                                src={getMediaUrl(omUrl)}
+                                alt={`Option ${String.fromCharCode(65 + idx)} diagram ${omIdx + 1}`}
+                                className="max-h-32 rounded border border-slate-300 object-contain bg-white p-1"
+                              />
+                            </div>
+                          );
+                        })}
                       </div>
                     </button>
                   );
