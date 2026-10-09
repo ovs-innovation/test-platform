@@ -62,12 +62,35 @@ pool.on('error', (err) => {
 });
 
 /**
+ * Recursively strip null bytes (\0 / \u0000) from query parameters.
+ * PostgreSQL rejects \0 in UTF-8 strings with "invalid byte sequence for encoding "UTF8": 0x00".
+ */
+export function sanitizeDbParam(val) {
+  if (typeof val === 'string') {
+    return val.replace(/\0/g, '');
+  }
+  if (Array.isArray(val)) {
+    return val.map(sanitizeDbParam);
+  }
+  if (val !== null && typeof val === 'object' && !(val instanceof Date) && !Buffer.isBuffer(val)) {
+    const cleaned = {};
+    for (const [k, v] of Object.entries(val)) {
+      cleaned[k] = sanitizeDbParam(v);
+    }
+    return cleaned;
+  }
+  return val;
+}
+
+/**
  * Run a parameterized query with safe retry for transient DB connection drops.
  */
 export const query = async (text, params, retries = 3) => {
+  const safeText = typeof text === 'string' ? text.replace(/\0/g, '') : text;
+  const safeParams = Array.isArray(params) ? params.map(sanitizeDbParam) : params;
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      return await pool.query(text, params);
+      return await pool.query(safeText, safeParams);
     } catch (err) {
       const isTransient =
         err &&
@@ -101,13 +124,19 @@ export const query = async (text, params, retries = 3) => {
  */
 export const withTransaction = async (callback) => {
   const client = await pool.connect();
+  const origQuery = client.query.bind(client);
+  client.query = (qText, qParams, ...rest) => {
+    const safeText = typeof qText === 'string' ? qText.replace(/\0/g, '') : qText;
+    const safeParams = Array.isArray(qParams) ? qParams.map(sanitizeDbParam) : qParams;
+    return origQuery(safeText, safeParams, ...rest);
+  };
   try {
-    await client.query('BEGIN');
+    await origQuery('BEGIN');
     const result = await callback(client);
-    await client.query('COMMIT');
+    await origQuery('COMMIT');
     return result;
   } catch (err) {
-    await client.query('ROLLBACK');
+    await origQuery('ROLLBACK').catch(() => {});
     throw err;
   } finally {
     client.release();

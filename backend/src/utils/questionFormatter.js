@@ -4,15 +4,15 @@
  */
 export function stripHeadersAndFooters(text) {
   if (!text || typeof text !== 'string') return text || '';
-
-  const trimmed = text.trim();
+  const sanitized = text.replace(/\0/g, '');
+  const trimmed = sanitized.trim();
   // Fast path: Pure numbers (e.g. "3", "18", "9", "6", "0", "-5", "2.5"), short values with units ("16 N", "10 m/s"),
   // chemical formulas ("CO2", "H2O"), or short option strings (<= 3 characters) are legitimate content, never page headers.
   if (/^[-+]?\d+(?:\.\d+)?(?:\s*[a-zA-Z%°\/^µΩ]+)?$/.test(trimmed) || trimmed.length <= 3) {
     return trimmed;
   }
 
-  let s = text.replace(/\r\n/g, '\n');
+  let s = sanitized.replace(/\r\n/g, '\n');
 
   const fullLineHeaderRegex = /^(?:EDVEDUM(?:\s*ACADEMY)?|AIETS(?:\s*NEET)?(?:\s*\d{4})?|\bUT-\d+\b|JEE[\s\-]*Main[\s\-]*(?:20\d\d)?(?:\s*Solved\s*Papers)?(?:\s*P\s*W)?|Scan\s+for\s+Video\s+Solutions?|JEE-MAIN\s*PAPER\b[^\n]*|(?:[A-Za-z0-9&.'\-]+\s+)?(?:ACADEMY|INSTITUTE|CLASSES|VIDYAPEETH|EDUCATION|TEST\s*SERIES)\b[^\n]*?[\|•·–—][^\n]*|[-_—–=]{3,}|SPACE\s+FOR\s+ROUGH\s+WORK|ROUGH\s+WORK|Page\s*\d+(?:\s*(?:of|\/)\s*\d+)?|[-–—]{1,2}\s*\d{1,3}\s*[-–—]{1,2})\s*(?:\d{1,3})?$/i;
 
@@ -48,15 +48,16 @@ export function stripHeadersAndFooters(text) {
  */
 export function ensureLatexDelimiters(text) {
   if (!text || typeof text !== 'string') return text || '';
+  const sanitized = text.replace(/\0/g, '');
 
   // If the whole string is already enclosed in $...$ or $$...$$ or \[...\], leave as is
-  const trimmed = text.trim();
+  const trimmed = sanitized.trim();
   if (
     (trimmed.startsWith('$') && trimmed.endsWith('$') && trimmed.length >= 2) ||
     (trimmed.startsWith('\\[') && trimmed.endsWith('\\]')) ||
     (trimmed.startsWith('\\(') && trimmed.endsWith('\\)'))
   ) {
-    return text;
+    return sanitized;
   }
 
   // Split text by existing LaTeX blocks ($...$, $$...$$, \(...\), \[...\])
@@ -65,15 +66,15 @@ export function ensureLatexDelimiters(text) {
   let lastIdx = 0;
   let match;
 
-  while ((match = blockRegex.exec(text)) !== null) {
+  while ((match = blockRegex.exec(sanitized)) !== null) {
     if (match.index > lastIdx) {
-      segments.push({ isDelimited: false, text: text.slice(lastIdx, match.index) });
+      segments.push({ isDelimited: false, text: sanitized.slice(lastIdx, match.index) });
     }
     segments.push({ isDelimited: true, text: match[0] });
     lastIdx = match.index + match[0].length;
   }
-  if (lastIdx < text.length) {
-    segments.push({ isDelimited: false, text: text.slice(lastIdx) });
+  if (lastIdx < sanitized.length) {
+    segments.push({ isDelimited: false, text: sanitized.slice(lastIdx) });
   }
 
   const mathPattern = /(?:\\begin\{(?:bmatrix|pmatrix|vmatrix|Vmatrix|matrix|cases|array)\}[\s\S]*?\\end\{(?:bmatrix|pmatrix|vmatrix|Vmatrix|matrix|cases|array)\}|\\frac\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}|\\binom\s*\{[^{}]*\}\s*\{[^{}]*\}|\\sqrt(?:\s*\[[^\]]*\])?\s*\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}|\\lim_\{\s*[^{}]*\s*\}(?:\s+[a-zA-Z0-9\(\)]+)?|\\lim_[a-zA-Z0-9\\]+(?:\s+[a-zA-Z0-9\(\)]+)?|\\(?:int|oint|sum|prod)(?:_\{\s*[^{}]*\s*\}|_[a-zA-Z0-9\\]+)?(?:\^\{\s*[^{}]*\s*\}|\^[a-zA-Z0-9\\]+)?|\\(?:vec|hat|tilde|bar|dot|ddot|mathbf)\s*(?:\{[^{}]*\}|[a-zA-Z])|\\(?:alpha|beta|gamma|delta|epsilon|zeta|eta|theta|iota|kappa|lambda|mu|nu|xi|pi|rho|sigma|tau|upsilon|phi|chi|psi|omega|infty|partial|nabla|pm|mp|times|div|cdot|leq|geq|neq|approx|equiv|in|subset|cap|cup|forall|exists)\b)/g;
@@ -92,7 +93,7 @@ export function ensureLatexDelimiters(text) {
  */
 export function formatQuestionStructure(text) {
   if (!text || typeof text !== 'string') return text || '';
-  let s = stripHeadersAndFooters(text).trim();
+  let s = stripHeadersAndFooters(text).replace(/\0/g, '').trim();
 
   // Normalize Windows line breaks
   s = s.replace(/\r\n/g, '\n');

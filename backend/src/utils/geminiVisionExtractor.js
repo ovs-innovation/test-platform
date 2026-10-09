@@ -107,7 +107,7 @@ class NodeCanvasFactory {
  * section headings, and answer key/solution sections.
  */
 export function buildPageInventory(pageIndex, text) {
-  const clean = (text || '').replace(/\r\n/g, '\n');
+  const clean = (text || '').replace(/\0/g, '').replace(/\r\n/g, '\n');
   const upper = clean.toUpperCase();
 
   const isAnswerKey = /ANSWER\s*KEY|OMR\s*RESPONSE|RESPONSES?\s*KEY/i.test(clean);
@@ -361,16 +361,27 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
   }
 }
 
+function deepCleanStrings(obj) {
+  if (typeof obj === 'string') return obj.replace(/\0/g, '');
+  if (Array.isArray(obj)) return obj.map(deepCleanStrings);
+  if (obj && typeof obj === 'object') {
+    for (const k of Object.keys(obj)) {
+      obj[k] = deepCleanStrings(obj[k]);
+    }
+  }
+  return obj;
+}
+
 /**
  * Helper to repair and parse JSON with LaTeX backslashes, unescaped newlines/tabs inside strings, and trailing commas
  */
 export function cleanAndParseJson(text) {
   if (!text || !text.trim()) return null;
-  let cleaned = text.trim();
+  let cleaned = text.replace(/\0/g, '').replace(/\\u0000/g, '').trim();
   cleaned = cleaned.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '').trim();
 
   try {
-    return JSON.parse(cleaned);
+    return deepCleanStrings(JSON.parse(cleaned));
   } catch (e) {
     try {
       let inString = false;
@@ -420,11 +431,11 @@ export function cleanAndParseJson(text) {
         }
       }
       if (escaped) sb += '\\';
-      return JSON.parse(sb);
+      return deepCleanStrings(JSON.parse(sb));
     } catch (e2) {
       try {
         const trailingFixed = cleaned.replace(/,\s*([}\]])/g, '$1');
-        return JSON.parse(trailingFixed);
+        return deepCleanStrings(JSON.parse(trailingFixed));
       } catch (e3) {
         return null;
       }
@@ -574,8 +585,23 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, {
   }
 
   const pageInventories = pageImages.map((p) => p.inventory);
+  // Detect if PDF has virtually no extractable text layer (e.g. scanned or rasterized document)
+  const totalTextChars = pageInventories.reduce((acc, p) => acc + (p.textLength || 0), 0);
+  const isScannedOrRasterized = totalTextChars < 60 * pageImages.length;
+
+  if (isScannedOrRasterized) {
+    // In a scanned/rasterized PDF, text-layer length cannot determine if a page is blank.
+    // Every page should be treated as a question page unless explicitly an OMR/instruction sheet.
+    for (const p of pageImages) {
+      if (!p.inventory.isOMRSheet && !p.inventory.isInstructions) {
+        p.inventory.isQuestionPage = true;
+        p.inventory.pageType = 'question_page';
+      }
+    }
+  }
+
   const totalQuestionPages = pageInventories.filter((p) => p.isQuestionPage).length;
-  console.log(`[PDF Extraction Pipeline] STAGE 1: Pages Processed = ${pageImages.length} total page(s), ${totalQuestionPages} question page(s) identified in inventory.`);
+  console.log(`[PDF Extraction Pipeline] STAGE 1: Pages Processed = ${pageImages.length} total page(s), ${totalQuestionPages} question page(s) identified in inventory. (Scanned/Rasterized: ${isScannedOrRasterized})`);
 
   // Step 2: Initialize Google GenAI client
   const ai = new GoogleGenAI({ apiKey });
@@ -812,7 +838,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, {
       const inv = pageImg.inventory;
 
       // Skip pure OMR or instructions pages with 0 questions to avoid false missing question alerts
-      if (inv.pageType === 'instructions_blank_page' && inv.detectedQuestionNumbers.length === 0) {
+      if (!isScannedOrRasterized && inv.pageType === 'instructions_blank_page' && inv.detectedQuestionNumbers.length === 0) {
         console.log(`[geminiVisionExtractor] Page ${pageIndex} is verified instructions/blank/OMR sheet. Skipping AI extraction.`);
         processedPages.push(pageIndex);
         return;

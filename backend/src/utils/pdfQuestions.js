@@ -23,6 +23,7 @@ function rawPdfTextExtractor(buffer) {
     let match;
     while ((match = tjRegex.exec(str)) !== null) {
       const unescaped = match[1]
+        .replace(/\0/g, '')
         .replace(/\\n/g, '\n')
         .replace(/\\r/g, '\r')
         .replace(/\\t/g, '\t')
@@ -31,20 +32,20 @@ function rawPdfTextExtractor(buffer) {
     }
 
     if (textParts.length > 5) {
-      return textParts.join('\n');
+      return textParts.join('\n').replace(/\0/g, '');
     }
 
     // Match all text enclosed in parentheses
     const parenRegex = /\(([^()\\]*(?:\\.[^()\\]*)*)\)/g;
     const genericParts = [];
     while ((match = parenRegex.exec(str)) !== null) {
-      const text = match[1].replace(/\\([()\\])/g, '$1').trim();
+      const text = match[1].replace(/\\([()\\])/g, '$1').replace(/\0/g, '').trim();
       if (text.length > 1 && !/^[0-9A-Fa-f]{10,}$/.test(text)) {
         genericParts.push(text);
       }
     }
 
-    return genericParts.join('\n');
+    return genericParts.join('\n').replace(/\0/g, '');
   } catch {
     return '';
   }
@@ -53,7 +54,7 @@ function rawPdfTextExtractor(buffer) {
 export async function extractPdfText(buffer) {
   try {
     const data = await pdfParse(buffer);
-    const text = (data.text || '').replace(/\r\n/g, '\n').trim();
+    const text = (data.text || '').replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
     if (text.length > 20) return text;
   } catch (err) {
     // eslint-disable-next-line no-console
@@ -63,7 +64,7 @@ export async function extractPdfText(buffer) {
   // Fallback to raw PDF stream parser
   const fallbackText = rawPdfTextExtractor(buffer);
   if (fallbackText && fallbackText.length > 20) {
-    return fallbackText.replace(/\r\n/g, '\n').trim();
+    return fallbackText.replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
   }
 
   throw new Error('Unable to extract readable text from this PDF file (bad XRef or scanned PDF). Please re-save/export as standard PDF or use CSV import.');
@@ -306,9 +307,10 @@ function parseBlock(block, answerKey) {
 }
 
 export function parseQuestionsFromText(text) {
-  if (!text?.trim()) throw new Error('PDF has no readable text. Scanned/image PDFs need OCR.');
-  const answerKey = extractAnswerKey(text);
-  const blocks = splitQuestionBlocks(text);
+  const cleanInput = (text || '').replace(/\0/g, '');
+  if (!cleanInput?.trim()) throw new Error('PDF has no readable text. Scanned/image PDFs need OCR.');
+  const answerKey = extractAnswerKey(cleanInput);
+  const blocks = splitQuestionBlocks(cleanInput);
   if (!blocks.length) {
     throw new Error('No questions found. Use format: Q1. Question… then (A) … (B) … (C) … (D) …');
   }

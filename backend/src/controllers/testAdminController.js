@@ -712,25 +712,27 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     const rawQText = q.question?.text || q.question_text || q.questionText || '';
     const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
+    const cleanStr = (val) => typeof val === 'string' ? val.replace(/\0/g, '') : val;
+
     sortedParsedQs[i]._dbRow = {
       assessment_id: id,
-      question_text: cleanFinalQText,
-      question_type: qType,
-      options: JSON.stringify(optionsToStore),
+      question_text: cleanStr(cleanFinalQText),
+      question_type: cleanStr(qType),
+      options: cleanStr(JSON.stringify(optionsToStore)),
       correct_index: dbCorrectIndex,
       numeric_answer: numericAnswer,
       marks: q.marks || 4,
       position: qNum || i + 1,
-      bank_category: finalSubject || 'General',
-      solution: formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : ''))),
-      subject: finalSubject,
-      topic: finalTopic,
-      chapter: finalChapter,
-      image_url: primaryMediaUrl,
-      solution_image_url: solutionMediaUrl,
-      media: mediaArrayJson,
-      tables: tablesArrayJson,
-      extraction_meta: extractionMetaJson,
+      bank_category: cleanStr(finalSubject || 'General'),
+      solution: cleanStr(formatQuestionStructure(stripHeadersAndFooters(q.explanation?.text || q.solution || (typeof q.explanation === 'string' ? q.explanation : '')))),
+      subject: cleanStr(finalSubject),
+      topic: cleanStr(finalTopic),
+      chapter: cleanStr(finalChapter),
+      image_url: cleanStr(primaryMediaUrl),
+      solution_image_url: cleanStr(solutionMediaUrl),
+      media: cleanStr(mediaArrayJson),
+      tables: cleanStr(tablesArrayJson),
+      extraction_meta: cleanStr(extractionMetaJson),
     };
 
     const rawExplanation = q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || ''));
