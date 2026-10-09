@@ -579,23 +579,23 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
         else if (qNum >= 151 && qNum <= 200) detectedSectionSubject = 'Zoology';
       }
     } else if (sortedParsedQs.length <= 80 && (sortedParsedQs.length >= 70 || qNum <= 75)) {
-      // Standard JEE Main 75-question paper: 25 per subject
-      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Mathematics';
-      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Physics';
-      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Chemistry';
+      // Standard JEE Main 75-question paper: 25 per subject (Physics, Chemistry, Mathematics)
+      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
+      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
+      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
     } else if (sortedParsedQs.length > 80 && sortedParsedQs.length <= 95) {
-      // Legacy JEE Main 90-question paper: 30 per subject
-      if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Mathematics';
-      else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Physics';
-      else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Chemistry';
+      // Legacy JEE Main 90-question paper: 30 per subject (Physics, Chemistry, Mathematics)
+      if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Physics';
+      else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Chemistry';
+      else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Mathematics';
     }
 
     const isJeeTest = String(currentTest.test_name || '').toUpperCase().includes('JEE') ||
                       String(currentTest.syllabus || '').toUpperCase().includes('JEE');
     if (!detectedSectionSubject && isJeeTest && qNum <= 75) {
-      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Mathematics';
-      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Physics';
-      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Chemistry';
+      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
+      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
+      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
     }
 
     const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : (detectedSectionSubject || classification.subject));

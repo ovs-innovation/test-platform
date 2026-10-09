@@ -855,11 +855,16 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - Use the actual printed question numbers (e.g. 1 to 180 for NEET, 1 to 75 for JEE).
 - Transcribe ALL questions visible on this page. Never skip, abbreviate, or truncate questions!
 
-2. SUBJECT IDENTIFICATION:
-- Assign the accurate subject based on printed section headers:
+2. SUBJECT & TOPIC IDENTIFICATION:
+- Assign the accurate subject based primarily on printed section headers (e.g. "PHYSICS", "CHEMISTRY", "MATHEMATICS", "BIOLOGY").
+- If no header is printed on this page, identify the subject and topic directly from the scientific content:
+  * Physics: Mechanics, Kinematics, Laws of Motion, Work-Energy, Electrodynamics, Optics, Thermodynamics.
+  * Chemistry: Organic, Inorganic, Physical Chemistry, Mole Concept, Equilibrium, Bonding, Atomic Structure.
+  * Mathematics: Algebra, Calculus, Trigonometry, Coordinate Geometry, Vectors, Binomial Theorem, Permutations.
+- Standard exam layouts:
   * NEET: Biology (Q1 to Q90), Physics (Q91 to Q135), Chemistry (Q136 to Q180).
-  * JEE Main: Mathematics (Q1 to Q25), Physics (Q26 to Q50), Chemistry (Q51 to Q75).
-- Never leave the "subject" field blank.
+  * JEE Main: Typically Section I is Physics (Q1 to Q25), Section II is Chemistry (Q26 to Q50), Section III is Mathematics (Q51 to Q75). ALWAYS prioritize printed headers and actual question content over question numbers!
+- Assign specific, descriptive "chapter" and "topic" names for every question (e.g., "Laws of Motion", "Chemical Thermodynamics", "Binomial Theorem"). Never leave subject, chapter, or topic blank or "General".
 
 3. MATCH-THE-COLUMN & LIST TABLES:
 - When a question contains Column-I vs Column-II, List-I vs List-II, or data tables:
