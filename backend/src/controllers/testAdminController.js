@@ -520,7 +520,11 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
   }
 
   const currentTestRes = await query('SELECT test_name, syllabus FROM tests WHERE id = $1', [id]);
+  const currentAssessmentRes = await query('SELECT title, syllabus_text, subject FROM assessments WHERE id = $1', [id]).catch(() => ({ rows: [] }));
   const currentTest = currentTestRes.rows[0] || {};
+  const currentAssessment = currentAssessmentRes.rows[0] || {};
+  const testTitle = currentAssessment.title || currentTest.test_name || '';
+  const testSyllabus = currentAssessment.syllabus_text || currentTest.syllabus || '';
 
   let calcTotalMarks = 0;
   let savedCount = 0;
@@ -544,18 +548,22 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     };
   }
 
-  const isNeet = String(currentTest.test_name || '').toUpperCase().includes('NEET') ||
-                 String(currentTest.syllabus || '').toUpperCase().includes('NEET') ||
+  const isNeet = String(testTitle).toUpperCase().includes('NEET') ||
+                 String(testSyllabus).toUpperCase().includes('NEET') ||
                  sortedParsedQs.length === 180 || sortedParsedQs.length === 200 ||
                  sortedParsedQs.some((q) => String(q.subject || '').toUpperCase().includes('BIO'));
+
+  const isJeeTest = String(testTitle).toUpperCase().includes('JEE') ||
+                    String(testSyllabus).toUpperCase().includes('JEE') ||
+                    (!isNeet && (sortedParsedQs.length <= 80 || sortedParsedQs.length === 75 || sortedParsedQs.length === 90));
 
   for (let i = 0; i < sortedParsedQs.length; i++) {
     const q = sortedParsedQs[i];
     calcTotalMarks += (q.marks || 4);
 
     const classification = inferSubjectAndTopic({
-      testName: currentTest.test_name,
-      syllabus: currentTest.syllabus,
+      testName: testTitle,
+      syllabus: testSyllabus,
       questionText: q.question_text || q.questionText,
     });
 
@@ -578,7 +586,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
         else if (qNum >= 101 && qNum <= 150) detectedSectionSubject = 'Botany';
         else if (qNum >= 151 && qNum <= 200) detectedSectionSubject = 'Zoology';
       }
-    } else if (sortedParsedQs.length <= 80 && (sortedParsedQs.length >= 70 || qNum <= 75)) {
+    } else if (sortedParsedQs.length <= 80 && (sortedParsedQs.length >= 70 || qNum <= 75 || isJeeTest)) {
       // Standard JEE Main 75-question paper: 25 per subject (Physics, Chemistry, Mathematics)
       if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
       else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
@@ -588,17 +596,13 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Physics';
       else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Chemistry';
       else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Mathematics';
-    }
-
-    const isJeeTest = String(currentTest.test_name || '').toUpperCase().includes('JEE') ||
-                      String(currentTest.syllabus || '').toUpperCase().includes('JEE');
-    if (!detectedSectionSubject && isJeeTest && qNum <= 75) {
+    } else if (isJeeTest && qNum <= 75) {
       if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
       else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
       else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
     }
 
-    const qSubject = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : (detectedSectionSubject || classification.subject));
+    const qSubject = detectedSectionSubject || geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
     const finalSubject = qSubject || 'General';
     if (finalSubject && finalSubject !== 'General') detectedSubjects.add(finalSubject);
 

@@ -9,6 +9,22 @@ const ensureAssessment = async (assessmentId) => {
   if (a.rowCount === 0) throw ApiError.notFound('Assessment not found');
 };
 
+export const checkAssessmentModifiable = async (assessmentId, actionName = 'modify questions') => {
+  const result = await query(
+    `SELECT (
+       (SELECT COUNT(*)::int FROM attempts WHERE assessment_id = $1) +
+       (SELECT COUNT(*)::int FROM test_attempts WHERE test_id = $1)
+     ) AS attempt_count`,
+    [assessmentId]
+  );
+  const count = Number(result.rows[0]?.attempt_count || 0);
+  if (count > 0) {
+    throw ApiError.conflict(
+      `Cannot ${actionName}: ${count} student attempt(s) have already been recorded for this assessment. Structural modifications (reordering, insertion, deletion) are locked to protect student results and answer mapping integrity. Please duplicate this assessment into a new editable draft to make changes.`
+    );
+  }
+};
+
 async function resolveSubjectAndChapter({ subject_id, subject, chapter_id, topic, question_text, options }) {
   let finalSubjectId = subject_id ? (Number(subject_id) || null) : null;
   let finalSubjectName = subject || null;
@@ -98,6 +114,7 @@ export const listQuestions = asyncHandler(async (req, res) => {
 export const createQuestion = asyncHandler(async (req, res) => {
   const { assessmentId } = req.params;
   await ensureAssessment(assessmentId);
+  await checkAssessmentModifiable(assessmentId, 'insert questions');
 
   const {
     section_id,
@@ -112,6 +129,11 @@ export const createQuestion = asyncHandler(async (req, res) => {
     reason_text,
     marks = 1,
     position,
+    target_position,
+    insert_mode,
+    reference_question_id,
+    original_question_number,
+    client_updated_at,
     starter_code,
     test_cases,
     language,
@@ -125,15 +147,6 @@ export const createQuestion = asyncHandler(async (req, res) => {
     subject: inputSubject,
     topic: inputTopic,
   } = req.body;
-
-  let pos = position;
-  if (pos === undefined) {
-    const maxRes = await query(
-      'SELECT COALESCE(MAX(position), 0) + 1 AS next FROM questions WHERE assessment_id = $1',
-      [assessmentId]
-    );
-    pos = maxRes.rows[0].next;
-  }
 
   const questionSubject = inputSubject || bank_category || null;
   const questionTopic = inputTopic || bank_category || null;
@@ -166,43 +179,121 @@ export const createQuestion = asyncHandler(async (req, res) => {
   }
   const mediaToStore = JSON.stringify(allMedia);
 
-  const result = await query(
-    `INSERT INTO questions
-       (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
-        numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
-     RETURNING *`,
-    [
-      assessmentId,
-      section_id || null,
-      question_type,
-      question_text,
-      options ? JSON.stringify(options) : JSON.stringify([]),
-      correct_index ?? 0,
-      JSON.stringify(correct_indices || []),
-      numeric_answer !== undefined ? numeric_answer : null,
-      numerical_tolerance !== undefined ? numerical_tolerance : 0,
-      assertion_text || null,
-      reason_text || null,
-      marks,
-      pos,
-      starter_code || '',
-      JSON.stringify(test_cases || []),
-      language || 'javascript',
-      bank_category || null,
-      solution || '',
-      image_url || '',
-      solution_image_url || '',
-      finalSubjectId,
-      finalChapterId,
-      difficulty || 'medium',
-      finalSubjectName,
-      finalTopicName,
-      mediaToStore,
-    ]
-  );
-  res.status(201).json({ question: result.rows[0] });
+  const inserted = await withTransaction(async (client) => {
+    // 1. Revision / concurrency check if client_updated_at is provided
+    if (client_updated_at) {
+      const aRes = await client.query('SELECT updated_at FROM assessments WHERE id = $1', [assessmentId]);
+      if (aRes.rowCount > 0) {
+        const dbTime = new Date(aRes.rows[0].updated_at).getTime();
+        const clTime = new Date(client_updated_at).getTime();
+        if (Math.abs(dbTime - clTime) > 2000) {
+          throw ApiError.conflict('The assessment was modified by another session. Please refresh the page before inserting.');
+        }
+      }
+    }
+
+    // 2. Determine target position K
+    let targetPos = null;
+    if (reference_question_id) {
+      const refRes = await client.query(
+        'SELECT position FROM questions WHERE id = $1 AND assessment_id = $2',
+        [reference_question_id, assessmentId]
+      );
+      if (refRes.rowCount > 0) {
+        const refPos = Number(refRes.rows[0].position);
+        targetPos = insert_mode === 'after' ? refPos + 1 : refPos;
+      }
+    }
+
+    if (targetPos === null) {
+      if (target_position !== undefined && target_position !== null && Number(target_position) > 0) {
+        targetPos = Number(target_position);
+      } else if (position !== undefined && position !== null && Number(position) > 0) {
+        targetPos = Number(position);
+      } else {
+        const maxRes = await client.query(
+          'SELECT COALESCE(MAX(position), 0) + 1 AS next FROM questions WHERE assessment_id = $1',
+          [assessmentId]
+        );
+        targetPos = Number(maxRes.rows[0].next);
+      }
+    }
+
+    // 3. Shift existing questions at or after targetPos forward by 1 (in descending order)
+    await client.query(
+      'UPDATE questions SET position = position + 1 WHERE assessment_id = $1 AND position >= $2',
+      [assessmentId, targetPos]
+    );
+
+    // 4. Insert new question at targetPos
+    const origQNum = (original_question_number !== undefined && original_question_number !== null)
+      ? Number(original_question_number)
+      : targetPos;
+
+    const insRes = await client.query(
+      `INSERT INTO questions
+         (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
+          numeric_answer, numerical_tolerance, assertion_text, reason_text,
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url,
+          subject_id, chapter_id, difficulty, subject, topic, media, original_question_number)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)
+       RETURNING *`,
+      [
+        assessmentId,
+        section_id || null,
+        question_type,
+        question_text,
+        options ? (typeof options === 'string' ? options : JSON.stringify(options)) : JSON.stringify([]),
+        correct_index ?? 0,
+        JSON.stringify(correct_indices || []),
+        numeric_answer !== undefined ? numeric_answer : null,
+        numerical_tolerance !== undefined ? numerical_tolerance : 0,
+        assertion_text || null,
+        reason_text || null,
+        marks,
+        targetPos,
+        starter_code || '',
+        JSON.stringify(test_cases || []),
+        language || 'javascript',
+        bank_category || null,
+        solution || '',
+        image_url || '',
+        solution_image_url || '',
+        finalSubjectId,
+        finalChapterId,
+        difficulty || 'medium',
+        finalSubjectName,
+        finalTopicName,
+        mediaToStore,
+        origQNum,
+      ]
+    );
+
+    const newQuestion = insRes.rows[0];
+
+    // 5. Renumber all questions consecutively 1..N to guarantee no gaps or duplicates
+    await client.query(
+      `WITH renumbered AS (
+         SELECT id, ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS new_pos
+         FROM questions
+         WHERE assessment_id = $1
+       )
+       UPDATE questions q
+       SET position = r.new_pos
+       FROM renumbered r
+       WHERE q.id = r.id AND q.assessment_id = $1`,
+      [assessmentId]
+    );
+
+    // 6. Update assessment updated_at timestamp
+    await client.query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [assessmentId]);
+
+    // 7. Return the final refreshed question
+    const finalQRes = await client.query('SELECT * FROM questions WHERE id = $1', [newQuestion.id]);
+    return finalQRes.rows[0];
+  });
+
+  res.status(201).json({ question: inserted });
 });
 
 export const updateQuestion = asyncHandler(async (req, res) => {
@@ -307,25 +398,143 @@ export const updateQuestion = asyncHandler(async (req, res) => {
 
 export const reorderQuestions = asyncHandler(async (req, res) => {
   const { assessmentId } = req.params;
-  const { order } = req.body;
+  const { order, client_updated_at } = req.body;
   await ensureAssessment(assessmentId);
+  await checkAssessmentModifiable(assessmentId, 'reorder questions');
 
-  await withTransaction(async (client) => {
+  if (!Array.isArray(order) || order.length === 0) {
+    throw ApiError.badRequest('Reorder request must contain a non-empty order array');
+  }
+
+  const result = await withTransaction(async (client) => {
+    // 1. Revision / concurrency check
+    if (client_updated_at) {
+      const aRes = await client.query('SELECT updated_at FROM assessments WHERE id = $1', [assessmentId]);
+      if (aRes.rowCount > 0) {
+        const dbTime = new Date(aRes.rows[0].updated_at).getTime();
+        const clTime = new Date(client_updated_at).getTime();
+        if (Math.abs(dbTime - clTime) > 2000) {
+          throw ApiError.conflict('The assessment was modified by another user or session. Please refresh the page before reordering.');
+        }
+      }
+    }
+
+    // 2. Fetch existing questions for this assessment
+    const currentRes = await client.query(
+      'SELECT id, position, section_id, subject FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+      [assessmentId]
+    );
+    const currentQuestions = currentRes.rows;
+    const currentMap = new Map(currentQuestions.map((q) => [Number(q.id), q]));
+
+    // Validate matching question count
+    if (order.length !== currentQuestions.length) {
+      throw ApiError.badRequest(`Reorder request contains ${order.length} questions, but assessment has ${currentQuestions.length}`);
+    }
+
+    // Validate all IDs belong to this assessment and no duplicates
+    const seenIds = new Set();
     for (const item of order) {
+      const qId = Number(item.id);
+      if (seenIds.has(qId)) {
+        throw ApiError.badRequest(`Duplicate question ID ${qId} in reorder request`);
+      }
+      seenIds.add(qId);
+      if (!currentMap.has(qId)) {
+        throw ApiError.badRequest(`Question ID ${qId} does not belong to assessment ${assessmentId}`);
+      }
+    }
+
+    // 3. Verify Subject & Section Invariance
+    // Questions must NOT cross subject or section boundaries!
+    const getPartitionKey = (q) => `${q.section_id || 'null'}::${(q.subject || 'general').trim().toLowerCase()}`;
+
+    // Sort proposed order by proposed positions
+    const sortedProposed = [...order].sort((a, b) => a.position - b.position);
+
+    // Verify partition sequence invariance:
+    // Every question at sorted index i must belong to the exact same partition (section + subject)
+    // as the question originally at index i.
+    for (let i = 0; i < currentQuestions.length; i++) {
+      const origKey = getPartitionKey(currentQuestions[i]);
+      const proposedQ = currentMap.get(Number(sortedProposed[i].id));
+      const proposedKey = getPartitionKey(proposedQ);
+      if (origKey !== proposedKey) {
+        throw ApiError.badRequest(
+          `Section/subject integrity violation: Question ID ${proposedQ.id} (${proposedKey}) cannot be moved into ${origKey} position slot. Questions are strictly isolated to their own subject and section.`
+        );
+      }
+    }
+
+    // 4. Update positions using temporary offsets to avoid any collisions
+    for (let i = 0; i < sortedProposed.length; i++) {
       await client.query(
         'UPDATE questions SET position = $1 WHERE id = $2 AND assessment_id = $3',
-        [item.position, item.id, assessmentId]
+        [-(i + 1), sortedProposed[i].id, assessmentId]
       );
     }
+    for (let i = 0; i < sortedProposed.length; i++) {
+      await client.query(
+        'UPDATE questions SET position = $1 WHERE id = $2 AND assessment_id = $3',
+        [i + 1, sortedProposed[i].id, assessmentId]
+      );
+    }
+
+    // 5. Strictly normalize consecutive 1..N positions without gaps
+    await client.query(
+      `WITH renumbered AS (
+         SELECT id, ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS new_pos
+         FROM questions
+         WHERE assessment_id = $1
+       )
+       UPDATE questions q
+       SET position = r.new_pos
+       FROM renumbered r
+       WHERE q.id = r.id AND q.assessment_id = $1`,
+      [assessmentId]
+    );
+
+    // 6. Update assessment updated_at timestamp
+    const updatedRes = await client.query(
+      'UPDATE assessments SET updated_at = NOW() WHERE id = $1 RETURNING updated_at',
+      [assessmentId]
+    );
+
+    return { updated_at: updatedRes.rows[0]?.updated_at };
   });
-  res.json({ message: 'Questions reordered' });
+
+  res.json({ message: 'Questions reordered successfully', updated_at: result.updated_at });
 });
 
 export const deleteQuestion = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const result = await query('DELETE FROM questions WHERE id = $1 RETURNING id', [id]);
-  if (result.rowCount === 0) throw ApiError.notFound('Question not found');
-  res.json({ message: 'Question deleted', id: result.rows[0].id });
+  const existing = await query('SELECT id, assessment_id, position FROM questions WHERE id = $1', [id]);
+  if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
+  const q = existing.rows[0];
+
+  await checkAssessmentModifiable(q.assessment_id, 'delete questions');
+
+  await withTransaction(async (client) => {
+    await client.query('DELETE FROM questions WHERE id = $1', [id]);
+
+    // Renumber remaining questions consecutively to cleanly close any gap
+    await client.query(
+      `WITH renumbered AS (
+         SELECT id, ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS new_pos
+         FROM questions
+         WHERE assessment_id = $1
+       )
+       UPDATE questions q
+       SET position = r.new_pos
+       FROM renumbered r
+       WHERE q.id = r.id AND q.assessment_id = $1`,
+      [q.assessment_id]
+    );
+
+    await client.query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [q.assessment_id]);
+  });
+
+  res.json({ message: 'Question deleted and positions normalized', id: q.id });
 });
 
 export const exportQuestions = asyncHandler(async (req, res) => {

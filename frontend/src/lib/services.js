@@ -143,6 +143,10 @@ export const assessmentService = {
     clearCache();
     return api.delete(`/assessments/${id}`).then((r) => r.data);
   },
+  duplicate: (id) => {
+    clearCache();
+    return api.post(`/assessments/${id}/duplicate`).then((r) => r.data);
+  },
 };
 
 export const questionBankService = {
@@ -201,8 +205,8 @@ export const questionService = {
     api.post(`/assessments/${assessmentId}/questions`, data).then((r) => r.data.question),
   update: (id, data) => api.put(`/questions/${id}`, data).then((r) => r.data.question),
   remove: (id) => api.delete(`/questions/${id}`).then((r) => r.data),
-  reorder: (assessmentId, order) =>
-    api.put(`/assessments/${assessmentId}/questions/reorder`, { order }).then((r) => r.data),
+  reorder: (assessmentId, order, client_updated_at) =>
+    api.put(`/assessments/${assessmentId}/questions/reorder`, { order, client_updated_at }).then((r) => r.data),
   bulkUpload: (assessmentId, csv) =>
     api.post(`/assessments/${assessmentId}/questions/bulk`, { csv }).then((r) => r.data),
   bulkUpdateMarks: (assessmentId, data) =>

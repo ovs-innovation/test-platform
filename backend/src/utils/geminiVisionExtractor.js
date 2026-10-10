@@ -554,12 +554,14 @@ export function mergeQuestionFragments(q1, q2) {
  * 4. Collision-safe preservation of multi-section paper structures
  * 5. Complete visual and table extraction
  */
-export async function extractQuestionsWithGeminiVision(pdfBuffer, {
-  includeAnswers = true,
-  importId = '',
-  expectedQuestionCount = null,
-  examType = null,
-} = {}) {
+export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) {
+  const {
+    includeAnswers = true,
+    importId = '',
+    expectedQuestionCount = null,
+    examType = null,
+    isSolutionPdf = false,
+  } = options;
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not configured in environment.');
@@ -763,7 +765,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, {
         config: {
           responseMimeType: 'application/json',
           responseSchema,
-          temperature: retryCount === 0 ? 0.1 : 0.2,
+          temperature: retryCount === 0 ? 0.1 : (retryCount === 1 ? 0.35 : 0.6),
           maxOutputTokens: 16384,
           thinkingConfig: { thinkingBudget: 0 }, // Disable excessive internal thinking tokens to prevent truncation
         },
@@ -788,12 +790,100 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, {
 
       console.log(`[geminiVisionExtractor] [${label}] Completed via ${currentModel} in ${durationMs}ms (finishReason: ${finishReason}, outputTokens: ${usage.candidatesTokenCount || 'N/A'})`);
 
-      const responseText = response.text || '';
-      const parsed = cleanAndParseJson(responseText);
+      let responseText = '';
+      try { responseText = response.text || ''; } catch (_) {}
+      if (!responseText && candidate?.content?.parts) {
+        responseText = candidate.content.parts.map((p) => p.text || '').join('');
+      }
+      let parsed = cleanAndParseJson(responseText);
 
-      if (!parsed && retryCount < 2) {
-        console.warn(`[geminiVisionExtractor] [${label}] Unparseable JSON. Retrying (attempt ${retryCount + 1})...`);
-        await new Promise((r) => setTimeout(r, 1500 * (retryCount + 1)));
+      function parseInlineOptions(text) {
+        if (!text) return { cleanQ: '', options: [] };
+        const parts = text.split(/(?=\s\([1-4A-Da-d]\)|\n\([1-4A-Da-d]\))/);
+        const qText = parts[0].trim();
+        const options = [];
+        for (let i = 1; i < parts.length; i++) {
+          const m = parts[i].trim().match(/^\(([1-4A-Da-d])\)\s*(.*)$/);
+          if (m) {
+            let key = m[1].toUpperCase();
+            if (['1', '2', '3', '4'].includes(key)) {
+              key = String.fromCharCode(65 + parseInt(key, 10) - 1);
+            }
+            options.push({ key, text: m[2].trim() });
+          }
+        }
+        if (options.length >= 2) {
+          return { cleanQ: qText, options };
+        }
+        return { cleanQ: text, options: [] };
+      }
+
+      if ((!parsed || finishReason === 'RECITATION') && retryCount < 3) {
+        console.warn(`[geminiVisionExtractor] [${label}] ${finishReason === 'RECITATION' ? 'Recitation detected' : 'Unparseable JSON'}. Attempting simplified questions recovery...`);
+
+        const imagePart = contents.find((c) => c && c.inlineData);
+        if (imagePart) {
+          try {
+            const fallbackSchema = {
+              type: Type.OBJECT,
+              properties: {
+                questions: {
+                  type: Type.ARRAY,
+                  items: {
+                    type: Type.OBJECT,
+                    properties: {
+                      questionNumber: { type: Type.INTEGER },
+                      questionText: { type: Type.STRING },
+                    },
+                    required: ['questionNumber', 'questionText'],
+                  },
+                },
+              },
+            };
+
+            const fallbackRes = await ai.models.generateContent({
+              model: currentModel,
+              contents: [
+                'Transcribe all questions visible on this page. Continuous exam numbering. Notice there may be multiple columns. Return json.',
+                imagePart,
+              ],
+              config: {
+                responseMimeType: 'application/json',
+                responseSchema: fallbackSchema,
+              },
+            });
+
+            const fbCandidate = fallbackRes.candidates?.[0];
+            let fbText = '';
+            try { fbText = fallbackRes.text || ''; } catch (_) {}
+            if (!fbText && fbCandidate?.content?.parts) {
+              fbText = fbCandidate.content.parts.map((p) => p.text || '').join('');
+            }
+
+            const fbParsed = cleanAndParseJson(fbText);
+            if (fbParsed && Array.isArray(fbParsed.questions) && fbParsed.questions.length > 0) {
+              console.log(`[geminiVisionExtractor] [${label}] Simplified recovery successfully bypassed recitation! Extracted ${fbParsed.questions.length} questions.`);
+              for (const q of fbParsed.questions) {
+                if ((!q.options || q.options.length === 0) && q.questionText) {
+                  const s = parseInlineOptions(q.questionText);
+                  if (s.options.length >= 2) {
+                    q.questionText = s.cleanQ;
+                    q.options = s.options;
+                  }
+                }
+              }
+              return {
+                parsed: fbParsed,
+                finishReason: fbCandidate?.finishReason || 'STOP',
+                rawText: fbText,
+              };
+            }
+          } catch (fbErr) {
+            console.warn(`[geminiVisionExtractor] [${label}] Simplified recovery attempt error:`, fbErr.message);
+          }
+        }
+
+        await new Promise((r) => setTimeout(r, 1000 * (retryCount + 1)));
         return callGemini(contents, label, retryCount + 1, modelIdx);
       }
 
@@ -924,7 +1014,9 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - Transcribe all mathematical equations, Greek letters, superscripts, subscripts, and chemical formulas using standard LaTeX wrapped in $...$ (e.g., $\text{pO}_2$, $\text{BF}_3$, $\Delta\text{G}^\circ$, $\text{v}_0$).
 
 5. MULTI-COLUMN LAYOUT & CONTINUATIONS:
-- Multi-column Pages: Pages often have 2 columns (left and right). Transcribe questions across both columns in exact reading order.
+- CRITICAL TWO-COLUMN LAYOUT: Most competitive exam pages contain two distinct vertical columns (LEFT and RIGHT).
+- You MUST transcribe the LEFT column completely from top to bottom FIRST, and then transcribe the RIGHT column completely from top to bottom.
+- NEVER skip the left column, never start with the right column, and never stop early!
 - If an option or diagram at the top belongs to a question from the previous page, transcribe it with the corresponding questionNumber.
 
 6. QUESTION TYPES & DIAGRAMS:
@@ -998,7 +1090,51 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
     await Promise.all(chunkPromises);
   }
 
-  // Step 4: Targeted Recovery Pass for failed or suspicious pages (using 2-column crop retries)
+  // Step 4: Sequence Gap Analysis & Targeted Recovery Pass
+  // Detect question jumps between pages or overall missing questions across sequence
+  const perPageQNums = new Map();
+  for (const q of allRawQuestions) {
+    const p = (q.sourcePages && q.sourcePages[0]) || q.physicalPageIndex;
+    const n = Number(q.questionNumber);
+    if (p && !isNaN(n) && n > 0) {
+      if (!perPageQNums.has(p)) perPageQNums.set(p, []);
+      perPageQNums.get(p).push(n);
+    }
+  }
+
+  // Detect gaps across consecutive pages
+  let prevLastNum = 0;
+  for (let pIdx = 1; pIdx <= pageImages.length; pIdx++) {
+    const numsOnPage = (perPageQNums.get(pIdx) || []).sort((a, b) => a - b);
+    if (numsOnPage.length > 0) {
+      const minOnPage = numsOnPage[0];
+      if (prevLastNum > 0 && minOnPage - prevLastNum > 1) {
+        console.warn(`[geminiVisionExtractor] Detected gap: jump from Q${prevLastNum} to Q${minOnPage} between pages.`);
+        suspiciousPages.push({ pageIndex: pIdx, reason: `Gap jump from ${prevLastNum} to ${minOnPage}` });
+        if (pIdx > 1) {
+          suspiciousPages.push({ pageIndex: pIdx - 1, reason: `Possible incomplete end before jump to ${minOnPage}` });
+        }
+      }
+      prevLastNum = numsOnPage[numsOnPage.length - 1];
+    }
+  }
+
+  // Also check if any question numbers are missing overall compared to expected count or max detected
+  const allExtractedNums = new Set(allRawQuestions.map((q) => Number(q.questionNumber)).filter((n) => !isNaN(n) && n > 0));
+  const maxDetected = Math.max(0, ...Array.from(allExtractedNums));
+  const targetCheckCount = expectedQuestionCount || (maxDetected >= 65 && maxDetected <= 80 ? 75 : (maxDetected >= 150 && maxDetected <= 190 ? 180 : maxDetected));
+  for (let checkQ = 1; checkQ <= targetCheckCount; checkQ++) {
+    if (!allExtractedNums.has(checkQ)) {
+      for (const [pIdx, nums] of perPageQNums.entries()) {
+        const minP = Math.min(...nums);
+        const maxP = Math.max(...nums);
+        if (checkQ >= minP - 4 && checkQ <= maxP + 4) {
+          suspiciousPages.push({ pageIndex: pIdx, reason: `Missing question ${checkQ} near page range [${minP}-${maxP}]` });
+        }
+      }
+    }
+  }
+
   const pagesNeedingRecovery = Array.from(new Set([...failedPages, ...suspiciousPages.map((s) => s.pageIndex)]));
   if (pagesNeedingRecovery.length > 0) {
     console.warn(`[geminiVisionExtractor] STAGE 3.5: Initiating targeted recovery for affected page(s): [${pagesNeedingRecovery.join(', ')}]...`);
@@ -1016,7 +1152,13 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
         try {
           const colPrompt = (colName) => String.raw`
 You are an expert exam-paper digitizer transcribing ${colName} Column of Page ${pageIndex}.
-Transcribe ALL questions in this column completely with printed question numbers, formulas in LaTeX $...$, options, and diagrams with box_2d.
+Transcribe ALL questions visible in this column completely with printed question numbers, formulas in LaTeX $...$, options, and diagrams with box_2d.
+CRITICAL INSTRUCTIONS:
+- Use actual printed continuous question numbers (e.g. 5, 6, 7, 8).
+- Transcribe mathematical and chemical formulas in standard LaTeX wrapped in $...$.
+- Options with keys ('A', 'B', 'C', 'D' or '1', '2', '3', '4') and option text.
+- If diagrams, apparatus, circuits, or graphs exist, provide bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000).
+- Assign subject ('Physics', 'Chemistry', 'Mathematics'), chapter, and topic.
 `;
 
           const leftRes = await callGemini([
@@ -1060,10 +1202,20 @@ Transcribe ALL questions in this column completely with printed question numbers
           const recoveredQs = [...leftQs, ...rightQs];
           if (recoveredQs.length > 0) {
             console.log(`[geminiVisionExtractor] Targeted recovery succeeded for Page ${pageIndex}: recovered ${recoveredQs.length} question(s)!`);
-            // Remove previous incomplete questions from this page and replace with recovered questions
+            const oldPageQs = allRawQuestions.filter((q) => q.sourcePages?.includes(pageIndex));
+            const newNums = new Set(recoveredQs.map((q) => Number(q.questionNumber)));
+
+            // Merge: take recovered questions, plus any old questions that might have had numbers not in recovered
+            const mergedPageQs = [...recoveredQs];
+            for (const oldQ of oldPageQs) {
+              if (!newNums.has(Number(oldQ.questionNumber))) {
+                mergedPageQs.push(oldQ);
+              }
+            }
+
             const otherQs = allRawQuestions.filter((q) => !q.sourcePages?.includes(pageIndex));
             allRawQuestions.length = 0;
-            allRawQuestions.push(...otherQs, ...recoveredQs);
+            allRawQuestions.push(...otherQs, ...mergedPageQs);
 
             // Remove from failedPages
             const fIdx = failedPages.indexOf(pageIndex);
@@ -1299,13 +1451,13 @@ Transcribe ALL questions in this column completely with printed question numbers
   const isJee75 = expectedQuestionCount === 75 || (!hasBiology && ((totalQuestionsDetected >= 70 && totalQuestionsDetected <= 80) || (maxQNum >= 70 && maxQNum <= 75)));
   const isNeet180 = expectedQuestionCount === 180 || hasBiology || (totalQuestionsDetected >= 120 && totalQuestionsDetected <= 200) || (maxQNum >= 120 && maxQNum <= 180);
 
-  let forwardSubject = 'Mathematics';
+  let forwardSubject = 'Physics';
   for (const rawQ of rawQuestions) {
     const qNum = Number(rawQ.questionNumber) || 0;
     if (isJee75) {
-      if (qNum >= 1 && qNum <= 25) rawQ.subject = 'Mathematics';
-      else if (qNum >= 26 && qNum <= 50) rawQ.subject = 'Physics';
-      else if (qNum >= 51 && qNum <= 75) rawQ.subject = 'Chemistry';
+      if (qNum >= 1 && qNum <= 25) rawQ.subject = 'Physics';
+      else if (qNum >= 26 && qNum <= 50) rawQ.subject = 'Chemistry';
+      else if (qNum >= 51 && qNum <= 75) rawQ.subject = 'Mathematics';
 
       if ([21, 22, 23, 24, 25, 46, 47, 48, 49, 50, 71, 72, 73, 74, 75].includes(qNum)) {
         if (!rawQ.options || rawQ.options.length === 0) {

@@ -51,11 +51,17 @@ function rawPdfTextExtractor(buffer) {
   }
 }
 
+function isReadableText(str) {
+  if (!str || str.length < 20) return false;
+  const printable = str.match(/[\x20-\x7E\t\n\r]/g) || [];
+  return (printable.length / str.length) > 0.75;
+}
+
 export async function extractPdfText(buffer) {
   try {
     const data = await pdfParse(buffer);
     const text = (data.text || '').replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
-    if (text.length > 20) return text;
+    if (text.length > 20 && isReadableText(text)) return text;
   } catch (err) {
     // eslint-disable-next-line no-console
     console.warn('[pdfQuestions] pdfParse error (bad XRef or format fault):', err.message, '- attempting raw recovery');
@@ -63,7 +69,7 @@ export async function extractPdfText(buffer) {
 
   // Fallback to raw PDF stream parser
   const fallbackText = rawPdfTextExtractor(buffer);
-  if (fallbackText && fallbackText.length > 20) {
+  if (fallbackText && fallbackText.length > 20 && isReadableText(fallbackText)) {
     return fallbackText.replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
   }
 

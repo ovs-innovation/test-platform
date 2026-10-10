@@ -313,7 +313,13 @@ const questionBaseSchema = z.object({
   assertion_text: z.string().optional().nullable(),
   reason_text: z.string().optional().nullable(),
   marks: z.number().min(0.25).max(100).default(1),
+  negative_marks: z.coerce.number().min(0).max(100).optional().default(0),
   position: z.number().int().min(0).optional(),
+  target_position: z.number().int().min(1).optional().nullable(),
+  insert_mode: z.enum(['before', 'after']).optional().nullable(),
+  reference_question_id: z.number().int().positive().optional().nullable(),
+  original_question_number: z.coerce.number().int().optional().nullable(),
+  client_updated_at: z.string().optional().nullable(),
   starter_code: z.string().max(20000).optional(),
   test_cases: z.array(z.object({ input: z.string(), expected: z.string() })).optional(),
   language: z.string().max(30).optional(),
@@ -377,6 +383,7 @@ export const questionUpdateSchema = questionBaseSchema.partial().superRefine((da
 
 export const reorderQuestionsSchema = z.object({
   order: z.array(z.object({ id: z.number().int().positive(), position: z.number().int().min(0) })).min(1),
+  client_updated_at: z.string().optional().nullable(),
 });
 
 export const bulkUpdateMarksSchema = z.object({

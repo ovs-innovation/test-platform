@@ -1,5 +1,5 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useEffect, useState, useCallback, useRef, useMemo } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import {
   assessmentService,
   questionService,
@@ -14,7 +14,7 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 
@@ -100,6 +100,8 @@ const emptyForm = (type) => ({
   assertion_text: '',
   reason_text: '',
   marks: type === 'coding' ? 4 : 4,
+  negative_marks: 0,
+  original_question_number: '',
   section_id: null,
   starter_code: 'function solution() {\n  \n}\n',
   test_cases: [{ input: '', expected: '' }],
@@ -113,6 +115,7 @@ const emptyForm = (type) => ({
 
 export default function AssessmentEditor() {
   const { assessmentId } = useParams();
+  const navigate = useNavigate();
   const toast = useToast();
   const [tab, setTab] = useState('general');
   const [assessment, setAssessment] = useState(null);
@@ -273,7 +276,7 @@ export default function AssessmentEditor() {
       )}
 
       {tab === 'questions' && (
-        <QuestionsTab assessmentId={assessmentId} questions={questions} sections={sections} onReload={load} toast={toast} />
+        <QuestionsTab assessmentId={assessmentId} assessment={assessment} questions={questions} sections={sections} onReload={load} toast={toast} />
       )}
 
       {tab === 'sections' && (
@@ -394,13 +397,19 @@ function GeneralTab({ settings, onChange, onSave, saving, ebooks = [] }) {
   );
 }
 
-function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
+function QuestionsTab({ assessmentId, assessment, questions, sections, onReload, toast }) {
+  const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [lastSubjectId, setLastSubjectId] = useState(null);
   const [lastChapterId, setLastChapterId] = useState(null);
   const [form, setForm] = useState(emptyForm('mcq'));
   const [saving, setSaving] = useState(false);
+  const [highlightedQuestionId, setHighlightedQuestionId] = useState(null);
+  const [reordering, setReordering] = useState(false);
+  const [duplicating, setDuplicating] = useState(false);
+  const [moveToPosModal, setMoveToPosModal] = useState({ open: false, question: null });
+  const [insertMeta, setInsertMeta] = useState(null);
   const [bankOpen, setBankOpen] = useState(false);
   const [bankCategory, setBankCategory] = useState('Physics');
   const [bankQuestions, setBankQuestions] = useState([]);
@@ -430,6 +439,89 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
   const [bulkUpdating, setBulkUpdating] = useState(false);
   const [inlineMarkInput, setInlineMarkInput] = useState(4);
   const [inlineUpdating, setInlineUpdating] = useState(false);
+
+  const isLocked = Boolean(assessment?.attempt_count > 0 || assessment?.is_locked);
+  const attemptCount = Number(assessment?.attempt_count || 0);
+
+  useEffect(() => {
+    if (!highlightedQuestionId) return;
+    const el = document.getElementById(`question-card-${highlightedQuestionId}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    const timer = setTimeout(() => {
+      setHighlightedQuestionId(null);
+    }, 4500);
+    return () => clearTimeout(timer);
+  }, [highlightedQuestionId]);
+
+  const handleDuplicateAsDraft = async () => {
+    setDuplicating(true);
+    try {
+      const res = await assessmentService.duplicate(assessmentId);
+      toast.success('Test duplicated into a new draft! Redirecting...');
+      navigate(`/admin/assessments/${res.assessment.id}`);
+    } catch (err) {
+      toast.error(err.message || 'Failed to duplicate test');
+    } finally {
+      setDuplicating(false);
+    }
+  };
+
+  const partitionHelper = useMemo(() => {
+    const sorted = [...questions].sort((a, b) => (Number(a.position) || 0) - (Number(b.position) || 0) || a.id - b.id);
+    const getPartKey = (q) => `${q.section_id || 'none'}::${(q.subject || 'General').trim().toLowerCase()}`;
+
+    const partitionsMap = new Map();
+    const partitionKeys = [];
+
+    sorted.forEach((q) => {
+      const key = getPartKey(q);
+      if (!partitionsMap.has(key)) {
+        partitionsMap.set(key, []);
+        partitionKeys.push(key);
+      }
+      partitionsMap.get(key).push(q);
+    });
+
+    const questionMetaMap = new Map();
+
+    sorted.forEach((q, globalIdx) => {
+      const key = getPartKey(q);
+      const partList = partitionsMap.get(key);
+      const secIdx = partList.findIndex((item) => item.id === q.id);
+      const secPos = secIdx + 1;
+      const secTotal = partList.length;
+
+      let secName = q.section_name || '';
+      if (!secName && q.section_id) {
+        const matchingSec = sections.find((s) => s.id === q.section_id);
+        secName = matchingSec ? matchingSec.name : `Section ${q.section_id}`;
+      }
+      const subjectName = q.subject || 'General';
+      const sectionLabel = secName ? `${subjectName} • ${secName}` : subjectName;
+
+      questionMetaMap.set(q.id, {
+        globalIndex: globalIdx,
+        displayNumber: globalIdx + 1,
+        partKey: key,
+        secIndex: secIdx,
+        secPosition: secPos,
+        secTotal: secTotal,
+        canMoveUp: secIdx > 0,
+        canMoveDown: secIdx < secTotal - 1,
+        sectionLabel,
+        partQuestions: partList,
+      });
+    });
+
+    return {
+      sortedQuestions: sorted,
+      partitionsMap,
+      partitionKeys,
+      questionMetaMap,
+    };
+  }, [questions, sections]);
 
   const toggleSelectQuestion = (id) => {
     setSelectedIds((prev) =>
@@ -629,6 +721,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
   const openAdd = (type) => {
     setEditing(null);
+    setInsertMeta(null);
     const f = emptyForm(type);
     const sec = sections.find((s) => s.section_type.includes(type === 'mcq' || type === 'multi_select' ? 'mcq' : type)) || sections[0];
     setForm({
@@ -643,6 +736,7 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
 
   const openEdit = (q) => {
     setEditing(q);
+    setInsertMeta(null);
     const opts = normalizeOptions(q.options, q.question_type);
     const indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
     const subjId = q.subject_id ? Number(q.subject_id) : null;
@@ -672,8 +766,119 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       chapter_id: chapId,
       topic: q.topic || '',
       difficulty: q.difficulty || 'medium',
+      negative_marks: q.negative_marks ?? 0,
+      original_question_number: q.original_question_number || '',
     });
     setModalOpen(true);
+  };
+
+  const handleInsertQuestionAt = (q, mode) => {
+    if (isLocked) {
+      toast.error('Question structure is locked because students have attempted this test. Duplicate to a draft to edit.');
+      return;
+    }
+    const meta = partitionHelper.questionMetaMap.get(q.id);
+    if (!meta) return;
+    setEditing(null);
+
+    const defaultType = q.question_type || 'mcq';
+    const f = emptyForm(defaultType);
+
+    const targetPos = mode === 'before' ? meta.displayNumber : meta.displayNumber + 1;
+    const targetSecPos = mode === 'before' ? meta.secPosition : meta.secPosition + 1;
+
+    setInsertMeta({
+      mode,
+      referenceQuestionId: q.id,
+      targetPosition: targetPos,
+      targetSecPosition: targetSecPos,
+      displayNumber: targetPos,
+      referenceDisplayNumber: meta.displayNumber,
+      sectionLabel: meta.sectionLabel,
+    });
+
+    setForm({
+      ...f,
+      options: normalizeOptions([], defaultType),
+      section_id: q.section_id || null,
+      subject_id: q.subject_id || lastSubjectId || null,
+      subject: q.subject || '',
+      chapter_id: q.chapter_id || lastChapterId || null,
+      topic: q.topic || '',
+      marks: q.marks || 4,
+      negative_marks: q.negative_marks ?? 0,
+      original_question_number: '',
+      target_position: targetPos,
+      insert_mode: mode,
+      reference_question_id: q.id,
+    });
+
+    setModalOpen(true);
+  };
+
+  const handleReorderWithinSection = async (q, targetSecPos) => {
+    if (reordering) return;
+    if (isLocked) {
+      toast.error('Question ordering is locked because students have attempted this test. Duplicate to a draft to edit.');
+      return;
+    }
+    const meta = partitionHelper.questionMetaMap.get(q.id);
+    if (!meta || targetSecPos === meta.secPosition) return;
+    if (targetSecPos < 1 || targetSecPos > meta.secTotal) return;
+
+    setReordering(true);
+    const key = meta.partKey;
+    const partQuestions = [...partitionHelper.partitionsMap.get(key)];
+    const currentSecIdx = meta.secIndex;
+    const targetSecIdx = targetSecPos - 1;
+
+    const [movedItem] = partQuestions.splice(currentSecIdx, 1);
+    partQuestions.splice(targetSecIdx, 0, movedItem);
+
+    const newFullList = [];
+    for (const pKey of partitionHelper.partitionKeys) {
+      if (pKey === key) {
+        newFullList.push(...partQuestions);
+      } else {
+        newFullList.push(...partitionHelper.partitionsMap.get(pKey));
+      }
+    }
+
+    const payload = newFullList.map((item, idx) => ({
+      id: Number(item.id),
+      position: idx + 1,
+    }));
+
+    try {
+      await questionService.reorder(assessmentId, payload, assessment?.updated_at || null);
+      setHighlightedQuestionId(q.id);
+      const targetDisplay = meta.globalIndex - meta.secIndex + targetSecPos;
+      toast.success(`Question moved to Position #${targetSecPos} (Displays as Q${targetDisplay})`);
+      await onReload();
+    } catch (err) {
+      toast.error(err.message || 'Failed to reorder questions');
+      await onReload();
+    } finally {
+      setReordering(false);
+      setMoveToPosModal({ open: false, question: null });
+    }
+  };
+
+  const handleDeleteQuestion = async (q) => {
+    if (isLocked) {
+      toast.error('Question structure is locked because students have attempted this test. Duplicate to a draft to edit.');
+      return;
+    }
+    const meta = partitionHelper.questionMetaMap.get(q.id);
+    const qNum = meta?.displayNumber || q.position;
+    if (!window.confirm(`Delete Question Q${qNum}? All subsequent questions will shift back automatically.`)) return;
+    try {
+      await questionService.remove(q.id);
+      toast.success(`Question Q${qNum} deleted. Subsequent questions renumbered.`);
+      await onReload();
+    } catch (err) {
+      toast.error(err.message || 'Failed to delete question');
+    }
   };
 
   const saveQuestion = async (e) => {
@@ -717,6 +922,12 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         correct_indices: isChoiceType ? (form.correct_indices || []) : [],
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
         numerical_tolerance: form.numerical_tolerance != null && form.numerical_tolerance !== '' ? Number(form.numerical_tolerance) : 0,
+        negative_marks: form.negative_marks != null && form.negative_marks !== '' ? Number(form.negative_marks) : 0,
+        original_question_number: form.original_question_number ? String(form.original_question_number).trim() : null,
+        target_position: insertMeta?.targetPosition || form.target_position || null,
+        insert_mode: insertMeta?.mode || form.insert_mode || null,
+        reference_question_id: insertMeta?.referenceQuestionId || form.reference_question_id || null,
+        client_updated_at: assessment?.updated_at || null,
       };
       if (['mcq', 'single_choice', 'multi_select'].includes(payload.question_type) && payload.options.length < 2) {
         toast.error('Need at least 2 options');
@@ -736,26 +947,24 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
       if (editing) {
         await questionService.update(editing.id, payload);
         toast.success('Question updated');
+        setHighlightedQuestionId(editing.id);
       } else {
-        await questionService.create(assessmentId, payload);
-        toast.success('Question added');
+        const res = await questionService.create(assessmentId, payload);
+        if (res?.id) setHighlightedQuestionId(res.id);
+        toast.success(
+          insertMeta
+            ? `Question inserted at Q${insertMeta.displayNumber} successfully`
+            : 'Question added'
+        );
       }
       setModalOpen(false);
-      onReload();
+      setInsertMeta(null);
+      await onReload();
     } catch (err) {
       toast.error(err.message || 'Save failed');
     } finally {
       setSaving(false);
     }
-  };
-
-  const moveQuestion = async (idx, dir) => {
-    const sorted = [...questions].sort((a, b) => a.position - b.position);
-    const swap = idx + dir;
-    if (swap < 0 || swap >= sorted.length) return;
-    [sorted[idx], sorted[swap]] = [sorted[swap], sorted[idx]];
-    await questionService.reorder(assessmentId, sorted.map((q, i) => ({ id: q.id, position: i + 1 })));
-    onReload();
   };
 
   const loadBank = async (cat) => {
@@ -882,6 +1091,29 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
           </div>
         </div>
 
+        {isLocked && (
+          <div className="mb-4 rounded-2xl border border-amber-300 dark:border-amber-700/70 bg-amber-50/90 dark:bg-amber-950/40 p-4 text-amber-900 dark:text-amber-200 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <span className="text-xl">🔒</span>
+              <div>
+                <h4 className="font-extrabold text-sm">Question Structure & Ordering Locked</h4>
+                <p className="text-xs text-amber-800 dark:text-amber-300 mt-0.5">
+                  This test has {attemptCount} student attempt{attemptCount > 1 ? 's' : ''}.
+                  Reordering, inserting, or deleting questions is locked to preserve student results, answers, and analytics integrity.
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              className="btn-primary text-xs font-bold whitespace-nowrap bg-amber-600 hover:bg-amber-700 text-white border-0 shadow-sm flex items-center gap-1.5 cursor-pointer shrink-0"
+              onClick={handleDuplicateAsDraft}
+              disabled={duplicating}
+            >
+              {duplicating ? <Spinner className="h-3 w-3" /> : '📋 Duplicate as Draft to Edit'}
+            </button>
+          </div>
+        )}
+
         {questions.length === 0 ? (
           <EmptyState title="No questions yet" message="Add questions manually or import from the question bank."
             action={<button type="button" className="btn-primary" onClick={() => openAdd('mcq')}>Add first question</button>} />
@@ -966,21 +1198,28 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
             </div>
 
             <div className="space-y-3">
-              {[...questions].sort((a, b) => a.position - b.position).map((q, idx) => (
-                <QuestionCard key={q.id} q={q} idx={idx} total={questions.length}
-                  isSelected={selectedIds.includes(q.id)}
-                  onToggleSelect={() => toggleSelectQuestion(q.id)}
-                  onEdit={() => openEdit(q)}
-                  onDelete={async () => {
-                    if (!window.confirm('Delete this question?')) return;
-                    await questionService.remove(q.id);
-                    toast.success('Deleted');
-                    onReload();
-                  }}
-                  onMoveUp={() => moveQuestion(idx, -1)}
-                  onMoveDown={() => moveQuestion(idx, 1)}
-                />
-              ))}
+              {partitionHelper.sortedQuestions.map((q) => {
+                const meta = partitionHelper.questionMetaMap.get(q.id);
+                return (
+                  <QuestionCard
+                    key={q.id}
+                    q={q}
+                    meta={meta}
+                    isSelected={selectedIds.includes(q.id)}
+                    onToggleSelect={() => toggleSelectQuestion(q.id)}
+                    onEdit={() => openEdit(q)}
+                    onDelete={() => handleDeleteQuestion(q)}
+                    onMoveUp={() => handleReorderWithinSection(q, meta.secPosition - 1)}
+                    onMoveDown={() => handleReorderWithinSection(q, meta.secPosition + 1)}
+                    onMoveToPosition={() => setMoveToPosModal({ open: true, question: q })}
+                    onInsertBefore={() => handleInsertQuestionAt(q, 'before')}
+                    onInsertAfter={() => handleInsertQuestionAt(q, 'after')}
+                    isHighlighted={highlightedQuestionId === q.id}
+                    isLocked={isLocked}
+                    disabled={reordering}
+                  />
+                );
+              })}
             </div>
           </div>
         )}
@@ -1003,8 +1242,26 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         </div>
       </div>
 
-      <QuestionBuilderModal open={modalOpen} onClose={() => setModalOpen(false)} editing={editing}
-        form={form} setForm={setForm} sections={sections} onSubmit={saveQuestion} saving={saving} />
+      <QuestionBuilderModal
+        open={modalOpen}
+        onClose={() => { setModalOpen(false); setInsertMeta(null); }}
+        editing={editing}
+        form={form}
+        setForm={setForm}
+        sections={sections}
+        onSubmit={saveQuestion}
+        saving={saving}
+        insertMeta={insertMeta}
+      />
+
+      <MoveToPositionModal
+        open={moveToPosModal.open}
+        onClose={() => setMoveToPosModal({ open: false, question: null })}
+        question={moveToPosModal.question}
+        meta={moveToPosModal.question ? partitionHelper.questionMetaMap.get(moveToPosModal.question.id) : null}
+        onMove={handleReorderWithinSection}
+        loading={reordering}
+      />
 
       <BulkMarksModal
         open={bulkMarksOpen}
@@ -1188,6 +1445,126 @@ function QuestionsTab({ assessmentId, questions, sections, onReload, toast }) {
         </div>
       </Modal>
     </div>
+  );
+}
+
+function MoveToPositionModal({ open, onClose, question, meta, onMove, loading }) {
+  const [targetPos, setTargetPos] = useState(1);
+
+  useEffect(() => {
+    if (meta?.secPosition) {
+      setTargetPos(meta.secPosition);
+    }
+  }, [meta?.secPosition, open]);
+
+  if (!open || !question || !meta) return null;
+
+  const totalPositions = meta.secTotal || 1;
+  const positions = Array.from({ length: totalPositions }, (_, i) => i + 1);
+
+  const sectionStartGlobal = meta.displayNumber - meta.secPosition + 1;
+  const projectedGlobal = sectionStartGlobal + targetPos - 1;
+
+  const handleApply = () => {
+    if (targetPos === meta.secPosition) {
+      onClose();
+      return;
+    }
+    onMove(question, targetPos);
+  };
+
+  return (
+    <Modal open={open} onClose={onClose} title={`Move Question Q${meta.displayNumber}`} size="md">
+      <div className="space-y-4">
+        <div className="rounded-xl border border-blue-100 bg-blue-50/60 p-3.5 dark:border-blue-900/50 dark:bg-blue-950/20 text-xs text-slate-700 dark:text-slate-300">
+          <div className="flex items-center justify-between font-bold text-slate-900 dark:text-white mb-2 pb-1.5 border-b border-blue-200/50 dark:border-blue-800/50">
+            <span>Subject / Section:</span>
+            <span className="text-blue-600 dark:text-blue-400">{meta.sectionLabel}</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2 text-[11px]">
+            <div>
+              <span className="text-slate-500 dark:text-slate-400">Current Display:</span>{' '}
+              <span className="font-bold text-slate-800 dark:text-slate-200">Q{meta.displayNumber}</span>
+            </div>
+            <div>
+              <span className="text-slate-500 dark:text-slate-400">Section Position:</span>{' '}
+              <span className="font-bold text-slate-800 dark:text-slate-200">#{meta.secPosition} of {meta.secTotal}</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <label className="label text-xs font-bold text-slate-800 dark:text-slate-200">
+            Target Position inside this Section
+          </label>
+          <div className="mt-1.5">
+            <select
+              className="input text-xs font-semibold"
+              value={targetPos}
+              onChange={(e) => setTargetPos(Number(e.target.value))}
+            >
+              {positions.map((p) => {
+                const projNum = sectionStartGlobal + p - 1;
+                const isCurrent = p === meta.secPosition;
+                return (
+                  <option key={p} value={p}>
+                    Position #{p} {isCurrent ? '(Current)' : `→ Displays as Q${projNum}`}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          <p className="mt-1.5 text-[11px] text-slate-500 dark:text-slate-400">
+            {targetPos === meta.secPosition
+              ? 'Currently at this position.'
+              : `Moving to position #${targetPos} will make this question display as Q${projectedGlobal}. Other questions in ${meta.sectionLabel} will shift to accommodate.`}
+          </p>
+        </div>
+
+        {totalPositions <= 35 && (
+          <div>
+            <span className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Quick Select:</span>
+            <div className="mt-1.5 flex flex-wrap gap-1.5 max-h-36 overflow-y-auto p-1 border border-slate-100 dark:border-slate-800 rounded-lg">
+              {positions.map((p) => {
+                const isCurrent = p === meta.secPosition;
+                const isSelected = p === targetPos;
+                return (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setTargetPos(p)}
+                    className={`h-7 min-w-7 px-1.5 rounded-md text-xs font-bold transition flex items-center justify-center cursor-pointer ${
+                      isSelected
+                        ? 'bg-blue-600 text-white shadow-xs'
+                        : isCurrent
+                        ? 'bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200'
+                        : 'border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300'
+                    }`}
+                  >
+                    {p}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        <div className="flex justify-end gap-2 pt-2 border-t border-slate-100 dark:border-slate-800">
+          <button type="button" className="btn-secondary text-xs" onClick={onClose} disabled={loading}>
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="btn-primary text-xs"
+            onClick={handleApply}
+            disabled={loading || targetPos === meta.secPosition}
+          >
+            {loading ? <Spinner className="h-3.5 w-3.5 mr-1" /> : null}
+            {targetPos === meta.secPosition ? 'Choose a Different Position' : `Move to Position #${targetPos}`}
+          </button>
+        </div>
+      </div>
+    </Modal>
   );
 }
 
@@ -1419,7 +1796,22 @@ function BulkMarksModal({
   );
 }
 
-function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, isSelected, onToggleSelect }) {
+function QuestionCard({
+  q,
+  meta,
+  isSelected,
+  onToggleSelect,
+  onEdit,
+  onDelete,
+  onMoveUp,
+  onMoveDown,
+  onMoveToPosition,
+  onInsertBefore,
+  onInsertAfter,
+  isHighlighted,
+  isLocked,
+  disabled,
+}) {
   const opts = Array.isArray(q.options) ? q.options : [];
   const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
 
@@ -1432,14 +1824,25 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
           : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== ''))
   );
 
+  const displayNumber = meta?.displayNumber ?? q.position;
+  const secPos = meta?.secPosition ?? 1;
+  const secTotal = meta?.secTotal ?? 1;
+  const canMoveUp = meta ? meta.canMoveUp : false;
+  const canMoveDown = meta ? meta.canMoveDown : false;
+
   return (
-    <div className={`card p-4 transition-all border ${
-      isSelected
-        ? 'bg-blue-50/40 dark:bg-blue-950/30 border-blue-400 dark:border-blue-600 ring-1 ring-blue-400/40 shadow-sm'
-        : 'bg-white dark:bg-slate-900/90 border-slate-200 dark:border-slate-800'
-    }`}>
+    <div
+      id={`question-card-${q.id}`}
+      className={`card p-4 transition-all duration-300 border ${
+        isHighlighted
+          ? 'ring-2 ring-blue-500 bg-blue-50/50 dark:bg-blue-950/40 border-blue-400 dark:border-blue-600 shadow-md'
+          : isSelected
+          ? 'bg-blue-50/40 dark:bg-blue-950/30 border-blue-400 dark:border-blue-600 ring-1 ring-blue-400/40 shadow-sm'
+          : 'bg-white dark:bg-slate-900/90 border-slate-200 dark:border-slate-800'
+      }`}
+    >
       <div className="flex gap-3">
-        <div className="flex flex-col items-center gap-1 pt-0.5">
+        <div className="flex flex-col items-center gap-1 pt-0.5 shrink-0">
           <input
             type="checkbox"
             checked={Boolean(isSelected)}
@@ -1447,31 +1850,118 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
             className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 cursor-pointer"
             title="Select question"
           />
-          <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveUp} disabled={idx === 0} title="Move up">↑</button>
-          <span className="text-center text-xs font-bold text-slate-400 dark:text-slate-500">{idx + 1}</span>
-          <button type="button" className="rounded p-1 text-slate-400 dark:text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-30" onClick={onMoveDown} disabled={idx === total - 1} title="Move down">↓</button>
+          <button
+            type="button"
+            className="rounded p-1 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-20 cursor-pointer disabled:cursor-not-allowed transition"
+            onClick={onMoveUp}
+            disabled={isLocked || disabled || !canMoveUp}
+            title={!canMoveUp ? 'First question in this section' : 'Move up'}
+          >
+            <ArrowUp className="h-3.5 w-3.5" />
+          </button>
+          <span className="text-center text-xs font-bold text-slate-700 dark:text-slate-300" title={`Question #${displayNumber}`}>
+            {displayNumber}
+          </span>
+          <button
+            type="button"
+            className="rounded p-1 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-20 cursor-pointer disabled:cursor-not-allowed transition"
+            onClick={onMoveDown}
+            disabled={isLocked || disabled || !canMoveDown}
+            title={!canMoveDown ? 'Last question in this section' : 'Move down'}
+          >
+            <ArrowDown className="h-3.5 w-3.5" />
+          </button>
+          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-mono" title={`Section position ${secPos} of ${secTotal}`}>
+            {secPos}/{secTotal}
+          </span>
         </div>
         <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge color="blue">{typeLabel}</Badge>
-            {q.section_name && <Badge color="slate">{q.section_name}</Badge>}
-            <Badge color="green">{q.marks} mk</Badge>
-            {!hasAnswerKey && (
-              <Badge color="slate">No Answer Key</Badge>
-            )}
-            {q.needs_review && (
-              <Badge color="amber">⚠️ Review Answer Key</Badge>
-            )}
-            {(q.topic || q.subject) && (
-              <Badge color="amber">
-                {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}
-              </Badge>
-            )}
-            {q.image_url && (
-              <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
-                🖼️ Diagram
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/80 pb-2 mb-2">
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="px-2 py-0.5 rounded-md bg-blue-600 text-white font-extrabold text-xs">
+                Q{displayNumber}
               </span>
-            )}
+              <span className="px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs font-medium" title="Position in current subject/section">
+                Sec #{secPos}
+              </span>
+              <Badge color="blue">{typeLabel}</Badge>
+              {q.section_name && <Badge color="slate">{q.section_name}</Badge>}
+              <Badge color="green">{q.marks} mk</Badge>
+              {Number(q.negative_marks) > 0 && (
+                <Badge color="red">-{q.negative_marks} mk</Badge>
+              )}
+              {q.original_question_number && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/60 text-xs font-semibold" title="Original question number from source document/PDF">
+                  PDF Q{q.original_question_number}
+                </span>
+              )}
+              {!hasAnswerKey && (
+                <Badge color="slate">No Answer Key</Badge>
+              )}
+              {q.needs_review && (
+                <Badge color="amber">⚠️ Review Answer Key</Badge>
+              )}
+              {(q.topic || q.subject) && (
+                <Badge color="amber">
+                  {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}
+                </Badge>
+              )}
+              {q.image_url && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                  🖼️ Diagram
+                </span>
+              )}
+            </div>
+
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                type="button"
+                disabled={isLocked || disabled || secTotal <= 1}
+                onClick={onMoveToPosition}
+                className="btn-secondary py-1 px-2 text-xs flex items-center gap-1 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title="Move to specific position inside this section"
+              >
+                <Move className="h-3 w-3" />
+                <span className="hidden sm:inline">Move Pos</span>
+              </button>
+              <button
+                type="button"
+                disabled={isLocked || disabled}
+                onClick={onInsertBefore}
+                className="btn-secondary py-1 px-2 text-xs flex items-center gap-1 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title={`Insert new question before Q${displayNumber}`}
+              >
+                <Plus className="h-3 w-3" />
+                <span>Before</span>
+              </button>
+              <button
+                type="button"
+                disabled={isLocked || disabled}
+                onClick={onInsertAfter}
+                className="btn-secondary py-1 px-2 text-xs flex items-center gap-1 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                title={`Insert new question after Q${displayNumber}`}
+              >
+                <Plus className="h-3 w-3" />
+                <span>After</span>
+              </button>
+              <div className="flex items-center gap-1 pl-1 border-l border-slate-200 dark:border-slate-800">
+                <button
+                  type="button"
+                  className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline px-1.5 py-1 cursor-pointer"
+                  onClick={onEdit}
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  className="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline px-1.5 py-1 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                  disabled={isLocked || disabled}
+                  onClick={onDelete}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
           <div className="mt-2 text-sm font-medium text-slate-900 dark:text-slate-100 whitespace-pre-line leading-relaxed">
             <MathRenderer text={q.question_text} />
@@ -1607,10 +2097,6 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
             </div>
           )}
         </div>
-        <div className="flex shrink-0 flex-col gap-1">
-          <button type="button" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline" onClick={onEdit}>Edit</button>
-          <button type="button" className="text-sm font-semibold text-red-600 dark:text-red-400 hover:underline" onClick={onDelete}>Delete</button>
-        </div>
       </div>
     </div>
   );
@@ -1705,7 +2191,7 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
   );
 }
 
-function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections, onSubmit, saving }) {
+function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections, onSubmit, saving, insertMeta }) {
   const isChoice = form.question_type === 'mcq' || form.question_type === 'multi_select';
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
@@ -1841,8 +2327,40 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
   };
 
   return (
-    <Modal open={open} onClose={onClose} title={editing ? 'Edit question' : 'Add question'} size="lg">
+    <Modal
+      open={open}
+      onClose={onClose}
+      title={
+        editing
+          ? 'Edit question'
+          : insertMeta
+          ? `Insert Question ${insertMeta.mode === 'before' ? 'Before' : 'After'} Q${insertMeta.referenceDisplayNumber}`
+          : 'Add question'
+      }
+      size="lg"
+    >
       <form onSubmit={onSubmit} className="space-y-4">
+        {insertMeta && (
+          <div className="rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50/70 dark:bg-emerald-950/30 p-3.5 text-xs text-emerald-900 dark:text-emerald-200 flex items-start justify-between gap-3 shadow-xs">
+            <div>
+              <div className="flex items-center gap-2 font-bold text-emerald-800 dark:text-emerald-300">
+                <span className="inline-flex items-center justify-center h-5 w-5 rounded-full bg-emerald-600 text-white text-[11px] font-black">
+                  +
+                </span>
+                <span>
+                  Inserting {insertMeta.mode === 'before' ? 'Before' : 'After'} Question Q{insertMeta.referenceDisplayNumber}
+                </span>
+              </div>
+              <p className="mt-1 text-[11px] text-emerald-700 dark:text-emerald-300/80 leading-relaxed">
+                Will be placed at <strong>Position #{insertMeta.targetSecPosition}</strong> in <strong>{insertMeta.sectionLabel}</strong> and display as <strong>Q{insertMeta.displayNumber}</strong>. Subsequent questions will shift automatically.
+              </p>
+            </div>
+            <span className="shrink-0 rounded-md bg-emerald-600 text-white font-extrabold px-2.5 py-1 text-xs shadow-xs">
+              Target: Q{insertMeta.displayNumber}
+            </span>
+          </div>
+        )}
+
         <div className="grid grid-cols-2 gap-3">
           <div>
             <label className="label">Question type</label>
@@ -2184,9 +2702,44 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           <p className="text-sm text-slate-500">Candidates will provide a written answer. Graded when answer meets minimum length.</p>
         )}
 
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="label">Marks</label>
+            <input
+              type="number"
+              min={0.25}
+              step="any"
+              className="input"
+              value={form.marks}
+              onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))}
+            />
+          </div>
+          <div>
+            <label className="label">Negative Marks (Optional)</label>
+            <input
+              type="number"
+              min={0}
+              step="any"
+              className="input"
+              placeholder="0"
+              value={form.negative_marks ?? 0}
+              onChange={(e) => setForm((f) => ({ ...f, negative_marks: e.target.value !== '' ? Number(e.target.value) : 0 }))}
+            />
+          </div>
+        </div>
+
         <div>
-          <label className="label">Marks</label>
-          <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
+          <label className="label">Original PDF / Paper Question Number (Optional reference)</label>
+          <input
+            type="text"
+            className="input text-xs"
+            placeholder="e.g. 14, 25(b), Q9"
+            value={form.original_question_number || ''}
+            onChange={(e) => setForm((f) => ({ ...f, original_question_number: e.target.value }))}
+          />
+          <p className="mt-1 text-[11px] text-slate-500">
+            Preserved for historical reference and document cross-checking. Does not alter system numbering.
+          </p>
         </div>
 
         <QuestionImageUploader

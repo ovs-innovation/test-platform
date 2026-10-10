@@ -1,4 +1,4 @@
-import { query } from '../config/db.js';
+import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 
@@ -391,11 +391,26 @@ export const getAssessmentAdmin = asyncHandler(async (req, res) => {
     ),
   ]);
 
+  const attRes = await query(
+    `SELECT (
+       (SELECT COUNT(*)::int FROM attempts WHERE assessment_id = $1) +
+       (SELECT COUNT(*)::int FROM test_attempts WHERE test_id = $1)
+     ) AS attempt_count`,
+    [id]
+  );
+  const attemptCount = Number(attRes.rows[0]?.attempt_count || 0);
+
   res.json({
-    assessment: a.rows[0],
+    assessment: {
+      ...a.rows[0],
+      attempt_count: attemptCount,
+      is_locked: attemptCount > 0,
+    },
     sections: sections.rows,
     questions: questions.rows,
     invites: invites.rows,
+    attempt_count: attemptCount,
+    is_locked: attemptCount > 0,
   });
 });
 
@@ -586,3 +601,117 @@ export const importScheduleCsv = asyncHandler(async (req, res) => {
     errors,
   });
 });
+
+export const duplicateAssessment = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const original = await query('SELECT * FROM assessments WHERE id = $1', [id]);
+  if (original.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  const a = original.rows[0];
+
+  const duplicated = await withTransaction(async (client) => {
+    // 1. Create duplicate assessment as draft
+    const newTitle = `${a.title} (Draft Copy)`.slice(0, 200);
+    const assessRes = await client.query(
+      `INSERT INTO assessments
+         (title, description, instructions, duration_minutes, passing_marks, max_violations,
+          result_visible, is_published, negative_marking, negative_marks_per_wrong,
+          available_from, available_until, recommended_ebook_id, created_by, test_type, preparation_phase, syllabus_text)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, false, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+       RETURNING *`,
+      [
+        newTitle,
+        a.description,
+        a.instructions,
+        a.duration_minutes,
+        a.passing_marks,
+        a.max_violations,
+        a.result_visible,
+        a.negative_marking,
+        a.negative_marks_per_wrong,
+        a.available_from,
+        a.available_until,
+        a.recommended_ebook_id,
+        req.user.id,
+        a.test_type,
+        a.preparation_phase,
+        a.syllabus_text,
+      ]
+    );
+    const newAssessment = assessRes.rows[0];
+
+    // 2. Duplicate sections and map old section id -> new section id
+    const oldSections = await client.query(
+      'SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+      [id]
+    );
+    const sectionMap = new Map();
+    for (const s of oldSections.rows) {
+      const insSec = await client.query(
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position, description)
+         VALUES ($1, $2, $3, $4, $5) RETURNING id`,
+        [newAssessment.id, s.name, s.section_type, s.position, s.description]
+      );
+      sectionMap.set(s.id, insSec.rows[0].id);
+    }
+
+    // 3. Duplicate questions preserving all fields, metadata, images, and sequence
+    const oldQuestions = await client.query(
+      'SELECT * FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+      [id]
+    );
+    for (const q of oldQuestions.rows) {
+      const newSectionId = q.section_id ? sectionMap.get(q.section_id) || null : null;
+      await client.query(
+        `INSERT INTO questions
+           (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
+            numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, position,
+            starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url,
+            subject_id, chapter_id, difficulty, subject, topic, media, tables, extraction_meta,
+            chapter, translations, original_question_number)
+         VALUES
+           ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27,$28,$29,$30,$31)`,
+        [
+          newAssessment.id,
+          newSectionId,
+          q.question_type,
+          q.question_text,
+          typeof q.options === 'string' ? q.options : JSON.stringify(q.options || []),
+          q.correct_index,
+          typeof q.correct_indices === 'string' ? q.correct_indices : JSON.stringify(q.correct_indices || []),
+          q.numeric_answer,
+          q.numerical_tolerance,
+          q.assertion_text,
+          q.reason_text,
+          q.marks,
+          q.position,
+          q.starter_code,
+          typeof q.test_cases === 'string' ? q.test_cases : JSON.stringify(q.test_cases || []),
+          q.language,
+          q.bank_category,
+          q.solution,
+          q.image_url,
+          q.solution_image_url,
+          q.subject_id,
+          q.chapter_id,
+          q.difficulty,
+          q.subject,
+          q.topic,
+          typeof q.media === 'string' ? q.media : JSON.stringify(q.media || []),
+          typeof q.tables === 'string' ? q.tables : JSON.stringify(q.tables || []),
+          typeof q.extraction_meta === 'string' ? q.extraction_meta : JSON.stringify(q.extraction_meta || {}),
+          q.chapter,
+          typeof q.translations === 'string' ? q.translations : JSON.stringify(q.translations || {}),
+          q.original_question_number || q.position,
+        ]
+      );
+    }
+
+    return newAssessment;
+  });
+
+  res.status(201).json({
+    assessment: duplicated,
+    message: 'Assessment duplicated successfully as a new draft. You can now freely reorder and insert questions.',
+  });
+});
+

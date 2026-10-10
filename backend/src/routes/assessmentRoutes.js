@@ -10,6 +10,7 @@ import {
   togglePublish,
   deleteAssessment,
   importScheduleCsv,
+  duplicateAssessment,
 } from '../controllers/assessmentController.js';
 import { listQuestions, createQuestion, reorderQuestions, bulkUploadQuestions, exportQuestions, bulkUpdateQuestionMarks } from '../controllers/questionController.js';
 import { listSections, createSection } from '../controllers/sectionController.js';
@@ -42,6 +43,7 @@ router.get('/:id/preview', authorize('admin'), previewAssessment);
 router.get('/:id', authorize('admin'), getAssessmentAdmin);
 router.put('/:id', authorize('admin'), validate(assessmentUpdateSchema), updateAssessment);
 router.patch('/:id/publish', authorize('admin'), togglePublish);
+router.post('/:id/duplicate', authorize('admin'), duplicateAssessment);
 router.delete('/:id', authorize('admin'), deleteAssessment);
 
 export default router;
