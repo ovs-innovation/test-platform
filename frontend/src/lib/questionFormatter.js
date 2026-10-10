@@ -82,6 +82,75 @@ export function ensureLatexDelimiters(text) {
 }
 
 /**
+ * Heals broken OCR line wrapping, single-character margin artifacts,
+ * and column gutter fragments (e.g. vertical cascades of 1-4 character lines).
+ */
+export function healOcrFragmentation(text) {
+  if (!text || typeof text !== 'string') return text || '';
+  if (!text.includes('\n')) return text;
+
+  // Split into paragraphs separated by double newlines
+  const paragraphs = text.split(/\n\s*\n/);
+  const healedParagraphs = paragraphs.map((para) => {
+    const rawLines = para.split('\n');
+    if (rawLines.length < 2) return para;
+
+    const trimmedLines = rawLines.map((l) => l.trim()).filter(Boolean);
+    if (trimmedLines.length < 2) return para;
+
+    // Do NOT merge markdown table rows
+    if (trimmedLines.some((l) => l.startsWith('|') && l.endsWith('|'))) {
+      return para;
+    }
+
+    // Measure line lengths and short fragment ratio
+    const shortLineCount = trimmedLines.filter((l) => l.length <= 6).length;
+    const shortRatio = shortLineCount / trimmedLines.length;
+    const totalChars = trimmedLines.reduce((acc, l) => acc + l.length, 0);
+    const avgLen = totalChars / trimmedLines.length;
+
+    // If severely fragmented (many lines <= 6 chars or very short average line length)
+    const isFragmented = shortRatio > 0.20 || (trimmedLines.length >= 4 && avgLen < 20);
+
+    if (isFragmented) {
+      // Rejoin lines, discarding pure margin junk characters
+      const tokens = [];
+      for (const line of trimmedLines) {
+        // Drop isolated single punctuation noise or stray margin characters
+        if (/^[\\|\/_\-~`'":;,\.]{1,2}$/.test(line)) continue;
+        tokens.push(line);
+      }
+      return tokens.join(' ');
+    }
+
+    // For moderately fragmented text (lines wrapped mid-sentence without paragraph breaks)
+    // Rejoin lines that do not start with a bullet or list marker, and where the previous line does not end with sentence-terminal punctuation.
+    const resultLines = [];
+    for (let i = 0; i < trimmedLines.length; i++) {
+      const line = trimmedLines[i];
+      const isBulletOrMarker = /^(?:[•·\-\*]|\([a-z0-9ivx]+\)|[a-z0-9ivx]+[\.\)]|Statement|Assertion|Reason|List|Column|Case\s+[I|V|X|\d]+)/i.test(line);
+
+      if (resultLines.length === 0 || isBulletOrMarker) {
+        resultLines.push(line);
+      } else {
+        const prev = resultLines[resultLines.length - 1];
+        const prevEndsWithTerminator = /[:\.\?\!]$/.test(prev.trim());
+        const isPrevBulletHeader = /^(?:Statement|Assertion|Reason|List|Column)\s+[^\n]+:?$/i.test(prev);
+
+        if (!prevEndsWithTerminator && !isPrevBulletHeader) {
+          resultLines[resultLines.length - 1] = `${prev} ${line}`;
+        } else {
+          resultLines.push(line);
+        }
+      }
+    }
+    return resultLines.join('\n');
+  });
+
+  return healedParagraphs.join('\n\n');
+}
+
+/**
  * Formats question statements and prompts into clean, structured line-by-line text.
  * Prevents statement-based questions, Assertion-Reason, and Match Lists from collapsing into run-on paragraphs.
  */
@@ -91,6 +160,9 @@ export function formatQuestionStructure(text) {
 
   // Normalize Windows line breaks
   s = s.replace(/\r\n/g, '\n');
+
+  // Heal OCR broken lines & vertical single-character column fragmentation
+  s = healOcrFragmentation(s);
 
   // Safeguard Markdown table blocks (| ... |) so regexes do not break table rows
   const tableBlocks = [];

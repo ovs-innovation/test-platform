@@ -545,20 +545,40 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       for (let i = 0; i < extractedQs.length; i++) {
         const q = extractedQs[i];
         const qNum = q.questionNumber || q.line || (i + 1);
+        const isMcq = q.question_type === 'mcq' || (Array.isArray(q.options) && q.options.length > 0) || (q.numeric_answer == null && (!q.question_type || q.question_type === 'mcq'));
+
         if (akMap[qNum] !== undefined) {
           const rawVal = akMap[qNum];
           if (typeof rawVal === 'number' && rawVal >= 0 && rawVal <= 3) {
             q.correct_index = rawVal;
             q.correctAnswer = String.fromCharCode(65 + rawVal);
+            q.question_type = 'mcq';
+          } else if (typeof rawVal === 'number' && rawVal >= 1 && rawVal <= 4 && isMcq) {
+            q.correct_index = rawVal - 1;
+            q.correctAnswer = String.fromCharCode(65 + rawVal - 1);
+            q.question_type = 'mcq';
           } else if (typeof rawVal === 'string') {
             const upper = rawVal.trim().toUpperCase();
             if (['A', 'B', 'C', 'D'].includes(upper)) {
               q.correct_index = upper.charCodeAt(0) - 65;
               q.correctAnswer = upper;
+              q.question_type = 'mcq';
+            } else if (['1', '2', '3', '4'].includes(upper) && isMcq) {
+              const idx = parseInt(upper, 10) - 1;
+              q.correct_index = idx;
+              q.correctAnswer = String.fromCharCode(65 + idx);
+              q.question_type = 'mcq';
             } else if (!isNaN(Number(upper))) {
-              q.numeric_answer = Number(upper);
-              q.question_type = 'integer';
-              q.correct_index = null;
+              const numVal = Number(upper);
+              if (isMcq && numVal >= 1 && numVal <= 4) {
+                q.correct_index = numVal - 1;
+                q.correctAnswer = String.fromCharCode(65 + numVal - 1);
+                q.question_type = 'mcq';
+              } else {
+                q.numeric_answer = numVal;
+                q.question_type = 'integer';
+                q.correct_index = null;
+              }
             }
           } else if (typeof rawVal === 'number') {
             q.numeric_answer = rawVal;
@@ -566,8 +586,12 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
             q.correct_index = null;
           }
         }
-        if (solMap[qNum] && (!q.solution || q.solution.length < 5)) {
-          q.solution = solMap[qNum];
+        if (solMap[qNum]) {
+          let cleanSol = stripHeadersAndFooters(solMap[qNum]).trim();
+          cleanSol = cleanSol.replace(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\([A-Da-d1-4]\)|\[[A-Da-d1-4]\]|[A-Da-d1-4])\s*[:\.\-–—]?\s*/i, '').trim();
+          if (cleanSol && (!q.solution || q.solution.length < cleanSol.length)) {
+            q.solution = cleanSol;
+          }
         }
         if (chMap[qNum] && (!q.chapter || q.chapter === 'General')) {
           q.chapter = chMap[qNum];

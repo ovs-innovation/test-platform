@@ -844,7 +844,46 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, {
         return;
       }
 
-      const pagePrompt = String.raw`
+      const isSolutionOrAnswerDocument = Boolean(
+        options.isSolutionPdf ||
+        inv.isSolutions ||
+        inv.isAnswerKey ||
+        inv.pageType === 'solution_page' ||
+        inv.pageType === 'answer_key_page'
+      );
+
+      const pagePrompt = isSolutionOrAnswerDocument ? String.raw`
+You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (NEET, JEE Main, JEE Advanced).
+Analyze the supplied page image representing document Page ${pageIndex} of ${pageImages.length}.
+Return valid JSON matching the supplied response schema without markdown fences.
+
+CRITICAL INSTRUCTIONS FOR THIS ANSWER KEY & DETAILED SOLUTIONS DOCUMENT:
+1. THIS DOCUMENT CONTAINS SOLUTIONS AND ANSWER KEYS:
+- Format typically appears as: "1. (3) : Prop root...", "2. (2) : Basophils...", "11. (4) : In given figure...", "25. (4) : ...", "91. (2) : ...".
+- DO NOT transcribe these items into the "questions" array! Leave "questions" as an empty array: []!
+- Transcribe ALL items into "answerKeyEntries" and "solutions".
+
+2. EXTRACT "answerKeyEntries":
+- "questionNumber": The integer printed question number (e.g. 1 to 180).
+- "correctAnswer": The correct option choice ('A', 'B', 'C', 'D').
+  IMPORTANT MAPPING: In Indian competitive exams, numbers in parentheses (1), (2), (3), (4) denote option choices:
+  (1) -> "A", (2) -> "B", (3) -> "C", (4) -> "D".
+  Always convert 1 to "A", 2 to "B", 3 to "C", 4 to "D"!
+  If the question is explicitly an integer or numerical value (e.g. "Ans: 16" or "10 m/s"), put the value in "numericAnswer".
+
+3. EXTRACT "solutions":
+- "questionNumber": The integer question number.
+- "correctAnswer": The corresponding option choice ("A", "B", "C", "D") or numeric answer.
+- "explanation": The complete, well-arranged, detailed explanation.
+  * STRIP the leading question number and answer key marker (e.g. remove "1. (3) : " or "2. (2) : "). Start immediately with the genuine explanation content!
+  * Transcribe all equations, calculations, Greek symbols, chemical formulas, and scientific units using standard LaTeX wrapped in $...$ (e.g. $mg \sin 30^\circ = 25\text{ N}$, $\text{pO}_2 = 95\text{ mm Hg}$, $\Delta G^\circ = -2.303 RT \log K$, $\text{Hb} + \text{O}_2 \rightleftharpoons \text{HbO}_2$).
+  * For multi-line derivations or step-by-step calculations, keep each step on a clean separate line.
+  * NEVER truncate, summarize, or omit portions of the explanation!
+- "visualElements": If the solution or explanation includes a diagram, schematic, anatomical drawing, circuit, graph, or free body diagram, include its bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000) so it can be cropped and saved!
+
+4. EXTRACT "topicGridEntries":
+- If there are chapter, topic, or syllabus classifications listed on this page, populate "topicGridEntries".
+` : String.raw`
 You are an expert exam-paper digitizer and transcriber specializing in Indian competitive exams (NEET, JEE Main, JEE Advanced).
 Analyze the supplied page image representing document Page ${pageIndex} of ${pageImages.length}.
 Return valid JSON matching the supplied response schema without markdown fences.
@@ -1123,6 +1162,9 @@ Transcribe ALL questions in this column completely with printed question numbers
 
       if (['A', 'B', 'C', 'D'].includes(cleanAns)) {
         answerKeyMap.set(qNum, { type: 'mcq', letter: cleanAns, numeric: null, acceptedAnswers: [], raw: cleanAns });
+      } else if (['1', '2', '3', '4'].includes(cleanAns)) {
+        const mappedLetter = { '1': 'A', '2': 'B', '3': 'C', '4': 'D' }[cleanAns];
+        answerKeyMap.set(qNum, { type: 'mcq', letter: mappedLetter, numeric: null, acceptedAnswers: [], raw: cleanAns });
       } else if (cleanAns) {
         const parsed = parseNumericAnswers(rawAns);
         answerKeyMap.set(qNum, {
@@ -1153,6 +1195,8 @@ Transcribe ALL questions in this column completely with printed question numbers
         const cleanAns = rawAns.replace(/^[\[\(]+|[\]\)]+$/g, '').trim().toUpperCase();
         if (['A', 'B', 'C', 'D'].includes(cleanAns)) {
           solCorrect = cleanAns;
+        } else if (['1', '2', '3', '4'].includes(cleanAns)) {
+          solCorrect = { '1': 'A', '2': 'B', '3': 'C', '4': 'D' }[cleanAns];
         } else if (cleanAns) {
           const parsed = parseNumericAnswers(rawAns);
           solNumeric = parsed.primary;
@@ -1161,12 +1205,15 @@ Transcribe ALL questions in this column completely with printed question numbers
         }
       }
 
-      const expText = (sol.explanation || '').trim();
+      let expText = (sol.explanation || '').trim();
       if (!solCorrect && expText) {
-        const leadingAnsMatch = expText.match(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\(([A-Da-d])\)|\[([0-9\sA-Za-z\-or/,\.]+)\])\s*[:\.\-–—]?\s*/i);
+        const leadingAnsMatch = expText.match(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\(([A-Da-d1-4])\)|\[([0-9\sA-Za-z\-or/,\.]+)\]|([A-Da-d1-4])\s*[:\.\-–—])\s*[:\.\-–—]?\s*/i);
         if (leadingAnsMatch) {
-          if (leadingAnsMatch[1]) {
-            solCorrect = leadingAnsMatch[1].toUpperCase();
+          const rawChar = (leadingAnsMatch[1] || leadingAnsMatch[3] || '').trim().toUpperCase();
+          if (['A', 'B', 'C', 'D'].includes(rawChar)) {
+            solCorrect = rawChar;
+          } else if (['1', '2', '3', '4'].includes(rawChar)) {
+            solCorrect = { '1': 'A', '2': 'B', '3': 'C', '4': 'D' }[rawChar];
           } else if (leadingAnsMatch[2]) {
             const rawBracket = leadingAnsMatch[2].trim();
             solCorrect = rawBracket;
@@ -1177,9 +1224,15 @@ Transcribe ALL questions in this column completely with printed question numbers
         }
       }
 
+      // Clean leading question number and answer key marker from explanation
+      expText = expText.replace(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\([A-Da-d1-4]\)|\[[A-Da-d1-4]\]|[A-Da-d1-4])\s*[:\.\-–—]?\s*/i, '').trim();
+
       if (solCorrect && !answerKeyMap.has(qNum)) {
         if (['A', 'B', 'C', 'D'].includes(solCorrect)) {
           answerKeyMap.set(qNum, { type: 'mcq', letter: solCorrect, numeric: null, acceptedAnswers: [], raw: solCorrect });
+        } else if (['1', '2', '3', '4'].includes(solCorrect)) {
+          const letter = { '1': 'A', '2': 'B', '3': 'C', '4': 'D' }[solCorrect];
+          answerKeyMap.set(qNum, { type: 'mcq', letter, numeric: null, acceptedAnswers: [], raw: solCorrect });
         } else {
           const parsed = parseNumericAnswers(solCorrect);
           answerKeyMap.set(qNum, {
@@ -1273,7 +1326,11 @@ Transcribe ALL questions in this column completely with printed question numbers
   }
 
   // Handle standalone Answer Key / Solution / Topic Grid PDF
-  if (!rawQuestions.length) {
+  const isDocumentPrimarilySolutions = Boolean(
+    options.isSolutionPdf ||
+    (solutionMap.size > 0 && (rawQuestions.length === 0 || solutionMap.size >= rawQuestions.length * 0.5))
+  );
+  if (!rawQuestions.length || isDocumentPrimarilySolutions) {
     if (answerKeyMap.size > 0 || solutionMap.size > 0 || topicGridMap.size > 0) {
       console.log(`[geminiVisionExtractor] Standalone Answer Key/Solution/Topic Grid PDF: ${answerKeyMap.size} answer key(s), ${solutionMap.size} solution(s).`);
       return {

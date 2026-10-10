@@ -228,10 +228,10 @@ export function parseAnswerKeyAndSolutions(text) {
   // Also parse any question-topic grid tables inside the text
   const topicGrid = parseTopicGrid(cleanText);
   Object.assign(chaptersMap, topicGrid);
-  const solutionBlocks = cleanText.split(/(?=(?:^|\n)\s*(?:Q|Question\s*)?\d+[\.\)\:\-]\s+)/gi);
+  const solutionBlocks = cleanText.split(/(?=(?:^|\n)\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[\.\)\:\-]\s*)/gi);
 
   for (const sBlock of solutionBlocks) {
-    const sMatch = sBlock.match(/(?:^|\n)\s*(?:Q|Question\s*)?(\d+)[\.\)\:\-]\s*([\s\S]+)/i);
+    const sMatch = sBlock.match(/(?:^|\n)\s*(?:Q(?:uestion)?\.?\s*)?(\d{1,3})[\.\)\:\-]\s*([\s\S]+)/i);
     if (!sMatch) continue;
 
     const qNum = parseInt(sMatch[1], 10);
@@ -251,9 +251,9 @@ export function parseAnswerKeyAndSolutions(text) {
     // Skip single-letter lines like "A" or "1. A" if they are just answer keys
     if (/^[A-D1-4]\s*$/i.test(sBody)) continue;
 
-    // Check if the solution block has an answer letter like "(B)" or "Ans: B" or "Option 2"
+    // Check if the solution block has an answer letter like "(B)" or "(3)" or "Ans: B" or "Option 2"
     if (answerKeyMap[qNum] === undefined) {
-      const ansMatch = sBody.match(/(?:(?:Correct\s*Answer|Answer|Ans|Option)\s*[:\.\-–—]\s*[\(\[]?([A-Da-d1-4])[\)\]]?(?![a-zA-Z0-9])|^[\(\[]([A-Da-d1-4])[\)\]](?![a-zA-Z0-9])|^\s*([A-Da-d1-4])\s*[\.\:\-](?![a-zA-Z0-9]))/i);
+      const ansMatch = sBody.match(/(?:(?:Correct\s*Answer|Answer|Ans|Option)\s*[:\.\-–—]\s*[\(\[]?([A-Da-d1-4])[\)\]]?(?![a-zA-Z0-9])|^[\(\[]([A-Da-d1-4])[\)\]]|^([A-Da-d1-4])\s*[\.\:\-](?![a-zA-Z0-9]))/i);
       if (ansMatch) {
         const rawLetter = ansMatch[1] || ansMatch[2] || ansMatch[3];
         if (rawLetter) {
@@ -300,8 +300,8 @@ export function parseAnswerKeyOnly(text) {
 
   const keyMap = {};
 
-  // Pattern 1: Delimited format e.g. "1. A", "1: B", "1 - (C)", "Q1. D", "1 (4)", "1. (2)"
-  const delimitedMatches = text.matchAll(/(?:(?:^|[\n\r;|\t\s])(?:Q(?:uestion)?\.?\s*)?(\d{1,3})\s*(?:[\.\)\:\-\–\—]\s*|\s+)(?:(?:Ans(?:wer)?|Option)?\s*[:\.\-–—]?\s*)?[\(\[]?\s*([A-Da-d1-4])\s*[\)\]\.\:\-]?(?=\s+|$)(?![a-zA-Z0-9]))/gi);
+  // Pattern 1: Delimited format e.g. "1. A", "1: B", "1 - (C)", "Q1. D", "1 (4)", "1. (2)", "10. (1):The", "16. (1):"
+  const delimitedMatches = text.matchAll(/(?:^|[\n\r;|\t])[ \t]*(?:Q(?:uestion)?\.?[ \t]*)?(\d{1,3})[ \t]*(?:[\.\)\:\-\–\—][ \t]*|[ \t]+)(?:(?:Ans(?:wer)?|Option)?[ \t]*[:\.\-–—]?[ \t]*)?[\(\[]?[ \t]*([A-Da-d1-4])[ \t]*[\)\]]?(?:[ \t]*[:\.\-–—])?(?=[ \t\r\n\(\$]|$|[A-Za-z])/gi);
   for (const m of delimitedMatches) {
     const qNum = parseInt(m[1], 10);
     const ansChar = m[2].toUpperCase();

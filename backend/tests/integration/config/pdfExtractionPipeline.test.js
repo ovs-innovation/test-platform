@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { parsePdfQuestions, parseQuestionsFromText, parseAnswerKeyOnly, parseAnswerKeyAndSolutions, parseTopicGrid } from '../../../src/utils/pdfQuestionParser.js';
-import { stripHeadersAndFooters } from '../../../src/utils/questionFormatter.js';
+import { stripHeadersAndFooters, healOcrFragmentation, formatQuestionStructure } from '../../../src/utils/questionFormatter.js';
 
 describe('Answer-Key & Explanation Processing Pipeline', () => {
   it('parses answer key formats including 1. A, 2. C, Q1 - A, Question 1: A', () => {
@@ -489,6 +489,58 @@ D. V = R/I
 
     // Any other number -> rejected
     expect(checkIsCorrect(q, { numeric_answer: '109' })).toBe(false);
+  });
+
+  it('accurately parses Indian exam answer keys with digit options (1)-(4) and unspaced colons', () => {
+    const rawPdfText = `
+    TEST - 2 : 11th MINOR TEST
+    1. (3) : Prop root or pillar roots, when root arises from branches of plant.
+    2. (2) :Basophils secrete histamine, serotonin.
+    3. (1) : Lateral roots originate from the part of the pericycle.
+    4. (2) : The anatomical setup of lungs in thorax.
+    10. (1) :The mode of arrangement of sepals or petals in floral bud.
+    11. (4) :
+    In given figure, pulmonary vein carries oxygenated blood.
+    14. (3) :China rose, tomato, Petunia and lemon show axile placentation.
+    `;
+
+    const { answerKeyMap, solutionsMap } = parseAnswerKeyAndSolutions(rawPdfText);
+
+    expect(answerKeyMap[1]).toBe(2); // (3) -> C (index 2)
+    expect(answerKeyMap[2]).toBe(1); // (2) -> B (index 1)
+    expect(answerKeyMap[3]).toBe(0); // (1) -> A (index 0)
+    expect(answerKeyMap[4]).toBe(1); // (2) -> B (index 1)
+    expect(answerKeyMap[10]).toBe(0); // (1) :The... unspaced colon
+    expect(answerKeyMap[11]).toBe(3); // (4) -> D (index 3)
+    expect(answerKeyMap[14]).toBe(2); // (3) :China... unspaced colon
+
+    expect(solutionsMap[1]).toContain('Prop root or pillar roots');
+    expect(solutionsMap[2]).toContain('Basophils secrete histamine');
+    expect(solutionsMap[10]).toBe('The mode of arrangement of sepals or petals in floral bud.');
+    expect(solutionsMap[11]).toContain('pulmonary vein carries oxygenated blood');
+    expect(solutionsMap[14]).toBe('China rose, tomato, Petunia and lemon show axile placentation.');
+  });
+
+  it('heals OCR vertical single-character line waterfalls into cohesive text', () => {
+    const fragmentedOcr = `
+t
+/an
+cs,
+lhe
+ol
+the
+nal
+of
+In given figure,
+pulmonary vein carries oxygenated blood.
+    `;
+
+    const healed = healOcrFragmentation(fragmentedOcr);
+    expect(healed.split('\n').length).toBeLessThan(3);
+    expect(healed).toContain('pulmonary vein carries oxygenated blood');
+
+    const formatted = formatQuestionStructure(fragmentedOcr);
+    expect(formatted).not.toContain('\nt\n');
   });
 });
 

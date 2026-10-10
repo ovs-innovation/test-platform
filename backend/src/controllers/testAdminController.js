@@ -908,6 +908,14 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
         let solutionsMap = {};
         let chaptersMap = {};
 
+        // Fetch existing questions for this assessment first to know total questions and types
+        const existingQsRes = await query(
+          'SELECT id, position, correct_index, numeric_answer, question_type, options, solution, chapter, topic FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+          [id]
+        );
+        const existingQs = existingQsRes.rows;
+        const totalExpected = existingQs.length;
+
         // 1. Extract raw text directly using robust PDF parser with fallback
         try {
           const { extractPdfText } = await import('../utils/pdfQuestions.js');
@@ -922,15 +930,33 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           console.warn('[uploadTestFile] Direct text extraction for answer key/solution failed:', textErr.message);
         }
 
-        // 2. Fallback to Gemini if text extraction yielded no entries or incomplete solutions
-        if (
-          !answerKeyMap || Object.keys(answerKeyMap).length === 0 ||
-          !solutionsMap || Object.keys(solutionsMap).length === 0
-        ) {
+        const extractedKeysCount = Object.keys(answerKeyMap).length;
+        const extractedSolsCount = Object.keys(solutionsMap).length;
+        const minExpected = totalExpected > 0 ? Math.max(5, Math.floor(totalExpected * 0.75)) : 5;
+        const isExtractionIncomplete = extractedKeysCount < minExpected || (file_type === 'solution_pdf' && extractedSolsCount < minExpected);
+
+        // Check if text-extracted solutions suffer from severe OCR line fragmentation
+        const hasDegradedText = Object.values(solutionsMap).some((txt) => {
+          const lines = String(txt || '').split('\n').map((l) => l.trim()).filter(Boolean);
+          if (lines.length > 5) {
+            const shortLines = lines.filter((l) => l.length <= 3).length;
+            return (shortLines / lines.length) > 0.4;
+          }
+          return false;
+        });
+
+        // 2. Fallback to Gemini if text extraction yielded incomplete or degraded solutions
+        if (isExtractionIncomplete || hasDegradedText || extractedKeysCount === 0) {
           try {
-            const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: true });
-            if (pdfExtraction.answerKeyMap) {
-              answerKeyMap = { ...pdfExtraction.answerKeyMap, ...answerKeyMap };
+            console.log(`[uploadTestFile] Initiating Gemini Vision for ${file_type} (expected: ${totalExpected || 'auto'})...`);
+            const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, {
+              includeAnswers: true,
+              isSolutionPdf: true,
+              expectedQuestionCount: totalExpected || undefined,
+            });
+
+            if (pdfExtraction.answerKeyMap && Object.keys(pdfExtraction.answerKeyMap).length > 0) {
+              answerKeyMap = { ...answerKeyMap, ...pdfExtraction.answerKeyMap };
             }
             if (pdfExtraction.topicGridMap) {
               chaptersMap = { ...pdfExtraction.topicGridMap, ...chaptersMap };
@@ -940,13 +966,17 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             }
             if (pdfExtraction.solutionMap) {
               for (const [qNum, solObj] of Object.entries(pdfExtraction.solutionMap)) {
-                if (solObj?.explanation && !solutionsMap[qNum]) {
-                  solutionsMap[qNum] = solObj.explanation;
+                if (solObj?.explanation) {
+                  if (!solutionsMap[qNum] || hasDegradedText || solObj.explanation.length > (solutionsMap[qNum]?.length || 0)) {
+                    solutionsMap[qNum] = solObj.explanation;
+                  }
                 }
                 if (solObj?.correctAnswer && answerKeyMap[qNum] === undefined) {
-                  const letter = String(solObj.correctAnswer).trim().toUpperCase();
-                  if (['A', 'B', 'C', 'D'].includes(letter)) {
-                    answerKeyMap[qNum] = letter.charCodeAt(0) - 65;
+                  const rawAns = String(solObj.correctAnswer).trim().toUpperCase();
+                  if (['A', 'B', 'C', 'D'].includes(rawAns)) {
+                    answerKeyMap[qNum] = rawAns.charCodeAt(0) - 65;
+                  } else if (['1', '2', '3', '4'].includes(rawAns)) {
+                    answerKeyMap[qNum] = parseInt(rawAns, 10) - 1;
                   }
                 }
                 if (solObj?.chapter && !chaptersMap[qNum]) {
@@ -967,7 +997,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                   if (q.correct_index !== null && q.correct_index !== undefined && answerKeyMap[qNum] === undefined) {
                     answerKeyMap[qNum] = q.correct_index;
                   }
-                  if (q.solution && !solutionsMap[qNum]) {
+                  if (q.solution && (!solutionsMap[qNum] || hasDegradedText)) {
                     solutionsMap[qNum] = q.solution;
                   }
                   if (q.chapter && q.chapter !== 'General' && !chaptersMap[qNum]) {
@@ -980,13 +1010,6 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             console.warn('[uploadTestFile] Gemini fallback for answer key/solution failed:', geminiErr.message);
           }
         }
-
-        // Fetch existing questions for this assessment
-        const existingQsRes = await query(
-          'SELECT id, position, correct_index, numeric_answer, question_type, solution, chapter, topic FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
-          [id]
-        );
-        const existingQs = existingQsRes.rows;
 
         let updatedKeyCount = 0;
         let updatedSolCount = 0;
@@ -1002,12 +1025,18 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
             const rawKey = answerKeyMap[qPos];
             let newCorrect = eq.correct_index;
             let newNumeric = eq.numeric_answer;
-            let newType = eq.question_type;
+            let newType = eq.question_type || 'mcq';
+
+            const isMcq = newType === 'mcq' || (Array.isArray(eq.options) && eq.options.length > 0) || (newNumeric === null && (!newType || newType === 'mcq'));
 
             if (hasKey) {
               if (typeof rawKey === 'number') {
                 if (rawKey >= 0 && rawKey <= 3) {
                   newCorrect = rawKey;
+                  newType = 'mcq';
+                } else if (rawKey >= 1 && rawKey <= 4 && isMcq) {
+                  newCorrect = rawKey - 1;
+                  newType = 'mcq';
                 } else {
                   newNumeric = rawKey;
                   newType = 'integer';
@@ -1016,26 +1045,53 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                 const upper = rawKey.trim().toUpperCase();
                 if (['A', 'B', 'C', 'D'].includes(upper)) {
                   newCorrect = upper.charCodeAt(0) - 65;
+                  newType = 'mcq';
+                } else if (['1', '2', '3', '4'].includes(upper) && isMcq) {
+                  newCorrect = parseInt(upper, 10) - 1;
+                  newType = 'mcq';
                 } else if (!isNaN(Number(upper))) {
-                  newNumeric = Number(upper);
-                  newType = 'integer';
+                  const numVal = Number(upper);
+                  if (isMcq && numVal >= 1 && numVal <= 4) {
+                    newCorrect = numVal - 1;
+                    newType = 'mcq';
+                  } else {
+                    newNumeric = numVal;
+                    newType = 'integer';
+                  }
                 }
               } else if (typeof rawKey === 'object' && rawKey !== null) {
-                if (rawKey.numeric !== undefined && rawKey.numeric !== null) {
-                  newNumeric = Number(rawKey.numeric);
-                  newType = 'integer';
-                } else if (rawKey.letter) {
+                if (rawKey.letter && ['A', 'B', 'C', 'D'].includes(rawKey.letter.toUpperCase())) {
                   newCorrect = rawKey.letter.toUpperCase().charCodeAt(0) - 65;
+                  newType = 'mcq';
+                } else if (rawKey.letter && ['1', '2', '3', '4'].includes(rawKey.letter) && isMcq) {
+                  newCorrect = parseInt(rawKey.letter, 10) - 1;
+                  newType = 'mcq';
+                } else if (rawKey.numeric !== undefined && rawKey.numeric !== null) {
+                  const numVal = Number(rawKey.numeric);
+                  if (isMcq && numVal >= 1 && numVal <= 4) {
+                    newCorrect = numVal - 1;
+                    newType = 'mcq';
+                  } else {
+                    newNumeric = numVal;
+                    newType = 'integer';
+                  }
                 }
               }
             }
 
-            const newSol = hasSol ? solutionsMap[qPos] : eq.solution;
+            let newSol = eq.solution;
+            if (hasSol) {
+              let clean = stripHeadersAndFooters(solutionsMap[qPos]).trim();
+              // Clean leading question number and answer key marker (e.g. "1. (3) : ", "Ans: (2)")
+              clean = clean.replace(/^(?:(?:Q\.?\s*)?\d+[\.\):\-–—\s]+)?(?:ans(?:wer)?|option)?\s*[:\.\-–—]?\s*(?:\([A-Da-d1-4]\)|\[[A-Da-d1-4]\]|[A-Da-d1-4])\s*[:\.\-–—]?\s*/i, '').trim();
+              if (clean) newSol = clean;
+            }
+
             const newChapter = hasChapter ? chaptersMap[qPos] : eq.chapter;
             const newTopic = hasChapter ? chaptersMap[qPos] : eq.topic;
 
             if (hasKey && (newCorrect !== eq.correct_index || newNumeric !== eq.numeric_answer)) updatedKeyCount++;
-            if (hasSol && solutionsMap[qPos] !== eq.solution) updatedSolCount++;
+            if (hasSol && newSol !== eq.solution) updatedSolCount++;
             if (hasChapter && chaptersMap[qPos] !== eq.chapter) updatedChapterCount++;
 
             await query(
