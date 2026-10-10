@@ -398,6 +398,7 @@ export const assessmentSchema = z.object({
   negative_marks_per_wrong: z.number().min(0).max(10).default(0.25),
   available_from: z.string().trim().optional().nullable(),
   available_until: z.string().trim().optional().nullable(),
+  recommended_ebook_id: z.union([z.coerce.number().int().positive(), z.literal(''), z.null()]).optional(),
 });
 
 export const assessmentUpdateSchema = assessmentSchema.partial();

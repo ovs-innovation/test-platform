@@ -398,6 +398,7 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
           t.question_paper_url,
           t.solution_pdf_url,
           t.answer_key_url,
+          t.recommended_ebook_id,
           1 AS sort_order
         FROM test_series_tests tst
         JOIN tests t ON t.id = tst.test_id AND (t.is_published = true OR t.status = 'published') AND COALESCE(t.is_deleted, false) = false
@@ -419,6 +420,7 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
           a.question_paper_url,
           a.solution_pdf_url,
           a.answer_key_url,
+          a.recommended_ebook_id,
           COALESCE(tsa.position, 1) AS sort_order
         FROM test_series_assessments tsa
         JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
@@ -433,9 +435,14 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
        lat.started_at,
        lat.submitted_at,
        lat.percentage,
-       lat.marks_obtained
+       lat.marks_obtained,
+       eb.id AS ebook_id,
+       eb.title AS ebook_title,
+       eb.pdf_url AS ebook_pdf_url,
+       eb.author AS ebook_author
      FROM test_series ts
      JOIN series_items item ON item.series_id = ts.id
+     LEFT JOIN ebooks eb ON eb.id = item.recommended_ebook_id
      LEFT JOIN LATERAL (
         SELECT 
           COALESCE(att.id, tat.id) AS attempt_id,

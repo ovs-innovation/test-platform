@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { testSeriesService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
-import { ArrowLeft, ChevronRight, Zap, Clock, Compass, Download, FileText } from 'lucide-react';
+import { ArrowLeft, ChevronRight, Zap, Clock, Compass, Download, FileText, BookOpen, ExternalLink } from 'lucide-react';
 import { getMediaUrl, getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
 
 export default function MySeriesTests() {
@@ -84,15 +84,36 @@ export default function MySeriesTests() {
             >
               <div>
                 <p className="font-extrabold text-slate-900 dark:text-white text-sm">{t.label || t.title}</p>
-                <div className="mt-1 flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
                   <span className="flex items-center gap-1">
                     <Clock className="h-3 w-3" /> {t.duration_minutes} Mins
                   </span>
                   <span>•</span>
                   <span>CBT Mode</span>
+                  {t.ebook_title && (
+                    <>
+                      <span>•</span>
+                      <span className="inline-flex items-center gap-1 font-semibold text-purple-600 dark:text-purple-400">
+                        <BookOpen className="h-3 w-3" /> Notes: {t.ebook_title}
+                      </span>
+                    </>
+                  )}
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
+                {t.ebook_pdf_url && (
+                  <a
+                    href={getMediaUrl(t.ebook_pdf_url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-purple-200 dark:border-purple-800/70 bg-purple-50 dark:bg-purple-950/40 hover:bg-purple-100 dark:hover:bg-purple-900/50 px-3 py-1.5 text-xs font-bold text-purple-700 dark:text-purple-300 shadow-2xs transition"
+                    title={t.ebook_title || 'Attached Study Notes & eBook'}
+                  >
+                    <BookOpen className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
+                    <span>Study Notes & eBook</span>
+                    <ExternalLink className="h-3 w-3 opacity-60 ml-0.5" />
+                  </a>
+                )}
                 {t.attempt_status === 'submitted' || t.attempt_status === 'auto_submitted' || t.attempt_status === 'completed' ? (
                   <>
                     <Badge color="green">

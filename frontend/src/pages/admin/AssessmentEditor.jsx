@@ -124,15 +124,20 @@ export default function AssessmentEditor() {
   const [savingSettings, setSavingSettings] = useState(false);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewData, setPreviewData] = useState(null);
+  const [ebooks, setEbooks] = useState([]);
 
   const load = useCallback(async () => {
     setState('loading');
     try {
-      const data = await assessmentService.getAdmin(assessmentId);
+      const [data, ebList] = await Promise.all([
+        assessmentService.getAdmin(assessmentId),
+        adminService.getEbooks().catch(() => [])
+      ]);
       setAssessment(data.assessment);
       setSections(data.sections || []);
       setQuestions(data.questions || []);
       setInvites(data.invites || []);
+      setEbooks(Array.isArray(ebList) ? ebList : (ebList?.ebooks || []));
       setSettings({
         title: data.assessment.title,
         description: data.assessment.description || '',
@@ -145,6 +150,7 @@ export default function AssessmentEditor() {
         negative_marks_per_wrong: Number(data.assessment.negative_marks_per_wrong) || 0.25,
         available_from: data.assessment.available_from ? toDatetimeLocal(data.assessment.available_from) : '',
         available_until: data.assessment.available_until ? toDatetimeLocal(data.assessment.available_until) : '',
+        recommended_ebook_id: data.assessment.recommended_ebook_id || '',
       });
       setState('done');
     } catch {
@@ -229,7 +235,7 @@ export default function AssessmentEditor() {
       </nav>
 
       {tab === 'general' && (
-        <GeneralTab settings={settings} setSettings={setSettings} saving={savingSettings}
+        <GeneralTab settings={settings} setSettings={setSettings} saving={savingSettings} ebooks={ebooks}
           onSave={async (e) => {
             e.preventDefault();
             setSavingSettings(true);
@@ -245,6 +251,7 @@ export default function AssessmentEditor() {
                 result_visible: settings.result_visible,
                 available_from: settings.available_from ? new Date(settings.available_from).toISOString() : null,
                 available_until: settings.available_until ? new Date(settings.available_until).toISOString() : null,
+                recommended_ebook_id: settings.recommended_ebook_id ? Number(settings.recommended_ebook_id) : null,
               };
               setAssessment(await assessmentService.update(assessmentId, payload));
               toast.success('Settings saved');
@@ -286,7 +293,7 @@ export default function AssessmentEditor() {
   );
 }
 
-function GeneralTab({ settings, onChange, onSave, saving }) {
+function GeneralTab({ settings, onChange, onSave, saving, ebooks = [] }) {
   return (
     <form onSubmit={onSave} className="card max-w-2xl space-y-5 p-6 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
       <h2 className="text-base font-extrabold text-slate-900 dark:text-white">General Settings</h2>
@@ -302,6 +309,27 @@ function GeneralTab({ settings, onChange, onSave, saving }) {
         <label className="label">Instructions (shown to candidates)</label>
         <textarea name="instructions" rows={4} className="input" value={settings.instructions} onChange={onChange} />
       </div>
+
+      <div>
+        <label className="label">Recommended Study eBook / Notes</label>
+        <select
+          name="recommended_ebook_id"
+          className="input"
+          value={settings.recommended_ebook_id || ''}
+          onChange={onChange}
+        >
+          <option value="">None (No linked eBook)</option>
+          {ebooks.map((eb) => (
+            <option key={eb.id} value={eb.id}>
+              {eb.title} {eb.subject ? `(${eb.subject})` : ''}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+          Enrolled students will see this study material in their Study Library and directly linked with this test.
+        </p>
+      </div>
+
       <div className="grid grid-cols-3 gap-4">
         <div>
           <label className="label">Duration (min)</label>

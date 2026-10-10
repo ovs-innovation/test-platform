@@ -76,7 +76,17 @@ export const createEbook = asyncHandler(async (req, res) => {
       detectedFileSize
     ]
   );
-  res.status(201).json({ ebook: result.rows[0] });
+  const newEbook = result.rows[0];
+
+  // Auto-assign to 'all' so candidates immediately have access to newly created study materials
+  await query(
+    `INSERT INTO ebook_assignments (ebook_id, assigned_to_type, assigned_to_id)
+     VALUES ($1, 'all', 0)
+     ON CONFLICT DO NOTHING`,
+    [newEbook.id]
+  ).catch((e) => console.warn('[createEbook] Auto-assign error:', e.message));
+
+  res.status(201).json({ ebook: newEbook });
 });
 
 export const deleteEbook = asyncHandler(async (req, res) => {
@@ -235,6 +245,7 @@ export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
 
   const result = await query(
     `
+    -- 1. Explicitly assigned eBooks
     SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
     FROM ebooks e
     JOIN ebook_assignments ea ON ea.ebook_id = e.id
@@ -248,6 +259,7 @@ export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
 
     UNION
 
+    -- 2. eBooks linked to tests assigned via test_assignments
     SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
     FROM ebooks e
     JOIN tests t ON t.recommended_ebook_id = e.id
@@ -258,6 +270,53 @@ export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
       OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id IN (SELECT id FROM batches WHERE institution_id = $3))
       OR (tas.assigned_to_type = 'institution' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
       OR tas.assigned_to_type = 'all'
+    )
+
+    UNION
+
+    -- 3. eBooks linked to tests in enrolled test series
+    SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
+    FROM ebooks e
+    JOIN tests t ON t.recommended_ebook_id = e.id
+    JOIN test_series_tests tst ON tst.test_id = t.id
+    JOIN student_enrollments se ON se.test_series_id = tst.series_id
+    WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+
+    UNION
+
+    -- 4. eBooks linked to assessments in enrolled test series
+    SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
+    FROM ebooks e
+    JOIN assessments a ON a.recommended_ebook_id = e.id
+    JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
+    JOIN student_enrollments se ON se.test_series_id = tsa.test_series_id
+    WHERE se.user_id = $1 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
+
+    UNION
+
+    -- 5. eBooks linked to tests or assessments the student has attempted
+    SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
+    FROM ebooks e
+    JOIN tests t ON t.recommended_ebook_id = e.id
+    JOIN test_attempts tat ON tat.test_id = t.id
+    WHERE tat.student_id = $1
+
+    UNION
+
+    SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
+    FROM ebooks e
+    JOIN assessments a ON a.recommended_ebook_id = e.id
+    JOIN attempts att ON att.assessment_id = a.id
+    WHERE att.candidate_id = $1
+
+    UNION
+
+    -- 6. eBooks uploaded by admin that have no specific institution/batch restriction (general study material)
+    SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
+    FROM ebooks e
+    WHERE NOT EXISTS (
+      SELECT 1 FROM ebook_assignments ea 
+      WHERE ea.ebook_id = e.id AND ea.assigned_to_type IN ('institution', 'batch', 'student', 'individual')
     )
 
     ORDER BY id DESC

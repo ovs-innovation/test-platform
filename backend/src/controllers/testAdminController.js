@@ -219,7 +219,7 @@ export const createTest = asyncHandler(async (req, res) => {
         is_published ? 'published' : 'draft',
         result_publish_time || null,
         solution_pdf_url || null,
-        recommended_ebook_id || null,
+        recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
         available_from || null,
         available_until || null
       ]

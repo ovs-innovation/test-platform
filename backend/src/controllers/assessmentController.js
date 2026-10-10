@@ -431,19 +431,23 @@ export const previewAssessment = asyncHandler(async (req, res) => {
 });
 
 export const createAssessment = asyncHandler(async (req, res) => {
-  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until } =
+  const { title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id } =
     req.body;
 
   const cleanPassingMarks = (passing_marks !== undefined && passing_marks !== null && passing_marks !== '' && !isNaN(Number(passing_marks)))
     ? Number(passing_marks)
     : 0;
 
+  const cleanEbookId = (recommended_ebook_id !== undefined && recommended_ebook_id !== null && recommended_ebook_id !== '' && !isNaN(Number(recommended_ebook_id)))
+    ? Number(recommended_ebook_id)
+    : null;
+
   const result = await query(
     `INSERT INTO assessments
-       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, created_by)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+       (title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, available_from, available_until, recommended_ebook_id, created_by)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
      RETURNING *`,
-    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, max_violations || 5, result_visible !== false, available_from || null, available_until || null, req.user.id]
+    [title, description, instructions, duration_minutes || 180, cleanPassingMarks, max_violations || 5, result_visible !== false, available_from || null, available_until || null, cleanEbookId, req.user.id]
   );
 
   const assessment = result.rows[0];
@@ -471,6 +475,12 @@ export const updateAssessment = asyncHandler(async (req, res) => {
     fields.passing_marks = (fields.passing_marks === '' || fields.passing_marks === null || isNaN(Number(fields.passing_marks)))
       ? 0
       : Number(fields.passing_marks);
+  }
+
+  if (fields.recommended_ebook_id !== undefined) {
+    fields.recommended_ebook_id = (fields.recommended_ebook_id === '' || fields.recommended_ebook_id === null || isNaN(Number(fields.recommended_ebook_id)))
+      ? null
+      : Number(fields.recommended_ebook_id);
   }
 
   const keys = Object.keys(fields);
