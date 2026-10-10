@@ -228,14 +228,24 @@ export function parseAnswerKeyAndSolutions(text) {
   // Also parse any question-topic grid tables inside the text
   const topicGrid = parseTopicGrid(cleanText);
   Object.assign(chaptersMap, topicGrid);
-  const solutionBlocks = cleanText.split(/(?=(?:^|\n)\s*(?:Q(?:uestion)?\.?\s*)?\d{1,3}[\.\)\:\-]\s*)/gi);
+  // Match genuine question/solution block delimiters:
+  // 1. "1. (3) :" or "10. (1) :" or "1. (A) :"
+  // 2. "Q.1 " or "Q1. " or "Question 1 : "
+  // 3. "1. Ans:" or "1. Solution:" or "1. Hint:"
+  // 4. Standalone question number on newline followed by a period (not decimal) and uppercase letter / LaTeX
+  // Match genuine question/solution block delimiters:
+  // 1. "1. (3) :" or "10. (1) :" or "1. (A) :"
+  // 2. "Q.1 " or "Q1. " or "Question 1 : "
+  // 3. "1. Ans:" or "1. Solution:" or "1. Hint:"
+  // 4. Standalone question number on newline followed by a period (not decimal) and uppercase letter / LaTeX
+  const solutionBlocks = cleanText.split(/(?=(?:^|\n)[ \t]*(?:(?:Question|Q)\.?\s*\d{1,3}\b|\d{1,3}\s*[\.\)]\s*[\(\[]\s*[A-Da-d1-4]\s*[\)\]]|\d{1,3}\s*[\.\)]\s*(?:[:\.\-–—]\s*)?(?=(?:Correct\s*Answer|Answer|Ans|Option|Solution|Sol|Hint)\b)|\d{1,3}\s*\.\s*(?=[A-Z\(\[\$])))/gi);
 
   for (const sBlock of solutionBlocks) {
-    const sMatch = sBlock.match(/(?:^|\n)\s*(?:Q(?:uestion)?\.?\s*)?(\d{1,3})[\.\)\:\-]\s*([\s\S]+)/i);
+    const sMatch = sBlock.match(/(?:^|\n)[ \t]*(?:(?:Question|Q)\.?\s*(\d{1,3})|(\d{1,3})\s*[\.\)]\s*[\(\[]\s*([A-Da-d1-4])\s*[\)\]]|(\d{1,3})\s*[\.\)]\s*(?:[:\.\-–—]\s*)?(?=(?:Correct\s*Answer|Answer|Ans|Option|Solution|Sol|Hint)\b)|(\d{1,3})\s*\.\s*(?=[A-Z\(\[\$]))[\.\:\-–—\s]*([\s\S]+)/i);
     if (!sMatch) continue;
 
-    const qNum = parseInt(sMatch[1], 10);
-    const sBody = sMatch[2].trim();
+    const qNum = parseInt(sMatch[1] || sMatch[2] || sMatch[4] || sMatch[5], 10);
+    const sBody = (sMatch[6] || '').trim();
 
     // Check for chapter or topic tag in this solution block (e.g., [Current Electricity], Chapter: Animal Kingdom)
     const bMatch = sBody.match(/\[([A-Za-z0-9\s,&'\-\/]{2,80})\]/);
