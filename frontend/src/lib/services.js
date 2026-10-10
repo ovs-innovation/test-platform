@@ -551,6 +551,7 @@ export const adminService = {
   notifyTestReminder: (id, custom_message) => api.post(`/admin/tests/${id}/notify`, { custom_message }).then((r) => r.data),
   // eBook Helpers
   ebooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
+  getEbooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
   createEbook: (data) => api.post('/admin/ebooks', data).then((r) => r.data.ebook),
   deleteEbook: (id) => api.delete(`/admin/ebooks/${id}`).then((r) => r.data),
   assignEbook: (id, data) => api.post(`/admin/ebooks/${id}/assignments`, data).then((r) => r.data),

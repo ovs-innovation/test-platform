@@ -131,7 +131,7 @@ export default function AssessmentEditor() {
     try {
       const [data, ebList] = await Promise.all([
         assessmentService.getAdmin(assessmentId),
-        adminService.getEbooks().catch(() => [])
+        (adminService.ebooks ? adminService.ebooks() : adminService.getEbooks?.() || Promise.resolve([])).catch(() => [])
       ]);
       setAssessment(data.assessment);
       setSections(data.sections || []);
@@ -153,7 +153,8 @@ export default function AssessmentEditor() {
         recommended_ebook_id: data.assessment.recommended_ebook_id || '',
       });
       setState('done');
-    } catch {
+    } catch (err) {
+      console.error('[AssessmentEditor load error]', err);
       setState('error');
     }
   }, [assessmentId]);
