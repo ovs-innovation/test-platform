@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPortal } from 'react-dom';
 import { adminService } from '../../lib/services.js';
+import { getMediaUrl } from '../../lib/media.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -74,6 +75,8 @@ export default function AdminAssessments() {
 
   const [ebookModalOpen, setEbookModalOpen] = useState(false);
   const [newEbook, setNewEbook] = useState({ title: '', author: '', description: '', pdf_url: '' });
+  const [ebookUploading, setEbookUploading] = useState(false);
+  const [uploadedEbookFile, setUploadedEbookFile] = useState(null);
 
   const [schools, setSchools] = useState([]);
   const [assignModalEbook, setAssignModalEbook] = useState(null);
@@ -396,13 +399,69 @@ export default function AdminAssessments() {
     }
   };
 
+  const handleEbookFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.name.toLowerCase().endsWith('.pdf') && file.type !== 'application/pdf') {
+      toast.error('Please upload a valid PDF document (.pdf)');
+      return;
+    }
+
+    if (file.size > 35 * 1024 * 1024) {
+      toast.error('PDF file size exceeds 35MB limit');
+      return;
+    }
+
+    setUploadedEbookFile(file);
+    setEbookUploading(true);
+
+    if (!newEbook.title.trim()) {
+      const cleanTitle = file.name
+        .replace(/\.[^/.]+$/, '')
+        .replace(/[_-]+/g, ' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      setNewEbook((prev) => ({ ...prev, title: cleanTitle }));
+    }
+
+    try {
+      const reader = new FileReader();
+      reader.onload = async () => {
+        try {
+          const base64 = reader.result;
+          const res = await adminService.uploadEbookPdf(base64, file.name);
+          if (res?.url) {
+            setNewEbook((prev) => ({ ...prev, pdf_url: res.url }));
+            toast.success(`PDF uploaded successfully: ${file.name}`);
+          } else {
+            throw new Error('Upload did not return a valid URL');
+          }
+        } catch (err) {
+          toast.error(err.message || 'Failed to upload eBook PDF');
+        } finally {
+          setEbookUploading(false);
+        }
+      };
+      reader.readAsDataURL(file);
+    } catch (err) {
+      setEbookUploading(false);
+      toast.error('Could not process PDF file');
+    }
+  };
+
   const handleCreateEbook = async (e) => {
     e.preventDefault();
+    if (!newEbook.pdf_url) {
+      toast.error('Please upload a PDF file or enter a valid PDF URL');
+      return;
+    }
     try {
       await adminService.createEbook(newEbook);
       toast.success('Recommended eBook created successfully!');
       setEbookModalOpen(false);
       setNewEbook({ title: '', author: '', description: '', pdf_url: '' });
+      setUploadedEbookFile(null);
       loadData();
     } catch (err) {
       toast.error(err.message || 'Failed to create eBook');
@@ -908,7 +967,7 @@ export default function AdminAssessments() {
                       {e.description && <p className="text-xs text-slate-400 line-clamp-2">{e.description}</p>}
                       {e.pdf_url && (
                         <a
-                          href={e.pdf_url.startsWith('http') ? e.pdf_url : `http://127.0.0.1:5000${e.pdf_url.startsWith('/') ? '' : '/'}${e.pdf_url}`}
+                          href={getMediaUrl(e.pdf_url)}
                           target="_blank"
                           rel="noreferrer"
                           className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 truncate pt-1"
@@ -1483,15 +1542,72 @@ export default function AdminAssessments() {
               </div>
 
               <div>
-                <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">PDF URL *</label>
-                <input
-                  type="text"
-                  required
-                  value={newEbook.pdf_url}
-                  onChange={(e) => setNewEbook({ ...newEbook, pdf_url: e.target.value })}
-                  placeholder="/ebooks/neet-physics-handbook.pdf or https://..."
-                  className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-semibold"
-                />
+                <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1.5">
+                  Upload eBook / Notes PDF *
+                </label>
+                
+                <div className="relative border-2 border-dashed border-slate-300 dark:border-slate-700 hover:border-blue-500 dark:hover:border-blue-400 rounded-2xl p-4 transition-all bg-slate-50/70 dark:bg-slate-900/60 text-center cursor-pointer group">
+                  <input
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    onChange={handleEbookFileUpload}
+                    disabled={ebookUploading}
+                    className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                  />
+                  
+                  {ebookUploading ? (
+                    <div className="py-3 flex flex-col items-center gap-2">
+                      <Spinner className="h-6 w-6 text-blue-600 animate-spin" />
+                      <p className="text-xs font-bold text-blue-600 dark:text-blue-400">Uploading PDF to secure storage...</p>
+                      <p className="text-[10px] text-slate-400 truncate max-w-[260px]">{uploadedEbookFile?.name}</p>
+                    </div>
+                  ) : newEbook.pdf_url ? (
+                    <div className="py-1 flex items-center justify-between gap-3 text-left">
+                      <div className="flex items-center gap-2.5 min-w-0">
+                        <div className="h-9 w-9 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                          <FileText className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate max-w-[220px]">
+                            {uploadedEbookFile?.name || newEbook.pdf_url.split('/').pop()}
+                          </p>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-600 dark:text-emerald-400">
+                            <CheckCircle2 className="h-3 w-3" /> Ready & Linked
+                          </span>
+                        </div>
+                      </div>
+                      <span className="text-[11px] font-bold text-blue-600 dark:text-blue-400 underline shrink-0 hover:text-blue-700">
+                        Change File
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="py-3 flex flex-col items-center gap-1.5">
+                      <div className="h-10 w-10 rounded-2xl bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center group-hover:scale-105 transition-transform">
+                        <Upload className="h-5 w-5" />
+                      </div>
+                      <p className="text-xs font-extrabold text-slate-800 dark:text-slate-200">
+                        Click or drag & drop eBook / Notes PDF here
+                      </p>
+                      <p className="text-[11px] text-slate-400">
+                        Supports high-quality PDF handbooks, formula sheets, notes (up to 35MB)
+                      </p>
+                    </div>
+                  )}
+                </div>
+
+                <div className="mt-2">
+                  <label className="text-[11px] font-semibold text-slate-500 dark:text-slate-400 block mb-0.5">
+                    Or PDF URL / Relative Path
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newEbook.pdf_url}
+                    onChange={(e) => setNewEbook({ ...newEbook, pdf_url: e.target.value })}
+                    placeholder="/uploads/documents/ebook.pdf or /ebooks/notes.pdf"
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2 font-mono text-xs"
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { authService, ebookService } from '../../lib/services.js';
+import { getMediaUrl } from '../../lib/media.js';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
@@ -304,7 +305,7 @@ export default function CandidateDashboard() {
                 </div>
 
                 <a
-                  href={b.pdf_url?.startsWith('http') ? b.pdf_url : `http://127.0.0.1:5000${b.pdf_url?.startsWith('/') ? '' : '/'}${b.pdf_url}`}
+                  href={getMediaUrl(b.pdf_url)}
                   target="_blank"
                   rel="noreferrer"
                   className="pt-2 border-t border-slate-200/60 dark:border-slate-800 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline flex items-center justify-between"

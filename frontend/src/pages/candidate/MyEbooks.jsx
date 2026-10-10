@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { BookOpen, Download, Search, FileText, Sparkles, ExternalLink, Filter } from 'lucide-react';
 import { ebookService } from '../../lib/services.js';
+import { getMediaUrl } from '../../lib/media.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { Spinner } from '../../components/ui.jsx';
@@ -44,8 +45,7 @@ export default function MyEbooks() {
 
   const getPdfUrl = (url) => {
     if (!url) return '#';
-    if (url.startsWith('http')) return url;
-    return `http://127.0.0.1:5000${url.startsWith('/') ? '' : '/'}${url}`;
+    return getMediaUrl(url);
   };
 
   const getSubjectColor = (subject) => {

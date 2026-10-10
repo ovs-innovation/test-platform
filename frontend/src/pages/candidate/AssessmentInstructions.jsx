@@ -7,6 +7,7 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { PALETTE_LEGEND } from '../../lib/examPalette.js';
 import { requestFullscreen } from '../../lib/proctoring.js';
 import { BookOpen, FileText } from 'lucide-react';
+import { getMediaUrl } from '../../lib/media.js';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 
 const GENERAL_RULES = [
@@ -281,7 +282,7 @@ export default function AssessmentInstructions() {
                   </div>
                   {assessment.ebook_pdf_url && (
                     <a
-                      href={assessment.ebook_pdf_url.startsWith('http') ? assessment.ebook_pdf_url : `http://127.0.0.1:5000${assessment.ebook_pdf_url.startsWith('/') ? '' : '/'}${assessment.ebook_pdf_url}`}
+                      href={getMediaUrl(assessment.ebook_pdf_url)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-xs font-extrabold text-white shadow-xs hover:bg-indigo-700 transition cursor-pointer"

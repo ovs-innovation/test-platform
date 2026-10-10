@@ -585,6 +585,8 @@ export const adminService = {
   uploadImage: (image, folder = 'edvedum/questions') => api.post('/upload/image', { image, folder }).then((r) => r.data),
   uploadBrochure: (fileBase64, fileName) =>
     api.post('/upload/brochure', { file_base64: fileBase64, file_name: fileName }).then((r) => r.data),
+  uploadEbookPdf: (fileBase64, fileName) =>
+    api.post('/upload/ebook', { file_base64: fileBase64, file_name: fileName }).then((r) => r.data),
 };
 
 export const institutionDashboardService = {

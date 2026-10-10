@@ -63,9 +63,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const uploadsDir = path.resolve(__dirname, '../uploads');
 const ebooksDir = path.resolve(__dirname, '../public/ebooks');
+const uploadDocsDir = path.resolve(__dirname, '../uploads/documents');
 
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
+}
+if (!fs.existsSync(ebooksDir)) {
+  fs.mkdirSync(ebooksDir, { recursive: true });
+}
+if (!fs.existsSync(uploadDocsDir)) {
+  fs.mkdirSync(uploadDocsDir, { recursive: true });
 }
 
 // Security & infrastructure middleware
@@ -96,13 +103,13 @@ app.use('/uploads', (req, res, next) => {
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   res.setHeader('Content-Security-Policy', "frame-ancestors *");
   next();
-}, express.static(uploadsDir));
+}, express.static(uploadsDir), express.static(ebooksDir));
 app.use('/ebooks', (req, res, next) => {
   res.removeHeader('X-Frame-Options');
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   res.setHeader('Content-Security-Policy', "frame-ancestors *");
   next();
-}, express.static(ebooksDir));
+}, express.static(ebooksDir), express.static(uploadDocsDir), express.static(uploadsDir));
 app.use(requestLogger);
 app.use(morgan(env.isProd ? 'combined' : 'dev'));
 

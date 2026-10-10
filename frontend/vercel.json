@@ -5,6 +5,14 @@
       "destination": "https://test-platform-cr9j.onrender.com/api/:path*"
     },
     {
+      "source": "/uploads/:path*",
+      "destination": "https://test-platform-cr9j.onrender.com/uploads/:path*"
+    },
+    {
+      "source": "/ebooks/:path*",
+      "destination": "https://test-platform-cr9j.onrender.com/ebooks/:path*"
+    },
+    {
       "source": "/((?!assets/).*)",
       "destination": "/index.html"
     }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 import { ChevronRight, ShieldCheck, BarChart3, Zap, BookOpen, HelpCircle, Clock, Award, Sparkles, CheckCircle2, Play, Trophy } from 'lucide-react';
 
 export function AssessmentCard({ a }) {
@@ -87,7 +88,7 @@ export function AssessmentCard({ a }) {
             </span>
             {a.ebook_pdf_url && (
               <a
-                href={a.ebook_pdf_url.startsWith('http') ? a.ebook_pdf_url : `http://127.0.0.1:5000${a.ebook_pdf_url.startsWith('/') ? '' : '/'}${a.ebook_pdf_url}`}
+                href={getMediaUrl(a.ebook_pdf_url)}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
