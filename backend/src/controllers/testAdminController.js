@@ -1103,7 +1103,7 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
                    solution = COALESCE($4, solution),
                    chapter = COALESCE($5, chapter),
                    topic = COALESCE($6, topic),
-                   extraction_meta = COALESCE(extraction_meta, '{}'::jsonb) || '{"hasAnswerKey": true}'::jsonb
+                   extraction_meta = jsonb_set(COALESCE(extraction_meta, '{}'::jsonb) || '{"hasAnswerKey": true}'::jsonb, '{needsReview}', 'false'::jsonb, true)
                WHERE id = $7`,
               [newCorrect, newNumeric, newType, newSol, newChapter, newTopic, eq.id]
             );

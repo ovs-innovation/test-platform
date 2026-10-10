@@ -1535,6 +1535,13 @@ Floral formula: $\oplus \ \text{\textdied} \ K_{(5)} \ C_{(5)} \ A_5 \ \underlin
             question_type = 'mcq'
         WHERE assessment_id = target_a.id AND position = 180;
 
+        UPDATE questions 
+        SET extraction_meta = jsonb_set(
+            jsonb_set(COALESCE(extraction_meta, '{}'::jsonb), '{hasAnswerKey}', 'true'::jsonb, true),
+            '{needsReview}', 'false'::jsonb, true
+        )
+        WHERE assessment_id = target_a.id;
+
         UPDATE assessments SET updated_at = NOW() WHERE id = target_a.id;
         UPDATE tests SET updated_at = NOW() WHERE id = target_a.id;
     END LOOP;

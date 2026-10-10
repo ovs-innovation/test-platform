@@ -1400,7 +1400,7 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
       ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
       : (isInteger
           ? (q.numeric_answer !== null && q.numeric_answer !== undefined && q.numeric_answer !== '')
-          : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false))
+          : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== ''))
   );
 
   return (
@@ -1509,10 +1509,10 @@ function QuestionCard({ q, idx, total, onEdit, onDelete, onMoveUp, onMoveDown, i
                   ? opt.media
                   : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
                 const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
-                const isCorrect = hasAnswerKey && (
+                const isCorrect = (
                   q.question_type === 'multi_select'
                     ? (q.correct_indices || []).includes(i)
-                    : i === Number(q.correct_index)
+                    : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && i === Number(q.correct_index))
                 );
                 return (
                   <li
@@ -2411,12 +2411,12 @@ function PreviewModal({ open, onClose, data }) {
                         const hasAnswerKey = Boolean(
                           q.question_type === 'multi_select'
                             ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
-                            : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && q.extraction_meta?.hasAnswerKey !== false)
+                            : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '')
                         );
-                        const isCorrect = hasAnswerKey && (
+                        const isCorrect = (
                           q.question_type === 'multi_select'
                             ? (q.correct_indices || []).includes(j)
-                            : j === Number(q.correct_index)
+                            : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && j === Number(q.correct_index))
                         );
                         const optText = typeof o === 'object' ? (o.text || JSON.stringify(o)) : o;
                         return (

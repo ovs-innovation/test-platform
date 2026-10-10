@@ -280,17 +280,27 @@ export const updateQuestion = asyncHandler(async (req, res) => {
     }
   }
 
+  const hasAnswerKey = Boolean(
+    (question_type === 'multi_select' && Array.isArray(JSON.parse(correct_indices || '[]')) && JSON.parse(correct_indices || '[]').length > 0) ||
+    ((question_type === 'integer' || question_type === 'numerical') && numeric_answer !== null && numeric_answer !== undefined && numeric_answer !== '') ||
+    (correct_index !== null && correct_index !== undefined && correct_index !== '')
+  );
+
   const result = await query(
     `UPDATE questions SET
        question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
        numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
        marks = $10, position = $11, section_id = $12, starter_code = $13, test_cases = $14, language = $15,
        bank_category = $16, solution = $17, image_url = $18, solution_image_url = $19, subject_id = $20, chapter_id = $21, difficulty = $22,
-       subject = $23, topic = $24, media = $25
+       subject = $23, topic = $24, media = $25,
+       extraction_meta = jsonb_set(
+         jsonb_set(COALESCE(extraction_meta, '{}'::jsonb), '{hasAnswerKey}', $27::jsonb, true),
+         '{needsReview}', 'false'::jsonb, true
+       )
      WHERE id = $26 RETURNING *`,
     [question_text, question_type, options, correct_index, correct_indices,
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
-      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, id]
+      marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, id, JSON.stringify(hasAnswerKey)]
   );
   res.json({ question: result.rows[0] });
 });
