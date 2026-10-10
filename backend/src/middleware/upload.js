@@ -32,9 +32,9 @@ export const saveUploadedFile = async (fileBase64, originalName = 'document.pdf'
     throw ApiError.badRequest('Invalid file format');
   }
 
-  // Size limit check (20 MB)
-  if (buffer.length > 20 * 1024 * 1024) {
-    throw ApiError.badRequest('File size exceeds 20MB limit');
+  // Size limit check (100 MB)
+  if (buffer.length > 100 * 1024 * 1024) {
+    throw ApiError.badRequest('File size exceeds 100MB limit');
   }
 
   // File extension validation

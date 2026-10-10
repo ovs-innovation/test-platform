@@ -96,7 +96,8 @@ app.use(
 );
 app.post('/api/payments/phonepe/webhook', express.raw({ type: '*/*' }), phonepeWebhook);
 app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), razorpayWebhook);
-app.use(express.json({ limit: '20mb' }));
+app.use(express.json({ limit: '150mb' }));
+app.use(express.urlencoded({ extended: true, limit: '150mb' }));
 app.use(cookieParser());
 app.use('/uploads', (req, res, next) => {
   res.removeHeader('X-Frame-Options');
