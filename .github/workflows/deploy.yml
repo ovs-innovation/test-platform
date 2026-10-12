@@ -273,6 +273,18 @@ jobs:
               log "Restored backend/.env"
             fi
 
+            # Ensure MSG91 credentials exist in backend/.env on VPS
+            if [ -f "backend/.env" ]; then
+              if ! grep -q "MSG91_AUTH_KEY" "backend/.env"; then
+                echo "" >> "backend/.env"
+                echo "# MSG91 SMS & OTP" >> "backend/.env"
+                echo "MSG91_AUTH_KEY=569777AM5exLLhEf6acc7d6eP1" >> "backend/.env"
+                echo "MSG91_OTP_TEMPLATE_ID=6acb8433e4dd61c79c0eca17" >> "backend/.env"
+                echo "MSG91_SENDER_ID=EDVEDM" >> "backend/.env"
+                log "Appended MSG91 configuration to backend/.env on VPS"
+              fi
+            fi
+
             # Rollback helper function
             execute_rollback() {
               log "CRITICAL FAILURE OCCURRED! Diagnostics:"

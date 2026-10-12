@@ -119,7 +119,7 @@ export const env = {
   geminiApiKey: process.env.GEMINI_API_KEY || '',
   geminiModel: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
   msg91: {
-    authKey: process.env.MSG91_AUTH_KEY || '',
+    authKey: process.env.MSG91_AUTH_KEY || '569777AM5exLLhEf6acc7d6eP1',
     templateId: process.env.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17',
     senderId: process.env.MSG91_SENDER_ID || 'EDVEDM',
   },
