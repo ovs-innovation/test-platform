@@ -88,29 +88,21 @@ export default function Overview() {
           {
             label: 'Total Revenue',
             value: `₹${Number(summary.total || 0).toLocaleString('en-IN')}`,
-            trend: '14.2%',
-            trendUp: true,
-            subtext: 'vs last month',
+            subtext: 'total platform earnings',
           },
           {
             label: 'Registered Students',
             value: stats.totalCandidates,
-            trend: '8.5%',
-            trendUp: true,
             subtext: 'active candidate accounts',
           },
           {
             label: 'Live CBT Assessments',
             value: stats.activeAssessments,
-            trend: '3',
-            trendUp: true,
             subtext: 'active examination packs',
           },
           {
             label: 'Platform Pass Rate',
             value: `${stats.passRate}%`,
-            trend: '2.1%',
-            trendUp: true,
             subtext: 'qualification benchmark',
           },
         ]}
