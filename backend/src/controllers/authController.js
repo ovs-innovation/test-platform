@@ -6,6 +6,7 @@ import { comparePassword, hashPassword } from '../utils/password.js';
 import { signToken, signAccessToken, signRefreshToken, hashToken, generateFamilyId, verifyToken } from '../utils/token.js';
 import { generateOtp, hashOtp, verifyOtp } from '../utils/otp.js';
 import { sendOtpEmail, sendEmail, sendStudentCredentialsEmail, sendStudentIdEmail } from '../utils/email.js';
+import { sendOtpSms, sendRegistrationOtpSms } from '../utils/sms.js';
 import { passwordResetEmailTemplate } from '../utils/emailTemplates.js';
 import { env } from '../config/env.js';
 import { getFirebaseAdminAuth } from '../utils/firebase.js';
@@ -257,29 +258,59 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
 
   if (!env.isProd) {
     console.log(`\n======================================================`);
-    console.log(`🔑 [DEV MODE OTP] Student Signup -> ${normalizedEmail} | Code: ${otp}`);
+    console.log(`🔑 [DEV MODE OTP] Student Signup -> ${normalizedEmail} | Phone: ${phone || 'N/A'} | Code: ${otp}`);
     console.log(`======================================================\n`);
   }
 
-  let emailSent = true;
-  try {
-    await sendOtpEmail(normalizedEmail, otp);
-  } catch (err) {
-    emailSent = false;
-    const emailErrorMsg = err.message || String(err);
-    console.error(`[email ERROR] Signup OTP email failed for ${normalizedEmail}: ${emailErrorMsg}`);
-    if (env.isProd) {
-      throw ApiError.internal(`Could not send verification email directly to ${normalizedEmail}. Please check your email address or try again.`);
+  // Channel selection: send ONLY to the chosen destination
+  const isSmsChoice = req.body.channel === 'sms' || req.body.channel === 'mobile' || (phone && req.body.channel !== 'email');
+
+  let emailSent = false;
+  let smsSent = false;
+  let message = '';
+  const phoneDisplay = phone ? (phone.replace(/\D/g, '').length >= 4 ? phone.replace(/\D/g, '').slice(-4) : phone) : '';
+
+  if (isSmsChoice && phone) {
+    // User chose mobile -> Send ONLY via SMS
+    try {
+      const smsRes = await sendRegistrationOtpSms(phone, otp);
+      smsSent = Boolean(smsRes?.sent);
+    } catch (smsErr) {
+      console.warn(`[sms ERROR] Failed to send MSG91 signup OTP SMS to ${phone}: ${smsErr?.message || smsErr}`);
     }
+
+    if (!smsSent && env.isProd) {
+      throw ApiError.internal(`Could not dispatch verification SMS to your mobile number (+91 ...${phoneDisplay}). Please verify the number or try Email OTP.`);
+    }
+
+    message = smsSent
+      ? `Verification code sent via SMS to your mobile (+91 ...${phoneDisplay})`
+      : 'Verification code generated for testing';
+  } else {
+    // User chose email -> Send ONLY via Email
+    try {
+      await sendOtpEmail(normalizedEmail, otp);
+      emailSent = true;
+    } catch (err) {
+      const emailErrorMsg = err.message || String(err);
+      console.error(`[email ERROR] Signup OTP email failed for ${normalizedEmail}: ${emailErrorMsg}`);
+      if (env.isProd) {
+        throw ApiError.internal(`Could not send verification email directly to ${normalizedEmail}. Please check your email address or try Mobile OTP.`);
+      }
+    }
+
+    message = emailSent
+      ? `Verification code sent to your email inbox (${normalizedEmail})`
+      : 'Could not send verification email directly — check server SMTP credentials or use dev OTP.';
   }
 
   res.json({
-    message: emailSent
-      ? `Verification code sent to your email inbox (${normalizedEmail})`
-      : 'Could not send verification email directly — check server SMTP credentials or use dev OTP.',
+    message,
+    channel: isSmsChoice ? 'sms' : 'email',
     emailSent,
+    smsSent,
     expiresInMinutes: env.otpExpiresMinutes,
-    ...(!env.isProd ? { devOtp: otp } : {}),
+    ...((!emailSent && !smsSent) || !env.isProd ? { devOtp: otp } : {}),
   });
 });
 
@@ -305,9 +336,10 @@ export const register = asyncHandler(async (req, res) => {
   if (otp) {
     const otpRes = await query(
       `SELECT * FROM otp_verifications
-       WHERE LOWER(email) = $1 AND purpose = 'student_signup' AND verified_at IS NULL
+       WHERE (LOWER(email) = $1 OR (phone IS NOT NULL AND phone <> '' AND (phone = $2 OR RIGHT(phone, 10) = $3)))
+         AND purpose = 'student_signup' AND verified_at IS NULL
        ORDER BY created_at DESC LIMIT 1`,
-      [normalizedEmail]
+      [normalizedEmail, phone || '', last10 || '']
     );
     const record = otpRes.rows[0];
     if (!record || new Date(record.expires_at) <= new Date() || (Date.now() - new Date(record.created_at).getTime()) > 5 * 60 * 1000) {
@@ -754,22 +786,58 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
     console.log(`======================================================\n`);
   }
 
-  let emailSent = true;
-  try {
-    await sendOtpEmail(normalizedEmail, otp);
-  } catch (err) {
-    emailSent = false;
-    // eslint-disable-next-line no-console
-    console.warn(`[email] Failed to send OTP email to ${normalizedEmail}: ${err.message}`);
+  // Check whether user chose Mobile SMS or Email OTP
+  const explicitEmail = Boolean(req.body.email && String(req.body.email).trim());
+  const explicitMobile = Boolean(req.body.mobile || req.body.phone);
+  const isMobileChoice = (req.body.channel === 'sms' || req.body.channel === 'mobile' || (explicitMobile && !explicitEmail) || !isEmail);
+
+  let emailSent = false;
+  let smsSent = false;
+  let message = '';
+  const phoneDisplay = targetPhone ? (targetPhone.replace(/\D/g, '').length >= 4 ? targetPhone.replace(/\D/g, '').slice(-4) : targetPhone) : '';
+
+  if (isMobileChoice) {
+    // User chose Mobile -> Send ONLY via SMS, do NOT send to email
+    if (targetPhone) {
+      try {
+        const smsRes = await sendOtpSms({ phone: targetPhone, otp });
+        smsSent = Boolean(smsRes?.sent);
+      } catch (smsErr) {
+        console.warn(`[sms] Failed to send login OTP SMS to ${targetPhone}: ${smsErr?.message || smsErr}`);
+      }
+    }
+
+    if (!smsSent && env.isProd) {
+      throw ApiError.internal(`Could not dispatch SMS to your registered mobile number (+91 ...${phoneDisplay}). Please verify your number or use Email OTP.`);
+    }
+
+    message = smsSent
+      ? `Verification code sent via SMS to your mobile (+91 ...${phoneDisplay})`
+      : 'Verification code generated for testing';
+  } else {
+    // User chose Email -> Send ONLY via Email, do NOT send to mobile
+    try {
+      await sendOtpEmail(normalizedEmail, otp);
+      emailSent = true;
+    } catch (err) {
+      console.warn(`[email] Failed to send OTP email to ${normalizedEmail}: ${err.message}`);
+      if (env.isProd) {
+        throw ApiError.internal(`Could not dispatch verification email to ${normalizedEmail}. Please check your email or use Mobile OTP.`);
+      }
+    }
+
+    message = emailSent
+      ? `Verification code sent to your email (${normalizedEmail})`
+      : 'Could not send email directly to your inbox. Check server SMTP settings.';
   }
 
   res.json({
-    message: emailSent
-      ? `Verification code sent to your email (${normalizedEmail})`
-      : 'Could not send email directly to your inbox. Check server SMTP settings.',
+    message,
+    channel: isMobileChoice ? 'sms' : 'email',
     emailSent,
+    smsSent,
     expiresInMinutes: env.otpExpiresMinutes,
-    ...(!emailSent && !env.isProd ? { devOtp: otp } : {}),
+    ...((!emailSent && !smsSent) || !env.isProd ? { devOtp: otp } : {}),
   });
 });
 

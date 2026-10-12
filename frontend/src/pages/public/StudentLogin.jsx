@@ -162,7 +162,7 @@ export default function StudentLogin() {
     setError('');
     try {
       if (sendLoginOtp) {
-        const res = await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail });
+        const res = await sendLoginOtp({ email: cleanEmail, identifier: cleanEmail, channel: 'email' });
         if (res?.devOtp) {
           setDevOtp(res.devOtp);
           setEmailOtpCode(res.devOtp);
@@ -221,7 +221,7 @@ export default function StudentLogin() {
     setError('');
     try {
       if (sendLoginOtp) {
-        const res = await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone });
+        const res = await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone, channel: 'sms' });
         if (res?.devOtp) {
           setDevOtp(res.devOtp);
           setMobileOtpCode(res.devOtp);

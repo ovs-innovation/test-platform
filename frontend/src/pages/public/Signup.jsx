@@ -22,6 +22,7 @@ export default function Signup() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [otpChannel, setOtpChannel] = useState('sms');
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [sentMessage, setSentMessage] = useState('');
@@ -54,9 +55,9 @@ export default function Signup() {
     setError('');
     setDevOtp('');
     try {
-      const res = await sendSignupOtp({ email: form.email, phone: form.phone });
+      const res = await sendSignupOtp({ email: form.email, phone: form.phone, channel: otpChannel });
       setOtpSent(true);
-      const msg = res?.message || `Verification OTP code sent to your email inbox (${form.email})`;
+      const msg = res?.message || (otpChannel === 'sms' ? `Verification OTP sent to +91 ${form.phone}` : `Verification OTP code sent to your email inbox (${form.email})`);
       setSentMessage(msg);
       toast.success(msg);
     } catch (err) {
@@ -70,7 +71,7 @@ export default function Signup() {
   const onVerifyAndRegister = async (e) => {
     e.preventDefault();
     if (!otp || otp.length < 6) {
-      setError('Please enter the 6-digit OTP sent to your email.');
+      setError('Please enter the 6-digit OTP sent to your mobile or email.');
       return;
     }
     setLoading(true);
@@ -93,7 +94,7 @@ export default function Signup() {
   };
 
   return (
-    <AuthShell title="Create Student Account" subtitle="Register via Email OTP to access online test series, rank analytics, and step solutions.">
+    <AuthShell title="Create Student Account" subtitle="Register via Mobile SMS & Email OTP to access online test series, rank analytics, and step solutions.">
       {error && (
         <div className="mb-4 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-xs font-semibold text-red-400">
           {error}
@@ -236,25 +237,57 @@ export default function Signup() {
           </div>
 
 
+          <div>
+            <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
+              Send Verification OTP To
+            </label>
+            <div className="grid grid-cols-2 gap-3">
+              <button
+                type="button"
+                onClick={() => setOtpChannel('sms')}
+                className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 px-3 text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  otpChannel === 'sms'
+                    ? 'border-[#0D6EFD] bg-[#0D6EFD]/20 text-[#00F0FF] shadow-lg shadow-blue-500/20'
+                    : 'border-[#2A354A] bg-[#070c18] text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                }`}
+              >
+                <span>📱 Mobile SMS</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setOtpChannel('email')}
+                className={`flex items-center justify-center gap-2 rounded-xl border py-2.5 px-3 text-xs font-bold transition-all duration-200 cursor-pointer ${
+                  otpChannel === 'email'
+                    ? 'border-[#0D6EFD] bg-[#0D6EFD]/20 text-[#00F0FF] shadow-lg shadow-blue-500/20'
+                    : 'border-[#2A354A] bg-[#070c18] text-slate-400 hover:border-slate-500 hover:text-slate-200'
+                }`}
+              >
+                <span>✉️ Email</span>
+              </button>
+            </div>
+          </div>
+
           <div className="pt-2">
             <button
               type="submit"
               disabled={loading}
               className="w-full rounded-xl bg-gradient-to-r from-[#0D6EFD] via-[#2563eb] to-[#00F0FF] py-3.5 text-sm font-bold text-white shadow-lg shadow-blue-500/25 transition-all duration-200 hover:scale-[1.01] hover:shadow-cyan-500/30 cursor-pointer disabled:opacity-50"
             >
-              {loading ? 'Sending Verification OTP…' : 'Send Email OTP to Register'}
+              {loading
+                ? 'Sending Verification OTP…'
+                : (otpChannel === 'sms' ? 'Send OTP to Mobile Number' : 'Send OTP to Email')}
             </button>
           </div>
         </form>
       ) : (
         <form onSubmit={onVerifyAndRegister} className="space-y-5">
           <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-xs text-emerald-400 leading-relaxed">
-            {sentMessage || `Verification OTP sent to ${form.email}`}
+            {sentMessage || (otpChannel === 'sms' ? `Verification OTP sent to +91 ${form.phone}` : `Verification OTP sent to ${form.email}`)}
           </div>
 
           <div>
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2.5">
-              Enter 6-Digit OTP Code
+              Enter 6-Digit OTP Code ({otpChannel === 'sms' ? 'Mobile SMS' : 'Email'})
             </label>
             <input
               className="w-full rounded-xl border border-[#2A354A] bg-[#070c18] px-4 py-3 text-center tracking-widest text-lg font-bold text-white placeholder:text-slate-600 transition-all duration-200 focus:border-[#0D6EFD] focus:bg-[#0a1224] focus:outline-none focus:ring-2 focus:ring-[#0D6EFD]/35 font-mono"

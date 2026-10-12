@@ -66,6 +66,7 @@ export const registerSchema = z.object({
 export const otpSendSignupSchema = z.object({
   email: z.string().trim().toLowerCase().email('A valid email is required'),
   phone: z.string().trim().min(10, 'Mobile number must be at least 10 digits').max(15).optional().or(z.literal('')),
+  channel: z.string().trim().toLowerCase().optional(),
 });
 
 export const adminCreateCandidateSchema = z.object({
@@ -238,6 +239,8 @@ const EMAIL_REGEX = /^[a-zA-Z0-9][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$
 export const otpSendLoginSchema = z.object({
   identifier: z.string().trim().optional(),
   phone: z.string().trim().optional(),
+  mobile: z.string().trim().optional(),
+  channel: z.string().trim().toLowerCase().optional(),
   email: z
     .string()
     .trim()
@@ -247,7 +250,7 @@ export const otpSendLoginSchema = z.object({
     })
     .optional()
     .or(z.literal('')),
-}).refine((d) => d.identifier || d.phone || (d.email && d.email.trim()), {
+}).refine((d) => d.identifier || d.phone || d.mobile || (d.email && d.email.trim()), {
   message: 'Mobile number or Email is required',
 });
 
