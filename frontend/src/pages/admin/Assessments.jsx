@@ -15,7 +15,6 @@ import {
   Trash2,
   Upload,
   UserCheck,
-  Award,
   BellRing,
   BookOpen,
   Users,
@@ -782,13 +781,6 @@ export default function AdminAssessments() {
                                 <Clock className="h-4 w-4" />
                               </button>
                               <button
-                                onClick={() => handleGenerateResults(t.id)}
-                                className="p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-100"
-                                title="Generate Ranks & Publish Results"
-                              >
-                                <Award className="h-4 w-4" />
-                              </button>
-                              <button
                                 onClick={() => handleOpenLeaderboard(t.id)}
                                 className="p-1.5 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-100"
                                 title="View Rank Leaderboard & Scorecards"
@@ -927,13 +919,6 @@ export default function AdminAssessments() {
                             title="Access Override"
                           >
                             <Clock className="h-3.5 w-3.5" />
-                          </button>
-                          <button
-                            onClick={() => handleGenerateResults(t.id)}
-                            className="p-1.5 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400"
-                            title="Publish Ranks"
-                          >
-                            <Award className="h-3.5 w-3.5" />
                           </button>
                           <button
                             onClick={() => handleOpenLeaderboard(t.id)}
