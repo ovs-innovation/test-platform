@@ -22,3 +22,6 @@ process.env.MERCHANT_ID = process.env.MERCHANT_ID || 'TEST_MERCHANT_ID';
 process.env.PHONEPE_CLIENT_VERSION = process.env.PHONEPE_CLIENT_VERSION || '1';
 process.env.PHONEPE_ENV = process.env.PHONEPE_ENV || 'PRODUCTION';
 process.env.PHONEPE_MERCHANT_HOST_URL = process.env.PHONEPE_MERCHANT_HOST_URL || 'https://edvedum.com';
+process.env.MSG91_AUTH_KEY = process.env.MSG91_AUTH_KEY || 'TEST_MSG91_AUTH_KEY';
+process.env.MSG91_OTP_TEMPLATE_ID = process.env.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17';
+process.env.MSG91_SENDER_ID = process.env.MSG91_SENDER_ID || 'EDVEDM';

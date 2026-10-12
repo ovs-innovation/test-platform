@@ -4,13 +4,18 @@ import { env } from '../../../src/config/env.js';
 
 describe('MSG91 SMS Service & Configuration', () => {
   const originalFetch = global.fetch;
+  const originalAuthKey = env.msg91?.authKey;
 
   beforeEach(() => {
     vi.restoreAllMocks();
+    if (!env.msg91.authKey) {
+      env.msg91.authKey = 'TEST_MSG91_AUTH_KEY_123';
+    }
   });
 
   afterEach(() => {
     global.fetch = originalFetch;
+    env.msg91.authKey = originalAuthKey;
   });
 
   describe('Configuration', () => {
@@ -116,6 +121,13 @@ describe('MSG91 SMS Service & Configuration', () => {
       const res = await sendOtpSms({ phone: '9876543210', otp: '123456' });
       expect(res.sent).toBe(false);
       expect(res.error).toBe('Network connection timeout');
+    });
+
+    it('falls back to mock delivery in non-prod when authKey is missing', async () => {
+      env.msg91.authKey = '';
+      const res = await sendOtpSms({ phone: '9876543210', otp: '123456' });
+      expect(res.sent).toBe(true);
+      expect(res.mock).toBe(true);
     });
   });
 });
