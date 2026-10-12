@@ -44,6 +44,73 @@ export async function sendStudentAssignmentNotifications(testId, testName, assig
     console.error('Failed to deliver candidate notifications for test assignment:', err.message);
   }
 }
+
+export async function notifyStudentsAboutTestEbook(testId, testName, ebookId) {
+  if (!ebookId || !testId) return;
+  try {
+    const ebookRes = await query('SELECT id, title FROM ebooks WHERE id = $1', [ebookId]);
+    if (!ebookRes.rowCount) return;
+    const ebookTitle = ebookRes.rows[0].title || 'Study Material';
+
+    // 1. Students enrolled in any test series that includes this test
+    const seriesStudents = await query(
+      `SELECT DISTINCT se.user_id AS id
+       FROM student_enrollments se
+       JOIN test_series_tests tst ON tst.series_id = se.test_series_id
+       JOIN users u ON u.id = se.user_id
+       WHERE tst.test_id = $1 AND se.status = 'active' AND u.role = 'candidate'`,
+      [testId]
+    );
+
+    // 2. Students in batches or institutions assigned to any test series containing this test
+    const seriesAssignedStudents = await query(
+      `SELECT DISTINCT u.id
+       FROM users u
+       JOIN test_series_assignments tsa ON (
+         (tsa.assigned_to_type = 'batch' AND u.batch_id = tsa.assigned_to_id)
+         OR (tsa.assigned_to_type = 'institution' AND u.institution_id = tsa.assigned_to_id)
+         OR (tsa.assigned_to_type = 'all')
+       )
+       JOIN test_series_tests tst ON tst.series_id = tsa.test_series_id
+       WHERE tst.test_id = $1 AND u.role = 'candidate'`,
+      [testId]
+    );
+
+    // 3. Students assigned via test_assignments
+    const directAssignedStudents = await query(
+      `SELECT DISTINCT u.id
+       FROM test_assignments tas
+       JOIN users u ON (
+         (tas.assigned_to_type IN ('student', 'individual') AND u.id = tas.assigned_to_id)
+         OR (tas.assigned_to_type = 'batch' AND u.batch_id = tas.assigned_to_id)
+         OR (tas.assigned_to_type = 'institution' AND u.institution_id = tas.assigned_to_id)
+         OR (tas.assigned_to_type = 'all')
+       )
+       WHERE tas.test_id = $1 AND u.role = 'candidate'`,
+      [testId]
+    );
+
+    const allTargetIds = new Set([
+      ...seriesStudents.rows.map((r) => r.id),
+      ...seriesAssignedStudents.rows.map((r) => r.id),
+      ...directAssignedStudents.rows.map((r) => r.id),
+    ]);
+
+    const notifTitle = `New Study Material: ${ebookTitle}`;
+    const notifBody = `Study material / notes "${ebookTitle}" have been assigned for test "${testName}". Access it now in Study Material!`;
+
+    for (const uid of allTargetIds) {
+      if (!uid || isNaN(Number(uid))) continue;
+      await query(
+        `INSERT INTO notifications (user_id, title, body, type, created_at)
+         VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
+        [uid, notifTitle, notifBody]
+      ).catch(() => {});
+    }
+  } catch (err) {
+    console.error('Failed to notify students about test ebook:', err.message);
+  }
+}
 import { saveUploadedFile } from '../middleware/upload.js';
 import { sendEmail } from '../utils/email.js';
 import { delCache } from '../config/redis.js';
@@ -241,6 +308,9 @@ export const createTest = asyncHandler(async (req, res) => {
   });
 
   syncFreeTestSeries(test).catch(() => { });
+  if (test && test.recommended_ebook_id) {
+    notifyStudentsAboutTestEbook(test.id, test.test_name || test.title || 'Test', test.recommended_ebook_id).catch(() => {});
+  }
 
   res.status(201).json({ test });
 });
@@ -304,7 +374,7 @@ export const updateTest = asyncHandler(async (req, res) => {
     available_until
   } = req.body;
 
-  const check = await query('SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE', [id]);
+  const check = await query('SELECT id, recommended_ebook_id, test_name, title FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE', [id]);
   if (check.rowCount === 0) throw ApiError.notFound('Test not found');
 
   const cleanDate = test_date ? String(test_date).split('T')[0] : null;
@@ -357,6 +427,11 @@ export const updateTest = asyncHandler(async (req, res) => {
 
   if (result.rows[0]) {
     syncFreeTestSeries(result.rows[0]).catch(() => { });
+    const newEbookId = result.rows[0].recommended_ebook_id ? Number(result.rows[0].recommended_ebook_id) : null;
+    const oldEbookId = check.rows[0]?.recommended_ebook_id ? Number(check.rows[0].recommended_ebook_id) : null;
+    if (newEbookId && newEbookId !== oldEbookId) {
+      notifyStudentsAboutTestEbook(id, result.rows[0].test_name || result.rows[0].title || 'Test', newEbookId).catch(() => {});
+    }
   }
 
   res.json({ test: result.rows[0] });
@@ -467,6 +542,11 @@ export const assignTest = asyncHandler(async (req, res) => {
 
   // Deliver notifications to all targeted candidates
   await sendStudentAssignmentNotifications(id, testName, assigned_to_type, assigned_to_id);
+
+  const testFull = await query('SELECT recommended_ebook_id FROM tests WHERE id = $1', [id]);
+  if (testFull.rows[0]?.recommended_ebook_id) {
+    notifyStudentsAboutTestEbook(id, testName, testFull.rows[0].recommended_ebook_id).catch(() => {});
+  }
 
   res.status(201).json({ assignment: result.rows[0] });
 });

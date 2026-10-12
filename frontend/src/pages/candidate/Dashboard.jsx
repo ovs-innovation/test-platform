@@ -6,7 +6,6 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import { ErrorState, Badge } from '../../components/ui.jsx';
 import { AssessmentCard } from './AssessmentList.jsx';
 import {
-  Trophy,
   Flame,
   Target,
   CheckCircle2,
@@ -131,8 +130,8 @@ export default function CandidateDashboard() {
         </div>
       </div>
 
-      {/* 2. 4 CLEAN MINIMALIST METRIC CARDS */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      {/* 2. CLEAN MINIMALIST METRIC CARDS */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <CleanStatCard
           label="Tests Completed"
           value={`${stats.completed || 0} / ${stats.totalInvited || 0}`}
@@ -148,14 +147,6 @@ export default function CandidateDashboard() {
           icon={Target}
           color="text-blue-600 dark:text-blue-400"
           bg="bg-blue-50 dark:bg-blue-950/40 border-blue-200 dark:border-blue-800/50"
-        />
-        <CleanStatCard
-          label="Predicted Rank"
-          value={stats.airRank ? `AIR #${stats.airRank}` : 'Unranked'}
-          subtitle={stats.topPercentile ? `Top ${stats.topPercentile}%` : 'Assessment AIR'}
-          icon={Trophy}
-          color="text-purple-600 dark:text-purple-400"
-          bg="bg-purple-50 dark:bg-purple-950/40 border-purple-200 dark:border-purple-800/50"
         />
         <CleanStatCard
           label="Study Streak"

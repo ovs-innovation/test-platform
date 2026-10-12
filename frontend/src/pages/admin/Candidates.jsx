@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check } from 'lucide-react';
+import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check, UserPlus, User, Phone, Building2, GraduationCap, Lock, X } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -500,116 +500,161 @@ export default function AdminCandidates() {
 
       {/* Modal Dialog for Create/Edit */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-xs transition-opacity">
-          <div className="bg-white dark:bg-[#111827] rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 dark:border-slate-800">
-            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-              <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
-                {modalMode === 'create' ? 'Register New Student' : 'Edit Student Profile'}
-              </h3>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-6 bg-slate-950/75 backdrop-blur-xs transition-opacity overflow-y-auto">
+          <div className="bg-white dark:bg-[#111827] rounded-3xl shadow-2xl w-full max-w-3xl overflow-hidden border border-slate-200 dark:border-slate-800 flex flex-col max-h-[92vh] my-auto animate-in fade-in zoom-in-95 duration-150">
+            {/* Modal Header */}
+            <div className="px-6 sm:px-7 py-4.5 bg-slate-50/80 dark:bg-slate-900/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-2xl bg-blue-500/10 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center ring-1 ring-blue-500/20">
+                  {modalMode === 'create' ? <UserPlus className="h-5 w-5" /> : <Pencil className="h-5 w-5" />}
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-slate-900 dark:text-white text-base">
+                    {modalMode === 'create' ? 'Register New Student' : 'Edit Student Profile'}
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                    {modalMode === 'create'
+                      ? 'Fill in the details below to register student credentials & portal access.'
+                      : 'Update student profile, institution allocation, or contact details.'}
+                  </p>
+                </div>
+              </div>
               <button
                 type="button"
-                className="text-slate-400 hover:text-slate-700 dark:hover:text-white transition"
+                className="rounded-xl p-2 text-slate-400 hover:text-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 dark:hover:text-white transition"
                 onClick={() => setModalOpen(false)}
+                aria-label="Close modal"
               >
-                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <X className="h-5 w-5" />
               </button>
             </div>
             
-            <form onSubmit={handleSubmit}>
-              <div className="p-6 space-y-4">
-                <div>
-                  <label className="label">
-                    Full Name <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    className="input w-full"
-                    placeholder="Enter full name"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                  />
-                </div>
-                
-                <div>
-                  <label className="label">
-                    Email Address <span className="text-rose-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    className="input w-full"
-                    placeholder="student@example.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                  />
-                </div>
-
-                <div>
-                  <label className="label">
-                    Student ID / Roll Number <span className="text-slate-400 font-normal">({modalMode === 'create' ? 'Optional - auto-generated if left blank' : 'Unique student identifier'})</span>
-                  </label>
-                  <input
-                    type="text"
-                    className="input w-full font-mono uppercase"
-                    placeholder={modalMode === 'create' ? "e.g. EDV26-10023 (or leave blank to auto-generate)" : "Enter Student ID"}
-                    value={form.student_id}
-                    onChange={(e) => setForm({ ...form, student_id: e.target.value })}
-                  />
-                  <p className="text-[11px] text-slate-400 mt-1">
-                    Student can use this ID along with their password to sign in to the student portal.
-                  </p>
-                </div>
-
-                {modalMode === 'create' && (
+            {/* Modal Body & Form */}
+            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
+              <div className="p-6 sm:p-7 overflow-y-auto flex-1">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                  {/* Full Name */}
                   <div>
                     <label className="label">
-                      Initial Password <span className="text-slate-400 font-normal">(Optional - auto-generated if left blank)</span>
+                      Full Name <span className="text-rose-500">*</span>
                     </label>
-                    <PasswordInput
-                      className="input"
-                      placeholder="Min 6 characters (or leave blank to auto-generate)"
-                      value={form.password}
-                      onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        required
+                        className="input w-full pl-10"
+                        placeholder="Enter full name"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      />
+                      <User className="h-4 w-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
                   </div>
-                )}
-
-                <div>
-                  <label className="label">
-                    Mobile Number
-                  </label>
-                  <input
-                    type="text"
-                    className="input w-full"
-                    placeholder="10-digit mobile number"
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                  />
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
+                  
+                  {/* Email Address */}
                   <div>
                     <label className="label">
-                      Class
+                      Email Address <span className="text-rose-500">*</span>
                     </label>
+                    <div className="relative">
+                      <input
+                        type="email"
+                        required
+                        className="input w-full pl-10"
+                        placeholder="student@example.com"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      />
+                      <Mail className="h-4 w-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Student ID / Roll Number */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="label !mb-0">
+                        Student ID / Roll Number
+                      </label>
+                      <span className="text-[10px] text-slate-400 font-semibold">
+                        {modalMode === 'create' ? 'Auto-generated if blank' : 'Unique ID'}
+                      </span>
+                    </div>
                     <input
                       type="text"
-                      className="input w-full"
-                      placeholder="e.g. 11th, 12th Pass"
-                      value={form.class}
-                      onChange={(e) => setForm({ ...form, class: e.target.value })}
+                      className="input w-full font-mono uppercase text-xs"
+                      placeholder={modalMode === 'create' ? "e.g. EDV26-10023 (or auto-generate)" : "Enter Student ID"}
+                      value={form.student_id}
+                      onChange={(e) => setForm({ ...form, student_id: e.target.value })}
                     />
+                    <p className="text-[11px] text-slate-400 mt-1">
+                      {modalMode === 'create' ? 'Can sign in using this ID & password' : 'Unique student portal identifier'}
+                    </p>
                   </div>
 
+                  {/* Initial Password (create mode only) */}
+                  {modalMode === 'create' && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="label !mb-0">
+                          Initial Password
+                        </label>
+                        <span className="text-[10px] text-slate-400 font-semibold">
+                          Auto-generated if blank
+                        </span>
+                      </div>
+                      <PasswordInput
+                        className="input"
+                        placeholder="Min 6 characters (or auto-generate)"
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      />
+                      <p className="text-[11px] text-slate-400 mt-1">
+                        Leave blank to auto-generate a secure password
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Mobile Number */}
+                  <div>
+                    <label className="label">
+                      Mobile Number
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        className="input w-full pl-10"
+                        placeholder="10-digit mobile number"
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                      />
+                      <Phone className="h-4 w-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Class */}
+                  <div>
+                    <label className="label">
+                      Class / Standard
+                    </label>
+                    <div className="relative">
+                      <input
+                        type="text"
+                        className="input w-full pl-10"
+                        placeholder="e.g. 11th, 12th Pass"
+                        value={form.class}
+                        onChange={(e) => setForm({ ...form, class: e.target.value })}
+                      />
+                      <GraduationCap className="h-4 w-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+                    </div>
+                  </div>
+
+                  {/* Target Exam */}
                   <div>
                     <label className="label">
                       Target Exam
                     </label>
                     <select
-                      className="input w-full"
+                      className="input w-full font-semibold"
                       value={form.target_exam}
                       onChange={(e) => setForm({ ...form, target_exam: e.target.value })}
                     >
@@ -617,64 +662,84 @@ export default function AdminCandidates() {
                       <option value="NEET">NEET</option>
                     </select>
                   </div>
-                </div>
 
-                <div>
-                  <label className="label">
-                    Allocated Partner School / Institution
-                  </label>
-                  <select
-                    className="input w-full font-semibold"
-                    value={form.institution_id || ''}
-                    onChange={(e) => setForm({ ...form, institution_id: e.target.value })}
-                  >
-                    <option value="">-- Independent Student (No Institution) --</option>
-                    {institutions.map((inst) => (
-                      <option key={inst.id} value={inst.id}>
-                        🏫 {inst.name} ({inst.schoolId})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-
-                {modalMode === 'create' && (
-                  <div className="rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/20 p-3.5">
-                    <label className="flex items-start gap-2.5 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        className="checkbox mt-0.5"
-                        checked={form.send_credentials}
-                        onChange={(e) => setForm({ ...form, send_credentials: e.target.checked })}
-                      />
-                      <div className="text-xs">
-                        <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-                          <Mail className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-                          Email Login Credentials to Student
-                        </span>
-                        <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
-                          Automatically sends an email containing their Student ID, registered email, and password so they can log in immediately.
-                        </p>
-                      </div>
+                  {/* Allocated Partner School / Institution */}
+                  <div className={modalMode === 'edit' ? 'md:col-span-1' : ''}>
+                    <label className="label">
+                      Allocated Institution / School
                     </label>
+                    <select
+                      className="input w-full font-semibold"
+                      value={form.institution_id || ''}
+                      onChange={(e) => setForm({ ...form, institution_id: e.target.value })}
+                    >
+                      <option value="">-- Independent Student (No Institution) --</option>
+                      {institutions.map((inst) => (
+                        <option key={inst.id} value={inst.id}>
+                          🏫 {inst.name} ({inst.schoolId})
+                        </option>
+                      ))}
+                    </select>
                   </div>
-                )}
+
+                  {/* Email Login Credentials to Student Checkbox Banner */}
+                  {modalMode === 'create' && (
+                    <div className="md:col-span-2 rounded-2xl border border-blue-200 dark:border-blue-900/50 bg-blue-50/70 dark:bg-blue-950/20 p-4 transition-all">
+                      <label className="flex items-start gap-3 cursor-pointer select-none">
+                        <input
+                          type="checkbox"
+                          className="checkbox mt-0.5"
+                          checked={form.send_credentials}
+                          onChange={(e) => setForm({ ...form, send_credentials: e.target.checked })}
+                        />
+                        <div className="text-xs">
+                          <span className="font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                            <Mail className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                            Email Login Credentials to Student
+                          </span>
+                          <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5 leading-relaxed">
+                            Automatically sends an onboarding email containing their Student ID, registered email, and password so they can log in immediately.
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                  )}
+                </div>
               </div>
 
-              <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
-                <button
-                  type="button"
-                  className="btn-secondary"
-                  onClick={() => setModalOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="btn-primary"
-                  disabled={submitting}
-                >
-                  {submitting ? 'Saving…' : 'Save Details'}
-                </button>
+              {/* Modal Footer */}
+              <div className="px-6 sm:px-7 py-4 bg-slate-50/80 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
+                <span className="text-xs text-slate-400 hidden sm:inline">
+                  <span className="text-rose-500 font-bold">*</span> Mandatory fields
+                </span>
+                <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
+                  <button
+                    type="button"
+                    className="btn-secondary text-xs sm:text-sm"
+                    onClick={() => setModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn-primary text-xs sm:text-sm flex items-center gap-2"
+                    disabled={submitting}
+                  >
+                    {submitting ? (
+                      <>
+                        <span className="inline-block animate-spin h-3.5 w-3.5 border-2 border-white border-t-transparent rounded-full" />
+                        <span>Saving…</span>
+                      </>
+                    ) : modalMode === 'create' ? (
+                      <>
+                        <UserPlus className="h-4 w-4" />
+                        <span>Register Student</span>
+                      </>
+                    ) : (
+                      <span>Save Details</span>
+                    )}
+                  </button>
+                </div>
               </div>
             </form>
           </div>

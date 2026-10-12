@@ -18,7 +18,7 @@ export const listNotifications = asyncHandler(async (req, res) => {
   const isAdmin = req.user?.role === 'admin' || req.user?.role === 'superadmin';
   let sql = `SELECT * FROM notifications WHERE user_id = $1`;
   if (!isAdmin) {
-    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%' AND LOWER(title) NOT LIKE '%institution%'`;
+    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%'`;
   }
   sql += ` ORDER BY created_at DESC LIMIT 50`;
 
@@ -57,7 +57,7 @@ export const unreadCount = asyncHandler(async (req, res) => {
   const isAdmin = req.user?.role === 'admin' || req.user?.role === 'superadmin';
   let sql = `SELECT COUNT(*)::int AS c FROM notifications WHERE user_id = $1 AND read_at IS NULL`;
   if (!isAdmin) {
-    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%' AND LOWER(title) NOT LIKE '%institution%'`;
+    sql += ` AND (type IS NULL OR type NOT IN ('b2b_demo_request', 'b2b', 'institution_admin', 'system_admin')) AND LOWER(title) NOT LIKE '%b2b%' AND LOWER(title) NOT LIKE '%institutional demo%' AND LOWER(title) NOT LIKE '%school demo%'`;
   }
 
   const result = await query(sql, [userId]);

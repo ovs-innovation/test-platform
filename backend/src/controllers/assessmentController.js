@@ -511,6 +511,36 @@ export const updateAssessment = asyncHandler(async (req, res) => {
     values
   );
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+
+  if (fields.recommended_ebook_id) {
+    (async () => {
+      try {
+        const ebookRes = await query('SELECT title FROM ebooks WHERE id = $1', [fields.recommended_ebook_id]);
+        const ebookTitle = ebookRes.rows[0]?.title || 'Study Material';
+        const asTitle = result.rows[0].title || 'Assessment';
+        const enrolled = await query(
+          `SELECT DISTINCT u.id
+           FROM users u
+           JOIN student_enrollments se ON se.user_id = u.id
+           JOIN test_series_assessments tsa ON tsa.test_series_id = se.test_series_id
+           WHERE tsa.assessment_id = $1 AND se.status = 'active' AND u.role = 'candidate'`,
+          [id]
+        );
+        for (const s of enrolled.rows) {
+          await query(
+            `INSERT INTO notifications (user_id, title, body, type, created_at)
+             VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
+            [
+              s.id,
+              `New Study Material: ${ebookTitle}`,
+              `Study notes "${ebookTitle}" have been assigned for assessment "${asTitle}". Read now in Study Material!`
+            ]
+          ).catch(() => {});
+        }
+      } catch (_) {}
+    })().catch(() => {});
+  }
+
   res.json({ assessment: result.rows[0] });
 });
 

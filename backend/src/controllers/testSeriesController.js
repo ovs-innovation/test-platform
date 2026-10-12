@@ -195,6 +195,45 @@ export const linkTest = asyncHandler(async (req, res) => {
      ON CONFLICT (series_id, test_id) DO NOTHING`,
     [id, test_id]
   );
+
+  // If the linked test has a recommended_ebook_id, notify enrolled & assigned students
+  try {
+    const testRes = await query('SELECT id, test_name, title, recommended_ebook_id FROM tests WHERE id = $1', [test_id]);
+    if (testRes.rowCount > 0 && testRes.rows[0].recommended_ebook_id) {
+      const ebookId = testRes.rows[0].recommended_ebook_id;
+      const testName = testRes.rows[0].test_name || testRes.rows[0].title || 'Test';
+      const ebookRes = await query('SELECT title FROM ebooks WHERE id = $1', [ebookId]);
+      const ebookTitle = ebookRes.rows[0]?.title || 'Study Material';
+      const seriesRes = await query('SELECT title FROM test_series WHERE id = $1', [id]);
+      const seriesTitle = seriesRes.rows[0]?.title || 'Test Series';
+
+      const enrolled = await query(
+        `SELECT DISTINCT u.id 
+         FROM users u
+         WHERE (
+           u.id IN (SELECT se.user_id FROM student_enrollments se WHERE se.test_series_id = $1 AND se.status = 'active')
+           OR u.batch_id IN (SELECT tsa.assigned_to_id FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'batch')
+           OR u.institution_id IN (SELECT tsa.assigned_to_id FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'institution')
+           OR EXISTS (SELECT 1 FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'all')
+         ) AND u.role = 'candidate'`,
+        [id]
+      );
+      for (const s of enrolled.rows) {
+        await query(
+          `INSERT INTO notifications (user_id, title, body, type, created_at)
+           VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
+          [
+            s.id,
+            `New Study Material: ${ebookTitle}`,
+            `Notes "${ebookTitle}" are available for test "${testName}" in your series "${seriesTitle}". Access now in Study Material!`
+          ]
+        ).catch(() => {});
+      }
+    }
+  } catch (err) {
+    console.error('[linkTest] Notification dispatch error:', err.message);
+  }
+
   res.json({ message: 'Test linked successfully' });
 });
 

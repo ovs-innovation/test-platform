@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import { adminService } from '../../lib/services.js';
+import { adminService, testSeriesService } from '../../lib/services.js';
 import { getMediaUrl } from '../../lib/media.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -29,7 +29,8 @@ import {
   Filter,
   Send,
   Sparkles,
-  Trophy
+  Trophy,
+  Award
 } from 'lucide-react';
 
 const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
@@ -79,6 +80,7 @@ export default function AdminAssessments() {
   const [isDraggingEbook, setIsDraggingEbook] = useState(false);
 
   const [schools, setSchools] = useState([]);
+  const [testSeriesList, setTestSeriesList] = useState([]);
   const [assignModalEbook, setAssignModalEbook] = useState(null);
   const [assignEbookType, setAssignEbookType] = useState('all');
   const [assignEbookTargetId, setAssignEbookTargetId] = useState('');
@@ -111,12 +113,13 @@ export default function AdminAssessments() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const [testsList, ebooksList, batchesList, instAnalytics, instList] = await Promise.all([
+      const [testsList, ebooksList, batchesList, instAnalytics, instList, tsList] = await Promise.all([
         adminService.tests(),
         adminService.ebooks().catch(() => []),
         adminService.batches().catch(() => []),
         adminService.institutionAnalytics().catch(() => ({ students: [] })),
-        adminService.partnerSchools().catch(() => ({ institutions: [] }))
+        adminService.partnerSchools().catch(() => ({ institutions: [] })),
+        testSeriesService.list().catch(() => [])
       ]);
 
       setTests(testsList || []);
@@ -124,6 +127,7 @@ export default function AdminAssessments() {
       setBatches(batchesList || []);
       setInstitutionAnalytics(instAnalytics?.students || []);
       setSchools(instList?.institutions || []);
+      setTestSeriesList(tsList || []);
     } catch (err) {
       console.error('Failed to load admin assessments data:', err);
     } finally {
@@ -1739,11 +1743,31 @@ export default function AdminAssessments() {
                   className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
                 >
                   <option value="all">All Registered Students (Platform-Wide Open)</option>
+                  <option value="test_series">Enrolled Test Series</option>
                   <option value="institution">Partner School / Institution</option>
                   <option value="batch">Specific Batch</option>
                   <option value="individual">Individual Student</option>
                 </select>
               </div>
+
+              {assignEbookType === 'test_series' && (
+                <div>
+                  <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Select Enrolled Test Series *</label>
+                  <select
+                    required
+                    value={assignEbookTargetId}
+                    onChange={(e) => setAssignEbookTargetId(e.target.value)}
+                    className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 p-2.5 font-bold"
+                  >
+                    <option value="">-- Choose Test Series --</option>
+                    {testSeriesList.map((ts) => (
+                      <option key={ts.id} value={ts.id}>
+                        {ts.title} ({ts.exam_type || 'Test Series'})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {assignEbookType === 'institution' && (
                 <div>
@@ -1833,6 +1857,7 @@ export default function AdminAssessments() {
                           </span>
                           <span className="font-bold text-slate-800 dark:text-slate-200 truncate">
                             {asg.assigned_to_type === 'all' && 'All Registered Students'}
+                            {asg.assigned_to_type === 'test_series' && (asg.test_series_title ? `Test Series: ${asg.test_series_title}` : `Test Series #${asg.assigned_to_id}`)}
                             {asg.assigned_to_type === 'institution' && (asg.institution_name || `Institution #${asg.assigned_to_id}`)}
                             {asg.assigned_to_type === 'batch' && (asg.batch_name || `Batch #${asg.assigned_to_id}`)}
                             {(asg.assigned_to_type === 'student' || asg.assigned_to_type === 'individual') &&

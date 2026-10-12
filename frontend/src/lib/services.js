@@ -333,7 +333,7 @@ export const paymentService = {
 };
 
 export const notificationService = {
-  list: () => withCache('notification_list', () => api.get('/notifications').then((r) => r.data.notifications).catch(() => [])),
+  list: () => api.get('/notifications').then((r) => r.data.notifications).catch(() => []),
   unreadCount: () => api.get('/notifications/unread-count').then((r) => r.data.count).catch(() => 0),
   markRead: (id) => {
     clearCache('notification_list');

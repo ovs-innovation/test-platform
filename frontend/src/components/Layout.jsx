@@ -9,7 +9,7 @@ import { tokenStore } from '../lib/api.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home, Search } from 'lucide-react';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home, Search, BookOpen } from 'lucide-react';
 import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
 
 
@@ -679,13 +679,33 @@ function getNotificationConfig(type = '', title = '') {
   const lowerType = (type || '').toLowerCase();
   const lowerTitle = (title || '').toLowerCase();
 
-  if (lowerType === 'b2b_demo_request' || lowerTitle.includes('b2b') || lowerTitle.includes('school demo') || lowerTitle.includes('institution')) {
+  if (lowerType === 'b2b_demo_request' || lowerTitle.includes('b2b') || lowerTitle.includes('school demo') || lowerTitle.includes('institutional demo')) {
     return {
       IconComponent: Flag,
       iconClass: 'text-cyan-500 bg-cyan-500/10 border-cyan-500/20',
       borderClass: 'border-l-4 border-l-cyan-500 bg-cyan-500/5 dark:bg-cyan-950/20',
       badge: 'B2B Demo',
       target: '/admin/schools'
+    };
+  }
+
+  if (lowerType === 'ebook_assigned' || lowerType === 'ebook' || lowerTitle.includes('ebook') || lowerTitle.includes('study material') || lowerTitle.includes('notes')) {
+    return {
+      IconComponent: BookOpen,
+      iconClass: 'text-purple-500 bg-purple-500/10 border-purple-500/20',
+      borderClass: 'border-l-4 border-l-purple-500 bg-purple-500/5 dark:bg-purple-950/20',
+      badge: 'Study Material',
+      target: '/my-ebooks'
+    };
+  }
+
+  if (lowerType === 'test_series' || lowerTitle.includes('test series')) {
+    return {
+      IconComponent: BookOpen,
+      iconClass: 'text-blue-500 bg-blue-500/10 border-blue-500/20',
+      borderClass: 'border-l-4 border-l-blue-500 bg-blue-500/5 dark:bg-blue-950/20',
+      badge: 'Test Series',
+      target: '/my-tests'
     };
   }
 
@@ -785,12 +805,11 @@ function NotificationPanelDrawer({ onClose }) {
         const isB2bOrInst =
           lowerType === 'b2b_demo_request' ||
           lowerType === 'b2b' ||
-          lowerType === 'institution' ||
           lowerType === 'institution_admin' ||
+          lowerType === 'system_admin' ||
           lowerTitle.includes('b2b') ||
           lowerTitle.includes('institutional demo') ||
-          lowerTitle.includes('school demo') ||
-          lowerTitle.includes('institution');
+          lowerTitle.includes('school demo');
 
         if (!isUserAdmin) {
           // Candidates / Students should NEVER see B2B / Institution notifications!

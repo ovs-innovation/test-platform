@@ -5,20 +5,34 @@ import { LoadingScreen, ErrorState, PageHeader, Spinner, EmptyState } from '../.
 import { formatDateTime } from '../../lib/format.js';
 import { Bell, BookOpen, BarChart3, MessageSquare, CheckCircle2, X, Trash2 } from 'lucide-react';
 
-function getNotificationStyle(title = '') {
-  const lower = title.toLowerCase();
+function getNotificationStyle(title = '', type = '') {
+  const lower = `${title || ''} ${type || ''}`.toLowerCase();
+  if (lower.includes('ebook') || lower.includes('notes') || lower.includes('study material') || lower.includes('e-book')) {
+    return {
+      badgeClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20',
+      borderClass: 'border-l-4 border-l-purple-600',
+      category: 'Study Material',
+      iconClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
+      actionLink: '/my-ebooks',
+      actionText: 'Open Material',
+    };
+  }
   if (lower.includes('unlocked') || lower.includes('series') || lower.includes('assigned') || lower.includes('invited')) {
     return {
       badgeClass: 'bg-blue-500/10 text-blue-600 dark:text-cyan-300 border-blue-500/20',
       borderClass: 'border-l-4 border-l-blue-600',
       category: 'Test Series Access',
+      iconClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+      actionLink: '/my-tests',
+      actionText: 'View Tests',
     };
   }
   if (lower.includes('welcome') || lower.includes('account') || lower.includes('profile')) {
     return {
-      badgeClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20',
-      borderClass: 'border-l-4 border-l-purple-600',
+      badgeClass: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-300 border-indigo-500/20',
+      borderClass: 'border-l-4 border-l-indigo-600',
       category: 'System Welcome',
+      iconClass: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400',
     };
   }
   if (lower.includes('payment') || lower.includes('invoice') || lower.includes('purchase') || lower.includes('receipt')) {
@@ -26,12 +40,16 @@ function getNotificationStyle(title = '') {
       badgeClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20',
       borderClass: 'border-l-4 border-l-emerald-600',
       category: 'Payment Receipt',
+      iconClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+      actionLink: '/payments',
+      actionText: 'View Receipt',
     };
   }
   return {
     badgeClass: 'bg-amber-500/10 text-amber-600 dark:text-amber-300 border-amber-500/20',
     borderClass: 'border-l-4 border-l-amber-500',
     category: 'CBT Reminder',
+    iconClass: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
   };
 }
 
@@ -182,7 +200,7 @@ export default function Notifications() {
       ) : (
         <div className="space-y-2.5">
           {notifications.map((n) => {
-            const style = getNotificationStyle(n.title);
+            const style = getNotificationStyle(n.title, n.type);
             const isUnread = !n.read_at;
 
             return (
@@ -195,8 +213,8 @@ export default function Notifications() {
                 }`}
               >
                 <div className="flex items-start gap-3">
-                  <div className="p-2 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0 mt-0.5">
-                    <Bell className="h-4 w-4" />
+                  <div className={`p-2 rounded-lg shrink-0 mt-0.5 ${style.iconClass || 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}`}>
+                    {style.category === 'Study Material' ? <BookOpen className="h-4 w-4" /> : <Bell className="h-4 w-4" />}
                   </div>
 
                   <div>
@@ -217,7 +235,16 @@ export default function Notifications() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 shrink-0">
+                  {style.actionLink && (
+                    <Link
+                      to={style.actionLink}
+                      onClick={() => { if (isUnread) markOne(n.id); }}
+                      className="shrink-0 rounded-lg border border-purple-200 bg-purple-50 px-2.5 py-1 text-xs font-bold text-purple-700 dark:border-purple-900/60 dark:bg-purple-950/40 dark:text-purple-300 hover:bg-purple-600 hover:text-white transition cursor-pointer"
+                    >
+                      {style.actionText || 'Open'}
+                    </Link>
+                  )}
                   {isUnread && (
                     <button
                       type="button"

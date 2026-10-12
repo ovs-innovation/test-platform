@@ -102,15 +102,15 @@ export const assignEbookToAudience = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const { assigned_to_type, assigned_to_id } = req.body;
 
-  if (!assigned_to_type || !['all', 'institution', 'batch', 'student', 'individual'].includes(assigned_to_type)) {
-    throw ApiError.badRequest('assigned_to_type must be one of: all, institution, batch, student, individual');
+  if (!assigned_to_type || !['all', 'institution', 'batch', 'student', 'individual', 'test_series'].includes(assigned_to_type)) {
+    throw ApiError.badRequest('assigned_to_type must be one of: all, institution, batch, student, individual, test_series');
   }
 
   const ebookId = Number(id);
   const targetId = assigned_to_type === 'all' ? 0 : (assigned_to_id ? Number(assigned_to_id) : 0);
 
   if (assigned_to_type !== 'all' && !targetId) {
-    throw ApiError.badRequest('Target ID is required when assigning to specific institution, batch, or student.');
+    throw ApiError.badRequest('Target ID is required when assigning to specific test series, institution, batch, or student.');
   }
 
   const checkEbook = await query('SELECT id, title FROM ebooks WHERE id = $1', [ebookId]);
@@ -118,6 +118,15 @@ export const assignEbookToAudience = asyncHandler(async (req, res) => {
     throw ApiError.notFound('eBook not found');
   }
   const ebookTitle = checkEbook.rows[0].title || 'Study Material';
+
+  let seriesTitle = '';
+  if (assigned_to_type === 'test_series') {
+    const tsCheck = await query('SELECT id, title FROM test_series WHERE id = $1', [targetId]);
+    if (tsCheck.rowCount === 0) {
+      throw ApiError.notFound('Test series not found');
+    }
+    seriesTitle = tsCheck.rows[0].title || 'Test Series';
+  }
 
   await query(
     `DELETE FROM ebook_assignments 
@@ -163,7 +172,29 @@ export const assignEbookToAudience = asyncHandler(async (req, res) => {
 
     // Deliver candidate/student notifications
     let targetStudentIds = [];
-    if (['student', 'individual'].includes(assigned_to_type) && targetId) {
+    if (assigned_to_type === 'test_series' && targetId) {
+      const enrolledRes = await query(
+        `SELECT DISTINCT se.user_id AS id 
+         FROM student_enrollments se 
+         JOIN users u ON u.id = se.user_id 
+         WHERE se.test_series_id = $1 AND se.status = 'active' AND u.role = 'candidate'`,
+        [targetId]
+      );
+      const seriesAssignedRes = await query(
+        `SELECT DISTINCT u.id
+         FROM users u
+         WHERE (
+           u.batch_id IN (SELECT tsa.assigned_to_id FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'batch')
+           OR u.institution_id IN (SELECT tsa.assigned_to_id FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'institution')
+           OR EXISTS (SELECT 1 FROM test_series_assignments tsa WHERE tsa.test_series_id = $1 AND tsa.assigned_to_type = 'all')
+         ) AND u.role = 'candidate'`,
+        [targetId]
+      );
+      targetStudentIds = [
+        ...enrolledRes.rows.map((r) => r.id),
+        ...seriesAssignedRes.rows.map((r) => r.id)
+      ];
+    } else if (['student', 'individual'].includes(assigned_to_type) && targetId) {
       targetStudentIds = [Number(targetId)];
     } else if (assigned_to_type === 'batch' && targetId) {
       const batchStudents = await query(
@@ -173,7 +204,7 @@ export const assignEbookToAudience = asyncHandler(async (req, res) => {
       targetStudentIds = batchStudents.rows.map((s) => s.id);
     } else if (assigned_to_type === 'institution' && targetId) {
       const instStudents = await query(
-        'SELECT id FROM users WHERE institution_id = $1 AND role = $2',
+        'SELECT id FROM users WHERE (institution_id = $1 OR batch_id IN (SELECT id FROM batches WHERE institution_id = $1)) AND role = $2',
         [targetId, 'candidate']
       );
       targetStudentIds = instStudents.rows.map((s) => s.id);
@@ -187,14 +218,17 @@ export const assignEbookToAudience = asyncHandler(async (req, res) => {
 
     const uniqueIds = Array.from(new Set(targetStudentIds.filter((id) => id && !isNaN(Number(id)))));
     for (const sid of uniqueIds) {
+      const notifTitle = assigned_to_type === 'test_series'
+        ? `New Study Material for ${seriesTitle}: ${ebookTitle}`
+        : `New Study Material Assigned: ${ebookTitle}`;
+      const notifBody = assigned_to_type === 'test_series'
+        ? `New study material / notes "${ebookTitle}" have been assigned to your "${seriesTitle}" test series. Open Study Material to read now!`
+        : `Admin assigned study material "${ebookTitle}" to your digital library. Open Study Material to read now!`;
+
       await query(
         `INSERT INTO notifications (user_id, title, body, type, created_at)
          VALUES ($1, $2, $3, 'ebook_assigned', NOW())`,
-        [
-          sid,
-          `New eBook Assigned: ${ebookTitle}`,
-          `Admin assigned eBook "${ebookTitle}" to your digital library. Open E-Books to read now!`
-        ]
+        [sid, notifTitle, notifBody]
       ).catch(() => {});
     }
   } catch (notifErr) {
@@ -216,11 +250,13 @@ export const getEbookAssignments = asyncHandler(async (req, res) => {
     `SELECT ea.*,
             inst.name AS institution_name,
             b.name AS batch_name,
+            ts.title AS test_series_title,
             u.name AS student_name,
             u.email AS student_email
      FROM ebook_assignments ea
      LEFT JOIN institutions inst ON ea.assigned_to_type = 'institution' AND ea.assigned_to_id = inst.id
      LEFT JOIN batches b ON ea.assigned_to_type = 'batch' AND ea.assigned_to_id = b.id
+     LEFT JOIN test_series ts ON ea.assigned_to_type = 'test_series' AND ea.assigned_to_id = ts.id
      LEFT JOIN users u ON (ea.assigned_to_type IN ('student', 'individual')) AND ea.assigned_to_id = u.id
      WHERE ea.ebook_id = $1
      ORDER BY ea.id DESC`,
@@ -254,6 +290,16 @@ export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
       OR (ea.assigned_to_type = 'batch' AND $2::int IS NOT NULL AND ea.assigned_to_id = $2)
       OR (ea.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND ea.assigned_to_id IN (SELECT id FROM batches WHERE institution_id = $3))
       OR (ea.assigned_to_type = 'institution' AND $3::int IS NOT NULL AND ea.assigned_to_id = $3)
+      OR (ea.assigned_to_type = 'test_series' AND ea.assigned_to_id IN (
+            SELECT test_series_id FROM student_enrollments WHERE user_id = $1 AND status = 'active'
+            UNION
+            SELECT test_series_id FROM test_series_assignments WHERE (
+              assigned_to_type = 'all'
+              OR (assigned_to_type = 'student' AND assigned_to_id = $1)
+              OR (assigned_to_type = 'batch' AND $2::int IS NOT NULL AND assigned_to_id = $2)
+              OR (assigned_to_type = 'institution' AND $3::int IS NOT NULL AND assigned_to_id = $3)
+            )
+          ))
       OR ea.assigned_to_type = 'all'
     )
 
@@ -311,12 +357,12 @@ export const getMyAssignedEbooks = asyncHandler(async (req, res) => {
 
     UNION
 
-    -- 6. eBooks uploaded by admin that have no specific institution/batch restriction (general study material)
+    -- 6. eBooks uploaded by admin that have no specific institution/batch/test_series restriction (general study material)
     SELECT DISTINCT e.id, e.title, e.author, e.description, e.subject, e.class_level, e.pdf_url, e.created_at
     FROM ebooks e
     WHERE NOT EXISTS (
       SELECT 1 FROM ebook_assignments ea 
-      WHERE ea.ebook_id = e.id AND ea.assigned_to_type IN ('institution', 'batch', 'student', 'individual')
+      WHERE ea.ebook_id = e.id AND ea.assigned_to_type IN ('institution', 'batch', 'student', 'individual', 'test_series')
     )
 
     ORDER BY id DESC
