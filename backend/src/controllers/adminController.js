@@ -1118,7 +1118,7 @@ export const assignStudentInstitution = asyncHandler(async (req, res) => {
 
 // Admin Discussion Hub & Moderation Controllers
 export const listAdminForumTopics = asyncHandler(async (req, res) => {
-  const { filter = 'all', q = '' } = req.query;
+  const { filter = 'all', q = '', testSeriesId, examType } = req.query;
 
   let whereClauses = [];
   let params = [];
@@ -1126,6 +1126,16 @@ export const listAdminForumTopics = asyncHandler(async (req, res) => {
   if (q && q.trim()) {
     params.push(`%${q.trim().toLowerCase()}%`);
     whereClauses.push(`(LOWER(ft.title) LIKE $${params.length} OR LOWER(ft.body) LIKE $${params.length} OR LOWER(u.name) LIKE $${params.length})`);
+  }
+
+  if (testSeriesId && testSeriesId !== 'all') {
+    params.push(parseInt(testSeriesId, 10));
+    whereClauses.push(`ft.test_series_id = $${params.length}`);
+  }
+
+  if (examType && examType !== 'all') {
+    params.push(examType.trim());
+    whereClauses.push(`LOWER(COALESCE(ft.exam_type, '')) = LOWER($${params.length})`);
   }
 
   if (filter === 'unanswered') {
@@ -1139,15 +1149,21 @@ export const listAdminForumTopics = asyncHandler(async (req, res) => {
   const whereSql = whereClauses.length ? `WHERE ${whereClauses.join(' AND ')}` : '';
 
   const topicsRes = await query(
-    `SELECT ft.*, u.name AS author_name, u.email AS author_email, u.role AS author_role,
+    `SELECT ft.*, 
+            ts.title AS test_series_title,
+            ts.slug AS test_series_slug,
+            u.name AS author_name, 
+            u.email AS author_email, 
+            u.role AS author_role,
             COUNT(fr.id)::int AS reply_count,
-            COUNT(CASE WHEN u_reply.role = 'admin' THEN 1 END)::int AS faculty_reply_count
+            COUNT(CASE WHEN u_reply.role = 'admin' OR u_reply.role = 'faculty' THEN 1 END)::int AS faculty_reply_count
      FROM forum_topics ft 
      JOIN users u ON u.id = ft.user_id
+     LEFT JOIN test_series ts ON ts.id = ft.test_series_id
      LEFT JOIN forum_replies fr ON fr.topic_id = ft.id
      LEFT JOIN users u_reply ON u_reply.id = fr.user_id
      ${whereSql}
-     GROUP BY ft.id, u.name, u.email, u.role 
+     GROUP BY ft.id, ts.title, ts.slug, u.name, u.email, u.role 
      ORDER BY ft.created_at DESC 
      LIMIT 100`,
     params
@@ -1173,9 +1189,15 @@ export const listAdminForumTopics = asyncHandler(async (req, res) => {
 export const getAdminForumTopic = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const topic = await query(
-    `SELECT ft.*, u.name AS author_name, u.email AS author_email, u.role AS author_role 
+    `SELECT ft.*, 
+            ts.title AS test_series_title,
+            ts.slug AS test_series_slug,
+            u.name AS author_name, 
+            u.email AS author_email, 
+            u.role AS author_role 
      FROM forum_topics ft 
      JOIN users u ON u.id = ft.user_id 
+     LEFT JOIN test_series ts ON ts.id = ft.test_series_id
      WHERE ft.id = $1`,
     [id]
   );

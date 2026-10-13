@@ -228,8 +228,10 @@ export const publicService = {
   subjects: () => withCache('public_subjects', () => api.get('/public/subjects').then((r) => r.data)),
   cms: (slug) => api.get(`/public/cms/${slug}`).then((r) => r.data.page),
   cmsList: (type) => api.get('/public/cms', { params: type ? { type } : {} }).then((r) => r.data.pages),
-  activeCoupons: () => api.get('/public/coupons/active').then((r) => r.data.coupons),
-  validateCoupon: (code, amount) => api.post('/public/coupons/validate', { code, amount }).then((r) => r.data),
+  activeCoupons: (testSeriesId) =>
+    api.get('/public/coupons/active', { params: testSeriesId ? { test_series_id: testSeriesId } : {} }).then((r) => r.data.coupons),
+  validateCoupon: (code, amount, testSeriesId) =>
+    api.post('/public/coupons/validate', { code, amount, test_series_id: testSeriesId }).then((r) => r.data),
   landingContent: () => api.get('/public/landing-content').then((r) => r.data),
 };
 
@@ -382,8 +384,8 @@ export const studentService = {
   },
   leaderboardAssessments: () => withCache('student_lb_assessments', () => api.get('/student/leaderboard/assessments').then((r) => r.data.assessments)),
   certificate: (attemptId) => api.get(`/student/certificates/${attemptId}`).then((r) => r.data),
-  forum: () => withCache('student_forum', () => api.get('/student/forum').then((r) => r.data.topics)),
-  forumTopic: (id) => withCache(`student_forum_topic_${id}`, () => api.get(`/student/forum/${id}`).then((r) => r.data)),
+  forum: (params) => api.get('/student/forum', { params }).then((r) => r.data),
+  forumTopic: (id) => api.get(`/student/forum/${id}`).then((r) => r.data),
   createTopic: (data) => {
     clearCache('student_forum');
     return api.post('/student/forum', data).then((r) => r.data);
@@ -496,6 +498,7 @@ export const adminService = {
     clearCache();
     return api.delete(`/admin/coupons/${id}`).then((r) => r.data);
   },
+  notifyCoupon: (id) => api.post(`/admin/coupons/${id}/notify`).then((r) => r.data),
   faculty: () => withCache('admin_faculty', () => api.get('/admin/faculty').then((r) => r.data.faculty)),
   createFaculty: (data) => {
     clearCache();
@@ -533,7 +536,7 @@ export const adminService = {
   },
   broadcast: (data) => api.post('/admin/notifications/broadcast', data).then((r) => r.data),
   // Discussion Hub & Forum Helpers
-  forumTopics: (filter = 'all', q = '') => api.get('/admin/forum', { params: { filter, q } }).then((r) => r.data),
+  forumTopics: (filter = 'all', q = '', testSeriesId, examType) => api.get('/admin/forum', { params: { filter, q, testSeriesId, examType } }).then((r) => r.data),
   forumTopic: (id) => api.get(`/admin/forum/${id}`).then((r) => r.data),
   replyForumTopic: (id, body, imageUrl = null) => api.post(`/student/forum/${id}/reply`, { body, imageUrl }).then((r) => r.data),
   lockForumTopic: (id) => api.patch(`/admin/forum/${id}/lock`).then((r) => r.data),
@@ -806,3 +809,12 @@ export const mistakeBookService = {
     return api.delete(`/student/mistake-book/${id}`).then((r) => r.data);
   },
 };
+
+export const enquiryService = {
+  submitStudentEnquiry: (data) => api.post('/public/student-enquiries', data).then((r) => r.data),
+  listEnquiries: (params) => api.get('/admin/enquiries', { params }).then((r) => r.data),
+  getEnquiryDetail: (id) => api.get(`/admin/enquiries/${id}`).then((r) => r.data),
+  updateEnquiry: (id, data) => api.patch(`/admin/enquiries/${id}`, data).then((r) => r.data),
+  deleteEnquiry: (id) => api.delete(`/admin/enquiries/${id}`).then((r) => r.data),
+};
+

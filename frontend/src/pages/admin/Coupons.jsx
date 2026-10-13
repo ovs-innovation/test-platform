@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
-import { Ticket, ChevronDown, Check, Percent, Trash2, Plus, AlertTriangle, X, Calendar, Tag } from 'lucide-react';
-import { adminService } from '../../lib/services.js';
+import { Ticket, ChevronDown, Check, Percent, Trash2, Plus, AlertTriangle, X, Calendar, Tag, Bell, GraduationCap } from 'lucide-react';
+import { adminService, testSeriesService } from '../../lib/services.js';
 import { LoadingScreen, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
 import ActionDropdown from '../../components/ActionDropdown.jsx';
@@ -77,6 +77,7 @@ function CustomDiscountTypeDropdown({ value, onChange }) {
 export default function AdminCoupons() {
   const toast = useToast();
   const [coupons, setCoupons] = useState([]);
+  const [testSeriesList, setTestSeriesList] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Modal States
@@ -91,25 +92,50 @@ export default function AdminCoupons() {
     discount_type: 'percent',
     discount_value: 10,
     max_uses: 100,
+    max_uses_per_user: 1,
     valid_until: '',
+    test_series_id: '',
+    notify_students: true,
   });
 
   const load = () => adminService.coupons().then(setCoupons).finally(() => setLoading(false));
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+    testSeriesService.list().then((list) => setTestSeriesList(list || [])).catch(() => []);
+  }, []);
 
   const handleCreateCoupon = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
-      await adminService.createCoupon(form);
-      toast.success(`Discount coupon "${form.code.toUpperCase()}" created successfully!`);
-      setForm({ code: '', discount_type: 'percent', discount_value: 10, max_uses: 100, valid_until: '' });
+      const res = await adminService.createCoupon(form);
+      const notifMsg = res.notified_students > 0 ? ` & notification sent to ${res.notified_students} active students` : '';
+      toast.success(`Discount coupon "${form.code.toUpperCase()}" created successfully${notifMsg}!`);
+      setForm({
+        code: '',
+        discount_type: 'percent',
+        discount_value: 10,
+        max_uses: 100,
+        max_uses_per_user: 1,
+        valid_until: '',
+        test_series_id: '',
+        notify_students: true,
+      });
       setShowCreateModal(false);
       load();
     } catch (err) {
       toast.error(err.message || 'Failed to create coupon');
     } finally {
       setSubmitting(false);
+    }
+  };
+
+  const handleNotifyStudents = async (couponId, code) => {
+    try {
+      const res = await adminService.notifyCoupon(couponId);
+      toast.success(res.message || `Notification sent to students for coupon ${code}!`);
+    } catch (err) {
+      toast.error(err.message || 'Failed to broadcast notification');
     }
   };
 
@@ -172,12 +198,29 @@ export default function AdminCoupons() {
                           {c.code}
                         </span>
                       </div>
+                      <div className="mt-1">
+                        {c.test_series_title ? (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-800/60 px-1.5 py-0.5 rounded truncate max-w-[220px]" title={c.test_series_title}>
+                            <GraduationCap className="w-2.5 h-2.5 shrink-0" />
+                            <span className="truncate">{c.test_series_title}</span>
+                          </span>
+                        ) : (
+                          <span className="text-[10px] font-bold text-slate-500 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded">
+                            🌐 All Test Series
+                          </span>
+                        )}
+                      </div>
                     </td>
                     <td className="px-5 py-4 font-extrabold text-slate-900 dark:text-white">
                       {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
                     </td>
                     <td className="px-5 py-4 font-semibold text-slate-700 dark:text-slate-300">
-                      {c.used_count}/{c.max_uses ?? '∞'}
+                      <div>
+                        <span>{c.used_count}/{c.max_uses ?? '∞'} total</span>
+                        <span className="block text-[10px] text-blue-600 dark:text-blue-400 font-bold">
+                          Max {c.max_uses_per_user ?? 1}/student
+                        </span>
+                      </div>
                     </td>
                     <td className="px-5 py-4">
                       <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
@@ -185,6 +228,12 @@ export default function AdminCoupons() {
                     <td className="px-5 py-4 text-right">
                       <ActionDropdown
                         items={[
+                          {
+                            label: 'Notify Students',
+                            icon: Bell,
+                            onClick: () => handleNotifyStudents(c.id, c.code),
+                            color: 'text-blue-600 dark:text-blue-400',
+                          },
                           {
                             label: c.is_active ? 'Deactivate Coupon' : 'Activate Coupon',
                             icon: Ticket,
@@ -248,37 +297,53 @@ export default function AdminCoupons() {
                   <span className="font-black text-slate-900 dark:text-white text-sm">
                     {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
                   </span>
+                  <span className="block text-[10.5px] font-bold text-indigo-600 dark:text-indigo-400 mt-1">
+                    {c.test_series_title ? `🎯 ${c.test_series_title}` : '🌐 All Test Series'}
+                  </span>
                 </div>
                 <div className="text-right">
                   <span className="text-[10px] font-bold text-slate-400 uppercase block">Redemptions</span>
                   <span className="font-bold text-slate-700 dark:text-slate-300">
                     {c.used_count} / {c.max_uses ?? '∞'} used
                   </span>
+                  <span className="block text-[10px] text-slate-400">
+                    Max {c.max_uses_per_user ?? 1}/student
+                  </span>
                 </div>
               </div>
 
               {/* Mobile Actions Toolbar */}
-              <div className="flex items-center justify-between gap-2 pt-1">
+              <div className="flex items-center justify-between gap-1.5 pt-1">
+                <button
+                  type="button"
+                  onClick={() => handleNotifyStudents(c.id, c.code)}
+                  className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-blue-200 dark:border-blue-800 bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 transition flex items-center gap-1 cursor-pointer"
+                  title="Notify Students"
+                >
+                  <Bell className="h-3.5 w-3.5" />
+                  <span>Notify</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={async () => {
                     await adminService.toggleCoupon(c.id);
                     load();
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1.5 cursor-pointer ${
+                  className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1 cursor-pointer ${
                     c.is_active
                       ? 'bg-amber-50 dark:bg-amber-950/40 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800'
                       : 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800'
                   }`}
                 >
                   <Ticket className="h-3.5 w-3.5" />
-                  <span>{c.is_active ? 'Deactivate' : 'Activate'}</span>
+                  <span>{c.is_active ? 'Pause' : 'Activate'}</span>
                 </button>
 
                 <button
                   type="button"
                   onClick={() => setCouponToDelete(c)}
-                  className="px-3 py-1.5 rounded-xl text-xs font-bold border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 transition cursor-pointer flex items-center gap-1.5"
+                  className="px-2.5 py-1.5 rounded-xl text-xs font-bold border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 transition cursor-pointer flex items-center gap-1"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
                   <span>Delete</span>
@@ -355,18 +420,56 @@ export default function AdminCoupons() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          {/* Target Test Series Selection */}
+          <div>
+            <label className="block text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 mb-1">
+              Apply to Specific Test Series <span className="text-slate-400 font-normal lowercase">(optional)</span>
+            </label>
+            <select
+              value={form.test_series_id}
+              onChange={(e) => setForm((f) => ({ ...f, test_series_id: e.target.value }))}
+              className="select w-full rounded-xl text-xs font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-3 py-2.5"
+            >
+              <option value="">🌐 All Test Series (Universal Platform Discount)</option>
+              {testSeriesList.map((ts) => (
+                <option key={ts.id} value={ts.id}>
+                  🎯 {ts.title} {ts.exam_type ? `(${ts.exam_type})` : ''} - ₹{ts.price}
+                </option>
+              ))}
+            </select>
+            <p className="text-[11px] text-slate-400 mt-1">
+              {form.test_series_id
+                ? '🔒 Coupon can only be used by students enrolling in this specific test series.'
+                : '🌐 Students can apply this discount coupon to any individual test series.'}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-3">
             <div>
               <label className="block text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 mb-1">
-                Max Usage Limit
+                Max Uses (Total)
               </label>
               <input
                 type="number"
                 min="1"
-                placeholder="e.g. 100 (Leave empty for ∞)"
+                placeholder="e.g. 100"
                 className="input w-full rounded-xl"
                 value={form.max_uses}
                 onChange={(e) => setForm((f) => ({ ...f, max_uses: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 mb-1">
+                Per-Student Limit
+              </label>
+              <input
+                type="number"
+                min="1"
+                placeholder="1 (Single Use)"
+                className="input w-full rounded-xl"
+                value={form.max_uses_per_user}
+                onChange={(e) => setForm((f) => ({ ...f, max_uses_per_user: e.target.value }))}
               />
             </div>
 
@@ -381,6 +484,26 @@ export default function AdminCoupons() {
                 onChange={(e) => setForm((f) => ({ ...f, valid_until: e.target.value }))}
               />
             </div>
+          </div>
+
+          {/* Broadcast to Students Notification Checkbox */}
+          <div className="p-3 bg-blue-50/60 dark:bg-blue-950/40 rounded-xl border border-blue-200/80 dark:border-blue-900/60">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={form.notify_students}
+                onChange={(e) => setForm((f) => ({ ...f, notify_students: e.target.checked }))}
+                className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer"
+              />
+              <div className="text-xs">
+                <span className="font-extrabold text-blue-950 dark:text-blue-200 block">
+                  📢 Send In-App Notification to Students Immediately
+                </span>
+                <span className="text-[11px] text-blue-700 dark:text-blue-300 font-medium">
+                  Students will receive an active discount alert with a direct link to claim the coupon and enroll.
+                </span>
+              </div>
+            </label>
           </div>
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">

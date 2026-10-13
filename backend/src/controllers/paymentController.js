@@ -229,6 +229,39 @@ export const createOrder = asyncHandler(async (req, res) => {
       throw ApiError.badRequest('Invalid, expired, or fully used discount coupon');
     }
     coupon = cRes.rows[0];
+
+    // Enforce specific test series restriction
+    if (coupon.test_series_id && Number(coupon.test_series_id) !== Number(test_series_id)) {
+      const tsCheck = await query(`SELECT title FROM test_series WHERE id = $1`, [coupon.test_series_id]);
+      const targetTitle = tsCheck.rows[0]?.title || 'a different test series';
+      throw ApiError.badRequest(
+        `Coupon code "${coupon.code}" is only valid for "${targetTitle}". It cannot be applied to this test series.`
+      );
+    }
+
+    // Enforce per-student coupon usage limits
+    const maxUsesPerUser = Number(coupon.max_uses_per_user) || 1;
+    const existingUsage = await query(
+      `SELECT cr.id, ts.title AS test_series_title
+       FROM coupon_redemptions cr
+       LEFT JOIN test_series ts ON cr.test_series_id = ts.id
+       WHERE cr.user_id = $1 AND cr.coupon_id = $2
+       UNION
+       SELECT p.id, ts.title AS test_series_title
+       FROM payments p
+       LEFT JOIN test_series ts ON p.test_series_id = ts.id
+       WHERE p.user_id = $1 AND p.coupon_id = $2 AND p.status = 'success'
+       LIMIT 1`,
+      [userId, coupon.id]
+    );
+
+    if (existingUsage.rowCount >= maxUsesPerUser) {
+      const prevSeries = existingUsage.rows[0]?.test_series_title;
+      throw ApiError.badRequest(
+        `You have already used coupon code "${coupon.code}"${prevSeries ? ` on "${prevSeries}"` : ''}. Each coupon can only be used once per student.`
+      );
+    }
+
     discountAmount =
       coupon.discount_type === 'fixed'
         ? Number(coupon.discount_value)

@@ -9,6 +9,7 @@ import {
   FileText,
   Sparkles,
   Tag,
+  AlertCircle,
 } from 'lucide-react';
 import { publicService, paymentService, testSeriesService } from '../../lib/services.js';
 import { useAuth } from '../../context/AuthContext.jsx';
@@ -54,14 +55,20 @@ export default function TestSeriesDetail() {
 
   useEffect(() => {
     setState('loading');
-    Promise.all([
-      publicService.testSeriesDetail(slug),
-      publicService.activeCoupons().catch(() => []),
-    ])
-      .then(([d, cList]) => {
+    publicService
+      .testSeriesDetail(slug)
+      .then(async (d) => {
         setSeries(d.test_series);
+        const seriesId = d?.test_series?.id;
+        const cList = await publicService.activeCoupons(seriesId).catch(() => []);
         setAvailableCoupons(cList || []);
         setState('done');
+
+        // Automatically prefill/apply coupon from notification or referral link
+        const paramCoupon = searchParams.get('coupon');
+        if (paramCoupon && d?.test_series) {
+          applyCodeDirectly(paramCoupon.trim());
+        }
       })
       .catch(() => setState('error'));
   }, [slug]);
@@ -86,12 +93,14 @@ export default function TestSeriesDetail() {
     setValidatingCoupon(true);
     setCouponError('');
     try {
-      const res = await publicService.validateCoupon(code, series.price);
+      const res = await publicService.validateCoupon(code, series.price, series.id);
       setAppliedCoupon(res);
       toast.success(`Coupon "${res.coupon.code}" applied! Saved ₹${res.discount}.`);
     } catch (err) {
       setAppliedCoupon(null);
-      setCouponError(err.message || 'Invalid or expired coupon code.');
+      const errMsg = err.message || 'Invalid or expired coupon code.';
+      setCouponError(errMsg);
+      toast.error(errMsg);
     } finally {
       setValidatingCoupon(false);
     }
@@ -598,7 +607,14 @@ export default function TestSeriesDetail() {
                           </button>
                         </form>
                       )}
-                      {couponError && <p className="text-[11px] text-rose-600 font-semibold">{couponError}</p>}
+                      {couponError && (
+                        <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 text-xs font-semibold flex items-start gap-2 shadow-2xs">
+                          <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
+                          <div className="flex-1 leading-snug">
+                            <span>{couponError}</span>
+                          </div>
+                        </div>
+                      )}
 
                       {availableCoupons.length > 0 && !appliedCoupon && (
                         <div className="pt-2 border-t border-slate-200/80 space-y-1.5">

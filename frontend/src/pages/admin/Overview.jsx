@@ -66,6 +66,13 @@ export default function Overview() {
           <>
             <button
               type="button"
+              onClick={() => navigate('/admin/enquiries')}
+              className="btn btn-secondary"
+            >
+              Student Enquiries
+            </button>
+            <button
+              type="button"
               onClick={() => navigate('/admin/assessments')}
               className="btn btn-primary"
             >

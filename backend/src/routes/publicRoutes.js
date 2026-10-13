@@ -8,6 +8,8 @@ import {
   submitPublicAdmission,
   getPublicAdmissionByAppNo
 } from '../controllers/admissionController.js';
+import { submitPublicStudentEnquiry } from '../controllers/studentEnquiryController.js';
+import { optionalAuthenticate } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -20,8 +22,13 @@ router.get('/subjects', listSubjects);
 router.get('/cms', listPublicCms);
 router.get('/cms/:slug', getCmsPage);
 router.get('/coupons/active', listPublicCoupons);
-router.post('/coupons/validate', validateCoupon);
+router.post('/coupons/validate', optionalAuthenticate, validateCoupon);
 router.post('/b2b-enquiry', createB2bEnquiry);
+
+// Student Visitor & Study Goals Enquiry Routes
+router.post('/student-enquiries', submitPublicStudentEnquiry);
+router.post('/student-enquiry', submitPublicStudentEnquiry);
+router.post('/enquiries', submitPublicStudentEnquiry);
 
 // Dynamic Admission Form Public Routes (noCache ensures instant reflection when admin updates schema)
 router.get('/admission-form', noCache, getPublicAdmissionFormConfig);

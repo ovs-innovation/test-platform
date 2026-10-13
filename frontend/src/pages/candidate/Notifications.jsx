@@ -3,17 +3,27 @@ import { Link } from 'react-router-dom';
 import { notificationService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, PageHeader, Spinner, EmptyState } from '../../components/ui.jsx';
 import { formatDateTime } from '../../lib/format.js';
-import { Bell, BookOpen, BarChart3, MessageSquare, CheckCircle2, X, Trash2 } from 'lucide-react';
+import { Bell, BookOpen, BarChart3, MessageSquare, CheckCircle2, X, Trash2, Tag } from 'lucide-react';
 
-function getNotificationStyle(title = '', type = '') {
+function getNotificationStyle(title = '', type = '', link = '') {
   const lower = `${title || ''} ${type || ''}`.toLowerCase();
+  if (lower.includes('coupon') || lower.includes('discount') || type === 'coupon_offer' || lower.includes('promo')) {
+    return {
+      badgeClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-300 border-emerald-500/20',
+      borderClass: 'border-l-4 border-l-emerald-600',
+      category: 'Special Promo Offer',
+      iconClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
+      actionLink: link || '/tests',
+      actionText: 'Claim Discount',
+    };
+  }
   if (lower.includes('ebook') || lower.includes('notes') || lower.includes('study material') || lower.includes('e-book')) {
     return {
       badgeClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-300 border-purple-500/20',
       borderClass: 'border-l-4 border-l-purple-600',
       category: 'Study Material',
       iconClass: 'bg-purple-500/10 text-purple-600 dark:text-purple-400',
-      actionLink: '/my-ebooks',
+      actionLink: link || '/my-ebooks',
       actionText: 'Open Material',
     };
   }
@@ -23,7 +33,7 @@ function getNotificationStyle(title = '', type = '') {
       borderClass: 'border-l-4 border-l-blue-600',
       category: 'Test Series Access',
       iconClass: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
-      actionLink: '/my-tests',
+      actionLink: link || '/my-tests',
       actionText: 'View Tests',
     };
   }
@@ -41,7 +51,7 @@ function getNotificationStyle(title = '', type = '') {
       borderClass: 'border-l-4 border-l-emerald-600',
       category: 'Payment Receipt',
       iconClass: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400',
-      actionLink: '/payments',
+      actionLink: link || '/payments',
       actionText: 'View Receipt',
     };
   }
@@ -50,6 +60,8 @@ function getNotificationStyle(title = '', type = '') {
     borderClass: 'border-l-4 border-l-amber-500',
     category: 'CBT Reminder',
     iconClass: 'bg-amber-500/10 text-amber-600 dark:text-amber-400',
+    actionLink: link || null,
+    actionText: 'Open',
   };
 }
 
@@ -200,7 +212,7 @@ export default function Notifications() {
       ) : (
         <div className="space-y-2.5">
           {notifications.map((n) => {
-            const style = getNotificationStyle(n.title, n.type);
+            const style = getNotificationStyle(n.title, n.type, n.link);
             const isUnread = !n.read_at;
 
             return (
@@ -214,7 +226,13 @@ export default function Notifications() {
               >
                 <div className="flex items-start gap-3">
                   <div className={`p-2 rounded-lg shrink-0 mt-0.5 ${style.iconClass || 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}`}>
-                    {style.category === 'Study Material' ? <BookOpen className="h-4 w-4" /> : <Bell className="h-4 w-4" />}
+                    {style.category === 'Study Material' ? (
+                      <BookOpen className="h-4 w-4" />
+                    ) : style.category === 'Special Promo Offer' ? (
+                      <Tag className="h-4 w-4" />
+                    ) : (
+                      <Bell className="h-4 w-4" />
+                    )}
                   </div>
 
                   <div>

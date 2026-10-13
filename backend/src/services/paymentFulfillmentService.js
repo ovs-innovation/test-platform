@@ -87,11 +87,18 @@ export const fulfillPaymentOrder = async ({
 
     const updatedPayment = updatePayRes.rows[0];
 
-    // 3. Atomically increment coupon used_count if not previously counted
+    // 3. Atomically increment coupon used_count and record user redemption if not previously counted
     if (payment.coupon_id && payment.status !== 'success') {
       await dbClient.query(
         `UPDATE coupons SET used_count = used_count + 1 WHERE id = $1`,
         [payment.coupon_id]
+      );
+
+      await dbClient.query(
+        `INSERT INTO coupon_redemptions (coupon_id, user_id, test_series_id, payment_id, discount_amount)
+         VALUES ($1, $2, $3, $4, $5)
+         ON CONFLICT (coupon_id, user_id) DO NOTHING`,
+        [payment.coupon_id, payment.user_id, payment.test_series_id, payment.id, payment.discount_amount || 0]
       );
     }
 

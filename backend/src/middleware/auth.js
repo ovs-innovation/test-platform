@@ -88,6 +88,41 @@ export const authenticate = async (req, _res, next) => {
 };
 
 /**
+ * Optional authentication: attaches req.user if valid token exists, but proceeds anyway if not.
+ */
+export const optionalAuthenticate = async (req, _res, next) => {
+  const token = extractToken(req);
+  if (!token) return next();
+
+  try {
+    const decoded = verifyToken(token);
+    if (!decoded) return next();
+
+    const subNum = Number(decoded?.sub);
+    if (!isNaN(subNum) && Number.isInteger(subNum)) {
+      const userRes = await query(
+        'SELECT id, role, email, name, is_blocked, institution_id, batch_id FROM users WHERE id = $1',
+        [subNum]
+      );
+      if (userRes.rowCount > 0 && !userRes.rows[0].is_blocked) {
+        const user = userRes.rows[0];
+        req.user = {
+          id: user.id,
+          role: user.role,
+          email: user.email,
+          name: user.name,
+          institution_id: user.institution_id || null,
+          batch_id: user.batch_id || null,
+        };
+      }
+    }
+  } catch (_err) {
+    // Silent ignore for optional authentication
+  }
+  return next();
+};
+
+/**
  * Restricts a route to specific roles. Use after `authenticate`.
  */
 export const authorize = (...roles) => (req, _res, next) => {

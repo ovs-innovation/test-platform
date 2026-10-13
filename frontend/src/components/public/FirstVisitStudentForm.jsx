@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { admissionService } from '../../lib/services.js';
+import { enquiryService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../Modal.jsx';
 
@@ -94,24 +94,17 @@ export default function FirstVisitStudentForm({ loading, user, children }) {
     const studentName = form.name.trim();
     const mobile = form.mobile.trim();
     const email = form.email.trim();
-    const formData = {
-      fullName: studentName,
-      studentMobile: mobile,
-      email,
-      currentClass: form.studentClass,
-      targetExam: form.exam,
-      source: 'first_visit_popup',
-    };
+    const studentClass = form.studentClass;
+    const exam = form.exam;
 
     try {
-      await admissionService.submitAdmission({
-        studentName,
-        fatherName: '',
-        contactNumber: mobile,
+      await enquiryService.submitStudentEnquiry({
+        name: studentName,
+        mobile,
         email,
-        courseName: form.exam,
-        formData,
-        documents: [],
+        studentClass,
+        exam,
+        source: 'first_visit_popup',
       });
       try {
         localStorage.setItem(key, 'submitted');
@@ -119,9 +112,9 @@ export default function FirstVisitStudentForm({ loading, user, children }) {
         console.error('Unable to save first-visit student form status:', error);
       }
       setOpen(false);
-      toast.success('Thanks! Your student details have been submitted.');
+      toast.success('Thanks! Your details have been submitted. Our team will contact you shortly.');
     } catch (error) {
-      toast.error(error?.message || 'Unable to submit your details. Please try again.');
+      toast.error(error?.response?.data?.message || error?.message || 'Unable to submit your details. Please try again.');
     } finally {
       setSaving(false);
     }

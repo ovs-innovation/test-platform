@@ -258,41 +258,215 @@ export const getCertificate = asyncHandler(async (req, res) => {
 
 import { processAndUploadImage } from '../services/cloudinaryService.js';
 
-export const listForumTopics = asyncHandler(async (_req, res) => {
-  // Ensure image_url columns exist
+/**
+ * Helper: Retrieve student's discussion scope (enrolled test series & target exam)
+ */
+export async function getStudentDiscussionScope(userId) {
+  const numId = Number(userId);
+  if (!numId || isNaN(numId)) {
+    return {
+      testSeriesList: [],
+      testSeriesIds: [],
+      examTypes: [],
+      targetExam: null,
+      isFreeDefault: false
+    };
+  }
+
+  // 1. Fetch active test series enrollments
+  const enrollRes = await query(
+    `SELECT se.test_series_id, ts.title AS test_series_title, ts.exam_type, ts.slug
+     FROM student_enrollments se
+     JOIN test_series ts ON ts.id = se.test_series_id
+     WHERE se.user_id = $1 AND se.status = 'active'
+     ORDER BY se.purchased_at DESC`,
+    [numId]
+  );
+
+  // 2. Fetch student profile target exam
+  const profileRes = await query(
+    `SELECT target_exam FROM student_profiles WHERE user_id = $1`,
+    [numId]
+  );
+  const targetExam = profileRes.rows[0]?.target_exam || null;
+
+  const testSeriesList = enrollRes.rows;
+  const testSeriesIds = testSeriesList.map((r) => r.test_series_id);
+
+  // 3. Extract unique exam types
+  const examSet = new Set();
+  testSeriesList.forEach((r) => {
+    if (r.exam_type && r.exam_type.trim()) {
+      examSet.add(r.exam_type.trim());
+    }
+  });
+  if (targetExam && targetExam.trim()) {
+    examSet.add(targetExam.trim());
+  }
+
+  // If student has no enrollments yet, offer free/active test series so they can participate in free student discussions
+  if (testSeriesIds.length === 0) {
+    const freeRes = await query(
+      `SELECT id AS test_series_id, title AS test_series_title, exam_type, slug
+       FROM test_series
+       WHERE is_active = true AND (price = 0 OR is_featured = true)
+       LIMIT 6`
+    );
+    freeRes.rows.forEach((r) => {
+      if (r.exam_type) examSet.add(r.exam_type.trim());
+    });
+    return {
+      testSeriesList: freeRes.rows,
+      testSeriesIds: freeRes.rows.map((r) => r.test_series_id),
+      examTypes: Array.from(examSet),
+      targetExam,
+      isFreeDefault: true
+    };
+  }
+
+  return {
+    testSeriesList,
+    testSeriesIds,
+    examTypes: Array.from(examSet),
+    targetExam,
+    isFreeDefault: false
+  };
+}
+
+export const listForumTopics = asyncHandler(async (req, res) => {
+  // Ensure image_url, test_series_id, and exam_type columns exist
   await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
   await query(`ALTER TABLE forum_replies ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS test_series_id INTEGER REFERENCES test_series(id) ON DELETE SET NULL`).catch(() => {});
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS exam_type VARCHAR(100)`).catch(() => {});
+
+  const { testSeriesId, examType } = req.query;
+  const isStaff = req.user?.role === 'admin' || req.user?.role === 'faculty';
+
+  let scope = null;
+  const conditions = [];
+  const params = [];
+
+  if (!isStaff) {
+    scope = await getStudentDiscussionScope(req.user.id);
+
+    // If specific testSeriesId filter requested
+    if (testSeriesId && testSeriesId !== 'all') {
+      const tsId = parseInt(testSeriesId, 10);
+      params.push(tsId);
+      conditions.push(`ft.test_series_id = $${params.length}`);
+    } else if (examType && examType !== 'all') {
+      params.push(examType.trim());
+      conditions.push(`LOWER(COALESCE(ft.exam_type, '')) = LOWER($${params.length})`);
+    } else {
+      // Default candidate view: ONLY show topics matching student's enrolled test series OR their enrolled exams
+      const allowedSeries = scope.testSeriesIds;
+      const allowedExams = scope.examTypes.map((e) => e.toLowerCase());
+
+      const scopeConditions = [];
+
+      if (allowedSeries.length > 0) {
+        params.push(allowedSeries);
+        scopeConditions.push(`ft.test_series_id = ANY($${params.length}::int[])`);
+      }
+
+      if (allowedExams.length > 0) {
+        params.push(allowedExams);
+        scopeConditions.push(`LOWER(COALESCE(ft.exam_type, '')) = ANY($${params.length}::text[])`);
+      }
+
+      if (scopeConditions.length > 0) {
+        conditions.push(`(${scopeConditions.join(' OR ')})`);
+      } else {
+        conditions.push(`(ft.test_series_id IS NULL AND (ft.exam_type IS NULL OR ft.exam_type = 'General'))`);
+      }
+    }
+  } else {
+    // Staff view: can see all topics or filter
+    if (testSeriesId && testSeriesId !== 'all') {
+      params.push(parseInt(testSeriesId, 10));
+      conditions.push(`ft.test_series_id = $${params.length}`);
+    }
+    if (examType && examType !== 'all') {
+      params.push(examType.trim());
+      conditions.push(`LOWER(COALESCE(ft.exam_type, '')) = LOWER($${params.length})`);
+    }
+  }
+
+  const whereClause = conditions.length ? `WHERE ${conditions.join(' AND ')}` : '';
 
   const result = await query(
-    `SELECT ft.*, u.name AS author_name, u.role AS author_role,
+    `SELECT ft.*, 
+            ts.title AS test_series_title,
+            ts.slug AS test_series_slug,
+            u.name AS author_name, 
+            u.role AS author_role,
             COUNT(fr.id)::int AS reply_count,
-            COUNT(CASE WHEN u_reply.role = 'admin' THEN 1 END)::int AS faculty_reply_count
+            COUNT(CASE WHEN u_reply.role = 'admin' OR u_reply.role = 'faculty' THEN 1 END)::int AS faculty_reply_count
      FROM forum_topics ft 
      JOIN users u ON u.id = ft.user_id
+     LEFT JOIN test_series ts ON ts.id = ft.test_series_id
      LEFT JOIN forum_replies fr ON fr.topic_id = ft.id
      LEFT JOIN users u_reply ON u_reply.id = fr.user_id
-     GROUP BY ft.id, u.name, u.role ORDER BY ft.created_at DESC LIMIT 50`
+     ${whereClause}
+     GROUP BY ft.id, ts.title, ts.slug, u.name, u.role 
+     ORDER BY ft.created_at DESC 
+     LIMIT 100`,
+    params
   );
-  res.json({ topics: result.rows });
+
+  res.json({
+    topics: result.rows,
+    scope: scope || { testSeriesList: [], examTypes: [], targetExam: null }
+  });
 });
 
 export const getForumTopic = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const topic = await query(
-    `SELECT ft.*, u.name AS author_name, u.role AS author_role FROM forum_topics ft JOIN users u ON u.id = ft.user_id WHERE ft.id = $1`,
+    `SELECT ft.*, 
+            ts.title AS test_series_title,
+            ts.slug AS test_series_slug,
+            u.name AS author_name, 
+            u.role AS author_role 
+     FROM forum_topics ft 
+     LEFT JOIN test_series ts ON ts.id = ft.test_series_id
+     JOIN users u ON u.id = ft.user_id 
+     WHERE ft.id = $1`,
     [id]
   );
   if (!topic.rowCount) throw ApiError.notFound('Topic not found');
+
+  const topicData = topic.rows[0];
+  const isStaff = req.user?.role === 'admin' || req.user?.role === 'faculty';
+
+  // Security: Check candidate has matching test series or exam
+  if (!isStaff) {
+    const scope = await getStudentDiscussionScope(req.user.id);
+    const hasSeriesMatch = topicData.test_series_id && scope.testSeriesIds.includes(topicData.test_series_id);
+    const hasExamMatch = topicData.exam_type && scope.examTypes.some((e) => e.toLowerCase() === topicData.exam_type.toLowerCase());
+    const isAuthor = topicData.user_id === req.user.id;
+
+    if (topicData.test_series_id || topicData.exam_type) {
+      if (!hasSeriesMatch && !hasExamMatch && !isAuthor && !scope.isFreeDefault) {
+        throw ApiError.forbidden('This discussion topic is exclusive to students enrolled in this Test Series or Exam.');
+      }
+    }
+  }
+
   const replies = await query(
-    `SELECT fr.*, u.name AS author_name, u.role AS author_role FROM forum_replies fr JOIN users u ON u.id = fr.user_id
-     WHERE fr.topic_id = $1 ORDER BY fr.created_at ASC`,
+    `SELECT fr.*, u.name AS author_name, u.role AS author_role 
+     FROM forum_replies fr 
+     JOIN users u ON u.id = fr.user_id
+     WHERE fr.topic_id = $1 
+     ORDER BY fr.created_at ASC`,
     [id]
   );
-  res.json({ topic: topic.rows[0], replies: replies.rows });
+  res.json({ topic: topicData, replies: replies.rows });
 });
 
 export const createForumTopic = asyncHandler(async (req, res) => {
-  const { title, body, imageUrl } = req.body;
+  const { title, body, imageUrl, testSeriesId, examType } = req.body;
 
   let finalImageUrl = null;
   if (imageUrl && typeof imageUrl === 'string' && imageUrl.trim()) {
@@ -304,10 +478,42 @@ export const createForumTopic = asyncHandler(async (req, res) => {
   }
 
   await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS test_series_id INTEGER REFERENCES test_series(id) ON DELETE SET NULL`).catch(() => {});
+  await query(`ALTER TABLE forum_topics ADD COLUMN IF NOT EXISTS exam_type VARCHAR(100)`).catch(() => {});
+
+  const scope = await getStudentDiscussionScope(req.user.id);
+
+  let targetSeriesId = testSeriesId ? parseInt(testSeriesId, 10) : null;
+  let targetExam = examType ? examType.trim() : null;
+
+  // If candidate selected a test series, verify enrollment or lookup exam type
+  if (targetSeriesId) {
+    const matched = scope.testSeriesList.find((ts) => ts.test_series_id === targetSeriesId);
+    if (matched) {
+      targetExam = targetExam || matched.exam_type;
+    } else {
+      const tsRow = await query('SELECT id, exam_type FROM test_series WHERE id = $1', [targetSeriesId]);
+      if (tsRow.rowCount) {
+        targetExam = targetExam || tsRow.rows[0].exam_type;
+      }
+    }
+  } else {
+    // Default to student's first active enrolled test series
+    if (scope.testSeriesList.length > 0) {
+      targetSeriesId = scope.testSeriesList[0].test_series_id;
+      targetExam = targetExam || scope.testSeriesList[0].exam_type;
+    } else if (scope.targetExam) {
+      targetExam = scope.targetExam;
+    } else {
+      targetExam = 'General';
+    }
+  }
 
   const result = await query(
-    `INSERT INTO forum_topics (user_id, title, body, image_url) VALUES ($1,$2,$3,$4) RETURNING *`,
-    [req.user.id, title, body, finalImageUrl]
+    `INSERT INTO forum_topics (user_id, title, body, image_url, test_series_id, exam_type) 
+     VALUES ($1,$2,$3,$4,$5,$6) 
+     RETURNING *`,
+    [req.user.id, title, body, finalImageUrl, targetSeriesId || null, targetExam || null]
   );
   res.status(201).json({ topic: result.rows[0] });
 });
@@ -327,9 +533,27 @@ export const replyForumTopic = asyncHandler(async (req, res) => {
 
   await query(`ALTER TABLE forum_replies ADD COLUMN IF NOT EXISTS image_url TEXT`).catch(() => {});
 
-  const topic = await query('SELECT id, is_locked FROM forum_topics WHERE id = $1', [id]);
-  if (!topic.rowCount) throw ApiError.notFound('Topic not found');
-  if (topic.rows[0].is_locked) throw ApiError.badRequest('Topic is locked');
+  const topicRes = await query('SELECT id, is_locked, test_series_id, exam_type, user_id FROM forum_topics WHERE id = $1', [id]);
+  if (!topicRes.rowCount) throw ApiError.notFound('Topic not found');
+  const topic = topicRes.rows[0];
+
+  if (topic.is_locked) throw ApiError.badRequest('This topic is locked by faculty/admin.');
+
+  const isStaff = req.user?.role === 'admin' || req.user?.role === 'faculty';
+
+  // Candidate enrollment check: can only reply if enrolled in same test series or exam
+  if (!isStaff) {
+    const scope = await getStudentDiscussionScope(req.user.id);
+    const hasSeriesMatch = topic.test_series_id && scope.testSeriesIds.includes(topic.test_series_id);
+    const hasExamMatch = topic.exam_type && scope.examTypes.some((e) => e.toLowerCase() === topic.exam_type.toLowerCase());
+    const isAuthor = topic.user_id === req.user.id;
+
+    if (topic.test_series_id || topic.exam_type) {
+      if (!hasSeriesMatch && !hasExamMatch && !isAuthor && !scope.isFreeDefault) {
+        throw ApiError.forbidden('You can only reply to discussions in your enrolled Test Series or Exam.');
+      }
+    }
+  }
 
   const result = await query(
     `INSERT INTO forum_replies (topic_id, user_id, body, image_url) VALUES ($1,$2,$3,$4) RETURNING *`,

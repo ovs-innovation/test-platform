@@ -353,7 +353,10 @@ export const listAdminAdmissions = asyncHandler(async (req, res) => {
   const l = Math.min(100, Math.max(1, parseInt(limit, 10)));
   const offset = (p - 1) * l;
 
-  const conditions = [];
+  const conditions = [
+    `(form_data->>'source' IS NULL OR form_data->>'source' != 'first_visit_popup')`,
+    `application_no NOT LIKE 'EDV-ENQ-%'`
+  ];
   const params = [];
 
   if (status && status !== 'all') {

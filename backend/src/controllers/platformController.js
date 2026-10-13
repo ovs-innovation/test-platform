@@ -153,19 +153,96 @@ export const getPublicLandingContent = asyncHandler(async (_req, res) => {
 
 // ─── Coupons ────────────────────────────────────────────────────────────────
 
+export const broadcastCouponNotification = async (couponId) => {
+  const cRes = await query(
+    `SELECT c.*, ts.title AS test_series_title, ts.slug AS test_series_slug
+     FROM coupons c
+     LEFT JOIN test_series ts ON c.test_series_id = ts.id
+     WHERE c.id = $1`,
+    [couponId]
+  );
+  if (!cRes.rowCount) return 0;
+  const coupon = cRes.rows[0];
+
+  const discountDisplay =
+    coupon.discount_type === 'percent'
+      ? `${coupon.discount_value}% OFF`
+      : `₹${coupon.discount_value} OFF`;
+
+  const title = coupon.test_series_title
+    ? `🎟️ Special Offer: ${discountDisplay} on ${coupon.test_series_title}!`
+    : `🎟️ Special Promo Offer: ${discountDisplay} with Code ${coupon.code}!`;
+
+  const body = coupon.test_series_title
+    ? `Use coupon code "${coupon.code}" to get ${discountDisplay} discount on "${coupon.test_series_title}". Limited time offer!`
+    : `Use coupon code "${coupon.code}" to get ${discountDisplay} discount on test series. Limited time offer!`;
+
+  const link = coupon.test_series_slug
+    ? `/test-series/${coupon.test_series_slug}?coupon=${coupon.code}`
+    : `/tests?coupon=${coupon.code}`;
+
+  const notifRes = await query(
+    `INSERT INTO notifications (user_id, title, body, type, link)
+     SELECT id, $1, $2, 'coupon_offer', $3
+     FROM users
+     WHERE role = 'candidate' AND is_blocked = false`,
+    [title, body, link]
+  );
+  return notifRes.rowCount;
+};
+
 export const listCoupons = asyncHandler(async (_req, res) => {
-  const result = await query('SELECT * FROM coupons ORDER BY created_at DESC');
+  const result = await query(`
+    SELECT c.*,
+      ts.title AS test_series_title,
+      ts.slug AS test_series_slug,
+      (SELECT COUNT(DISTINCT user_id) FROM coupon_redemptions WHERE coupon_id = c.id) AS student_redeemed_count
+    FROM coupons c
+    LEFT JOIN test_series ts ON c.test_series_id = ts.id
+    ORDER BY c.created_at DESC
+  `);
   res.json({ coupons: result.rows });
 });
 
 export const createCoupon = asyncHandler(async (req, res) => {
-  const { code, discount_type, discount_value, max_uses, valid_until } = req.body;
+  const {
+    code,
+    discount_type,
+    discount_value,
+    max_uses,
+    max_uses_per_user,
+    valid_until,
+    test_series_id,
+    notify_students
+  } = req.body;
+  const tsId = test_series_id ? Number(test_series_id) : null;
+
   const result = await query(
-    `INSERT INTO coupons (code, discount_type, discount_value, max_uses, valid_until)
-     VALUES ($1,$2,$3,$4,$5) RETURNING *`,
-    [code.toUpperCase(), discount_type || 'percent', discount_value, max_uses || null, valid_until || null]
+    `INSERT INTO coupons (code, discount_type, discount_value, max_uses, max_uses_per_user, valid_until, test_series_id)
+     VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+    [
+      code.toUpperCase().trim(),
+      discount_type || 'percent',
+      discount_value,
+      max_uses ? Number(max_uses) : null,
+      max_uses_per_user ? Number(max_uses_per_user) : 1,
+      valid_until || null,
+      tsId
+    ]
   );
-  res.status(201).json({ coupon: result.rows[0] });
+  const coupon = result.rows[0];
+
+  let notifiedCount = 0;
+  if (notify_students) {
+    notifiedCount = await broadcastCouponNotification(coupon.id);
+  }
+
+  res.status(201).json({ coupon, notified_students: notifiedCount });
+});
+
+export const notifyCouponStudents = asyncHandler(async (req, res) => {
+  const count = await broadcastCouponNotification(req.params.id);
+  res.json({ success: true, message: `Notification sent to ${count} active students.` });
 });
 
 export const toggleCoupon = asyncHandler(async (req, res) => {
@@ -183,28 +260,81 @@ export const deleteCoupon = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Coupon deleted successfully' });
 });
 
-export const listPublicCoupons = asyncHandler(async (_req, res) => {
-  const result = await query(
-    `SELECT code, discount_type, discount_value, valid_until
-     FROM coupons
-     WHERE is_active = true
-       AND (valid_until IS NULL OR valid_until > NOW())
-       AND (max_uses IS NULL OR used_count < max_uses)
-     ORDER BY created_at DESC LIMIT 5`
-  );
+export const listPublicCoupons = asyncHandler(async (req, res) => {
+  const { test_series_id } = req.query;
+  let sql = `
+    SELECT c.id, c.code, c.discount_type, c.discount_value, c.valid_until, c.test_series_id,
+           ts.title AS test_series_title
+    FROM coupons c
+    LEFT JOIN test_series ts ON c.test_series_id = ts.id
+    WHERE c.is_active = true
+      AND (c.valid_until IS NULL OR c.valid_until > NOW())
+      AND (c.max_uses IS NULL OR c.used_count < c.max_uses)
+  `;
+  const params = [];
+  if (test_series_id) {
+    sql += ` AND (c.test_series_id IS NULL OR c.test_series_id = $1)`;
+    params.push(Number(test_series_id));
+  }
+  sql += ` ORDER BY c.created_at DESC LIMIT 10`;
+  const result = await query(sql, params);
   res.json({ coupons: result.rows });
 });
 
 export const validateCoupon = asyncHandler(async (req, res) => {
-  const { code, amount } = req.body;
+  const { code, amount, test_series_id } = req.body;
+  if (!code || !String(code).trim()) {
+    throw ApiError.badRequest('Coupon code is required');
+  }
+
   const result = await query(
-    `SELECT * FROM coupons WHERE UPPER(code) = UPPER($1) AND is_active = true
-     AND (valid_until IS NULL OR valid_until > NOW())
-     AND (max_uses IS NULL OR used_count < max_uses)`,
-    [code]
+    `SELECT c.*, ts.title AS target_series_title
+     FROM coupons c
+     LEFT JOIN test_series ts ON c.test_series_id = ts.id
+     WHERE UPPER(c.code) = UPPER($1) AND c.is_active = true
+       AND (c.valid_until IS NULL OR c.valid_until > NOW())
+       AND (c.max_uses IS NULL OR c.used_count < c.max_uses)`,
+    [code.trim()]
   );
-  if (!result.rowCount) throw ApiError.badRequest('Invalid or expired coupon');
+  if (!result.rowCount) throw ApiError.badRequest('Invalid, expired, or fully used discount coupon');
   const c = result.rows[0];
+
+  // Specific Test Series Validation
+  if (c.test_series_id) {
+    if (!test_series_id || Number(c.test_series_id) !== Number(test_series_id)) {
+      const targetTitle = c.target_series_title || 'a specific test series';
+      throw ApiError.badRequest(
+        `Coupon code "${c.code}" is only valid for "${targetTitle}". It cannot be applied to this test series.`
+      );
+    }
+  }
+
+  // If user is authenticated, enforce per-student coupon usage limits
+  const userId = req.user?.id;
+  if (userId) {
+    const maxUsesPerUser = Number(c.max_uses_per_user) || 1;
+    const existingUsage = await query(
+      `SELECT cr.id, ts.title AS test_series_title, cr.redeemed_at
+       FROM coupon_redemptions cr
+       LEFT JOIN test_series ts ON cr.test_series_id = ts.id
+       WHERE cr.user_id = $1 AND cr.coupon_id = $2
+       UNION
+       SELECT p.id, ts.title AS test_series_title, p.created_at AS redeemed_at
+       FROM payments p
+       LEFT JOIN test_series ts ON p.test_series_id = ts.id
+       WHERE p.user_id = $1 AND p.coupon_id = $2 AND p.status = 'success'
+       LIMIT 1`,
+      [userId, c.id]
+    );
+
+    if (existingUsage.rowCount >= maxUsesPerUser) {
+      const prevSeries = existingUsage.rows[0]?.test_series_title;
+      throw ApiError.badRequest(
+        `You have already used coupon code "${c.code}"${prevSeries ? ` on "${prevSeries}"` : ''}. Each coupon can only be used once per student.`
+      );
+    }
+  }
+
   const base = Number(amount) || 0;
   let discount = c.discount_type === 'fixed' ? Number(c.discount_value) : (base * Number(c.discount_value)) / 100;
   discount = Math.min(discount, base);

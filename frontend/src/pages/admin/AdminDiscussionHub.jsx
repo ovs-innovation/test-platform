@@ -365,6 +365,22 @@ export default function AdminDiscussionHub() {
                       <span className="text-[10px] text-slate-400 shrink-0">{formatDateTime(t.created_at)}</span>
                     </div>
 
+                    {(t.test_series_title || t.exam_type) && (
+                      <div className="flex items-center flex-wrap gap-1 mt-1.5">
+                        {t.test_series_title && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/70 dark:border-indigo-800/50 px-1.5 py-0.5 rounded max-w-full truncate" title={t.test_series_title}>
+                            <GraduationCap className="w-2.5 h-2.5 shrink-0" />
+                            <span className="truncate">{t.test_series_title}</span>
+                          </span>
+                        )}
+                        {t.exam_type && (
+                          <span className="text-[10px] font-bold text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/40 border border-cyan-200/70 dark:border-cyan-800/50 px-1.5 py-0.5 rounded shrink-0">
+                            🎯 {t.exam_type}
+                          </span>
+                        )}
+                      </div>
+                    )}
+
                     <div className="mt-2.5 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-2 text-[10.5px]">
                       {hasFacultyReply ? (
                         <span className="inline-flex items-center gap-1 font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-900/60">
@@ -449,6 +465,23 @@ export default function AdminDiscussionHub() {
 
                 {/* Question Title & Description Box */}
                 <div className="mt-3 p-4 bg-slate-50 dark:bg-slate-900/90 border border-slate-200/80 dark:border-slate-800 rounded-2xl space-y-3">
+                  {/* Test Series & Exam Context */}
+                  {(topicDetail.topic.test_series_title || topicDetail.topic.exam_type) && (
+                    <div className="flex flex-wrap items-center gap-2 pb-1 border-b border-slate-200/60 dark:border-slate-800">
+                      {topicDetail.topic.test_series_title && (
+                        <span className="inline-flex items-center gap-1.5 text-xs font-extrabold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/50 border border-indigo-200 dark:border-indigo-800/80 px-2.5 py-1 rounded-lg">
+                          <GraduationCap className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                          <span>Test Series: <strong>{topicDetail.topic.test_series_title}</strong></span>
+                        </span>
+                      )}
+                      {topicDetail.topic.exam_type && (
+                        <span className="text-xs font-extrabold text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/50 border border-cyan-200 dark:border-cyan-800/80 px-2.5 py-1 rounded-lg">
+                          🎯 Exam: <strong>{topicDetail.topic.exam_type}</strong>
+                        </span>
+                      )}
+                    </div>
+                  )}
+
                   <h2 className="text-sm font-black text-slate-900 dark:text-white leading-snug">{topicDetail.topic.title}</h2>
                   <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">{topicDetail.topic.body}</p>
 

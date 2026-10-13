@@ -71,7 +71,7 @@ import {
 import { listBatches, createBatch, deleteBatch } from '../controllers/batchController.js';
 import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
-  listCoupons, createCoupon, toggleCoupon, deleteCoupon,
+  listCoupons, createCoupon, toggleCoupon, deleteCoupon, notifyCouponStudents,
   listFaculty, createFaculty, deleteFaculty,
   adminListSubjects, createSubject, deleteSubject, createChapter, deleteChapter, listChapters, createTopic, deleteTopic,
   getSettings, updateSettings, broadcastNotification,
@@ -142,6 +142,7 @@ router.get('/landing-content', getAdminLandingContent);
 router.put('/landing-content', updateAdminLandingContent);
 router.get('/coupons', listCoupons);
 router.post('/coupons', createCoupon);
+router.post('/coupons/:id/notify', notifyCouponStudents);
 router.patch('/coupons/:id/toggle', toggleCoupon);
 router.delete('/coupons/:id', deleteCoupon);
 router.get('/faculty', listFaculty);
@@ -206,6 +207,13 @@ router.patch('/forum/:id/lock', lockAdminForumTopic);
 router.delete('/forum/:id', deleteAdminForumTopic);
 router.delete('/forum/replies/:replyId', deleteAdminForumReply);
 
+import {
+  listAdminStudentEnquiries,
+  getAdminStudentEnquiryDetail,
+  updateAdminStudentEnquiry,
+  deleteAdminStudentEnquiry,
+} from '../controllers/studentEnquiryController.js';
+
 // Admin Dynamic Admission Form Builder & Submissions Endpoints
 import {
   getAdminAdmissionFormConfig,
@@ -216,6 +224,12 @@ import {
   updateAdminAdmissionStatus,
   deleteAdminAdmission,
 } from '../controllers/admissionController.js';
+
+// Admin Student Enquiries Endpoints
+router.get('/enquiries', listAdminStudentEnquiries);
+router.get('/enquiries/:id', getAdminStudentEnquiryDetail);
+router.patch('/enquiries/:id', updateAdminStudentEnquiry);
+router.delete('/enquiries/:id', deleteAdminStudentEnquiry);
 
 router.get('/admission-form', getAdminAdmissionFormConfig);
 router.put('/admission-form', updateAdminAdmissionFormConfig);
