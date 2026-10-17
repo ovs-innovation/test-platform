@@ -217,10 +217,12 @@ export const bankBulkImportSchema = z.object({
 export const markReviewSchema = z.object({
   question_id: z.number().int().positive(),
   marked_for_review: z.boolean().optional(),
+  client_timestamp: z.union([z.number(), z.string()]).optional(),
 });
 
 export const clearAnswerSchema = z.object({
   question_id: z.number().int().positive(),
+  client_timestamp: z.union([z.number(), z.string()]).optional(),
 });
 
 export const otpSendSchema = z.object({
@@ -418,19 +420,83 @@ export const saveAnswerSchema = z.object({
   selected_index: z.coerce.number().int().min(0).nullable().optional(),
   selected_indices: z.array(z.coerce.number().int().min(0)).optional(),
   numeric_answer: z.union([z.number(), z.string()]).nullable().optional(),
+  client_timestamp: z.union([z.number(), z.string()]).optional(),
 });
 
 export const saveCodingSchema = z.object({
   question_id: z.number().int().positive(),
   source_code: z.string().max(50000),
   language: z.string().max(30).default('javascript'),
+  client_timestamp: z.union([z.number(), z.string()]).optional(),
 });
 
 export const saveSubjectiveSchema = z.object({
   question_id: z.number().int().positive(),
   answer_text: z.string().max(10000),
+  client_timestamp: z.union([z.number(), z.string()]).optional(),
 });
 
 export const violationSchema = z.object({
   violation_type: z.string().trim().min(1).max(60),
 });
+
+export const INCIDENT_CATEGORIES = [
+  'NETWORK_DISCONNECTED',
+  'NETWORK_RESTORED',
+  'ANSWER_SAVE_FAILED',
+  'QUESTION_LOAD_FAILED',
+  'SUBMISSION_FAILED',
+  'APPLICATION_ERROR',
+  'TIMER_MISMATCH',
+  'RECORDING_FAILED',
+  'SCREENSHOT_FAILED',
+  'SCREEN_SHARING_STOPPED',
+  'STUDENT_REPORTED_ISSUE',
+];
+
+export const INCIDENT_STATUSES = [
+  'new',
+  'acknowledged',
+  'investigating',
+  'waiting_for_student',
+  'resolved',
+  'closed',
+  'dismissed',
+];
+
+export const reportIncidentSchema = z.object({
+  category: z.enum(INCIDENT_CATEGORIES, {
+    errorMap: () => ({ message: `Invalid incident category. Must be one of: ${INCIDENT_CATEGORIES.join(', ')}` }),
+  }),
+  question_id: z.coerce.number().int().positive().optional().nullable(),
+  description: z.string().trim().min(1, 'Description is required').max(3000),
+  diagnostics: z.record(z.any()).optional().default({}),
+  client_timestamp: z.string().optional(),
+});
+
+export const updateIncidentStatusSchema = z.object({
+  status: z.enum(INCIDENT_STATUSES, {
+    errorMap: () => ({ message: `Invalid status. Must be one of: ${INCIDENT_STATUSES.join(', ')}` }),
+  }),
+  notes: z.string().trim().max(3000).optional(),
+  guidance_message: z.string().trim().max(1000).optional(),
+  resolution_category: z.string().trim().max(64).optional(),
+});
+
+export const assignIncidentSchema = z.object({
+  assigned_to: z.coerce.number().int().positive().nullable().optional(),
+});
+
+export const addIncidentNotesSchema = z.object({
+  notes: z.string().trim().min(1, 'Notes cannot be empty').max(3000),
+  guidance_message: z.string().trim().max(1000).optional(),
+});
+
+export const resolveIncidentSchema = z.object({
+  resolution_notes: z.string().trim().max(3000).optional(),
+  notes: z.string().trim().max(3000).optional(),
+  resolution_category: z.string().trim().max(64).optional(),
+}).refine(
+  (data) => Boolean((data.resolution_notes && data.resolution_notes.length > 0) || (data.notes && data.notes.length > 0)),
+  { message: 'Resolution notes or notes are required' }
+);

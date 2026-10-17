@@ -14,7 +14,7 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 
@@ -214,6 +214,16 @@ export default function AssessmentEditor() {
           )}
         </div>
         <div className="flex flex-wrap gap-2">
+          <Link
+            to={`/admin/simulator/${assessmentId}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 hover:bg-amber-100 font-extrabold text-xs shadow-xs transition"
+            title="Open Simulator Mode to verify the live exam screen from student perspective"
+          >
+            <Eye className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+            <span>View as Student (Simulator)</span>
+          </Link>
           <button type="button" className="btn-secondary" onClick={openPreview}>👁️ Preview</button>
           <button type="button" className={assessment.is_published ? 'btn-secondary text-amber-600 dark:text-amber-400' : 'btn-primary'} onClick={handlePublish}>
             {assessment.is_published ? 'Unpublish' : 'Publish'}

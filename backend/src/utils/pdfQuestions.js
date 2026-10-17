@@ -136,14 +136,16 @@ function splitQuestionBlocks(text) {
       continue;
     }
 
-    // Detect standalone subject headers like "SECTION A: PHYSICS", "Chemistry", "Biology"
+    // Detect standalone subject headers like "SECTION A: PHYSICS", "Chemistry", "Botany", "Zoology"
     if (line.length < 50) {
       const subjectMatch = line.match(/(?:section|part)?\s*[a-z0-9\:\-\|\—\–\s]*?\b(Physics|Chemistry|Mathematics|Maths|Biology|Botany|Zoology|General Aptitude|Aptitude)\b/i);
       if (subjectMatch) {
         const sub = subjectMatch[1].toLowerCase();
         if (sub.includes('physic')) currentSubject = 'Physics';
         else if (sub.includes('chem')) currentSubject = 'Chemistry';
-        else if (sub.includes('bio') || sub.includes('botany') || sub.includes('zoology')) currentSubject = 'Biology';
+        else if (sub.includes('botan')) currentSubject = 'Botany';
+        else if (sub.includes('zool')) currentSubject = 'Zoology';
+        else if (sub.includes('bio')) currentSubject = 'Biology';
         else if (sub.includes('math')) currentSubject = 'Mathematics';
         else if (sub.includes('aptitude')) currentSubject = 'General Aptitude';
         continue;

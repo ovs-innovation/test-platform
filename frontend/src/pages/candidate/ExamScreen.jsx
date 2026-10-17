@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { attemptService, aiTestService } from '../../lib/services.js';
+import { attemptService, aiTestService, adminService } from '../../lib/services.js';
 import { useProctoring } from '../../hooks/useProctoring.js';
 import { requestFullscreen, exitFullscreen, isFullscreen, VIOLATION_LABELS } from '../../lib/proctoring.js';
 import { formatDuration } from '../../lib/format.js';
@@ -20,7 +20,17 @@ import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl } from '../../lib/media.js';
-import { Languages, Globe } from 'lucide-react';
+import { Languages, Globe, Eye, ArrowLeft, CheckCircle2, ShieldCheck, AlertCircle, Edit, ExternalLink, LifeBuoy } from 'lucide-react';
+import { useScreenRecorder } from '../../hooks/useScreenRecorder.js';
+import ScreenRecordingIndicator from '../../components/candidate/ScreenRecordingIndicator.jsx';
+import ScreenShareConsentModal from '../../components/candidate/ScreenShareConsentModal.jsx';
+import { RECORDING_STATUS } from '../../lib/screenRecorder.js';
+import { createIncidentReporter, INCIDENT_CATEGORIES } from '../../lib/incidentReporter.js';
+import ExamErrorBoundary from '../../components/candidate/ExamErrorBoundary.jsx';
+import TechnicalIncidentModal from '../../components/candidate/TechnicalIncidentModal.jsx';
+import TechnicalIncidentStatusBanner from '../../components/candidate/TechnicalIncidentStatusBanner.jsx';
+import { createAnswerSyncManager, SYNC_STATUS } from '../../lib/cbtAnswerSync.js';
+import CbtAnswerSyncIndicator from '../../components/candidate/CbtAnswerSyncIndicator.jsx';
 
 const SECTION_LABELS = {
   aptitude: 'Aptitude',
@@ -36,8 +46,12 @@ const HINDI_AR_OPTIONS = [
   'अभिकथन (A) असत्य है लेकिन कारण (R) सत्य है',
 ];
 
-export default function ExamScreen() {
-  const { attemptId } = useParams();
+export default function ExamScreen({ isSimulator = false }) {
+  const { attemptId, assessmentId } = useParams();
+  const effectiveAttemptId = attemptId || (assessmentId ? `sim-${assessmentId}` : '');
+  const isSimulatorActive = Boolean(isSimulator || (effectiveAttemptId && effectiveAttemptId.startsWith('sim-')));
+  const simulatorAssessmentId = isSimulatorActive ? (assessmentId || effectiveAttemptId.replace(/^sim-/, '')) : null;
+
   const navigate = useNavigate();
   const toast = useToast();
   const { user } = useAuth();
@@ -62,6 +76,7 @@ export default function ExamScreen() {
   const [needsFullscreen, setNeedsFullscreen] = useState(false);
   const [warning, setWarning] = useState(null);
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [simulatorModalOpen, setSimulatorModalOpen] = useState(false);
   const [imgZoom, setImgZoom] = useState(null);
   const [activeSection, setActiveSection] = useState(null);
   const [pdfMode, setPdfMode] = useState('hidden'); // 'split' | 'full' | 'hidden'
@@ -81,6 +96,101 @@ export default function ExamScreen() {
   const finishedRef = useRef(false);
   const endsAtRef = useRef(null);
   const codingDebounce = useRef({});
+  const stopRecordingRef = useRef(null);
+
+  // Live Technical Incident Reporting state
+  const [showIncidentModal, setShowIncidentModal] = useState(false);
+  const [invigilatorGuidance, setInvigilatorGuidance] = useState(null);
+  const [isOffline, setIsOffline] = useState(() => (typeof navigator !== 'undefined' ? !navigator.onLine : false));
+  const reporterRef = useRef(null);
+
+  // Live CBT Answer Sync & Offline Recovery state
+  const [syncState, setSyncState] = useState({
+    status: SYNC_STATUS.IDLE,
+    pendingCount: 0,
+    failedCount: 0,
+    pendingQuestionIds: [],
+  });
+  const [submissionError, setSubmissionError] = useState(null);
+  const [incidentReference, setIncidentReference] = useState(null);
+  const syncManagerRef = useRef(null);
+
+  useEffect(() => {
+    if (!effectiveAttemptId) return;
+    reporterRef.current = createIncidentReporter(effectiveAttemptId, {
+      isSimulator: isSimulatorActive,
+    });
+    syncManagerRef.current = createAnswerSyncManager(effectiveAttemptId, {
+      isSimulator: isSimulatorActive,
+      onStatusChange: (statusInfo) => {
+        setSyncState(statusInfo);
+      },
+      onIncident: (category, err, details) => {
+        try {
+          if (category === 'ANSWER_SAVE_FAILED') {
+            reporterRef.current?.reportSaveFailure(details?.questionId, err);
+          } else if (category === 'SUBMISSION_FAILED') {
+            reporterRef.current?.reportSubmissionFailure(err);
+          }
+        } catch (_) {}
+      },
+      onTimerSync: ({ remainingSeconds, clockSkewSeconds, authoritativeEndsAtMs }) => {
+        if (authoritativeEndsAtMs) endsAtRef.current = authoritativeEndsAtMs;
+        setRemaining(remainingSeconds);
+        if (Math.abs(clockSkewSeconds) > 30) {
+          try {
+            reporterRef.current?.reportTimerMismatch(
+              clockSkewSeconds,
+              new Date(authoritativeEndsAtMs).toISOString(),
+              new Date().toISOString()
+            );
+          } catch (_) {}
+        }
+      },
+    });
+
+    return () => {
+      reporterRef.current?.destroy();
+      syncManagerRef.current?.destroy();
+    };
+  }, [effectiveAttemptId, isSimulatorActive]);
+
+  useEffect(() => {
+    const onOnline = () => setIsOffline(false);
+    const onOffline = () => setIsOffline(true);
+    window.addEventListener('online', onOnline);
+    window.addEventListener('offline', onOffline);
+    return () => {
+      window.removeEventListener('online', onOnline);
+      window.removeEventListener('offline', onOffline);
+    };
+  }, []);
+
+  // Poll for invigilator guidance / incident status and check clock skew
+  useEffect(() => {
+    if (!effectiveAttemptId || isSimulatorActive || effectiveAttemptId.startsWith('ai-')) return;
+    const checkGuidance = async () => {
+      try {
+        const res = await attemptService.getActiveIncidents(effectiveAttemptId);
+        const activeWithMsg = (res.active_incidents || []).find((inc) => inc.last_student_message);
+        if (activeWithMsg) {
+          setInvigilatorGuidance(activeWithMsg.last_student_message);
+        }
+        if (res.server_time && endsAtRef.current) {
+          syncManagerRef.current?.reconcileTimer(res.server_time, new Date(endsAtRef.current).toISOString());
+          const serverNow = new Date(res.server_time).getTime();
+          const clientNow = Date.now();
+          const driftSeconds = (clientNow - serverNow) / 1000;
+          if (Math.abs(driftSeconds) > 30) {
+            reporterRef.current?.reportTimerMismatch(driftSeconds, res.server_time, new Date(clientNow).toISOString());
+          }
+        }
+      } catch (_) {}
+    };
+    checkGuidance();
+    const id = setInterval(checkGuidance, 15000);
+    return () => clearInterval(id);
+  }, [effectiveAttemptId, isSimulatorActive]);
 
   useEffect(() => {
     let cancelled = false;
@@ -88,8 +198,8 @@ export default function ExamScreen() {
     setLoading(true);
     (async () => {
       try {
-        if (attemptId && attemptId.startsWith('ai-')) {
-          const testId = attemptId.replace(/^ai-/, '');
+        if (effectiveAttemptId && effectiveAttemptId.startsWith('ai-')) {
+          const testId = effectiveAttemptId.replace(/^ai-/, '');
           let session = null;
           try {
             const raw = sessionStorage.getItem(`ai_test_session_${testId}`);
@@ -117,10 +227,46 @@ export default function ExamScreen() {
           return;
         }
 
-        const data = await attemptService.getState(attemptId);
+        if (isSimulatorActive && simulatorAssessmentId) {
+          let data = null;
+          try {
+            data = await adminService.getTestSimulator(simulatorAssessmentId);
+          } catch (simErr) {
+            data = await attemptService.getState(`sim-${simulatorAssessmentId}`);
+          }
+          if (cancelled) return;
+          const inst = data.institution || data.assessment?.institution || (data.assessment?.institution_id || data.assessment?.institution_name ? {
+            id: data.assessment.institution_id,
+            name: data.assessment.institution_name,
+            logo_url: data.assessment.institution_logo_url,
+            logo_badge: data.assessment.institution_logo_badge,
+          } : null);
+          setInstitutionBranding(inst);
+          setSections(data.sections || []);
+          setQuestions(data.questions || []);
+          const initialTrans = {};
+          for (const question of data.questions || []) {
+            if (question.translations?.hi) {
+              initialTrans[`${question.id}_hi`] = question.translations.hi;
+            }
+          }
+          if (Object.keys(initialTrans).length > 0) {
+            setTranslationsCache((prev) => ({ ...prev, ...initialTrans }));
+          }
+          setMeta(data.assessment);
+          setMaxViolations(data.assessment?.max_violations || 5);
+          setViolations(0);
+          const durationMins = data.assessment?.duration_minutes || 180;
+          endsAtRef.current = Date.now() + durationMins * 60 * 1000;
+          setRemaining(durationMins * 60);
+          setLoading(false);
+          return;
+        }
+
+        const data = await attemptService.getState(effectiveAttemptId);
         if (cancelled) return;
         if (data.expired || data.attempt.status !== 'in_progress') {
-          navigate(`/results/${attemptId}`, { replace: true });
+          navigate(`/results/${effectiveAttemptId}`, { replace: true });
           return;
         }
         const inst = data.institution || data.assessment?.institution || (data.assessment?.institution_id || data.assessment?.institution_name ? {
@@ -175,30 +321,65 @@ export default function ExamScreen() {
         }
         for (const a of data.coding_answers || []) vis[a.question_id] = true;
         for (const a of data.subjective_answers || []) vis[a.question_id] = true;
+        const code = {};
+        for (const a of data.coding_answers || []) code[a.question_id] = { code: a.source_code, lang: a.language };
+        const subj = {};
+        for (const a of data.subjective_answers || []) subj[a.question_id] = a.answer_text;
+
+        // Hydrate and prioritize any offline stored answers from localStorage (crash/refresh recovery)
+        if (syncManagerRef.current) {
+          const offline = syncManagerRef.current.getStoredAnswersMap();
+          Object.assign(mcq, offline.mcq);
+          Object.assign(multi, offline.multi);
+          Object.assign(num, offline.numeric);
+          Object.assign(code, offline.coding);
+          Object.assign(subj, offline.subjective);
+          Object.assign(rev, offline.reviewed);
+          for (const clearedId of Object.keys(offline.cleared)) {
+            delete mcq[clearedId];
+            delete multi[clearedId];
+            delete num[clearedId];
+            delete code[clearedId];
+            delete subj[clearedId];
+            delete rev[clearedId];
+          }
+          for (const qid of Object.keys({ ...offline.mcq, ...offline.multi, ...offline.numeric, ...offline.coding, ...offline.subjective })) {
+            vis[qid] = true;
+          }
+        }
+
         setAnswers(mcq);
         setMultiAnswers(multi);
         setNumericAnswers(num);
         setReviewed(rev);
         setVisited(vis);
-        const code = {};
-        for (const a of data.coding_answers || []) code[a.question_id] = { code: a.source_code, lang: a.language };
         setCodingAnswers(code);
-        const subj = {};
-        for (const a of data.subjective_answers || []) subj[a.question_id] = a.answer_text;
         setSubjectiveAnswers(subj);
+
         endsAtRef.current = new Date(data.attempt.ends_at).getTime();
-        setRemaining(Math.max(0, Math.round((endsAtRef.current - Date.now()) / 1000)));
+        if (syncManagerRef.current && data.server_time) {
+          syncManagerRef.current.reconcileTimer(data.server_time, data.attempt.ends_at);
+        } else {
+          setRemaining(Math.max(0, Math.round((endsAtRef.current - Date.now()) / 1000)));
+        }
+
+        // Flush any pending offline answers
+        if (syncManagerRef.current?.getPendingCount() > 0) {
+          syncManagerRef.current.syncPending();
+        }
         setLoading(false);
         const ok = await requestFullscreen().then(() => true).catch(() => false);
         if (!ok && !isFullscreen()) setNeedsFullscreen(true);
       } catch (err) {
         if (cancelled) return;
+        reporterRef.current?.reportQuestionLoadFailure(null, err);
+        reporterRef.current?.reportResumeFailure(err);
         toast.error(err.message || 'Could not load assessment');
         navigate('/assessments', { replace: true });
       }
     })();
     return () => { cancelled = true; };
-  }, [attemptId, navigate, toast]);
+  }, [effectiveAttemptId, isSimulatorActive, simulatorAssessmentId, navigate, toast]);
 
   const finishExam = useCallback(async (reason) => {
     if (finishedRef.current) return;
@@ -206,9 +387,17 @@ export default function ExamScreen() {
     setIsSubmitting(true);
     setWarning(null);
     setNeedsFullscreen(false);
+    setSubmissionError(null);
 
-    if (attemptId && attemptId.startsWith('ai-')) {
-      const testId = attemptId.replace(/^ai-/, '');
+    if (isSimulatorActive) {
+      finishedRef.current = false;
+      setIsSubmitting(false);
+      setSimulatorModalOpen(true);
+      return;
+    }
+
+    if (effectiveAttemptId && effectiveAttemptId.startsWith('ai-')) {
+      const testId = effectiveAttemptId.replace(/^ai-/, '');
       const answersList = (questions || []).map((q) => {
         const qId = q.id || q.question_id;
         return {
@@ -223,18 +412,38 @@ export default function ExamScreen() {
         console.warn('AI Test Submission error:', err);
       }
       try { await exitFullscreen(); } catch (_) {}
-      navigate(`/results/${attemptId}`, { replace: true });
+      navigate(`/results/${effectiveAttemptId}`, { replace: true });
       return;
     }
 
     try {
-      await attemptService.submit(attemptId, reason);
-    } catch { /* ignore submit error if already submitted */ }
+      if (stopRecordingRef.current) {
+        await stopRecordingRef.current({ status: 'completed', reason: reason || 'Exam submitted' });
+      }
+    } catch (_) { /* ignore recorder stop errors */ }
+
+    // Use syncManager to flush pending answers and submit safely with retry capability
+    const outcome = syncManagerRef.current
+      ? await syncManagerRef.current.submitExamSafely(reason)
+      : await attemptService.submit(effectiveAttemptId, reason).then((r) => ({ success: true, result: r })).catch((e) => ({ success: false, error: e }));
+
+    if (!outcome.success) {
+      finishedRef.current = false;
+      setIsSubmitting(false);
+      setSubmissionError(outcome.error?.message || 'Submission failed due to a network connection error.');
+      const ref = `INC-${Date.now().toString(36).toUpperCase()}`;
+      setIncidentReference(ref);
+      try {
+        reporterRef.current?.reportSubmissionFailure(outcome.error);
+      } catch (_) {}
+      return;
+    }
+
     try {
       await exitFullscreen();
     } catch { /* ignore fullscreen error */ }
-    navigate(`/results/${attemptId}`, { replace: true });
-  }, [attemptId, navigate, questions, answers, user]);
+    navigate(`/results/${effectiveAttemptId}`, { replace: true });
+  }, [effectiveAttemptId, isSimulatorActive, navigate, questions, answers, user]);
 
   useEffect(() => {
     if (loading || isSubmitting) return undefined;
@@ -251,20 +460,54 @@ export default function ExamScreen() {
   }, [loading, isSubmitting, finishExam, toast]);
 
   const handleViolation = useCallback(async (type) => {
-    if (finishedRef.current || isSubmitting) return;
+    if (finishedRef.current || isSubmitting || isSimulatorActive) return;
     if (type === 'fullscreen_exit') setNeedsFullscreen(true);
     setWarning({ type });
     try {
-      const res = await attemptService.logViolation(attemptId, type);
+      const res = await attemptService.logViolation(effectiveAttemptId, type);
       if (typeof res.violation_count === 'number') setViolations(res.violation_count);
       if (res.autoSubmitted) {
         toast.error('Violation limit exceeded. Assessment submitted.');
         finishExam('violations');
       }
     } catch { /* ignore */ }
-  }, [attemptId, isSubmitting, finishExam, toast]);
+  }, [effectiveAttemptId, isSimulatorActive, isSubmitting, finishExam, toast]);
 
-  useProctoring({ active: !loading && !finishedRef.current && !isSubmitting, onViolation: handleViolation });
+  useProctoring({ active: !loading && !finishedRef.current && !isSubmitting && !isSimulatorActive, onViolation: handleViolation });
+
+  const [showRecordingModal, setShowRecordingModal] = useState(false);
+
+  const {
+    status: recordingStatus,
+    errorMessage: recorderError,
+    isRecording,
+    hasRecording,
+    elapsedSeconds: recordingElapsed,
+    startRecording,
+    stopRecording,
+    downloadRecording,
+  } = useScreenRecorder({
+    attemptId: effectiveAttemptId,
+    enabled: Boolean(effectiveAttemptId && !effectiveAttemptId.startsWith('ai-') && !isSimulatorActive),
+  });
+
+  stopRecordingRef.current = stopRecording;
+
+  // Optional: Prompt candidate once on exam load if they wish to record locally
+  useEffect(() => {
+    if (
+      !loading &&
+      effectiveAttemptId &&
+      !effectiveAttemptId.startsWith('ai-') &&
+      !isSimulatorActive &&
+      recordingStatus === RECORDING_STATUS.IDLE
+    ) {
+      const alreadyPrompted = sessionStorage.getItem(`rec_prompt_${effectiveAttemptId}`);
+      if (!alreadyPrompted) {
+        setShowRecordingModal(true);
+      }
+    }
+  }, [loading, effectiveAttemptId, recordingStatus, isSimulatorActive]);
 
   useEffect(() => {
     if (!warning) return undefined;
@@ -344,8 +587,13 @@ export default function ExamScreen() {
     const qid = activeQuestions[current]?.id || (current + 1);
     const next = mark ? true : !reviewed[qid];
     setReviewed((r) => ({ ...r, [qid]: next }));
+    if (isSimulatorActive) return;
     try {
-      await attemptService.markReview(attemptId, qid, next);
+      if (syncManagerRef.current) {
+        await syncManagerRef.current.recordAnswer('review', qid, { marked_for_review: next });
+      } else {
+        await attemptService.markReview(attemptId, qid, next);
+      }
     } catch { /* ignore */ }
   };
 
@@ -355,8 +603,16 @@ export default function ExamScreen() {
     setMultiAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setNumericAnswers((a) => { const n = { ...a }; delete n[qid]; return n; });
     setReviewed((r) => { const n = { ...r }; delete n[qid]; return n; });
+    if (isSimulatorActive) {
+      toast.info('Response cleared (Simulator)');
+      return;
+    }
     try {
-      await attemptService.clearAnswer(attemptId, qid);
+      if (syncManagerRef.current) {
+        await syncManagerRef.current.recordAnswer('clear', qid, {});
+      } else {
+        await attemptService.clearAnswer(attemptId, qid);
+      }
       toast.info('Response cleared');
     } catch { toast.error('Could not clear'); }
   };
@@ -382,26 +638,36 @@ export default function ExamScreen() {
 
   const selectAnswer = async (questionId, index) => {
     setAnswers((prev) => ({ ...prev, [questionId]: index }));
+    setVisited((prev) => ({ ...prev, [questionId]: true }));
+    if (isSimulatorActive) return;
     setSavingId(questionId);
     try {
-      await attemptService.saveAnswer(attemptId, questionId, index);
+      if (syncManagerRef.current) {
+        await syncManagerRef.current.recordAnswer('mcq', questionId, { selected_index: index });
+      } else {
+        await attemptService.saveAnswer(attemptId, questionId, index);
+      }
     } catch (err) {
-      if (err.status === 409) finishExam('timeout');
-      else toast.error('Failed to save answer');
+      if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
     } finally { setSavingId(null); }
   };
 
   const saveNumericAnswer = (questionId, val) => {
     setNumericAnswers((prev) => ({ ...prev, [questionId]: val }));
+    setVisited((prev) => ({ ...prev, [questionId]: true }));
+    if (isSimulatorActive) return;
     clearTimeout(codingDebounce.current[`num-${questionId}`]);
     codingDebounce.current[`num-${questionId}`] = setTimeout(async () => {
       setSavingId(questionId);
       try {
         const numVal = val != null && val !== '' ? Number(val) : null;
-        await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
+        if (syncManagerRef.current) {
+          await syncManagerRef.current.recordAnswer('numeric', questionId, { numeric_answer: numVal });
+        } else {
+          await attemptService.saveAnswer(attemptId, questionId, { numeric_answer: numVal });
+        }
       } catch (err) {
-        if (err.status === 409) finishExam('timeout');
-        else toast.error('Failed to save numeric answer');
+        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
       } finally { setSavingId(null); }
     }, 400);
   };
@@ -412,37 +678,54 @@ export default function ExamScreen() {
 
     const next = isAdding ? [...cur, index].sort((a, b) => a - b) : cur.filter((i) => i !== index);
     setMultiAnswers((prev) => ({ ...prev, [questionId]: next }));
+    setVisited((prev) => ({ ...prev, [questionId]: true }));
+    if (isSimulatorActive) return;
     setSavingId(questionId);
     try {
-      await attemptService.saveAnswer(attemptId, questionId, undefined, next);
+      if (syncManagerRef.current) {
+        await syncManagerRef.current.recordAnswer('multi', questionId, { selected_indices: next });
+      } else {
+        await attemptService.saveAnswer(attemptId, questionId, undefined, next);
+      }
     } catch (err) {
-      if (err.status === 409) finishExam('timeout');
-      else toast.error('Failed to save answer');
+      if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
     } finally { setSavingId(null); }
   };
 
   const saveCoding = (questionId, sourceCode, language) => {
     setCodingAnswers((prev) => ({ ...prev, [questionId]: { code: sourceCode, lang: language } }));
+    setVisited((prev) => ({ ...prev, [questionId]: true }));
+    if (isSimulatorActive) return;
     clearTimeout(codingDebounce.current[questionId]);
     codingDebounce.current[questionId] = setTimeout(async () => {
       setSavingId(questionId);
       try {
-        await attemptService.saveCoding(attemptId, questionId, sourceCode, language);
+        if (syncManagerRef.current) {
+          await syncManagerRef.current.recordAnswer('coding', questionId, { source_code: sourceCode, language });
+        } else {
+          await attemptService.saveCoding(attemptId, questionId, sourceCode, language);
+        }
       } catch (err) {
-        if (err.status === 409) finishExam('timeout');
+        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
       } finally { setSavingId(null); }
     }, 800);
   };
 
   const saveSubjective = (questionId, text) => {
     setSubjectiveAnswers((prev) => ({ ...prev, [questionId]: text }));
+    setVisited((prev) => ({ ...prev, [questionId]: true }));
+    if (isSimulatorActive) return;
     clearTimeout(codingDebounce.current[`s-${questionId}`]);
     codingDebounce.current[`s-${questionId}`] = setTimeout(async () => {
       setSavingId(questionId);
       try {
-        await attemptService.saveSubjective(attemptId, questionId, text);
+        if (syncManagerRef.current) {
+          await syncManagerRef.current.recordAnswer('subjective', questionId, { answer_text: text });
+        } else {
+          await attemptService.saveSubjective(attemptId, questionId, text);
+        }
       } catch (err) {
-        if (err.status === 409) finishExam('timeout');
+        if (err.status === 409 || err.response?.status === 409) finishExam('timeout');
       } finally { setSavingId(null); }
     }, 800);
   };
@@ -458,7 +741,9 @@ export default function ExamScreen() {
     if (n.includes('physic')) return '⚛️';
     if (n.includes('chem')) return '🧪';
     if (n.includes('math')) return '📐';
-    if (n.includes('bio') || n.includes('botany') || n.includes('zoology')) return '🧬';
+    if (n.includes('botan')) return '🌿';
+    if (n.includes('zool')) return '🦁';
+    if (n.includes('bio')) return '🧬';
     return '🧠';
   };
 
@@ -466,8 +751,7 @@ export default function ExamScreen() {
     if (meta?.is_neet) return true;
     const title = String(meta?.title || '').toUpperCase();
     const type = String(meta?.test_type || '').toUpperCase();
-    if (title.includes('NEET') || type.includes('NEET')) return true;
-    if (activeQuestions.length === 200 || activeQuestions.length === 180) return true;
+    if (title.includes('NEET') || type.includes('NEET') || activeQuestions.length === 180) return true;
     return false;
   }, [meta, activeQuestions]);
 
@@ -482,25 +766,65 @@ export default function ExamScreen() {
     return raw ? raw.trim() : 'General';
   };
 
+  // Pre-calculate Biology split if activeQuestions has generic Biology questions
+  const biologySplitMap = useMemo(() => {
+    if (!isNeetExam) return new Map();
+    const bioIndices = [];
+    activeQuestions.forEach((q, idx) => {
+      const explicit = (q.subject || q.bank_category || (q.section_id && sectionMap.get(q.section_id)?.name) || '').toLowerCase().trim();
+      const pos = Number(q.position || idx + 1);
+      if (explicit.includes('bio') && !explicit.includes('botan') && !explicit.includes('zool')) {
+        bioIndices.push({ idx, pos });
+      }
+    });
+
+    const m = new Map();
+    if (bioIndices.length > 0) {
+      const half = Math.ceil(bioIndices.length / 2);
+      bioIndices.forEach((item, k) => {
+        m.set(item.idx, k < half ? 'Botany' : 'Zoology');
+      });
+    }
+    return m;
+  }, [activeQuestions, isNeetExam, sectionMap]);
+
   const getQuestionSubject = useCallback((item, idx = 0) => {
     if (!item) return 'General';
     const explicit = item.subject || item.bank_category || (item.section_id && sectionMap.get(item.section_id)?.name);
+
     if (explicit && !['general', 'technical mcq', ''].includes(explicit.toLowerCase())) {
-      return getSubjectCanonical(explicit);
+      const canonical = getSubjectCanonical(explicit);
+      if (canonical === 'Botany') return 'Botany';
+      if (canonical === 'Zoology') return 'Zoology';
+      if (canonical === 'Physics') return 'Physics';
+      if (canonical === 'Chemistry') return 'Chemistry';
+      if (canonical === 'Biology') {
+        if (biologySplitMap.has(idx)) {
+          return biologySplitMap.get(idx);
+        }
+        if (isNeetExam) {
+          const pos = Number(item.position || idx + 1);
+          return pos <= 135 ? 'Botany' : 'Zoology';
+        }
+      }
+      return canonical;
     }
-    // If standard 180-question NEET paper where questions are sequential:
-    if (activeQuestions.length === 180) {
-      const pos = item.position || idx + 1;
-      if (pos <= 45) return 'Physics';
-      if (pos <= 90) return 'Chemistry';
-      return 'Biology';
+
+    // Sequential NEET mapping (180 questions: 45 per subject) if no explicit subject
+    if (isNeetExam || activeQuestions.length === 180) {
+      const pos = Number(item.position || idx + 1);
+      if (pos >= 1 && pos <= 45) return 'Physics';
+      if (pos >= 46 && pos <= 90) return 'Chemistry';
+      if (pos >= 91 && pos <= 135) return 'Botany';
+      if (pos >= 136 && pos <= 180) return 'Zoology';
     }
+
     return explicit ? getSubjectCanonical(explicit) : 'General';
-  }, [sectionMap, activeQuestions.length]);
+  }, [sectionMap, activeQuestions.length, isNeetExam, biologySplitMap]);
 
   // Compute subject-based sections dynamically from activeQuestions
   const effectiveSections = useMemo(() => {
-    const canonicalOrder = ['Physics', 'Chemistry', 'Biology', 'Botany', 'Zoology', 'Mathematics'];
+    const canonicalOrder = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
     const subjectCountMap = new Map();
     const firstIndexMap = new Map();
 
@@ -527,37 +851,55 @@ export default function ExamScreen() {
     });
 
     if (existingSubjects.length > 0) {
-      return existingSubjects.map((subj) => ({
-        id: `subj-${subj}`,
-        name: subj,
-        icon: getSubjectIcon(subj),
-        startIndex: firstIndexMap.get(subj) ?? 0,
-        count: subjectCountMap.get(subj) || 0,
-      }));
+      const neetSectionLabels = {
+        Physics: { prefix: 'Section-A', label: 'Section-A: Physics' },
+        Chemistry: { prefix: 'Section-B', label: 'Section-B: Chemistry' },
+        Botany: { prefix: 'Section-C', label: 'Section-C: Botany' },
+        Zoology: { prefix: 'Section-D', label: 'Section-D: Zoology' },
+      };
+
+      return existingSubjects.map((subj) => {
+        const neetMeta = isNeetExam ? neetSectionLabels[subj] : null;
+        const displayName = neetMeta ? neetMeta.label : subj;
+        return {
+          id: `subj-${subj}`,
+          name: subj,
+          subject: subj,
+          displayName,
+          sectionTag: neetMeta ? neetMeta.prefix : null,
+          icon: getSubjectIcon(subj),
+          startIndex: firstIndexMap.get(subj) ?? 0,
+          count: subjectCountMap.get(subj) || 0,
+        };
+      });
     }
 
     if (sections && sections.length > 0) {
       return sections.map((s) => ({
         id: s.id,
         name: s.name,
+        displayName: s.name,
         sectionId: s.id,
         icon: getSubjectIcon(s.name),
       }));
     }
 
-    return [{ id: 'sec-all', name: 'All Questions', icon: '📚' }];
-  }, [activeQuestions, sections, getQuestionSubject]);
+    return [{ id: 'sec-all', name: 'All Questions', displayName: 'All Questions', icon: '📚' }];
+  }, [activeQuestions, sections, getQuestionSubject, isNeetExam]);
 
   const getSecQuestions = useCallback(
     (secItem) => {
       return activeQuestions
         .map((item, idx) => ({ item, idx }))
         .filter(({ item, idx }) => {
-          if (secItem.sectionId) {
-            return item.section_id === secItem.sectionId;
+          if (secItem.sectionId && item.section_id === secItem.sectionId) {
+            return true;
           }
           const itemSubj = getQuestionSubject(item, idx);
-          return itemSubj.toLowerCase() === (secItem.name || '').toLowerCase();
+          const targetSubj = secItem.subject || secItem.name || '';
+          if (itemSubj.toLowerCase() === targetSubj.toLowerCase()) return true;
+          if (secItem.displayName && secItem.displayName.toLowerCase().includes(itemSubj.toLowerCase())) return true;
+          return false;
         });
     },
     [activeQuestions, getQuestionSubject]
@@ -675,7 +1017,7 @@ export default function ExamScreen() {
   const displayOptions = currentTranslation?.options || q.options || [];
 
   const currentSubjectInfo = useMemo(() => {
-    const sec = effectiveSections.find((s) => s.name.toLowerCase() === qCategory.toLowerCase());
+    const sec = effectiveSections.find((s) => (s.subject || s.name || '').toLowerCase() === qCategory.toLowerCase() || (s.displayName && s.displayName.toLowerCase().includes(qCategory.toLowerCase())));
     if (!sec) return null;
     const secQs = getSecQuestions(sec);
     const qIdx = secQs.findIndex(({ idx }) => idx === current);
@@ -683,8 +1025,10 @@ export default function ExamScreen() {
     return {
       subjectQNum: qIdx + 1,
       subjectTotal: secQs.length,
+      sectionDisplayName: sec.displayName || sec.name,
+      sectionTag: sec.sectionTag || (isNeetExam ? (qCategory === 'Physics' ? 'Section-A' : qCategory === 'Chemistry' ? 'Section-B' : qCategory === 'Botany' ? 'Section-C' : qCategory === 'Zoology' ? 'Section-D' : null) : null),
     };
-  }, [effectiveSections, qCategory, getSecQuestions, current]);
+  }, [effectiveSections, qCategory, getSecQuestions, current, isNeetExam]);
 
   const activeSecItem = effectiveSections.find((s) => s.id === activeSection);
   const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
@@ -720,26 +1064,64 @@ export default function ExamScreen() {
 
   return (
     <div className="exam-surface flex min-h-screen flex-col select-none bg-white text-slate-900">
-      <header className="nta-bar sticky top-0 z-30">
-        <div className="flex flex-wrap items-center justify-between gap-3 px-4 py-2">
-          <div className="flex items-center gap-3 min-w-0">
+      {/* Simulator Mode Admin Banner */}
+      {isSimulatorActive && (
+        <div className="sticky top-0 z-40 bg-gradient-to-r from-amber-600 via-orange-600 to-amber-700 px-3 py-1.5 text-white shadow-md flex items-center justify-between flex-wrap gap-2 text-xs">
+          <div className="flex items-center gap-2 font-medium">
+            <span className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-white text-amber-800 font-extrabold text-[11px] shadow-xs tracking-wide uppercase">
+              <Eye className="w-3.5 h-3.5" />
+              Simulator Mode
+            </span>
+            <span className="hidden sm:inline text-amber-100">
+              Verifying live test from student perspective (proctoring & server saves disabled)
+            </span>
+          </div>
+          <div className="flex items-center gap-2">
+            {simulatorAssessmentId && (
+              <button
+                type="button"
+                onClick={() => navigate(`/admin/assessments/${simulatorAssessmentId}/edit`)}
+                className="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-black/20 hover:bg-black/30 text-white font-semibold transition cursor-pointer text-[11px]"
+              >
+                <Edit className="w-3 h-3" />
+                Edit in Admin
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => navigate('/admin/assessments')}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded bg-white text-slate-900 font-bold hover:bg-amber-50 transition cursor-pointer shadow-xs text-[11px]"
+            >
+              <ArrowLeft className="w-3 h-3" />
+              Exit Simulator
+            </button>
+          </div>
+        </div>
+      )}
+
+      <header className="nta-bar sticky top-0 z-30 shadow-xs">
+        <div className="flex items-center justify-between gap-3 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[50px] max-w-full overflow-hidden">
+          {/* Assessment Title & Branding - Graceful truncation */}
+          <div className="flex items-center gap-2.5 min-w-0 flex-1 max-w-[42%] lg:max-w-[48%]">
             <AssessmentBranding variant="cbt" customInstitution={institutionBranding || meta?.institution} />
-            <div className="min-w-0">
-              <p className="truncate text-sm font-bold">{meta?.title}</p>
-              <p className="text-xs text-blue-100">
+            <div className="min-w-0 truncate">
+              <p className="truncate text-xs sm:text-sm font-bold leading-tight text-white">{meta?.title}</p>
+              <p className="truncate text-[11px] sm:text-xs text-blue-100 leading-tight">
                 {user?.name} · Roll No: {rollNo}
                 {qCategory ? ` · Subject: ${qCategory}` : ''}
               </p>
             </div>
           </div>
-          <div className="flex flex-wrap items-center gap-2">
+
+          {/* Action Controls - Guaranteed Single Row (No Wrap) */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
             {/* Top Bar Quick Language Switcher */}
-            <div className="flex items-center rounded border border-white/30 bg-black/20 p-0.5 text-xs text-white">
-              <span className="hidden sm:inline px-1.5 text-[11px] font-bold text-blue-200">Lang:</span>
+            <div className="flex items-center rounded border border-white/30 bg-black/20 p-0.5 text-xs text-white shrink-0">
+              <span className="hidden md:inline px-1 text-[11px] font-bold text-blue-200">Lang:</span>
               <button
                 type="button"
                 onClick={() => handleLanguageChange('en')}
-                className={`px-2 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer ${
+                className={`px-1.5 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer ${
                   examLanguage === 'en'
                     ? 'bg-white text-[#1a4480] shadow-xs'
                     : 'text-white hover:text-blue-100'
@@ -751,7 +1133,7 @@ export default function ExamScreen() {
               <button
                 type="button"
                 onClick={() => handleLanguageChange('hi')}
-                className={`px-2 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer flex items-center gap-1 ${
+                className={`px-1.5 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer flex items-center gap-1 ${
                   examLanguage === 'hi'
                     ? 'bg-white text-[#1a4480] shadow-xs'
                     : 'text-white hover:text-blue-100'
@@ -762,20 +1144,80 @@ export default function ExamScreen() {
               </button>
             </div>
 
+            {/* Student Voluntary Local Screen Recording Control */}
+            {!isSimulatorActive && attemptId && !attemptId.startsWith('ai-') && (
+              <ScreenRecordingIndicator
+                status={recordingStatus}
+                isRecording={isRecording}
+                hasRecording={hasRecording}
+                elapsedSeconds={recordingElapsed}
+                onStartRecording={async () => {
+                  setShowRecordingModal(false);
+                  sessionStorage.setItem(`rec_prompt_${effectiveAttemptId}`, 'true');
+                  await startRecording();
+                }}
+                onStopRecording={async () => {
+                  await stopRecording();
+                }}
+                onDownload={() => downloadRecording()}
+              />
+            )}
+
             {maxViolations > 0 && (
-              <span className="hidden rounded border border-white/30 px-2 py-1 text-[10px] font-semibold sm:inline">
+              <span className="hidden rounded border border-white/30 px-2 py-1 text-[10px] font-semibold md:inline whitespace-nowrap shrink-0">
                 Warnings {violations}/{maxViolations}
               </span>
             )}
-            <div className={`rounded px-3 py-1 ${timerClass(remaining)}`}>
+            {/* Live CBT Answer Autosave & Offline Sync Indicator */}
+            <CbtAnswerSyncIndicator
+              syncStatus={syncState.status}
+              pendingCount={syncState.pendingCount}
+              failedCount={syncState.failedCount}
+              isOffline={isOffline}
+              onManualRetry={() => syncManagerRef.current?.syncPending()}
+              submissionError={submissionError}
+              onRetrySubmission={() => finishExam('retry')}
+              isSubmitting={isSubmitting}
+              incidentRef={incidentReference}
+              onOpenHelp={() => setShowIncidentModal(true)}
+            />
+
+            <div className={`rounded px-2.5 py-1 text-xs sm:text-sm font-bold whitespace-nowrap shrink-0 ${timerClass(remaining)}`}>
               Time Left: {formatDuration(remaining)}
             </div>
-            <button type="button" className="nta-btn nta-btn-danger" onClick={() => setConfirmOpen(true)}>
+            {/* Technical Help / Incident Report Action */}
+            <button
+              type="button"
+              id="cbt-technical-help-btn"
+              data-testid="cbt-technical-help-btn"
+              aria-label="Technical Help"
+              aria-haspopup="dialog"
+              className="flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-2.5 py-1 rounded text-xs transition cursor-pointer shrink-0 shadow-xs focus:outline-hidden focus:ring-2 focus:ring-amber-400"
+              onClick={() => setShowIncidentModal(true)}
+              title="Report a technical problem or hardware issue to the invigilator"
+            >
+              <LifeBuoy className="h-3.5 w-3.5 shrink-0" />
+              <span className="hidden sm:inline">Technical Help</span>
+              <span className="inline sm:hidden">Help</span>
+            </button>
+
+            <button
+              type="button"
+              className="nta-btn nta-btn-danger text-xs sm:text-sm px-3 py-1 whitespace-nowrap shrink-0"
+              onClick={() => setConfirmOpen(true)}
+            >
               Submit
             </button>
           </div>
         </div>
       </header>
+
+      {/* Live Technical Incident / Invigilator Guidance Banner */}
+      <TechnicalIncidentStatusBanner
+        isOffline={isOffline}
+        invigilatorGuidance={invigilatorGuidance}
+        onReportIssue={() => setShowIncidentModal(true)}
+      />
 
       {effectiveSections.length > 0 && (
         <div className="nta-bar-sub flex flex-wrap gap-1.5 px-4 py-2">
@@ -796,7 +1238,7 @@ export default function ExamScreen() {
                 onClick={() => jumpToSection(s)}
               >
                 <span>{s.icon}</span>
-                <span>{s.name} ({count} Qs)</span>
+                <span>{s.displayName || s.name} ({count} Qs)</span>
               </button>
             );
           })}
@@ -839,13 +1281,23 @@ export default function ExamScreen() {
         )}
 
         <div className="border-b border-r border-slate-300 bg-white text-slate-900 p-5 lg:border-b-0">
-          <div className="space-y-4">
+          <ExamErrorBoundary
+            reporter={reporterRef.current}
+            currentQuestionId={q?.id}
+            onReportIssue={() => setShowIncidentModal(true)}
+          >
+            <div className="space-y-4">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-slate-300 pb-3">
               <div className="flex-1 min-w-[200px]">
                 <div className="flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1.5 rounded-md bg-blue-50 px-2.5 py-1 text-xs font-extrabold uppercase tracking-wide text-[#1a4480] border border-blue-200">
                     <span>{getSubjectIcon(qCategory)}</span>
                     <span>Subject: {qCategory}</span>
+                    {currentSubjectInfo?.sectionTag && (
+                      <span className="ml-1 pl-1.5 border-l border-blue-300 font-bold text-blue-800">
+                        {currentSubjectInfo.sectionTag}
+                      </span>
+                    )}
                   </span>
                 </div>
                 <p className="text-sm font-bold text-slate-800 mt-1.5">
@@ -1146,6 +1598,7 @@ export default function ExamScreen() {
             />
           )}
           </div>
+          </ExamErrorBoundary>
 
           {/* Action Buttons — Positioned just below options and centered */}
           <div className="mt-6 border-t border-slate-300 pt-4 pb-4 flex flex-col items-center">
@@ -1240,7 +1693,7 @@ export default function ExamScreen() {
                 >
                   <div className="mb-2 flex items-center justify-between border-b border-slate-200 pb-1.5">
                     <span className="text-[11px] font-extrabold uppercase text-[#1a4480] tracking-wider flex items-center gap-1">
-                      <span>{secItem.icon}</span> {secItem.name}
+                      <span>{secItem.icon}</span> {secItem.displayName || secItem.name}
                     </span>
                     <span className="text-[10px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">
                       {secAnswered} / {secQuestions.length} Answered
@@ -1252,12 +1705,14 @@ export default function ExamScreen() {
                     <div className="grid grid-cols-5 gap-1.5">
                       {secQuestions.map(({ item, idx }) => {
                         const status = getQStatus(item);
+                        const isPending = (syncState.pendingQuestionIds || []).includes(item.id);
                         return (
                           <button
                             key={item.id}
                             type="button"
                             onClick={() => setCurrent(idx)}
-                            className={`flex h-8 w-full items-center justify-center text-xs font-bold rounded-sm border transition-all ${paletteCellClass(status, idx === current)}`}
+                            className={`flex h-8 w-full items-center justify-center text-xs font-bold rounded-sm border transition-all ${paletteCellClass(status, idx === current, isPending)}`}
+                            title={isPending ? 'Answer saved locally (pending sync with server)' : undefined}
                           >
                             {idx + 1}
                           </button>
@@ -1270,9 +1725,15 @@ export default function ExamScreen() {
             })}
           </div>
 
-          <div className="mt-3 border-t border-slate-300 pt-2 text-center text-[10px] text-slate-600">
+          <div className="mt-3 border-t border-slate-300 pt-2 text-center text-[10px] text-slate-600 flex flex-col items-center gap-1.5">
             <p>Answered: <strong>{answeredCount}</strong> / {activeQuestions.length}</p>
-            <p className="mt-0.5">{savingId === q.id ? 'Saving…' : 'Auto-saved'}</p>
+            <CbtAnswerSyncIndicator
+              syncStatus={syncState.status}
+              pendingCount={syncState.pendingCount}
+              failedCount={syncState.failedCount}
+              isOffline={isOffline}
+              onManualRetry={() => syncManagerRef.current?.syncPending()}
+            />
           </div>
         </aside>
       </div>
@@ -1313,7 +1774,7 @@ export default function ExamScreen() {
                   <div key={s.id} className="flex items-center justify-between text-slate-700 py-0.5 border-b border-blue-100 last:border-b-0">
                     <span className="font-semibold flex items-center gap-1.5">
                       <span>{s.icon}</span>
-                      <span>{s.name}:</span>
+                      <span>{s.displayName || s.name}:</span>
                     </span>
                     <span><strong>{secAns}</strong> / {secQs.length} Answered</span>
                   </div>
@@ -1387,6 +1848,123 @@ export default function ExamScreen() {
           </div>
         </Modal>
       )}
+
+      {/* Simulator Mode Verification Summary Modal */}
+      <Modal
+        open={simulatorModalOpen}
+        onClose={() => setSimulatorModalOpen(false)}
+        title="Simulator Mode — Test Verification Summary"
+        size="md"
+      >
+        <div className="text-sm text-slate-700 space-y-4">
+          <div className="flex items-center gap-3 p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-800">
+            <CheckCircle2 className="w-6 h-6 shrink-0 text-emerald-600" />
+            <div>
+              <p className="font-bold">Student Perspective Verification Complete</p>
+              <p className="text-xs text-emerald-700">No database attempt or ranking was created. This was an isolated preview of live questions, equations, and layouts.</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+            <div className="rounded border border-slate-200 bg-slate-50 p-2.5 text-center">
+              <p className="text-[11px] text-slate-500 font-medium">Total Questions</p>
+              <p className="text-xl font-bold text-slate-800">{activeQuestions.length}</p>
+            </div>
+            <div className="rounded border border-emerald-200 bg-emerald-50/50 p-2.5 text-center">
+              <p className="text-[11px] text-emerald-700 font-medium">Answered</p>
+              <p className="text-xl font-bold text-emerald-700">{answeredCount}</p>
+            </div>
+            <div className="rounded border border-amber-200 bg-amber-50/50 p-2.5 text-center">
+              <p className="text-[11px] text-amber-700 font-medium">Marked Review</p>
+              <p className="text-xl font-bold text-amber-700">{Object.values(reviewed).filter(Boolean).length}</p>
+            </div>
+            <div className="rounded border border-slate-200 bg-slate-50 p-2.5 text-center">
+              <p className="text-[11px] text-slate-500 font-medium">Unattempted</p>
+              <p className="text-xl font-bold text-slate-700">{unattemptedCount}</p>
+            </div>
+          </div>
+
+          {effectiveSections.length > 0 && (
+            <div className="space-y-1.5 rounded-lg border border-slate-200 bg-slate-50 p-3 text-xs">
+              <p className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">Section Layout Verification:</p>
+              {effectiveSections.map((s) => {
+                const secQs = getSecQuestions(s);
+                const secAns = secQs.filter(({ item }) => qAnswered(item)).length;
+                return (
+                  <div key={s.id} className="flex items-center justify-between text-slate-700 py-1 border-b border-slate-200 last:border-b-0">
+                    <span className="font-semibold flex items-center gap-1.5">
+                      <span>{s.icon}</span>
+                      <span>{s.displayName || s.name}</span>
+                    </span>
+                    <span className="text-slate-600"><strong>{secAns}</strong> of {secQs.length} verified</span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          <div className="text-xs text-slate-500 bg-blue-50/60 p-2.5 rounded border border-blue-100 flex items-start gap-2">
+            <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+            <span>MathJax equations, diagrams, Hindi/English toggles, and answer palettes work identically for real enrolled students.</span>
+          </div>
+
+          <div className="flex flex-wrap items-center justify-end gap-2 pt-2">
+            <button
+              type="button"
+              className="nta-btn"
+              onClick={() => setSimulatorModalOpen(false)}
+            >
+              Resume Verifying
+            </button>
+            {simulatorAssessmentId && (
+              <button
+                type="button"
+                className="nta-btn nta-btn-primary flex items-center gap-1.5"
+                onClick={() => navigate(`/admin/assessments/${simulatorAssessmentId}/edit`)}
+              >
+                <Edit className="w-3.5 h-3.5" />
+                Edit Assessment
+              </button>
+            )}
+            <button
+              type="button"
+              className="nta-btn bg-slate-800 hover:bg-slate-900 text-white"
+              onClick={() => navigate('/admin/assessments')}
+            >
+              Back to Assessments
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Optional Student Local Recording Modal */}
+      <ScreenShareConsentModal
+        isOpen={!isSimulatorActive && showRecordingModal}
+        status={recordingStatus}
+        errorMessage={recorderError}
+        onConfirm={async () => {
+          sessionStorage.setItem(`rec_prompt_${effectiveAttemptId}`, 'true');
+          const res = await startRecording();
+          if (res?.success) {
+            setShowRecordingModal(false);
+          }
+        }}
+        onDismiss={() => {
+          sessionStorage.setItem(`rec_prompt_${effectiveAttemptId}`, 'true');
+          setShowRecordingModal(false);
+        }}
+      />
+
+      {/* Candidate Technical Incident Report Modal */}
+      <TechnicalIncidentModal
+        isOpen={showIncidentModal}
+        onClose={() => setShowIncidentModal(false)}
+        reporter={reporterRef.current}
+        attemptId={effectiveAttemptId}
+        currentQuestionId={q?.id}
+        currentQuestionNumber={current + 1}
+        isOffline={isOffline}
+      />
     </div>
   );
 }

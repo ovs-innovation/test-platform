@@ -3,7 +3,7 @@ export const NEET_SUBJECTS = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
 
 /**
  * Checks whether an assessment follows the NEET UG pattern based on test_type, title, syllabus,
- * or question count (200 questions).
+ * or question count (180 questions).
  */
 export function isNeetTest(assessment = {}, questions = []) {
   const type = String(assessment.test_type || '').toUpperCase();
@@ -14,9 +14,9 @@ export function isNeetTest(assessment = {}, questions = []) {
     return true;
   }
 
-  // Also check if question count is 200 or close to 200 with standard subjects
+  // Also check if question count is 180 with standard subjects
   const qCount = questions.length || assessment.total_questions || 0;
-  if (qCount === 200 || qCount === 180) {
+  if (qCount === 180) {
     return true;
   }
 
@@ -40,96 +40,75 @@ export function normalizeNeetSubject(name = '') {
   return null;
 }
 
-export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 200) {
-  const pos = Number(q.position || index + 1);
+export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 180) {
+  const actualTotal = Number(q.totalQuestions || q.total_questions || totalQuestions || 180);
+  const pos = Number(q.position || q.question_number || q.questionNumber || (index + 1));
 
   // 1. Check explicit tags on question if present
   let explicitSubject = normalizeNeetSubject(q.subject || q.subject_name || q.bank_category);
   let explicitSection = null;
 
   const sectionRaw = String(q.section || q.section_name || q.section_letter || '').toUpperCase().trim();
-  if (sectionRaw.includes('SECTION B') || sectionRaw.endsWith(' B') || sectionRaw === 'B' || sectionRaw.includes('SEC B') || sectionRaw.includes('SEC-B')) {
+  if (sectionRaw.includes('SECTION D') || sectionRaw.endsWith(' D') || sectionRaw === 'D' || sectionRaw.includes('SEC D') || sectionRaw.includes('SEC-D')) {
+    explicitSection = 'D';
+  } else if (sectionRaw.includes('SECTION C') || sectionRaw.endsWith(' C') || sectionRaw === 'C' || sectionRaw.includes('SEC C') || sectionRaw.includes('SEC-C')) {
+    explicitSection = 'C';
+  } else if (sectionRaw.includes('SECTION B') || sectionRaw.endsWith(' B') || sectionRaw === 'B' || sectionRaw.includes('SEC B') || sectionRaw.includes('SEC-B')) {
     explicitSection = 'B';
   } else if (sectionRaw.includes('SECTION A') || sectionRaw.endsWith(' A') || sectionRaw === 'A' || sectionRaw.includes('SEC A') || sectionRaw.includes('SEC-A')) {
     explicitSection = 'A';
   }
 
-  // If 180-question paper:
-  // Standard NEET paper layout (e.g. AIETS 2027): Biology (90 Qs, 1-90), Physics (45 Qs, 91-135), Chemistry (45 Qs, 136-180)
-  if (totalQuestions === 180) {
-    let fallbackSubject = 'Biology';
-    let subjectQNum = pos;
-
-    // Check if the paper follows Biology first (Q1 is Biology) or Physics first
-    const isBioFirst = explicitSubject === 'Biology' ||
-      pos <= 90 ||
-      String(q.bank_category || '').toLowerCase().includes('bio') ||
-      String(q.subject || '').toLowerCase().includes('bio');
-
-    if (isBioFirst) {
-      if (pos >= 1 && pos <= 90) {
-        fallbackSubject = 'Biology';
-        subjectQNum = pos;
-      } else if (pos >= 91 && pos <= 135) {
-        fallbackSubject = 'Physics';
-        subjectQNum = pos - 90;
-      } else if (pos >= 136 && pos <= 180) {
-        fallbackSubject = 'Chemistry';
-        subjectQNum = pos - 135;
-      }
-    } else {
-      if (pos >= 1 && pos <= 45) {
-        fallbackSubject = 'Physics';
-        subjectQNum = pos;
-      } else if (pos >= 46 && pos <= 90) {
-        fallbackSubject = 'Chemistry';
-        subjectQNum = pos - 45;
-      } else if (pos >= 91 && pos <= 180) {
-        fallbackSubject = 'Biology';
-        subjectQNum = pos - 90;
-      }
+  // If explicit subject is Biology, handle sub-split into Botany and Zoology
+  let bioSplitSubject = null;
+  if (explicitSubject === 'Biology') {
+    const bioIdx = (q.subjectQuestionIndex !== undefined) ? Number(q.subjectQuestionIndex) :
+                   (q.subject_index !== undefined) ? Number(q.subject_index) :
+                   (q.bioIndex !== undefined) ? Number(q.bioIndex) : null;
+    const totalBio = Number(q.totalSubjectQuestions || q.total_bio || 90);
+    if (bioIdx !== null) {
+      bioSplitSubject = (bioIdx < Math.floor(totalBio / 2)) ? 'Botany' : 'Zoology';
     }
-
-    const finalSubject = explicitSubject || fallbackSubject;
-    return {
-      subject: finalSubject,
-      section: explicitSection || null,
-      subjectQuestionNumber: subjectQNum,
-      overallQuestionNumber: pos,
-      isSectionB: explicitSection === 'B',
-    };
   }
 
-  // 2. Default to standard NEET 200 sequential mapping if 200 questions or pos in 1..200
+  // Standard NEET 180-question paper layout:
+  // Section-A: Physics (1-45), Section-B: Chemistry (46-90), Section-C: Botany (91-135), Section-D: Zoology (136-180)
   let fallbackSubject = 'Physics';
   let fallbackSection = 'A';
   let subjectQNum = pos;
 
-  if (pos >= 1 && pos <= 50) {
+  if (pos >= 1 && pos <= 45) {
     fallbackSubject = 'Physics';
-    fallbackSection = pos <= 35 ? 'A' : 'B';
+    fallbackSection = 'A';
     subjectQNum = pos;
-  } else if (pos >= 51 && pos <= 100) {
+  } else if (pos >= 46 && pos <= 90) {
     fallbackSubject = 'Chemistry';
-    fallbackSection = pos <= 85 ? 'A' : 'B';
-    subjectQNum = pos - 50;
-  } else if (pos >= 101 && pos <= 150) {
+    fallbackSection = 'B';
+    subjectQNum = pos - 45;
+  } else if (pos >= 91 && pos <= 135) {
     fallbackSubject = 'Botany';
-    fallbackSection = pos <= 135 ? 'A' : 'B';
-    subjectQNum = pos - 100;
-  } else if (pos >= 151 && pos <= 200) {
+    fallbackSection = 'C';
+    subjectQNum = pos - 90;
+  } else if (pos >= 136 && pos <= 180) {
     fallbackSubject = 'Zoology';
-    fallbackSection = pos <= 185 ? 'A' : 'B';
-    subjectQNum = pos - 150;
+    fallbackSection = 'D';
+    subjectQNum = pos - 135;
+  } else {
+    // If questions exceed 180, distribute appropriately
+    subjectQNum = pos;
   }
 
-  // If explicit subject is provided and not generic
-  const finalSubject = explicitSubject || fallbackSubject;
-  const finalSection = explicitSection || fallbackSection;
+  let finalSubject = bioSplitSubject || explicitSubject;
+  if (!finalSubject || finalSubject === 'Biology') {
+    finalSubject = fallbackSubject;
+  }
+
+  const finalSection = explicitSection || (finalSubject === 'Botany' ? 'C' : (finalSubject === 'Zoology' ? 'D' : (finalSubject === 'Chemistry' ? 'B' : fallbackSection)));
 
   return {
     subject: finalSubject,
     section: finalSection,
+    sectionTag: `Section-${finalSection}`,
     subjectQuestionNumber: subjectQNum,
     overallQuestionNumber: pos,
     isSectionB: finalSection === 'B',
@@ -228,6 +207,18 @@ export function evaluateNeetAttempt({
     let totalUnattempted = 0;
     const evaluatedQuestionsMap = new Map();
     const subjectStats = {};
+    for (const s of NEET_SUBJECTS) {
+      subjectStats[s] = {
+        subject: s,
+        totalQuestions: 0,
+        totalMarks: 0,
+        marksObtained: 0,
+        attempted: 0,
+        correct: 0,
+        incorrect: 0,
+        unattempted: 0,
+      };
+    }
 
     questions.forEach((q, idx) => {
       const meta = resolveQuestionNeetMeta(q, idx, questions.length);

@@ -609,13 +609,28 @@ export default function ResultPage() {
       const pos = q.position || (idx + 1);
       let subj = 'Physics';
       let sec = 'A';
-      if (pos >= 1 && pos <= 50) { subj = 'Physics'; sec = pos <= 35 ? 'A' : 'B'; }
-      else if (pos >= 51 && pos <= 100) { subj = 'Chemistry'; sec = pos <= 85 ? 'A' : 'B'; }
-      else if (pos >= 101 && pos <= 150) { subj = 'Botany'; sec = pos <= 135 ? 'A' : 'B'; }
-      else if (pos >= 151 && pos <= 200) { subj = 'Zoology'; sec = pos <= 185 ? 'A' : 'B'; }
+      if (solutions.length <= 185) {
+        if (pos >= 1 && pos <= 45) { subj = 'Physics'; sec = 'A'; }
+        else if (pos >= 46 && pos <= 90) { subj = 'Chemistry'; sec = 'A'; }
+        else if (pos >= 91 && pos <= 135) { subj = 'Botany'; sec = 'A'; }
+        else if (pos >= 136 && pos <= 180) { subj = 'Zoology'; sec = 'A'; }
+      } else {
+        if (pos >= 1 && pos <= 50) { subj = 'Physics'; sec = pos <= 35 ? 'A' : 'B'; }
+        else if (pos >= 51 && pos <= 100) { subj = 'Chemistry'; sec = pos <= 85 ? 'A' : 'B'; }
+        else if (pos >= 101 && pos <= 150) { subj = 'Botany'; sec = pos <= 135 ? 'A' : 'B'; }
+        else if (pos >= 151 && pos <= 200) { subj = 'Zoology'; sec = pos <= 185 ? 'A' : 'B'; }
+      }
 
-      if (q.subject_name && subjects.some((s) => q.subject_name.toLowerCase().includes(s.toLowerCase()))) {
-        subj = subjects.find((s) => q.subject_name.toLowerCase().includes(s.toLowerCase()));
+      const explicitSub = q.subject || q.subject_name || q.bank_category;
+      if (explicitSub) {
+        const lower = explicitSub.toLowerCase();
+        if (lower.includes('botan')) subj = 'Botany';
+        else if (lower.includes('zool')) subj = 'Zoology';
+        else if (lower.includes('chem')) subj = 'Chemistry';
+        else if (lower.includes('phys')) subj = 'Physics';
+        else if (lower.includes('bio')) {
+          subj = pos <= 135 ? 'Botany' : 'Zoology';
+        }
       }
       if (q.section === 'B' || q.is_section_b) sec = 'B';
       else if (q.section === 'A') sec = 'A';

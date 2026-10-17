@@ -121,7 +121,9 @@ export function buildPageInventory(pageIndex, text) {
 
   // Subject headers
   const subjects = [];
-  if (/\bBIOLOGY\b|\bBOTANY\b|\bZOOLOGY\b/i.test(clean)) subjects.push('Biology');
+  if (/\bBOTANY\b/i.test(clean)) subjects.push('Botany');
+  if (/\bZOOLOGY\b/i.test(clean)) subjects.push('Zoology');
+  if (/\bBIOLOGY\b/i.test(clean) && !subjects.includes('Botany') && !subjects.includes('Zoology')) subjects.push('Biology');
   if (/\bPHYSICS\b/i.test(clean)) subjects.push('Physics');
   if (/\bCHEMISTRY\b/i.test(clean)) subjects.push('Chemistry');
   if (/\bMATHEMATICS\b|\bMATHS\b/i.test(clean)) subjects.push('Mathematics');
@@ -985,15 +987,18 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - Transcribe ALL questions visible on this page. Never skip, abbreviate, or truncate questions!
 
 2. SUBJECT & TOPIC IDENTIFICATION:
-- Assign the accurate subject based primarily on printed section headers (e.g. "PHYSICS", "CHEMISTRY", "MATHEMATICS", "BIOLOGY").
-- If no header is printed on this page, identify the subject and topic directly from the scientific content:
-  * Physics: Mechanics, Kinematics, Laws of Motion, Work-Energy, Electrodynamics, Optics, Thermodynamics.
-  * Chemistry: Organic, Inorganic, Physical Chemistry, Mole Concept, Equilibrium, Bonding, Atomic Structure.
-  * Mathematics: Algebra, Calculus, Trigonometry, Coordinate Geometry, Vectors, Binomial Theorem, Permutations.
-- Standard exam layouts:
-  * NEET: Biology (Q1 to Q90), Physics (Q91 to Q135), Chemistry (Q136 to Q180).
-  * JEE Main: Typically Section I is Physics (Q1 to Q25), Section II is Chemistry (Q26 to Q50), Section III is Mathematics (Q51 to Q75). ALWAYS prioritize printed headers and actual question content over question numbers!
-- Assign specific, descriptive "chapter" and "topic" names for every question (e.g., "Laws of Motion", "Chemical Thermodynamics", "Binomial Theorem"). Never leave subject, chapter, or topic blank or "General".
+- Assign the accurate subject based primarily on printed section headers (e.g. "PHYSICS", "CHEMISTRY", "BOTANY", "ZOOLOGY", "MATHEMATICS").
+- For NEET examinations, the biology section MUST be divided into two distinct subjects: BOTANY and ZOOLOGY.
+  * Botany: Plant Kingdom, Morphology/Anatomy of Flowering Plants, Cell: The Unit of Life, Cell Division, Photosynthesis, Respiration in Plants, Plant Growth & Regulators, Genetics & Molecular Inheritance, Ecology & Environment.
+  * Zoology: Animal Kingdom, Structural Organisation in Animals, Biomolecules, Human Physiology (Digestion, Respiration, Circulation, Excretion, Locomotion, Nervous & Endocrine Systems), Human Reproduction, Reproductive Health, Evolution, Human Health & Disease, Biotechnology.
+- Standard NEET 180 Exam Layout:
+  * Section-A: Physics (Q1 to Q45)
+  * Section-B: Chemistry (Q46 to Q90)
+  * Section-C: Botany (Q91 to Q135)
+  * Section-D: Zoology (Q136 to Q180)
+- NEVER output generic "Biology" for NEET questions! Always classify them specifically as either "Botany" or "Zoology"!
+- Standard JEE Main layout: Typically Section I is Physics (Q1 to Q25), Section II is Chemistry (Q26 to Q50), Section III is Mathematics (Q51 to Q75). ALWAYS prioritize printed headers and actual question content over question numbers!
+- Assign specific, descriptive "chapter" and "topic" names for every question (e.g., "Laws of Motion", "Chemical Thermodynamics", "Cell Division", "Human Physiology"). Never leave subject, chapter, or topic blank or "General".
 
 3. MATCH-THE-COLUMN & LIST TABLES:
 - When a question contains Column-I vs Column-II, List-I vs List-II, or data tables:
@@ -1158,7 +1163,7 @@ CRITICAL INSTRUCTIONS:
 - Transcribe mathematical and chemical formulas in standard LaTeX wrapped in $...$.
 - Options with keys ('A', 'B', 'C', 'D' or '1', '2', '3', '4') and option text.
 - If diagrams, apparatus, circuits, or graphs exist, provide bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000).
-- Assign subject ('Physics', 'Chemistry', 'Mathematics'), chapter, and topic.
+- Assign subject ('Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics'), chapter, and topic. For biological questions, strictly assign 'Botany' (for plants/cells/genetics/ecology) or 'Zoology' (for animals/human physiology/reproduction/evolution/biotech).
 `;
 
           const leftRes = await callGemini([
@@ -1446,10 +1451,13 @@ CRITICAL INSTRUCTIONS:
   const rawQuestions = verifiedMergedQuestions;
   const totalQuestionsDetected = rawQuestions.length;
   const maxQNum = Math.max(0, ...rawQuestions.map((q) => Number(q.questionNumber) || 0));
-  const hasBiology = rawQuestions.some((q) => String(q.subject || '').toUpperCase().includes('BIO'));
+  const hasBiology = rawQuestions.some((q) => {
+    const s = String(q.subject || '').toUpperCase();
+    return s.includes('BIO') || s.includes('BOTAN') || s.includes('ZOOL');
+  });
 
   const isJee75 = expectedQuestionCount === 75 || (!hasBiology && ((totalQuestionsDetected >= 70 && totalQuestionsDetected <= 80) || (maxQNum >= 70 && maxQNum <= 75)));
-  const isNeet180 = expectedQuestionCount === 180 || hasBiology || (totalQuestionsDetected >= 120 && totalQuestionsDetected <= 200) || (maxQNum >= 120 && maxQNum <= 180);
+  const isNeet180 = expectedQuestionCount === 180 || hasBiology || (totalQuestionsDetected >= 120 && totalQuestionsDetected <= 185) || (maxQNum >= 120 && maxQNum <= 180);
 
   let forwardSubject = 'Physics';
   for (const rawQ of rawQuestions) {
@@ -1465,9 +1473,17 @@ CRITICAL INSTRUCTIONS:
         }
       }
     } else if (isNeet180) {
-      if (qNum >= 1 && qNum <= 90) rawQ.subject = 'Biology';
-      else if (qNum >= 91 && qNum <= 135) rawQ.subject = 'Physics';
-      else if (qNum >= 136 && qNum <= 180) rawQ.subject = 'Chemistry';
+      // Standard NEET 180 Question Paper Layout:
+      // Section-A: Physics (1-45), Section-B: Chemistry (46-90), Section-C: Botany (91-135), Section-D: Zoology (136-180)
+      if (qNum >= 1 && qNum <= 45) {
+        rawQ.subject = (rawQ.subject && rawQ.subject !== 'General') ? rawQ.subject : 'Physics';
+      } else if (qNum >= 46 && qNum <= 90) {
+        rawQ.subject = (rawQ.subject && rawQ.subject !== 'General') ? rawQ.subject : 'Chemistry';
+      } else if (qNum >= 91 && qNum <= 135) {
+        rawQ.subject = (rawQ.subject && ['Botany', 'Zoology'].includes(rawQ.subject)) ? rawQ.subject : 'Botany';
+      } else if (qNum >= 136 && qNum <= 180) {
+        rawQ.subject = (rawQ.subject && ['Botany', 'Zoology'].includes(rawQ.subject)) ? rawQ.subject : 'Zoology';
+      }
     } else {
       if (rawQ.subject && rawQ.subject !== 'General' && rawQ.subject.trim() !== '') {
         forwardSubject = rawQ.subject;
@@ -1882,3 +1898,146 @@ CRITICAL INSTRUCTIONS:
     warnings,
   };
 }
+
+/**
+ * Heuristically classifies a single biology question using keyword patterns and NEET 180 position.
+ */
+export function fallbackSingleBiologyQuestion(q, idx = 0, totalBio = 90) {
+  const text = `${q.question_text || q.questionText || q.question?.text || ''} ${(q.options || []).map((o) => (typeof o === 'string' ? o : o.text || '')).join(' ')}`;
+  const qNum = Number(q.questionNumber || q.question_number || (idx + 1));
+
+  // Keyword check for Botany
+  if (/\b(botany|plant|chloroplast|photosynthesis|angiosperm|gymnosperm|bryophyte|pteridophyte|algae|fungi|xylem|phloem|cambium|stomata|transpiration|auxin|cytokinin|gibberellin|monocot|dicot|anther|ovule|pollination|endosperm|mendel|dihybrid|monohybrid|allele|dna polymerase|rna|chlorophyll|cell wall|vacuole|thylakoid|plasmodesmata|peroxisome|cristae|mitochondria)\b/i.test(text)) {
+    return { ...q, subject: 'Botany', bank_category: 'Botany' };
+  }
+
+  // Keyword check for Zoology
+  if (/\b(zoology|animal|chordata|mammal|amphibian|reptile|arthropod|annelid|mollusc|echinoderm|neuron|nervous|brain|cerebellum|spinal|kidney|nephron|glomerulus|heart|cardiac|artery|vein|alveoli|lung|digestion|stomach|pepsin|liver|pancreas|insulin|testosterone|estrogen|progesterone|sperm|ovum|placenta|embryo|blastocyst|darwin|natural selection|evolution|homologous|analogous|antibody|antigen|immunity|vaccine|aids|hiv|malaria|plasmodium|pcr|biotechnology|plasmid|restriction enzyme|vector|transgenic|dna fingerprinting)\b/i.test(text)) {
+    return { ...q, subject: 'Zoology', bank_category: 'Zoology' };
+  }
+
+  // Positional fallback for NEET 180: Q91-135 is Botany, Q136-180 is Zoology
+  const assigned = qNum > 0 ? (qNum <= 135 ? 'Botany' : 'Zoology') : (idx < Math.ceil(totalBio / 2) ? 'Botany' : 'Zoology');
+  return { ...q, subject: assigned, bank_category: assigned };
+}
+
+/**
+ * Deterministic fallback to classify an array of biology questions.
+ */
+export function fallbackBiologyClassification(questions = []) {
+  return questions.map((q, idx) => fallbackSingleBiologyQuestion(q, idx, questions.length));
+}
+
+/**
+ * Uses Gemini AI to classify an array of Biology questions into Botany and Zoology
+ * based on the standard NEET curriculum.
+ */
+export async function classifyBiologyQuestionsWithGemini(questions = [], testTitle = '') {
+  if (!Array.isArray(questions) || questions.length === 0) return questions;
+
+  const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
+  if (!apiKey) {
+    console.warn('[classifyBiologyQuestionsWithGemini] No GEMINI_API_KEY configured; using intelligent keyword and positional classifier.');
+    return fallbackBiologyClassification(questions);
+  }
+
+  try {
+    const ai = new GoogleGenAI({ apiKey });
+    const model = env.geminiModel || 'gemini-2.5-flash';
+
+    const questionItems = questions.map((q, idx) => ({
+      index: idx,
+      questionNumber: Number(q.questionNumber || q.question_number || (idx + 1)),
+      text: (q.question_text || q.questionText || q.question?.text || '').slice(0, 350),
+      options: (q.options || []).map((o) => (typeof o === 'string' ? o : o.text || '')).join(' | ').slice(0, 200),
+    }));
+
+    const BATCH_SIZE = 45;
+    const classifiedMap = new Map();
+
+    for (let i = 0; i < questionItems.length; i += BATCH_SIZE) {
+      const batch = questionItems.slice(i, i + BATCH_SIZE);
+      const prompt = `You are a NEET biology expert and curriculum specialist.
+In the NEET examination, biology is divided strictly into two separate subjects:
+1. "Botany": Plant kingdom, morphology & anatomy of plants, plant physiology (photosynthesis, respiration, plant growth), cell biology (cell structure & division), genetics & molecular inheritance, ecology & ecosystems.
+2. "Zoology": Animal kingdom, animal tissues, human physiology (digestion, breathing, circulation, excretion, nervous, endocrine, locomotion), human reproduction, evolution, human health & disease, immunology, biotechnology.
+
+Classify each question strictly into "Botany" or "Zoology".
+Return valid JSON matching this schema:
+{
+  "classifications": [
+    {
+      "questionNumber": 91,
+      "subject": "Botany"
+    }
+  ]
+}
+
+Questions:
+${JSON.stringify(batch, null, 2)}`;
+
+      const response = await ai.models.generateContent({
+        model,
+        contents: prompt,
+        config: {
+          responseMimeType: 'application/json',
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              classifications: {
+                type: Type.ARRAY,
+                items: {
+                  type: Type.OBJECT,
+                  properties: {
+                    questionNumber: { type: Type.INTEGER },
+                    subject: { type: Type.STRING },
+                  },
+                  required: ['questionNumber', 'subject'],
+                },
+              },
+            },
+            required: ['classifications'],
+          },
+          temperature: 0.1,
+          thinkingConfig: { thinkingBudget: 0 },
+        },
+      });
+
+      let responseText = '';
+      try { responseText = response.text || ''; } catch (_) {}
+      if (!responseText && response.candidates?.[0]?.content?.parts) {
+        responseText = response.candidates[0].content.parts.map((p) => p.text || '').join('');
+      }
+
+      if (responseText) {
+        const cleanJson = responseText.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/i, '');
+        const parsed = JSON.parse(cleanJson);
+        const list = parsed.classifications || parsed;
+        if (Array.isArray(list)) {
+          for (const item of list) {
+            const sub = String(item.subject || '').toLowerCase();
+            const normalizedSub = sub.includes('zool') ? 'Zoology' : 'Botany';
+            classifiedMap.set(Number(item.questionNumber), normalizedSub);
+          }
+        }
+      }
+    }
+
+    return questions.map((q, idx) => {
+      const qNum = Number(q.questionNumber || q.question_number || (idx + 1));
+      const geminiSub = classifiedMap.get(qNum);
+      if (geminiSub) {
+        return {
+          ...q,
+          subject: geminiSub,
+          bank_category: geminiSub,
+        };
+      }
+      return fallbackSingleBiologyQuestion(q, idx, questions.length);
+    });
+  } catch (err) {
+    console.warn('[classifyBiologyQuestionsWithGemini] Gemini AI request error, using keyword fallback:', err.message);
+    return fallbackBiologyClassification(questions);
+  }
+}
+

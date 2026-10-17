@@ -293,9 +293,10 @@ export default function AdminAttemptDetail() {
           )}
         </div>
 
-        {/* Violation log */}
-        <div>
-          <h2 className="mb-3 text-base font-extrabold text-slate-900 dark:text-white">Violation Log</h2>
+        {/* Violation Sidebar */}
+        <div className="space-y-6">
+          <div>
+            <h2 className="mb-3 text-base font-extrabold text-slate-900 dark:text-white">Violation Log</h2>
           <div className="card p-4 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
             {violations.length === 0 ? (
               <p className="py-6 text-center text-xs font-semibold text-slate-400">No violations recorded.</p>
@@ -317,6 +318,7 @@ export default function AdminAttemptDetail() {
         </div>
       </div>
     </div>
+  </div>
   );
 }
 

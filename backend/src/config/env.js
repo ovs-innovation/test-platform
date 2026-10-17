@@ -123,5 +123,10 @@ export const env = {
     templateId: process.env.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17',
     senderId: process.env.MSG91_SENDER_ID || 'EDVEDM',
   },
+  proctoring: {
+    retentionDays: parseInt(process.env.PROCTORING_MEDIA_RETENTION_DAYS || '30', 10),
+    signedUrlSecret: process.env.PROCTORING_SIGNED_URL_SECRET || process.env.JWT_SECRET || 'proctoring_secure_media_token_secret_fallback_key',
+    signedUrlExpiresSeconds: parseInt(process.env.PROCTORING_SIGNED_URL_EXPIRES_SECONDS || '900', 10), // 15 mins default
+  },
 };
 

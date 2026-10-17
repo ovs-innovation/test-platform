@@ -583,13 +583,22 @@ export const startAttempt = asyncHandler(async (req, res) => {
   res.status(201).json({ attempt: created.rows[0], resumed: false });
 });
 
-export const getAttemptState = asyncHandler(async (req, res) => {
+export const getAttemptState = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
+
+  if (String(id).startsWith('sim-')) {
+    const simAssessmentId = Number(String(id).replace(/^sim-/, ''));
+    req.params.id = simAssessmentId;
+    const { getTestSimulator } = await import('./testAdminController.js');
+    return getTestSimulator(req, res, next);
+  }
 
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
   if (!attempt) throw ApiError.notFound('Attempt not found');
-  if (attempt.candidate_id !== req.user.id) throw ApiError.forbidden('This is not your attempt');
+  if (attempt.candidate_id !== req.user.id && req.user.role !== 'admin' && req.user.role !== 'institution_admin') {
+    throw ApiError.forbidden('This is not your attempt');
+  }
 
   if (attempt.status === 'in_progress' && new Date(attempt.ends_at).getTime() <= Date.now()) {
     await finalizeAttempt(attempt.id, 'auto_submitted');
@@ -680,6 +689,7 @@ export const getAttemptState = asyncHandler(async (req, res) => {
   });
 
   res.json({
+    server_time: new Date().toISOString(),
     attempt,
     assessment: {
       id: assessmentObj.id,
@@ -762,7 +772,7 @@ export const saveAnswer = asyncHandler(async (req, res) => {
       [id, question_id, selIndex]
     );
   }
-  res.json({ saved: true });
+  res.json({ saved: true, server_time: new Date().toISOString() });
 });
 
 export const markForReview = asyncHandler(async (req, res) => {
@@ -781,21 +791,22 @@ export const markForReview = asyncHandler(async (req, res) => {
      DO UPDATE SET marked_for_review = EXCLUDED.marked_for_review, updated_at = NOW()`,
     [id, question_id, marked_for_review]
   );
-  res.json({ marked: marked_for_review });
+  res.json({ marked: marked_for_review, server_time: new Date().toISOString() });
 });
 
 export const clearAnswer = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { questionId } = req.params;
+  const targetQId = req.body.question_id || req.body.questionId || req.params.questionId;
+  if (!targetQId) throw ApiError.badRequest('question_id is required');
   const attemptRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
   const attempt = attemptRes.rows[0];
   if (!attempt || attempt.candidate_id !== req.user.id) throw ApiError.forbidden('Not allowed');
   if (attempt.status !== 'in_progress') throw ApiError.conflict('Attempt submitted');
 
-  await query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
-  await query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
-  await query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, questionId]);
-  res.json({ cleared: true });
+  await query('DELETE FROM answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
+  await query('DELETE FROM coding_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
+  await query('DELETE FROM subjective_answers WHERE attempt_id = $1 AND question_id = $2', [id, targetQId]);
+  res.json({ cleared: true, server_time: new Date().toISOString() });
 });
 
 export const saveCodingAnswer = asyncHandler(async (req, res) => {
@@ -820,7 +831,7 @@ export const saveCodingAnswer = asyncHandler(async (req, res) => {
      DO UPDATE SET source_code = EXCLUDED.source_code, language = EXCLUDED.language, updated_at = NOW()`,
     [id, question_id, source_code || '', language || 'javascript']
   );
-  res.json({ saved: true });
+  res.json({ saved: true, server_time: new Date().toISOString() });
 });
 
 export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
@@ -845,7 +856,7 @@ export const saveSubjectiveAnswer = asyncHandler(async (req, res) => {
      DO UPDATE SET answer_text = EXCLUDED.answer_text, updated_at = NOW()`,
     [id, question_id, answer_text || '']
   );
-  res.json({ saved: true });
+  res.json({ saved: true, server_time: new Date().toISOString() });
 });
 
 export const submitAttempt = asyncHandler(async (req, res) => {

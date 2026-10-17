@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { NavLink, Link, useNavigate, useLocation, Outlet } from 'react-router-dom';
-import { Bell, Home, Search } from 'lucide-react';
+import { Bell, Home, Search, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { useTheme } from '../../context/ThemeContext.jsx';
-import { notificationService } from '../../lib/services.js';
+import { notificationService, adminService } from '../../lib/services.js';
 import { tokenStore } from '../../lib/api.js';
 import { formatDateTime } from '../../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead } from '../../lib/schoolStore.js';
@@ -26,6 +26,7 @@ const ADMIN_NAV_GROUPS = [
     groupTitle: 'ACADEMICS',
     items: [
       { to: '/admin/assessments', label: 'Tests & Exams', icon: 'calendar' },
+      { to: '/admin/incidents', label: 'Exam Incidents', icon: 'alert-triangle' },
       { to: '/admin/test-series', label: 'Test Series', icon: 'layers' },
       { to: '/admin/question-bank', label: 'Question Bank', icon: 'doc' },
       { to: '/admin/subjects', label: 'Subjects & Topics', icon: 'book' },
@@ -52,6 +53,8 @@ const ADMIN_NAV_GROUPS = [
 const NavIcon = ({ name, className = 'h-4 w-4' }) => {
   const icons = {
     grid: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 5a1 1 0 011-1h4a1 1 0 011 1v4a1 1 0 01-1 1H5a1 1 0 01-1-1V5zm0 9a1 1 0 011-1h4a1 1 0 011 1v5a1 1 0 01-1 1H5a1 1 0 01-1-1v-5zm9-9a1 1 0 011-1h5a1 1 0 011 1v5a1 1 0 01-1 1h-5a1 1 0 01-1-1V5zm0 10a1 1 0 011-1h5a1 1 0 011 1v4a1 1 0 01-1 1h-5a1 1 0 01-1-1v-4z" />,
+    shield: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
+    'alert-triangle': <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />,
     'phone-call': <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />,
     clipboard: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />,
     chat: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />,
@@ -88,6 +91,7 @@ export default function AdminLayout({ children }) {
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [notifPanelOpen, setNotifPanelOpen] = useState(false);
   const [unreadNotifs, setUnreadNotifs] = useState(0);
+  const [unreadIncidents, setUnreadIncidents] = useState(0);
 
   const quickActionsRef = useRef(null);
 
@@ -103,7 +107,7 @@ export default function AdminLayout({ children }) {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
-  // Unread notification check
+  // Unread notification & incident check
   useEffect(() => {
     const checkUnread = () => {
       if (!tokenStore.get()) return;
@@ -118,6 +122,15 @@ export default function AdminLayout({ children }) {
           const adminNotifs = getAdminNotifications();
           setUnreadNotifs(adminNotifs.filter((n) => !n.read_at).length);
         });
+
+      adminService
+        .incidents({ status: 'active', limit: 1 })
+        .then((res) => {
+          if (res?.summary) {
+            setUnreadIncidents(res.summary.active_total || 0);
+          }
+        })
+        .catch(() => {});
     };
     checkUnread();
     const interval = setInterval(checkUnread, 10000);
@@ -460,6 +473,25 @@ export default function AdminLayout({ children }) {
                   </div>
                 )}
               </div>
+
+              {/* Live Exam Incident Beacon */}
+              <Link
+                to="/admin/incidents"
+                className="group relative flex h-9 w-9 items-center justify-center rounded-xl border border-slate-200/90 bg-white/90 text-slate-600 shadow-xs transition-all duration-200 hover:border-rose-500/50 hover:bg-rose-50/60 hover:text-rose-600 hover:shadow-md hover:shadow-rose-500/10 active:scale-95 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300 dark:hover:border-rose-500/50 dark:hover:bg-slate-800 dark:hover:text-rose-400 cursor-pointer"
+                title="Live Technical Incidents"
+              >
+                <AlertTriangle className={`h-4 w-4 ${unreadIncidents > 0 ? 'text-rose-500 animate-pulse' : 'text-slate-400 group-hover:text-rose-500'} transition-transform duration-300 group-hover:scale-110`} strokeWidth={1.8} />
+                {unreadIncidents > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] animate-ping font-mono">
+                    {unreadIncidents > 99 ? '99+' : unreadIncidents}
+                  </span>
+                )}
+                {unreadIncidents > 0 && (
+                  <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] px-1 items-center justify-center rounded-full bg-gradient-to-r from-rose-500 to-red-600 text-[9.5px] font-black text-white shadow-md shadow-rose-500/40 ring-2 ring-white dark:ring-[#0F172A] font-mono">
+                    {unreadIncidents > 99 ? '99+' : unreadIncidents}
+                  </span>
+                )}
+              </Link>
 
               {/* Premium Notification Bell */}
               <button

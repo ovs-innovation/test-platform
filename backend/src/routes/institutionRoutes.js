@@ -2,7 +2,22 @@ import { Router } from 'express';
 import { institutionAdminLogin } from '../controllers/authController.js';
 import { authInstitutionAdmin } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { institutionLoginSchema } from '../validators/schemas.js';
+import {
+  institutionLoginSchema,
+  assignIncidentSchema,
+  addIncidentNotesSchema,
+  updateIncidentStatusSchema,
+  resolveIncidentSchema,
+} from '../validators/schemas.js';
+import {
+  listAdminIncidents,
+  getAdminIncidentDetails,
+  acknowledgeIncident,
+  assignIncident,
+  addInvestigationNotes,
+  updateIncidentStatus,
+  resolveIncident,
+} from '../controllers/incidentController.js';
 import {
   getInstitutionProfile,
   updateInstitutionProfile,
@@ -115,5 +130,14 @@ router.post('/:id/invoices/request-licenses', requestAdditionalLicenses);
 router.get('/:id/notifications', listInstitutionNotifications);
 router.put('/:id/notifications/:notif_id/read', markNotificationAsRead);
 router.post('/:id/notifications/send-reminder', sendStudentReminder);
+
+// 12. Live Technical Incident Management (Scoped to Institution)
+router.get('/:id/incidents', listAdminIncidents);
+router.get('/:id/incidents/:incident_id', getAdminIncidentDetails);
+router.post('/:id/incidents/:incident_id/acknowledge', acknowledgeIncident);
+router.patch('/:id/incidents/:incident_id/assign', validate(assignIncidentSchema), assignIncident);
+router.post('/:id/incidents/:incident_id/notes', validate(addIncidentNotesSchema), addInvestigationNotes);
+router.patch('/:id/incidents/:incident_id/status', validate(updateIncidentStatusSchema), updateIncidentStatus);
+router.post('/:id/incidents/:incident_id/resolve', validate(resolveIncidentSchema), resolveIncident);
 
 export default router;

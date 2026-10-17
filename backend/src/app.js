@@ -100,6 +100,12 @@ app.use(express.json({ limit: '150mb' }));
 app.use(express.urlencoded({ extended: true, limit: '150mb' }));
 app.use(cookieParser());
 app.use('/uploads', (req, res, next) => {
+  if (req.path.startsWith('/proctoring') || req.path.startsWith('proctoring')) {
+    return res.status(403).json({
+      error: 'Forbidden',
+      message: 'Direct access to proctoring media is restricted. Use authenticated signed playback URLs.',
+    });
+  }
   res.removeHeader('X-Frame-Options');
   res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
   res.setHeader('Content-Security-Policy', "frame-ancestors *");

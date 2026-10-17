@@ -59,6 +59,8 @@ import {
   getTestParticipation,
   notifyTestReminder,
   getTestExtractedQuestions,
+  getTestSimulator,
+  toggleTestLive,
 } from '../controllers/testAdminController.js';
 import {
   listEbooks,
@@ -78,9 +80,27 @@ import {
   getAdminLandingContent, updateAdminLandingContent,
 } from '../controllers/platformController.js';
 import { createInvite, listInvites, resendInvite } from '../controllers/inviteController.js';
+import { listProctoringSessions } from '../controllers/proctoringRecordingController.js';
+import {
+  inviteSchema,
+  adminCreateCandidateSchema,
+  adminUpdateCandidateSchema,
+  assignIncidentSchema,
+  addIncidentNotesSchema,
+  updateIncidentStatusSchema,
+  resolveIncidentSchema,
+} from '../validators/schemas.js';
+import {
+  listAdminIncidents,
+  getAdminIncidentDetails,
+  acknowledgeIncident,
+  assignIncident,
+  addInvestigationNotes,
+  updateIncidentStatus,
+  resolveIncident,
+} from '../controllers/incidentController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
-import { inviteSchema, adminCreateCandidateSchema, adminUpdateCandidateSchema } from '../validators/schemas.js';
 
 const router = Router();
 
@@ -98,6 +118,7 @@ router.post('/candidates/:id/send-credentials', sendCandidateCredentials);
 router.get('/reports/export', exportReports);
 router.get('/reports', getReports);
 router.get('/attempts/:id', getAttemptReport);
+router.get('/proctoring/sessions', listProctoringSessions);
 router.get('/invites', listInvites);
 router.post('/invites', validate(inviteSchema), createInvite);
 router.post('/invites/:id/resend', resendInvite);
@@ -119,6 +140,8 @@ router.post('/tests/:id/generate-results', generateResults);
 router.post('/tests/:id/missed-override', setMissedTestOverride);
 router.get('/tests/:id/participation', getTestParticipation);
 router.post('/tests/:id/notify', notifyTestReminder);
+router.get('/tests/:id/simulator', getTestSimulator);
+router.patch('/tests/:id/toggle-live', toggleTestLive);
 
 // eBooks Endpoints
 router.get('/ebooks', listEbooks);
@@ -239,5 +262,14 @@ router.get('/admissions', listAdminAdmissions);
 router.get('/admissions/:id', getAdminAdmissionDetail);
 router.patch('/admissions/:id/status', updateAdminAdmissionStatus);
 router.delete('/admissions/:id', deleteAdminAdmission);
+
+// Live Technical Incident Management Endpoints (Platform Admin)
+router.get('/incidents', listAdminIncidents);
+router.get('/incidents/:id', getAdminIncidentDetails);
+router.post('/incidents/:id/acknowledge', acknowledgeIncident);
+router.patch('/incidents/:id/assign', validate(assignIncidentSchema), assignIncident);
+router.post('/incidents/:id/notes', validate(addIncidentNotesSchema), addInvestigationNotes);
+router.patch('/incidents/:id/status', validate(updateIncidentStatusSchema), updateIncidentStatus);
+router.post('/incidents/:id/resolve', validate(resolveIncidentSchema), resolveIncident);
 
 export default router;

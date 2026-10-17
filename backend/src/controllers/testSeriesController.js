@@ -434,6 +434,7 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
           t.end_time::text AS end_time,
           t.available_from,
           t.available_until,
+          COALESCE(t.is_live, false) AS is_live,
           t.question_paper_url,
           t.solution_pdf_url,
           t.answer_key_url,
@@ -456,6 +457,7 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
           a.end_time::text AS end_time,
           a.available_from,
           a.available_until,
+          COALESCE(a.is_live, false) AS is_live,
           a.question_paper_url,
           a.solution_pdf_url,
           a.answer_key_url,
@@ -503,7 +505,42 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
      ORDER BY item.sort_order ASC, item.test_date DESC NULLS LAST`,
     [slug, req.user.id]
   );
-  res.json({ tests: testsRes.rows, test_series: enrolled.rows[0] });
+
+  const now = new Date();
+  const enhancedTests = testsRes.rows.map((row) => {
+    let isLive = Boolean(row.is_live);
+    if (!isLive && row.test_date) {
+      const dateStr = String(row.test_date).includes('T')
+        ? String(row.test_date).split('T')[0]
+        : String(row.test_date).slice(0, 10);
+      const startTime = row.start_time ? String(row.start_time).slice(0, 8) : '00:00:00';
+      const endTime = row.end_time ? String(row.end_time).slice(0, 8) : '23:59:59';
+      const startDt = new Date(`${dateStr}T${startTime}`);
+      const endDt = new Date(`${dateStr}T${endTime}`);
+      if (!isNaN(startDt.getTime()) && !isNaN(endDt.getTime()) && now >= startDt && now <= endDt) {
+        isLive = true;
+      }
+      const startDtUtc = new Date(`${dateStr}T${startTime}Z`);
+      const endDtUtc = new Date(`${dateStr}T${endTime}Z`);
+      if (!isNaN(startDtUtc.getTime()) && !isNaN(endDtUtc.getTime()) && now >= startDtUtc && now <= endDtUtc) {
+        isLive = true;
+      }
+    }
+    if (!isLive && row.available_from) {
+      const fromDt = new Date(row.available_from);
+      const untilDt = row.available_until ? new Date(row.available_until) : null;
+      if (!isNaN(fromDt.getTime()) && now >= fromDt && (!untilDt || now <= untilDt)) {
+        isLive = true;
+      }
+    }
+    return {
+      ...row,
+      is_live: isLive,
+      computed_status: isLive ? 'Live' : (row.computed_status || 'Available'),
+    };
+  });
+
+  res.json({ tests: enhancedTests, test_series: enrolled.rows[0] });
 });
 
 /**

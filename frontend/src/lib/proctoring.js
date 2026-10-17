@@ -31,4 +31,6 @@ export const VIOLATION_LABELS = {
   paste: 'Attempted to paste',
   cut: 'Attempted to cut',
   right_click: 'Used right-click menu',
+  screen_share_stopped: 'Screen sharing / recording stopped',
+  screen_share_denied: 'Screen sharing permission was denied',
 };

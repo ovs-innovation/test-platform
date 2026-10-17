@@ -4,9 +4,11 @@ import { assessmentService } from '../../lib/services.js';
 import { PageHeader, LoadingScreen, ErrorState, EmptyState, Badge } from '../../components/ui.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 import { ChevronRight, ShieldCheck, BarChart3, Zap, BookOpen, HelpCircle, Clock, Award, Sparkles, CheckCircle2, Play, Trophy } from 'lucide-react';
+import { isTestLive } from '../../lib/testStatus.js';
 
 export function AssessmentCard({ a }) {
   const assessmentId = a.assessment_id || a.id;
+  const isLive = isTestLive(a);
   const completed =
     a.attempt_status === 'submitted' ||
     a.attempt_status === 'auto_submitted' ||
@@ -28,7 +30,17 @@ export function AssessmentCard({ a }) {
     </span>
   );
 
-  if (completed) {
+  if (isLive && !completed) {
+    statusBadge = (
+      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-rose-500/10 text-rose-600 dark:text-rose-400 text-[11px] font-black border border-rose-500/30 shadow-2xs shrink-0 animate-pulse">
+        <span className="relative flex h-2 w-2">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+          <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+        </span>
+        <span>LIVE NOW</span>
+      </span>
+    );
+  } else if (completed) {
     statusBadge = (
       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 text-[11px] font-extrabold border border-blue-200 dark:border-blue-800/80 shadow-2xs shrink-0">
         <CheckCircle2 className="h-3 w-3 text-blue-600 dark:text-blue-400" />
@@ -52,7 +64,9 @@ export function AssessmentCard({ a }) {
   }
 
   // Accent border color based on status
-  const topAccentColor = completed
+  const topAccentColor = isLive && !completed
+    ? 'bg-rose-500'
+    : completed
     ? 'bg-blue-500'
     : inProgress
     ? 'bg-amber-500'
@@ -150,10 +164,20 @@ export function AssessmentCard({ a }) {
         ) : (
           <Link
             to={`/assessments/${assessmentId}/instructions`}
-            className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs shadow-sm shadow-blue-500/20 py-2.5 transition active:scale-[0.99]"
+            className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl font-extrabold text-xs py-2.5 transition active:scale-[0.99] text-white ${
+              isLive
+                ? 'bg-gradient-to-r from-rose-600 to-red-600 hover:from-rose-500 hover:to-red-500 shadow-md shadow-rose-500/25'
+                : 'bg-blue-600 hover:bg-blue-700 shadow-sm shadow-blue-500/20'
+            }`}
             onClick={() => sessionStorage.setItem('assessmentReturn', '/assessments')}
           >
-            <span>{inProgress ? 'Resume Assessment' : 'Start Assessment'}</span>
+            {isLive && (
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+              </span>
+            )}
+            <span>{isLive ? (inProgress ? 'Resume Live Assessment' : 'Take Live Assessment') : (inProgress ? 'Resume Assessment' : 'Start Assessment')}</span>
             <ChevronRight className="h-4 w-4" />
           </Link>
         )}

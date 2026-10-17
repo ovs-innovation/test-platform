@@ -17,3 +17,12 @@ export const authLimiter = rateLimit({
   legacyHeaders: false,
   message: { message: 'Too many authentication attempts, please try again later.' },
 });
+
+// Incident reporting limiter: prevents rapid loop spam while allowing legitimate failure reports.
+export const incidentLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { message: 'Too many incident reports submitted in a short period. Please wait a moment.' },
+});

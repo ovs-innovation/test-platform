@@ -428,6 +428,33 @@ export const attemptService = {
   getResult: (id) => api.get(`/attempts/${id}/result`).then((r) => r.data),
   translateQuestion: (data) => api.post('/student/translate-question', data).then((r) => r.data),
   translateBatch: (data) => api.post('/student/translate-questions-batch', data).then((r) => r.data),
+  startProctoringSession: (id, { session_id, mime_type }) =>
+    api.post(`/attempts/${id}/proctoring/session/start`, { session_id, mime_type }).then((r) => r.data),
+  uploadProctoringChunk: (id, formData) =>
+    api.post(`/attempts/${id}/proctoring/chunk`, formData).then((r) => r.data),
+  stopProctoringSession: (id, { session_id, status, reason }) =>
+    api.post(`/attempts/${id}/proctoring/session/stop`, { session_id, status, reason }).then((r) => r.data),
+  getProctoringSession: (id, session_id) =>
+    api.get(`/attempts/${id}/proctoring/session`, { params: session_id ? { session_id } : {} }).then((r) => r.data),
+  uploadProctoringScreenshot: (id, formData) =>
+    api.post(`/attempts/${id}/proctoring/screenshot`, formData).then((r) => r.data),
+  recordMissedScreenshot: (id, payload) =>
+    api.post(`/attempts/${id}/proctoring/screenshot/missed`, payload).then((r) => r.data),
+  getProctoringScreenshots: (id) =>
+    api.get(`/attempts/${id}/proctoring/screenshots`).then((r) => r.data),
+  recordProctoringEvent: (id, payload) =>
+    api.post(`/attempts/${id}/proctoring/event`, payload).then((r) => r.data),
+  getProctoringManifest: (id, session_id) =>
+    api.get(`/attempts/${id}/proctoring/playback/manifest`, { params: session_id ? { session_id } : {} }).then((r) => r.data),
+  reportIncident: (attemptId, payload, options = {}) => {
+    const headers = {};
+    if (options.idempotencyKey) {
+      headers['X-Idempotency-Key'] = options.idempotencyKey;
+    }
+    return api.post(`/attempts/${attemptId}/incidents`, payload, { headers }).then((r) => r.data);
+  },
+  getActiveIncidents: (attemptId) =>
+    api.get(`/attempts/${attemptId}/incidents/active`).then((r) => r.data),
 };
 
 export const adminService = {
@@ -462,6 +489,11 @@ export const adminService = {
       downloadFromApi('/admin/reports/export', 'attempt_reports.csv')
     ),
   attemptReport: (id) => api.get(`/admin/attempts/${id}`).then((r) => r.data),
+  proctoringSessions: (params) => api.get('/admin/proctoring/sessions', { params }).then((r) => r.data),
+  proctoringManifest: (attemptId, sessionId) =>
+    api.get(`/attempts/${attemptId}/proctoring/playback/manifest`, { params: sessionId ? { session_id: sessionId } : {} }).then((r) => r.data),
+  proctoringScreenshots: (attemptId) => api.get(`/attempts/${attemptId}/proctoring/screenshots`).then((r) => r.data),
+  purgeProctoringMedia: (retentionDays) => api.post('/attempts/proctoring/purge', { retention_days: retentionDays }).then((r) => r.data),
   listInvites: (assessmentId) =>
     api.get('/admin/invites', { params: assessmentId ? { assessment_id: assessmentId } : {} }).then((r) => r.data.invites),
   createInvite: (data) => api.post('/admin/invites', data).then((r) => r.data),
@@ -556,6 +588,16 @@ export const adminService = {
   getTestParticipation: (id) => api.get(`/admin/tests/${id}/participation`).then((r) => r.data),
   setMissedTestOverride: (id, data) => api.post(`/admin/tests/${id}/missed-override`, data).then((r) => r.data.override),
   notifyTestReminder: (id, custom_message) => api.post(`/admin/tests/${id}/notify`, { custom_message }).then((r) => r.data),
+  getTestSimulator: (id) => api.get(`/admin/tests/${id}/simulator`).then((r) => r.data),
+  toggleLiveTest: (id) => api.patch(`/admin/tests/${id}/toggle-live`).then((r) => r.data),
+  // Live Exam Technical Incidents Helpers
+  incidents: (params) => api.get('/admin/incidents', { params }).then((r) => r.data),
+  incident: (id) => api.get(`/admin/incidents/${id}`).then((r) => r.data),
+  acknowledgeIncident: (id) => api.post(`/admin/incidents/${id}/acknowledge`).then((r) => r.data),
+  assignIncident: (id, assigned_to) => api.patch(`/admin/incidents/${id}/assign`, { assigned_to }).then((r) => r.data),
+  addIncidentNotes: (id, notes) => api.post(`/admin/incidents/${id}/notes`, { notes }).then((r) => r.data),
+  updateIncidentStatus: (id, data) => api.patch(`/admin/incidents/${id}/status`, data).then((r) => r.data),
+  resolveIncident: (id, data) => api.post(`/admin/incidents/${id}/resolve`, data).then((r) => r.data),
   // eBook Helpers
   ebooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
   getEbooks: () => api.get('/admin/ebooks').then((r) => r.data.ebooks),
@@ -645,6 +687,14 @@ export const institutionDashboardService = {
   notifications: (instId) => api.get(`/institution/${instId}/notifications`).then((r) => r.data),
   markNotificationRead: (instId, notifId) => api.put(`/institution/${instId}/notifications/${notifId}/read`).then((r) => r.data),
   sendReminder: (instId, data) => api.post(`/institution/${instId}/notifications/send-reminder`, data).then((r) => r.data),
+  // Institution Live Incident Helpers
+  incidents: (instId, params) => api.get(`/institution/${instId}/incidents`, { params }).then((r) => r.data),
+  incident: (instId, id) => api.get(`/institution/${instId}/incidents/${id}`).then((r) => r.data),
+  acknowledgeIncident: (instId, id) => api.post(`/institution/${instId}/incidents/${id}/acknowledge`).then((r) => r.data),
+  assignIncident: (instId, id, assigned_to) => api.patch(`/institution/${instId}/incidents/${id}/assign`, { assigned_to }).then((r) => r.data),
+  addIncidentNotes: (instId, id, notes) => api.post(`/institution/${instId}/incidents/${id}/notes`, { notes }).then((r) => r.data),
+  updateIncidentStatus: (instId, id, data) => api.patch(`/institution/${instId}/incidents/${id}/status`, data).then((r) => r.data),
+  resolveIncident: (instId, id, data) => api.post(`/institution/${instId}/incidents/${id}/resolve`, data).then((r) => r.data),
 };
 
 export const institutionReportsService = {

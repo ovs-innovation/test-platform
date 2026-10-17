@@ -1,6 +1,7 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { isNeetTest, resolveQuestionNeetMeta } from '../utils/neetPattern.js';
 
 export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
   try {
@@ -117,7 +118,7 @@ import { delCache } from '../config/redis.js';
 import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
-import { parseNumericAnswers } from '../utils/geminiVisionExtractor.js';
+import { parseNumericAnswers, classifyBiologyQuestionsWithGemini } from '../utils/geminiVisionExtractor.js';
 import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
 import { stripHeadersAndFooters, formatQuestionStructure } from '../utils/questionFormatter.js';
 
@@ -228,7 +229,37 @@ export const listTests = asyncHandler(async (req, res) => {
   `;
 
   const result = await query(sql, params);
-  res.json({ tests: result.rows });
+  const now = new Date();
+  const enhancedRows = result.rows.map((row) => {
+    let isLive = Boolean(row.is_live);
+    if (!isLive && row.test_date) {
+      const dateStr = String(row.test_date).includes('T') ? String(row.test_date).split('T')[0] : String(row.test_date).slice(0, 10);
+      const startTime = row.start_time ? String(row.start_time).slice(0, 8) : '00:00:00';
+      const endTime = row.end_time ? String(row.end_time).slice(0, 8) : '23:59:59';
+      const startDt = new Date(`${dateStr}T${startTime}`);
+      const endDt = new Date(`${dateStr}T${endTime}`);
+      if (!isNaN(startDt.getTime()) && !isNaN(endDt.getTime()) && now >= startDt && now <= endDt) {
+        isLive = true;
+      }
+      const startDtUtc = new Date(`${dateStr}T${startTime}Z`);
+      const endDtUtc = new Date(`${dateStr}T${endTime}Z`);
+      if (!isNaN(startDtUtc.getTime()) && !isNaN(endDtUtc.getTime()) && now >= startDtUtc && now <= endDtUtc) {
+        isLive = true;
+      }
+    }
+    if (!isLive && row.available_from) {
+      const fromDt = new Date(row.available_from);
+      const untilDt = row.available_until ? new Date(row.available_until) : null;
+      if (!isNaN(fromDt.getTime()) && now >= fromDt && (!untilDt || now <= untilDt)) {
+        isLive = true;
+      }
+    }
+    return {
+      ...row,
+      is_live: isLive,
+    };
+  });
+  res.json({ tests: enhancedRows });
 });
 
 /**
@@ -265,13 +296,14 @@ export const createTest = asyncHandler(async (req, res) => {
     : (String(test_type || '').toUpperCase().includes('NEET') ? 720 : 300);
 
   const test = await withTransaction(async (client) => {
+    const resolvedIsLive = req.body.is_live !== undefined ? Boolean(req.body.is_live) : false;
     const result = await client.query(
       `INSERT INTO tests (
         test_name, title, test_type, test_date, start_time, end_time,
         duration_minutes, syllabus, max_marks, is_published, status,
         result_publish_time, solution_pdf_url, recommended_ebook_id,
-        available_from, available_until
-      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+        available_from, available_until, is_live
+      ) VALUES ($1, $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
       RETURNING *`,
       [
         test_name,
@@ -288,7 +320,8 @@ export const createTest = asyncHandler(async (req, res) => {
         solution_pdf_url || null,
         recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
         available_from || null,
-        available_until || null
+        available_until || null,
+        resolvedIsLive
       ]
     );
 
@@ -401,8 +434,9 @@ export const updateTest = asyncHandler(async (req, res) => {
       recommended_ebook_id = $14,
       available_from = $15,
       available_until = $16,
+      is_live = COALESCE($17, is_live),
       updated_at = NOW()
-    WHERE id = $17
+    WHERE id = $18
     RETURNING *`,
     [
       test_name || null,
@@ -421,6 +455,7 @@ export const updateTest = asyncHandler(async (req, res) => {
       recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
       available_from || null,
       available_until || null,
+      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
       id
     ]
   );
@@ -435,6 +470,19 @@ export const updateTest = asyncHandler(async (req, res) => {
   }
 
   res.json({ test: result.rows[0] });
+});
+
+/**
+ * 4b. PATCH /api/admin/tests/:id/toggle-live
+ * 1-Click Toggle: Set test is_live to true/false
+ */
+export const toggleTestLive = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const current = await query('SELECT id, is_live, test_name FROM tests WHERE id = $1', [id]);
+  if (!current.rowCount) throw ApiError.notFound('Test not found');
+  const nextVal = !Boolean(current.rows[0].is_live);
+  const updated = await query('UPDATE tests SET is_live = $1, updated_at = NOW() WHERE id = $2 RETURNING *', [nextVal, id]);
+  res.json({ test: updated.rows[0], is_live: nextVal, message: `Test live status set to ${nextVal ? 'LIVE' : 'OFFLINE'}` });
 });
 
 /**
@@ -630,49 +678,38 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
 
   const isNeet = String(testTitle).toUpperCase().includes('NEET') ||
                  String(testSyllabus).toUpperCase().includes('NEET') ||
-                 sortedParsedQs.length === 180 || sortedParsedQs.length === 200 ||
-                 sortedParsedQs.some((q) => String(q.subject || '').toUpperCase().includes('BIO'));
+                 sortedParsedQs.length === 180 ||
+                 sortedParsedQs.some((q) => String(q.subject || '').toUpperCase().includes('BIO') || String(q.bank_category || '').toUpperCase().includes('BIO'));
 
   const isJeeTest = String(testTitle).toUpperCase().includes('JEE') ||
                     String(testSyllabus).toUpperCase().includes('JEE') ||
                     (!isNeet && (sortedParsedQs.length <= 80 || sortedParsedQs.length === 75 || sortedParsedQs.length === 90));
 
+  // 1. Pre-pass: Resolve subject assignments for NEET / JEE questions
+  const resolvedSubjects = [];
   for (let i = 0; i < sortedParsedQs.length; i++) {
     const q = sortedParsedQs[i];
-    calcTotalMarks += (q.marks || 4);
-
+    const qNum = Number(q.questionNumber || i + 1);
     const classification = inferSubjectAndTopic({
       testName: testTitle,
       syllabus: testSyllabus,
       questionText: q.question_text || q.questionText,
     });
-
-    const qNum = Number(q.questionNumber || i + 1);
-
     const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
-    const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
-    const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
 
     let detectedSectionSubject = null;
     if (isNeet) {
-      if ((sortedParsedQs.length >= 130 && sortedParsedQs.length <= 190) || (qNum <= 180 && !isJeeTest)) {
-        // Standard NEET 180 paper: Biology (1-90), Physics (91-135), Chemistry (136-180)
-        if (qNum >= 1 && qNum <= 90) detectedSectionSubject = 'Biology';
-        else if (qNum >= 91 && qNum <= 135) detectedSectionSubject = 'Physics';
-        else if (qNum >= 136 && qNum <= 180) detectedSectionSubject = 'Chemistry';
-      } else if (sortedParsedQs.length === 200) {
-        if (qNum >= 1 && qNum <= 50) detectedSectionSubject = 'Physics';
-        else if (qNum >= 51 && qNum <= 100) detectedSectionSubject = 'Chemistry';
-        else if (qNum >= 101 && qNum <= 150) detectedSectionSubject = 'Botany';
-        else if (qNum >= 151 && qNum <= 200) detectedSectionSubject = 'Zoology';
-      }
+      // Standard NEET has exactly 180 questions:
+      // Section-A Physics (1-45), Section-B Chemistry (46-90), Section-C Botany (91-135), Section-D Zoology (136-180)
+      if (qNum >= 1 && qNum <= 45) detectedSectionSubject = 'Physics';
+      else if (qNum >= 46 && qNum <= 90) detectedSectionSubject = 'Chemistry';
+      else if (qNum >= 91 && qNum <= 135) detectedSectionSubject = 'Botany';
+      else if (qNum >= 136 && qNum <= 180) detectedSectionSubject = 'Zoology';
     } else if (sortedParsedQs.length <= 80 && (sortedParsedQs.length >= 70 || qNum <= 75 || isJeeTest)) {
-      // Standard JEE Main 75-question paper: 25 per subject (Physics, Chemistry, Mathematics)
       if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
       else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
       else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
     } else if (sortedParsedQs.length > 80 && sortedParsedQs.length <= 95) {
-      // Legacy JEE Main 90-question paper: 30 per subject (Physics, Chemistry, Mathematics)
       if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Physics';
       else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Chemistry';
       else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Mathematics';
@@ -682,9 +719,101 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
     }
 
-    const qSubject = detectedSectionSubject || geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : classification.subject);
-    const finalSubject = qSubject || 'General';
+    const explicitSub = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : null);
+    const chosenSub = detectedSectionSubject || explicitSub || classification.subject || 'General';
+    resolvedSubjects.push({ qNum, subject: chosenSub, classification });
+  }
+
+  // 2. In NEET tests, ensure any questions remaining as "Biology" are divided into Botany and Zoology using Gemini AI
+  if (isNeet) {
+    const bioItems = [];
+    const bioIndices = [];
+    resolvedSubjects.forEach((item, idx) => {
+      const lower = String(item.subject || '').toLowerCase();
+      if (lower.includes('bio') && !lower.includes('botan') && !lower.includes('zool')) {
+        bioIndices.push(idx);
+        bioItems.push(sortedParsedQs[idx]);
+      }
+    });
+
+    if (bioItems.length > 0) {
+      try {
+        console.log(`[PDF Import] Classifying ${bioItems.length} Biology question(s) into Botany and Zoology using Gemini AI...`);
+        const classified = await classifyBiologyQuestionsWithGemini(bioItems, testTitle);
+        classified.forEach((res, k) => {
+          const targetIdx = bioIndices[k];
+          if (targetIdx !== undefined && res.subject) {
+            resolvedSubjects[targetIdx].subject = res.subject;
+            sortedParsedQs[targetIdx].subject = res.subject;
+            sortedParsedQs[targetIdx].bank_category = res.subject;
+          }
+        });
+      } catch (geminiErr) {
+        console.warn('[PDF Import] Gemini classification fallback, using positional division:', geminiErr.message);
+        const half = Math.ceil(bioIndices.length / 2);
+        bioIndices.forEach((idx, k) => {
+          const sub = k < half ? 'Botany' : 'Zoology';
+          resolvedSubjects[idx].subject = sub;
+          sortedParsedQs[idx].subject = sub;
+          sortedParsedQs[idx].bank_category = sub;
+        });
+      }
+    }
+  }
+
+  // 3. Create or sync assessment_sections in assessment_sections table
+  const sectionMapByName = {};
+  if (isNeet) {
+    await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
+    const secRes = await query(
+      `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES
+       ($1, 'Section-A: Physics', 'technical_mcq', 1),
+       ($1, 'Section-B: Chemistry', 'technical_mcq', 2),
+       ($1, 'Section-C: Botany', 'technical_mcq', 3),
+       ($1, 'Section-D: Zoology', 'technical_mcq', 4)
+       RETURNING id, name, position`,
+      [id]
+    ).catch(() => ({ rows: [] }));
+    for (const row of secRes.rows) {
+      if (row.name.includes('Physics')) sectionMapByName['Physics'] = row.id;
+      if (row.name.includes('Chemistry')) sectionMapByName['Chemistry'] = row.id;
+      if (row.name.includes('Botany')) sectionMapByName['Botany'] = row.id;
+      if (row.name.includes('Zoology')) sectionMapByName['Zoology'] = row.id;
+    }
+  } else if (isJeeTest) {
+    await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
+    const secRes = await query(
+      `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES
+       ($1, 'Section-A: Physics', 'technical_mcq', 1),
+       ($1, 'Section-B: Chemistry', 'technical_mcq', 2),
+       ($1, 'Section-C: Mathematics', 'technical_mcq', 3)
+       RETURNING id, name, position`,
+      [id]
+    ).catch(() => ({ rows: [] }));
+    for (const row of secRes.rows) {
+      if (row.name.includes('Physics')) sectionMapByName['Physics'] = row.id;
+      if (row.name.includes('Chemistry')) sectionMapByName['Chemistry'] = row.id;
+      if (row.name.includes('Math')) sectionMapByName['Mathematics'] = row.id;
+    }
+  }
+
+  for (let i = 0; i < sortedParsedQs.length; i++) {
+    const q = sortedParsedQs[i];
+    calcTotalMarks += (q.marks || 4);
+
+    const qNum = Number(q.questionNumber || i + 1);
+    const resolvedItem = resolvedSubjects[i] || {};
+    const finalSubject = resolvedItem.subject || 'General';
     if (finalSubject && finalSubject !== 'General') detectedSubjects.add(finalSubject);
+
+    const classification = resolvedItem.classification || inferSubjectAndTopic({
+      testName: testTitle,
+      syllabus: testSyllabus,
+      questionText: q.question_text || q.questionText,
+    });
+
+    const geminiChapter = (q.chapter && q.chapter !== 'General' && q.chapter !== 'Unknown' && q.chapter.trim() !== '') ? q.chapter : null;
+    const geminiTopic = (q.topic && q.topic !== 'General' && q.topic !== 'Unknown' && q.topic.trim() !== '') ? q.topic : null;
 
     const qTopic = geminiTopic || classification.topic;
     const finalChapter = geminiChapter || geminiTopic || qTopic || classification.topic || 'General Concepts';
@@ -756,7 +885,6 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
 
     const cleanOptionText = (raw) => {
       const s = String(raw || '').trim();
-      // Match-the-column / composite mapping pattern: e.g. "(a) - q, (b) - p", "A-1, B-2", "a-F, b-T", "(i) ..., (ii) ..."
       const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(s);
       if (isMatchMapping) {
         return stripHeadersAndFooters(s) || s;
@@ -797,9 +925,11 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
     const cleanStr = (val) => typeof val === 'string' ? val.replace(/\0/g, '') : val;
+    const qSecId = sectionMapByName[finalSubject] || null;
 
     sortedParsedQs[i]._dbRow = {
       assessment_id: id,
+      section_id: qSecId,
       question_text: cleanStr(cleanFinalQText),
       question_type: cleanStr(qType),
       options: cleanStr(JSON.stringify(optionsToStore)),
@@ -861,10 +991,10 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     let pIdx = 1;
     for (const r of dbRows) {
       valueClauses.push(
-        `($${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
+        `($${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++}, $${pIdx++})`
       );
       bulkParams.push(
-        r.assessment_id, r.question_text, r.question_type || 'mcq', r.options,
+        r.assessment_id, r.section_id, r.question_text, r.question_type || 'mcq', r.options,
         r.correct_index, r.marks, r.position, r.bank_category,
         r.solution, r.subject, r.topic, r.chapter,
         r.image_url, r.solution_image_url, r.media, r.tables, r.extraction_meta,
@@ -872,14 +1002,16 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       );
     }
     const bulkSql = `INSERT INTO questions (
-      assessment_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
+      assessment_id, section_id, question_text, question_type, options, correct_index, marks, position, bank_category, solution, subject, topic, chapter, image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
     ) VALUES ${valueClauses.join(', ')}`;
     await query(bulkSql, bulkParams);
     savedCount = dbRows.length;
   }
 
   const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
-  const subjectsArray = Array.from(detectedSubjects);
+  const subjectsArray = isNeet
+    ? ['Physics', 'Chemistry', 'Botany', 'Zoology']
+    : Array.from(detectedSubjects);
 
   if (calcTotalMarks > 0 || primarySubject) {
     await query(
@@ -1773,3 +1905,147 @@ export const replayExtractedQuestions = asyncHandler(async (req, res) => {
     warnings: result.reviewWarnings.length > 0 ? result.reviewWarnings : undefined
   });
 });
+
+/**
+ * 17. GET /api/admin/tests/:id/simulator
+ * Simulator Mode: Generates authenticated candidate-perspective test payload
+ * without writing any attempt or score records to database.
+ */
+export const getTestSimulator = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const assessmentId = Number(id);
+  if (!assessmentId) throw ApiError.badRequest('Valid test/assessment ID required');
+
+  let testObj = null;
+  const tCheck = await query('SELECT * FROM tests WHERE id = $1 LIMIT 1', [assessmentId]);
+  if ((tCheck.rowCount || tCheck.rows?.length || 0) > 0) {
+    testObj = tCheck.rows[0];
+  }
+
+  if (!testObj) {
+    const aRes = await query('SELECT * FROM assessments WHERE id = $1 LIMIT 1', [assessmentId]);
+    if ((aRes.rowCount || aRes.rows?.length || 0) > 0) {
+      testObj = aRes.rows[0];
+    }
+  }
+
+  if (!testObj) {
+    throw ApiError.notFound('Test or Assessment not found');
+  }
+
+  const [sectionsRes, questionsRes] = await Promise.all([
+    query(
+      'SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+      [assessmentId]
+    ),
+    query(
+      'SELECT * FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
+      [assessmentId]
+    ),
+  ]);
+
+  let institutionObj = null;
+  if (req.user?.institution_id) {
+    const instRes = await query(
+      'SELECT id, name, logo_url, logo_badge, code FROM institutions WHERE id = $1',
+      [req.user.institution_id]
+    ).catch(() => ({ rows: [] }));
+    if (instRes.rows.length > 0) {
+      const row = instRes.rows[0];
+      institutionObj = {
+        id: row.id,
+        name: row.name,
+        logo_url: row.logo_url || '',
+        logo_badge: row.logo_badge || (row.name ? row.name.substring(0, 3).toUpperCase() : 'INST'),
+        code: row.code || '',
+      };
+    }
+  }
+
+  const isNeet = isNeetTest(testObj, questionsRes.rows);
+  const totalQCount = questionsRes.rows.length;
+
+  const sanitizedQuestions = questionsRes.rows.map((q, idx) => {
+    let opts = [];
+    if (Array.isArray(q.options)) {
+      opts = q.options;
+    } else if (typeof q.options === 'string') {
+      try { opts = JSON.parse(q.options); } catch (_) { opts = []; }
+    }
+
+    const base = {
+      id: q.id,
+      section_id: q.section_id,
+      question_type: q.question_type || 'mcq',
+      question_text: q.question_text || '',
+      assertion_text: q.assertion_text || null,
+      reason_text: q.reason_text || null,
+      image_url: q.image_url || '',
+      marks: q.marks || 4,
+      position: q.position || idx + 1,
+      subject: q.subject || q.bank_category || null,
+      section: q.section || null,
+      bank_category: q.bank_category || null,
+      topic: q.topic || null,
+      chapter: q.chapter || null,
+      translations: q.translations || {},
+      options: opts,
+      starter_code: q.starter_code || '',
+      language: q.language || 'javascript',
+    };
+
+    if (isNeet) {
+      const neetMeta = resolveQuestionNeetMeta(q, idx, totalQCount);
+      return {
+        ...base,
+        subject: neetMeta.subject,
+        section: neetMeta.section,
+        questionNumber: neetMeta.subjectQuestionNumber,
+        overallQuestionNumber: neetMeta.overallQuestionNumber,
+        is_neet: true,
+        is_section_b: neetMeta.isSectionB,
+      };
+    }
+    return base;
+  });
+
+  const durationMins = testObj.duration_minutes || 180;
+  const fakeEndsAt = new Date(Date.now() + durationMins * 60 * 1000).toISOString();
+
+  res.json({
+    success: true,
+    is_simulator: true,
+    attempt: {
+      id: `sim-${assessmentId}`,
+      candidate_id: req.user?.id || 1,
+      assessment_id: assessmentId,
+      status: 'in_progress',
+      started_at: new Date().toISOString(),
+      ends_at: fakeEndsAt,
+      is_simulator: true,
+    },
+    assessment: {
+      id: testObj.id,
+      title: testObj.test_name || testObj.title || 'Simulated Assessment',
+      duration_minutes: durationMins,
+      max_violations: 5,
+      question_paper_url: testObj.question_paper_url || null,
+      solution_pdf_url: testObj.solution_pdf_url || null,
+      answer_key_url: testObj.answer_key_url || null,
+      institution: institutionObj,
+      institution_id: institutionObj?.id || null,
+      institution_name: institutionObj?.name || null,
+      institution_logo_url: institutionObj?.logo_url || null,
+      institution_logo_badge: institutionObj?.logo_badge || null,
+      is_neet: isNeet,
+      total_marks: isNeet ? 720 : (testObj.max_marks || null),
+    },
+    institution: institutionObj,
+    sections: sectionsRes.rows,
+    questions: sanitizedQuestions,
+    answers: [],
+    coding_answers: [],
+    subjective_answers: [],
+  });
+});
+

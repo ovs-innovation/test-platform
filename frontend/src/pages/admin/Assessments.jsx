@@ -30,8 +30,11 @@ import {
   Send,
   Sparkles,
   Trophy,
-  Award
+  Award,
+  Eye,
+  Radio
 } from 'lucide-react';
+import { isTestLive } from '../../lib/testStatus.js';
 
 const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full Syllabus Mock'];
 
@@ -151,6 +154,7 @@ export default function AdminAssessments() {
       max_marks: '',
       syllabus: '',
       is_published: true,
+      is_live: false,
       result_publish_time: '',
       recommended_ebook_id: '',
     });
@@ -176,6 +180,7 @@ export default function AdminAssessments() {
       max_marks: t.max_marks !== undefined && t.max_marks !== null && t.max_marks !== '' ? Number(t.max_marks) : '',
       syllabus: t.syllabus || '',
       is_published: Boolean(t.is_published),
+      is_live: Boolean(t.is_live),
       result_publish_time: t.result_publish_time ? String(t.result_publish_time).slice(0, 16) : '',
       recommended_ebook_id: t.recommended_ebook_id || '',
     });
@@ -187,6 +192,7 @@ export default function AdminAssessments() {
     try {
       const payload = {
         ...testForm,
+        is_live: Boolean(testForm.is_live),
         max_marks: testForm.max_marks !== '' && testForm.max_marks !== null && !isNaN(Number(testForm.max_marks))
           ? Number(testForm.max_marks)
           : null,
@@ -229,6 +235,16 @@ export default function AdminAssessments() {
       loadData();
     } catch (err) {
       toast.error(err.message || 'Action failed');
+    }
+  };
+
+  const handleToggleLive = async (test) => {
+    try {
+      const res = await adminService.toggleLiveTest(test.id);
+      toast.success(res.message || 'Test live status updated!');
+      loadData();
+    } catch (err) {
+      toast.error(err.message || 'Failed to update live status');
     }
   };
 
@@ -708,17 +724,37 @@ export default function AdminAssessments() {
                           <tr key={t.id} className="hover:bg-slate-50 dark:hover:bg-slate-900/40 transition">
                             <td className="py-4 px-4">
                               <div>
-                                <Link
-                                  to={`/admin/assessments/${t.id}`}
-                                  className="font-extrabold text-slate-900 dark:text-white text-sm hover:text-blue-600 hover:underline transition"
-                                  title="Click to Edit Questions & Assessment Content"
-                                >
-                                  {t.test_name}
-                                </Link>
+                                <div className="flex items-center gap-2 flex-wrap">
+                                  <Link
+                                    to={`/admin/assessments/${t.id}`}
+                                    className="font-extrabold text-slate-900 dark:text-white text-sm hover:text-blue-600 hover:underline transition"
+                                    title="Click to Edit Questions & Assessment Content"
+                                  >
+                                    {t.test_name}
+                                  </Link>
+                                  {isTestLive(t) && (
+                                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30 shadow-2xs animate-pulse">
+                                      <span className="relative flex h-1.5 w-1.5">
+                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                                        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-rose-500"></span>
+                                      </span>
+                                      <span>LIVE</span>
+                                    </span>
+                                  )}
+                                </div>
                                 <div className="flex items-center gap-2 mt-1">
                                   <span className="bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-bold border border-blue-200 dark:border-blue-800">
                                     {t.test_type}
                                   </span>
+                                  <Link
+                                    to={`/admin/simulator/${t.id}`}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="inline-flex items-center gap-1 text-[10px] font-extrabold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-800 hover:bg-amber-100 transition shadow-xs"
+                                    title="Verify live uploaded test as student"
+                                  >
+                                    <Eye className="h-3 w-3" /> View as Student
+                                  </Link>
                                   {t.solution_pdf_url && (
                                     <span className="text-[10px] font-extrabold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200">
                                       Solution Uploaded
@@ -749,6 +785,15 @@ export default function AdminAssessments() {
                               )}
                             </td>
                             <td className="py-4 px-4 whitespace-nowrap text-right space-x-1">
+                              <Link
+                                to={`/admin/simulator/${t.id}`}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-block p-1.5 rounded-lg border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/60 transition shadow-xs"
+                                title="View as Student (Simulator Mode) - Verify Live CBT Screen"
+                              >
+                                <Eye className="h-4 w-4" />
+                              </Link>
                               <Link
                                 to={`/admin/assessments/${t.id}`}
                                 className="inline-block p-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100"
@@ -799,6 +844,17 @@ export default function AdminAssessments() {
                                 <BellRing className="h-4 w-4" />
                               </button>
                               <button
+                                onClick={() => handleToggleLive(t)}
+                                className={`p-1.5 rounded-lg border transition shadow-xs ${
+                                  isTestLive(t)
+                                    ? 'border-rose-300 dark:border-rose-700 bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 hover:bg-rose-100'
+                                    : 'border-slate-300 dark:border-slate-700 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                                }`}
+                                title={isTestLive(t) ? 'Test is currently LIVE — click to turn off' : 'Click to force test LIVE now'}
+                              >
+                                <Radio className={`h-4 w-4 ${isTestLive(t) ? 'text-rose-600 animate-pulse' : ''}`} />
+                              </button>
+                              <button
                                 onClick={() => handleTogglePublish(t)}
                                 className="p-1.5 rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 text-slate-700 dark:text-slate-200"
                                 title={t.is_published ? 'Unpublish' : 'Publish'}
@@ -836,12 +892,20 @@ export default function AdminAssessments() {
                       {/* Top Header Row */}
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0 flex-1">
-                          <Link
-                            to={`/admin/assessments/${t.id}`}
-                            className="font-black text-slate-900 dark:text-white text-sm hover:text-blue-600 transition block leading-tight"
-                          >
-                            {t.test_name}
-                          </Link>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <Link
+                              to={`/admin/assessments/${t.id}`}
+                              className="font-black text-slate-900 dark:text-white text-sm hover:text-blue-600 transition block leading-tight"
+                            >
+                              {t.test_name}
+                            </Link>
+                            {isTestLive(t) && (
+                              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/30 animate-pulse">
+                                <span className="h-1.5 w-1.5 rounded-full bg-rose-500"></span>
+                                LIVE
+                              </span>
+                            )}
+                          </div>
                           <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
                             <span className="bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-400 px-2 py-0.5 rounded-md text-[10px] font-extrabold border border-blue-200 dark:border-blue-800">
                               {t.test_type}
@@ -888,12 +952,23 @@ export default function AdminAssessments() {
 
                       {/* Mobile Action Buttons Bar */}
                       <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-1 overflow-x-auto scrollbar-none">
-                        <Link
-                          to={`/admin/assessments/${t.id}`}
-                          className="px-2.5 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold text-[11px] flex items-center gap-1 shrink-0"
-                        >
-                          <FileText className="h-3.5 w-3.5" /> Edit Paper
-                        </Link>
+                        <div className="flex items-center gap-1.5 shrink-0">
+                          <Link
+                            to={`/admin/simulator/${t.id}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="px-2.5 py-1.5 rounded-lg border border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950/50 text-amber-700 dark:text-amber-300 font-bold text-[11px] flex items-center gap-1 shadow-xs"
+                            title="Verify test screen as student"
+                          >
+                            <Eye className="h-3.5 w-3.5" /> View as Student
+                          </Link>
+                          <Link
+                            to={`/admin/assessments/${t.id}`}
+                            className="px-2.5 py-1.5 rounded-lg border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 font-bold text-[11px] flex items-center gap-1"
+                          >
+                            <FileText className="h-3.5 w-3.5" /> Edit Paper
+                          </Link>
+                        </div>
                         
                         <div className="flex items-center gap-1 shrink-0">
                           <button
@@ -1234,6 +1309,23 @@ export default function AdminAssessments() {
                 />
                 <label htmlFor="is_published" className="font-extrabold text-slate-900 dark:text-white">
                   Publish test immediately to student calendar
+                </label>
+              </div>
+
+              <div className="flex items-center gap-2 pt-1">
+                <input
+                  type="checkbox"
+                  id="is_live"
+                  checked={testForm.is_live}
+                  onChange={(e) => setTestForm({ ...testForm, is_live: e.target.checked })}
+                  className="h-4 w-4 rounded border-rose-300 text-rose-600 focus:ring-rose-500"
+                />
+                <label htmlFor="is_live" className="font-extrabold text-rose-600 dark:text-rose-400 flex items-center gap-1.5 cursor-pointer">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-rose-500"></span>
+                  </span>
+                  <span>Mark Test as LIVE Now (Show LIVE tag & priority action on student portal)</span>
                 </label>
               </div>
 

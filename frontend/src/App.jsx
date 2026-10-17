@@ -71,6 +71,8 @@ const AdminSettings = lazy(() => import('./pages/admin/Settings.jsx'));
 const AdminCandidates = lazy(() => import('./pages/admin/Candidates.jsx'));
 const AdminReports = lazy(() => import('./pages/admin/Reports.jsx'));
 const AdminAttemptDetail = lazy(() => import('./pages/admin/AttemptDetail.jsx'));
+const AdminProctoringReview = lazy(() => import('./pages/admin/AdminProctoringReview.jsx'));
+const AdminIncidents = lazy(() => import('./pages/admin/AdminIncidents.jsx'));
 const AdminSchools = lazy(() => import('./pages/admin/Schools.jsx'));
 const AdminSchoolDetail = lazy(() => import('./pages/admin/SchoolDetail.jsx'));
 const AdminDiscussionHub = lazy(() => import('./pages/admin/AdminDiscussionHub.jsx'));
@@ -228,6 +230,10 @@ export default function App() {
         <Route path="/admin/schools" element={<ProtectedRoute role="admin"><AdminLayout><AdminSchools /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/schools/:schoolId" element={<ProtectedRoute role="admin"><AdminLayout><AdminSchoolDetail /></AdminLayout></ProtectedRoute>} />
         <Route path="/admin/attempts/:attemptId" element={<ProtectedRoute role="admin"><AdminLayout><AdminAttemptDetail /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/proctoring" element={<Navigate to="/admin" replace />} />
+        <Route path="/admin/incidents" element={<ProtectedRoute role="admin"><AdminLayout><AdminIncidents /></AdminLayout></ProtectedRoute>} />
+        <Route path="/admin/simulator/:assessmentId" element={<ProtectedRoute role="admin"><ExamScreen isSimulator={true} /></ProtectedRoute>} />
+        <Route path="/exam/simulator/:assessmentId" element={<ProtectedRoute role="admin"><ExamScreen isSimulator={true} /></ProtectedRoute>} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

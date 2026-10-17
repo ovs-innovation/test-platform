@@ -34,7 +34,7 @@ export const PALETTE_LEGEND = [
   { key: 'answered_review', num: '5', label: 'Answered & Marked for Review', desc: 'The question WILL be evaluated.', swatch: 'nta-swatch-ar' },
 ];
 
-export function paletteCellClass(status, isCurrent) {
+export function paletteCellClass(status, isCurrent, isPendingSync = false) {
   const base = {
     not_visited: 'nta-palette-nv',
     unanswered: 'nta-palette-na',
@@ -42,7 +42,9 @@ export function paletteCellClass(status, isCurrent) {
     review: 'nta-palette-r',
     answered_review: 'nta-palette-ar',
   }[status] || 'nta-palette-nv';
-  return isCurrent ? `${base} nta-palette-current` : base;
+  let res = isCurrent ? `${base} nta-palette-current` : base;
+  if (isPendingSync) res += ' ring-2 ring-amber-400 ring-offset-1';
+  return res;
 }
 
 export function timerClass(remainingSeconds) {
