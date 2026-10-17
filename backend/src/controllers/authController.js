@@ -1032,7 +1032,60 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
 
     UNION ALL
 
-    -- 2. Test Series Enrollments
+    -- 2a. Test Series Tests (CBT tests attached via test_series_tests)
+    SELECT t.id::text AS id,
+           t.id::text AS assessment_id,
+           COALESCE(t.test_name, t.title) AS title,
+           COALESCE(t.syllabus, 'Test Series CBT Exam') AS description,
+           COALESCE(t.duration_minutes, 180) AS duration_minutes,
+           40 AS passing_marks,
+           TRUE AS result_visible,
+           TRUE AS is_published,
+           t.available_from,
+           t.available_until,
+           NULL::text AS invite_status,
+           'series_test' AS access_type,
+           75 AS question_count,
+           COALESCE(t.max_marks, 720)::int AS total_marks,
+           lat.attempt_id,
+           COALESCE(lat.attempt_status, 'not_started') AS attempt_status,
+           lat.started_at,
+           lat.submitted_at,
+           0 AS violation_count,
+           lat.marks_obtained,
+           COALESCE(t.max_marks, 720) AS score_total,
+           COALESCE(lat.percentage, 0)::numeric(5,2) AS percentage,
+           (COALESCE(lat.percentage, 0) >= 40) AS passed
+    FROM student_enrollments se
+    JOIN test_series ts ON ts.id = se.test_series_id
+    JOIN test_series_tests tst ON tst.series_id = ts.id
+    JOIN tests t ON t.id = tst.test_id 
+      AND (t.is_published = true OR t.status = 'published') 
+      AND COALESCE(t.is_deleted, false) = false
+    LEFT JOIN LATERAL (
+      SELECT 
+        COALESCE(att.id, tat.id) AS attempt_id,
+        COALESCE(att.status::text, CASE WHEN tat.submitted_at IS NOT NULL THEN 'submitted' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END) AS attempt_status,
+        COALESCE(att.started_at, tat.started_at) AS started_at,
+        COALESCE(att.submitted_at, tat.submitted_at) AS submitted_at,
+        COALESCE(s.percentage, tat.percentage) AS percentage,
+        COALESCE(s.marks_obtained, tat.score) AS marks_obtained
+      FROM (SELECT 1) dummy
+      LEFT JOIN attempts att ON att.assessment_id = t.id AND att.candidate_id = $2
+      LEFT JOIN scores s ON s.attempt_id = att.id
+      LEFT JOIN test_attempts tat ON tat.test_id = t.id AND tat.student_id = $2
+      ORDER BY 
+        CASE WHEN att.status IN ('submitted', 'auto_submitted') OR tat.submitted_at IS NOT NULL THEN 1 ELSE 2 END ASC,
+        COALESCE(att.submitted_at, tat.submitted_at, att.started_at, tat.started_at) DESC NULLS LAST
+      LIMIT 1
+    ) lat ON true
+    WHERE se.user_id = $2 
+      AND se.status = 'active' 
+      AND (se.expires_at IS NULL OR se.expires_at > NOW())
+
+    UNION ALL
+
+    -- 2b. Test Series Assessments (Legacy assessments attached via test_series_assessments)
     SELECT a.id::text AS id,
            a.id::text AS assessment_id,
            a.title,
@@ -1064,7 +1117,12 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
     ) q ON q.assessment_id::text = a.id::text
     LEFT JOIN attempts at ON at.assessment_id::text = a.id::text AND at.candidate_id = $2
     LEFT JOIN scores s ON s.attempt_id = at.id
-    WHERE se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
+    WHERE se.user_id = $2 
+      AND se.status = 'active' 
+      AND (se.expires_at IS NULL OR se.expires_at > NOW())
+      AND NOT EXISTS (
+        SELECT 1 FROM test_series_tests tst_check WHERE tst_check.series_id = tsa.test_series_id
+      )
 
     UNION ALL
 
@@ -1105,7 +1163,7 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
     -- 4. Calendar / AIETS Test Attempts
     SELECT t.id::text AS id,
            t.id::text AS assessment_id,
-           t.test_name AS title,
+           COALESCE(t.test_name, t.title) AS title,
            COALESCE(t.syllabus, 'AIETS CBT Exam') AS description,
            t.duration_minutes,
            40 AS passing_marks,
@@ -1132,17 +1190,17 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
 
     UNION ALL
 
-    -- 5. Assigned Tests via Institution / Batch / Student Assignments
+    -- 5. Assigned Tests via Institution / Batch / Student Assignments (Only loose assignments not already in enrolled test series)
     SELECT t.id::text AS id,
            t.id::text AS assessment_id,
-           t.test_name AS title,
+           COALESCE(t.test_name, t.title) AS title,
            COALESCE(t.syllabus, 'Assigned CBT Exam') AS description,
            t.duration_minutes,
            40 AS passing_marks,
            TRUE AS result_visible,
            TRUE AS is_published,
-           NULL::timestamp AS available_from,
-           NULL::timestamp AS available_until,
+           t.available_from,
+           t.available_until,
            NULL::text AS invite_status,
            'assignment' AS access_type,
            75 AS question_count,
@@ -1158,14 +1216,25 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
            (COALESCE(ta.percentage, 0) >= 40) AS passed
     FROM users u
     JOIN test_assignments tas ON (
-      (tas.assigned_to_type = 'institution' AND tas.assigned_to_id = u.institution_id) OR
-      (tas.assigned_to_type = 'batch' AND tas.assigned_to_id = u.batch_id) OR
-      (tas.assigned_to_type = 'student' AND tas.assigned_to_id = u.id) OR
-      (tas.assigned_to_type = 'all')
+      (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = u.id) OR
+      (tas.assigned_to_type = 'batch' AND u.batch_id IS NOT NULL AND tas.assigned_to_id = u.batch_id) OR
+      (tas.assigned_to_type = 'institution' AND u.institution_id IS NOT NULL AND u.batch_id IS NULL AND tas.assigned_to_id = u.institution_id) OR
+      (tas.assigned_to_type = 'all' AND u.institution_id IS NULL)
     )
-    JOIN tests t ON t.id = tas.test_id
+    JOIN tests t ON t.id = tas.test_id 
+      AND (t.is_published = true OR t.status = 'published') 
+      AND COALESCE(t.is_deleted, false) = false
     LEFT JOIN test_attempts ta ON ta.student_id = u.id AND ta.test_id = t.id
     WHERE u.id = $2
+      AND NOT EXISTS (
+        SELECT 1 FROM student_enrollments se
+        WHERE se.user_id = u.id AND se.status = 'active'
+          AND (se.expires_at IS NULL OR se.expires_at > NOW())
+          AND (
+            EXISTS (SELECT 1 FROM test_series_tests tst WHERE tst.series_id = se.test_series_id AND tst.test_id = t.id)
+            OR EXISTS (SELECT 1 FROM test_series_assessments tsa WHERE tsa.test_series_id = se.test_series_id AND tsa.assessment_id = t.id)
+          )
+      )
     ORDER BY title ASC
     `,
     [req.user.email, req.user.id]
@@ -1173,12 +1242,21 @@ export const candidateDashboard = asyncHandler(async (req, res) => {
 
   const now = new Date();
   
-  // Deduplicate rows by attempt_id if available, otherwise by assessment_id + access_type
+  // Deduplicate rows by test/assessment ID, preferring completed attempts
   const uniqueMap = new Map();
   for (const r of result.rows) {
-    const key = r.attempt_id ? `attempt_${r.attempt_id}` : `assess_${r.assessment_id}_${r.access_type}`;
-    if (!uniqueMap.has(key) || (r.submitted_at && !uniqueMap.get(key).submitted_at)) {
+    const key = String(r.assessment_id || r.id);
+    const existing = uniqueMap.get(key);
+    if (!existing) {
       uniqueMap.set(key, r);
+    } else {
+      const existingDone = existing.attempt_status === 'submitted' || Boolean(existing.submitted_at);
+      const currentDone = r.attempt_status === 'submitted' || Boolean(r.submitted_at);
+      if (currentDone && !existingDone) {
+        uniqueMap.set(key, r);
+      } else if (r.attempt_id && !existing.attempt_id) {
+        uniqueMap.set(key, r);
+      }
     }
   }
   const rows = Array.from(uniqueMap.values());

@@ -158,10 +158,10 @@ export default function CandidateDashboard() {
         />
       </div>
 
-      {/* SCHEDULED AI IMPROVEMENT TESTS WIDGET */}
-      <div>
+      {/* SCHEDULED AI IMPROVEMENT TESTS WIDGET (for non-institution self-study candidates) */}
+      {!user?.institution_id && (
         <ScheduledTestsWidget studentId={user?.id} />
-      </div>
+      )}
 
       {/* 3. ACTIVE & PENDING TESTS */}
       <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-6 shadow-xs space-y-4">

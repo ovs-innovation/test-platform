@@ -58,35 +58,8 @@ export default function ScheduledTestsWidget({ studentId, onRefreshTrigger }) {
     return `Unlocks in ${remMins}m`;
   };
 
-  if (loading) {
-    return (
-      <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs">
-        <div className="flex items-center justify-between mb-3">
-          <div className="h-5 w-40 bg-slate-200 dark:bg-slate-800 rounded-md animate-pulse" />
-          <div className="h-4 w-12 bg-slate-200 dark:bg-slate-800 rounded-md animate-pulse" />
-        </div>
-        <div className="h-20 w-full bg-slate-100 dark:bg-slate-900/60 rounded-xl animate-pulse" />
-      </div>
-    );
-  }
-
-  if (!tests || tests.length === 0) {
-    return (
-      <div className="rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-white dark:bg-[#0F172A] p-5 shadow-xs">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-xl bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50">
-              <Sparkles className="h-4 w-4" />
-            </div>
-            <div>
-              <h3 className="font-bold text-slate-900 dark:text-white text-sm">Scheduled Improvement Tests</h3>
-              <p className="text-xs text-slate-500 dark:text-slate-400">Personalized spaced-repetition revision tests</p>
-            </div>
-          </div>
-          <span className="text-xs text-slate-400 dark:text-slate-500 font-medium">0 Active</span>
-        </div>
-      </div>
-    );
+  if (loading || !tests || tests.length === 0) {
+    return null;
   }
 
   return (
