@@ -413,6 +413,22 @@ jobs:
               execute_rollback
             fi
 
+            # Execute NEET 180 questions reordering and section alignment on production database
+            log "Executing NEET 180 questions reorder and section synchronization..."
+            docker compose exec -T backend node -e "
+              import('./src/config/db.js').then(async ({pool}) => {
+                const fs = await import('fs');
+                if (fs.existsSync('src/db/migration_v69_reorder_neet_180_questions.sql')) {
+                  const sql = fs.readFileSync('src/db/migration_v69_reorder_neet_180_questions.sql', 'utf8');
+                  await pool.query(sql);
+                  console.log('[deploy] NEET 180 reorder migration applied successfully!');
+                }
+                await pool.end();
+              }).catch(err => {
+                console.error('[deploy warning] NEET reorder error:', err.message);
+              });
+            " || true
+
             # Restart frontend container to refresh Docker internal DNS mapping
             log "Restarting frontend container to refresh Docker internal DNS resolver..."
             docker compose restart frontend || true

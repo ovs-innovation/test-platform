@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { pool } from '../config/db.js';
+import { reorderNeet180Assessments } from './reorderNeet180.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -110,6 +111,13 @@ const run = async () => {
     } catch (seqErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] Sequence sync warning:', seqErr.message);
+    }
+
+    try {
+      await reorderNeet180Assessments(pool);
+    } catch (reorderErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] NEET 180 reorder warning:', reorderErr.message);
     }
 
     // eslint-disable-next-line no-console
