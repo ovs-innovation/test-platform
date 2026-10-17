@@ -415,13 +415,15 @@ jobs:
 
             # Execute NEET 180 questions reordering and section alignment on production database
             log "Executing NEET 180 questions reorder and section synchronization..."
+            docker compose exec -T backend node src/db/migrate.js || true
             docker compose exec -T backend node -e "
               import('./src/config/db.js').then(async ({pool}) => {
                 const fs = await import('fs');
-                if (fs.existsSync('src/db/migration_v69_reorder_neet_180_questions.sql')) {
-                  const sql = fs.readFileSync('src/db/migration_v69_reorder_neet_180_questions.sql', 'utf8');
+                const file = 'src/db/migration_v70_reorder_neet_180_and_fix_subjects.sql';
+                if (fs.existsSync(file)) {
+                  const sql = fs.readFileSync(file, 'utf8');
                   await pool.query(sql);
-                  console.log('[deploy] NEET 180 reorder migration applied successfully!');
+                  console.log('[deploy] NEET 180 and subjects migration v70 applied successfully!');
                 }
                 await pool.end();
               }).catch(err => {
