@@ -654,7 +654,7 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
        JOIN test_assignments ta ON ta.test_id = t.id
        WHERE COALESCE(t.is_published, TRUE) = TRUE
          AND COALESCE(t.is_deleted, FALSE) = FALSE
-         AND ((ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1) OR ta.assigned_to_type = 'all')
+         AND (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
 
        UNION ALL
 
@@ -809,13 +809,9 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
            LEFT JOIN package_tests pt ON pt.test_id = t.id
            LEFT JOIN test_series_tests tst ON tst.test_id = t.id
            LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-           LEFT JOIN test_packages tp ON tp.id = pt.package_id
-           LEFT JOIN test_series ts ON ts.id = tst.series_id
            WHERE pt.package_id = $1
               OR tst.series_id = $1
               OR tsa.test_series_id = $1
-              OR (tp.id IS NOT NULL AND LOWER(TRIM(tp.package_name)) = (SELECT LOWER(TRIM(title)) FROM test_series WHERE id = $1 LIMIT 1))
-              OR (ts.id IS NOT NULL AND LOWER(TRIM(ts.title)) = (SELECT LOWER(TRIM(package_name)) FROM test_packages WHERE id = $1 LIMIT 1))
 
            UNION
 

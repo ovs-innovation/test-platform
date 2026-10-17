@@ -18,8 +18,26 @@ export default function MyTests() {
       assessmentService.listAvailable().catch(() => []),
     ])
       .then(([enrollRes, tests]) => {
-        setEnrollments(enrollRes.enrollments || []);
-        setAvailableTests(tests || []);
+        const myEnrollments = enrollRes.enrollments || [];
+        const rawTests = tests || [];
+
+        // Exclude tests that are already part of the student's enrolled test series packages,
+        // so that tests inside enrolled series (accessed via /my-tests/:slug) are not duplicated
+        // into the loose "Assigned CBT Assessments" section.
+        const enrolledSeriesIds = new Set(myEnrollments.map((e) => Number(e.id || e.test_series_id)));
+
+        const standaloneTests = rawTests.filter((t) => {
+          if (t.access_type === 'enrollment' && myEnrollments.length > 0) {
+            return false;
+          }
+          if (t.series_id && enrolledSeriesIds.has(Number(t.series_id))) {
+            return false;
+          }
+          return true;
+        });
+
+        setEnrollments(myEnrollments);
+        setAvailableTests(standaloneTests);
         setState('done');
       })
       .catch(() => setState('error'));
@@ -180,7 +198,7 @@ export default function MyTests() {
       )}
 
       {/* 2. ASSIGNED MOCK ASSESSMENTS */}
-      {(activeTab === 'all' || activeTab === 'upcoming' || activeTab === 'completed') && (
+      {(activeTab === 'all' || activeTab === 'upcoming' || activeTab === 'completed') && (availableTests.length > 0 || enrollments.length === 0) && (
         <section className="space-y-3">
           <h2 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2">
             <Compass className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />

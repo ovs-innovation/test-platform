@@ -29,10 +29,32 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
 
 export const listAvailableAssessments = asyncHandler(async (req, res) => {
   try {
-    const userRes = await query('SELECT batch_id, institution_id FROM users WHERE id = $1', [req.user.id]);
+    const userRes = await query('SELECT batch_id, institution_id, exam_type FROM users WHERE id = $1', [req.user.id]);
     const student = userRes.rows[0] || {};
     const batchId = student.batch_id || null;
     const instId = student.institution_id || null;
+    let candidateExamType = (student.exam_type || '').toUpperCase().trim();
+
+    if (batchId && (!candidateExamType || candidateExamType === 'GENERAL')) {
+      const batchRes = await query('SELECT target_exam FROM batches WHERE id = $1', [batchId]);
+      if (batchRes.rows[0]?.target_exam) {
+        candidateExamType = batchRes.rows[0].target_exam.toUpperCase().trim();
+      }
+    }
+
+    if (!candidateExamType || candidateExamType === 'GENERAL') {
+      const seriesExamRes = await query(
+        `SELECT ts.exam_type
+         FROM student_enrollments se
+         JOIN test_series ts ON ts.id = se.test_series_id
+         WHERE se.user_id = $1 AND se.status = 'active'
+         LIMIT 1`,
+        [req.user.id]
+      ).catch(() => ({ rows: [] }));
+      if (seriesExamRes.rows[0]?.exam_type) {
+        candidateExamType = seriesExamRes.rows[0].exam_type.toUpperCase().trim();
+      }
+    }
 
     const result = await query(
       `
@@ -47,6 +69,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              COALESCE(a.available_until, t.available_until) AS available_until,
              ci.id AS invite_id, ci.status::text AS invite_status, ci.token AS invite_token,
              'invite' AS access_type,
+             NULL::int AS series_id,
              COALESCE(q.cnt, qt.cnt, 0)::int AS question_count,
              COALESCE(q.total_marks, qt.total_marks, t.max_marks, 300)::int AS total_marks,
              COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
@@ -84,6 +107,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              a.passing_marks, a.max_violations, a.result_visible, a.available_from, a.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'enrollment' AS access_type,
+             tsa.test_series_id AS series_id,
              COALESCE(q.cnt, 0)::int AS question_count,
              COALESCE(q.total_marks, 0)::int AS total_marks,
              at.status::text AS attempt_status,
@@ -100,7 +124,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       ) q ON q.assessment_id = a.id
       LEFT JOIN attempts at ON at.assessment_id = a.id AND at.candidate_id = $2
       LEFT JOIN scores s ON s.attempt_id = at.id
-      WHERE se.user_id = $2 AND se.status = 'active' AND se.expires_at > NOW()
+      WHERE se.user_id = $2 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
         AND NOT EXISTS (
           SELECT 1 FROM candidate_invites ci2
           WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
@@ -113,6 +137,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
              0 AS passing_marks, 5 AS max_violations, true AS result_visible, t.available_from, t.available_until,
              NULL AS invite_id, NULL AS invite_status, NULL AS invite_token,
              'assignment' AS access_type,
+             NULL::int AS series_id,
              COALESCE(q.cnt, 0)::int AS question_count,
              COALESCE(t.max_marks, q.total_marks, 300)::int AS total_marks,
              COALESCE(at.status::text, (CASE WHEN tat.submitted_at IS NOT NULL THEN 'completed' WHEN tat.started_at IS NOT NULL THEN 'in_progress' ELSE NULL END)::text) AS attempt_status,
@@ -126,19 +151,6 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       FROM tests t
       LEFT JOIN ebooks eb_t ON eb_t.id = t.recommended_ebook_id
       LEFT JOIN test_assignments tas ON tas.test_id = t.id
-      LEFT JOIN package_tests pt ON pt.test_id = t.id
-      LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-      LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-      LEFT JOIN test_series ts_series ON ts_series.id = tst.series_id OR ts_series.id = tsa.test_series_id
-      LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts_series.title IS NOT NULL AND (
-         LOWER(tp.package_name) LIKE '%' || LOWER(SUBSTRING(ts_series.title FROM 1 FOR 15)) || '%'
-         OR LOWER(ts_series.title) LIKE '%' || LOWER(SUBSTRING(tp.package_name FROM 1 FOR 15)) || '%'
-      ))
-      LEFT JOIN institution_packages ip ON (
-         ip.package_id = pt.package_id
-         OR ip.package_id = tp.id
-         OR ip.package_id = ts_series.id
-      ) AND $4::int IS NOT NULL AND ip.institution_id = $4 AND COALESCE(ip.is_active, TRUE) = TRUE
       LEFT JOIN (
         SELECT assessment_id, COUNT(*) AS cnt, SUM(marks) AS total_marks FROM questions GROUP BY assessment_id
       ) q ON q.assessment_id = t.id
@@ -150,11 +162,9 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         AND COALESCE(t.is_deleted, false) = false
         AND (
           (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $2)
-          OR (tas.assigned_to_id IS NOT NULL AND tas.assigned_to_id = $2)
           OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
           OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
-          OR tas.assigned_to_type = 'all'
-          OR (ip.institution_id IS NOT NULL AND (ip.valid_until IS NULL OR ip.valid_until > NOW()))
+          OR ($4::int IS NULL AND tas.assigned_to_type = 'all')
         )
 
       ORDER BY id DESC
@@ -171,7 +181,35 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       }
     }
 
-    res.json({ assessments: uniqueAssessments });
+    // Filter out tests conflicting with candidate's target exam (NEET vs JEE) and internal drafts
+    const isNeetCandidate = candidateExamType.includes('NEET');
+    const isJeeCandidate = candidateExamType.includes('JEE');
+
+    const filteredAssessments = uniqueAssessments.filter((row) => {
+      const title = (row.title || '').toUpperCase();
+      const desc = (row.description || '').toUpperCase();
+      const text = `${title} ${desc}`;
+
+      // Exclude internal training/draft mocks from candidate dashboard
+      if (text.includes('TRANN') || text.includes('MOCK TEST FOR TRAINING')) {
+        return false;
+      }
+
+      if (isNeetCandidate && !isJeeCandidate) {
+        // Exclude JEE-exclusive tests
+        if ((text.includes('JEE ') || text.includes('JEE MAIN') || text.includes('JEE ADVANCED') || text.includes('IIT-JEE')) && !text.includes('NEET')) {
+          return false;
+        }
+      } else if (isJeeCandidate && !isNeetCandidate) {
+        // Exclude NEET-exclusive tests
+        if ((text.includes('NEET') || text.includes('MEDICAL') || text.includes('BIOLOGY')) && !text.includes('JEE')) {
+          return false;
+        }
+      }
+      return true;
+    });
+
+    res.json({ assessments: filteredAssessments });
   } catch (err) {
     console.error('[listAvailableAssessments error]', err);
     res.json({ assessments: [] });

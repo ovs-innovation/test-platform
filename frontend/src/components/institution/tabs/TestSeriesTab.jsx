@@ -388,7 +388,7 @@ export default function TestSeriesTab({
                   </button>
 
                   <button
-                    onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
+                    onClick={() => handleOpenAssignModal(pkg)}
                     className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <Send className="h-3.5 w-3.5" />
@@ -500,7 +500,7 @@ export default function TestSeriesTab({
 
                     {pkg.isAssigned ? (
                       <button
-                        onClick={() => handleOpenAssignModal({ id: pkg.id, title: pkg.title, type: 'package' })}
+                        onClick={() => handleOpenAssignModal(pkg)}
                         className="flex-1 py-2 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white shadow-xs transition flex items-center justify-center gap-1.5 cursor-pointer"
                       >
                         <Send className="h-3.5 w-3.5" />
