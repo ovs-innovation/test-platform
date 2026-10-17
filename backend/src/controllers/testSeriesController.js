@@ -371,6 +371,7 @@ export const myEnrollments = asyncHandler(async (req, res) => {
      JOIN test_series ts ON ts.id = se.test_series_id
      LEFT JOIN test_series_tests tst ON tst.series_id = ts.id
      LEFT JOIN test_series_assessments tsa ON tsa.test_series_id = ts.id
+       AND NOT EXISTS (SELECT 1 FROM test_series_tests tst_check WHERE tst_check.series_id = ts.id)
      LEFT JOIN tests t ON t.id = tst.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
      LEFT JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
      LEFT JOIN attempts att ON (att.assessment_id = t.id OR att.assessment_id = a.id) AND att.candidate_id = $1
@@ -491,6 +492,9 @@ export const mySeriesTests = asyncHandler(async (req, res) => {
           COALESCE(tsa.position, 1) AS sort_order
         FROM test_series_assessments tsa
         JOIN assessments a ON a.id = tsa.assessment_id AND a.is_published = true
+        WHERE NOT EXISTS (
+          SELECT 1 FROM test_series_tests tst_check WHERE tst_check.series_id = tsa.test_series_id
+        )
      ),
      series_items AS (
         SELECT DISTINCT ON (series_id, id) * FROM raw_items
