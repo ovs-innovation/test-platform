@@ -635,12 +635,13 @@ export function InstTestSeriesTabWrapper() {
   const navigate = useNavigate();
   return (
     <TestSeriesTab
+      availableSeries={ctx.availableSeries}
       availableTests={ctx.availableTests}
       batches={ctx.batches}
       students={ctx.students}
-      onAssignTest={(testId) => {
+      onAssignTest={(testId, data) => {
         if (testId) {
-          ctx.onAssignTest(testId);
+          return ctx.onAssignTest(testId, data);
         } else {
           navigate('/institution/test-assignments');
         }

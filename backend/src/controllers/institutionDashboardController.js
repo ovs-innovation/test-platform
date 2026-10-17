@@ -597,39 +597,68 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
             item.package_id,
             item.package_name
      FROM (
+       -- 1. Tests linked to test_series assigned to this institution or all
        SELECT 
          t.id,
-         t.test_name,
-         t.test_type,
+         COALESCE(t.test_name, t.title) AS test_name,
+         COALESCE(t.test_type, 'CBT Exam') AS test_type,
          t.test_date::text AS test_date,
-         t.duration_minutes,
-         t.max_marks,
-         COALESCE(ts.id, tp.id, pt.package_id, tst.series_id, tsa.test_series_id, 1) AS package_id,
-         COALESCE(ts.title, tp.package_name, 'Institutional Test') AS package_name
+         COALESCE(t.duration_minutes, 180) AS duration_minutes,
+         COALESCE(t.max_marks, 720) AS max_marks,
+         ts.id AS package_id,
+         ts.title AS package_name
        FROM tests t
-       LEFT JOIN package_tests pt ON pt.test_id = t.id
-       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-       LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-       LEFT JOIN test_series ts ON ts.id = tst.series_id OR ts.id = tsa.test_series_id OR (pt.package_id IS NOT NULL AND LOWER(ts.title) = (SELECT LOWER(package_name) FROM test_packages WHERE id = pt.package_id LIMIT 1))
-       LEFT JOIN test_packages tp ON tp.id = pt.package_id OR LOWER(tp.package_name) = LOWER(ts.title) OR tp.id = ts.id
-       LEFT JOIN institution_packages ip ON (
-          ip.package_id = pt.package_id 
-          OR ip.package_id = tp.id 
-          OR ip.package_id = ts.id
-          OR ip.package_id = tst.series_id
-          OR ip.package_id = tsa.test_series_id
-       ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
-       LEFT JOIN test_assignments ta ON ta.test_id = t.id
+       JOIN test_series_tests tst ON tst.test_id = t.id
+       JOIN test_series ts ON ts.id = tst.series_id AND COALESCE(ts.is_active, TRUE) = TRUE
+       JOIN test_series_assignments tsa ON tsa.test_series_id = ts.id
        WHERE COALESCE(t.is_published, TRUE) = TRUE
          AND COALESCE(t.is_deleted, FALSE) = FALSE
-         AND (
-           ip.institution_id IS NOT NULL
-           OR (ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1)
-           OR (ta.assigned_to_type = 'all')
-         )
+         AND ((tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1) OR tsa.assigned_to_type = 'all')
 
        UNION ALL
 
+       -- 2. Tests linked to packages assigned to this institution via institution_packages
+       SELECT 
+         t.id,
+         COALESCE(t.test_name, t.title) AS test_name,
+         COALESCE(t.test_type, 'CBT Exam') AS test_type,
+         t.test_date::text AS test_date,
+         COALESCE(t.duration_minutes, 180) AS duration_minutes,
+         COALESCE(t.max_marks, 720) AS max_marks,
+         COALESCE(ts.id, tp.id) AS package_id,
+         COALESCE(ts.title, tp.package_name) AS package_name
+       FROM tests t
+       LEFT JOIN package_tests pt ON pt.test_id = t.id
+       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+       LEFT JOIN test_series ts ON ts.id = tst.series_id
+       LEFT JOIN test_packages tp ON tp.id = pt.package_id OR (ts.id IS NOT NULL AND LOWER(TRIM(tp.package_name)) = LOWER(TRIM(ts.title)))
+       JOIN institution_packages ip ON ip.package_id = tp.id AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+       WHERE COALESCE(t.is_published, TRUE) = TRUE
+         AND COALESCE(t.is_deleted, FALSE) = FALSE
+
+       UNION ALL
+
+       -- 3. Tests directly assigned to this institution via test_assignments
+       SELECT 
+         t.id,
+         COALESCE(t.test_name, t.title) AS test_name,
+         COALESCE(t.test_type, 'CBT Exam') AS test_type,
+         t.test_date::text AS test_date,
+         COALESCE(t.duration_minutes, 180) AS duration_minutes,
+         COALESCE(t.max_marks, 720) AS max_marks,
+         COALESCE(ts.id, 1) AS package_id,
+         COALESCE(ts.title, 'Institutional Test') AS package_name
+       FROM tests t
+       LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+       LEFT JOIN test_series ts ON ts.id = tst.series_id
+       JOIN test_assignments ta ON ta.test_id = t.id
+       WHERE COALESCE(t.is_published, TRUE) = TRUE
+         AND COALESCE(t.is_deleted, FALSE) = FALSE
+         AND ((ta.assigned_to_type = 'institution' AND ta.assigned_to_id = $1) OR ta.assigned_to_type = 'all')
+
+       UNION ALL
+
+       -- 4. Assessments linked to test_series_assessments
        SELECT
          a.id,
          COALESCE(tsa.label, a.title) AS test_name,
@@ -637,19 +666,16 @@ export const getAvailablePackageTests = asyncHandler(async (req, res) => {
          COALESCE(a.created_at::date::text, NOW()::date::text) AS test_date,
          COALESCE(a.duration_minutes, 180) AS duration_minutes,
          COALESCE(a.passing_marks, 300) AS max_marks,
-         COALESCE(ts.id, tp.id, tsa.test_series_id, 1) AS package_id,
-         COALESCE(ts.title, tp.package_name, 'Institutional Test') AS package_name
+         ts.id AS package_id,
+         ts.title AS package_name
        FROM assessments a
        JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
-       LEFT JOIN test_series ts ON ts.id = tsa.test_series_id
-       LEFT JOIN test_packages tp ON tp.id = ts.id OR LOWER(tp.package_name) = LOWER(ts.title)
-       LEFT JOIN institution_packages ip ON (
-          ip.package_id = tsa.test_series_id 
-          OR ip.package_id = ts.id
-          OR ip.package_id = tp.id
-       ) AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+       JOIN test_series ts ON ts.id = tsa.test_series_id
+       LEFT JOIN test_packages tp ON LOWER(TRIM(tp.package_name)) = LOWER(TRIM(ts.title))
+       LEFT JOIN institution_packages ip ON ip.package_id = tp.id AND ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
+       LEFT JOIN test_series_assignments ts_assign ON ts_assign.test_series_id = ts.id AND ((ts_assign.assigned_to_type = 'institution' AND ts_assign.assigned_to_id = $1) OR ts_assign.assigned_to_type = 'all')
        WHERE COALESCE(a.is_published, TRUE) = TRUE
-         AND ip.institution_id IS NOT NULL
+         AND (ip.institution_id IS NOT NULL OR ts_assign.id IS NOT NULL)
      ) item
      ORDER BY item.id DESC`,
     [instId]
@@ -701,12 +727,24 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
        WHERE ip.institution_id = $1 AND pt.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
        UNION
        SELECT 1 FROM test_series_tests tst
-       JOIN institution_packages ip ON ip.package_id = tst.series_id
+       JOIN test_series ts ON ts.id = tst.series_id
+       JOIN test_packages tp ON LOWER(TRIM(tp.package_name)) = LOWER(TRIM(ts.title))
+       JOIN institution_packages ip ON ip.package_id = tp.id
        WHERE ip.institution_id = $1 AND tst.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
        UNION
+       SELECT 1 FROM test_series_tests tst
+       JOIN test_series_assignments tsa ON tsa.test_series_id = tst.series_id
+       WHERE ((tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1) OR tsa.assigned_to_type = 'all')
+         AND tst.test_id = $2
+       UNION
+       SELECT 1 FROM test_series_assignments tsa
+       WHERE ((tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1) OR tsa.assigned_to_type = 'all')
+         AND tsa.test_series_id = $2
+       UNION
        SELECT 1 FROM test_series_assessments tsa
-       JOIN institution_packages ip ON ip.package_id = tsa.test_series_id
-       WHERE ip.institution_id = $1 AND tsa.assessment_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       JOIN test_series_assignments tsa_assign ON tsa_assign.test_series_id = tsa.test_series_id
+       WHERE ((tsa_assign.assigned_to_type = 'institution' AND tsa_assign.assigned_to_id = $1) OR tsa_assign.assigned_to_type = 'all')
+         AND tsa.assessment_id = $2
        UNION
        SELECT 1 FROM test_assignments ta
        WHERE ta.test_id = $2 AND (
@@ -724,29 +762,36 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   }
 
   // Determine list of test IDs to assign (handles single test or full package/series)
+  const isPackage = req.body.is_package === true || req.body.type === 'package';
   let testIdsToAssign = [];
   if (!isNaN(testIdNum) && testIdNum > 0) {
-    const linkedTests = await query(
-      `SELECT DISTINCT item.id FROM (
-         SELECT t.id FROM tests t
-         LEFT JOIN package_tests pt ON pt.test_id = t.id
-         LEFT JOIN test_series_tests tst ON tst.test_id = t.id
-         LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-         WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1
-
-         UNION
-
-         SELECT a.id FROM assessments a
-         JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
-         WHERE tsa.test_series_id = $1
-       ) item`,
-      [testIdNum]
-    );
-    if (linkedTests.rowCount > 0) {
-      testIdsToAssign = linkedTests.rows.map((r) => r.id);
-    } else {
-      const singleTest = await query('SELECT id FROM tests WHERE id = $1 UNION SELECT id FROM assessments WHERE id = $1', [testIdNum]);
+    if (!isPackage) {
+      const singleTest = await query('SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE UNION SELECT id FROM assessments WHERE id = $1', [testIdNum]);
       if (singleTest.rowCount > 0) {
+        testIdsToAssign = [testIdNum];
+      }
+    }
+
+    if (testIdsToAssign.length === 0) {
+      const linkedTests = await query(
+        `SELECT DISTINCT item.id FROM (
+           SELECT t.id FROM tests t
+           LEFT JOIN package_tests pt ON pt.test_id = t.id
+           LEFT JOIN test_series_tests tst ON tst.test_id = t.id
+           LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
+           WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1
+
+           UNION
+
+           SELECT a.id FROM assessments a
+           JOIN test_series_assessments tsa ON tsa.assessment_id = a.id
+           WHERE tsa.test_series_id = $1
+         ) item`,
+        [testIdNum]
+      );
+      if (linkedTests.rowCount > 0) {
+        testIdsToAssign = linkedTests.rows.map((r) => r.id);
+      } else {
         testIdsToAssign = [testIdNum];
       }
     }
@@ -2220,69 +2265,208 @@ export const sendStudentReminder = asyncHandler(async (req, res) => {
  * GET available test series
  */
 export const getAvailableTestSeries = asyncHandler(async (req, res) => {
-  const instId = req.institution_id || req.params.id;
+  const instId = req.institution_id || Number(req.params.id);
 
-  const assignedRes = await query(
+  // 1. Fetch assigned packages from institution_packages
+  const assignedPkgRes = await query(
     `SELECT COALESCE(ts.id, tp.id) AS id,
             tp.id AS package_id,
             ts.id AS series_id,
-            tp.package_name AS title,
+            COALESCE(ts.title, tp.package_name) AS title,
             tp.package_name,
-            tp.description,
-            CASE
-              WHEN tp.package_name ILIKE '%NEET-PG%' OR tp.package_name ILIKE '%NEET PG%' THEN 'NEET PG'
-              WHEN tp.package_name ILIKE '%NEET%' THEN 'NEET'
-              WHEN tp.package_name ILIKE '%JEE%' THEN 'JEE Main'
-              ELSE 'NEET / JEE'
-            END AS exam_type,
-            2027 AS target_year,
-            365 AS validity_days,
+            COALESCE(ts.description, tp.description) AS description,
             COALESCE(
-              NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = tp.id), 0),
-              NULLIF((SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = tp.id OR (ts.id IS NOT NULL AND tst.series_id = ts.id)), 0),
-              NULLIF((SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = tp.id OR (ts.id IS NOT NULL AND tsa.test_series_id = ts.id)), 0),
-              15
-            )::int AS total_tests_count,
+              ts.exam_type,
+              CASE
+                WHEN tp.package_name ILIKE '%NEET-PG%' OR tp.package_name ILIKE '%NEET PG%' THEN 'NEET PG'
+                WHEN tp.package_name ILIKE '%NEET%' THEN 'NEET'
+                WHEN tp.package_name ILIKE '%JEE%' THEN 'JEE Main'
+                ELSE 'NEET / JEE'
+              END
+            ) AS exam_type,
+            COALESCE(ts.target_year, '2027') AS target_year,
+            COALESCE(ts.validity_days, 365) AS validity_days,
             'Assigned Package' AS status,
             TRUE AS is_assigned,
             ip.purchased_at,
-            ip.valid_until
+            ip.valid_until,
+            COALESCE(
+              (
+                SELECT json_agg(
+                  json_build_object(
+                    'id', t.id,
+                    'title', COALESCE(t.test_name, t.title),
+                    'test_name', COALESCE(t.test_name, t.title),
+                    'test_type', COALESCE(t.test_type, 'CBT Exam'),
+                    'duration_minutes', COALESCE(t.duration_minutes, 180),
+                    'max_marks', COALESCE(t.max_marks, 720),
+                    'test_date', t.test_date,
+                    'package_id', COALESCE(ts.id, tp.id),
+                    'package_name', COALESCE(ts.title, tp.package_name)
+                  ) ORDER BY t.id ASC
+                )
+                FROM test_series_tests tst2
+                JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                WHERE ts.id IS NOT NULL AND tst2.series_id = ts.id
+              ),
+              (
+                SELECT json_agg(
+                  json_build_object(
+                    'id', t.id,
+                    'title', COALESCE(t.test_name, t.title),
+                    'test_name', COALESCE(t.test_name, t.title),
+                    'test_type', COALESCE(t.test_type, 'CBT Exam'),
+                    'duration_minutes', COALESCE(t.duration_minutes, 180),
+                    'max_marks', COALESCE(t.max_marks, 720),
+                    'test_date', t.test_date,
+                    'package_id', tp.id,
+                    'package_name', tp.package_name
+                  ) ORDER BY t.id ASC
+                )
+                FROM package_tests pt
+                JOIN tests t ON t.id = pt.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                WHERE pt.package_id = tp.id
+              ),
+              '[]'::json
+            ) AS tests
      FROM institution_packages ip
      JOIN test_packages tp ON tp.id = ip.package_id
-     LEFT JOIN test_series ts ON LOWER(ts.title) = LOWER(tp.package_name) OR ts.id = tp.id
+     LEFT JOIN test_series ts ON LOWER(TRIM(ts.title)) = LOWER(TRIM(tp.package_name))
      WHERE ip.institution_id = $1 AND COALESCE(ip.is_active, TRUE) = TRUE
      ORDER BY ip.id DESC`,
     [instId]
   ).catch((err) => {
-    console.error('Error fetching assigned packages:', err);
+    console.error('Error fetching assigned packages from institution_packages:', err);
     return { rows: [] };
   });
 
-  const seriesRes = await query(
-    `SELECT ts.id, ts.title, ts.title AS package_name, ts.description, ts.exam_type,
-            2027 AS target_year, ts.validity_days,
+  // 2. Fetch assigned series from test_series_assignments (assigned to institution or all)
+  const assignedSeriesRes = await query(
+    `SELECT ts.id,
+            tp.id AS package_id,
+            ts.id AS series_id,
+            ts.title,
+            ts.title AS package_name,
+            ts.description,
+            COALESCE(ts.exam_type, 'NEET / JEE') AS exam_type,
+            COALESCE(ts.target_year, '2027') AS target_year,
+            COALESCE(tsa.validity_days, ts.validity_days, 365) AS validity_days,
+            'Assigned Package' AS status,
+            TRUE AS is_assigned,
+            tsa.created_at AS purchased_at,
+            (tsa.created_at + (COALESCE(tsa.validity_days, ts.validity_days, 365) || ' days')::interval) AS valid_until,
             COALESCE(
-              NULLIF(
-                (SELECT COUNT(*)::int FROM test_series_tests tst WHERE tst.series_id = ts.id) +
-                (SELECT COUNT(*)::int FROM test_series_assessments tsa WHERE tsa.test_series_id = ts.id),
-                0
+              (
+                SELECT json_agg(
+                  json_build_object(
+                    'id', t.id,
+                    'title', COALESCE(t.test_name, t.title),
+                    'test_name', COALESCE(t.test_name, t.title),
+                    'test_type', COALESCE(t.test_type, 'CBT Exam'),
+                    'duration_minutes', COALESCE(t.duration_minutes, 180),
+                    'max_marks', COALESCE(t.max_marks, 720),
+                    'test_date', t.test_date,
+                    'package_id', ts.id,
+                    'package_name', ts.title
+                  ) ORDER BY t.id ASC
+                )
+                FROM test_series_tests tst2
+                JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                WHERE tst2.series_id = ts.id
               ),
-              NULLIF((SELECT COUNT(*)::int FROM package_tests pt WHERE pt.package_id = ts.id), 0),
-              1
-            )::int AS total_tests_count,
+              '[]'::json
+            ) AS tests
+     FROM test_series_assignments tsa
+     JOIN test_series ts ON ts.id = tsa.test_series_id AND COALESCE(ts.is_active, TRUE) = TRUE
+     LEFT JOIN test_packages tp ON LOWER(TRIM(tp.package_name)) = LOWER(TRIM(ts.title))
+     WHERE (tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1)
+        OR tsa.assigned_to_type = 'all'
+     ORDER BY tsa.id DESC`,
+    [instId]
+  ).catch((err) => {
+    console.error('Error fetching assigned series from test_series_assignments:', err);
+    return { rows: [] };
+  });
+
+  // 3. Fetch full test series catalogue
+  const seriesRes = await query(
+    `SELECT ts.id,
+            ts.id AS series_id,
+            ts.title,
+            ts.title AS package_name,
+            ts.description,
+            COALESCE(ts.exam_type, 'NEET / JEE') AS exam_type,
+            COALESCE(ts.target_year, '2027') AS target_year,
+            COALESCE(ts.validity_days, 365) AS validity_days,
             'Available Series' AS status,
-            FALSE AS is_assigned
+            FALSE AS is_assigned,
+            COALESCE(
+              (
+                SELECT json_agg(
+                  json_build_object(
+                    'id', t.id,
+                    'title', COALESCE(t.test_name, t.title),
+                    'test_name', COALESCE(t.test_name, t.title),
+                    'test_type', COALESCE(t.test_type, 'CBT Exam'),
+                    'duration_minutes', COALESCE(t.duration_minutes, 180),
+                    'max_marks', COALESCE(t.max_marks, 720),
+                    'test_date', t.test_date,
+                    'package_id', ts.id,
+                    'package_name', ts.title
+                  ) ORDER BY t.id ASC
+                )
+                FROM test_series_tests tst2
+                JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                WHERE tst2.series_id = ts.id
+              ),
+              '[]'::json
+            ) AS tests
      FROM test_series ts
      WHERE COALESCE(ts.is_active, TRUE) = TRUE
      ORDER BY ts.id DESC`
   ).catch(() => ({ rows: [] }));
 
-  const allPackages = [...assignedRes.rows];
+  // 4. Deduplicate assigned packages by normalized title
+  const assignedMap = new Map();
+  const allAssignedRows = [...assignedPkgRes.rows, ...assignedSeriesRes.rows];
+
+  for (const pkg of allAssignedRows) {
+    const rawTests = Array.isArray(pkg.tests) ? pkg.tests : [];
+    const normTitle = (pkg.title || pkg.package_name || '').toLowerCase().trim();
+    const key = normTitle || `pkg_${pkg.id}`;
+
+    pkg.total_tests_count = rawTests.length > 0 ? rawTests.length : (pkg.total_tests_count || 1);
+
+    if (!assignedMap.has(key)) {
+      assignedMap.set(key, pkg);
+    } else {
+      const existing = assignedMap.get(key);
+      const existingTests = Array.isArray(existing.tests) ? existing.tests : [];
+      // Prefer the package record that has more linked tests or newer validity
+      if (rawTests.length > existingTests.length) {
+        assignedMap.set(key, pkg);
+      }
+    }
+  }
+
+  // 5. Build combined catalog packages list
+  const allPackages = Array.from(assignedMap.values());
+
   for (const s of seriesRes.rows) {
-    const isAlreadyIncluded = allPackages.some(
-      (p) => p.id === s.id || (p.title && s.title && p.title.toLowerCase().trim() === s.title.toLowerCase().trim())
-    );
-    if (!isAlreadyIncluded) {
+    const sNormTitle = (s.title || s.package_name || '').toLowerCase().trim();
+    const rawTests = Array.isArray(s.tests) ? s.tests : [];
+    s.total_tests_count = rawTests.length > 0 ? rawTests.length : 1;
+
+    const alreadyAssigned = allPackages.some((p) => {
+      const pNormTitle = (p.title || p.package_name || '').toLowerCase().trim();
+      return (
+        (p.id && s.id && Number(p.id) === Number(s.id)) ||
+        (p.series_id && s.id && Number(p.series_id) === Number(s.id)) ||
+        (pNormTitle && sNormTitle && pNormTitle === sNormTitle)
+      );
+    });
+
+    if (!alreadyAssigned) {
       allPackages.push(s);
     }
   }

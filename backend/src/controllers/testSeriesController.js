@@ -196,6 +196,20 @@ export const linkTest = asyncHandler(async (req, res) => {
     [id, test_id]
   );
 
+  // Keep package_tests in sync if a matching test_packages row exists
+  try {
+    const seriesTitleRes = await query('SELECT title FROM test_series WHERE id = $1', [id]);
+    if (seriesTitleRes.rowCount > 0) {
+      const pkgRes = await query('SELECT id FROM test_packages WHERE LOWER(TRIM(package_name)) = LOWER(TRIM($1))', [seriesTitleRes.rows[0].title]);
+      if (pkgRes.rowCount > 0) {
+        await query(
+          'INSERT INTO package_tests (package_id, test_id) VALUES ($1, $2) ON CONFLICT DO NOTHING',
+          [pkgRes.rows[0].id, test_id]
+        );
+      }
+    }
+  } catch (_) {}
+
   // If the linked test has a recommended_ebook_id, notify enrolled & assigned students
   try {
     const testRes = await query('SELECT id, test_name, title, recommended_ebook_id FROM tests WHERE id = $1', [test_id]);
@@ -243,6 +257,18 @@ export const linkTest = asyncHandler(async (req, res) => {
 export const unlinkTest = asyncHandler(async (req, res) => {
   const { id, testId } = req.params;
   await query('DELETE FROM test_series_tests WHERE series_id = $1 AND test_id = $2', [id, testId]);
+
+  // Keep package_tests in sync if a matching test_packages row exists
+  try {
+    const seriesTitleRes = await query('SELECT title FROM test_series WHERE id = $1', [id]);
+    if (seriesTitleRes.rowCount > 0) {
+      const pkgRes = await query('SELECT id FROM test_packages WHERE LOWER(TRIM(package_name)) = LOWER(TRIM($1))', [seriesTitleRes.rows[0].title]);
+      if (pkgRes.rowCount > 0) {
+        await query('DELETE FROM package_tests WHERE package_id = $1 AND test_id = $2', [pkgRes.rows[0].id, testId]);
+      }
+    }
+  } catch (_) {}
+
   res.json({ message: 'Test unlinked successfully' });
 });
 
@@ -647,6 +673,29 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
         ]
       ).catch(() => {});
     }
+
+    // Also keep institution_packages in sync with assigned test_packages
+    try {
+      let pkgIdRes = await query('SELECT id FROM test_packages WHERE LOWER(TRIM(package_name)) = LOWER(TRIM($1)) LIMIT 1', [series.title]);
+      let pkgId = pkgIdRes.rows[0]?.id;
+      if (!pkgId) {
+        const insPkg = await query(
+          'INSERT INTO test_packages (package_name, description, price) VALUES ($1, $2, $3) RETURNING id',
+          [series.title, series.description || '', series.price || 0]
+        );
+        pkgId = insPkg.rows[0]?.id;
+      }
+      if (pkgId) {
+        await query(
+          `INSERT INTO institution_packages (institution_id, package_id, is_active)
+           VALUES ($1, $2, TRUE)
+           ON CONFLICT DO NOTHING`,
+          [targetId, pkgId]
+        );
+      }
+    } catch (e) {
+      console.warn('[assignTestSeries] Warning syncing to institution_packages:', e.message);
+    }
   } else if (assigned_to_type === 'all') {
     targetDisplayName = 'All Platform Candidates';
     const studentsRes = await query(
@@ -788,7 +837,22 @@ export const deleteTestSeriesAssignment = asyncHandler(async (req, res) => {
     [assignmentId, id]
   );
   if (!result.rowCount) throw ApiError.notFound('Assignment record not found');
-  res.json({ success: true, message: 'Assignment rule removed successfully', deleted: result.rows[0] });
+  const deleted = result.rows[0];
+
+  // If deleting an institution assignment, also remove corresponding institution_packages row
+  if (deleted.assigned_to_type === 'institution' && deleted.assigned_to_id) {
+    try {
+      const tsRes = await query('SELECT title FROM test_series WHERE id = $1', [id]);
+      if (tsRes.rowCount > 0) {
+        const pkgRes = await query('SELECT id FROM test_packages WHERE LOWER(TRIM(package_name)) = LOWER(TRIM($1))', [tsRes.rows[0].title]);
+        if (pkgRes.rowCount > 0) {
+          await query('DELETE FROM institution_packages WHERE institution_id = $1 AND package_id = $2', [deleted.assigned_to_id, pkgRes.rows[0].id]);
+        }
+      }
+    } catch (_) {}
+  }
+
+  res.json({ success: true, message: 'Assignment rule removed successfully', deleted });
 });
 
 /**

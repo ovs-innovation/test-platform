@@ -91,6 +91,10 @@ export default function TestSeriesTab({
           return idMatch || titleMatch;
         });
 
+        const seriesTests = (Array.isArray(s.tests) && s.tests.length > 0)
+          ? s.tests
+          : matchingTests;
+
         const isAssigned =
           Boolean(s.is_assigned) ||
           s.status === 'Assigned Package' ||
@@ -103,14 +107,14 @@ export default function TestSeriesTab({
           title: s.title || s.package_name || 'Test Series Package',
           exam: examName,
           targetYear: s.target_year || 2027,
-          testCount: s.total_tests_count || s.test_count || matchingTests.length || 15,
+          testCount: seriesTests.length > 0 ? seriesTests.length : (s.total_tests_count || s.test_count || 1),
           description: s.description || 'Comprehensive computer-based test series package with AIETS diagnostic performance reporting.',
           status: statusText,
           isAssigned,
           validity: s.validity_days ? `${s.validity_days} Days` : '31 Mar 2027',
           color,
           badgeColor,
-          tests: matchingTests,
+          tests: seriesTests,
           raw: s,
         };
       });
@@ -118,7 +122,25 @@ export default function TestSeriesTab({
       seriesList = [];
     }
 
-    return seriesList
+    // Strict deduplication by normalized package title and canonical ID
+    const dedupedMap = new Map();
+    for (const item of seriesList) {
+      const key = (item.title || '').toLowerCase().trim();
+      if (!dedupedMap.has(key)) {
+        dedupedMap.set(key, item);
+      } else {
+        const existing = dedupedMap.get(key);
+        // If one is assigned and the other is not, preserve the assigned one
+        if (!existing.isAssigned && item.isAssigned) {
+          dedupedMap.set(key, item);
+        } else if (existing.isAssigned === item.isAssigned && (item.tests?.length || 0) > (existing.tests?.length || 0)) {
+          dedupedMap.set(key, item);
+        }
+      }
+    }
+    const cleanSeriesList = Array.from(dedupedMap.values());
+
+    return cleanSeriesList
       .sort((a, b) => (b.isAssigned ? 1 : 0) - (a.isAssigned ? 1 : 0))
       .filter((pkg) => {
         const matchesSearch =
@@ -605,13 +627,18 @@ export default function TestSeriesTab({
                       return idMatch || titleMatch;
                     });
                 
-                const listToDisplay = modalTests.length > 0 ? modalTests : (selectedSeries.isAssigned ? availableTests : []);
+                const listToDisplay = modalTests;
 
                 if (listToDisplay.length === 0) {
                   return (
-                    <div className={`text-center py-8 text-xs space-y-1 ${textMutedClass}`}>
-                      <p className="font-semibold text-slate-300">Package Not Assigned by Admin</p>
-                      <p>Contact your Platform Administrator to unlock this test series package for your institution.</p>
+                    <div className={`text-center py-8 text-xs space-y-2 ${textMutedClass}`}>
+                      <FileText className="h-8 w-8 mx-auto text-slate-500 opacity-60 mb-2" />
+                      <p className="font-semibold text-slate-200">No Tests Linked to This Package</p>
+                      <p className="max-w-xs mx-auto text-slate-400">
+                        {selectedSeries.isAssigned
+                          ? 'This test package is active for your institution, but tests have not been linked to it yet in the admin panel.'
+                          : 'Contact your Platform Administrator to unlock this test series package for your institution.'}
+                      </p>
                     </div>
                   );
                 }
