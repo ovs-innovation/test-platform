@@ -163,8 +163,19 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         AND (
           (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $2)
           OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
-          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
+          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND $3::int IS NULL AND tas.assigned_to_id = $4)
           OR ($4::int IS NULL AND tas.assigned_to_type = 'all')
+        )
+        -- Exclude tests that are already part of the candidate's active enrolled test series packages
+        AND NOT EXISTS (
+          SELECT 1 FROM student_enrollments se
+          WHERE se.user_id = $2 AND se.status = 'active'
+            AND (se.expires_at IS NULL OR se.expires_at > NOW())
+            AND (
+              EXISTS (SELECT 1 FROM test_series_tests tst WHERE tst.series_id = se.test_series_id AND tst.test_id = t.id)
+              OR EXISTS (SELECT 1 FROM test_series_assessments tsa WHERE tsa.test_series_id = se.test_series_id AND tsa.assessment_id = t.id)
+              OR EXISTS (SELECT 1 FROM package_tests pt WHERE pt.package_id = se.test_series_id AND pt.test_id = t.id)
+            )
         )
 
       ORDER BY id DESC

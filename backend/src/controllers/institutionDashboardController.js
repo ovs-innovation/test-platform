@@ -876,24 +876,28 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     validTestsToAssign = testCheckRes.rows.map((r) => r.id);
   }
 
-  for (const tid of validTestsToAssign) {
-    try {
-      const existing = await query(
-        `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
-        [tid, assign_to, assignedTargetId]
-      );
-
-      if (existing.rowCount === 0) {
-        await query(
-          `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
-           VALUES ($1, $2, $3)`,
+  if (!isPackage && !resolvedSeriesId) {
+    for (const tid of validTestsToAssign) {
+      try {
+        const existing = await query(
+          `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
           [tid, assign_to, assignedTargetId]
         );
-        assignedCount++;
+
+        if (existing.rowCount === 0) {
+          await query(
+            `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+             VALUES ($1, $2, $3)`,
+            [tid, assign_to, assignedTargetId]
+          );
+          assignedCount++;
+        }
+      } catch (insertErr) {
+        console.warn(`[assignTestSeries] Skipped test_assignment for test ${tid}:`, insertErr.message);
       }
-    } catch (insertErr) {
-      console.warn(`[assignTestSeries] Skipped test_assignment for test ${tid}:`, insertErr.message);
     }
+  } else {
+    assignedCount = validTestsToAssign.length > 0 ? validTestsToAssign.length : (testIdsToAssign.length > 0 ? testIdsToAssign.length : 1);
   }
 
   // Fetch test or package name for clear notification title

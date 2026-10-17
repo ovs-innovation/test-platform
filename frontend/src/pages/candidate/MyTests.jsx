@@ -25,12 +25,16 @@ export default function MyTests() {
         // so that tests inside enrolled series (accessed via /my-tests/:slug) are not duplicated
         // into the loose "Assigned CBT Assessments" section.
         const enrolledSeriesIds = new Set(myEnrollments.map((e) => Number(e.id || e.test_series_id)));
+        const enrolledSeriesTitles = new Set(myEnrollments.map((e) => (e.title || '').trim().toLowerCase()));
 
         const standaloneTests = rawTests.filter((t) => {
           if (t.access_type === 'enrollment' && myEnrollments.length > 0) {
             return false;
           }
           if (t.series_id && enrolledSeriesIds.has(Number(t.series_id))) {
+            return false;
+          }
+          if (t.title && enrolledSeriesTitles.has(t.title.trim().toLowerCase())) {
             return false;
           }
           return true;
