@@ -52,7 +52,7 @@ export default function EdvedumHero() {
       <div
         className="hidden md:block absolute inset-0 bg-no-repeat opacity-100 transition-all duration-700 pointer-events-none z-[1]"
         style={{
-          backgroundImage: "url('/edvedum/opt.png?v=10')",
+          backgroundImage: "url('/edvedum/opt.png?v=12')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
           filter: 'drop-shadow(0 20px 35px rgba(2, 27, 62, 0.95)) drop-shadow(0 0 30px rgba(4, 8, 98, 0.14))',
@@ -148,7 +148,7 @@ export default function EdvedumHero() {
             }}
           >
             <img
-              src="/edvedum/opt.png?v=10"
+              src="/edvedum/opt.png?v=12"
               alt="EDVEDUM student using CBT mock tests on laptop and mobile"
               className="w-full h-auto block object-contain object-center border-none rounded-none"
             />
