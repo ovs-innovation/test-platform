@@ -722,6 +722,11 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
       `SELECT 1 FROM institution_packages ip
        WHERE ip.institution_id = $1 AND ip.package_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
        UNION
+       SELECT 1 FROM test_series ts
+       JOIN test_packages tp ON LOWER(TRIM(tp.package_name)) = LOWER(TRIM(ts.title))
+       JOIN institution_packages ip ON ip.package_id = tp.id
+       WHERE ip.institution_id = $1 AND ts.id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
+       UNION
        SELECT 1 FROM package_tests pt
        JOIN institution_packages ip ON ip.package_id = pt.package_id
        WHERE ip.institution_id = $1 AND pt.test_id = $2 AND COALESCE(ip.is_active, TRUE) = TRUE
@@ -740,6 +745,12 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
        SELECT 1 FROM test_series_assignments tsa
        WHERE ((tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1) OR tsa.assigned_to_type = 'all')
          AND tsa.test_series_id = $2
+       UNION
+       SELECT 1 FROM test_packages tp
+       JOIN test_series ts ON LOWER(TRIM(ts.title)) = LOWER(TRIM(tp.package_name))
+       JOIN test_series_assignments tsa ON tsa.test_series_id = ts.id
+       WHERE ((tsa.assigned_to_type = 'institution' AND tsa.assigned_to_id = $1) OR tsa.assigned_to_type = 'all')
+         AND tp.id = $2
        UNION
        SELECT 1 FROM test_series_assessments tsa
        JOIN test_series_assignments tsa_assign ON tsa_assign.test_series_id = tsa.test_series_id
@@ -766,9 +777,22 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   let testIdsToAssign = [];
   if (!isNaN(testIdNum) && testIdNum > 0) {
     if (!isPackage) {
-      const singleTest = await query('SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE UNION SELECT id FROM assessments WHERE id = $1', [testIdNum]);
-      if (singleTest.rowCount > 0) {
-        testIdsToAssign = [testIdNum];
+      // Check if this ID is strictly a standalone test (not a test series or test package)
+      const isSeriesOrPackage = await query(
+        `SELECT 1 FROM test_series WHERE id = $1
+         UNION
+         SELECT 1 FROM test_packages WHERE id = $1`,
+        [testIdNum]
+      ).catch(() => ({ rowCount: 0 }));
+
+      if (isSeriesOrPackage.rowCount === 0) {
+        const singleTest = await query(
+          'SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE UNION SELECT id FROM assessments WHERE id = $1',
+          [testIdNum]
+        );
+        if (singleTest.rowCount > 0) {
+          testIdsToAssign = [testIdNum];
+        }
       }
     }
 
@@ -779,7 +803,13 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
            LEFT JOIN package_tests pt ON pt.test_id = t.id
            LEFT JOIN test_series_tests tst ON tst.test_id = t.id
            LEFT JOIN test_series_assessments tsa ON tsa.assessment_id = t.id
-           WHERE pt.package_id = $1 OR tst.series_id = $1 OR tsa.test_series_id = $1
+           LEFT JOIN test_packages tp ON tp.id = pt.package_id
+           LEFT JOIN test_series ts ON ts.id = tst.series_id
+           WHERE pt.package_id = $1
+              OR tst.series_id = $1
+              OR tsa.test_series_id = $1
+              OR (tp.id IS NOT NULL AND LOWER(TRIM(tp.package_name)) = (SELECT LOWER(TRIM(title)) FROM test_series WHERE id = $1 LIMIT 1))
+              OR (ts.id IS NOT NULL AND LOWER(TRIM(ts.title)) = (SELECT LOWER(TRIM(package_name)) FROM test_packages WHERE id = $1 LIMIT 1))
 
            UNION
 
@@ -804,6 +834,32 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     });
   }
 
+  // Also assign test series reference if assigning a series
+  const seriesLookup = await query(
+    `SELECT id FROM test_series WHERE id = $1
+     UNION
+     SELECT ts.id FROM test_series ts
+     JOIN test_packages tp ON LOWER(TRIM(ts.title)) = LOWER(TRIM(tp.package_name))
+     WHERE tp.id = $1
+     LIMIT 1`,
+    [testIdNum]
+  ).catch(() => ({ rows: [] }));
+  const resolvedSeriesId = seriesLookup.rows[0]?.id;
+
+  if (resolvedSeriesId) {
+    const existingSeriesAssign = await query(
+      `SELECT id FROM test_series_assignments WHERE test_series_id = $1 AND assigned_to_type = $2 AND (assigned_to_id = $3 OR ($3::int IS NULL AND assigned_to_id IS NULL))`,
+      [resolvedSeriesId, assign_to, assignedTargetId]
+    ).catch(() => ({ rowCount: 1 }));
+    if (existingSeriesAssign.rowCount === 0) {
+      await query(
+        `INSERT INTO test_series_assignments (test_series_id, assigned_to_type, assigned_to_id)
+         VALUES ($1, $2, $3)`,
+        [resolvedSeriesId, assign_to, assignedTargetId]
+      ).catch(() => {});
+    }
+  }
+
   let assignedCount = 0;
 
   for (const tid of testIdsToAssign) {
@@ -825,9 +881,17 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   // Fetch test or package name for clear notification title
   let testName = 'Test Series';
   if (!isNaN(testIdNum) && testIdNum > 0) {
-    const tRes = await query('SELECT test_name FROM tests WHERE id = $1', [testIdNum]);
-    if (tRes.rowCount > 0 && tRes.rows[0].test_name) {
-      testName = tRes.rows[0].test_name;
+    const tRes = await query(
+      `SELECT title AS name FROM test_series WHERE id = $1
+       UNION
+       SELECT package_name AS name FROM test_packages WHERE id = $1
+       UNION
+       SELECT test_name AS name FROM tests WHERE id = $1
+       LIMIT 1`,
+      [testIdNum]
+    ).catch(() => ({ rows: [] }));
+    if (tRes.rowCount > 0 && tRes.rows[0].name) {
+      testName = tRes.rows[0].name;
     }
   }
 

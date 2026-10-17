@@ -188,6 +188,9 @@ export default function TestSeriesTab({
         await onAssignTest(assignModalItem.id, {
           assign_to: targetType,
           target_id: targetType === 'institution' ? null : Number(targetId || (batches[0]?.id || 1)),
+          is_package: true,
+          type: 'package',
+          package_id: assignModalItem.raw?.package_id || assignModalItem.raw?.id || assignModalItem.id,
         });
       }
       const targetLabel =
