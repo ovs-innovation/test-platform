@@ -644,6 +644,7 @@ export const getInstitutions = asyncHandler(async (_req, res) => {
        i.code AS "schoolId",
        i.name,
        i.email,
+       COALESCE(i.raw_password, '') AS "password",
        i.tagline,
        i.logo_badge AS "logoBadge",
        i.logo_url AS "logoUrl",
@@ -695,14 +696,15 @@ export const createInstitution = asyncHandler(async (req, res) => {
   const uploadedLogoUrl = logoUrl ? await processAndUploadImage(logoUrl, 'edvedum/institutions') : '';
 
   const insertRes = await query(
-    `INSERT INTO institutions (code, name, email, password_hash, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
-     RETURNING id, code AS "schoolId", name, email, tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus", created_at AS "createdAt"`,
+    `INSERT INTO institutions (code, name, email, password_hash, raw_password, tagline, logo_badge, logo_url, accent_color, total_licenses, gstin, custom_price, payment_status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+     RETURNING id, code AS "schoolId", name, email, raw_password AS "password", tagline, logo_badge AS "logoBadge", logo_url AS "logoUrl", accent_color AS "accentColor", total_licenses AS "totalLicenses", gstin, custom_price AS "customPrice", payment_status AS "paymentStatus", created_at AS "createdAt"`,
     [
       schoolId.toUpperCase(),
       name,
       email.toLowerCase(),
       pwHash,
+      password,
       tagline || 'Premier Educational Institution',
       badge,
       uploadedLogoUrl,

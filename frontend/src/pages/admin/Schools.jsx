@@ -325,8 +325,33 @@ export default function Schools() {
   };
 
   const handleCopy = (text, id) => {
-    navigator.clipboard.writeText(text);
+    if (!text) {
+      toast?.error('No password available to copy');
+      return;
+    }
+    if (navigator?.clipboard?.writeText) {
+      navigator.clipboard.writeText(text).catch(() => {
+        try {
+          const textArea = document.createElement('textarea');
+          textArea.value = text;
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+        } catch (_) {}
+      });
+    } else {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+      } catch (_) {}
+    }
     setCopiedId(id);
+    toast?.success('Password copied to clipboard');
     setTimeout(() => setCopiedId(null), 2000);
   };
 
@@ -705,8 +730,8 @@ export default function Schools() {
                     {/* Password */}
                     <td className="py-4 px-4 min-w-[140px] whitespace-nowrap">
                       <div className="flex items-center gap-2">
-                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800">
-                          {showPasswords[school.id] ? school.password : '••••••••'}
+                        <span className="font-mono text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-900 px-2 py-1 rounded border border-slate-200 dark:border-slate-800 select-all">
+                          {showPasswords[school.id] ? (school.password || '••••••••') : '••••••••'}
                         </span>
                         <button
                           type="button"
