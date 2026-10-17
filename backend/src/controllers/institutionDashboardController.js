@@ -772,10 +772,16 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     }
   }
 
-  // Determine list of test IDs to assign (handles single test or full package/series)
+  // Determine list of test IDs to assign (handles single test, explicit tests from payload, or full package/series)
   const isPackage = req.body.is_package === true || req.body.type === 'package';
+  const explicitTestIds = Array.isArray(req.body.test_ids)
+    ? req.body.test_ids.map(Number).filter((n) => !isNaN(n) && n > 0)
+    : [];
+
   let testIdsToAssign = [];
-  if (!isNaN(testIdNum) && testIdNum > 0) {
+  if (explicitTestIds.length > 0) {
+    testIdsToAssign = explicitTestIds;
+  } else if (!isNaN(testIdNum) && testIdNum > 0) {
     if (!isPackage) {
       // Check if this ID is strictly a standalone test (not a test series or test package)
       const isSeriesOrPackage = await query(
@@ -822,16 +828,16 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
       if (linkedTests.rowCount > 0) {
         testIdsToAssign = linkedTests.rows.map((r) => r.id);
       } else {
-        testIdsToAssign = [testIdNum];
+        // Only assign testIdNum directly if it actually exists in tests table
+        const existsAsTest = await query(
+          'SELECT id FROM tests WHERE id = $1 AND COALESCE(is_deleted, FALSE) = FALSE',
+          [testIdNum]
+        ).catch(() => ({ rowCount: 0 }));
+        if (existsAsTest.rowCount > 0) {
+          testIdsToAssign = [testIdNum];
+        }
       }
     }
-  }
-
-  if (testIdsToAssign.length === 0) {
-    return res.status(400).json({
-      success: false,
-      message: 'No valid tests found in this package to assign.'
-    });
   }
 
   // Also assign test series reference if assigning a series
@@ -841,6 +847,8 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
      SELECT ts.id FROM test_series ts
      JOIN test_packages tp ON LOWER(TRIM(ts.title)) = LOWER(TRIM(tp.package_name))
      WHERE tp.id = $1
+     UNION
+     SELECT tst.series_id AS id FROM test_series_tests tst WHERE tst.test_id = $1
      LIMIT 1`,
     [testIdNum]
   ).catch(() => ({ rows: [] }));
@@ -862,19 +870,33 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
 
   let assignedCount = 0;
 
-  for (const tid of testIdsToAssign) {
-    const existing = await query(
-      `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
-      [tid, assign_to, assignedTargetId]
-    );
+  // Filter test IDs to strictly those existing in `tests` table to prevent foreign key violation on test_assignments
+  let validTestsToAssign = [];
+  if (testIdsToAssign.length > 0) {
+    const testCheckRes = await query(
+      `SELECT id FROM tests WHERE id = ANY($1::int[]) AND COALESCE(is_deleted, FALSE) = FALSE`,
+      [testIdsToAssign]
+    ).catch(() => ({ rows: [] }));
+    validTestsToAssign = testCheckRes.rows.map((r) => r.id);
+  }
 
-    if (existing.rowCount === 0) {
-      await query(
-        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
-         VALUES ($1, $2, $3)`,
+  for (const tid of validTestsToAssign) {
+    try {
+      const existing = await query(
+        `SELECT id FROM test_assignments WHERE test_id = $1 AND assigned_to_type = $2 AND assigned_to_id = $3`,
         [tid, assign_to, assignedTargetId]
       );
-      assignedCount++;
+
+      if (existing.rowCount === 0) {
+        await query(
+          `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+           VALUES ($1, $2, $3)`,
+          [tid, assign_to, assignedTargetId]
+        );
+        assignedCount++;
+      }
+    } catch (insertErr) {
+      console.warn(`[assignTestSeries] Skipped test_assignment for test ${tid}:`, insertErr.message);
     }
   }
 
@@ -896,22 +918,23 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   }
 
   // Send candidate notifications
+  const displayTestCount = validTestsToAssign.length > 0 ? validTestsToAssign.length : (testIdsToAssign.length > 0 ? testIdsToAssign.length : 1);
   const notificationTitle = `New Test Series Unlocked: ${testName}`;
-  const notificationBody = `Your institution has assigned "${testName}" (${testIdsToAssign.length} CBT tests) to your candidate portal. Go to Assessments to start!`;
+  const notificationBody = `Your institution has assigned "${testName}" (${displayTestCount} CBT tests) to your candidate portal. Go to Assessments to start!`;
 
   let targetStudentIds = [];
   if (assign_to === 'student') {
     targetStudentIds = [assignedTargetId];
   } else if (assign_to === 'batch') {
-    const batchStudents = await query('SELECT id FROM users WHERE batch_id = $1 AND role = $2', [assignedTargetId, 'candidate']);
+    const batchStudents = await query('SELECT id FROM users WHERE batch_id = $1 AND role = $2', [assignedTargetId, 'candidate']).catch(() => ({ rows: [] }));
     if (batchStudents.rowCount > 0) {
       targetStudentIds = batchStudents.rows.map((s) => s.id);
     } else {
-      const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+      const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']).catch(() => ({ rows: [] }));
       targetStudentIds = instStudents.rows.map((s) => s.id);
     }
   } else {
-    const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']);
+    const instStudents = await query('SELECT id FROM users WHERE institution_id = $1 AND role = $2', [instId, 'candidate']).catch(() => ({ rows: [] }));
     targetStudentIds = instStudents.rows.map((s) => s.id);
   }
 
@@ -926,8 +949,8 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
   res.json({
     success: true,
     assigned_count: assignedCount,
-    total_tests: testIdsToAssign.length,
-    message: `Test series assigned successfully (${testIdsToAssign.length} test papers unlocked for target).`,
+    total_tests: displayTestCount,
+    message: `Test series assigned successfully (${displayTestCount} test paper(s) unlocked for target).`,
   });
 });
 

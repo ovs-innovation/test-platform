@@ -185,12 +185,18 @@ export default function TestSeriesTab({
     setAssigning(true);
     try {
       if (onAssignTest) {
+        const testIds = Array.isArray(assignModalItem.tests)
+          ? assignModalItem.tests.map((t) => Number(t.id)).filter((id) => !isNaN(id) && id > 0)
+          : [];
+
         await onAssignTest(assignModalItem.id, {
           assign_to: targetType,
           target_id: targetType === 'institution' ? null : Number(targetId || (batches[0]?.id || 1)),
           is_package: true,
           type: 'package',
           package_id: assignModalItem.raw?.package_id || assignModalItem.raw?.id || assignModalItem.id,
+          series_id: assignModalItem.raw?.series_id || assignModalItem.id,
+          test_ids: testIds,
         });
       }
       const targetLabel =
