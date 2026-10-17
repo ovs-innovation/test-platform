@@ -369,14 +369,16 @@ Choose the correct answer from the options given below:`;
       expect(sortedUnique[0]).toBe(1);
       expect(sortedUnique[179]).toBe(180);
 
-      // Verify subject distributions
-      const bioQs = data.filter((q) => (q.questionNumber || q.position) <= 90);
-      const phyQs = data.filter((q) => (q.questionNumber || q.position) >= 91 && (q.questionNumber || q.position) <= 135);
-      const chemQs = data.filter((q) => (q.questionNumber || q.position) >= 136 && (q.questionNumber || q.position) <= 180);
+      // Verify subject distributions (Standard NEET CBT: Physics 1-45, Chemistry 46-90, Botany 91-135, Zoology 136-180)
+      const phyQs = data.filter((q) => (q.questionNumber || q.position) <= 45);
+      const chemQs = data.filter((q) => (q.questionNumber || q.position) >= 46 && (q.questionNumber || q.position) <= 90);
+      const botQs = data.filter((q) => (q.questionNumber || q.position) >= 91 && (q.questionNumber || q.position) <= 135);
+      const zooQs = data.filter((q) => (q.questionNumber || q.position) >= 136 && (q.questionNumber || q.position) <= 180);
 
-      expect(bioQs.length).toBe(90);
       expect(phyQs.length).toBe(45);
       expect(chemQs.length).toBe(45);
+      expect(botQs.length).toBe(45);
+      expect(zooQs.length).toBe(45);
 
       // Verify questions with diagrams
       const withImages = data.filter((q) => q.image_url || (Array.isArray(q.media) && q.media.length > 0));
