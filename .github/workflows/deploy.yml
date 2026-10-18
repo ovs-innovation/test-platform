@@ -287,9 +287,25 @@ jobs:
             done
 
             if [ "$RESTORED_PREV_ENV" = "false" ]; then
-              log "Cleaning local development Neon overrides from VPS environment..."
-              sed -i '/ep-weathered-heart/d' ".env" 2>/dev/null || true
-              sed -i '/ep-weathered-heart/d' "backend/.env" 2>/dev/null || true
+              log "No external production database backup found. Configuring internal VPS Postgres database..."
+              for ENV_FILE in ".env" "backend/.env"; do
+                if [ -f "$ENV_FILE" ]; then
+                  sed -i '/ep-weathered-heart/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
+                  echo "DATABASE_URL=postgres://postgres:postgres@postgres:5432/interview_platform" >> "$ENV_FILE"
+                  echo "PGHOST=postgres" >> "$ENV_FILE"
+                  echo "PGPORT=5432" >> "$ENV_FILE"
+                  echo "PGUSER=postgres" >> "$ENV_FILE"
+                  echo "PGPASSWORD=postgres" >> "$ENV_FILE"
+                  echo "PGDATABASE=interview_platform" >> "$ENV_FILE"
+                  log "Configured $ENV_FILE for internal VPS Postgres."
+                fi
+              done
             fi
 
             # Ensure MSG91 credentials exist in backend/.env on VPS
@@ -422,7 +438,8 @@ jobs:
                 INTERNAL_READY_OK=true
                 break
               else
-                log "Attempt ${i}/${MAX_RETRIES}: Internal database readiness check failed. Retrying in ${RETRY_INTERVAL}s..."
+                READY_DIAG=$(docker compose exec -T backend node -e "const http = require('http'); const req = http.get('http://127.0.0.1:5000/api/health/ready', (r) => { let d = ''; r.on('data', c => d += c); r.on('end', () => console.log(r.statusCode, d.slice(0, 120))); }); req.on('error', e => console.log(e.message));" 2>&1 || echo "unreachable")
+                log "Attempt ${i}/${MAX_RETRIES}: Readiness: ${READY_DIAG}. Retrying in ${RETRY_INTERVAL}s..."
                 sleep "$RETRY_INTERVAL"
               fi
             done
