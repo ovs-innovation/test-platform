@@ -1,7 +1,7 @@
 import './polyfills.js';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { fileURLToPath, pathToFileURL } from 'url';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import sharp from 'sharp';
@@ -176,11 +176,26 @@ export async function renderPdfToImages(pdfBuffer) {
     };
   }
 
+  let wasmUrl;
+  try {
+    const candidateWasmDirs = [
+      path.resolve(__dirname, '../../node_modules/pdfjs-dist/wasm/'),
+      path.resolve(process.cwd(), 'node_modules/pdfjs-dist/wasm/'),
+    ];
+    for (const dir of candidateWasmDirs) {
+      if (fs.existsSync(dir)) {
+        wasmUrl = pathToFileURL(dir).href + '/';
+        break;
+      }
+    }
+  } catch (_) {}
+
   const loadingTask = getDocument({
     data: new Uint8Array(pdfBuffer),
     canvasFactory: new NodeCanvasFactory(),
     disableFontFace: true,
     verbosity: 0,
+    ...(wasmUrl ? { wasmUrl } : {}),
   });
 
   const pdfDocument = await loadingTask.promise;
