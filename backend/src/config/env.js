@@ -117,7 +117,7 @@ export const env = {
   },
   firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
   geminiApiKey: process.env.GEMINI_API_KEY || '',
-  geminiModel: process.env.GEMINI_MODEL || 'gemini-3.6-flash',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-3.8-flash',
   msg91: {
     authKey: process.env.MSG91_AUTH_KEY || '569777AM5exLLhEf6acc7d6eP1',
     templateId: process.env.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17',

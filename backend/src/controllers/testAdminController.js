@@ -1116,7 +1116,9 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
        VALUES ($1, $2, $2, 'mock', CURRENT_DATE, '00:00:00', '23:59:59', COALESCE($3, 180), COALESCE($4, 720))
        ON CONFLICT (id) DO UPDATE SET updated_at = NOW()`,
       [id, a.title, a.duration_minutes, a.passing_marks]
-    ).catch(() => { });
+    ).catch((err) => {
+      console.warn(`[uploadTestFile] Failed to sync tests table for assessment ${id}:`, err.message);
+    });
   }
 
   const relativeUrl = await saveUploadedFile(file_base64, file_name || 'document.pdf', file_type);
@@ -1452,10 +1454,19 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       }
     } catch (err) {
       console.error('PDF Question Extraction Error:', err.message, err.stack);
-      // Return a descriptive 400 error to the client instead of an opaque 500
+      let clientMsg = err.message || 'PDF question extraction failed. Please check the file format.';
+      try {
+        const jsonMatch = clientMsg.match(/\{[\s\S]*"error"[\s\S]*\}/);
+        if (jsonMatch) {
+          const parsedErr = JSON.parse(jsonMatch[0]);
+          if (parsedErr?.error?.message) {
+            clientMsg = `Gemini AI Error (${parsedErr.error.code || 400}): ${parsedErr.error.message}`;
+          }
+        }
+      } catch (_) {}
       return res.status(400).json({
         error: true,
-        message: err.message || 'PDF question extraction failed. Please check the file format.',
+        message: clientMsg,
       });
     }
   }

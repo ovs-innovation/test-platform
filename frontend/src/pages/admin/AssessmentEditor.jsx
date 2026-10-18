@@ -629,7 +629,8 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         setKeyFile(null);
         onReload();
       } catch (err) {
-        toast.error(err.message || 'Answer key upload failed');
+        const serverMsg = err?.response?.data?.message || err?.response?.data?.error;
+        toast.error(serverMsg || err.message || 'Answer key upload failed');
       } finally {
         setKeyUploading(false);
       }
@@ -670,7 +671,18 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         }
         await onReload();
       } catch (err) {
-        const serverMsg = err?.response?.data?.message || err?.response?.data?.error;
+        let serverMsg = err?.response?.data?.message || err?.response?.data?.error;
+        if (typeof serverMsg === 'string') {
+          try {
+            const jsonMatch = serverMsg.match(/\{[\s\S]*"error"[\s\S]*\}/);
+            if (jsonMatch) {
+              const parsed = JSON.parse(jsonMatch[0]);
+              if (parsed?.error?.message) {
+                serverMsg = `AI Error (${parsed.error.code || 400}): ${parsed.error.message}`;
+              }
+            }
+          } catch (_) {}
+        }
         toast.error(serverMsg || err.message || 'PDF extraction failed. Please check the file format and try again.');
       } finally {
         setPdfUploading(false);

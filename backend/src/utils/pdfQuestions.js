@@ -515,8 +515,20 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
   }
 
   // Fallback: Existing pdf-parse + Regex parser
-  const text = await extractPdfText(buffer);
-  const parsed = parseQuestionsFromText(text);
+  let text = '';
+  let parsed = { rows: [], errors: [] };
+  try {
+    text = await extractPdfText(buffer);
+    if (text) {
+      parsed = parseQuestionsFromText(text);
+    }
+  } catch (parseErr) {
+    console.warn('[pdfQuestions] Fallback text parsing also failed:', parseErr.message);
+    if (!visionBypassReason) {
+      throw parseErr;
+    }
+    throw new Error(`AI Vision extraction failed (${visionBypassReason}), and plain-text fallback parsing failed: ${parseErr.message}`);
+  }
   const rawRows = parsed.rows || [];
   const errors = parsed.errors || [];
 
