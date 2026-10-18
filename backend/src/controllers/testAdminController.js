@@ -119,7 +119,7 @@ import pdfParse from 'pdf-parse/lib/pdf-parse.js';
 import { parsePdfQuestions, parseAnswerKeyOnly, parseAnswerKeyAndSolutions } from '../utils/pdfQuestionParser.js';
 import { parseQuestionsFromPdf } from '../utils/pdfQuestions.js';
 import { parseNumericAnswers, classifyBiologyQuestionsWithGemini } from '../utils/geminiVisionExtractor.js';
-import { inferSubjectAndTopic } from '../utils/subjectClassifier.js';
+import { inferSubjectAndTopic, inferSubjectFromTopic } from '../utils/subjectClassifier.js';
 import { stripHeadersAndFooters, formatQuestionStructure } from '../utils/questionFormatter.js';
 
 export async function syncFreeTestSeries(test) {
@@ -702,43 +702,149 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
                     String(testSyllabus).toUpperCase().includes('JEE') ||
                     (!isNeet && (sortedParsedQs.length <= 80 || sortedParsedQs.length === 75 || sortedParsedQs.length === 90));
 
-  // 1. Pre-pass: Resolve subject assignments for NEET / JEE questions
-  const resolvedSubjects = [];
+  // 1. Pre-pass: Resolve subject assignments dynamically based on question topic, content & test booklet layout
+  const questionCandidates = [];
   for (let i = 0; i < sortedParsedQs.length; i++) {
     const q = sortedParsedQs[i];
     const qNum = Number(q.questionNumber || i + 1);
+    const qText = q.question_text || q.questionText || q.question?.text || '';
+
     const classification = inferSubjectAndTopic({
       testName: testTitle,
       syllabus: testSyllabus,
-      questionText: q.question_text || q.questionText,
+      questionText: qText,
     });
-    const geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject : null;
 
-    let detectedSectionSubject = null;
-    if (isNeet) {
-      // Standard NEET has exactly 180 questions:
-      // Section-A Physics (1-45), Section-B Chemistry (46-90), Section-C Botany (91-135), Section-D Zoology (136-180)
-      if (qNum >= 1 && qNum <= 45) detectedSectionSubject = 'Physics';
-      else if (qNum >= 46 && qNum <= 90) detectedSectionSubject = 'Chemistry';
-      else if (qNum >= 91 && qNum <= 135) detectedSectionSubject = 'Botany';
-      else if (qNum >= 136 && qNum <= 180) detectedSectionSubject = 'Zoology';
-    } else if (sortedParsedQs.length <= 80 && (sortedParsedQs.length >= 70 || qNum <= 75 || isJeeTest)) {
-      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
-      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
-      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
-    } else if (sortedParsedQs.length > 80 && sortedParsedQs.length <= 95) {
-      if (qNum >= 1 && qNum <= 30) detectedSectionSubject = 'Physics';
-      else if (qNum >= 31 && qNum <= 60) detectedSectionSubject = 'Chemistry';
-      else if (qNum >= 61 && qNum <= 90) detectedSectionSubject = 'Mathematics';
-    } else if (isJeeTest && qNum <= 75) {
-      if (qNum >= 1 && qNum <= 25) detectedSectionSubject = 'Physics';
-      else if (qNum >= 26 && qNum <= 50) detectedSectionSubject = 'Chemistry';
-      else if (qNum >= 51 && qNum <= 75) detectedSectionSubject = 'Mathematics';
+    const topicSubject = inferSubjectFromTopic(q.topic) || inferSubjectFromTopic(q.chapter);
+    let geminiSubject = (q.subject && q.subject !== 'General' && q.subject.trim() !== '') ? q.subject.trim() : null;
+    if (geminiSubject) {
+      const s = geminiSubject.toLowerCase();
+      if (s.includes('physic')) geminiSubject = 'Physics';
+      else if (s.includes('chem')) geminiSubject = 'Chemistry';
+      else if (s.includes('botan')) geminiSubject = 'Botany';
+      else if (s.includes('zool')) geminiSubject = 'Zoology';
+      else if (s.includes('math')) geminiSubject = 'Mathematics';
     }
 
-    const explicitSub = geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : null);
-    const chosenSub = detectedSectionSubject || explicitSub || classification.subject || 'General';
-    resolvedSubjects.push({ qNum, subject: chosenSub, classification });
+    const explicitCandidate = topicSubject || geminiSubject || (q.bank_category && q.bank_category !== 'General' ? q.bank_category : null) || (classification.subject !== 'General' ? classification.subject : null);
+
+    questionCandidates.push({
+      index: i,
+      qNum,
+      candidateSub: explicitCandidate,
+      topicSubject,
+      geminiSubject,
+      classification,
+      qText,
+      q,
+    });
+  }
+
+  // Detect section blocks dynamically (e.g. NEET 180 Qs -> 4 blocks of 45; JEE 75 Qs -> 3 blocks of 25)
+  let blockDefinitions = [];
+  const totalQs = sortedParsedQs.length;
+
+  if (isNeet && totalQs >= 160 && totalQs <= 195) {
+    blockDefinitions = [
+      { start: 1, end: 45, defaultLetter: 'A' },
+      { start: 46, end: 90, defaultLetter: 'B' },
+      { start: 91, end: 135, defaultLetter: 'C' },
+      { start: 136, end: 180, defaultLetter: 'D' },
+    ];
+  } else if (isNeet && totalQs > 195) {
+    blockDefinitions = [
+      { start: 1, end: 50, defaultLetter: 'A' },
+      { start: 51, end: 100, defaultLetter: 'B' },
+      { start: 101, end: 150, defaultLetter: 'C' },
+      { start: 151, end: 200, defaultLetter: 'D' },
+    ];
+  } else if (isJeeTest && totalQs >= 70 && totalQs <= 80) {
+    blockDefinitions = [
+      { start: 1, end: 25, defaultLetter: 'A' },
+      { start: 26, end: 50, defaultLetter: 'B' },
+      { start: 51, end: 75, defaultLetter: 'C' },
+    ];
+  } else if (isJeeTest && totalQs > 80 && totalQs <= 100) {
+    blockDefinitions = [
+      { start: 1, end: 30, defaultLetter: 'A' },
+      { start: 31, end: 60, defaultLetter: 'B' },
+      { start: 61, end: 90, defaultLetter: 'C' },
+    ];
+  }
+
+  // Tally candidate subjects within each block to identify each block's true subject
+  const blockSubjectMap = new Map();
+  for (const block of blockDefinitions) {
+    const tally = { Physics: 0, Chemistry: 0, Botany: 0, Zoology: 0, Biology: 0, Mathematics: 0 };
+    for (const item of questionCandidates) {
+      if (item.qNum >= block.start && item.qNum <= block.end) {
+        if (item.candidateSub && tally[item.candidateSub] !== undefined) {
+          tally[item.candidateSub]++;
+        }
+      }
+    }
+
+    const bioTotal = tally.Botany + tally.Zoology + tally.Biology;
+    let bestSub = 'General';
+    let maxVotes = 0;
+
+    for (const [sub, count] of Object.entries(tally)) {
+      if (count > maxVotes) {
+        maxVotes = count;
+        bestSub = sub;
+      }
+    }
+
+    if (bioTotal > tally.Physics && bioTotal > tally.Chemistry && bioTotal > tally.Mathematics) {
+      bestSub = tally.Zoology > tally.Botany ? 'Zoology' : 'Botany';
+    }
+
+    blockSubjectMap.set(block, bestSub);
+    console.log(`[PDF Import] Detected Block ${block.defaultLetter} (Q${block.start}-Q${block.end}): Subject = "${bestSub}" (tally: ${JSON.stringify(tally)})`);
+  }
+
+  const resolvedSubjects = [];
+  for (let i = 0; i < sortedParsedQs.length; i++) {
+    const cand = questionCandidates[i];
+    const qNum = cand.qNum;
+
+    let blockSub = null;
+    let blockInfo = null;
+    for (const block of blockDefinitions) {
+      if (qNum >= block.start && qNum <= block.end) {
+        blockSub = blockSubjectMap.get(block);
+        blockInfo = block;
+        break;
+      }
+    }
+
+    let finalSub = cand.candidateSub;
+    if (blockSub && blockSub !== 'General') {
+      if (blockSub === 'Physics') {
+        finalSub = 'Physics';
+      } else if (blockSub === 'Chemistry') {
+        finalSub = 'Chemistry';
+      } else if (blockSub === 'Mathematics') {
+        finalSub = 'Mathematics';
+      } else if (blockSub === 'Botany' || blockSub === 'Zoology') {
+        if (cand.candidateSub === 'Botany' || cand.candidateSub === 'Zoology') {
+          finalSub = cand.candidateSub;
+        } else {
+          finalSub = blockSub;
+        }
+      }
+    }
+
+    if (!finalSub || finalSub === 'General') {
+      finalSub = blockSub || cand.candidateSub || cand.classification.subject || 'General';
+    }
+
+    resolvedSubjects.push({
+      qNum,
+      subject: finalSub,
+      classification: cand.classification,
+      blockInfo,
+    });
   }
 
   // 2. In NEET tests, ensure any questions remaining as "Biology" are divided into Botany and Zoology using Gemini AI
@@ -747,7 +853,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     const bioIndices = [];
     resolvedSubjects.forEach((item, idx) => {
       const lower = String(item.subject || '').toLowerCase();
-      if (lower.includes('bio') && !lower.includes('botan') && !lower.includes('zool')) {
+      if (lower === 'biology' || (lower.includes('bio') && !lower.includes('botan') && !lower.includes('zool'))) {
         bioIndices.push(idx);
         bioItems.push(sortedParsedQs[idx]);
       }
@@ -778,16 +884,37 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     }
   }
 
-  // 3. Create or sync assessment_sections in assessment_sections table
+  // 3. Create or sync assessment_sections in assessment_sections table dynamically
   const sectionMapByName = {};
-  if (isNeet) {
+  if (blockDefinitions.length > 0) {
+    await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
+    for (let bIdx = 0; bIdx < blockDefinitions.length; bIdx++) {
+      const block = blockDefinitions[bIdx];
+      const blockSub = blockSubjectMap.get(block) || 'General';
+      const secLetter = block.defaultLetter || String.fromCharCode(65 + bIdx);
+      const secName = `Section-${secLetter}: ${blockSub}`;
+      const pos = bIdx + 1;
+
+      const secRes = await query(
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position)
+         VALUES ($1, $2, 'technical_mcq', $3)
+         RETURNING id, name, position`,
+        [id, secName, pos]
+      ).catch(() => ({ rows: [] }));
+
+      if (secRes.rows[0]) {
+        sectionMapByName[blockSub] = secRes.rows[0].id;
+        block.sectionId = secRes.rows[0].id;
+      }
+    }
+  } else if (isNeet) {
     await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
     const secRes = await query(
       `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES
-       ($1, 'Section-A: Physics', 'technical_mcq', 1),
-       ($1, 'Section-B: Chemistry', 'technical_mcq', 2),
-       ($1, 'Section-C: Botany', 'technical_mcq', 3),
-       ($1, 'Section-D: Zoology', 'technical_mcq', 4)
+       ($1, 'Section-A: Botany', 'technical_mcq', 1),
+       ($1, 'Section-B: Zoology', 'technical_mcq', 2),
+       ($1, 'Section-C: Physics', 'technical_mcq', 3),
+       ($1, 'Section-D: Chemistry', 'technical_mcq', 4)
        RETURNING id, name, position`,
       [id]
     ).catch(() => ({ rows: [] }));
@@ -974,7 +1101,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     const cleanFinalQText = formatQuestionStructure(stripHeadersAndFooters(rawQText)) || rawQText || `Question ${qNum}`;
 
     const cleanStr = (val) => typeof val === 'string' ? val.replace(/\0/g, '') : val;
-    const qSecId = sectionMapByName[finalSubject] || null;
+    const qSecId = resolvedItem.blockInfo?.sectionId || sectionMapByName[finalSubject] || null;
 
     sortedParsedQs[i]._dbRow = {
       assessment_id: id,
@@ -1058,9 +1185,9 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
   }
 
   const primarySubject = detectedSubjects.size > 0 ? Array.from(detectedSubjects)[0] : null;
-  const subjectsArray = isNeet
-    ? ['Physics', 'Chemistry', 'Botany', 'Zoology']
-    : Array.from(detectedSubjects);
+  const subjectsArray = Array.from(detectedSubjects).length > 0
+    ? Array.from(detectedSubjects)
+    : (isNeet ? ['Botany', 'Zoology', 'Physics', 'Chemistry'] : ['General']);
 
   if (calcTotalMarks > 0 || primarySubject) {
     await query(
@@ -2109,3 +2236,66 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
   });
 });
 
+/**
+ * 18. POST /api/admin/tests/:id/reclassify
+ * Dynamically reclassify all questions in an assessment:
+ * Determines accurate subject and topic per question, infers booklet layout,
+ * recreates/syncs assessment_sections, and updates questions and tests tables.
+ */
+export const reclassifyTestQuestions = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const assessmentId = Number(id);
+  if (!assessmentId) throw ApiError.badRequest('Valid test/assessment ID required');
+
+  const assessRes = await query('SELECT id, title, syllabus_text, subject FROM assessments WHERE id = $1', [assessmentId]);
+  const testRes = await query('SELECT id, test_name, syllabus, subject FROM tests WHERE id = $1', [assessmentId]);
+
+  if (assessRes.rowCount === 0 && testRes.rowCount === 0) {
+    throw ApiError.notFound('Assessment or test not found');
+  }
+
+  const qRes = await query(
+    `SELECT id, assessment_id, section_id, question_text, question_type, options,
+            correct_index, marks, position, bank_category, solution, subject, topic, chapter,
+            image_url, solution_image_url, media, tables, extraction_meta, numeric_answer
+     FROM questions
+     WHERE assessment_id = $1
+     ORDER BY position, id`,
+    [assessmentId]
+  );
+
+  const existingQs = qRes.rows;
+  if (!existingQs.length) {
+    throw ApiError.badRequest('No questions found to reclassify in this assessment.');
+  }
+
+  const parsedQs = existingQs.map((r, idx) => {
+    let opts = [];
+    try { opts = typeof r.options === 'string' ? JSON.parse(r.options) : (r.options || []); } catch (_) {}
+    let extMeta = {};
+    try { extMeta = typeof r.extraction_meta === 'string' ? JSON.parse(r.extraction_meta) : (r.extraction_meta || {}); } catch (_) {}
+
+    return {
+      ...r,
+      questionNumber: r.position || idx + 1,
+      questionText: r.question_text,
+      question_text: r.question_text,
+      options: opts,
+      subject: r.subject,
+      topic: r.topic,
+      chapter: r.chapter,
+      bank_category: r.bank_category,
+      extraction: extMeta,
+    };
+  });
+
+  const result = await persistExtractedQuestionsToAssessment(assessmentId, parsedQs, {
+    extractedBy: 'auto-reclassify',
+  });
+
+  res.json({
+    success: true,
+    message: `Successfully reclassified ${result.savedCount} questions and updated sections.`,
+    savedCount: result.savedCount,
+  });
+});

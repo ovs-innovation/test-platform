@@ -61,6 +61,7 @@ import {
   getTestExtractedQuestions,
   getTestSimulator,
   toggleTestLive,
+  reclassifyTestQuestions,
 } from '../controllers/testAdminController.js';
 import {
   listEbooks,
@@ -134,6 +135,7 @@ router.get('/tests/:id/assignments', listAssignments);
 router.post('/tests/:id/assignments', assignTest);
 router.delete('/tests/:id/assignments/:assignmentId', removeAssignment);
 router.post('/tests/:id/upload', uploadTestFile);
+router.post('/tests/:id/reclassify', reclassifyTestQuestions);
 router.post('/tests/:id/replay', replayExtractedQuestions);
 router.get('/tests/:id/extracted-questions', getTestExtractedQuestions);
 router.post('/tests/:id/generate-results', generateResults);

@@ -14,7 +14,7 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye, Sparkles } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl, getQuestionDiagrams, hasQuestionDiagram } from '../../lib/media.js';
 
@@ -450,6 +450,7 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
   const [bulkUpdating, setBulkUpdating] = useState(false);
   const [inlineMarkInput, setInlineMarkInput] = useState(4);
   const [inlineUpdating, setInlineUpdating] = useState(false);
+  const [reclassifying, setReclassifying] = useState(false);
 
   const isLocked = Boolean(assessment?.attempt_count > 0 || assessment?.is_locked);
   const attemptCount = Number(assessment?.attempt_count || 0);
@@ -732,6 +733,22 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
     a.click();
     URL.revokeObjectURL(url);
     toast.success('Downloaded questions JSON file');
+  };
+
+  const handleAutoFixSubjectsAndTopics = async () => {
+    if (!window.confirm('Do you want to automatically detect and align subjects, topics, and sections for all questions in this test?')) {
+      return;
+    }
+    setReclassifying(true);
+    try {
+      const res = await adminService.reclassifyTestQuestions(assessmentId);
+      toast.success(res.message || 'Subjects, topics, and sections updated successfully!');
+      await onReload();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err.message || 'Failed to reclassify questions');
+    } finally {
+      setReclassifying(false);
+    }
   };
 
   useEffect(() => {
@@ -1103,6 +1120,16 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
             >
               {jsonLoading ? <Spinner className="h-3 w-3" /> : <Code className="h-3.5 w-3.5" />}
               View Extracted JSON
+            </button>
+            <button
+              type="button"
+              className="btn-secondary text-xs font-semibold text-purple-600 dark:text-purple-400 flex items-center gap-1.5 cursor-pointer"
+              onClick={handleAutoFixSubjectsAndTopics}
+              disabled={reclassifying || isLocked || !questions.length}
+              title="Automatically detect booklet subject order, correct Physics/Chemistry/Botany/Zoology subjects, and align sections"
+            >
+              {reclassifying ? <Spinner className="h-3 w-3" /> : <Sparkles className="h-3.5 w-3.5 text-purple-500" />}
+              Auto-Fix Subjects & Sections
             </button>
             <button type="button" className="btn-secondary text-xs" onClick={() => setCsvOpen(true)}>CSV Import</button>
             <button type="button" className="btn-secondary text-xs" onClick={exportCsv} disabled={exporting || !questions.length}>

@@ -583,6 +583,7 @@ export const adminService = {
   togglePublishTest: (id, is_published) => api.patch(`/admin/tests/${id}/publish`, { is_published }).then((r) => r.data),
   assignTest: (id, data) => api.post(`/admin/tests/${id}/assignments`, data).then((r) => r.data.assignment),
   uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data).then((r) => r.data),
+  reclassifyTestQuestions: (id) => api.post(`/admin/tests/${id}/reclassify`).then((r) => r.data),
   getTestExtractedQuestions: (id) => api.get(`/admin/tests/${id}/extracted-questions`).then((r) => r.data),
   generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
   getTestParticipation: (id) => api.get(`/admin/tests/${id}/participation`).then((r) => r.data),

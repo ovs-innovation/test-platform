@@ -8,6 +8,7 @@ import sharp from 'sharp';
 import { GoogleGenAI, Type } from '@google/genai';
 import { env } from '../config/env.js';
 import { formatQuestionStructure, stripHeadersAndFooters } from './questionFormatter.js';
+import { inferSubjectFromTopic, inferSubjectAndTopic } from './subjectClassifier.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1004,18 +1005,13 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - Transcribe ALL questions visible on this page. Never skip, abbreviate, or truncate questions!
 
 2. SUBJECT & TOPIC IDENTIFICATION:
-- Assign the accurate subject based primarily on printed section headers (e.g. "PHYSICS", "CHEMISTRY", "BOTANY", "ZOOLOGY", "MATHEMATICS").
-- For NEET examinations, the biology section MUST be divided into two distinct subjects: BOTANY and ZOOLOGY.
-  * Botany: Plant Kingdom, Morphology/Anatomy of Flowering Plants, Cell: The Unit of Life, Cell Division, Photosynthesis, Respiration in Plants, Plant Growth & Regulators, Genetics & Molecular Inheritance, Ecology & Environment.
-  * Zoology: Animal Kingdom, Structural Organisation in Animals, Biomolecules, Human Physiology (Digestion, Respiration, Circulation, Excretion, Locomotion, Nervous & Endocrine Systems), Human Reproduction, Reproductive Health, Evolution, Human Health & Disease, Biotechnology.
-- Standard NEET 180 Exam Layout:
-  * Section-A: Physics (Q1 to Q45)
-  * Section-B: Chemistry (Q46 to Q90)
-  * Section-C: Botany (Q91 to Q135)
-  * Section-D: Zoology (Q136 to Q180)
-- NEVER output generic "Biology" for NEET questions! Always classify them specifically as either "Botany" or "Zoology"!
-- Standard JEE Main layout: Typically Section I is Physics (Q1 to Q25), Section II is Chemistry (Q26 to Q50), Section III is Mathematics (Q51 to Q75). ALWAYS prioritize printed headers and actual question content over question numbers!
-- Assign specific, descriptive "chapter" and "topic" names for every question (e.g., "Laws of Motion", "Chemical Thermodynamics", "Cell Division", "Human Physiology"). Never leave subject, chapter, or topic blank or "General".
+- Assign the accurate subject based primarily on printed section headers visible on this page (e.g. "PHYSICS", "CHEMISTRY", "BIOLOGY", "BOTANY", "ZOOLOGY", "MATHEMATICS").
+- CRITICAL: Exam papers may arrange subjects in ANY order! (For example, Biology first Q1-90, Physics Q91-135, Chemistry Q136-180; or Physics Q1-45, Chemistry Q46-90, Botany Q91-135, Zoology Q136-180; or Maths first).
+- ALWAYS determine the subject based on the printed header on the page and the actual scientific content and topic of each question, NEVER by assuming a fixed question number sequence!
+- For NEET examinations, the biology section MUST be divided into two distinct subjects: BOTANY and ZOOLOGY (do NOT output generic "Biology"):
+  * Botany: The Living World, Taxonomic Categories, Biological Classification, Plant Kingdom, Morphology/Anatomy of Flowering Plants, Cell: The Unit of Life, Cell Division, Photosynthesis, Respiration in Plants, Plant Growth & Regulators, Genetics & Molecular Inheritance, Ecology & Environment.
+  * Zoology: Animal Kingdom, Structural Organisation in Animals, Biomolecules, Human Physiology (Digestion, Breathing & Respiration, Circulation, Excretion, Locomotion, Nervous & Endocrine Systems), Human Reproduction, Reproductive Health, Evolution, Human Health & Disease, Biotechnology.
+- Assign specific, descriptive "chapter" and "topic" names for every question (e.g., "Laws of Motion", "Chemical Thermodynamics", "Cell Division", "Taxonomic Categories", "Work, Energy and Power", "Circular Motion"). Never leave subject, chapter, or topic blank or "General".
 
 3. MATCH-THE-COLUMN & LIST TABLES:
 - When a question contains Column-I vs Column-II, List-I vs List-II, or data tables:
@@ -1476,36 +1472,38 @@ CRITICAL INSTRUCTIONS:
   const isJee75 = expectedQuestionCount === 75 || (!hasBiology && ((totalQuestionsDetected >= 70 && totalQuestionsDetected <= 80) || (maxQNum >= 70 && maxQNum <= 75)));
   const isNeet180 = expectedQuestionCount === 180 || hasBiology || (totalQuestionsDetected >= 120 && totalQuestionsDetected <= 185) || (maxQNum >= 120 && maxQNum <= 180);
 
-  let forwardSubject = 'Physics';
   for (const rawQ of rawQuestions) {
     const qNum = Number(rawQ.questionNumber) || 0;
-    if (isJee75) {
-      if (qNum >= 1 && qNum <= 25) rawQ.subject = 'Physics';
-      else if (qNum >= 26 && qNum <= 50) rawQ.subject = 'Chemistry';
-      else if (qNum >= 51 && qNum <= 75) rawQ.subject = 'Mathematics';
+    const qText = rawQ.question_text || rawQ.questionText || rawQ.question?.text || '';
 
+    // Check if topic or chapter directly reveals the exact subject
+    const topicSub = inferSubjectFromTopic(rawQ.topic) || inferSubjectFromTopic(rawQ.chapter);
+
+    if (topicSub) {
+      rawQ.subject = topicSub;
+    } else if (rawQ.subject && rawQ.subject !== 'General' && rawQ.subject.trim() !== '') {
+      const s = rawQ.subject.trim().toLowerCase();
+      if (s.includes('physic')) rawQ.subject = 'Physics';
+      else if (s.includes('chem')) rawQ.subject = 'Chemistry';
+      else if (s.includes('botan')) rawQ.subject = 'Botany';
+      else if (s.includes('zool')) rawQ.subject = 'Zoology';
+      else if (s.includes('math')) rawQ.subject = 'Mathematics';
+      else if (s.includes('bio')) {
+        rawQ.subject = fallbackSingleBiologyQuestion(rawQ).subject;
+      }
+    } else {
+      const classified = inferSubjectAndTopic({ questionText: qText });
+      if (classified && classified.subject && classified.subject !== 'General') {
+        rawQ.subject = classified.subject;
+        if (!rawQ.topic || rawQ.topic === 'General') rawQ.topic = classified.topic;
+      }
+    }
+
+    if (isJee75) {
       if ([21, 22, 23, 24, 25, 46, 47, 48, 49, 50, 71, 72, 73, 74, 75].includes(qNum)) {
         if (!rawQ.options || rawQ.options.length === 0) {
           rawQ.questionType = 'integer';
         }
-      }
-    } else if (isNeet180) {
-      // Standard NEET 180 Question Paper Layout:
-      // Section-A: Physics (1-45), Section-B: Chemistry (46-90), Section-C: Botany (91-135), Section-D: Zoology (136-180)
-      if (qNum >= 1 && qNum <= 45) {
-        rawQ.subject = (rawQ.subject && rawQ.subject !== 'General') ? rawQ.subject : 'Physics';
-      } else if (qNum >= 46 && qNum <= 90) {
-        rawQ.subject = (rawQ.subject && rawQ.subject !== 'General') ? rawQ.subject : 'Chemistry';
-      } else if (qNum >= 91 && qNum <= 135) {
-        rawQ.subject = (rawQ.subject && ['Botany', 'Zoology'].includes(rawQ.subject)) ? rawQ.subject : 'Botany';
-      } else if (qNum >= 136 && qNum <= 180) {
-        rawQ.subject = (rawQ.subject && ['Botany', 'Zoology'].includes(rawQ.subject)) ? rawQ.subject : 'Zoology';
-      }
-    } else {
-      if (rawQ.subject && rawQ.subject !== 'General' && rawQ.subject.trim() !== '') {
-        forwardSubject = rawQ.subject;
-      } else {
-        rawQ.subject = forwardSubject;
       }
     }
   }
