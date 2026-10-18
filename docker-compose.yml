@@ -33,8 +33,6 @@ services:
       dockerfile: Dockerfile
     restart: unless-stopped
     env_file:
-      - path: backend/.env
-        required: false
       - path: .env
         required: false
     environment:
@@ -44,7 +42,7 @@ services:
       REDIS_URL: ${REDIS_URL:-redis://redis:6379}
       JWT_SECRET: ${JWT_SECRET:-edvedum_production_secure_fallback_jwt_secret_key_9876543210_v2_key}
       JWT_EXPIRES_IN: ${JWT_EXPIRES_IN:-2h}
-      CLIENT_URL: ${CLIENT_URL:-http://localhost:5173}
+      CLIENT_URL: ${CLIENT_URL:-https://edvedum.com}
       RUN_SEED: ${RUN_SEED:-false}
       SEED_ADMIN_EMAIL: ${SEED_ADMIN_EMAIL:-admin@assess.io}
       SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-Admin@12345}

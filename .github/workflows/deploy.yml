@@ -122,11 +122,7 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/.env" ]; then
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
             fi
-            if [ -f "backend/.env" ]; then
-              if [ ! -f ".env" ] || ! grep -q "DATABASE_URL" ".env"; then
-                cp "backend/.env" ".env" || true
-              fi
-            fi
+            # Do not copy local development backend/.env to production root .env
 
             echo "VPS git reset completed successfully to commit ${{ github.sha }}."
 
@@ -278,40 +274,23 @@ jobs:
               log "Restored backend/.env"
             fi
 
-            # Ensure active Neon database credentials are used on VPS
-            TARGET_NEON_HOST="ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech"
-            TARGET_DATABASE_URL="postgresql://neondb_owner:npg_pnKv5TdUQ7fg@ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require"
-
-            for ENV_FILE in "backend/.env" ".env"; do
-              if [ -f "$ENV_FILE" ]; then
-                CURRENT_HOST=$(grep "^PGHOST=" "$ENV_FILE" | cut -d'=' -f2- | tr -d ' "\r\n' || echo "")
-                log "Checking $ENV_FILE (PGHOST=${CURRENT_HOST:-'none'})..."
-                if [ "$CURRENT_HOST" != "$TARGET_NEON_HOST" ]; then
-                  log "Updating $ENV_FILE to active Neon host $TARGET_NEON_HOST..."
-                  sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
-                  echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
-                  echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
-                  echo "PGPORT=5432" >> "$ENV_FILE"
-                  echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                  echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
-                  echo "PGDATABASE=neondb" >> "$ENV_FILE"
-                  log "Successfully updated $ENV_FILE with active Neon credentials."
-                fi
-              else
-                log "Creating $ENV_FILE with active Neon credentials..."
-                echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
-                echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
-                echo "PGPORT=5432" >> "$ENV_FILE"
-                echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
-                echo "PGDATABASE=neondb" >> "$ENV_FILE"
+            # Restore previous production .env from VPS backup if available, and ensure dev Neon URL is not used
+            log "Checking for pre-incident production environment configuration..."
+            RESTORED_PREV_ENV=false
+            for BDIR in $(ls -td /tmp/edvedum_prod_backup_* 2>/dev/null); do
+              if [ -f "$BDIR/.env" ] && ! grep -q "ep-weathered-heart" "$BDIR/.env"; then
+                log "Restoring verified previous production .env from $BDIR/.env..."
+                cp "$BDIR/.env" ".env"
+                RESTORED_PREV_ENV=true
+                break
               fi
             done
+
+            if [ "$RESTORED_PREV_ENV" = "false" ]; then
+              log "Cleaning local development Neon overrides from VPS environment..."
+              sed -i '/ep-weathered-heart/d' ".env" 2>/dev/null || true
+              sed -i '/ep-weathered-heart/d' "backend/.env" 2>/dev/null || true
+            fi
 
             # Ensure MSG91 credentials exist in backend/.env on VPS
             if [ -f "backend/.env" ]; then
