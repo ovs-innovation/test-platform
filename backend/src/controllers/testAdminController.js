@@ -884,37 +884,45 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
     }
   }
 
+  // If this is a NEET test, re-sequence questions to standard NEET order:
+  // Physics (1-45), Chemistry (46-90), Botany (91-135), Zoology (136-180)
+  if (isNeet && sortedParsedQs.length >= 70) {
+    const subjectOrder = { Physics: 1, Chemistry: 2, Botany: 3, Zoology: 4, Biology: 5, General: 6 };
+    
+    // Combine into paired array for sorting
+    const paired = sortedParsedQs.map((q, idx) => ({
+      q,
+      resolved: resolvedSubjects[idx] || {},
+      origNum: q.questionNumber || idx + 1,
+    }));
+
+    paired.sort((a, b) => {
+      const orderA = subjectOrder[a.resolved.subject] || 99;
+      const orderB = subjectOrder[b.resolved.subject] || 99;
+      if (orderA !== orderB) return orderA - orderB;
+      return (a.origNum || 0) - (b.origNum || 0);
+    });
+
+    for (let k = 0; k < paired.length; k++) {
+      const item = paired[k];
+      const newPos = k + 1;
+      item.q.original_question_number = item.origNum;
+      item.q.questionNumber = newPos;
+      sortedParsedQs[k] = item.q;
+      resolvedSubjects[k] = item.resolved;
+    }
+  }
+
   // 3. Create or sync assessment_sections in assessment_sections table dynamically
   const sectionMapByName = {};
-  if (blockDefinitions.length > 0) {
-    await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
-    for (let bIdx = 0; bIdx < blockDefinitions.length; bIdx++) {
-      const block = blockDefinitions[bIdx];
-      const blockSub = blockSubjectMap.get(block) || 'General';
-      const secLetter = block.defaultLetter || String.fromCharCode(65 + bIdx);
-      const secName = `Section-${secLetter}: ${blockSub}`;
-      const pos = bIdx + 1;
-
-      const secRes = await query(
-        `INSERT INTO assessment_sections (assessment_id, name, section_type, position)
-         VALUES ($1, $2, 'technical_mcq', $3)
-         RETURNING id, name, position`,
-        [id, secName, pos]
-      ).catch(() => ({ rows: [] }));
-
-      if (secRes.rows[0]) {
-        sectionMapByName[blockSub] = secRes.rows[0].id;
-        block.sectionId = secRes.rows[0].id;
-      }
-    }
-  } else if (isNeet) {
+  if (isNeet) {
     await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
     const secRes = await query(
       `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES
-       ($1, 'Section-A: Botany', 'technical_mcq', 1),
-       ($1, 'Section-B: Zoology', 'technical_mcq', 2),
-       ($1, 'Section-C: Physics', 'technical_mcq', 3),
-       ($1, 'Section-D: Chemistry', 'technical_mcq', 4)
+       ($1, 'Section-A: Physics', 'technical_mcq', 1),
+       ($1, 'Section-B: Chemistry', 'technical_mcq', 2),
+       ($1, 'Section-C: Botany', 'technical_mcq', 3),
+       ($1, 'Section-D: Zoology', 'technical_mcq', 4)
        RETURNING id, name, position`,
       [id]
     ).catch(() => ({ rows: [] }));
@@ -938,6 +946,27 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       if (row.name.includes('Physics')) sectionMapByName['Physics'] = row.id;
       if (row.name.includes('Chemistry')) sectionMapByName['Chemistry'] = row.id;
       if (row.name.includes('Math')) sectionMapByName['Mathematics'] = row.id;
+    }
+  } else if (blockDefinitions.length > 0) {
+    await query('DELETE FROM assessment_sections WHERE assessment_id = $1', [id]).catch(() => {});
+    for (let bIdx = 0; bIdx < blockDefinitions.length; bIdx++) {
+      const block = blockDefinitions[bIdx];
+      const blockSub = blockSubjectMap.get(block) || 'General';
+      const secLetter = block.defaultLetter || String.fromCharCode(65 + bIdx);
+      const secName = `Section-${secLetter}: ${blockSub}`;
+      const pos = bIdx + 1;
+
+      const secRes = await query(
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position)
+         VALUES ($1, $2, 'technical_mcq', $3)
+         RETURNING id, name, position`,
+        [id, secName, pos]
+      ).catch(() => ({ rows: [] }));
+
+      if (secRes.rows[0]) {
+        sectionMapByName[blockSub] = secRes.rows[0].id;
+        block.sectionId = secRes.rows[0].id;
+      }
     }
   }
 
