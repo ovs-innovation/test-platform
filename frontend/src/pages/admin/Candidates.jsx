@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { Pencil, ShieldAlert, Trash2, ChevronLeft, ChevronRight, Mail, KeyRound, Copy, Check, UserPlus, User, Phone, Building2, GraduationCap, Lock, X } from 'lucide-react';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, EmptyState, PasswordInput } from '../../components/ui.jsx';
@@ -258,18 +258,16 @@ export default function AdminCandidates() {
   const endIndex = Math.min(startIndex + ITEMS_PER_PAGE, totalItems);
   const paginatedCandidates = filtered.slice(startIndex, endIndex);
 
-  const paginationPages = useMemo(() => {
-    if (totalPages <= 7) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-    if (currentPage <= 3) {
-      return [1, 2, 3, 4, '...', totalPages];
-    }
-    if (currentPage >= totalPages - 2) {
-      return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
-    }
-    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
-  }, [currentPage, totalPages]);
+  let paginationPages = [];
+  if (totalPages <= 7) {
+    paginationPages = Array.from({ length: totalPages }, (_, i) => i + 1);
+  } else if (currentPage <= 3) {
+    paginationPages = [1, 2, 3, 4, '...', totalPages];
+  } else if (currentPage >= totalPages - 2) {
+    paginationPages = [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+  } else {
+    paginationPages = [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+  }
 
   return (
     <div className="w-full max-w-full space-y-6">
