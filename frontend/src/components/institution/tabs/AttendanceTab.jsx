@@ -125,6 +125,20 @@ export default function AttendanceTab({
     return filteredParticipation.slice(startIndex, endIndex);
   }, [filteredParticipation, startIndex, endIndex]);
 
+  // Windowed pagination range to avoid button overflow with large numbers of pages
+  const paginationPages = useMemo(() => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, '...', totalPages];
+    }
+    if (currentPage >= totalPages - 2) {
+      return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+  }, [currentPage, totalPages]);
+
   // Compute live attendance statistics
   const stats = useMemo(() => {
     const total = currentRecords.length;
@@ -462,61 +476,78 @@ export default function AttendanceTab({
 
           {/* PAGINATION CONTROL BAR */}
           {totalItems > 0 && (
-            <div className={`p-4 border-t flex flex-col sm:flex-row items-center justify-between gap-3 text-xs ${
+            <div className={`p-4 border-t flex flex-col sm:flex-row items-center justify-between gap-4 text-xs ${
               isDarkMode ? 'border-slate-800/80 bg-slate-950/40 text-slate-400' : 'border-slate-200 bg-slate-50/60 text-slate-600'
             }`}>
-              <div>
+              <div className="font-medium text-center sm:text-left">
                 Showing <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{totalItems === 0 ? 0 : startIndex + 1}</span> to{' '}
                 <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{endIndex}</span> of{' '}
                 <span className={`font-extrabold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{totalItems}</span> attendance records
               </div>
 
               {totalPages > 1 && (
-                <div className="flex items-center gap-1.5">
+                <div className="flex items-center gap-1.5 flex-wrap justify-center">
                   <button
                     type="button"
                     disabled={currentPage === 1}
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                       isDarkMode
-                        ? 'border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'
-                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                        ? 'border-slate-700/80 bg-slate-800/90 text-slate-200 hover:bg-slate-700'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 shadow-2xs'
                     }`}
+                    title="Previous Page"
                   >
                     <ChevronLeft className="h-4 w-4" />
-                    Previous
+                    <span>Previous</span>
                   </button>
 
                   <div className="flex items-center gap-1 px-1">
-                    {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                      <button
-                        key={page}
-                        type="button"
-                        onClick={() => setCurrentPage(page)}
-                        className={`h-8 min-w-[32px] px-2.5 rounded-lg text-xs font-bold transition cursor-pointer ${
-                          currentPage === page
-                            ? 'bg-blue-600 text-white shadow-xs'
-                            : isDarkMode
-                            ? 'bg-slate-800 text-slate-300 hover:bg-slate-700'
-                            : 'bg-slate-200/70 text-slate-700 hover:bg-slate-300'
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    ))}
+                    {paginationPages.map((page, idx) => {
+                      if (page === '...') {
+                        return (
+                          <span
+                            key={`ellipsis-${idx}`}
+                            className={`h-8 w-8 flex items-center justify-center text-xs font-bold select-none ${
+                              isDarkMode ? 'text-slate-500' : 'text-slate-400'
+                            }`}
+                          >
+                            ...
+                          </span>
+                        );
+                      }
+                      const isCurrent = currentPage === page;
+                      return (
+                        <button
+                          key={page}
+                          type="button"
+                          onClick={() => setCurrentPage(page)}
+                          className={`h-8 min-w-[32px] px-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
+                            isCurrent
+                              ? 'bg-blue-600 text-white shadow-sm font-extrabold ring-2 ring-blue-500/30'
+                              : isDarkMode
+                              ? 'bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white'
+                              : 'bg-slate-200/80 text-slate-700 hover:bg-slate-300'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      );
+                    })}
                   </div>
 
                   <button
                     type="button"
                     disabled={currentPage >= totalPages}
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
-                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed ${
                       isDarkMode
-                        ? 'border-slate-700 bg-slate-800 text-slate-300 hover:bg-slate-700'
-                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100'
+                        ? 'border-slate-700/80 bg-slate-800/90 text-slate-200 hover:bg-slate-700'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-100 shadow-2xs'
                     }`}
+                    title="Next Page"
                   >
-                    Next
+                    <span>Next</span>
                     <ChevronRight className="h-4 w-4" />
                   </button>
                 </div>

@@ -76,3 +76,38 @@ describe('Institution Analytics - Subject Performance formatting', () => {
     expect(formatSubjectBreakdown(undefined)).toEqual([]);
   });
 });
+
+describe('Pagination Windowing logic', () => {
+  const getPaginationPages = (currentPage, totalPages) => {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, '...', totalPages];
+    }
+    if (currentPage >= totalPages - 2) {
+      return [1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages];
+    }
+    return [1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages];
+  };
+
+  it('renders all page numbers when totalPages <= 7', () => {
+    expect(getPaginationPages(1, 5)).toEqual([1, 2, 3, 4, 5]);
+    expect(getPaginationPages(3, 7)).toEqual([1, 2, 3, 4, 5, 6, 7]);
+  });
+
+  it('windows properly when currentPage is near start for 40 total pages', () => {
+    expect(getPaginationPages(1, 40)).toEqual([1, 2, 3, 4, '...', 40]);
+    expect(getPaginationPages(3, 40)).toEqual([1, 2, 3, 4, '...', 40]);
+  });
+
+  it('windows properly when currentPage is in the middle', () => {
+    expect(getPaginationPages(10, 40)).toEqual([1, '...', 9, 10, 11, '...', 40]);
+  });
+
+  it('windows properly when currentPage is near end', () => {
+    expect(getPaginationPages(39, 40)).toEqual([1, '...', 37, 38, 39, 40]);
+    expect(getPaginationPages(40, 40)).toEqual([1, '...', 37, 38, 39, 40]);
+  });
+});
+
