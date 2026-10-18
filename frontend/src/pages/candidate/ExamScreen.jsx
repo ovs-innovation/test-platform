@@ -19,7 +19,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
-import { getMediaUrl } from '../../lib/media.js';
+import { getMediaUrl, getQuestionDiagrams } from '../../lib/media.js';
 import { Languages, Globe, Eye, ArrowLeft, CheckCircle2, ShieldCheck, AlertCircle, Edit, ExternalLink, LifeBuoy } from 'lucide-react';
 import { useScreenRecorder } from '../../hooks/useScreenRecorder.js';
 import ScreenRecordingIndicator from '../../components/candidate/ScreenRecordingIndicator.jsx';
@@ -1366,9 +1366,7 @@ export default function ExamScreen({ isSimulator = false }) {
             </div>
 
             {(() => {
-              const questionMediaList = (Array.isArray(q.media) && q.media.length > 0)
-                ? q.media.filter((m) => m && (m.url || (typeof m === 'string' && m.trim())))
-                : (q.image_url ? [{ url: q.image_url }] : []);
+              const questionMediaList = getQuestionDiagrams(q);
               if (!questionMediaList.length) return null;
               return (
                 <div className="mt-4 flex flex-wrap gap-3">

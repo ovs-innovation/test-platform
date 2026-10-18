@@ -374,16 +374,39 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             ? []
             : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
           const qText = q.question?.text || q.questionText || '';
-          const primaryMediaUrl = q.question?.media && q.question.media.length > 0
-            ? q.question.media[0].url
-            : (q.media && q.media.length > 0 ? q.media[0].url : null);
+          const optMediaUrls = new Set(
+            (q.options || []).flatMap((o) => {
+              if (typeof o !== 'object' || !o) return [];
+              const urls = [];
+              if (o.image_url) urls.push(String(o.image_url).trim());
+              if (Array.isArray(o.media)) {
+                o.media.forEach((m) => {
+                  const u = typeof m === 'string' ? m : m?.url;
+                  if (u) urls.push(String(u).trim());
+                });
+              }
+              return urls;
+            })
+          );
 
-          // Collect all media across question, options, and explanation
-          const allMedia = [
-            ...(q.question?.media || []),
-            ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
-            ...(q.explanation?.media || []),
-          ];
+          // Collect strictly question-level media (excluding option and explanation media)
+          const rawQMedia = Array.isArray(q.question?.media) && q.question.media.length > 0
+            ? q.question.media
+            : (Array.isArray(q.media) ? q.media : []);
+
+          const questionMedia = rawQMedia.filter((m) => {
+            if (!m) return false;
+            const u = (typeof m === 'string' ? m : m?.url || '').trim();
+            if (!u || optMediaUrls.has(u)) return false;
+            if (typeof m === 'object') {
+              if (m.type === 'solution' || m.type === 'explanation') return false;
+              if (m.id && (String(m.id).startsWith('opt-') || String(m.id).includes('-opt-') || String(m.id).startsWith('sol-'))) return false;
+              if (m.description && /diagram for option|option\s+[a-z0-9]\s+diagram/i.test(m.description)) return false;
+            }
+            return true;
+          });
+
+          const primaryMediaUrl = questionMedia.length > 0 ? (questionMedia[0].url || questionMedia[0]) : null;
 
           const hasAnswerKey = Boolean(correctIndex !== null || numericAnswer !== null);
           const finalCorrectAnswer = hasAnswerKey
@@ -417,7 +440,7 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
             correctAnswer: finalCorrectAnswer,
             solution: q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : (q.solution || '')),
             image_url: primaryMediaUrl,
-            media: allMedia,
+            media: questionMedia,
             tables: q.tables || [],
             extraction: {
               ...(q.extraction || {

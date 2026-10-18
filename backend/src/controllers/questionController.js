@@ -165,18 +165,6 @@ export const createQuestion = asyncHandler(async (req, res) => {
 
   const allMedia = [];
   if (image_url) allMedia.push({ type: 'question', url: image_url, id: 'q-diagram' });
-  if (solution_image_url) allMedia.push({ type: 'solution', url: solution_image_url, id: 'sol-diagram' });
-  if (Array.isArray(options)) {
-    options.forEach((opt, idx) => {
-      if (typeof opt === 'object' && opt !== null) {
-        if (Array.isArray(opt.media) && opt.media.length > 0) {
-          allMedia.push(...opt.media);
-        } else if (opt.image_url) {
-          allMedia.push({ type: 'diagram', url: opt.image_url, id: `opt-${idx}-img` });
-        }
-      }
-    });
-  }
   const mediaToStore = JSON.stringify(allMedia);
 
   const inserted = await withTransaction(async (client) => {
@@ -347,25 +335,40 @@ export const updateQuestion = asyncHandler(async (req, res) => {
 
   let media = q.media;
   if (body.options !== undefined || body.image_url !== undefined || body.solution_image_url !== undefined || body.media !== undefined) {
+    const optsToCheck = body.options !== undefined ? body.options : (typeof q.options === 'string' ? JSON.parse(q.options || '[]') : (q.options || []));
+    const optUrls = new Set();
+    if (Array.isArray(optsToCheck)) {
+      optsToCheck.forEach((o) => {
+        if (typeof o === 'object' && o) {
+          if (o.image_url) optUrls.add(String(o.image_url).trim());
+          if (Array.isArray(o.media)) {
+            o.media.forEach((m) => {
+              const u = typeof m === 'string' ? m : m?.url;
+              if (u) optUrls.add(String(u).trim());
+            });
+          }
+        }
+      });
+    }
+
     if (body.media !== undefined) {
-      media = typeof body.media === 'string' ? body.media : JSON.stringify(body.media);
+      const rawList = typeof body.media === 'string' ? JSON.parse(body.media || '[]') : (body.media || []);
+      const filtered = Array.isArray(rawList) ? rawList.filter((m) => {
+        if (!m) return false;
+        const u = (typeof m === 'string' ? m : m.url || '').trim();
+        if (!u || optUrls.has(u)) return false;
+        if (typeof m === 'object') {
+          if (m.type === 'solution' || m.type === 'explanation') return false;
+          if (m.id && (String(m.id).startsWith('opt-') || String(m.id).includes('-opt-') || String(m.id).startsWith('sol-'))) return false;
+        }
+        return true;
+      }) : [];
+      media = JSON.stringify(filtered);
     } else {
       const qImg = body.image_url !== undefined ? body.image_url : q.image_url;
-      const solImg = body.solution_image_url !== undefined ? body.solution_image_url : q.solution_image_url;
       const allMedia = [];
-      if (qImg) allMedia.push({ type: 'question', url: qImg, id: 'q-diagram' });
-      if (solImg) allMedia.push({ type: 'solution', url: solImg, id: 'sol-diagram' });
-      const optsToCheck = body.options !== undefined ? body.options : (typeof q.options === 'string' ? JSON.parse(q.options) : (q.options || []));
-      if (Array.isArray(optsToCheck)) {
-        optsToCheck.forEach((opt, idx) => {
-          if (typeof opt === 'object' && opt !== null) {
-            if (Array.isArray(opt.media) && opt.media.length > 0) {
-              allMedia.push(...opt.media);
-            } else if (opt.image_url) {
-              allMedia.push({ type: 'diagram', url: opt.image_url, id: `opt-${idx}-img` });
-            }
-          }
-        });
+      if (qImg && !optUrls.has(String(qImg).trim())) {
+        allMedia.push({ type: 'question', url: qImg, id: 'q-diagram' });
       }
       media = JSON.stringify(allMedia);
     }

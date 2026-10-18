@@ -16,7 +16,7 @@ import QuestionImageUploader from '../../components/common/QuestionImageUploader
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
 import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
-import { getMediaUrl } from '../../lib/media.js';
+import { getMediaUrl, getQuestionDiagrams, hasQuestionDiagram } from '../../lib/media.js';
 
 const toDatetimeLocal = (isoString) => {
   if (!isoString) return '';
@@ -71,17 +71,18 @@ const normalizeOptions = (rawList, type) => {
     list = type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', ''];
   }
   return list.map((opt, idx) => {
+    const expectedKey = String.fromCharCode(65 + idx);
     if (typeof opt === 'object' && opt !== null) {
       const img = opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '';
       return {
-        key: opt.key || String.fromCharCode(65 + idx),
+        key: expectedKey,
         text: opt.text != null ? String(opt.text) : '',
         image_url: img,
         media: Array.isArray(opt.media) && opt.media.length > 0 ? opt.media : (img ? [{ id: `opt-${idx}-img`, type: 'diagram', url: img }] : []),
       };
     }
     return {
-      key: String.fromCharCode(65 + idx),
+      key: expectedKey,
       text: String(opt ?? ''),
       image_url: '',
       media: [],
@@ -904,7 +905,7 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         ? (form.options || []).map((o, idx) => {
             const text = typeof o === 'object' ? (o.text ?? '') : String(o ?? '');
             const imgUrl = typeof o === 'object' ? (o.image_url || (Array.isArray(o.media) && o.media[0]?.url) || '') : '';
-            const key = (typeof o === 'object' && o.key) ? o.key : String.fromCharCode(65 + idx);
+            const key = String.fromCharCode(65 + idx);
             const media = (typeof o === 'object' && Array.isArray(o.media) && o.media.length > 0)
               ? o.media.map((m) => (typeof m === 'object' ? { ...m, url: imgUrl || m.url } : { type: 'diagram', url: imgUrl }))
               : (imgUrl ? [{ id: `opt-${idx}-img`, type: 'diagram', url: imgUrl }] : []);
@@ -1916,7 +1917,7 @@ function QuestionCard({
                   {q.subject ? `${q.subject} • ` : ''}{q.topic || 'General'}
                 </Badge>
               )}
-              {q.image_url && (
+              {hasQuestionDiagram(q) && (
                 <span className="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-0.5 text-xs font-semibold text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
                   🖼️ Diagram
                 </span>
@@ -1978,15 +1979,7 @@ function QuestionCard({
           </div>
           
           {(() => {
-            let mediaList = [];
-            if (Array.isArray(q.media) && q.media.length > 0) {
-              mediaList = q.media;
-            } else if (typeof q.media === 'string') {
-              try { mediaList = JSON.parse(q.media); } catch (_) { mediaList = []; }
-            }
-            if (!mediaList.length && q.image_url) {
-              mediaList = [{ url: q.image_url }];
-            }
+            const mediaList = getQuestionDiagrams(q);
             if (!mediaList.length) return null;
 
             return (
@@ -2329,11 +2322,102 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
         const optObj = typeof o === 'object' && o !== null ? o : { text: String(o ?? '') };
         return {
           ...optObj,
+          key: String.fromCharCode(65 + j),
           image_url: '',
           media: [],
         };
       }),
     }));
+  };
+
+  const moveOption = (fromIdx, toIdx) => {
+    if (toIdx < 0 || toIdx >= form.options.length) return;
+    setForm((f) => {
+      const list = [...f.options];
+      const [moved] = list.splice(fromIdx, 1);
+      list.splice(toIdx, 0, moved);
+
+      let newCorrect = f.correct_index;
+      if (f.correct_index === fromIdx) {
+        newCorrect = toIdx;
+      } else if (fromIdx < f.correct_index && toIdx >= f.correct_index) {
+        newCorrect = f.correct_index - 1;
+      } else if (fromIdx > f.correct_index && toIdx <= f.correct_index) {
+        newCorrect = f.correct_index + 1;
+      }
+
+      const newIndices = (f.correct_indices || []).map((ci) => {
+        if (ci === fromIdx) return toIdx;
+        if (fromIdx < ci && toIdx >= ci) return ci - 1;
+        if (fromIdx > ci && toIdx <= ci) return ci + 1;
+        return ci;
+      }).sort((a, b) => a - b);
+
+      return {
+        ...f,
+        options: list.map((opt, idx) => ({
+          ...(typeof opt === 'object' ? opt : { text: String(opt ?? '') }),
+          key: String.fromCharCode(65 + idx),
+        })),
+        correct_index: newCorrect,
+        correct_indices: newIndices,
+      };
+    });
+  };
+
+  const insertOptionAt = (idx) => {
+    if (form.options.length >= 6) return;
+    setForm((f) => {
+      const list = [...f.options];
+      list.splice(idx, 0, {
+        key: '',
+        text: '',
+        image_url: '',
+        media: [],
+      });
+
+      let newCorrect = f.correct_index;
+      if (f.correct_index >= idx) {
+        newCorrect = f.correct_index + 1;
+      }
+      const newIndices = (f.correct_indices || []).map((ci) => (ci >= idx ? ci + 1 : ci));
+
+      return {
+        ...f,
+        options: list.map((opt, j) => ({
+          ...(typeof opt === 'object' ? opt : { text: String(opt ?? '') }),
+          key: String.fromCharCode(65 + j),
+        })),
+        correct_index: newCorrect,
+        correct_indices: newIndices,
+      };
+    });
+  };
+
+  const removeOption = (idx) => {
+    if (form.options.length <= 2) return;
+    setForm((f) => {
+      const list = f.options.filter((_, j) => j !== idx);
+      let newCorrect = f.correct_index;
+      if (f.correct_index === idx) {
+        newCorrect = Math.min(idx, list.length - 1);
+      } else if (f.correct_index > idx) {
+        newCorrect = f.correct_index - 1;
+      }
+      const newIndices = (f.correct_indices || [])
+        .filter((ci) => ci !== idx)
+        .map((ci) => (ci > idx ? ci - 1 : ci));
+
+      return {
+        ...f,
+        options: list.map((opt, j) => ({
+          ...(typeof opt === 'object' ? opt : { text: String(opt ?? '') }),
+          key: String.fromCharCode(65 + j),
+        })),
+        correct_index: Math.max(0, newCorrect),
+        correct_indices: newIndices,
+      };
+    });
   };
 
   return (
@@ -2481,7 +2565,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                 const optObj = typeof opt === 'object' && opt !== null ? opt : { key: String.fromCharCode(65 + i), text: String(opt ?? ''), image_url: '', media: [] };
                 const optText = optObj.text ?? '';
                 const optImg = optObj.image_url || (Array.isArray(optObj.media) && optObj.media[0]?.url) || '';
-                const optKey = optObj.key || String.fromCharCode(65 + i);
+                const optKey = String.fromCharCode(65 + i);
 
                 return (
                   <div
@@ -2520,6 +2604,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                               j === i
                                 ? {
                                     ...(typeof o === 'object' ? o : { key: optKey }),
+                                    key: optKey,
                                     text: val,
                                   }
                                 : o
@@ -2527,16 +2612,46 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                           }));
                         }}
                       />
-                      {form.options.length > 2 && (
+                      <div className="flex items-center gap-1 shrink-0">
                         <button
                           type="button"
-                          className="text-slate-400 hover:text-red-500 p-1 text-lg leading-none cursor-pointer"
-                          title="Remove option"
-                          onClick={() => setForm((f) => ({ ...f, options: f.options.filter((_, j) => j !== i) }))}
+                          disabled={i === 0}
+                          className="text-slate-400 hover:text-blue-600 p-1 text-xs cursor-pointer rounded hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Move option up"
+                          onClick={() => moveOption(i, i - 1)}
                         >
-                          ×
+                          <ArrowUp className="h-3.5 w-3.5" />
                         </button>
-                      )}
+                        <button
+                          type="button"
+                          disabled={i === form.options.length - 1}
+                          className="text-slate-400 hover:text-blue-600 p-1 text-xs cursor-pointer rounded hover:bg-slate-200 dark:hover:bg-slate-800 disabled:opacity-30 disabled:cursor-not-allowed"
+                          title="Move option down"
+                          onClick={() => moveOption(i, i + 1)}
+                        >
+                          <ArrowDown className="h-3.5 w-3.5" />
+                        </button>
+                        {form.options.length < 6 && (
+                          <button
+                            type="button"
+                            className="text-xs text-slate-500 hover:text-emerald-600 px-1.5 py-1 cursor-pointer rounded border border-dashed border-slate-300 dark:border-slate-700 hover:border-emerald-500 font-medium"
+                            title={`Insert option before (${optKey})`}
+                            onClick={() => insertOptionAt(i)}
+                          >
+                            + Before
+                          </button>
+                        )}
+                        {form.options.length > 2 && (
+                          <button
+                            type="button"
+                            className="text-slate-400 hover:text-red-500 p-1 text-base leading-none cursor-pointer rounded hover:bg-slate-200 dark:hover:bg-slate-800"
+                            title="Remove option"
+                            onClick={() => removeOption(i)}
+                          >
+                            ×
+                          </button>
+                        )}
+                      </div>
                     </div>
 
                     {/* Option Diagram uploader & preview */}
@@ -2600,7 +2715,8 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                                 options: f.options.map((o, j) =>
                                   j === i
                                     ? {
-                                        ...(typeof o === 'object' ? o : { key: optKey, text: String(o ?? '') }),
+                                        ...(typeof o === 'object' ? o : { text: String(o ?? '') }),
+                                        key: optKey,
                                         image_url: urlVal,
                                         media: urlVal ? [{ id: `opt-${i}-img`, type: 'diagram', url: urlVal }] : [],
                                       }
@@ -2619,7 +2735,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
             {form.options.length < 6 && (
               <button
                 type="button"
-                className="mt-2 inline-flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 cursor-pointer"
+                className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 cursor-pointer"
                 onClick={() =>
                   setForm((f) => ({
                     ...f,
@@ -2635,7 +2751,8 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                   }))
                 }
               >
-                + Add option ({String.fromCharCode(65 + form.options.length)})
+                <Plus className="h-4 w-4" />
+                <span>Add option ({String.fromCharCode(65 + form.options.length)})</span>
               </button>
             )}
           </div>

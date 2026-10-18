@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import { mistakeBookService } from '../../lib/services.js';
 import { formatDateTime } from '../../lib/format.js';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
-import { getMediaUrl } from '../../lib/media.js';
+import { getMediaUrl, getQuestionDiagrams } from '../../lib/media.js';
 import {
   Bookmark,
   Sparkles,
@@ -835,15 +835,26 @@ export default function MyMistakeBook() {
                     </div>
 
                     {/* Question Diagram / Image if present */}
-                    {q.image_url && (
-                      <div className="mb-4">
-                        <img
-                          src={getMediaUrl(q.image_url)}
-                          alt="Question diagram"
-                          className="max-h-64 rounded-xl border border-slate-200 dark:border-slate-800 object-contain bg-white"
-                        />
-                      </div>
-                    )}
+                    {(() => {
+                      const questionMediaList = getQuestionDiagrams(q);
+                      if (!questionMediaList.length) return null;
+                      return (
+                        <div className="mb-4 flex flex-wrap gap-2.5">
+                          {questionMediaList.map((m, mIdx) => {
+                            const mUrl = typeof m === 'string' ? m : m.url;
+                            if (!mUrl) return null;
+                            return (
+                              <img
+                                key={mIdx}
+                                src={getMediaUrl(mUrl)}
+                                alt="Question diagram"
+                                className="max-h-64 rounded-xl border border-slate-200 dark:border-slate-800 object-contain bg-white"
+                              />
+                            );
+                          })}
+                        </div>
+                      );
+                    })()}
 
                     {/* Options List: CLEAN NEUTRAL CHOICES ONLY (NO ANSWERS REVEALED) */}
                     {Array.isArray(q.options) && q.options.length > 0 && (

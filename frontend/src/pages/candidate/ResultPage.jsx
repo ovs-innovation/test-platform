@@ -34,7 +34,7 @@ import SevenDayRevisionPlanCard from '../../components/candidate/SevenDayRevisio
 import ScheduledTestsWidget from '../../components/candidate/ScheduledTestsWidget.jsx';
 import AiTestResultsCard from '../../components/candidate/AiTestResultsCard.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
-import { getMediaUrl } from '../../lib/media.js';
+import { getMediaUrl, getQuestionDiagrams } from '../../lib/media.js';
 import { useTheme } from '../../context/ThemeContext.jsx';
 import { predictNeetRank } from '../../lib/neetRankPredictor.js';
 
@@ -1581,16 +1581,27 @@ export default function ResultPage() {
                             <MathRenderer text={q.question_text} />
                           </div>
 
-                          {q.image_url && (
-                            <div className="mt-3.5">
-                              <img
-                                src={getMediaUrl(q.image_url)}
-                                alt={`Question ${originalIdx + 1} diagram`}
-                                className="max-h-64 rounded-xl border border-slate-300 dark:border-slate-700 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
-                                onClick={() => window.open(getMediaUrl(q.image_url), '_blank')}
-                              />
-                            </div>
-                          )}
+                          {(() => {
+                            const questionMediaList = getQuestionDiagrams(q);
+                            if (!questionMediaList.length) return null;
+                            return (
+                              <div className="mt-3.5 flex flex-wrap gap-2.5">
+                                {questionMediaList.map((m, mIdx) => {
+                                  const mUrl = typeof m === 'string' ? m : m.url;
+                                  if (!mUrl) return null;
+                                  return (
+                                    <img
+                                      key={mIdx}
+                                      src={getMediaUrl(mUrl)}
+                                      alt={`Question ${originalIdx + 1} diagram`}
+                                      className="max-h-64 rounded-xl border border-slate-300 dark:border-slate-700 object-contain cursor-zoom-in bg-white dark:bg-slate-900 p-1"
+                                      onClick={() => window.open(getMediaUrl(mUrl), '_blank')}
+                                    />
+                                  );
+                                })}
+                              </div>
+                            );
+                          })()}
 
                           {opts.length > 0 && (
                             <ul className="mt-4 space-y-2 text-sm">

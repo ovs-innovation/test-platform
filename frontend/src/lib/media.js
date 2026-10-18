@@ -60,3 +60,103 @@ export function getBrochureDownloadUrl(series) {
   return '';
 }
 
+/**
+ * Extract all media URLs that belong to options of a question.
+ */
+export function getOptionMediaUrls(q) {
+  const urls = new Set();
+  if (!q) return urls;
+
+  const options = Array.isArray(q.options)
+    ? q.options
+    : (typeof q.options === 'string' ? (() => { try { return JSON.parse(q.options); } catch (_) { return []; } })() : []);
+
+  options.forEach((opt) => {
+    if (typeof opt === 'object' && opt !== null) {
+      if (opt.image_url && typeof opt.image_url === 'string') {
+        const u = opt.image_url.trim();
+        if (u) urls.add(u);
+      }
+      if (opt.image && typeof opt.image === 'string') {
+        const u = opt.image.trim();
+        if (u) urls.add(u);
+      }
+      if (Array.isArray(opt.media)) {
+        opt.media.forEach((m) => {
+          const u = typeof m === 'string' ? m : m?.url;
+          if (u && typeof u === 'string') {
+            const trimmed = u.trim();
+            if (trimmed) urls.add(trimmed);
+          }
+        });
+      }
+    }
+  });
+
+  return urls;
+}
+
+/**
+ * Filter and resolve true question-level diagrams.
+ * Strictly excludes any diagrams that belong to options or solutions/explanations.
+ */
+export function getQuestionDiagrams(q) {
+  if (!q) return [];
+  const optUrls = getOptionMediaUrls(q);
+  const solUrl = q.solution_image_url && typeof q.solution_image_url === 'string'
+    ? q.solution_image_url.trim()
+    : null;
+
+  let rawMedia = [];
+  if (Array.isArray(q.media) && q.media.length > 0) {
+    rawMedia = q.media;
+  } else if (typeof q.media === 'string') {
+    try { rawMedia = JSON.parse(q.media); } catch (_) { rawMedia = []; }
+  }
+
+  const validMedia = rawMedia.filter((m) => {
+    if (!m) return false;
+    const url = (typeof m === 'string' ? m : m.url || '').trim();
+    if (!url) return false;
+    if (solUrl && url === solUrl) return false;
+    if (optUrls.has(url)) return false;
+
+    if (typeof m === 'object') {
+      const type = String(m.type || '').toLowerCase();
+      if (type === 'solution' || type === 'explanation') return false;
+
+      const id = String(m.id || '').toLowerCase();
+      if (id.startsWith('opt-') || id.includes('-opt-') || id.startsWith('sol-') || id.startsWith('exp-')) {
+        return false;
+      }
+
+      const desc = String(m.description || '').toLowerCase();
+      if (/diagram\s+for\s+option|option\s+[a-z0-9]\s+diagram/i.test(desc)) {
+        return false;
+      }
+    }
+    return true;
+  });
+
+  if (validMedia.length > 0) {
+    return validMedia;
+  }
+
+  // Fallback to q.image_url only if it is NOT an option or solution diagram
+  if (q.image_url && typeof q.image_url === 'string') {
+    const trimmedImg = q.image_url.trim();
+    if (trimmedImg && !optUrls.has(trimmedImg) && trimmedImg !== solUrl) {
+      return [{ url: trimmedImg }];
+    }
+  }
+
+  return [];
+}
+
+/**
+ * Returns true if question has at least one valid question-level diagram.
+ */
+export function hasQuestionDiagram(q) {
+  return getQuestionDiagrams(q).length > 0;
+}
+

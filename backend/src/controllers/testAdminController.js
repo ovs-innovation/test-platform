@@ -866,14 +866,46 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
           : (q.correctAnswer || (dbCorrectIndex !== null ? String.fromCharCode(65 + dbCorrectIndex) : null)))
       : null;
 
-    const primaryMediaUrl = q.image_url || (q.question?.media && q.question.media.length > 0 ? q.question.media[0].url : (q.media && q.media.length > 0 ? q.media[0].url : null));
+    const allOptionMediaUrls = new Set();
+    const rawOpts = q.options || q.rawOptions || [];
+    if (Array.isArray(rawOpts)) {
+      rawOpts.forEach((o) => {
+        if (typeof o === 'object' && o !== null) {
+          if (o.image_url) allOptionMediaUrls.add(String(o.image_url).trim());
+          if (Array.isArray(o.media)) {
+            o.media.forEach((m) => {
+              const u = typeof m === 'string' ? m : m?.url;
+              if (u) allOptionMediaUrls.add(String(u).trim());
+            });
+          }
+        }
+      });
+    }
+
     const solutionMediaUrl = q.solution_image_url || (q.explanation?.media && q.explanation.media.length > 0 ? q.explanation.media[0].url : null);
-    const allMedia = [
-      ...(q.question?.media || []),
-      ...((q.options || []).flatMap((o) => (typeof o === 'object' && Array.isArray(o.media) ? o.media : []))),
-      ...(q.explanation?.media || []),
-    ];
-    const mediaArrayJson = JSON.stringify(allMedia.length > 0 ? allMedia : (q.media || []));
+
+    const rawQuestionMedia = Array.isArray(q.question?.media) && q.question.media.length > 0
+      ? q.question.media
+      : (Array.isArray(q.media) ? q.media : []);
+
+    const trueQuestionMedia = rawQuestionMedia.filter((m) => {
+      if (!m) return false;
+      const u = (typeof m === 'string' ? m : m?.url || '').trim();
+      if (!u || allOptionMediaUrls.has(u)) return false;
+      if (solutionMediaUrl && u === solutionMediaUrl) return false;
+      if (typeof m === 'object') {
+        if (m.type === 'solution' || m.type === 'explanation') return false;
+        if (m.id && (String(m.id).startsWith('opt-') || String(m.id).includes('-opt-') || String(m.id).startsWith('sol-'))) return false;
+        if (m.description && /diagram for option|option\s+[a-z0-9]\s+diagram/i.test(m.description)) return false;
+      }
+      return true;
+    });
+
+    const primaryMediaUrl = (q.image_url && !allOptionMediaUrls.has(String(q.image_url).trim()) && q.image_url !== solutionMediaUrl)
+      ? q.image_url
+      : (trueQuestionMedia.length > 0 ? (trueQuestionMedia[0].url || trueQuestionMedia[0]) : null);
+
+    const mediaArrayJson = JSON.stringify(trueQuestionMedia);
     const tablesArrayJson = JSON.stringify(q.tables || []);
     const extractionMetaObj = {
       confidence: q.extraction?.confidence || (q.needs_review ? 0.60 : 0.96),
