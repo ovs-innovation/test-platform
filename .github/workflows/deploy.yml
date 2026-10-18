@@ -122,6 +122,11 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/.env" ]; then
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
             fi
+            if [ -f "backend/.env" ]; then
+              if [ ! -f ".env" ] || ! grep -q "DATABASE_URL" ".env"; then
+                cp "backend/.env" ".env" || true
+              fi
+            fi
 
             echo "VPS git reset completed successfully to commit ${{ github.sha }}."
 
@@ -271,6 +276,14 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/.env" ]; then
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
               log "Restored backend/.env"
+            fi
+
+            # Synchronize root .env with backend/.env so docker compose loads production DATABASE_URL & secrets
+            if [ -f "backend/.env" ]; then
+              if [ ! -f ".env" ] || ! grep -q "DATABASE_URL" ".env"; then
+                cp "backend/.env" ".env" || true
+                log "Synchronized backend/.env to root .env"
+              fi
             fi
 
             # Ensure MSG91 credentials exist in backend/.env on VPS

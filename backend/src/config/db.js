@@ -23,10 +23,16 @@ const isLocalDb =
     env.pg.host === 'postgres'
   ));
 
-const maxPool = parseInt(process.env.DB_POOL_MAX || (env.isProd ? '20' : '10'), 10);
-const minPool = parseInt(process.env.DB_POOL_MIN || '2', 10);
-const idleTimeoutMillis = parseInt(process.env.DB_IDLE_TIMEOUT_MS || '30000', 10);
-const connectionTimeoutMillis = parseInt(process.env.DB_CONN_TIMEOUT_MS || '10000', 10);
+const customLookup = (hostname, options, callback) => {
+  const cb = typeof options === 'function' ? options : callback;
+  const opts = typeof options === 'object' && options !== null ? { ...options, family: 4 } : { family: 4 };
+  return dns.lookup(hostname, opts, cb);
+};
+
+const maxPool = parseInt(process.env.DB_POOL_MAX || (env.isProd ? '10' : '10'), 10);
+const minPool = parseInt(process.env.DB_POOL_MIN || '0', 10);
+const idleTimeoutMillis = parseInt(process.env.DB_IDLE_TIMEOUT_MS || '15000', 10);
+const connectionTimeoutMillis = parseInt(process.env.DB_CONN_TIMEOUT_MS || '30000', 10);
 
 const poolConfig = env.databaseUrl
   ? {
@@ -37,6 +43,7 @@ const poolConfig = env.databaseUrl
       connectionTimeoutMillis,
       keepAlive: true,
       keepAliveInitialDelayMillis: 10000,
+      lookup: isLocalDb ? undefined : customLookup,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },
     }
   : {
@@ -51,6 +58,7 @@ const poolConfig = env.databaseUrl
       connectionTimeoutMillis,
       keepAlive: true,
       keepAliveInitialDelayMillis: 10000,
+      lookup: isLocalDb ? undefined : customLookup,
       ssl: isLocalDb ? false : { rejectUnauthorized: false },
     };
 
@@ -97,7 +105,11 @@ export const query = async (text, params, retries = 3) => {
         (err.code === 'ENOTFOUND' ||
           err.code === 'ETIMEDOUT' ||
           err.code === 'ECONNRESET' ||
+          err.code === 'ECONNREFUSED' ||
+          err.code === 'EHOSTUNREACH' ||
+          err.code === 'ENETUNREACH' ||
           err.code === '57P01' ||
+          err.code === '53300' ||
           err.code === '08006' ||
           err.code === '08003' ||
           err.code === '08001' ||
@@ -105,13 +117,15 @@ export const query = async (text, params, retries = 3) => {
             (err.message.includes('getaddrinfo') ||
              err.message.includes('connection terminated') ||
              err.message.includes('Connection terminated unexpectedly') ||
+             err.message.includes('timeout') ||
+             err.message.includes('Timeout') ||
              err.message.includes('SSL') ||
              err.message.includes('Client has encountered a connection error'))));
 
       if (isTransient && attempt < retries) {
         // eslint-disable-next-line no-console
         console.warn(`[db] Retrying transient query failure (attempt ${attempt + 1}/${retries})...`);
-        await new Promise((resolve) => setTimeout(resolve, 300 * (attempt + 1)));
+        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
         continue;
       }
       throw err;
@@ -120,10 +134,23 @@ export const query = async (text, params, retries = 3) => {
 };
 
 /**
- * Run a set of statements inside a single transaction.
+ * Run a set of statements inside a single transaction with connection retry.
  */
-export const withTransaction = async (callback) => {
-  const client = await pool.connect();
+export const withTransaction = async (callback, retries = 2) => {
+  let client;
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    try {
+      client = await pool.connect();
+      break;
+    } catch (connErr) {
+      if (attempt < retries) {
+        await new Promise((resolve) => setTimeout(resolve, 500 * (attempt + 1)));
+        continue;
+      }
+      throw connErr;
+    }
+  }
+
   const origQuery = client.query.bind(client);
   client.query = (qText, qParams, ...rest) => {
     const safeText = typeof qText === 'string' ? qText.replace(/\0/g, '') : qText;

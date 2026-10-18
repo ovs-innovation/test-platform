@@ -18,6 +18,13 @@ const seed = async () => {
       );
       const adminId = adminRes.rows[0].id;
 
+      await client.query(
+        `INSERT INTO users (name, email, password_hash, role)
+         VALUES ($1, $2, $3, 'admin')
+         ON CONFLICT (email) DO UPDATE SET name = EXCLUDED.name, password_hash = EXCLUDED.password_hash`,
+        ['EDVEDUM Administrator', 'admin@edvedum.com', adminHash]
+      );
+
       const candidateHash = await hashPassword(env.seed.candidatePassword || 'Candidate@123');
 
       await client.query(

@@ -30,14 +30,25 @@ export const errorHandler = (err, _req, res, _next) => {
     (err.code === 'ENOTFOUND' ||
       err.code === 'ETIMEDOUT' ||
       err.code === 'ECONNRESET' ||
+      err.code === 'ECONNREFUSED' ||
+      err.code === 'EHOSTUNREACH' ||
+      err.code === 'ENETUNREACH' ||
       err.code === '57P01' ||
-      (err.message && (err.message.includes('getaddrinfo') || err.message.includes('connection terminated'))));
+      err.code === '53300' ||
+      (err.message && (
+        err.message.includes('getaddrinfo') ||
+        err.message.includes('connection terminated') ||
+        err.message.includes('Connection terminated unexpectedly') ||
+        err.message.includes('timeout') ||
+        err.message.includes('Timeout') ||
+        err.message.includes('Client has encountered a connection error')
+      )));
 
   if (isDbConnectionError) {
     return res.status(503).json({
       success: false,
       code: 'SERVICE_TEMPORARILY_UNAVAILABLE',
-      message: 'The service is temporarily unavailable. Please try again.',
+      message: 'The database service is temporarily unavailable. Please try again in a moment.',
     });
   }
 

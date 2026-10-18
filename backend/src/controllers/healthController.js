@@ -23,6 +23,8 @@ export const checkReadiness = async (_req, res) => {
       status: 'degraded',
       db: 'unavailable',
       message: 'Database service unavailable',
+      error: err?.message,
+      code: err?.code,
     });
   }
 };
