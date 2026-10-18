@@ -274,39 +274,32 @@ jobs:
               log "Restored backend/.env"
             fi
 
-            # Restore previous production .env from VPS backup if available, and ensure dev Neon URL is not used
-            log "Checking for pre-incident production environment configuration..."
-            RESTORED_PREV_ENV=false
-            for BDIR in $(ls -td /tmp/edvedum_prod_backup_* 2>/dev/null); do
-              if [ -f "$BDIR/.env" ] && ! grep -q "ep-weathered-heart" "$BDIR/.env"; then
-                log "Restoring verified previous production .env from $BDIR/.env..."
-                cp "$BDIR/.env" ".env"
-                RESTORED_PREV_ENV=true
-                break
+            # Unconditionally configure production to use the VPS internal PostgreSQL container
+            log "Configuring VPS to connect to internal Docker Postgres (interview_platform)..."
+            for ENV_FILE in ".env" "backend/.env"; do
+              if [ -f "$ENV_FILE" ]; then
+                sed -i '/ep-weathered-heart/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
+                sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
+                echo "DATABASE_URL=postgres://postgres:postgres@postgres:5432/interview_platform" >> "$ENV_FILE"
+                echo "PGHOST=postgres" >> "$ENV_FILE"
+                echo "PGPORT=5432" >> "$ENV_FILE"
+                echo "PGUSER=postgres" >> "$ENV_FILE"
+                echo "PGPASSWORD=postgres" >> "$ENV_FILE"
+                echo "PGDATABASE=interview_platform" >> "$ENV_FILE"
+                log "Configured $ENV_FILE for internal VPS Postgres."
               fi
             done
 
-            if [ "$RESTORED_PREV_ENV" = "false" ]; then
-              log "No external production database backup found. Configuring internal VPS Postgres database..."
-              for ENV_FILE in ".env" "backend/.env"; do
-                if [ -f "$ENV_FILE" ]; then
-                  sed -i '/ep-weathered-heart/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
-                  echo "DATABASE_URL=postgres://postgres:postgres@postgres:5432/interview_platform" >> "$ENV_FILE"
-                  echo "PGHOST=postgres" >> "$ENV_FILE"
-                  echo "PGPORT=5432" >> "$ENV_FILE"
-                  echo "PGUSER=postgres" >> "$ENV_FILE"
-                  echo "PGPASSWORD=postgres" >> "$ENV_FILE"
-                  echo "PGDATABASE=interview_platform" >> "$ENV_FILE"
-                  log "Configured $ENV_FILE for internal VPS Postgres."
-                fi
-              done
-            fi
+            # Ensure internal Postgres service is running and healthy
+            log "Ensuring internal Postgres service is up..."
+            docker compose up -d postgres
+            sleep 3
+            docker compose exec -T postgres pg_isready -U postgres -d interview_platform || true
 
             # Ensure MSG91 credentials exist in backend/.env on VPS
             if [ -f "backend/.env" ]; then
@@ -386,8 +379,9 @@ jobs:
               execute_rollback
             fi
 
-            log "Step 6/8: Starting production containers in background..."
-            if ! docker compose up -d --remove-orphans; then
+            log "Step 6/8: Starting production containers with clean recreate..."
+            docker compose stop backend 2>/dev/null || true
+            if ! docker compose up -d --force-recreate --remove-orphans; then
               log "CRITICAL ERROR: 'docker compose up' failed on VPS!"
               execute_rollback
             fi
