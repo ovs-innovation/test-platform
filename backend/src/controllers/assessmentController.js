@@ -22,6 +22,11 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
       SELECT assessment_id, COUNT(*) AS invite_count
       FROM candidate_invites GROUP BY assessment_id
     ) inv ON inv.assessment_id = a.id
+    WHERE COALESCE(a.is_personal, FALSE) = FALSE
+      AND (a.created_by IS NULL OR a.created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
+      AND COALESCE(a.test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice')
+      AND a.title NOT ILIKE '%Mistake Book%'
+      AND a.title NOT ILIKE '%Weak Topic%'
     ORDER BY a.created_at DESC
   `);
   res.json({ assessments: result.rows });

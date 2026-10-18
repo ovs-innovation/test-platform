@@ -9,7 +9,13 @@ import { sendStudentCredentialsEmail, sendStudentIdEmail } from '../utils/email.
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations, testSeriesRes, activeStudentsRes] = await Promise.all([
     query(`SELECT COUNT(*)::int AS c FROM users WHERE role = 'candidate'`),
-    query('SELECT COUNT(*)::int AS c FROM assessments'),
+    query(`
+      SELECT COUNT(*)::int AS c 
+      FROM assessments 
+      WHERE COALESCE(is_personal, FALSE) = FALSE 
+        AND COALESCE(test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice') 
+        AND (created_by IS NULL OR created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
+    `),
     query('SELECT COUNT(*)::int AS c FROM attempts'),
     query(`
       SELECT
@@ -35,7 +41,14 @@ export const getStats = asyncHandler(async (_req, res) => {
     query(`SELECT COUNT(DISTINCT candidate_id)::int AS c FROM attempts WHERE started_at >= NOW() - INTERVAL '30 days'`),
   ]);
 
-  const publishedRes = await query('SELECT COUNT(*)::int AS c FROM assessments WHERE is_published');
+  const publishedRes = await query(`
+    SELECT COUNT(*)::int AS c 
+    FROM assessments 
+    WHERE is_published 
+      AND COALESCE(is_personal, FALSE) = FALSE 
+      AND COALESCE(test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice') 
+      AND (created_by IS NULL OR created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
+  `);
   const activeRes = await query(`
     SELECT COUNT(*)::int AS c FROM attempts WHERE status = 'in_progress'
   `);

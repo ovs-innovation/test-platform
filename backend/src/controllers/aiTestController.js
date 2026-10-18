@@ -146,9 +146,9 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
     `INSERT INTO tests (
        test_name, test_type, type, status, test_date, start_time, end_time,
        duration_minutes, max_marks, is_published, available_from, available_until,
-       unlock_at, expires_at, source_weak_topics, created_at
+       unlock_at, expires_at, source_weak_topics, is_personal, created_by, created_at
      )
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, NOW())
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, TRUE, $16, NOW())
      RETURNING id, test_name, type, status, unlock_at, expires_at`,
     [
       testTitle,
@@ -166,6 +166,7 @@ export const generateAiWeakTopicTest = asyncHandler(async (req, res) => {
       unlockAt,
       expiresAt,
       JSON.stringify(weakTopicsPayload),
+      studentId,
     ]
   );
 
@@ -259,11 +260,11 @@ export const getScheduledTests = asyncHandler(async (req, res) => {
      LEFT JOIN test_assignments tas ON tas.test_id = t.id
      LEFT JOIN candidate_invites ci ON ci.assessment_id = t.id
      LEFT JOIN test_attempts ta ON ta.test_id = t.id AND ta.student_id = $1
-     WHERE (t.type = 'ai_weak_topic' OR t.test_name LIKE 'AI Booster%' OR t.test_name LIKE 'AI Improvement%')
+     WHERE (t.type = 'ai_weak_topic' OR t.test_name LIKE 'AI Booster%' OR t.test_name LIKE 'AI Improvement%' OR t.test_name LIKE 'Weak Topic%')
        AND (
-         tas.assigned_to_id = $1 
+         t.created_by = $1
+         OR tas.assigned_to_id = $1 
          OR ci.candidate_email = (SELECT email FROM users WHERE id = $1)
-         OR tas.assigned_to_id IS NULL
        )
        AND COALESCE(t.is_deleted, false) = false
      ORDER BY t.id, t.created_at DESC`,

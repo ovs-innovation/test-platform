@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { adminService } from '../../lib/services.js';
+import { isPersonalStudentTest } from './Assessments.jsx';
 import { getMediaUrl } from '../../lib/media.js';
 import { Spinner, Badge } from '../../components/ui.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
@@ -168,7 +169,7 @@ export default function AdminTestManager() {
         adminService.institutionAnalytics().catch(() => ({ students: [] }))
       ]);
 
-      setTests(testsList || []);
+      setTests((testsList || []).filter((t) => !isPersonalStudentTest(t)));
       setEbooks(ebooksList || []);
       setBatches(batchesList || []);
       setInstitutionAnalytics(instAnalytics?.students || []);
@@ -517,6 +518,7 @@ export default function AdminTestManager() {
   };
 
   const filteredTests = tests.filter((t) => {
+    if (isPersonalStudentTest(t)) return false;
     const matchesSearch = t.test_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           (t.syllabus && t.syllabus.toLowerCase().includes(searchQuery.toLowerCase()));
     const matchesType = selectedType === 'All' || t.test_type === selectedType;

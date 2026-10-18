@@ -472,9 +472,9 @@ export const recreateTestFromMistakes = async (candidateId, { question_ids, titl
   const assessmentInsertRes = await query(
     `INSERT INTO assessments (
        title, description, instructions, duration_minutes, passing_marks, max_violations,
-       result_visible, is_published, created_by, created_at, updated_at
+       result_visible, is_published, created_by, test_type, is_personal, created_at, updated_at
      )
-     VALUES ($1, $2, $3, $4, $5, 5, true, true, $6, NOW(), NOW())
+     VALUES ($1, $2, $3, $4, $5, 5, true, true, $6, 'mistake_book', TRUE, NOW(), NOW())
      RETURNING *`,
     [
       finalTitle,

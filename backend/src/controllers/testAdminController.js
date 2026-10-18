@@ -192,7 +192,16 @@ export async function syncFreeTestSeries(test) {
 export const listTests = asyncHandler(async (req, res) => {
   const { test_type, is_published, search } = req.query;
 
-  let whereClauses = ['COALESCE(t.is_deleted, FALSE) = FALSE'];
+  let whereClauses = [
+    'COALESCE(t.is_deleted, FALSE) = FALSE',
+    'COALESCE(t.is_personal, FALSE) = FALSE',
+    "COALESCE(t.type, 'regular') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')",
+    "t.test_name NOT ILIKE '%Weak Topic%'",
+    "t.test_name NOT ILIKE '%Mistake Book%'",
+    "t.test_name NOT ILIKE 'AI Booster%'",
+    "t.test_name NOT ILIKE 'AI Improvement%'",
+    "(t.created_by IS NULL OR t.created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))"
+  ];
   let params = [];
   let paramIdx = 1;
 
@@ -355,7 +364,15 @@ export const createTest = asyncHandler(async (req, res) => {
 export const getTestDetails = asyncHandler(async (req, res) => {
   const { id } = req.params;
 
-  const testRes = await query('SELECT t.*, eb.title AS ebook_title FROM tests t LEFT JOIN ebooks eb ON eb.id = t.recommended_ebook_id WHERE t.id = $1 AND COALESCE(t.is_deleted, FALSE) = FALSE', [id]);
+  const testRes = await query(`
+    SELECT t.*, eb.title AS ebook_title 
+    FROM tests t 
+    LEFT JOIN ebooks eb ON eb.id = t.recommended_ebook_id 
+    WHERE t.id = $1 
+      AND COALESCE(t.is_deleted, FALSE) = FALSE
+      AND COALESCE(t.is_personal, FALSE) = FALSE
+      AND COALESCE(t.type, 'regular') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')
+  `, [id]);
   if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');
 
   const [assignments, overrides, attempts] = await Promise.all([
