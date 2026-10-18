@@ -1,7 +1,7 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
-import { isNeetTest, resolveQuestionNeetMeta } from '../utils/neetPattern.js';
+import { isNeetTest, resolveQuestionNeetMeta, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
 
 export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
   try {
@@ -2225,6 +2225,14 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
     return base;
   });
 
+  let finalQuestions = sanitizedQuestions;
+  let finalSections = sectionsRes.rows;
+  if (isNeet) {
+    const normalized = normalizeNeetAssessmentPayload(testObj, sanitizedQuestions, sectionsRes.rows);
+    finalQuestions = normalized.questions;
+    finalSections = normalized.sections;
+  }
+
   const durationMins = testObj.duration_minutes || 180;
   const fakeEndsAt = new Date(Date.now() + durationMins * 60 * 1000).toISOString();
 
@@ -2257,8 +2265,8 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
       total_marks: isNeet ? 720 : (testObj.max_marks || null),
     },
     institution: institutionObj,
-    sections: sectionsRes.rows,
-    questions: sanitizedQuestions,
+    sections: finalSections,
+    questions: finalQuestions,
     answers: [],
     coding_answers: [],
     subjective_answers: [],

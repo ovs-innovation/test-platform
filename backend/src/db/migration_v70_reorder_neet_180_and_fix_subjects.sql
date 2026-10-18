@@ -13,9 +13,9 @@ BEGIN
   FOR assess_id IN 
     SELECT a.id FROM assessments a
     LEFT JOIN tests t ON t.id = a.id
-    WHERE a.id IN (35, 58, 235)
+    WHERE a.id IN (35, 58, 235, 41, 238)
        OR (
-         (a.title ILIKE '%Mock Test 2%' OR COALESCE(t.test_name, '') ILIKE '%Mock Test 2%')
+         (a.title ILIKE '%Mock Test%' OR a.title ILIKE '%NEET%' OR COALESCE(t.test_name, '') ILIKE '%NEET%')
          AND (SELECT COUNT(*) FROM questions q WHERE q.assessment_id = a.id) = 180
        )
   LOOP

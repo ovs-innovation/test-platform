@@ -115,6 +115,200 @@ export function resolveQuestionNeetMeta(q = {}, index = 0, totalQuestions = 180)
   };
 }
 
+const BOTANY_REGEX = /plant|botan|algae|riccia|bryophyte|pteridophyte|selaginella|salvinia|gymnosperm|angiosperm|homosporous|flower|stomata|guard cell|leaves|mesophyll|cambium|vascular bundle|stem|dicot|monocot|morphology|androecium|mustard|vexillary|aestivation|solanaceae|potato|cereal|china rose|family|apocarpous|biological classification|archaebacteria|eubacteria|fungus|fungi|deuteromycetes|virus|viroid|prion|lichen|dinoflagellate|protist|living world|taxonomic|taxonomy|binomial|chloroplast|cell wall|photosynthesis/i;
+
+/**
+ * Normalizes an assessment's questions and sections to strictly enforce standard NEET UG layout:
+ * - Section-A: Physics (Questions 1 to 45)
+ * - Section-B: Chemistry (Questions 46 to 90)
+ * - Section-C: Botany (Questions 91 to 135)
+ * - Section-D: Zoology (Questions 136 to 180)
+ */
+export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], sections = []) {
+  if (!Array.isArray(questions) || questions.length !== 180) {
+    return { questions, sections };
+  }
+
+  const isNeet = isNeetTest(assessment, questions);
+  if (!isNeet) {
+    return { questions, sections };
+  }
+
+  const physics = [];
+  const chemistry = [];
+  const botany = [];
+  const zoology = [];
+  const biology = [];
+  const unassigned = [];
+
+  for (let idx = 0; idx < questions.length; idx++) {
+    const q = questions[idx];
+    const rawSubj = q.subject || q.bank_category || (q.section_name) || '';
+    const norm = normalizeNeetSubject(rawSubj);
+    const origNum = Number(q.original_question_number || (q.extraction_meta && q.extraction_meta.original_question_number) || 0);
+    const pos = Number(q.position || idx + 1);
+
+    if (norm === 'Physics' || (origNum >= 91 && origNum <= 135 && !norm) || (pos >= 91 && pos <= 135 && !norm && idx >= 90 && idx <= 134)) {
+      physics.push(q);
+    } else if (norm === 'Chemistry' || (origNum >= 136 && origNum <= 180 && !norm) || (pos >= 136 && pos <= 180 && !norm && idx >= 135 && idx <= 179)) {
+      chemistry.push(q);
+    } else if (norm === 'Botany') {
+      botany.push(q);
+    } else if (norm === 'Zoology') {
+      zoology.push(q);
+    } else if (norm === 'Biology' || (origNum >= 1 && origNum <= 90)) {
+      biology.push(q);
+    } else {
+      unassigned.push(q);
+    }
+  }
+
+  // Pool biology questions together
+  const allBio = [...botany, ...zoology, ...biology];
+
+  let finalBotany = [];
+  let finalZoology = [];
+
+  if (allBio.length === 90) {
+    const botList = [];
+    const zooList = [];
+
+    for (const q of allBio) {
+      const text = `${q.topic || ''} ${q.chapter || ''} ${q.question_text || ''}`;
+      const isExplicitBotany = normalizeNeetSubject(q.subject) === 'Botany';
+      const matchesBotany = BOTANY_REGEX.test(text);
+
+      if (isExplicitBotany || matchesBotany) {
+        if (botList.length < 45) {
+          botList.push(q);
+        } else {
+          zooList.push(q);
+        }
+      } else {
+        zooList.push(q);
+      }
+    }
+
+    while (botList.length < 45 && zooList.length > 45) {
+      botList.push(zooList.shift());
+    }
+
+    finalBotany = botList;
+    finalZoology = zooList;
+  } else {
+    // If exact 90 wasn't partitioned, balance as evenly as possible
+    finalBotany = botany;
+    finalZoology = zoology;
+    for (const q of biology) {
+      if (finalBotany.length < 45) finalBotany.push(q);
+      else finalZoology.push(q);
+    }
+  }
+
+  // Fill physics and chemistry from unassigned if necessary
+  while (physics.length < 45 && unassigned.length > 0) physics.push(unassigned.shift());
+  while (chemistry.length < 45 && unassigned.length > 0) chemistry.push(unassigned.shift());
+
+  // Only apply standard sequence if all 4 subjects have 45 questions each
+  if (physics.length !== 45 || chemistry.length !== 45 || finalBotany.length !== 45 || finalZoology.length !== 45) {
+    return { questions, sections };
+  }
+
+  // Match existing section IDs if available
+  const secMap = {};
+  if (Array.isArray(sections)) {
+    for (const s of sections) {
+      const name = String(s.name || '').toLowerCase();
+      if (name.includes('phys')) secMap.Physics = s.id;
+      else if (name.includes('chem')) secMap.Chemistry = s.id;
+      else if (name.includes('botan')) secMap.Botany = s.id;
+      else if (name.includes('zool')) secMap.Zoology = s.id;
+    }
+  }
+
+  const normalizedSections = [
+    { id: secMap.Physics || 'sec-phy', assessment_id: assessment.id, name: 'Section-A: Physics', position: 1, section_type: 'technical_mcq', total_questions: 45 },
+    { id: secMap.Chemistry || 'sec-chem', assessment_id: assessment.id, name: 'Section-B: Chemistry', position: 2, section_type: 'technical_mcq', total_questions: 45 },
+    { id: secMap.Botany || 'sec-bot', assessment_id: assessment.id, name: 'Section-C: Botany', position: 3, section_type: 'technical_mcq', total_questions: 45 },
+    { id: secMap.Zoology || 'sec-zoo', assessment_id: assessment.id, name: 'Section-D: Zoology', position: 4, section_type: 'technical_mcq', total_questions: 45 },
+  ];
+
+  const normalizedQuestions = [];
+
+  // 1. Physics: 1 to 45
+  physics.forEach((q, idx) => {
+    normalizedQuestions.push({
+      ...q,
+      position: idx + 1,
+      subject: 'Physics',
+      bank_category: 'Physics',
+      section: 'A',
+      sectionTag: 'Section-A',
+      section_id: secMap.Physics || q.section_id || 'sec-phy',
+      questionNumber: idx + 1,
+      overallQuestionNumber: idx + 1,
+      is_neet: true,
+      is_section_b: false,
+    });
+  });
+
+  // 2. Chemistry: 46 to 90
+  chemistry.forEach((q, idx) => {
+    normalizedQuestions.push({
+      ...q,
+      position: 46 + idx,
+      subject: 'Chemistry',
+      bank_category: 'Chemistry',
+      section: 'B',
+      sectionTag: 'Section-B',
+      section_id: secMap.Chemistry || q.section_id || 'sec-chem',
+      questionNumber: idx + 1,
+      overallQuestionNumber: 46 + idx,
+      is_neet: true,
+      is_section_b: true,
+    });
+  });
+
+  // 3. Botany: 91 to 135
+  finalBotany.forEach((q, idx) => {
+    normalizedQuestions.push({
+      ...q,
+      position: 91 + idx,
+      subject: 'Botany',
+      bank_category: 'Botany',
+      section: 'C',
+      sectionTag: 'Section-C',
+      section_id: secMap.Botany || q.section_id || 'sec-bot',
+      questionNumber: idx + 1,
+      overallQuestionNumber: 91 + idx,
+      is_neet: true,
+      is_section_b: false,
+    });
+  });
+
+  // 4. Zoology: 136 to 180
+  finalZoology.forEach((q, idx) => {
+    normalizedQuestions.push({
+      ...q,
+      position: 136 + idx,
+      subject: 'Zoology',
+      bank_category: 'Zoology',
+      section: 'D',
+      sectionTag: 'Section-D',
+      section_id: secMap.Zoology || q.section_id || 'sec-zoo',
+      questionNumber: idx + 1,
+      overallQuestionNumber: 136 + idx,
+      is_neet: true,
+      is_section_b: false,
+    });
+  });
+
+  return {
+    questions: normalizedQuestions,
+    sections: normalizedSections,
+  };
+}
+
 /**
  * Checks whether a candidate attempted a question.
  */

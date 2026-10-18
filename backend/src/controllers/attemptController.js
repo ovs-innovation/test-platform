@@ -4,7 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { gradeCodingAnswer } from '../utils/gradeCoding.js';
 import { sendCompletionEmail } from '../utils/email.js';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
-import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS, predictNeetRank } from '../utils/neetPattern.js';
+import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS, predictNeetRank, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 import { getTopperComparison } from '../services/topperComparisonService.js';
@@ -688,6 +688,14 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     return clean;
   });
 
+  let finalQuestions = sanitizedQuestions;
+  let finalSections = sectionsRes.rows;
+  if (isNeet) {
+    const normalized = normalizeNeetAssessmentPayload(assessmentObj, sanitizedQuestions, sectionsRes.rows);
+    finalQuestions = normalized.questions;
+    finalSections = normalized.sections;
+  }
+
   res.json({
     server_time: new Date().toISOString(),
     attempt,
@@ -708,8 +716,8 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
       total_marks: isNeet ? 720 : (assessmentObj.total_marks || null),
     },
     institution: institutionObj,
-    sections: sectionsRes.rows,
-    questions: sanitizedQuestions,
+    sections: finalSections,
+    questions: finalQuestions,
     answers: answersRes.rows,
     coding_answers: codingRes.rows,
     subjective_answers: subjectiveRes.rows,

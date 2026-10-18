@@ -14,6 +14,12 @@ export async function reorderNeet180Assessments(clientOrPool) {
       const sql = fs.readFileSync(sqlPath, 'utf8');
       await clientOrPool.query(sql);
       console.log('[reorderNeet180] Applied migration_v70 SQL successfully.');
+      try {
+        const { executeResequence } = await import('../../scripts/execute_neet_resequence.js');
+        await executeResequence();
+      } catch (e) {
+        console.warn('[reorderNeet180] executeResequence note:', e.message);
+      }
       return;
     }
 

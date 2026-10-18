@@ -1,6 +1,7 @@
 import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { isNeetTest, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
 
 export const listAllAssessments = asyncHandler(async (_req, res) => {
   const result = await query(`
@@ -454,14 +455,22 @@ export const getAssessmentAdmin = asyncHandler(async (req, res) => {
   );
   const attemptCount = Number(attRes.rows[0]?.attempt_count || 0);
 
+  let finalQuestions = questions.rows;
+  let finalSections = sections.rows;
+  if (isNeetTest(a.rows[0], questions.rows)) {
+    const normalized = normalizeNeetAssessmentPayload(a.rows[0], questions.rows, sections.rows);
+    finalQuestions = normalized.questions;
+    finalSections = normalized.sections;
+  }
+
   res.json({
     assessment: {
       ...a.rows[0],
       attempt_count: attemptCount,
       is_locked: attemptCount > 0,
     },
-    sections: sections.rows,
-    questions: questions.rows,
+    sections: finalSections,
+    questions: finalQuestions,
     invites: invites.rows,
     attempt_count: attemptCount,
     is_locked: attemptCount > 0,
