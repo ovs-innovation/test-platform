@@ -84,59 +84,43 @@ export default function AnalyticsTab({
   };
 
   const subjectBreakdown = useMemo(() => {
-    if (currentAnalytics?.subject_performance && currentAnalytics.subject_performance.length > 0) {
-      return currentAnalytics.subject_performance.map((s, i) => {
-        const darkColors = [
-          'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
-          'text-purple-400 bg-purple-500/10 border-purple-500/20',
-          'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
-          'text-amber-400 bg-amber-500/10 border-amber-500/20',
-          'text-rose-400 bg-rose-500/10 border-rose-500/20',
-        ];
-        const lightColors = [
-          'text-blue-700 bg-blue-50 border-blue-200',
-          'text-purple-700 bg-purple-50 border-purple-200',
-          'text-emerald-700 bg-emerald-50 border-emerald-200',
-          'text-amber-800 bg-amber-50 border-amber-200',
-          'text-rose-700 bg-rose-50 border-rose-200',
-        ];
+    if (Array.isArray(currentAnalytics?.subject_performance) && currentAnalytics.subject_performance.length > 0) {
+      const darkColors = [
+        'text-cyan-400 bg-cyan-500/10 border-cyan-500/20',
+        'text-purple-400 bg-purple-500/10 border-purple-500/20',
+        'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',
+        'text-amber-400 bg-amber-500/10 border-amber-500/20',
+        'text-rose-400 bg-rose-500/10 border-rose-500/20',
+        'text-indigo-400 bg-indigo-500/10 border-indigo-500/20',
+      ];
+      const lightColors = [
+        'text-blue-700 bg-blue-50 border-blue-200 font-bold',
+        'text-purple-700 bg-purple-50 border-purple-200 font-bold',
+        'text-emerald-700 bg-emerald-50 border-emerald-200 font-bold',
+        'text-amber-800 bg-amber-50 border-amber-200 font-bold',
+        'text-rose-700 bg-rose-50 border-rose-200 font-bold',
+        'text-indigo-700 bg-indigo-50 border-indigo-200 font-bold',
+      ];
 
-        const scoreVal = typeof s.avg_score === 'number' ? `${s.avg_score}%` : (s.avg_score || `${s.score || 80}%`);
-        const accuracyVal = s.accuracy_rate || s.accuracy || `${Math.min(100, Math.round((parseFloat(s.avg_score || 80) + 4)))}%`;
-        
+      const formatPercent = (val) => {
+        if (val === null || val === undefined || val === '') return '0%';
+        const str = String(val).trim();
+        return str.endsWith('%') ? str : `${str}%`;
+      };
+
+      return currentAnalytics.subject_performance.map((s, i) => {
+        const testsCount = Number(s.tests_count ?? s.tests ?? 0);
         return {
           subject: s.subject || `Subject ${i + 1}`,
-          score: scoreVal,
-          accuracy: accuracyVal,
-          tests: s.tests_count || s.tests || 10,
+          score: formatPercent(s.avg_score ?? s.score),
+          accuracy: formatPercent(s.accuracy_rate ?? s.accuracy),
+          tests: testsCount,
           color: isDarkMode ? darkColors[i % darkColors.length] : lightColors[i % lightColors.length],
         };
       });
     }
 
-    return [
-      {
-        subject: 'Physics',
-        score: '82.4%',
-        accuracy: '86%',
-        tests: 12,
-        color: isDarkMode ? 'text-cyan-400 bg-cyan-500/10 border-cyan-500/20' : 'text-blue-700 bg-blue-50 border-blue-200 font-extrabold'
-      },
-      {
-        subject: 'Chemistry',
-        score: '84.8%',
-        accuracy: '89%',
-        tests: 12,
-        color: isDarkMode ? 'text-purple-400 bg-purple-500/10 border-purple-500/20' : 'text-purple-700 bg-purple-50 border-purple-200 font-extrabold'
-      },
-      {
-        subject: 'Biology / Math',
-        score: '86.2%',
-        accuracy: '91%',
-        tests: 10,
-        color: isDarkMode ? 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20' : 'text-emerald-700 bg-emerald-50 border-emerald-200 font-extrabold'
-      },
-    ];
+    return [];
   }, [currentAnalytics?.subject_performance, isDarkMode]);
 
   const batchPerformance = useMemo(() => {
@@ -146,7 +130,8 @@ export default function AnalyticsTab({
   const hasData = Boolean(
     (currentAnalytics?.total_attempts || 0) > 0 ||
     safeRankings.length > 0 ||
-    batchPerformance.length > 0
+    batchPerformance.length > 0 ||
+    subjectBreakdown.length > 0
   );
 
   const textMutedClass = isDarkMode ? 'text-slate-400' : 'text-slate-600 font-semibold';
@@ -324,53 +309,63 @@ export default function AnalyticsTab({
           {loading && <Loader2 className="h-4 w-4 animate-spin text-cyan-500" />}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {subjectBreakdown.map((sb, idx) => (
-            <div
-              key={idx}
-              className={`p-5 rounded-2xl border transition ${
-                isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/90 shadow-2xs'
-              }`}
-            >
-              <div className="flex items-center justify-between mb-2">
-                <span className={`px-3 py-1 rounded-xl text-xs font-black uppercase border ${sb.color}`}>
-                  {sb.subject}
-                </span>
-                <span className={`text-xs font-bold ${
-                  isDarkMode ? 'text-slate-400' : 'text-slate-600'
-                }`}>
-                  {sb.tests} Tests Evaluated
-                </span>
-              </div>
-              
-              <div className="flex justify-between items-end mt-4 pt-2 border-t border-slate-200/70 dark:border-slate-800/80">
-                <div>
-                  <span className={`text-[10px] uppercase font-black block ${
+        {subjectBreakdown.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {subjectBreakdown.map((sb, idx) => (
+              <div
+                key={idx}
+                className={`p-5 rounded-2xl border transition ${
+                  isDarkMode ? 'bg-slate-900/60 border-slate-800' : 'bg-slate-50 border-slate-200/90 shadow-2xs'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`px-3 py-1 rounded-xl text-xs font-black uppercase border ${sb.color}`}>
+                    {sb.subject}
+                  </span>
+                  <span className={`text-xs font-bold ${
                     isDarkMode ? 'text-slate-400' : 'text-slate-600'
                   }`}>
-                    Avg Subject Score
-                  </span>
-                  <span
-                    className={`text-xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
-                  >
-                    {sb.score}
+                    {sb.tests} {sb.tests === 1 ? 'Test' : 'Tests'} Evaluated
                   </span>
                 </div>
                 
-                <div className="text-right">
-                  <span className={`text-[10px] uppercase font-black block ${
-                    isDarkMode ? 'text-slate-400' : 'text-slate-600'
-                  }`}>
-                    Accuracy Rate
-                  </span>
-                  <span className="text-base font-black text-emerald-600 dark:text-emerald-400">
-                    {sb.accuracy}
-                  </span>
+                <div className="flex justify-between items-end mt-4 pt-2 border-t border-slate-200/70 dark:border-slate-800/80">
+                  <div>
+                    <span className={`text-[10px] uppercase font-black block ${
+                      isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                    }`}>
+                      Avg Subject Score
+                    </span>
+                    <span
+                      className={`text-xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'}`}
+                    >
+                      {sb.score}
+                    </span>
+                  </div>
+                  
+                  <div className="text-right">
+                    <span className={`text-[10px] uppercase font-black block ${
+                      isDarkMode ? 'text-slate-400' : 'text-slate-600'
+                    }`}>
+                      Accuracy Rate
+                    </span>
+                    <span className="text-base font-black text-emerald-600 dark:text-emerald-400">
+                      {sb.accuracy}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className={`py-10 text-center rounded-2xl border border-dashed ${
+            isDarkMode ? 'border-slate-800 text-slate-400 bg-slate-950/20' : 'border-slate-200 text-slate-500 bg-slate-50/50'
+          }`}>
+            <BookOpen className="h-8 w-8 mx-auto mb-2 opacity-40 text-cyan-500" />
+            <p className="text-sm font-bold">No subject-wise attempt data recorded yet</p>
+            <p className="text-xs opacity-75 mt-0.5">Subject performance and accuracy will automatically calculate once students attempt subject tests.</p>
+          </div>
+        )}
       </div>
 
       {/* =========================================================================

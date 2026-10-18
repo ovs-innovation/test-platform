@@ -1307,17 +1307,23 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
   const instId = req.institution_id || Number(req.params.id) || 1;
   const { test_id, batch_id } = req.query;
 
-  let attemptWhere = `WHERE u.institution_id = $1 AND u.role = 'candidate'`;
+  let taWhere = `WHERE u.institution_id = $1 AND u.role = 'candidate'`;
+  let atWhere = `WHERE u.institution_id = $1 AND u.role = 'candidate'`;
+  let batchFilter = '';
   const params = [instId];
 
   if (test_id && test_id !== 'All' && !isNaN(Number(test_id))) {
     params.push(Number(test_id));
-    attemptWhere += ` AND (ta.test_id = $${params.length} OR at.assessment_id = $${params.length})`;
+    taWhere += ` AND ta.test_id = $${params.length}`;
+    atWhere += ` AND at.assessment_id = $${params.length}`;
   }
 
   if (batch_id && batch_id !== 'All') {
     params.push(batch_id);
-    attemptWhere += ` AND (b.id::text = $${params.length} OR b.batch_name = $${params.length} OR b.name = $${params.length})`;
+    const bf = ` AND (b.id::text = $${params.length} OR b.batch_name = $${params.length} OR b.name = $${params.length})`;
+    taWhere += bf;
+    atWhere += bf;
+    batchFilter = bf;
   }
 
   const [aggRes, studentCountRes, batchAggRes, subjectAggRes] = await Promise.all([
@@ -1327,14 +1333,14 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
          FROM test_attempts ta
          JOIN users u ON u.id = ta.student_id
          LEFT JOIN batches b ON b.id = u.batch_id
-         ${attemptWhere} AND ta.submitted_at IS NOT NULL
+         ${taWhere} AND ta.submitted_at IS NOT NULL
          UNION ALL
          SELECT at.assessment_id AS test_id, at.candidate_id AS student_id, at.submitted_at, s.marks_obtained AS score, s.percentage
          FROM attempts at
          JOIN scores s ON s.attempt_id = at.id
          JOIN users u ON u.id = at.candidate_id
          LEFT JOIN batches b ON b.id = u.batch_id
-         ${attemptWhere} AND at.submitted_at IS NOT NULL
+         ${atWhere} AND at.submitted_at IS NOT NULL
        )
        SELECT 
          COALESCE(ROUND(AVG(combined.percentage), 2), 0) AS average_score,
@@ -1344,7 +1350,13 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
        FROM combined`,
       params
     ),
-    query(`SELECT COUNT(*)::int AS total_students FROM users WHERE institution_id = $1 AND role = 'candidate'`, [instId]),
+    query(
+      `SELECT COUNT(*)::int AS total_students 
+       FROM users u 
+       LEFT JOIN batches b ON b.id = u.batch_id 
+       WHERE u.institution_id = $1 AND u.role = 'candidate' ${batchFilter}`,
+      batch_id && batch_id !== 'All' ? [instId, batch_id] : [instId]
+    ),
     query(
       `WITH combined_attempts AS (
          SELECT 
@@ -1353,7 +1365,8 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
            ta.percentage
          FROM test_attempts ta
          JOIN users u ON u.id = ta.student_id
-         WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
+         LEFT JOIN batches b ON b.id = u.batch_id
+         ${taWhere} AND ta.submitted_at IS NOT NULL
 
          UNION ALL
 
@@ -1364,7 +1377,8 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
          FROM attempts at
          JOIN scores s ON s.attempt_id = at.id
          JOIN users u ON u.id = at.candidate_id
-         WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
+         LEFT JOIN batches b ON b.id = u.batch_id
+         ${atWhere} AND at.submitted_at IS NOT NULL
        )
        SELECT 
          b.id AS batch_id,
@@ -1379,52 +1393,125 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
        WHERE b.institution_id = $1
        GROUP BY b.id, b.name, b.batch_name
        ORDER BY b.name ASC`,
-      [instId]
+      params
     ),
     query(
-      `WITH combined_subject_attempts AS (
+      `WITH attempt_questions AS (
+         -- Source 1: Standard assessment attempts
          SELECT 
-           COALESCE(sec.name, 'General') AS subject,
-           ta.percentage,
-           ta.test_id
-         FROM test_attempts ta
-         JOIN users u ON u.id = ta.student_id
-         LEFT JOIN test_sections sec ON sec.test_id = ta.test_id
-         WHERE u.institution_id = $1 AND u.role = 'candidate' AND ta.submitted_at IS NOT NULL
+           at.assessment_id AS test_id,
+           COALESCE(
+             NULLIF(TRIM(q.subject), ''),
+             NULLIF(TRIM(s_subj.name), ''),
+             NULLIF(TRIM(sec.name), ''),
+             NULLIF(TRIM(q.bank_category), ''),
+             NULLIF(TRIM(a.subject), ''),
+             'General'
+           ) AS raw_subject,
+           COALESCE(q.marks, 4) AS q_marks,
+           CASE
+             WHEN ans.id IS NOT NULL AND (
+               ans.selected_index IS NOT NULL 
+               OR ans.numeric_answer IS NOT NULL 
+               OR (ans.selected_indices IS NOT NULL AND jsonb_array_length(CASE WHEN jsonb_typeof(ans.selected_indices) = 'array' THEN ans.selected_indices ELSE '[]'::jsonb END) > 0)
+             ) THEN 1
+             ELSE 0
+           END AS is_attempted,
+           CASE
+             WHEN q.question_type IN ('mcq', 'single_choice', 'assertion_reason') 
+               AND ans.selected_index IS NOT NULL 
+               AND ans.selected_index = q.correct_index THEN 1
+             WHEN q.question_type IN ('integer', 'numerical') 
+               AND ans.numeric_answer IS NOT NULL 
+               AND abs(ans.numeric_answer - q.numeric_answer) <= COALESCE(q.numerical_tolerance, 0.01) THEN 1
+             WHEN q.question_type = 'multi_select'
+               AND ans.selected_indices IS NOT NULL
+               AND ans.selected_indices = q.correct_indices THEN 1
+             ELSE 0
+           END AS is_correct,
+           COALESCE(a.negative_marking, false) AS neg_enabled,
+           COALESCE(a.negative_marks_per_wrong, 1) AS neg_penalty
+         FROM attempts at
+         JOIN assessments a ON a.id = at.assessment_id
+         JOIN users u ON u.id = at.candidate_id
+         LEFT JOIN batches b ON b.id = u.batch_id
+         JOIN questions q ON q.assessment_id = at.assessment_id
+         LEFT JOIN answers ans ON ans.attempt_id = at.id AND ans.question_id = q.id
+         LEFT JOIN subjects s_subj ON s_subj.id = q.subject_id
+         LEFT JOIN assessment_sections sec ON sec.id = q.section_id
+         ${atWhere} AND at.submitted_at IS NOT NULL
 
          UNION ALL
 
+         -- Source 2: test_attempts with question_responses JSONB
          SELECT 
+           ta.test_id,
            COALESCE(
-             NULLIF(s_subj.name, ''),
-             CASE 
-               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('physics') THEN 'Physics'
-               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('chemistry', 'chem') THEN 'Chemistry'
-               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('biology', 'bio', 'botany', 'zoology') THEN 'Biology'
-               WHEN LOWER(COALESCE(q.bank_category, '')) IN ('mathematics', 'maths', 'math') THEN 'Mathematics'
-               ELSE NULL
-             END,
+             NULLIF(TRIM(elem->>'subject'), ''),
              'General'
-           ) AS subject,
-           sc.percentage,
-           at.assessment_id AS test_id
-         FROM attempts at
-         JOIN scores sc ON sc.attempt_id = at.id
-         JOIN users u ON u.id = at.candidate_id
-         JOIN answers ans ON ans.attempt_id = at.id
-         JOIN questions q ON q.id = ans.question_id
-         LEFT JOIN subjects s_subj ON s_subj.id = q.subject_id
-         WHERE u.institution_id = $1 AND u.role = 'candidate' AND at.submitted_at IS NOT NULL
+           ) AS raw_subject,
+           COALESCE((elem->>'marks')::numeric, 4) AS q_marks,
+           CASE 
+             WHEN (elem->>'isAttempted')::boolean = true OR elem->>'selectedOption' IS NOT NULL THEN 1
+             ELSE 0
+           END AS is_attempted,
+           CASE 
+             WHEN (elem->>'isCorrect')::boolean = true THEN 1
+             ELSE 0
+           END AS is_correct,
+           false AS neg_enabled,
+           0 AS neg_penalty
+         FROM test_attempts ta
+         JOIN users u ON u.id = ta.student_id
+         LEFT JOIN batches b ON b.id = u.batch_id
+         CROSS JOIN LATERAL jsonb_array_elements(CASE WHEN jsonb_typeof(ta.question_responses) = 'array' THEN ta.question_responses ELSE '[]'::jsonb END) AS elem
+         ${taWhere} AND ta.submitted_at IS NOT NULL
+       ),
+       scored_questions AS (
+         SELECT 
+           test_id,
+           CASE 
+             WHEN LOWER(raw_subject) LIKE '%phys%' THEN 'Physics'
+             WHEN LOWER(raw_subject) LIKE '%chem%' THEN 'Chemistry'
+             WHEN LOWER(raw_subject) LIKE '%math%' THEN 'Mathematics'
+             WHEN LOWER(raw_subject) LIKE '%botany%' THEN 'Botany'
+             WHEN LOWER(raw_subject) LIKE '%zoology%' THEN 'Zoology'
+             WHEN LOWER(raw_subject) LIKE '%bio%' THEN 'Biology'
+             ELSE raw_subject
+           END AS subject,
+           q_marks,
+           is_attempted,
+           is_correct,
+           CASE 
+             WHEN is_correct = 1 THEN q_marks
+             WHEN is_attempted = 1 AND neg_enabled THEN -neg_penalty
+             ELSE 0
+           END AS marks_earned
+         FROM attempt_questions
        )
        SELECT 
          subject,
-         COALESCE(ROUND(AVG(percentage), 2), 0) AS avg_score,
-         COUNT(DISTINCT test_id)::int AS tests_count
-       FROM combined_subject_attempts
+         COUNT(DISTINCT test_id)::int AS tests_count,
+         COUNT(*)::int AS total_questions,
+         SUM(is_attempted)::int AS attempted_count,
+         SUM(is_correct)::int AS correct_count,
+         COALESCE(ROUND(
+           (SUM(is_correct)::numeric / NULLIF(SUM(is_attempted), 0)) * 100, 
+           1
+         ), 0) AS accuracy_rate,
+         COALESCE(ROUND(
+           (GREATEST(0, SUM(marks_earned))::numeric / NULLIF(SUM(q_marks), 0)) * 100, 
+           1
+         ), 0) AS avg_score
+       FROM scored_questions
        GROUP BY subject
-       LIMIT 5`,
-      [instId]
-    ).catch(() => ({ rows: [] }))
+       ORDER BY total_questions DESC
+       LIMIT 8`,
+      params
+    ).catch((err) => {
+      console.error('[getInstitutionAnalytics] subjectAgg error:', err);
+      return { rows: [] };
+    })
   ]);
 
   const stats = aggRes.rows[0] || {};
@@ -1440,14 +1527,8 @@ export const getInstitutionAnalytics = asyncHandler(async (req, res) => {
       active_participating_students: stats.active_students || 0,
       total_attempts: stats.total_test_attempts || 0,
       participation_rate: participationRate,
-      batch_performance: batchAggRes.rows,
-      subject_performance: subjectAggRes.rows && subjectAggRes.rows.length > 0
-        ? subjectAggRes.rows
-        : [
-            { subject: 'Physics', avg_score: 82.4, accuracy_rate: '86%', tests_count: 12 },
-            { subject: 'Chemistry', avg_score: 84.8, accuracy_rate: '89%', tests_count: 12 },
-            { subject: 'Biology / Math', avg_score: 86.2, accuracy_rate: '91%', tests_count: 10 },
-          ],
+      batch_performance: batchAggRes.rows || [],
+      subject_performance: subjectAggRes.rows || [],
     },
   });
 });
