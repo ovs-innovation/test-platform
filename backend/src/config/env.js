@@ -84,9 +84,11 @@ export const env = {
     user: process.env.SMTP_USER || '',
     pass: process.env.SMTP_PASS || '',
     from: process.env.SMTP_FROM || 'EDVEDUM Academy <noreply@edvedum.com>',
+    supportEmail: process.env.SUPPORT_EMAIL || 'support@edvedum.com',
     resendApiKey: process.env.RESEND_API_KEY || '',
     brevoApiKey: process.env.BREVO_API_KEY || '',
   },
+  supportEmail: process.env.SUPPORT_EMAIL || 'support@edvedum.com',
 
   otpExpiresMinutes: parseInt(process.env.OTP_EXPIRES_MINUTES || '10', 10),
   otpResendLimit: parseInt(process.env.OTP_RESEND_LIMIT || '3', 10),

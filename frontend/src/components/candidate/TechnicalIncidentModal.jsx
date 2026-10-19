@@ -236,7 +236,7 @@ export default function TechnicalIncidentModal({
                 Technical Help &amp; Support
               </h2>
               <p id={dialogDescId} className="text-[11px] text-slate-500 dark:text-slate-400">
-                Report technical glitches directly to invigilators · Answers &amp; Timer Safe
+                Direct alert to admin (support@edvedum.com) · Answers &amp; Timer Safe
               </p>
             </div>
           </div>
@@ -267,7 +267,7 @@ export default function TechnicalIncidentModal({
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto mt-1">
                   {offlineQueued
                     ? 'Report recorded in offline queue. It will automatically upload as soon as your internet restores.'
-                    : 'Our live exam invigilators have been notified. Hardware & network diagnostics were recorded.'}
+                    : 'Our live exam invigilators and support desk (support@edvedum.com) have been notified. Hardware & network diagnostics were recorded.'}
                 </p>
               </div>
 
@@ -441,7 +441,7 @@ export default function TechnicalIncidentModal({
               <div className="flex items-start gap-2 rounded-xl bg-slate-100 dark:bg-slate-800/50 p-2.5 text-[11px] text-slate-600 dark:text-slate-400 border border-slate-200/60 dark:border-slate-800">
                 <AlertCircle className="h-4 w-4 shrink-0 mt-0.5 text-blue-600 dark:text-blue-400" />
                 <span>
-                  <strong>Important:</strong> Reporting a technical issue will <em>never</em> submit or penalize your exam. Your timer continues and your answers remain intact.
+                  <strong>Admin Notification:</strong> Submitting sends an instant alert directly to <strong className="text-blue-600 dark:text-blue-400">support@edvedum.com</strong>. Reporting a technical issue will <em>never</em> submit or penalize your exam. Your timer continues and your answers remain intact.
                 </span>
               </div>
 

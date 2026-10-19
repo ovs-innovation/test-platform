@@ -25,6 +25,8 @@ import {
   INCIDENT_CATEGORIES,
 } from '../../src/services/incidentService.js';
 import { reportIncidentSchema, updateIncidentStatusSchema } from '../../src/validators/schemas.js';
+import { incidentAlertEmailTemplate } from '../../src/utils/emailTemplates.js';
+import { sendIncidentAlertEmail } from '../../src/utils/email.js';
 
 const callHandler = (handler, req, res, next) =>
   new Promise((resolve) => {
@@ -629,6 +631,71 @@ describe('Live Exam Technical Incident Reporting System', () => {
       expect(result.data.success).toBe(true);
       expect(result.data.incident.status).toBe('resolved');
       expect(result.data.incident.resolution_category).toBe('answers_synced');
+    });
+  });
+
+  // =========================================================================
+  // 6. Direct Admin Notification Email (support@edvedum.com)
+  // =========================================================================
+  describe('Direct Admin Notification Email (support@edvedum.com)', () => {
+    it('generates an email template targeting support with full incident and student context', () => {
+      const email = incidentAlertEmailTemplate({
+        incidentId: 999,
+        incidentKey: 'inc_key_123',
+        candidateName: 'Saurabh Sharma',
+        candidateEmail: 'saurabh@edvedum.com',
+        rollNumber: 'DRON-2026-001',
+        assessmentTitle: 'NEET Full Mock 2026',
+        attemptId: 42,
+        category: 'NETWORK_DISCONNECTED',
+        categoryLabel: 'Internet / Connectivity',
+        severity: 'high',
+        questionNumber: 15,
+        description: 'Screen froze while clicking Save & Next',
+        isBlocking: true,
+        clientTimestamp: '2026-10-19T10:30:00Z',
+        adminUrl: 'https://edvedum.com/admin/incidents?search=INC-999',
+      });
+
+      // Subject line
+      expect(email.subject).toContain('[HIGH INCIDENT]');
+      expect(email.subject).toContain('Internet / Connectivity');
+      expect(email.subject).toContain('Saurabh Sharma');
+      expect(email.subject).toContain('NEET Full Mock 2026');
+
+      // HTML body details
+      expect(email.html).toContain('INC-999');
+      expect(email.html).toContain('HIGH SEVERITY');
+      expect(email.html).toContain('Saurabh Sharma');
+      expect(email.html).toContain('DRON-2026-001');
+      expect(email.html).toContain('saurabh@edvedum.com');
+      expect(email.html).toContain('NEET Full Mock 2026');
+      expect(email.html).toContain('Question #15');
+      expect(email.html).toContain('Screen froze while clicking Save & Next');
+      expect(email.html).toContain('YES — Candidate is blocked from answering');
+      expect(email.html).toContain('https://edvedum.com/admin/incidents?search=INC-999');
+      expect(email.html).toContain('Open Admin Panel &amp; Resolve Issue');
+
+      // Text fallback
+      expect(email.text).toContain('[HIGH INCIDENT]');
+      expect(email.text).toContain('Candidate: Saurabh Sharma');
+      expect(email.text).toContain('Roll: DRON-2026-001');
+      expect(email.text).toContain('https://edvedum.com/admin/incidents?search=INC-999');
+    });
+
+    it('handles optional fields gracefully without undefined or null tokens', () => {
+      const email = incidentAlertEmailTemplate({
+        incidentId: 1001,
+        category: 'QUESTION_LOAD_FAILED',
+      });
+
+      expect(email.subject).toContain('[MEDIUM INCIDENT]');
+      expect(email.subject).toContain('QUESTION LOAD FAILED');
+      expect(email.subject).toContain('Candidate');
+      expect(email.html).toContain('INC-1001');
+      expect(email.html).toContain('No (Non-blocking)');
+      expect(email.html).not.toContain('undefined');
+      expect(email.html).not.toContain('null');
     });
   });
 });

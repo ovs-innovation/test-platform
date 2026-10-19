@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import { query } from '../config/db.js';
 import { ApiError } from '../utils/ApiError.js';
 import { logger } from '../utils/logger.js';
+import { sendIncidentAlertEmail } from '../utils/email.js';
 
 // Approved Category Definitions
 export const INCIDENT_CATEGORIES = {
@@ -238,7 +239,9 @@ export async function ingestIncident({
 }) {
   // 1. Validate Attempt & Derive trusted tenant and assessment context
   const attemptRes = await query(
-    `SELECT at.id, at.assessment_id, at.candidate_id, at.status, u.institution_id, u.name AS candidate_name, a.title AS assessment_title
+    `SELECT at.id, at.assessment_id, at.candidate_id, at.status, u.institution_id,
+            u.name AS candidate_name, u.email AS candidate_email, u.roll_number,
+            a.title AS assessment_title
      FROM attempts at
      JOIN users u ON u.id = at.candidate_id
      JOIN assessments a ON a.id = at.assessment_id
@@ -308,17 +311,24 @@ export async function ingestIncident({
     const newCount = parent.occurrence_count + 1;
     const newSeverity = calculateSeverity(category, newCount, safeDiagnostics);
 
-    // Update parent occurrence count and last seen
+    // Update parent occurrence count, last seen, and student message if provided
     const updatedParentRes = await query(
       `UPDATE exam_technical_incidents
        SET occurrence_count = $1,
            severity = $2,
            last_seen_at = NOW(),
            last_diagnostics = $3,
+           last_student_message = COALESCE($4, last_student_message),
            updated_at = NOW()
-       WHERE id = $4
+       WHERE id = $5
        RETURNING *`,
-      [newCount, newSeverity, JSON.stringify(safeDiagnostics), parent.id]
+      [
+        newCount,
+        newSeverity,
+        JSON.stringify(safeDiagnostics),
+        cleanDescription || null,
+        parent.id,
+      ]
     );
 
     const updatedParent = updatedParentRes.rows[0];
@@ -351,6 +361,31 @@ export async function ingestIncident({
       });
     }
 
+    // If student reported or escalated, dispatch notification email directly to support@edvedum.com (non-blocking)
+    if (source === 'student' || safeDiagnostics?.reportedByStudent || newSeverity === 'critical' || newSeverity === 'high') {
+      sendIncidentAlertEmail({
+        incidentId: parent.id,
+        incidentKey,
+        candidateName: attempt.candidate_name,
+        candidateEmail: attempt.candidate_email,
+        rollNumber: attempt.roll_number,
+        assessmentTitle: attempt.assessment_title,
+        attemptId,
+        category,
+        categoryLabel: safeDiagnostics.categoryLabel,
+        severity: newSeverity,
+        questionNumber: safeDiagnostics.questionNumber,
+        description: cleanDescription,
+        isBlocking: Boolean(safeDiagnostics.isBlocking),
+        clientTimestamp: safeDiagnostics.clientTimestamp,
+      }).catch((emailErr) => {
+        logger.warn('[incidentService] Non-blocking incident re-report alert email failed:', {
+          error: emailErr.message,
+          incidentId: parent.id,
+        });
+      });
+    }
+
     return {
       isNew: false,
       isDuplicateEvent: false,
@@ -365,9 +400,9 @@ export async function ingestIncident({
   const insertParentRes = await query(
     `INSERT INTO exam_technical_incidents
        (incident_key, attempt_id, assessment_id, candidate_id, institution_id, question_id,
-        category, severity, status, source, title, description, occurrence_count,
+        category, severity, status, source, title, description, last_student_message, occurrence_count,
         first_seen_at, last_seen_at, last_diagnostics, created_at, updated_at)
-     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'new', $9, $10, $11, 1, NOW(), NOW(), $12, NOW(), NOW())
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, 'new', $9, $10, $11, $12, 1, NOW(), NOW(), $13, NOW(), NOW())
      RETURNING *`,
     [
       incidentKey,
@@ -381,6 +416,7 @@ export async function ingestIncident({
       source,
       title,
       cleanDescription,
+      source === 'student' || safeDiagnostics.reportedByStudent ? cleanDescription : null,
       JSON.stringify(safeDiagnostics),
     ]
   );
@@ -412,6 +448,29 @@ export async function ingestIncident({
     toStatus: 'new',
     notes: `Incident logged (${initialSeverity.toUpperCase()}) - ${title}`,
     metadata: { source, category, question_id: questionId },
+  });
+
+  // Dispatch background email alert directly to support@edvedum.com (non-blocking)
+  sendIncidentAlertEmail({
+    incidentId: newIncident.id,
+    incidentKey: newIncident.incident_key,
+    candidateName: attempt.candidate_name,
+    candidateEmail: attempt.candidate_email,
+    rollNumber: attempt.roll_number,
+    assessmentTitle: attempt.assessment_title,
+    attemptId,
+    category,
+    categoryLabel: safeDiagnostics.categoryLabel,
+    severity: initialSeverity,
+    questionNumber: safeDiagnostics.questionNumber,
+    description: cleanDescription,
+    isBlocking: Boolean(safeDiagnostics.isBlocking),
+    clientTimestamp: safeDiagnostics.clientTimestamp,
+  }).catch((emailErr) => {
+    logger.warn('[incidentService] Non-blocking incident alert email delivery failed:', {
+      error: emailErr.message,
+      incidentId: newIncident.id,
+    });
   });
 
   return {

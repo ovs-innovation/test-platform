@@ -6,6 +6,7 @@ import {
   completionEmailTemplate,
   studentCredentialsEmailTemplate,
   studentIdEmailTemplate,
+  incidentAlertEmailTemplate,
 } from './emailTemplates.js';
 
 let transporter;
@@ -246,6 +247,68 @@ export const sendStudentIdEmail = ({ to, name, email, studentId, loginUrl }) => 
       loginUrl: loginUrl || 'https://edvedum.com/student-login',
     });
     sendEmail({ to: to || email, ...tpl }).then(resolve).catch(reject);
+  });
+};
+
+/**
+ * Send Live Exam Technical Incident Alert directly to support@edvedum.com
+ */
+export const sendIncidentAlertEmail = ({
+  incidentId,
+  incidentKey,
+  candidateName,
+  candidateEmail,
+  rollNumber,
+  assessmentTitle,
+  attemptId,
+  category,
+  categoryLabel,
+  severity = 'medium',
+  questionNumber,
+  description,
+  isBlocking = false,
+  clientTimestamp,
+  adminUrl,
+}) => {
+  return new Promise((resolve, reject) => {
+    const to = process.env.SUPPORT_EMAIL || 'support@edvedum.com';
+    const rawClientUrl =
+      (env.inviteBaseUrl || '').split(',')[0].trim() ||
+      (env.clientUrl || '').split(',')[0].trim() ||
+      'https://edvedum.com';
+    const targetAdminUrl =
+      adminUrl ||
+      `${rawClientUrl}/admin/incidents?search=${incidentId ? `INC-${incidentId}` : ''}`;
+
+    const tpl = incidentAlertEmailTemplate({
+      incidentId,
+      incidentKey,
+      candidateName,
+      candidateEmail,
+      rollNumber,
+      assessmentTitle,
+      attemptId,
+      category,
+      categoryLabel,
+      severity,
+      questionNumber,
+      description,
+      isBlocking,
+      clientTimestamp,
+      adminUrl: targetAdminUrl,
+    });
+
+    console.log(`[incidentService] Initiating incident alert email to ${to} for incident ${incidentId ? `INC-${incidentId}` : incidentKey}...`);
+
+    sendEmail({ to, ...tpl })
+      .then((res) => {
+        console.log(`[incidentService] Support notification email successfully dispatched to ${to} for incident ${incidentId ? `INC-${incidentId}` : incidentKey}`);
+        resolve(res);
+      })
+      .catch((err) => {
+        console.error(`[incidentService WARNING] Failed to deliver incident alert email to ${to}:`, err.message);
+        reject(err);
+      });
   });
 };
 

@@ -254,4 +254,159 @@ export const studentIdEmailTemplate = ({ name, email, studentId, loginUrl }) => 
   text: `Hello ${name},\n\nYour EDVEDUM Student ID has been assigned:\nStudent ID: ${studentId}\nEmail: ${email}\n\nLogin URL: ${loginUrl}\nUse your Student ID and the password you set during registration to log in.`,
 });
 
+export const incidentAlertEmailTemplate = ({
+  incidentId,
+  incidentKey,
+  candidateName,
+  candidateEmail,
+  rollNumber,
+  assessmentTitle,
+  attemptId,
+  category,
+  categoryLabel,
+  severity = 'medium',
+  questionNumber,
+  description,
+  isBlocking = false,
+  clientTimestamp,
+  adminUrl,
+}) => {
+  const normSeverity = (severity || 'medium').toLowerCase();
+  const isHighOrCritical = normSeverity === 'critical' || normSeverity === 'high';
+  const badgeBg =
+    normSeverity === 'critical'
+      ? '#dc2626'
+      : normSeverity === 'high'
+      ? '#ea580c'
+      : normSeverity === 'medium'
+      ? '#d97706'
+      : '#2563eb';
+
+  const resolvedCategoryLabel =
+    categoryLabel ||
+    (category ? String(category).replace(/_/g, ' ') : 'Technical Glitch / Issue');
+
+  const displayRef = incidentId
+    ? `INC-${incidentId}`
+    : incidentKey
+    ? `REF-${String(incidentKey).slice(0, 8).toUpperCase()}`
+    : 'LIVE-INCIDENT';
+
+  const targetAdminUrl = adminUrl || 'https://edvedum.com/admin/incidents';
+
+  return {
+    subject: `[${normSeverity.toUpperCase()} INCIDENT] ${resolvedCategoryLabel} - ${candidateName || 'Candidate'} (${assessmentTitle || 'Exam'})`,
+    html: layout(`
+      <div style="margin-bottom:20px;padding:14px 18px;background:${isHighOrCritical ? '#fef2f2' : '#eff6ff'};border-left:4px solid ${badgeBg};border-radius:8px;">
+        <div style="margin-bottom:6px;">
+          <span style="display:inline-block;padding:3px 10px;background:${badgeBg};color:#ffffff;font-size:11px;font-weight:800;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px;">
+            ${normSeverity.toUpperCase()} SEVERITY
+          </span>
+          <span style="display:inline-block;margin-left:6px;padding:3px 10px;background:#0f172a;color:#ffffff;font-size:11px;font-weight:700;border-radius:4px;letter-spacing:0.5px;font-family:monospace;">
+            ${displayRef}
+          </span>
+        </div>
+        <h2 style="margin:8px 0 4px;color:#0f172a;font-size:18px;font-weight:700;">
+          Live Test Technical Issue Reported
+        </h2>
+        <p style="margin:0;color:#64748b;font-size:13px;">
+          A student has reported an issue during an active test session. You can review diagnostics and resolve it directly from the Admin Panel.
+        </p>
+      </div>
+
+      <table width="100%" cellpadding="0" cellspacing="0" style="margin:20px 0;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;overflow:hidden;">
+        <tr>
+          <td style="padding:10px 14px;width:150px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Candidate Name:
+          </td>
+          <td style="padding:10px 14px;font-weight:700;color:#0f172a;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            ${candidateName || 'Candidate'}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Roll / Student ID:
+          </td>
+          <td style="padding:10px 14px;font-family:monospace;font-weight:700;color:#1B4FDB;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            ${rollNumber || 'N/A'}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Candidate Email:
+          </td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a;">
+            ${candidateEmail || 'N/A'}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Test / Assessment:
+          </td>
+          <td style="padding:10px 14px;font-weight:600;border-bottom:1px solid #e2e8f0;font-size:13px;color:#0f172a;">
+            ${assessmentTitle || 'Test Assessment'} (Attempt #${attemptId || 'N/A'})
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Issue Category:
+          </td>
+          <td style="padding:10px 14px;font-weight:700;color:#0f172a;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            ${resolvedCategoryLabel}
+          </td>
+        </tr>
+        ${questionNumber ? `
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Question Number:
+          </td>
+          <td style="padding:10px 14px;font-weight:700;color:#1B4FDB;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Question #${questionNumber}
+          </td>
+        </tr>` : ''}
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;border-bottom:1px solid #e2e8f0;font-size:13px;">
+            Exam Blocking:
+          </td>
+          <td style="padding:10px 14px;font-weight:700;border-bottom:1px solid #e2e8f0;font-size:13px;color:${isBlocking ? '#dc2626' : '#16a34a'};">
+            ${isBlocking ? '⚠️ YES — Candidate is blocked from answering' : 'No (Non-blocking)'}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:10px 14px;font-weight:600;color:#64748b;background:#f1f5f9;font-size:13px;">
+            Reported At:
+          </td>
+          <td style="padding:10px 14px;color:#64748b;font-size:13px;">
+            ${clientTimestamp || new Date().toISOString()}
+          </td>
+        </tr>
+      </table>
+
+      <div style="margin:20px 0;padding:16px;background:#ffffff;border:1px solid #cbd5e1;border-radius:8px;">
+        <span style="display:block;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;">
+          Student Description / Details:
+        </span>
+        <p style="margin:0;font-size:14px;color:#0f172a;line-height:1.6;white-space:pre-wrap;">${description || 'No additional comment provided by student.'}</p>
+      </div>
+
+      <div style="margin:28px 0 16px;text-align:center;">
+        <table cellpadding="0" cellspacing="0" style="margin:0 auto;">
+          <tr>
+            <td style="border-radius:8px;background:${BRAND};">
+              <a href="${targetAdminUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:14px 28px;color:#ffffff;font-size:15px;font-weight:700;text-decoration:none;border-radius:8px;">
+                Open Admin Panel &amp; Resolve Issue &rarr;
+              </a>
+            </td>
+          </tr>
+        </table>
+      </div>
+
+      <p style="margin:16px 0 0;color:#94a3b8;font-size:12px;text-align:center;word-break:break-all;">
+        Direct resolution link: <a href="${targetAdminUrl}" style="color:#1B4FDB;">${targetAdminUrl}</a>
+      </p>
+    `),
+    text: `[${normSeverity.toUpperCase()} INCIDENT] ${resolvedCategoryLabel}\nReference: ${displayRef}\nCandidate: ${candidateName || 'Candidate'} (${candidateEmail || 'N/A'}, Roll: ${rollNumber || 'N/A'})\nAssessment: ${assessmentTitle || 'Exam'} (Attempt: #${attemptId})\nBlocking: ${isBlocking ? 'YES' : 'NO'}\nReported: ${clientTimestamp || new Date().toISOString()}\n\nStudent Message:\n${description || 'None'}\n\nResolve in Admin Panel: ${targetAdminUrl}`,
+  };
+};
+
 
