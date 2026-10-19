@@ -1025,7 +1025,7 @@ export default function ExamScreen({ isSimulator = false }) {
     }
   };
 
-  const rollNo = String(user?.id || '0').padStart(6, '0');
+  const rollNo = user?.roll_number || user?.enrollmentId || user?.student_id || String(user?.id || '0').padStart(6, '0');
 
   const q = activeQuestions[current] || {
     id: current + 1,

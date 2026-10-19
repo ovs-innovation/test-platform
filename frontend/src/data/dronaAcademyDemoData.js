@@ -18,7 +18,7 @@ export const DRONA_INSTITUTION = {
   total_licenses: 200,
   used_licenses: 20,
   available_licenses: 180,
-  logo_url: '',
+  logo_url: '/edvedum/drona-academy-logo.svg',
   logoBadge: 'DRO',
   accentColor: '#4f46e5',
   contact_person: 'Dr. Arvind Sharma',

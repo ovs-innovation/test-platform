@@ -16,13 +16,16 @@ export async function seedDronaAcademy() {
     if (!instId) {
       const insInst = await query(
         `INSERT INTO institutions (
-          name, code, email, institution_type, package_name,
-          total_licenses, used_licenses, city, state, contact_person, contact_mobile, is_active
+          name, code, email, institution_type,
+          total_licenses, used_licenses, city, state, contact_person, contact_mobile,
+          logo_url, logo_badge, tagline, accent_color, password_hash, raw_password, is_active
         ) VALUES (
           'Drona Acadmy', 'DRON-2026', 'director@dronaacademy.edu.in', 'School / Coaching Institute',
-          'NEET Class 12 Personalised Test Series', 200, 20, 'Kota', 'Rajasthan',
-          'Dr. Arvind Sharma', '+91 98201 44521', true
-        ) RETURNING id`
+          200, 20, 'Kota', 'Rajasthan', 'Dr. Arvind Sharma', '+91 98201 44521',
+          '/edvedum/drona-academy-logo.svg', 'DRO', 'Premier NEET & Medical Entrance Academy · Kota',
+          '#4f46e5', $1, 'drona123', true
+        ) RETURNING id`,
+        [defaultPasswordHash]
       );
       instId = insInst.rows[0].id;
       console.log(`Created Institution: Drona Acadmy (ID: ${instId})`);
@@ -31,10 +34,15 @@ export async function seedDronaAcademy() {
         `UPDATE institutions SET
           total_licenses = 200,
           used_licenses = 20,
-          package_name = 'NEET Class 12 Personalised Test Series',
+          logo_url = '/edvedum/drona-academy-logo.svg',
+          logo_badge = 'DRO',
+          tagline = 'Premier NEET & Medical Entrance Academy · Kota',
+          accent_color = '#4f46e5',
+          password_hash = COALESCE(password_hash, $1),
+          raw_password = COALESCE(raw_password, 'drona123'),
           is_active = true
-        WHERE id = $1`,
-        [instId]
+        WHERE id = $2`,
+        [defaultPasswordHash, instId]
       );
       console.log(`Updated Institution: Drona Acadmy (ID: ${instId})`);
     }
@@ -152,14 +160,16 @@ export async function seedDronaAcademy() {
 
       // Upsert student_profiles
       await query(
-        `INSERT INTO student_profiles (user_id, roll_number, target_exam, class_level, phone)
-         VALUES ($1, $2, 'NEET', $3, $4)
+        `INSERT INTO student_profiles (user_id, roll_number, target_exam, class, phone, institution_id, batch_id)
+         VALUES ($1, $2, 'NEET', $3, $4, $5, $6)
          ON CONFLICT (user_id) DO UPDATE SET
            roll_number = EXCLUDED.roll_number,
            target_exam = EXCLUDED.target_exam,
-           class_level = EXCLUDED.class_level,
-           phone = EXCLUDED.phone`,
-        [studentId, s.roll, s.class_level, s.mobile]
+           class = EXCLUDED.class,
+           phone = EXCLUDED.phone,
+           institution_id = EXCLUDED.institution_id,
+           batch_id = EXCLUDED.batch_id`,
+        [studentId, s.roll, s.class_level, s.mobile, instId, batchId]
       );
 
       // Upsert test_attempt for rankings and analytics
@@ -175,20 +185,35 @@ export async function seedDronaAcademy() {
       await query(
         `INSERT INTO test_attempts (
           test_id, student_id, score, max_marks, percentage, percentile,
-          all_india_rank, question_responses, submitted_at, status
-        ) VALUES ($1, $2, $3, 720, $4, $5, $6, $7, $8, 'completed')
+          all_india_rank, institute_rank, question_responses, subject_wise_score, submitted_at
+        ) VALUES ($1, $2, $3, 720, $4, $5, $6, $7, $8, $9, $10)
         ON CONFLICT (test_id, student_id) DO UPDATE SET
           score = EXCLUDED.score,
           max_marks = EXCLUDED.max_marks,
           percentage = EXCLUDED.percentage,
           percentile = EXCLUDED.percentile,
           all_india_rank = EXCLUDED.all_india_rank,
+          institute_rank = EXCLUDED.institute_rank,
           question_responses = EXCLUDED.question_responses,
+          subject_wise_score = EXCLUDED.subject_wise_score,
           submitted_at = EXCLUDED.submitted_at`,
-        [testId, studentId, s.score, percentage, s.pct, s.air, JSON.stringify(responses), submittedAt]
+        [testId, studentId, s.score, percentage, s.pct, s.air, count + 1, JSON.stringify(responses), JSON.stringify(responses), submittedAt]
       );
 
       count++;
+    }
+
+    // 6. Assign Tests to Drona Acadmy & its Batches
+    const testsToAssign = [108, 126, 127];
+    for (const tId of testsToAssign) {
+      await query(
+        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+         SELECT $1, 'institution', $2
+         WHERE NOT EXISTS (
+           SELECT 1 FROM test_assignments WHERE test_id = $1 AND assigned_to_type = 'institution' AND assigned_to_id = $2
+         )`,
+        [tId, instId]
+      );
     }
 
     console.log(`\nSuccessfully seeded ${count} students and performance records for Drona Acadmy!`);
