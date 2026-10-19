@@ -274,32 +274,40 @@ jobs:
               log "Restored backend/.env"
             fi
 
-            # Unconditionally configure production to use the VPS internal PostgreSQL container
-            log "Configuring VPS to connect to internal Docker Postgres (interview_platform)..."
-            for ENV_FILE in ".env" "backend/.env"; do
+            # Ensure active Neon database credentials are used on VPS
+            TARGET_NEON_HOST="ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech"
+            TARGET_DATABASE_URL="postgresql://neondb_owner:npg_pnKv5TdUQ7fg@ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require"
+
+            for ENV_FILE in "backend/.env" ".env"; do
               if [ -f "$ENV_FILE" ]; then
-                sed -i '/ep-weathered-heart/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
-                sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
-                echo "DATABASE_URL=postgres://postgres:postgres@postgres:5432/interview_platform" >> "$ENV_FILE"
-                echo "PGHOST=postgres" >> "$ENV_FILE"
+                CURRENT_HOST=$(grep "^PGHOST=" "$ENV_FILE" | cut -d'=' -f2- | tr -d ' "\r\n' || echo "")
+                log "Checking $ENV_FILE (PGHOST=${CURRENT_HOST:-'none'})..."
+                if [ "$CURRENT_HOST" != "$TARGET_NEON_HOST" ]; then
+                  log "Updating $ENV_FILE to active Neon host $TARGET_NEON_HOST..."
+                  sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
+                  sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
+                  echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
+                  echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
+                  echo "PGPORT=5432" >> "$ENV_FILE"
+                  echo "PGUSER=neondb_owner" >> "$ENV_FILE"
+                  echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
+                  echo "PGDATABASE=neondb" >> "$ENV_FILE"
+                  log "Successfully updated $ENV_FILE with active Neon credentials."
+                fi
+              else
+                log "Creating $ENV_FILE with active Neon credentials..."
+                echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
+                echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
                 echo "PGPORT=5432" >> "$ENV_FILE"
-                echo "PGUSER=postgres" >> "$ENV_FILE"
-                echo "PGPASSWORD=postgres" >> "$ENV_FILE"
-                echo "PGDATABASE=interview_platform" >> "$ENV_FILE"
-                log "Configured $ENV_FILE for internal VPS Postgres."
+                echo "PGUSER=neondb_owner" >> "$ENV_FILE"
+                echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
+                echo "PGDATABASE=neondb" >> "$ENV_FILE"
               fi
             done
-
-            # Ensure internal Postgres service is running and healthy
-            log "Ensuring internal Postgres service is up..."
-            docker compose up -d postgres
-            sleep 3
-            docker compose exec -T postgres pg_isready -U postgres -d interview_platform || true
 
             # Ensure MSG91 credentials exist in backend/.env on VPS
             if [ -f "backend/.env" ]; then

@@ -101,23 +101,27 @@ export const updateSettings = asyncHandler(async (req, res) => {
 // ─── Landing Content (Offers & Achievements) ─────────────────────────────────
 
 export async function getLandingContentHelper() {
-  const result = await query(
-    `SELECT key, value FROM settings WHERE key IN ('homepage_achievements', 'homepage_offers')`
-  );
-  const map = Object.fromEntries(result.rows.map((r) => [r.key, r.value]));
-
   let achievements = DEFAULT_ACHIEVEMENTS;
   let offers = DEFAULT_OFFERS;
 
-  if (map.homepage_achievements) {
-    try {
-      achievements = JSON.parse(map.homepage_achievements);
-    } catch (_) {}
-  }
-  if (map.homepage_offers) {
-    try {
-      offers = JSON.parse(map.homepage_offers);
-    } catch (_) {}
+  try {
+    const result = await query(
+      `SELECT key, value FROM settings WHERE key IN ('homepage_achievements', 'homepage_offers')`
+    );
+    const map = Object.fromEntries(result.rows.map((r) => [r.key, r.value]));
+
+    if (map.homepage_achievements) {
+      try {
+        achievements = JSON.parse(map.homepage_achievements);
+      } catch (_) {}
+    }
+    if (map.homepage_offers) {
+      try {
+        offers = JSON.parse(map.homepage_offers);
+      } catch (_) {}
+    }
+  } catch (err) {
+    // Graceful fallback to default achievements and offers when database is unavailable or quota exceeded
   }
 
   return { achievements, offers };
@@ -262,23 +266,27 @@ export const deleteCoupon = asyncHandler(async (req, res) => {
 
 export const listPublicCoupons = asyncHandler(async (req, res) => {
   const { test_series_id } = req.query;
-  let sql = `
-    SELECT c.id, c.code, c.discount_type, c.discount_value, c.valid_until, c.test_series_id,
-           ts.title AS test_series_title
-    FROM coupons c
-    LEFT JOIN test_series ts ON c.test_series_id = ts.id
-    WHERE c.is_active = true
-      AND (c.valid_until IS NULL OR c.valid_until > NOW())
-      AND (c.max_uses IS NULL OR c.used_count < c.max_uses)
-  `;
-  const params = [];
-  if (test_series_id) {
-    sql += ` AND (c.test_series_id IS NULL OR c.test_series_id = $1)`;
-    params.push(Number(test_series_id));
+  try {
+    let sql = `
+      SELECT c.id, c.code, c.discount_type, c.discount_value, c.valid_until, c.test_series_id,
+             ts.title AS test_series_title
+      FROM coupons c
+      LEFT JOIN test_series ts ON c.test_series_id = ts.id
+      WHERE c.is_active = true
+        AND (c.valid_until IS NULL OR c.valid_until > NOW())
+        AND (c.max_uses IS NULL OR c.used_count < c.max_uses)
+    `;
+    const params = [];
+    if (test_series_id) {
+      sql += ` AND (c.test_series_id IS NULL OR c.test_series_id = $1)`;
+      params.push(Number(test_series_id));
+    }
+    sql += ` ORDER BY c.created_at DESC LIMIT 10`;
+    const result = await query(sql, params);
+    res.json({ coupons: result.rows });
+  } catch (err) {
+    res.json({ coupons: [] });
   }
-  sql += ` ORDER BY c.created_at DESC LIMIT 10`;
-  const result = await query(sql, params);
-  res.json({ coupons: result.rows });
 });
 
 export const validateCoupon = asyncHandler(async (req, res) => {
