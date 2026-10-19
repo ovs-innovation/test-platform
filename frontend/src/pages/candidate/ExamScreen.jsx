@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, lazy, Suspense } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { attemptService, aiTestService, adminService } from '../../lib/services.js';
 import { useProctoring } from '../../hooks/useProctoring.js';
@@ -14,7 +14,7 @@ import {
 } from '../../lib/examPalette.js';
 import { Skeleton, Spinner } from '../../components/ui.jsx';
 import Modal from '../../components/Modal.jsx';
-import CodeEditor from '../../components/CodeEditor.jsx';
+const CodeEditor = lazy(() => import('../../components/CodeEditor.jsx'));
 import { useToast } from '../../context/ToastContext.jsx';
 import { useAuth } from '../../context/AuthContext.jsx';
 import AssessmentBranding from '../../components/candidate/AssessmentBranding.jsx';
@@ -1206,9 +1206,8 @@ export default function ExamScreen({ isSimulator = false }) {
 
       <header className="nta-bar sticky top-0 z-30 shadow-xs">
         <div className="flex items-center justify-between gap-3 px-3 py-1.5 sm:px-4 sm:py-2 min-h-[50px] max-w-full overflow-hidden">
-          {/* Assessment Title & Branding - Graceful truncation */}
-          <div className="flex items-center gap-2.5 min-w-0 flex-1 max-w-[42%] lg:max-w-[48%]">
-            <AssessmentBranding variant="cbt" customInstitution={institutionBranding || meta?.institution} />
+          {/* Left: Assessment Title & Candidate info */}
+          <div className="flex items-center gap-2.5 min-w-0 flex-1 max-w-[35%]">
             <div className="min-w-0 truncate">
               <p className="truncate text-xs sm:text-sm font-bold leading-tight text-white">{meta?.title}</p>
               <p className="truncate text-[11px] sm:text-xs text-blue-100 leading-tight">
@@ -1218,36 +1217,13 @@ export default function ExamScreen({ isSimulator = false }) {
             </div>
           </div>
 
-          {/* Action Controls - Guaranteed Single Row (No Wrap) */}
-          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Top Bar Quick Language Switcher */}
-            <div className="flex items-center rounded border border-white/30 bg-black/20 p-0.5 text-xs text-white shrink-0">
-              <span className="hidden md:inline px-1 text-[11px] font-bold text-blue-200">Lang:</span>
-              <button
-                type="button"
-                onClick={() => handleLanguageChange('en')}
-                className={`px-1.5 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer ${
-                  examLanguage === 'en'
-                    ? 'bg-white text-[#1a4480] shadow-xs'
-                    : 'text-white hover:text-blue-100'
-                }`}
-                title="Switch test language to English"
-              >
-                EN
-              </button>
-              <button
-                type="button"
-                onClick={() => handleLanguageChange('hi')}
-                className={`px-1.5 py-0.5 text-[11px] font-extrabold rounded transition cursor-pointer flex items-center gap-1 ${
-                  examLanguage === 'hi'
-                    ? 'bg-white text-[#1a4480] shadow-xs'
-                    : 'text-white hover:text-blue-100'
-                }`}
-                title="Switch test language to Hindi"
-              >
-                <span>हिन्दी</span>
-              </button>
-            </div>
+          {/* Middle: Institute Logo */}
+          <div className="flex items-center justify-center shrink-0 px-2 sm:px-4">
+            <AssessmentBranding variant="cbt" customInstitution={institutionBranding || meta?.institution} />
+          </div>
+
+          {/* Right: Action Controls (Language switch handled at question area) */}
+          <div className="flex items-center justify-end gap-1.5 sm:gap-2 shrink-0">
 
             {/* Student Voluntary Local Screen Recording Control */}
             {!isSimulatorActive && attemptId && !attemptId.startsWith('ai-') && (
@@ -1684,11 +1660,13 @@ export default function ExamScreen({ isSimulator = false }) {
           {q.question_type === 'coding' && (
             <div className="mt-5">
               <p className="mb-2 text-xs font-semibold text-slate-600">Language: JavaScript</p>
-              <CodeEditor
-                value={codingAnswers[q.id]?.code ?? q.starter_code ?? ''}
-                language="javascript"
-                onChange={(v) => saveCoding(q.id, v || '', 'javascript')}
-              />
+              <Suspense fallback={<div className="p-4 rounded-lg bg-slate-100 dark:bg-slate-800 text-xs text-slate-500">Loading code editor...</div>}>
+                <CodeEditor
+                  value={codingAnswers[q.id]?.code ?? q.starter_code ?? ''}
+                  language="javascript"
+                  onChange={(v) => saveCoding(q.id, v || '', 'javascript')}
+                />
+              </Suspense>
             </div>
           )}
 

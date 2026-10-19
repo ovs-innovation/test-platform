@@ -1,8 +1,60 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from 'react';
 import { studentService } from '../../lib/services.js';
-import { LoadingScreen, ErrorState, EmptyState, PageHeader } from '../../components/ui.jsx';
-import { Trophy, Award, Search, Sparkles, ChevronDown, Check, FileText } from 'lucide-react';
+import { LoadingScreen, ErrorState, EmptyState } from '../../components/ui.jsx';
+import { Award, Search, ChevronDown, Check } from 'lucide-react';
 import CompareWithTopper from '../../components/candidate/CompareWithTopper.jsx';
+
+/**
+ * Standard NEET Score Range to Predicted Rank Range Benchmark Matrix
+ */
+export const NEET_RANK_TIERS = [
+  { minScore: 672, maxScore: 720, minRank: 1,      maxRank: 10,       rangeStr: '1–10' },
+  { minScore: 650, maxScore: 671, minRank: 11,     maxRank: 100,      rangeStr: '11–100' },
+  { minScore: 630, maxScore: 649, minRank: 101,    maxRank: 500,      rangeStr: '101–500' },
+  { minScore: 616, maxScore: 629, minRank: 501,    maxRank: 1000,     rangeStr: '501–1,000' },
+  { minScore: 571, maxScore: 615, minRank: 1001,   maxRank: 5000,     rangeStr: '1,001–5,000' },
+  { minScore: 542, maxScore: 570, minRank: 5001,   maxRank: 10000,    rangeStr: '5,001–10,000' },
+  { minScore: 528, maxScore: 541, minRank: 10001,  maxRank: 20000,    rangeStr: '10,001–20,000' },
+  { minScore: 515, maxScore: 527, minRank: 20001,  maxRank: 30000,    rangeStr: '20,001–30,000' },
+  { minScore: 496, maxScore: 514, minRank: 30001,  maxRank: 50000,    rangeStr: '30,001–50,000' },
+  { minScore: 465, maxScore: 495, minRank: 50001,  maxRank: 100000,   rangeStr: '50,001–1,00,000' },
+  { minScore: 424, maxScore: 464, minRank: 100001, maxRank: 200000,   rangeStr: '1,00,001–2,00,000' },
+  { minScore: 0,   maxScore: 423, minRank: 200001, maxRank: 400000,   rangeStr: 'Above 2,00,000' },
+];
+
+/**
+ * Calculates exact rank in between the rank range based on student marks
+ */
+export function getExactRankDetails(score, totalMarks = 720, fallbackExactRank = null) {
+  if (score == null || isNaN(Number(score))) {
+    return { exactRank: null, rangeStr: '—', display: '—' };
+  }
+
+  const numScore = totalMarks && Number(totalMarks) !== 720
+    ? (Number(score) / Number(totalMarks)) * 720
+    : Number(score);
+
+  const tier = NEET_RANK_TIERS.find((t) => numScore >= t.minScore) || NEET_RANK_TIERS[NEET_RANK_TIERS.length - 1];
+
+  let exactRank = fallbackExactRank;
+  if (!exactRank) {
+    if (tier.minScore === 0) {
+      const deficit = Math.max(0, 423 - numScore);
+      exactRank = Math.min(tier.maxRank, 200000 + Math.round(deficit * 470) + 1);
+    } else {
+      const spanScore = tier.maxScore - tier.minScore;
+      const spanRank = tier.maxRank - tier.minRank;
+      const fractionFromTop = spanScore > 0 ? (tier.maxScore - numScore) / spanScore : 0;
+      exactRank = tier.minRank + Math.round(fractionFromTop * spanRank);
+    }
+  }
+
+  return {
+    exactRank,
+    rangeStr: tier.rangeStr,
+    display: `#${exactRank.toLocaleString()}`
+  };
+}
 
 function CustomAssessmentDropdown({ assessments, value, onChange }) {
   const [open, setOpen] = useState(false);
@@ -56,7 +108,6 @@ function CustomAssessmentDropdown({ assessments, value, onChange }) {
       {/* Popover Menu Dropdown */}
       {open && (
         <div className="absolute right-0 top-full mt-2 w-full min-w-[300px] sm:w-[380px] z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-2 space-y-1.5 animate-in fade-in zoom-in-95 duration-150">
-          {/* Search Filter */}
           {assessments.length > 4 && (
             <div className="relative p-1">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
@@ -70,7 +121,6 @@ function CustomAssessmentDropdown({ assessments, value, onChange }) {
             </div>
           )}
 
-          {/* Options Scroll List */}
           <div className="max-h-64 overflow-y-auto space-y-1 pr-1 custom-scrollbar">
             {filteredAssessments.length > 0 ? (
               filteredAssessments.map((a) => {
@@ -164,16 +214,17 @@ export default function Leaderboard() {
     return rows.filter((r) => r.name?.toLowerCase().includes(q));
   }, [rows, searchQuery]);
 
-  const top1 = rows.find((r) => r.rank === 1);
-  const top2 = rows.find((r) => r.rank === 2);
-  const top3 = rows.find((r) => r.rank === 3);
-
-  const totalTakers = rows.length;
-  const highestMarks = rows.length > 0 ? Math.max(...rows.map((r) => r.marks_obtained || 0)) : 0;
+  const highestMarks = rows.length > 0 ? Math.max(...rows.map((r) => Number(r.marks_obtained) || 0)) : 0;
   const averagePercentage =
     rows.length > 0
       ? Math.round(rows.reduce((acc, r) => acc + (Number(r.percentage) || 0), 0) / rows.length)
       : 0;
+
+  const yourRow = useMemo(() => rows.find((r) => r.is_you), [rows]);
+  const yourRankDetails = useMemo(() => {
+    if (!yourRow) return null;
+    return getExactRankDetails(yourRow.marks_obtained, yourRow.total_marks, yourRow.exact_rank);
+  }, [yourRow]);
 
   const getAvatarInitials = (name) => {
     if (!name) return 'ST';
@@ -219,13 +270,9 @@ export default function Leaderboard() {
         )}
       </div>
 
-      {/* 1. STATS BANNER */}
+      {/* 1. STATS BANNER (Total Candidates removed per user request) */}
       {rows.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
-            <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Candidates</p>
-            <p className="text-2xl font-extrabold text-slate-900 dark:text-white">{totalTakers}</p>
-          </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Highest Score</p>
             <p className="text-2xl font-extrabold text-amber-600 dark:text-amber-400">{highestMarks} pts</p>
@@ -236,9 +283,20 @@ export default function Leaderboard() {
           </div>
           <div className="p-4 bg-white dark:bg-[#0F172A] border border-slate-200/90 dark:border-slate-800 rounded-2xl space-y-1 shadow-xs">
             <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Your Rank</p>
-            <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
-              {data?.your_rank != null ? `#${data.your_rank}` : 'Unranked'}
-            </p>
+            {yourRankDetails?.exactRank != null ? (
+              <div className="flex items-baseline gap-2 flex-wrap">
+                <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
+                  #{yourRankDetails.exactRank.toLocaleString()}
+                </p>
+                <span className="text-xs font-bold text-slate-400">
+                  ({yourRankDetails.rangeStr})
+                </span>
+              </div>
+            ) : (
+              <p className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
+                Unranked
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -250,112 +308,13 @@ export default function Leaderboard() {
         />
       ) : (
         <>
-          {/* 2. TOP 3 PODIUM SHOWCASE - SAAS LIGHT MATCHED */}
-          <div className="grid gap-3 md:grid-cols-3 md:items-end">
-            {/* Rank 2 - Silver */}
-            {top2 ? (
-              <div className="order-2 md:order-1 flex flex-col items-center">
-                <div className="relative w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#111827] p-4 text-center shadow-2xs space-y-2">
-                  <span className="inline-flex rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-0.5 text-[10.5px] font-extrabold text-slate-700 dark:text-slate-300">
-                    🥈 RANK #2
-                  </span>
-
-                  <div className="flex justify-center pt-1">
-                    <div className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(top2.name)} text-base font-extrabold text-white ring-2 ring-slate-300 shadow-xs`}>
-                      {getAvatarInitials(top2.name)}
-                    </div>
-                  </div>
-
-                  <h3 className="font-extrabold text-slate-900 dark:text-white text-xs truncate" title={top2.name}>
-                    {top2.name} {top2.is_you && <span className="text-blue-600 font-bold">(You)</span>}
-                  </h3>
-
-                  <div className="flex items-center justify-center gap-1.5 text-xs">
-                    <span className="font-extrabold text-slate-800 dark:text-slate-200">{top2.marks_obtained}/{top2.total_marks} Marks</span>
-                    <span className="font-bold text-slate-500">({top2.percentage}%)</span>
-                  </div>
-
-                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-slate-400 rounded-full" style={{ width: `${top2.percentage}%` }} />
-                  </div>
-                </div>
-              </div>
-            ) : <div className="order-2 md:order-1" />}
-
-            {/* Rank 1 - Champion Gold */}
-            {top1 && (
-              <div className="order-1 md:order-2 flex flex-col items-center">
-                <div className="relative w-full rounded-xl border border-amber-300 dark:border-amber-700 bg-white dark:bg-[#111827] p-5 text-center shadow-md space-y-2.5">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-3.5 py-0.5 text-xs font-black text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                    👑 CHAMPION #1
-                  </span>
-
-                  <div className="flex justify-center pt-1">
-                    <div className={`flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(top1.name)} text-xl font-black text-white ring-4 ring-amber-400 shadow-md`}>
-                      {getAvatarInitials(top1.name)}
-                    </div>
-                  </div>
-
-                  <h3 className="font-black text-slate-900 dark:text-white text-sm truncate" title={top1.name}>
-                    {top1.name} {top1.is_you && <span className="text-blue-600 font-bold">(You)</span>}
-                  </h3>
-
-                  <div className="flex items-center justify-center gap-1.5 text-xs font-extrabold">
-                    <span className="text-amber-600 dark:text-amber-400">{top1.marks_obtained}/{top1.total_marks} Marks</span>
-                    <span className="text-slate-500">({top1.percentage}%)</span>
-                  </div>
-
-                  {top1.percentile != null && (
-                    <p className="text-[11px] font-bold text-emerald-600 dark:text-emerald-400">
-                      Top {100 - top1.percentile < 1 ? 1 : Math.round(100 - top1.percentile)}% · {top1.percentile}%ile
-                    </p>
-                  )}
-
-                  <div className="h-1.5 w-full bg-amber-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-amber-500 rounded-full" style={{ width: `${top1.percentage}%` }} />
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* Rank 3 - Bronze */}
-            {top3 ? (
-              <div className="order-3 flex flex-col items-center">
-                <div className="relative w-full rounded-xl border border-slate-200/90 dark:border-slate-800/90 bg-white dark:bg-[#111827] p-4 text-center shadow-2xs space-y-2">
-                  <span className="inline-flex rounded-full bg-amber-700/10 px-3 py-0.5 text-[10.5px] font-extrabold text-amber-700 dark:text-amber-400">
-                    🥉 RANK #3
-                  </span>
-
-                  <div className="flex justify-center pt-1">
-                    <div className={`flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(top3.name)} text-base font-extrabold text-white ring-2 ring-amber-700/50 shadow-xs`}>
-                      {getAvatarInitials(top3.name)}
-                    </div>
-                  </div>
-
-                  <h3 className="font-extrabold text-slate-900 dark:text-white text-xs truncate" title={top3.name}>
-                    {top3.name} {top3.is_you && <span className="text-blue-600 font-bold">(You)</span>}
-                  </h3>
-
-                  <div className="flex items-center justify-center gap-1.5 text-xs">
-                    <span className="font-extrabold text-slate-800 dark:text-slate-200">{top3.marks_obtained}/{top3.total_marks} Marks</span>
-                    <span className="font-bold text-slate-500">({top3.percentage}%)</span>
-                  </div>
-
-                  <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                    <div className="h-full bg-amber-700 rounded-full" style={{ width: `${top3.percentage}%` }} />
-                  </div>
-                </div>
-              </div>
-            ) : <div className="order-3" />}
-          </div>
-
-          {/* 3. LEADERBOARD TABLE */}
+          {/* 2. ALL CANDIDATE RANKINGS TABLE WITH EXACT RANK IN BETWEEN THE RANK */}
           <div className="saas-card overflow-hidden bg-white dark:bg-[#111827] border border-slate-200/90 dark:border-slate-800/90 rounded-xl space-y-3 p-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-100 dark:border-slate-800/60 pb-3">
               <div>
                 <h3 className="font-extrabold text-slate-900 dark:text-white text-sm">All Candidate Rankings</h3>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Showing {filteredRows.length} rankers sorted by score
+                  Showing {filteredRows.length} rankers sorted by score with exact ranks mapped to score ranges
                 </p>
               </div>
 
@@ -375,7 +334,7 @@ export default function Leaderboard() {
               <table className="w-full text-left text-xs">
                 <thead className="border-b border-slate-100 bg-slate-50 text-[10.5px] font-extrabold uppercase tracking-wider text-slate-500 dark:border-slate-800/60 dark:bg-slate-900/60 dark:text-slate-400">
                   <tr>
-                    <th className="px-3 py-2.5 w-16">Rank</th>
+                    <th className="px-3 py-2.5 w-40">Rank</th>
                     <th className="px-3 py-2.5">Candidate Name</th>
                     <th className="px-3 py-2.5">Marks Obtained</th>
                     <th className="px-3 py-2.5">Percentage</th>
@@ -384,46 +343,60 @@ export default function Leaderboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800/40">
-                  {filteredRows.map((r) => (
-                    <tr
-                      key={r.attempt_id}
-                      className={`transition-colors ${
-                        r.is_you
-                          ? 'bg-blue-50/80 dark:bg-blue-950/40 font-bold'
-                          : 'hover:bg-slate-50/80 dark:hover:bg-slate-900/40'
-                      }`}
-                    >
-                      <td className="px-3 py-2.5 font-black text-slate-900 dark:text-white">
-                        #{r.rank}
-                      </td>
-                      <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-white">
-                        <div className="flex items-center gap-2">
-                          <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(r.name)} text-[10px] text-white font-bold`}>
-                            {getAvatarInitials(r.name)}
-                          </span>
-                          <span>{r.name} {r.is_you && <span className="text-blue-600 font-extrabold text-[10px]">(You)</span>}</span>
-                        </div>
-                      </td>
-                      <td className="px-3 py-2.5 text-slate-700 dark:text-slate-300 font-bold">
-                        {r.marks_obtained} / {r.total_marks}
-                      </td>
-                      <td className="px-3 py-2.5 font-extrabold text-slate-900 dark:text-white">
-                        {r.percentage}%
-                      </td>
-                      <td className="px-3 py-2.5 font-bold text-emerald-600 dark:text-emerald-400">
-                        {r.percentile != null ? `${r.percentile}%ile` : '—'}
-                      </td>
-                      <td className="px-3 py-2.5 text-right text-slate-400 text-[10.5px]">
-                        {r.submitted_at ? new Date(r.submitted_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '—'}
-                      </td>
-                    </tr>
-                  ))}
+                  {filteredRows.map((r) => {
+                    const rankInfo = getExactRankDetails(r.marks_obtained, r.total_marks, r.exact_rank);
+                    return (
+                      <tr
+                        key={r.attempt_id}
+                        className={`transition-colors ${
+                          r.is_you
+                            ? 'bg-blue-50/80 dark:bg-blue-950/40 font-bold'
+                            : 'hover:bg-slate-50/80 dark:hover:bg-slate-900/40'
+                        }`}
+                      >
+                        <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-white">
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="font-black text-xs text-slate-900 dark:text-white">
+                              #{rankInfo.exactRank ? rankInfo.exactRank.toLocaleString() : (r.rank || '—')}
+                            </span>
+                            {rankInfo.rangeStr && rankInfo.rangeStr !== '—' && (
+                              <span className="text-[10.5px] font-semibold text-slate-400 dark:text-slate-500">
+                                ({rankInfo.rangeStr})
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="px-3 py-2.5 font-bold text-slate-900 dark:text-white">
+                          <div className="flex items-center gap-2">
+                            <span className={`flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br ${getAvatarGradient(r.name)} text-[10px] text-white font-bold shrink-0`}>
+                              {getAvatarInitials(r.name)}
+                            </span>
+                            <span className="truncate">
+                              {r.name} {r.is_you && <span className="text-blue-600 font-extrabold text-[10px]">(You)</span>}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-3 py-2.5 text-slate-700 dark:text-slate-300 font-bold">
+                          {Number(r.marks_obtained).toFixed(2)} / {Number(r.total_marks || 720).toFixed(2)}
+                        </td>
+                        <td className="px-3 py-2.5 font-extrabold text-slate-900 dark:text-white">
+                          {Number(r.percentage).toFixed(2)}%
+                        </td>
+                        <td className="px-3 py-2.5 font-bold text-emerald-600 dark:text-emerald-400">
+                          {r.percentile != null ? `${Number(r.percentile).toFixed(2)}%ile` : '—'}
+                        </td>
+                        <td className="px-3 py-2.5 text-right text-slate-400 text-[10.5px]">
+                          {r.submitted_at ? new Date(r.submitted_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : '—'}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
           </div>
 
-          {/* 4. COMPARE WITH TOPPER FEATURE */}
+          {/* 3. COMPARE WITH TOPPER FEATURE */}
           {(data?.topper_comparison || data?.topperComparison) && (
             <div className="pt-2">
               <CompareWithTopper

@@ -109,15 +109,11 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-200 bg-blue-950/60 px-3 py-1 rounded-full border border-blue-800/60">
-            <span className="text-slate-400 font-normal">Powered by</span>
-            <span className="font-extrabold tracking-wide text-white">EDVEDUM</span>
-          </div>
         </div>
       );
     }
 
-    // Default Direct EDVEDUM Student Header
+    // Default Direct Student Header
     return (
       <div className="nta-bar px-4 py-2.5 flex items-center justify-between">
         <div>
@@ -128,10 +124,6 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
             Read all instructions carefully before proceeding
           </p>
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-blue-200 bg-blue-950/60 px-3 py-1 rounded-full border border-blue-800/60">
-          <span className="text-slate-400 font-normal">Powered by</span>
-          <span className="font-extrabold tracking-wide text-white">EDVEDUM</span>
-        </div>
       </div>
     );
   }
@@ -141,38 +133,26 @@ export default function AssessmentBranding({ variant = 'instructions', customIns
   // =========================================================
   if (isInstitutionLinked) {
     return (
-      <div className="flex items-center gap-2.5 min-w-0">
+      <div className="flex items-center gap-2 min-w-0">
         {renderLogo('h-8 w-8')}
-        <div className="min-w-0">
-          <div className="flex items-center gap-2">
-            <h2 className="truncate text-xs font-black uppercase tracking-wider text-amber-300">
-              {instName}
-            </h2>
-            <span className="hidden sm:inline-block text-[10px] font-bold text-blue-200 bg-blue-900/50 px-1.5 py-0.5 rounded border border-blue-700/50">
-              Powered by EDVEDUM
-            </span>
-          </div>
-        </div>
+        {instName && (
+          <h2 className="truncate text-xs font-black uppercase tracking-wider text-amber-300">
+            {instName}
+          </h2>
+        )}
       </div>
     );
   }
 
-  // Default Direct EDVEDUM Student CBT Brand
+  // Default Direct Student CBT Brand
   return (
-    <div className="flex items-center gap-2.5 min-w-0">
+    <div className="flex items-center gap-2 min-w-0">
       <div className="h-8 w-8 flex items-center justify-center rounded-md bg-gradient-to-br from-blue-600 to-indigo-700 font-extrabold text-xs text-white shadow-xs">
         EDV
       </div>
-      <div className="min-w-0">
-        <div className="flex items-center gap-2">
-          <h2 className="truncate text-xs font-black uppercase tracking-wider text-amber-300">
-            EDVEDUM ACADEMY
-          </h2>
-          <span className="hidden sm:inline-block text-[10px] font-bold text-blue-200 bg-blue-900/50 px-1.5 py-0.5 rounded border border-blue-700/50">
-            Powered by EDVEDUM
-          </span>
-        </div>
-      </div>
+      <h2 className="truncate text-xs font-black uppercase tracking-wider text-amber-300">
+        EDVEDUM ACADEMY
+      </h2>
     </div>
   );
 }

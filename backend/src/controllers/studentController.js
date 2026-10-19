@@ -90,6 +90,47 @@ export const getLeaderboardAssessments = asyncHandler(async (_req, res) => {
   res.json({ assessments: result.rows });
 });
 
+export const NEET_TIERS = [
+  { minScore: 672, maxScore: 720, minRank: 1,      maxRank: 10,       rangeStr: '1–10' },
+  { minScore: 650, maxScore: 671, minRank: 11,     maxRank: 100,      rangeStr: '11–100' },
+  { minScore: 630, maxScore: 649, minRank: 101,    maxRank: 500,      rangeStr: '101–500' },
+  { minScore: 616, maxScore: 629, minRank: 501,    maxRank: 1000,     rangeStr: '501–1,000' },
+  { minScore: 571, maxScore: 615, minRank: 1001,   maxRank: 5000,     rangeStr: '1,001–5,000' },
+  { minScore: 542, maxScore: 570, minRank: 5001,   maxRank: 10000,    rangeStr: '5,001–10,000' },
+  { minScore: 528, maxScore: 541, minRank: 10001,  maxRank: 20000,    rangeStr: '10,001–20,000' },
+  { minScore: 515, maxScore: 527, minRank: 20001,  maxRank: 30000,    rangeStr: '20,001–30,000' },
+  { minScore: 496, maxScore: 514, minRank: 30001,  maxRank: 50000,    rangeStr: '30,001–50,000' },
+  { minScore: 465, maxScore: 495, minRank: 50001,  maxRank: 100000,   rangeStr: '50,001–1,00,000' },
+  { minScore: 424, maxScore: 464, minRank: 100001, maxRank: 200000,   rangeStr: '1,00,001–2,00,000' },
+  { minScore: 0,   maxScore: 423, minRank: 200001, maxRank: 400000,   rangeStr: 'Above 2,00,000' },
+];
+
+export function getExactNeetRank(marksObtained, totalMarks = 720) {
+  if (marksObtained == null || isNaN(Number(marksObtained))) return null;
+  const numScore = totalMarks && Number(totalMarks) !== 720
+    ? (Number(marksObtained) / Number(totalMarks)) * 720
+    : Number(marksObtained);
+
+  const tier = NEET_TIERS.find((t) => numScore >= t.minScore) || NEET_TIERS[NEET_TIERS.length - 1];
+  if (tier.minScore === 0) {
+    const deficit = Math.max(0, 423 - numScore);
+    return Math.min(tier.maxRank, 200000 + Math.round(deficit * 470) + 1);
+  }
+  const spanScore = tier.maxScore - tier.minScore;
+  const spanRank = tier.maxRank - tier.minRank;
+  const fractionFromTop = spanScore > 0 ? (tier.maxScore - numScore) / spanScore : 0;
+  return tier.minRank + Math.round(fractionFromTop * spanRank);
+}
+
+export function getNeetPredictedRank(marksObtained, totalMarks = 720) {
+  if (marksObtained == null) return 'Above 2,00,000';
+  const score = totalMarks && Number(totalMarks) !== 720 
+    ? (Number(marksObtained) / Number(totalMarks)) * 720 
+    : Number(marksObtained);
+  const tier = NEET_TIERS.find((t) => score >= t.minScore) || NEET_TIERS[NEET_TIERS.length - 1];
+  return tier.rangeStr;
+}
+
 export const getLeaderboard = asyncHandler(async (req, res) => {
   const userId = req.user.id;
   let assessmentId = req.query.assessment_id ? Number(req.query.assessment_id) : null;
@@ -141,6 +182,7 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
       assessment_id: null,
       assessment_title: null,
       your_rank: null,
+      your_predicted_rank: null,
       leaderboard: [],
       topper_comparison: null,
       topperComparison: null,
@@ -161,6 +203,8 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
             s.total_marks,
             s.percentage,
             s.percentile,
+            s.predicted_rank_range,
+            s.rank_range,
             at.submitted_at,
             RANK() OVER (ORDER BY s.marks_obtained DESC, at.submitted_at ASC)::int AS rank
      FROM scores s
@@ -174,6 +218,9 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
   );
 
   const yourRow = result.rows.find((r) => r.candidate_id === userId);
+  const yourPredRank = yourRow
+    ? (yourRow.predicted_rank_range || yourRow.rank_range || getNeetPredictedRank(yourRow.marks_obtained, yourRow.total_marks))
+    : null;
 
   let currentStudentStats = null;
   if (yourRow) {
@@ -213,15 +260,25 @@ export const getLeaderboard = asyncHandler(async (req, res) => {
     console.error('Failed to get topper comparison for leaderboard:', err);
   }
 
+  const yourExactRank = yourRow ? getExactNeetRank(yourRow.marks_obtained, yourRow.total_marks) : null;
+
   res.json({
     assessment_id: assessment.id,
     assessment_title: assessment.title,
     your_rank: yourRow?.rank ?? null,
+    your_exact_rank: yourExactRank,
+    your_predicted_rank: yourPredRank,
     your_percentage: yourRow ? Number(yourRow.percentage) : null,
-    leaderboard: result.rows.map(({ candidate_id, ...row }) => ({
-      ...row,
-      is_you: candidate_id === userId,
-    })),
+    leaderboard: result.rows.map(({ candidate_id, ...row }) => {
+      const predRank = row.predicted_rank_range || row.rank_range || getNeetPredictedRank(row.marks_obtained, row.total_marks);
+      const exactRank = getExactNeetRank(row.marks_obtained, row.total_marks);
+      return {
+        ...row,
+        exact_rank: exactRank,
+        predicted_rank_range: predRank,
+        is_you: candidate_id === userId,
+      };
+    }),
     topper_comparison: topperComparison,
     topperComparison,
     student_stats: currentStudentStats,

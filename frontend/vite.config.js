@@ -12,6 +12,20 @@ export default defineConfig({
       avif: { quality: 75 },
     }),
   ],
+  optimizeDeps: {
+    force: true,
+    include: [
+      'react',
+      'react-dom',
+      'react-dom/client',
+      'react/jsx-dev-runtime',
+      'react-router-dom',
+      '@monaco-editor/react',
+      'monaco-editor',
+      'katex',
+      'lucide-react',
+    ],
+  },
   server: {
     port: 5173,
     proxy: {

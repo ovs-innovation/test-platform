@@ -20,6 +20,12 @@ window.addEventListener('error', (event) => {
   }
 });
 
+// Auto-recover from outdated optimize deps or stale dynamic import chunks
+window.addEventListener('vite:preloadError', (event) => {
+  event.preventDefault();
+  window.location.reload();
+});
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
