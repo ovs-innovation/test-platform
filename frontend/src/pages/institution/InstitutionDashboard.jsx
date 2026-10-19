@@ -404,6 +404,8 @@ export default function InstitutionDashboard() {
       setBatches((prev) => prev.filter((b) => b.id !== batchId));
       toast.success('Batch archived');
     }
+  };
+
   // Test & eBook Assignments
   const handleAssignTest = async (testId, data) => {
     try {
