@@ -275,8 +275,8 @@ jobs:
             fi
 
             # Ensure active Neon database credentials are used on VPS
-            TARGET_NEON_HOST="ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech"
-            TARGET_DATABASE_URL="postgresql://neondb_owner:npg_pnKv5TdUQ7fg@ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require"
+            TARGET_NEON_HOST="ep-little-hill-azfr6i6j-pooler.c-3.ap-southeast-1.aws.neon.tech"
+            TARGET_DATABASE_URL="postgresql://neondb_owner:npg_YjvGunWX5m0o@ep-little-hill-azfr6i6j-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
 
             for ENV_FILE in "backend/.env" ".env"; do
               if [ -f "$ENV_FILE" ]; then
@@ -294,7 +294,7 @@ jobs:
                   echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
                   echo "PGPORT=5432" >> "$ENV_FILE"
                   echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                  echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
+                  echo "PGPASSWORD=npg_YjvGunWX5m0o" >> "$ENV_FILE"
                   echo "PGDATABASE=neondb" >> "$ENV_FILE"
                   log "Successfully updated $ENV_FILE with active Neon credentials."
                 fi
@@ -304,7 +304,7 @@ jobs:
                 echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
                 echo "PGPORT=5432" >> "$ENV_FILE"
                 echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                echo "PGPASSWORD=npg_pnKv5TdUQ7fg" >> "$ENV_FILE"
+                echo "PGPASSWORD=npg_YjvGunWX5m0o" >> "$ENV_FILE"
                 echo "PGDATABASE=neondb" >> "$ENV_FILE"
               fi
             done
