@@ -152,6 +152,8 @@ export default function AdminIncidents() {
   const [auditTrail, setAuditTrail] = useState([]);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [rawDiagnosticsOpen, setRawDiagnosticsOpen] = useState(false);
+  const loadedIncidentIdRef = useRef(null);
+  const assigneeDirtyRef = useRef(false);
 
   // Drawer Action Forms
   const [guidanceMessage, setGuidanceMessage] = useState('');
@@ -165,11 +167,17 @@ export default function AdminIncidents() {
   const [isResolving, setIsResolving] = useState(false);
   const [showResolveModal, setShowResolveModal] = useState(false);
   const [actionSuccessMsg, setActionSuccessMsg] = useState('');
+  const [actionErrorMsg, setActionErrorMsg] = useState('');
 
   // Flash Banner helper
-  const flashMessage = (msg) => {
-    setActionSuccessMsg(msg);
-    setTimeout(() => setActionSuccessMsg(''), 4000);
+  const flashMessage = (msg, isError = false) => {
+    if (isError) {
+      setActionErrorMsg(msg);
+      setTimeout(() => setActionErrorMsg(''), 6000);
+    } else {
+      setActionSuccessMsg(msg);
+      setTimeout(() => setActionSuccessMsg(''), 4000);
+    }
   };
 
   // Load auxiliary lists for filters
@@ -193,17 +201,33 @@ export default function AdminIncidents() {
         .catch(() => {});
     }
 
+    // Include current logged-in admin user in assignment list
+    if (user && user.id) {
+      setAdminUsersList((prev) => {
+        if (prev.some((u) => u.id === user.id)) return prev;
+        return [{ id: user.id, name: `${user.name || 'Admin'} (Me)`, email: user.email }, ...prev];
+      });
+    }
+
     // Candidates / Admins for assignment
     if (adminService.candidates) {
       adminService
         .candidates()
         .then((res) => {
           const list = Array.isArray(res) ? res : res.candidates || [];
-          setAdminUsersList(list.slice(0, 30));
+          setAdminUsersList((prev) => {
+            const combined = [...prev];
+            for (const item of list.slice(0, 50)) {
+              if (!combined.some((c) => c.id === item.id)) {
+                combined.push(item);
+              }
+            }
+            return combined;
+          });
         })
         .catch(() => {});
     }
-  }, [isInstitutionAdmin]);
+  }, [isInstitutionAdmin, user]);
 
   // Fetch incident list
   const fetchIncidents = useCallback(
@@ -283,19 +307,26 @@ export default function AdminIncidents() {
 
   // Fetch single incident details
   const fetchIncidentDetail = useCallback(
-    async (id) => {
+    async (id, isBackground = false) => {
       if (!id) return;
-      setLoadingDetail(true);
+      // Only show full loading spinner if this incident hasn't been loaded yet
+      if (!isBackground && loadedIncidentIdRef.current !== id) {
+        setLoadingDetail(true);
+      }
       try {
         const res = isInstitutionAdmin
           ? await institutionDashboardService.incident(institutionId, id)
           : await adminService.incident(id);
 
-        if (res.success) {
+        if (res.success && res.incident) {
           setIncidentDetail(res.incident);
           setDetailEvents(res.events || []);
           setAuditTrail(res.audit_trail || []);
-          setAssigneeId(res.incident?.assigned_to ? String(res.incident.assigned_to) : '');
+          // Only update assigneeId on fresh load or if user hasn't touched the dropdown
+          if (!assigneeDirtyRef.current || loadedIncidentIdRef.current !== id) {
+            setAssigneeId(res.incident?.assigned_to ? String(res.incident.assigned_to) : '');
+          }
+          loadedIncidentIdRef.current = id;
         }
       } catch (err) {
         console.error('Failed to fetch incident details:', err);
@@ -306,29 +337,59 @@ export default function AdminIncidents() {
     [isInstitutionAdmin, institutionId]
   );
 
-  // Sync selected ID to URL
+  // 1. Sync URL param -> selectedIncidentId (when landing or URL changes externally)
+  useEffect(() => {
+    const paramVal = searchParams.get('incident_id');
+    const paramNum = paramVal ? Number(paramVal) : null;
+    if (paramNum !== selectedIncidentId) {
+      setSelectedIncidentId(paramNum);
+    }
+  }, [searchParams]);
+
+  // 2. Sync selectedIncidentId -> URL search params (only if not already matching)
+  useEffect(() => {
+    const currentParam = searchParams.get('incident_id');
+    const currentNum = currentParam ? Number(currentParam) : null;
+    if (selectedIncidentId !== currentNum) {
+      const next = new URLSearchParams(searchParams);
+      if (selectedIncidentId) {
+        next.set('incident_id', String(selectedIncidentId));
+      } else {
+        next.delete('incident_id');
+      }
+      setSearchParams(next, { replace: true });
+    }
+  }, [selectedIncidentId]);
+
+  // 3. Load incident details when selectedIncidentId changes
   useEffect(() => {
     if (selectedIncidentId) {
-      setSearchParams({ incident_id: selectedIncidentId });
-      fetchIncidentDetail(selectedIncidentId);
+      if (loadedIncidentIdRef.current !== selectedIncidentId) {
+        assigneeDirtyRef.current = false;
+        fetchIncidentDetail(selectedIncidentId, false);
+      }
     } else {
-      setSearchParams({});
+      loadedIncidentIdRef.current = null;
+      assigneeDirtyRef.current = false;
       setIncidentDetail(null);
+      setDetailEvents([]);
+      setAuditTrail([]);
+      setAssigneeId('');
     }
-  }, [selectedIncidentId, setSearchParams, fetchIncidentDetail]);
+  }, [selectedIncidentId, fetchIncidentDetail]);
 
-  // Initial & Filter fetch
+  // Initial & Filter fetch for incidents table
   useEffect(() => {
     fetchIncidents();
   }, [fetchIncidents]);
 
-  // Auto-refresh interval (10s)
+  // Auto-refresh interval (10s) - background only, never interrupts drawer
   useEffect(() => {
     if (!autoRefresh) return;
     const interval = setInterval(() => {
       fetchIncidents(true);
       if (selectedIncidentId) {
-        fetchIncidentDetail(selectedIncidentId);
+        fetchIncidentDetail(selectedIncidentId, true);
       }
     }, 10000);
     return () => clearInterval(interval);
@@ -344,10 +405,11 @@ export default function AdminIncidents() {
       if (res.success) {
         flashMessage('Incident acknowledged and claimed successfully');
         fetchIncidents(true);
-        if (selectedIncidentId === id) fetchIncidentDetail(id);
+        if (selectedIncidentId === id) fetchIncidentDetail(id, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to acknowledge incident');
+      const msg = err.response?.data?.message || err.message || 'Failed to acknowledge incident';
+      flashMessage(msg, true);
     }
   };
 
@@ -367,10 +429,11 @@ export default function AdminIncidents() {
       if (res.success) {
         flashMessage('Incident moved to Investigating');
         fetchIncidents(true);
-        fetchIncidentDetail(id);
+        fetchIncidentDetail(id, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to update status');
+      const msg = err.response?.data?.message || err.message || 'Failed to update status';
+      flashMessage(msg, true);
     }
   };
 
@@ -387,11 +450,13 @@ export default function AdminIncidents() {
 
       if (res.success) {
         flashMessage(targetId ? 'Incident assigned to team member' : 'Incident unassigned');
+        assigneeDirtyRef.current = false;
         fetchIncidents(true);
-        fetchIncidentDetail(selectedIncidentId);
+        fetchIncidentDetail(selectedIncidentId, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to assign incident');
+      const msg = err.response?.data?.message || err.message || 'Failed to assign incident';
+      flashMessage(msg, true);
     } finally {
       setIsAssigning(false);
     }
@@ -417,10 +482,11 @@ export default function AdminIncidents() {
         setGuidanceMessage('');
         flashMessage('Guidance message dispatched to candidate screen');
         fetchIncidents(true);
-        fetchIncidentDetail(selectedIncidentId);
+        fetchIncidentDetail(selectedIncidentId, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to send guidance message');
+      const msg = err.response?.data?.message || err.message || 'Failed to send guidance message';
+      flashMessage(msg, true);
     } finally {
       setIsSendingGuidance(false);
     }
@@ -440,10 +506,11 @@ export default function AdminIncidents() {
         setInternalNote('');
         flashMessage('Investigation note added');
         fetchIncidents(true);
-        fetchIncidentDetail(selectedIncidentId);
+        fetchIncidentDetail(selectedIncidentId, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to add investigation note');
+      const msg = err.response?.data?.message || err.message || 'Failed to add investigation note';
+      flashMessage(msg, true);
     } finally {
       setIsSavingNote(false);
     }
@@ -470,10 +537,11 @@ export default function AdminIncidents() {
         setResolutionNotes('');
         flashMessage('Incident resolved and marked complete');
         fetchIncidents(true);
-        fetchIncidentDetail(selectedIncidentId);
+        fetchIncidentDetail(selectedIncidentId, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to resolve incident');
+      const msg = err.response?.data?.message || err.message || 'Failed to resolve incident';
+      flashMessage(msg, true);
     } finally {
       setIsResolving(false);
     }
@@ -496,10 +564,11 @@ export default function AdminIncidents() {
       if (res.success) {
         flashMessage('Incident closed');
         fetchIncidents(true);
-        fetchIncidentDetail(id);
+        fetchIncidentDetail(id, true);
       }
     } catch (err) {
-      alert(err.message || 'Failed to close incident');
+      const msg = err.response?.data?.message || err.message || 'Failed to close incident';
+      flashMessage(msg, true);
     }
   };
 
@@ -1124,9 +1193,23 @@ export default function AdminIncidents() {
               </button>
             </div>
 
+            {/* Action Feedback Banners */}
+            {actionSuccessMsg && (
+              <div className="mx-4 sm:mx-6 mt-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-700 dark:text-emerald-400 text-xs font-bold flex items-center gap-2">
+                <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-500" />
+                <span>{actionSuccessMsg}</span>
+              </div>
+            )}
+            {actionErrorMsg && (
+              <div className="mx-4 sm:mx-6 mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-700 dark:text-rose-400 text-xs font-bold flex items-center gap-2">
+                <AlertCircle className="h-4 w-4 shrink-0 text-rose-500" />
+                <span>{actionErrorMsg}</span>
+              </div>
+            )}
+
             {/* Drawer Body */}
             <div className="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
-              {loadingDetail ? (
+              {loadingDetail && !incidentDetail ? (
                 <div className="py-12 flex justify-center items-center">
                   <RefreshCw className="h-6 w-6 animate-spin text-blue-600" />
                 </div>
@@ -1273,7 +1356,10 @@ export default function AdminIncidents() {
                       <div className="flex gap-2">
                         <select
                           value={assigneeId}
-                          onChange={(e) => setAssigneeId(e.target.value)}
+                          onChange={(e) => {
+                            setAssigneeId(e.target.value);
+                            assigneeDirtyRef.current = true;
+                          }}
                           className="flex-1 px-3 py-1.5 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-white"
                         >
                           <option value="">Unassigned</option>

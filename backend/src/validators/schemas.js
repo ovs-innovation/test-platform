@@ -484,7 +484,10 @@ export const updateIncidentStatusSchema = z.object({
 });
 
 export const assignIncidentSchema = z.object({
-  assigned_to: z.coerce.number().int().positive().nullable().optional(),
+  assigned_to: z.preprocess(
+    (val) => (val === '' || val === 'unassigned' ? null : val),
+    z.coerce.number().int().positive().nullable().optional()
+  ),
 });
 
 export const addIncidentNotesSchema = z.object({

@@ -421,8 +421,8 @@ export const acknowledgeIncident = asyncHandler(async (req, res) => {
 
   const updatedRes = await query(
     `UPDATE exam_technical_incidents
-     SET status = $1,
-         assigned_to = COALESCE(assigned_to, $2),
+     SET status = $1::varchar,
+         assigned_to = COALESCE(assigned_to, $2::integer),
          assigned_at = COALESCE(assigned_at, NOW()),
          acknowledged_at = NOW(),
          updated_at = NOW()
@@ -469,8 +469,8 @@ export const assignIncident = asyncHandler(async (req, res) => {
 
   const updatedRes = await query(
     `UPDATE exam_technical_incidents
-     SET assigned_to = $1,
-         assigned_at = CASE WHEN $1 IS NOT NULL THEN NOW() ELSE NULL END,
+     SET assigned_to = $1::integer,
+         assigned_at = CASE WHEN $1::integer IS NOT NULL THEN NOW() ELSE NULL END,
          updated_at = NOW()
      WHERE id = $2
      RETURNING *`,
@@ -515,7 +515,7 @@ export const addInvestigationNotes = asyncHandler(async (req, res) => {
   const updatedRes = await query(
     `UPDATE exam_technical_incidents
      SET investigation_notes = $1,
-         last_student_message = COALESCE($2, last_student_message),
+         last_student_message = COALESCE($2::text, last_student_message),
          status = CASE WHEN status = 'new' THEN 'investigating' ELSE status END,
          updated_at = NOW()
      WHERE id = $3
@@ -554,14 +554,14 @@ export const updateIncidentStatus = asyncHandler(async (req, res) => {
 
   const fromStatus = incident.status;
 
-  if (fromStatus === toStatus) {
+  if (fromStatus === toStatus && !guidance_message && !notes && !resolution_category) {
     return res.json({ success: true, incident });
   }
 
-  const allowed = ALLOWED_TRANSITIONS[fromStatus] || [];
+  const allowed = [...(ALLOWED_TRANSITIONS[fromStatus] || []), fromStatus];
   if (!allowed.includes(toStatus)) {
     throw ApiError.badRequest(
-      `Invalid status transition from '${fromStatus}' to '${toStatus}'. Allowed transitions: ${allowed.join(', ') || 'none (terminal state)'}`
+      `Invalid status transition from '${fromStatus}' to '${toStatus}'. Allowed transitions: ${(ALLOWED_TRANSITIONS[fromStatus] || []).join(', ') || 'none (terminal state)'}`
     );
   }
 
@@ -579,13 +579,13 @@ export const updateIncidentStatus = asyncHandler(async (req, res) => {
 
   const updatedRes = await query(
     `UPDATE exam_technical_incidents
-     SET status = $1,
-         last_student_message = COALESCE($2, last_student_message),
-         resolution_notes = COALESCE($3, resolution_notes),
-         resolution_category = COALESCE($4, resolution_category),
-         resolved_at = CASE WHEN $1 = 'resolved' THEN NOW() ELSE resolved_at END,
-         resolved_by = CASE WHEN $1 = 'resolved' THEN $5 ELSE resolved_by END,
-         assigned_to = COALESCE(assigned_to, $5),
+     SET status = $1::varchar,
+         last_student_message = COALESCE($2::text, last_student_message),
+         resolution_notes = COALESCE($3::text, resolution_notes),
+         resolution_category = COALESCE($4::varchar, resolution_category),
+         resolved_at = CASE WHEN $1::varchar = 'resolved'::varchar THEN NOW() ELSE resolved_at END,
+         resolved_by = CASE WHEN $1::varchar = 'resolved'::varchar THEN $5::integer ELSE resolved_by END,
+         assigned_to = COALESCE(assigned_to, $5::integer),
          updated_at = NOW()
      WHERE id = $6
      RETURNING *`,
@@ -647,8 +647,8 @@ export const resolveIncident = asyncHandler(async (req, res) => {
          resolution_notes = $1,
          resolution_category = $2,
          resolved_at = NOW(),
-         resolved_by = $3,
-         assigned_to = COALESCE(assigned_to, $3),
+         resolved_by = $3::integer,
+         assigned_to = COALESCE(assigned_to, $3::integer),
          updated_at = NOW()
      WHERE id = $4
      RETURNING *`,
