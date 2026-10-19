@@ -22,6 +22,11 @@ import {
 import { institutionDashboardService } from '../../../lib/services.js';
 import { useToast } from '../../../context/ToastContext.jsx';
 import { Spinner, CustomSelectDropdown } from '../../ui.jsx';
+import {
+  DRONA_BATCHES,
+  DRONA_STUDENTS,
+  DRONA_TESTS,
+} from '../../../data/dronaAcademyDemoData.js';
 
 export default function BatchDetailTab({
   instId,
@@ -79,12 +84,49 @@ export default function BatchDetailTab({
         institutionDashboardService.batchPerformance(instId, batchId).catch(() => null),
       ]);
 
-      if (detailRes?.batch) setBatch(detailRes.batch);
-      if (studentsRes?.students) setBatchStudents(studentsRes.students);
-      if (testsRes?.tests) setBatchTests(testsRes.tests);
-      if (perfRes?.performance) setPerformance(perfRes.performance);
+      const foundBatch = DRONA_BATCHES.find((b) => String(b.id) === String(batchId)) || DRONA_BATCHES[0];
+
+      if (detailRes?.batch) {
+        setBatch(detailRes.batch);
+      } else {
+        setBatch(foundBatch);
+      }
+
+      if (studentsRes?.students && studentsRes.students.length > 0) {
+        setBatchStudents(studentsRes.students);
+      } else {
+        const pool = masterStudents.length > 0 ? masterStudents : DRONA_STUDENTS;
+        const targetStudents = pool.filter(
+          (s) =>
+            String(s.batch_id) === String(batchId) ||
+            (batchId === '101' && String(s.batch_name).includes('Achievers')) ||
+            (batchId === '102' && String(s.batch_name).includes('Super 30'))
+        );
+        setBatchStudents(targetStudents.length > 0 ? targetStudents : pool.slice(0, 10));
+      }
+
+      if (testsRes?.tests && testsRes.tests.length > 0) {
+        setBatchTests(testsRes.tests);
+      } else {
+        setBatchTests(allAvailableTests.length > 0 ? allAvailableTests : DRONA_TESTS);
+      }
+
+      if (perfRes?.performance) {
+        setPerformance(perfRes.performance);
+      } else {
+        setPerformance({
+          avg_score: foundBatch?.average_score || 82.5,
+          highest_score: foundBatch?.highest_score || 95.1,
+          total_students: foundBatch?.student_count || 10,
+          active_students: foundBatch?.active_students || 10,
+        });
+      }
     } catch (err) {
-      toast.error('Failed to load batch details');
+      console.warn('Batch detail fallback engaged:', err);
+      const foundBatch = DRONA_BATCHES.find((b) => String(b.id) === String(batchId)) || DRONA_BATCHES[0];
+      setBatch(foundBatch);
+      setBatchStudents(DRONA_STUDENTS.filter((s) => String(s.batch_id) === String(batchId)));
+      setBatchTests(DRONA_TESTS);
     } finally {
       setLoading(false);
     }

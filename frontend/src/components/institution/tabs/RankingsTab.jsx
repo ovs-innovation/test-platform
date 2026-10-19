@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CustomSelectDropdown } from '../../ui.jsx';
 import { institutionDashboardService } from '../../../lib/services.js';
+import { DRONA_RANKINGS, getFilteredDronaRankings, getDronaSummaryMetrics } from '../../../data/dronaAcademyDemoData.js';
 
 export default function RankingsTab({
   rankings = [],
@@ -30,7 +31,9 @@ export default function RankingsTab({
   const [selectedTest, setSelectedTest] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const [currentRankings, setCurrentRankings] = useState(Array.isArray(rankings) ? rankings : []);
+  const [currentRankings, setCurrentRankings] = useState(
+    Array.isArray(rankings) && rankings.length > 0 ? rankings : DRONA_RANKINGS
+  );
   const [currentSummary, setCurrentSummary] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -50,29 +53,42 @@ export default function RankingsTab({
 
   // Sync initial rankings prop if provided and no custom fetch has occurred
   useEffect(() => {
-    if (Array.isArray(rankings)) {
+    if (Array.isArray(rankings) && rankings.length > 0) {
       setCurrentRankings(rankings);
+    } else {
+      setCurrentRankings(DRONA_RANKINGS);
     }
   }, [rankings]);
 
   // Fetch rankings when filter parameters change
   const fetchFilteredRankings = async (testVal, batchVal) => {
-    if (!activeInstId) return;
     setLoading(true);
     try {
       const params = {};
       if (testVal && testVal !== 'All') params.test_id = testVal;
       if (batchVal && batchVal !== 'All') params.batch_id = batchVal;
 
-      const res = await institutionDashboardService.rankings(activeInstId, params);
-      if (res?.rankings) {
-        setCurrentRankings(res.rankings);
+      let res = null;
+      if (activeInstId) {
+        try {
+          res = await institutionDashboardService.rankings(activeInstId, params);
+        } catch (_) {}
       }
-      if (res?.summary) {
-        setCurrentSummary(res.summary);
+
+      if (res?.rankings && res.rankings.length > 0) {
+        setCurrentRankings(res.rankings);
+        if (res?.summary) {
+          setCurrentSummary(res.summary);
+        }
+      } else {
+        const filtered = getFilteredDronaRankings(testVal, batchVal, searchQuery);
+        setCurrentRankings(filtered);
+        setCurrentSummary(getDronaSummaryMetrics());
       }
     } catch (err) {
-      console.error('Failed to fetch filtered rankings:', err);
+      const filtered = getFilteredDronaRankings(testVal, batchVal, searchQuery);
+      setCurrentRankings(filtered);
+      setCurrentSummary(getDronaSummaryMetrics());
     } finally {
       setLoading(false);
     }

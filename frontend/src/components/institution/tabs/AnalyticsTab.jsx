@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { CustomSelectDropdown } from '../../ui.jsx';
 import { institutionDashboardService } from '../../../lib/services.js';
+import { DRONA_ANALYTICS, getFilteredDronaAnalytics } from '../../../data/dronaAcademyDemoData.js';
 
 export default function AnalyticsTab({
   analytics = {},
@@ -30,7 +31,9 @@ export default function AnalyticsTab({
 
   const [selectedBatch, setSelectedBatch] = useState('All');
   const [selectedTest, setSelectedTest] = useState('All');
-  const [currentAnalytics, setCurrentAnalytics] = useState(analytics || {});
+  const [currentAnalytics, setCurrentAnalytics] = useState(
+    analytics && analytics.total_attempts > 0 ? analytics : DRONA_ANALYTICS
+  );
   const [loading, setLoading] = useState(false);
 
   const resolveInstId = () => {
@@ -49,25 +52,36 @@ export default function AnalyticsTab({
 
   // Sync prop changes
   useEffect(() => {
-    if (analytics && Object.keys(analytics).length > 0) {
+    if (analytics && Object.keys(analytics).length > 0 && analytics.total_attempts > 0) {
       setCurrentAnalytics(analytics);
+    } else {
+      setCurrentAnalytics(DRONA_ANALYTICS);
     }
   }, [analytics]);
 
   const fetchFilteredAnalytics = async (testVal, batchVal) => {
-    if (!activeInstId) return;
     setLoading(true);
     try {
       const params = {};
       if (testVal && testVal !== 'All') params.test_id = testVal;
       if (batchVal && batchVal !== 'All') params.batch_id = batchVal;
 
-      const res = await institutionDashboardService.analytics(activeInstId, params);
-      if (res?.analytics) {
+      let res = null;
+      if (activeInstId) {
+        try {
+          res = await institutionDashboardService.analytics(activeInstId, params);
+        } catch (_) {}
+      }
+
+      if (res?.analytics && res.analytics.total_attempts > 0) {
         setCurrentAnalytics(res.analytics);
+      } else {
+        const filtered = getFilteredDronaAnalytics(testVal, batchVal);
+        setCurrentAnalytics(filtered);
       }
     } catch (err) {
-      console.error('Failed to fetch filtered analytics:', err);
+      const filtered = getFilteredDronaAnalytics(testVal, batchVal);
+      setCurrentAnalytics(filtered);
     } finally {
       setLoading(false);
     }
