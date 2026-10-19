@@ -50,8 +50,11 @@ export async function getCache(key) {
 
   // Fallback to in-memory map
   const item = inMemoryFallbackCache.get(key);
-  if (item && item.expiresAt > Date.now()) {
-    return item.value;
+  if (item) {
+    if (item.expiresAt > Date.now()) {
+      return item.value;
+    }
+    inMemoryFallbackCache.delete(key);
   }
   return null;
 }
@@ -71,7 +74,21 @@ export async function setCache(key, value, ttlSeconds = 60) {
     }
   }
 
-  // Fallback to in-memory map
+  // Fallback to in-memory map with bounded memory safety (max 2000 keys)
+  const MAX_IN_MEMORY_KEYS = 2000;
+  if (inMemoryFallbackCache.size >= MAX_IN_MEMORY_KEYS) {
+    const now = Date.now();
+    for (const [k, v] of inMemoryFallbackCache.entries()) {
+      if (v.expiresAt <= now) {
+        inMemoryFallbackCache.delete(k);
+      }
+    }
+    if (inMemoryFallbackCache.size >= MAX_IN_MEMORY_KEYS) {
+      const oldestKey = inMemoryFallbackCache.keys().next().value;
+      if (oldestKey) inMemoryFallbackCache.delete(oldestKey);
+    }
+  }
+
   inMemoryFallbackCache.set(key, {
     value,
     expiresAt: Date.now() + (ttlSeconds * 1000),

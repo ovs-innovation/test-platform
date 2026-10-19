@@ -35,13 +35,20 @@ export const errorHandler = (err, _req, res, _next) => {
       err.code === 'ENETUNREACH' ||
       err.code === '57P01' ||
       err.code === '53300' ||
+      err.code === '53000' ||
+      err.code === '08006' ||
+      err.code === '08003' ||
+      err.code === '08001' ||
+      err.code === '08004' ||
       (err.message && (
         err.message.includes('getaddrinfo') ||
         err.message.includes('connection terminated') ||
         err.message.includes('Connection terminated unexpectedly') ||
         err.message.includes('timeout') ||
         err.message.includes('Timeout') ||
-        err.message.includes('Client has encountered a connection error')
+        err.message.includes('SSL') ||
+        err.message.includes('Client has encountered a connection error') ||
+        err.message.includes('exceeded the quota')
       )));
 
   if (isDbConnectionError) {

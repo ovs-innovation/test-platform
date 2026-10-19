@@ -76,6 +76,17 @@ function attachShutdown(server) {
   }
 }
 
+// Global process error handlers to prevent abrupt crashes on background tasks
+process.on('unhandledRejection', (reason, promise) => {
+  // eslint-disable-next-line no-console
+  console.error('[server] Unhandled Promise Rejection at:', promise, 'reason:', reason?.message || reason);
+});
+
+process.on('uncaughtException', (err) => {
+  // eslint-disable-next-line no-console
+  console.error('[server] Uncaught Exception:', err?.message || err, err?.stack);
+});
+
 const start = async () => {
   let dbConnected = false;
   for (let attempt = 1; attempt <= 5; attempt++) {

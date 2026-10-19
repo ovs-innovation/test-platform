@@ -1711,8 +1711,36 @@ export const refreshTokens = asyncHandler(async (req, res) => {
 
   const session = sessionRes.rows[0];
 
-  // REUSE / REPLAY ATTACK DETECTION
+  // REUSE / REPLAY ATTACK DETECTION WITH CONCURRENCY GRACE WINDOW
   if (session.is_revoked) {
+    // If this token was rotated recently (within 30 seconds) by a concurrent in-flight request,
+    // allow the concurrent caller to receive a valid access token instead of nuking the user's session.
+    const activeSessionRes = await query(
+      `SELECT id, created_at FROM refresh_tokens 
+       WHERE family_id = $1 AND is_revoked = FALSE AND expires_at > NOW() 
+       ORDER BY id DESC LIMIT 1`,
+      [session.family_id]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
+
+    if (activeSessionRes.rowCount > 0) {
+      const activeSession = activeSessionRes.rows[0];
+      const timeSinceCreationMs = Date.now() - new Date(activeSession.created_at).getTime();
+      if (timeSinceCreationMs < 30000) {
+        const userRes = await query('SELECT id, name, email, role, is_blocked FROM users WHERE id = $1', [session.user_id]);
+        if (userRes.rowCount > 0 && !userRes.rows[0].is_blocked) {
+          const user = userRes.rows[0];
+          const newAccessToken = signAccessToken(user);
+          return res.json({
+            success: true,
+            token: newAccessToken,
+            accessToken: newAccessToken,
+            expiresIn: 30 * 24 * 3600,
+            user: publicUser(user),
+          });
+        }
+      }
+    }
+
     await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE family_id = $1', [session.family_id]).catch(() => {});
     clearAuthCookies(res);
     throw ApiError.unauthorized('Security Alert: Attempted reuse of revoked refresh token. All sessions revoked for security.');
@@ -1732,20 +1760,21 @@ export const refreshTokens = asyncHandler(async (req, res) => {
 
   const user = userRes.rows[0];
 
-  // Revoke current refresh token (RTR)
-  await query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE id = $1', [session.id]);
-
   // Issue NEW Access Token + NEW Refresh Token in SAME family_id
   const newAccessToken = signAccessToken(user);
   const newRefreshToken = signRefreshToken(user, session.family_id);
   const newHash = hashToken(newRefreshToken);
   const newExpiresAt = new Date(Date.now() + 90 * 24 * 60 * 60 * 1000);
 
-  await query(
-    `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
-     VALUES ($1, $2, $3, $4, $5, $6)`,
-    [user.id, newHash, session.family_id, newExpiresAt, req?.headers?.['user-agent'] || '', req?.ip || '']
-  );
+  // Atomically revoke current refresh token and persist new one in transaction
+  await withTransaction(async (client) => {
+    await client.query('UPDATE refresh_tokens SET is_revoked = TRUE WHERE id = $1', [session.id]);
+    await client.query(
+      `INSERT INTO refresh_tokens (user_id, refresh_token_hash, family_id, expires_at, user_agent, ip_address)
+       VALUES ($1, $2, $3, $4, $5, $6)`,
+      [user.id, newHash, session.family_id, newExpiresAt, req?.headers?.['user-agent'] || '', req?.ip || '']
+    );
+  });
 
   // Set updated HttpOnly cookies
   setAuthCookies(res, { accessToken: newAccessToken, refreshToken: newRefreshToken });

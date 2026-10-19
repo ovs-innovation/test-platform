@@ -37,6 +37,11 @@ import aiTestRoutes from './routes/aiTestRoutes.js';
 
 const app = express();
 
+// Enable trust proxy (1 hop behind Nginx / Render / Cloudflare reverse proxy)
+// This ensures req.ip correctly resolves the client's public IP rather than the proxy's IP,
+// preventing global rate-limiter starvation across concurrent users.
+app.set('trust proxy', 1);
+
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:5174',
@@ -89,7 +94,7 @@ app.use(
       if (allowedOrigins.includes(normalized)) {
         return callback(null, origin);
       }
-      return callback(new Error(`CORS blocked for ${origin}`));
+      return callback(null, false);
     },
     credentials: true,
   })

@@ -166,6 +166,7 @@ export const withTransaction = async (callback, retries = 2) => {
     await origQuery('ROLLBACK').catch(() => {});
     throw err;
   } finally {
+    client.query = origQuery;
     client.release();
   }
 };

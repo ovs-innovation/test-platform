@@ -708,44 +708,48 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     candidates = studentsRes.rows;
   }
 
-  // 4. Record the assignment rule in test_series_assignments
-  const assignmentRes = await query(
-    `INSERT INTO test_series_assignments (test_series_id, assigned_to_type, assigned_to_id, validity_days, notes)
-     VALUES ($1, $2, $3, $4, $5)
-     RETURNING *`,
-    [seriesId, assigned_to_type, targetId, valDays, notes || null]
-  );
-
-  // 5. Enroll students in student_enrollments
+  // 4. Atomically record assignment rule and enroll students in a transaction
   const assignmentTypeStr = `admin_${assigned_to_type}`;
   let enrolledCount = 0;
+  let assignmentRow = null;
 
-  for (const student of candidates) {
-    await query(
-      `INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at, assignment_type, notes)
-       VALUES ($1, $2, 'active', NOW(), $3, $4, $5)
-       ON CONFLICT (user_id, test_series_id)
-       DO UPDATE SET
-         status = 'active',
-         expires_at = EXCLUDED.expires_at,
-         assignment_type = EXCLUDED.assignment_type,
-         notes = COALESCE(EXCLUDED.notes, student_enrollments.notes)`,
-      [student.id, seriesId, expiresAt, assignmentTypeStr, notes || null]
+  await withTransaction(async (client) => {
+    const assignmentRes = await client.query(
+      `INSERT INTO test_series_assignments (test_series_id, assigned_to_type, assigned_to_id, validity_days, notes)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING *`,
+      [seriesId, assigned_to_type, targetId, valDays, notes || null]
     );
-    enrolledCount++;
+    assignmentRow = assignmentRes.rows[0];
 
-    if (notify) {
-      await query(
-        `INSERT INTO notifications (user_id, title, body, type)
-         VALUES ($1, $2, $3, 'test_series')`,
-        [
-          student.id,
-          'Test Series Assigned',
-          `Admin assigned "${series.title}" to you. You can now access and attempt all included mock tests!`,
-        ]
-      ).catch(() => {});
+    // 5. Enroll students in student_enrollments
+    for (const student of candidates) {
+      await client.query(
+        `INSERT INTO student_enrollments (user_id, test_series_id, status, purchased_at, expires_at, assignment_type, notes)
+         VALUES ($1, $2, 'active', NOW(), $3, $4, $5)
+         ON CONFLICT (user_id, test_series_id)
+         DO UPDATE SET
+           status = 'active',
+           expires_at = EXCLUDED.expires_at,
+           assignment_type = EXCLUDED.assignment_type,
+           notes = COALESCE(EXCLUDED.notes, student_enrollments.notes)`,
+        [student.id, seriesId, expiresAt, assignmentTypeStr, notes || null]
+      );
+      enrolledCount++;
+
+      if (notify) {
+        await client.query(
+          `INSERT INTO notifications (user_id, title, body, type)
+           VALUES ($1, $2, $3, 'test_series')`,
+          [
+            student.id,
+            'Test Series Assigned',
+            `Admin assigned "${series.title}" to you. You can now access and attempt all included mock tests!`,
+          ]
+        ).catch(() => {});
+      }
     }
-  }
+  });
 
   await delCache('cache:public_test_series:*').catch(() => {});
 
@@ -753,7 +757,7 @@ export const assignTestSeries = asyncHandler(async (req, res) => {
     success: true,
     message: `Assigned "${series.title}" to ${targetDisplayName} (${enrolledCount} student${enrolledCount === 1 ? '' : 's'} enrolled).`,
     enrolled_count: enrolledCount,
-    assignment: assignmentRes.rows[0],
+    assignment: assignmentRow,
   });
 });
 
