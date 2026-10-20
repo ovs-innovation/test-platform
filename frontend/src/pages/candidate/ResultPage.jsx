@@ -366,7 +366,7 @@ export default function ResultPage() {
     const fromAssessment = Number(assessment?.total_marks);
     if (!isNaN(fromAssessment) && fromAssessment > 0) return fromAssessment;
     if (Array.isArray(solutions) && solutions.length > 0) {
-      return solutions.reduce((acc, q) => acc + (Number(q.marks) || 4), 0);
+      return solutions.reduce((acc, q) => acc + (Number(q?.marks) || 4), 0);
     }
     return 0;
   }, [isNeetExam, score, assessment, solutions]);
@@ -458,8 +458,8 @@ export default function ResultPage() {
       if (!map[sec]) {
         map[sec] = { name: sec, max: 0, obtained: 0, correct: 0, wrong: 0, unattempted: 0 };
       }
-      map[sec].max += q.marks || 0;
-      map[sec].obtained += q.marks_obtained || 0;
+      map[sec].max += q?.marks || 0;
+      map[sec].obtained += q?.marks_obtained || 0;
 
       // Classify attempts
       const isMulti = isMultiSelectQuestion(q);
@@ -485,7 +485,7 @@ export default function ResultPage() {
       } else if (q.question_type === 'coding') {
         if (!q.your_answer || !q.your_answer.trim()) {
           map[sec].unattempted += 1;
-        } else if (q.marks_obtained === q.marks) {
+        } else if (q?.marks_obtained === q?.marks) {
           map[sec].correct += 1;
         } else {
           map[sec].wrong += 1;
@@ -579,11 +579,22 @@ export default function ResultPage() {
   }, [solutions, detectedPrimarySubject]);
 
   const neetSectionAnalytics = useMemo(() => {
-    const hasSectionB = solutions?.some((q) => q.is_section_b || q.section === 'B');
-    if (!isNeetExam || !hasSectionB || !solutions || solutions.length === 0) return null;
+    // Only 200-question pattern NEET exams have Section A (35 Qs) and Section B (15 Qs) per subject.
+    // In 180-question NEET exams, Chemistry was pos 46-90 with section 'B', but was not a 200-Q optional section.
+    const hasExplicitSecB = solutions?.some((q) => q.is_section_b || (q.section === 'B' && q.section_name?.toLowerCase().includes('section b')));
+    const is200QPattern = solutions && (solutions.length >= 190 || hasExplicitSecB);
+    if (!isNeetExam || !is200QPattern || !solutions || solutions.length === 0) return null;
 
     if (data?.neetBreakdown?.subjectResults) {
-      return data.neetBreakdown.subjectResults;
+      const entries = Object.values(data.neetBreakdown.subjectResults);
+      const hasValidSections = entries.length > 0 && entries.every((s) => s && s.sectionA && s.sectionB);
+      if (hasValidSections) {
+        return data.neetBreakdown.subjectResults;
+      }
+    }
+
+    if (solutions.length < 190 && !hasExplicitSecB) {
+      return null;
     }
 
     const subjects = ['Physics', 'Chemistry', 'Botany', 'Zoology'];
@@ -599,6 +610,7 @@ export default function ResultPage() {
     });
 
     const isQAttempted = (q) => {
+      if (!q) return false;
       if (isMultiSelectQuestion(q)) return Array.isArray(q.your_answer) && q.your_answer.length > 0;
       if (['mcq', 'single_choice', 'assertion_reason'].includes(q.question_type)) return q.your_answer !== null && q.your_answer !== undefined;
       if (['integer', 'numerical'].includes(q.question_type)) return q.your_answer !== null && q.your_answer !== undefined && q.your_answer !== '';
@@ -606,6 +618,7 @@ export default function ResultPage() {
     };
 
     solutions.forEach((q, idx) => {
+      if (!q) return;
       const pos = q.position || (idx + 1);
       let subj = 'Physics';
       let sec = 'A';
@@ -1174,16 +1187,11 @@ export default function ResultPage() {
 
                 <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
                   {['Physics', 'Chemistry', 'Botany', 'Zoology'].map((subj) => {
-                    const data = neetSectionAnalytics[subj] || {
-                      totalMarks: 180,
-                      marksObtained: 0,
-                      sectionA: { maxMarks: 140, totalQuestions: 35, attempted: 0, correct: 0, incorrect: 0, marks: 0 },
-                      sectionB: { maxMarks: 40, totalQuestions: 15, maxAttemptAllowed: 10, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, marks: 0 },
-                    };
-                    const secA = data.sectionA;
-                    const secB = data.sectionB;
-                    const totalSubjMarks = data.marksObtained;
-                    const subjPct = Math.round((totalSubjMarks / 180) * 100);
+                    const subjData = neetSectionAnalytics?.[subj] || {};
+                    const secA = subjData?.sectionA || { maxMarks: 140, totalQuestions: 35, attempted: 0, correct: 0, incorrect: 0, marks: 0 };
+                    const secB = subjData?.sectionB || { maxMarks: 40, totalQuestions: 15, maxAttemptAllowed: 10, totalAttempted: 0, evaluatedAttempted: 0, correct: 0, incorrect: 0, marks: 0 };
+                    const totalSubjMarks = Number(subjData?.marksObtained ?? ((Number(secA?.marks) || 0) + (Number(secB?.marks) || 0)));
+                    const subjPct = Math.round((totalSubjMarks / 180) * 100) || 0;
 
                     return (
                       <div
@@ -1212,11 +1220,11 @@ export default function ResultPage() {
                         <div className="rounded-xl bg-blue-50/50 dark:bg-blue-950/30 border border-blue-100 dark:border-blue-900/40 p-2.5 text-xs space-y-1">
                           <div className="flex items-center justify-between font-bold text-blue-950 dark:text-blue-200">
                             <span>Section A (35 Qs)</span>
-                            <span className="text-blue-700 dark:text-blue-400">{secA.marks} / 140</span>
+                            <span className="text-blue-700 dark:text-blue-400">{(secA?.marks ?? 0)} / 140</span>
                           </div>
                           <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
-                            <span>Attempted: <strong>{secA.attempted}</strong> / 35</span>
-                            <span>✓ {secA.correct} · ✗ {secA.incorrect}</span>
+                            <span>Attempted: <strong>{secA?.attempted ?? 0}</strong> / 35</span>
+                            <span>✓ {secA?.correct ?? 0} · ✗ {secA?.incorrect ?? 0}</span>
                           </div>
                         </div>
 
@@ -1224,15 +1232,15 @@ export default function ResultPage() {
                         <div className="rounded-xl bg-amber-50/50 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-900/40 p-2.5 text-xs space-y-1">
                           <div className="flex items-center justify-between font-bold text-amber-950 dark:text-amber-200">
                             <span>Section B (Any 10)</span>
-                            <span className="text-amber-700 dark:text-amber-400">{secB.marks} / 40</span>
+                            <span className="text-amber-700 dark:text-amber-400">{(secB?.marks ?? 0)} / 40</span>
                           </div>
                           <div className="flex items-center justify-between text-[11px] text-slate-600 dark:text-slate-400">
-                            <span>Evaluated: <strong>{secB.evaluatedAttempted || secB.correct + secB.incorrect}</strong> / 10</span>
-                            <span>✓ {secB.correct} · ✗ {secB.incorrect}</span>
+                            <span>Evaluated: <strong>{secB?.evaluatedAttempted ?? ((secB?.correct ?? 0) + (secB?.incorrect ?? 0))}</strong> / 10</span>
+                            <span>✓ {secB?.correct ?? 0} · ✗ {secB?.incorrect ?? 0}</span>
                           </div>
-                          {secB.totalAttempted > 10 && (
+                          {(secB?.totalAttempted ?? 0) > 10 && (
                             <p className="text-[10px] text-rose-600 font-semibold pt-0.5">
-                              * {secB.totalAttempted - 10} excess question(s) ignored as per rules
+                              * {(secB?.totalAttempted ?? 0) - 10} excess question(s) ignored as per rules
                             </p>
                           )}
                         </div>

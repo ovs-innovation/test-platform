@@ -481,6 +481,30 @@ export function evaluateNeetAttempt({
       }
     });
 
+    for (const s of Object.keys(subjectStats)) {
+      const st = subjectStats[s];
+      st.sectionA = {
+        maxMarks: st.totalMarks || 180,
+        totalQuestions: st.totalQuestions || 45,
+        attempted: st.attempted,
+        correct: st.correct,
+        incorrect: st.incorrect,
+        unattempted: st.unattempted,
+        marks: st.marksObtained,
+      };
+      st.sectionB = {
+        maxMarks: 0,
+        totalQuestions: 0,
+        maxAttemptAllowed: 0,
+        totalAttempted: 0,
+        evaluatedAttempted: 0,
+        correct: 0,
+        incorrect: 0,
+        unattempted: 0,
+        marks: 0,
+      };
+    }
+
     const finalMarksObtained = Math.max(0, Number(totalMarksObtained.toFixed(2)));
     const maxMarks = 720;
     const percentage = Number(((finalMarksObtained / maxMarks) * 100).toFixed(2));
