@@ -1263,3 +1263,57 @@ export const deleteAdminForumReply = asyncHandler(async (req, res) => {
   res.json({ success: true, message: 'Reply deleted successfully.', topicId: reply.rows[0].topic_id });
 });
 
+/**
+ * POST /api/admin/attempts/:id/reset
+ * Resets a student's attempt (for accidental submissions, network drops, etc.) and allows a retake.
+ */
+export const resetAttempt = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  let attempt = null;
+  let isTestAttempt = false;
+
+  const attRes = await query('SELECT * FROM attempts WHERE id = $1', [id]);
+  if (attRes.rowCount > 0) {
+    attempt = attRes.rows[0];
+  } else {
+    const testAttRes = await query('SELECT * FROM test_attempts WHERE id = $1', [id]);
+    if (testAttRes.rowCount > 0) {
+      attempt = testAttRes.rows[0];
+      isTestAttempt = true;
+    }
+  }
+
+  if (!attempt) throw ApiError.notFound('Attempt not found');
+
+  const assessmentId = isTestAttempt ? attempt.test_id : attempt.assessment_id;
+  const candidateId = isTestAttempt ? attempt.student_id : attempt.candidate_id;
+
+  if (isTestAttempt) {
+    await query('DELETE FROM test_attempts WHERE id = $1', [id]);
+  } else {
+    await query('DELETE FROM attempts WHERE id = $1', [id]);
+  }
+
+  // Also reset associated candidate_invites if any
+  const userRes = await query('SELECT email FROM users WHERE id = $1', [candidateId]);
+  const candidateEmail = userRes.rows[0]?.email;
+  if (candidateEmail) {
+    await query(
+      `UPDATE candidate_invites
+       SET status = 'pending',
+           completed_at = NULL,
+           accessed_at = NULL,
+           invited_at = NOW()
+       WHERE assessment_id = $1 AND LOWER(candidate_email) = LOWER($2)`,
+      [assessmentId, candidateEmail]
+    );
+  }
+
+  res.json({
+    success: true,
+    message: 'Attempt has been reset successfully. The candidate can now retake this assessment.',
+  });
+});
+
+

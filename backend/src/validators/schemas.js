@@ -281,6 +281,7 @@ export const inviteSchema = z.object({
   assessment_id: z.number().int().positive(),
   candidate_name: z.string().trim().min(2).max(120),
   candidate_email: z.string().trim().toLowerCase().email(),
+  allow_retake: z.boolean().optional().default(false),
 });
 
 export const sectionSchema = z.object({

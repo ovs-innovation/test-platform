@@ -55,11 +55,20 @@ export const getInvite = asyncHandler(async (req, res) => {
   });
 });
 
+const resetCandidateAttemptForAssessment = async (assessmentId, candidateEmail) => {
+  const userRes = await query('SELECT id FROM users WHERE LOWER(email) = $1', [candidateEmail.toLowerCase()]);
+  const candidateUserId = userRes.rows[0]?.id || null;
+  if (candidateUserId) {
+    await query('DELETE FROM attempts WHERE assessment_id = $1 AND candidate_id = $2', [assessmentId, candidateUserId]);
+    await query('DELETE FROM test_attempts WHERE test_id = $1 AND student_id = $2', [assessmentId, candidateUserId]);
+  }
+};
+
 /**
  * POST /api/admin/invites
  */
 export const createInvite = asyncHandler(async (req, res) => {
-  const { assessment_id, candidate_name, candidate_email } = req.body;
+  const { assessment_id, candidate_name, candidate_email, allow_retake } = req.body;
 
   const aRes = await query(
     `SELECT id, title, duration_minutes, is_published FROM assessments WHERE id = $1
@@ -109,7 +118,32 @@ export const createInvite = asyncHandler(async (req, res) => {
   if (existing.rowCount > 0) {
     const row = existing.rows[0];
     if (row.status === 'completed') {
-      throw ApiError.conflict('This candidate has already completed this assessment');
+      if (!allow_retake) {
+        throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
+      }
+
+      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+
+      const updated = await query(
+        `UPDATE candidate_invites
+         SET candidate_name = $1,
+             status = 'pending',
+             completed_at = NULL,
+             accessed_at = NULL,
+             invited_at = NOW()
+         WHERE id = $2
+         RETURNING *`,
+        [candidate_name, row.id]
+      );
+      const invite = updated.rows[0];
+      await sendInvite(invite);
+
+      return res.json({
+        invite: { ...invite, invite_url: inviteUrlFor(invite.token) },
+        resent: true,
+        retake_granted: true,
+        message: 'Previous attempt has been reset and invitation resent for retake.',
+      });
     }
 
     const updated = await query(
@@ -129,6 +163,25 @@ export const createInvite = asyncHandler(async (req, res) => {
       resent: true,
       message: 'Invitation resent to this candidate',
     });
+  }
+
+  // Also check if candidate has an existing completed attempt even without prior candidate_invites
+  const userRes = await query('SELECT id FROM users WHERE LOWER(email) = $1', [candidate_email.toLowerCase()]);
+  const candidateUserId = userRes.rows[0]?.id;
+  if (candidateUserId) {
+    const prevAttempt = await query(
+      `SELECT id, status FROM attempts WHERE assessment_id = $1 AND candidate_id = $2
+       UNION ALL
+       SELECT id, (CASE WHEN submitted_at IS NOT NULL THEN 'completed' ELSE 'in_progress' END)::text AS status FROM test_attempts WHERE test_id = $1 AND student_id = $2
+       LIMIT 1`,
+      [assessment_id, candidateUserId]
+    );
+    if (prevAttempt.rowCount > 0 && prevAttempt.rows[0].status !== 'in_progress') {
+      if (!allow_retake) {
+        throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
+      }
+      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+    }
   }
 
   const result = await query(
@@ -212,4 +265,59 @@ export const resendInvite = asyncHandler(async (req, res) => {
     console.warn('[email] Resend failed:', err.message);
   }
   res.json({ message: 'Invitation resent', invite_url: inviteUrl });
+});
+
+/**
+ * POST /api/admin/invites/:id/grant-retake
+ */
+export const grantRetake = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const result = await query(
+    `SELECT ci.*, COALESCE(a.title, t.test_name, t.title) AS assessment_title, COALESCE(a.duration_minutes, t.duration_minutes, 180) AS duration_minutes
+     FROM candidate_invites ci
+     LEFT JOIN assessments a ON a.id = ci.assessment_id
+     LEFT JOIN tests t ON t.id = ci.assessment_id
+     WHERE ci.id = $1`,
+    [id]
+  );
+  if (result.rowCount === 0) throw ApiError.notFound('Invite not found');
+  const invite = result.rows[0];
+
+  await resetCandidateAttemptForAssessment(invite.assessment_id, invite.candidate_email);
+
+  const updated = await query(
+    `UPDATE candidate_invites
+     SET status = 'pending',
+         completed_at = NULL,
+         accessed_at = NULL,
+         invited_at = NOW()
+     WHERE id = $1
+     RETURNING *`,
+    [id]
+  );
+  const updatedInvite = updated.rows[0];
+
+  const requestOrigin = req.get('origin') || req.get('referer');
+  let baseUrl = env.inviteBaseUrl;
+  if (requestOrigin) {
+    try { baseUrl = new URL(requestOrigin).origin; } catch (_) {}
+  }
+  const inviteUrl = `${baseUrl}/invite/${updatedInvite.token}`;
+  try {
+    await sendInviteEmail(
+      updatedInvite.candidate_email,
+      updatedInvite.candidate_name,
+      invite.assessment_title,
+      inviteUrl,
+      invite.duration_minutes
+    );
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.warn('[email] Retake email failed:', err.message);
+  }
+
+  res.json({
+    message: 'Retake granted. Previous attempt has been reset and invitation resent.',
+    invite: { ...updatedInvite, invite_url: inviteUrl },
+  });
 });

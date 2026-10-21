@@ -14,7 +14,7 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye, Sparkles } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye, Sparkles, RotateCcw } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl, getQuestionDiagrams, hasQuestionDiagram } from '../../lib/media.js';
 
@@ -295,7 +295,7 @@ export default function AssessmentEditor() {
       )}
 
       {tab === 'candidates' && (
-        <CandidatesTab invites={invites} />
+        <CandidatesTab invites={invites} onReload={load} toast={toast} />
       )}
 
       {tab === 'invitations' && (
@@ -2989,34 +2989,69 @@ function SectionsTab({ assessmentId, sections, onReload, toast }) {
   );
 }
 
-function CandidatesTab({ invites }) {
+function CandidatesTab({ invites, onReload, toast }) {
+  const [grantingId, setGrantingId] = useState(null);
+
+  const handleGrantRetake = async (inv) => {
+    if (!window.confirm(`Grant a retake for ${inv.candidate_name}? This will reset their previous attempt and allow them to take this test again from their dashboard.`)) {
+      return;
+    }
+    setGrantingId(inv.id);
+    try {
+      await adminService.grantRetake(inv.id);
+      toast.success(`Retake granted for ${inv.candidate_name}!`);
+      onReload?.();
+    } catch (err) {
+      toast.error(err.message || 'Failed to grant retake');
+    } finally {
+      setGrantingId(null);
+    }
+  };
+
   return (
     <div className="card overflow-hidden">
-      <div className="border-b border-slate-200 px-5 py-4">
-        <h2 className="font-semibold text-slate-900">Invited candidates</h2>
-        <p className="text-sm text-slate-500">Candidates invited to this assessment and their progress.</p>
+      <div className="border-b border-slate-200 px-5 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <div>
+          <h2 className="font-semibold text-slate-900 dark:text-white">Invited candidates</h2>
+          <p className="text-sm text-slate-500">Candidates invited to this assessment and their progress.</p>
+        </div>
       </div>
       {invites.length === 0 ? (
         <div className="p-8"><EmptyState title="No candidates yet" message="Send invitations from the Invitations tab." /></div>
       ) : (
         <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase text-slate-500">
+          <thead className="bg-slate-50 dark:bg-slate-900 text-left text-xs uppercase text-slate-500">
             <tr>
               <th className="px-4 py-3">Name</th>
               <th className="px-4 py-3">Email</th>
               <th className="px-4 py-3">Status</th>
               <th className="px-4 py-3">Score</th>
               <th className="px-4 py-3">Invited</th>
+              <th className="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
             {invites.map((inv) => (
               <tr key={inv.id}>
                 <td className="px-4 py-3 font-medium">{inv.candidate_name}</td>
-                <td className="px-4 py-3 text-slate-600">{inv.candidate_email}</td>
+                <td className="px-4 py-3 text-slate-600 dark:text-slate-400">{inv.candidate_email}</td>
                 <td className="px-4 py-3"><Badge color={inv.status === 'completed' ? 'green' : inv.status === 'accessed' ? 'amber' : 'blue'}>{inv.status}</Badge></td>
                 <td className="px-4 py-3">{inv.percentage != null ? `${inv.percentage}%` : '—'}</td>
                 <td className="px-4 py-3 text-slate-500">{formatDate(inv.invited_at)}</td>
+                <td className="px-4 py-3 text-right">
+                  {inv.status === 'completed' && (
+                    <button
+                      type="button"
+                      className="btn-secondary text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 border-amber-200 dark:border-amber-850 inline-flex items-center gap-1 font-bold"
+                      disabled={grantingId === inv.id}
+                      onClick={() => handleGrantRetake(inv)}
+                      title="Reset previous attempt and allow candidate to re-attempt"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                      {grantingId === inv.id ? 'Resetting…' : 'Grant Retake'}
+                    </button>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -3027,9 +3062,10 @@ function CandidatesTab({ invites }) {
 }
 
 function InvitationsTab({ assessmentId, invites, canInvite, onReload, toast }) {
-  const [form, setForm] = useState({ candidate_name: '', candidate_email: '' });
+  const [form, setForm] = useState({ candidate_name: '', candidate_email: '', allow_retake: false });
   const [sending, setSending] = useState(false);
   const [resending, setResending] = useState(null);
+  const [grantingRetake, setGrantingRetake] = useState(null);
 
   const send = async (e) => {
     e.preventDefault();
@@ -3040,8 +3076,8 @@ function InvitationsTab({ assessmentId, invites, canInvite, onReload, toast }) {
     setSending(true);
     try {
       const result = await adminService.createInvite({ assessment_id: Number(assessmentId), ...form });
-      toast.success(result.resent ? 'Invitation resent' : 'Invitation sent via email');
-      setForm({ candidate_name: '', candidate_email: '' });
+      toast.success(result.retake_granted ? 'Retake granted & invite sent' : result.resent ? 'Invitation resent' : 'Invitation sent via email');
+      setForm({ candidate_name: '', candidate_email: '', allow_retake: false });
       onReload();
     } catch (err) {
       toast.error(err.message || 'Failed to send');
@@ -3050,10 +3086,26 @@ function InvitationsTab({ assessmentId, invites, canInvite, onReload, toast }) {
     }
   };
 
+  const handleGrantRetake = async (inv) => {
+    if (!window.confirm(`Grant a retake for ${inv.candidate_name}? This will reset their previous attempt and allow them to take this test again from their dashboard.`)) {
+      return;
+    }
+    setGrantingRetake(inv.id);
+    try {
+      await adminService.grantRetake(inv.id);
+      toast.success(`Retake granted for ${inv.candidate_name}!`);
+      onReload();
+    } catch (err) {
+      toast.error(err.message || 'Failed to grant retake');
+    } finally {
+      setGrantingRetake(null);
+    }
+  };
+
   return (
     <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
       <form onSubmit={send} className="card space-y-4 p-5">
-        <h2 className="font-semibold">Invite candidate</h2>
+        <h2 className="font-semibold text-slate-900 dark:text-white">Invite candidate</h2>
         {!canInvite && (
           <p className="rounded-lg bg-amber-50 p-3 text-sm text-amber-800">Add questions before inviting candidates.</p>
         )}
@@ -3065,27 +3117,59 @@ function InvitationsTab({ assessmentId, invites, canInvite, onReload, toast }) {
           <label className="label">Candidate email</label>
           <input className="input" type="email" required value={form.candidate_email} onChange={(e) => setForm((f) => ({ ...f, candidate_email: e.target.value }))} />
         </div>
+
+        {/* Retake Checkbox */}
+        <div className="rounded-xl border border-amber-200/90 dark:border-amber-900/60 bg-amber-50/70 dark:bg-amber-950/30 p-3">
+          <label className="flex items-start gap-2.5 cursor-pointer text-xs text-slate-700 dark:text-slate-300">
+            <input
+              type="checkbox"
+              checked={form.allow_retake}
+              onChange={(e) => setForm((f) => ({ ...f, allow_retake: e.target.checked }))}
+              className="mt-0.5 h-4 w-4 rounded border-slate-300 text-amber-600 focus:ring-amber-500 cursor-pointer"
+            />
+            <div>
+              <span className="font-extrabold text-amber-900 dark:text-amber-200 flex items-center gap-1">
+                <RotateCcw className="h-3 w-3" /> Allow Retake (Reset previous attempt)
+              </span>
+              <p className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5 leading-normal">
+                Check this if the candidate accidentally submitted or had network failure and needs to attempt this test again.
+              </p>
+            </div>
+          </label>
+        </div>
+
         <button type="submit" className="btn-primary w-full" disabled={sending || !canInvite}>
           {sending ? <Spinner className="h-4 w-4 text-white" /> : 'Send invitation email'}
         </button>
       </form>
 
       <div className="card p-5">
-        <h2 className="mb-4 font-semibold">Invitation history</h2>
+        <h2 className="mb-4 font-semibold text-slate-900 dark:text-white">Invitation history</h2>
         {invites.length === 0 ? (
           <EmptyState title="No invitations sent" />
         ) : (
           <ul className="space-y-3">
             {invites.map((inv) => (
-              <li key={inv.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 p-3">
+              <li key={inv.id} className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-slate-200 dark:border-slate-800 p-3">
                 <div>
-                  <p className="font-medium">{inv.candidate_name}</p>
-                  <p className="text-sm text-slate-500">{inv.candidate_email}</p>
-                  <p className="text-xs text-slate-400">Sent {formatDate(inv.invited_at)}</p>
+                  <p className="font-medium text-slate-900 dark:text-white">{inv.candidate_name}</p>
+                  <p className="text-sm text-slate-500 dark:text-slate-400">{inv.candidate_email}</p>
+                  <p className="text-xs text-slate-400 dark:text-slate-500">Sent {formatDate(inv.invited_at)}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <Badge color={inv.status === 'completed' ? 'green' : 'blue'}>{inv.status}</Badge>
-                  {inv.status !== 'completed' && (
+                  {inv.status === 'completed' ? (
+                    <button
+                      type="button"
+                      className="btn-secondary text-xs text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/40 border-amber-200 dark:border-amber-850 inline-flex items-center gap-1 font-bold"
+                      disabled={grantingRetake === inv.id}
+                      onClick={() => handleGrantRetake(inv)}
+                      title="Reset previous attempt and allow candidate to re-attempt"
+                    >
+                      <RotateCcw className="h-3 w-3" />
+                      {grantingRetake === inv.id ? 'Resetting…' : 'Grant Retake'}
+                    </button>
+                  ) : (
                     <button type="button" className="btn-secondary text-xs" disabled={resending === inv.id}
                       onClick={async () => {
                         setResending(inv.id);

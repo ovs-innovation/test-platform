@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { adminService } from '../../lib/services.js';
 import { LoadingScreen, ErrorState, Badge, StatCard } from '../../components/ui.jsx';
 import { formatDateTime, attemptStatusLabel } from '../../lib/format.js';
 import { VIOLATION_LABELS } from '../../lib/proctoring.js';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { useToast } from '../../context/ToastContext.jsx';
+import { RotateCcw } from 'lucide-react';
 
 function getOptionsList(rawOptions) {
   let opts = rawOptions;
@@ -42,8 +44,11 @@ function getQuestionText(rawText) {
 
 export default function AdminAttemptDetail() {
   const { attemptId } = useParams();
+  const navigate = useNavigate();
+  const toast = useToast();
   const [data, setData] = useState(null);
   const [state, setState] = useState('loading');
+  const [resetting, setResetting] = useState(false);
 
   const load = async () => {
     setState('loading');
@@ -52,6 +57,22 @@ export default function AdminAttemptDetail() {
       setState('done');
     } catch {
       setState('error');
+    }
+  };
+
+  const handleResetAttempt = async () => {
+    const candidateName = data?.attempt?.candidate_name || 'this candidate';
+    if (!window.confirm(`Reset attempt for ${candidateName}?\n\nThis will clear this attempt's recorded answers and score, allowing the candidate to retake the test from their dashboard.`)) {
+      return;
+    }
+    setResetting(true);
+    try {
+      await adminService.resetAttempt(attemptId);
+      toast.success('Attempt reset successfully! Candidate can now retake this test.');
+      navigate('/admin/reports');
+    } catch (err) {
+      toast.error(err.message || 'Failed to reset attempt');
+      setResetting(false);
     }
   };
 
@@ -86,13 +107,26 @@ export default function AdminAttemptDetail() {
         Back to Reports
       </Link>
 
-      <div className="mb-6">
-        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
-          {attempt.assessment_title || 'Assessment Attempt'}
-        </h1>
-        <p className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
-          {attempt.candidate_name || 'Candidate'} · {attempt.candidate_email || '—'}
-        </p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+            {attempt.assessment_title || 'Assessment Attempt'}
+          </h1>
+          <p className="mt-1 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            {attempt.candidate_name || 'Candidate'} · {attempt.candidate_email || '—'}
+          </p>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleResetAttempt}
+          disabled={resetting}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/60 shadow-xs transition cursor-pointer"
+          title="Reset this attempt and allow the candidate to take the exam again"
+        >
+          <RotateCcw className="h-3.5 w-3.5" />
+          <span>{resetting ? 'Resetting Attempt…' : 'Reset Attempt & Allow Retake'}</span>
+        </button>
       </div>
 
       <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

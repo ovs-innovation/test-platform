@@ -627,6 +627,8 @@ export const adminService = {
     api.get('/admin/invites', { params: assessmentId ? { assessment_id: assessmentId } : {} }).then((r) => r.data.invites),
   createInvite: (data) => api.post('/admin/invites', data).then((r) => r.data),
   resendInvite: (id) => api.post(`/admin/invites/${id}/resend`).then((r) => r.data),
+  grantRetake: (id) => api.post(`/admin/invites/${id}/grant-retake`).then((r) => r.data),
+  resetAttempt: (id) => api.post(`/admin/attempts/${id}/reset`).then((r) => r.data),
   cms: (type) => withCache(`admin_cms_${type || 'all'}`, () => api.get('/admin/cms', { params: type ? { type } : {} }).then((r) => r.data.pages)),
   saveCms: (data) => {
     clearCache();

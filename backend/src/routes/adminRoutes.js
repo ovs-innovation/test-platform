@@ -10,6 +10,7 @@ import {
   getReports,
   exportReports,
   getAttemptReport,
+  resetAttempt,
   getAnalytics,
   getInstitutionAnalytics,
   getFeatureFlags,
@@ -80,7 +81,7 @@ import {
   getSettings, updateSettings, broadcastNotification,
   getAdminLandingContent, updateAdminLandingContent,
 } from '../controllers/platformController.js';
-import { createInvite, listInvites, resendInvite } from '../controllers/inviteController.js';
+import { createInvite, listInvites, resendInvite, grantRetake } from '../controllers/inviteController.js';
 import { listProctoringSessions } from '../controllers/proctoringRecordingController.js';
 import {
   inviteSchema,
@@ -119,10 +120,12 @@ router.post('/candidates/:id/send-credentials', sendCandidateCredentials);
 router.get('/reports/export', exportReports);
 router.get('/reports', getReports);
 router.get('/attempts/:id', getAttemptReport);
+router.post('/attempts/:id/reset', resetAttempt);
 router.get('/proctoring/sessions', listProctoringSessions);
 router.get('/invites', listInvites);
 router.post('/invites', validate(inviteSchema), createInvite);
 router.post('/invites/:id/resend', resendInvite);
+router.post('/invites/:id/grant-retake', grantRetake);
 
 // Test Management Endpoints
 router.get('/tests', listTests);
