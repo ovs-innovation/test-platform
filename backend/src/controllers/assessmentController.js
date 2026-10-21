@@ -106,7 +106,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       LEFT JOIN test_attempts tat ON tat.test_id = ci.assessment_id AND tat.student_id = $2
       LEFT JOIN scores s ON s.attempt_id = at.id
       LEFT JOIN scores ts ON ts.attempt_id = tat.id
-      WHERE ci.candidate_email = $1 AND ci.status <> 'expired'
+      WHERE LOWER(ci.candidate_email) = LOWER($1) AND ci.status <> 'expired'
 
       UNION ALL
 
@@ -134,7 +134,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
       WHERE se.user_id = $2 AND se.status = 'active' AND (se.expires_at IS NULL OR se.expires_at > NOW())
         AND NOT EXISTS (
           SELECT 1 FROM candidate_invites ci2
-          WHERE ci2.candidate_email = $1 AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
+          WHERE LOWER(ci2.candidate_email) = LOWER($1) AND ci2.assessment_id = a.id AND ci2.status <> 'expired'
         )
 
       UNION ALL
@@ -298,7 +298,7 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
   if (!assessmentRow) throw ApiError.notFound('Assessment not found');
 
   const invite = await query(
-    `SELECT id FROM candidate_invites WHERE candidate_email = $1 AND assessment_id = $2 AND status <> 'expired'`,
+    `SELECT id FROM candidate_invites WHERE LOWER(candidate_email) = LOWER($1) AND assessment_id = $2 AND status <> 'expired'`,
     [req.user.email, id]
   );
   const enr = await query(

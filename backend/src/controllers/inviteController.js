@@ -55,12 +55,15 @@ export const getInvite = asyncHandler(async (req, res) => {
   });
 });
 
-const resetCandidateAttemptForAssessment = async (assessmentId, candidateEmail) => {
+const resetCandidateAttemptForAssessment = async (assessmentId, candidateEmail, inviteId = null) => {
   const userRes = await query('SELECT id FROM users WHERE LOWER(email) = $1', [candidateEmail.toLowerCase()]);
   const candidateUserId = userRes.rows[0]?.id || null;
   if (candidateUserId) {
     await query('DELETE FROM attempts WHERE assessment_id = $1 AND candidate_id = $2', [assessmentId, candidateUserId]);
     await query('DELETE FROM test_attempts WHERE test_id = $1 AND student_id = $2', [assessmentId, candidateUserId]);
+  }
+  if (inviteId) {
+    await query('DELETE FROM attempts WHERE invite_id = $1', [inviteId]);
   }
 };
 
@@ -88,7 +91,7 @@ export const createInvite = asyncHandler(async (req, res) => {
   }
 
   const existing = await query(
-    'SELECT id, status, token FROM candidate_invites WHERE assessment_id = $1 AND candidate_email = $2',
+    'SELECT id, status, token FROM candidate_invites WHERE assessment_id = $1 AND LOWER(candidate_email) = $2',
     [assessment_id, candidate_email.toLowerCase()]
   );
 
@@ -117,12 +120,12 @@ export const createInvite = asyncHandler(async (req, res) => {
 
   if (existing.rowCount > 0) {
     const row = existing.rows[0];
-    if (row.status === 'completed') {
-      if (!allow_retake) {
+    if (row.status === 'completed' || allow_retake) {
+      if (row.status === 'completed' && !allow_retake) {
         throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
       }
 
-      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+      await resetCandidateAttemptForAssessment(assessment_id, candidate_email, row.id);
 
       const updated = await query(
         `UPDATE candidate_invites
@@ -170,7 +173,7 @@ export const createInvite = asyncHandler(async (req, res) => {
   const candidateUserId = userRes.rows[0]?.id;
   if (candidateUserId) {
     const prevAttempt = await query(
-      `SELECT id, status FROM attempts WHERE assessment_id = $1 AND candidate_id = $2
+      `SELECT id, status::text FROM attempts WHERE assessment_id = $1 AND candidate_id = $2
        UNION ALL
        SELECT id, (CASE WHEN submitted_at IS NOT NULL THEN 'completed' ELSE 'in_progress' END)::text AS status FROM test_attempts WHERE test_id = $1 AND student_id = $2
        LIMIT 1`,
@@ -180,6 +183,8 @@ export const createInvite = asyncHandler(async (req, res) => {
       if (!allow_retake) {
         throw ApiError.conflict('This candidate has already completed this assessment. Enable "Allow Retake" to reset their attempt and allow them to take it again.');
       }
+      await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
+    } else if (allow_retake && prevAttempt.rowCount > 0) {
       await resetCandidateAttemptForAssessment(assessment_id, candidate_email);
     }
   }
@@ -283,7 +288,7 @@ export const grantRetake = asyncHandler(async (req, res) => {
   if (result.rowCount === 0) throw ApiError.notFound('Invite not found');
   const invite = result.rows[0];
 
-  await resetCandidateAttemptForAssessment(invite.assessment_id, invite.candidate_email);
+  await resetCandidateAttemptForAssessment(invite.assessment_id, invite.candidate_email, invite.id);
 
   const updated = await query(
     `UPDATE candidate_invites
