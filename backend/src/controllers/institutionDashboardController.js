@@ -8,6 +8,7 @@ import path from 'path';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
 import pdfParse from 'pdf-parse';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
+import { invalidateUserAuthCache } from '../middleware/auth.js';
 
 
 /**
@@ -272,6 +273,7 @@ export const toggleBlockInstitutionStudent = asyncHandler(async (req, res) => {
   );
 
   if (result.rowCount === 0) throw ApiError.notFound('Student not found in this institution');
+  await invalidateUserAuthCache(student_id);
   res.json({
     success: true,
     message: `Student account ${is_blocked ? 'blocked' : 'unblocked'} successfully.`,

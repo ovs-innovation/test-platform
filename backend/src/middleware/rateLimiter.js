@@ -1,9 +1,26 @@
 import rateLimit from 'express-rate-limit';
+import { extractToken } from './auth.js';
+import { verifyToken } from '../utils/token.js';
 
-// General API limiter: protects all routes from abuse.
+const resolveRateLimitKey = (req) => {
+  if (req.user?.id) return `user_${req.user.id}`;
+  try {
+    const token = extractToken(req);
+    if (token) {
+      const decoded = verifyToken(token);
+      if (decoded?.sub) return `user_${decoded.sub}`;
+    }
+  } catch (_) {
+    // Fall back to client IP if token decoding fails
+  }
+  return req.ip || req.socket?.remoteAddress || 'unknown';
+};
+
+// General API limiter: protects all routes from abuse while preventing NAT lab starvation
 export const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 600,
+  max: process.env.RATE_LIMIT_MAX ? Number(process.env.RATE_LIMIT_MAX) : 6000,
+  keyGenerator: resolveRateLimitKey,
   standardHeaders: true,
   legacyHeaders: false,
   message: { message: 'Too many requests, please try again later.' },

@@ -965,11 +965,37 @@ export const verifyLoginOtp = asyncHandler(async (req, res) => {
 
   await query('UPDATE otp_verifications SET verified_at = NOW() WHERE id = $1', [record.id]);
 
+  let institutionInfo = null;
+  if (user.institution_id) {
+    const instRes = await query(
+      `SELECT id, name, code, logo_url, logo_badge, tagline, accent_color FROM institutions WHERE id = $1`,
+      [user.institution_id]
+    ).catch(() => ({ rowCount: 0, rows: [] }));
+    if (instRes.rowCount > 0) {
+      const instRow = instRes.rows[0];
+      institutionInfo = {
+        id: instRow.id,
+        name: instRow.name,
+        code: instRow.code,
+        logo_url: instRow.logo_url || (instRow.code === 'DRON-2026' ? '/edvedum/drona-academy-logo.svg' : null),
+        logo_badge: instRow.logo_badge || (instRow.code === 'DRON-2026' ? 'DRO' : 'INST'),
+        tagline: instRow.tagline,
+        accent_color: instRow.accent_color,
+      };
+    }
+  }
+
   const session = await issueAuthSession(req, res, user);
   res.json({
     success: true,
     ...session,
-    user: publicUser(user),
+    user: {
+      ...publicUser(user),
+      institution_name: institutionInfo?.name || null,
+      institution_logo_url: institutionInfo?.logo_url || null,
+      institution_logo_badge: institutionInfo?.logo_badge || null,
+      institution: institutionInfo || null,
+    },
     redirectTo: '/dashboard',
   });
 });

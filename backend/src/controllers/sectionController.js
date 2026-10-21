@@ -1,6 +1,7 @@
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
+import { invalidateExamPaperCache } from '../services/examCacheService.js';
 
 /**
  * GET /api/assessments/:assessmentId/sections
@@ -38,6 +39,7 @@ export const createSection = asyncHandler(async (req, res) => {
      VALUES ($1, $2, $3, $4, $5) RETURNING *`,
     [assessmentId, name, section_type, description || '', pos]
   );
+  await invalidateExamPaperCache(assessmentId);
   res.status(201).json({ section: result.rows[0] });
 });
 
@@ -55,6 +57,7 @@ export const updateSection = asyncHandler(async (req, res) => {
     [name, section_type, description, position, id]
   );
   if (result.rowCount === 0) throw ApiError.notFound('Section not found');
+  await invalidateExamPaperCache(result.rows[0].assessment_id);
   res.json({ section: result.rows[0] });
 });
 
@@ -63,7 +66,8 @@ export const updateSection = asyncHandler(async (req, res) => {
  */
 export const deleteSection = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const result = await query('DELETE FROM assessment_sections WHERE id = $1 RETURNING id', [id]);
+  const result = await query('DELETE FROM assessment_sections WHERE id = $1 RETURNING id, assessment_id', [id]);
   if (result.rowCount === 0) throw ApiError.notFound('Section not found');
+  await invalidateExamPaperCache(result.rows[0].assessment_id);
   res.json({ message: 'Section deleted', id: result.rows[0].id });
 });

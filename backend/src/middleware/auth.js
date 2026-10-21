@@ -1,6 +1,30 @@
 import { verifyToken } from '../utils/token.js';
 import { ApiError } from '../utils/ApiError.js';
 import { query } from '../config/db.js';
+import { getCache, setCache, delCache } from '../config/redis.js';
+
+export async function invalidateUserAuthCache(userId) {
+  const numId = Number(userId);
+  if (numId) {
+    await delCache(`user_auth:${numId}`).catch(() => {});
+  }
+}
+
+async function fetchUserAuthRecord(subNum) {
+  const cacheKey = `user_auth:${subNum}`;
+  const cached = await getCache(cacheKey).catch(() => null);
+  if (cached && cached.id) {
+    return cached;
+  }
+  const userRes = await query(
+    'SELECT id, role, email, name, is_blocked, institution_id, batch_id FROM users WHERE id = $1',
+    [subNum]
+  );
+  if (userRes.rowCount === 0) return null;
+  const user = userRes.rows[0];
+  await setCache(cacheKey, user, 60).catch(() => {});
+  return user;
+}
 
 /**
  * Extracts JWT token from HttpOnly cookie first, falling back to Authorization Bearer header.
@@ -64,11 +88,10 @@ export const authenticate = async (req, _res, next) => {
       return next(ApiError.unauthorized('Invalid user identity in token'));
     }
 
-    const userRes = await query('SELECT id, role, email, name, is_blocked, institution_id, batch_id FROM users WHERE id = $1', [subNum]);
-    if (userRes.rowCount === 0) {
+    const user = await fetchUserAuthRecord(subNum);
+    if (!user) {
       return next(ApiError.unauthorized('User not found or session invalid'));
     }
-    const user = userRes.rows[0];
     if (user.is_blocked) {
       return next(ApiError.forbidden('Your account has been blocked by an administrator. Please contact support.'));
     }
@@ -100,12 +123,8 @@ export const optionalAuthenticate = async (req, _res, next) => {
 
     const subNum = Number(decoded?.sub);
     if (!isNaN(subNum) && Number.isInteger(subNum)) {
-      const userRes = await query(
-        'SELECT id, role, email, name, is_blocked, institution_id, batch_id FROM users WHERE id = $1',
-        [subNum]
-      );
-      if (userRes.rowCount > 0 && !userRes.rows[0].is_blocked) {
-        const user = userRes.rows[0];
+      const user = await fetchUserAuthRecord(subNum);
+      if (user && !user.is_blocked) {
         req.user = {
           id: user.id,
           role: user.role,

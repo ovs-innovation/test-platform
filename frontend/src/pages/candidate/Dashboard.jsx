@@ -25,6 +25,14 @@ export default function CandidateDashboard() {
   const [data, setData] = useState(null);
   const [assignedEbooks, setAssignedEbooks] = useState([]);
   const [state, setState] = useState('loading');
+  const [instLogoErr, setInstLogoErr] = useState(false);
+
+  const instName = user?.institution?.name || user?.institution_name;
+  const instLogo = user?.institution?.logo_url || user?.institution_logo_url;
+
+  useEffect(() => {
+    setInstLogoErr(false);
+  }, [instLogo]);
 
   const load = async () => {
     setState('loading');
@@ -87,10 +95,19 @@ export default function CandidateDashboard() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
             <div className="flex flex-wrap items-center gap-2">
-              {user?.institution?.name && (
+              {instName && (
                 <span className="inline-flex items-center gap-1.5 rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2.5 py-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
-                  <Building2 className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
-                  <span>{user.institution.name}</span>
+                  {instLogo && !instLogoErr ? (
+                    <img
+                      src={instLogo}
+                      alt={instName}
+                      className="h-3.5 w-3.5 object-contain rounded-xs"
+                      onError={() => setInstLogoErr(true)}
+                    />
+                  ) : (
+                    <Building2 className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+                  )}
+                  <span>{instName}</span>
                 </span>
               )}
               {user?.batch && (

@@ -3,6 +3,7 @@ import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 import { autoClassifyQuestion } from '../utils/questionClassifier.js';
+import { invalidateExamPaperCache, invalidateQuestionMeta } from '../services/examCacheService.js';
 
 const ensureAssessment = async (assessmentId) => {
   const a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
@@ -281,6 +282,7 @@ export const createQuestion = asyncHandler(async (req, res) => {
     return finalQRes.rows[0];
   });
 
+  await invalidateExamPaperCache(assessmentId);
   res.status(201).json({ question: inserted });
 });
 
@@ -396,6 +398,8 @@ export const updateQuestion = asyncHandler(async (req, res) => {
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
       marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, id, JSON.stringify(hasAnswerKey)]
   );
+  await invalidateExamPaperCache(q.assessment_id);
+  await invalidateQuestionMeta(id);
   res.json({ question: result.rows[0] });
 });
 
@@ -506,6 +510,7 @@ export const reorderQuestions = asyncHandler(async (req, res) => {
     return { updated_at: updatedRes.rows[0]?.updated_at };
   });
 
+  await invalidateExamPaperCache(assessmentId);
   res.json({ message: 'Questions reordered successfully', updated_at: result.updated_at });
 });
 
@@ -537,6 +542,8 @@ export const deleteQuestion = asyncHandler(async (req, res) => {
     await client.query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [q.assessment_id]);
   });
 
+  await invalidateExamPaperCache(q.assessment_id);
+  await invalidateQuestionMeta(id);
   res.json({ message: 'Question deleted and positions normalized', id: q.id });
 });
 
@@ -622,6 +629,7 @@ export const bulkUploadQuestions = asyncHandler(async (req, res) => {
     }
   }
 
+  await invalidateExamPaperCache(assessmentId);
   res.status(201).json({ created: created.length, questions: created, errors });
 });
 
@@ -681,6 +689,7 @@ export const bulkUpdateQuestionMarks = asyncHandler(async (req, res) => {
     [totalMarks, assessmentId]
   ).catch(() => {});
 
+  await invalidateExamPaperCache(assessmentId);
   res.json({
     message: `Updated marks to ${marks} for ${updatedCount} question${updatedCount === 1 ? '' : 's'}`,
     updated_count: updatedCount,

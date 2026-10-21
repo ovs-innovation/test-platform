@@ -2,6 +2,7 @@ import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { isNeetTest, resolveQuestionNeetMeta, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
+import { invalidateExamPaperCache } from '../services/examCacheService.js';
 
 export async function sendStudentAssignmentNotifications(testId, testName, assigned_to_type, assigned_to_id) {
   try {
@@ -486,6 +487,7 @@ export const updateTest = asyncHandler(async (req, res) => {
     }
   }
 
+  await invalidateExamPaperCache(id);
   res.json({ test: result.rows[0] });
 });
 
@@ -523,6 +525,7 @@ export const deleteTest = asyncHandler(async (req, res) => {
     await query('DELETE FROM test_series WHERE price = 0 AND id IN (SELECT series_id FROM test_series_tests WHERE test_id = $1)', [id]).catch(() => { });
     await query('DELETE FROM tests WHERE id = $1', [id]);
     await delCache('cache:public_test_series:*').catch(() => { });
+    await invalidateExamPaperCache(id);
     return res.json({ message: 'Test deleted permanently.', id, soft_deleted: false });
   }
 });
@@ -546,6 +549,7 @@ export const togglePublishTest = asyncHandler(async (req, res) => {
     syncFreeTestSeries(result.rows[0]).catch(() => { });
   }
 
+  await invalidateExamPaperCache(id);
   res.json({
     message: `Test is now ${result.rows[0].is_published ? 'Published' : 'Unpublished'}.`,
     test: result.rows[0]

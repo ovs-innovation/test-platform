@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState, useCallback } from 'react';
-import { authService } from '../lib/services.js';
+import { authService, clearCache } from '../lib/services.js';
 import { tokenStore } from '../lib/api.js';
 import { AuthContext } from './authContext.js';
 
@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const onExpired = () => {
+      clearCache();
       setUser(null);
       setLoading(false);
     };
@@ -33,6 +34,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = useCallback(async (credentials) => {
+    clearCache();
     try {
       const res = await authService.login(credentials);
       const { user: u, redirectTo } = res;
@@ -59,6 +61,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const verifyOtp = useCallback(async (data) => {
+    clearCache();
     const res = await authService.verifyOtp(data);
     const u = res.user;
     tokenStore.set();
@@ -75,6 +78,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const verifyLoginOtp = useCallback(async (data) => {
+    clearCache();
     const res = await authService.verifyLoginOtp(data);
     const u = res.user;
     tokenStore.set();
@@ -83,6 +87,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const firebaseLogin = useCallback(async (data) => {
+    clearCache();
     const res = await authService.firebaseLogin(data);
     const u = res.user;
     tokenStore.set();
@@ -95,10 +100,12 @@ export function AuthProvider({ children }) {
       await authService.logout();
     } catch (_) {}
     tokenStore.clear();
+    clearCache();
     setUser(null);
   }, []);
 
   const register = useCallback(async (data) => {
+    clearCache();
     const res = await authService.register(data);
     const u = res.user;
     tokenStore.set();
@@ -107,6 +114,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const studentLogin = useCallback(async (credentials) => {
+    clearCache();
     const result = await authService.studentLogin(credentials);
     if (!result || !result.user) {
       throw new Error('Invalid login response from server');

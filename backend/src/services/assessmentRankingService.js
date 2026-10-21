@@ -257,7 +257,8 @@ export async function syncAssessmentRankings(assessmentId) {
         `SELECT s.id, s.attempt_id, s.marks_obtained
          FROM scores s
          JOIN attempts a ON a.id = s.attempt_id
-         WHERE a.assessment_id = $1`,
+         WHERE a.assessment_id = $1
+           AND (s.rank IS NULL OR s.percentile IS NULL)`,
         [numId]
       );
       for (const row of (scoreRows.rows || [])) {

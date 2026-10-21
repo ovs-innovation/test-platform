@@ -1,37 +1,105 @@
 import api, { tokenStore } from './api.js';
 
 const cache = new Map();
+const inFlight = new Map();
 
 export const clearCache = (key) => {
-  if (key) cache.delete(key);
-  else cache.clear();
+  if (key) {
+    cache.delete(key);
+    inFlight.delete(key);
+    for (const k of cache.keys()) {
+      if (k.endsWith(`:${key}`) || k === key) {
+        cache.delete(k);
+        inFlight.delete(k);
+      }
+    }
+  } else {
+    cache.clear();
+    inFlight.clear();
+  }
 };
 
-const withCache = (key, fetcher, ttlMs = 60000) => {
+export const getActiveUserScope = () => {
+  try {
+    const student = localStorage.getItem('edvedum_active_student');
+    if (student) {
+      const parsed = JSON.parse(student);
+      if (parsed?.id || parsed?.email || parsed?.roll_number) {
+        return `u_${parsed.id || parsed.email || parsed.roll_number}`;
+      }
+    }
+  } catch (_) {}
+  return 'u_anon';
+};
+
+export const withCache = (key, fetcher, ttlMs = 60000) => {
   const cached = cache.get(key);
   const now = Date.now();
+
   if (cached && (now - cached.timestamp < ttlMs)) {
-    if (now - cached.timestamp > 3000) {
-      fetcher()
-        .then((data) => cache.set(key, { data, timestamp: Date.now() }))
-        .catch(() => { });
+    if (now - cached.timestamp > 5000 && !inFlight.has(key)) {
+      const bgPromise = Promise.resolve()
+        .then(() => fetcher())
+        .then((data) => {
+          cache.set(key, { data, timestamp: Date.now() });
+          return data;
+        })
+        .catch(() => {})
+        .finally(() => {
+          inFlight.delete(key);
+        });
+      inFlight.set(key, bgPromise);
     }
     return Promise.resolve(cached.data);
   }
-  return fetcher().then((data) => {
-    cache.set(key, { data, timestamp: Date.now() });
-    return data;
-  });
+
+  if (inFlight.has(key)) {
+    return inFlight.get(key);
+  }
+
+  const promise = Promise.resolve()
+    .then(() => fetcher())
+    .then((data) => {
+      cache.set(key, { data, timestamp: Date.now() });
+      return data;
+    })
+    .finally(() => {
+      inFlight.delete(key);
+    });
+
+  inFlight.set(key, promise);
+  return promise;
 };
 
+export const withUserCache = (key, fetcher, ttlMs = 60000) => {
+  const scope = getActiveUserScope();
+  return withCache(`${scope}:${key}`, fetcher, ttlMs);
+};
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('auth:session-expired', () => clearCache());
+}
+
 export const authService = {
-  login: (data) => api.post('/auth/login', data).then((r) => r.data),
-  register: (data) => api.post('/auth/register', data).then((r) => r.data),
+  login: (data) =>
+    api.post('/auth/login', data).then((r) => {
+      clearCache();
+      return r.data;
+    }),
+  register: (data) =>
+    api.post('/auth/register', data).then((r) => {
+      clearCache();
+      return r.data;
+    }),
   studentLogin: (data) =>
     api
       .post('/auth/student-login', data)
-      .then((r) => r.data)
+      .then((r) => {
+        clearCache();
+        return r.data;
+      })
       .catch((err) => {
+        clearCache();
         const id = String(data?.enrollmentId || data?.studentId || data?.identifier || data?.email || data?.roll_number || '').toUpperCase();
         const code = String(data?.instituteCode || '').toUpperCase();
         if (id.includes('DRON-2026') || code === 'DRON-2026' || id.includes('DRONA')) {
@@ -67,12 +135,27 @@ export const authService = {
   forgotPassword: (data) => api.post('/auth/forgot-password', data).then((r) => r.data),
   resetPassword: (data) => api.post('/auth/reset-password', data).then((r) => r.data),
   sendOtp: (data) => api.post('/auth/otp/send', data).then((r) => r.data),
-  verifyOtp: (data) => api.post('/auth/otp/verify', data).then((r) => r.data),
+  verifyOtp: (data) =>
+    api.post('/auth/otp/verify', data).then((r) => {
+      clearCache();
+      return r.data;
+    }),
   sendLoginOtp: (data) => api.post('/auth/otp/send-login', data).then((r) => r.data),
   sendSignupOtp: (data) => api.post('/auth/otp/send-signup', data).then((r) => r.data),
-  verifyLoginOtp: (data) => api.post('/auth/otp/verify-login', data).then((r) => r.data),
-  firebaseLogin: (data) => api.post('/auth/firebase-login', data).then((r) => r.data),
-  logout: () => api.post('/auth/logout').then((r) => r.data).catch(() => ({ success: true })),
+  verifyLoginOtp: (data) =>
+    api.post('/auth/otp/verify-login', data).then((r) => {
+      clearCache();
+      return r.data;
+    }),
+  firebaseLogin: (data) =>
+    api.post('/auth/firebase-login', data).then((r) => {
+      clearCache();
+      return r.data;
+    }),
+  logout: () => {
+    clearCache();
+    return api.post('/auth/logout').then((r) => r.data).catch(() => ({ success: true }));
+  },
   me: () =>
     api
       .get('/auth/me')
@@ -85,7 +168,7 @@ export const authService = {
         throw err;
       }),
   candidateDashboard: () =>
-    withCache('candidate_dashboard', () =>
+    withUserCache('candidate_dashboard', () =>
       api
         .get('/auth/candidate/dashboard')
         .then((r) => r.data)
@@ -347,7 +430,7 @@ export const paymentService = {
     api.get(`/payments/status/${merchantOrderId}`).then((r) => r.data),
   history: (forceRefresh = false) => {
     if (forceRefresh) clearCache('payment_history');
-    return withCache('payment_history', () => api.get('/payments/history').then((r) => r.data));
+    return withUserCache('payment_history', () => api.get('/payments/history').then((r) => r.data));
   },
   admin: () => withCache('payment_admin', () => api.get('/payments/admin').then((r) => r.data)),
   adminManualOptions: () => api.get('/payments/admin/options').then((r) => r.data),
@@ -402,22 +485,22 @@ export const notificationService = {
 };
 
 export const studentService = {
-  analytics: () => withCache('student_analytics', () => api.get('/student/analytics').then((r) => r.data)),
-  postTestAnalytics: (testId) => withCache(`post_test_analytics_${testId}`, () => api.get(`/student/analytics/${testId}`).then((r) => r.data)),
-  getAIMentorReport: (testId) => withCache(`ai_mentor_report_${testId}`, () => api.get(`/student/analytics/${testId}/ai-mentor-report`).then((r) => r.data)),
-  get7DayPlan: (params) => withCache(`7day_plan_${params?.attemptId || params?.testId}`, () => api.get('/student/7-day-plan', { params }).then((r) => r.data)),
+  analytics: () => withUserCache('student_analytics', () => api.get('/student/analytics').then((r) => r.data)),
+  postTestAnalytics: (testId) => withUserCache(`post_test_analytics_${testId}`, () => api.get(`/student/analytics/${testId}`).then((r) => r.data)),
+  getAIMentorReport: (testId) => withUserCache(`ai_mentor_report_${testId}`, () => api.get(`/student/analytics/${testId}/ai-mentor-report`).then((r) => r.data)),
+  get7DayPlan: (params) => withUserCache(`7day_plan_${params?.attemptId || params?.testId}`, () => api.get('/student/7-day-plan', { params }).then((r) => r.data)),
   generate7DayPlan: (data) => {
     if (data?.regenerate) {
       clearCache(`7day_plan_${data?.attemptId || data?.testId}`);
     }
     return api.post('/student/generate-7-day-plan', data).then((r) => {
       if (r.data?.plan) {
-        cache.set(`7day_plan_${data?.attemptId || data?.testId}`, { data: r.data, timestamp: Date.now() });
+        cache.set(`${getActiveUserScope()}:7day_plan_${data?.attemptId || data?.testId}`, { data: r.data, timestamp: Date.now() });
       }
       return r.data;
     });
   },
-  profile: () => withCache('student_profile', () => api.get('/student/profile').then((r) => r.data)),
+  profile: () => withUserCache('student_profile', () => api.get('/student/profile').then((r) => r.data)),
   updateProfile: (data) => {
     clearCache('student_profile');
     return api.put('/student/profile', data).then((r) => r.data);
@@ -441,11 +524,11 @@ export const studentService = {
     clearCache('student_forum');
     return api.post(`/student/forum/${id}/reply`, { body, imageUrl }).then((r) => r.data);
   },
-  calendar: () => withCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
+  calendar: () => withUserCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
 };
 
 export const calendarService = {
-  getCalendar: () => withCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
+  getCalendar: () => withUserCache('student_calendar', () => api.get('/student/calendar').then((r) => r.data)),
 };
 
 export const attemptService = {

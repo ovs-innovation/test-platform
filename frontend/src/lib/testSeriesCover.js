@@ -18,11 +18,11 @@ export function examCoverKey(examType = '') {
 }
 
 const COVER_IMAGES = {
-  jee: '/edvedum/student-jee.png',
-  neet: '/edvedum/student-neet.png',
-  'neet-pg': '/edvedum/student-neet.png',
-  foundation: '/edvedum/student-foundation.png',
-  general: '/edvedum/students-group.png',
+  jee: '/edvedum/student-jee.webp',
+  neet: '/edvedum/student-neet.webp',
+  'neet-pg': '/edvedum/student-neet.webp',
+  foundation: '/edvedum/student-foundation.webp',
+  general: '/edvedum/students-group.webp',
 };
 
 const THEMES = {
@@ -33,7 +33,7 @@ const THEMES = {
     badgeStyle: 'bg-[#0D6EFD]/10 text-[#0D6EFD] border border-[#0D6EFD]/20',
     heroGradient: 'from-[#0D6EFD] via-[#2563eb] to-[#1e40af]',
     fadeFromGradient: 'from-[#2563eb] to-transparent',
-    studentImage: '/edvedum/jee-student-ai.png',
+    studentImage: '/edvedum/jee-student-ai.webp',
     glowColor: 'rgba(13, 110, 253, 0.25)',
     accentText: 'text-[#0D6EFD]',
     chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
@@ -47,7 +47,7 @@ const THEMES = {
     badgeStyle: 'bg-[#0891b2]/10 text-[#0891b2] border border-[#0891b2]/20',
     heroGradient: 'from-[#0284c7] via-[#06b6d4] to-[#0891b2]',
     fadeFromGradient: 'from-[#06b6d4] to-transparent',
-    studentImage: '/edvedum/neet-student-ai.png',
+    studentImage: '/edvedum/neet-student-ai.webp',
     glowColor: 'rgba(8, 145, 178, 0.25)',
     accentText: 'text-[#0891b2]',
     chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
@@ -61,7 +61,7 @@ const THEMES = {
     badgeStyle: 'bg-[#7C3AED]/10 text-[#7C3AED] border border-[#7C3AED]/20',
     heroGradient: 'from-[#7C3AED] via-[#6d28d9] to-[#5b21b6]',
     fadeFromGradient: 'from-[#6d28d9] to-transparent',
-    studentImage: '/edvedum/neetpg-student-ai.png',
+    studentImage: '/edvedum/neetpg-student-ai.webp',
     glowColor: 'rgba(124, 58, 237, 0.25)',
     accentText: 'text-[#7C3AED]',
     chipBg: 'bg-purple-50 text-[#7C3AED] border border-purple-200/60',
@@ -75,7 +75,7 @@ const THEMES = {
     badgeStyle: 'bg-[#4F46E5]/10 text-[#4F46E5] border border-[#4F46E5]/20',
     heroGradient: 'from-[#4F46E5] via-[#4338ca] to-[#3730a3]',
     fadeFromGradient: 'from-[#4338ca] to-transparent',
-    studentImage: '/edvedum/foundation-student-ai.png',
+    studentImage: '/edvedum/foundation-student-ai.webp',
     glowColor: 'rgba(79, 70, 229, 0.25)',
     accentText: 'text-[#4F46E5]',
     chipBg: 'bg-indigo-50 text-[#4F46E5] border border-indigo-200/60',
@@ -89,7 +89,7 @@ const THEMES = {
     badgeStyle: 'bg-[#0D6EFD]/10 text-[#0D6EFD] border border-[#0D6EFD]/20',
     heroGradient: 'from-[#0D6EFD] via-[#2563eb] to-[#1d4ed8]',
     fadeFromGradient: 'from-[#2563eb] to-transparent',
-    studentImage: '/edvedum/jee-student-ai.png',
+    studentImage: '/edvedum/jee-student-ai.webp',
     glowColor: 'rgba(13, 110, 253, 0.25)',
     accentText: 'text-[#0D6EFD]',
     chipBg: 'bg-blue-50 text-[#0D6EFD] border border-blue-200/60',
@@ -103,7 +103,7 @@ const THEMES = {
     badgeStyle: 'bg-[#0891b2]/10 text-[#0891b2] border border-[#0891b2]/20',
     heroGradient: 'from-[#0284c7] via-[#06b6d4] to-[#0891b2]',
     fadeFromGradient: 'from-[#06b6d4] to-transparent',
-    studentImage: '/edvedum/neet-student-ai.png',
+    studentImage: '/edvedum/neet-student-ai.webp',
     glowColor: 'rgba(8, 145, 178, 0.25)',
     accentText: 'text-[#0891b2]',
     chipBg: 'bg-cyan-50 text-[#0891b2] border border-cyan-200/60',
@@ -114,7 +114,7 @@ const THEMES = {
 
 export function getSeriesBannerImage(series) {
   const custom = series?.image_url?.trim();
-  if (custom && custom !== '/edvedum/banners/banner-free-mock.png' && !custom.includes('banner-free-mock')) return custom;
+  if (custom && custom !== '/edvedum/banners/banner-free-mock.webp' && custom !== '/edvedum/banners/banner-free-mock.png' && !custom.includes('banner-free-mock')) return custom;
 
   const slug = (series?.slug || '').toLowerCase();
   const title = (series?.title || '').toLowerCase();
@@ -130,33 +130,33 @@ export function getSeriesBannerImage(series) {
   // 1. PERSONALISED TEST SERIES (Distinct, premium imagery with modern tablets and mentorship)
   if (isPersonalised) {
     if (isNeet) {
-      if (isTwoYear) return '/edvedum/banners/banner-personalized-neet.jpg';
-      if (isRepeater) return '/edvedum/banners/banner-neet-male.png';
-      return '/edvedum/banners/banner-neet-bio.png'; // Class 12
+      if (isTwoYear) return '/edvedum/banners/banner-personalized-neet.webp';
+      if (isRepeater) return '/edvedum/banners/banner-neet-male.webp';
+      return '/edvedum/banners/banner-neet-bio.webp'; // Class 12
     }
     if (isJee) {
-      if (isTwoYear) return '/edvedum/banners/banner-personalized-jee.jpg';
-      if (isRepeater) return '/edvedum/banners/banner-personalized-repeater.jpg';
-      return '/edvedum/banners/banner-jee-female.png'; // Class 12
+      if (isTwoYear) return '/edvedum/banners/banner-personalized-jee.webp';
+      if (isRepeater) return '/edvedum/banners/banner-personalized-repeater.webp';
+      return '/edvedum/banners/banner-jee-female.webp'; // Class 12
     }
-    return '/edvedum/banners/banner-premium-series.png';
+    return '/edvedum/banners/banner-premium-series.webp';
   }
 
   // 2. AIETS / STANDARD TEST SERIES
   if (isNeet) {
-    if (free) return '/edvedum/banners/banner-free-mock.png';
-    if (isRepeater) return '/edvedum/banners/banner-neet-bio.png';
-    return '/edvedum/banners/banner-neet-mock.png';
+    if (free) return '/edvedum/banners/banner-free-mock.webp';
+    if (isRepeater) return '/edvedum/banners/banner-neet-bio.webp';
+    return '/edvedum/banners/banner-neet-mock.webp';
   }
 
   if (isJee) {
-    if (free) return '/edvedum/banners/banner-free-mock.png';
-    if (isRepeater) return '/edvedum/banners/banner-jee-male2.png';
-    return '/edvedum/banners/banner-jee-full.png';
+    if (free) return '/edvedum/banners/banner-free-mock.webp';
+    if (isRepeater) return '/edvedum/banners/banner-jee-male2.webp';
+    return '/edvedum/banners/banner-jee-full.webp';
   }
 
-  if (free) return '/edvedum/banners/banner-free-mock.png';
-  return '/edvedum/banners/banner-premium-series.png';
+  if (free) return '/edvedum/banners/banner-free-mock.webp';
+  return '/edvedum/banners/banner-premium-series.webp';
 }
 
 /** Exam-type styling for catalog cards. */
@@ -164,7 +164,7 @@ export function getExamTheme(series) {
   const text = `${series?.exam_type || ''} ${series?.title || ''}`;
   const free = Number(series?.price) === 0 || Boolean(series?.is_free);
   const custom = series?.image_url?.trim();
-  const bannerImage = (custom && custom !== '/edvedum/banners/banner-free-mock.png') ? custom : getSeriesBannerImage(series);
+  const bannerImage = (custom && custom !== '/edvedum/banners/banner-free-mock.webp' && custom !== '/edvedum/banners/banner-free-mock.png') ? custom : getSeriesBannerImage(series);
 
   let theme = THEMES.general;
   if (isNeetPg(text)) theme = THEMES['neet-pg'];

@@ -2,14 +2,14 @@ import { lazy, Suspense } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import PublicLayout from './components/PublicLayout.jsx';
-import Layout from './components/Layout.jsx';
-import AdminLayout from './components/admin/AdminLayout.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import { LoadingScreen } from './components/ui.jsx';
-
-import Home from './pages/public/Home.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import InstitutionProtectedRoute from './components/institution/InstitutionProtectedRoute.jsx';
+
+// Lazy-loaded layouts for role isolation
+const Layout = lazy(() => import('./components/Layout.jsx'));
+const AdminLayout = lazy(() => import('./components/admin/AdminLayout.jsx'));
 
 // Lazy-loaded routes for code splitting & bundle size optimization
 const Login = lazy(() => import('./pages/Login.jsx'));
@@ -79,23 +79,55 @@ const AdminDiscussionHub = lazy(() => import('./pages/admin/AdminDiscussionHub.j
 const AdminAdmissionManager = lazy(() => import('./pages/admin/AdmissionManager.jsx'));
 const AdminEnquiries = lazy(() => import('./pages/admin/Enquiries.jsx'));
 
-import InstitutionDashboard, {
-  InstOverviewTabWrapper,
-  InstStudentsTabWrapper,
-  InstBatchesTabWrapper,
-  InstTestSeriesTabWrapper,
-  InstTestAssignmentsTabWrapper,
-  InstEbooksTabWrapper,
-  InstAnalyticsTabWrapper,
-  InstRankingsTabWrapper,
-  InstReportsTabWrapper,
-  InstAttendanceTabWrapper,
-  InstPaymentsTabWrapper,
-  InstNotificationsTabWrapper,
-  InstProfileTabWrapper,
-  InstSettingsTabWrapper,
-  InstBatchDetailTabWrapper,
-} from './pages/institution/InstitutionDashboard.jsx';
+// Lazy-loaded Home and Institution Portal pages
+const Home = lazy(() => import('./pages/public/Home.jsx'));
+
+const InstitutionDashboard = lazy(() => import('./pages/institution/InstitutionDashboard.jsx'));
+const InstOverviewTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstOverviewTabWrapper }))
+);
+const InstStudentsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstStudentsTabWrapper }))
+);
+const InstBatchesTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstBatchesTabWrapper }))
+);
+const InstBatchDetailTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstBatchDetailTabWrapper }))
+);
+const InstTestSeriesTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstTestSeriesTabWrapper }))
+);
+const InstTestAssignmentsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstTestAssignmentsTabWrapper }))
+);
+const InstEbooksTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstEbooksTabWrapper }))
+);
+const InstAnalyticsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstAnalyticsTabWrapper }))
+);
+const InstRankingsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstRankingsTabWrapper }))
+);
+const InstReportsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstReportsTabWrapper }))
+);
+const InstAttendanceTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstAttendanceTabWrapper }))
+);
+const InstPaymentsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstPaymentsTabWrapper }))
+);
+const InstNotificationsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstNotificationsTabWrapper }))
+);
+const InstProfileTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstProfileTabWrapper }))
+);
+const InstSettingsTabWrapper = lazy(() =>
+  import('./pages/institution/InstitutionDashboard.jsx').then((m) => ({ default: m.InstSettingsTabWrapper }))
+);
 
 import { COMPANY, CONTACT } from './data/edvedumContent.js';
 

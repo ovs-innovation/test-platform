@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, lazy, Suspense } from 'react';
 import { NavLink, useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { useTheme } from '../context/ThemeContext.jsx';
@@ -9,8 +9,9 @@ import { tokenStore } from '../lib/api.js';
 import { Spinner } from './ui.jsx';
 import { formatDateTime } from '../lib/format.js';
 import { getAdminNotifications, markAdminNotificationRead, markAllAdminNotificationsRead, deleteAdminNotification, clearAllAdminNotifications } from '../lib/schoolStore.js';
-import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home, Search, BookOpen } from 'lucide-react';
-import AIDoubtSolverChatbox from './candidate/AIDoubtSolverChatbox.jsx';
+import { Bell, UserPlus, DollarSign, AlertTriangle, ShieldAlert, Flag, CheckCircle2, ArrowRight, School, X, Trash2, Home, Search, BookOpen, Building2 } from 'lucide-react';
+
+const AIDoubtSolverChatbox = lazy(() => import('./candidate/AIDoubtSolverChatbox.jsx'));
 
 
 
@@ -118,6 +119,53 @@ export default function Layout({ children }) {
 
   const isAdmin = user?.role === 'admin' || user?.role === 'superadmin';
   const nav = isAdmin ? adminNav : candidateNav;
+
+  // Resolve institution metadata for institutional student view
+  let activeStudent = null;
+  if (!user?.institution_id && !user?.institution && !isAdmin) {
+    try {
+      const saved = localStorage.getItem('edvedum_active_student');
+      if (saved) activeStudent = JSON.parse(saved);
+    } catch (_) {}
+  }
+
+  const instId =
+    user?.institution?.id ||
+    user?.institution_id ||
+    user?.institutionId ||
+    activeStudent?.institution?.id ||
+    activeStudent?.institution_id;
+
+  const instName =
+    user?.institution?.name ||
+    user?.institution_name ||
+    user?.institutionName ||
+    activeStudent?.institution?.name ||
+    activeStudent?.institution_name;
+
+  const instLogo =
+    user?.institution?.logo_url ||
+    user?.institution?.logoUrl ||
+    user?.institution_logo_url ||
+    user?.logoUrl ||
+    activeStudent?.institution?.logo_url ||
+    activeStudent?.institution_logo_url;
+
+  const instBadge =
+    user?.institution?.logo_badge ||
+    user?.institution?.badge ||
+    user?.institution?.logoBadge ||
+    user?.institution_logo_badge ||
+    activeStudent?.institution?.logo_badge ||
+    activeStudent?.institution?.badge ||
+    (instName ? instName.substring(0, 3).toUpperCase() : 'INST');
+
+  const isInstitutionalStudent = !isAdmin && Boolean(instId || instName);
+  const [instLogoError, setInstLogoError] = useState(false);
+
+  useEffect(() => {
+    setInstLogoError(false);
+  }, [instLogo, instId, instName]);
 
   // Toggle collapse
   const toggleCollapse = () => {
@@ -255,19 +303,50 @@ export default function Layout({ children }) {
           <div className={`flex h-14 shrink-0 items-center border-b border-slate-200/70 dark:border-slate-800/70 px-4 transition-all duration-300 ${
             collapsed ? 'justify-center' : 'justify-between'
           }`}>
-            <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 overflow-hidden mx-auto" title="EDVEDUM Academy">
-              <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-8 w-auto shrink-0 object-contain" />
-              {!collapsed && (
-                <div className="space-y-0.5 leading-none">
-                  <span className="block font-serif text-sm font-black tracking-wider text-slate-900 uppercase dark:text-white">
-                    EDVEDUM
-                  </span>
-                  <span className="block text-[8.5px] font-extrabold tracking-[0.2em] text-[#D97706] uppercase dark:text-[#F59E0B]">
-                    ACADEMY
-                  </span>
-                </div>
-              )}
-            </Link>
+            {isInstitutionalStudent ? (
+              <Link
+                to="/dashboard"
+                className={`flex items-center ${collapsed ? 'justify-center' : 'gap-2.5'} overflow-hidden mx-auto max-w-full`}
+                title={instName || 'Institution Student Portal'}
+              >
+                {instLogo && !instLogoError ? (
+                  <img
+                    src={instLogo}
+                    alt={instName || 'Institution Logo'}
+                    className="h-8 w-8 shrink-0 object-contain rounded-md bg-white/60 dark:bg-slate-800/60 p-0.5 border border-slate-200/60 dark:border-slate-700/60 shadow-2xs"
+                    onError={() => setInstLogoError(true)}
+                  />
+                ) : (
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 font-black text-xs text-white shadow-xs">
+                    {instBadge ? instBadge.slice(0, 3).toUpperCase() : <Building2 className="h-4 w-4" />}
+                  </div>
+                )}
+                {!collapsed && (
+                  <div className="space-y-0.5 leading-tight min-w-0">
+                    <span className="block font-bold text-sm tracking-tight text-slate-900 dark:text-white truncate max-w-[170px]" title={instName}>
+                      {instName}
+                    </span>
+                    <span className="block text-[8.5px] font-extrabold tracking-wider text-blue-600 dark:text-blue-400 uppercase">
+                      STUDENT PORTAL
+                    </span>
+                  </div>
+                )}
+              </Link>
+            ) : (
+              <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center gap-2.5 overflow-hidden mx-auto" title="EDVEDUM Academy">
+                <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-8 w-auto shrink-0 object-contain" />
+                {!collapsed && (
+                  <div className="space-y-0.5 leading-none">
+                    <span className="block font-serif text-sm font-black tracking-wider text-slate-900 uppercase dark:text-white">
+                      EDVEDUM
+                    </span>
+                    <span className="block text-[8.5px] font-extrabold tracking-[0.2em] text-[#D97706] uppercase dark:text-[#F59E0B]">
+                      ACADEMY
+                    </span>
+                  </div>
+                )}
+              </Link>
+            )}
           </div>
 
           {/* Navigation Rail */}
@@ -374,11 +453,32 @@ export default function Layout({ children }) {
           <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl overflow-y-auto flex flex-col justify-between dark:border-slate-800 dark:bg-[#0F172A]">
             <div>
               <div className="flex items-center justify-between border-b border-slate-200 pb-3 dark:border-slate-800 mb-3">
-                <div className="flex items-center gap-2">
-                  <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto" />
-                  <span className="font-bold text-xs text-slate-900 dark:text-white">EDVEDUM Academy</span>
-                </div>
-                <button type="button" onClick={() => setMobileOpen(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer p-1">
+                {isInstitutionalStudent ? (
+                  <div className="flex items-center gap-2.5 min-w-0 pr-2">
+                    {instLogo && !instLogoError ? (
+                      <img
+                        src={instLogo}
+                        alt={instName || 'Institution Logo'}
+                        className="h-7 w-7 shrink-0 object-contain rounded-md bg-white/60 dark:bg-slate-800/60 p-0.5 border border-slate-200/60 dark:border-slate-700/60 shadow-2xs"
+                        onError={() => setInstLogoError(true)}
+                      />
+                    ) : (
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 font-extrabold text-[11px] text-white shadow-xs">
+                        {instBadge ? instBadge.slice(0, 3).toUpperCase() : <Building2 className="h-3.5 w-3.5" />}
+                      </div>
+                    )}
+                    <div className="min-w-0">
+                      <p className="truncate text-xs font-bold text-slate-900 dark:text-white">{instName}</p>
+                      <p className="text-[9px] font-extrabold uppercase tracking-wider text-blue-600 dark:text-blue-400">Student Portal</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto" />
+                    <span className="font-bold text-xs text-slate-900 dark:text-white">EDVEDUM Academy</span>
+                  </div>
+                )}
+                <button type="button" onClick={() => setMobileOpen(false)} className="text-slate-400 hover:text-slate-700 dark:hover:text-white cursor-pointer p-1 shrink-0">
                   ✕
                 </button>
               </div>
@@ -458,16 +558,38 @@ export default function Layout({ children }) {
               </button>
 
               {/* Mobile Brand Logo */}
-              <Link to="/dashboard" className="flex items-center gap-2 shrink-0 min-w-0 lg:hidden">
-                <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto max-h-7 shrink-0 object-contain" />
-                <span className="font-serif text-xs font-black tracking-wider text-slate-900 uppercase dark:text-white sm:hidden truncate">
-                  EDVEDUM
-                </span>
+              <Link to="/dashboard" className="flex items-center gap-2 shrink-0 min-w-0 lg:hidden" title={isInstitutionalStudent ? instName : 'EDVEDUM'}>
+                {isInstitutionalStudent ? (
+                  <>
+                    {instLogo && !instLogoError ? (
+                      <img
+                        src={instLogo}
+                        alt={instName || 'Institution Logo'}
+                        className="h-7 w-7 shrink-0 object-contain rounded-md bg-white/60 dark:bg-slate-800/60 p-0.5 border border-slate-200/60 dark:border-slate-700/60 shadow-2xs"
+                        onError={() => setInstLogoError(true)}
+                      />
+                    ) : (
+                      <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-700 font-extrabold text-[11px] text-white shadow-xs">
+                        {instBadge ? instBadge.slice(0, 3).toUpperCase() : <Building2 className="h-3.5 w-3.5" />}
+                      </div>
+                    )}
+                    <span className="font-bold text-xs text-slate-900 dark:text-white sm:hidden truncate max-w-[120px]">
+                      {instName}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    <img src={EDVEDUM_LOGO} alt="EDVEDUM" className="h-7 w-auto max-h-7 shrink-0 object-contain" />
+                    <span className="font-serif text-xs font-black tracking-wider text-slate-900 uppercase dark:text-white sm:hidden truncate">
+                      EDVEDUM
+                    </span>
+                  </>
+                )}
               </Link>
 
               <div className="hidden sm:flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400 shrink-0">
-                <span className="uppercase text-[10px] tracking-wider text-slate-400">
-                  {isAdmin ? 'Admin Portal' : 'Student Portal'}
+                <span className="uppercase text-[10px] tracking-wider text-slate-400 truncate max-w-[200px]" title={isInstitutionalStudent ? instName : (isAdmin ? 'Admin Portal' : 'Student Portal')}>
+                  {isInstitutionalStudent ? `${instName} Portal` : (isAdmin ? 'Admin Portal' : 'Student Portal')}
                 </span>
                 <span>/</span>
                 <span className="text-blue-600 dark:text-blue-400 font-extrabold">{getBreadcrumbs()}</span>
@@ -581,7 +703,11 @@ export default function Layout({ children }) {
       </div>
 
       {/* Global AI Doubt Assistant Floating Solver (Candidate Only) */}
-      {!isAdmin && <AIDoubtSolverChatbox />}
+      {!isAdmin && (
+        <Suspense fallback={null}>
+          <AIDoubtSolverChatbox />
+        </Suspense>
+      )}
 
       {/* Command Palette Modal (Ctrl + K) */}
       {commandPaletteOpen && (

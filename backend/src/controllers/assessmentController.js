@@ -2,6 +2,7 @@ import { query, withTransaction } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { isNeetTest, normalizeNeetAssessmentPayload } from '../utils/neetPattern.js';
+import { invalidateExamPaperCache } from '../services/examCacheService.js';
 
 export const listAllAssessments = asyncHandler(async (_req, res) => {
   const result = await query(`
@@ -169,7 +170,7 @@ export const listAvailableAssessments = asyncHandler(async (req, res) => {
         AND (
           (tas.assigned_to_type IN ('individual', 'student') AND tas.assigned_to_id = $2)
           OR (tas.assigned_to_type = 'batch' AND $3::int IS NOT NULL AND tas.assigned_to_id = $3)
-          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND $3::int IS NULL AND tas.assigned_to_id = $4)
+          OR (tas.assigned_to_type = 'institution' AND $4::int IS NOT NULL AND tas.assigned_to_id = $4)
           OR ($4::int IS NULL AND tas.assigned_to_type = 'all')
         )
         -- Exclude tests that are already part of the candidate's active enrolled test series packages
@@ -574,6 +575,7 @@ export const updateAssessment = asyncHandler(async (req, res) => {
     values
   );
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  await invalidateExamPaperCache(id);
 
   if (fields.recommended_ebook_id) {
     (async () => {
@@ -623,6 +625,7 @@ export const togglePublish = asyncHandler(async (req, res) => {
     [publish, id]
   );
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  await invalidateExamPaperCache(id);
   res.json({ assessment: result.rows[0] });
 });
 
@@ -630,6 +633,7 @@ export const deleteAssessment = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const result = await query('DELETE FROM assessments WHERE id = $1 RETURNING id', [id]);
   if (result.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  await invalidateExamPaperCache(id);
   res.json({ message: 'Assessment deleted', id: result.rows[0].id });
 });
 

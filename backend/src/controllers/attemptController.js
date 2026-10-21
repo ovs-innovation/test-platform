@@ -8,6 +8,7 @@ import { isNeetTest, resolveQuestionNeetMeta, evaluateNeetAttempt, NEET_SUBJECTS
 import { getAssessmentRankingData, syncAssessmentRankings } from '../services/assessmentRankingService.js';
 import { recordAttemptMistakes } from '../services/mistakeBookService.js';
 import { getTopperComparison } from '../services/topperComparisonService.js';
+import { getOrSetCachedExamPaper, getOrSetQuestionMeta, getOrSetCachedInstitution } from '../services/examCacheService.js';
 
 const ensureArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -538,17 +539,18 @@ export const startAttempt = asyncHandler(async (req, res) => {
     throw ApiError.forbidden('This assessment availability window has expired');
   }
 
-  const qCount = await query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [assessmentId]);
+  const [qCount, existing] = await Promise.all([
+    query('SELECT COUNT(*)::int AS c FROM questions WHERE assessment_id = $1', [assessmentId]),
+    query(
+      'SELECT * FROM attempts WHERE assessment_id = $1 AND candidate_id = $2',
+      [assessmentId, req.user.id]
+    ),
+  ]);
   const hasPdf = Boolean(assessment.question_paper_url || assessment.solution_pdf_url || assessment.answer_key_url);
 
   if (qCount.rows[0].c === 0 && !hasPdf) {
     throw ApiError.badRequest('Question paper PDF or questions have not been uploaded for this assessment yet.');
   }
-
-  const existing = await query(
-    'SELECT * FROM attempts WHERE assessment_id = $1 AND candidate_id = $2',
-    [assessmentId, req.user.id]
-  );
 
   if (existing.rowCount > 0) {
     const attempt = existing.rows[0];
@@ -606,118 +608,51 @@ export const getAttemptState = asyncHandler(async (req, res, next) => {
     return res.json({ attempt: refreshed.rows[0], sections: [], questions: [], answers: [], expired: true });
   }
 
-  let assessmentObj = null;
-  const tCheck = await query('SELECT id FROM tests WHERE id = $1 LIMIT 1', [attempt.assessment_id]);
-  if (tCheck.rowCount > 0) {
-    const tRes = await query(
-      `SELECT t.id, COALESCE(t.test_name, t.title) AS title, t.duration_minutes,
-              5 AS max_violations, t.question_paper_url, t.solution_pdf_url, t.answer_key_url
-       FROM tests t WHERE t.id = $1`,
-      [attempt.assessment_id]
-    );
-    assessmentObj = tRes.rows[0];
+  const paper = await getOrSetCachedExamPaper(attempt.assessment_id);
+  if (!paper) {
+    throw ApiError.notFound('Assessment paper not found or unavailable');
   }
 
-  if (!assessmentObj) {
-    const assessmentRes = await query('SELECT * FROM assessments WHERE id = $1', [attempt.assessment_id]);
-    assessmentObj = assessmentRes.rows[0];
-  }
-
-  if (!assessmentObj) {
-    assessmentObj = { id: attempt.assessment_id, title: 'Assessment', duration_minutes: 180, max_violations: 5 };
-  }
-
-  const sectionsRes = await query(
-    'SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
-    [attempt.assessment_id]
-  );
-  const questionsRes = await query(
-    'SELECT * FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC',
-    [attempt.assessment_id]
-  );
-  const answersRes = await query(
-    'SELECT question_id, selected_index, selected_indices, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
-    [id]
-  );
-  const codingRes = await query(
-    'SELECT question_id, source_code, language FROM coding_answers WHERE attempt_id = $1',
-    [id]
-  );
-  const subjectiveRes = await query(
-    'SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1',
-    [id]
-  );
+  const [answersRes, codingRes, subjectiveRes, userInstRes] = await Promise.all([
+    query(
+      'SELECT question_id, selected_index, selected_indices, marked_for_review, numeric_answer FROM answers WHERE attempt_id = $1',
+      [id]
+    ),
+    query(
+      'SELECT question_id, source_code, language FROM coding_answers WHERE attempt_id = $1',
+      [id]
+    ),
+    query(
+      'SELECT question_id, answer_text FROM subjective_answers WHERE attempt_id = $1',
+      [id]
+    ),
+    query('SELECT institution_id FROM users WHERE id = $1', [attempt.candidate_id]).catch(() => ({ rows: [] })),
+  ]);
 
   let institutionObj = null;
-  const userInstRes = await query('SELECT institution_id FROM users WHERE id = $1', [attempt.candidate_id]).catch(() => ({ rows: [] }));
   const candInstId = userInstRes.rows[0]?.institution_id;
   if (candInstId) {
-    const instRes = await query(
-      'SELECT id, name, logo_url, logo_badge, code FROM institutions WHERE id = $1',
-      [candInstId]
-    ).catch(() => ({ rows: [] }));
-    if (instRes.rows.length > 0) {
-      const row = instRes.rows[0];
-      institutionObj = {
-        id: row.id,
-        name: row.name,
-        logo_url: row.logo_url || '',
-        logo_badge: row.logo_badge || (row.name ? row.name.substring(0, 3).toUpperCase() : 'INST'),
-        code: row.code || '',
-      };
-    }
+    institutionObj = await getOrSetCachedInstitution(candInstId);
   }
 
-  const isNeet = isNeetTest(assessmentObj, questionsRes.rows);
-  const totalQCount = questionsRes.rows.length;
-
-  const sanitizedQuestions = questionsRes.rows.map((q, idx) => {
-    const clean = sanitizeQuestion(q);
-    if (isNeet) {
-      const neetMeta = resolveQuestionNeetMeta(q, idx, totalQCount);
-      return {
-        ...clean,
-        subject: neetMeta.subject,
-        section: neetMeta.section,
-        questionNumber: neetMeta.subjectQuestionNumber,
-        overallQuestionNumber: neetMeta.overallQuestionNumber,
-        is_neet: true,
-        is_section_b: neetMeta.isSectionB,
-      };
-    }
-    return clean;
-  });
-
-  let finalQuestions = sanitizedQuestions;
-  let finalSections = sectionsRes.rows;
-  if (isNeet) {
-    const normalized = normalizeNeetAssessmentPayload(assessmentObj, sanitizedQuestions, sectionsRes.rows);
-    finalQuestions = normalized.questions;
-    finalSections = normalized.sections;
-  }
+  const assessmentPayload = {
+    ...paper.assessment,
+    solution_pdf_url: attempt.status === 'in_progress' ? null : (paper.assessment.solution_pdf_url || null),
+    answer_key_url: attempt.status === 'in_progress' ? null : (paper.assessment.answer_key_url || null),
+    institution: institutionObj,
+    institution_id: institutionObj?.id || null,
+    institution_name: institutionObj?.name || null,
+    institution_logo_url: institutionObj?.logo_url || null,
+    institution_logo_badge: institutionObj?.logo_badge || null,
+  };
 
   res.json({
     server_time: new Date().toISOString(),
     attempt,
-    assessment: {
-      id: assessmentObj.id,
-      title: assessmentObj.title,
-      duration_minutes: assessmentObj.duration_minutes,
-      max_violations: assessmentObj.max_violations || 5,
-      question_paper_url: assessmentObj.question_paper_url || null,
-      solution_pdf_url: attempt.status === 'in_progress' ? null : (assessmentObj.solution_pdf_url || null),
-      answer_key_url: attempt.status === 'in_progress' ? null : (assessmentObj.answer_key_url || null),
-      institution: institutionObj,
-      institution_id: institutionObj?.id || null,
-      institution_name: institutionObj?.name || null,
-      institution_logo_url: institutionObj?.logo_url || null,
-      institution_logo_badge: institutionObj?.logo_badge || null,
-      is_neet: isNeet,
-      total_marks: isNeet ? 720 : (assessmentObj.total_marks || null),
-    },
+    assessment: assessmentPayload,
     institution: institutionObj,
-    sections: finalSections,
-    questions: finalQuestions,
+    sections: paper.sections,
+    questions: paper.questions,
     answers: answersRes.rows,
     coding_answers: codingRes.rows,
     subjective_answers: subjectiveRes.rows,
@@ -739,14 +674,9 @@ export const saveAnswer = asyncHandler(async (req, res) => {
     throw ApiError.conflict('Time has expired; your test was auto-submitted');
   }
 
-  const qRes = await query(
-    'SELECT id, question_type, question_text, correct_indices FROM questions WHERE id = $1',
-    [question_id]
-  );
-
-  const targetQ = qRes.rows[0] || { question_type: 'mcq' };
+  const targetQ = await getOrSetQuestionMeta(question_id);
   const qType = targetQ.question_type || 'mcq';
-  const isMulti = isMultiSelectQuestion(targetQ);
+  const isMulti = Boolean(targetQ.is_multi);
 
   if (isMulti) {
     let indices = Array.isArray(selected_indices) ? selected_indices : [];

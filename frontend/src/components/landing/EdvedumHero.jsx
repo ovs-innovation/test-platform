@@ -52,7 +52,7 @@ export default function EdvedumHero() {
       <div
         className="hidden md:block absolute inset-0 bg-no-repeat opacity-100 transition-all duration-700 pointer-events-none z-[1]"
         style={{
-          backgroundImage: "url('/edvedum/opt.png?v=12')",
+          backgroundImage: "url('/edvedum/opt.webp?v=12')",
           backgroundPosition: 'right center',
           backgroundSize: 'contain',
           filter: 'drop-shadow(0 20px 35px rgba(2, 27, 62, 0.95)) drop-shadow(0 0 30px rgba(4, 8, 98, 0.14))',
@@ -147,11 +147,19 @@ export default function EdvedumHero() {
               WebkitMaskImage: '-webkit-linear-gradient(top, black 0%, black 60%, rgba(0,0,0,0.6) 80%, transparent 100%)',
             }}
           >
-            <img
-              src="/edvedum/opt.png?v=12"
-              alt="EDVEDUM student using CBT mock tests on laptop and mobile"
-              className="w-full h-auto block object-contain object-center border-none rounded-none"
-            />
+            <picture>
+              <source srcSet="/edvedum/opt.webp?v=12" type="image/webp" />
+              <img
+                src="/edvedum/opt.png?v=12"
+                alt="EDVEDUM student using CBT mock tests on laptop and mobile"
+                width="800"
+                height="450"
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="w-full h-auto block object-contain object-center border-none rounded-none aspect-[16/9]"
+              />
+            </picture>
             {/* Mobile Logo placed above laptop in open space */}
             <div className="absolute top-2 left-4 sm:left-6 w-24 sm:w-28 h-auto pointer-events-none">
               <img

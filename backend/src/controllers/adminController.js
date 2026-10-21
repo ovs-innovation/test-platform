@@ -5,6 +5,7 @@ import { toCsvRow } from '../utils/csvQuestions.js';
 import { hashPassword } from '../utils/password.js';
 import { processAndUploadImage } from '../services/cloudinaryService.js';
 import { sendStudentCredentialsEmail, sendStudentIdEmail } from '../utils/email.js';
+import { invalidateUserAuthCache } from '../middleware/auth.js';
 
 export const getStats = asyncHandler(async (_req, res) => {
   const [candidates, assessments, attempts, scores, invites, violations, testSeriesRes, activeStudentsRes] = await Promise.all([
@@ -621,6 +622,7 @@ export const toggleBlockCandidate = asyncHandler(async (req, res) => {
     [Boolean(is_blocked), id, 'candidate']
   );
   if (result.rowCount === 0) throw ApiError.notFound('Candidate not found');
+  await invalidateUserAuthCache(id);
   res.json({
     message: `Candidate user has been ${result.rows[0].is_blocked ? 'blocked' : 'unblocked'} successfully.`,
     candidate: result.rows[0],
