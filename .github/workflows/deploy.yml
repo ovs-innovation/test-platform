@@ -274,49 +274,64 @@ jobs:
               log "Restored backend/.env"
             fi
 
-            # Ensure active Neon database credentials are used on VPS
-            TARGET_NEON_HOST="ep-little-hill-azfr6i6j-pooler.c-3.ap-southeast-1.aws.neon.tech"
-            TARGET_DATABASE_URL="postgresql://neondb_owner:npg_YjvGunWX5m0o@ep-little-hill-azfr6i6j-pooler.c-3.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+            # Neon database credentials (managed securely via GitHub Repository Secrets)
+            TARGET_NEON_HOST="${{ secrets.TARGET_NEON_HOST || secrets.PGHOST }}"
+            TARGET_DATABASE_URL="${{ secrets.TARGET_DATABASE_URL || secrets.DATABASE_URL }}"
+            TARGET_PGUSER="${{ secrets.PGUSER || 'neondb_owner' }}"
+            TARGET_PGPASSWORD="${{ secrets.TARGET_NEON_PASSWORD || secrets.PGPASSWORD }}"
+            TARGET_PGDATABASE="${{ secrets.PGDATABASE || 'neondb' }}"
 
-            for ENV_FILE in "backend/.env" ".env"; do
-              if [ -f "$ENV_FILE" ]; then
-                CURRENT_HOST=$(grep "^PGHOST=" "$ENV_FILE" | cut -d'=' -f2- | tr -d ' "\r\n' || echo "")
-                log "Checking $ENV_FILE (PGHOST=${CURRENT_HOST:-'none'})..."
-                if [ "$CURRENT_HOST" != "$TARGET_NEON_HOST" ]; then
-                  log "Updating $ENV_FILE to active Neon host $TARGET_NEON_HOST..."
-                  sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
-                  sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
+            if [ -n "$TARGET_DATABASE_URL" ] && [ -n "$TARGET_NEON_HOST" ]; then
+              for ENV_FILE in "backend/.env" ".env"; do
+                if [ -f "$ENV_FILE" ]; then
+                  CURRENT_HOST=$(grep "^PGHOST=" "$ENV_FILE" | cut -d'=' -f2- | tr -d ' "\r\n' || echo "")
+                  log "Checking $ENV_FILE (PGHOST=${CURRENT_HOST:-'none'})..."
+                  if [ "$CURRENT_HOST" != "$TARGET_NEON_HOST" ]; then
+                    log "Updating $ENV_FILE to target database host $TARGET_NEON_HOST..."
+                    sed -i '/^DATABASE_URL=/d' "$ENV_FILE" 2>/dev/null || true
+                    sed -i '/^PGHOST=/d' "$ENV_FILE" 2>/dev/null || true
+                    sed -i '/^PGPORT=/d' "$ENV_FILE" 2>/dev/null || true
+                    sed -i '/^PGUSER=/d' "$ENV_FILE" 2>/dev/null || true
+                    sed -i '/^PGPASSWORD=/d' "$ENV_FILE" 2>/dev/null || true
+                    sed -i '/^PGDATABASE=/d' "$ENV_FILE" 2>/dev/null || true
+                    echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
+                    echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
+                    echo "PGPORT=5432" >> "$ENV_FILE"
+                    echo "PGUSER=${TARGET_PGUSER}" >> "$ENV_FILE"
+                    if [ -n "$TARGET_PGPASSWORD" ]; then
+                      echo "PGPASSWORD=${TARGET_PGPASSWORD}" >> "$ENV_FILE"
+                    fi
+                    echo "PGDATABASE=${TARGET_PGDATABASE}" >> "$ENV_FILE"
+                    log "Successfully updated $ENV_FILE with secrets-configured database credentials."
+                  fi
+                else
+                  log "Creating $ENV_FILE with database credentials..."
                   echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
                   echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
                   echo "PGPORT=5432" >> "$ENV_FILE"
-                  echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                  echo "PGPASSWORD=npg_YjvGunWX5m0o" >> "$ENV_FILE"
-                  echo "PGDATABASE=neondb" >> "$ENV_FILE"
-                  log "Successfully updated $ENV_FILE with active Neon credentials."
+                  echo "PGUSER=${TARGET_PGUSER}" >> "$ENV_FILE"
+                  if [ -n "$TARGET_PGPASSWORD" ]; then
+                    echo "PGPASSWORD=${TARGET_PGPASSWORD}" >> "$ENV_FILE"
+                  fi
+                  echo "PGDATABASE=${TARGET_PGDATABASE}" >> "$ENV_FILE"
                 fi
-              else
-                log "Creating $ENV_FILE with active Neon credentials..."
-                echo "DATABASE_URL=${TARGET_DATABASE_URL}" >> "$ENV_FILE"
-                echo "PGHOST=${TARGET_NEON_HOST}" >> "$ENV_FILE"
-                echo "PGPORT=5432" >> "$ENV_FILE"
-                echo "PGUSER=neondb_owner" >> "$ENV_FILE"
-                echo "PGPASSWORD=npg_YjvGunWX5m0o" >> "$ENV_FILE"
-                echo "PGDATABASE=neondb" >> "$ENV_FILE"
-              fi
-            done
+              done
+            else
+              log "Database secrets not passed in CI/CD; retaining existing VPS database configuration in .env files."
+            fi
 
-            # Ensure MSG91 credentials exist in backend/.env on VPS
-            if [ -f "backend/.env" ]; then
+            # Ensure MSG91 credentials exist in backend/.env on VPS (if provided in secrets)
+            TARGET_MSG91_KEY="${{ secrets.MSG91_AUTH_KEY }}"
+            TARGET_MSG91_TEMPLATE="${{ secrets.MSG91_OTP_TEMPLATE_ID }}"
+            TARGET_MSG91_SENDER="${{ secrets.MSG91_SENDER_ID }}"
+
+            if [ -n "$TARGET_MSG91_KEY" ] && [ -f "backend/.env" ]; then
               if ! grep -q "MSG91_AUTH_KEY" "backend/.env"; then
                 echo "" >> "backend/.env"
                 echo "# MSG91 SMS & OTP" >> "backend/.env"
-                echo "MSG91_AUTH_KEY=569777AM5exLLhEf6acc7d6eP1" >> "backend/.env"
-                echo "MSG91_OTP_TEMPLATE_ID=6acb8433e4dd61c79c0eca17" >> "backend/.env"
-                echo "MSG91_SENDER_ID=EDVEDM" >> "backend/.env"
+                echo "MSG91_AUTH_KEY=${TARGET_MSG91_KEY}" >> "backend/.env"
+                echo "MSG91_OTP_TEMPLATE_ID=${TARGET_MSG91_TEMPLATE:-6acb8433e4dd61c79c0eca17}" >> "backend/.env"
+                echo "MSG91_SENDER_ID=${TARGET_MSG91_SENDER:-EDVEDM}" >> "backend/.env"
                 log "Appended MSG91 configuration to backend/.env on VPS"
               fi
             fi

@@ -1,8 +1,16 @@
 async function inspectLive() {
-  const loginRes = await fetch('https://edvedum.com/api/auth/login', {
+  const email = process.env.LIVE_ADMIN_EMAIL || process.env.ADMIN_EMAIL;
+  const password = process.env.LIVE_ADMIN_PASSWORD || process.env.ADMIN_PASSWORD;
+
+  if (!email || !password) {
+    console.error('ERROR: LIVE_ADMIN_EMAIL and LIVE_ADMIN_PASSWORD environment variables are required.');
+    process.exit(1);
+  }
+
+  const loginRes = await fetch(process.env.LIVE_API_URL || 'https://edvedum.com/api/auth/login', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email: 'admin@assess.io', password: 'Admin@12345' }),
+    body: JSON.stringify({ email, password }),
   });
 
   const loginData = await loginRes.json();

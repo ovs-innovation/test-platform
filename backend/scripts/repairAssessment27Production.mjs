@@ -6,7 +6,11 @@ import pg from 'pg';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const databaseUrl = process.env.DATABASE_URL || 'postgresql://neondb_owner:npg_pnKv5TdUQ7fg@ep-weathered-heart-aqvw9ylo-pooler.c-8.us-east-1.aws.neon.tech/neondb?sslmode=require';
+const databaseUrl = process.env.DATABASE_URL;
+if (!databaseUrl) {
+  console.error('ERROR: DATABASE_URL environment variable is required to run this script.');
+  process.exit(1);
+}
 
 const isNeon = databaseUrl.includes('neon.tech');
 const pool = new pg.Pool({
