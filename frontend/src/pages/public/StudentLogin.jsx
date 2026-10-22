@@ -220,8 +220,12 @@ export default function StudentLogin() {
     setLoading(true);
     setError('');
     try {
+      let otpMsg = `OTP sent to +91 ${cleanPhone}`;
       if (sendLoginOtp) {
         const res = await sendLoginOtp({ mobile: cleanPhone, phone: cleanPhone, identifier: cleanPhone, channel: 'sms' });
+        if (res?.message) {
+          otpMsg = res.message;
+        }
         if (res?.devOtp) {
           setDevOtp(res.devOtp);
           setMobileOtpCode(res.devOtp);
@@ -229,7 +233,7 @@ export default function StudentLogin() {
       }
       setMobileOtpSent(true);
       setMobileTimer(60);
-      toast.success(`OTP sent to +91 ${cleanPhone}`);
+      toast.success(otpMsg);
     } catch (err) {
       setError(err.message || 'Failed to send OTP to mobile number.');
     } finally {

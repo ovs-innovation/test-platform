@@ -320,21 +320,23 @@ jobs:
               log "Database secrets not passed in CI/CD; retaining existing VPS database configuration in .env files."
             fi
 
-            # Ensure MSG91 credentials exist in backend/.env on VPS (if provided in secrets)
-            TARGET_MSG91_KEY="${{ secrets.MSG91_AUTH_KEY }}"
-            TARGET_MSG91_TEMPLATE="${{ secrets.MSG91_OTP_TEMPLATE_ID }}"
-            TARGET_MSG91_SENDER="${{ secrets.MSG91_SENDER_ID }}"
+            # Ensure MSG91 credentials exist in backend/.env and .env on VPS
+            TARGET_MSG91_KEY="${{ secrets.MSG91_AUTH_KEY || '569777AM5exLLhEf6acc7d6eP1' }}"
+            TARGET_MSG91_TEMPLATE="${{ secrets.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17' }}"
+            TARGET_MSG91_SENDER="${{ secrets.MSG91_SENDER_ID || 'EDVEDM' }}"
 
-            if [ -n "$TARGET_MSG91_KEY" ] && [ -f "backend/.env" ]; then
-              if ! grep -q "MSG91_AUTH_KEY" "backend/.env"; then
-                echo "" >> "backend/.env"
-                echo "# MSG91 SMS & OTP" >> "backend/.env"
-                echo "MSG91_AUTH_KEY=${TARGET_MSG91_KEY}" >> "backend/.env"
-                echo "MSG91_OTP_TEMPLATE_ID=${TARGET_MSG91_TEMPLATE:-6acb8433e4dd61c79c0eca17}" >> "backend/.env"
-                echo "MSG91_SENDER_ID=${TARGET_MSG91_SENDER:-EDVEDM}" >> "backend/.env"
-                log "Appended MSG91 configuration to backend/.env on VPS"
+            for TARGET_ENV in "backend/.env" ".env"; do
+              if [ -f "$TARGET_ENV" ]; then
+                if ! grep -q "^MSG91_AUTH_KEY=" "$TARGET_ENV"; then
+                  echo "" >> "$TARGET_ENV"
+                  echo "# MSG91 SMS & OTP" >> "$TARGET_ENV"
+                  echo "MSG91_AUTH_KEY=${TARGET_MSG91_KEY}" >> "$TARGET_ENV"
+                  echo "MSG91_OTP_TEMPLATE_ID=${TARGET_MSG91_TEMPLATE}" >> "$TARGET_ENV"
+                  echo "MSG91_SENDER_ID=${TARGET_MSG91_SENDER}" >> "$TARGET_ENV"
+                  log "Appended MSG91 configuration to $TARGET_ENV on VPS"
+                fi
               fi
-            fi
+            done
 
             # Rollback helper function
             execute_rollback() {

@@ -271,7 +271,7 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
   const phoneDisplay = phone ? (phone.replace(/\D/g, '').length >= 4 ? phone.replace(/\D/g, '').slice(-4) : phone) : '';
 
   if (isSmsChoice && phone) {
-    // User chose mobile -> Send ONLY via SMS
+    // User chose mobile -> Send via SMS
     try {
       const smsRes = await sendRegistrationOtpSms(phone, otp);
       smsSent = Boolean(smsRes?.sent);
@@ -279,13 +279,26 @@ export const sendSignupOtp = asyncHandler(async (req, res) => {
       console.warn(`[sms ERROR] Failed to send MSG91 signup OTP SMS to ${phone}: ${smsErr?.message || smsErr}`);
     }
 
-    if (!smsSent && env.isProd) {
-      throw ApiError.internal(`Could not dispatch verification SMS to your mobile number (+91 ...${phoneDisplay}). Please verify the number or try Email OTP.`);
+    if (!smsSent) {
+      if (normalizedEmail) {
+        try {
+          await sendOtpEmail(normalizedEmail, otp);
+          emailSent = true;
+        } catch (emailErr) {
+          console.warn(`[email fallback] Failed to send signup OTP email to ${normalizedEmail}: ${emailErr?.message || emailErr}`);
+        }
+      }
+
+      if (!emailSent && env.isProd) {
+        throw ApiError.internal(`Could not dispatch verification SMS to your mobile number (+91 ...${phoneDisplay}). Please verify the number or try Email OTP.`);
+      }
     }
 
     message = smsSent
       ? `Verification code sent via SMS to your mobile (+91 ...${phoneDisplay})`
-      : 'Verification code generated for testing';
+      : (emailSent
+          ? `Verification code sent to your email inbox (${normalizedEmail})`
+          : 'Verification code generated for testing');
   } else {
     // User chose email -> Send ONLY via Email
     try {
@@ -837,7 +850,7 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
   const phoneDisplay = targetPhone ? (targetPhone.replace(/\D/g, '').length >= 4 ? targetPhone.replace(/\D/g, '').slice(-4) : targetPhone) : '';
 
   if (isMobileChoice) {
-    // User chose Mobile -> Send ONLY via SMS, do NOT send to email
+    // User chose Mobile -> Send via SMS
     if (targetPhone) {
       try {
         const smsRes = await sendOtpSms({ phone: targetPhone, otp });
@@ -847,13 +860,27 @@ export const sendLoginOtp = asyncHandler(async (req, res) => {
       }
     }
 
-    if (!smsSent && env.isProd) {
-      throw ApiError.internal(`Could not dispatch SMS to your registered mobile number (+91 ...${phoneDisplay}). Please verify your number or use Email OTP.`);
+    if (!smsSent) {
+      // Graceful fallback: If SMS gateway fails or cannot deliver, dispatch to student's registered email
+      if (normalizedEmail) {
+        try {
+          await sendOtpEmail(normalizedEmail, otp);
+          emailSent = true;
+        } catch (emailErr) {
+          console.warn(`[email fallback] Failed to send fallback OTP email to ${normalizedEmail}: ${emailErr?.message || emailErr}`);
+        }
+      }
+
+      if (!emailSent && env.isProd) {
+        throw ApiError.internal(`Could not dispatch SMS to your registered mobile number (+91 ...${phoneDisplay}). Please verify your number or use Email OTP.`);
+      }
     }
 
     message = smsSent
       ? `Verification code sent via SMS to your mobile (+91 ...${phoneDisplay})`
-      : 'Verification code generated for testing';
+      : (emailSent
+          ? `Could not dispatch SMS to mobile. Verification code sent to your registered email (${normalizedEmail})`
+          : 'Verification code generated for testing');
   } else {
     // User chose Email -> Send ONLY via Email, do NOT send to mobile
     try {
