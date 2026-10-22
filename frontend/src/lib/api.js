@@ -102,7 +102,11 @@ api.interceptors.response.use(
         message = rawData;
       }
     } else if (!error.response || status === 503 || (error.message && (error.message.includes('getaddrinfo') || error.message.includes('Network Error')))) {
-      message = 'The service is temporarily unavailable. Please try again.';
+      if (url.includes('/upload-pdf') || url.includes('question-bank')) {
+        message = 'The server connection was interrupted while processing this PDF. For large multi-page booklets (50MB+ / 50+ pages), please specify a page range (e.g. Pages 1–25) or upload chapter by chapter.';
+      } else {
+        message = 'The service is temporarily unavailable. Please try again.';
+      }
     } else if (error.message) {
       message = error.message;
     }

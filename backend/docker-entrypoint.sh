@@ -11,4 +11,4 @@ if [ "$RUN_SEED" = "true" ]; then
 fi
 
 echo "[entrypoint] Starting API server on port ${PORT:-5000}..."
-exec node src/server.js
+exec node --max-old-space-size=4096 src/server.js

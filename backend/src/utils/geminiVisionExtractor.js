@@ -1,6 +1,7 @@
 import './polyfills.js';
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 import { fileURLToPath, pathToFileURL } from 'url';
 import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { createCanvas, loadImage } from '@napi-rs/canvas';
@@ -164,7 +165,14 @@ export function buildPageInventory(pageIndex, text) {
  * Render all pages of a PDF buffer into array of high-res PNG image buffers
  * and simultaneously extract lightweight text inventory per page.
  */
-export async function renderPdfToImages(pdfBuffer) {
+export async function renderPdfToImages(pdfBuffer, options = {}) {
+  const {
+    startPage = 1,
+    endPage = null,
+    scale = 1.5,
+    importId = '',
+  } = options;
+
   if (typeof Promise.withResolvers !== 'function') {
     Promise.withResolvers = function withResolvers() {
       let resolve;
@@ -200,12 +208,22 @@ export async function renderPdfToImages(pdfBuffer) {
   });
 
   const pdfDocument = await loadingTask.promise;
-  const numPages = pdfDocument.numPages;
+  const totalNumPages = pdfDocument.numPages;
+
+  const actualStart = Math.max(1, Math.min(startPage || 1, totalNumPages));
+  const actualEnd = Math.min(totalNumPages, Math.max(actualStart, endPage || totalNumPages));
+
+  // Dedicated temp directory for this document's rendered pages to prevent V8 heap OOM
+  const tempDir = path.join(os.tmpdir(), `qb_doc_${importId || Date.now()}`);
+  if (!fs.existsSync(tempDir)) {
+    fs.mkdirSync(tempDir, { recursive: true });
+  }
+
   const pageImages = [];
 
-  for (let i = 1; i <= numPages; i++) {
+  for (let i = actualStart; i <= actualEnd; i++) {
     const page = await pdfDocument.getPage(i);
-    const viewport = page.getViewport({ scale: 2.0 }); // 2x resolution for high quality layout analysis
+    const viewport = page.getViewport({ scale: scale || 1.5 }); // 1.5x is optimal resolution for Gemini Vision
     const canvas = createCanvas(viewport.width, viewport.height);
     const context = canvas.getContext('2d');
 
@@ -215,12 +233,18 @@ export async function renderPdfToImages(pdfBuffer) {
     }).promise;
 
     const jpegBuffer = canvas.toBuffer('image/jpeg', 85);
+    page.cleanup(); // Clean up PDF.js memory immediately!
+
+    // Stream page image to disk to prevent V8 heap OOM
+    const filePath = path.join(tempDir, `page_${i}.jpg`);
+    await fs.promises.writeFile(filePath, jpegBuffer);
 
     // Extract text content for lightweight page inventory
     let text = '';
     try {
       const tc = await page.getTextContent();
       text = tc.items.map((it) => it.str).join(' ');
+      page.cleanup();
     } catch (_) { }
 
     const inventory = buildPageInventory(i, text);
@@ -229,11 +253,14 @@ export async function renderPdfToImages(pdfBuffer) {
       pageIndex: i,
       width: Math.round(viewport.width),
       height: Math.round(viewport.height),
-      buffer: jpegBuffer,
+      filePath,
       mimeType: 'image/jpeg',
       inventory,
+      tempDir,
     });
   }
+
+  await pdfDocument.destroy();
 
   return pageImages;
 }
@@ -244,6 +271,9 @@ export async function renderPdfToImages(pdfBuffer) {
  */
 export async function cropPageRegion(pageImage, regionBox) {
   if (!pageImage || !regionBox || regionBox.length < 4) return null;
+  const imgBuffer = pageImage.buffer || (pageImage.filePath ? await fs.promises.readFile(pageImage.filePath) : null);
+  if (!imgBuffer) return null;
+
   const [ymin, xmin, ymax, xmax] = regionBox;
 
   const top = Math.max(0, Math.floor((ymin / 1000) * pageImage.height));
@@ -254,7 +284,7 @@ export async function cropPageRegion(pageImage, regionBox) {
   if (width < 20 || height < 20) return null;
 
   try {
-    const croppedBuffer = await sharp(pageImage.buffer)
+    const croppedBuffer = await sharp(imgBuffer)
       .extract({ left, top, width, height })
       .toFormat('jpeg', { quality: 85 })
       .toBuffer();
@@ -296,6 +326,8 @@ export async function cropPageRegion(pageImage, regionBox) {
  */
 export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType, index, customFileName = '', importNamespace = '', options = {}) {
   if (!pageImage || !box2d || box2d.length < 4) return null;
+  const imgBuffer = pageImage.buffer || (pageImage.filePath ? await fs.promises.readFile(pageImage.filePath) : null);
+  if (!imgBuffer) return null;
 
   const [ymin, xmin, ymax, xmax] = box2d;
 
@@ -336,12 +368,12 @@ export async function cropAndSaveVisualElement(pageImage, box2d, qNum, elemType,
     let croppedBuffer = null;
 
     try {
-      croppedBuffer = await sharp(pageImage.buffer)
+      croppedBuffer = await sharp(imgBuffer)
         .extract({ left, top, width, height })
         .toFormat('png')
         .toBuffer();
     } catch (sharpErr) {
-      const img = await loadImage(pageImage.buffer);
+      const img = await loadImage(imgBuffer);
       const cropCanvas = createCanvas(width, height);
       const ctx = cropCanvas.getContext('2d');
       ctx.drawImage(img, left, top, width, height, 0, 0, width, height);
@@ -582,7 +614,30 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
     expectedQuestionCount = null,
     examType = null,
     isSolutionPdf = false,
+    pageRange = null,
+    page_range = null,
   } = options;
+
+  let startPage = 1;
+  let endPage = null;
+  const rawRange = pageRange || page_range || options.startPage;
+  if (rawRange && typeof rawRange === 'string') {
+    const rangeParts = rawRange.trim().match(/^(\d+)\s*[-–—:]\s*(\d+)$/);
+    if (rangeParts) {
+      startPage = parseInt(rangeParts[1], 10);
+      endPage = parseInt(rangeParts[2], 10);
+    } else {
+      const singlePage = parseInt(rawRange.trim(), 10);
+      if (!isNaN(singlePage)) {
+        startPage = singlePage;
+        endPage = singlePage;
+      }
+    }
+  } else if (options.startPage || options.endPage) {
+    startPage = options.startPage || 1;
+    endPage = options.endPage || null;
+  }
+
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error('GEMINI_API_KEY is not configured in environment.');
@@ -601,10 +656,15 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
   ].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i);
   let activeModel = candidateModels[0] || 'gemini-3.8-flash';
 
-  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with candidate models: [${candidateModels.join(', ')}] (primary: ${activeModel}, expectedCount: ${expectedQuestionCount || 'auto'}, importId: ${effectiveImportId})`);
+  console.log(`[geminiVisionExtractor] Initializing extraction pipeline with candidate models: [${candidateModels.join(', ')}] (primary: ${activeModel}, pageRange: ${startPage}-${endPage || 'end'}, expectedCount: ${expectedQuestionCount || 'auto'}, importId: ${effectiveImportId})`);
 
   // Step 1: Render PDF pages into high-res images and build page inventory
-  const pageImages = await renderPdfToImages(pdfBuffer);
+  const pageImages = await renderPdfToImages(pdfBuffer, {
+    startPage,
+    endPage,
+    scale: 1.5,
+    importId: effectiveImportId,
+  });
   if (!pageImages.length) {
     throw new Error('Failed to render PDF pages into images.');
   }
@@ -930,6 +990,21 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
         return callGemini(contents, label, 0, modelIdx + 1);
       }
 
+      const isRateLimited = apiErr.status === 429 ||
+        (apiErr.message && (
+          apiErr.message.includes('429') ||
+          apiErr.message.toLowerCase().includes('quota') ||
+          apiErr.message.toLowerCase().includes('resource_exhausted') ||
+          apiErr.message.toLowerCase().includes('rate limit')
+        ));
+
+      if (isRateLimited && retryCount < 4) {
+        const delayMs = (retryCount + 1) * 4000;
+        console.warn(`[geminiVisionExtractor] [${label}] Rate limited (429). Retrying in ${delayMs}ms (attempt ${retryCount + 1}/4)...`);
+        await new Promise((r) => setTimeout(r, delayMs));
+        return callGemini(contents, label, retryCount + 1, modelIdx);
+      }
+
       if (retryCount < 3) {
         const delayMs = Math.min(2000 * Math.pow(2, retryCount), 10000);
         console.warn(`[geminiVisionExtractor] [${label}] Error: ${apiErr.message}. Retrying in ${delayMs}ms (attempt ${retryCount + 1})...`);
@@ -1046,11 +1121,18 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - Diagrams, circuits, graphs, apparatus, or biological figures: include bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000) in visualElements.
 `;
 
+      const pageBuf = pageImg.buffer || (pageImg.filePath ? await fs.promises.readFile(pageImg.filePath) : null);
+      if (!pageBuf) {
+        console.warn(`[geminiVisionExtractor] Page ${pageIndex} image buffer not found. Skipping.`);
+        failedPages.push(pageIndex);
+        return;
+      }
+
       const contents = [
         pagePrompt,
         {
           inlineData: {
-            data: pageImg.buffer.toString('base64'),
+            data: pageBuf.toString('base64'),
             mimeType: pageImg.mimeType || 'image/jpeg',
           },
         },
@@ -1876,7 +1958,7 @@ CRITICAL INSTRUCTIONS:
     }, null, 2));
   } catch (_) { }
 
-  return {
+  const extractionResult = {
     questions: finalStructuredQuestions,
     answerKeyMap: Object.fromEntries(Array.from(answerKeyMap.entries()).map(([k, v]) => [k, v.type === 'mcq' ? v.letter : (v.numeric ?? v.raw)])),
     solutionMap: Object.fromEntries(solutionMap),
@@ -1916,6 +1998,15 @@ CRITICAL INSTRUCTIONS:
     },
     warnings,
   };
+
+  // Clean up temporary disk page images
+  try {
+    if (pageImages[0]?.tempDir && fs.existsSync(pageImages[0].tempDir)) {
+      await fs.promises.rm(pageImages[0].tempDir, { recursive: true, force: true });
+    }
+  } catch (_) {}
+
+  return extractionResult;
 }
 
 /**

@@ -141,6 +141,7 @@ export default function AdminQuestionBank() {
   const [pdfMarks, setPdfMarks] = useState(4);
   const [pdfDifficulty, setPdfDifficulty] = useState('medium');
   const [pdfIncludeAnswers, setPdfIncludeAnswers] = useState(true);
+  const [pdfPageRange, setPdfPageRange] = useState('');
   const [pdfUploading, setPdfUploading] = useState(false);
   const [pdfProgressStatus, setPdfProgressStatus] = useState('');
   const [pdfSuccessData, setPdfSuccessData] = useState(null);
@@ -154,6 +155,7 @@ export default function AdminQuestionBank() {
     setPdfMarks(4);
     setPdfDifficulty('medium');
     setPdfIncludeAnswers(true);
+    setPdfPageRange('');
     setPdfProgressStatus('');
     setPdfSuccessData(null);
     setPdfOpen(true);
@@ -220,6 +222,9 @@ export default function AdminQuestionBank() {
       formData.append('default_marks', Number(pdfMarks) || 4);
       formData.append('difficulty', pdfDifficulty);
       formData.append('include_answers', Boolean(pdfIncludeAnswers));
+      if (pdfPageRange && pdfPageRange.trim()) {
+        formData.append('page_range', pdfPageRange.trim());
+      }
 
       setPdfProgressStatus('Analyzing PDF with AI Vision, extracting questions, options, & answers...');
 
@@ -976,7 +981,7 @@ export default function AdminQuestionBank() {
             </div>
 
             {/* Settings Row */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-1">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
               <div>
                 <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
                   Default Marks
@@ -1007,7 +1012,21 @@ export default function AdminQuestionBank() {
                 />
               </div>
 
-              <div className="col-span-2 sm:col-span-1 flex items-end">
+              <div>
+                <label className="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-1">
+                  Page Range <span className="text-slate-400 font-normal">(Optional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="e.g. 1-25 (all if blank)"
+                  disabled={pdfUploading}
+                  className="input text-xs"
+                  value={pdfPageRange}
+                  onChange={(e) => setPdfPageRange(e.target.value)}
+                />
+              </div>
+
+              <div className="flex items-end">
                 <label className="flex items-center gap-2 cursor-pointer pb-2.5">
                   <input
                     type="checkbox"
@@ -1017,11 +1036,17 @@ export default function AdminQuestionBank() {
                     className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer"
                   />
                   <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
-                    Extract Answers & Solutions
+                    Extract Answers
                   </span>
                 </label>
               </div>
             </div>
+
+            {pdfFile && pdfFile.size > 20 * 1024 * 1024 && (
+              <p className="text-[11px] text-amber-700 dark:text-amber-300 font-medium bg-amber-50 dark:bg-amber-950/30 p-2.5 rounded-xl border border-amber-200 dark:border-amber-900/40">
+                💡 <strong>Large Document Tip:</strong> For large multi-page books or booklets (50MB+ / 100+ pages), enter a <strong>Page Range</strong> (such as <code>1-25</code>, <code>26-50</code>) to extract specific chapters quickly and reliably.
+              </p>
+            )}
 
             {/* Progress Box */}
             {pdfUploading && (

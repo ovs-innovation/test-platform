@@ -344,11 +344,12 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
 
   if (apiKey) {
     try {
-      console.log(`[pdfQuestions] Attempting Gemini Vision PDF extraction pipeline (includeAnswers: ${includeAnswers}, expectedQuestionCount: ${expectedQuestionCount || 'auto'})...`);
+      console.log(`[pdfQuestions] Attempting Gemini Vision PDF extraction pipeline (includeAnswers: ${includeAnswers}, expectedQuestionCount: ${expectedQuestionCount || 'auto'}, pageRange: ${options.pageRange || options.page_range || 'all'})...`);
       const visionResult = await extractQuestionsWithGeminiVision(buffer, {
         includeAnswers,
         expectedQuestionCount,
         examType,
+        pageRange: options.pageRange || options.page_range,
       });
       const visionQuestions = visionResult.questions || [];
       const stats = visionResult.stats || {};

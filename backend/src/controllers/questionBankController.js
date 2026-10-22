@@ -469,6 +469,8 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       default_marks = 4,
       include_answers = true,
       difficulty = 'medium',
+      page_range,
+      pageRange,
     } = req.body;
 
     const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
@@ -551,9 +553,12 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     const { parseQuestionsFromPdf, extractPdfText } = await import('../utils/pdfQuestions.js');
     const { parseAnswerKeyAndSolutions } = await import('../utils/pdfQuestionParser.js');
 
-    console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${fileName})...`);
+    console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${fileName}, pageRange: ${page_range || pageRange || 'all'})...`);
     const shouldIncludeAnswers = include_answers !== false && include_answers !== 'false';
-    const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: shouldIncludeAnswers });
+    const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, {
+      includeAnswers: shouldIncludeAnswers,
+      pageRange: page_range || pageRange,
+    });
     let extractedQs = pdfExtraction.rows || [];
 
     if (!extractedQs.length) {
