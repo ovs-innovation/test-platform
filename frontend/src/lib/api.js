@@ -87,6 +87,12 @@ api.interceptors.response.use(
       } else {
         message = 'PDF exceeds the maximum allowed upload size (maximum 100 MB).';
       }
+    } else if (status === 504) {
+      if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
+        message = rawData.message || rawData.error;
+      } else {
+        message = 'The document is very large and the AI extraction is taking longer than expected. Please split large question papers into smaller parts or check back shortly.';
+      }
     } else if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
       message = rawData.message || rawData.error;
     } else if (typeof rawData === 'string' && rawData.trim()) {

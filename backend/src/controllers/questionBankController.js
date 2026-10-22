@@ -726,62 +726,70 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
   const affectedCategories = new Set();
   const errors = [];
 
-  for (let idx = 0; idx < extractedQs.length; idx++) {
-    const q = extractedQs[idx];
-    try {
-      const { categoryName, subjectId } = resolveSubject(q.subject || q.bank_category, category);
-      affectedCategories.add(categoryName);
+  const INSERT_BATCH_SIZE = 10;
+  for (let i = 0; i < extractedQs.length; i += INSERT_BATCH_SIZE) {
+    const batch = extractedQs.slice(i, i + INSERT_BATCH_SIZE);
+    await Promise.all(
+      batch.map(async (q, bIdx) => {
+        const idx = i + bIdx;
+        try {
+          const { categoryName, subjectId } = resolveSubject(q.subject || q.bank_category, category);
+          affectedCategories.add(categoryName);
 
-      const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
-      if (!qText) continue;
+          const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
+          if (!qText) return;
 
-      const qType = q.question_type || q.questionType || (q.numeric_answer != null ? 'integer' : 'mcq');
-      const isInteger = qType === 'integer' || qType === 'numerical';
+          const qType = q.question_type || q.questionType || (q.numeric_answer != null ? 'integer' : 'mcq');
+          const isInteger = qType === 'integer' || qType === 'numerical';
 
-      const options = isInteger
-        ? []
-        : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
+          const options = isInteger
+            ? []
+            : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
 
-      let correctIndex = q.correct_index != null ? Number(q.correct_index) : 0;
-      if (isInteger) correctIndex = 0;
-      const correctIndices = isInteger ? [] : (q.correct_indices || [correctIndex]);
+          let correctIndex = q.correct_index != null ? Number(q.correct_index) : 0;
+          if (isInteger) correctIndex = 0;
+          const correctIndices = isInteger ? [] : (q.correct_indices || [correctIndex]);
 
-      const numericAnswer = isInteger && q.numeric_answer != null ? Number(q.numeric_answer) : null;
-      const marks = Number(q.marks || default_marks || 4);
-      const solution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
-      const imageUrl = q.image_url || (q.media && q.media[0] ? q.media[0].url : '') || '';
-      const topic = q.topic || q.chapter || '';
+          const numericAnswer = isInteger && q.numeric_answer != null ? Number(q.numeric_answer) : null;
+          const marks = Number(q.marks || default_marks || 4);
+          const solution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
+          const imageUrl = q.image_url || (q.media && q.media[0] ? q.media[0].url : '') || '';
+          const topic = q.topic || q.chapter || '';
 
-      const result = await query(
-        `INSERT INTO question_bank (
-          category, question_type, question_text, options, correct_index, correct_indices,
-          numeric_answer, marks, solution, subject_id, chapter_id, difficulty,
-          image_url, subject, topic
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
-        RETURNING id, category, question_text, question_type, marks, solution, subject`,
-        [
-          categoryName,
-          qType,
-          qText,
-          asJson(options, []),
-          correctIndex,
-          asJson(correctIndices, []),
-          numericAnswer,
-          marks,
-          solution,
-          subjectId,
-          null, // chapter_id
-          difficulty || q.difficulty || 'medium',
-          imageUrl,
-          categoryName,
-          topic,
-        ]
-      );
-      createdQuestions.push(result.rows[0]);
-    } catch (err) {
-      console.error('[uploadPdfToQuestionBank] Insert error on question', idx + 1, err.message);
-      errors.push({ line: idx + 1, error: err.message });
-    }
+          const result = await query(
+            `INSERT INTO question_bank (
+              category, question_type, question_text, options, correct_index, correct_indices,
+              numeric_answer, marks, solution, subject_id, chapter_id, difficulty,
+              image_url, subject, topic
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
+            RETURNING id, category, question_text, question_type, marks, solution, subject`,
+            [
+              categoryName,
+              qType,
+              qText,
+              asJson(options, []),
+              correctIndex,
+              asJson(correctIndices, []),
+              numericAnswer,
+              marks,
+              solution,
+              subjectId,
+              null, // chapter_id
+              difficulty || q.difficulty || 'medium',
+              imageUrl,
+              categoryName,
+              topic,
+            ]
+          );
+          if (result.rows[0]) {
+            createdQuestions.push(result.rows[0]);
+          }
+        } catch (err) {
+          console.error('[uploadPdfToQuestionBank] Insert error on question', idx + 1, err.message);
+          errors.push({ line: idx + 1, error: err.message });
+        }
+      })
+    );
   }
 
     await delCache('cache:qb:*');

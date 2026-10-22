@@ -15,6 +15,12 @@ function listenWithRetry(port) {
     const tryListen = (attempt) => {
       const server = app.listen(port, '0.0.0.0');
 
+      // Extended timeouts to handle AI Vision PDF processing of large exam papers (up to 100MB)
+      server.requestTimeout = 900000; // 15 minutes
+      server.headersTimeout = 905000; // 15 minutes + 5 seconds
+      server.timeout = 900000; // 15 minutes
+      server.keepAliveTimeout = 65000; // 65 seconds
+
       server.once('listening', () => resolve(server));
 
       server.once('error', (err) => {

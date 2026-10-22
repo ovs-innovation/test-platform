@@ -214,7 +214,7 @@ export async function renderPdfToImages(pdfBuffer) {
       viewport,
     }).promise;
 
-    const pngBuffer = canvas.toBuffer('image/png');
+    const jpegBuffer = canvas.toBuffer('image/jpeg', 85);
 
     // Extract text content for lightweight page inventory
     let text = '';
@@ -229,7 +229,8 @@ export async function renderPdfToImages(pdfBuffer) {
       pageIndex: i,
       width: Math.round(viewport.width),
       height: Math.round(viewport.height),
-      buffer: pngBuffer,
+      buffer: jpegBuffer,
+      mimeType: 'image/jpeg',
       inventory,
     });
   }
@@ -255,7 +256,7 @@ export async function cropPageRegion(pageImage, regionBox) {
   try {
     const croppedBuffer = await sharp(pageImage.buffer)
       .extract({ left, top, width, height })
-      .toFormat('png')
+      .toFormat('jpeg', { quality: 85 })
       .toBuffer();
 
     return {
@@ -263,6 +264,7 @@ export async function cropPageRegion(pageImage, regionBox) {
       width,
       height,
       buffer: croppedBuffer,
+      mimeType: 'image/jpeg',
       regionBox,
     };
   } catch (err) {
@@ -271,12 +273,13 @@ export async function cropPageRegion(pageImage, regionBox) {
       const cropCanvas = createCanvas(width, height);
       const ctx = cropCanvas.getContext('2d');
       ctx.drawImage(img, left, top, width, height, 0, 0, width, height);
-      const buf = cropCanvas.toBuffer('image/png');
+      const buf = cropCanvas.toBuffer('image/jpeg', 85);
       return {
         pageIndex: pageImage.pageIndex,
         width,
         height,
         buffer: buf,
+        mimeType: 'image/jpeg',
         regionBox,
       };
     } catch (e2) {
@@ -937,10 +940,10 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
     }
   }
 
-  // Step 3: Process PDF page-by-page with concurrency of 3
+  // Step 3: Process PDF page-by-page with concurrency of 5
   console.log(`[PDF Extraction Pipeline] STAGE 2: Processing ${pageImages.length} page(s) page-by-page with concurrency...`);
 
-  const PAGE_CONCURRENCY = 3;
+  const PAGE_CONCURRENCY = 5;
   for (let i = 0; i < pageImages.length; i += PAGE_CONCURRENCY) {
     const chunk = pageImages.slice(i, i + PAGE_CONCURRENCY);
     const chunkPromises = chunk.map(async (pageImg) => {
@@ -1048,7 +1051,7 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
         {
           inlineData: {
             data: pageImg.buffer.toString('base64'),
-            mimeType: 'image/png',
+            mimeType: pageImg.mimeType || 'image/jpeg',
           },
         },
       ];
@@ -1179,15 +1182,16 @@ CRITICAL INSTRUCTIONS:
 - Assign subject ('Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics'), chapter, and topic. For biological questions, strictly assign 'Botany' (for plants/cells/genetics/ecology) or 'Zoology' (for animals/human physiology/reproduction/evolution/biotech).
 `;
 
-          const leftRes = await callGemini([
-            colPrompt('Left'),
-            { inlineData: { data: leftColCrop.buffer.toString('base64'), mimeType: 'image/png' } },
-          ], `Page ${pageIndex} (Left Col)`);
-
-          const rightRes = await callGemini([
-            colPrompt('Right'),
-            { inlineData: { data: rightColCrop.buffer.toString('base64'), mimeType: 'image/png' } },
-          ], `Page ${pageIndex} (Right Col)`);
+          const [leftRes, rightRes] = await Promise.all([
+            callGemini([
+              colPrompt('Left'),
+              { inlineData: { data: leftColCrop.buffer.toString('base64'), mimeType: leftColCrop.mimeType || 'image/jpeg' } },
+            ], `Page ${pageIndex} (Left Col)`),
+            callGemini([
+              colPrompt('Right'),
+              { inlineData: { data: rightColCrop.buffer.toString('base64'), mimeType: rightColCrop.mimeType || 'image/jpeg' } },
+            ], `Page ${pageIndex} (Right Col)`),
+          ]);
 
           const leftQs = leftRes?.parsed?.questions || [];
           const rightQs = rightRes?.parsed?.questions || [];

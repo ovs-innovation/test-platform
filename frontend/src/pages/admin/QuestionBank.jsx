@@ -230,7 +230,7 @@ export default function AdminQuestionBank() {
     } catch (err) {
       let msg = err?.message || err?.response?.data?.message || err?.response?.data?.error || 'PDF extraction failed. Please check the file.';
       if (typeof msg === 'string' && /<html|<!DOCTYPE/i.test(msg)) {
-        msg = 'PDF exceeds the maximum allowed upload size (maximum 100 MB).';
+        msg = 'The server encountered an issue processing this PDF. If the file is very large, consider splitting it into smaller parts.';
       }
       toast.error(msg);
     } finally {
@@ -910,7 +910,7 @@ export default function AdminQuestionBank() {
                     Click to choose or drag & drop Question Paper PDF
                   </p>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                    Accepts NEET, JEE, or any exam PDF with questions & answers (up to 20MB)
+                    Accepts NEET, JEE, or any exam PDF with questions & answers (up to 100MB)
                   </p>
                 </div>
               )}
@@ -1033,7 +1033,7 @@ export default function AdminQuestionBank() {
                   </p>
                 </div>
                 <p className="text-[11px] text-indigo-700/80 dark:text-indigo-300/80 pl-8">
-                  Processing pages, formulas, diagrams, and answer keys. This may take 15–40 seconds depending on document length.
+                  Processing pages, formulas, diagrams, and answer keys. For large multi-page exam papers (50MB+), AI extraction may take 2–5 minutes. Please keep this tab open.
                 </p>
               </div>
             )}
