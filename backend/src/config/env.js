@@ -130,5 +130,7 @@ export const env = {
     signedUrlSecret: process.env.PROCTORING_SIGNED_URL_SECRET || process.env.JWT_SECRET || 'proctoring_secure_media_token_secret_fallback_key',
     signedUrlExpiresSeconds: parseInt(process.env.PROCTORING_SIGNED_URL_EXPIRES_SECONDS || '900', 10), // 15 mins default
   },
+  maxPdfUploadMb: parseInt(process.env.MAX_PDF_UPLOAD_MB || '100', 10),
+  maxPdfUploadBytes: parseInt(process.env.MAX_PDF_UPLOAD_MB || '100', 10) * 1024 * 1024,
 };
 

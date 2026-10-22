@@ -1,9 +1,13 @@
+import fs from 'fs';
 import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 import { rememberCache, delCache } from '../config/redis.js';
 import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
+import { env } from '../config/env.js';
+import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
+import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
 
 const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
 
@@ -455,56 +459,116 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
  * questions, options, answers, and solutions directly into the Question Bank for selected or auto-detected subjects.
  */
 export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
-  const {
-    file_base64,
-    file_name = 'question_paper.pdf',
-    category = 'auto',
-    answer_key_base64,
-    answer_key_name = 'answer_key.pdf',
-    default_marks = 4,
-    include_answers = true,
-    difficulty = 'medium',
-  } = req.body;
-
-  if (!file_base64 || typeof file_base64 !== 'string') {
-    throw ApiError.badRequest('Question paper PDF is required');
-  }
-
-  // Save question paper file copy to disk if upload middleware is present
-  let savedFileUrl = '';
   try {
-    const { saveUploadedFile } = await import('../middleware/upload.js');
-    savedFileUrl = await saveUploadedFile(file_base64, file_name, 'qb_paper');
-  } catch (err) {
-    console.warn('[uploadPdfToQuestionBank] Warning: Could not save uploaded PDF copy:', err.message);
-  }
+    const {
+      file_base64,
+      file_name: bodyFileName = 'question_paper.pdf',
+      category = 'auto',
+      answer_key_base64,
+      answer_key_name: bodyAkName = 'answer_key.pdf',
+      default_marks = 4,
+      include_answers = true,
+      difficulty = 'medium',
+    } = req.body;
 
-  const base64Data = file_base64.replace(/^data:[^;]+;base64,/, '');
-  const pdfBuffer = Buffer.from(base64Data, 'base64');
+    const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
+    let pdfBuffer = null;
+    let fileName = bodyFileName;
 
-  const { parseQuestionsFromPdf, extractPdfText } = await import('../utils/pdfQuestions.js');
-  const { parseAnswerKeyAndSolutions } = await import('../utils/pdfQuestionParser.js');
+    // 1. Resolve Question Paper PDF (Multipart Multer disk storage or Base64 JSON)
+    const uploadedPaper = req.files?.file?.[0] || req.files?.question_paper?.[0] || req.file;
+    if (uploadedPaper) {
+      fileName = uploadedPaper.originalname || bodyFileName;
+      if (uploadedPaper.size > maxBytes) {
+        const err = new Error(`PDF exceeds the maximum allowed upload size (maximum ${env.maxPdfUploadMb || 100} MB).`);
+        err.statusCode = 413;
+        err.code = 'PAYLOAD_TOO_LARGE';
+        throw err;
+      }
+      const isValidPdf = await verifyPdfMagicBytes(uploadedPaper.path);
+      if (!isValidPdf) {
+        throw ApiError.badRequest('Invalid PDF format: file is not a valid PDF document.');
+      }
+      pdfBuffer = await fs.promises.readFile(uploadedPaper.path);
+    } else if (file_base64 && typeof file_base64 === 'string') {
+      const cleanBase64 = file_base64.replace(/^data:[^;]+;base64,/, '');
+      pdfBuffer = Buffer.from(cleanBase64, 'base64');
+      if (pdfBuffer.length > maxBytes) {
+        const err = new Error(`PDF exceeds the maximum allowed upload size (maximum ${env.maxPdfUploadMb || 100} MB).`);
+        err.statusCode = 413;
+        err.code = 'PAYLOAD_TOO_LARGE';
+        throw err;
+      }
+      const isValidPdf = await verifyPdfMagicBytes(pdfBuffer);
+      if (!isValidPdf) {
+        throw ApiError.badRequest('Invalid PDF format: file is not a valid PDF document.');
+      }
+    } else {
+      throw ApiError.badRequest('Question paper PDF is required');
+    }
 
-  console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${file_name})...`);
-  const shouldIncludeAnswers = include_answers !== false && include_answers !== 'false';
-  const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: shouldIncludeAnswers });
-  let extractedQs = pdfExtraction.rows || [];
+    // 2. Resolve optional Answer Key PDF
+    let akBuffer = null;
+    let answer_key_name = bodyAkName;
+    const uploadedAk = req.files?.answer_key?.[0];
+    if (uploadedAk) {
+      answer_key_name = uploadedAk.originalname || bodyAkName;
+      if (uploadedAk.size > maxBytes) {
+        const err = new Error(`Answer key PDF exceeds the maximum allowed upload size (maximum ${env.maxPdfUploadMb || 100} MB).`);
+        err.statusCode = 413;
+        err.code = 'PAYLOAD_TOO_LARGE';
+        throw err;
+      }
+      const isValidAkPdf = await verifyPdfMagicBytes(uploadedAk.path);
+      if (!isValidAkPdf) {
+        throw ApiError.badRequest('Invalid answer key PDF format: file is not a valid PDF document.');
+      }
+      akBuffer = await fs.promises.readFile(uploadedAk.path);
+    } else if (answer_key_base64 && typeof answer_key_base64 === 'string') {
+      const cleanAkBase64 = answer_key_base64.replace(/^data:[^;]+;base64,/, '');
+      akBuffer = Buffer.from(cleanAkBase64, 'base64');
+      if (akBuffer.length > maxBytes) {
+        const err = new Error(`Answer key PDF exceeds the maximum allowed upload size (maximum ${env.maxPdfUploadMb || 100} MB).`);
+        err.statusCode = 413;
+        err.code = 'PAYLOAD_TOO_LARGE';
+        throw err;
+      }
+      const isValidAkPdf = await verifyPdfMagicBytes(akBuffer);
+      if (!isValidAkPdf) {
+        throw ApiError.badRequest('Invalid answer key PDF format: file is not a valid PDF document.');
+      }
+    }
 
-  if (!extractedQs.length) {
-    throw ApiError.badRequest('No questions could be extracted from the PDF. Please ensure the PDF contains readable text or high quality question pages.');
-  }
-
-  console.log(`[uploadPdfToQuestionBank] Extracted ${extractedQs.length} question(s) from PDF.`);
-
-  // Optional: Merge standalone answer key / solution PDF if provided
-  if (answer_key_base64 && typeof answer_key_base64 === 'string') {
+    // Save question paper file copy to disk if upload middleware is present
+    let savedFileUrl = '';
     try {
-      console.log(`[uploadPdfToQuestionBank] Processing separate answer key PDF (${answer_key_name})...`);
-      const akBase64 = answer_key_base64.replace(/^data:[^;]+;base64,/, '');
-      const akBuffer = Buffer.from(akBase64, 'base64');
-      let akMap = {};
-      let solMap = {};
-      let chMap = {};
+      const { saveUploadedFile } = await import('../middleware/upload.js');
+      savedFileUrl = await saveUploadedFile(pdfBuffer, fileName, 'qb_paper');
+    } catch (err) {
+      console.warn('[uploadPdfToQuestionBank] Warning: Could not save uploaded PDF copy:', err.message);
+    }
+
+    const { parseQuestionsFromPdf, extractPdfText } = await import('../utils/pdfQuestions.js');
+    const { parseAnswerKeyAndSolutions } = await import('../utils/pdfQuestionParser.js');
+
+    console.log(`[uploadPdfToQuestionBank] Parsing questions from PDF (${fileName})...`);
+    const shouldIncludeAnswers = include_answers !== false && include_answers !== 'false';
+    const pdfExtraction = await parseQuestionsFromPdf(pdfBuffer, { includeAnswers: shouldIncludeAnswers });
+    let extractedQs = pdfExtraction.rows || [];
+
+    if (!extractedQs.length) {
+      throw ApiError.badRequest('No questions could be extracted from the PDF. Please ensure the PDF contains readable text or high quality question pages.');
+    }
+
+    console.log(`[uploadPdfToQuestionBank] Extracted ${extractedQs.length} question(s) from PDF.`);
+
+    // Optional: Merge standalone answer key / solution PDF if provided
+    if (akBuffer) {
+      try {
+        console.log(`[uploadPdfToQuestionBank] Processing separate answer key PDF (${answer_key_name})...`);
+        let akMap = {};
+        let solMap = {};
+        let chMap = {};
 
       try {
         const rawAkText = await extractPdfText(akBuffer);
@@ -720,16 +784,20 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     }
   }
 
-  await delCache('cache:qb:*');
+    await delCache('cache:qb:*');
 
-  res.status(201).json({
-    success: true,
-    created: createdQuestions.length,
-    questions: createdQuestions,
-    categories: Array.from(affectedCategories),
-    warnings: pdfExtraction.warnings || [],
-    errors,
-    file_url: savedFileUrl || null,
-  });
+    res.status(201).json({
+      success: true,
+      created: createdQuestions.length,
+      questions: createdQuestions,
+      categories: Array.from(affectedCategories),
+      warnings: pdfExtraction.warnings || [],
+      errors,
+      file_url: savedFileUrl || null,
+    });
+  } finally {
+    await cleanupUploadedFiles(req);
+  }
 });
+
 

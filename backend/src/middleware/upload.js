@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { ApiError } from '../utils/ApiError.js';
+import { env } from '../config/env.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,9 +33,13 @@ export const saveUploadedFile = async (fileBase64, originalName = 'document.pdf'
     throw ApiError.badRequest('Invalid file format');
   }
 
-  // Size limit check (100 MB)
-  if (buffer.length > 100 * 1024 * 1024) {
-    throw ApiError.badRequest('File size exceeds 100MB limit');
+  // Size limit check
+  const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
+  if (buffer.length > maxBytes) {
+    const err = new Error(`File size exceeds maximum allowed limit (${env.maxPdfUploadMb || 100}MB)`);
+    err.statusCode = 413;
+    err.code = 'PAYLOAD_TOO_LARGE';
+    throw err;
   }
 
   // File extension validation

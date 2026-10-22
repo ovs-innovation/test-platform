@@ -305,9 +305,9 @@ export const questionBankService = {
   },
   import: (bankId, assessmentId, section_id) =>
     api.post(`/question-bank/${bankId}/import/${assessmentId}`, { section_id }).then((r) => r.data.question),
-  uploadPdf: (data) => {
+  uploadPdf: (data, config = {}) => {
     clearCache();
-    return api.post('/question-bank/upload-pdf', data).then((r) => r.data);
+    return api.post('/question-bank/upload-pdf', data, config).then((r) => r.data);
   },
   bulkUpload: (csv, default_category) => {
     clearCache();

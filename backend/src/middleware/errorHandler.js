@@ -5,9 +5,31 @@ export const notFoundHandler = (req, res) => {
   res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 };
 
-// eslint-disable-next-line no-unused-vars
 export const errorHandler = (err, _req, res, _next) => {
-  const statusCode = err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
+  const is413 = err?.code === 'LIMIT_FILE_SIZE' || err?.type === 'entity.too.large' || err?.statusCode === 413 || err?.status === 413;
+  const isMulterError = err?.name === 'MulterError';
+  const statusCode = is413
+    ? 413
+    : isMulterError
+    ? 400
+    : err?.statusCode || err?.status || (err instanceof ApiError ? err.statusCode : 500);
+
+  // Handle Multer and Body-Parser 413 / Payload Too Large errors
+  if (is413) {
+    return res.status(413).json({
+      success: false,
+      code: 'PAYLOAD_TOO_LARGE',
+      message: `PDF exceeds the maximum allowed upload size (maximum ${env.maxPdfUploadMb || 100} MB).`,
+    });
+  }
+
+  if (isMulterError) {
+    return res.status(400).json({
+      success: false,
+      code: 'UPLOAD_ERROR',
+      message: err.message,
+    });
+  }
 
   // Only log detailed stack traces for unexpected 5xx server exceptions
   if (statusCode >= 500 && !(err instanceof ApiError)) {

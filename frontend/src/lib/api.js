@@ -81,10 +81,20 @@ api.interceptors.response.use(
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
 
-    if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
+    if (status === 413) {
+      if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
+        message = rawData.message || rawData.error;
+      } else {
+        message = 'PDF exceeds the maximum allowed upload size (maximum 100 MB).';
+      }
+    } else if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
       message = rawData.message || rawData.error;
     } else if (typeof rawData === 'string' && rawData.trim()) {
-      message = rawData;
+      if (/<html|<!DOCTYPE/i.test(rawData)) {
+        message = 'The server encountered an error processing your request. Please try again.';
+      } else {
+        message = rawData;
+      }
     } else if (!error.response || status === 503 || (error.message && (error.message.includes('getaddrinfo') || error.message.includes('Network Error')))) {
       message = 'The service is temporarily unavailable. Please try again.';
     } else if (error.message) {

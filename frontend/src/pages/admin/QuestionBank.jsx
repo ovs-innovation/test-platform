@@ -176,6 +176,8 @@ export default function AdminQuestionBank() {
     });
   };
 
+  const MAX_UPLOAD_SIZE = 100 * 1024 * 1024; // 100 MB
+
   const uploadPdf = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     if (!pdfFile) {
@@ -183,37 +185,53 @@ export default function AdminQuestionBank() {
       return;
     }
 
+    if (!pdfFile.name.toLowerCase().endsWith('.pdf')) {
+      toast.error('Please select a valid PDF document (.pdf)');
+      return;
+    }
+
+    if (pdfFile.size > MAX_UPLOAD_SIZE) {
+      toast.error(`Question paper PDF exceeds the maximum allowed upload size (maximum 100 MB). Selected: ${formatBytes(pdfFile.size)}`);
+      return;
+    }
+
+    if (answerKeyFile) {
+      if (!answerKeyFile.name.toLowerCase().endsWith('.pdf')) {
+        toast.error('Answer key file must be a valid PDF document (.pdf)');
+        return;
+      }
+      if (answerKeyFile.size > MAX_UPLOAD_SIZE) {
+        toast.error(`Answer key PDF exceeds the maximum allowed upload size (maximum 100 MB). Selected: ${formatBytes(answerKeyFile.size)}`);
+        return;
+      }
+    }
+
     setPdfUploading(true);
     setPdfSuccessData(null);
-    setPdfProgressStatus('Preparing PDF document...');
+    setPdfProgressStatus('Uploading PDF document to server...');
 
     try {
-      const fileBase64 = await fileToBase64(pdfFile);
-      let answerKeyBase64 = null;
+      const formData = new FormData();
+      formData.append('file', pdfFile);
       if (answerKeyFile) {
-        setPdfProgressStatus('Preparing answer key document...');
-        answerKeyBase64 = await fileToBase64(answerKeyFile);
+        formData.append('answer_key', answerKeyFile);
       }
+      formData.append('category', pdfCategory);
+      formData.append('default_marks', Number(pdfMarks) || 4);
+      formData.append('difficulty', pdfDifficulty);
+      formData.append('include_answers', Boolean(pdfIncludeAnswers));
 
       setPdfProgressStatus('Analyzing PDF with AI Vision, extracting questions, options, & answers...');
 
-      const payload = {
-        file_base64: fileBase64,
-        file_name: pdfFile.name,
-        category: pdfCategory,
-        answer_key_base64: answerKeyBase64,
-        answer_key_name: answerKeyFile ? answerKeyFile.name : null,
-        default_marks: Number(pdfMarks) || 4,
-        difficulty: pdfDifficulty,
-        include_answers: Boolean(pdfIncludeAnswers),
-      };
-
-      const res = await questionBankService.uploadPdf(payload);
+      const res = await questionBankService.uploadPdf(formData);
       setPdfSuccessData(res);
       toast.success(`Imported ${res.created} question(s) successfully!`);
       await load();
     } catch (err) {
-      const msg = err?.response?.data?.message || err?.response?.data?.error || err.message || 'PDF extraction failed. Please check the file.';
+      let msg = err?.message || err?.response?.data?.message || err?.response?.data?.error || 'PDF extraction failed. Please check the file.';
+      if (typeof msg === 'string' && /<html|<!DOCTYPE/i.test(msg)) {
+        msg = 'PDF exceeds the maximum allowed upload size (maximum 100 MB).';
+      }
       toast.error(msg);
     } finally {
       setPdfUploading(false);
