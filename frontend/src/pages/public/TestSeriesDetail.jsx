@@ -17,7 +17,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getExamTheme } from '../../lib/testSeriesCover.js';
 import { getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
-import { formatDateRange } from '../../lib/format.js';
+import { formatDateRange, getRepeaterDurationText, normalizeRepeaterDurationText } from '../../lib/format.js';
 import { useFirstVisitStudentForm } from '../../components/public/FirstVisitStudentForm.jsx';
 
 
@@ -285,10 +285,12 @@ export default function TestSeriesDetail() {
   }
 
   const formattedDateRange = formatDateRange(series.start_date, series.end_date);
+  const seriesExamName = `${series.exam_type || ''} ${series.title || ''} ${series.slug || ''}`;
+  const savedDurationText = normalizeRepeaterDurationText(series.duration_text, seriesExamName);
   const displayDuration =
-    series.duration_text ||
+    savedDurationText ||
     (isNeetRm
-      ? 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)'
+      ? getRepeaterDurationText(seriesExamName, series.target_year || '2027')
       : formattedDateRange
       ? formattedDateRange
       : series.duration_months

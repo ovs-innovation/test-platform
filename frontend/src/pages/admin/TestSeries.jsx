@@ -32,6 +32,7 @@ import Modal from '../../components/Modal.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { getTestSeriesCover, getSeriesClassBadge } from '../../lib/testSeriesCover.js';
 import { getMediaUrl } from '../../lib/media.js';
+import { getRepeaterDurationText, normalizeRepeaterDurationText } from '../../lib/format.js';
 
 export default function AdminTestSeries() {
   const toast = useToast();
@@ -242,7 +243,7 @@ export default function AdminTestSeries() {
       target_year: s.target_year || (resolvedClass === '11 + 12' ? '2028' : '2027'),
       planned_tests: s.planned_tests ?? (s.test_count || 0),
       duration_months: s.duration_months || (resolvedClass === '11 + 12' ? 24 : 12),
-      duration_text: s.duration_text || '',
+      duration_text: normalizeRepeaterDurationText(s.duration_text, `${s.exam_type || ''} ${s.title || ''}`),
       is_featured: Boolean(s.is_featured),
       is_active: s.is_active !== false,
       validity_days: (s.validity_days !== null && s.validity_days !== undefined && Number(s.validity_days) > 0) ? Number(s.validity_days) : '',
@@ -296,7 +297,7 @@ export default function AdminTestSeries() {
         target_year = '2027';
         duration_months = 12;
         if (!duration_text) {
-          duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
+          duration_text = getRepeaterDurationText(f.exam_type, target_year);
         }
       } else {
         program_type = 'One Year';
@@ -318,6 +319,11 @@ export default function AdminTestSeries() {
   const handleTitleChange = (val) => {
     setForm((f) => {
       const updates = { ...f, title: val };
+      if (/jee/i.test(val)) {
+        updates.exam_type = /main/i.test(val) ? 'JEE Main' : 'JEE';
+      } else if (/neet/i.test(val)) {
+        updates.exam_type = /neet[- ]?pg/i.test(val) ? 'NEET PG' : 'NEET UG';
+      }
       if (/two[- ]?year|2028|2[- ]year|11\s*(?:&|and|\+)\s*12/i.test(val) && f.target_class !== '11 + 12') {
         updates.target_class = '11 + 12';
         updates.program_type = 'Two Year';
@@ -329,7 +335,7 @@ export default function AdminTestSeries() {
         updates.target_year = '2027';
         updates.duration_months = 12;
         if (!updates.duration_text) {
-          updates.duration_text = 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)';
+          updates.duration_text = getRepeaterDurationText(updates.exam_type || f.exam_type, updates.target_year);
         }
       }
       if (/neet/i.test(val) && (f.exam_type === 'JEE Main' || f.exam_type === 'General')) {
@@ -756,7 +762,7 @@ export default function AdminTestSeries() {
               <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Custom Duration Display Text</label>
               <input
                 className="input"
-                placeholder="e.g. October 2026 – NEET 2027 (Exam Date to be updated...)"
+                placeholder="e.g. October 2026 – JEE 2027 (Exam Date to be updated...)"
                 value={form.duration_text}
                 onChange={(e) => setForm((f) => ({ ...f, duration_text: e.target.value }))}
               />
@@ -816,7 +822,11 @@ export default function AdminTestSeries() {
                 className="input"
                 placeholder="e.g. NEET UG, JEE Main, NEET PG"
                 value={form.exam_type}
-                onChange={(e) => setForm((f) => ({ ...f, exam_type: e.target.value }))}
+                onChange={(e) => setForm((f) => ({
+                  ...f,
+                  exam_type: e.target.value,
+                  duration_text: normalizeRepeaterDurationText(f.duration_text, e.target.value),
+                }))}
               />
             </div>
             <div>

@@ -25,6 +25,25 @@ export const formatDateRange = (start, end) => {
   return `${formatter.format(startDate)} – ${formatter.format(endDate)}`;
 };
 
+export const getRepeaterExamName = (examType) => {
+  const value = String(examType || '').toLowerCase();
+  if (/\bjee\b/.test(value)) return 'JEE';
+  if (/neet\s*[- ]?pg/.test(value)) return 'NEET PG';
+  return 'NEET';
+};
+
+export const getRepeaterDurationText = (examType, targetYear = '2027') =>
+  `October 2026 – ${getRepeaterExamName(examType)} ${targetYear} (Exam Date to be updated after official announcement)`;
+
+export const normalizeRepeaterDurationText = (durationText, examType) => {
+  if (!durationText) return '';
+  const examName = getRepeaterExamName(examType);
+  if (examName === 'JEE') {
+    return String(durationText).replace(/\bNEET\b/gi, examName);
+  }
+  return String(durationText);
+};
+
 export const formatDuration = (totalSeconds) => {
   const s = Math.max(0, Math.floor(totalSeconds));
   const h = Math.floor(s / 3600);
