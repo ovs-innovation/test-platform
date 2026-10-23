@@ -198,6 +198,7 @@ export const submitPublicAdmission = asyncHandler(async (req, res) => {
     contactNumber,
     email,
     courseName,
+    testSeriesId,
     formData = {},
     documents = []
   } = req.body;
@@ -208,31 +209,106 @@ export const submitPublicAdmission = asyncHandler(async (req, res) => {
   const phone = contactNumber || formData.studentMobile || formData.parentMobile || '';
   const em = email || formData.email || formData.parentEmail || '';
   const course = courseName || formData.courseName || 'Classroom Batch';
+  const normalizedCourse = String(course).trim().toLowerCase().replace(/\s+/g, ' ');
 
-  const result = await query(
-    `INSERT INTO admission_submissions (
-      application_no,
-      student_name,
-      father_name,
-      contact_number,
-      email,
-      course_name,
-      status,
-      form_data,
-      documents
-    ) VALUES ($1, $2, $3, $4, $5, $6, 'pending', $7, $8)
-    ON CONFLICT (application_no) DO UPDATE SET
-      student_name = EXCLUDED.student_name,
-      father_name = EXCLUDED.father_name,
-      contact_number = EXCLUDED.contact_number,
-      email = EXCLUDED.email,
-      course_name = EXCLUDED.course_name,
-      form_data = EXCLUDED.form_data,
-      documents = EXCLUDED.documents,
-      updated_at = NOW()
-    RETURNING *`,
-    [appNo, sName, fName, phone, em, course, JSON.stringify(formData), JSON.stringify(documents)]
-  );
+  const seriesId = testSeriesId === undefined || testSeriesId === null || testSeriesId === ''
+    ? null
+    : Number(testSeriesId);
+  if (seriesId !== null && (!Number.isInteger(seriesId) || seriesId <= 0)) {
+    throw ApiError.badRequest('A valid test series is required');
+  }
+
+  let studentIdentity = null;
+  let studentPhoneIdentity = null;
+  let studentEmailIdentity = null;
+  let studentAccountIdentity = null;
+  let admissionScope;
+  if (seriesId !== null) {
+    const phoneDigits = String(contactNumber || formData.studentMobile || '').replace(/\D/g, '')
+      .replace(/^91(?=\d{10}$)/, '')
+      .replace(/^0(?=\d{10}$)/, '');
+    const normalizedEmail = String(email || formData.email || req.user?.email || '').trim().toLowerCase();
+    studentPhoneIdentity = phoneDigits.length >= 10 ? phoneDigits : null;
+    studentEmailIdentity = normalizedEmail || null;
+    studentAccountIdentity = req.user?.id ? String(req.user.id) : null;
+    studentIdentity = studentPhoneIdentity || studentEmailIdentity || studentAccountIdentity;
+    admissionScope = `series:${seriesId}`;
+
+    if (!studentIdentity) {
+      throw ApiError.badRequest('Enter a student mobile number or email to submit this test-series admission form.');
+    }
+
+    const seriesResult = await query('SELECT id FROM test_series WHERE id = $1', [seriesId]);
+    if (!seriesResult.rowCount) {
+      throw ApiError.badRequest('The selected test series could not be found. Please reopen the admission form from the test-series page.');
+    }
+  } else {
+    admissionScope = `course:${normalizedCourse}`;
+    const phoneDigits = String(contactNumber || formData.studentMobile || '').replace(/\D/g, '')
+      .replace(/^91(?=\d{10}$)/, '')
+      .replace(/^0(?=\d{10}$)/, '');
+    studentPhoneIdentity = phoneDigits.length >= 10 ? phoneDigits : null;
+    studentEmailIdentity = String(email || formData.email || '').trim().toLowerCase() || null;
+    studentAccountIdentity = req.user?.id ? String(req.user.id) : null;
+    studentIdentity = studentPhoneIdentity || studentEmailIdentity || studentAccountIdentity;
+  }
+
+  if (!normalizedCourse) {
+    throw ApiError.badRequest('Select a course or test series before submitting the admission form.');
+  }
+  if (!studentIdentity) {
+    throw ApiError.badRequest('Enter a student mobile number or email to submit this admission form.');
+  }
+
+  let result;
+  try {
+    result = await query(
+      `INSERT INTO admission_submissions (
+        application_no,
+        student_name,
+        father_name,
+        contact_number,
+        email,
+        course_name,
+        status,
+        form_data,
+        documents,
+        test_series_id,
+        admission_scope,
+        student_phone_identity,
+        student_email_identity,
+        student_account_identity
+      ) VALUES ($1, $2, $3, $4, $5, $6, 'pending', $7, $8, $9, $10, $11, $12, $13)
+      RETURNING *`,
+      [
+        appNo,
+        sName,
+        fName,
+        phone,
+        em,
+        course,
+        JSON.stringify(formData),
+        JSON.stringify(documents),
+        seriesId,
+        admissionScope,
+        studentPhoneIdentity,
+        studentEmailIdentity,
+        studentAccountIdentity,
+      ]
+    );
+  } catch (error) {
+    if (error.code === '23505' && [
+      'uq_admission_submissions_scope_student_phone',
+      'uq_admission_submissions_scope_student_email',
+      'uq_admission_submissions_scope_student_account',
+    ].includes(error.constraint)) {
+      throw ApiError.conflict('You have already submitted an admission form for this test series or course.');
+    }
+    if (error.code === '23505' && error.constraint === 'admission_submissions_application_no_key') {
+      throw ApiError.conflict('This application number has already been used. Refresh the form to generate a new number.');
+    }
+    throw error;
+  }
 
   res.status(201).json({
     success: true,

@@ -32,8 +32,7 @@ router.post('/enquiries', submitPublicStudentEnquiry);
 
 // Dynamic Admission Form Public Routes (noCache ensures instant reflection when admin updates schema)
 router.get('/admission-form', noCache, getPublicAdmissionFormConfig);
-router.post('/admission-form/submit', submitPublicAdmission);
+router.post('/admission-form/submit', optionalAuthenticate, submitPublicAdmission);
 router.get('/admission-form/application/:applicationNo', noCache, getPublicAdmissionByAppNo);
 
 export default router;
-

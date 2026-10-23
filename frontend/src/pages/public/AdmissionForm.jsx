@@ -194,6 +194,7 @@ export default function AdmissionForm() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [submitting, setSubmitting] = useState(false);
+  const [submissionError, setSubmissionError] = useState('');
 
   // Dynamic Form Config from Database (with default initial fallback)
   const [sections, setSections] = useState(DEFAULT_SECTIONS);
@@ -440,34 +441,39 @@ export default function AdmissionForm() {
 
     try {
       setSubmitting(true);
+      setSubmissionError('');
+      const applicationNo = querySeriesId
+        ? `${formData.applicationNo.replace(/-TS\d+$/, '')}-TS${querySeriesId}`
+        : formData.applicationNo;
+      setFormData((prev) => ({ ...prev, applicationNo }));
       const payload = {
-        applicationNo: formData.applicationNo,
+        applicationNo,
         studentName: formData.fullName,
         fatherName: formData.parentName,
         contactNumber: formData.studentMobile,
         email: formData.email,
         courseName: formData.courseName,
+        testSeriesId: querySeriesId ? Number(querySeriesId) : null,
         formData: formData
       };
 
       // Submit to backend
       const res = await admissionService.submitAdmission(payload);
-      sessionStorage.setItem('edvedum_submitted_application_no', formData.applicationNo);
+      const submittedApplicationNo = res.submission?.application_no || applicationNo;
+      sessionStorage.setItem('edvedum_submitted_application_no', submittedApplicationNo);
       try {
         sessionStorage.removeItem('edvedum_form_inputs_draft');
         sessionStorage.removeItem('edvedum_admission_draft');
         sessionStorage.removeItem('edvedum_admission_id');
       } catch (e) {}
-      navigate(`/admission/confirmation?appNo=${encodeURIComponent(formData.applicationNo)}`);
+      navigate(`/admission/confirmation?appNo=${encodeURIComponent(submittedApplicationNo)}`);
     } catch (err) {
       console.warn('Backend submission warning:', err);
-      sessionStorage.setItem('edvedum_submitted_application_no', formData.applicationNo);
-      try {
-        sessionStorage.removeItem('edvedum_form_inputs_draft');
-        sessionStorage.removeItem('edvedum_admission_draft');
-        sessionStorage.removeItem('edvedum_admission_id');
-      } catch (e) {}
-      navigate(`/admission/confirmation?appNo=${encodeURIComponent(formData.applicationNo)}`);
+      setSubmissionError(
+        err?.response?.data?.message ||
+        err.message ||
+        'The admission form could not be submitted. Please try again.'
+      );
     } finally {
       setSubmitting(false);
     }
@@ -625,6 +631,15 @@ export default function AdmissionForm() {
 
         {/* ================= FORM BODY ================= */}
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+
+          {submissionError && (
+            <div
+              role="alert"
+              className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm font-semibold text-rose-700"
+            >
+              {submissionError}
+            </div>
+          )}
 
           {/* STEP 1: TOP BAR (Photo & Application Details) */}
           {currentStep === 1 && (
