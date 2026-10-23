@@ -1,4 +1,4 @@
-import './polyfills.js';
+﻿import './polyfills.js';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -1059,15 +1059,22 @@ CRITICAL INSTRUCTIONS FOR THIS ANSWER KEY & DETAILED SOLUTIONS DOCUMENT:
   Always convert 1 to "A", 2 to "B", 3 to "C", 4 to "D"!
   If the question is explicitly an integer or numerical value (e.g. "Ans: 16" or "10 m/s"), put the value in "numericAnswer".
 
-3. EXTRACT "solutions":
+3. EXTRACT "solutions" (CRITICAL - never skip any question):
 - "questionNumber": The integer question number.
 - "correctAnswer": The corresponding option choice ("A", "B", "C", "D") or numeric answer.
-- "explanation": The complete, well-arranged, detailed explanation.
+- "explanation": The COMPLETE, well-arranged, detailed explanation. Rules:
   * STRIP the leading question number and answer key marker (e.g. remove "1. (3) : " or "2. (2) : "). Start immediately with the genuine explanation content!
-  * Transcribe all equations, calculations, Greek symbols, chemical formulas, and scientific units using standard LaTeX wrapped in $...$ (e.g. $mg \sin 30^\circ = 25\text{ N}$, $\text{pO}_2 = 95\text{ mm Hg}$, $\Delta G^\circ = -2.303 RT \log K$, $\text{Hb} + \text{O}_2 \rightleftharpoons \text{HbO}_2$).
+  * Transcribe ALL equations, calculations, Greek symbols, chemical formulas, and scientific units using standard LaTeX wrapped in $...$.
+    Examples: $mg\sin 30^\circ = 25\text{ N}$, $\text{pO}_2 = 95\text{ mm Hg}$, $\Delta G^\circ = -2.303 RT \log K$.
+  * Chemical equations: $\text{Hb} + \text{O}_2 \rightleftharpoons \text{HbO}_2$, $2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O}$.
   * For multi-line derivations or step-by-step calculations, keep each step on a clean separate line.
-  * NEVER truncate, summarize, or omit portions of the explanation!
-- "visualElements": If the solution or explanation includes a diagram, schematic, anatomical drawing, circuit, graph, or free body diagram, include its bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000) so it can be cropped and saved!
+  * NEVER truncate, summarize, or omit portions of the explanation! Even if very long, transcribe everything.
+  * Include references to figures/diagrams as written (e.g., "As shown in the figure...").
+- "visualElements": CRITICAL - if the solution or explanation includes ANY diagram, schematic, anatomical drawing, circuit, graph, free body diagram, or geometric figure:
+  * Include its precise bounding box box_2d [ymin, xmin, ymax, xmax] in 0-1000 scale relative to page.
+  * Use the tightest box that includes the full diagram (including axis labels and legends).
+  * type field: use "diagram", "circuit", "graph", "structure", "anatomy", or "figure" as appropriate.
+  * description field: brief description of what the diagram shows.
 
 4. EXTRACT "topicGridEntries":
 - If there are chapter, topic, or syllabus classifications listed on this page, populate "topicGridEntries".
@@ -1107,7 +1114,10 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
   NEVER strip or drop "(a)", "A-", or Roman numerals from option text!
 
 4. MATHEMATICAL & CHEMICAL FORMULAS:
-- Transcribe all mathematical equations, Greek letters, superscripts, subscripts, and chemical formulas using standard LaTeX wrapped in $...$ (e.g., $\text{pO}_2$, $\text{BF}_3$, $\Delta\text{G}^\circ$, $\text{v}_0$).
+- Transcribe ALL mathematical equations, Greek letters, superscripts, subscripts, and chemical formulas using standard LaTeX wrapped in $...$.
+- Examples: $\text{pO}_2$, $\text{BF}_3$, $\Delta G^\circ$, $v_0$, $\frac{1}{2}mv^2$, $\vec{F} = m\vec{a}$.
+- For option values containing expressions: $16\text{ m/s}$, $\frac{v_0}{2}$, $3\sqrt{2}$.
+- Chemical equations: $2\text{H}_2 + \text{O}_2 \rightarrow 2\text{H}_2\text{O}$.
 
 5. MULTI-COLUMN LAYOUT & CONTINUATIONS:
 - CRITICAL TWO-COLUMN LAYOUT: Most competitive exam pages contain two distinct vertical columns (LEFT and RIGHT).
@@ -1115,10 +1125,20 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 - NEVER skip the left column, never start with the right column, and never stop early!
 - If an option or diagram at the top belongs to a question from the previous page, transcribe it with the corresponding questionNumber.
 
-6. QUESTION TYPES & DIAGRAMS:
+6. QUESTION TYPES, DIAGRAMS & INLINE ANSWERS:
 - MCQ: options array with keys 'A', 'B', 'C', 'D' (or '1', '2', '3', '4').
-- Integer / Numerical: questionType = 'integer', options = [].
-- Diagrams, circuits, graphs, apparatus, or biological figures: include bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000) in visualElements.
+- Integer / Numerical: questionType = 'integer', options = []. Record the answer in numericAnswer field.
+- DIAGRAMS (CRITICAL - MANDATORY for every visual element):
+  For EVERY diagram, circuit, graph, biological figure, apparatus, ray diagram, chemical structure, or geometric figure visible on this page:
+  * YOU MUST include its bounding box in visualElements with box_2d [ymin, xmin, ymax, xmax] in 0-1000 scale.
+  * The bounding box must be as tight as possible while including the full figure, axis labels, and legends.
+  * Use type: "diagram" for general figures, "circuit" for electrical circuits, "graph" for graphs/plots, "structure" for chemical structures, "anatomy" for biological diagrams, "ray_diagram" for optics.
+  * Provide a description briefly describing what the diagram represents.
+  * Associate the visualElement with its question in that question's visualElements array.
+  * If a diagram is shared by multiple questions, include it in the FIRST of those questions.
+  * NEVER omit diagrams, even simple ones (number lines, circles, triangles, arrows)!
+- INLINE ANSWERS: If the question text or options have a printed correct answer marker (e.g., "Ans: B", "Answer: (3)", asterisk, or checkmark next to option), record it in inlineCorrectAnswer using letter ("A"/"B"/"C"/"D").
+- INLINE EXPLANATIONS: If a hint or short solution is printed below the question, capture it in inlineExplanation (use LaTeX for all formulas).
 `;
 
       const pageBuf = pageImg.buffer || (pageImg.filePath ? await fs.promises.readFile(pageImg.filePath) : null);

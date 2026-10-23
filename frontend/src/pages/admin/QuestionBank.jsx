@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -8,6 +8,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
+import MathRenderer from '../../components/common/MathRenderer.jsx';
 
 const tryParseArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -524,12 +525,74 @@ export default function AdminQuestionBank() {
           <DataTable
             columns={[
               {
-                key: 'question_text', label: 'Question', render: (q) => (
-                  <div className="flex flex-col gap-1 max-w-md">
-                    <span className="line-clamp-2 text-slate-900 dark:text-slate-100 font-extrabold leading-snug">{q.question_text}</span>
-                    {q.solution && <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate">Sol: {q.solution}</span>}
-                  </div>
-                )
+                key: 'question_text', label: 'Question', render: (q) => {
+                  const opts = tryParseArray(q.options);
+                  const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E'];
+                  const correctIdx = q.correct_index ?? 0;
+                  const isInteger = q.question_type === 'integer' || q.question_type === 'numerical';
+                  return (
+                    <div className="flex flex-col gap-1.5 max-w-xl py-1">
+                      {/* Question Text with LaTeX */}
+                      <div className="text-slate-900 dark:text-slate-100 font-bold leading-snug text-xs">
+                        <MathRenderer text={q.question_text} />
+                      </div>
+
+                      {/* Options A/B/C/D */}
+                      {!isInteger && opts.length > 0 && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-0.5">
+                          {opts.map((opt, i) => {
+                            const optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
+                            const isCorrect = i === correctIdx;
+                            return (
+                              <div
+                                key={i}
+                                className={`flex items-start gap-1.5 rounded-lg px-2 py-1 text-[11px] leading-snug ${
+                                  isCorrect
+                                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/60 text-emerald-900 dark:text-emerald-200'
+                                    : 'bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300'
+                                }`}
+                              >
+                                <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                                  {OPTION_KEYS[i] || (i + 1)}.
+                                </span>
+                                <MathRenderer text={optText} className="flex-1 min-w-0" />
+                                {isCorrect && <Check className="h-3 w-3 shrink-0 text-emerald-500 mt-0.5" />}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {/* Integer answer */}
+                      {isInteger && q.numeric_answer != null && (
+                        <div className="text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50 rounded-lg px-2 py-1">
+                          Answer: <span className="font-black">{q.numeric_answer}</span>
+                        </div>
+                      )}
+
+                      {/* Diagram thumbnail */}
+                      {q.image_url && (
+                        <div className="flex items-center gap-1.5 mt-0.5">
+                          <Image className="h-3 w-3 text-slate-400" />
+                          <img
+                            src={q.image_url}
+                            alt="Question diagram"
+                            className="h-12 max-w-[120px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+                            onError={(e) => { e.target.style.display = 'none'; }}
+                          />
+                        </div>
+                      )}
+
+                      {/* Solution preview */}
+                      {q.solution && (
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2 italic border-t border-slate-100 dark:border-slate-800 pt-1">
+                          <span className="font-semibold not-italic text-slate-400 dark:text-slate-500">Sol: </span>
+                          <MathRenderer text={q.solution} className="inline" />
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
               },
               {
                 key: 'question_type', label: 'Type', render: (q) => (
@@ -676,6 +739,40 @@ export default function AdminQuestionBank() {
               <div>
                 <label className="label">Options (pipe-separated e.g. Option A|Option B|Option C|Option D)</label>
                 <input className="input" required value={form.options} onChange={(e) => setForm((f) => ({ ...f, options: e.target.value }))} />
+                {/* Live Options Preview */}
+                {form.options && (() => {
+                  const previewOpts = String(form.options).split('|').map(o => o.trim()).filter(Boolean);
+                  const KEYS = ['A', 'B', 'C', 'D', 'E'];
+                  const correctIdx = Number(form.correct_index ?? 0);
+                  const correctIndices = form.question_type === 'multi_select'
+                    ? String(form.correct_indices_str || '').split(/[\s,]+/).map(Number).filter(n => !isNaN(n) && n >= 0)
+                    : [correctIdx];
+                  if (previewOpts.length < 2) return null;
+                  return (
+                    <div className="mt-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 p-2.5 space-y-1.5">
+                      <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Options Preview</p>
+                      {previewOpts.map((opt, i) => {
+                        const isCorrect = correctIndices.includes(i);
+                        return (
+                          <div
+                            key={i}
+                            className={`flex items-start gap-2 rounded-lg px-2.5 py-1.5 text-xs ${
+                              isCorrect
+                                ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/50 text-emerald-900 dark:text-emerald-200'
+                                : 'bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300'
+                            }`}
+                          >
+                            <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
+                              {KEYS[i] || (i + 1)}.
+                            </span>
+                            <MathRenderer text={opt} className="flex-1" />
+                            {isCorrect && <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })()}
               </div>
               {form.question_type === 'multi_select' ? (
                 <div>
