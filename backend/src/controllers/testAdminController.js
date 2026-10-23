@@ -405,7 +405,10 @@ export const getTestDetails = asyncHandler(async (req, res) => {
  * Update test details (dates, timings, syllabus, ebook, solution, etc.)
  */
 export const updateTest = asyncHandler(async (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id) || id <= 0) {
+    throw ApiError.badRequest('Valid test ID required');
+  }
   const {
     test_name,
     test_type,
@@ -434,29 +437,30 @@ export const updateTest = asyncHandler(async (req, res) => {
 
   const result = await query(
     `UPDATE tests SET
-      test_name = COALESCE($1, test_name),
-      title = COALESCE($1, title),
-      test_type = COALESCE($2, test_type),
-      test_date = COALESCE($3, test_date),
-      start_time = COALESCE($4, start_time),
-      end_time = COALESCE($5, end_time),
-      duration_minutes = COALESCE($6, duration_minutes),
-      syllabus = COALESCE($7, syllabus),
-      max_marks = COALESCE($8, max_marks),
-      is_published = COALESCE($9, is_published),
-      status = CASE WHEN $9 IS NULL THEN status WHEN $9 = true THEN 'published' ELSE 'draft' END,
-      result_publish_time = $10,
-      solution_pdf_url = COALESCE($11, solution_pdf_url),
-      question_paper_url = COALESCE($12, question_paper_url),
-      answer_key_url = COALESCE($13, answer_key_url),
-      recommended_ebook_id = $14,
-      available_from = $15,
-      available_until = $16,
-      is_live = COALESCE($17, is_live),
+      test_name = COALESCE($2, test_name),
+      title = COALESCE($2, title),
+      test_type = COALESCE($3, test_type),
+      test_date = COALESCE($4, test_date),
+      start_time = COALESCE($5, start_time),
+      end_time = COALESCE($6, end_time),
+      duration_minutes = COALESCE($7, duration_minutes),
+      syllabus = COALESCE($8, syllabus),
+      max_marks = COALESCE($9, max_marks),
+      is_published = COALESCE($10, is_published),
+      status = CASE WHEN $10 IS NULL THEN status WHEN $10 = true THEN 'published' ELSE 'draft' END,
+      result_publish_time = $11,
+      solution_pdf_url = COALESCE($12, solution_pdf_url),
+      question_paper_url = COALESCE($13, question_paper_url),
+      answer_key_url = COALESCE($14, answer_key_url),
+      recommended_ebook_id = $15,
+      available_from = $16,
+      available_until = $17,
+      is_live = COALESCE($18, is_live),
       updated_at = NOW()
-    WHERE id = $18
+    WHERE id = $1
     RETURNING *`,
     [
+      id,
       test_name || null,
       test_type || null,
       cleanDate,
@@ -473,18 +477,19 @@ export const updateTest = asyncHandler(async (req, res) => {
       recommended_ebook_id ? parseInt(recommended_ebook_id, 10) : null,
       available_from || null,
       available_until || null,
-      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null,
-      id
+      req.body.is_live !== undefined ? Boolean(req.body.is_live) : null
     ]
   );
 
-  if (result.rows[0]) {
-    syncFreeTestSeries(result.rows[0]).catch(() => { });
-    const newEbookId = result.rows[0].recommended_ebook_id ? Number(result.rows[0].recommended_ebook_id) : null;
-    const oldEbookId = check.rows[0]?.recommended_ebook_id ? Number(check.rows[0].recommended_ebook_id) : null;
-    if (newEbookId && newEbookId !== oldEbookId) {
-      notifyStudentsAboutTestEbook(id, result.rows[0].test_name || result.rows[0].title || 'Test', newEbookId).catch(() => {});
-    }
+  if (result.rowCount !== 1 || !result.rows[0]) {
+    throw ApiError.notFound('Test not found');
+  }
+
+  syncFreeTestSeries(result.rows[0]).catch(() => { });
+  const newEbookId = result.rows[0].recommended_ebook_id ? Number(result.rows[0].recommended_ebook_id) : null;
+  const oldEbookId = check.rows[0]?.recommended_ebook_id ? Number(check.rows[0].recommended_ebook_id) : null;
+  if (newEbookId && newEbookId !== oldEbookId) {
+    notifyStudentsAboutTestEbook(id, result.rows[0].test_name || result.rows[0].title || 'Test', newEbookId).catch(() => {});
   }
 
   await invalidateExamPaperCache(id);

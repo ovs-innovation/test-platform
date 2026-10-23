@@ -17,6 +17,7 @@ import { useToast } from '../../context/ToastContext.jsx';
 import { ErrorState, Skeleton } from '../../components/ui.jsx';
 import { getSeriesBlurb, getExamTheme } from '../../lib/testSeriesCover.js';
 import { getBrochureDownloadUrl, hasBrochure } from '../../lib/media.js';
+import { formatDateRange } from '../../lib/format.js';
 import { useFirstVisitStudentForm } from '../../components/public/FirstVisitStudentForm.jsx';
 
 
@@ -283,12 +284,13 @@ export default function TestSeriesDetail() {
     displayProgramType = 'Two-Year Program';
   }
 
+  const formattedDateRange = formatDateRange(series.start_date, series.end_date);
   const displayDuration =
     series.duration_text ||
     (isNeetRm
       ? 'October 2026 – NEET 2027 (Exam Date to be updated after official announcement)'
-      : series.start_date && series.end_date
-      ? `${series.start_date} – ${series.end_date}`
+      : formattedDateRange
+      ? formattedDateRange
       : series.duration_months
       ? `${series.duration_months} Months`
       : isTwoYear

@@ -11,6 +11,20 @@ export const formatDate = (value) => {
   return new Date(value).toLocaleDateString(undefined, { dateStyle: 'medium' });
 };
 
+export const formatDateRange = (start, end) => {
+  if (!start || !end) return null;
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  if (Number.isNaN(startDate.getTime()) || Number.isNaN(endDate.getTime())) return null;
+
+  const formatter = new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  });
+  return `${formatter.format(startDate)} – ${formatter.format(endDate)}`;
+};
+
 export const formatDuration = (totalSeconds) => {
   const s = Math.max(0, Math.floor(totalSeconds));
   const h = Math.floor(s / 3600);
@@ -35,4 +49,3 @@ export const formatCompactDateTime = (value) => {
   const time = d.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   return `${day} ${month} • ${time}`;
 };
-
