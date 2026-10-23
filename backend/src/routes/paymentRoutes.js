@@ -11,6 +11,7 @@ import {
   adminCreateManualPayment,
   adminAddManualInstallment,
   adminCorrectManualInstallment,
+  adminUpdateManualAgreedFee,
   adminDeletePayment,
   adminUpdatePaymentStatus,
 } from '../controllers/paymentController.js';
@@ -85,6 +86,7 @@ router.get('/admin/manual/:id', authorize('admin'), adminManualPaymentDetail);
 router.post('/admin/manual', authorize('admin'), paymentLimiter, adminCreateManualPayment);
 router.post('/admin/manual/:id/installments', authorize('admin'), paymentLimiter, adminAddManualInstallment);
 router.post('/admin/manual/:id/corrections', authorize('admin'), paymentLimiter, adminCorrectManualInstallment);
+router.patch('/admin/manual/:id/agreed-fee', authorize('admin'), paymentLimiter, adminUpdateManualAgreedFee);
 router.delete('/admin/:id', authorize('admin'), adminDeletePayment);
 router.patch('/admin/:id/status', authorize('admin'), adminUpdatePaymentStatus);
 router.post(

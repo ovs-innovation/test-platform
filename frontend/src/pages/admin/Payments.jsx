@@ -106,6 +106,10 @@ export default function AdminPayments() {
   const [detailLoading, setDetailLoading] = useState(false);
   const [installmentForm, setInstallmentForm] = useState(INITIAL_INSTALLMENT_FORM);
   const [correctingEntry, setCorrectingEntry] = useState(null);
+  const [editingAgreedFee, setEditingAgreedFee] = useState(false);
+  const [agreedFeeInput, setAgreedFeeInput] = useState('');
+  const [agreedFeeNotes, setAgreedFeeNotes] = useState('');
+  const [agreedFeeDueDate, setAgreedFeeDueDate] = useState('');
   const [correctionForm, setCorrectionForm] = useState({
     replacement_amount: '',
     payment_mode: 'cash',
@@ -221,16 +225,44 @@ export default function AdminPayments() {
   const openPaymentHistory = async (payment) => {
     setSelectedPayment(payment);
     setCorrectingEntry(null);
+    setEditingAgreedFee(false);
+    setAgreedFeeInput(payment.total_fee_paise ? (Number(payment.total_fee_paise) / 100).toString() : '');
+    setAgreedFeeNotes(payment.fee_notes || '');
+    setAgreedFeeDueDate(payment.next_due_date ? String(payment.next_due_date).slice(0, 10) : '');
     setInstallmentForm({ ...INITIAL_INSTALLMENT_FORM, payment_date: today() });
     if (!payment.fee_record_id) return;
     setDetailLoading(true);
     try {
       const detail = await paymentService.adminManualDetail(payment.fee_record_id);
       setSelectedPayment(detail);
+      setAgreedFeeInput((Number(detail.total_fee_paise || 0) / 100).toString());
+      setAgreedFeeNotes(detail.fee_notes || '');
+      setAgreedFeeDueDate(detail.next_due_date ? String(detail.next_due_date).slice(0, 10) : '');
     } catch (error) {
       toast.error(error?.message || 'Unable to load payment history');
     } finally {
       setDetailLoading(false);
+    }
+  };
+
+  const submitAgreedFeeUpdate = async (event) => {
+    event.preventDefault();
+    if (!selectedPayment?.fee_record_id) return;
+    setSaving(true);
+    try {
+      const result = await paymentService.adminUpdateManualAgreedFee(selectedPayment.fee_record_id, {
+        agreed_fee: agreedFeeInput,
+        notes: agreedFeeNotes,
+        next_due_date: agreedFeeDueDate || null,
+      });
+      setSelectedPayment(result.payment);
+      setEditingAgreedFee(false);
+      toast.success('Total agreed fee updated successfully. Remaining balance recalculated.');
+      await load(true);
+    } catch (error) {
+      toast.error(error?.message || 'Unable to update agreed fee');
+    } finally {
+      setSaving(false);
     }
   };
 
@@ -441,8 +473,9 @@ export default function AdminPayments() {
             </div>
             {duplicateEnrollment && <p className="rounded-xl bg-amber-50 p-3 text-xs font-semibold text-amber-800 dark:bg-amber-950/40 dark:text-amber-300">This student and course already have a manual fee record. Use Manage Payment to add an installment.</p>}
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Total agreed fee (₹)">
-                <input required type="number" min="0.01" step="0.01" value={manualForm.total_fee} onChange={(event) => updateManualField('total_fee', event.target.value)} className={inputClass} placeholder="e.g. 10000" />
+              <Field label="Total agreed fee (₹) — Agreed Amount">
+                <input required type="number" min="0.01" step="0.01" value={manualForm.total_fee} onChange={(event) => updateManualField('total_fee', event.target.value)} className={inputClass} placeholder="Enter agreed amount with student" />
+                <p className="mt-1 text-[10px] text-slate-500">* Change from MRP to the agreed amount if negotiated or discounted with the student.</p>
               </Field>
               <Field label="Amount received now (₹)">
                 <input required type="number" min="0" step="0.01" max={manualForm.total_fee || undefined} value={manualForm.amount_received} onChange={(event) => updateManualField('amount_received', event.target.value)} className={inputClass} placeholder="0 if no installment received" />
@@ -503,12 +536,100 @@ export default function AdminPayments() {
             <div className="grid gap-3 rounded-2xl bg-slate-50 p-4 dark:bg-slate-900 sm:grid-cols-2">
               <div><p className="text-[10px] font-bold uppercase text-slate-400">Student / Course</p><p className="mt-1 text-sm font-extrabold text-slate-900 dark:text-white">{selectedPayment.user_name} · {selectedPayment.series_title}</p></div>
               <div><p className="text-[10px] font-bold uppercase text-slate-400">Payment Source</p><div className="mt-1"><SourceBadge source={selectedPayment.source} /></div></div>
-              <ComputedAmount label="Total fee" paise={selectedPayment.total_fee_paise} />
+              <div className="flex items-start justify-between">
+                <ComputedAmount label="Total fee (Agreed Amount)" paise={selectedPayment.total_fee_paise} />
+                {selectedPayment.fee_record_id && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEditingAgreedFee(!editingAgreedFee);
+                      if (!editingAgreedFee) {
+                        setAgreedFeeInput((Number(selectedPayment.total_fee_paise || 0) / 100).toString());
+                        setAgreedFeeNotes(selectedPayment.fee_notes || '');
+                        setAgreedFeeDueDate(selectedPayment.next_due_date ? String(selectedPayment.next_due_date).slice(0, 10) : '');
+                      }
+                    }}
+                    className="mt-1 inline-flex items-center gap-1 rounded-lg border border-blue-200 bg-white px-2 py-1 text-[10px] font-extrabold text-blue-700 shadow-xs hover:bg-blue-50 dark:border-blue-800 dark:bg-slate-800 dark:text-blue-300 dark:hover:bg-blue-950/40"
+                  >
+                    <Pencil className="h-2.5 w-2.5" />
+                    {editingAgreedFee ? 'Cancel' : 'Edit Agreed Fee'}
+                  </button>
+                )}
+              </div>
               <ComputedAmount label="Total paid" paise={selectedPayment.total_paid_paise} />
               <ComputedAmount label="Remaining fee" paise={selectedPayment.remaining_fee_paise} />
               <div><p className="text-[10px] font-bold uppercase text-slate-400">Payment status</p><div className="mt-1"><PaymentStatus status={selectedPayment.status} /></div></div>
               {selectedPayment.next_due_date && <div><p className="text-[10px] font-bold uppercase text-slate-400">Next due date</p><p className="mt-1 text-xs font-semibold text-slate-700 dark:text-slate-200">{formatDateTime(selectedPayment.next_due_date)}</p></div>}
             </div>
+
+            {editingAgreedFee && (
+              <form onSubmit={submitAgreedFeeUpdate} className="space-y-3 rounded-2xl border border-blue-200 bg-blue-50/50 p-4 dark:border-blue-900/60 dark:bg-blue-950/20">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-xs font-extrabold text-blue-900 dark:text-blue-200">
+                    Update Total Agreed Fee
+                  </h4>
+                  <button type="button" onClick={() => setEditingAgreedFee(false)} className="text-slate-400 hover:text-slate-600">
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-600 dark:text-slate-400">
+                  Update the negotiated fee agreed upon with the student. The remaining balance will immediately recalculate as <strong>(Agreed Fee − Total Paid)</strong>.
+                </p>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <Field label="Total Agreed Fee (₹)">
+                    <input
+                      type="number"
+                      step="0.01"
+                      min={Number(selectedPayment.total_paid_paise || 0) / 100}
+                      required
+                      value={agreedFeeInput}
+                      onChange={(e) => setAgreedFeeInput(e.target.value)}
+                      className={inputClass}
+                      placeholder="e.g. 5000"
+                    />
+                  </Field>
+                  <Field label="Next Payment Due Date (optional)">
+                    <input
+                      type="date"
+                      value={agreedFeeDueDate}
+                      onChange={(e) => setAgreedFeeDueDate(e.target.value)}
+                      className={inputClass}
+                    />
+                  </Field>
+                </div>
+                <Field label="Fee Notes / Agreement Reason (optional)">
+                  <input
+                    type="text"
+                    maxLength={2000}
+                    value={agreedFeeNotes}
+                    onChange={(e) => setAgreedFeeNotes(e.target.value)}
+                    placeholder="e.g. Discounted agreed fee per director approval"
+                    className={inputClass}
+                  />
+                </Field>
+                <div className="flex items-center justify-between pt-1">
+                  <span className="text-[11px] font-semibold text-slate-600 dark:text-slate-400">
+                    New Remaining Balance: <strong>₹{Math.max((Number(agreedFeeInput || 0) - Number(selectedPayment.total_paid_paise || 0) / 100), 0).toLocaleString('en-IN')}</strong>
+                  </span>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditingAgreedFee(false)}
+                      className="rounded-xl border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-300"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={saving}
+                      className="rounded-xl bg-blue-600 px-4 py-1.5 text-xs font-extrabold text-white hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      {saving ? 'Updating…' : 'Save Agreed Fee'}
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
 
             <section className="space-y-2">
               <h3 className="text-xs font-extrabold text-slate-800 dark:text-slate-100">Payment history and audit trail</h3>

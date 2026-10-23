@@ -230,3 +230,41 @@ export function EdvedumMiniFaq() {
     </div>
   );
 }
+
+export function EdvedumInstitutionalBanner() {
+  return (
+    <section className="relative overflow-hidden bg-gradient-to-r from-[#071126] via-[#0B1E38] to-[#040C1A] text-white py-14 px-4 sm:px-6 lg:px-8 border-y border-blue-500/20">
+      <div className="max-w-[1280px] mx-auto flex flex-col lg:flex-row items-center justify-between gap-8">
+        <div className="space-y-3 max-w-2xl text-center lg:text-left">
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-blue-500/10 px-3 py-1">
+            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+            <span className="text-[11px] font-extrabold tracking-wider text-cyan-300 uppercase">
+              For Schools & Coaching Institutes
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight">
+            Run NTA-Pattern Online CBT Exams for Your Students
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Eliminate traditional pen-and-paper friction. Equip your institute with an authentic NEET/JEE computer-based testing platform, automated instant grading, marketing support, and extra revenue generation.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row items-center gap-3 shrink-0">
+          <Link
+            to="/for-institutions"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-7 py-3.5 text-xs sm:text-sm font-extrabold text-slate-950 shadow-lg hover:scale-105 transition"
+          >
+            <span>Explore Institution Platform</span>
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            to="/for-institutions#partnership-form"
+            className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3.5 text-xs sm:text-sm font-extrabold text-slate-200 backdrop-blur-xl hover:border-slate-500 hover:text-white transition"
+          >
+            <span>Request Institute Demo</span>
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}

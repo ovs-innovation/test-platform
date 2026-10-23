@@ -249,6 +249,12 @@ export default function AdmissionForm() {
 
   const [errors, setErrors] = useState({});
   const [photoPreview, setPhotoPreview] = useState(formData.studentPhoto || '');
+  const [duplicateModal, setDuplicateModal] = useState({
+    open: false,
+    appNo: '',
+    message: '',
+    studentName: ''
+  });
 
   // Pre-fill query parameters and user context if available
   useEffect(() => {
@@ -468,12 +474,20 @@ export default function AdmissionForm() {
       } catch (e) {}
       navigate(`/admission/confirmation?appNo=${encodeURIComponent(submittedApplicationNo)}`);
     } catch (err) {
-      console.warn('Backend submission warning:', err);
-      setSubmissionError(
-        err?.response?.data?.message ||
-        err.message ||
-        'The admission form could not be submitted. Please try again.'
-      );
+      console.warn('Backend submission error:', err);
+      const resData = err?.response?.data;
+      const message = resData?.message || err?.message || 'The admission form could not be submitted. Please try again.';
+      setSubmissionError(message);
+
+      if (err?.response?.status === 409 || resData?.already_submitted) {
+        const existingAppNo = resData?.application_no || resData?.existing_submission?.application_no;
+        setDuplicateModal({
+          open: true,
+          appNo: existingAppNo,
+          studentName: resData?.existing_submission?.student_name || formData.fullName,
+          message: message
+        });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -932,6 +946,58 @@ export default function AdmissionForm() {
           </div>
         </form>
       </div>
+
+      {/* Duplicate Submission Modal */}
+      {duplicateModal.open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-200">
+          <div className="w-full max-w-md rounded-3xl bg-white p-6 sm:p-8 shadow-2xl border border-[#DFB76C]/40 text-center space-y-4">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-[#002B49] text-[#DFB76C] shadow-lg shadow-[#002B49]/20">
+              <FileCheck2 className="h-7 w-7" />
+            </div>
+            <div className="space-y-1">
+              <span className="inline-block rounded-full bg-amber-50 px-3 py-1 text-[11px] font-black uppercase tracking-wider text-amber-800 border border-amber-200">
+                Application Already On File
+              </span>
+              <h3 className="text-xl font-black text-[#002B49] tracking-tight">
+                Admission Form Already Submitted
+              </h3>
+            </div>
+            <p className="text-xs text-slate-600 leading-relaxed">
+              {duplicateModal.message}
+            </p>
+            {duplicateModal.appNo && (
+              <div className="rounded-2xl bg-slate-50 border border-slate-200 p-3.5 text-center">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-400">Your Official Application Number</p>
+                <p className="font-mono text-base font-black text-[#002B49] mt-0.5 tracking-wide">
+                  {duplicateModal.appNo}
+                </p>
+              </div>
+            )}
+            <div className="flex flex-col sm:flex-row gap-2.5 pt-2">
+              {duplicateModal.appNo && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    sessionStorage.setItem('edvedum_submitted_application_no', duplicateModal.appNo);
+                    navigate(`/admission/confirmation?appNo=${encodeURIComponent(duplicateModal.appNo)}`);
+                  }}
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#002B49] to-[#083e66] px-5 py-3 text-xs font-bold text-white shadow-md hover:from-[#001f35] hover:to-[#062f4f] transition"
+                >
+                  <span>View / Print Admission Slip</span>
+                  <ArrowRight className="h-4 w-4 text-[#DFB76C]" />
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={() => setDuplicateModal({ open: false, appNo: '', message: '', studentName: '' })}
+                className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs font-bold text-slate-700 hover:bg-slate-50 transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

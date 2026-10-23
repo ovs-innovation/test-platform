@@ -1,4 +1,4 @@
-﻿import './polyfills.js';
+import './polyfills.js';
 import fs from 'fs';
 import path from 'path';
 import os from 'os';
@@ -1459,8 +1459,25 @@ CRITICAL INSTRUCTIONS:
       const isSameSubjectOrGeneral = !existing.subject || !rawQ.subject ||
         existing.subject === rawQ.subject || existing.subject === 'General' || rawQ.subject === 'General';
 
-      // Safe continuation criteria: consecutive pages, matching subject, incomplete previous question
-      if (isConsecutivePage && isSameSubjectOrGeneral && (isExplicitContinuation || (existing.options?.length < 4 && rawQ.options?.length > 0) || exText.length < 30 || curText.length < 30)) {
+      const existingHasOptions = Array.isArray(existing.options) && existing.options.length >= 2;
+      const curHasOptions = Array.isArray(rawQ.options) && rawQ.options.length >= 2;
+
+      // Check text similarity (exact match, substring, or identical initial 30 chars normalized)
+      const cleanEx = exText.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const cleanCur = curText.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const isSameOrSimilarStem = cleanEx === cleanCur ||
+        (cleanEx.length > 15 && cleanCur.length > 15 && (cleanEx.includes(cleanCur) || cleanCur.includes(cleanEx))) ||
+        (cleanEx.slice(0, 35) === cleanCur.slice(0, 35) && cleanEx.length > 15);
+
+      // If stems are same/similar or one is a solution-page repetition without options, merge instead of duplicating
+      if (isSameOrSimilarStem || (existingHasOptions && !curHasOptions && isSameSubjectOrGeneral) || (!existingHasOptions && curHasOptions && isSameSubjectOrGeneral)) {
+        console.log(`[geminiVisionExtractor] Merging verified matching/solution fragment for Q${qNum} across Page ${exPage} and Page ${curPage}.`);
+        if (!existingHasOptions && curHasOptions) {
+          verifiedMergedQuestions[existingIndex] = mergeQuestionFragments(rawQ, existing);
+        } else {
+          verifiedMergedQuestions[existingIndex] = mergeQuestionFragments(existing, rawQ);
+        }
+      } else if (isConsecutivePage && isSameSubjectOrGeneral && (isExplicitContinuation || (existing.options?.length < 4 && rawQ.options?.length > 0) || exText.length < 30 || curText.length < 30)) {
         console.log(`[geminiVisionExtractor] Merging verified continuation for Q${qNum} across Page ${exPage} and Page ${curPage}.`);
         verifiedMergedQuestions[existingIndex] = mergeQuestionFragments(existing, rawQ);
       } else {
@@ -1672,12 +1689,12 @@ CRITICAL INSTRUCTIONS:
     }
   }
 
-  // Handle standalone Answer Key / Solution / Topic Grid PDF
+  // Handle standalone Answer Key / Solution / Topic Grid PDF (only when no questions exist or explicitly flagged as solution PDF)
   const isDocumentPrimarilySolutions = Boolean(
     options.isSolutionPdf ||
-    (solutionMap.size > 0 && (rawQuestions.length === 0 || solutionMap.size >= rawQuestions.length * 0.5))
+    (rawQuestions.length === 0 && (solutionMap.size > 0 || answerKeyMap.size > 0 || topicGridMap.size > 0))
   );
-  if (!rawQuestions.length || isDocumentPrimarilySolutions) {
+  if (!rawQuestions.length || options.isSolutionPdf) {
     if (answerKeyMap.size > 0 || solutionMap.size > 0 || topicGridMap.size > 0) {
       console.log(`[geminiVisionExtractor] Standalone Answer Key/Solution/Topic Grid PDF: ${answerKeyMap.size} answer key(s), ${solutionMap.size} solution(s).`);
       return {

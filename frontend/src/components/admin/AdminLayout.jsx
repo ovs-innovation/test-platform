@@ -167,11 +167,11 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#F8FAFC] text-slate-900 transition-colors duration-200 dark:bg-[#080D1A] dark:text-slate-100">
+    <div className="flex min-h-screen w-full max-w-full overflow-x-hidden bg-[#F8FAFC] text-slate-900 transition-colors duration-200 dark:bg-[#080D1A] dark:text-slate-100 print:min-h-0 print:bg-white print:overflow-visible">
       {/* DESKTOP COMMAND NAVIGATION RAIL */}
       <aside
         className={`fixed top-0 left-0 bottom-0 z-40 hidden shrink-0 flex-col p-3 transition-all duration-300 ease-in-out lg:flex ${collapsed ? 'w-20' : 'w-[260px]'
-          }`}
+          } print:hidden`}
       >
         <div className="relative flex h-full flex-col rounded-2xl border border-slate-200/90 bg-white shadow-xs transition-all duration-300 dark:border-slate-800 dark:bg-[#0F172A]">
           {/* Minimal Compact Circular Collapse Toggle (24px, Thin Bright Blue Border) */}
@@ -283,7 +283,7 @@ export default function AdminLayout({ children }) {
 
       {/* MOBILE NAVIGATION DRAWER */}
       {mobileDrawerOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 lg:hidden print:hidden">
           <div className="absolute inset-0 bg-slate-950/70 backdrop-blur-md" onClick={() => setMobileDrawerOpen(false)} />
           <aside className="absolute left-3 top-3 bottom-3 w-72 rounded-2xl border border-slate-200 bg-white p-4 shadow-2xl overflow-y-auto flex flex-col justify-between dark:border-slate-800 dark:bg-[#0F172A]">
             <div>
@@ -364,9 +364,9 @@ export default function AdminLayout({ children }) {
 
       {/* MAIN ADMIN WORKSPACE AREA */}
       <div className={`flex flex-1 flex-col min-w-0 w-full max-w-full overflow-x-hidden transition-all duration-300 ${collapsed ? 'lg:pl-20' : 'lg:pl-[260px]'
-        }`}>
+        } print:pl-0 print:m-0 print:w-full print:overflow-visible`}>
         {/* FLOATING ROUNDED NAVBAR CONTAINER */}
-        <div className="pt-3 px-3 sm:px-4 lg:px-4">
+        <div className="pt-3 px-3 sm:px-4 lg:px-4 print:hidden">
           <header className="sticky top-3 z-30 flex h-14 items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 sm:px-6 shadow-xs dark:border-slate-800 dark:bg-[#0F172A]">
             {/* Mobile Drawer Trigger & Breadcrumb / Mobile Logo */}
             <div className="flex items-center gap-2 min-w-0 shrink-0">
@@ -521,7 +521,7 @@ export default function AdminLayout({ children }) {
         </div>
 
         {/* PAGE CONTENT CONTAINER */}
-        <main className="flex-1 p-3 sm:p-4 lg:p-4 w-full max-w-full">
+        <main className="flex-1 p-3 sm:p-4 lg:p-4 w-full max-w-full print:p-0 print:m-0 print:w-full print:overflow-visible">
           {children || <Outlet />}
         </main>
       </div>

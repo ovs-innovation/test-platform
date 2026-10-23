@@ -188,7 +188,7 @@ export const getPublicAdmissionFormConfig = asyncHandler(async (req, res) => {
 });
 
 /**
- * Public: Submit admission form application
+ * Public: Submit admission form application (restricted to 1 submission per student)
  */
 export const submitPublicAdmission = asyncHandler(async (req, res) => {
   const {
@@ -203,7 +203,6 @@ export const submitPublicAdmission = asyncHandler(async (req, res) => {
     documents = []
   } = req.body;
 
-  const appNo = applicationNo || `EDV-2026-${Math.floor(10000 + Math.random() * 90000)}`;
   const sName = studentName || formData.fullName || 'Student Applicant';
   const fName = fatherName || formData.parentName || '';
   const phone = contactNumber || formData.studentMobile || formData.parentMobile || '';
@@ -260,6 +259,8 @@ export const submitPublicAdmission = asyncHandler(async (req, res) => {
     throw ApiError.badRequest('Enter a student mobile number or email to submit this admission form.');
   }
 
+  const appNo = applicationNo || `EDV-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+
   let result;
   try {
     result = await query(
@@ -313,7 +314,7 @@ export const submitPublicAdmission = asyncHandler(async (req, res) => {
   res.status(201).json({
     success: true,
     message: 'Admission form submitted successfully',
-    submission: result.rows[0]
+    submission: result.rows[0],
   });
 });
 

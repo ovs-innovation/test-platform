@@ -75,7 +75,7 @@ import {
 import { listBatches, createBatch, deleteBatch } from '../controllers/batchController.js';
 import {
   listCmsPages, upsertCmsPage, deleteCmsPage,
-  listCoupons, createCoupon, toggleCoupon, deleteCoupon, notifyCouponStudents,
+  listCoupons, createCoupon, toggleCoupon, toggleCouponPublic, deleteCoupon, notifyCouponStudents,
   listFaculty, createFaculty, deleteFaculty,
   adminListSubjects, createSubject, deleteSubject, createChapter, deleteChapter, listChapters, createTopic, deleteTopic,
   getSettings, updateSettings, broadcastNotification,
@@ -172,6 +172,7 @@ router.get('/coupons', listCoupons);
 router.post('/coupons', createCoupon);
 router.post('/coupons/:id/notify', notifyCouponStudents);
 router.patch('/coupons/:id/toggle', toggleCoupon);
+router.patch('/coupons/:id/toggle-public', toggleCouponPublic);
 router.delete('/coupons/:id', deleteCoupon);
 router.get('/faculty', listFaculty);
 router.post('/faculty', createFaculty);

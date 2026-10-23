@@ -9,7 +9,11 @@ function getGeminiClient() {
 }
 
 function getGeminiModel() {
-  return env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+  const model = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+  if (['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-2.0-flash', 'gemini-2.5-flash'].includes(model)) {
+    return 'gemini-3.8-flash';
+  }
+  return model;
 }
 
 function prepareGeminiContents(systemPrompt, questionText, imageBase64, mimeType = 'image/jpeg') {

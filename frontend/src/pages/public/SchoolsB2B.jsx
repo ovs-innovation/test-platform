@@ -41,7 +41,13 @@ import {
   Activity,
   FileSpreadsheet,
   Eye,
-  EyeOff
+  EyeOff,
+  Coins,
+  Megaphone,
+  Monitor,
+  Laptop,
+  Zap,
+  XCircle
 } from 'lucide-react';
 import { Spinner } from '../../components/ui.jsx';
 import {
@@ -264,6 +270,24 @@ export default function SchoolsB2B() {
 
   const scrollToPrograms = () => {
     const element = document.getElementById('aiets-programs');
+    if (element) {
+      const yOffset = -70;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToCbtPlatform = () => {
+    const element = document.getElementById('cbt-platform');
+    if (element) {
+      const yOffset = -70;
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  const scrollToRevenueMarketing = () => {
+    const element = document.getElementById('institutional-revenue-marketing');
     if (element) {
       const yOffset = -70;
       const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
@@ -564,56 +588,60 @@ export default function SchoolsB2B() {
               <div className="inline-flex items-center gap-2 rounded-full border border-cyan-400/30 bg-blue-500/10 px-3.5 py-1 backdrop-blur-xl">
                 <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
                 <span className="text-[11px] font-extrabold tracking-wider text-cyan-300 uppercase">
-                  B2B & Institutional Partnerships
+                  Institutional CBT & Assessment Platform
                 </span>
               </div>
 
               {/* Main Headline & Subheading */}
-              <div className="space-y-1.5">
+              <div className="space-y-2">
                 <h1 className="text-3xl sm:text-4xl lg:text-[44px] font-extrabold text-white tracking-tight leading-[1.12]">
-                  Power Your Institution’s Results with AIETS
+                  Institutional CBT Platform & Academic Growth Engine
                 </h1>
-                <p className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
-                  NEET / JEE-Pattern CBT Test Series
+                <p className="text-base sm:text-lg lg:text-xl font-bold bg-gradient-to-r from-cyan-300 via-blue-300 to-purple-300 bg-clip-text text-transparent">
+                  Conduct Real NEET/JEE Online CBTs • Unlock Additional Revenue • Automate Grading
                 </p>
               </div>
 
               {/* Short Description */}
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl font-normal">
-                Bring national-level testing, detailed performance analytics, student rankings and institutional reporting to your school, coaching institute or college.
+                Equip your coaching institute, school, or college with an authentic NTA-standard online Computer Based Test (CBT) platform. Replace traditional pen-and-paper friction, provide students with a real exam-day simulation, boost admissions, and generate high-margin institutional revenue.
               </p>
 
-              {/* SIMPLIFIED HERO CTAs */}
+              {/* HERO CTAs */}
               <div className="pt-0.5 flex flex-wrap items-center gap-3">
                 <button
                   onClick={() => scrollToEnquiryForm()}
                   className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#2563eb] to-[#1d4ed8] px-7 py-3 text-xs sm:text-sm font-extrabold text-white shadow-[0_6px_16px_rgba(37,99,235,0.16)] hover:-translate-y-[1px] hover:shadow-[0_8px_20px_rgba(37,99,235,0.20)] active:translate-y-0 transition-all duration-200 cursor-pointer"
                 >
                   <Send className="h-4 w-4" />
-                  <span>Request an Enquiry</span>
+                  <span>Request an Institutional Demo</span>
                 </button>
                 <button
-                  onClick={() => scrollToPrograms()}
-                  className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-200 backdrop-blur-xl hover:border-slate-500 hover:text-white transition cursor-pointer"
+                  onClick={() => scrollToCbtPlatform()}
+                  className="inline-flex items-center justify-center gap-2 rounded-full border border-slate-700 bg-slate-900/80 px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-200 backdrop-blur-xl hover:border-cyan-400 hover:text-white transition cursor-pointer"
                 >
-                  <BookOpen className="h-4 w-4 text-cyan-400" />
-                  <span>Explore AIETS Programs</span>
+                  <Monitor className="h-4 w-4 text-cyan-400" />
+                  <span>Explore CBT Platform & Benefits</span>
                 </button>
               </div>
 
-              {/* 3 Short Trust Indicators */}
-              <div className="pt-3 flex flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-bold text-slate-300 border-t border-slate-800/90">
+              {/* 4 Trust Indicators */}
+              <div className="pt-3 grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2.5 sm:gap-4 text-[11px] sm:text-xs font-bold text-slate-300 border-t border-slate-800/90">
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                  <span>National-Level Assessments</span>
+                  <span>NTA CBT Simulation</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Coins className="h-4 w-4 text-amber-400 shrink-0" />
+                  <span>Extra Revenue Generation</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <Megaphone className="h-4 w-4 text-cyan-400 shrink-0" />
+                  <span>Marketing & Admission Support</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                  <span>Bulk Student Onboarding</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                  <span>Dedicated Support</span>
+                  <span>Instant Automated Grading</span>
                 </div>
               </div>
             </div>
@@ -785,79 +813,405 @@ export default function SchoolsB2B() {
       </div>
 
 
-      {/* SECTION 3: WHAT IS AIETS? (WHITE WITH SUBTLE RADIAL GLOW) */}
-      <section id="what-is-aiets" className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
-        <div className="absolute -inset-10 rounded-full bg-cyan-400/5 blur-3xl pointer-events-none" />
-        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-10 items-center">
+      {/* SECTION 3: THE CBT PLATFORM (ONLINE CBT VS TRADITIONAL PEN & PAPER) */}
+      <section id="cbt-platform" className="relative overflow-hidden bg-white py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1] scroll-mt-20">
+        <div className="absolute -inset-10 rounded-full bg-blue-500/5 blur-3xl pointer-events-none" />
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
 
-            {/* Left Col */}
-            <div className="lg:col-span-7 space-y-6">
-              <div className="space-y-2">
-                <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Edvedum Assessment Engine</span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-                  What is AIETS?
-                </h2>
-                <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full" />
-              </div>
-
-              <div className="p-4.5 rounded-2xl bg-[#F4F8FF] border border-[#D0E2FF]">
-                <p className="text-base font-black text-[#2563EB]">
-                  AIETS — All India Edvedum Test Series
-                </p>
-              </div>
-
-              <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
-                AIETS is Edvedum’s national-level testing program designed to provide structured assessments, realistic NEET / JEE-pattern CBT practice, All India ranking, granular performance analytics, detailed step-by-step solution PDFs, and personalized improvement insights for NEET aspirants.
-              </p>
-
-              <div className="grid sm:grid-cols-2 gap-4 pt-1">
-                <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
-                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Authentic NEET / JEE CBT Interface</h4>
-                  <p className="text-xs text-[#5D6B82]">Exact timer, question palette, section navigation, and proctoring controls.</p>
-                </div>
-                <div className="p-4 rounded-2xl border border-[#DCE5F1] bg-[#F8FAFC] space-y-1 shadow-xs hover:-translate-y-1 transition duration-300">
-                  <h4 className="text-xs font-extrabold text-[#071833] uppercase">Peer Benchmarking</h4>
-                  <p className="text-xs text-[#5D6B82]">Benchmark performance across eligible AIETS participants nationwide.</p>
-                </div>
-              </div>
+          {/* Section Header */}
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3.5 py-1">
+              <Monitor className="h-3.5 w-3.5 text-[#2563EB]" />
+              <span className="text-[11px] font-extrabold tracking-wider text-[#2563EB] uppercase">
+                Examination Evolution
+              </span>
             </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
+              Why Switch from Pen-and-Paper to Edvedum Online CBT?
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
+            <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
+              National competitive examinations like NEET and JEE have completely evolved into digital environments. Preparing students on traditional paper sheets causes exam-day screen panic, grading backlogs, and zero timing analytics.
+            </p>
+          </div>
 
-            {/* Right Col: Highlights Panel */}
-            <div className="lg:col-span-5 relative">
-              <div className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-blue-100 via-cyan-100 to-indigo-100 blur-xl opacity-70 pointer-events-none" />
-              <div className="relative rounded-3xl border border-[#D0E2FF] bg-white p-7 sm:p-8 space-y-5 shadow-md">
-                <h3 className="text-lg font-black text-[#071833] border-b border-[#DCE5F1] pb-3">
-                  Key Highlights of AIETS
-                </h3>
+          {/* Direct Side-by-Side Comparison Grid */}
+          <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
 
-                <ul className="space-y-4 text-xs text-[#475467]">
+            {/* Offline Pen-and-Paper Limitations */}
+            <div className="rounded-3xl border border-rose-200/80 bg-rose-50/30 p-6 sm:p-8 space-y-5 shadow-xs flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-rose-200/60 pb-4">
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-rose-600">
+                      Traditional Assessment
+                    </span>
+                    <h3 className="text-xl font-extrabold text-[#071833]">
+                      Pen-and-Paper / Offline Tests
+                    </h3>
+                  </div>
+                  <span className="h-10 w-10 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                    <XCircle className="h-5 w-5" />
+                  </span>
+                </div>
+
+                <ul className="space-y-3.5 text-xs sm:text-sm text-[#475467]">
                   <li className="flex items-start gap-3">
-                    <div className="p-1.5 rounded-xl bg-blue-50 text-[#2563EB] border border-blue-100 mt-0.5 shrink-0">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <span><strong className="text-[#101828]">NEET / JEE Practice Interface:</strong> Authentic exam environment builds student confidence.</span>
+                    <XCircle className="h-4 w-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-800">High Recurring Printing Costs:</strong> Continuous heavy expenditure on physical question paper printing, OMR sheets, logistics, and document shredding.</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="p-1.5 rounded-xl bg-cyan-50 text-cyan-600 border border-cyan-100 mt-0.5 shrink-0">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <span><strong className="text-[#101828]">Structured Test Schedule:</strong> Unit tests, cumulative reviews, and full-syllabus mocks.</span>
+                    <XCircle className="h-4 w-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-800">Days of Manual Evaluation:</strong> Faculty wastes 20+ hours manually checking sheets; scorecards take days or weeks, delaying remedial coaching.</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="p-1.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-100 mt-0.5 shrink-0">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <span><strong className="text-[#101828]">Granular Performance Analytics:</strong> Speed, accuracy, and topic-level weakness analysis.</span>
+                    <XCircle className="h-4 w-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-800">Severe Exam-Day Screen Shock:</strong> Students freeze during actual NTA examinations due to lack of prior mouse-click, split-pane timer, and screen navigation habits.</span>
                   </li>
                   <li className="flex items-start gap-3">
-                    <div className="p-1.5 rounded-xl bg-purple-50 text-purple-600 border border-purple-100 mt-0.5 shrink-0">
-                      <Check className="h-4 w-4" />
-                    </div>
-                    <span><strong className="text-[#101828]">Curated eBooks & Solutions:</strong> Complete NCERT-aligned study modules and explanation PDFs.</span>
+                    <XCircle className="h-4 w-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-800">No Question-Level Timing Diagnostics:</strong> Static marksheets only reveal total marks—never whether students rushed guesses or ran out of time on physics numericals.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <XCircle className="h-4 w-4 text-rose-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-800">Bubbling & OMR Handling Errors:</strong> Inadvertent double bubbles, stray pencil marks, and scanning misreads unfairly penalize hard-working students.</span>
                   </li>
                 </ul>
               </div>
+
+              <div className="pt-3 border-t border-rose-200/60">
+                <span className="text-xs font-semibold text-rose-700 block">
+                  Outcome: High operational overhead, stressed faculty, and students unprepared for actual NTA computer centres.
+                </span>
+              </div>
+            </div>
+
+            {/* Edvedum Online CBT Advantage */}
+            <div className="rounded-3xl border-2 border-[#2563EB]/40 bg-gradient-to-b from-[#F4F8FF] to-white p-6 sm:p-8 space-y-5 shadow-lg relative flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-blue-200/60 pb-4">
+                  <div className="space-y-1">
+                    <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#2563EB]">
+                      Edvedum Digital Assessment
+                    </span>
+                    <h3 className="text-xl font-extrabold text-[#071833]">
+                      Edvedum NTA-Pattern Online CBT
+                    </h3>
+                  </div>
+                  <span className="h-10 w-10 rounded-2xl bg-blue-100 text-[#2563EB] flex items-center justify-center shrink-0">
+                    <CheckCircle2 className="h-5 w-5" />
+                  </span>
+                </div>
+
+                <ul className="space-y-3.5 text-xs sm:text-sm text-[#475467]">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-900">Exact NTA Exam Simulation:</strong> 100% authentic question palette, section navigation, countdown timer, mark-for-review tags, and clear-response controls.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-900">Instant Automated Scoring & Solutions:</strong> Zero faculty grading workload. Instant AI-generated scorecards, answer keys, and step-by-step solution PDFs upon submission.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-900">Zero Exam-Day Anxiety:</strong> Weekly computer-based practice develops muscle memory, calm pacing, and effortless comfort with digital testing centres.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-900">Granular Time & Topic Analytics:</strong> Accurately measures time-per-question, speed vs accuracy, unattempted patterns, and negative mark leaks.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 mt-0.5 shrink-0" />
+                    <span><strong className="text-slate-900">100% Error-Free Evaluation:</strong> Flawless numerical and integer-type evaluation with instant All India, batch, and institute leaderboards.</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-3 border-t border-blue-200/60">
+                <span className="text-xs font-bold text-[#2563EB] block">
+                  Outcome: 90% faculty time saved, zero printing costs, and students ready to crack high percentiles on actual exam day.
+                </span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* How Institutes Conduct CBT in 3 Steps */}
+          <div className="rounded-3xl border border-[#DCE5F1] bg-[#F8FAFC] p-6 sm:p-8 space-y-6">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#DCE5F1] pb-4">
+              <div>
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#2563EB]">
+                  Operational Simplicity
+                </span>
+                <h3 className="text-lg sm:text-xl font-extrabold text-[#071833]">
+                  How Your Institute Conducts CBT Exams in 3 Simple Steps
+                </h3>
+              </div>
+              <button
+                onClick={() => scrollToEnquiryForm()}
+                className="inline-flex items-center gap-1.5 text-xs font-extrabold text-[#2563EB] hover:text-blue-700 hover:underline cursor-pointer"
+              >
+                <span>Book a Guided Walkthrough</span>
+                <ArrowRight className="h-3.5 w-3.5" />
+              </button>
+            </div>
+
+            <div className="grid sm:grid-cols-3 gap-6">
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="h-8 w-8 rounded-xl bg-blue-100 text-[#2563EB] font-mono font-black text-xs flex items-center justify-center">
+                    01
+                  </span>
+                  <h4 className="text-sm font-extrabold text-[#071833]">Setup & Schedule</h4>
+                </div>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Select from pre-loaded NEET/JEE question papers or upload custom tests. Set test date, active time window, and target batch with 1 click.
+                </p>
+              </div>
+
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="h-8 w-8 rounded-xl bg-cyan-100 text-cyan-700 font-mono font-black text-xs flex items-center justify-center">
+                    02
+                  </span>
+                  <h4 className="text-sm font-extrabold text-[#071833]">Student Exam Attempt</h4>
+                </div>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Students log in from school computer labs, classroom laptops, or home tablets. Complete full-screen lockdown and proctoring keeps tests honest.
+                </p>
+              </div>
+
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-3">
+                  <span className="h-8 w-8 rounded-xl bg-emerald-100 text-emerald-700 font-mono font-black text-xs flex items-center justify-center">
+                    03
+                  </span>
+                  <h4 className="text-sm font-extrabold text-[#071833]">Instant Reports & Ranks</h4>
+                </div>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  The moment students hit submit, the system compiles institute leaderboards, batch averages, and parent-ready performance PDFs automatically.
+                </p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* SECTION 4: ADDITIONAL REVENUE GENERATION & MARKETING SUPPORT */}
+      <section id="institutional-revenue-marketing" className="bg-[#F4F7FC] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1] scroll-mt-20">
+        <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+          {/* Section Header */}
+          <div className="text-center space-y-3 max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 rounded-full border border-amber-300 bg-amber-50 px-3.5 py-1">
+              <Coins className="h-3.5 w-3.5 text-amber-600" />
+              <span className="text-[11px] font-extrabold tracking-wider text-amber-700 uppercase">
+                Institutional Growth & Monetization
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight leading-tight">
+              Unlock Additional Revenue & Accelerate Admissions
+            </h2>
+            <div className="h-1 w-16 bg-gradient-to-r from-amber-500 to-[#2563eb] rounded-full mx-auto" />
+            <p className="text-sm sm:text-base text-[#475467] leading-relaxed">
+              Edvedum isn’t just an assessment tool—it is a turnkey growth engine designed to generate high-margin revenue and dramatically boost student admissions for coaching institutes and schools.
+            </p>
+          </div>
+
+          {/* 4 Revenue & Marketing Pillars Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            {/* Pillar 1: Test Series Add-On Revenue */}
+            <div className="rounded-3xl border border-[#DCE5F1] bg-white p-6 space-y-4 hover:-translate-y-1 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="h-12 w-12 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center border border-amber-100">
+                  <Coins className="h-6 w-6" />
+                </div>
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-amber-100/70 text-amber-800 text-[10px] font-extrabold uppercase tracking-wider">
+                  Revenue Stream
+                </span>
+                <h3 className="text-base font-extrabold text-[#071833]">
+                  Premium Test-Series Fee Revenue
+                </h3>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Offer our NTA-standard online CBT series as an exclusive test-series add-on (₹3,000–₹8,000 per student) or bundle it into premium tuition packages.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-amber-700 flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5" />
+                <span>Keep 100% of your retail margin</span>
+              </div>
+            </div>
+
+            {/* Pillar 2: Distance Learning & Remote Expansion */}
+            <div className="rounded-3xl border border-[#DCE5F1] bg-white p-6 space-y-4 hover:-translate-y-1 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="h-12 w-12 rounded-2xl bg-blue-50 text-[#2563EB] flex items-center justify-center border border-blue-100">
+                  <Users className="h-6 w-6" />
+                </div>
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-blue-100/70 text-[#2563EB] text-[10px] font-extrabold uppercase tracking-wider">
+                  Scale Enrollment
+                </span>
+                <h3 className="text-base font-extrabold text-[#071833]">
+                  Expand Beyond Your Local City
+                </h3>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Enroll distance learners, droppers, and students across neighboring districts under your digital test series without adding classroom desks.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-[#2563EB] flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5" />
+                <span>Unlimited geographical reach</span>
+              </div>
+            </div>
+
+            {/* Pillar 3: Co-Branded Marketing Collateral */}
+            <div className="rounded-3xl border border-[#DCE5F1] bg-white p-6 space-y-4 hover:-translate-y-1 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="h-12 w-12 rounded-2xl bg-cyan-50 text-cyan-600 flex items-center justify-center border border-cyan-100">
+                  <Megaphone className="h-6 w-6" />
+                </div>
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-cyan-100/70 text-cyan-800 text-[10px] font-extrabold uppercase tracking-wider">
+                  Marketing Kit
+                </span>
+                <h3 className="text-base font-extrabold text-[#071833]">
+                  Co-Branded Marketing Collateral
+                </h3>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Receive ready-to-use digital banners, social media creatives, flyers, and admission brochures co-branded with your institute's name and logo.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-cyan-700 flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5" />
+                <span>Professional admission campaigns</span>
+              </div>
+            </div>
+
+            {/* Pillar 4: Verified Rank & Result Marketing */}
+            <div className="rounded-3xl border border-[#DCE5F1] bg-white p-6 space-y-4 hover:-translate-y-1 transition-all duration-300 shadow-xs hover:shadow-md flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="h-12 w-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-100">
+                  <Award className="h-6 w-6" />
+                </div>
+                <span className="inline-block px-2.5 py-0.5 rounded-full bg-emerald-100/70 text-emerald-800 text-[10px] font-extrabold uppercase tracking-wider">
+                  Admissions Proof
+                </span>
+                <h3 className="text-base font-extrabold text-[#071833]">
+                  Verified Rank & Result Marketing
+                </h3>
+                <p className="text-xs text-[#5D6B82] leading-relaxed">
+                  Market top student achievements with official All India percentile scorecards and city rank lists. Proven data builds parent trust for admissions.
+                </p>
+              </div>
+              <div className="pt-3 border-t border-slate-100 text-[11px] font-bold text-emerald-700 flex items-center gap-1.5">
+                <Check className="h-3.5 w-3.5" />
+                <span>Build parent credibility & trust</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Revenue Calculator Banner Strip */}
+          <div className="rounded-3xl bg-gradient-to-r from-[#0B1E38] via-[#102B52] to-[#08172E] p-6 sm:p-8 text-white flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl border border-blue-500/20">
+            <div className="space-y-1 text-center sm:text-left">
+              <span className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
+                Instant Profitability Calculation
+              </span>
+              <h3 className="text-xl sm:text-2xl font-black text-white">
+                Calculate Your Institute's Projected Annual Margins
+              </h3>
+              <p className="text-xs text-slate-300 max-w-xl">
+                See how enrolling 100 to 1,000+ students on Edvedum CBT generates healthy recurring institutional revenue.
+              </p>
+            </div>
+            <button
+              onClick={() => {
+                const element = document.getElementById('institutional-pricing');
+                if (element) {
+                  const y = element.getBoundingClientRect().top + window.pageYOffset - 70;
+                  window.scrollTo({ top: y, behavior: 'smooth' });
+                }
+              }}
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 px-6 py-3 text-xs sm:text-sm font-extrabold text-slate-950 shadow-lg hover:scale-105 transition cursor-pointer shrink-0"
+            >
+              <Calculator className="h-4 w-4" />
+              <span>Open Pricing Calculator</span>
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* SECTION 5: WHAT IS AIETS? (CONCISE, FOCUSED SPOTLIGHT CARD) */}
+      <section id="what-is-aiets" className="relative overflow-hidden bg-white py-12 sm:py-16 border-b border-[#DCE5F1] scroll-mt-20">
+        <div className="relative max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-[#D0E2FF] bg-gradient-to-br from-[#F8FAFF] via-white to-[#F0F6FF] p-6 sm:p-8 lg:p-10 shadow-sm space-y-6">
+            
+            <div className="grid lg:grid-cols-12 gap-6 lg:gap-10 items-center">
+              
+              {/* Left Side: Short Summary */}
+              <div className="lg:col-span-8 space-y-3">
+                <div className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-0.5">
+                  <Sparkles className="h-3 w-3 text-[#2563EB]" />
+                  <span className="text-[10.5px] font-extrabold tracking-wider text-[#2563EB] uppercase">
+                    Curriculum Spotlight
+                  </span>
+                </div>
+
+                <div className="space-y-1">
+                  <h2 className="text-2xl sm:text-3xl font-extrabold text-[#071833] tracking-tight">
+                    What is AIETS?
+                  </h2>
+                  <p className="text-sm font-bold text-[#2563EB]">
+                    All India Edvedum Test Series — Pre-Loaded National Testing Curriculum
+                  </p>
+                </div>
+
+                <p className="text-xs sm:text-sm text-[#475467] leading-relaxed">
+                  AIETS is the flagship national-benchmark examination curriculum integrated directly into your Edvedum CBT Platform. Curated by senior faculty and Kota academic experts, it provides your students with authentic national competition benchmarking through structured unit tests, cumulative reviews, and full-syllabus Grand Mocks aligned with the latest NTA NEET/JEE blueprints.
+                </p>
+
+                {/* 4 Fast Facts */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                  <div className="p-3 rounded-xl bg-white border border-[#DCE5F1] space-y-0.5">
+                    <span className="text-sm sm:text-base font-black text-[#071833]">39 CBT Mocks</span>
+                    <p className="text-[10px] text-[#5D6B82] font-semibold">+ 1 Pre-NEET/JEE (1-Yr)</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-[#DCE5F1] space-y-0.5">
+                    <span className="text-sm sm:text-base font-black text-[#071833]">78 CBT Mocks</span>
+                    <p className="text-[10px] text-[#5D6B82] font-semibold">+ 1 Pre-NEET/JEE (2-Yr)</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-[#DCE5F1] space-y-0.5">
+                    <span className="text-sm sm:text-base font-black text-[#071833]">AIR Rankings</span>
+                    <p className="text-[10px] text-[#5D6B82] font-semibold">National Percentiles</p>
+                  </div>
+                  <div className="p-3 rounded-xl bg-white border border-[#DCE5F1] space-y-0.5">
+                    <span className="text-sm sm:text-base font-black text-[#071833]">Step Solutions</span>
+                    <p className="text-[10px] text-[#5D6B82] font-semibold">+ Formula Handbooks</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Side: Quick Action Button */}
+              <div className="lg:col-span-4 flex flex-col justify-center items-start lg:items-end space-y-3 lg:border-l lg:border-slate-200 lg:pl-8">
+                <span className="text-xs font-semibold text-[#5D6B82]">
+                  Explore available institutional packages for 2027 & 2028:
+                </span>
+                <button
+                  onClick={() => scrollToPrograms()}
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-2xl bg-[#2563EB] hover:bg-blue-700 px-6 py-3 text-xs sm:text-sm font-extrabold text-white shadow-md hover:-translate-y-0.5 transition cursor-pointer"
+                >
+                  <BookOpen className="h-4 w-4" />
+                  <span>Compare AIETS Packages</span>
+                </button>
+                <p className="text-[10.5px] text-[#5D6B82] italic">
+                  Complete syllabus calendars and exam dates included.
+                </p>
+              </div>
+
             </div>
 
           </div>
@@ -984,37 +1338,37 @@ export default function SchoolsB2B() {
       </section>
 
 
-      {/* SECTION 5: INSTITUTION ADVANTAGES (GRADIENT FROM #EEF5FF TO #F8FBFF) */}
-      <section className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FBFF] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1]">
+      {/* SECTION 6: INSTITUTION ADVANTAGES (GRADIENT FROM #EEF5FF TO #F8FBFF) */}
+      <section id="institutional-benefits" className="bg-gradient-to-b from-[#EEF5FF] to-[#F8FBFF] py-16 sm:py-20 lg:py-24 border-b border-[#DCE5F1] scroll-mt-20">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-2 max-w-2xl mx-auto">
             <span className="text-xs font-extrabold text-[#2563EB] uppercase tracking-wider">Institutional Advantages</span>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-[#071833] tracking-tight">
-              Why Institutions Should Partner with Edvedum
+              Institutional Benefits & Strategic Advantages
             </h2>
             <div className="h-1 w-16 bg-gradient-to-r from-[#2563eb] to-cyan-400 rounded-full mx-auto" />
             <p className="text-sm text-[#475467] pt-1">
-              Built specifically for Schools, Coaching Institutes, Junior Colleges, and Educational Organizations.
+              Purpose-built to eliminate administrative friction, empower teaching faculty, and elevate your institution's market reputation.
             </p>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
-              { title: 'National-Level Test Series', desc: '39 NEET UG practice CBT assessments curated by senior academic faculty.', icon: Award, color: 'blue', isFuture: false },
-              { title: 'AI-Based Performance Analytics', desc: 'Evaluates student speed, accuracy, question time distribution, and topic mastery.', icon: Sparkles, color: 'cyan', isFuture: false },
-              { title: 'All India Student Ranking', desc: 'Benchmarks scores nationally via AIR, State, City, and Institute rank cards.', icon: TrendingUp, color: 'purple', isFuture: false },
-              { title: 'Subject-Wise & Chapter Reports', desc: 'Granular analytics breakdown across Physics, Chemistry, Botany, and Zoology.', icon: BarChart3, color: 'emerald', isFuture: false },
-              { title: 'Curated eBooks & Study Material', desc: 'Every test includes assigned digital eBooks, formula guides, and solution PDFs.', icon: FileText, color: 'indigo', isFuture: false },
-              { title: 'Institution Performance Dashboard', desc: 'Unified admin portal to monitor attendance, test completion %, and batch progress.', icon: School, color: 'amber', isFuture: false },
-              { title: 'Bulk Student Registration', desc: 'Fast bulk student onboarding via CSV templates with auto credential generation.', icon: Users, color: 'blue', isFuture: false },
-              { title: 'Dedicated Institutional Support', desc: 'Assigned Onboarding Manager, priority technical support, and faculty guidance.', icon: UserCheck, color: 'emerald', isFuture: false },
-              { title: 'Future AI Learning Features', desc: 'Adaptive question recommendations, predictive rank algorithms, and LMS integration.', icon: ShieldCheck, color: 'purple', isFuture: true },
+              { title: 'Zero Infrastructure Overhead', desc: '100% cloud-hosted CBT platform. Works on any browser in your computer lab, laptops, or tablets without costly servers.', icon: Monitor, color: 'blue' },
+              { title: 'Instant Automated Grading', desc: 'Saves faculty 20+ hours per test by eliminating manual paper and OMR checks. Instant scorecards and solutions upon submission.', icon: Zap, color: 'amber' },
+              { title: 'High-Margin Revenue Generation', desc: 'Bundle CBT mocks into course fees or sell as test-series add-ons to unlock high recurring income for your institute.', icon: Coins, color: 'emerald' },
+              { title: 'Co-Branded Marketing Support', desc: 'Receive professional admission flyers, social media creatives, and banners co-branded with your institute logo.', icon: Megaphone, color: 'cyan' },
+              { title: 'All India Student Ranking', desc: 'Benchmarks scores nationally via AIR, State, City, and Institute rank cards to motivate students and impress parents.', icon: TrendingUp, color: 'purple' },
+              { title: 'Granular Chapter Diagnostics', desc: 'Detailed breakdown of student speed, accuracy %, question time distribution, and chapter weak spots for targeted revision.', icon: BarChart3, color: 'emerald' },
+              { title: 'Bulk Student CSV Onboarding', desc: 'Onboard 100 to 1,000+ students in 30 seconds with automated roll number generation and secure credential delivery.', icon: Users, color: 'blue' },
+              { title: 'Curated eBooks & Solutions', desc: 'Complete formula handbooks, NCERT study modules, and detailed step-by-step PDF solutions included with every test.', icon: FileText, color: 'indigo' },
+              { title: 'Dedicated Support & Privacy', desc: 'Assigned Onboarding Manager, priority technical assistance, and 100% isolated multi-tenant database privacy.', icon: ShieldCheck, color: 'purple' },
             ].map((card, idx) => {
               const Icon = card.icon;
               return (
                 <div
                   key={idx}
-                  className="rounded-2xl border border-[#DCE5F1] bg-white p-6 space-y-3 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden"
+                  className="rounded-2xl border border-[#DCE5F1] bg-white p-6 space-y-3 shadow-xs hover:shadow-md hover:-translate-y-1 transition-all duration-300 relative overflow-hidden flex flex-col justify-between"
                 >
                   <div className="h-1 w-full bg-gradient-to-r from-[#2563eb] to-cyan-400 absolute top-0 left-0" />
 

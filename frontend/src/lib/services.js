@@ -449,6 +449,11 @@ export const paymentService = {
     clearCache('payment_history');
     return api.post(`/payments/admin/manual/${id}/corrections`, data).then((r) => r.data);
   },
+  adminUpdateManualAgreedFee: (id, data) => {
+    clearCache('payment_admin');
+    clearCache('payment_history');
+    return api.patch(`/payments/admin/manual/${id}/agreed-fee`, data).then((r) => r.data);
+  },
   adminDelete: (id) => {
     clearCache('payment_admin');
     return api.delete(`/payments/admin/${id}`).then((r) => r.data);
@@ -656,6 +661,10 @@ export const adminService = {
   toggleCoupon: (id) => {
     clearCache();
     return api.patch(`/admin/coupons/${id}/toggle`).then((r) => r.data);
+  },
+  toggleCouponPublic: (id) => {
+    clearCache();
+    return api.patch(`/admin/coupons/${id}/toggle-public`).then((r) => r.data);
   },
   deleteCoupon: (id) => {
     clearCache();

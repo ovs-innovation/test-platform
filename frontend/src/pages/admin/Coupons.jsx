@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { Ticket, ChevronDown, Check, Percent, Trash2, Plus, AlertTriangle, X, Calendar, Tag, Bell, GraduationCap } from 'lucide-react';
+import { Ticket, ChevronDown, Check, Percent, Trash2, Plus, AlertTriangle, X, Calendar, Tag, Bell, GraduationCap, Globe, Lock } from 'lucide-react';
 import { adminService, testSeriesService } from '../../lib/services.js';
 import { LoadingScreen, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -91,11 +91,12 @@ export default function AdminCoupons() {
     code: '',
     discount_type: 'percent',
     discount_value: 10,
-    max_uses: 100,
+    max_uses: 1,
     max_uses_per_user: 1,
     valid_until: '',
     test_series_id: '',
-    notify_students: true,
+    notify_students: false,
+    is_public: false,
   });
 
   const load = () => adminService.coupons().then(setCoupons).finally(() => setLoading(false));
@@ -110,16 +111,18 @@ export default function AdminCoupons() {
     try {
       const res = await adminService.createCoupon(form);
       const notifMsg = res.notified_students > 0 ? ` & notification sent to ${res.notified_students} active students` : '';
-      toast.success(`Discount coupon "${form.code.toUpperCase()}" created successfully${notifMsg}!`);
+      const visibilityMsg = form.is_public ? ' (🌐 Public Promo Offer)' : ' (🔒 Private Student Coupon)';
+      toast.success(`Discount coupon "${form.code.toUpperCase()}" created successfully${visibilityMsg}${notifMsg}!`);
       setForm({
         code: '',
         discount_type: 'percent',
         discount_value: 10,
-        max_uses: 100,
+        max_uses: 1,
         max_uses_per_user: 1,
         valid_until: '',
         test_series_id: '',
-        notify_students: true,
+        notify_students: false,
+        is_public: false,
       });
       setShowCreateModal(false);
       load();
@@ -177,10 +180,11 @@ export default function AdminCoupons() {
       {/* ─── DESKTOP TABLE VIEW ────────────────────────────────────────── */}
       <div className="hidden sm:block card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-sm rounded-3xl">
         <div className="overflow-x-auto">
-          <table className="w-full min-w-[600px] text-xs">
+          <table className="w-full min-w-[650px] text-xs">
             <thead className="bg-slate-100/80 dark:bg-slate-900/80 text-left text-xs font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800">
               <tr>
                 <th className="px-5 py-4">Code</th>
+                <th className="px-5 py-4">Visibility</th>
                 <th className="px-5 py-4">Discount</th>
                 <th className="px-5 py-4">Used</th>
                 <th className="px-5 py-4">Status</th>
@@ -211,6 +215,19 @@ export default function AdminCoupons() {
                         )}
                       </div>
                     </td>
+                    <td className="px-5 py-4">
+                      {c.is_public ? (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800 shadow-2xs" title="Visible publicly on website under Available Promo Offers">
+                          <Globe className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+                          <span>Public Offer</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800 shadow-2xs" title="Private coupon for specific student/child. Hidden from website.">
+                          <Lock className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
+                          <span>Private / Student</span>
+                        </span>
+                      )}
+                    </td>
                     <td className="px-5 py-4 font-extrabold text-slate-900 dark:text-white">
                       {c.discount_type === 'percent' ? `${c.discount_value}% OFF` : `₹${c.discount_value} OFF`}
                     </td>
@@ -228,6 +245,20 @@ export default function AdminCoupons() {
                     <td className="px-5 py-4 text-right">
                       <ActionDropdown
                         items={[
+                          {
+                            label: c.is_public ? 'Make Private (Hide from Store)' : 'Make Public (Show in Promo Offers)',
+                            icon: c.is_public ? Lock : Globe,
+                            onClick: async () => {
+                              try {
+                                await adminService.toggleCouponPublic(c.id);
+                                toast.success(`Coupon "${c.code}" is now ${c.is_public ? 'Private (Hidden from public website)' : 'Public (Visible on website store)'}!`);
+                                load();
+                              } catch (err) {
+                                toast.error(err.message || 'Failed to update coupon visibility');
+                              }
+                            },
+                            color: c.is_public ? 'text-amber-600 dark:text-amber-400' : 'text-blue-600 dark:text-blue-400',
+                          },
                           {
                             label: 'Notify Students',
                             icon: Bell,
@@ -257,7 +288,7 @@ export default function AdminCoupons() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-5 py-12 text-center text-slate-400">
+                  <td colSpan={6} className="px-5 py-12 text-center text-slate-400">
                     <Ticket className="h-8 w-8 mx-auto mb-2 opacity-50 text-slate-400" />
                     <p className="text-xs font-bold text-slate-700 dark:text-slate-200">No coupons found.</p>
                     <p className="text-[11px] text-slate-500 mt-0.5">Click "+ Create New Coupon" above to create your first discount code.</p>
@@ -287,7 +318,20 @@ export default function AdminCoupons() {
                     {c.code}
                   </span>
                 </div>
-                <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {c.is_public ? (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">
+                      <Globe className="w-2.5 h-2.5 text-blue-600" />
+                      <span>Public</span>
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 dark:bg-amber-950/50 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+                      <Lock className="w-2.5 h-2.5 text-amber-600" />
+                      <span>Private</span>
+                    </span>
+                  )}
+                  <Badge color={c.is_active ? 'green' : 'slate'}>{c.is_active ? 'Active' : 'Inactive'}</Badge>
+                </div>
               </div>
 
               {/* Specs Box */}
@@ -313,7 +357,29 @@ export default function AdminCoupons() {
               </div>
 
               {/* Mobile Actions Toolbar */}
-              <div className="flex items-center justify-between gap-1.5 pt-1">
+              <div className="flex flex-wrap items-center justify-between gap-1.5 pt-1">
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      await adminService.toggleCouponPublic(c.id);
+                      toast.success(`Coupon "${c.code}" is now ${c.is_public ? 'Private (Hidden)' : 'Public (Visible)'}!`);
+                      load();
+                    } catch (err) {
+                      toast.error(err.message || 'Failed to toggle visibility');
+                    }
+                  }}
+                  className={`px-2.5 py-1.5 rounded-xl text-xs font-bold border transition flex items-center gap-1 cursor-pointer ${
+                    c.is_public
+                      ? 'bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-800'
+                      : 'bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border-amber-200 dark:border-amber-800'
+                  }`}
+                  title="Toggle Public/Private Visibility"
+                >
+                  {c.is_public ? <Globe className="h-3.5 w-3.5 text-blue-600" /> : <Lock className="h-3.5 w-3.5 text-amber-600" />}
+                  <span>{c.is_public ? 'Public' : 'Private'}</span>
+                </button>
+
                 <button
                   type="button"
                   onClick={() => handleNotifyStudents(c.id, c.code)}
@@ -486,25 +552,86 @@ export default function AdminCoupons() {
             </div>
           </div>
 
-          {/* Broadcast to Students Notification Checkbox */}
-          <div className="p-3 bg-blue-50/60 dark:bg-blue-950/40 rounded-xl border border-blue-200/80 dark:border-blue-900/60">
-            <label className="flex items-start gap-2.5 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={form.notify_students}
-                onChange={(e) => setForm((f) => ({ ...f, notify_students: e.target.checked }))}
-                className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer"
-              />
-              <div className="text-xs">
-                <span className="font-extrabold text-blue-950 dark:text-blue-200 block">
-                  📢 Send In-App Notification to Students Immediately
-                </span>
-                <span className="text-[11px] text-blue-700 dark:text-blue-300 font-medium">
-                  Students will receive an active discount alert with a direct link to claim the coupon and enroll.
-                </span>
-              </div>
+          {/* Coupon Visibility / Audience */}
+          <div>
+            <label className="block text-xs font-extrabold uppercase text-slate-600 dark:text-slate-400 mb-1.5">
+              Coupon Type & Website Visibility <span className="text-rose-500">*</span>
             </label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              <button
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, is_public: false, notify_students: false }))}
+                className={`p-3 rounded-2xl border text-left transition flex items-start gap-2.5 cursor-pointer ${
+                  !form.is_public
+                    ? 'border-amber-500 bg-amber-500/10 dark:bg-amber-500/15 text-slate-900 dark:text-white ring-2 ring-amber-500/30'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                }`}
+              >
+                <div className="p-1.5 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 shrink-0">
+                  <Lock className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-extrabold text-slate-900 dark:text-white">
+                    🔒 Private / Specific Student
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
+                    Hidden from website. For a specific child, scholarship, or admission voucher. Not visible to everyone.
+                  </p>
+                </div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setForm((f) => ({ ...f, is_public: true }))}
+                className={`p-3 rounded-2xl border text-left transition flex items-start gap-2.5 cursor-pointer ${
+                  form.is_public
+                    ? 'border-blue-500 bg-blue-500/10 dark:bg-blue-500/15 text-slate-900 dark:text-white ring-2 ring-blue-500/30'
+                    : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-400 hover:border-slate-300'
+                }`}
+              >
+                <div className="p-1.5 rounded-xl bg-blue-500/10 text-blue-600 dark:text-blue-400 shrink-0">
+                  <Globe className="w-4 h-4" />
+                </div>
+                <div>
+                  <p className="text-xs font-extrabold text-slate-900 dark:text-white">
+                    🌐 Public Store Offer
+                  </p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-snug">
+                    Visible to all visitors under "Available Promo Offers" on the public test series page.
+                  </p>
+                </div>
+              </button>
+            </div>
           </div>
+
+          {/* Broadcast to Students Notification Checkbox or Private Note */}
+          {form.is_public ? (
+            <div className="p-3 bg-blue-50/60 dark:bg-blue-950/40 rounded-xl border border-blue-200/80 dark:border-blue-900/60">
+              <label className="flex items-start gap-2.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={form.notify_students}
+                  onChange={(e) => setForm((f) => ({ ...f, notify_students: e.target.checked }))}
+                  className="mt-0.5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 h-4 w-4 cursor-pointer"
+                />
+                <div className="text-xs">
+                  <span className="font-extrabold text-blue-950 dark:text-blue-200 block">
+                    📢 Send In-App Notification to All Active Students
+                  </span>
+                  <span className="text-[11px] text-blue-700 dark:text-blue-300 font-medium">
+                    Students will receive an active discount alert with a direct link to claim this public promo code.
+                  </span>
+                </div>
+              </label>
+            </div>
+          ) : (
+            <div className="p-3 bg-amber-50/60 dark:bg-amber-950/30 rounded-xl border border-amber-200/80 dark:border-amber-900/50 flex items-start gap-2 text-xs text-amber-900 dark:text-amber-200">
+              <Lock className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" />
+              <span className="text-[11.5px] leading-snug">
+                <strong>Private coupon protection active:</strong> This coupon code will <strong>never</strong> be shown publicly in the test series section. You can share this code directly with the child/parent, and they can enter it at checkout to claim the discount.
+              </span>
+            </div>
+          )}
 
           <div className="flex items-center justify-end gap-3 pt-4 border-t border-slate-200 dark:border-slate-800">
             <button

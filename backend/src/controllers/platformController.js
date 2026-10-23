@@ -217,13 +217,15 @@ export const createCoupon = asyncHandler(async (req, res) => {
     max_uses_per_user,
     valid_until,
     test_series_id,
-    notify_students
+    notify_students,
+    is_public
   } = req.body;
   const tsId = test_series_id ? Number(test_series_id) : null;
+  const isPub = is_public === true || is_public === 'true';
 
   const result = await query(
-    `INSERT INTO coupons (code, discount_type, discount_value, max_uses, max_uses_per_user, valid_until, test_series_id)
-     VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING *`,
+    `INSERT INTO coupons (code, discount_type, discount_value, max_uses, max_uses_per_user, valid_until, test_series_id, is_public)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
     [
       code.toUpperCase().trim(),
       discount_type || 'percent',
@@ -231,13 +233,14 @@ export const createCoupon = asyncHandler(async (req, res) => {
       max_uses ? Number(max_uses) : null,
       max_uses_per_user ? Number(max_uses_per_user) : 1,
       valid_until || null,
-      tsId
+      tsId,
+      isPub
     ]
   );
   const coupon = result.rows[0];
 
   let notifiedCount = 0;
-  if (notify_students) {
+  if (notify_students && isPub) {
     notifiedCount = await broadcastCouponNotification(coupon.id);
   }
 
@@ -252,6 +255,15 @@ export const notifyCouponStudents = asyncHandler(async (req, res) => {
 export const toggleCoupon = asyncHandler(async (req, res) => {
   const result = await query(
     `UPDATE coupons SET is_active = NOT is_active WHERE id = $1 RETURNING *`,
+    [req.params.id]
+  );
+  if (!result.rowCount) throw ApiError.notFound('Coupon not found');
+  res.json({ coupon: result.rows[0] });
+});
+
+export const toggleCouponPublic = asyncHandler(async (req, res) => {
+  const result = await query(
+    `UPDATE coupons SET is_public = NOT is_public WHERE id = $1 RETURNING *`,
     [req.params.id]
   );
   if (!result.rowCount) throw ApiError.notFound('Coupon not found');
@@ -273,6 +285,7 @@ export const listPublicCoupons = asyncHandler(async (req, res) => {
       FROM coupons c
       LEFT JOIN test_series ts ON c.test_series_id = ts.id
       WHERE c.is_active = true
+        AND c.is_public = true
         AND (c.valid_until IS NULL OR c.valid_until > NOW())
         AND (c.max_uses IS NULL OR c.used_count < c.max_uses)
     `;

@@ -5,6 +5,7 @@ import { EdvedumCtaStrip } from "../../components/edvedum/EdvedumPlatformUI.jsx"
 import {
   EdvedumHowItWorks,
   EdvedumMiniFaq,
+  EdvedumInstitutionalBanner,
 } from "../../components/landing/EdvedumHomeExtended.jsx";
 import { CONTACT } from "../../data/edvedumContent.js";
 
@@ -14,6 +15,7 @@ export default function Home() {
       <EdvedumHero />
       <EdvedumHeroBridge />
       <EdvedumHomeSections />
+      <EdvedumInstitutionalBanner />
       <EdvedumHowItWorks />
       <EdvedumMiniFaq />
       <EdvedumCtaStrip

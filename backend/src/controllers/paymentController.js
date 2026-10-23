@@ -1453,6 +1453,84 @@ export const adminCorrectManualInstallment = asyncHandler(async (req, res) => {
 });
 
 /**
+ * PATCH /api/payments/admin/manual/:id/agreed-fee — update the total agreed fee and recalculate remaining balance.
+ */
+export const adminUpdateManualAgreedFee = asyncHandler(async (req, res) => {
+  const feeRecordId = Number(req.params.id);
+  if (!Number.isSafeInteger(feeRecordId) || feeRecordId <= 0) {
+    throw ApiError.badRequest('Invalid manual fee record id');
+  }
+
+  const agreedFeePaise = toPaise(req.body.agreed_fee, 'Total agreed fee');
+  const nextDueDate = req.body.next_due_date !== undefined
+    ? requireDate(req.body.next_due_date, 'Next payment due date', { optional: true })
+    : undefined;
+  const notes = req.body.notes !== undefined ? String(req.body.notes || '').trim().slice(0, 2000) : undefined;
+
+  const enrollmentId = await withTransaction(async (client) => {
+    const recordResult = await client.query(
+      `SELECT mf.*, se.user_id, se.test_series_id
+       FROM manual_fee_records mf
+       JOIN student_enrollments se ON se.id = mf.enrollment_id
+       WHERE mf.id = $1
+       FOR UPDATE OF mf, se`,
+      [feeRecordId]
+    );
+    if (!recordResult.rowCount) throw ApiError.notFound('Manual fee record not found');
+    const record = recordResult.rows[0];
+
+    // Compute total already paid
+    const [onlineResult, manualResult] = await Promise.all([
+      client.query(
+        `SELECT COALESCE(SUM(ROUND(amount * 100)::bigint), 0)::bigint AS paid
+         FROM payments WHERE enrollment_id = $1 AND status = 'success'`,
+        [record.enrollment_id]
+      ),
+      client.query(
+        `SELECT COALESCE(SUM(amount_paise), 0)::bigint AS paid
+         FROM manual_payment_entries WHERE fee_record_id = $1`,
+        [feeRecordId]
+      ),
+    ]);
+    const alreadyPaid = Number(onlineResult.rows[0].paid || 0) + Number(manualResult.rows[0].paid || 0);
+
+    if (agreedFeePaise < alreadyPaid) {
+      throw ApiError.badRequest(
+        `Agreed fee (₹${(agreedFeePaise / 100).toLocaleString('en-IN')}) cannot be less than the total amount already collected (₹${(alreadyPaid / 100).toLocaleString('en-IN')}). If an overpayment or refund occurred, correct the payment entries first.`
+      );
+    }
+
+    await client.query(
+      `UPDATE manual_fee_records
+       SET agreed_fee_paise = $1,
+           next_due_date = CASE WHEN $2::boolean THEN $3::date ELSE next_due_date END,
+           notes = CASE WHEN $4::boolean THEN $5::text ELSE notes END,
+           updated_at = NOW(),
+           updated_by_id = $6
+       WHERE id = $7`,
+      [
+        agreedFeePaise,
+        nextDueDate !== undefined,
+        nextDueDate || null,
+        notes !== undefined,
+        notes || '',
+        req.user.id,
+        feeRecordId,
+      ]
+    );
+
+    return record.enrollment_id;
+  });
+
+  const payment = (await getEnrollmentFeeSummaries({ enrollmentId }))[0];
+  res.json({
+    success: true,
+    message: 'Total agreed fee updated successfully. Remaining balance recalculated.',
+    payment,
+  });
+});
+
+/**
  * DELETE /api/payments/admin/:id
  * Allows admin to permanently delete any payment record (failed, pending, success, etc.)
  */

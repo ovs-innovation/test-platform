@@ -26,7 +26,7 @@ import {
   School,
   ArrowUpRight
 } from 'lucide-react';
-import { ONE_YEAR_39_SCHEDULE } from '../../lib/aietsCalendarData.js';
+import { ONE_YEAR_39_SCHEDULE, getScheduleByProgram } from '../../lib/aietsCalendarData.js';
 import { calendarService, authService } from '../../lib/services.js';
 import TestDetailDrawer from '../../components/candidate/TestDetailDrawer.jsx';
 
@@ -97,8 +97,11 @@ export default function AietsCalendarPage() {
   const programDropdownRef = useRef(null);
 
   const programs = [
+    { id: 'neet-class-11', label: 'AIETS NEET Class 11 (39 Tests)', badge: 'Class 11' },
+    { id: 'jee-class-12', label: 'AIETS JEE Class 12 (39 Tests)', badge: 'Class 12' },
+    { id: 'jee-repeater', label: 'AIETS JEE Repeater (39 Tests)', badge: 'Dropper' },
     { id: 'neet-ug-2027-aiets-comprehensive-test-series', label: 'AIETS NEET-UG 2027 (39 Tests)', badge: '1-Year' },
-    { id: 'aiets-neet-ug-2028-two-year-online-cbt-program', label: 'AIETS NEET-UG 2028 (60 Tests)', badge: '2-Year' },
+    { id: 'aiets-neet-ug-2028-two-year-online-cbt-program', label: 'AIETS NEET-UG 2028 (78 Tests)', badge: '2-Year' },
   ];
 
   // URL Sync State
@@ -252,7 +255,8 @@ export default function AietsCalendarPage() {
       };
     });
 
-    const staticSchedule = ONE_YEAR_39_SCHEDULE.map((t) => {
+    const activeProgramSchedule = getScheduleByProgram(selectedProgram);
+    const staticSchedule = activeProgramSchedule.map((t) => {
       const testDate = new Date(`${t.date}T09:00:00+05:30`);
       const testEndDate = new Date(`${t.date}T12:00:00+05:30`);
 
@@ -283,7 +287,7 @@ export default function AietsCalendarPage() {
     const filteredStatic = staticSchedule.filter((t) => !existingDates.has(t.date));
 
     return [...formattedDbTests, ...filteredStatic].sort((a, b) => new Date(a.date) - new Date(b.date));
-  }, [apiTests, completedTests]);
+  }, [apiTests, completedTests, selectedProgram]);
 
   // Dynamic countdown in days for next assessment
   const getCountdownDays = (dateStr) => {

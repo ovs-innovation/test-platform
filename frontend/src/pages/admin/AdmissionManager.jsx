@@ -31,6 +31,7 @@ import {
 import { admissionService } from '../../lib/services.js';
 import { useToast } from '../../context/ToastContext.jsx';
 import { Spinner, LoadingScreen } from '../../components/ui.jsx';
+import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT } from '../../data/edvedumContent.js';
 
 export default function AdmissionManager() {
   const toast = useToast();
@@ -502,7 +503,8 @@ export default function AdmissionManager() {
   const totalFields = sections.reduce((acc, s) => acc + (s.fields?.length || 0), 0);
 
   return (
-    <div className="space-y-6">
+    <>
+      <div className={`space-y-6 ${viewDetailModalOpen ? 'print:hidden' : ''}`}>
       {/* Top Banner */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between border-b border-slate-200 dark:border-slate-800 pb-5">
         <div>
@@ -1228,13 +1230,98 @@ export default function AdmissionManager() {
           </div>
         </div>
       )}
+      </div>
 
       {/* ================= MODAL: VIEW SUBMISSION DETAIL SLIP ================= */}
       {viewDetailModalOpen && selectedSubmission && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 overflow-y-auto">
-          <div className="w-full max-w-2xl rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-800 bg-[#002B49] text-white">
+        <div className="admin-slip-modal-wrapper fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 overflow-y-auto print:static print:inset-auto print:z-auto print:bg-white print:p-0 print:m-0 print:overflow-visible print:block">
+          {/* PRINT-SPECIFIC CSS RULES */}
+          <style>{`
+            @media print {
+              @page {
+                size: A4 portrait;
+                margin: 6mm 8mm;
+              }
+              html, body {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                min-height: auto !important;
+                height: auto !important;
+                overflow: visible !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              .admin-slip-modal-wrapper {
+                position: static !important;
+                inset: auto !important;
+                z-index: auto !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                overflow: visible !important;
+                display: block !important;
+              }
+              .admin-printable-record {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 10px 14px !important;
+                border: 2px solid #002B49 !important;
+                border-radius: 6px !important;
+                box-shadow: none !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
+                display: block !important;
+              }
+              /* FORCE PURE CLEAN WHITE ON EVERY CONTAINER & BOX (NO BLACK / GREY) */
+              .admin-printable-record,
+              .admin-printable-record * {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #0f172a !important;
+                box-shadow: none !important;
+                text-shadow: none !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
+              .admin-printable-record .slip-card-box,
+              .admin-printable-record .slip-field-box {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: 4px !important;
+              }
+              .admin-printable-record .print-text-brand {
+                color: #002B49 !important;
+              }
+              .admin-printable-record .print-text-muted {
+                color: #64748b !important;
+              }
+              .admin-printable-record .print-badge {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border: 1px solid #94a3b8 !important;
+                color: #002B49 !important;
+              }
+              .admin-printable-record img {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+              }
+            }
+          `}</style>
+
+          <div className="admin-printable-record w-full max-w-2xl rounded-2xl bg-white dark:bg-slate-900 shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden my-8 animate-in fade-in zoom-in-95 duration-150 print:max-w-none print:w-full print:rounded-lg print:shadow-none print:my-0 print:p-3 print:bg-white print:text-slate-900 print:animate-none">
+            {/* Modal Header (Screen Only) */}
+            <div className="flex items-center justify-between p-4 border-b border-slate-100 dark:border-slate-800 bg-[#002B49] text-white print:hidden">
               <div>
                 <h3 className="text-base font-black tracking-wide">
                   Application Slip: {selectedSubmission.application_no}
@@ -1246,14 +1333,43 @@ export default function AdmissionManager() {
               <button
                 type="button"
                 onClick={() => setViewDetailModalOpen(false)}
-                className="p-1 rounded-lg text-white/80 hover:text-white"
+                className="p-1 rounded-lg text-white/80 hover:text-white cursor-pointer"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
+            {/* Official Printable Slip Header (Print Only) */}
+            <div className="hidden print:block border-b-2 border-[#002B49] pb-3 mb-3">
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <img src={EDVEDUM_LOGO} alt={EDVEDUM_LOGO_ALT} className="h-11 w-auto object-contain" />
+                  <div>
+                    <h1 className="text-base font-black tracking-tight text-[#002B49] font-serif uppercase leading-none">
+                      EDVEDUM ACADEMY
+                    </h1>
+                    <p className="text-[10px] font-extrabold tracking-widest text-[#855D14] uppercase mt-0.5 leading-tight">
+                      Official Student Admission &amp; Enrollment Slip • Session 2026–2027
+                    </p>
+                    <p className="text-[9px] text-slate-500 leading-tight">
+                      EDVEDUM ACADEMY (OPC) PRIVATE LIMITED • edvedum.com • support@edvedum.com
+                    </p>
+                  </div>
+                </div>
+                <div className="text-right shrink-0">
+                  <span className="text-[9.5px] font-bold text-slate-500 uppercase tracking-wider block">Application No.</span>
+                  <span className="inline-block bg-slate-100 text-[#002B49] px-2 py-0.5 text-xs font-mono font-black border border-slate-300 rounded mt-0.5">
+                    {selectedSubmission.application_no}
+                  </span>
+                  <span className="block text-[9px] text-slate-500 mt-0.5">
+                    Date: {new Date(selectedSubmission.created_at).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
+            </div>
+
             {/* Modal Content */}
-            <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6 text-xs">
+            <div className="p-6 max-h-[70vh] overflow-y-auto space-y-6 text-xs print:p-0 print:max-h-none print:overflow-visible print:space-y-2">
               {/* Summary Card with Student Photo */}
               {(() => {
                 const studentPhoto =
@@ -1265,10 +1381,10 @@ export default function AdmissionManager() {
                   '';
 
                 return (
-                  <div className="flex flex-col sm:flex-row gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60">
+                  <div className="slip-card-box flex flex-col sm:flex-row gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/60 print:bg-white print:border-slate-300 print:p-2.5 print:gap-2.5">
                     {/* Student Photo Section */}
                     <div className="flex flex-col items-center gap-2 shrink-0 sm:self-start">
-                      <div className="relative group w-24 h-32 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 overflow-hidden shadow-sm flex items-center justify-center">
+                      <div className="relative group w-24 h-32 rounded-lg border-2 border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-900 overflow-hidden shadow-sm flex items-center justify-center print:w-16 print:h-20 print:border-slate-300 print:shadow-none">
                         {studentPhoto ? (
                           <>
                             <img
@@ -1279,7 +1395,7 @@ export default function AdmissionManager() {
                             <button
                               type="button"
                               onClick={() => setPhotoModalUrl(studentPhoto)}
-                              className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white gap-1 text-[10px] font-bold"
+                              className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white gap-1 text-[10px] font-bold print:hidden cursor-pointer"
                               title="Click to view full photo"
                             >
                               <Maximize2 className="h-4 w-4" />
@@ -1294,13 +1410,13 @@ export default function AdmissionManager() {
                         )}
                       </div>
 
-                      {/* Photo Actions */}
-                      <div className="flex items-center gap-1.5 w-full justify-center">
+                      {/* Photo Actions (Screen only) */}
+                      <div className="flex items-center gap-1.5 w-full justify-center print:hidden">
                         {studentPhoto && (
                           <button
                             type="button"
                             onClick={() => setPhotoModalUrl(studentPhoto)}
-                            className="p-1 px-2 rounded-md bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-[10px] font-bold inline-flex items-center gap-1 transition"
+                            className="p-1 px-2 rounded-md bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-[10px] font-bold inline-flex items-center gap-1 transition cursor-pointer"
                             title="View Full Size"
                           >
                             <Eye className="h-3 w-3" />
@@ -1323,7 +1439,7 @@ export default function AdmissionManager() {
                             type="button"
                             onClick={handleRemovePhoto}
                             disabled={photoUploading}
-                            className="p-1 text-slate-400 hover:text-rose-500 rounded transition"
+                            className="p-1 text-slate-400 hover:text-rose-500 rounded transition cursor-pointer"
                             title="Remove Photo"
                           >
                             <Trash2 className="h-3 w-3" />
@@ -1333,52 +1449,52 @@ export default function AdmissionManager() {
                     </div>
 
                     {/* Details Grid */}
-                    <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    <div className="flex-1 grid grid-cols-2 sm:grid-cols-3 gap-3 print:grid-cols-3 print:gap-1.5 text-xs">
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Student Name</span>
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Student Name</span>
+                        <span className="text-xs font-bold text-slate-900 dark:text-white print:text-black">
                           {selectedSubmission.student_name}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Father / Guardian</span>
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Father / Guardian</span>
+                        <span className="text-xs font-bold text-slate-900 dark:text-white print:text-black">
                           {selectedSubmission.father_name || '—'}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Mobile</span>
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Mobile</span>
+                        <span className="text-xs font-bold text-slate-900 dark:text-white print:text-black font-mono">
                           {selectedSubmission.contact_number || '—'}
                         </span>
                       </div>
-                      <div className="sm:col-span-2">
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Course Enrolled</span>
-                        <span className="text-xs font-bold text-slate-900 dark:text-white">
+                      <div className="sm:col-span-2 print:col-span-2">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Course Enrolled</span>
+                        <span className="text-xs font-bold text-slate-900 dark:text-white print:text-black">
                           {selectedSubmission.course_name || '—'}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Status</span>
-                        <span className="text-xs font-bold capitalize text-blue-600 dark:text-blue-400">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Status</span>
+                        <span className="text-xs font-bold capitalize text-blue-600 dark:text-blue-400 print:text-[#002B49]">
                           {selectedSubmission.status}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Email</span>
-                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate block">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Email</span>
+                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300 print:text-slate-800 truncate block">
                           {selectedSubmission.email || '—'}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Application Date</span>
-                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300 block">
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Application Date</span>
+                        <span className="text-xs font-medium text-slate-700 dark:text-slate-300 print:text-slate-800 block">
                           {new Date(selectedSubmission.created_at).toLocaleDateString()}
                         </span>
                       </div>
                       <div>
-                        <span className="text-[10px] text-slate-400 uppercase font-bold block">Photo Status</span>
-                        <span className={`text-[11px] font-bold ${studentPhoto ? 'text-emerald-600 dark:text-emerald-400' : 'text-amber-500'}`}>
+                        <span className="text-[10px] text-slate-400 print:text-slate-500 uppercase font-bold block">Photo Status</span>
+                        <span className={`text-[11px] font-bold ${studentPhoto ? 'text-emerald-600 dark:text-emerald-400 print:text-emerald-700' : 'text-amber-500'}`}>
                           {studentPhoto ? '● Photo Verified' : '○ No Photo Attached'}
                         </span>
                       </div>
@@ -1387,10 +1503,10 @@ export default function AdmissionManager() {
                 );
               })()}
 
-              {/* Status Update Form in Admin */}
-              <div className="p-4 rounded-xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 space-y-3">
+              {/* Status Update Form in Admin (Screen Only) */}
+              <div className="p-4 rounded-xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/50 dark:bg-blue-950/20 space-y-3 print:hidden">
                 <span className="text-xs font-bold text-blue-900 dark:text-blue-300 block">
-                  Update Verification Status & Admin Notes
+                  Update Verification Status &amp; Admin Notes
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
@@ -1398,11 +1514,11 @@ export default function AdmissionManager() {
                     <select
                       value={newStatusInput}
                       onChange={(e) => setNewStatusInput(e.target.value)}
-                      className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-bold"
+                      className="w-full p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 text-xs font-bold cursor-pointer"
                     >
                       <option value="pending">Pending</option>
                       <option value="verified">Verified</option>
-                      <option value="approved">Approved & Admitted</option>
+                      <option value="approved">Approved &amp; Admitted</option>
                       <option value="rejected">Rejected</option>
                     </select>
                   </div>
@@ -1422,19 +1538,37 @@ export default function AdmissionManager() {
                     type="button"
                     onClick={handleUpdateStatus}
                     disabled={statusUpdating}
-                    className="px-4 py-1.5 rounded-lg bg-[#002B49] text-white font-bold hover:bg-[#083e66] transition text-xs"
+                    className="px-4 py-1.5 rounded-lg bg-[#002B49] text-white font-bold hover:bg-[#083e66] transition text-xs cursor-pointer"
                   >
                     {statusUpdating ? 'Saving...' : 'Update Status'}
                   </button>
                 </div>
               </div>
 
+              {/* Status & Verification Summary (Print Record View Only) */}
+              <div className="slip-card-box hidden print:block p-2 rounded-lg border border-slate-300 bg-white text-xs print:my-1.5">
+                <div className="grid grid-cols-3 gap-3 items-center">
+                  <div>
+                    <span className="text-[9px] font-bold text-slate-500 uppercase block leading-none">Verification Status</span>
+                    <span className="text-xs font-black uppercase text-[#002B49] leading-tight">
+                      {newStatusInput || selectedSubmission.status || 'Pending'}
+                    </span>
+                  </div>
+                  <div className="col-span-2">
+                    <span className="text-[9px] font-bold text-slate-500 uppercase block leading-none">Admin Verification Notes</span>
+                    <span className="text-[10px] font-medium text-slate-800 leading-tight">
+                      {adminNotesInput || selectedSubmission.admin_notes || 'Application reviewed and verified by admissions desk.'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
               {/* Full Submitted Form Data */}
               <div>
-                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">
+                <h4 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-2 print:text-[9.5px] print:mb-1">
                   All Submitted Field Answers
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                <div className="grid grid-cols-1 sm:grid-cols-2 print:grid-cols-3 gap-2 text-xs print:gap-1.5 print:text-[10px]">
                   {selectedSubmission.form_data &&
                     Object.entries(selectedSubmission.form_data).map(([key, val]) => {
                       if (key === 'studentPhoto' || key === 'photo' || key === 'student_photo' || key === 'passportPhoto') {
@@ -1442,19 +1576,24 @@ export default function AdmissionManager() {
                       }
                       const isImage = typeof val === 'string' && (val.startsWith('data:image/') || val.match(/\.(jpeg|jpg|gif|png|webp)($|\?)/i));
                       return (
-                        <div key={key} className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800">
-                          <span className="font-mono text-[10px] text-slate-400 block">{key}</span>
+                        <div key={key} className="slip-field-box p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-100 dark:border-slate-800 print:bg-white print:border-slate-300 print:p-1.5 print:rounded">
+                          <span className="font-mono text-[9px] text-slate-400 print:text-slate-500 block uppercase font-bold leading-none truncate">{key}</span>
                           {isImage ? (
-                            <button
-                              type="button"
-                              onClick={() => setPhotoModalUrl(val)}
-                              className="inline-flex items-center gap-1.5 mt-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
-                            >
-                              <Eye className="h-3.5 w-3.5" />
-                              <span>View Attached Image</span>
-                            </button>
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => setPhotoModalUrl(val)}
+                                className="inline-flex items-center gap-1.5 mt-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline print:hidden cursor-pointer"
+                              >
+                                <Eye className="h-3.5 w-3.5" />
+                                <span>View Attached Image</span>
+                              </button>
+                              <span className="hidden print:inline-block text-[9.5px] font-bold text-emerald-700 leading-tight mt-0.5">
+                                [Attached Document / Image Verified]
+                              </span>
+                            </>
                           ) : (
-                            <span className="font-semibold text-slate-800 dark:text-slate-200 block truncate" title={typeof val === 'object' ? JSON.stringify(val) : String(val || '—')}>
+                            <span className="font-semibold text-slate-800 dark:text-slate-200 print:text-slate-900 block truncate text-xs print:text-[10px] leading-tight mt-0.5" title={typeof val === 'object' ? JSON.stringify(val) : String(val || '—')}>
                               {typeof val === 'object' ? JSON.stringify(val) : String(val || '—')}
                             </span>
                           )}
@@ -1465,12 +1604,12 @@ export default function AdmissionManager() {
               </div>
             </div>
 
-            {/* Modal Footer */}
-            <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            {/* Modal Footer (Screen Only) */}
+            <div className="p-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between print:hidden">
               <button
                 type="button"
                 onClick={() => window.print()}
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#002B49]"
+                className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-700 hover:text-[#002B49] cursor-pointer"
               >
                 <Printer className="h-4 w-4" />
                 <span>Print Record</span>
@@ -1478,10 +1617,22 @@ export default function AdmissionManager() {
               <button
                 type="button"
                 onClick={() => setViewDetailModalOpen(false)}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-200"
+                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-200 cursor-pointer"
               >
                 Close
               </button>
+            </div>
+
+            {/* Official Print Signatory Block (Print Only) */}
+            <div className="hidden print:flex items-end justify-between pt-3 mt-2 border-t border-slate-300 text-[9.5px] text-slate-500">
+              <div>
+                <p className="font-bold text-slate-700">EDVEDUM ACADEMY • Student Admission Record</p>
+                <p>System Generated on {new Date().toLocaleString()} • Official Copy</p>
+              </div>
+              <div className="text-right">
+                <div className="w-36 border-b border-dashed border-slate-400 mb-1"></div>
+                <p className="font-bold text-slate-700">Authorized Signatory / Admin</p>
+              </div>
             </div>
           </div>
         </div>
@@ -1490,7 +1641,7 @@ export default function AdmissionManager() {
       {/* Lightbox / Full Size Photo Modal */}
       {photoModalUrl && (
         <div
-          className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4"
+          className="fixed inset-0 z-60 flex items-center justify-center bg-black/80 backdrop-blur-xs p-4 print:hidden"
           onClick={() => setPhotoModalUrl(null)}
         >
           <div
@@ -1536,6 +1687,6 @@ export default function AdmissionManager() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
