@@ -219,6 +219,33 @@ export function attachPageMetadata(parsedOutput, pageIndex, regionBox = null) {
 }
 
 /**
+ * Parse page range expressions including disjoint ranges and single pages (e.g. "1-10", "1-10, 116", "5, 8, 12-15").
+ */
+export function parsePageRangeString(rangeStr, totalNumPages = 1000) {
+  if (!rangeStr || typeof rangeStr !== 'string') return null;
+  const pages = new Set();
+  const parts = rangeStr.split(/[\s,;|]+/);
+  for (const part of parts) {
+    const trimmed = part.trim();
+    if (!trimmed) continue;
+    const mRange = trimmed.match(/^(\d+)\s*[-–—:]\s*(\d+)$/);
+    if (mRange) {
+      const s = parseInt(mRange[1], 10);
+      const e = parseInt(mRange[2], 10);
+      const start = Math.max(1, Math.min(s, totalNumPages));
+      const end = Math.min(totalNumPages, Math.max(start, e));
+      for (let p = start; p <= end; p++) pages.add(p);
+    } else {
+      const single = parseInt(trimmed, 10);
+      if (!isNaN(single) && single >= 1 && single <= totalNumPages) {
+        pages.add(single);
+      }
+    }
+  }
+  return pages.size > 0 ? Array.from(pages).sort((a, b) => a - b) : null;
+}
+
+/**
  * Render all pages of a PDF buffer into array of high-res PNG image buffers
  * and simultaneously extract lightweight text inventory per page.
  */
@@ -270,12 +297,28 @@ export async function renderPdfToImages(pdfBuffer, options = {}) {
   try {
     const pdfDocument = await loadingTask.promise;
     const totalNumPages = pdfDocument.numPages;
-    const actualStart = Math.max(1, Math.min(startPage || 1, totalNumPages));
-    const actualEnd = Math.min(totalNumPages, Math.max(actualStart, endPage || totalNumPages));
+
+    let targetPages = options.targetPages;
+    if (!Array.isArray(targetPages) || targetPages.length === 0) {
+      const rawRange = options.pageRange || options.page_range;
+      if (rawRange) {
+        targetPages = parsePageRangeString(String(rawRange), totalNumPages);
+      }
+    }
+
+    if (!Array.isArray(targetPages) || targetPages.length === 0) {
+      const actualStart = Math.max(1, Math.min(startPage || 1, totalNumPages));
+      const actualEnd = Math.min(totalNumPages, Math.max(actualStart, endPage || totalNumPages));
+      targetPages = [];
+      for (let p = actualStart; p <= actualEnd; p++) {
+        targetPages.push(p);
+      }
+    }
+
     await fs.promises.mkdir(tempDir, { recursive: true });
 
     const pageImages = [];
-    for (let i = actualStart; i <= actualEnd; i++) {
+    for (const i of targetPages) {
       const page = await pdfDocument.getPage(i);
       const viewport = page.getViewport({ scale: scale || 1.5 });
       const canvas = createCanvas(viewport.width, viewport.height);
@@ -312,11 +355,16 @@ export async function renderPdfToImages(pdfBuffer, options = {}) {
     }
 
     completed = true;
+    pageImages.totalNumPages = totalNumPages;
     return pageImages;
   } finally {
-    await loadingTask.destroy();
+    try {
+      await loadingTask.destroy();
+    } catch (_) {}
     if (!completed) {
-      await fs.promises.rm(tempDir, { recursive: true, force: true });
+      try {
+        await fs.promises.rm(tempDir, { recursive: true, force: true });
+      } catch (_) {}
     }
   }
 }
@@ -355,7 +403,7 @@ export async function cropPageRegion(pageImage, regionBox) {
     };
   } catch (err) {
     try {
-      const img = await loadImage(pageImage.buffer);
+      const img = await loadImage(imgBuffer);
       const cropCanvas = createCanvas(width, height);
       const ctx = cropCanvas.getContext('2d');
       ctx.drawImage(img, left, top, width, height, 0, 0, width, height);
@@ -707,6 +755,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
 
   // Step 1: Render PDF pages into high-res images and build page inventory
   const pageImages = await renderPdfToImages(pdfBuffer, {
+    pageRange: rawRange,
     startPage,
     endPage,
     scale: 1.5,
@@ -1232,7 +1281,10 @@ ${(inv.isAnswerKey || inv.isSolutions) && inv.hasQuestionContent ? `
         const missingDetected = inv.detectedQuestionNumbers.filter((n) => !returnedQNums.includes(n));
 
         if (inv.isQuestionPage && batchQuestions.length === 0 && batchAnswerKeyEntries.length === 0 && batchSolutions.length === 0) {
-          suspiciousPages.push({ pageIndex, reason: 'Question page returned 0 questions' });
+          const isDocumentCoverPage = pageIndex === 1 && (pageImages[0]?.pageIndex === 1);
+          if (!isDocumentCoverPage) {
+            suspiciousPages.push({ pageIndex, reason: 'Question page returned 0 questions' });
+          }
         } else if (result.finishReason === 'MAX_TOKENS') {
           suspiciousPages.push({ pageIndex, reason: 'Output truncated due to MAX_TOKENS' });
         } else if (missingDetected.length >= 2) {
@@ -1269,6 +1321,61 @@ ${(inv.isAnswerKey || inv.isSolutions) && inv.hasQuestionContent ? `
     });
 
     await Promise.all(chunkPromises);
+  }
+
+  // Automatic End-of-PDF Answer Key Scan:
+  // If questions were extracted, but no answer keys or solutions were found on the requested pages,
+  // and the source document has pages remaining at the end (e.g. answer keys placed on final pages):
+  const maxReqPage = Math.max(...pageImages.map((p) => p.pageIndex), 0);
+  const docTotal = pageImages.totalNumPages || 0;
+  if (includeAnswers && docTotal > maxReqPage && allRawQuestions.length > 0 && allRawAnswerKeyEntries.length === 0) {
+    const endScanStart = Math.max(maxReqPage + 1, docTotal - 5);
+    console.log(`[geminiVisionExtractor] Questions extracted without answer keys. Auto-scanning end of PDF (pages ${endScanStart}-${docTotal}) for Answer Key table...`);
+    try {
+      const endCandidatePages = [];
+      for (let ep = endScanStart; ep <= docTotal; ep++) endCandidatePages.push(ep);
+      const endPageImages = await renderPdfToImages(pdfBuffer, {
+        targetPages: endCandidatePages,
+        scale: 1.5,
+        importId: `${effectiveImportId}_ak_end`,
+      });
+
+      for (const endImg of endPageImages) {
+        const akPrompt = String.raw`
+You are an expert exam-paper digitizer transcribing an ANSWER KEY or SOLUTIONS page (Page ${endImg.pageIndex}).
+Return valid JSON matching the supplied response schema without markdown fences.
+CRITICAL INSTRUCTIONS:
+- This is an ANSWER KEY or SOLUTION page.
+- Leave "questions" as an empty array: [].
+- Transcribe ALL answer key entries into "answerKeyEntries" with integer "questionNumber" and "correctAnswer" ('A', 'B', 'C', 'D' or '1'->'A', '2'->'B', '3'->'C', '4'->'D').
+- If detailed solutions or explanations exist, transcribe them into "solutions".
+`;
+        const akContents = [
+          akPrompt,
+          {
+            inlineData: {
+              data: (await fs.promises.readFile(endImg.filePath)).toString('base64'),
+              mimeType: endImg.mimeType || 'image/jpeg',
+            },
+          },
+        ];
+        const akRes = await callGemini(akContents, `End Page ${endImg.pageIndex} (Answer Key Scan)`);
+        if (akRes?.parsed) {
+          const parsedAk = attachPageMetadata(akRes.parsed, endImg.pageIndex);
+          const keys = Array.isArray(parsedAk.answerKeyEntries) ? parsedAk.answerKeyEntries : [];
+          const sols = Array.isArray(parsedAk.solutions) ? parsedAk.solutions : [];
+          if (keys.length > 0 || sols.length > 0) {
+            console.log(`[geminiVisionExtractor] Auto-scan discovered Answer Key on Page ${endImg.pageIndex}: found ${keys.length} key(s), ${sols.length} solution(s)!`);
+            allRawAnswerKeyEntries.push(...keys);
+            allRawSolutions.push(...sols);
+            pageImages.push(endImg);
+            if (keys.length >= 20) break;
+          }
+        }
+      }
+    } catch (akScanErr) {
+      console.warn('[geminiVisionExtractor] End-of-PDF answer key auto-scan error:', akScanErr.message);
+    }
   }
 
   // Step 4: Sequence Gap Analysis & Targeted Recovery Pass

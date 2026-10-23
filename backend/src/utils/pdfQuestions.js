@@ -1,11 +1,15 @@
 import './polyfills.js';
 import { createRequire } from 'module';
+import { getDocument } from 'pdfjs-dist/legacy/build/pdf.mjs';
 import { extractQuestionsWithGeminiVision } from './geminiVisionExtractor.js';
 import { stripHeadersAndFooters } from './questionFormatter.js';
 import { env } from '../config/env.js';
 
 const require = createRequire(import.meta.url);
-const pdfParse = require('pdf-parse/lib/pdf-parse.js');
+let pdfParse = null;
+try {
+  pdfParse = require('pdf-parse/lib/pdf-parse.js');
+} catch (_) {}
 
 const OPTION_LINE = /^\s*(?:\(?([A-Da-d])\)?[\.\):\-–—]\s*|([A-Da-d])\)\s*)(.+)$/;
 const QUESTION_START = /^(?:Q(?:uestion)?\s*(\d+)[\.\)\:\-–—]?|(\d+)\.(?!\d))\s*(.*)$/i;
@@ -58,16 +62,51 @@ function isReadableText(str) {
 }
 
 export async function extractPdfText(buffer) {
+  // 1. Primary extractor: modern pdfjs-dist getDocument + getTextContent
   try {
-    const data = await pdfParse(buffer);
-    const text = (data.text || '').replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
-    if (text.length > 20 && isReadableText(text)) return text;
+    const uint8 = new Uint8Array(buffer.buffer, buffer.byteOffset, buffer.byteLength);
+    const loadingTask = getDocument({
+      data: uint8,
+      disableFontFace: true,
+      verbosity: 0,
+    });
+    try {
+      const doc = await loadingTask.promise;
+      const pagesText = [];
+      for (let i = 1; i <= doc.numPages; i++) {
+        const page = await doc.getPage(i);
+        const textContent = await page.getTextContent();
+        const text = (textContent?.items || []).map((item) => item.str || '').join(' ');
+        pagesText.push(text);
+        if (typeof page.cleanup === 'function') page.cleanup();
+      }
+      const fullText = pagesText.join('\n\n').replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
+      if (fullText.length > 20 && isReadableText(fullText)) {
+        return fullText;
+      }
+    } finally {
+      try {
+        await loadingTask.destroy();
+      } catch (_) {}
+    }
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.warn('[pdfQuestions] pdfParse error (bad XRef or format fault):', err.message, '- attempting raw recovery');
+    console.warn('[pdfQuestions] pdfjs-dist text extraction error:', err.message, '- attempting pdfParse fallback');
   }
 
-  // Fallback to raw PDF stream parser
+  // 2. Secondary fallback: pdfParse (if loaded)
+  if (typeof pdfParse === 'function') {
+    try {
+      const data = await pdfParse(buffer);
+      const text = (data.text || '').replace(/\0/g, '').replace(/\r\n/g, '\n').trim();
+      if (text.length > 20 && isReadableText(text)) return text;
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.warn('[pdfQuestions] pdfParse error (bad XRef or format fault):', err.message, '- attempting raw recovery');
+    }
+  }
+
+  // 3. Tertiary fallback: raw PDF stream parser
   const fallbackText = rawPdfTextExtractor(buffer);
   if (fallbackText && fallbackText.length > 20 && isReadableText(fallbackText)) {
     return fallbackText.replace(/\0/g, '').replace(/\r\n/g, '\n').trim();

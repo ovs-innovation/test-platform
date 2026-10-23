@@ -528,7 +528,8 @@ export default function AdminQuestionBank() {
                 key: 'question_text', label: 'Question', render: (q) => {
                   const opts = tryParseArray(q.options);
                   const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E'];
-                  const correctIdx = q.correct_index ?? 0;
+                  const hasAnswerKey = q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '';
+                  const correctIdx = hasAnswerKey ? Number(q.correct_index) : -1;
                   const isInteger = q.question_type === 'integer' || q.question_type === 'numerical';
                   return (
                     <div className="flex flex-col gap-1.5 max-w-xl py-1">
@@ -542,7 +543,7 @@ export default function AdminQuestionBank() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-0.5">
                           {opts.map((opt, i) => {
                             const optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
-                            const isCorrect = i === correctIdx;
+                            const isCorrect = hasAnswerKey && i === correctIdx;
                             return (
                               <div
                                 key={i}
@@ -560,6 +561,14 @@ export default function AdminQuestionBank() {
                               </div>
                             );
                           })}
+                        </div>
+                      )}
+
+                      {/* Warning when answer key is missing */}
+                      {!isInteger && !hasAnswerKey && opts.length > 0 && (
+                        <div className="text-[10px] text-amber-600 dark:text-amber-400 font-medium mt-0.5 flex items-center gap-1">
+                          <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                          <span>Answer key not provided</span>
                         </div>
                       )}
 
@@ -1115,12 +1124,15 @@ export default function AdminQuestionBank() {
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. 1-25 (all if blank)"
+                  placeholder="e.g. 1-20, 116 (all if blank)"
                   disabled={pdfUploading}
                   className="input text-xs"
                   value={pdfPageRange}
                   onChange={(e) => setPdfPageRange(e.target.value)}
                 />
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">
+                  Question batch + Answer Key page (e.g. 1-20, 116)
+                </p>
               </div>
 
               <div className="flex items-end">

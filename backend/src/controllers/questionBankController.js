@@ -758,9 +758,9 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
             ? []
             : (q.options || []).map((o) => (typeof o === 'object' && o.text ? o.text : String(o)));
 
-          let correctIndex = q.correct_index != null ? Number(q.correct_index) : 0;
-          if (isInteger) correctIndex = 0;
-          const correctIndices = isInteger ? [] : (q.correct_indices || [correctIndex]);
+          let correctIndex = (q.correct_index != null && q.correct_index !== '') ? Number(q.correct_index) : null;
+          if (isInteger) correctIndex = null;
+          const correctIndices = isInteger ? [] : (q.correct_indices || (correctIndex != null ? [correctIndex] : []));
 
           const numericAnswer = isInteger && q.numeric_answer != null ? Number(q.numeric_answer) : null;
           const marks = Number(q.marks || default_marks || 4);
