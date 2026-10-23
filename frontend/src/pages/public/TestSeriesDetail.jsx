@@ -524,7 +524,7 @@ export default function TestSeriesDetail() {
               {isInstitutional ? (
                 <div className="space-y-3 pt-1">
                   <p className="text-xs text-[#2563EB] font-bold bg-blue-50 p-2.5 rounded-xl border border-blue-100 text-center">
-                    Institutional bulk pricing depends on student batch capacity (25% to 50% Volume Discount).
+                    Institutional bulk discounts range from 10% to 30%, based on student batch capacity.
                   </p>
 
                   <button

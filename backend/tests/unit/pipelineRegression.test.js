@@ -1,10 +1,17 @@
 import { describe, expect, it } from 'vitest';
+import fs from 'fs';
+import os from 'os';
+import path from 'path';
+import PDFDocument from 'pdfkit';
 import {
   parseNumericAnswers,
+  buildGeminiVisionCandidateModels,
   remapBoxToOriginalPage,
   buildPageInventory,
+  attachPageMetadata,
   cleanAndParseJson,
   mergeQuestionFragments,
+  renderPdfToImages,
 } from '../../src/utils/geminiVisionExtractor.js';
 import {
   stripHeadersAndFooters,
@@ -13,6 +20,37 @@ import {
 } from '../../src/utils/questionFormatter.js';
 
 describe('PDF Extraction Pipeline - Complete Regression Suite', () => {
+
+  it('renders a PDF page and destroys the PDF.js loading task without calling document.destroy', async () => {
+    const pdfBuffer = await new Promise((resolve, reject) => {
+      const doc = new PDFDocument();
+      const chunks = [];
+      doc.on('data', (chunk) => chunks.push(chunk));
+      doc.on('end', () => resolve(Buffer.concat(chunks)));
+      doc.on('error', reject);
+      doc.text('A sample question page with readable text.');
+      doc.end();
+    });
+    const importId = `render-test-${Date.now()}`;
+    const tempDir = path.join(os.tmpdir(), `qb_doc_${importId}`);
+
+    try {
+      const images = await renderPdfToImages(pdfBuffer, { importId, scale: 0.5 });
+      expect(images).toHaveLength(1);
+      expect(images[0].inventory.textLength).toBeGreaterThan(0);
+      expect(fs.existsSync(images[0].filePath)).toBe(true);
+    } finally {
+      await fs.promises.rm(tempDir, { recursive: true, force: true });
+    }
+  });
+
+  it('falls back from configured Gemini model IDs to supported multimodal models', () => {
+    expect(buildGeminiVisionCandidateModels(['gemini-3.8-flash', 'gemini-3.8-flash'])).toEqual([
+      'gemini-3.8-flash',
+      'gemini-2.5-flash',
+      'gemini-2.5-pro',
+    ]);
+  });
 
   // Scenario 1: Parseable JSON that omits visible questions (inventory detects discrepancy)
   it('Scenario 1: Detects discrepancy when JSON parse succeeds but omits visible questions', () => {
@@ -55,9 +93,24 @@ describe('PDF Extraction Pipeline - Complete Regression Suite', () => {
     expect(blankInventory.pageType).toBe('instructions_blank_page');
     expect(blankInventory.isQuestionPage).toBe(false);
 
-    const akText = 'ANSWER KEY\n1. A\n2. B\n3. C\n4. D';
+    const akText = 'ANSWER KEY\n1. (A)\n2. (B)\n3. (C)\n4. (D)';
     const akInventory = buildPageInventory(15, akText);
     expect(akInventory.isAnswerKey).toBe(true);
+    expect(akInventory.pageType).toBe('answer_key_page');
+    expect(akInventory.hasQuestionContent).toBe(false);
+
+    const mixedText = `QUESTIONS AND ANSWER KEY
+1. Which quantity is measured in newtons?
+(A) Force (B) Energy (C) Power (D) Pressure`;
+    const mixedInventory = buildPageInventory(16, mixedText);
+    expect(mixedInventory.pageType).toBe('mixed_page');
+    expect(mixedInventory.hasQuestionContent).toBe(true);
+    expect(mixedInventory.isQuestionPage).toBe(true);
+
+    const solutionText = 'SOLUTIONS\n1. The force is $F=ma$.';
+    const solutionInventory = buildPageInventory(18, solutionText);
+    expect(solutionInventory.pageType).toBe('solution_page');
+    expect(solutionInventory.hasQuestionContent).toBe(false);
   });
 
   // Scenario 4 & 17: Two-column pages and coordinate conversion after column-crop retry
@@ -87,6 +140,40 @@ describe('PDF Extraction Pipeline - Complete Regression Suite', () => {
     expect(rightRemapped[1]).toBe(532);
     expect(rightRemapped[2]).toBe(250);
     expect(rightRemapped[3]).toBe(740);
+  });
+
+  it('attaches physical page metadata and remaps question, option, and solution visual boxes', () => {
+    const leftColumn = attachPageMetadata({
+      questions: [{
+        questionNumber: 12,
+        sourcePages: [99],
+        visualElements: [{ type: 'diagram', pageIndex: 99, box_2d: [100, 200, 300, 400] }],
+        options: [{ key: 'A', text: '', visualElements: [{ type: 'figure', pageIndex: 99, box_2d: [50, 100, 150, 200] }] }],
+      }],
+      answerKeyEntries: [{ questionNumber: 12, correctAnswer: 'B' }],
+      solutions: [{
+        questionNumber: 12,
+        explanation: 'Use the diagram.',
+        sourcePages: [99],
+        visualElements: [{ type: 'diagram', pageIndex: 99, box_2d: [200, 300, 400, 500] }],
+      }],
+    }, 7, [0, 0, 1000, 520]);
+
+    expect(leftColumn.questions[0].sourcePages).toEqual([7]);
+    expect(leftColumn.questions[0].visualElements[0]).toMatchObject({
+      pageIndex: 7,
+      box_2d: [100, 104, 300, 208],
+    });
+    expect(leftColumn.questions[0].options[0].visualElements[0]).toMatchObject({
+      pageIndex: 7,
+      box_2d: [50, 52, 150, 104],
+    });
+    expect(leftColumn.answerKeyEntries[0].sourcePages).toEqual([7]);
+    expect(leftColumn.solutions[0].sourcePages).toEqual([7]);
+    expect(leftColumn.solutions[0].visualElements[0]).toMatchObject({
+      pageIndex: 7,
+      box_2d: [200, 156, 400, 260],
+    });
   });
 
   // Scenario 5 & 18: Split stems, options, tables, diagrams across page boundaries and media ownership

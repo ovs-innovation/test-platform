@@ -61,6 +61,14 @@ export function parseNumericAnswers(rawStr) {
   };
 }
 
+export function buildGeminiVisionCandidateModels(configuredModels = []) {
+  return [
+    ...configuredModels,
+    'gemini-2.5-flash',
+    'gemini-2.5-pro',
+  ].filter((model, index, models) => Boolean(model) && models.indexOf(model) === index);
+}
+
 /**
  * Remap bounding box coordinates from a sub-region/crop (0-1000 relative to crop)
  * back to original full page coordinates (0-1000 relative to page).
@@ -120,6 +128,11 @@ export function buildPageInventory(pageIndex, text) {
   // Extract visible question start numbers like "1.", "13.", "Q. 26", "Q35", "51 )"
   const qNumMatches = [...clean.matchAll(/(?:^|\s)(?:Q(?:uestion)?\.?\s*)?(\d{1,3})\s*[\.\):\-–—]\s*(?=[A-Za-z\(\$])/g)];
   const detectedQuestionNumbers = [...new Set(qNumMatches.map((m) => parseInt(m[1], 10)))].filter((n) => n >= 1 && n <= 300);
+  const optionMarkers = clean.match(/(?:\(\s*[A-D1-4]\s*\)|(?:^|\s)[A-D]\s*[\).])\s*(?!\d{1,3}\s*[\.\):])\S/g) || [];
+  const hasQuestionContent = detectedQuestionNumbers.length > 0 && (
+    optionMarkers.length >= 2 ||
+    (!isAnswerKey && !isSolutions)
+  );
 
   // Subject headers
   const subjects = [];
@@ -137,11 +150,11 @@ export function buildPageInventory(pageIndex, text) {
   let pageType = 'question_page';
   if (isOMRSheet || (isInstructions && detectedQuestionNumbers.length === 0)) {
     pageType = 'instructions_blank_page';
-  } else if (isAnswerKey && detectedQuestionNumbers.length === 0) {
+  } else if (isAnswerKey && !hasQuestionContent) {
     pageType = 'answer_key_page';
-  } else if (isSolutions && detectedQuestionNumbers.length === 0) {
+  } else if (isSolutions && !hasQuestionContent) {
     pageType = 'solution_page';
-  } else if ((isAnswerKey || isSolutions) && detectedQuestionNumbers.length > 0) {
+  } else if ((isAnswerKey || isSolutions) && hasQuestionContent) {
     pageType = 'mixed_page';
   } else if (clean.trim().length < 50) {
     pageType = 'instructions_blank_page';
@@ -152,12 +165,56 @@ export function buildPageInventory(pageIndex, text) {
     pageType,
     textLength: clean.length,
     detectedQuestionNumbers,
+    hasQuestionContent,
     subjects,
     hasOrphanOptionsAtTop,
     isQuestionPage: pageType === 'question_page' || pageType === 'mixed_page',
     isAnswerKey,
     isSolutions,
     isOMRSheet,
+  };
+}
+
+export function attachPageMetadata(parsedOutput, pageIndex, regionBox = null) {
+  const mapVisuals = (visualElements = []) => (
+    Array.isArray(visualElements)
+      ? visualElements.map((visual) => ({
+          ...visual,
+          pageIndex,
+          ...(regionBox && visual.box_2d
+            ? { box_2d: remapBoxToOriginalPage(visual.box_2d, regionBox) }
+            : {}),
+        }))
+      : []
+  );
+
+  const mapEntries = (entries, includeOptions = false) => (
+    Array.isArray(entries)
+      ? entries.map((entry) => ({
+          ...entry,
+          sourcePages: [pageIndex],
+          ...(Array.isArray(entry.visualElements)
+            ? { visualElements: mapVisuals(entry.visualElements) }
+            : {}),
+          ...(includeOptions && Array.isArray(entry.options)
+            ? {
+                options: entry.options.map((option) => (
+                  option && typeof option === 'object' && Array.isArray(option.visualElements)
+                    ? { ...option, visualElements: mapVisuals(option.visualElements) }
+                    : option
+                )),
+              }
+            : {}),
+        }))
+      : []
+  );
+
+  return {
+    ...parsedOutput,
+    questions: mapEntries(parsedOutput?.questions, true),
+    answerKeyEntries: mapEntries(parsedOutput?.answerKeyEntries),
+    solutions: mapEntries(parsedOutput?.solutions),
+    topicGridEntries: mapEntries(parsedOutput?.topicGridEntries),
   };
 }
 
@@ -207,62 +264,61 @@ export async function renderPdfToImages(pdfBuffer, options = {}) {
     ...(wasmUrl ? { wasmUrl } : {}),
   });
 
-  const pdfDocument = await loadingTask.promise;
-  const totalNumPages = pdfDocument.numPages;
-
-  const actualStart = Math.max(1, Math.min(startPage || 1, totalNumPages));
-  const actualEnd = Math.min(totalNumPages, Math.max(actualStart, endPage || totalNumPages));
-
   // Dedicated temp directory for this document's rendered pages to prevent V8 heap OOM
   const tempDir = path.join(os.tmpdir(), `qb_doc_${importId || Date.now()}`);
-  if (!fs.existsSync(tempDir)) {
-    fs.mkdirSync(tempDir, { recursive: true });
+  let completed = false;
+  try {
+    const pdfDocument = await loadingTask.promise;
+    const totalNumPages = pdfDocument.numPages;
+    const actualStart = Math.max(1, Math.min(startPage || 1, totalNumPages));
+    const actualEnd = Math.min(totalNumPages, Math.max(actualStart, endPage || totalNumPages));
+    await fs.promises.mkdir(tempDir, { recursive: true });
+
+    const pageImages = [];
+    for (let i = actualStart; i <= actualEnd; i++) {
+      const page = await pdfDocument.getPage(i);
+      const viewport = page.getViewport({ scale: scale || 1.5 });
+      const canvas = createCanvas(viewport.width, viewport.height);
+      const context = canvas.getContext('2d');
+
+      try {
+        await page.render({ canvasContext: context, viewport }).promise;
+        const jpegBuffer = canvas.toBuffer('image/jpeg', 85);
+        const filePath = path.join(tempDir, `page_${i}.jpg`);
+        await fs.promises.writeFile(filePath, jpegBuffer);
+
+        let text = '';
+        try {
+          const textContent = await page.getTextContent();
+          text = textContent.items.map((item) => item.str).join(' ');
+        } catch (err) {
+          console.warn(`[geminiVisionExtractor] Could not extract text inventory for page ${i}:`, err.message);
+        }
+
+        pageImages.push({
+          pageIndex: i,
+          width: Math.round(viewport.width),
+          height: Math.round(viewport.height),
+          filePath,
+          mimeType: 'image/jpeg',
+          inventory: buildPageInventory(i, text),
+          tempDir,
+        });
+      } finally {
+        page.cleanup();
+        canvas.width = 0;
+        canvas.height = 0;
+      }
+    }
+
+    completed = true;
+    return pageImages;
+  } finally {
+    await loadingTask.destroy();
+    if (!completed) {
+      await fs.promises.rm(tempDir, { recursive: true, force: true });
+    }
   }
-
-  const pageImages = [];
-
-  for (let i = actualStart; i <= actualEnd; i++) {
-    const page = await pdfDocument.getPage(i);
-    const viewport = page.getViewport({ scale: scale || 1.5 }); // 1.5x is optimal resolution for Gemini Vision
-    const canvas = createCanvas(viewport.width, viewport.height);
-    const context = canvas.getContext('2d');
-
-    await page.render({
-      canvasContext: context,
-      viewport,
-    }).promise;
-
-    const jpegBuffer = canvas.toBuffer('image/jpeg', 85);
-    page.cleanup(); // Clean up PDF.js memory immediately!
-
-    // Stream page image to disk to prevent V8 heap OOM
-    const filePath = path.join(tempDir, `page_${i}.jpg`);
-    await fs.promises.writeFile(filePath, jpegBuffer);
-
-    // Extract text content for lightweight page inventory
-    let text = '';
-    try {
-      const tc = await page.getTextContent();
-      text = tc.items.map((it) => it.str).join(' ');
-      page.cleanup();
-    } catch (_) { }
-
-    const inventory = buildPageInventory(i, text);
-
-    pageImages.push({
-      pageIndex: i,
-      width: Math.round(viewport.width),
-      height: Math.round(viewport.height),
-      filePath,
-      mimeType: 'image/jpeg',
-      inventory,
-      tempDir,
-    });
-  }
-
-  await pdfDocument.destroy();
-
-  return pageImages;
 }
 
 /**
@@ -644,17 +700,8 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
   }
 
   const effectiveImportId = importId || `doc_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-  const candidateModels = [
-    env.geminiModel,
-    process.env.GEMINI_MODEL,
-    'gemini-3.8-flash',
-    'gemini-3.7-flash',
-    'gemini-3.6-flash',
-    'gemini-3.5-flash',
-    'gemini-flash-latest',
-    'gemini-pro-latest',
-  ].filter(Boolean).filter((m, i, a) => a.indexOf(m) === i);
-  let activeModel = candidateModels[0] || 'gemini-3.8-flash';
+  const candidateModels = buildGeminiVisionCandidateModels([env.geminiModel, process.env.GEMINI_MODEL]);
+  let activeModel = candidateModels[0] || 'gemini-2.5-flash';
 
   console.log(`[geminiVisionExtractor] Initializing extraction pipeline with candidate models: [${candidateModels.join(', ')}] (primary: ${activeModel}, pageRange: ${startPage}-${endPage || 'end'}, expectedCount: ${expectedQuestionCount || 'auto'}, importId: ${effectiveImportId})`);
 
@@ -773,8 +820,9 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
             questionType: { type: Type.STRING },
             correctAnswer: { type: Type.STRING },
             numericAnswer: { type: Type.STRING },
+            sourcePages: { type: Type.ARRAY, items: { type: Type.INTEGER } },
           },
-          required: ['questionNumber', 'correctAnswer'],
+          required: ['questionNumber'],
         },
       },
       solutions: {
@@ -821,6 +869,7 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
             questionNumber: { type: Type.INTEGER },
             topicName: { type: Type.STRING },
             subject: { type: Type.STRING },
+            sourcePages: { type: Type.ARRAY, items: { type: Type.INTEGER } },
           },
           required: ['questionNumber', 'topicName'],
         },
@@ -1015,10 +1064,10 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
     }
   }
 
-  // Step 3: Process PDF page-by-page with concurrency of 5
-  console.log(`[PDF Extraction Pipeline] STAGE 2: Processing ${pageImages.length} page(s) page-by-page with concurrency...`);
+  // Keep only a small number of page images/base64 payloads in flight for large PDFs.
+  console.log(`[PDF Extraction Pipeline] STAGE 2: Processing ${pageImages.length} page(s) page-by-page with bounded concurrency...`);
 
-  const PAGE_CONCURRENCY = 5;
+  const PAGE_CONCURRENCY = 2;
   for (let i = 0; i < pageImages.length; i += PAGE_CONCURRENCY) {
     const chunk = pageImages.slice(i, i + PAGE_CONCURRENCY);
     const chunkPromises = chunk.map(async (pageImg) => {
@@ -1034,10 +1083,8 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
 
       const isSolutionOrAnswerDocument = Boolean(
         options.isSolutionPdf ||
-        inv.isSolutions ||
-        inv.isAnswerKey ||
-        inv.pageType === 'solution_page' ||
-        inv.pageType === 'answer_key_page'
+        ((inv.isSolutions || inv.isAnswerKey || inv.pageType === 'solution_page' || inv.pageType === 'answer_key_page') &&
+          !inv.hasQuestionContent)
       );
 
       const pagePrompt = isSolutionOrAnswerDocument ? String.raw`
@@ -1070,6 +1117,7 @@ CRITICAL INSTRUCTIONS FOR THIS ANSWER KEY & DETAILED SOLUTIONS DOCUMENT:
   * For multi-line derivations or step-by-step calculations, keep each step on a clean separate line.
   * NEVER truncate, summarize, or omit portions of the explanation! Even if very long, transcribe everything.
   * Include references to figures/diagrams as written (e.g., "As shown in the figure...").
+  * Preserve any table used in an explanation as a complete Markdown table inside the explanation. If the table is image-based, also include its bounding box as a visualElement with type "table".
 - "visualElements": CRITICAL - if the solution or explanation includes ANY diagram, schematic, anatomical drawing, circuit, graph, free body diagram, or geometric figure:
   * Include its precise bounding box box_2d [ymin, xmin, ymax, xmax] in 0-1000 scale relative to page.
   * Use the tightest box that includes the full diagram (including axis labels and legends).
@@ -1105,6 +1153,8 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
   | :--- | :--- |
   | (a) Item A | (p) Item P |
   | (b) Item B | (q) Item Q |
+  - Also include every complete table as its own Markdown string in the question's "tables" array. Preserve all rows, columns, labels, units, footnotes, and cell values; never summarize or omit rows.
+  - If a table is image-based or its layout cannot be represented faithfully as text, include a tight "table" visualElements bounding box and a short description, while still transcribing any legible cell text.
 - For option choices of match questions:
   Preserve the FULL mapping string with all sub-item keys intact in the option text:
   Example:
@@ -1139,6 +1189,11 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
   * NEVER omit diagrams, even simple ones (number lines, circles, triangles, arrows)!
 - INLINE ANSWERS: If the question text or options have a printed correct answer marker (e.g., "Ans: B", "Answer: (3)", asterisk, or checkmark next to option), record it in inlineCorrectAnswer using letter ("A"/"B"/"C"/"D").
 - INLINE EXPLANATIONS: If a hint or short solution is printed below the question, capture it in inlineExplanation (use LaTeX for all formulas).
+${(inv.isAnswerKey || inv.isSolutions) && inv.hasQuestionContent ? `
+7. MIXED QUESTION AND ANSWER/SOLUTION PAGE:
+- This page contains both question content and an answer-key or solution section. Extract all visible questions into "questions" AND all answer-key entries and complete explanations into their respective arrays.
+- Do not leave "questions" empty just because an answer-key or solution heading appears on the page.
+` : ''}
 `;
 
       const pageBuf = pageImg.buffer || (pageImg.filePath ? await fs.promises.readFile(pageImg.filePath) : null);
@@ -1160,13 +1215,12 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 
       try {
         const result = await callGemini(contents, `Page ${pageIndex}`);
-        const parsedOutput = result?.parsed;
-
-        if (!parsedOutput) {
+        if (!result?.parsed) {
           console.warn(`[geminiVisionExtractor] Page ${pageIndex} returned null/unparseable JSON.`);
           failedPages.push(pageIndex);
           return;
         }
+        const parsedOutput = attachPageMetadata(result.parsed, pageIndex);
 
         const batchQuestions = Array.isArray(parsedOutput?.questions) ? parsedOutput.questions : [];
         const batchAnswerKeyEntries = Array.isArray(parsedOutput?.answerKeyEntries) ? parsedOutput.answerKeyEntries : [];
@@ -1183,6 +1237,10 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
           suspiciousPages.push({ pageIndex, reason: 'Output truncated due to MAX_TOKENS' });
         } else if (missingDetected.length >= 2) {
           suspiciousPages.push({ pageIndex, reason: `Visible question starts missing: [${missingDetected.join(', ')}]` });
+        }
+        if ((inv.isAnswerKey && batchAnswerKeyEntries.length === 0) ||
+            (inv.isSolutions && batchSolutions.length === 0)) {
+          suspiciousPages.push({ pageIndex, reason: 'Answer-key or solution page returned no matching entries' });
         }
 
         // Tag physical sourcePages and reading position
@@ -1227,7 +1285,8 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
 
   // Detect gaps across consecutive pages
   let prevLastNum = 0;
-  for (let pIdx = 1; pIdx <= pageImages.length; pIdx++) {
+  for (const pageImage of pageImages) {
+    const pIdx = pageImage.pageIndex;
     const numsOnPage = (perPageQNums.get(pIdx) || []).sort((a, b) => a - b);
     if (numsOnPage.length > 0) {
       const minOnPage = numsOnPage[0];
@@ -1274,13 +1333,16 @@ CRITICAL INSTRUCTIONS FOR THIS EXAM PAPER:
       if (leftColCrop && rightColCrop) {
         try {
           const colPrompt = (colName) => String.raw`
-You are an expert exam-paper digitizer transcribing ${colName} Column of Page ${pageIndex}.
-Transcribe ALL questions visible in this column completely with printed question numbers, formulas in LaTeX $...$, options, and diagrams with box_2d.
+You are an expert exam-paper digitizer transcribing the ${colName} Column of Page ${pageIndex}.
+Return complete JSON matching the supplied schema. Extract all content visible in this column:
+questions with all options, tables, inline answer markers and hints; answerKeyEntries; complete solutions and explanations; and topicGridEntries.
+For answer-key/solution pages, keep questions empty and extract every answer and full explanation instead.
 CRITICAL INSTRUCTIONS:
 - Use actual printed continuous question numbers (e.g. 5, 6, 7, 8).
-- Transcribe mathematical and chemical formulas in standard LaTeX wrapped in $...$.
+- Transcribe all mathematical and chemical formulas in standard LaTeX wrapped in $...$; retain complete step-by-step explanations.
 - Options with keys ('A', 'B', 'C', 'D' or '1', '2', '3', '4') and option text.
-- If diagrams, apparatus, circuits, or graphs exist, provide bounding box box_2d [ymin, xmin, ymax, xmax] (0-1000).
+- Represent every table as complete Markdown in tables and include a tight type "table" visualElements box when layout matters.
+- For every diagram, table, graph, circuit, or figure, provide box_2d [ymin, xmin, ymax, xmax] in 0-1000 coordinates relative to this column.
 - Assign subject ('Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics'), chapter, and topic. For biological questions, strictly assign 'Botany' (for plants/cells/genetics/ecology) or 'Zoology' (for animals/human physiology/reproduction/evolution/biotech).
 `;
 
@@ -1295,37 +1357,20 @@ CRITICAL INSTRUCTIONS:
             ], `Page ${pageIndex} (Right Col)`),
           ]);
 
-          const leftQs = leftRes?.parsed?.questions || [];
-          const rightQs = rightRes?.parsed?.questions || [];
-
-          // Transform crop-relative coordinates back to original-page coordinates!
-          for (const q of leftQs) {
-            if (Array.isArray(q.visualElements)) {
-              for (const v of q.visualElements) {
-                if (v.box_2d) v.box_2d = remapBoxToOriginalPage(v.box_2d, [0, 0, 1000, 520]);
-              }
-            }
-            q.sourcePages = [pageIndex];
-            q.physicalPageIndex = pageIndex;
-            q.printedQuestionNumber = q.questionNumber;
-            q.internalId = `p${pageIndex}_left_q${q.questionNumber}`;
-          }
-
-          for (const q of rightQs) {
-            if (Array.isArray(q.visualElements)) {
-              for (const v of q.visualElements) {
-                if (v.box_2d) v.box_2d = remapBoxToOriginalPage(v.box_2d, [0, 480, 1000, 1000]);
-              }
-            }
-            q.sourcePages = [pageIndex];
-            q.physicalPageIndex = pageIndex;
-            q.printedQuestionNumber = q.questionNumber;
-            q.internalId = `p${pageIndex}_right_q${q.questionNumber}`;
-          }
-
-          const recoveredQs = [...leftQs, ...rightQs];
-          if (recoveredQs.length > 0) {
-            console.log(`[geminiVisionExtractor] Targeted recovery succeeded for Page ${pageIndex}: recovered ${recoveredQs.length} question(s)!`);
+          const leftData = attachPageMetadata(leftRes?.parsed, pageIndex, [0, 0, 1000, 520]);
+          const rightData = attachPageMetadata(rightRes?.parsed, pageIndex, [0, 480, 1000, 1000]);
+          const recoveredQs = [...leftData.questions, ...rightData.questions].map((q, idx) => ({
+            ...q,
+            physicalPageIndex: pageIndex,
+            printedQuestionNumber: q.questionNumber,
+            internalId: `p${pageIndex}_recovered_q${q.questionNumber}_idx${idx + 1}`,
+          }));
+          const recoveredKeys = [...leftData.answerKeyEntries, ...rightData.answerKeyEntries];
+          const recoveredSolutions = [...leftData.solutions, ...rightData.solutions];
+          const recoveredTopics = [...leftData.topicGridEntries, ...rightData.topicGridEntries];
+          const recoveredCount = recoveredQs.length + recoveredKeys.length + recoveredSolutions.length + recoveredTopics.length;
+          if (recoveredCount > 0) {
+            console.log(`[geminiVisionExtractor] Targeted recovery succeeded for Page ${pageIndex}: recovered ${recoveredQs.length} question(s), ${recoveredKeys.length} key(s), ${recoveredSolutions.length} solution(s), and ${recoveredTopics.length} topic(s).`);
             const oldPageQs = allRawQuestions.filter((q) => q.sourcePages?.includes(pageIndex));
             const newNums = new Set(recoveredQs.map((q) => Number(q.questionNumber)));
 
@@ -1340,6 +1385,19 @@ CRITICAL INSTRUCTIONS:
             const otherQs = allRawQuestions.filter((q) => !q.sourcePages?.includes(pageIndex));
             allRawQuestions.length = 0;
             allRawQuestions.push(...otherQs, ...mergedPageQs);
+
+            const replacePageEntries = (entries, recoveredEntries) => {
+              const recoveredNums = new Set(recoveredEntries.map((entry) => Number(entry.questionNumber)));
+              const retained = entries.filter((entry) => (
+                !entry.sourcePages?.includes(pageIndex) ||
+                !recoveredNums.has(Number(entry.questionNumber))
+              ));
+              entries.length = 0;
+              entries.push(...retained, ...recoveredEntries);
+            };
+            replacePageEntries(allRawAnswerKeyEntries, recoveredKeys);
+            replacePageEntries(allRawSolutions, recoveredSolutions);
+            replacePageEntries(allRawTopicGridEntries, recoveredTopics);
 
             // Remove from failedPages
             const fIdx = failedPages.indexOf(pageIndex);
@@ -2073,7 +2131,7 @@ export async function classifyBiologyQuestionsWithGemini(questions = [], testTit
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    const model = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+    const model = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 
     const questionItems = questions.map((q, idx) => ({
       index: idx,
@@ -2170,4 +2228,3 @@ ${JSON.stringify(batch, null, 2)}`;
     return fallbackBiologyClassification(questions);
   }
 }
-

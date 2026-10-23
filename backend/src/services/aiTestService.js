@@ -659,7 +659,7 @@ async function callClaudeAPI({ prompt, model = 'claude-sonnet-4-6', maxTokens = 
   if (geminiKey) {
     try {
       const ai = new GoogleGenAI({ apiKey: geminiKey });
-      const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+      const modelName = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
       const response = await ai.models.generateContent({
         model: modelName,
         contents: prompt,

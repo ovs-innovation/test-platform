@@ -15,7 +15,6 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
             ts.is_active::boolean AS is_active,
             COUNT(DISTINCT se.id)::int AS enrollment_count,
             COUNT(DISTINCT tst.test_id)::int AS linked_tests,
-            COUNT(DISTINCT tst.test_id)::int AS planned_tests,
             COALESCE(
               (
                 SELECT json_agg(
@@ -165,6 +164,9 @@ export const updateTestSeries = asyncHandler(async (req, res) => {
     fields.brochure_name = fields.brochure_name && typeof fields.brochure_name === 'string' && fields.brochure_name.trim()
       ? fields.brochure_name.trim()
       : null;
+  }
+  if ('planned_tests' in fields && !('test_count' in fields)) {
+    fields.test_count = fields.planned_tests;
   }
   const keys = Object.keys(fields);
   if (!keys.length) throw ApiError.badRequest('No fields to update');

@@ -74,7 +74,7 @@ export const createB2bEnquiry = asyncHandler(async (req, res) => {
         institutionType || 'School',
         studentCount || '100-300',
         targetExam || 'NEET',
-        interestedPackage || 'NEET-UG 2027 One-Year Program',
+        interestedPackage || 'AIETS Package Pricing • One-Year Program',
         message ? message.trim() : '',
         estTotal,
         'New Request',

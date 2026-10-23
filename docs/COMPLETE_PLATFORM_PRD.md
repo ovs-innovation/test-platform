@@ -5,7 +5,7 @@
 **Status:** Approved & Implemented Baseline  
 **Product Scope:** Full-Stack Online Examination, Test Series Marketplace, Multi-Tenant Institutional B2B SaaS, and Academic Management Platform  
 **Target Examinations:** JEE Main, JEE Advanced, NEET-UG, Foundation (Classes 8–10), SSC & National Competitive Exams  
-**Technology Stack:** React 18 + Vite + Tailwind CSS · Node.js 18+ (Express) · PostgreSQL 15+ · Gemini 3.8 Flash Vision AI · Razorpay & PhonePe Gateway  
+**Technology Stack:** React 18 + Vite + Tailwind CSS · Node.js 18+ (Express) · PostgreSQL 15+ · Gemini 2.5 Flash Vision AI · Razorpay & PhonePe Gateway
 
 ---
 
@@ -90,7 +90,7 @@ The platform is designed with an **API-First, Service-Oriented Architecture** al
         ┌────────────────────────┼────────────────────────┐
         ▼                        ▼                        ▼
   DATABASE TIER            EXTERNAL APIS            STORAGE / AI
-  PostgreSQL 15+         • Razorpay (Checkout/API)• Gemini 3.8 Flash Vision
+  PostgreSQL 15+         • Razorpay (Checkout/API)• Gemini 2.5 Flash Vision
   (Connection Pool       • PhonePe (PG SDK)       • Sharp / Canvas Engine
    Normalized Schema     • SMTP Mailer (Nodemailer• Local & S3 Storage
    Migrations v1-v56)    • Firebase (Cloud Alerts)• KaTeX / MathJax TeX
@@ -99,7 +99,7 @@ The platform is designed with an **API-First, Service-Oriented Architecture** al
 ### 3.2 Key Technical Specifications
 * **Frontend:** React 18, Vite 5, Tailwind CSS, Lucide Icons, KaTeX Math rendering, HTML5 Fullscreen API, Web Storage API with sync reconciliation.
 * **Backend:** Node.js (ES Modules), Express 4, `pg` connection pool with parameterized queries, Zod validation, `bcrypt` (salt rounds 10), JWT tokens.
-* **AI & Document Processing:** Google Gemini 3.8 Flash via `@google/genai`, PDF.js (`pdfjs-dist/legacy`), Node Canvas (`@napi-rs/canvas`), `sharp` image processing.
+* **AI & Document Processing:** Google Gemini 2.5 Flash via `@google/genai`, PDF.js (`pdfjs-dist/legacy`), Node Canvas (`@napi-rs/canvas`), `sharp` image processing.
 * **Payment Processing:** Dual integration supporting Razorpay webhook verification and PhonePe V2 Standard Checkout with an automated cron reconciliation job.
 
 ---
@@ -283,13 +283,14 @@ The exam interface replicates the National Testing Agency (NTA) Computer-Based T
 
 ### 10.1 Gemini Vision Automated Paper Extraction Pipeline (`geminiVisionExtractor.js`)
 * **Enterprise Ingestion Workflow:** Solves manual data entry by extracting complete competitive exam papers directly from scanned PDFs and question paper images.
-* **Page Rasterization:** High-resolution multi-page rendering using `pdfjs-dist/legacy` and `@napi-rs/canvas` at 2.0x scale.
-* **Gemini 3.8 Flash Multimodal Analysis:**
-  * Extracts question body, option choices, sub-questions, and official answer keys.
+* **Large-PDF Processing:** Pages are rendered to temporary disk files and sent to Gemini with bounded concurrency to limit memory use. Suspicious or truncated pages receive a targeted two-column recovery pass.
+* **Gemini 2.5 Flash Multimodal Analysis:**
+  * Extracts question body, option choices, answer keys, complete explanations, and topic mappings.
   * Formats all scientific mathematical formulas into standard LaTeX (`$...$` and `$$...$$`).
-  * Automatically detects diagrams, circuit charts, and geometric figures.
-* **Automated Diagram Cropping:** Detects bounding boxes for figures and uses `sharp` to automatically crop, optimize, and save diagrams to `/uploads/diagrams`, embedding clean image URLs into the question markdown.
+  * Preserves complete tables as Markdown and detects bounding boxes for image-based tables, diagrams, circuit charts, and geometric figures.
+* **Automated Visual Cropping:** Maps diagram and solution visual bounding boxes back to their physical PDF pages, then uses `sharp` to crop and save them to `/uploads/diagrams`.
 * **Numeric Answer Normalization:** Robust parsing for integer and numerical questions, preserving decimal ranges and multiple accepted answers (e.g., "107 or 108").
+* **Coverage Recovery:** Tracks page failures and suspicious extraction results, then retries affected pages by column while preserving page attribution for questions, answer keys, explanations, and visuals.
 
 ### 10.2 Question Bank Taxonomy & Hierarchy (`/admin/question-bank`, `/admin/subjects`)
 * **Normalized Academic Hierarchy:** Exam Stream -> Subject -> Chapter -> Topic.

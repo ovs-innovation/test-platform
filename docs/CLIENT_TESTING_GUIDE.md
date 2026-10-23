@@ -189,11 +189,12 @@
 2. Click **"AI Question Paper Upload (PDF)"**.
 3. Upload a sample competitive exam question paper PDF containing mathematical formulas and diagrams:
    - **What to observe in the system:**
-     1. Multi-page PDF rasterization (using `@napi-rs/canvas` at 2.0x DPI).
-     2. Google Gemini 3.8 Flash multimodal analysis extracting questions, options, and official answer keys.
-     3. Mathematical equations converted into clean LaTeX strings (`$...$`).
-     4. Automatic diagram detection: Bounding boxes are cropped using `sharp` (with Canvas fallback) and saved directly to `/uploads/diagrams/`.
-     5. The questions appear in the review table with diagram images and math previews rendered cleanly!
+     1. Multi-page PDF rendering to temporary disk files and bounded Gemini concurrency for large-document memory control.
+     2. Gemini extraction of questions, options, answer keys, complete explanations, and topic mappings.
+     3. Mathematical equations converted into clean LaTeX strings (`$...$`), with tables preserved as complete Markdown.
+     4. Automatic detection and cropping of diagrams, image-based tables, and solution figures from their original PDF pages.
+     5. Pages with missing or truncated results receive targeted two-column recovery; confirm extracted page coverage and review warnings.
+     6. The questions appear in the review table with diagram images and math previews rendered cleanly.
 4. Click **"Import to Question Bank / Assessment"** and confirm questions are saved into the database.
 
 #### Step 4: Dynamic Admission Form Builder & Applications Manager (`/admin/admissions`)

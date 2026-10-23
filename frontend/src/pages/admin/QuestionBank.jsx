@@ -234,7 +234,7 @@ export default function AdminQuestionBank() {
       toast.success(`Imported ${res.created} question(s) successfully!`);
       await load();
     } catch (err) {
-      let msg = err?.message || err?.response?.data?.message || err?.response?.data?.error || 'PDF extraction failed. Please check the file.';
+      let msg = err?.response?.data?.message || err?.response?.data?.error || err?.message || 'PDF extraction failed. Please check the file.';
       if (typeof msg === 'string' && /<html|<!DOCTYPE/i.test(msg)) {
         msg = 'The server encountered an issue processing this PDF. If the file is very large, consider splitting it into smaller parts.';
       }

@@ -54,7 +54,7 @@ export const translateText = async (text, targetLang = 'hi', sourceLang = 'en') 
         const ai = new GoogleGenAI({ apiKey: env.geminiApiKey });
         const prompt = `Translate the following exam question text from ${sourceLang} to Hindi. Keep LaTeX math expressions like $...$ or $$...$$ unchanged. Only output the translated Hindi text without conversational filler.\n\nText:\n${text}`;
         const response = await ai.models.generateContent({
-          model: env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+          model: env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash',
           contents: prompt,
         });
         const out = response.text?.trim() || text;

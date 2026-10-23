@@ -657,6 +657,12 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
           include_answers: includeAnswers,
         });
 
+        if (!Number(res.extractedCount)) {
+          throw new Error(
+            res.message || 'The PDF was uploaded, but no questions were extracted. Try a clearer PDF or upload smaller page ranges.'
+          );
+        }
+
         toast.success(res.message || `Successfully extracted ${res.extractedCount || 0} questions with options!`);
         if (res.warnings && res.warnings.length > 0) {
           if (typeof toast.warning === 'function') {

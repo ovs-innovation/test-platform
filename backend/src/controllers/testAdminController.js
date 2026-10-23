@@ -1583,6 +1583,18 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
       extractionStats = pdfExtraction.stats || null;
       const parsedQs = pdfExtraction.rows || [];
 
+      if (file_type === 'question_paper' && parsedQs.length === 0) {
+        const extractionDetail = pdfExtraction.visionBypassReason
+          ? ` Extraction detail: ${pdfExtraction.visionBypassReason}`
+          : '';
+        const noQuestionsError = new Error(
+          `The PDF was uploaded, but no questions could be extracted.${extractionDetail} Confirm that it is a question paper, then retry with a clearer PDF or upload smaller page ranges.`
+        );
+        noQuestionsError.code = 'PDF_NO_QUESTIONS_EXTRACTED';
+        noQuestionsError.statusCode = 422;
+        throw noQuestionsError;
+      }
+
       if (file_type === 'question_paper' && parsedQs.length > 0) {
         console.log(`[PDF Extraction Pipeline] STAGE 5: Questions Before DB Save = ${parsedQs.length} question(s)`);
         const persistResult = await persistExtractedQuestionsToAssessment(id, parsedQs, {
@@ -1624,8 +1636,10 @@ export const uploadTestFile = asyncHandler(async (req, res) => {
           }
         }
       } catch (_) {}
-      return res.status(400).json({
+      const statusCode = err.statusCode || (err.code === 'PDF_VISION_EXTRACTION_FAILED' ? 502 : 400);
+      return res.status(statusCode).json({
         error: true,
+        code: err.code || 'PDF_EXTRACTION_FAILED',
         message: clientMsg,
       });
     }

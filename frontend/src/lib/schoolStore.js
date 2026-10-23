@@ -320,7 +320,7 @@ export async function submitSchoolDemoLead(leadData) {
     institutionType: leadData.institutionType || 'School',
     studentCount: leadData.studentCount || '100-300',
     targetExam: leadData.targetExam || leadData.preferredCourse || 'NEET',
-    interestedPackage: leadData.interestedPackage || 'NEET-UG 2027 One-Year Program',
+    interestedPackage: leadData.interestedPackage || 'AIETS Package Pricing • One-Year Program',
     message: leadData.message || '',
     estimatedPrice: leadData.estimatedPrice || leadData.estimatedGrandTotal || 0,
     status: 'New Request',
@@ -620,5 +620,4 @@ export function findStudentByAccess({ instituteCode, enrollmentId, mobile, email
     },
   };
 }
-
 

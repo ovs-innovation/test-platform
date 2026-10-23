@@ -562,7 +562,14 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     let extractedQs = pdfExtraction.rows || [];
 
     if (!extractedQs.length) {
-      throw ApiError.badRequest('No questions could be extracted from the PDF. Please ensure the PDF contains readable text or high quality question pages.');
+      const requestedPageRange = page_range || pageRange;
+      const pageRangeContext = requestedPageRange ? ` in pages ${requestedPageRange}` : '';
+      const extractionDetail = pdfExtraction.visionBypassReason
+        ? ` Extraction detail: ${pdfExtraction.visionBypassReason}`
+        : '';
+      throw ApiError.badRequest(
+        `No questions were extracted${pageRangeContext}. Make sure the selected pages contain questions (not only a cover, contents, answer key, or solutions), then try a smaller page range or a clearer PDF.${extractionDetail}`
+      );
     }
 
     console.log(`[uploadPdfToQuestionBank] Extracted ${extractedQs.length} question(s) from PDF.`);
@@ -812,5 +819,4 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     await cleanupUploadedFiles(req);
   }
 });
-
 

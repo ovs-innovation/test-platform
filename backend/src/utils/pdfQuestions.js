@@ -503,6 +503,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
           question_count: 0,
         };
       }
+
+      visionBypassReason = 'Gemini Vision returned no question records.';
     } catch (err) {
       const sanitizedErrMsg = (err.message || 'Unknown vision error')
         .replace(/AIza[0-9A-Za-z-_]{35}/g, '[REDACTED]')
@@ -528,7 +530,12 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
     if (!visionBypassReason) {
       throw parseErr;
     }
-    throw new Error(`AI Vision extraction failed (${visionBypassReason}), and plain-text fallback parsing failed: ${parseErr.message}`);
+    const extractionError = new Error(
+      `AI Vision extraction failed (${visionBypassReason}), and plain-text fallback parsing failed: ${parseErr.message}`
+    );
+    extractionError.code = 'PDF_VISION_EXTRACTION_FAILED';
+    extractionError.statusCode = /GEMINI_API_KEY is not configured/i.test(visionBypassReason) ? 503 : 502;
+    throw extractionError;
   }
   const rawRows = parsed.rows || [];
   const errors = parsed.errors || [];
@@ -639,6 +646,4 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
     text_preview: text.slice(0, 1500),
   };
 }
-
-
 

@@ -9,7 +9,7 @@ function getGeminiClient() {
 }
 
 function getGeminiModel() {
-  return env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
+  return env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
 }
 
 function prepareGeminiContents(systemPrompt, questionText, imageBase64, mimeType = 'image/jpeg') {
@@ -2402,7 +2402,6 @@ Respond ONLY with valid JSON in this shape without markdown backticks:
   }
   return null;
 }
-
 
 
 

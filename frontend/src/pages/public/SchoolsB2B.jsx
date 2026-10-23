@@ -216,7 +216,7 @@ export default function SchoolsB2B() {
     institutionType: 'School',
     studentCount: '100-300',
     targetExam: 'NEET',
-    interestedPackage: 'NEET-UG 2027 One-Year Program',
+    interestedPackage: 'AIETS Package Pricing • One-Year Program',
     message: '',
     consent: false,
   });
@@ -328,7 +328,7 @@ export default function SchoolsB2B() {
         programName: matchedPkg.title,
         programYear: matchedPkg.target.includes('2028') ? 2028 : 2027,
         studentCountNum: calcStudentCount,
-        standardRetailRate: matchedPkg.baseRetailPrice,
+        standardRetailRate: matchedPkg.regularPrice,
         discountTier: calculatedQuote.tierLabel,
         estimatedDiscountedRate: calculatedQuote.discountedPricePerStudent,
         estimatedSubtotal: calculatedQuote.subtotal,
@@ -883,7 +883,7 @@ export default function SchoolsB2B() {
           <div className="grid md:grid-cols-2 gap-6 items-stretch">
             {B2B_PACKAGES.map((pkg, idx) => {
               const isFirst = idx === 0;
-              const buttonLabel = isFirst ? 'Select 2027 Program' : 'Select 2028 Program';
+              const buttonLabel = isFirst ? 'Select One-Year Program' : 'Select Two-Year Program';
               return (
                 <div
                   key={pkg.id}
@@ -900,7 +900,7 @@ export default function SchoolsB2B() {
                         <h3 className="text-base sm:text-lg font-extrabold text-[#071833] mt-0.5 leading-snug">{pkg.title}</h3>
                       </div>
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold shrink-0 ml-2 ${isFirst ? 'bg-[#2563EB] text-white' : 'bg-purple-600 text-white'}`}>
-                        {pkg.target}
+                      {isFirst ? 'One-Year Program' : 'Two-Year Program'}
                       </span>
                     </div>
 
@@ -913,8 +913,9 @@ export default function SchoolsB2B() {
                         <p className="text-xl font-extrabold text-[#071833]">{pkg.totalTests} CBT Tests</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-[9px] uppercase font-extrabold text-[#5D6B82]">Standard Retail Rate</p>
-                        <p className="text-lg font-extrabold text-[#2563EB]">₹{pkg.baseRetailPrice.toLocaleString()} <span className="text-[11px] text-[#5D6B82] font-normal">/student</span></p>
+                        <p className="text-[9px] uppercase font-extrabold text-[#5D6B82]">Regular Price / Student</p>
+                        <p className="text-sm font-bold text-slate-400 line-through">₹{pkg.regularPrice.toLocaleString()}</p>
+                        <p className="text-lg font-extrabold text-[#2563EB]">₹{pkg.baseRetailPrice.toLocaleString()} <span className="text-[11px] text-[#5D6B82] font-normal">Institute price/student</span></p>
                       </div>
                     </div>
 
@@ -1424,8 +1425,10 @@ export default function SchoolsB2B() {
                           : 'border-[#DCE5F1] bg-white hover:bg-slate-50'
                         }`}
                     >
-                      <p className="text-xs font-black text-[#071833]">{pkg.target}</p>
-                      <p className="text-[11px] text-[#5D6B82] mt-0.5">{pkg.totalTests} Mocks • ₹{pkg.baseRetailPrice}/std</p>
+                      <p className="text-xs font-black text-[#071833]">{pkg.title}</p>
+                      <p className="text-[11px] text-[#5D6B82] mt-0.5">
+                        {pkg.totalTests} Mocks • Regular ₹{pkg.regularPrice.toLocaleString()} • Institute ₹{pkg.baseRetailPrice.toLocaleString()}/student
+                      </p>
                     </button>
                   ))}
                 </div>
@@ -1442,7 +1445,7 @@ export default function SchoolsB2B() {
                   type="range"
                   min="50"
                   max="1500"
-                  step="25"
+                  step="1"
                   value={calcStudentCount}
                   onChange={(e) => setCalcStudentCount(parseInt(e.target.value))}
                   className="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#2563eb]"
@@ -1454,23 +1457,26 @@ export default function SchoolsB2B() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-xs">
-                <div className={`p-2.5 rounded-xl border ${calcStudentCount < 200 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                  <span>50-199</span>
-                  <p className="text-[10px] font-normal">Standard Rate</p>
-                </div>
-                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 200 && calcStudentCount < 500 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                  <span>200-499</span>
-                  <p className="text-[10px] font-bold text-emerald-600">25% OFF</p>
-                </div>
-                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 500 && calcStudentCount < 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                  <span>500-999</span>
-                  <p className="text-[10px] font-bold text-emerald-600">40% OFF</p>
-                </div>
-                <div className={`p-2.5 rounded-xl border ${calcStudentCount >= 1000 ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}>
-                  <span>1,000+</span>
-                  <p className="text-[10px] font-bold text-emerald-600">50% OFF</p>
-                </div>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-xs">
+                {[
+                  { min: 50, max: 100, range: '50–100', discount: 10 },
+                  { min: 101, max: 200, range: '101–200', discount: 15 },
+                  { min: 201, max: 300, range: '201–300', discount: 20 },
+                  { min: 301, max: 500, range: '301–500', discount: 25 },
+                  { min: 501, max: 1000, range: '501–1,000', discount: 30 },
+                  { min: 1001, max: Infinity, range: '1,001+', discount: 30 },
+                ].map((tier) => {
+                  const isActive = calcStudentCount >= tier.min && calcStudentCount <= tier.max;
+                  return (
+                    <div
+                      key={tier.min}
+                      className={`p-2.5 rounded-xl border ${isActive ? 'border-[#2563EB] bg-blue-50 font-bold text-[#2563EB]' : 'border-[#DCE5F1] text-[#5D6B82]'}`}
+                    >
+                      <span>{tier.range} Students</span>
+                      <p className="text-[10px] font-bold text-emerald-600">{tier.discount}% OFF</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
 
@@ -1487,11 +1493,19 @@ export default function SchoolsB2B() {
 
               <div className="space-y-2 text-xs font-mono">
                 <div className="flex justify-between text-[#5D6B82]">
-                  <span>Standard Retail Subtotal:</span>
+                  <span>Regular price subtotal:</span>
                   <span className="line-through text-slate-400">₹{calculatedQuote.retailSubtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-[#071833] font-bold">
-                  <span>Discounted Rate ({calcStudentCount} x ₹{calculatedQuote.discountedPricePerStudent}):</span>
+                  <span>Institute price before discount ({calcStudentCount} students):</span>
+                  <span>₹{calculatedQuote.instituteSubtotal.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-[#071833] font-bold">
+                  <span>Final price per student:</span>
+                  <span className="text-[#2563EB]">₹{calculatedQuote.discountedPricePerStudent.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-[#071833] font-bold">
+                  <span>Package subtotal ({calcStudentCount} students):</span>
                   <span className="text-[#2563EB]">₹{calculatedQuote.subtotal.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-[#5D6B82]">
@@ -1499,7 +1513,7 @@ export default function SchoolsB2B() {
                   <span>₹{calculatedQuote.taxAmount.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm font-black pt-3 border-t border-[#DCE5F1] text-[#071833]">
-                  <span>Grand Net Total (Incl. GST):</span>
+                  <span>Total package amount (Incl. GST):</span>
                   <span className="text-emerald-600 text-base">₹{calculatedQuote.grandTotal.toLocaleString()}</span>
                 </div>
               </div>

@@ -108,9 +108,9 @@ export function ToastProvider({ children }) {
             className={`pointer-events-auto flex items-center justify-between gap-3 w-full max-w-md rounded-xl px-4 py-3 text-sm font-semibold shadow-2xl backdrop-blur-md transition-all duration-300 transform animate-in fade-in slide-in-from-top-3 ${styles[t.type] || styles.info}`}
             role="status"
           >
-            <div className="flex items-center gap-2.5 min-w-0">
+            <div className="flex items-start gap-2.5 min-w-0">
               {icons[t.type] || icons.info}
-              <span className="truncate leading-snug">{t.message}</span>
+              <span className="max-h-40 overflow-y-auto whitespace-normal break-words leading-snug">{t.message}</span>
             </div>
             <button
               onClick={() => remove(t.id)}

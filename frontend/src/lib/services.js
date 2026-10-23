@@ -713,7 +713,7 @@ export const adminService = {
   deleteTest: (id) => api.delete(`/admin/tests/${id}`).then((r) => r.data),
   togglePublishTest: (id, is_published) => api.patch(`/admin/tests/${id}/publish`, { is_published }).then((r) => r.data),
   assignTest: (id, data) => api.post(`/admin/tests/${id}/assignments`, data).then((r) => r.data.assignment),
-  uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data).then((r) => r.data),
+  uploadTestFile: (id, data) => api.post(`/admin/tests/${id}/upload`, data, { timeout: 900000 }).then((r) => r.data),
   reclassifyTestQuestions: (id) => api.post(`/admin/tests/${id}/reclassify`).then((r) => r.data),
   getTestExtractedQuestions: (id) => api.get(`/admin/tests/${id}/extracted-questions`).then((r) => r.data),
   generateResults: (id) => api.post(`/admin/tests/${id}/generate-results`).then((r) => r.data),
@@ -999,4 +999,3 @@ export const enquiryService = {
   updateEnquiry: (id, data) => api.patch(`/admin/enquiries/${id}`, data).then((r) => r.data),
   deleteEnquiry: (id) => api.delete(`/admin/enquiries/${id}`).then((r) => r.data),
 };
-

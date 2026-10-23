@@ -7,7 +7,7 @@ export const B2B_PACKAGES = [
     dbId: 20,
     code: 'AIETS-NEET-2027-1Y',
     slug: 'neet-ug-2027-aiets-comprehensive-test-series',
-    title: 'NEET-UG 2027 Comprehensive Test Series',
+    title: 'AIETS Package Pricing • One-Year Program',
     target: 'NEET-UG 2027',
     suitableFor: 'Class XII and Class XII-pass/dropper students',
     duration: 'October 2026 to April 2027',
@@ -19,7 +19,8 @@ export const B2B_PACKAGES = [
       cumulativeTests: 2,
       fullMocks: 7,
     },
-    baseRetailPrice: 1999,
+    baseRetailPrice: 2000,
+    regularPrice: 2999,
     popular: true,
     features: [
       '39 NEET UG-Pattern Full CBT Tests',
@@ -35,7 +36,7 @@ export const B2B_PACKAGES = [
     dbId: 21,
     code: 'AIETS-NEET-2028-2Y',
     slug: 'aiets-neet-ug-2028-two-year-online-cbt-program',
-    title: 'AIETS Two-Year Online CBT Program',
+    title: 'AIETS Package Pricing • Two-Year Program',
     target: 'NEET-UG 2028',
     suitableFor: 'Classes XI and XII students',
     duration: '24 Months',
@@ -47,7 +48,8 @@ export const B2B_PACKAGES = [
       cumulativeTests: 2,
       fullMocks: 9,
     },
-    baseRetailPrice: 3999,
+    baseRetailPrice: 4000,
+    regularPrice: 6000,
     popular: false,
     features: [
       '60 NEET UG-Pattern Full CBT Tests across 2 Years',
@@ -88,12 +90,14 @@ export function getB2BPackageById(id) {
   );
 }
 
-// Volume discount tiers applied to standard retail price
+// Volume discounts apply to the institute price, not the regular price.
 export const PRICING_TIERS = [
-  { minStudents: 50, maxStudents: 199, discountPercent: 0, label: 'Standard Rate' },
-  { minStudents: 200, maxStudents: 499, discountPercent: 25, label: '25% Volume Savings' },
-  { minStudents: 500, maxStudents: 999, discountPercent: 40, label: '40% Bulk Tier' },
-  { minStudents: 1000, maxStudents: 5000, discountPercent: 50, label: '50% Maximum Volume Tier' },
+  { minStudents: 50, maxStudents: 100, discountPercent: 10, label: '10% discount · 50–100 students' },
+  { minStudents: 101, maxStudents: 200, discountPercent: 15, label: '15% discount · 101–200 students' },
+  { minStudents: 201, maxStudents: 300, discountPercent: 20, label: '20% discount · 201–300 students' },
+  { minStudents: 301, maxStudents: 500, discountPercent: 25, label: '25% discount · 301–500 students' },
+  { minStudents: 501, maxStudents: 1000, discountPercent: 30, label: '30% discount · 501–1,000 students' },
+  { minStudents: 1001, maxStudents: Infinity, discountPercent: 30, label: '30% discount · above 1,000 students' },
 ];
 
 export const TAX_CONFIG = {
@@ -116,8 +120,8 @@ export const TARGET_EXAMINATIONS = [
 ];
 
 export const INTERESTED_PACKAGES = [
-  'NEET-UG 2027 One-Year Program',
-  'NEET-UG 2028 Two-Year Program',
+  'AIETS Package Pricing • One-Year Program',
+  'AIETS Package Pricing • Two-Year Program',
   'Custom Institutional Package',
   'Not Sure',
 ];
@@ -133,7 +137,7 @@ export const B2B_FAQS = [
   },
   {
     q: 'Can we receive custom institutional pricing for large student batches?',
-    a: 'Yes. We offer bulk volume discounts ranging from 25% up to 50% off retail pricing based on your student batch size and selected AIETS program.',
+    a: 'Yes. Institutional discounts range from 10% to 30% based on your student batch size and selected AIETS program.',
   },
   {
     q: 'How are student login credentials created and distributed?',
@@ -168,20 +172,18 @@ export function calculateInstitutionalQuote(packageId, studentCount) {
   const pkg = getB2BPackageById(packageId);
   const count = Math.max(1, Number(studentCount) || 50);
 
-  let discountPercent = 0;
-  let tierLabel = 'Standard Rate';
+  const tier = PRICING_TIERS.find(
+    ({ minStudents, maxStudents }) => count >= minStudents && count <= maxStudents
+  );
+  const discountPercent = tier?.discountPercent || 0;
+  const tierLabel = tier?.label || 'Below minimum batch size';
 
-  for (const tier of PRICING_TIERS) {
-    if (count >= tier.minStudents) {
-      discountPercent = tier.discountPercent;
-      tierLabel = tier.label;
-    }
-  }
-
-  const retailPricePerStudent = pkg.baseRetailPrice;
-  const discountedPricePerStudent = Math.round(retailPricePerStudent * (1 - discountPercent / 100));
+  const retailPricePerStudent = pkg.regularPrice;
+  const institutePricePerStudent = pkg.baseRetailPrice;
+  const discountedPricePerStudent = Math.round(institutePricePerStudent * (1 - discountPercent / 100));
 
   const retailSubtotal = count * retailPricePerStudent;
+  const instituteSubtotal = count * institutePricePerStudent;
   const subtotal = count * discountedPricePerStudent;
   const totalSavings = retailSubtotal - subtotal;
   const taxAmount = Math.round(subtotal * TAX_CONFIG.gstRate);
@@ -193,8 +195,10 @@ export function calculateInstitutionalQuote(packageId, studentCount) {
     discountPercent,
     tierLabel,
     retailPricePerStudent,
+    institutePricePerStudent,
     discountedPricePerStudent,
     retailSubtotal,
+    instituteSubtotal,
     subtotal,
     totalSavings,
     taxAmount,

@@ -119,7 +119,7 @@ export const env = {
   },
   firebaseServiceAccount: process.env.FIREBASE_SERVICE_ACCOUNT || '',
   geminiApiKey: process.env.GEMINI_API_KEY || '',
-  geminiModel: process.env.GEMINI_MODEL || 'gemini-3.8-flash',
+  geminiModel: process.env.GEMINI_MODEL || 'gemini-2.5-flash',
   msg91: {
     authKey: (process.env.MSG91_AUTH_KEY || '569777AM5exLLhEf6acc7d6eP1').trim(),
     templateId: process.env.MSG91_OTP_TEMPLATE_ID || '6acb8433e4dd61c79c0eca17',
@@ -133,4 +133,3 @@ export const env = {
   maxPdfUploadMb: parseInt(process.env.MAX_PDF_UPLOAD_MB || '100', 10),
   maxPdfUploadBytes: parseInt(process.env.MAX_PDF_UPLOAD_MB || '100', 10) * 1024 * 1024,
 };
-
