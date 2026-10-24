@@ -47,6 +47,8 @@ const parseOptions = (value) => {
     return [];
 };
 
+import { resolveStandardChapter } from './chapterResolver.js';
+
 export const normalizeQuestionBankPayload = (payload = {}) => {
     const questionType = payload.question_type || 'mcq';
     const options = parseOptions(payload.options ?? payload.option_list ?? []);
@@ -57,9 +59,15 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
     const fallbackIndex = Number.isFinite(Number(singleValue)) ? Number(singleValue) : (correctIndices[0] ?? 0);
     const normalizedIndex = Number.isFinite(Number(fallbackIndex)) ? Number(fallbackIndex) : 0;
 
+    const category = payload.category || payload.subject || 'Physics';
+    const rawChapter = (payload.chapter || '').trim();
+    const rawTopic = (payload.topic || '').trim();
+    const resolvedChapter = resolveStandardChapter(category, rawTopic, payload.question_text || '', rawChapter);
+    const finalTopic = rawTopic && rawTopic.toLowerCase() !== resolvedChapter.toLowerCase() ? rawTopic : '';
+
     return {
         ...payload,
-        category: payload.category || payload.subject || 'Physics',
+        category,
         question_type: questionType,
         options,
         marks: Number(payload.marks ?? 1),
@@ -71,5 +79,9 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         difficulty: payload.difficulty || 'medium',
         image_url: payload.image_url || '',
         solution_image_url: payload.solution_image_url || '',
+        chapter: resolvedChapter,
+        topic: finalTopic,
+        subject: payload.subject || category,
     };
 };
+

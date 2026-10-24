@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image } from 'lucide-react';
+import { useEffect, useState, useRef, useMemo } from 'react';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -133,6 +133,8 @@ export default function AdminQuestionBank() {
 
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
+  const [customChapterMode, setCustomChapterMode] = useState(false);
+  const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
 
   // PDF Upload States
   const [pdfOpen, setPdfOpen] = useState(false);
@@ -243,7 +245,7 @@ export default function AdminQuestionBank() {
       if (typeof msg === 'string' && /<html|<!DOCTYPE/i.test(msg)) {
         msg = 'The server encountered an issue processing this PDF. If the file is very large, consider splitting it into smaller parts.';
       }
-      toast.error(msg);
+      toast.error(msg, { duration: 8000 });
     } finally {
       setPdfUploading(false);
       setPdfProgressStatus('');
@@ -292,11 +294,56 @@ export default function AdminQuestionBank() {
   };
 
   useEffect(() => {
+    setSelectedChapterFilter('all');
     load();
   }, [category]);
 
+  useEffect(() => {
+    const targetSubjId = form.subject_id;
+    if (targetSubjId && !isNaN(Number(targetSubjId))) {
+      adminService.chapters(targetSubjId).then((data) => {
+        setChaptersList(data || []);
+      }).catch(() => setChaptersList([]));
+    } else if (form.subject) {
+      const match = subjectsList.find((s) => s.name?.toLowerCase() === form.subject?.toLowerCase());
+      if (match?.id) {
+        adminService.chapters(match.id).then((data) => {
+          setChaptersList(data || []);
+        }).catch(() => setChaptersList([]));
+      } else {
+        setChaptersList([]);
+      }
+    } else {
+      setChaptersList([]);
+    }
+  }, [form.subject_id, form.subject, subjectsList]);
+
+  const availableChapters = useMemo(() => {
+    const set = new Set();
+    (questions || []).forEach((q) => {
+      const ch = q.chapter || q.chapter_name;
+      if (ch && ch.trim()) set.add(ch.trim());
+    });
+    return Array.from(set).sort();
+  }, [questions]);
+
+  const filteredQuestions = useMemo(() => {
+    let list = questions || [];
+    if (selectedChapterFilter && selectedChapterFilter !== 'all') {
+      list = list.filter((q) => {
+        const ch = q.chapter || q.chapter_name || '';
+        return ch.toLowerCase() === selectedChapterFilter.toLowerCase();
+      });
+    }
+    return list.map((q, idx) => ({
+      ...q,
+      serialNumber: idx + 1,
+    }));
+  }, [questions, selectedChapterFilter]);
+
   const openAdd = () => {
     setEditing(null);
+    setCustomChapterMode(false);
     setForm({
       question_type: 'mcq',
       question_text: '',
@@ -307,15 +354,25 @@ export default function AdminQuestionBank() {
       explanation_url: '',
       image_url: '',
       solution_image_url: '',
+      subject_id: null,
+      subject: category && category !== 'All' ? category : '',
+      chapter_id: null,
+      chapter: '',
+      topic: '',
+      difficulty: 'medium',
+      marks: 4,
     });
     setModalOpen(true);
   };
 
   const openEdit = (q) => {
     setEditing(q);
+    setCustomChapterMode(false);
     const opts = tryParseArray(q.options);
     const correctIndex = q.correct_index ?? q.correct_option ?? 0;
     const correctIndices = Array.isArray(q.correct_indices) ? q.correct_indices : (q.correct_index !== undefined && q.correct_index !== null ? [q.correct_index] : []);
+    const chapterName = q.chapter || q.chapter_name || '';
+    const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text || '',
@@ -327,9 +384,10 @@ export default function AdminQuestionBank() {
       image_url: q.image_url || '',
       solution_image_url: q.solution_image_url || '',
       subject_id: q.subject_id || null,
-      subject: q.subject || '',
+      subject: q.subject || q.category || '',
       chapter_id: q.chapter_id || null,
-      topic: q.topic || '',
+      chapter: chapterName,
+      topic: hasTopic ? q.topic : '',
       difficulty: q.difficulty || 'medium',
       marks: q.marks ?? 4,
     });
@@ -408,8 +466,9 @@ export default function AdminQuestionBank() {
         solution_image_url: form.solution_image_url || '',
         subject_id: form.subject_id || null,
         chapter_id: form.chapter_id || null,
+        chapter: (form.chapter || form.topic || '').trim(),
         subject: form.subject || category,
-        topic: form.topic || '',
+        topic: (form.topic || form.chapter || '').trim(),
         difficulty: form.difficulty || 'medium',
       };
 
@@ -509,12 +568,12 @@ export default function AdminQuestionBank() {
         )}
       />
 
-      <div className="mb-4 flex flex-wrap gap-2">
+      <div className="mb-3 flex flex-wrap gap-2">
         {categoriesList.map((c) => (
           <button
             key={c}
             type="button"
-            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 ${category === c
+            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${category === c
               ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
               : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
               }`}
@@ -525,12 +584,102 @@ export default function AdminQuestionBank() {
         ))}
       </div>
 
+      {/* Chapter Filter Pills (when multiple chapters exist in category) */}
+      {availableChapters.length > 1 && (
+        <div className="mb-4 flex flex-wrap items-center gap-1.5 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-950/20 text-xs">
+          <span className="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1 pl-1 pr-1.5">
+            <BookOpen className="h-3.5 w-3.5 shrink-0" />
+            <span>Chapter:</span>
+          </span>
+          <button
+            type="button"
+            onClick={() => setSelectedChapterFilter('all')}
+            className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+              selectedChapterFilter === 'all'
+                ? 'bg-indigo-600 text-white shadow-xs'
+                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50'
+            }`}
+          >
+            All Chapters ({questions.length})
+          </button>
+          {availableChapters.map((ch) => {
+            const count = (questions || []).filter((q) => (q.chapter || q.chapter_name) === ch).length;
+            return (
+              <button
+                key={ch}
+                type="button"
+                onClick={() => setSelectedChapterFilter(ch)}
+                className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
+                  selectedChapterFilter === ch
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50'
+                }`}
+              >
+                {ch} ({count})
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
             columns={[
               {
-                key: 'question_text', label: 'Question', render: (q) => {
+                key: 'serialNumber',
+                label: '#',
+                render: (q, idx) => {
+                  const sNo = q.serialNumber || (idx != null ? idx + 1 : q.id);
+                  return (
+                    <div className="flex flex-col items-center justify-center min-w-[36px] select-none">
+                      <span className="inline-flex items-center justify-center font-mono font-black text-xs text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/60 rounded-md px-2 py-0.5 shadow-2xs">
+                        #{sNo}
+                      </span>
+                      {q.id && (
+                        <span className="text-[9px] text-slate-400 dark:text-slate-500 font-mono mt-0.5" title={`Database ID: ${q.id}`}>
+                          ID:{q.id}
+                        </span>
+                      )}
+                    </div>
+                  );
+                },
+              },
+              {
+                key: 'chapter',
+                label: 'Chapter',
+                render: (q) => {
+                  const chapterName = q.chapter || q.chapter_name;
+                  const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
+                  return (
+                    <div className="flex flex-col gap-1 max-w-[200px]">
+                      {chapterName ? (
+                        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-lg px-2.5 py-1">
+                          <BookOpen className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+                          <span className="truncate" title={chapterName}>{chapterName}</span>
+                        </div>
+                      ) : (
+                        <span className="text-[11px] text-slate-400 dark:text-slate-500 italic flex items-center gap-1">
+                          <Bookmark className="h-3 w-3 opacity-40" />
+                          <span>General</span>
+                        </span>
+                      )}
+                      {hasTopic && (
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium truncate pl-1" title={`Specific Topic: ${q.topic}`}>
+                          Topic: {q.topic}
+                        </span>
+                      )}
+                    </div>
+                  );
+                },
+              },
+              {
+                key: 'question_text',
+                label: 'Question',
+                render: (q, idx) => {
+                  const sNo = q.serialNumber || (idx != null ? idx + 1 : q.id);
+                  const chapterName = q.chapter || q.chapter_name;
+                  const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
                   const opts = tryParseArray(q.options);
                   const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E'];
                   const hasAnswerKey = q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '';
@@ -538,6 +687,30 @@ export default function AdminQuestionBank() {
                   const isInteger = q.question_type === 'integer' || q.question_type === 'numerical';
                   return (
                     <div className="flex flex-col gap-1.5 max-w-xl py-1">
+                      {/* Top Identification Header: Numbering & Overall Chapter */}
+                      <div className="flex flex-wrap items-center gap-1.5 mb-0.5 select-none">
+                        <span className="inline-flex items-center gap-1 text-[11px] font-black text-blue-700 dark:text-blue-300 bg-blue-100/70 dark:bg-blue-900/40 px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800/50">
+                          <Hash className="h-3 w-3" />
+                          Question #{sNo}
+                        </span>
+                        {chapterName && (
+                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800/50 truncate max-w-xs" title={`Overall Chapter: ${chapterName}`}>
+                            <BookOpen className="h-3 w-3 shrink-0" />
+                            {chapterName}
+                          </span>
+                        )}
+                        {hasTopic && (
+                          <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700/50 truncate max-w-[170px]" title={`Specific Topic: ${q.topic}`}>
+                            Topic: {q.topic}
+                          </span>
+                        )}
+                        {q.subject && q.subject.toLowerCase() !== category.toLowerCase() && (
+                          <span className="text-[10px] font-bold text-purple-700 dark:text-purple-300 bg-purple-50 dark:bg-purple-950/40 px-1.5 py-0.5 rounded border border-purple-200 dark:border-purple-800/50">
+                            {q.subject}
+                          </span>
+                        )}
+                      </div>
+
                       {/* Question Text with LaTeX */}
                       <div className="text-slate-900 dark:text-slate-100 font-bold leading-snug text-xs">
                         <MathRenderer text={q.question_text} />
@@ -644,7 +817,7 @@ export default function AdminQuestionBank() {
                 )
               },
             ]}
-            rows={questions}
+            rows={filteredQuestions}
             emptyMessage={`No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
           />
         </div>
@@ -698,22 +871,51 @@ export default function AdminQuestionBank() {
               />
             </div>
             <div>
-              <label className="label">Chapter</label>
-              <CustomSelectDropdown
-                value={form.chapter_id || form.topic || ''}
-                placeholder="Select chapter"
-                disabled={!form.subject_id && !form.subject}
-                options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
-                onChange={(val, opt) => {
-                  const chapObj = opt || chaptersList.find(c => (c.id !== undefined && String(c.id) === String(val)) || (c.name && c.name.toLowerCase() === String(val).toLowerCase()));
-                  const nextChapId = (chapObj && chapObj.id !== undefined && chapObj.id !== '' && !isNaN(Number(chapObj.id))) ? Number(chapObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : null);
-                  const nextTopicName = (chapObj && (chapObj.name || chapObj.label)) ? (chapObj.name || chapObj.label) : String(val || '');
-                  setForm((f) => ({
-                    ...f,
-                    chapter_id: nextChapId || null,
-                    topic: nextTopicName
-                  }));
-                }}
+              <div className="flex items-center justify-between mb-1">
+                <label className="label mb-0">Chapter</label>
+                <button
+                  type="button"
+                  onClick={() => setCustomChapterMode((prev) => !prev)}
+                  className="text-[11px] text-blue-600 dark:text-blue-400 hover:underline font-bold cursor-pointer"
+                >
+                  {customChapterMode ? 'Select from list' : '+ Enter custom'}
+                </button>
+              </div>
+              {customChapterMode ? (
+                <input
+                  type="text"
+                  className="input text-xs"
+                  placeholder="e.g. Sexual Reproduction in Flowering Plants"
+                  value={form.chapter || ''}
+                  onChange={(e) => setForm((f) => ({ ...f, chapter: e.target.value }))}
+                />
+              ) : (
+                <CustomSelectDropdown
+                  value={form.chapter_id || form.chapter || ''}
+                  placeholder="Select chapter"
+                  disabled={!form.subject_id && !form.subject}
+                  options={[{ id: '', name: 'Select chapter' }, ...chaptersList]}
+                  onChange={(val, opt) => {
+                    const chapObj = opt || chaptersList.find(c => (c.id !== undefined && String(c.id) === String(val)) || (c.name && c.name.toLowerCase() === String(val).toLowerCase()));
+                    const nextChapId = (chapObj && chapObj.id !== undefined && chapObj.id !== '' && !isNaN(Number(chapObj.id))) ? Number(chapObj.id) : (val !== '' && val !== null && !isNaN(Number(val)) ? Number(val) : null);
+                    const nextChapterName = (chapObj && (chapObj.name || chapObj.label)) ? (chapObj.name || chapObj.label) : String(val || '');
+                    setForm((f) => ({
+                      ...f,
+                      chapter_id: nextChapId || null,
+                      chapter: nextChapterName,
+                    }));
+                  }}
+                />
+              )}
+            </div>
+            <div>
+              <label className="label">Specific Topic (Optional)</label>
+              <input
+                type="text"
+                className="input text-xs"
+                placeholder="e.g. Pollen Grain Viability / Double Fertilization"
+                value={form.topic || ''}
+                onChange={(e) => setForm((f) => ({ ...f, topic: e.target.value }))}
               />
             </div>
             <div>

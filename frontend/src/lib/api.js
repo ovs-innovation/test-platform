@@ -81,7 +81,13 @@ api.interceptors.response.use(
     const rawData = error.response?.data;
     let message = 'Something went wrong. Please try again.';
 
-    if (status === 413) {
+    if (status === 402) {
+      if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
+        message = rawData.message || rawData.error;
+      } else {
+        message = 'Google Gemini API prepayment credits are depleted. Please recharge your credits in Google AI Studio (https://ai.studio/projects) or configure an active GEMINI_API_KEY.';
+      }
+    } else if (status === 413) {
       if (rawData && typeof rawData === 'object' && (rawData.message || rawData.error)) {
         message = rawData.message || rawData.error;
       } else {

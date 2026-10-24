@@ -8,6 +8,7 @@ import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 import { env } from '../config/env.js';
 import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
 import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
+import { resolveStandardChapter } from '../utils/chapterResolver.js';
 
 const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
 
@@ -43,15 +44,32 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
   const cacheKey = `cache:qb:questions:${category || 'all'}`;
 
   const fetchQuestions = async () => {
-    let sql = 'SELECT * FROM question_bank';
+    let sql = `
+      SELECT qb.*, COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, c.name AS chapter_name, s.name AS subject_name
+      FROM question_bank qb
+      LEFT JOIN chapters c ON qb.chapter_id = c.id
+      LEFT JOIN subjects s ON qb.subject_id = s.id
+    `;
     const params = [];
     if (category) {
-      sql += ' WHERE category = $1';
+      sql += ' WHERE qb.category = $1';
       params.push(category);
     }
-    sql += ' ORDER BY category, id ASC';
+    sql += ' ORDER BY qb.category, qb.id ASC';
     const result = await query(sql, params);
-    return { questions: result.rows };
+    const questions = (result.rows || []).map((row) => {
+      const standardChapter = resolveStandardChapter(
+        row.category || row.subject_name || '',
+        row.topic || '',
+        row.question_text || '',
+        row.chapter || row.chapter_name || ''
+      );
+      return {
+        ...row,
+        chapter: standardChapter,
+      };
+    });
+    return { questions };
   };
 
   if (shouldSkipCache) {
@@ -167,11 +185,28 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     difficulty,
     image_url,
     solution_image_url,
+    chapter,
+    topic,
+    subject,
   } = payload;
 
+  let effectiveChapterId = chapter_id || null;
+  if (!effectiveChapterId && subject_id && chapter) {
+    const chMatch = await query(
+      'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2) LIMIT 1',
+      [subject_id, chapter]
+    );
+    if (chMatch.rows.length > 0) {
+      effectiveChapterId = chMatch.rows[0].id;
+    }
+  }
+
   const result = await query(
-    `INSERT INTO question_bank (category, question_type, question_text, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, subject_id, chapter_id, difficulty, image_url, solution_image_url)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17) RETURNING *`,
+    `INSERT INTO question_bank (
+       category, question_type, question_text, options, correct_index, correct_indices,
+       numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution,
+       subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *`,
     [
       category,
       question_type || 'mcq',
@@ -186,10 +221,13 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       Number(marks ?? 1),
       solution || '',
       subject_id || null,
-      chapter_id || null,
+      effectiveChapterId,
       difficulty || 'medium',
       image_url || '',
       solution_image_url || '',
+      chapter || '',
+      topic || '',
+      subject || category,
     ]
   );
   await delCache('cache:qb:*');
@@ -215,11 +253,27 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     difficulty,
     image_url,
     solution_image_url,
+    chapter,
+    topic,
+    subject,
   } = payload;
 
   const existing = await query('SELECT * FROM question_bank WHERE id = $1', [id]);
   if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
   const q = existing.rows[0];
+
+  let effectiveChapterId = chapter_id !== undefined ? (chapter_id || null) : q.chapter_id;
+  const effectiveSubjectId = subject_id !== undefined ? (subject_id || null) : q.subject_id;
+  const effectiveChapter = chapter !== undefined ? chapter : q.chapter;
+  if (!effectiveChapterId && effectiveSubjectId && effectiveChapter) {
+    const chMatch = await query(
+      'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2) LIMIT 1',
+      [effectiveSubjectId, effectiveChapter]
+    );
+    if (chMatch.rows.length > 0) {
+      effectiveChapterId = chMatch.rows[0].id;
+    }
+  }
 
   const result = await query(
     `UPDATE question_bank SET 
@@ -237,8 +291,11 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        chapter_id = $12,
        difficulty = $13,
        image_url = $14,
-       solution_image_url = $15
-     WHERE id = $16 RETURNING *`,
+       solution_image_url = $15,
+       chapter = $16,
+       topic = $17,
+       subject = $18
+     WHERE id = $19 RETURNING *`,
     [
       question_text ?? q.question_text,
       options ? asJson(options, []) : q.options,
@@ -250,11 +307,14 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       reason_text !== undefined ? reason_text : q.reason_text,
       Number(marks ?? q.marks ?? 1),
       solution ?? q.solution,
-      subject_id !== undefined ? (subject_id || null) : q.subject_id,
-      chapter_id !== undefined ? (chapter_id || null) : q.chapter_id,
+      effectiveSubjectId,
+      effectiveChapterId,
       difficulty ?? q.difficulty,
       image_url !== undefined ? image_url : q.image_url,
       solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
+      effectiveChapter,
+      topic !== undefined ? topic : q.topic,
+      subject !== undefined ? subject : q.subject,
       id
     ]
   );
@@ -765,15 +825,30 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
           const marks = Number(q.marks || default_marks || 4);
           const solution = (q.solution || q.explanation?.text || (typeof q.explanation === 'string' ? q.explanation : '') || '').trim();
           const imageUrl = q.image_url || (q.media && q.media[0] ? q.media[0].url : '') || '';
-          const topic = q.topic || q.chapter || '';
+          
+          const rawChapter = (q.chapter || '').trim();
+          const rawTopic = (q.topic || '').trim();
+          const resolvedChapter = resolveStandardChapter(categoryName, rawTopic, qText, rawChapter);
+          const finalTopic = rawTopic && rawTopic.toLowerCase() !== resolvedChapter.toLowerCase() ? rawTopic : '';
+
+          let resolvedChapterId = null;
+          if (subjectId && resolvedChapter) {
+            const chMatch = await query(
+              'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2) LIMIT 1',
+              [subjectId, resolvedChapter]
+            );
+            if (chMatch.rows.length > 0) {
+              resolvedChapterId = chMatch.rows[0].id;
+            }
+          }
 
           const result = await query(
             `INSERT INTO question_bank (
               category, question_type, question_text, options, correct_index, correct_indices,
               numeric_answer, marks, solution, subject_id, chapter_id, difficulty,
-              image_url, subject, topic
-            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)
-            RETURNING id, category, question_text, question_type, marks, solution, subject`,
+              image_url, subject, topic, chapter
+            ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16)
+            RETURNING id, category, question_text, question_type, marks, solution, subject, topic, chapter`,
             [
               categoryName,
               qType,
@@ -785,11 +860,12 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
               marks,
               solution,
               subjectId,
-              null, // chapter_id
+              resolvedChapterId,
               difficulty || q.difficulty || 'medium',
               imageUrl,
               categoryName,
-              topic,
+              finalTopic,
+              resolvedChapter,
             ]
           );
           if (result.rows[0]) {

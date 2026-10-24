@@ -81,7 +81,7 @@ export const errorHandler = (err, _req, res, _next) => {
     });
   }
 
-  if (statusCode < 500 || err instanceof ApiError || err?.code === 'PDF_VISION_EXTRACTION_FAILED' || statusCode === 502 || statusCode === 503) {
+  if (statusCode < 500 || err instanceof ApiError || err?.code === 'PDF_VISION_EXTRACTION_FAILED' || err?.code === 'GEMINI_CREDITS_DEPLETED' || statusCode === 502 || statusCode === 503) {
     const detailedMsg = Array.isArray(err.details) && err.details.length > 0
       ? err.details.map((d) => d.message).join(', ')
       : err.message;

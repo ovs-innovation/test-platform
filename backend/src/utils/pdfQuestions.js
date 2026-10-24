@@ -380,6 +380,8 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
   const examType = options.examType || null;
   const apiKey = env.geminiApiKey || process.env.GEMINI_API_KEY;
   let visionBypassReason = null;
+  let visionErrorStatusCode = null;
+  let visionErrorCode = null;
 
   if (apiKey) {
     try {
@@ -550,6 +552,10 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
         .replace(/key=[^&\s]+/gi, 'key=[REDACTED]');
       visionBypassReason = `Gemini Vision error: ${sanitizedErrMsg}`;
       console.warn('[pdfQuestions] Gemini Vision extraction failed. Falling back to pdf-parse + regex parser:', sanitizedErrMsg);
+      if (err.statusCode === 402 || err.code === 'GEMINI_CREDITS_DEPLETED') {
+        visionErrorStatusCode = 402;
+        visionErrorCode = 'GEMINI_CREDITS_DEPLETED';
+      }
     }
   } else {
     visionBypassReason = 'GEMINI_API_KEY is not configured in environment.';
@@ -569,11 +575,27 @@ export async function parseQuestionsFromPdf(buffer, options = {}) {
     if (!visionBypassReason) {
       throw parseErr;
     }
+    const isCreditsDepleted =
+      visionErrorStatusCode === 402 ||
+      visionErrorCode === 'GEMINI_CREDITS_DEPLETED' ||
+      /prepayment credits are depleted|billing#prepay|recharge your credits|credits depleted/i.test(visionBypassReason);
+    const isMissingKey = /GEMINI_API_KEY is not configured/i.test(visionBypassReason);
+    const isRateLimited = /rate limit|too many requests|429/i.test(visionBypassReason);
+
+    let statusCode = 400;
+    if (isCreditsDepleted) {
+      statusCode = 402;
+    } else if (isMissingKey) {
+      statusCode = 503;
+    } else if (isRateLimited) {
+      statusCode = 429;
+    }
+
     const extractionError = new Error(
       `AI Vision extraction failed (${visionBypassReason}), and plain-text fallback parsing failed: ${parseErr.message}`
     );
-    extractionError.code = 'PDF_VISION_EXTRACTION_FAILED';
-    extractionError.statusCode = /GEMINI_API_KEY is not configured/i.test(visionBypassReason) ? 503 : 502;
+    extractionError.code = isCreditsDepleted ? 'GEMINI_CREDITS_DEPLETED' : 'PDF_VISION_EXTRACTION_FAILED';
+    extractionError.statusCode = statusCode;
     throw extractionError;
   }
   const rawRows = parsed.rows || [];

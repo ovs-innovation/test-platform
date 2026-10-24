@@ -341,7 +341,7 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
               <tr key={row.id ?? i} className="group transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
                 {columns.map((col) => (
                   <td key={col.key} className="px-5 py-4 font-medium text-slate-900 dark:text-slate-300">
-                    {col.render ? col.render(row) : row[col.key]}
+                    {col.render ? col.render(row, (currentPage - 1) * pageSize + i) : row[col.key]}
                   </td>
                 ))}
               </tr>

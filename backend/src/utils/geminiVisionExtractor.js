@@ -64,8 +64,10 @@ export function parseNumericAnswers(rawStr) {
 export function buildGeminiVisionCandidateModels(configuredModels = []) {
   return [
     ...configuredModels,
-    'gemini-2.5-flash',
-    'gemini-2.5-pro',
+    'gemini-3.8-flash',
+    'gemini-3.7-flash',
+    'gemini-3.5-flash',
+    'gemini-flash-latest',
   ].filter((model, index, models) => Boolean(model) && models.indexOf(model) === index);
 }
 
@@ -1074,6 +1076,18 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
         rawText: responseText,
       };
     } catch (apiErr) {
+      const isDepletedCredits = apiErr.status === 402 ||
+        apiErr.statusCode === 402 ||
+        apiErr.code === 'GEMINI_CREDITS_DEPLETED' ||
+        (apiErr.message && /prepayment credits are depleted|billing#prepay|recharge your credits|insufficient_quota/i.test(apiErr.message));
+
+      if (isDepletedCredits) {
+        const error = new Error('Your Google Gemini API prepayment credits are depleted. Please recharge your credits in Google AI Studio (https://ai.studio/projects) or update your GEMINI_API_KEY.');
+        error.statusCode = 402;
+        error.code = 'GEMINI_CREDITS_DEPLETED';
+        throw error;
+      }
+
       const isModelNotFound = apiErr.status === 404 ||
         (apiErr.message && (
           apiErr.message.toLowerCase().includes('not found') ||
@@ -1088,13 +1102,13 @@ export async function extractQuestionsWithGeminiVision(pdfBuffer, options = {}) 
         return callGemini(contents, label, 0, modelIdx + 1);
       }
 
-      const isRateLimited = apiErr.status === 429 ||
+      const isRateLimited = (apiErr.status === 429 ||
         (apiErr.message && (
           apiErr.message.includes('429') ||
           apiErr.message.toLowerCase().includes('quota') ||
           apiErr.message.toLowerCase().includes('resource_exhausted') ||
           apiErr.message.toLowerCase().includes('rate limit')
-        ));
+        ))) && !isDepletedCredits;
 
       if (isRateLimited && retryCount < 4) {
         const delayMs = (retryCount + 1) * 4000;
@@ -2255,7 +2269,7 @@ export async function classifyBiologyQuestionsWithGemini(questions = [], testTit
 
   try {
     const ai = new GoogleGenAI({ apiKey });
-    const model = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-2.5-flash';
+    const model = env.geminiModel || process.env.GEMINI_MODEL || 'gemini-3.8-flash';
 
     const questionItems = questions.map((q, idx) => ({
       index: idx,

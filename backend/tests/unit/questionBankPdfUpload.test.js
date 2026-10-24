@@ -496,4 +496,31 @@ describe('Question Bank PDF Upload & Size Limit Pipeline', () => {
       expect(res.body.created).toBe(1);
     });
   });
+
+  describe('7. AI Vision Error & Credit Depletion Handling', () => {
+    it('surfaces GEMINI_CREDITS_DEPLETED with HTTP 402 and clear message instead of 500/502', () => {
+      const err = new Error('Your Google Gemini API prepayment credits are depleted. Please recharge your credits in Google AI Studio.');
+      err.code = 'GEMINI_CREDITS_DEPLETED';
+      err.statusCode = 402;
+
+      const res = {
+        status: vi.fn(function (code) {
+          this.statusCode = code;
+          return this;
+        }),
+        json: vi.fn(),
+      };
+
+      errorHandler(err, {}, res, () => {});
+
+      expect(res.status).toHaveBeenCalledWith(402);
+      expect(res.json).toHaveBeenCalledWith(
+        expect.objectContaining({
+          code: 'GEMINI_CREDITS_DEPLETED',
+          message: expect.stringMatching(/prepayment credits are depleted/i),
+        })
+      );
+    });
+  });
 });
+
