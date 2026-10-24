@@ -134,7 +134,6 @@ export default function AdminQuestionBank() {
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
   const [customChapterMode, setCustomChapterMode] = useState(false);
-  const [selectedChapterFilter, setSelectedChapterFilter] = useState('all');
 
   // PDF Upload States
   const [pdfOpen, setPdfOpen] = useState(false);
@@ -294,7 +293,6 @@ export default function AdminQuestionBank() {
   };
 
   useEffect(() => {
-    setSelectedChapterFilter('all');
     load();
   }, [category]);
 
@@ -318,28 +316,12 @@ export default function AdminQuestionBank() {
     }
   }, [form.subject_id, form.subject, subjectsList]);
 
-  const availableChapters = useMemo(() => {
-    const set = new Set();
-    (questions || []).forEach((q) => {
-      const ch = q.chapter || q.chapter_name;
-      if (ch && ch.trim()) set.add(ch.trim());
-    });
-    return Array.from(set).sort();
-  }, [questions]);
-
-  const filteredQuestions = useMemo(() => {
-    let list = questions || [];
-    if (selectedChapterFilter && selectedChapterFilter !== 'all') {
-      list = list.filter((q) => {
-        const ch = q.chapter || q.chapter_name || '';
-        return ch.toLowerCase() === selectedChapterFilter.toLowerCase();
-      });
-    }
-    return list.map((q, idx) => ({
+  const questionsWithSerial = useMemo(() => {
+    return (questions || []).map((q, idx) => ({
       ...q,
       serialNumber: idx + 1,
     }));
-  }, [questions, selectedChapterFilter]);
+  }, [questions]);
 
   const openAdd = () => {
     setEditing(null);
@@ -568,7 +550,7 @@ export default function AdminQuestionBank() {
         )}
       />
 
-      <div className="mb-3 flex flex-wrap gap-2">
+      <div className="mb-4 flex flex-wrap gap-2">
         {categoriesList.map((c) => (
           <button
             key={c}
@@ -583,44 +565,6 @@ export default function AdminQuestionBank() {
           </button>
         ))}
       </div>
-
-      {/* Chapter Filter Pills (when multiple chapters exist in category) */}
-      {availableChapters.length > 1 && (
-        <div className="mb-4 flex flex-wrap items-center gap-1.5 p-2 rounded-xl border border-indigo-100 dark:border-indigo-900/40 bg-indigo-50/40 dark:bg-indigo-950/20 text-xs">
-          <span className="font-extrabold text-indigo-700 dark:text-indigo-300 flex items-center gap-1 pl-1 pr-1.5">
-            <BookOpen className="h-3.5 w-3.5 shrink-0" />
-            <span>Chapter:</span>
-          </span>
-          <button
-            type="button"
-            onClick={() => setSelectedChapterFilter('all')}
-            className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-              selectedChapterFilter === 'all'
-                ? 'bg-indigo-600 text-white shadow-xs'
-                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50'
-            }`}
-          >
-            All Chapters ({questions.length})
-          </button>
-          {availableChapters.map((ch) => {
-            const count = (questions || []).filter((q) => (q.chapter || q.chapter_name) === ch).length;
-            return (
-              <button
-                key={ch}
-                type="button"
-                onClick={() => setSelectedChapterFilter(ch)}
-                className={`px-3 py-1 rounded-lg text-xs font-bold transition cursor-pointer ${
-                  selectedChapterFilter === ch
-                    ? 'bg-indigo-600 text-white shadow-xs'
-                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50'
-                }`}
-              >
-                {ch} ({count})
-              </button>
-            );
-          })}
-        </div>
-      )}
 
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
@@ -817,7 +761,7 @@ export default function AdminQuestionBank() {
                 )
               },
             ]}
-            rows={filteredQuestions}
+            rows={questionsWithSerial}
             emptyMessage={`No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
           />
         </div>
