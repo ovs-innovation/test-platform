@@ -746,7 +746,6 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
         const idx = i + bIdx;
         try {
           const { categoryName, subjectId } = resolveSubject(q.subject || q.bank_category, category);
-          affectedCategories.add(categoryName);
 
           const qText = (q.question_text || q.questionText || q.question?.text || '').trim();
           if (!qText) return;
@@ -795,6 +794,7 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
           );
           if (result.rows[0]) {
             createdQuestions.push(result.rows[0]);
+            affectedCategories.add(categoryName);
           }
         } catch (err) {
           console.error('[uploadPdfToQuestionBank] Insert error on question', idx + 1, err.message);
@@ -803,6 +803,13 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       })
     );
   }
+
+    if (createdQuestions.length === 0) {
+      const firstError = errors[0]?.error || 'Unknown database insert error';
+      throw ApiError.badRequest(
+        `Failed to import extracted questions into Question Bank (${errors.length} failed): ${firstError}`
+      );
+    }
 
     await delCache('cache:qb:*');
 

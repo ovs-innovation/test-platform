@@ -343,6 +343,41 @@ describe('Question Bank PDF Upload & Size Limit Pipeline', () => {
       expect(fs.existsSync(tempPath)).toBe(false);
     });
 
+    it('throws ApiError.badRequest when database insertion fails for all extracted questions', async () => {
+      const tempPath = path.join(tempUploadDir, `db_fail_test_${Date.now()}.pdf`);
+      await fs.promises.writeFile(tempPath, validPdfBuffer);
+
+      query.mockImplementation((sql) => {
+        if (sql.includes('SELECT id, name FROM subjects')) {
+          return Promise.resolve({ rows: [{ id: 1, name: 'Physics' }] });
+        }
+        if (sql.includes('INSERT INTO question_bank')) {
+          return Promise.reject(new Error('null value in column "correct_index" violates not-null constraint'));
+        }
+        return Promise.resolve({ rows: [] });
+      });
+
+      const mockReq = {
+        body: { category: 'Physics' },
+        files: {
+          file: [{
+            path: tempPath,
+            originalname: 'physics_paper.pdf',
+            size: validPdfBuffer.length,
+          }],
+        },
+      };
+
+      const res = { status: vi.fn(), json: vi.fn() };
+
+      await expect(callHandler(mockReq, res)).rejects.toMatchObject({
+        statusCode: 400,
+        message: expect.stringContaining('Failed to import extracted questions into Question Bank'),
+      });
+
+      expect(fs.existsSync(tempPath)).toBe(false);
+    });
+
     it('rejects an oversized file (> 100 MB) with HTTP 413 in the controller', async () => {
       const tempPath = path.join(tempUploadDir, `oversized_${Date.now()}.pdf`);
       await fs.promises.writeFile(tempPath, validPdfBuffer);

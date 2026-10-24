@@ -230,6 +230,11 @@ export default function AdminQuestionBank() {
       setPdfProgressStatus('Analyzing PDF with AI Vision, extracting questions, options, & answers...');
 
       const res = await questionBankService.uploadPdf(formData);
+      if (!res?.created || res.created === 0) {
+        const failureReason = res?.errors?.[0]?.error || 'No questions could be imported into the Question Bank.';
+        toast.error(`Import failed: ${failureReason}`);
+        return;
+      }
       setPdfSuccessData(res);
       toast.success(`Imported ${res.created} question(s) successfully!`);
       await load();
