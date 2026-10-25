@@ -1103,7 +1103,7 @@ export async function persistExtractedQuestionsToAssessment(id, parsedQs, {
       if (isMatchMapping) {
         return stripHeadersAndFooters(s) || s;
       }
-      const stripped = s.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim() || s;
+      const stripped = s.replace(/^(?:\([a-eA-E1-4]\)\s*|[a-eA-E][\.\:\)]\s+|[1-4]\)\s*|[1-4]\.(?!\d)\s+)/, '').trim() || s;
       return stripHeadersAndFooters(stripped) || stripped;
     };
 

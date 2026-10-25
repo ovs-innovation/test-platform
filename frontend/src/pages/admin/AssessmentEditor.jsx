@@ -2071,7 +2071,7 @@ function QuestionCard({
               {opts.map((opt, i) => {
                 const rawOptText = typeof opt === 'object' && opt !== null ? (opt.text ?? '') : String(opt ?? '');
                 const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(rawOptText);
-                const optText = isMatchMapping ? rawOptText : rawOptText.replace(/^(\([A-Za-z0-9]\)|[A-Za-z0-9][\.\)]|[A-Za-z0-9]:)\s*/, '').trim();
+                const optText = isMatchMapping ? rawOptText : rawOptText.replace(/^(?:\([a-eA-E1-4]\)\s*|[a-eA-E][\.\:\)]\s+|[1-4]\)\s*|[1-4]\.(?!\d)\s+)/, '').trim();
                 const optMedia = (typeof opt === 'object' && Array.isArray(opt.media))
                   ? opt.media
                   : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
