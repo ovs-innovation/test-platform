@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { pool } from '../config/db.js';
 import { reorderNeet180Assessments } from './reorderNeet180.js';
+import { uploadAssessment43 } from '../../scripts/upload_assessment_43.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -118,6 +119,18 @@ const run = async () => {
     } catch (reorderErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] NEET 180 reorder warning:', reorderErr.message);
+    }
+
+    try {
+      const qCheck = await pool.query('SELECT count(*)::int FROM questions WHERE assessment_id = 43');
+      if (qCheck.rows[0].count < 180) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Assessment 43 has ${qCheck.rows[0].count} questions (<180). Uploading 180 questions...`);
+        await uploadAssessment43(pool);
+      }
+    } catch (upload43Err) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Assessment 43 sync warning:', upload43Err.message);
     }
 
     // eslint-disable-next-line no-console

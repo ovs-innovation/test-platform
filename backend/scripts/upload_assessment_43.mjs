@@ -1,13 +1,40 @@
 import { pool } from '../src/config/db.js';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const ASSESSMENT_ID = 43;
 
-// Load diagram metadata
-const diagrams = JSON.parse(
-  fs.readFileSync('c:/Users/rs004/OneDrive/Desktop/test-platform/backend/diagrams_data.json', 'utf8')
-);
+// Load diagram metadata from diagrams_43.json
+const jsonPath = path.join(__dirname, 'diagrams_43.json');
+let diagrams = {};
+if (fs.existsSync(jsonPath)) {
+  try {
+    diagrams = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+  } catch (e) {
+    console.warn('[upload_assessment_43] Could not parse diagrams_43.json:', e.message);
+  }
+}
+
+// Ensure diagram files exist in backend/uploads/assessment_43
+try {
+  const uploadTargetDir = path.resolve(__dirname, '../uploads/assessment_43');
+  if (!fs.existsSync(uploadTargetDir)) {
+    fs.mkdirSync(uploadTargetDir, { recursive: true });
+  }
+  for (const [key, val] of Object.entries(diagrams)) {
+    const filePath = path.join(uploadTargetDir, `${key}.png`);
+    if (!fs.existsSync(filePath) && val.base64) {
+      const base64Data = val.base64.replace(/^data:image\/png;base64,/, '');
+      fs.writeFileSync(filePath, Buffer.from(base64Data, 'base64'));
+    }
+  }
+} catch (fsErr) {
+  console.warn('[upload_assessment_43] Warning writing uploads dir:', fsErr.message);
+}
 
 const questionsData = [
   // ==========================================
@@ -1529,10 +1556,11 @@ const questionsData = [
   }
 ];
 
-async function main() {
+export async function uploadAssessment43(activePool) {
+  const effectivePool = activePool || pool;
   console.log(`Starting upload of ${questionsData.length} questions into Assessment ${ASSESSMENT_ID}...`);
 
-  const client = await pool.connect();
+  const client = await effectivePool.connect();
   try {
     await client.query('BEGIN');
 
@@ -1620,9 +1648,21 @@ async function main() {
     const now = new Date();
     const oneYearLater = new Date(now.getTime() + 365 * 24 * 60 * 60 * 1000);
 
+    const existingAssess = await client.query('SELECT id, title FROM assessments WHERE id = $1', [ASSESSMENT_ID]);
+    let assessTitle = 'UNIT TEST NEET 4';
+    if (existingAssess.rows.length > 0 && existingAssess.rows[0].title && existingAssess.rows[0].title.trim()) {
+      assessTitle = existingAssess.rows[0].title.trim();
+    } else if (existingAssess.rows.length === 0) {
+      await client.query(
+        `INSERT INTO assessments (id, title, duration_minutes, passing_marks, is_published, is_live)
+         VALUES ($1, $2, 180, 180, true, true)`,
+        [ASSESSMENT_ID, assessTitle]
+      );
+    }
+
     await client.query(
       `UPDATE assessments SET
-        title = 'AIETS 2027: AIETS 1',
+        title = $1,
         description = 'NEET Entrance Exam Unit Test-4 (Physics, Chemistry, Botany, Zoology)',
         instructions = 'Authentic NTA NEET CBT pattern. 180 questions (720 marks), +4 for correct, -1 for incorrect. Duration: 180 minutes.',
         duration_minutes = 180,
@@ -1634,14 +1674,32 @@ async function main() {
         test_type = 'AIETS',
         negative_marking = true,
         negative_marks_per_wrong = 1.00,
-        available_from = $1,
-        available_until = $2,
-        start_time = $1,
-        end_time = $2,
+        available_from = $2,
+        available_until = $3,
+        start_time = $2,
+        end_time = $3,
         updated_at = NOW()
-      WHERE id = $3`,
-      [now, oneYearLater, ASSESSMENT_ID]
+      WHERE id = $4`,
+      [assessTitle, now, oneYearLater, ASSESSMENT_ID]
     );
+
+    // If test exists in tests table, keep it synchronized
+    const existingTest = await client.query('SELECT id FROM tests WHERE id = $1', [ASSESSMENT_ID]);
+    if (existingTest.rows.length > 0) {
+      await client.query(
+        `UPDATE tests SET
+          test_name = $1,
+          title = $1,
+          max_marks = 720,
+          duration_minutes = 180,
+          subjects = '["Physics", "Chemistry", "Botany", "Zoology"]'::jsonb,
+          subject = 'Physics',
+          is_active = true,
+          updated_at = NOW()
+        WHERE id = $2`,
+        [assessTitle, ASSESSMENT_ID]
+      );
+    }
 
     // 5. Ensure it is mapped in test_series_assessments so enrolled students see it
     const seriesIds = [20, 21];
@@ -1661,19 +1719,28 @@ async function main() {
     }
 
     await client.query('COMMIT');
-    console.log(`\n🎉 SUCCESS! Uploaded all ${questionsData.length} questions into Assessment ${ASSESSMENT_ID}!`);
+    console.log(`\n🎉 SUCCESS! Uploaded all ${questionsData.length} questions into Assessment ${ASSESSMENT_ID} (${assessTitle})!`);
     console.log('Status: PUBLISHED, LIVE: TRUE, Total Marks: 720, Duration: 180m');
+    return true;
   } catch (err) {
     await client.query('ROLLBACK');
     console.error('Error uploading assessment 43:', err);
     throw err;
   } finally {
     client.release();
-    await pool.end();
   }
 }
 
-main().catch((e) => {
-  console.error(e);
-  process.exit(1);
-});
+// Standalone execution
+if (process.argv[1]?.endsWith('upload_assessment_43.mjs')) {
+  uploadAssessment43()
+    .then(async () => {
+      await pool.end();
+      process.exit(0);
+    })
+    .catch(async (e) => {
+      console.error(e);
+      await pool.end();
+      process.exit(1);
+    });
+}
