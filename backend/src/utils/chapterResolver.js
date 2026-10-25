@@ -594,6 +594,37 @@ const CHAPTER_RULES = [
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
   {
+    chapter: 'Unit and Measurement',
+    subjects: ['physics'],
+    patterns: [
+      /\bunits? and measurements?\b/i,
+      /\bunits? & measurements?\b/i,
+      /\bunit and measurement\b/i,
+      /\bunit & measurement\b/i,
+      /\bdimensional formula\b/i,
+      /\bdimensions? of\b/i,
+      /\bdimensional analysis\b/i,
+      /\bdimensionless\b/i,
+      /\bvernier calliper/i,
+      /\bvernier caliper/i,
+      /\bscrew gauge\b/i,
+      /\bleast count\b/i,
+      /\bsignificant figures?\b/i,
+      /\berrors? in measurement\b/i,
+      /\bpercentage error\b/i,
+      /\brelative error\b/i,
+      /\bpropagation of error/i,
+      /\bsystem of units\b/i,
+      /\bsi units?\b/i,
+      /\bcgs unit\b/i,
+      /\bmks unit\b/i,
+      /\bfundamental units?\b/i,
+      /\bderived units?\b/i,
+      /\bparallax method\b/i,
+      /\border of magnitude\b/i,
+    ],
+  },
+  {
     chapter: 'Electrostatics & Capacitance',
     subjects: ['physics'],
     patterns: [
@@ -913,7 +944,35 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   const rawTopic = (topic || '').trim();
   const rawText = (questionText || '').trim();
 
-  // Combine relevant text for pattern detection
+  const normalizeChap = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/s\b/g, '').replace(/[^a-z0-9]/g, '');
+
+  // 1. If rawChapter is already set and not a generic placeholder
+  if (rawChapter && rawChapter.toLowerCase() !== 'general' && rawChapter.toLowerCase() !== 'unknown') {
+    // Check if rawChapter matches any known chapter rule in the same subject
+    for (const rule of CHAPTER_RULES) {
+      if (normCategory && rule.subjects.length > 0 && !rule.subjects.includes(normCategory)) {
+        continue;
+      }
+      if (normalizeChap(rawChapter) === normalizeChap(rule.chapter)) {
+        return rule.chapter;
+      }
+    }
+
+    // Check cross-subject for known chapter match
+    for (const rule of CHAPTER_RULES) {
+      if (normalizeChap(rawChapter) === normalizeChap(rule.chapter)) {
+        return rule.chapter;
+      }
+    }
+
+    // If rawChapter is already a designated chapter distinct from the micro-topic, retain it!
+    // Do NOT let questionText keywords override an explicitly assigned chapter.
+    if (!rawTopic || rawChapter.toLowerCase() !== rawTopic.toLowerCase()) {
+      return rawChapter;
+    }
+  }
+
+  // Combine relevant text for pattern detection only when chapter is absent or identical to topic
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.trim();
   if (!combined) {
     if (rawChapter) return rawChapter;
@@ -921,22 +980,23 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     return 'General';
   }
 
-  // 1. Direct exact or substring match against known Chapter rules
+  // 2. Check if topic is a standard chapter name
+  if (rawTopic) {
+    for (const rule of CHAPTER_RULES) {
+      if (normCategory && rule.subjects.length > 0 && !rule.subjects.includes(normCategory)) {
+        continue;
+      }
+      if (normalizeChap(rawTopic) === normalizeChap(rule.chapter)) {
+        return rule.chapter;
+      }
+    }
+  }
+
+  // 3. Subject-filtered pattern matching
   for (const rule of CHAPTER_RULES) {
-    // Subject filter: if subject is specified and not matching, skip (unless General)
     if (normCategory && rule.subjects.length > 0 && !rule.subjects.includes(normCategory)) {
       continue;
     }
-
-    // Check if the currentChapter or topic is already the standard chapter name
-    if (
-      rawChapter.toLowerCase() === rule.chapter.toLowerCase() ||
-      rawTopic.toLowerCase() === rule.chapter.toLowerCase()
-    ) {
-      return rule.chapter;
-    }
-
-    // Check pattern rules
     for (const pattern of rule.patterns) {
       if (pattern.test(combined)) {
         return rule.chapter;
@@ -944,7 +1004,7 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     }
   }
 
-  // 2. Cross-subject fallback: if category was missing or ambiguous, try matching patterns across all rules
+  // 4. Cross-subject fallback pattern matching
   for (const rule of CHAPTER_RULES) {
     for (const pattern of rule.patterns) {
       if (pattern.test(combined)) {
@@ -953,12 +1013,7 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     }
   }
 
-  // 3. Fallback: if existing rawChapter is non-empty and not equal to the specific micro-topic, keep it
-  if (rawChapter && rawChapter.toLowerCase() !== rawTopic.toLowerCase()) {
-    return rawChapter;
-  }
-
-  // 4. Default: return rawChapter || rawTopic || 'General'
+  // 5. Default: return rawChapter || rawTopic || 'General'
   return rawChapter || rawTopic || 'General';
 }
 

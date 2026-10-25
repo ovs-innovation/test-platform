@@ -140,8 +140,10 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
            reason_text = $11,
            chapter = $12,
            topic = $13,
-           subject = $14
-         WHERE id = $15`,
+           subject = $14,
+           subject_id = $15,
+           chapter_id = $16
+         WHERE id = $17`,
         [
           'Physics',
           questionType,
@@ -157,6 +159,8 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
           'Unit and Measurement',
           topic,
           'Physics',
+          physicsSubjectId,
+          chapterId,
           qId,
         ]
       );

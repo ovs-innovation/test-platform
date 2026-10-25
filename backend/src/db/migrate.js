@@ -6,6 +6,7 @@ import { reorderNeet180Assessments } from './reorderNeet180.js';
 import { uploadAssessment43 } from '../../scripts/upload_assessment_43.mjs';
 import { uploadBiomoleculesQuestions } from '../../scripts/import_biomolecules_chemistry.mjs';
 import { uploadAminesQuestions } from '../../scripts/import_amines_chemistry.mjs';
+import { uploadUnitsMeasurementsQuestions } from '../../scripts/import_units_measurements_physics.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -157,6 +158,18 @@ const run = async () => {
     } catch (aminesErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] Amines sync warning:', aminesErr.message);
+    }
+
+    try {
+      const unitsCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'Unit and Measurement'");
+      if (unitsCheck.rows[0].count < 117) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Unit and Measurement questions count is ${unitsCheck.rows[0].count} (<117). Uploading 117 Physics questions...`);
+        await uploadUnitsMeasurementsQuestions(pool);
+      }
+    } catch (unitsErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Unit and Measurement sync warning:', unitsErr.message);
     }
 
     // eslint-disable-next-line no-console
