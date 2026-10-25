@@ -24,21 +24,26 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
     console.log(`[Units & Measurements] Found Subject 'Physics' (id=${physicsSubjectId})`);
   }
 
-  // 2. Resolve or verify Chapter 'Units and Measurements'
+  // 2. Resolve or verify Chapter 'Unit and Measurement'
   const chapRes = await clientOrPool.query(
-    "SELECT id FROM chapters WHERE subject_id = $1 AND (lower(name) = 'units and measurements' OR lower(name) = 'units & measurements') LIMIT 1",
+    "SELECT id FROM chapters WHERE subject_id = $1 AND (lower(name) = 'unit and measurement' OR lower(name) = 'units and measurements' OR lower(name) = 'units & measurements') LIMIT 1",
     [physicsSubjectId]
   );
   let chapterId = chapRes.rows[0]?.id;
   if (!chapterId) {
     const newChap = await clientOrPool.query(
-      "INSERT INTO chapters (subject_id, name, position) VALUES ($1, 'Units and Measurements', 1) RETURNING id",
+      "INSERT INTO chapters (subject_id, name, position) VALUES ($1, 'Unit and Measurement', 1) RETURNING id",
       [physicsSubjectId]
     );
     chapterId = newChap.rows[0].id;
-    console.log(`[Units & Measurements] Created Chapter 'Units and Measurements' (id=${chapterId})`);
+    console.log(`[Unit and Measurement] Created Chapter 'Unit and Measurement' (id=${chapterId})`);
   } else {
-    console.log(`[Units & Measurements] Found Chapter 'Units and Measurements' (id=${chapterId})`);
+    // Ensure name in chapters table is exactly 'Unit and Measurement'
+    await clientOrPool.query(
+      "UPDATE chapters SET name = 'Unit and Measurement' WHERE id = $1",
+      [chapterId]
+    );
+    console.log(`[Unit and Measurement] Found and updated Chapter 'Unit and Measurement' (id=${chapterId})`);
   }
 
   // 3. Load Diagrams
@@ -149,7 +154,7 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
           imageUrl,
           assertionText,
           reasonText,
-          'Units and Measurements',
+          'Unit and Measurement',
           topic,
           'Physics',
           qId,
@@ -180,7 +185,7 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
           chapterId,
           difficulty,
           imageUrl,
-          'Units and Measurements',
+          'Unit and Measurement',
           topic,
           'Physics',
         ]
