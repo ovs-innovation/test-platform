@@ -1701,21 +1701,26 @@ export async function uploadAssessment43(activePool) {
       );
     }
 
-    // 5. Ensure it is mapped in test_series_assessments so enrolled students see it
-    const seriesIds = [20, 21];
-    for (const sId of seriesIds) {
-      const existingMapping = await client.query(
-        'SELECT 1 FROM test_series_assessments WHERE test_series_id = $1 AND assessment_id = $2',
-        [sId, ASSESSMENT_ID]
-      );
-      if (existingMapping.rows.length === 0) {
-        await client.query(
-          `INSERT INTO test_series_assessments (test_series_id, assessment_id, position, label)
-           VALUES ($1, $2, 1, 'AIETS 1')`,
+    // 5. Ensure it is mapped in test_series_assessments for valid test series
+    try {
+      const validSeries = await client.query('SELECT id FROM test_series WHERE id IN (20, 21, 22, 38)');
+      for (const row of validSeries.rows) {
+        const sId = row.id;
+        const existingMapping = await client.query(
+          'SELECT 1 FROM test_series_assessments WHERE test_series_id = $1 AND assessment_id = $2',
           [sId, ASSESSMENT_ID]
         );
-        console.log(`Mapped Assessment 43 to Test Series ${sId}`);
+        if (existingMapping.rows.length === 0) {
+          await client.query(
+            `INSERT INTO test_series_assessments (test_series_id, assessment_id, position, label)
+             VALUES ($1, $2, 1, $3)`,
+            [sId, ASSESSMENT_ID, assessTitle]
+          );
+          console.log(`Mapped Assessment 43 to Test Series ${sId}`);
+        }
       }
+    } catch (seriesErr) {
+      console.warn('Note: test_series mapping skipped:', seriesErr.message);
     }
 
     await client.query('COMMIT');
