@@ -275,18 +275,9 @@ export async function executeResequence() {
   console.log('=== Starting Standard NEET Resequence & Subject Assignment ===');
 
   await withTransaction(async (client) => {
-    // Collect all candidate assessments
+    // Collect candidate assessments (strictly legacy 41 and 238, never touch 43)
     const targetSet = new Set([41, 238]);
-    const assessList = await client.query(`
-      SELECT a.id, a.title, (SELECT COUNT(*)::int FROM questions q WHERE q.assessment_id = a.id) as q_count
-      FROM assessments a
-      WHERE a.id IN (41, 238)
-         OR (SELECT COUNT(*) FROM questions q WHERE q.assessment_id = a.id) >= 180
-    `);
-
-    for (const r of assessList.rows) {
-      targetSet.add(r.id);
-    }
+    targetSet.delete(43);
 
     let primarySourceId = null;
 

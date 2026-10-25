@@ -14,10 +14,7 @@ BEGIN
     SELECT a.id FROM assessments a
     LEFT JOIN tests t ON t.id = a.id
     WHERE a.id IN (35, 58, 235, 41, 238)
-       OR (
-         (a.title ILIKE '%Mock Test%' OR a.title ILIKE '%NEET%' OR COALESCE(t.test_name, '') ILIKE '%NEET%')
-         AND (SELECT COUNT(*) FROM questions q WHERE q.assessment_id = a.id) = 180
-       )
+      AND a.id NOT IN (43)
   LOOP
     -- Recreate standard sections
     DELETE FROM assessment_sections WHERE assessment_id = assess_id;

@@ -471,7 +471,6 @@ jobs:
             # Execute NEET 180 questions reordering and section alignment on production database
             log "Executing NEET 180 questions reorder and section synchronization..."
             docker compose exec -T backend node src/db/migrate.js || true
-            docker compose exec -T backend node scripts/execute_neet_resequence.js || true
             docker compose exec -T backend node scripts/upload_assessment_43.mjs || true
 
             # Restart frontend container to refresh Docker internal DNS mapping
