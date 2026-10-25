@@ -438,8 +438,13 @@ export function CustomSelectDropdown({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleSelect = (val) => {
+    onChange(val);
+    setIsOpen(false);
+  };
+
   return (
-    <div ref={containerRef} className={`relative inline-block text-left ${className}`}>
+    <div ref={containerRef} className={`relative inline-block text-left ${isOpen ? 'z-50' : 'z-auto'} ${className}`}>
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -457,6 +462,7 @@ export function CustomSelectDropdown({
 
       {isOpen && (
         <div
+          onMouseDown={(e) => e.stopPropagation()}
           className={`absolute ${align === 'right' ? 'right-0' : 'left-0'} mt-2 w-full min-w-[180px] max-h-60 overflow-y-auto rounded-2xl border p-1.5 z-50 shadow-2xl animate-in fade-in slide-in-from-top-2 custom-scrollbar ${isDarkMode ? 'bg-[#0B1730] border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-900'
             }`}
         >
@@ -466,9 +472,15 @@ export function CustomSelectDropdown({
               <button
                 key={String(opt.value)}
                 type="button"
-                onClick={() => {
-                  onChange(opt.value);
-                  setIsOpen(false);
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(opt.value);
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(opt.value);
                 }}
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all text-left cursor-pointer ${isSelected
                     ? (isDarkMode ? 'bg-cyan-500/10 text-cyan-400 font-extrabold' : 'bg-blue-50 text-blue-700 font-extrabold')

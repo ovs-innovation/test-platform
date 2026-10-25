@@ -2150,7 +2150,7 @@ function QuestionCard({
   );
 }
 
-function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false }) {
+function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false, className = '' }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -2195,8 +2195,13 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleSelect = (optVal, opt) => {
+    onChange(optVal, opt);
+    setOpen(false);
+  };
+
   return (
-    <div className="relative w-full" ref={dropdownRef}>
+    <div className={`relative w-full ${open ? 'z-50' : 'z-auto'} ${className}`} ref={dropdownRef}>
       <button
         type="button"
         disabled={disabled}
@@ -2210,7 +2215,10 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
       </button>
 
       {open && !disabled && (
-        <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
+        <div
+          className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto"
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           {options.map((opt, idx) => {
             const optVal = getOptVal(opt);
             const isSelected = isMatchingOpt(opt, value);
@@ -2218,9 +2226,15 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
               <button
                 key={optVal ?? opt.name ?? idx}
                 type="button"
-                onClick={() => {
-                  onChange(optVal, opt);
-                  setOpen(false);
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(optVal, opt);
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(optVal, opt);
                 }}
                 className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${
                   isSelected
@@ -2500,7 +2514,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           </div>
         )}
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-3 relative z-30">
           <div>
             <label className="label">Question type</label>
             <CustomSelectDropdown
@@ -2533,7 +2547,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-3 gap-3 relative z-20">
           <div>
             <label className="label">Subject</label>
             <CustomSelectDropdown

@@ -21,7 +21,7 @@ const tryParseArray = (val) => {
 
 const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
 
-function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false }) {
+function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false, className = '' }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -58,8 +58,13 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  const handleSelect = (optVal, opt) => {
+    onChange(optVal, opt);
+    setOpen(false);
+  };
+
   return (
-    <div className="relative w-full" ref={dropdownRef}>
+    <div className={`relative w-full ${open ? 'z-50' : 'z-auto'} ${className}`} ref={dropdownRef}>
       <button
         type="button"
         disabled={disabled}
@@ -72,7 +77,10 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
       </button>
 
       {open && !disabled && (
-        <div className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto">
+        <div
+          className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto"
+          onMouseDown={(e) => e.stopPropagation()}
+        >
           {options.map((opt, idx) => {
             const optVal = getOptVal(opt);
             const isSelected = isMatchingOpt(opt, value);
@@ -80,9 +88,15 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
               <button
                 key={optVal ?? opt.name ?? idx}
                 type="button"
-                onClick={() => {
-                  onChange(optVal, opt);
-                  setOpen(false);
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(optVal, opt);
+                }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleSelect(optVal, opt);
                 }}
                 className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left text-xs transition cursor-pointer ${isSelected
                   ? 'bg-blue-600 text-white font-extrabold shadow-sm'
@@ -127,6 +141,8 @@ export default function AdminQuestionBank() {
     options: 'A|B|C|D',
     correct_index: 0,
     correct_indices_str: '',
+    numeric_answer: '',
+    numerical_tolerance: 0.01,
     solution: '',
     explanation_url: '',
   });
@@ -332,6 +348,8 @@ export default function AdminQuestionBank() {
       options: 'A|B|C|D',
       correct_index: 0,
       correct_indices_str: '',
+      numeric_answer: '',
+      numerical_tolerance: 0.01,
       solution: '',
       explanation_url: '',
       image_url: '',
@@ -355,12 +373,15 @@ export default function AdminQuestionBank() {
     const correctIndices = Array.isArray(q.correct_indices) ? q.correct_indices : (q.correct_index !== undefined && q.correct_index !== null ? [q.correct_index] : []);
     const chapterName = q.chapter || q.chapter_name || '';
     const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
+    const isIntOrNum = q.question_type === 'integer' || q.question_type === 'numerical';
     setForm({
       question_type: q.question_type || 'mcq',
       question_text: q.question_text || '',
-      options: opts.length ? opts.join('|') : (typeof q.options === 'string' ? q.options : 'A|B|C|D'),
+      options: opts.length ? opts.join('|') : (typeof q.options === 'string' ? q.options : (isIntOrNum ? '' : 'A|B|C|D')),
       correct_index: correctIndex,
       correct_indices_str: correctIndices.length ? correctIndices.join(',') : '',
+      numeric_answer: q.numeric_answer !== undefined && q.numeric_answer !== null ? q.numeric_answer : '',
+      numerical_tolerance: q.numerical_tolerance !== undefined && q.numerical_tolerance !== null ? q.numerical_tolerance : 0.01,
       solution: q.solution || q.solution_text || '',
       explanation_url: q.explanation_url || '',
       image_url: q.image_url || '',
@@ -421,27 +442,38 @@ export default function AdminQuestionBank() {
     e.preventDefault();
     setSaving(true);
     try {
-      const safeOptions = String(form.options ?? '')
-        .split('|')
-        .map((opt) => opt.trim())
-        .filter(Boolean);
+      const isIntegerType = form.question_type === 'integer' || form.question_type === 'numerical';
+      const safeOptions = isIntegerType
+        ? []
+        : String(form.options ?? '')
+            .split('|')
+            .map((opt) => opt.trim())
+            .filter(Boolean);
 
-      const correctIndex = Number(form.correct_index ?? 0);
+      const correctIndex = isIntegerType ? null : Number(form.correct_index ?? 0);
       const correctIndices = form.question_type === 'multi_select'
         ? String(form.correct_indices_str ?? '')
           .split(/[\s,]+/)
           .map((value) => Number(value))
           .filter((value) => Number.isInteger(value) && value >= 0)
-        : [correctIndex];
+        : (isIntegerType ? [] : [correctIndex]);
+
+      const numericVal = isIntegerType
+        ? (form.numeric_answer !== '' && form.numeric_answer !== null && form.numeric_answer !== undefined && !isNaN(Number(form.numeric_answer))
+            ? (form.question_type === 'integer' ? parseInt(form.numeric_answer, 10) : parseFloat(form.numeric_answer))
+            : (form.numeric_answer === '' ? null : 0))
+        : null;
 
       const payload = {
         ...form,
         category,
         question_type: form.question_type,
         question_text: form.question_text?.trim(),
-        options: safeOptions.length ? safeOptions : ['Option A', 'Option B'],
-        correct_index: form.question_type === 'multi_select' ? (correctIndices[0] ?? 0) : correctIndex,
-        correct_indices: form.question_type === 'multi_select' ? correctIndices : [correctIndex],
+        options: isIntegerType ? [] : (safeOptions.length ? safeOptions : ['Option A', 'Option B']),
+        correct_index: correctIndex,
+        correct_indices: correctIndices,
+        numeric_answer: numericVal,
+        numerical_tolerance: form.question_type === 'numerical' ? Number(form.numerical_tolerance ?? 0.01) : 0,
         marks: Number(form.marks ?? 1),
         solution: form.solution ?? '',
         image_url: form.image_url || '',
@@ -695,9 +727,13 @@ export default function AdminQuestionBank() {
                       )}
 
                       {/* Integer answer */}
-                      {isInteger && q.numeric_answer != null && (
-                        <div className="text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50 rounded-lg px-2 py-1">
-                          Answer: <span className="font-black">{q.numeric_answer}</span>
+                      {isInteger && (
+                        <div className="text-[11px] font-semibold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/30 border border-indigo-200 dark:border-indigo-800/50 rounded-lg px-2.5 py-1.5 flex items-center gap-2 mt-1">
+                          <Hash className="h-3.5 w-3.5 text-indigo-500 shrink-0" />
+                          <span>Correct Integer Answer: <strong className="font-mono text-xs font-black text-indigo-900 dark:text-indigo-100">{q.numeric_answer != null ? q.numeric_answer : 'Not specified'}</strong></span>
+                          {q.question_type === 'numerical' && q.numerical_tolerance ? (
+                            <span className="text-[10px] text-slate-500 font-mono">(±{q.numerical_tolerance})</span>
+                          ) : null}
                         </div>
                       )}
 
@@ -726,9 +762,31 @@ export default function AdminQuestionBank() {
                 }
               },
               {
-                key: 'question_type', label: 'Type', render: (q) => (
-                  <span className="uppercase text-[10px] font-black tracking-wider text-blue-600 dark:text-blue-400 bg-blue-500/10 px-2.5 py-0.5 rounded-full border border-blue-500/20">{q.question_type}</span>
-                )
+                key: 'question_type', label: 'Type', render: (q) => {
+                  const typeColors = {
+                    integer: 'text-indigo-700 dark:text-indigo-300 bg-indigo-500/15 border-indigo-500/30',
+                    numerical: 'text-cyan-700 dark:text-cyan-300 bg-cyan-500/15 border-cyan-500/30',
+                    multi_select: 'text-purple-700 dark:text-purple-300 bg-purple-500/15 border-purple-500/30',
+                    assertion_reason: 'text-amber-700 dark:text-amber-300 bg-amber-500/15 border-amber-500/30',
+                    coding: 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 border-emerald-500/30',
+                    subjective: 'text-rose-700 dark:text-rose-300 bg-rose-500/15 border-rose-500/30',
+                  };
+                  const colorClass = typeColors[q.question_type] || 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20';
+                  const labelMap = {
+                    mcq: 'Single MCQ',
+                    multi_select: 'Multi MCQ',
+                    integer: 'Integer',
+                    numerical: 'Numerical',
+                    assertion_reason: 'Assertion-Reason',
+                    coding: 'Coding',
+                    subjective: 'Subjective',
+                  };
+                  return (
+                    <span className={`uppercase text-[10px] font-black tracking-wider px-2.5 py-0.5 rounded-full border ${colorClass}`}>
+                      {labelMap[q.question_type] || q.question_type}
+                    </span>
+                  );
+                }
               },
               {
                 key: 'difficulty', label: 'Difficulty', render: (q) => (
@@ -770,7 +828,7 @@ export default function AdminQuestionBank() {
       {/* Add / Edit Question Modal */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit question' : 'Add question'} size="lg">
         <form onSubmit={saveQuestion} className="space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3 relative z-30">
             <div>
               <label className="label">Question type</label>
               <CustomSelectDropdown
@@ -784,7 +842,17 @@ export default function AdminQuestionBank() {
                   { value: 'coding', label: 'Coding' },
                   { value: 'subjective', label: 'Subjective' },
                 ]}
-                onChange={(val) => setForm((f) => ({ ...f, question_type: val }))}
+                onChange={(val) => {
+                  const isIntOrNum = val === 'integer' || val === 'numerical';
+                  setForm((f) => ({
+                    ...f,
+                    question_type: val,
+                    numeric_answer: isIntOrNum ? (f.numeric_answer !== '' && f.numeric_answer != null ? f.numeric_answer : 0) : null,
+                    numerical_tolerance: val === 'numerical' ? (f.numerical_tolerance ?? 0.01) : 0,
+                    options: isIntOrNum ? '' : (f.options || 'Option A|Option B|Option C|Option D'),
+                    correct_index: isIntOrNum ? null : (f.correct_index ?? 0),
+                  }));
+                }}
               />
             </div>
             <div>
@@ -793,7 +861,7 @@ export default function AdminQuestionBank() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-3 relative z-20">
             <div>
               <label className="label">Subject</label>
               <CustomSelectDropdown
@@ -954,18 +1022,52 @@ export default function AdminQuestionBank() {
             </>
           )}
 
-          {(form.question_type === 'integer' || form.question_type === 'numerical') && (
-            <div className="grid grid-cols-2 gap-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
+          {form.question_type === 'integer' && (
+            <div className="rounded-xl border border-indigo-200 dark:border-indigo-800/60 bg-indigo-50/50 dark:bg-indigo-950/20 p-4 space-y-2">
+              <label className="label text-indigo-900 dark:text-indigo-200 font-extrabold flex items-center gap-1.5 mb-1">
+                <Hash className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+                Correct Integer Answer (Whole Number)
+              </label>
+              <input
+                className="input font-mono text-base font-bold max-w-xs"
+                type="number"
+                step="1"
+                placeholder="e.g. 4"
+                required
+                value={form.numeric_answer ?? ''}
+                onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? parseInt(e.target.value, 10) : '' }))}
+              />
+              <p className="text-xs text-indigo-700/80 dark:text-indigo-300/80">
+                Candidate will type a whole integer value (e.g. 0, 1, 2, 42) during the exam.
+              </p>
+            </div>
+          )}
+
+          {form.question_type === 'numerical' && (
+            <div className="grid grid-cols-2 gap-3 rounded-xl border border-indigo-200 dark:border-indigo-800/60 bg-indigo-50/50 dark:bg-indigo-950/20 p-4">
               <div>
-                <label className="label">Correct Numeric Answer</label>
-                <input className="input font-mono" type="number" step="any" required value={form.numeric_answer ?? ''} onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? Number(e.target.value) : '' }))} />
+                <label className="label text-indigo-900 dark:text-indigo-200 font-extrabold">Correct Numerical Value</label>
+                <input
+                  className="input font-mono text-base font-bold"
+                  type="number"
+                  step="any"
+                  placeholder="e.g. 12.5"
+                  required
+                  value={form.numeric_answer ?? ''}
+                  onChange={(e) => setForm((f) => ({ ...f, numeric_answer: e.target.value !== '' ? parseFloat(e.target.value) : '' }))}
+                />
               </div>
-              {form.question_type === 'numerical' && (
-                <div>
-                  <label className="label">Tolerance (±)</label>
-                  <input className="input font-mono" type="number" step="any" min={0} value={form.numerical_tolerance ?? 0.01} onChange={(e) => setForm((f) => ({ ...f, numerical_tolerance: Number(e.target.value) || 0 }))} />
-                </div>
-              )}
+              <div>
+                <label className="label text-indigo-900 dark:text-indigo-200 font-extrabold">Tolerance (±)</label>
+                <input
+                  className="input font-mono text-base font-bold"
+                  type="number"
+                  step="any"
+                  min={0}
+                  value={form.numerical_tolerance ?? 0.01}
+                  onChange={(e) => setForm((f) => ({ ...f, numerical_tolerance: parseFloat(e.target.value) || 0 }))}
+                />
+              </div>
             </div>
           )}
 

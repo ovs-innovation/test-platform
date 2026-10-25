@@ -51,19 +51,28 @@ import { resolveStandardChapter } from './chapterResolver.js';
 
 export const normalizeQuestionBankPayload = (payload = {}) => {
     const questionType = payload.question_type || 'mcq';
-    const options = parseOptions(payload.options ?? payload.option_list ?? []);
+    const isIntegerType = questionType === 'integer' || questionType === 'numerical';
     const singleValue = payload.correct_index ?? payload.correct_option ?? payload.correctOption ?? null;
-    const correctIndices = parseNumberList(
+
+    // For integer/numerical questions, options are typically empty unless explicit option objects exist
+    const rawOptions = parseOptions(payload.options ?? payload.option_list ?? []);
+    const options = isIntegerType ? (Array.isArray(payload.options) && payload.options.length ? rawOptions : []) : rawOptions;
+
+    const correctIndices = isIntegerType ? [] : parseNumberList(
         payload.correct_indices ?? payload.correct_indices_str ?? (questionType === 'multi_select' ? [singleValue] : singleValue)
     );
     const fallbackIndex = Number.isFinite(Number(singleValue)) ? Number(singleValue) : (correctIndices[0] ?? 0);
-    const normalizedIndex = Number.isFinite(Number(fallbackIndex)) ? Number(fallbackIndex) : 0;
+    const normalizedIndex = isIntegerType ? null : (Number.isFinite(Number(fallbackIndex)) ? Number(fallbackIndex) : 0);
 
     const category = payload.category || payload.subject || 'Physics';
     const rawChapter = (payload.chapter || '').trim();
     const rawTopic = (payload.topic || '').trim();
     const resolvedChapter = resolveStandardChapter(category, rawTopic, payload.question_text || '', rawChapter);
     const finalTopic = rawTopic && rawTopic.toLowerCase() !== resolvedChapter.toLowerCase() ? rawTopic : '';
+
+    const numericAnswer = payload.numeric_answer !== undefined && payload.numeric_answer !== null && payload.numeric_answer !== '' && !isNaN(Number(payload.numeric_answer))
+        ? Number(payload.numeric_answer)
+        : (isIntegerType && singleValue !== null && !isNaN(Number(singleValue)) ? Number(singleValue) : null);
 
     return {
         ...payload,
@@ -72,7 +81,9 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         options,
         marks: Number(payload.marks ?? 1),
         correct_index: normalizedIndex,
-        correct_indices: questionType === 'multi_select' ? correctIndices : (correctIndices.length ? correctIndices : [normalizedIndex]),
+        correct_indices: questionType === 'multi_select' ? correctIndices : (correctIndices.length ? correctIndices : (normalizedIndex !== null ? [normalizedIndex] : [])),
+        numeric_answer: numericAnswer,
+        numerical_tolerance: payload.numerical_tolerance !== undefined && payload.numerical_tolerance !== null ? Number(payload.numerical_tolerance) : (questionType === 'numerical' ? 0.01 : 0),
         solution: payload.solution ?? payload.solution_text ?? '',
         subject_id: payload.subject_id ?? null,
         chapter_id: payload.chapter_id ?? null,
