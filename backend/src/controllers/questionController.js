@@ -374,6 +374,10 @@ export const updateQuestion = asyncHandler(async (req, res) => {
       }
       media = JSON.stringify(allMedia);
     }
+  } else if (media && typeof media !== 'string') {
+    media = JSON.stringify(media);
+  } else if (!media) {
+    media = JSON.stringify([]);
   }
 
   const hasAnswerKey = Boolean(

@@ -1556,6 +1556,45 @@ const questionsData = [
   }
 ];
 
+export function getChapterForQuestion(num) {
+  // Physics (1-45)
+  if (num >= 1 && num <= 26) {
+    return { subject: 'Physics', subjectId: 11, chapter: 'Units and Measurements' };
+  }
+  if (num >= 27 && num <= 45) {
+    return { subject: 'Physics', subjectId: 11, chapter: 'Current Electricity' };
+  }
+
+  // Chemistry (46-90)
+  if (num >= 46 && num <= 57) {
+    return { subject: 'Chemistry', subjectId: 10, chapter: 'Electrochemistry' };
+  }
+  if (num >= 58 && num <= 89) {
+    return { subject: 'Chemistry', subjectId: 10, chapter: 'Some Basic Concepts of Chemistry' };
+  }
+  if (num === 90) {
+    return { subject: 'Chemistry', subjectId: 10, chapter: 'Redox Reactions' };
+  }
+
+  // Botany (91-135)
+  if ((num >= 91 && num <= 103) || (num >= 113 && num <= 115) || (num >= 124 && num <= 128)) {
+    return { subject: 'Botany', subjectId: 15, chapter: 'The Living World' };
+  }
+  if ((num >= 104 && num <= 112) || (num >= 116 && num <= 123) || (num >= 129 && num <= 135)) {
+    return { subject: 'Botany', subjectId: 15, chapter: 'Principles of Inheritance and Variation' };
+  }
+
+  // Zoology (136-180)
+  if ((num >= 136 && num <= 140) || (num >= 143 && num <= 144) || (num >= 146 && num <= 147)) {
+    return { subject: 'Zoology', subjectId: 13, chapter: 'Reproductive Health' };
+  }
+  if ((num >= 141 && num <= 142) || num === 145 || (num >= 148 && num <= 180)) {
+    return { subject: 'Zoology', subjectId: 13, chapter: 'Animal Kingdom' };
+  }
+
+  return { subject: 'General', subjectId: null, chapter: 'General Core Concepts' };
+}
+
 export async function uploadAssessment43(activePool) {
   const effectivePool = activePool || pool;
   console.log(`Starting upload of ${questionsData.length} questions into Assessment ${ASSESSMENT_ID}...`);
@@ -1563,6 +1602,30 @@ export async function uploadAssessment43(activePool) {
   const client = await effectivePool.connect();
   try {
     await client.query('BEGIN');
+
+    // 0. Ensure chapters exist in chapters table
+    const distinctChapters = [
+      { subjectId: 11, name: 'Units and Measurements' },
+      { subjectId: 11, name: 'Current Electricity' },
+      { subjectId: 10, name: 'Electrochemistry' },
+      { subjectId: 10, name: 'Some Basic Concepts of Chemistry' },
+      { subjectId: 10, name: 'Redox Reactions' },
+      { subjectId: 15, name: 'The Living World' },
+      { subjectId: 15, name: 'Principles of Inheritance and Variation' },
+      { subjectId: 13, name: 'Reproductive Health' },
+      { subjectId: 13, name: 'Animal Kingdom' },
+    ];
+    const chapterIdMap = {};
+    for (const item of distinctChapters) {
+      const cRes = await client.query(
+        `INSERT INTO chapters (subject_id, name, position)
+         VALUES ($1, $2, 0)
+         ON CONFLICT (subject_id, name) DO UPDATE SET name = EXCLUDED.name
+         RETURNING id`,
+        [item.subjectId, item.name]
+      );
+      chapterIdMap[`${item.subjectId}:::${item.name}`] = cRes.rows[0].id;
+    }
 
     // 1. Ensure sections exist
     const sectionsDef = [
@@ -1599,6 +1662,9 @@ export async function uploadAssessment43(activePool) {
     // 3. Insert all 180 questions
     for (const q of questionsData) {
       const sectionId = sectionMap[q.subject];
+      const chMapping = getChapterForQuestion(q.num);
+      const chapterId = chMapping.subjectId ? chapterIdMap[`${chMapping.subjectId}:::${chMapping.chapter}`] : null;
+
       const optObjects = q.options.map((optText, idx) => ({
         key: String.fromCharCode(65 + idx),
         text: optText,
@@ -1623,10 +1689,10 @@ export async function uploadAssessment43(activePool) {
       await client.query(
         `INSERT INTO questions (
           assessment_id, section_id, question_type, question_text, options, correct_index,
-          marks, position, image_url, media, subject, original_question_number
+          marks, position, image_url, media, subject, subject_id, topic, chapter_id, original_question_number
         ) VALUES (
           $1, $2, 'mcq', $3, $4, $5,
-          $6, $7, $8, $9, $10, $11
+          $6, $7, $8, $9, $10, $11, $12, $13, $14
         )`,
         [
           ASSESSMENT_ID,
@@ -1639,6 +1705,9 @@ export async function uploadAssessment43(activePool) {
           imgUrl,
           JSON.stringify(mediaArray),
           q.subject,
+          chMapping.subjectId,
+          chMapping.chapter,
+          chapterId,
           q.num
         ]
       );
