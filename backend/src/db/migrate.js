@@ -5,6 +5,7 @@ import { pool } from '../config/db.js';
 import { reorderNeet180Assessments } from './reorderNeet180.js';
 import { uploadAssessment43 } from '../../scripts/upload_assessment_43.mjs';
 import { uploadBiomoleculesQuestions } from '../../scripts/import_biomolecules_chemistry.mjs';
+import { uploadAminesQuestions } from '../../scripts/import_amines_chemistry.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -144,6 +145,18 @@ const run = async () => {
     } catch (biomolErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] Biomolecules sync warning:', biomolErr.message);
+    }
+
+    try {
+      const aminesCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND chapter = 'Amines'");
+      if (aminesCheck.rows[0].count < 55) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Amines questions count is ${aminesCheck.rows[0].count} (<55). Uploading 55 Amines questions...`);
+        await uploadAminesQuestions(pool);
+      }
+    } catch (aminesErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Amines sync warning:', aminesErr.message);
     }
 
     // eslint-disable-next-line no-console

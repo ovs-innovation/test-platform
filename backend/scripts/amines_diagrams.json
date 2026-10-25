@@ -1,0 +1,26 @@
+{
+  "amines_q1_basic_strength": {
+    "localUrl": "/uploads/amines/amines_q1_basic_strength.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939449/edvedum_amines/amines_q1_basic_strength.png"
+  },
+  "amines_q2_benzamide_reactions": {
+    "localUrl": "/uploads/amines/amines_q2_benzamide_reactions.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939449/edvedum_amines/amines_q2_benzamide_reactions.png"
+  },
+  "amines_q3_benzyne_reaction": {
+    "localUrl": "/uploads/amines/amines_q3_benzyne_reaction.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939450/edvedum_amines/amines_q3_benzyne_reaction.png"
+  },
+  "amines_q5_nitrobenzene_reduction": {
+    "localUrl": "/uploads/amines/amines_q5_nitrobenzene_reduction.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939451/edvedum_amines/amines_q5_nitrobenzene_reduction.png"
+  },
+  "amines_q12_nitration_aniline": {
+    "localUrl": "/uploads/amines/amines_q12_nitration_aniline.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939453/edvedum_amines/amines_q12_nitration_aniline.png"
+  },
+  "amines_q82_roadmap": {
+    "localUrl": "/uploads/amines/amines_q82_roadmap.png",
+    "cdnUrl": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1792939454/edvedum_amines/amines_q82_roadmap.png"
+  }
+}
