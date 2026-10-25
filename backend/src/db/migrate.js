@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { pool } from '../config/db.js';
 import { reorderNeet180Assessments } from './reorderNeet180.js';
 import { uploadAssessment43 } from '../../scripts/upload_assessment_43.mjs';
+import { uploadBiomoleculesQuestions } from '../../scripts/import_biomolecules_chemistry.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -131,6 +132,18 @@ const run = async () => {
     } catch (upload43Err) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] Assessment 43 sync warning:', upload43Err.message);
+    }
+
+    try {
+      const qbCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND chapter = 'Biomolecules'");
+      if (qbCheck.rows[0].count < 45) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Biomolecules questions count is ${qbCheck.rows[0].count} (<45). Uploading 45 Biomolecules questions...`);
+        await uploadBiomoleculesQuestions(pool);
+      }
+    } catch (biomolErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Biomolecules sync warning:', biomolErr.message);
     }
 
     // eslint-disable-next-line no-console

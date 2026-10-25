@@ -472,6 +472,7 @@ jobs:
             log "Executing NEET 180 questions reorder and section synchronization..."
             docker compose exec -T backend node src/db/migrate.js || true
             docker compose exec -T backend node scripts/upload_assessment_43.mjs || true
+            docker compose exec -T backend node scripts/import_biomolecules_chemistry.mjs || true
 
             # Restart frontend container to refresh Docker internal DNS mapping
             log "Restarting frontend container to refresh Docker internal DNS resolver..."
