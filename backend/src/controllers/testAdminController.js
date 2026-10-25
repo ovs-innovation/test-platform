@@ -347,6 +347,28 @@ export const createTest = asyncHandler(async (req, res) => {
       sendStudentAssignmentNotifications(createdTest.id, createdTest.test_name || createdTest.title || 'Test', assigned_to_type, assigned_to_id).catch(() => { });
     }
 
+    // Sync into assessments table to ensure immediate compatibility across editor and CBT views
+    await client.query(
+      `INSERT INTO assessments (
+        id, title, description, instructions, duration_minutes, passing_marks, max_violations,
+        result_visible, is_published, available_from, available_until, created_by
+      ) VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, 3, true, $6, $7, $8, $9)
+      ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, duration_minutes = EXCLUDED.duration_minutes`,
+      [
+        createdTest.id,
+        createdTest.test_name || createdTest.title || 'Assessment',
+        createdTest.syllabus || '',
+        createdTest.duration_minutes || 180,
+        createdTest.passing_marks || 0,
+        Boolean(is_published),
+        createdTest.available_from || null,
+        createdTest.available_until || null,
+        req.user?.id || null,
+      ]
+    ).catch((err) => {
+      console.warn('[createTest] sync assessment warning:', err.message);
+    });
+
     return createdTest;
   });
 

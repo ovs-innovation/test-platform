@@ -424,7 +424,11 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
   const [bankOpen, setBankOpen] = useState(false);
   const [bankCategory, setBankCategory] = useState('Physics');
   const [bankQuestions, setBankQuestions] = useState([]);
-  const [categories, setCategories] = useState(['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology']);
+  const [bankSelectedIds, setBankSelectedIds] = useState([]);
+  const [bankSearch, setBankSearch] = useState('');
+  const [bankTargetSectionId, setBankTargetSectionId] = useState('auto');
+  const [bankImporting, setBankImporting] = useState(false);
+  const [categories, setCategories] = useState(['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology']);
   const [csvOpen, setCsvOpen] = useState(false);
   const [csvText, setCsvText] = useState(CSV_TEMPLATE);
   const [uploading, setUploading] = useState(false);
@@ -1014,17 +1018,57 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
   };
 
   const loadBank = async (cat) => {
-    setBankCategory(cat);
+    const targetCat = cat || bankCategory || 'Physics';
+    setBankCategory(targetCat);
+    setBankSelectedIds([]);
     try {
       const res = await questionBankService.categories();
       if (res?.categories?.length) {
-        setCategories(res.categories.map((c) => c.name));
+        setCategories(res.categories.map((c) => (typeof c === 'object' ? c.name : c)));
       }
-      const questionsList = await questionBankService.list(cat);
+      const questionsList = await questionBankService.list(targetCat);
       setBankQuestions(Array.isArray(questionsList) ? questionsList : (questionsList?.questions || []));
       setBankOpen(true);
     } catch (err) {
       toast.error(err.message || 'Could not load question bank');
+    }
+  };
+
+  const toggleBankQuestionSelect = (id) => {
+    setBankSelectedIds((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  };
+
+  const handleBankSelectAll = (visibleBankQuestions) => {
+    const visibleIds = (visibleBankQuestions || bankQuestions).map((bq) => bq.id);
+    const allSelected = visibleIds.length > 0 && visibleIds.every((id) => bankSelectedIds.includes(id));
+    if (allSelected) {
+      setBankSelectedIds((prev) => prev.filter((id) => !visibleIds.includes(id)));
+    } else {
+      setBankSelectedIds((prev) => Array.from(new Set([...prev, ...visibleIds])));
+    }
+  };
+
+  const handleBulkImportFromBank = async () => {
+    if (bankSelectedIds.length === 0) {
+      toast.error('Please select at least one question to import');
+      return;
+    }
+    setBankImporting(true);
+    try {
+      const res = await questionBankService.bulkImportToAssessment(assessmentId, {
+        ids: bankSelectedIds,
+        section_id: bankTargetSectionId === 'auto' ? null : Number(bankTargetSectionId),
+      });
+      toast.success(`Imported ${res?.imported || bankSelectedIds.length} question(s) from Question Bank!`);
+      setBankSelectedIds([]);
+      setBankOpen(false);
+      onReload();
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err?.message || 'Bulk import failed');
+    } finally {
+      setBankImporting(false);
     }
   };
 
@@ -1111,6 +1155,14 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
             >
               <Zap className="h-3.5 w-3.5 text-amber-500 fill-amber-500/20" />
               Bulk Update Marks
+            </button>
+            <button
+              type="button"
+              className="btn bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
+              onClick={() => loadBank(bankCategory || 'Physics')}
+            >
+              <Sparkles className="h-3.5 w-3.5 text-indigo-200" />
+              <span>+ Pick from Question Bank</span>
             </button>
             <button type="button" className="btn-secondary text-xs font-bold text-blue-600 dark:text-blue-400" onClick={() => setPdfOpen(true)}>
               📄 PDF Question Import
@@ -1337,23 +1389,194 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         loading={bulkUpdating}
       />
 
-      <Modal open={bankOpen} onClose={() => setBankOpen(false)} title={`Question bank — ${bankCategory}`} size="lg">
-        {bankQuestions.length === 0 ? (
-          <p className="text-sm text-slate-500 dark:text-slate-400">No questions in this category. Run db:seed to populate the bank.</p>
-        ) : (
-          <ul className="max-h-96 space-y-3 overflow-y-auto">
-            {bankQuestions.map((bq) => (
-              <li key={bq.id} className="flex items-start justify-between gap-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3">
-                <div className="min-w-0 flex-1">
-                  <Badge color="blue">{bq.question_type}</Badge>
-                  <p className="mt-1 text-sm font-medium text-slate-800 dark:text-slate-100">{bq.question_text}</p>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">{bq.marks} marks</p>
-                </div>
-                <button type="button" className="btn-primary shrink-0 text-xs" onClick={() => importBank(bq.id)}>Import</button>
-              </li>
+      <Modal open={bankOpen} onClose={() => setBankOpen(false)} title={`Question Repository & Bank`} size="xl">
+        <div className="space-y-4">
+          {/* Category Tabs */}
+          <div className="flex flex-wrap items-center gap-1.5 border-b border-slate-200 dark:border-slate-800 pb-2">
+            {(categories.length ? categories : ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology']).map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => loadBank(cat)}
+                className={`px-3 py-1.5 rounded-xl text-xs font-extrabold transition cursor-pointer ${
+                  bankCategory === cat
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700'
+                }`}
+              >
+                {cat}
+              </button>
             ))}
-          </ul>
-        )}
+          </div>
+
+          {/* Search, Filter & Controls */}
+          {(() => {
+            const filteredBank = bankQuestions.filter((bq) =>
+              !bankSearch ||
+              (bq.question_text || '').toLowerCase().includes(bankSearch.toLowerCase()) ||
+              (bq.chapter || '').toLowerCase().includes(bankSearch.toLowerCase()) ||
+              (bq.topic || '').toLowerCase().includes(bankSearch.toLowerCase())
+            );
+            const allSelected = filteredBank.length > 0 && filteredBank.every((bq) => bankSelectedIds.includes(bq.id));
+
+            return (
+              <>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-50 dark:bg-slate-900/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-800">
+                  <div className="flex items-center gap-2 flex-1">
+                    <input
+                      type="text"
+                      placeholder={`Search ${bankCategory} questions by keyword or chapter...`}
+                      className="input text-xs flex-1"
+                      value={bankSearch}
+                      onChange={(e) => setBankSearch(e.target.value)}
+                    />
+                    {bankSearch && (
+                      <button
+                        type="button"
+                        onClick={() => setBankSearch('')}
+                        className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 px-2"
+                      >
+                        Clear
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <div className="flex items-center gap-1.5 text-xs">
+                      <span className="font-bold text-slate-500">Section:</span>
+                      <select
+                        value={bankTargetSectionId}
+                        onChange={(e) => setBankTargetSectionId(e.target.value)}
+                        className="rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1 text-xs font-semibold"
+                      >
+                        <option value="auto">Auto-assign by Subject</option>
+                        {sections.map((sec) => (
+                          <option key={sec.id} value={sec.id}>{sec.name}</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleBankSelectAll(filteredBank)}
+                      className="btn-secondary text-xs font-bold py-1 px-2.5"
+                    >
+                      {allSelected ? 'Deselect All' : `Select All (${filteredBank.length})`}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Questions List */}
+                {filteredBank.length === 0 ? (
+                  <div className="py-12 text-center text-xs text-slate-400">
+                    {bankQuestions.length === 0
+                      ? `No questions found in ${bankCategory}. Import or add questions in Question Bank.`
+                      : 'No questions match your search filter.'}
+                  </div>
+                ) : (
+                  <ul className="max-h-[50vh] space-y-2.5 overflow-y-auto pr-1">
+                    {filteredBank.map((bq, idx) => {
+                      const isSelected = bankSelectedIds.includes(bq.id);
+                      const chapterName = bq.chapter || bq.chapter_name;
+                      return (
+                        <li
+                          key={bq.id}
+                          onClick={() => toggleBankQuestionSelect(bq.id)}
+                          className={`flex items-start gap-3 rounded-2xl border p-3.5 transition cursor-pointer select-none ${
+                            isSelected
+                              ? 'border-blue-500 bg-blue-50/70 dark:bg-blue-950/40 shadow-xs'
+                              : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-850'
+                          }`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => {}}
+                            className="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                          />
+
+                          <div className="min-w-0 flex-1">
+                            <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+                              <span className="text-[10px] font-mono font-black text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/60 px-1.5 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+                                #{idx + 1}
+                              </span>
+                              <Badge color="blue">{bq.question_type}</Badge>
+                              {chapterName && (
+                                <span className="text-[10px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800/50 truncate max-w-xs">
+                                  {chapterName}
+                                </span>
+                              )}
+                              {bq.topic && bq.topic !== chapterName && (
+                                <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded truncate max-w-[150px]">
+                                  {bq.topic}
+                                </span>
+                              )}
+                              <span className="text-[10px] font-extrabold text-slate-500 dark:text-slate-400 ml-auto">
+                                {bq.marks || 4} Marks
+                              </span>
+                            </div>
+
+                            <div className="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">
+                              <MathRenderer text={bq.question_text} />
+                            </div>
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              importBank(bq.id);
+                            }}
+                            className="btn-secondary text-[11px] font-extrabold px-2.5 py-1 shrink-0 ml-1"
+                            title="Import this single question immediately"
+                          >
+                            Import
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+
+                {/* Footer with Bulk Import Action */}
+                <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-200 dark:border-slate-800">
+                  <div className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+                    <span className="font-extrabold text-blue-600 dark:text-blue-400">{bankSelectedIds.length}</span> question{bankSelectedIds.length !== 1 ? 's' : ''} selected
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      className="btn-secondary text-xs"
+                      onClick={() => setBankOpen(false)}
+                      disabled={bankImporting}
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-primary text-xs flex items-center gap-1.5"
+                      onClick={handleBulkImportFromBank}
+                      disabled={bankImporting || bankSelectedIds.length === 0}
+                    >
+                      {bankImporting ? (
+                        <>
+                          <Spinner className="h-3.5 w-3.5 text-white" />
+                          <span>Importing...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Sparkles className="h-3.5 w-3.5 text-white" />
+                          <span>Import Selected ({bankSelectedIds.length}) Questions</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </div>
+              </>
+            );
+          })()}
+        </div>
       </Modal>
 
       <Modal open={csvOpen} onClose={() => setCsvOpen(false)} title="Bulk CSV import" size="lg">

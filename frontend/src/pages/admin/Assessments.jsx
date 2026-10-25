@@ -625,13 +625,22 @@ export default function AdminAssessments() {
         subtitle="Create, edit, schedule, assign, upload question papers/solutions, trigger rank calculations, and configure missed-test access overrides."
         breadcrumbs={['CBT Assessments']}
         actions={
-          <button
-            type="button"
-            onClick={openCreateModal}
-            className="btn btn-primary"
-          >
-            + Create New Test
-          </button>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              to="/admin/question-bank"
+              className="btn bg-blue-50 text-blue-700 hover:bg-blue-100 hover:text-blue-800 dark:bg-blue-950/50 dark:text-blue-300 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/80 flex items-center gap-1.5 font-bold transition shadow-xs cursor-pointer text-xs"
+            >
+              <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <span>Select from Question Bank</span>
+            </Link>
+            <button
+              type="button"
+              onClick={openCreateModal}
+              className="btn btn-primary"
+            >
+              + Create New Test
+            </button>
+          </div>
         }
       />
 
@@ -1201,6 +1210,26 @@ export default function AdminAssessments() {
             </div>
 
             <form onSubmit={handleTestSubmit} className="space-y-4 text-xs font-semibold">
+              {!editingTest && (
+                <div className="rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/40 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div className="text-[11px] text-blue-900 dark:text-blue-200">
+                    <span className="font-extrabold flex items-center gap-1.5 text-xs text-blue-700 dark:text-blue-300">
+                      <Sparkles className="h-3.5 w-3.5" />
+                      Want to build this test from your Question Bank?
+                    </span>
+                    <p className="text-slate-500 dark:text-slate-400 mt-0.5">
+                      You can select questions directly by subject/chapter in the Question Bank and bundle them into a test with 1-click.
+                    </p>
+                  </div>
+                  <Link
+                    to="/admin/question-bank"
+                    className="shrink-0 text-xs font-extrabold px-3 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white shadow-xs transition inline-flex items-center gap-1"
+                  >
+                    <span>Question Bank →</span>
+                  </Link>
+                </div>
+              )}
+
               <div>
                 <label className="block text-slate-700 dark:text-slate-300 font-bold mb-1">Test Title *</label>
                 <input

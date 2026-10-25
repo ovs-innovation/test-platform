@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -121,6 +122,212 @@ export default function AdminQuestionBank() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const navigate = useNavigate();
+
+  // Multi-select Question Bank state
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState([]);
+  const [selectedQuestionsMap, setSelectedQuestionsMap] = useState({});
+  const [createTestModalOpen, setCreateTestModalOpen] = useState(false);
+  const [addToTestModalOpen, setAddToTestModalOpen] = useState(false);
+  const [creatingTest, setCreatingTest] = useState(false);
+  const [addingToTest, setAddingToTest] = useState(false);
+  const [existingTestsList, setExistingTestsList] = useState([]);
+  const [loadingExistingTests, setLoadingExistingTests] = useState(false);
+  const [existingTestSearch, setExistingTestSearch] = useState('');
+  const [selectedExistingTestId, setSelectedExistingTestId] = useState(null);
+  const [testForm, setTestForm] = useState({
+    test_name: '',
+    test_type: 'AIETS',
+    test_date: new Date().toISOString().slice(0, 10),
+    start_time: '09:00:00',
+    end_time: '12:00:00',
+    duration_minutes: 180,
+    max_marks: '',
+    syllabus: '',
+    is_published: true,
+  });
+
+  const selectedQuestionsList = useMemo(() => {
+    return selectedQuestionIds.map((id) => selectedQuestionsMap[id]).filter(Boolean);
+  }, [selectedQuestionIds, selectedQuestionsMap]);
+
+  const totalSelectedMarks = useMemo(() => {
+    return selectedQuestionsList.reduce((acc, q) => acc + (Number(q.marks) || 4), 0);
+  }, [selectedQuestionsList]);
+
+  const selectedCategoryBreakdown = useMemo(() => {
+    const counts = {};
+    selectedQuestionsList.forEach((q) => {
+      const c = q.category || q.subject || 'General';
+      counts[c] = (counts[c] || 0) + 1;
+    });
+    return Object.entries(counts).map(([cat, count]) => ({ cat, count }));
+  }, [selectedQuestionsList]);
+
+  const toggleSelectQuestion = (q) => {
+    setSelectedQuestionIds((prev) => {
+      const exists = prev.includes(q.id);
+      if (exists) {
+        return prev.filter((id) => id !== q.id);
+      } else {
+        return [...prev, q.id];
+      }
+    });
+    setSelectedQuestionsMap((prev) => {
+      const next = { ...prev };
+      if (next[q.id]) {
+        delete next[q.id];
+      } else {
+        next[q.id] = q;
+      }
+      return next;
+    });
+  };
+
+  const handleSelectAllVisible = () => {
+    const visibleIds = questions.map((q) => q.id);
+    const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
+    if (allSelected) {
+      setSelectedQuestionIds((prev) => prev.filter((id) => !visibleIds.includes(id)));
+      setSelectedQuestionsMap((prev) => {
+        const next = { ...prev };
+        visibleIds.forEach((id) => delete next[id]);
+        return next;
+      });
+    } else {
+      const newIdsSet = new Set([...selectedQuestionIds, ...visibleIds]);
+      setSelectedQuestionIds(Array.from(newIdsSet));
+      setSelectedQuestionsMap((prev) => {
+        const next = { ...prev };
+        questions.forEach((q) => { next[q.id] = q; });
+        return next;
+      });
+    }
+  };
+
+  const handleClearSelection = () => {
+    setSelectedQuestionIds([]);
+    setSelectedQuestionsMap({});
+  };
+
+  const openCreateTestModal = () => {
+    if (selectedQuestionIds.length === 0) {
+      if (questions.length > 0) {
+        handleSelectAllVisible();
+        toast.info(`Selected all ${questions.length} questions in ${category}. Click 'Create Test' again to proceed.`);
+      } else {
+        toast.error('Please select at least one question from the bank');
+      }
+      return;
+    }
+    const list = selectedQuestionIds.map((id) => selectedQuestionsMap[id]).filter(Boolean);
+    const sumMarks = list.reduce((s, q) => s + (Number(q.marks) || 4), 0);
+    const cats = Array.from(new Set(list.map((q) => q.category || q.subject).filter(Boolean)));
+    const chapters = Array.from(new Set(list.map((q) => q.chapter || q.topic).filter(Boolean)));
+
+    const defaultTitle = cats.length > 0
+      ? `${cats.join(' & ')} Practice Test`
+      : 'Practice Test from Question Bank';
+
+    const defaultSyllabus = chapters.length > 0
+      ? chapters.slice(0, 8).join(', ')
+      : (cats.join(', ') || 'Comprehensive Syllabus');
+
+    setTestForm({
+      test_name: defaultTitle,
+      test_type: 'AIETS',
+      test_date: new Date().toISOString().slice(0, 10),
+      start_time: '09:00:00',
+      end_time: '12:00:00',
+      duration_minutes: 180,
+      max_marks: sumMarks || 100,
+      syllabus: defaultSyllabus,
+      is_published: true,
+    });
+    setCreateTestModalOpen(true);
+  };
+
+  const handleCreateTestSubmit = async (e) => {
+    e.preventDefault();
+    if (!testForm.test_name.trim()) {
+      toast.error('Please enter a test title');
+      return;
+    }
+    setCreatingTest(true);
+    try {
+      const payload = {
+        ...testForm,
+        max_marks: Number(testForm.max_marks) || totalSelectedMarks || 100,
+        start_time: testForm.start_time.length === 5 ? `${testForm.start_time}:00` : testForm.start_time,
+        end_time: testForm.end_time.length === 5 ? `${testForm.end_time}:00` : testForm.end_time,
+      };
+
+      const res = await adminService.createTest(payload);
+      const createdTest = res?.test || res;
+      const testId = createdTest?.id;
+      if (!testId) {
+        throw new Error('Test creation failed: missing test ID');
+      }
+
+      await questionBankService.bulkImportToAssessment(testId, {
+        ids: selectedQuestionIds,
+      });
+
+      toast.success(`Test "${testForm.test_name}" created with ${selectedQuestionIds.length} questions!`);
+      setCreateTestModalOpen(false);
+      handleClearSelection();
+      navigate(`/admin/assessments/${testId}`);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err?.message || 'Failed to create test');
+    } finally {
+      setCreatingTest(false);
+    }
+  };
+
+  const openAddToExistingTestModal = async () => {
+    if (selectedQuestionIds.length === 0) {
+      toast.error('Please select at least one question first');
+      return;
+    }
+    setAddToTestModalOpen(true);
+    setLoadingExistingTests(true);
+    try {
+      const tests = await adminService.tests();
+      const list = Array.isArray(tests) ? tests : [];
+      setExistingTestsList(list);
+      if (list.length > 0) {
+        setSelectedExistingTestId(list[0].id);
+      }
+    } catch (err) {
+      toast.error('Failed to load existing tests');
+    } finally {
+      setLoadingExistingTests(false);
+    }
+  };
+
+  const handleAddToExistingTestSubmit = async (e) => {
+    e.preventDefault();
+    if (!selectedExistingTestId) {
+      toast.error('Please select a target test');
+      return;
+    }
+    setAddingToTest(true);
+    try {
+      await questionBankService.bulkImportToAssessment(selectedExistingTestId, {
+        ids: selectedQuestionIds,
+      });
+      const targetTest = existingTestsList.find((t) => t.id === Number(selectedExistingTestId));
+      toast.success(`Imported ${selectedQuestionIds.length} question(s) into "${targetTest?.test_name || 'Test'}"!`);
+      setAddToTestModalOpen(false);
+      handleClearSelection();
+      navigate(`/admin/assessments/${selectedExistingTestId}`);
+    } catch (err) {
+      toast.error(err?.response?.data?.message || err?.message || 'Failed to import into test');
+    } finally {
+      setAddingToTest(false);
+    }
+  };
+
   const [csvOpen, setCsvOpen] = useState(false);
   const [csvText, setCsvText] = useState(BANK_CSV_TEMPLATE);
   const [uploading, setUploading] = useState(false);
@@ -549,6 +756,23 @@ export default function AdminQuestionBank() {
         breadcrumbs={['Question Repository']}
         actions={(
           <>
+            <button
+              type="button"
+              className={`btn font-extrabold flex items-center gap-1.5 shadow-sm transition cursor-pointer ${
+                selectedQuestionIds.length > 0
+                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/25 ring-2 ring-emerald-400/50'
+                  : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100'
+              }`}
+              onClick={openCreateTestModal}
+              title="Create a test using selected questions from the bank"
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>
+                {selectedQuestionIds.length > 0
+                  ? `Create Test (${selectedQuestionIds.length})`
+                  : 'Create Test from Bank'}
+              </span>
+            </button>
             <button type="button" className="btn btn-primary" onClick={openAdd}>+ Add Question</button>
             <button
               type="button"
@@ -582,6 +806,54 @@ export default function AdminQuestionBank() {
         )}
       />
 
+      {/* Floating Selection Action Bar */}
+      {selectedQuestionIds.length > 0 && (
+        <div className="sticky top-2 z-40 p-3.5 sm:p-4 rounded-2xl border border-blue-500/40 bg-slate-900/95 dark:bg-[#0f172a]/95 text-white shadow-2xl backdrop-blur-md flex flex-wrap items-center justify-between gap-3 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="flex h-7 px-3 items-center justify-center rounded-xl bg-blue-600 text-white font-black text-xs shadow-md">
+                {selectedQuestionIds.length} Selected
+              </span>
+              <span className="text-xs font-semibold text-slate-300">
+                ({totalSelectedMarks} Total Marks)
+              </span>
+            </div>
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {selectedCategoryBreakdown.map(({ cat, count }) => (
+                <span key={cat} className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-white/10 text-white border border-white/15">
+                  {cat}: {count}
+                </span>
+              ))}
+            </div>
+          </div>
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              type="button"
+              onClick={openCreateTestModal}
+              className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs flex items-center gap-1.5 shadow-lg shadow-emerald-600/30 transition cursor-pointer"
+            >
+              <Sparkles className="h-4 w-4" />
+              <span>Create Test with Selected ({selectedQuestionIds.length})</span>
+            </button>
+            <button
+              type="button"
+              onClick={openAddToExistingTestModal}
+              className="px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs flex items-center gap-1.5 border border-white/20 transition cursor-pointer"
+            >
+              <BookOpen className="h-4 w-4" />
+              <span>Add to Existing Test</span>
+            </button>
+            <button
+              type="button"
+              onClick={handleClearSelection}
+              className="px-2.5 py-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/10 text-xs font-semibold transition cursor-pointer"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="mb-4 flex flex-wrap gap-2">
         {categoriesList.map((c) => (
           <button
@@ -601,7 +873,42 @@ export default function AdminQuestionBank() {
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
+            rowClassName={(q) => (selectedQuestionIds.includes(q.id) ? 'bg-blue-50/60 dark:bg-blue-950/30' : '')}
             columns={[
+              {
+                key: 'select',
+                sortable: false,
+                headerRender: () => {
+                  const visibleIds = questions.map((q) => q.id);
+                  const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
+                  const someSelected = visibleIds.some((id) => selectedQuestionIds.includes(id));
+                  return (
+                    <div className="flex items-center justify-center pl-1" onClick={(e) => e.stopPropagation()}>
+                      <input
+                        type="checkbox"
+                        checked={allSelected}
+                        ref={(el) => { if (el) el.indeterminate = !allSelected && someSelected; }}
+                        onChange={handleSelectAllVisible}
+                        title={allSelected ? "Deselect all questions in this category" : "Select all questions in this category"}
+                        className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                      />
+                    </div>
+                  );
+                },
+                render: (q) => {
+                  const isChecked = selectedQuestionIds.includes(q.id);
+                  return (
+                    <div className="flex items-center justify-center pl-1" onClick={(e) => e.stopPropagation()}>
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={() => toggleSelectQuestion(q)}
+                        className="h-4 w-4 rounded border-slate-300 dark:border-slate-700 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                      />
+                    </div>
+                  );
+                },
+              },
               {
                 key: 'serialNumber',
                 label: '#',
@@ -1612,6 +1919,257 @@ export default function AdminQuestionBank() {
           </div>
         </Modal>
       )}
+
+      {/* Create Test from Selected Questions Modal */}
+      <Modal
+        open={createTestModalOpen}
+        onClose={() => setCreateTestModalOpen(false)}
+        title="Create New Test from Question Bank"
+        size="lg"
+      >
+        <form onSubmit={handleCreateTestSubmit} className="space-y-4">
+          <div className="rounded-2xl border border-blue-200 dark:border-blue-900/60 bg-blue-50/70 dark:bg-blue-950/30 p-4">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-blue-200/60 dark:border-blue-800/60 pb-2.5 mb-2.5">
+              <span className="text-xs font-black text-blue-900 dark:text-blue-200 flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                Selected Question Repository Bundle
+              </span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-black px-2.5 py-0.5 rounded-full bg-blue-600 text-white shadow-xs">
+                  {selectedQuestionIds.length} Questions
+                </span>
+                <span className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                  Total Marks: <strong className="text-blue-600 dark:text-blue-400">{testForm.max_marks || totalSelectedMarks}</strong>
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              <span className="text-[11px] font-bold text-slate-600 dark:text-slate-400 mr-1">Subject composition:</span>
+              {selectedCategoryBreakdown.map(({ cat, count }) => (
+                <span key={cat} className="inline-flex items-center gap-1 text-[11px] font-black px-2 py-0.5 rounded-lg bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-800 shadow-2xs">
+                  <span className="h-1.5 w-1.5 rounded-full bg-blue-500"></span>
+                  {cat} ({count})
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="sm:col-span-2">
+              <label className="label">Test Title / Name <span className="text-rose-500">*</span></label>
+              <input
+                type="text"
+                required
+                className="input"
+                placeholder="e.g. Botany & Zoology Major NEET Practice Test 1"
+                value={testForm.test_name}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, test_name: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">Test Type</label>
+              <CustomSelectDropdown
+                value={testForm.test_type}
+                options={[
+                  { value: 'AIETS', label: 'AIETS (All India Exam Test Series)' },
+                  { value: 'Unit Test', label: 'Unit Test' },
+                  { value: 'Part Test', label: 'Part Test' },
+                  { value: 'Cumulative Test', label: 'Cumulative Test' },
+                  { value: 'Full Syllabus Mock', label: 'Full Syllabus Mock' },
+                ]}
+                onChange={(val) => setTestForm((prev) => ({ ...prev, test_type: val }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">Exam Date</label>
+              <input
+                type="date"
+                required
+                className="input text-xs"
+                value={testForm.test_date}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, test_date: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">Start Time</label>
+              <input
+                type="time"
+                step="1"
+                className="input text-xs"
+                value={testForm.start_time}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, start_time: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">End Time</label>
+              <input
+                type="time"
+                step="1"
+                className="input text-xs"
+                value={testForm.end_time}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, end_time: e.target.value }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">Duration (Minutes)</label>
+              <input
+                type="number"
+                min="1"
+                className="input text-xs"
+                value={testForm.duration_minutes}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, duration_minutes: Number(e.target.value) }))}
+              />
+            </div>
+
+            <div>
+              <label className="label">Maximum Marks (Auto-summed)</label>
+              <input
+                type="number"
+                min="1"
+                className="input text-xs"
+                value={testForm.max_marks}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, max_marks: Number(e.target.value) }))}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="label">Syllabus / Topics Summary</label>
+              <textarea
+                rows={2}
+                className="input text-xs"
+                placeholder="e.g. Sexual Reproduction in Flowering Plants, Plant Physiology..."
+                value={testForm.syllabus}
+                onChange={(e) => setTestForm((prev) => ({ ...prev, syllabus: e.target.value }))}
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="flex items-center gap-2 cursor-pointer select-none text-xs font-bold text-slate-800 dark:text-slate-200">
+                <input
+                  type="checkbox"
+                  checked={testForm.is_published}
+                  onChange={(e) => setTestForm((prev) => ({ ...prev, is_published: e.target.checked }))}
+                  className="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 cursor-pointer"
+                />
+                <span>Publish test immediately (available for candidates in portal)</span>
+              </label>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+            <button
+              type="button"
+              className="btn btn-secondary text-xs"
+              onClick={() => setCreateTestModalOpen(false)}
+              disabled={creatingTest}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn bg-blue-600 hover:bg-blue-700 text-white font-extrabold text-xs flex items-center gap-2 shadow-md shadow-blue-500/20 cursor-pointer"
+              disabled={creatingTest}
+            >
+              {creatingTest ? (
+                <>
+                  <Spinner className="h-4 w-4 text-white" />
+                  <span>Creating Test & Importing Questions...</span>
+                </>
+              ) : (
+                <>
+                  <Sparkles className="h-4 w-4" />
+                  <span>Create Test & Import {selectedQuestionIds.length} Questions</span>
+                </>
+              )}
+            </button>
+          </div>
+        </form>
+      </Modal>
+
+      {/* Add Selected Questions to Existing Test Modal */}
+      <Modal
+        open={addToTestModalOpen}
+        onClose={() => setAddToTestModalOpen(false)}
+        title="Add Questions to Existing Test"
+        size="md"
+      >
+        <form onSubmit={handleAddToExistingTestSubmit} className="space-y-4">
+          <p className="text-xs text-slate-500 dark:text-slate-400">
+            Append <strong className="text-blue-600 dark:text-blue-400 font-black">{selectedQuestionIds.length} selected questions</strong> into an active test in your repository. Questions will automatically align to their respective subject sections.
+          </p>
+
+          <div>
+            <label className="label">Search & Select Target Test</label>
+            <div className="relative mb-2">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search tests by title or exam..."
+                className="input text-xs pl-8"
+                value={existingTestSearch}
+                onChange={(e) => setExistingTestSearch(e.target.value)}
+              />
+            </div>
+
+            {loadingExistingTests ? (
+              <div className="py-8 text-center"><Spinner className="h-5 w-5 mx-auto text-blue-500" /></div>
+            ) : existingTestsList.length === 0 ? (
+              <p className="text-xs text-slate-400 py-4 text-center">No tests available. Create a new test instead.</p>
+            ) : (
+              <div className="max-h-60 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 divide-y divide-slate-100 dark:divide-slate-800/60 p-1">
+                {existingTestsList
+                  .filter((t) => !existingTestSearch || (t.test_name || t.title || '').toLowerCase().includes(existingTestSearch.toLowerCase()))
+                  .map((t) => {
+                    const isSelected = selectedExistingTestId === t.id;
+                    return (
+                      <div
+                        key={t.id}
+                        onClick={() => setSelectedExistingTestId(t.id)}
+                        className={`p-2.5 rounded-lg text-xs cursor-pointer transition flex items-center justify-between gap-2 ${
+                          isSelected
+                            ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                            : 'hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-800 dark:text-slate-200'
+                        }`}
+                      >
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate font-bold">{t.test_name || t.title}</p>
+                          <p className={`text-[10px] mt-0.5 ${isSelected ? 'text-blue-100' : 'text-slate-400'}`}>
+                            {t.test_type} · {t.test_date ? String(t.test_date).slice(0, 10) : 'No date'} · {t.question_count || 0} questions
+                          </p>
+                        </div>
+                        {isSelected && <CheckCircle2 className="h-4 w-4 text-white shrink-0" />}
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+            <button
+              type="button"
+              className="btn btn-secondary text-xs"
+              onClick={() => setAddToTestModalOpen(false)}
+              disabled={addingToTest}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary text-xs flex items-center gap-1.5"
+              disabled={addingToTest || !selectedExistingTestId}
+            >
+              {addingToTest ? <Spinner className="h-4 w-4 text-white" /> : <BookOpen className="h-4 w-4" />}
+              <span>Import into Test</span>
+            </button>
+          </div>
+        </form>
+      </Modal>
     </div>
   );
 }

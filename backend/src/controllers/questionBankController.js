@@ -424,8 +424,45 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   const { assessmentId } = req.params;
   const { category, ids, section_id } = req.body || {};
 
-  const a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
-  if (a.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  let a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
+  if (a.rowCount === 0) {
+    const t = await query('SELECT id, test_name, title, duration_minutes, syllabus, passing_marks, is_published FROM tests WHERE id = $1', [assessmentId]);
+    if (t.rowCount === 0) throw ApiError.notFound('Assessment or Test not found');
+    const testRow = t.rows[0];
+    await query(
+      `INSERT INTO assessments (id, title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, is_published)
+       VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, 3, true, $6)
+       ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title`,
+      [
+        assessmentId,
+        testRow.test_name || testRow.title || 'Assessment',
+        testRow.syllabus || '',
+        testRow.duration_minutes || 180,
+        testRow.passing_marks || 0,
+        Boolean(testRow.is_published),
+      ]
+    );
+  }
+
+  // Load existing sections to auto-match section by question category/subject
+  const secRes = await query('SELECT id, name FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC', [assessmentId]);
+  let existingSections = secRes.rows;
+  if (existingSections.length === 0) {
+    const defaultSections = [
+      { name: 'Physics', section_type: 'technical_mcq', position: 1 },
+      { name: 'Chemistry', section_type: 'technical_mcq', position: 2 },
+      { name: 'Botany', section_type: 'technical_mcq', position: 3 },
+      { name: 'Zoology', section_type: 'technical_mcq', position: 4 },
+      { name: 'Mathematics', section_type: 'technical_mcq', position: 5 },
+    ];
+    for (const s of defaultSections) {
+      const insSec = await query(
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,$3,$4) RETURNING id, name`,
+        [assessmentId, s.name, s.section_type, s.position]
+      );
+      if (insSec.rows.length) existingSections.push(insSec.rows[0]);
+    }
+  }
 
   let bankRows;
   if (Array.isArray(ids) && ids.length) {
@@ -476,16 +513,26 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
       if (cRes.rows.length > 0) chapter_id = cRes.rows[0].id;
     }
 
+    // Auto-match section if section_id is not given
+    let targetSectionId = section_id || null;
+    if (!targetSectionId && existingSections.length > 0) {
+      const catKey = (b.category || subject || '').trim().toLowerCase();
+      const matched = existingSections.find((s) => s.name && s.name.trim().toLowerCase() === catKey);
+      if (matched) {
+        targetSectionId = matched.id;
+      }
+    }
+
     const result = await query(
       `INSERT INTO questions
          (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
           numeric_answer, numerical_tolerance, assertion_text, reason_text,
-          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, subject_id, chapter_id, difficulty, subject, topic)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24)
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
        RETURNING id, question_text`,
       [
         assessmentId,
-        section_id || null,
+        targetSectionId,
         b.question_type,
         b.question_text,
         asJson(b.options, []),
@@ -503,6 +550,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         b.category,
         b.solution || '',
         b.image_url || '',
+        b.solution_image_url || '',
         subject_id,
         chapter_id,
         b.difficulty || 'medium',
@@ -512,6 +560,9 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     );
     imported.push(result.rows[0]);
   }
+
+  await query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});
+  await query('UPDATE tests SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});
 
   res.status(201).json({ imported: imported.length, questions: imported });
 });

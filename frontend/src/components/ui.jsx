@@ -216,7 +216,7 @@ export function Badge({ children, color = 'slate' }) {
   );
 }
 
-export function DataTable({ columns, rows, emptyMessage = 'No records available.', searchable = true }) {
+export function DataTable({ columns, rows, emptyMessage = 'No records available.', searchable = true, rowClassName }) {
   const [filterText, setFilterText] = useState('');
   const [sortKey, setSortKey] = useState(null);
   const [sortDir, setSortDir] = useState('asc');
@@ -250,7 +250,8 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
     return filteredRows.slice(start, start + pageSize);
   }, [filteredRows, currentPage, pageSize]);
 
-  const handleSort = (key) => {
+  const handleSort = (key, sortable = true) => {
+    if (sortable === false) return;
     if (sortKey === key) {
       setSortDir((prev) => (prev === 'asc' ? 'desc' : 'asc'));
     } else {
@@ -323,12 +324,12 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
               {columns.map((col) => (
                 <th
                   key={col.key}
-                  onClick={() => handleSort(col.key)}
-                  className="cursor-pointer px-5 py-4 transition hover:text-slate-900 dark:hover:text-white"
+                  onClick={() => handleSort(col.key, col.sortable)}
+                  className={`px-5 py-4 transition ${col.sortable === false ? '' : 'cursor-pointer hover:text-slate-900 dark:hover:text-white'}`}
                 >
                   <div className="flex items-center gap-1.5">
-                    <span>{col.label}</span>
-                    {sortKey === col.key && (
+                    {col.headerRender ? col.headerRender() : <span>{col.label}</span>}
+                    {col.sortable !== false && sortKey === col.key && (
                       <span className="text-blue-600 dark:text-blue-400">{sortDir === 'asc' ? '↑' : '↓'}</span>
                     )}
                   </div>
@@ -338,7 +339,10 @@ export function DataTable({ columns, rows, emptyMessage = 'No records available.
           </thead>
           <tbody className="divide-y divide-slate-200 dark:divide-slate-800/40">
             {paginatedRows.map((row, i) => (
-              <tr key={row.id ?? i} className="group transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50">
+              <tr
+                key={row.id ?? i}
+                className={`group transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/50 ${rowClassName ? rowClassName(row) : ''}`}
+              >
                 {columns.map((col) => (
                   <td key={col.key} className="px-5 py-4 font-medium text-slate-900 dark:text-slate-300">
                     {col.render ? col.render(row, (currentPage - 1) * pageSize + i) : row[col.key]}

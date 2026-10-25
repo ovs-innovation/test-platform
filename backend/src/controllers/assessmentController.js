@@ -412,8 +412,28 @@ export const getStudentAssessment = asyncHandler(async (req, res) => {
 
 export const getAssessmentAdmin = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const a = await query('SELECT * FROM assessments WHERE id = $1', [id]);
-  if (a.rowCount === 0) throw ApiError.notFound('Assessment not found');
+  let a = await query('SELECT * FROM assessments WHERE id = $1', [id]);
+  if (a.rowCount === 0) {
+    const t = await query('SELECT * FROM tests WHERE id = $1', [id]);
+    if (t.rowCount === 0) throw ApiError.notFound('Assessment not found');
+    const testRow = t.rows[0];
+    a = await query(
+      `INSERT INTO assessments (id, title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, is_published, available_from, available_until)
+       VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, 3, true, $6, $7, $8)
+       ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title
+       RETURNING *`,
+      [
+        testRow.id,
+        testRow.test_name || testRow.title || 'Assessment',
+        testRow.syllabus || '',
+        testRow.duration_minutes || 180,
+        testRow.passing_marks || 0,
+        Boolean(testRow.is_published),
+        testRow.available_from || null,
+        testRow.available_until || null,
+      ]
+    );
+  }
 
   const [sections, questions, invites] = await Promise.all([
     query('SELECT * FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC', [id]),
