@@ -1,0 +1,268 @@
+[
+  {
+    "question_number": 58,
+    "question_type": "mcq",
+    "question_text": "Position $x$ of a body moving with acceleration $a$ is related to time $t$ as $x = K a^m t^n$, where $K$ is dimensionless. The values of $m$ and $n$ are respectively",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$m = 1, n = 2$",
+      "$m = -2, n = 1$",
+      "$m = -1, n = 2$",
+      "$m = 2, n = -1$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the equation: \n$$x = K a^m t^n$$\nEquating dimensions on both sides:\n$$[x] = [a]^m [t]^n$$\n$$[\\text{L}] = [\\text{LT}^{-2}]^m [\\text{T}]^n = [\\text{L}^m \\text{T}^{-2m+n}]$$\nComparing powers of $\\text{L}$ and $\\text{T}$:\n$$m = 1$$\n$$-2m + n = 0 \\implies n = 2m = 2$$\nTherefore, $m = 1$ and $n = 2$."
+  },
+  {
+    "question_number": 59,
+    "question_type": "mcq",
+    "question_text": "In which of the following, the number of significant figures is different from that in the others?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2.003\\text{ kg}$",
+      "$12.23\\text{ m}$",
+      "$0.002 \\times 10^4\\text{ m}$",
+      "$2.001 \\times 10^{-3}\\text{ kg}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us count the number of significant figures in each option:\n1. $2.003\\text{ kg}$ has 4 significant figures (zeros between non-zero digits are significant).\n2. $12.23\\text{ m}$ has 4 significant figures.\n3. $0.002 \\times 10^4\\text{ m}$ has only 1 significant figure (leading zeros are not significant, and the power of $10$ does not affect significant figures).\n4. $2.001 \\times 10^{-3}\\text{ kg}$ has 4 significant figures.\n\nThus, option (3) has a different number of significant figures."
+  },
+  {
+    "question_number": 60,
+    "question_type": "mcq",
+    "question_text": "The true value of the measurement of a physical quantity is $13.5\\text{ m}^3$. Which of the following measured values of this quantity is most precise?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$13.4\\text{ m}^3$",
+      "$13.230\\text{ m}^3$",
+      "$13.30\\text{ m}^3$",
+      "$13.8\\text{ m}^3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Precision depends on the least count (resolution) of the measuring instrument. A measurement with the maximum number of decimal places represents measurement by an instrument of smallest least count, and is therefore the most precise.\nAmong the given options, $13.230\\text{ m}^3$ has three decimal places (least count of $0.001\\text{ m}^3$), making it the most precise measurement."
+  },
+  {
+    "question_number": 61,
+    "question_type": "mcq",
+    "question_text": "Accuracy of a measurement tells",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "The closeness of a measured value to the true value",
+      "Upto what resolution or limit the given quantity is measured",
+      "The number of readings taken for the measurement",
+      "All of these"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By definition, the accuracy of a measurement is a measure of how close the measured value is to the true value of the physical quantity. The resolution or limit to which the quantity is measured refers to precision."
+  },
+  {
+    "question_number": 62,
+    "question_type": "mcq",
+    "question_text": "If $P = 2.348\\text{ cm}$ and $Q = 2.1\\text{ cm}$, then $(P - Q)$ equals",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.248\\text{ cm}$",
+      "$0.25\\text{ cm}$",
+      "$0.2\\text{ cm}$",
+      "$0.3\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When subtracting two numbers, the result should have the same number of decimal places as the number with the least decimal places.\nHere, $P = 2.348\\text{ cm}$ has 3 decimal places and $Q = 2.1\\text{ cm}$ has 1 decimal place.\n$$P - Q = 2.348 - 2.1 = 0.248\\text{ cm}$$\nRounding off to 1 decimal place gives $0.2\\text{ cm}$."
+  },
+  {
+    "question_number": 63,
+    "question_type": "mcq",
+    "question_text": "Dimensional formula of torque is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{ML}^2\\text{T}^{-1}]$",
+      "$[\\text{ML}^2\\text{T}^{-2}]$",
+      "$[\\text{M}^2\\text{L}^2\\text{T}^{-1}]$",
+      "$[\\text{ML}^2\\text{T}^{-4}]$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Torque is defined as:\n$$\\tau = \\mathbf{r} \\times \\mathbf{F}$$\nTherefore, the dimensional formula is:\n$$[\\tau] = [r][F] = [\\text{L}][\\text{MLT}^{-2}] = [\\text{ML}^2\\text{T}^{-2}]$$"
+  },
+  {
+    "question_number": 64,
+    "question_type": "mcq",
+    "question_text": "If the units of mass, length and time each is doubled, then the unit of acceleration will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Doubled",
+      "Halved",
+      "Tripled",
+      "Quadrupled"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Units & Conversion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The unit of acceleration is given by:\n$$[a] = [\\text{L}][\\text{T}]^{-2} = \\frac{[\\text{L}]}{[\\text{T}]^2}$$\nNotice that the unit of acceleration is independent of mass.\nIf length is doubled ($L' = 2L$) and time is doubled ($T' = 2T$), the new unit of acceleration becomes:\n$$a' = \\frac{2L}{(2T)^2} = \\frac{2L}{4T^2} = \\frac{1}{2}\\frac{L}{T^2} = \\frac{1}{2}a$$\nThus, the unit of acceleration will be halved."
+  },
+  {
+    "question_number": 65,
+    "question_type": "mcq",
+    "question_text": "The length $l$ of a cube is measured to be $l = (4.0 \\pm 0.1)\\text{ m}$. The volume of the cube will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(64 \\pm 4.8)\\text{ m}^3$",
+      "$(64 \\pm 0.3)\\text{ m}^3$",
+      "$(64 \\pm 2.4)\\text{ m}^3$",
+      "$(64 \\pm 1.6)\\text{ m}^3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Volume of a cube is:\n$$V = l^3 = (4.0)^3 = 64\\text{ m}^3$$\nThe relative error in volume is:\n$$\\frac{\\Delta V}{V} = 3\\frac{\\Delta l}{l}$$\n$$\\Delta V = 3 \\left(\\frac{\\Delta l}{l}\\right) V = 3 \\left(\\frac{0.1}{4.0}\\right) \\times 64 = 3 \\times 0.1 \\times 16 = 4.8\\text{ m}^3$$\nTherefore, the volume of the cube is $(64 \\pm 4.8)\\text{ m}^3$."
+  },
+  {
+    "question_number": 66,
+    "question_type": "mcq",
+    "question_text": "The dimensional formula of viscosity is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{ML}^{-1}\\text{T}^{-1}]$",
+      "$[\\text{ML}^{-2}\\text{T}^{-1}]$",
+      "$[\\text{ML}^{-1}\\text{T}^{-2}]$",
+      "$[\\text{LT}^{-1}]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Newton's formula for viscous force:\n$$F = \\eta A \\frac{dv}{dx}$$\n$$\\eta = \\frac{F}{A \\frac{dv}{dx}}$$\nSubstituting dimensions:\n$$[\\eta] = \\frac{[\\text{MLT}^{-2}]}{[\\text{L}^2][\\text{T}^{-1}]} = [\\text{ML}^{-1}\\text{T}^{-1}]$$"
+  },
+  {
+    "question_number": 67,
+    "question_type": "mcq",
+    "question_text": "The velocity $v$ of a particle depends on time $t$ as per the equation $v = At + \\frac{B}{C + t}$. The physical quantities represented by $A$, $B$ and $C$ are in the following order",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Distance, velocity, time",
+      "Acceleration, distance, time",
+      "Distance, time, velocity",
+      "Acceleration, velocity, time"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By the principle of homogeneity of dimensions:\n1. Since $C$ is added to time $t$:\n$$[C] = [t] = [\\text{T}] \\implies C \\text{ represents time.}$$\n2. The term $At$ has dimensions of velocity:\n$$[At] = [v] \\implies [A] = \\frac{[v]}{[t]} = \\frac{[\\text{LT}^{-1}]}{[\\text{T}]} = [\\text{LT}^{-2}] \\implies A \\text{ represents acceleration.}$$\n3. The term $\\frac{B}{C + t}$ has dimensions of velocity:\n$$\\left[\\frac{B}{C + t}\\right] = [v] \\implies \\frac{[B]}{[\\text{T}]} = [\\text{LT}^{-1}] \\implies [B] = [\\text{L}] \\implies B \\text{ represents distance.}$$\n\nThus, $A, B$ and $C$ represent acceleration, distance, and time respectively."
+  },
+  {
+    "question_number": 68,
+    "question_type": "mcq",
+    "question_text": "The dimensions of the group $\\left(\\frac{\\mu p}{T \\rho}\\right)$ (where $\\mu$ is linear mass density, $p$ is pressure, $T$ is tension and $\\rho$ is mass per unit volume) are same as that of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Angle",
+      "Force",
+      "$(\\text{Velocity})^2$",
+      "Planck's constant"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us find the dimensions of each variable:\n- $\\mu$ (linear mass density) $= [\\text{ML}^{-1}]$\n- $p$ (pressure) $= [\\text{ML}^{-1}\\text{T}^{-2}]$\n- $T$ (tension, which is a force) $= [\\text{MLT}^{-2}]$\n- $\\rho$ (mass density) $= [\\text{ML}^{-3}]$\n\nNow, evaluating the group $\\left(\\frac{\\mu p}{T \\rho}\\right)$:\n$$[\\mu p] = [\\text{ML}^{-1}][\\text{ML}^{-1}\\text{T}^{-2}] = [\\text{M}^2\\text{L}^{-2}\\text{T}^{-2}]$$\n$$[T \\rho] = [\\text{MLT}^{-2}][\\text{ML}^{-3}] = [\\text{M}^2\\text{L}^{-2}\\text{T}^{-2}]$$\n$$\\left[\\frac{\\mu p}{T \\rho}\\right] = \\frac{[\\text{M}^2\\text{L}^{-2}\\text{T}^{-2}]}{[\\text{M}^2\\text{L}^{-2}\\text{T}^{-2}]} = [\\text{M}^0\\text{L}^0\\text{T}^0]$$\nSince the group is dimensionless, its dimensions are the same as that of an angle, which is also dimensionless ($[\\text{M}^0\\text{L}^0\\text{T}^0]$)."
+  },
+  {
+    "question_number": 69,
+    "question_type": "mcq",
+    "question_text": "The dimensions of the pole strength of a magnet are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{M}^0\\text{L}^0\\text{TA}]$",
+      "$[\\text{M}^0\\text{LT}^0\\text{A}]$",
+      "$[\\text{M}^0\\text{L}^2\\text{T}^0\\text{A}]$",
+      "$[\\text{ML}\\text{T}^{-1}\\text{A}^2]$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Magnetic dipole moment is related to pole strength $m$ and distance between poles $2l$ by:\n$$M = m \\times 2l$$\nAlso, magnetic moment of a current-carrying loop is given by:\n$$M = I \\times A$$\nComparing both:\n$$[m][l] = [I][A] \\implies [m] = \\frac{[I][A]}{[l]} = \\frac{[\\text{A}][\\text{L}^2]}{[\\text{L}]} = [\\text{AL}] = [\\text{M}^0\\text{LT}^0\\text{A}]$$"
+  },
+  {
+    "question_number": 70,
+    "question_type": "mcq",
+    "question_text": "The radius of curvature of the curved face of a plano-convex lens is calculated as $R = \\frac{d^2}{8t}$, where $d$ (diameter of the aperture) is measured as $(5.0 \\pm 0.1)\\text{ cm}$ and $t$ (thickness of the lens in middle) is measured as $(0.40 \\pm 0.02)\\text{ cm}$. The maximum error in $R$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\%$",
+      "$5\\%$",
+      "$7\\%$",
+      "$9\\%$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the relation:\n$$R = \\frac{d^2}{8t}$$\nThe fractional maximum error in $R$ is:\n$$\\frac{\\Delta R}{R} = 2\\frac{\\Delta d}{d} + \\frac{\\Delta t}{t}$$\nGiven:\n- $d = 5.0\\text{ cm}$, $\\Delta d = 0.1\\text{ cm} \\implies \\frac{\\Delta d}{d} = \\frac{0.1}{5.0} = 0.02 = 2\\%$\n- $t = 0.40\\text{ cm}$, $\\Delta t = 0.02\\text{ cm} \\implies \\frac{\\Delta t}{t} = \\frac{0.02}{0.40} = 0.05 = 5\\%$\n\nTherefore, the maximum percentage error in $R$ is:\n$$\\frac{\\Delta R}{R} \\times 100\\% = 2(2\\%) + 5\\% = 4\\% + 5\\% = 9\\%$$"
+  },
+  {
+    "question_number": 71,
+    "question_type": "mcq",
+    "question_text": "A particle of mass $(m)$ is located in a space where potential energy varies with position $(x)$ as $U = \\frac{\\alpha}{x^2} - \\frac{\\beta}{x^4}$, where $\\alpha$ and $\\beta$ are positive constants. A particle is performing oscillation in this region and time period is recorded as $T = 4\\pi\\alpha \\sqrt{\\frac{m\\alpha}{\\beta^2}}$. This formula is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Dimensionally correct",
+      "Dimensionally incorrect",
+      "Dimensionally correct in some conditions and incorrect in some other conditions",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 1,
+    "difficulty": "hard",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Potential energy $U$ has dimensions:\n$$[U] = [\\text{ML}^2\\text{T}^{-2}]$$\nFrom the given equation $U = \\frac{\\alpha}{x^2} - \\frac{\\beta}{x^4}$:\n$$[\\alpha] = [U][x^2] = [\\text{ML}^2\\text{T}^{-2}][\\text{L}^2] = [\\text{ML}^4\\text{T}^{-2}]$$\n$$[\\beta] = [U][x^4] = [\\text{ML}^2\\text{T}^{-2}][\\text{L}^4] = [\\text{ML}^6\\text{T}^{-2}]$$\n\nNow, let us find the dimensions of the expression for time period $T$:\n$$\\text{RHS} = 4\\pi\\alpha \\sqrt{\\frac{m\\alpha}{\\beta^2}}$$\nInside the square root:\n$$\\left[\\frac{m\\alpha}{\\beta^2}\\right] = \\frac{[\\text{M}][\\text{ML}^4\\text{T}^{-2}]}{[\\text{ML}^6\\text{T}^{-2}]^2} = \\frac{[\\text{M}^2\\text{L}^4\\text{T}^{-2}]}{[\\text{M}^2\\text{L}^{12}\\text{T}^{-4}]} = [\\text{L}^{-8}\\text{T}^2]$$\nTaking the square root:\n$$\\left[\\sqrt{\\frac{m\\alpha}{\\beta^2}}\\right] = [\\text{L}^{-4}\\text{T}]$$\nMultiplying by $[\\alpha]$:\n$$[\\text{RHS}] = [\\alpha] \\times [\\text{L}^{-4}\\text{T}] = [\\text{ML}^4\\text{T}^{-2}][\\text{L}^{-4}\\text{T}] = [\\text{MT}^{-1}]$$\n\nHowever, the LHS is time period $T$, which has dimension $[\\text{T}]$.\nSince $[\\text{RHS}] = [\\text{MT}^{-1}] \\neq [\\text{T}]$, the given formula is dimensionally incorrect."
+  }
+]

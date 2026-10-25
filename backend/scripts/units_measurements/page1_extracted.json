@@ -1,0 +1,192 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "mcq",
+    "question_text": "The kinetic energy of a particle varies according to relation $K = \\frac{Av^2}{(B + x^2)}$. Here $x$ is the distance and $v$ is the velocity. The dimensional formula of $AB$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "[\\text{ML}^3\\text{T}^0]",
+      "[\\text{ML}^4\\text{T}^0]",
+      "[\\text{ML}^4\\text{T}^1]",
+      "[\\text{M}^2\\text{L}^3\\text{T}^0]"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By the principle of homogeneity of dimensions, terms added together must possess identical dimensions:\n$$[B] = [x^2] = [\\text{L}]^2 = [\\text{L}^2]$$\nThus, the denominator has dimensions $[B + x^2] = [\\text{L}^2]$.\n\nThe kinetic energy $K$ has dimensions of work or energy:\n$$[K] = [\\text{M}\\text{L}^2\\text{T}^{-2}]$$\nVelocity $v$ has dimensions $[v] = [\\text{L}\\text{T}^{-1}]$, so:\n$$[v^2] = [\\text{L}^2\\text{T}^{-2}]$$\n\nSubstituting these into the given relation $K = \\frac{Av^2}{B + x^2}$:\n$$[K] = \\frac{[A][v^2]}{[B + x^2]}$$\n$$[\\text{M}\\text{L}^2\\text{T}^{-2}] = \\frac{[A][\\text{L}^2\\text{T}^{-2}]}{[\\text{L}^2]} = [A][\\text{T}^{-2}]$$\n$$[A] = \\frac{[\\text{M}\\text{L}^2\\text{T}^{-2}]}{[\\text{T}^{-2}]} = [\\text{M}\\text{L}^2]$$\n\nNow, the dimensional formula of the product $AB$ is:\n$$[AB] = [A][B] = [\\text{M}\\text{L}^2] \\times [\\text{L}^2] = [\\text{M}\\text{L}^4\\text{T}^0]$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 2,
+    "question_type": "mcq",
+    "question_text": "If $A = \\int_{x_1}^{x_2} \\frac{dx}{B - x}$; where $x$ represents position and $A$ and $B$ are unknown quantities, then dimensions of $\\left[\\frac{A}{B}\\right]$ are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "[\\text{M}^0\\text{LT}^0]",
+      "[\\text{M}^0\\text{L}^0\\text{T}^0]",
+      "[\\text{M}^0\\text{L}^{-1}\\text{T}^0]",
+      "[\\text{M}^0\\text{L}^2\\text{T}^0]"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From the denominator $(B - x)$, by the principle of homogeneity:\n$$[B] = [x] = [\\text{L}]$$\n\nThe differential element $dx$ has the dimension of length:\n$$[dx] = [\\text{L}]$$\n\nTherefore, the dimension of the quantity $A$ is:\n$$[A] = \\left[ \\int \\frac{dx}{B - x} \\right] = \\frac{[dx]}{[B - x]} = \\frac{[\\text{L}]}{[\\text{L}]} = [\\text{M}^0\\text{L}^0\\text{T}^0] \\quad (\\text{dimensionless})$$\n\nNow, the dimension of $\\left[\\frac{A}{B}\\right]$ is:\n$$\\left[\\frac{A}{B}\\right] = \\frac{[A]}{[B]} = \\frac{[\\text{M}^0\\text{L}^0\\text{T}^0]}{[\\text{L}]} = [\\text{M}^0\\text{L}^{-1}\\text{T}^0]$$\n\nHence, the correct option is (3)."
+  },
+  {
+    "question_number": 3,
+    "question_type": "mcq",
+    "question_text": "How many significant figures are there in the value $2.50 \\times 10^{10}\\text{ m}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In scientific notation $N \\times 10^x$, the exponential term $10^x$ does not contribute to the number of significant figures.\n\nThe numerical coefficient is $2.50$:\n1. All non-zero digits are significant ($2$ and $5$).\n2. Trailing zeros after a decimal point in a number are significant (the trailing $0$ in $2.50$).\n\nThus, $2.50$ contains 3 significant figures.\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 4,
+    "question_type": "mcq",
+    "question_text": "Length of one division on main scale of vernier calliper is $0.1\\text{ cm}$. If $10$ divisions of vernier scale coincides with the $9$ divisions of the main scale, then least count is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "0.01 cm",
+      "0.1 cm",
+      "0.02 cm",
+      "0.002 cm"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Vernier Caliper & Screw Gauge",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\n$1\\text{ MSD} = 0.1\\text{ cm}$\n$10\\text{ VSD} = 9\\text{ MSD} \\implies 1\\text{ VSD} = \\frac{9}{10}\\text{ MSD} = 0.9\\text{ MSD}$\n\nThe least count (LC) of a vernier caliper is given by:\n$$\\text{Least Count} = 1\\text{ MSD} - 1\\text{ VSD}$$\n$$\\text{Least Count} = 1\\text{ MSD} - 0.9\\text{ MSD} = 0.1\\text{ MSD}$$\n$$\\text{Least Count} = 0.1 \\times 0.1\\text{ cm} = 0.01\\text{ cm}$$\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 5,
+    "question_type": "mcq",
+    "question_text": "Time period $T$ of a small drop of liquid (due to surface tension) depends on density $\\rho$, radius $r$ and surface tension $s$. The relation is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$T \\propto \\left(\\frac{\\rho r^3}{s}\\right)^{1/2}$",
+      "$T \\propto \\rho r s$",
+      "$T \\propto \\frac{\\rho r}{s}$",
+      "$T \\propto \\frac{s}{\\rho r}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the relation be:\n$$T \\propto \\rho^a r^b s^c$$\n\nDimensional formulas of the given quantities:\n- Time period: $[T] = [\\text{M}^0\\text{L}^0\\text{T}^1]$\n- Density: $[\\rho] = [\\text{M}\\text{L}^{-3}]$\n- Radius: $[r] = [\\text{L}]$\n- Surface tension: $[s] = [\\text{Force}/\\text{Length}] = [\\text{M}\\text{T}^{-2}]$\n\nSubstituting dimensions:\n$$[\\text{M}^0\\text{L}^0\\text{T}^1] = [\\text{M}\\text{L}^{-3}]^a [\\text{L}]^b [\\text{M}\\text{T}^{-2}]^c$$\n$$[\\text{M}^0\\text{L}^0\\text{T}^1] = [\\text{M}^{a+c} \\text{L}^{-3a+b} \\text{T}^{-2c}]$$\n\nEquating exponents on both sides:\n1. For $\\text{M}$: $a + c = 0 \\implies a = -c$\n2. For $\\text{T}$: $-2c = 1 \\implies c = -\\frac{1}{2}$\n   $$\\implies a = -\\left(-\\frac{1}{2}\\right) = \\frac{1}{2}$$\n3. For $\\text{L}$: $-3a + b = 0 \\implies b = 3a = 3\\left(\\frac{1}{2}\\right) = \\frac{3}{2}$\n\nTherefore:\n$$T \\propto \\rho^{1/2} r^{3/2} s^{-1/2} = \\left(\\frac{\\rho r^3}{s}\\right)^{1/2}$$\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 6,
+    "question_type": "mcq",
+    "question_text": "The focal length of spherical mirror if the object distance $u = (50.1 \\pm 0.5)\\text{ cm}$ and image distance $v = (20.1 \\pm 0.2)\\text{ cm}$, will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(12.2 \\pm 0.2)\\text{ cm}$",
+      "$(14.3 \\pm 0.1)\\text{ cm}$",
+      "$(10.2 \\pm 0.1)\\text{ cm}$",
+      "$(15.1 \\pm 0.3)\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From the mirror formula (taking magnitudes):\n$$\\frac{1}{f} = \\frac{1}{u} + \\frac{1}{v} \\implies f = \\frac{uv}{u + v}$$\n$$f = \\frac{50.1 \\times 20.1}{50.1 + 20.1} = \\frac{1007.01}{70.2} \\approx 14.345\\text{ cm} \\approx 14.3\\text{ cm}$$\n\nDifferentiating $\\frac{1}{f} = \\frac{1}{u} + \\frac{1}{v}$ to find the maximum absolute error $\\Delta f$:\n$$\\frac{\\Delta f}{f^2} = \\frac{\\Delta u}{u^2} + \\frac{\\Delta v}{v^2}$$\n$$\\Delta f = f^2 \\left( \\frac{\\Delta u}{u^2} + \\frac{\\Delta v}{v^2} \\right)$$\n\nSubstitute the given values:\n$$\\frac{\\Delta u}{u^2} = \\frac{0.5}{(50.1)^2} = \\frac{0.5}{2510.01} \\approx 0.000199\\text{ cm}^{-1}$$\n$$\\frac{\\Delta v}{v^2} = \\frac{0.2}{(20.1)^2} = \\frac{0.2}{404.01} \\approx 0.000495\\text{ cm}^{-1}$$\n$$\\frac{\\Delta u}{u^2} + \\frac{\\Delta v}{v^2} \\approx 0.000694\\text{ cm}^{-1}$$\n\nNow, calculate $\\Delta f$:\n$$\\Delta f = (14.345)^2 \\times 0.000694 = 205.78 \\times 0.000694 \\approx 0.143\\text{ cm} \\approx 0.1\\text{ cm}$$\n\nThus, the focal length is:\n$$f = (14.3 \\pm 0.1)\\text{ cm}$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 7,
+    "question_type": "mcq",
+    "question_text": "Velocity $v$ is given by $v = at^2 + bt + c$, where $t$ is time. Find the dimensions of $\\frac{a^2b}{c}$.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "[\\text{L}^2\\text{T}^{-6}]",
+      "[\\text{LT}^{-6}]",
+      "[\\text{L}^2\\text{T}^{-7}]",
+      "[\\text{L}^2\\text{T}^{-4}]"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By the principle of homogeneity of dimensions, each term on the right-hand side must have the dimensions of velocity $[v] = [\\text{L}\\text{T}^{-1}]$:\n$$[at^2] = [v] = [\\text{L}\\text{T}^{-1}] \\implies [a] = \\frac{[\\text{L}\\text{T}^{-1}]}{[\\text{T}^2]} = [\\text{L}\\text{T}^{-3}]$$\n$$[bt] = [v] = [\\text{L}\\text{T}^{-1}] \\implies [b] = \\frac{[\\text{L}\\text{T}^{-1}]}{[\\text{T}]} = [\\text{L}\\text{T}^{-2}]$$\n$$[c] = [v] = [\\text{L}\\text{T}^{-1}]$$\n\nNow, find the dimensions of $\\frac{a^2b}{c}$:\n$$\\left[\\frac{a^2b}{c}\\right] = \\frac{[a]^2 [b]}{[c]} = \\frac{([\\text{L}\\text{T}^{-3}])^2 ([\\text{L}\\text{T}^{-2}])}{[\\text{L}\\text{T}^{-1}]}$$\n$$\\left[\\frac{a^2b}{c}\\right] = \\frac{[\\text{L}^2\\text{T}^{-6}][\\text{L}\\text{T}^{-2}]}{[\\text{L}\\text{T}^{-1}]} = \\frac{[\\text{L}^3\\text{T}^{-8}]}{[\\text{L}\\text{T}^{-1}]} = [\\text{L}^2\\text{T}^{-7}]$$\n\nHence, the correct option is (3)."
+  },
+  {
+    "question_number": 8,
+    "question_type": "mcq",
+    "question_text": "In a new system of units the fundamental quantities, mass, length and time are replaced by acceleration '$a$', density '$\\rho$' and frequency '$f$'. The dimensional formula for force in this system is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "[\\rho a^4 f]",
+      "[\\rho a^4 f^{-6}]",
+      "[\\rho^{-1} a^{-4} f^6]",
+      "[\\rho^{-1} a^{-4} f^{-1}]"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let force $F$ be related to density $\\rho$, acceleration $a$, and frequency $f$ as:\n$$F \\propto \\rho^x a^y f^z$$\n\nThe dimensions in the standard system are:\n- Force: $[F] = [\\text{M}\\text{L}\\text{T}^{-2}]$\n- Density: $[\\rho] = [\\text{M}\\text{L}^{-3}]$\n- Acceleration: $[a] = [\\text{L}\\text{T}^{-2}]$\n- Frequency: $[f] = [\\text{T}^{-1}]$\n\nEquating dimensions:\n$$[\\text{M}\\text{L}\\text{T}^{-2}] = [\\text{M}\\text{L}^{-3}]^x [\\text{L}\\text{T}^{-2}]^y [\\text{T}^{-1}]^z$$\n$$[\\text{M}^1\\text{L}^1\\text{T}^{-2}] = [\\text{M}^x \\text{L}^{-3x+y} \\text{T}^{-2y-z}]$$\n\nComparing exponents:\n1. For $\\text{M}$: $x = 1$\n2. For $\\text{L}$: $-3x + y = 1 \\implies -3(1) + y = 1 \\implies y = 4$\n3. For $\\text{T}$: $-2y - z = -2 \\implies -2(4) - z = -2 \\implies -8 - z = -2 \\implies z = -6$\n\nThus, the dimensional formula for force is:\n$$[F] = [\\rho a^4 f^{-6}]$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 9,
+    "question_type": "mcq",
+    "question_text": "The diagram shows part of vernier scale on a pair of callipers. Which reading is correct? (Least count = $0.01\\text{ cm}$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "2.74 cm",
+      "3.10 cm",
+      "3.26 cm",
+      "3.64 cm"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Vernier Caliper & Screw Gauge",
+    "has_diagram": true,
+    "diagram_description": "A vernier caliper reading showing a main scale with marks at 2.5 and 3.0, and a vernier scale above it with zero mark located between 2.5 cm and 3.0 cm.",
+    "solution": "From the given diagram:\n1. The main scale shows divisions labeled $2.5\\text{ cm}$ and $3.0\\text{ cm}$.\n2. The zero of the vernier scale lies clearly between the marks $2.5\\text{ cm}$ and $3.0\\text{ cm}$.\n3. Therefore, the measured reading must lie strictly in the range between $2.5\\text{ cm}$ and $3.0\\text{ cm}$.\n\nLooking at the options:\n- (1) $2.74\\text{ cm}$ (lies between $2.5$ and $3.0$)\n- (2) $3.10\\text{ cm}$ ($> 3.0$)\n- (3) $3.26\\text{ cm}$ ($> 3.0$)\n- (4) $3.64\\text{ cm}$ ($> 3.0$)\n\nOnly $2.74\\text{ cm}$ is within this range. Here, the main scale reading is $\\text{MSR} = 2.7\\text{ cm}$ and the coinciding vernier division is $4$, giving:\n$$\\text{Total reading} = \\text{MSR} + (\\text{VSR} \\times \\text{LC}) = 2.7\\text{ cm} + (4 \\times 0.01\\text{ cm}) = 2.74\\text{ cm}$$\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 10,
+    "question_type": "mcq",
+    "question_text": "Find the maximum possible percentage error in the calculation of force on an object (of mass $m$), travelling with velocity $v$ in a circle of radius $r$, if $m = (4.0 \\pm 0.1)\\text{ kg}$, $v = (10 \\pm 0.1)\\text{ m/s}$ and $r = (8.0 \\pm 0.2)\\text{ m}$.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\pm 5\\%$",
+      "$\\pm 8\\%$",
+      "$\\pm 4\\%$",
+      "$\\pm 7\\%$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The centripetal force is given by:\n$$F = \\frac{m v^2}{r}$$\n\nThe maximum fractional error in force $F$ is:\n$$\\frac{\\Delta F}{F} = \\frac{\\Delta m}{m} + 2\\frac{\\Delta v}{v} + \\frac{\\Delta r}{r}$$\n\nConvert each to a percentage error:\n1. $\\frac{\\Delta m}{m} \\times 100 = \\frac{0.1}{4.0} \\times 100 = 2.5\\%$\n2. $2\\frac{\\Delta v}{v} \\times 100 = 2 \\times \\left(\\frac{0.1}{10} \\times 100\\right) = 2 \\times 1.0\\% = 2.0\\%$\n3. $\\frac{\\Delta r}{r} \\times 100 = \\frac{0.2}{8.0} \\times 100 = 2.5\\%$\n\nAdding all the percentage contributions:\n$$\\frac{\\Delta F}{F} \\times 100 = 2.5\\% + 2.0\\% + 2.5\\% = 7.0\\% = \\pm 7\\%$$\n\nHence, the correct option is (4)."
+  }
+]

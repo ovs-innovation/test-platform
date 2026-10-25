@@ -1,0 +1,262 @@
+[
+  {
+    "question_number": 118,
+    "question_type": "mcq",
+    "question_text": "There are four data given: $A = 5.00\\text{ m}$, $B = 5.00\\text{ cm}$, $C = 50.00\\text{ m}$ and $D = 5.00\\text{ mm}$. Select the most precise and most accurate data respectively:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$C$ and $D$ respectively",
+      "$D$ and $C$ respectively",
+      "$A$ and $C$ respectively",
+      "$B$ and $D$ respectively"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Precision:** Precision depends on the least count (the smallest unit of resolution) of the measuring instrument. Smaller least count implies higher precision.\n- For $A = 5.00\\text{ m}$, least count $= 0.01\\text{ m} = 10\\text{ mm}$\n- For $B = 5.00\\text{ cm}$, least count $= 0.01\\text{ cm} = 0.1\\text{ mm}$\n- For $C = 50.00\\text{ m}$, least count $= 0.01\\text{ m} = 10\\text{ mm}$\n- For $D = 5.00\\text{ mm}$, least count $= 0.01\\text{ mm}$\n\nSince $D$ has the smallest least count ($0.01\\text{ mm}$), measurement $D$ is the **most precise**.\n\n2. **Accuracy:** Accuracy is determined by the relative error (fractional error). Smaller relative error implies greater accuracy (which correlates with a greater number of significant figures):\n- Relative error in $A = \\frac{0.01}{5.00} = 2 \\times 10^{-3}$ (3 significant figures)\n- Relative error in $B = \\frac{0.01}{5.00} = 2 \\times 10^{-3}$ (3 significant figures)\n- Relative error in $C = \\frac{0.01}{50.00} = 2 \\times 10^{-4}$ (4 significant figures)\n- Relative error in $D = \\frac{0.01}{5.00} = 2 \\times 10^{-3}$ (3 significant figures)\n\nMeasurement $C$ has the lowest relative error and the highest number of significant figures, making it the **most accurate**.\n\nHence, the most precise and most accurate data are $D$ and $C$ respectively."
+  },
+  {
+    "question_number": 119,
+    "question_type": "mcq",
+    "question_text": "The volume of a sphere is $1.62\\text{ m}^3$. The volume of $22$ such spheres, taking into account significant figures, will be:",
+    "options": [
+      "$36\\text{ m}^3$",
+      "$35.6\\text{ m}^3$",
+      "$35.64\\text{ m}^3$",
+      "$35\\text{ m}^3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The volume of one sphere is $V_1 = 1.62\\text{ m}^3$, which has $3$ significant figures.\n\nThe number of spheres is $n = 22$, which is an exact counting number and has an infinite number of significant figures.\n\nTotal volume:\n$$V = 22 \\times 1.62\\text{ m}^3 = 35.64\\text{ m}^3$$\n\nAccording to the rules of significant figures in multiplication, the final result must retain the same number of significant figures as the measured quantity with the least number of significant figures (i.e., $3$ significant figures).\n\nRounding $35.64$ to $3$ significant figures gives $35.6\\text{ m}^3$."
+  },
+  {
+    "question_number": 120,
+    "question_type": "mcq",
+    "question_text": "The volume $V$ of a liquid crossing through a tube is related to the area of cross-section $A$, velocity $v$ and time $t$ as: $V \\propto A^\\alpha v^\\beta t^\\gamma$. Choose the correct alternative:",
+    "options": [
+      "$\\alpha \\neq \\beta \\neq \\gamma$",
+      "$\\alpha \\neq \\beta = \\gamma$",
+      "$\\alpha = \\beta \\neq \\gamma$",
+      "$\\alpha = \\beta = \\gamma$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The dimensional formulas of the given physical quantities are:\n- Volume, $[V] = [\\text{M}^0 \\text{L}^3 \\text{T}^0]$\n- Area of cross-section, $[A] = [\\text{L}^2]$\n- Velocity, $[v] = [\\text{L} \\text{T}^{-1}]$\n- Time, $[t] = [\\text{T}]$\n\nGiven the relation:\n$$V = k A^\\alpha v^\\beta t^\\gamma$$\n\nSubstituting dimensions on both sides:\n$$[\\text{L}^3] = [\\text{L}^2]^\\alpha [\\text{L} \\text{T}^{-1}]^\\beta [\\text{T}]^\\gamma = [\\text{L}^{2\\alpha + \\beta} \\text{T}^{-\\beta + \\gamma}]$$\n\nEquating the powers of fundamental dimensions on both sides:\n- For $\\text{T}$: $-\\beta + \\gamma = 0 \\implies \\beta = \\gamma$\n- For $\\text{L}$: $2\\alpha + \\beta = 3$\n\nPhysically, volume of liquid flowing is given by:\n$$\\text{Volume} = \\text{Area} \\times \\text{Length} = A \\times (v \\times t) = A^1 v^1 t^1$$\n\nThus, $\\alpha = 1$, $\\beta = 1$, and $\\gamma = 1$.\n\nTherefore, $\\alpha = \\beta = \\gamma$."
+  },
+  {
+    "question_number": 121,
+    "question_type": "mcq",
+    "question_text": "The dimensional formula for $\\frac{\\mu_0 \\varepsilon_0}{v}$ is (where $v = \\text{speed}$):",
+    "options": [
+      "$[\\text{L}\\text{T}^{-1}]$",
+      "$[\\text{L}^3\\text{T}^{-3}]$",
+      "$[\\text{L}^{-3}\\text{T}^3]$",
+      "$[\\text{M}^0\\text{L}^0\\text{T}^0]$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From electromagnetic theory, the speed of light in vacuum $c$ is related to permeability $\\mu_0$ and permittivity $\\varepsilon_0$ by:\n$$c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\implies \\mu_0 \\varepsilon_0 = \\frac{1}{c^2}$$\n\nTherefore, the given expression can be written as:\n$$\\frac{\\mu_0 \\varepsilon_0}{v} = \\frac{1}{c^2 v}$$\n\nBoth $c$ and $v$ have the dimensions of speed, i.e., $[\\text{L} \\text{T}^{-1}]$.\n\nSubstituting these dimensions:\n$$\\left[\\frac{\\mu_0 \\varepsilon_0}{v}\\right] = \\frac{1}{[\\text{L} \\text{T}^{-1}]^2 [\\text{L} \\text{T}^{-1}]} = \\frac{1}{[\\text{L}^3 \\text{T}^{-3}]} = [\\text{L}^{-3} \\text{T}^3]$$"
+  },
+  {
+    "question_number": 122,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Dimensionally incorrect equation can never be correct.\nReason (R): Physically correct equations must be dimensionally correct.\nSelect the correct option:",
+    "assertion_text": "Dimensionally incorrect equation can never be correct.",
+    "reason_text": "Physically correct equations must be dimensionally correct.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the principle of homogeneity of dimensions, any physically valid equation must have identical dimensions on both sides of each term.\n- Therefore, every physically correct equation must be dimensionally correct (Reason is true).\n- If an equation violates dimensional consistency, it can never represent a correct physical law (Assertion is true).\n- Reason correctly explains why a dimensionally incorrect equation can never be correct."
+  },
+  {
+    "question_number": 123,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): The emissivity of a body is a dimensionless quantity.\nReason (R): Emissive power of a body is a dimensionless quantity.\nSelect the correct option:",
+    "assertion_text": "The emissivity of a body is a dimensionless quantity.",
+    "reason_text": "Emissive power of a body is a dimensionless quantity.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion:** Emissivity ($e$) is defined as the ratio of the emissive power of a real body to the emissive power of a blackbody at the same temperature:\n$$e = \\frac{E}{E_b}$$\nSince it is a ratio of two identical physical quantities, emissivity is dimensionless. Thus, the Assertion is **true**.\n\n2. **Reason:** Emissive power ($E$) is the total radiant energy emitted per unit surface area per unit time:\n$$E = \\frac{\\Delta U}{A \\Delta t} \\implies [E] = \\frac{[\\text{M}\\text{L}^2\\text{T}^{-2}]}{[\\text{L}^2][\\text{T}]} = [\\text{M}\\text{T}^{-3}]$$\nIts SI unit is $\\text{W/m}^2$, which is not dimensionless. Thus, the Reason is **false**."
+  },
+  {
+    "question_number": 124,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): If $a$, $b$ and $c$ are the percentage errors in the measurements of $A$, $B$ and $C$ respectively, then the percentage error in the measurement of $Z = A^a B^b C^c$ must be $(a + b + c)$.\nReason (R): If $Z = A^a B^b C^c$, then $\\frac{\\Delta Z}{Z} = \\frac{\\Delta A}{A} + \\frac{\\Delta B}{B} + \\frac{\\Delta C}{C}$.\nSelect the correct option:",
+    "assertion_text": "If $a$, $b$ and $c$ are the percentage errors in the measurements of $A$, $B$ and $C$ respectively, then the percentage error in the measurement of $Z = A^a B^b C^c$ must be $(a + b + c)$.",
+    "reason_text": "If $Z = A^a B^b C^c$, then $\\frac{\\Delta Z}{Z} = \\frac{\\Delta A}{A} + \\frac{\\Delta B}{B} + \\frac{\\Delta C}{C}$.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a quantity $Z = A^a B^b C^c$, the relative error is given by:\n$$\\frac{\\Delta Z}{Z} = a\\frac{\\Delta A}{A} + b\\frac{\\Delta B}{B} + c\\frac{\\Delta C}{C}$$\n\nHence, the percentage error is:\n$$\\%\\Delta Z = a(\\%A) + b(\\%B) + c(\\%C) = a(a) + b(b) + c(c) = a^2 + b^2 + c^2$$\n\n- The Assertion states that the percentage error must be $(a + b + c)$, which is false.\n- The Reason states that $\\frac{\\Delta Z}{Z} = \\frac{\\Delta A}{A} + \\frac{\\Delta B}{B} + \\frac{\\Delta C}{C}$, omitting the exponents $a, b, c$, which is also false.\n\nTherefore, both Assertion and Reason are false statements."
+  },
+  {
+    "question_number": 125,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Each one of the fundamental units are independent.\nReason (R): None of the fundamental units can be expressed in terms of the remaining fundamental units.\nSelect the correct option:",
+    "assertion_text": "Each one of the fundamental units are independent.",
+    "reason_text": "None of the fundamental units can be expressed in terms of the remaining fundamental units.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By definition, fundamental units are a set of mutually independent units that cannot be derived from or reduced to one another.\n- Assertion is true: The fundamental units are completely independent of each other.\n- Reason is true: By definition, none of the fundamental units can be expressed in terms of any other fundamental unit.\n- Since the Reason defines the condition for independence, it is the correct explanation of the Assertion."
+  },
+  {
+    "question_number": 126,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Out of measurements $l_1 = 0.3\\text{ m}$ and $l_2 = 0.30\\text{ m}$, $l_2$ is most accurate.\nReason (R): In every measurement, only the last significant digit is not accurately known.\nSelect the correct option:",
+    "assertion_text": "Out of measurements $l_1 = 0.3\\text{ m}$ and $l_2 = 0.30\\text{ m}$, $l_2$ is most accurate.",
+    "reason_text": "In every measurement, only the last significant digit is not accurately known.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. In any scientific measurement, all digits are reliably known except the last digit, which contains uncertainty. Hence, the Reason is **true**.\n2. In $l_1 = 0.3\\text{ m}$, the digit $3$ is the uncertain digit (fractional uncertainty $\\sim \\frac{0.1}{0.3} = 33\\% $).\n3. In $l_2 = 0.30\\text{ m}$, the digit $3$ is accurately known and uncertainty lies only in the final zero (fractional uncertainty $\\sim \\frac{0.01}{0.30} = 3.3\\% $).\n4. Since $l_2$ has smaller fractional uncertainty due to the uncertainty being shifted to the second decimal place, $l_2$ is more accurate. Thus, Assertion is **true**, and Reason is the correct explanation."
+  },
+  {
+    "question_number": 127,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): A constant may not be unitless.\nReason (R): A physical quantity may have unit but it is dimensionless.\nSelect the correct option:",
+    "assertion_text": "A constant may not be unitless.",
+    "reason_text": "A physical quantity may have unit but it is dimensionless.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "- **Assertion:** Dimensional constants like universal gravitational constant $G$, Planck's constant $h$, and speed of light $c$ possess units. Thus, a constant may not be unitless (Assertion is true).\n- **Reason:** Quantities like plane angle (unit: radian) and solid angle (unit: steradian) possess units but are dimensionless (Reason is true).\n- However, the fact that some dimensionless quantities have units does not explain why dimensional constants possess units. Hence, Reason is not the correct explanation of Assertion."
+  },
+  {
+    "question_number": 128,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): If numerical value $n$ of a physical quantity is plotted against unit $u$, then graph obtained will be rectangular hyperbola.\nReason (R): $n \\propto \\frac{1}{u}$.\nSelect the correct option:",
+    "assertion_text": "If numerical value $n$ of a physical quantity is plotted against unit $u$, then graph obtained will be rectangular hyperbola.",
+    "reason_text": "$n \\propto \\frac{1}{u}$.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The magnitude of a physical quantity $Q$ is constant and is given by the product of its numerical value $n$ and its unit $u$:\n$$Q = n u = \\text{constant}$$\n\n$$\\implies n \\propto \\frac{1}{u}$$\n\nThis inverse proportionality between $n$ and $u$ represents the equation of a rectangular hyperbola ($xy = c$).\n\nTherefore, both Assertion and Reason are true, and Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 129,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Physical quantities having same dimension can be added together.\nReason (R): Different types of physical quantities can never have same dimension.\nSelect the correct option:",
+    "assertion_text": "Physical quantities having same dimension can be added together.",
+    "reason_text": "Different types of physical quantities can never have same dimension.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "- **Assertion:** According to the principle of homogeneity, only physical quantities having the same dimensions can be added or subtracted (Assertion is true).\n- **Reason:** Different physical quantities can have identical dimensions. For example, work and torque both have dimensions $[\\text{M}\\text{L}^2\\text{T}^{-2}]$; frequency and angular velocity both have dimensions $[\\text{T}^{-1}]$. Therefore, the statement that different physical quantities can never have the same dimension is completely false.\n\nThus, Assertion is true but Reason is false."
+  },
+  {
+    "question_number": 130,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Mean absolute error is preferred over mean error.\nReason (R): Lower the value of mean error, greater will be accuracy in measurement.\nSelect the correct option:",
+    "assertion_text": "Mean absolute error is preferred over mean error.",
+    "reason_text": "Lower the value of mean error, greater will be accuracy in measurement.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "- **Assertion:** When computing mean error, positive and negative errors cancel each other out, which may result in a value close to zero despite large individual errors. In contrast, mean absolute error uses the absolute magnitudes of individual errors, preventing mutual cancellation. Thus, mean absolute error is preferred (Assertion is true).\n- **Reason:** Since positive and negative errors cancel out, a small or zero mean error does not imply that the measurements are accurate. Therefore, a lower value of mean error does not necessarily mean greater accuracy (Reason is false)."
+  },
+  {
+    "question_number": 131,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements labeled as Assertion (A) and Reason (R):\nAssertion (A): Increase in number of observations in measurement decreases the value of systematic error.\nReason (R): Systematic error is a bidirectional error.\nSelect the correct option:",
+    "assertion_text": "Increase in number of observations in measurement decreases the value of systematic error.",
+    "reason_text": "Systematic error is a bidirectional error.",
+    "options": [
+      "Both Assertion & Reason are true and the reason is the correct explanation of the assertion.",
+      "Both Assertion & Reason are true but the reason is not the correct explanation of the assertion.",
+      "Assertion is true statement but Reason is false.",
+      "Both Assertion and Reason are false statements."
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Units and Measurements",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. Systematic errors arise from known causes (such as zero error or calibration defects) and tend to occur consistently in one direction (unidirectional, either always positive or always negative). Therefore, systematic error is not bidirectional (Reason is false).\n2. Taking an arithmetic mean over a large number of observations reduces random errors (by a factor of $1/\\sqrt{n}$), but has no effect on systematic errors because they do not cancel out statistically (Assertion is false).\n\nThus, both Assertion and Reason are false statements."
+  }
+]

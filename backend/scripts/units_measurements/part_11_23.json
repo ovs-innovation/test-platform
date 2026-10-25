@@ -1,0 +1,249 @@
+[
+  {
+    "question_number": 11,
+    "question_type": "mcq",
+    "question_text": "A voltmeter has a least count of $0.1\\text{ V}$ and an ammeter has a least count of $0.1\\text{ A}$. The potential drop $V$ across a resistor is measured as $10.0\\text{ V}$ and current through it is measured as $1.0\\text{ A}$. The value of resistance with error is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "(10 \u00b1 1.1) \u03a9",
+      "(10 \u00b1 1) \u03a9",
+      "(10 \u00b1 0.5) \u03a9",
+      "(10 \u00b1 0.2) \u03a9"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Resistance is given by Ohm's law:\n$$R = \\frac{V}{I} = \\frac{10.0\\text{ V}}{1.0\\text{ A}} = 10\\,\\Omega$$\n\nThe absolute errors in measurement correspond to the least counts of the instruments:\n$$\\Delta V = 0.1\\text{ V}, \\quad \\Delta I = 0.1\\text{ A}$$\n\nThe relative error in resistance is:\n$$\\frac{\\Delta R}{R} = \\frac{\\Delta V}{V} + \\frac{\\Delta I}{I} = \\frac{0.1}{10.0} + \\frac{0.1}{1.0} = 0.01 + 0.1 = 0.11$$\n\nThus, the absolute error is:\n$$\\Delta R = R \\times 0.11 = 10 \\times 0.11 = 1.1\\,\\Omega$$\n\nTherefore, the value of resistance with error is $(10 \\pm 1.1)\\,\\Omega$."
+  },
+  {
+    "question_number": 12,
+    "question_type": "mcq",
+    "question_text": "The time dependence of a physical quantity $P$ is given by $P = P_0 e^{-\\alpha t^2}$ [where $\\alpha$ is a constant and $t$ is time]. The constant $\\alpha$",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Has dimensions [T\u207b\u00b2]",
+      "Has dimensions [T\u00b2]",
+      "Has dimensions of P",
+      "Is dimensionless"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The exponent of an exponential function must be dimensionless:\n$$[\\alpha t^2] = [\\text{M}^0\\text{L}^0\\text{T}^0]$$\n$$[\\alpha][\\text{T}^2] = 1 \\implies [\\alpha] = [\\text{T}^{-2}]$$\n\nHence, $\\alpha$ has dimensions $[\\text{T}^{-2}]$."
+  },
+  {
+    "question_number": 13,
+    "question_type": "mcq",
+    "question_text": "The velocity of a particle is given by $v = v_0 \\cos(\\omega t - kx)$ where $x$ is position and $t$ is time. The dimensions of $\\frac{k}{\\omega}$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "[LT\u207b\u00b9]",
+      "[L\u207b\u00b9T]",
+      "[LT\u2070]",
+      "[L\u207b\u00b9T\u207b\u00b9]"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The argument of a trigonometric function $(\\omega t - kx)$ must be dimensionless:\n$$[\\omega t] = 1 \\implies [\\omega] = [\\text{T}^{-1}]$$\n$$[kx] = 1 \\implies [k] = [\\text{L}^{-1}]$$\n\nNow, taking the ratio:\n$$\\left[\\frac{k}{\\omega}\\right] = \\frac{[\\text{L}^{-1}]}{[\\text{T}^{-1}]} = [\\text{L}^{-1}\\text{T}]$$\n\n(Alternatively, $\\frac{\\omega}{k} = v$, so $\\frac{k}{\\omega} = \\frac{1}{v}$, giving $[\\text{L}^{-1}\\text{T}]$)."
+  },
+  {
+    "question_number": 14,
+    "question_type": "mcq",
+    "question_text": "The number of significant figures in the measurements $4.7000 \\times 10^4$ and $47000.50$ are respectively",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "5 and 7",
+      "5 and 6",
+      "2 and 3",
+      "2 and 4"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. In scientific notation $4.7000 \\times 10^4$, all digits in the mantissa are significant. Since trailing zeros after a decimal point are significant, $4, 7, 0, 0, 0$ gives $5$ significant figures.\n2. In $47000.50$, all zeros between non-zero digits are significant, and trailing zeros after the decimal point are also significant. Hence, all $7$ digits ($4, 7, 0, 0, 0, 5, 0$) are significant.\n\nThus, the number of significant figures are $5$ and $7$ respectively."
+  },
+  {
+    "question_number": 15,
+    "question_type": "mcq",
+    "question_text": "An object is oscillating about certain mean position. Its time period of oscillation is being measured by a stop watch of least count $0.1\\text{ s}$. For $20$ oscillations, the time noted down is $40.0\\text{ s}$. Then fractional error in measurement of time period of oscillation is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "1/20",
+      "1/400",
+      "1/200",
+      "1/40"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The time period of oscillation is:\n$$T = \\frac{t}{n}$$\nwhere $n = 20$ is the number of oscillations (an exact integer).\n\nThe fractional error in the time period is identical to the fractional error in the total measured time $t$:\n$$\\frac{\\Delta T}{T} = \\frac{\\Delta t}{t}$$\n\nGiven $\\Delta t = 0.1\\text{ s}$ and $t = 40.0\\text{ s}$:\n$$\\frac{\\Delta T}{T} = \\frac{0.1}{40.0} = \\frac{1}{400}$$"
+  },
+  {
+    "question_number": 16,
+    "question_type": "mcq",
+    "question_text": "In a screw gauge, the main scale division is $1\\text{ mm}$ and there are $100$ divisions on circular scale. What is the least count of the screw gauge?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "1 mm",
+      "0.1 mm",
+      "0.01 mm",
+      "1 cm"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vernier Caliper & Screw Gauge",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Least count (L.C.) of a screw gauge is defined as:\n$$\\text{Least Count} = \\frac{\\text{Pitch}}{\\text{Total number of divisions on circular scale}}$$\n\nAssuming the pitch equals $1$ main scale division ($1\\text{ mm}$):\n$$\\text{Least Count} = \\frac{1\\text{ mm}}{100} = 0.01\\text{ mm}$$"
+  },
+  {
+    "question_number": 17,
+    "question_type": "mcq",
+    "question_text": "For two resistors $R_1$ and $R_2$ connected in parallel, $R_1 = (30 \\pm 1)\\,\\Omega$ and $R_2 = (60 \\pm 2)\\,\\Omega$. The percentage error in the measurement of equivalent resistance is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "3.33%",
+      "33.3%",
+      "6.67%",
+      "9%"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For two resistors in parallel:\n$$\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2} \\implies R_p = \\frac{R_1 R_2}{R_1 + R_2} = \\frac{30 \\times 60}{30 + 60} = 20\\,\\Omega$$\n\nDifferentiating $\\frac{1}{R_p} = \\frac{1}{R_1} + \\frac{1}{R_2}$ gives:\n$$\\frac{\\Delta R_p}{R_p^2} = \\frac{\\Delta R_1}{R_1^2} + \\frac{\\Delta R_2}{R_2^2}$$\n$$\\Delta R_p = R_p^2 \\left( \\frac{\\Delta R_1}{R_1^2} + \\frac{\\Delta R_2}{R_2^2} \\right) = 20^2 \\left( \\frac{1}{30^2} + \\frac{2}{60^2} \\right)$$\n$$\\Delta R_p = 400 \\left( \\frac{1}{900} + \\frac{2}{3600} \\right) = 400 \\left( \\frac{1}{900} + \\frac{1}{1800} \\right) = 400 \\left( \\frac{3}{1800} \\right) = \\frac{400}{600} = \\frac{2}{3}\\,\\Omega$$\n\nThe percentage error in equivalent resistance is:\n$$\\frac{\\Delta R_p}{R_p} \\times 100 = \\frac{2/3}{20} \\times 100 = \\frac{1}{30} \\times 100 \\approx 3.33\\%$$"
+  },
+  {
+    "question_number": 18,
+    "question_type": "mcq",
+    "question_text": "Select the false one from the following:\nGiven $[q] = [\\text{L}^3\\text{T}^{-1}]$\n[Here $v$, $A$ and $t$ represent velocity, area, and time respectively]",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "q = A (dv/dt)",
+      "q = A (dt/dv)",
+      "q = (1/A) (dv/dt)",
+      "All of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "We are given $[q] = [\\text{L}^3\\text{T}^{-1}]$ (volume rate of flow).\nLet us analyze the dimensions of each expression:\n1. $\\left[A \\frac{dv}{dt}\\right] = [\\text{L}^2] \\left[\\frac{\\text{LT}^{-1}}{\\text{T}}\\right] = [\\text{L}^3\\text{T}^{-2}] \\neq [\\text{L}^3\\text{T}^{-1}]$ (False)\n2. $\\left[A \\frac{dt}{dv}\\right] = [\\text{L}^2] \\left[\\frac{\\text{T}}{\\text{LT}^{-1}}\\right] = [\\text{LT}^2] \\neq [\\text{L}^3\\text{T}^{-1}]$ (False)\n3. $\\left[\\frac{1}{A} \\frac{dv}{dt}\\right] = [\\text{L}^{-2}] [\\text{LT}^{-2}] = [\\text{L}^{-1}\\text{T}^{-2}] \\neq [\\text{L}^3\\text{T}^{-1}]$ (False)\n\nSince all three given equations are dimensionally incorrect (false), the correct option is \"All of these\"."
+  },
+  {
+    "question_number": 19,
+    "question_type": "mcq",
+    "question_text": "You measure two quantities as $A = (10.0 \\pm 0.2)\\text{ m}$ and $B = (20.0 \\pm 0.2)\\text{ m}$. We should report correct value for $\\sqrt{AB}$ as",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "(14.1 \u00b1 0.3) m",
+      "(14.1 \u00b1 0.15) m",
+      "(14.1 \u00b1 0.4) m",
+      "(14.1 \u00b1 0.2) m"
+    ],
+    "correct_index": 3,
+    "difficulty": "hard",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let $Z = \\sqrt{AB} = (AB)^{1/2}$.\n$$Z = \\sqrt{10.0 \\times 20.0} = \\sqrt{200} \\approx 14.14\\text{ m} \\approx 14.1\\text{ m}$$\n\nThe fractional error in $Z$ is:\n$$\\frac{\\Delta Z}{Z} = \\frac{1}{2} \\left( \\frac{\\Delta A}{A} + \\frac{\\Delta B}{B} \\right)$$\n$$\\frac{\\Delta Z}{Z} = \\frac{1}{2} \\left( \\frac{0.2}{10.0} + \\frac{0.2}{20.0} \\right) = \\frac{1}{2} (0.02 + 0.01) = \\frac{1}{2} (0.03) = 0.015$$\n\nAbsolute error in $Z$:\n$$\\Delta Z = 0.015 \\times Z = 0.015 \\times 14.14 = 0.212\\text{ m}$$\n\nRounding the error to one significant figure gives $\\Delta Z = 0.2\\text{ m}$.\nTherefore, the value should be reported with error as $(14.1 \\pm 0.2)\\text{ m}$."
+  },
+  {
+    "question_number": 20,
+    "question_type": "mcq",
+    "question_text": "A drop of olive oil of radius $0.25\\text{ mm}$ spreads into a circular film of radius $5\\text{ cm}$ on the water surface. Estimate the thickness of the film",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "8.3 \u00d7 10\u207b\u00b9\u2070 m",
+      "7.2 \u00d7 10\u207b\u2079 m",
+      "8.9 \u00d7 10\u207b\u00b9\u00b9 m",
+      "8.3 \u00d7 10\u207b\u2079 m"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Units & Conversion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The volume of the spherical drop is conserved as it spreads to form a cylindrical film of thickness $t$:\n$$V_{\\text{drop}} = \\frac{4}{3}\\pi r^3$$\nGiven $r = 0.25\\text{ mm} = 0.25 \\times 10^{-3}\\text{ m} = 2.5 \\times 10^{-4}\\text{ m}$:\n$$V = \\frac{4}{3}\\pi (2.5 \\times 10^{-4})^3 = \\frac{4}{3}\\pi \\times 15.625 \\times 10^{-12} \\approx 20.83\\pi \\times 10^{-12}\\text{ m}^3$$\n\nThe area of the circular film of radius $R = 5\\text{ cm} = 5 \\times 10^{-2}\\text{ m}$ is:\n$$A = \\pi R^2 = \\pi (5 \\times 10^{-2})^2 = 25\\pi \\times 10^{-4}\\text{ m}^2$$\n\nThe thickness of the film is:\n$$t = \\frac{V}{A} = \\frac{20.83\\pi \\times 10^{-12}}{25\\pi \\times 10^{-4}} = \\frac{20.83}{25} \\times 10^{-8} \\approx 0.833 \\times 10^{-8}\\text{ m} = 8.3 \\times 10^{-9}\\text{ m}$$"
+  },
+  {
+    "question_number": 21,
+    "question_type": "mcq",
+    "question_text": "The number of significant figures in the difference of $15.45$ and $14.7$ is/are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Calculating the difference:\n$$15.45 - 14.7 = 0.75$$\n\nAccording to the rules of arithmetic operations with significant figures, the result of addition or subtraction cannot have more decimal places than the measurement with the fewest decimal places.\nHere, $14.7$ has $1$ decimal place while $15.45$ has $2$ decimal places. Therefore, the result must be rounded off to $1$ decimal place:\n$$0.75 \\to 0.8$$\n(by rounding off rule, since the preceding digit $7$ is odd, it rounds up to $8$).\n\nThe number $0.8$ has only $1$ significant figure."
+  },
+  {
+    "question_number": 22,
+    "question_type": "mcq",
+    "question_text": "Dimensions of which of the following pairs are not same?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Torque and work",
+      "Young's modulus and pressure",
+      "Impulse and momentum",
+      "Angular momentum and energy"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us check the dimensional formulas of each pair:\n1. $[\\text{Torque}] = [\\text{Work}] = [\\text{ML}^2\\text{T}^{-2}]$ (Same)\n2. $[\\text{Young's modulus}] = [\\text{Pressure}] = [\\text{ML}^{-1}\\text{T}^{-2}]$ (Same)\n3. $[\\text{Impulse}] = [\\text{Linear momentum}] = [\\text{MLT}^{-1}]$ (Same)\n4. $[\\text{Angular momentum}] = [\\text{ML}^2\\text{T}^{-1}]$, whereas $[\\text{Energy}] = [\\text{ML}^2\\text{T}^{-2}]$ (Not same)\n\nTherefore, pair (4) does not have the same dimensions."
+  },
+  {
+    "question_number": 23,
+    "question_type": "mcq",
+    "question_text": "A physical quantity $x$ is represented by $x = \\frac{F \\rho v}{S}$ where $F, \\rho, v$ and $S$ are force, density, velocity and surface tension respectively. Then the dimension of $x$ is same as",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Angular momentum",
+      "Coefficient of viscosity",
+      "Modulus of elasticity",
+      "Boltzmann's constant"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Substitute the dimensional formula for each quantity:\n- $[F] = [\\text{MLT}^{-2}]$\n- $[\\rho] = [\\text{ML}^{-3}]$\n- $[v] = [\\text{LT}^{-1}]$\n- $[S] = [\\text{MT}^{-2}]$ (Surface tension = Force/length)\n\nNow, calculate the dimensions of $x$:\n$$[x] = \\frac{[F][\\rho][v]}{[S]} = \\frac{[\\text{MLT}^{-2}][\\text{ML}^{-3}][\\text{LT}^{-1}]}{[\\text{MT}^{-2}]}$$\n$$[x] = \\frac{[\\text{M}^2\\text{L}^{-1}\\text{T}^{-3}]}{[\\text{MT}^{-2}]} = [\\text{ML}^{-1}\\text{T}^{-1}]$$\n\nThe coefficient of viscosity $\\eta$ has dimensions:\n$$[\\eta] = [\\text{ML}^{-1}\\text{T}^{-1}]$$\n\nHence, the dimensions of $x$ match those of the coefficient of viscosity."
+  }
+]

@@ -1,0 +1,306 @@
+[
+  {
+    "question_number": 42,
+    "question_type": "mcq",
+    "question_text": "The radius of a uniform plate is $1.5\\text{ cm}$. Its area on taking significant figures into account is given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$7.065\\text{ cm}^2$",
+      "$7.06\\text{ cm}^2$",
+      "$7.0\\text{ cm}^2$",
+      "$7.1\\text{ cm}^2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given, radius of the circular plate $r = 1.5\\text{ cm}$, which has 2 significant figures.\n\nThe area of the circular plate is:\n$$A = \\pi r^2 = \\pi \\times (1.5\\text{ cm})^2 \\approx 3.14159 \\times 2.25\\text{ cm}^2 = 7.06858\\text{ cm}^2$$\n\nAccording to the rules of significant figures, in multiplication, the final result must retain as many significant figures as there are in the original number with the least significant figures. Since $r = 1.5\\text{ cm}$ has 2 significant figures, the area must be rounded off to 2 significant figures:\n$$A \\approx 7.1\\text{ cm}^2$$"
+  },
+  {
+    "question_number": 43,
+    "question_type": "mcq",
+    "question_text": "If a wire is stretched to decrease its radius by $2\\%$, then the percentage change in its resistance will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1\\%$",
+      "$2\\%$",
+      "$4\\%$",
+      "$8\\%$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resistance of a wire is given by:\n$$R = \\rho \\frac{l}{A}$$\nWhen a wire is stretched, its volume $V = A \\cdot l = \\pi r^2 l$ remains constant. Therefore, $l = \\frac{V}{\\pi r^2}$.\n\nSubstituting $l$ into the resistance formula:\n$$R = \\rho \\frac{V}{A^2} = \\rho \\frac{V}{(\\pi r^2)^2} = \\frac{\\rho V}{\\pi^2 r^4} \\propto r^{-4}$$\n\nFor small percentage changes, we can differentiate logarithmically:\n$$\\frac{\\Delta R}{R} \\approx -4 \\frac{\\Delta r}{r}$$\n\nGiven that the radius decreases by $2\\%$, i.e., $\\frac{\\Delta r}{r} = -2\\%$, we have:\n$$\\frac{\\Delta R}{R} = -4(-2\\%) = +8\\%$$\n\nHence, the percentage increase in resistance is $8\\%$."
+  },
+  {
+    "question_number": 44,
+    "question_type": "mcq",
+    "question_text": "If error in measuring the distance of a planet from sun is $0.4\\%$ and in measuring the mass of sun is $0.6\\%$, then error in measuring the time period of planet around the sun is (assume the orbit to be circular)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.3\\%$",
+      "$0.6\\%$",
+      "$1\\%$",
+      "$0.9\\%$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Kepler's third law, for a planet orbiting the Sun in a circular orbit of radius $r$:\n$$T^2 = \\frac{4\\pi^2 r^3}{G M}$$\n$$T = 2\\pi G^{-1/2} r^{3/2} M^{-1/2}$$\n\nTaking relative errors:\n$$\\frac{\\Delta T}{T} = \\frac{3}{2}\\left(\\frac{\\Delta r}{r}\\right) + \\frac{1}{2}\\left(\\frac{\\Delta M}{M}\\right)$$\n\nGiven:\n$$\\frac{\\Delta r}{r} = 0.4\\%, \\quad \\frac{\\Delta M}{M} = 0.6\\%$$\n\nSubstituting these values:\n$$\\frac{\\Delta T}{T} = \\frac{3}{2}(0.4\\%) + \\frac{1}{2}(0.6\\%) = 0.6\\% + 0.3\\% = 0.9\\%$$"
+  },
+  {
+    "question_number": 45,
+    "question_type": "mcq",
+    "question_text": "Which of the following relation is dimensionally incorrect?\n($\\nu$ - frequency, $v$ - velocity, $\\lambda$ - wavelength, $E$ - elastic constant, $\\rho$ - density, $R$ - radius of earth, $T$ - tension, $\\mu$ - mass per unit length, $l$ - length, $g$ - acceleration due to gravity)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\nu = \\frac{v}{\\lambda}$",
+      "$v = \\frac{1}{2l}\\sqrt{\\frac{E}{\\rho}}$",
+      "$\\nu = \\frac{1}{2l}\\sqrt{\\frac{T}{\\mu}}$",
+      "$\\nu = \\frac{1}{2\\pi}\\sqrt{\\left(\\frac{1}{R}+\\frac{1}{l}\\right)g}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us check the dimensions of each relation:\n\n1. $\\nu = \\frac{v}{\\lambda}$:\n$$[\\text{LHS}] = [\\nu] = [\\text{T}^{-1}]$$\n$$[\\text{RHS}] = \\frac{[v]}{[\\lambda]} = \\frac{[\\text{LT}^{-1}]}{[\\text{L}]} = [\\text{T}^{-1}]$$\nThis is dimensionally correct.\n\n2. $v = \\frac{1}{2l}\\sqrt{\\frac{E}{\\rho}}$:\n$$[\\text{LHS}] = [v] = [\\text{LT}^{-1}]$$\n$$[E] = [\\text{ML}^{-1}\\text{T}^{-2}], \\quad [\\rho] = [\\text{ML}^{-3}] \\implies \\left[\\sqrt{\\frac{E}{\\rho}}\\right] = [\\text{LT}^{-1}]$$\n$$[\\text{RHS}] = \\frac{1}{[l]}\\left[\\sqrt{\\frac{E}{\\rho}}\\right] = [\\text{L}^{-1}][\\text{LT}^{-1}] = [\\text{T}^{-1}]$$\nSince $[\\text{LT}^{-1}] \\neq [\\text{T}^{-1}]$, this relation is dimensionally incorrect (the LHS should be frequency $\\nu$, not velocity $v$).\n\n3. $\\nu = \\frac{1}{2l}\\sqrt{\\frac{T}{\\mu}}$:\n$$[\\text{LHS}] = [\\text{T}^{-1}]$$\n$$[T] = [\\text{MLT}^{-2}], \\quad [\\mu] = [\\text{ML}^{-1}] \\implies \\left[\\sqrt{\\frac{T}{\\mu}}\\right] = [\\text{LT}^{-1}]$$\n$$[\\text{RHS}] = [\\text{L}^{-1}][\\text{LT}^{-1}] = [\\text{T}^{-1}]$$\nThis is dimensionally correct.\n\n4. $\\nu = \\frac{1}{2\\pi}\\sqrt{\\left(\\frac{1}{R}+\\frac{1}{l}\\right)g}$:\n$$[\\text{LHS}] = [\\text{T}^{-1}]$$\n$$\\left[\\left(\\frac{1}{R}+\\frac{1}{l}\\right)g\\right] = [\\text{L}^{-1}][\\text{LT}^{-2}] = [\\text{T}^{-2}] \\implies [\\text{RHS}] = [\\text{T}^{-1}]$$\nThis is dimensionally correct.\n\nTherefore, option (2) is dimensionally incorrect."
+  },
+  {
+    "question_number": 46,
+    "question_type": "mcq",
+    "question_text": "Mass of a block is $0.013\\text{ kg}$ and its volume is $0.03\\text{ m}^3$. The density of the material of block is (answer should be according to significant digits)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.00043\\text{ kg/m}^3$",
+      "$0.004\\text{ kg/m}^3$",
+      "$4.33 \\times 10^{-1}\\text{ kg/m}^3$",
+      "$4 \\times 10^{-1}\\text{ kg/m}^3$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nMass $m = 0.013\\text{ kg}$ (has 2 significant figures)\nVolume $V = 0.03\\text{ m}^3$ (has 1 significant figure)\n\nDensity is given by:\n$$\\rho = \\frac{m}{V} = \\frac{0.013}{0.03} = 0.4333...\\text{ kg/m}^3$$\n\nAccording to the rules of significant figures, the result of division should retain as many significant figures as the quantity with the least number of significant figures. Here, the volume has only 1 significant figure. \n\nRounding to 1 significant figure:\n$$\\rho = 0.4\\text{ kg/m}^3 = 4 \\times 10^{-1}\\text{ kg/m}^3$$"
+  },
+  {
+    "question_number": 47,
+    "question_type": "mcq",
+    "question_text": "Which of the following is different from the others?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Parallactic second",
+      "Light year",
+      "Kilosecond",
+      "Micron"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Units & Conversion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "- Parallactic second (parsec) is a unit of length ($1\\text{ parsec} \\approx 3.08 \\times 10^{16}\\text{ m}$).\n- Light year is a unit of length ($1\\text{ ly} \\approx 9.46 \\times 10^{15}\\text{ m}$).\n- Micron is a unit of length ($1\\,\\mu\\text{m} = 10^{-6}\\text{ m}$).\n- Kilosecond is a unit of time ($1\\text{ ks} = 10^3\\text{ s}$).\n\nHence, Kilosecond is a unit of time, while all the other three are units of distance/length."
+  },
+  {
+    "question_number": 48,
+    "question_type": "mcq",
+    "question_text": "If we select unit of acceleration as $9.8\\text{ m/s}^2$ and unit of velocity as $3 \\times 10^8\\text{ m/s}$, then what will be unit of time?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3.06 \\times 10^7\\text{ s}$",
+      "$4.06 \\times 10^7\\text{ s}$",
+      "$5.06 \\times 10^7\\text{ s}$",
+      "$6.06 \\times 10^7\\text{ s}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Units & Conversion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "We know that:\n$$\\text{Acceleration } a = \\frac{v}{t} \\implies t = \\frac{v}{a}$$\n\nUsing the given units:\n$$\\text{Unit of time } T = \\frac{\\text{Unit of velocity}}{\\text{Unit of acceleration}} = \\frac{3 \\times 10^8\\text{ m/s}}{9.8\\text{ m/s}^2} \\approx 3.0612 \\times 10^7\\text{ s} = 3.06 \\times 10^7\\text{ s}$$"
+  },
+  {
+    "question_number": 49,
+    "question_type": "mcq",
+    "question_text": "Which of the following has its unit different from the other three? ($R = \\text{Resistance}$, $C = \\text{Capacitance}$, $L = \\text{Inductance}$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$RC$",
+      "$\\frac{L}{R}$",
+      "$\\sqrt{LC}$",
+      "$\\frac{L}{C}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "- $RC$ is the capacitive time constant, so $[RC] = [\\text{T}]$.\n- $\\frac{L}{R}$ is the inductive time constant, so $\\left[\\frac{L}{R}\\right] = [\\text{T}]$.\n- $\\sqrt{LC}$ is related to the natural frequency $\\omega = \\frac{1}{\\sqrt{LC}}$, so $[\\sqrt{LC}] = [\\text{T}]$.\n- $\\frac{L}{C}$: \n  Since $[L] = [\\text{ML}^2\\text{T}^{-2}\\text{A}^{-2}]$ and $[C] = [\\text{M}^{-1}\\text{L}^{-2}\\text{T}^4\\text{A}^2]$, we have:\n  $$\\left[\\frac{L}{C}\\right] = [\\text{M}^2\\text{L}^4\\text{T}^{-6}\\text{A}^{-4}] = [R^2]$$\n  This has the units of $\\Omega^2$ (resistance squared), which is completely different from time."
+  },
+  {
+    "question_number": 50,
+    "question_type": "mcq",
+    "question_text": "The S.I. unit of solar constant is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\text{W m}^2\\text{ K}^{-4}$",
+      "$\\text{J s}^{-1}\\text{ m}^{-2}$",
+      "$\\text{W m}^{-1}\\text{ K}^{-1}$",
+      "$\\text{J s}^{-1}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Units & Conversion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Solar constant is defined as the amount of solar energy received per unit area per second normal to the rays of the Sun at the average distance of the Earth from the Sun:\n$$\\text{Solar Constant } S = \\frac{\\text{Energy}}{\\text{Area} \\times \\text{Time}}$$\n\n$$\\text{SI Unit} = \\frac{\\text{J}}{\\text{m}^2 \\cdot \\text{s}} = \\text{J s}^{-1}\\text{ m}^{-2} = \\text{W m}^{-2}$$"
+  },
+  {
+    "question_number": 51,
+    "question_type": "mcq",
+    "question_text": "The dimensional formula of universal gravitational constant is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]$",
+      "$[\\text{ML}^{-1}\\text{T}^{-2}]$",
+      "$[\\text{M}^{-1}\\text{L}^2\\text{T}^{-2}]$",
+      "$[\\text{M}^{-1}\\text{L}^3\\text{T}^{-1}]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Newton's law of gravitation:\n$$F = \\frac{G m_1 m_2}{r^2} \\implies G = \\frac{F r^2}{m_1 m_2}$$\n\nSubstituting the dimensions of each quantity:\n$$[G] = \\frac{[\\text{MLT}^{-2}][\\text{L}^2]}{[\\text{M}][\\text{M}]} = [\\text{M}^{-1}\\text{L}^3\\text{T}^{-2}]$$"
+  },
+  {
+    "question_number": 52,
+    "question_type": "mcq",
+    "question_text": "The magnitude of measurement of a physical quantity is expressed in terms of numerical value $n$ and unit $u$. Which of the following graphs best represent the variation of $n$ with $u$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "A graph of $n$ versus $u$ showing a curve that is concave downward.",
+      "A graph of $n$ versus $u$ showing a curve that is concave upward and increasing.",
+      "A graph of $n$ versus $u$ showing a rectangular hyperbola asymptotically approaching both axes.",
+      "A graph of $n$ versus $u$ showing a straight line with negative slope."
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Units & Conversion",
+    "has_diagram": true,
+    "diagram_description": "Four plots with $n$ on the vertical axis and $u$ on the horizontal axis: (1) shows a curve that bends downwards, (2) shows an increasing curve bending upwards, (3) shows a rectangular hyperbola decreasing asymptotically towards both axes, and (4) shows a linearly decreasing straight line with negative slope.",
+    "solution": "The magnitude of a physical quantity $Q$ is independent of the system of units chosen:\n$$Q = n \\cdot u = \\text{constant}$$\n$$\\implies n \\propto \\frac{1}{u}$$\n\nSince the product of $n$ and $u$ is constant, the graph between the numerical value $n$ and the unit $u$ is a rectangular hyperbola asymptotic to both axes, which corresponds to graph (3)."
+  },
+  {
+    "question_number": 53,
+    "question_type": "mcq",
+    "question_text": "In the equation $\\left(P + \\frac{a}{V^2}\\right)(V - b) = RT$, $P = \\text{Pressure}$, $V = \\text{Volume}$, $T = \\text{absolute temperature}$. The dimensional formula of $\\frac{a}{b}$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{ML}^5\\text{T}^{-2}]$",
+      "$[\\text{ML}^2\\text{T}^{-2}]$",
+      "$[\\text{ML}^4\\text{T}^{-1}]$",
+      "$[\\text{ML}^2\\text{T}^{-1}]$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the principle of homogeneity of dimensions, only quantities of the same dimensions can be added or subtracted:\n\n1. From $\\left(P + \\frac{a}{V^2}\\right)$:\n$$\\left[\\frac{a}{V^2}\\right] = [P] \\implies [a] = [P][V^2]$$\nSince $[P] = [\\text{ML}^{-1}\\text{T}^{-2}]$ and $[V] = [\\text{L}^3]$:\n$$[a] = [\\text{ML}^{-1}\\text{T}^{-2}][\\text{L}^6] = [\\text{ML}^5\\text{T}^{-2}]$$\n\n2. From $(V - b)$:\n$$[b] = [V] = [\\text{L}^3]$$\n\nTherefore, the dimensional formula of $\\frac{a}{b}$ is:\n$$\\left[\\frac{a}{b}\\right] = \\frac{[\\text{ML}^5\\text{T}^{-2}]}{[\\text{L}^3]} = [\\text{ML}^2\\text{T}^{-2}]$$"
+  },
+  {
+    "question_number": 54,
+    "question_type": "mcq",
+    "question_text": "If velocity $v = A + Bt + Ct^2$ (where $t$ is time), the dimensional formula of $C$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{M}^0\\text{LT}^{-2}]$",
+      "$[\\text{M}^0\\text{LT}^{-3}]$",
+      "$[\\text{M}^0\\text{LT}^{-1}]$",
+      "$[\\text{M}^0\\text{LT}^{-4}]$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the velocity equation:\n$$v = A + Bt + Ct^2$$\n\nBy the principle of homogeneity of dimensions:\n$$[Ct^2] = [v]$$\n$$[C][\\text{T}^2] = [\\text{LT}^{-1}]$$\n$$[C] = \\frac{[\\text{LT}^{-1}]}{[\\text{T}^2]} = [\\text{LT}^{-3}] = [\\text{M}^0\\text{LT}^{-3}]$$"
+  },
+  {
+    "question_number": 55,
+    "question_type": "mcq",
+    "question_text": "Which of the following relations is dimensionally wrong? (The symbols have their usual meanings)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$S = ut + \\frac{1}{6}at^2$",
+      "$v^2 = u^2 + \\frac{2aS^2}{\\pi}$",
+      "$v = u - 2at$",
+      "All of these"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us check the dimensional correctness of each relation:\n\n1. $S = ut + \\frac{1}{6}at^2$:\n- $[S] = [\\text{L}]$\n- $[ut] = [\\text{LT}^{-1}][\\text{T}] = [\\text{L}]$\n- $\\left[\\frac{1}{6}at^2\\right] = [\\text{LT}^{-2}][\\text{T}^2] = [\\text{L}]$\nAll terms have dimension $[\\text{L}]$, so it is dimensionally correct.\n\n2. $v^2 = u^2 + \\frac{2aS^2}{\\pi}$:\n- $[v^2] = [\\text{L}^2\\text{T}^{-2}]$\n- $[u^2] = [\\text{L}^2\\text{T}^{-2}]$\n- $\\left[\\frac{2aS^2}{\\pi}\\right] = [a][S^2] = [\\text{LT}^{-2}][\\text{L}^2] = [\\text{L}^3\\text{T}^{-2}]$\nSince $[\\text{L}^3\\text{T}^{-2}] \\neq [\\text{L}^2\\text{T}^{-2}]$, this relation is dimensionally wrong.\n\n3. $v = u - 2at$:\n- $[v] = [\\text{LT}^{-1}]$\n- $[u] = [\\text{LT}^{-1}]$\n- $[2at] = [\\text{LT}^{-2}][\\text{T}] = [\\text{LT}^{-1}]$\nAll terms have dimension $[\\text{LT}^{-1}]$, so it is dimensionally correct.\n\nThus, relation (2) is dimensionally wrong."
+  },
+  {
+    "question_number": 56,
+    "question_type": "mcq",
+    "question_text": "If force $(F)$, length $(L)$ and time $(T)$ are taken as fundamental quantities, then the dimensional formula of mass will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[\\text{FL}^{-1}\\text{T}^2]$",
+      "$[\\text{FLT}^{-1}]$",
+      "$[\\text{FL}^{-1}\\text{T}^{-1}]$",
+      "$[\\text{F}^{-1}\\text{L}^{-1}\\text{T}^1]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "We know that:\n$$\\text{Force } F = \\text{mass} \\times \\text{acceleration}$$\n$$[F] = [M][\\text{LT}^{-2}]$$\n\nSolving for mass $[M]$:\n$$[M] = \\frac{[F]}{[\\text{LT}^{-2}]} = [\\text{FL}^{-1}\\text{T}^2]$$"
+  },
+  {
+    "question_number": 57,
+    "question_type": "mcq",
+    "question_text": "Two quantities $P$ and $Q$ have different dimensions. Which of the following mathematical operation given below is physically meaningful?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$P \\times Q$",
+      "$P - Q$",
+      "$P + Q$",
+      "All of these"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the principle of homogeneity of dimensions:\n- Two physical quantities can be added or subtracted only if they have the same dimensions. Since $P$ and $Q$ have different dimensions, neither $(P + Q)$ nor $(P - Q)$ is physically meaningful.\n- Physical quantities with different dimensions can be multiplied or divided to produce a new physical quantity (e.g., $\\text{force} \\times \\text{displacement} = \\text{work}$, $\\text{mass} \\times \\text{velocity} = \\text{momentum}$).\n\nTherefore, only $P \\times Q$ is physically meaningful."
+  }
+]

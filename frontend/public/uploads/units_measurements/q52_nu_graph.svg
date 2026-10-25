@@ -1,0 +1,76 @@
+
+<svg width="760" height="380" viewBox="0 0 760 380" xmlns="http://www.w3.org/2000/svg" style="background:#ffffff; font-family: 'Segoe UI', Arial, sans-serif;">
+  <style>
+    .panel-box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 8; }
+    .axis { stroke: #1e293b; stroke-width: 2.2; marker-end: url(#arrow); }
+    .curve { stroke: #2563eb; stroke-width: 3; fill: none; stroke-linecap: round; }
+    .correct-curve { stroke: #059669; stroke-width: 3.5; fill: none; stroke-linecap: round; }
+    .opt-label { font-size: 18px; font-weight: bold; fill: #0f172a; }
+    .axis-label { font-size: 16px; font-weight: bold; font-style: italic; fill: #0f172a; }
+  </style>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b" />
+    </marker>
+  </defs>
+
+  <!-- Title Banner -->
+  <text x="25" y="32" font-size="17" font-weight="bold" fill="#1e293b">Variation of Numerical Value (n) with Unit (u): Q = n · u = constant ⇒ n ∝ 1/u</text>
+
+  <!-- PANEL (1) -->
+  <g transform="translate(30, 55)">
+    <rect width="160" height="150" class="panel-box" />
+    <text x="15" y="25" class="opt-label">(1)</text>
+    <!-- Axes: origin at (35, 125) -->
+    <line x1="35" y1="125" x2="35" y2="35" class="axis" />
+    <line x1="35" y1="125" x2="140" y2="125" class="axis" />
+    <text x="20" y="45" class="axis-label">n</text>
+    <text x="142" y="138" class="axis-label">u</text>
+    <!-- Curve: increasing convex -->
+    <path d="M 40 120 Q 80 115 130 50" class="curve" />
+  </g>
+
+  <!-- PANEL (2) -->
+  <g transform="translate(215, 55)">
+    <rect width="160" height="150" class="panel-box" />
+    <text x="15" y="25" class="opt-label">(2)</text>
+    <!-- Axes -->
+    <line x1="35" y1="125" x2="35" y2="35" class="axis" />
+    <line x1="35" y1="125" x2="140" y2="125" class="axis" />
+    <text x="20" y="45" class="axis-label">n</text>
+    <text x="142" y="138" class="axis-label">u</text>
+    <!-- Curve: sharp drop then flat horizontal -->
+    <path d="M 40 50 Q 55 105 85 110 L 135 110" class="curve" />
+  </g>
+
+  <!-- PANEL (3) - Correct Rectangular Hyperbola -->
+  <g transform="translate(400, 55)">
+    <rect width="160" height="150" class="panel-box" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
+    <text x="15" y="25" class="opt-label" fill="#047857">(3) ✓</text>
+    <!-- Axes -->
+    <line x1="35" y1="125" x2="35" y2="35" class="axis" />
+    <line x1="35" y1="125" x2="140" y2="125" class="axis" />
+    <text x="20" y="45" class="axis-label">n</text>
+    <text x="142" y="138" class="axis-label">u</text>
+    <!-- Rectangular Hyperbola Curve: n ∝ 1/u -->
+    <path d="M 42 45 Q 52 95 135 120" class="correct-curve" />
+    <text x="50" y="142" font-size="11" font-weight="bold" fill="#047857">Rectangular Hyperbola</text>
+  </g>
+
+  <!-- PANEL (4) -->
+  <g transform="translate(585, 55)">
+    <rect width="160" height="150" class="panel-box" />
+    <text x="15" y="25" class="opt-label">(4)</text>
+    <!-- Axes -->
+    <line x1="35" y1="125" x2="35" y2="35" class="axis" />
+    <line x1="35" y1="125" x2="140" y2="125" class="axis" />
+    <text x="20" y="45" class="axis-label">n</text>
+    <text x="142" y="138" class="axis-label">u</text>
+    <!-- Curve: straight line with negative slope -->
+    <line x1="42" y1="50" x2="135" y2="120" class="curve" />
+  </g>
+
+  <!-- Explanation note at bottom -->
+  <rect x="30" y="225" width="700" height="40" rx="6" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+  <text x="45" y="250" font-size="14" fill="#334155">Since magnitude $Q = n_1 u_1 = n_2 u_2$, the product $n \times u = \text{constant}$, giving a rectangular hyperbola (Graph 3).</text>
+</svg>

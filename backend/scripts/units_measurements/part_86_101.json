@@ -1,0 +1,306 @@
+[
+  {
+    "question_number": 86,
+    "question_type": "mcq",
+    "question_text": "Number of significant figures in $0.0006032\\text{ m}^2$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "3",
+      "6",
+      "4",
+      "7"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the rules of significant figures:\n1. All non-zero digits are significant.\n2. Any zeros between two significant digits are significant.\n3. Leading zeros (zeros preceding the first non-zero digit) are not significant; they merely indicate the position of the decimal point.\n\nIn the number $0.0006032$, the leading zeros before $6$ are not significant. The significant digits are $6, 0, 3, 2$, which gives a total of $4$ significant figures."
+  },
+  {
+    "question_number": 87,
+    "question_type": "mcq",
+    "question_text": "When fundamental unit of mass, length and time are taken as $10\\text{ kg}$, $60\\text{ m}$ and $x\\text{ s}$, then new unit of energy becomes $10$ times the S.I. unit of energy. The value of $x$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "10",
+      "20",
+      "60",
+      "100"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Units and Dimensions",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The dimensional formula for energy is $[M L^2 T^{-2}]$.\n\nIn the S.I. system, the unit of energy is:\n$$U_1 = (1\\text{ kg})(1\\text{ m})^2(1\\text{ s})^{-2} = 1\\text{ J}$$\n\nIn the new system of units:\n$$U_2 = (10\\text{ kg})(60\\text{ m})^2(x\\text{ s})^{-2} = 10 \\times 3600 \\times x^{-2}\\text{ J} = \\frac{36000}{x^2}\\text{ J}$$\n\nGiven that the new unit of energy is $10$ times the S.I. unit:\n$$U_2 = 10 U_1$$\n$$\\frac{36000}{x^2} = 10 \\implies x^2 = 3600 \\implies x = 60$$"
+  },
+  {
+    "question_number": 88,
+    "question_type": "mcq",
+    "question_text": "Maximum percentage error in the measurement of $25.00\\text{ m}$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "0.01%",
+      "0.03%",
+      "0.04%",
+      "0.02%"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The measurement is given as $25.00\\text{ m}$.\nThe absolute error (least count of the measuring instrument) corresponds to the place value of the last digit:\n$$\\Delta l = 0.01\\text{ m}$$\n\nThe maximum percentage error is:\n$$\\text{Percentage error} = \\frac{\\Delta l}{l} \\times 100\\% = \\frac{0.01}{25.00} \\times 100\\% = \\frac{1}{25}\\% = 0.04\\%$$"
+  },
+  {
+    "question_number": 89,
+    "question_type": "mcq",
+    "question_text": "The dimensional formula of coefficient of thermal conductivity is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[M^1 L^1 T^{-3} K^{-1}]$",
+      "$[M^2 L^{-1} T^{-1} K]$",
+      "$[M^1 L^{-2} T^{-3} K^{-1}]$",
+      "$[M^1 L^1 T^{-3} K]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Rate of heat flow through a conductor is given by Fourier's law of heat conduction:\n$$\\frac{dQ}{dt} = k A \\frac{\\Delta T}{\\Delta x}$$\n$$\\implies k = \\frac{dQ}{dt} \\cdot \\frac{\\Delta x}{A \\Delta T}$$\n\nSubstituting the dimensions of each quantity:\n- Heat energy rate $\\left[\\frac{dQ}{dt}\\right] = [M L^2 T^{-3}]$\n- Distance $[\\Delta x] = [L]$\n- Area $[A] = [L^2]$\n- Temperature difference $[\\Delta T] = [K]$\n\n$$[k] = \\frac{[M L^2 T^{-3}][L]}{[L^2][K]} = [M^1 L^1 T^{-3} K^{-1}]$$"
+  },
+  {
+    "question_number": 90,
+    "question_type": "mcq",
+    "question_text": "Among the following four different measurements of masses $10.52\\text{ kg}$, $1.54\\text{ g}$, $10.23\\text{ g}$ and $25.1\\text{ g}$, which one is most accurate?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10.52\\text{ kg}$",
+      "$1.54\\text{ g}$",
+      "$10.23\\text{ g}$",
+      "$25.1\\text{ g}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Accuracy of a measurement is inversely proportional to its fractional (or relative) error. A measurement having the minimum fractional error is the most accurate.\n\nLet us calculate the fractional error $\\frac{\\Delta m}{m}$ for each measurement:\n1. For $10.52\\text{ kg}$: $\\Delta m = 0.01\\text{ kg} \\implies \\frac{\\Delta m}{m} = \\frac{0.01}{10.52} \\approx 9.51 \\times 10^{-4}$\n2. For $1.54\\text{ g}$: $\\Delta m = 0.01\\text{ g} \\implies \\frac{\\Delta m}{m} = \\frac{0.01}{1.54} \\approx 6.49 \\times 10^{-3}$\n3. For $10.23\\text{ g}$: $\\Delta m = 0.01\\text{ g} \\implies \\frac{\\Delta m}{m} = \\frac{0.01}{10.23} \\approx 9.77 \\times 10^{-4}$\n4. For $25.1\\text{ g}$: $\\Delta m = 0.1\\text{ g} \\implies \\frac{\\Delta m}{m} = \\frac{0.1}{25.1} \\approx 3.98 \\times 10^{-3}$\n\nThe measurement $10.52\\text{ kg}$ has the least fractional error, hence it is the most accurate."
+  },
+  {
+    "question_number": 91,
+    "question_type": "mcq",
+    "question_text": "A student measures the value of $g$ with the help of a simple pendulum using the formula $g = \\frac{4\\pi^2 L}{T^2}$. $L$ and $T$ are measured to be $2.0\\text{ m}$ and $2.0\\text{ s}$. The errors in the measurement of $L$ and $T$ are respectively $\\Delta L$ and $\\Delta T$. In which of the following cases, the error in the value of $g$ is minimum? (Symbols have their usual meanings)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\Delta L = 0.5\\text{ cm}, \\Delta T = 0.5\\text{ s}$",
+      "$\\Delta L = 0.2\\text{ cm}, \\Delta T = 0.2\\text{ s}$",
+      "$\\Delta L = 0.1\\text{ cm}, \\Delta T = 1.0\\text{ s}$",
+      "$\\Delta L = 0.1\\text{ cm}, \\Delta T = 0.1\\text{ s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The expression for acceleration due to gravity is:\n$$g = \\frac{4\\pi^2 L}{T^2}$$\n\nThe fractional error in $g$ is given by:\n$$\\frac{\\Delta g}{g} = \\frac{\\Delta L}{L} + 2\\frac{\\Delta T}{T}$$\n\nGiven $L = 2.0\\text{ m} = 200\\text{ cm}$ and $T = 2.0\\text{ s}$.\n\nCalculating $\\frac{\\Delta g}{g}$ for each option:\n1. $\\frac{\\Delta g}{g} = \\frac{0.5}{200} + 2\\left(\\frac{0.5}{2.0}\\right) = 0.0025 + 0.5 = 0.5025$\n2. $\\frac{\\Delta g}{g} = \\frac{0.2}{200} + 2\\left(\\frac{0.2}{2.0}\\right) = 0.0010 + 0.2 = 0.2010$\n3. $\\frac{\\Delta g}{g} = \\frac{0.1}{200} + 2\\left(\\frac{1.0}{2.0}\\right) = 0.0005 + 1.0 = 1.0005$\n4. $\\frac{\\Delta g}{g} = \\frac{0.1}{200} + 2\\left(\\frac{0.1}{2.0}\\right) = 0.0005 + 0.1 = 0.1005$\n\nThe error in $g$ is minimum in case (4)."
+  },
+  {
+    "question_number": 92,
+    "question_type": "mcq",
+    "question_text": "Dimensions of solar constant are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[M^1 L^0 T^{-3}]$",
+      "$[M^1 L^0 T^{-2}]$",
+      "$[M^1 L^1 T^{-1}]$",
+      "$[M^1 L^2 T^{-3}]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Solar constant is defined as the radiant solar energy received per unit area per unit time normal to the rays of the Sun at the average distance of the Earth from the Sun.\n$$\\text{Solar constant} = \\frac{\\text{Energy}}{\\text{Area} \\times \\text{Time}}$$\n\n$$[\\text{Solar constant}] = \\frac{[M L^2 T^{-2}]}{[L^2][T]} = [M^1 L^0 T^{-3}]$$"
+  },
+  {
+    "question_number": 93,
+    "question_type": "mcq",
+    "question_text": "If $\\varepsilon_0$ is the permittivity of free space and $E$ is the electric field, then dimensions of $\\varepsilon_0 E^2$ is same as that of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Pressure",
+      "Force",
+      "Energy",
+      "Intensity"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The electrostatic energy density (energy per unit volume) of an electric field is given by:\n$$u_E = \\frac{1}{2} \\varepsilon_0 E^2$$\n\nTherefore, the dimension of $\\varepsilon_0 E^2$ is the same as energy density:\n$$[\\varepsilon_0 E^2] = \\frac{[\\text{Energy}]}{[\\text{Volume}]} = \\frac{[M L^2 T^{-2}]}{[L^3]} = [M L^{-1} T^{-2}]$$\n\nNow, let's find the dimension of pressure:\n$$[\\text{Pressure}] = \\frac{[\\text{Force}]}{[\\text{Area}]} = \\frac{[M L T^{-2}]}{[L^2]} = [M L^{-1} T^{-2}]$$\n\nHence, $\\varepsilon_0 E^2$ has the same dimensions as pressure."
+  },
+  {
+    "question_number": 94,
+    "question_type": "mcq",
+    "question_text": "If velocity $v$, force $F$ and acceleration $a$ are taken as fundamental units, then unit of angular momentum is given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$F^{-1} v^2 a^3$",
+      "$F^1 v^3 a^{-1}$",
+      "$F v^3 a^{-2}$",
+      "$F^{-2} v^3 a^{-2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let angular momentum $J \\propto F^x v^y a^z$.\nDimensions of the quantities are:\n- $[J] = [M L^2 T^{-1}]$\n- $[F] = [M L T^{-2}]$\n- $[v] = [L T^{-1}]$\n- $[a] = [L T^{-2}]$\n\nEquating dimensions:\n$$[M L^2 T^{-1}] = [M L T^{-2}]^x [L T^{-1}]^y [L T^{-2}]^z = [M^x L^{x+y+z} T^{-2x-y-2z}]$$\n\nEquating powers of $M, L, T$:\n1. $x = 1$\n2. $x + y + z = 2 \\implies 1 + y + z = 2 \\implies y + z = 1$\n3. $-2x - y - 2z = -1 \\implies -2(1) - (y + 2z) = -1 \\implies y + 2z = -1$\n\nSubtracting the two equations:\n$$(y + 2z) - (y + z) = -1 - 1 \\implies z = -2$$\n\nSubstituting $z = -2$ into $y + z = 1$:\n$$y - 2 = 1 \\implies y = 3$$\n\nThus, $[J] = F^1 v^3 a^{-2} = F v^3 a^{-2}$."
+  },
+  {
+    "question_number": 95,
+    "question_type": "mcq",
+    "question_text": "Time period of a liquid drop is given by $T = k d^x r^y \\sigma^z$, where $d$ is density of liquid, $r$ is radius of liquid drop and $\\sigma$ is surface tension of liquid, then the values of $x, y$ and $z$ are ($k$ is dimensionless constant)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{2}, \\frac{3}{2}, -\\frac{1}{2}$",
+      "$\\frac{1}{2}, \\frac{3}{2}, \\frac{1}{2}$",
+      "$-\\frac{1}{2}, \\frac{3}{2}, \\frac{1}{2}$",
+      "$\\frac{3}{2}, -1, \\frac{1}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the formula:\n$$T = k d^x r^y \\sigma^z$$\n\nDimensions of the quantities are:\n- Time period $[T] = [M^0 L^0 T^1]$\n- Density $[d] = [M L^{-3}]$\n- Radius $[r] = [L]$\n- Surface tension $[\\sigma] = \\frac{[\\text{Force}]}{[\\text{Length}]} = [M T^{-2}]$\n\nEquating dimensions on both sides:\n$$[M^0 L^0 T^1] = [M L^{-3}]^x [L]^y [M T^{-2}]^z = [M^{x+z} L^{-3x+y} T^{-2z}]$$\n\nComparing exponents:\n1. For $T$: $-2z = 1 \\implies z = -\\frac{1}{2}$\n2. For $M$: $x + z = 0 \\implies x = -z = \\frac{1}{2}$\n3. For $L$: $-3x + y = 0 \\implies y = 3x = 3\\left(\\frac{1}{2}\\right) = \\frac{3}{2}$\n\nTherefore, $x = \\frac{1}{2}, y = \\frac{3}{2}, z = -\\frac{1}{2}$."
+  },
+  {
+    "question_number": 96,
+    "question_type": "mcq",
+    "question_text": "The mass of a box is $2.3\\text{ kg}$. Two wooden balls of masses $120\\text{ g}$ and $150\\text{ g}$ are added in the box. The total mass of the box upto correct significant figures is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2.3\\text{ kg}$",
+      "$2.5\\text{ kg}$",
+      "$2.6\\text{ kg}$",
+      "$2.57\\text{ kg}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Mass of the box $m_1 = 2.3\\text{ kg}$\nMass of first ball $m_2 = 120\\text{ g} = 0.12\\text{ kg}$\nMass of second ball $m_3 = 150\\text{ g} = 0.15\\text{ kg}$\n\nTotal mass:\n$$m = m_1 + m_2 + m_3 = 2.3 + 0.12 + 0.15 = 2.57\\text{ kg}$$\n\nAccording to the rules of addition of significant figures, the final result should have the same number of decimal places as the least precise measurement in the addition.\nHere, $2.3\\text{ kg}$ has only one decimal place.\nRounding off $2.57\\text{ kg}$ to one decimal place gives $2.6\\text{ kg}$."
+  },
+  {
+    "question_number": 97,
+    "question_type": "mcq",
+    "question_text": "What is value of $(9.99 + 0.0099)\\text{ cm}$, taking significant figures into account?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$10.0\\text{ cm}$",
+      "$10.00\\text{ cm}$",
+      "$10.0000\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Significant Figures",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Carrying out the addition:\n$$9.99 + 0.0099 = 9.9999\\text{ cm}$$\n\nIn addition, the result must retain only as many decimal places as are present in the number with the least number of decimal places.\nHere, $9.99$ has $2$ decimal places, whereas $0.0099$ has $4$ decimal places.\nRounding off $9.9999$ to $2$ decimal places:\n- The digit at the third decimal place is $9$ ($> 5$), so the preceding digit $9$ is rounded up by $1$, leading to $10.00\\text{ cm}$."
+  },
+  {
+    "question_number": 98,
+    "question_type": "mcq",
+    "question_text": "Dimensional formula of entropy is same as that of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Thermal capacity",
+      "Specific heat",
+      "Gas constant",
+      "Gravitational constant"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Entropy is defined as:\n$$S = \\frac{\\Delta Q}{T}$$\n$$[S] = \\frac{[\\text{Heat energy}]}{[\\text{Temperature}]} = \\frac{[M L^2 T^{-2}]}{[K]} = [M L^2 T^{-2} K^{-1}]$$\n\nThermal capacity (heat capacity) is given by:\n$$C = \\frac{\\Delta Q}{\\Delta T}$$\n$$[C] = \\frac{[M L^2 T^{-2}]}{[K]} = [M L^2 T^{-2} K^{-1}]$$\n\nThus, entropy has the same dimensional formula as thermal capacity."
+  },
+  {
+    "question_number": 99,
+    "question_type": "mcq",
+    "question_text": "If $\\alpha$, $\\beta$ and $\\gamma$ are physical quantities having different dimensions, which of the following combination(s) may be a meaningful quantity?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\alpha\\beta - \\gamma^2}{\\beta}$",
+      "$\\alpha\\gamma - \\beta$",
+      "$\\frac{\\alpha - \\beta}{\\gamma}$",
+      "Both (1) & (2)"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the principle of homogeneity of dimensions, only quantities having the same dimensions can be added or subtracted.\n\n- In (3): $\\alpha - \\beta$ requires $[\\alpha] = [\\beta]$, but it is given that $\\alpha, \\beta, \\gamma$ have different dimensions. Hence, this combination cannot be meaningful.\n- In (1): $\\alpha\\beta - \\gamma^2$ is meaningful if $[\\alpha\\beta] = [\\gamma^2]$. Since $\\alpha, \\beta, \\gamma$ have different dimensions, their product $[\\alpha][\\beta]$ can equal $[\\gamma]^2$. Thus, (1) may be meaningful.\n- In (2): $\\alpha\\gamma - \\beta$ is meaningful if $[\\alpha\\gamma] = [\\beta]$. Since $\\alpha$ and $\\gamma$ have different dimensions, the product $[\\alpha][\\gamma]$ can have the same dimension as $[\\beta]$. Thus, (2) may be meaningful.\n\nTherefore, both (1) and (2) may represent meaningful physical quantities."
+  },
+  {
+    "question_number": 100,
+    "question_type": "mcq",
+    "question_text": "In an operation $R = A \\cdot B^{-2}$, maximum error in $A$ is $a$ and that in $B$ is $b$. The maximum error in $R$ will be (where $\\Delta R$ is maximum error in $R$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\Delta R = \\left[\\frac{a}{A} + \\frac{2b}{B}\\right] R$",
+      "$\\Delta R = \\left[\\frac{a}{A} - \\frac{2b}{B}\\right] R$",
+      "$\\Delta R = \\left[\\frac{a}{A} - \\frac{b}{B}\\right] R$",
+      "$\\Delta R = \\left[\\frac{a}{A} + \\frac{b}{B}\\right] R$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Errors in Measurement",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the relationship:\n$$R = A B^{-2} = \\frac{A}{B^2}$$\n\nTaking natural logarithm on both sides:\n$$\\ln R = \\ln A - 2\\ln B$$\n\nDifferentiating to find the maximum fractional error:\n$$\\frac{\\Delta R}{R} = \\frac{\\Delta A}{A} + 2\\frac{\\Delta B}{B}$$\n(Errors always add up to find the maximum possible error).\n\nGiven $\\Delta A = a$ and $\\Delta B = b$:\n$$\\frac{\\Delta R}{R} = \\frac{a}{A} + \\frac{2b}{B}$$\n$$\\implies \\Delta R = \\left[\\frac{a}{A} + \\frac{2b}{B}\\right] R$$"
+  },
+  {
+    "question_number": 101,
+    "question_type": "mcq",
+    "question_text": "If $B$ represents magnetic field and $\\mu_0$ represents permeability of free space, then $\\frac{B^2}{2\\mu_0}$ has the dimensions of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$[M^1 L^{-1} T^{-2}]$",
+      "$[M^1 L^2 T^{-2}]$",
+      "$[M^1 L^0 T^{-2}]$",
+      "$[M^1 L^2 T^{-1}]$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Dimensional Analysis",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The quantity $\\frac{B^2}{2\\mu_0}$ represents the magnetic energy density, which is defined as the magnetic energy stored per unit volume in a magnetic field.\n\n$$\\left[\\frac{B^2}{2\\mu_0}\\right] = \\frac{[\\text{Energy}]}{[\\text{Volume}]} = \\frac{[M L^2 T^{-2}]}{[L^3]} = [M^1 L^{-1} T^{-2}]$$"
+  }
+]
