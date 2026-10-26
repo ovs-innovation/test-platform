@@ -59,7 +59,28 @@ import {
   removeStudentFromBatch,
   getBatchTestSeries,
   getBatchPerformance,
+  listInstitutionCustomTests,
+  createInstitutionCustomTest,
+  getInstitutionCustomTest,
+  updateInstitutionCustomTest,
+  deleteInstitutionCustomTest,
+  assignInstitutionCustomTest,
+  uploadQuestionPaperFile,
+  updateInstitutionCustomTestQuestion,
+  deleteInstitutionCustomTestQuestion,
+  uploadCustomTestDiagram,
 } from '../controllers/institutionDashboardController.js';
+import { pdfUploadMiddleware } from '../middleware/pdfUpload.js';
+import multer from 'multer';
+
+const diagramUpload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 20 * 1024 * 1024 },
+}).fields([
+  { name: 'file', maxCount: 1 },
+  { name: 'image', maxCount: 1 },
+  { name: 'diagram', maxCount: 1 },
+]);
 
 const router = Router();
 
@@ -104,6 +125,18 @@ router.get('/:id/batches/:batch_id/performance', getBatchPerformance);
 router.get('/:id/test-series', getAvailableTestSeries);
 router.get('/:id/available-tests', getAvailablePackageTests);
 router.post('/:id/tests/:test_id/assign', assignTestSeries);
+
+// 6b. Institution Custom Tests & Question Paper Upload
+router.get('/:id/custom-tests', listInstitutionCustomTests);
+router.post('/:id/custom-tests', createInstitutionCustomTest);
+router.post('/:id/custom-tests/upload-paper', pdfUploadMiddleware, uploadQuestionPaperFile);
+router.get('/:id/custom-tests/:test_id', getInstitutionCustomTest);
+router.put('/:id/custom-tests/:test_id', updateInstitutionCustomTest);
+router.delete('/:id/custom-tests/:test_id', deleteInstitutionCustomTest);
+router.post('/:id/custom-tests/:test_id/assign', assignInstitutionCustomTest);
+router.put('/:id/custom-tests/:test_id/questions/:question_id', updateInstitutionCustomTestQuestion);
+router.delete('/:id/custom-tests/:test_id/questions/:question_id', deleteInstitutionCustomTestQuestion);
+router.post('/:id/custom-tests/:test_id/questions/upload-diagram', diagramUpload, uploadCustomTestDiagram);
 
 // 7. eBooks Assignment, Creation & Deletion
 router.get('/:id/available-ebooks', getAvailableEbooks);

@@ -11,6 +11,7 @@ const FILTERS = [
   { id: 'all', label: 'All series' },
   { id: 'neet', label: 'NEET' },
   { id: 'jee', label: 'JEE' },
+  { id: 'foundation', label: 'Foundation' },
   { id: 'free', label: 'Free' },
   { id: 'featured', label: 'Featured' },
 ];
@@ -22,9 +23,23 @@ export const CLASS_FILTERS = [
   { id: '11', label: '11 + 12' },
 ];
 
+export const FOUNDATION_CLASS_FILTERS = [
+  { id: 'all', label: 'All Foundation' },
+  { id: '10', label: 'Class 10' },
+  { id: '9', label: 'Class 9' },
+  { id: '8', label: 'Class 8' },
+  { id: '7', label: 'Class 7' },
+  { id: '6', label: 'Class 6' },
+];
+
 export function normalizeClass(c) {
   if (!c) return 'all';
   const lower = c.toLowerCase().trim();
+  if (['6', '7', '8', '9', '10'].includes(lower)) return lower;
+  if (/^(?:class[- ]?)?([6-9]|10)$/i.test(lower)) {
+    const match = lower.match(/(?:class[- ]?)?([6-9]|10)/i);
+    if (match) return match[1];
+  }
   if (
     lower === '11' ||
     lower === 'class-11' ||
@@ -55,27 +70,39 @@ export function normalizeClass(c) {
 export function matchesClass(series, targetClass) {
   const norm = normalizeClass(targetClass);
   if (norm === 'all') return true;
-  return getSeriesClass(series) === norm;
+  const sClass = getSeriesClass(series);
+  if (sClass === norm) return true;
+  const text = `${series.target_class || ''} ${series.title || ''} ${series.slug || ''}`.toLowerCase();
+  if (norm >= '6' && norm <= '10') {
+    return new RegExp(`\\b(class\\s*${norm}|${norm}th|class-${norm})\\b`, 'i').test(text);
+  }
+  return false;
 }
 
 export function getSeriesSortScore(s) {
   const text = `${s.exam_type || ''} ${s.title || ''}`;
 
-  // 1. Exam score: NEET first (1), JEE second (2), Others (3)
-  let examScore = 3;
+  // 1. Exam score: NEET first (1), JEE second (2), Foundation (3), Others (4)
+  let examScore = 4;
   if (isNeetUg(text)) examScore = 1;
   else if (/jee/i.test(text)) examScore = 2;
+  else if (/foundation/i.test(text)) examScore = 3;
 
   // 2. Class score: RM / Dropper first (1), Class 12 second (2), Two-Year / Class 11 third (3)
   let classScore = 2;
   if (matchesClass(s, 'passed-12')) classScore = 1;
   else if (matchesClass(s, '12')) classScore = 2;
   else if (matchesClass(s, '11')) classScore = 3;
+  else if (matchesClass(s, '10')) classScore = 4;
+  else if (matchesClass(s, '9')) classScore = 5;
+  else if (matchesClass(s, '8')) classScore = 6;
+  else if (matchesClass(s, '7')) classScore = 7;
+  else if (matchesClass(s, '6')) classScore = 8;
 
   return examScore * 100 + classScore * 10;
 }
 
-const isFoundation = (s) => /foundation/i.test(`${s.exam_type || ''} ${s.title || ''} ${s.target_class || ''} ${s.program_type || ''}`);
+const isFoundation = (s) => /foundation|class\s*[6-9]|class\s*10/i.test(`${s.exam_type || ''} ${s.title || ''} ${s.target_class || ''} ${s.program_type || ''}`);
 
 export default function TestSeriesCatalog() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -118,7 +145,7 @@ export default function TestSeriesCatalog() {
   const fetchSeries = () => {
     publicService.testSeries()
       .then((d) => {
-        const activeSeries = (d.test_series || []).filter((s) => !isFoundation(s));
+        const activeSeries = d.test_series || [];
         setList(activeSeries);
         setState('done');
       })
@@ -180,6 +207,7 @@ export default function TestSeriesCatalog() {
 
       if (filter === 'jee') return /jee/i.test(text);
       if (filter === 'neet') return isNeetUg(text);
+      if (filter === 'foundation') return isFoundation(s);
       if (filter === 'featured') return Boolean(s.is_featured);
       return true;
     });
@@ -201,6 +229,7 @@ export default function TestSeriesCatalog() {
       free: 0,
       jee: 0,
       neet: 0,
+      foundation: 0,
       featured: 0,
     };
     list.forEach((s) => {
@@ -217,6 +246,7 @@ export default function TestSeriesCatalog() {
         counts.all++;
         if (/jee/i.test(text)) counts.jee++;
         if (isNeetUg(text)) counts.neet++;
+        if (isFoundation(s)) counts.foundation++;
       }
       if (s.is_featured) counts.featured++;
     });
@@ -229,6 +259,11 @@ export default function TestSeriesCatalog() {
       '11': 0,
       '12': 0,
       'passed-12': 0,
+      '10': 0,
+      '9': 0,
+      '8': 0,
+      '7': 0,
+      '6': 0,
     };
     list.forEach((s) => {
       const text = `${s.exam_type || ''} ${s.title || ''}`;
@@ -240,6 +275,7 @@ export default function TestSeriesCatalog() {
       else if (isDiagnostic) matchesExam = false;
       else if (filter === 'jee') matchesExam = /jee/i.test(text);
       else if (filter === 'neet') matchesExam = isNeetUg(text);
+      else if (filter === 'foundation') matchesExam = isFoundation(s);
       else if (filter === 'featured') matchesExam = Boolean(s.is_featured);
 
       if (!matchesExam) return;
@@ -248,6 +284,11 @@ export default function TestSeriesCatalog() {
       if (matchesClass(s, '11')) counts['11']++;
       if (matchesClass(s, '12')) counts['12']++;
       if (matchesClass(s, 'passed-12')) counts['passed-12']++;
+      if (matchesClass(s, '10')) counts['10']++;
+      if (matchesClass(s, '9')) counts['9']++;
+      if (matchesClass(s, '8')) counts['8']++;
+      if (matchesClass(s, '7')) counts['7']++;
+      if (matchesClass(s, '6')) counts['6']++;
     });
     return counts;
   }, [list, filter]);
@@ -262,8 +303,11 @@ export default function TestSeriesCatalog() {
 
   const loading = state === 'loading';
   const filterLabel = FILTERS.find((f) => f.id === filter)?.label || 'All';
-  const classObj = CLASS_FILTERS.find((c) => c.id === selectedClass);
-  const classLabel = classObj?.label || 'All Classes';
+  const isFoundationTab = filter === 'foundation' || ['6', '7', '8', '9', '10'].includes(selectedClass);
+  const activeClassList = isFoundationTab ? FOUNDATION_CLASS_FILTERS : CLASS_FILTERS;
+  const allClassFilters = [...CLASS_FILTERS, ...FOUNDATION_CLASS_FILTERS];
+  const classObj = allClassFilters.find((c) => c.id === selectedClass);
+  const classLabel = classObj?.label || (selectedClass !== 'all' ? `Class ${selectedClass}` : 'All Classes');
 
   let dynamicTitle = 'All test series';
   if (filter !== 'all' && selectedClass !== 'all') {
@@ -314,12 +358,12 @@ export default function TestSeriesCatalog() {
             })}
           </div>
 
-          {/* 2. Target Class Selector (Class 11, Class 12, Dropper/RM) */}
+          {/* 2. Target Class Selector (Class 11, Class 12, Dropper/RM OR Foundation Classes) */}
           <div className="mt-3 pt-3 border-t border-slate-200/80 flex flex-wrap items-center justify-start sm:justify-center gap-1.5 sm:gap-2">
             <span className="text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 mr-1">
               Class:
             </span>
-            {CLASS_FILTERS.map((c) => {
+            {activeClassList.map((c) => {
               const isActive = selectedClass === c.id;
               const count = classCounts[c.id] ?? 0;
               return (

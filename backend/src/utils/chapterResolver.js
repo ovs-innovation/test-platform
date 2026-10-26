@@ -766,7 +766,7 @@ const CHAPTER_RULES = [
     ],
   },
   {
-    chapter: 'Work, Energy & Power',
+    chapter: 'Work, Power and Energy',
     subjects: ['physics'],
     patterns: [
       /\bwork[,\s]+energy\b/i,

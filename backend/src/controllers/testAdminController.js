@@ -196,6 +196,8 @@ export const listTests = asyncHandler(async (req, res) => {
   let whereClauses = [
     'COALESCE(t.is_deleted, FALSE) = FALSE',
     'COALESCE(t.is_personal, FALSE) = FALSE',
+    'COALESCE(t.is_institution_custom, FALSE) = FALSE',
+    't.institution_id IS NULL',
     "COALESCE(t.type, 'regular') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')",
     "t.test_name NOT ILIKE '%Weak Topic%'",
     "t.test_name NOT ILIKE '%Mistake Book%'",
@@ -394,6 +396,8 @@ export const getTestDetails = asyncHandler(async (req, res) => {
     WHERE t.id = $1 
       AND COALESCE(t.is_deleted, FALSE) = FALSE
       AND COALESCE(t.is_personal, FALSE) = FALSE
+      AND COALESCE(t.is_institution_custom, FALSE) = FALSE
+      AND t.institution_id IS NULL
       AND COALESCE(t.type, 'regular') NOT IN ('ai_weak_topic', 'mistake_book', 'personal', 'student_practice')
   `, [id]);
   if (testRes.rowCount === 0) throw ApiError.notFound('Test not found');

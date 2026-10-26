@@ -41,6 +41,7 @@ const TEST_TYPES = ['AIETS', 'Unit Test', 'Part Test', 'Cumulative Test', 'Full 
 export const isPersonalStudentTest = (t) => {
   if (!t) return false;
   if (t.is_personal) return true;
+  if (t.is_institution_custom || t.institution_id) return true;
   if (t.type && ['ai_weak_topic', 'mistake_book', 'personal', 'student_practice'].includes(t.type)) return true;
   if (t.test_type && ['mistake_book', 'ai_weak_topic', 'personal', 'student_practice'].includes(t.test_type)) return true;
   const name = (t.test_name || t.title || '').toLowerCase();

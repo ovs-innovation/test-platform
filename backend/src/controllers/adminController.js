@@ -14,6 +14,8 @@ export const getStats = asyncHandler(async (_req, res) => {
       SELECT COUNT(*)::int AS c 
       FROM assessments 
       WHERE COALESCE(is_personal, FALSE) = FALSE 
+        AND COALESCE(is_institution_custom, FALSE) = FALSE
+        AND institution_id IS NULL
         AND COALESCE(test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice') 
         AND (created_by IS NULL OR created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
     `),
@@ -47,6 +49,8 @@ export const getStats = asyncHandler(async (_req, res) => {
     FROM assessments 
     WHERE is_published 
       AND COALESCE(is_personal, FALSE) = FALSE 
+      AND COALESCE(is_institution_custom, FALSE) = FALSE
+      AND institution_id IS NULL
       AND COALESCE(test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice') 
       AND (created_by IS NULL OR created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
   `);

@@ -10,6 +10,7 @@ import { uploadUnitsMeasurementsQuestions } from '../../scripts/import_units_mea
 import { uploadMotionStraightLineQuestions } from '../../scripts/import_motion_straight_line_physics.mjs';
 import { uploadMotionInPlaneQuestions } from '../../scripts/import_motion_in_plane_physics.mjs';
 import { uploadMotionInPlanePart2Questions } from '../../scripts/import_motion_in_plane_part2.mjs';
+import { uploadLawsOfMotionQuestions } from '../../scripts/import_laws_of_motion.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -198,6 +199,18 @@ const run = async () => {
     } catch (planeErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] motion in a plane sync warning:', planeErr.message);
+    }
+
+    try {
+      const lawsCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND (lower(chapter) = 'laws of motion' OR chapter_id = 25)");
+      if (lawsCheck.rows[0].count < 76) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Laws of Motion questions count is ${lawsCheck.rows[0].count} (<76). Uploading 76 Physics questions...`);
+        await uploadLawsOfMotionQuestions(pool);
+      }
+    } catch (lawsErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Laws of Motion sync warning:', lawsErr.message);
     }
 
     // eslint-disable-next-line no-console

@@ -809,6 +809,17 @@ export const institutionDashboardService = {
   availableTestSeries: (instId) => api.get(`/institution/${instId}/test-series`).then((r) => r.data),
   availableTests: (instId) => api.get(`/institution/${instId}/available-tests`).then((r) => r.data),
   assignTest: (instId, testId, data) => api.post(`/institution/${instId}/tests/${testId}/assign`, data).then((r) => r.data),
+  customTests: (instId) => api.get(`/institution/${instId}/custom-tests`).then((r) => r.data),
+  createCustomTest: (instId, data) => api.post(`/institution/${instId}/custom-tests`, data).then((r) => r.data),
+  getCustomTest: (instId, testId) => api.get(`/institution/${instId}/custom-tests/${testId}`).then((r) => r.data),
+  updateCustomTest: (instId, testId, data) => api.put(`/institution/${instId}/custom-tests/${testId}`, data).then((r) => r.data),
+  deleteCustomTest: (instId, testId) => api.delete(`/institution/${instId}/custom-tests/${testId}`).then((r) => r.data),
+  assignCustomTest: (instId, testId, data) => api.post(`/institution/${instId}/custom-tests/${testId}/assign`, data).then((r) => r.data),
+  uploadQuestionPaper: (instId, formData) => api.post(`/institution/${instId}/custom-tests/upload-paper`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then((r) => r.data),
+  updateCustomTestQuestion: (instId, testId, questionId, data) => api.put(`/institution/${instId}/custom-tests/${testId}/questions/${questionId}`, data).then((r) => r.data),
+  deleteCustomTestQuestion: (instId, testId, questionId) => api.delete(`/institution/${instId}/custom-tests/${testId}/questions/${questionId}`).then((r) => r.data),
+  uploadCustomTestDiagram: (instId, testId, formData) => api.post(`/institution/${instId}/custom-tests/${testId}/questions/upload-diagram`, formData, { headers: { 'Content-Type': 'multipart/form-data' } }).then((r) => r.data),
+
 
   availableEbooks: (instId) => api.get(`/institution/${instId}/available-ebooks`).then((r) => r.data),
   createEbook: (instId, data) => api.post(`/institution/${instId}/ebooks`, data).then((r) => r.data),

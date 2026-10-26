@@ -189,3 +189,6 @@ export function questionBankPdfUpload(req, res, next) {
     next();
   });
 }
+
+export const pdfUploadMiddleware = questionBankPdfUpload;
+

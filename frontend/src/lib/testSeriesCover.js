@@ -189,6 +189,13 @@ export function getSeriesClass(series) {
   const programType = (series.program_type || '').toLowerCase();
   const targetYear = String(series.target_year || '').trim();
 
+  // Foundation classes 6 through 10 check
+  for (let cl = 6; cl <= 10; cl++) {
+    if (new RegExp(`\\b(class\\s*${cl}|${cl}th|class-${cl})\\b`, 'i').test(`${title} ${targetClass} ${slug}`)) {
+      return String(cl);
+    }
+  }
+
   const isRepeaterTitleOrSlug = /\b(repeater|repeaters|rm|dropper|droppers)\b/i.test(`${title} ${slug}`);
   const isClass12Explicit = /\b(class\s*12|12th|class\s*xii)\b/i.test(title) && !isRepeaterTitleOrSlug;
   const isTwoYearExplicit = (/two[- ]?year|2[- ]?year|11\s*(?:&|and|\+)\s*12/i.test(title) || targetYear === '2028') && !isRepeaterTitleOrSlug;
@@ -222,10 +229,11 @@ export function getSeriesClass(series) {
 }
 
 /**
- * Returns user-facing class badge label ('11 + 12', 'Class 12', or 'Dropper / 12 Passed')
+ * Returns user-facing class badge label ('11 + 12', 'Class 12', 'Class 10', etc.)
  */
 export function getSeriesClassBadge(series) {
   const c = getSeriesClass(series);
+  if (c >= '6' && c <= '10') return `Class ${c}`;
   if (c === '11') return '11 + 12';
   if (c === 'passed-12') return 'Dropper / 12 Passed';
   return 'Class 12';

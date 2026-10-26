@@ -9,6 +9,11 @@ import { processAndUploadImage } from '../services/cloudinaryService.js';
 import pdfParse from 'pdf-parse';
 import { createAdminNotification } from '../utils/createAdminNotification.js';
 import { invalidateUserAuthCache } from '../middleware/auth.js';
+import { fileURLToPath } from 'url';
+import { parseInstitutionPdf } from '../utils/institutionPdfParser.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 
 /**
@@ -2640,8 +2645,899 @@ export const getAvailableTestSeries = asyncHandler(async (req, res) => {
       allPackages.push(s);
     }
   }
-
   res.json({ success: true, count: allPackages.length, packages: allPackages });
 });
+
+/**
+ * =========================================================================
+ * 13. INSTITUTION CUSTOM TESTS & MANUAL QUESTION PAPER UPLOAD
+ * =========================================================================
+ */
+
+/**
+ * GET /api/institution/:id/custom-tests
+ * List all custom tests uploaded/created by this institution.
+ */
+export const listInstitutionCustomTests = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+
+  const testsRes = await query(
+    `SELECT 
+       a.id,
+       a.title,
+       COALESCE(a.description, a.syllabus_text, '') AS description,
+       COALESCE(a.test_type, 'Custom Test') AS test_type,
+       COALESCE(a.duration_minutes, 180) AS duration_minutes,
+       COALESCE(a.passing_marks, 0) AS passing_marks,
+       COALESCE(a.negative_marking, TRUE) AS negative_marking,
+       COALESCE(a.negative_marks_per_wrong, 1) AS negative_marks_per_wrong,
+       a.question_paper_url,
+       a.solution_pdf_url,
+       a.is_published,
+       a.created_at,
+       a.available_from,
+       a.available_until,
+       COALESCE(q_stat.question_count, 0)::int AS question_count,
+       COALESCE(q_stat.total_marks, 0)::int AS total_marks,
+       COALESCE(att_stat.total_attempts, 0)::int AS total_attempts,
+       COALESCE(att_stat.completed_attempts, 0)::int AS completed_attempts,
+       ROUND(COALESCE(att_stat.avg_score, 0)::numeric, 1) AS avg_score
+     FROM assessments a
+     LEFT JOIN (
+       SELECT assessment_id, COUNT(*) AS question_count, SUM(marks) AS total_marks
+       FROM questions
+       GROUP BY assessment_id
+     ) q_stat ON q_stat.assessment_id = a.id
+     LEFT JOIN (
+       SELECT 
+         assessment_id, 
+         COUNT(*) AS total_attempts,
+         COUNT(CASE WHEN att.status::text IN ('submitted', 'auto_submitted', 'completed', 'evaluated') THEN 1 END) AS completed_attempts,
+         AVG(s.marks_obtained) AS avg_score
+       FROM attempts att
+       LEFT JOIN scores s ON s.attempt_id = att.id
+       GROUP BY assessment_id
+     ) att_stat ON att_stat.assessment_id = a.id
+     WHERE a.institution_id = $1 OR (a.is_institution_custom = TRUE AND a.institution_id = $1)
+     ORDER BY a.id DESC`,
+    [instId]
+  );
+
+  const testIds = testsRes.rows.map((t) => t.id);
+  const assignmentsMap = {};
+
+  if (testIds.length > 0) {
+    const assignRes = await query(
+      `SELECT 
+         ta.test_id,
+         ta.assigned_to_type,
+         ta.assigned_to_id,
+         b.batch_name,
+         u.name AS student_name
+       FROM test_assignments ta
+       LEFT JOIN batches b ON ta.assigned_to_type = 'batch' AND b.id = ta.assigned_to_id
+       LEFT JOIN users u ON ta.assigned_to_type IN ('student', 'individual') AND u.id = ta.assigned_to_id
+       WHERE ta.test_id = ANY($1::int[])`,
+      [testIds]
+    );
+
+    for (const row of assignRes.rows) {
+      if (!assignmentsMap[row.test_id]) assignmentsMap[row.test_id] = [];
+      assignmentsMap[row.test_id].push(row);
+    }
+  }
+
+  const enrichedTests = testsRes.rows.map((t) => ({
+    ...t,
+    assignments: assignmentsMap[t.id] || [],
+  }));
+
+  res.json({ success: true, count: enrichedTests.length, tests: enrichedTests });
+});
+
+/**
+ * POST /api/institution/:id/custom-tests
+ * Create a new custom test / question paper and optionally assign to batches.
+ */
+export const createInstitutionCustomTest = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+
+  const {
+    title,
+    test_type = 'Custom Test',
+    target_exam = 'NEET',
+    syllabus = '',
+    duration_minutes = 180,
+    passing_marks = 0,
+    negative_marking = true,
+    negative_marks_per_wrong = 1,
+    question_paper_url = '',
+    solution_pdf_url = '',
+    questions = [],
+    assign_to = 'none',
+    batch_ids = [],
+    student_ids = [],
+  } = req.body;
+
+  if (!title || !title.trim()) {
+    throw ApiError.badRequest('Test title is required');
+  }
+
+  const totalQuestions = Array.isArray(questions) ? questions.length : 0;
+  let computedTotalMarks = 0;
+  if (totalQuestions > 0) {
+    computedTotalMarks = questions.reduce((sum, q) => sum + (Number(q.marks) || 4), 0);
+  } else {
+    computedTotalMarks = 100;
+  }
+
+  const result = await withTransaction(async (client) => {
+    // Check if req.user.id exists in users table to satisfy assessments_created_by_fkey
+    let validCreatedBy = null;
+    if (req.user?.id && !isNaN(Number(req.user.id))) {
+      const userCheck = await client.query('SELECT id FROM users WHERE id = $1', [Number(req.user.id)]);
+      if (userCheck.rowCount > 0) validCreatedBy = userCheck.rows[0].id;
+    }
+
+    // 1. Insert into assessments
+    const aRes = await client.query(
+      `INSERT INTO assessments (
+         title, description, instructions, duration_minutes, passing_marks,
+         max_violations, result_visible, is_published, created_by,
+         negative_marking, negative_marks_per_wrong, test_type,
+         syllabus_text, question_paper_url, solution_pdf_url,
+         institution_id, is_institution_custom
+       ) VALUES ($1, $2, $3, $4, $5, 5, true, true, $6, $7, $8, $9, $10, $11, $12, $13, true)
+       RETURNING *`,
+      [
+        title.trim(),
+        syllabus || 'Authentic assessment created by institution admin.',
+        `1. Proctored online test. Maintain absolute academic integrity.\n2. Marking: +${questions[0]?.marks || 4} for correct, -${negative_marking ? negative_marks_per_wrong : 0} for incorrect.\n3. The test will auto-submit when the countdown timer expires.`,
+        Number(duration_minutes) || 180,
+        Number(passing_marks) || 0,
+        validCreatedBy,
+        Boolean(negative_marking),
+        Number(negative_marks_per_wrong) || 1,
+        target_exam || test_type || 'Custom Test',
+        syllabus,
+        question_paper_url || '',
+        solution_pdf_url || '',
+        instId,
+      ]
+    );
+
+    const assessment = aRes.rows[0];
+
+    // 2. Insert or sync into tests
+    await client.query(
+      `INSERT INTO tests (
+         id, test_name, title, test_type, test_date, start_time, end_time,
+         duration_minutes, syllabus, max_marks, is_published,
+         question_paper_url, solution_pdf_url, institution_id, is_institution_custom
+       ) VALUES ($1, $2, $3, $4, NOW()::date, '00:00:00', '23:59:59', $5, $6, $7, true, $8, $9, $10, true)
+       ON CONFLICT (id) DO UPDATE SET
+         test_name = EXCLUDED.test_name,
+         title = EXCLUDED.title,
+         duration_minutes = EXCLUDED.duration_minutes,
+         syllabus = EXCLUDED.syllabus,
+         max_marks = EXCLUDED.max_marks,
+         question_paper_url = EXCLUDED.question_paper_url,
+         solution_pdf_url = EXCLUDED.solution_pdf_url,
+         institution_id = EXCLUDED.institution_id,
+         is_institution_custom = EXCLUDED.is_institution_custom`,
+      [
+        assessment.id,
+        title.trim(),
+        title.trim(),
+        target_exam || test_type || 'Custom Test',
+        Number(duration_minutes) || 180,
+        syllabus,
+        computedTotalMarks,
+        question_paper_url || '',
+        solution_pdf_url || '',
+        instId,
+      ]
+    );
+
+    // 3. Create default section(s)
+    const sRes = await client.query(
+      `INSERT INTO assessment_sections (assessment_id, name, section_type, position)
+       VALUES ($1, 'Main Section', 'technical_mcq', 1)
+       RETURNING id`,
+      [assessment.id]
+    );
+    const defaultSectionId = sRes.rows[0].id;
+
+    // 4. Insert questions if provided
+    if (Array.isArray(questions) && questions.length > 0) {
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        const qText = q.question_text || `Question ${i + 1}`;
+        let rawOptions = [];
+        if (Array.isArray(q.options) && q.options.length > 0) {
+          rawOptions = q.options;
+        } else if (q.option_a || q.option_b || q.option_c || q.option_d) {
+          rawOptions = [
+            q.option_a || 'Option A',
+            q.option_b || 'Option B',
+            q.option_c || 'Option C',
+            q.option_d || 'Option D',
+          ];
+        } else {
+          rawOptions = ['Option A', 'Option B', 'Option C', 'Option D'];
+        }
+
+        let correctIdx = 0;
+        if (typeof q.correct_index === 'number' && q.correct_index >= 0) {
+          correctIdx = q.correct_index;
+        } else if (q.correct_answer !== undefined && q.correct_answer !== null) {
+          const letter = String(q.correct_answer).toUpperCase().trim();
+          const map = { A: 0, B: 1, C: 2, D: 3, '1': 0, '2': 1, '3': 2, '4': 3 };
+          correctIdx = map[letter] ?? 0;
+        }
+        const marks = Number(q.marks) || 4;
+        const solution = q.solution || q.explanation || '';
+        const subject = q.subject || target_exam || 'General';
+        const imageUrl = q.image_url || (Array.isArray(q.media) && q.media[0]?.url) || null;
+        const media = q.media || (imageUrl ? [{ type: 'diagram', url: imageUrl, id: `diag_${i + 1}` }] : []);
+
+        await client.query(
+          `INSERT INTO questions (
+             assessment_id, section_id, question_text, question_type,
+             options, correct_index, marks, position, solution, subject,
+             image_url, media
+           ) VALUES ($1, $2, $3, 'single_choice', $4, $5, $6, $7, $8, $9, $10, $11)`,
+          [
+            assessment.id,
+            defaultSectionId,
+            qText,
+            JSON.stringify(rawOptions),
+            correctIdx,
+            marks,
+            i + 1,
+            solution,
+            subject,
+            imageUrl,
+            JSON.stringify(media),
+          ]
+        );
+      }
+    }
+
+    // 5. Handle assignments
+    const assignedBatches = [];
+    const assignedStudents = [];
+
+    if (assign_to === 'all') {
+      await client.query(
+        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+         VALUES ($1, 'institution', $2)`,
+        [assessment.id, instId]
+      );
+    } else if (assign_to === 'batch' && Array.isArray(batch_ids) && batch_ids.length > 0) {
+      for (const bId of batch_ids) {
+        const bNum = Number(bId);
+        if (bNum > 0) {
+          const bCheck = await client.query(
+            'SELECT id, batch_name FROM batches WHERE id = $1 AND institution_id = $2',
+            [bNum, instId]
+          );
+          if (bCheck.rowCount > 0) {
+            await client.query(
+              `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+               VALUES ($1, 'batch', $2)`,
+              [assessment.id, bNum]
+            );
+            assignedBatches.push(bCheck.rows[0].batch_name);
+          }
+        }
+      }
+    } else if (assign_to === 'student' && Array.isArray(student_ids) && student_ids.length > 0) {
+      for (const sId of student_ids) {
+        const sNum = Number(sId);
+        if (sNum > 0) {
+          const sCheck = await client.query(
+            'SELECT id, name FROM users WHERE id = $1 AND institution_id = $2',
+            [sNum, instId]
+          );
+          if (sCheck.rowCount > 0) {
+            await client.query(
+              `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+               VALUES ($1, 'student', $2)`,
+              [assessment.id, sNum]
+            );
+            assignedStudents.push(sCheck.rows[0].name);
+          }
+        }
+      }
+    }
+
+    // (Notifications executed outside transaction)
+
+    return {
+      assessment_id: assessment.id,
+      title: assessment.title,
+      question_count: totalQuestions,
+      assigned_to: assign_to,
+      assigned_batches: assignedBatches,
+      assigned_students: assignedStudents,
+    };
+  });
+
+  res.status(201).json({
+    success: true,
+    message: 'Custom test created and assigned successfully.',
+    test: result,
+  });
+});
+
+/**
+ * GET /api/institution/:id/custom-tests/:test_id
+ * Get full details of a custom test including questions and attempts.
+ */
+export const getInstitutionCustomTest = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const { test_id } = req.params;
+
+  const aRes = await query(
+    `SELECT a.*, 
+            COALESCE(q_stat.question_count, 0)::int AS question_count,
+            COALESCE(q_stat.total_marks, 0)::int AS total_marks
+     FROM assessments a
+     LEFT JOIN (
+       SELECT assessment_id, COUNT(*) AS question_count, SUM(marks) AS total_marks
+       FROM questions
+       GROUP BY assessment_id
+     ) q_stat ON q_stat.assessment_id = a.id
+     WHERE a.id = $1 AND (a.institution_id = $2 OR $3 = 'admin')`,
+    [Number(test_id), instId, req.user?.role || '']
+  );
+
+  if (aRes.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or not owned by your institution');
+  }
+
+  const assessment = aRes.rows[0];
+
+  const [questionsRes, assignmentsRes, attemptsRes] = await Promise.all([
+    query('SELECT * FROM questions WHERE assessment_id = $1 ORDER BY position ASC, id ASC', [assessment.id]),
+    query(
+      `SELECT ta.*, b.batch_name, u.name AS student_name, u.email AS student_email
+       FROM test_assignments ta
+       LEFT JOIN batches b ON ta.assigned_to_type = 'batch' AND b.id = ta.assigned_to_id
+       LEFT JOIN users u ON ta.assigned_to_type IN ('student', 'individual') AND u.id = ta.assigned_to_id
+       WHERE ta.test_id = $1`,
+      [assessment.id]
+    ),
+    query(
+      `SELECT att.id, att.candidate_id, att.status, att.started_at, att.submitted_at,
+              u.name AS candidate_name, u.email AS candidate_email, u.roll_number,
+              b.batch_name,
+              s.marks_obtained, s.total_marks, s.percentage, s.passed
+       FROM attempts att
+       JOIN users u ON u.id = att.candidate_id
+       LEFT JOIN batches b ON b.id = u.batch_id
+       LEFT JOIN scores s ON s.attempt_id = att.id
+       WHERE att.assessment_id = $1
+       ORDER BY att.id DESC`,
+      [assessment.id]
+    ),
+  ]);
+
+  res.json({
+    success: true,
+    test: {
+      ...assessment,
+      questions: questionsRes.rows,
+      assignments: assignmentsRes.rows,
+      attempts: attemptsRes.rows,
+    },
+  });
+});
+
+/**
+ * PUT /api/institution/:id/custom-tests/:test_id
+ * Update an existing custom test.
+ */
+export const updateInstitutionCustomTest = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const { test_id } = req.params;
+  const testIdNum = Number(test_id);
+
+  const aCheck = await query(
+    'SELECT id FROM assessments WHERE id = $1 AND institution_id = $2',
+    [testIdNum, instId]
+  );
+  if (aCheck.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or unauthorized');
+  }
+
+  const {
+    title,
+    test_type,
+    duration_minutes,
+    passing_marks,
+    negative_marking,
+    negative_marks_per_wrong,
+    syllabus,
+    question_paper_url,
+    solution_pdf_url,
+    questions,
+  } = req.body;
+
+  await withTransaction(async (client) => {
+    // 1. Update assessments
+    await client.query(
+      `UPDATE assessments SET
+         title = COALESCE($1, title),
+         test_type = COALESCE($2, test_type),
+         duration_minutes = COALESCE($3, duration_minutes),
+         passing_marks = COALESCE($4, passing_marks),
+         negative_marking = COALESCE($5, negative_marking),
+         negative_marks_per_wrong = COALESCE($6, negative_marks_per_wrong),
+         syllabus_text = COALESCE($7, syllabus_text),
+         question_paper_url = COALESCE($8, question_paper_url),
+         solution_pdf_url = COALESCE($9, solution_pdf_url),
+         updated_at = NOW()
+       WHERE id = $10 AND institution_id = $11`,
+      [
+        title ? title.trim() : null,
+        test_type || null,
+        duration_minutes ? Number(duration_minutes) : null,
+        passing_marks !== undefined ? Number(passing_marks) : null,
+        negative_marking !== undefined ? Boolean(negative_marking) : null,
+        negative_marks_per_wrong !== undefined ? Number(negative_marks_per_wrong) : null,
+        syllabus !== undefined ? syllabus : null,
+        question_paper_url !== undefined ? question_paper_url : null,
+        solution_pdf_url !== undefined ? solution_pdf_url : null,
+        testIdNum,
+        instId,
+      ]
+    );
+
+    // 2. Sync to tests
+    await client.query(
+      `UPDATE tests SET
+         test_name = COALESCE($1, test_name),
+         title = COALESCE($1, title),
+         duration_minutes = COALESCE($2, duration_minutes),
+         syllabus = COALESCE($3, syllabus),
+         question_paper_url = COALESCE($4, question_paper_url),
+         solution_pdf_url = COALESCE($5, solution_pdf_url),
+         updated_at = NOW()
+       WHERE id = $6 AND institution_id = $7`,
+      [
+        title ? title.trim() : null,
+        duration_minutes ? Number(duration_minutes) : null,
+        syllabus !== undefined ? syllabus : null,
+        question_paper_url !== undefined ? question_paper_url : null,
+        solution_pdf_url !== undefined ? solution_pdf_url : null,
+        testIdNum,
+        instId,
+      ]
+    );
+
+    // 3. Update questions if array provided
+    if (Array.isArray(questions)) {
+      await client.query('DELETE FROM questions WHERE assessment_id = $1', [testIdNum]);
+      const secRes = await client.query('SELECT id FROM assessment_sections WHERE assessment_id = $1 LIMIT 1', [testIdNum]);
+      const sectionId = secRes.rows[0]?.id || null;
+
+      for (let i = 0; i < questions.length; i++) {
+        const q = questions[i];
+        const qText = q.question_text || `Question ${i + 1}`;
+        const rawOptions = Array.isArray(q.options) && q.options.length > 0
+          ? q.options
+          : ['Option A', 'Option B', 'Option C', 'Option D'];
+        const correctIdx = Number(q.correct_index) >= 0 ? Number(q.correct_index) : 0;
+        const marks = Number(q.marks) || 4;
+        const solution = q.solution || q.explanation || '';
+        const subject = q.subject || 'General';
+
+        await client.query(
+          `INSERT INTO questions (
+             assessment_id, section_id, question_text, question_type,
+             options, correct_index, marks, position, solution, subject
+           ) VALUES ($1, $2, $3, 'single_choice', $4, $5, $6, $7, $8, $9)`,
+          [
+            testIdNum,
+            sectionId,
+            qText,
+            JSON.stringify(rawOptions),
+            correctIdx,
+            marks,
+            i + 1,
+            solution,
+            subject,
+          ]
+        );
+      }
+    }
+  });
+
+  res.json({ success: true, message: 'Custom test updated successfully.' });
+});
+
+/**
+ * DELETE /api/institution/:id/custom-tests/:test_id
+ * Delete a custom test and its questions/assignments.
+ */
+export const deleteInstitutionCustomTest = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const { test_id } = req.params;
+  const testIdNum = Number(test_id);
+
+  const aRes = await query(
+    'SELECT id, title FROM assessments WHERE id = $1 AND institution_id = $2',
+    [testIdNum, instId]
+  );
+  if (aRes.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or unauthorized');
+  }
+
+  const testTitle = aRes.rows[0].title;
+
+  await withTransaction(async (client) => {
+    await client.query('DELETE FROM test_assignments WHERE test_id = $1', [testIdNum]);
+    await client.query('DELETE FROM questions WHERE assessment_id = $1', [testIdNum]);
+    await client.query('DELETE FROM assessment_sections WHERE assessment_id = $1', [testIdNum]);
+    await client.query('DELETE FROM tests WHERE id = $1 AND institution_id = $2', [testIdNum, instId]);
+    await client.query('DELETE FROM assessments WHERE id = $1 AND institution_id = $2', [testIdNum, instId]);
+  });
+
+  res.json({ success: true, message: `Custom test "${testTitle}" deleted successfully.` });
+});
+
+/**
+ * POST /api/institution/:id/custom-tests/:test_id/assign
+ * Re-assign or update batches/students assigned to a custom test.
+ */
+export const assignInstitutionCustomTest = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const { test_id } = req.params;
+  const { assign_to, batch_ids = [], student_ids = [] } = req.body;
+  const testIdNum = Number(test_id);
+
+  const aRes = await query(
+    'SELECT id, title FROM assessments WHERE id = $1 AND institution_id = $2',
+    [testIdNum, instId]
+  );
+  if (aRes.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or unauthorized');
+  }
+
+  const testTitle = aRes.rows[0].title;
+
+  await withTransaction(async (client) => {
+    // Clear old assignments for this test
+    await client.query('DELETE FROM test_assignments WHERE test_id = $1', [testIdNum]);
+
+    if (assign_to === 'all') {
+      await client.query(
+        `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+         VALUES ($1, 'institution', $2)`,
+        [testIdNum, instId]
+      );
+    } else if (assign_to === 'batch' && Array.isArray(batch_ids)) {
+      for (const bId of batch_ids) {
+        const bNum = Number(bId);
+        if (bNum > 0) {
+          const bCheck = await client.query('SELECT id FROM batches WHERE id = $1 AND institution_id = $2', [bNum, instId]);
+          if (bCheck.rowCount > 0) {
+            await client.query(
+              `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+               VALUES ($1, 'batch', $2)`,
+              [testIdNum, bNum]
+            );
+          }
+        }
+      }
+    } else if (assign_to === 'student' && Array.isArray(student_ids)) {
+      for (const sId of student_ids) {
+        const sNum = Number(sId);
+        if (sNum > 0) {
+          const sCheck = await client.query('SELECT id FROM users WHERE id = $1 AND institution_id = $2', [sNum, instId]);
+          if (sCheck.rowCount > 0) {
+            await client.query(
+              `INSERT INTO test_assignments (test_id, assigned_to_type, assigned_to_id)
+               VALUES ($1, 'student', $2)`,
+              [testIdNum, sNum]
+            );
+          }
+        }
+      }
+    }
+  });
+
+  res.json({ success: true, message: `"${testTitle}" assignments updated successfully.` });
+});
+
+/**
+ * POST /api/institution/:id/custom-tests/upload-paper
+ * Upload question paper PDF or document to disk/Cloudinary.
+ */
+export const uploadQuestionPaperFile = asyncHandler(async (req, res) => {
+  const file = req.files?.question_paper?.[0] || req.files?.file?.[0] || req.file;
+  if (!file) {
+    throw ApiError.badRequest('No question paper file uploaded.');
+  }
+
+  const destinationDir = path.resolve(__dirname, '../../uploads/question_papers');
+  if (!fs.existsSync(destinationDir)) {
+    fs.mkdirSync(destinationDir, { recursive: true });
+  }
+
+  const cleanFilename = `paper_${Date.now()}_${path.basename(file.originalname).replace(/[^\w.-]/g, '_')}`;
+  const targetPath = path.join(destinationDir, cleanFilename);
+
+  let fileBuffer = null;
+  if (file.path && fs.existsSync(file.path)) {
+    try { fileBuffer = fs.readFileSync(file.path); } catch (_) {}
+    fs.copyFileSync(file.path, targetPath);
+    try { fs.unlinkSync(file.path); } catch (_) {}
+  } else if (file.buffer) {
+    fileBuffer = file.buffer;
+    fs.writeFileSync(targetPath, file.buffer);
+  }
+
+  let publicUrl = `/uploads/question_papers/${cleanFilename}`;
+
+  try {
+    const { v2: cloudinary } = await import('cloudinary');
+    const cloudRes = await cloudinary.uploader.upload(targetPath, {
+      folder: 'edvedum_question_papers',
+      resource_type: 'auto',
+    });
+    if (cloudRes?.secure_url) {
+      publicUrl = cloudRes.secure_url;
+    }
+  } catch (cloudErr) {
+    // eslint-disable-next-line no-console
+    console.warn('[uploadQuestionPaperFile] Cloudinary upload fallback to local URL:', cloudErr.message);
+  }
+
+  // Parse questions locally without any AI calls
+  let parsedResult = { questions: [], answerKey: {}, total: 0 };
+  if (fileBuffer) {
+    try {
+      parsedResult = await parseInstitutionPdf(fileBuffer);
+    } catch (parseErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[uploadQuestionPaperFile] PDF local parsing warning:', parseErr.message);
+    }
+  }
+
+  res.json({
+    success: true,
+    url: publicUrl,
+    filename: file.originalname,
+    extracted_questions: parsedResult.questions || [],
+    total_extracted: parsedResult.total || 0,
+    answer_key_map: parsedResult.answerKey || {},
+    message: parsedResult.total > 0
+      ? `Successfully extracted ${parsedResult.total} questions & options from question paper.`
+      : 'Question paper uploaded successfully.',
+  });
+});
+
+/**
+ * PUT /api/institution/:id/custom-tests/:test_id/questions/:question_id
+ * Update an individual question (text, options, correct index, diagram image, solution, marks).
+ */
+export const updateInstitutionCustomTestQuestion = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const testId = Number(req.params.test_id);
+  const questionId = Number(req.params.question_id);
+
+  // 1. Verify ownership
+  const aRes = await query(
+    `SELECT id FROM assessments WHERE id = $1 AND (institution_id = $2 OR $3 = 'admin')`,
+    [testId, instId, req.user?.role || '']
+  );
+  if (aRes.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or not owned by your institution');
+  }
+
+  // 2. Verify question exists for this assessment
+  const qRes = await query(
+    `SELECT * FROM questions WHERE id = $1 AND assessment_id = $2`,
+    [questionId, testId]
+  );
+  if (qRes.rowCount === 0) {
+    throw ApiError.notFound('Question not found in this custom test');
+  }
+
+  const existingQ = qRes.rows[0];
+
+  const {
+    question_text,
+    options,
+    correct_index,
+    marks,
+    solution,
+    image_url,
+    media,
+    subject,
+  } = req.body;
+
+  let rawOptions = existingQ.options;
+  if (Array.isArray(options) && options.length > 0) {
+    rawOptions = options;
+  }
+
+  const targetQuestionText = question_text !== undefined ? String(question_text).trim() : existingQ.question_text;
+  const parsedCorrectIndex = correct_index !== undefined && correct_index !== null ? Number(correct_index) : existingQ.correct_index;
+  const parsedMarks = marks !== undefined && marks !== null && !isNaN(Number(marks)) ? Number(marks) : existingQ.marks;
+  const targetSolution = solution !== undefined ? solution : existingQ.solution;
+  const targetSubject = subject !== undefined ? subject : existingQ.subject;
+
+  let finalImageUrl = existingQ.image_url;
+  let finalMedia = existingQ.media;
+
+  if (image_url !== undefined) {
+    finalImageUrl = image_url || null;
+    if (!finalImageUrl) {
+      finalMedia = [];
+    } else {
+      finalMedia = [{ type: 'diagram', url: finalImageUrl, id: `diag_${existingQ.position || 1}` }];
+    }
+  } else if (media !== undefined) {
+    finalMedia = media;
+  }
+
+  const targetTopic = req.body.topic !== undefined ? req.body.topic : existingQ.topic;
+
+  const updatedRes = await query(
+    `UPDATE questions SET
+       question_text = $1,
+       options = $2,
+       correct_index = $3,
+       correct_option_index = $3,
+       marks = $4,
+       solution = $5,
+       explanation = $5,
+       image_url = $6,
+       media = $7,
+       subject = $8,
+       topic = $9
+     WHERE id = $10 AND assessment_id = $11
+     RETURNING *`,
+    [
+      targetQuestionText,
+      typeof rawOptions === 'string' ? rawOptions : JSON.stringify(rawOptions),
+      parsedCorrectIndex,
+      parsedMarks,
+      targetSolution,
+      finalImageUrl || null,
+      typeof finalMedia === 'string' ? finalMedia : JSON.stringify(finalMedia || []),
+      targetSubject || null,
+      targetTopic || null,
+      questionId,
+      testId,
+    ]
+  );
+
+  // Update assessment updated_at timestamp
+  await query(
+    `UPDATE assessments SET updated_at = NOW() WHERE id = $1`,
+    [testId]
+  );
+
+  res.json({
+    success: true,
+    question: updatedRes.rows[0],
+    message: 'Question updated successfully.',
+  });
+});
+
+/**
+ * DELETE /api/institution/:id/custom-tests/:test_id/questions/:question_id
+ * Delete an individual question from a custom test.
+ */
+export const deleteInstitutionCustomTestQuestion = asyncHandler(async (req, res) => {
+  const instId = req.institution_id || Number(req.params.id);
+  const testId = Number(req.params.test_id);
+  const questionId = Number(req.params.question_id);
+
+  // 1. Verify ownership
+  const aRes = await query(
+    `SELECT id FROM assessments WHERE id = $1 AND (institution_id = $2 OR $3 = 'admin')`,
+    [testId, instId, req.user?.role || '']
+  );
+  if (aRes.rowCount === 0) {
+    throw ApiError.notFound('Custom test not found or not owned by your institution');
+  }
+
+  // 2. Delete question
+  const dRes = await query(
+    `DELETE FROM questions WHERE id = $1 AND assessment_id = $2 RETURNING id`,
+    [questionId, testId]
+  );
+  if (dRes.rowCount === 0) {
+    throw ApiError.notFound('Question not found or already deleted');
+  }
+
+  // 3. Re-sequence question positions
+  await query(
+    `WITH reordered AS (
+       SELECT id, ROW_NUMBER() OVER (ORDER BY position ASC, id ASC) AS new_pos
+       FROM questions
+       WHERE assessment_id = $1
+     )
+     UPDATE questions q
+     SET position = r.new_pos
+     FROM reordered r
+     WHERE q.id = r.id`,
+    [testId]
+  );
+
+  // 4. Update assessment updated_at timestamp
+  await query(
+    `UPDATE assessments SET updated_at = NOW() WHERE id = $1`,
+    [testId]
+  );
+
+  res.json({
+    success: true,
+    message: 'Question deleted successfully.',
+  });
+});
+
+/**
+ * POST /api/institution/:id/custom-tests/:test_id/questions/upload-diagram
+ * Upload a diagram image for a question in a custom test.
+ */
+export const uploadCustomTestDiagram = asyncHandler(async (req, res) => {
+  const file = req.files?.file?.[0] || req.files?.image?.[0] || req.files?.diagram?.[0] || req.file;
+  let fileBuffer = null;
+  let ext = '.png';
+
+  if (req.body?.image_base64 || req.body?.file_base64) {
+    const raw = req.body.image_base64 || req.body.file_base64;
+    const clean = raw.replace(/^data:[^;]+;base64,/, '');
+    fileBuffer = Buffer.from(clean, 'base64');
+    if (raw.includes('image/jpeg') || raw.includes('image/jpg')) ext = '.jpg';
+    else if (raw.includes('image/svg')) ext = '.svg';
+    else if (raw.includes('image/webp')) ext = '.webp';
+  } else if (file) {
+    ext = path.extname(file.originalname).toLowerCase() || '.png';
+    if (file.path && fs.existsSync(file.path)) {
+      fileBuffer = fs.readFileSync(file.path);
+      try { fs.unlinkSync(file.path); } catch (_) {}
+    } else if (file.buffer) {
+      fileBuffer = file.buffer;
+    }
+  }
+
+  if (!fileBuffer) {
+    throw ApiError.badRequest('No diagram image uploaded.');
+  }
+
+  const backendDir = path.resolve(__dirname, '../../uploads/question_papers/diagrams');
+  const frontendDir = path.resolve(__dirname, '../../../frontend/public/uploads/question_papers/diagrams');
+
+  for (const d of [backendDir, frontendDir]) {
+    if (!fs.existsSync(d)) {
+      try { fs.mkdirSync(d, { recursive: true }); } catch (_) {}
+    }
+  }
+
+  const cleanFilename = `diag_${Date.now()}_${Math.random().toString(36).substring(2, 7)}${ext}`;
+  const backendPath = path.join(backendDir, cleanFilename);
+  const frontendPath = path.join(frontendDir, cleanFilename);
+
+  fs.writeFileSync(backendPath, fileBuffer);
+  try { fs.writeFileSync(frontendPath, fileBuffer); } catch (_) {}
+
+  const relativeUrl = `/uploads/question_papers/diagrams/${cleanFilename}`;
+
+  res.json({
+    success: true,
+    url: relativeUrl,
+    message: 'Diagram image uploaded successfully.',
+  });
+});
+
+
 
 

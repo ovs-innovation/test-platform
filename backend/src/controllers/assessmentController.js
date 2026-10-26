@@ -25,6 +25,8 @@ export const listAllAssessments = asyncHandler(async (_req, res) => {
       FROM candidate_invites GROUP BY assessment_id
     ) inv ON inv.assessment_id = a.id
     WHERE COALESCE(a.is_personal, FALSE) = FALSE
+      AND COALESCE(a.is_institution_custom, FALSE) = FALSE
+      AND a.institution_id IS NULL
       AND (a.created_by IS NULL OR a.created_by NOT IN (SELECT id FROM users WHERE role = 'candidate'))
       AND COALESCE(a.test_type, '') NOT IN ('mistake_book', 'ai_weak_topic', 'personal', 'student_practice')
       AND a.title NOT ILIKE '%Mistake Book%'

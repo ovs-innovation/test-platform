@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 const QUICK_LINKS = [
   { label: 'NEET', to: '/test-series?filter=neet' },
   { label: 'JEE', to: '/test-series?filter=jee' },
+  { label: 'Foundation', to: '/test-series?filter=foundation' },
   { label: 'Free mocks', to: '/test-series?filter=free' },
 ];
 
@@ -22,6 +23,14 @@ const EXAM_TRACKS = [
     to: '/test-series?filter=jee',
     borderStyle: 'border-[#0D6EFD]/35 hover:border-[#0D6EFD] hover:shadow-lg hover:shadow-blue-500/10',
     tagBg: 'bg-blue-500/15 text-[#38bdf8] border-blue-400/30',
+  },
+  {
+    label: 'Foundation',
+    desc: 'Class 6–10 · early competitive edge',
+    src: '/test-series/jee.svg',
+    to: '/test-series?filter=foundation',
+    borderStyle: 'border-[#4F46E5]/40 hover:border-[#4F46E5] hover:shadow-lg hover:shadow-indigo-500/10',
+    tagBg: 'bg-indigo-500/15 text-[#818cf8] border-indigo-400/30',
   },
 ];
 

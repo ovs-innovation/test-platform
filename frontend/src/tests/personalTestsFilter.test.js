@@ -87,4 +87,29 @@ describe('Personal Student Tests Filter for Admin Panel', () => {
     expect(filtered.length).toBe(2);
     expect(filtered.map((t) => t.id)).toEqual([1, 3]);
   });
+
+  it('filters out institution custom tests from admin panel', () => {
+    const institutionTest1 = {
+      id: 250,
+      test_name: 'Vedantu Internal Weekly Test',
+      is_institution_custom: true,
+      institution_id: 15,
+    };
+    expect(isPersonalStudentTest(institutionTest1)).toBe(true);
+
+    const institutionTest2 = {
+      id: 251,
+      title: 'Allen Custom Chemistry Mock',
+      institution_id: 8,
+    };
+    expect(isPersonalStudentTest(institutionTest2)).toBe(true);
+
+    const regularTest = {
+      id: 252,
+      test_name: 'National Level NEET Mock 2026',
+      is_institution_custom: false,
+      institution_id: null,
+    };
+    expect(isPersonalStudentTest(regularTest)).toBe(false);
+  });
 });

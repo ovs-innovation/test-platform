@@ -37,12 +37,11 @@ const TRACKS = [
     image: '/edvedum/student-foundation.png',
     imageAlt: 'Foundation student',
     to: '/test-series?filter=foundation',
-    border: 'border-t-amber-500',
-    disabled: true,
+    border: 'border-t-indigo-600',
     links: [
-      { label: 'Class 8', to: '#' },
-      { label: 'Class 9', to: '#' },
-      { label: 'Class 10', to: '#' },
+      { label: 'Class 8', to: '/test-series?filter=foundation&class=8' },
+      { label: 'Class 9', to: '/test-series?filter=foundation&class=9' },
+      { label: 'Class 10', to: '/test-series?filter=foundation&class=10' },
     ],
   },
 ];

@@ -8,8 +8,13 @@ export function getMediaUrl(url) {
   const trimmed = url.trim();
   if (!trimmed) return '';
 
-  // Return data URLs and absolute HTTP(S) URLs directly
-  if (trimmed.startsWith('data:') || trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+  // Return data URLs, blob URLs, and absolute HTTP(S) URLs directly
+  if (
+    trimmed.startsWith('data:') ||
+    trimmed.startsWith('blob:') ||
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://')
+  ) {
     return trimmed;
   }
 

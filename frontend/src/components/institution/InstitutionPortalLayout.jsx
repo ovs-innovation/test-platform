@@ -24,6 +24,7 @@ import {
   Plus,
   Upload,
   UserPlus,
+  FileUp,
   HelpCircle,
   ShieldCheck,
   Home,
@@ -401,6 +402,13 @@ export default function InstitutionPortalLayout({
                   >
                     <FileText className="h-4 w-4 text-indigo-400" />
                     <span>Assign Test Series</span>
+                  </button>
+                  <button
+                    onClick={() => { setQuickActionOpen(false); navigate('/institution/test-series?action=upload'); }}
+                    className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs font-bold text-emerald-400 hover:bg-emerald-500/10 hover:text-emerald-300 transition cursor-pointer"
+                  >
+                    <FileUp className="h-4 w-4 text-emerald-400" />
+                    <span>Upload Question Paper</span>
                   </button>
                 </div>
               )}

@@ -25,7 +25,10 @@ export const listTestSeries = asyncHandler(async (_req, res) => {
                   )
                 )
                 FROM test_series_tests tst2
-                JOIN tests t ON t.id = tst2.test_id AND COALESCE(t.is_deleted, FALSE) = FALSE
+                JOIN tests t ON t.id = tst2.test_id 
+                  AND COALESCE(t.is_deleted, FALSE) = FALSE
+                  AND COALESCE(t.is_institution_custom, FALSE) = FALSE
+                  AND t.institution_id IS NULL
                 WHERE tst2.series_id = ts.id
               ), '[]'::json
             ) AS tests

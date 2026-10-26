@@ -18,3 +18,10 @@ scratch/
 scratch_page_*.json
 omr_transcribed.txt
 
+# Scanned source pages & temporary crops
+backend/scripts/wpe_pages/
+backend/scripts/wpe_batch2_pages/
+backend/scripts/wpe_batch3_pages/
+backend/scripts/laws_of_motion/
+backend/test_fixed_diag*.png
+

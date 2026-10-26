@@ -12,6 +12,14 @@ const SENIOR_CLASS_OPTIONS = [
   { label: 'Dropper / 12 Passed', value: 'passed-12' },
 ];
 
+const FOUNDATION_CLASS_OPTIONS = [
+  { label: 'Class 10', value: '10' },
+  { label: 'Class 9', value: '9' },
+  { label: 'Class 8', value: '8' },
+  { label: 'Class 7', value: '7' },
+  { label: 'Class 6', value: '6' },
+];
+
 const TEST_SERIES_OPTIONS = [
   { label: 'JEE Test Series', filter: 'jee' },
   { label: 'NEET Test Series', filter: 'neet' },
@@ -64,8 +72,6 @@ export const PROGRAM_SECTIONS = [
     desc: 'Early preparation for future doctors & engineers',
     filter: 'foundation',
     theme: 'foundation',
-    badge: 'Coming Soon',
-    disabled: true,
     studentImage: '/images/home/categories/foundation-student-approved.png',
     bgColor: 'bg-[#f5f3ff]',
     hoverBg: 'hover:bg-indigo-50/90',
@@ -124,6 +130,7 @@ const THEME_STYLES = {
 
 function getDropdownOptions(section) {
   if (section.id === 'testSeries') return TEST_SERIES_OPTIONS;
+  if (section.id === 'foundation') return FOUNDATION_CLASS_OPTIONS;
   if (section.id === 'jee' || section.id === 'neet') return SENIOR_CLASS_OPTIONS;
   return [];
 }
