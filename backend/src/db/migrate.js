@@ -7,6 +7,9 @@ import { uploadAssessment43 } from '../../scripts/upload_assessment_43.mjs';
 import { uploadBiomoleculesQuestions } from '../../scripts/import_biomolecules_chemistry.mjs';
 import { uploadAminesQuestions } from '../../scripts/import_amines_chemistry.mjs';
 import { uploadUnitsMeasurementsQuestions } from '../../scripts/import_units_measurements_physics.mjs';
+import { uploadMotionStraightLineQuestions } from '../../scripts/import_motion_straight_line_physics.mjs';
+import { uploadMotionInPlaneQuestions } from '../../scripts/import_motion_in_plane_physics.mjs';
+import { uploadMotionInPlanePart2Questions } from '../../scripts/import_motion_in_plane_part2.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -170,6 +173,31 @@ const run = async () => {
     } catch (unitsErr) {
       // eslint-disable-next-line no-console
       console.warn('[migrate] Unit and Measurement sync warning:', unitsErr.message);
+    }
+
+    try {
+      const motionCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'Motion in straight line'");
+      if (motionCheck.rows[0].count < 88) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] Motion in straight line questions count is ${motionCheck.rows[0].count} (<88). Uploading 88 Physics questions...`);
+        await uploadMotionStraightLineQuestions(pool);
+      }
+    } catch (motionErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] Motion in straight line sync warning:', motionErr.message);
+    }
+
+    try {
+      const planeCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'motion in a plane'");
+      if (planeCheck.rows[0].count < 133) {
+        // eslint-disable-next-line no-console
+        console.log(`[migrate] motion in a plane questions count is ${planeCheck.rows[0].count} (<133). Uploading 133 Physics questions...`);
+        await uploadMotionInPlaneQuestions(pool);
+        await uploadMotionInPlanePart2Questions(pool);
+      }
+    } catch (planeErr) {
+      // eslint-disable-next-line no-console
+      console.warn('[migrate] motion in a plane sync warning:', planeErr.message);
     }
 
     // eslint-disable-next-line no-console
