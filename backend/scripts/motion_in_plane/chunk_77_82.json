@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 77,
+    "question_type": "mcq",
+    "question_text": "Two particles are thrown from ground with same speed for same horizontal range $R$ on different paths. If $T_1$ and $T_2$ are their time of flight, then $T_1 T_2$ is",
+    "options": [
+      "$\\frac{R}{g}$",
+      "$\\frac{2R}{g}$",
+      "$\\frac{R^2}{g^2}$",
+      "$\\frac{4R^2}{g^2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For two projectiles projected with the same speed $u$ to have the same horizontal range $R$, their angles of projection must be complementary, i.e., $\\theta$ and $90^\\circ - \\theta$.\n\nThe times of flight are given by:\n$$T_1 = \\frac{2u\\sin\\theta}{g}$$\n$$T_2 = \\frac{2u\\sin(90^\\circ - \\theta)}{g} = \\frac{2u\\cos\\theta}{g}$$\n\nMultiplying $T_1$ and $T_2$:\n$$T_1 T_2 = \\left(\\frac{2u\\sin\\theta}{g}\\right)\\left(\\frac{2u\\cos\\theta}{g}\\right) = \\frac{2}{g} \\left(\\frac{u^2 (2\\sin\\theta\\cos\\theta)}{g}\\right)$$\n$$T_1 T_2 = \\frac{2}{g} \\left(\\frac{u^2\\sin 2\\theta}{g}\\right)$$\n\nSince the range $R = \\frac{u^2\\sin 2\\theta}{g}$, we have:\n$$T_1 T_2 = \\frac{2R}{g}$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 78,
+    "question_type": "mcq",
+    "question_text": "A ball is projected with velocity $5\\text{ m/s}$ at an angle of $60^\\circ$ with horizontal from ground. The speed of the ball at the instant when its velocity is perpendicular to its initial direction of motion is ($g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$\\frac{5}{\\sqrt{3}}\\text{ m/s}$",
+      "$5\\text{ m/s}$",
+      "$5\\sqrt{2}\\text{ m/s}$",
+      "$10\\text{ m/s}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the initial velocity be $\\vec{u}$ and the velocity at the instant when it becomes perpendicular to $\\vec{u}$ be $\\vec{v}$.\n\nThe initial velocity makes an angle of $\\theta = 60^\\circ$ with the horizontal. Therefore, the angle made by $\\vec{v}$ with the vertical must be $\\theta = 60^\\circ$, or with the horizontal it makes an angle of $90^\\circ - \\theta = 30^\\circ$ below the horizontal.\n\nSince horizontal velocity remains constant throughout the motion:\n$$v_x = u_x$$\n$$v \\cos(90^\\circ - \\theta) = u \\cos\\theta$$\n$$v \\sin\\theta = u \\cos\\theta$$\n$$v = u \\cot\\theta$$\n\nSubstituting $u = 5\\text{ m/s}$ and $\\theta = 60^\\circ$:\n$$v = 5 \\cot 60^\\circ = \\frac{5}{\\sqrt{3}}\\text{ m/s}$$\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 79,
+    "question_type": "mcq",
+    "question_text": "A boy runs on a circular track of radius $R$ (in km) with speed of $\\frac{\\pi R}{2}\\text{ km/h}$ in clockwise sense for $3\\text{ h}$ and then $\\pi R\\text{ km/h}$ in anticlockwise sense for $1\\text{ h}$. The magnitude of his displacement will be",
+    "options": [
+      "$\\frac{\\pi R}{2}$",
+      "$\\frac{R}{\\sqrt{2}}$",
+      "$\\frac{3\\pi R}{2}$",
+      "$\\sqrt{2}R$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. Distance travelled in the clockwise direction:\n$$s_1 = v_1 \\times t_1 = \\left(\\frac{\\pi R}{2}\\right) \\times 3 = \\frac{3\\pi R}{2}\\text{ km}$$\nAngular displacement in clockwise sense:\n$$\\theta_1 = \\frac{s_1}{R} = \\frac{3\\pi}{2}\\text{ rad}$$\n\n2. Distance travelled in the anticlockwise direction:\n$$s_2 = v_2 \\times t_2 = (\\pi R) \\times 1 = \\pi R\\text{ km}$$\nAngular displacement in anticlockwise sense:\n$$\\theta_2 = \\frac{s_2}{R} = \\pi\\text{ rad}$$\n\n3. Net angular displacement from the starting point:\n$$\\theta_{\\text{net}} = \\theta_1 - \\theta_2 = \\frac{3\\pi}{2} - \\pi = \\frac{\\pi}{2}\\text{ rad}$$\n\n4. The magnitude of displacement for an angular change $\\theta$ on a circle of radius $R$ is:\n$$d = 2R\\sin\\left(\\frac{\\theta_{\\text{net}}}{2}\\right) = 2R\\sin\\left(\\frac{\\pi}{4}\\right) = 2R \\times \\frac{1}{\\sqrt{2}} = \\sqrt{2}R$$\n\nHence, the correct option is (4)."
+  },
+  {
+    "question_number": 80,
+    "question_type": "mcq",
+    "question_text": "The equation of trajectory of a projectile is given by $y = x - 10x^2$. Its speed of projection is [$g = 10\\text{ m/s}^2$]",
+    "options": [
+      "$1\\text{ m/s}$",
+      "$2\\text{ m/s}$",
+      "$3\\text{ m/s}$",
+      "$4\\text{ m/s}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Trajectory Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The standard equation of trajectory for a projectile is:\n$$y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}$$\n\nComparing this with the given equation $y = x - 10x^2$:\n$$\\tan\\theta = 1 \\implies \\theta = 45^\\circ$$\nTherefore, $\\cos\\theta = \\frac{1}{\\sqrt{2}}$ and $\\cos^2\\theta = \\frac{1}{2}$.\n\nEquating the coefficient of $x^2$:\n$$\\frac{g}{2u^2\\cos^2\\theta} = 10$$\n$$\\frac{10}{2u^2 \\left(\\frac{1}{2}\\right)} = 10$$\n$$\\frac{10}{u^2} = 10 \\implies u^2 = 1 \\implies u = 1\\text{ m/s}$$\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 81,
+    "question_type": "mcq",
+    "question_text": "Two projectiles $P$ and $Q$ are projected with same speed at angles $60^\\circ$ and $30^\\circ$ with horizontal on level ground, then [$R = \\text{Range}$, $T = \\text{Time of flight}$, $H = \\text{Maximum height}$]",
+    "options": [
+      "$R_P = 2R_Q$",
+      "$T_P = \\sqrt{3}T_Q$",
+      "$H_Q = 3H_P$",
+      "All of these"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given speeds are equal ($u_P = u_Q = u$), with $\\theta_P = 60^\\circ$ and $\\theta_Q = 30^\\circ$.\n\n1. **Horizontal Range:**\n$$R_P = \\frac{u^2\\sin(2 \\times 60^\\circ)}{g} = \\frac{u^2\\sin 120^\\circ}{g} = \\frac{\\sqrt{3}u^2}{2g}$$\n$$R_Q = \\frac{u^2\\sin(2 \\times 30^\\circ)}{g} = \\frac{u^2\\sin 60^\\circ}{g} = \\frac{\\sqrt{3}u^2}{2g}$$\nThus, $R_P = R_Q$. Option (1) is incorrect.\n\n2. **Time of flight:**\n$$T_P = \\frac{2u\\sin 60^\\circ}{g} = \\frac{2u}{g}\\left(\\frac{\\sqrt{3}}{2}\\right) = \\frac{\\sqrt{3}u}{g}$$\n$$T_Q = \\frac{2u\\sin 30^\\circ}{g} = \\frac{2u}{g}\\left(\\frac{1}{2}\\right) = \\frac{u}{g}$$\n$$\\frac{T_P}{T_Q} = \\sqrt{3} \\implies T_P = \\sqrt{3}T_Q$$\nOption (2) is correct.\n\n3. **Maximum Height:**\n$$H_P = \\frac{u^2\\sin^2 60^\\circ}{2g} = \\frac{3u^2}{8g}$$\n$$H_Q = \\frac{u^2\\sin^2 30^\\circ}{2g} = \\frac{u^2}{8g}$$\nThus, $H_P = 3H_Q$, not $H_Q = 3H_P$. Option (3) is incorrect.\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 82,
+    "question_type": "mcq",
+    "question_text": "A body starts moving from rest on a horizontal ground such that the position vector of the body with respect to its starting point is given by $\\vec{r} = 2t\\hat{i} + 3t^2\\hat{j}$. The equation of trajectory of body is",
+    "options": [
+      "$y = 1.5x$",
+      "$y = 0.75x^2$",
+      "$y = 1.5x^2$",
+      "$y = 0.45x^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Trajectory Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The position vector of the body is given by:\n$$\\vec{r} = x\\hat{i} + y\\hat{j} = 2t\\hat{i} + 3t^2\\hat{j}$$\n\nComparing components:\n$$x = 2t \\implies t = \\frac{x}{2}$$\n$$y = 3t^2$$\n\nSubstitute the value of $t$ into the equation for $y$:\n$$y = 3\\left(\\frac{x}{2}\\right)^2 = 3\\left(\\frac{x^2}{4}\\right) = \\frac{3}{4}x^2 = 0.75x^2$$\n\nHence, the correct option is (2)."
+  }
+]

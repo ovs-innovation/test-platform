@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 30,
+    "question_type": "mcq",
+    "question_text": "A lift performs the first part of its ascent from the lowest position with uniform acceleration $a$ and the remaining to the topmost position with uniform retardation $2a$. If $t$ is the time of ascent, find the depth of the shaft.",
+    "options": [
+      "$\\frac{1}{3} a t^2$",
+      "$a t^2$",
+      "$\\frac{1}{2} a t^2$",
+      "$\\sqrt{\\frac{at}{3}}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the lift accelerate for time $t_1$ with acceleration $a$ and then decelerate for time $t_2$ with retardation $2a$ until it comes to rest.\n\nThe maximum velocity reached is:\n$$v_{\\max} = a t_1 = 2a t_2 \\implies t_1 = 2 t_2$$\n\nThe total time of ascent is given as $t$:\n$$t = t_1 + t_2 = 2t_2 + t_2 = 3t_2 \\implies t_2 = \\frac{t}{3} \\text{ and } t_1 = \\frac{2t}{3}$$\n\nThe maximum velocity is therefore:\n$$v_{\\max} = a t_1 = a \\left(\\frac{2t}{3}\\right) = \\frac{2}{3} a t$$\n\nThe total distance covered (depth of the shaft, $h$) is equal to the area under the velocity-time graph (a triangle with base $t$ and height $v_{\\max}$):\n$$h = \\frac{1}{2} \\times v_{\\max} \\times t = \\frac{1}{2} \\times \\left(\\frac{2}{3} a t\\right) \\times t = \\frac{1}{3} a t^2$$\n\nThus, the correct option is (1)."
+  },
+  {
+    "question_number": 31,
+    "question_type": "mcq",
+    "question_text": "A car starts from rest and moves with constant acceleration on a straight road. The ratio of displacement travelled by car in first $4\\text{ seconds}$ and next $4\\text{ seconds}$ is",
+    "options": [
+      "$1 : 2$",
+      "$1 : 1$",
+      "$1 : 3$",
+      "$1 : 4$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The car starts from rest, so $u = 0$.\n\n1. Displacement in the first $4\\text{ s}$:\n$$s_1 = u t_1 + \\frac{1}{2} a t_1^2 = 0 + \\frac{1}{2} a (4)^2 = 8a$$\n\n2. Total displacement in the first $8\\text{ s}$:\n$$s_{\\text{total}} = 0 + \\frac{1}{2} a (8)^2 = 32a$$\n\n3. Displacement in the next $4\\text{ s}$ (from $t = 4\\text{ s}$ to $t = 8\\text{ s}$):\n$$s_2 = s_{\\text{total}} - s_1 = 32a - 8a = 24a$$\n\n4. Ratio of displacements:\n$$\\frac{s_1}{s_2} = \\frac{8a}{24a} = \\frac{1}{3}$$\n\nAccording to Galileo's law of odd numbers, displacements in equal successive intervals of time from rest are in the ratio $1 : 3 : 5 : \\dots$\nTherefore, the ratio is $1 : 3$, which corresponds to option (3)."
+  },
+  {
+    "question_number": 32,
+    "question_type": "mcq",
+    "question_text": "A particle is released from the top of a tower of height $150\\text{ m}$ and another ball is thrown vertically upwards with velocity $20\\text{ m/s}$ from a tower of height $50\\text{ m}$ at the same time. Assume both are in a same vertical line. Then time after which they collide to each other (take $g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$2\\text{ s}$",
+      "$3\\text{ s}$",
+      "$4\\text{ s}$",
+      "$5\\text{ s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the ground be the reference level ($y = 0$).\n- Particle 1 is released from $y_1(0) = 150\\text{ m}$ with initial velocity $u_1 = 0\\text{ m/s}$.\n- Ball 2 is thrown upwards from $y_2(0) = 50\\text{ m}$ with initial velocity $u_2 = +20\\text{ m/s}$.\n\nThe initial separation between the two particles is:\n$$\\Delta y = y_1(0) - y_2(0) = 150 - 50 = 100\\text{ m}$$\n\nBoth particles experience the same downward acceleration due to gravity, so their relative acceleration is:\n$$a_{\\text{rel}} = (-g) - (-g) = 0$$\n\nThe relative velocity of approach is:\n$$v_{\\text{rel}} = |u_1 - u_2| = |0 - (-20)| = 20\\text{ m/s}$$\n\nSince relative acceleration is zero, the time taken for them to collide is:\n$$t = \\frac{\\Delta y}{v_{\\text{rel}}} = \\frac{100\\text{ m}}{20\\text{ m/s}} = 5\\text{ s}$$\n\nLet us check their position at $t = 5\\text{ s}$:\n$$y_1(5) = 150 - \\frac{1}{2}(10)(5)^2 = 150 - 125 = 25\\text{ m}$$\n$$y_2(5) = 50 + 20(5) - \\frac{1}{2}(10)(5)^2 = 50 + 100 - 125 = 25\\text{ m}$$\nBoth particles collide at a height of $25\\text{ m}$ above the ground at $t = 5\\text{ s}$.\n\nThus, the correct option is (4)."
+  },
+  {
+    "question_number": 33,
+    "question_type": "mcq",
+    "question_text": "A man is standing behind a car at a distance of $48\\text{ m}$. At a particular instant, the car starts accelerating at $1\\text{ m/s}^2$ and the man runs at a constant speed of $11\\text{ m/s}$ in the same direction. The man will meet the car the first time at time",
+    "options": [
+      "$t = 6\\text{ s}$",
+      "$t = 16\\text{ s}$",
+      "$t = 6\\text{ s}$ and $t = 16\\text{ s}$",
+      "None of these"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the initial position of the man be $x = 0$.\nThen, the initial position of the car is $x = 48\\text{ m}$.\n\nThe position of the man at any time $t$ is:\n$$x_m(t) = 11t$$\n\nThe position of the car at any time $t$ starting from rest ($u = 0$) with acceleration $a = 1\\text{ m/s}^2$ is:\n$$x_c(t) = 48 + \\frac{1}{2}(1)t^2 = 48 + 0.5t^2$$\n\nThey meet when $x_m(t) = x_c(t)$:\n$$11t = 48 + 0.5t^2$$\n$$0.5t^2 - 11t + 48 = 0$$\n$$t^2 - 22t + 96 = 0$$\n\nFactoring the quadratic equation:\n$$(t - 6)(t - 16) = 0$$\nThis gives two values of time: $t = 6\\text{ s}$ and $t = 16\\text{ s}$.\n\nThe question specifically asks for the time when the man meets the car for the **first time**, which is at $t = 6\\text{ s}$. (At $t = 6\\text{ s}$, the man overtakes the car, and later at $t = 16\\text{ s}$, the accelerating car catches up and overtakes the man).\n\nTherefore, the correct option is (1)."
+  },
+  {
+    "question_number": 34,
+    "question_type": "mcq",
+    "question_text": "A juggler throws one ball into air, whenever the previous one is at its highest point. How high do the balls rise, if he throws $n$ balls each second? (Acceleration due to gravity is $g$)",
+    "options": [
+      "$\\frac{g}{4n^2}$",
+      "$\\frac{g}{2n^2}$",
+      "$\\frac{g}{n^2}$",
+      "$\\frac{2g}{n^2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since the juggler throws $n$ balls in one second, the time interval between consecutive throws is:\n$$\\Delta t = \\frac{1}{n}\\text{ s}$$\n\nHe throws a ball whenever the previous one reaches its highest point. Therefore, the time taken by a ball to reach its maximum height (time of ascent $t_a$) is equal to the time interval between consecutive throws:\n$$t_a = \\Delta t = \\frac{1}{n}$$\n\nAt the highest point, the velocity of the ball becomes zero:\n$$v = u - g t_a = 0 \\implies u = g t_a = \\frac{g}{n}$$\n\nThe maximum height $H$ reached by each ball is:\n$$H = \\frac{u^2}{2g} = \\frac{(g/n)^2}{2g} = \\frac{g^2}{2g n^2} = \\frac{g}{2n^2}$$\n\nThus, the correct option is (2)."
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 122,
+    "question_type": "mcq",
+    "question_text": "Two particles move from $A$ to $C$ and from $A$ to $D$ on a circle of radius $R$ and diameter $AB$. If time taken by both particles are same, then ratio of magnitudes of their average velocity is",
+    "options": [
+      "$2$",
+      "$2\\sqrt{3}$",
+      "$\\sqrt{3}$",
+      "$\\frac{\\sqrt{3}}{2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Circular Geometry & Average Velocity",
+    "has_diagram": true,
+    "diagram_description": "A circle with diameter AB. Chord AC makes an angle of 30° with diameter AB, and chord AD makes an angle of 60° with diameter AB.",
+    "solution": "In a circle with diameter $AB = 2R$, any triangle inscribed in a semicircle with hypotenuse $AB$ is a right-angled triangle (i.e., $\\angle ACB = 90^\\circ$ and $\\angle ADB = 90^\\circ$).\n\n1. For chord $AC$ making an angle of $30^\\circ$ with diameter $AB$:\n$$AC = AB \\cos 30^\\circ = 2R \\left(\\frac{\\sqrt{3}}{2}\\right) = \\sqrt{3}R$$\n\n2. For chord $AD$ making an angle of $60^\\circ$ with diameter $AB$:\n$$AD = AB \\cos 60^\\circ = 2R \\left(\\frac{1}{2}\\right) = R$$\n\nThe magnitude of average velocity is the net displacement divided by the time taken:\n$$v_{\\text{avg}} = \\frac{|\\text{Displacement}|}{\\Delta t}$$\n\nSince the time taken by both particles is the same ($t_1 = t_2$):\n$$\\frac{v_{\\text{avg1}}}{v_{\\text{avg2}}} = \\frac{\\text{Displacement } AC}{\\text{Displacement } AD} = \\frac{\\sqrt{3}R}{R} = \\sqrt{3}$$\n\nHence, option (3) is correct."
+  },
+  {
+    "question_number": 123,
+    "question_type": "mcq",
+    "question_text": "If $\\vec{a} + \\vec{b} + \\vec{c} = \\vec{0}$, then which of the following statements is incorrect?",
+    "options": [
+      "$\\vec{a}$, $\\vec{b}$ and $\\vec{c}$ must each be a null vector",
+      "The magnitude of $\\vec{a} + \\vec{b}$ is equal to the magnitude of $\\vec{c}$",
+      "The magnitude of $\\vec{a}$ can never be greater than the sum of the magnitudes of $\\vec{b}$ and $\\vec{c}$",
+      "$\\vec{a}$ must lie in the plane of $\\vec{b}$ and $\\vec{c}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Vector Algebra",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\n$$\\vec{a} + \\vec{b} + \\vec{c} = \\vec{0}$$\n\n- Statement (1): The vectors do NOT each have to be null vectors. Any three coplanar vectors that form a closed triangle can sum to zero (e.g., $3\\hat{i} + 4\\hat{j} - (3\\hat{i} + 4\\hat{j}) = \\vec{0}$). Therefore, statement (1) is incorrect.\n- Statement (2): $\\vec{a} + \\vec{b} = -\\vec{c} \\implies |\\vec{a} + \\vec{b}| = |-\\vec{c}| = |\\vec{c}|$. This is correct.\n- Statement (3): By triangle inequality, any side length cannot exceed the sum of the other two sides: $|\\vec{a}| \\le |\\vec{b}| + |\\vec{c}|$. This is correct.\n- Statement (4): The sum of three non-zero vectors can be zero only if they are coplanar. This is correct.\n\nThus, statement (1) is the incorrect statement."
+  },
+  {
+    "question_number": 124,
+    "question_type": "mcq",
+    "question_text": "A particle is moving along a curve. Select the correct statement",
+    "options": [
+      "If its speed is constant, then it has no acceleration",
+      "If its speed is increasing, then the acceleration of the particle is along its direction of motion",
+      "If its speed is decreasing, then the acceleration of the particle is opposite to its direction of motion",
+      "If its speed is constant, then its acceleration is perpendicular to its velocity"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Curvilinear Motion & Acceleration",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In motion along a curve, the acceleration of the particle has two components:\n1. Tangential acceleration: $$a_t = \\frac{dv}{dt}$$, which is along the direction of velocity (or opposite to it if slowing down).\n2. Normal (centripetal) acceleration: $$a_n = \\frac{v^2}{\\rho}$$, which is directed perpendicular to the velocity towards the center of curvature.\n\n- If speed $v$ is constant, then $a_t = \\frac{dv}{dt} = 0$.\n- Therefore, the only acceleration present is the normal acceleration $a_n$, which is strictly perpendicular to the velocity.\n\nHence, statement (4) is correct."
+  },
+  {
+    "question_number": 125,
+    "question_type": "mcq",
+    "question_text": "Figure shows a rod of length $5\\text{ m}$. Its ends $A$ and $B$ are restrained to move in horizontal and vertical guides. When the end $B$ is $3\\text{ m}$ from $O$, it moves at $4\\text{ m/s}$. Velocity of end $A$ at that instant is",
+    "options": [
+      "$2\\text{ m/s}$",
+      "$3\\text{ m/s}$",
+      "$4\\text{ m/s}$",
+      "$0.20\\text{ m/s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Constrained Motion",
+    "has_diagram": true,
+    "diagram_description": "A rod AB of length 5 m whose end A slides along a vertical guide OA and end B slides along a horizontal guide OB. When OB = 3 m, end B moves with speed v_B = 4 m/s.",
+    "solution": "Let $x$ be the distance of end $B$ from origin $O$ along the horizontal guide, and $y$ be the distance of end $A$ from $O$ along the vertical guide.\n\nBy Pythagoras' theorem:\n$$x^2 + y^2 = L^2 = 5^2 = 25$$\n\nDifferentiating with respect to time $t$:\n$$2x \\frac{dx}{dt} + 2y \\frac{dy}{dt} = 0$$\n$$x v_B + y v_A = 0 \\implies v_A = -\\frac{x}{y} v_B$$\n\nGiven:\n- $x = 3\\text{ m}$\n- $v_B = 4\\text{ m/s}$\n- $y = \\sqrt{25 - 3^2} = \\sqrt{16} = 4\\text{ m}$\n\nTherefore, the magnitude of velocity of end $A$ is:\n$$|v_A| = \\frac{x}{y} v_B = \\frac{3}{4} \\times 4\\text{ m/s} = 3\\text{ m/s}$$\n\nHence, option (2) is correct."
+  }
+]

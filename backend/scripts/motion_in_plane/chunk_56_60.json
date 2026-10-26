@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 56,
+    "question_type": "mcq",
+    "question_text": "Two forces $\\vec{f}_1$ and $\\vec{f}_2$ are such that their vector sum and difference are at right angle. The angle between the forces may be",
+    "options": [
+      "$0^\\circ$",
+      "$360^\\circ$",
+      "$90^\\circ$",
+      "$180^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given that the vector sum $(\\vec{f}_1 + \\vec{f}_2)$ and the vector difference $(\\vec{f}_1 - \\vec{f}_2)$ are perpendicular (at a right angle) to each other:\n$$(\\vec{f}_1 + \\vec{f}_2) \\cdot (\\vec{f}_1 - \\vec{f}_2) = 0$$\n$$\\implies |\\vec{f}_1|^2 - |\\vec{f}_2|^2 = 0 \\implies |\\vec{f}_1| = |\\vec{f}_2|$$\nThis means the two forces have equal magnitudes. For two vectors of equal magnitude, their sum and difference are always mutually perpendicular for any non-zero angle between them (except $0^\\circ$ and $180^\\circ$ where one of the vectors vanishes). Among the given choices, the angle between the forces may be $90^\\circ$."
+  },
+  {
+    "question_number": 57,
+    "question_type": "mcq",
+    "question_text": "Which of the following sets of concurrent forces may be in equilibrium?",
+    "options": [
+      "$F_1 = 2\\text{ N},\\; F_2 = 5\\text{ N},\\; F_3 = 9\\text{ N}$",
+      "$F_1 = 3\\text{ N},\\; F_2 = 6\\text{ N},\\; F_3 = 8\\text{ N}$",
+      "$F_1 = 4\\text{ N},\\; F_2 = 6\\text{ N},\\; F_3 = 12\\text{ N}$",
+      "$F_1 = 5\\text{ N},\\; F_2 = 10\\text{ N},\\; F_3 = 4\\text{ N}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For three concurrent forces to be in equilibrium, they must be able to form a closed triangle. Thus, the sum of any two forces must be greater than or equal to the third force (i.e., $|F_1 - F_2| \\le F_3 \\le F_1 + F_2$).\n\nChecking each option:\n1. $2 + 5 = 7 < 9$ (Cannot be in equilibrium)\n2. $|6 - 3| = 3 \\le 8 \\le (3 + 6 = 9)$ (Can be in equilibrium)\n3. $4 + 6 = 10 < 12$ (Cannot be in equilibrium)\n4. $5 + 4 = 9 < 10$ (Cannot be in equilibrium)\n\nTherefore, the set of forces in option (2) can produce a net resultant of zero."
+  },
+  {
+    "question_number": 58,
+    "question_type": "mcq",
+    "question_text": "The speed of a projectile projected from a level ground at its maximum height is found to be half of its speed of projection ($u$). Its maximum height is",
+    "options": [
+      "$\\dfrac{3u^2}{8g}$",
+      "$\\dfrac{3u^2}{2g}$",
+      "$\\dfrac{\\sqrt{3}u^2}{2g}$",
+      "$\\dfrac{3u^2}{4g}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "At the maximum height, the vertical component of velocity is zero, and the velocity is purely horizontal:\n$$v_{\\text{top}} = u\\cos\\theta$$\nGiven that $v_{\\text{top}} = \\dfrac{u}{2}$:\n$$u\\cos\\theta = \\frac{u}{2} \\implies \\cos\\theta = \\frac{1}{2} \\implies \\theta = 60^\\circ$$\n\nThe maximum height $H$ is given by:\n$$H = \\frac{u^2 \\sin^2\\theta}{2g}$$\nFor $\\theta = 60^\\circ$, $\\sin 60^\\circ = \\dfrac{\\sqrt{3}}{2}$, so:\n$$H = \\frac{u^2 \\left(\\frac{\\sqrt{3}}{2}\\right)^2}{2g} = \\frac{u^2 \\left(\\frac{3}{4}\\right)}{2g} = \\frac{3u^2}{8g}$$"
+  },
+  {
+    "question_number": 59,
+    "question_type": "mcq",
+    "question_text": "A body moves along $x$-axis and $y$-axis according to equation\n$$x = 2\\sin\\theta$$\n$$y = 3\\cos\\theta$$\nWhat is the trajectory followed by the body?",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Trajectory Equation",
+    "has_diagram": true,
+    "diagram_description": "Four graphs are given: Graph (1) shows a vertical ellipse centered at the origin with semi-minor axis 2 along the x-axis and semi-major axis 3 along the y-axis. Graph (2) shows a horizontal ellipse with semi-major axis 3 along the x-axis and semi-minor axis 2 along the y-axis. Graph (3) shows a circle of radius 2. Graph (4) shows a downward-opening parabola.",
+    "solution": "From the given parametric equations of motion:\n$$\\frac{x}{2} = \\sin\\theta \\quad \\text{and} \\quad \\frac{y}{3} = \\cos\\theta$$\nSquaring and adding both equations:\n$$\\left(\\frac{x}{2}\\right)^2 + \\left(\\frac{y}{3}\\right)^2 = \\sin^2\\theta + \\cos^2\\theta = 1$$\n$$\\implies \\frac{x^2}{2^2} + \\frac{y^2}{3^2} = 1$$\nThis represents an ellipse centered at $(0, 0)$ with a semi-minor axis of length $2$ along the $x$-axis (intercepts at $x = \\pm 2$) and a semi-major axis of length $3$ along the $y$-axis (intercepts at $y = \\pm 3$).\nThis corresponds to Graph (1)."
+  },
+  {
+    "question_number": 60,
+    "question_type": "mcq",
+    "question_text": "A particle of mass $m$ is projected with a velocity $u$ at an angle $\\theta$ with the horizontal into a uniform gravitational field. The slope of the trajectory varies with horizontal distance $x$ as",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": true,
+    "diagram_description": "Four graphs of 'Slope' versus 'x' are shown: Graph (1) shows a V-shaped curve touching the x-axis and going up. Graph (2) shows a straight line starting with a positive y-intercept and a negative slope, crossing the x-axis into the negative region. Graph (3) shows an inverted parabola. Graph (4) shows a sinusoidal wave.",
+    "solution": "The trajectory of a projectile is given by:\n$$y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}$$\nThe slope of the trajectory at any horizontal distance $x$ is given by the derivative $\\dfrac{dy}{dx}$:\n$$\\text{Slope} = \\frac{dy}{dx} = \\tan\\theta - \\left(\\frac{g}{u^2\\cos^2\\theta}\\right)x$$\nThis equation is of the linear form $Y = -mX + C$:\n- The intercept on the Slope-axis is positive: $C = \\tan\\theta > 0$\n- The slope with respect to $x$ is constant and negative: $-\\dfrac{g}{u^2\\cos^2\\theta} < 0$\n\nHence, the graph of slope versus horizontal distance $x$ is a straight line with a positive intercept that decreases linearly and passes into negative values as $x$ increases, as depicted in Graph (2)."
+  }
+]

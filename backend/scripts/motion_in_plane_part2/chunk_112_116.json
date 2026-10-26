@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 112,
+    "question_type": "mcq",
+    "question_text": "Which of the following statement/s is/are incorrect regarding the motion in a plane?",
+    "options": [
+      "A body can move on a circular curved path with constant acceleration",
+      "The angle between acceleration and velocity can be $90^\\circ$",
+      "The angle between acceleration and velocity can be other than $90^\\circ$",
+      "All of the above"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In circular motion, the direction of acceleration is continuously changing (always having a component towards the center of the circle). Since the direction of the acceleration vector changes at every instant, the acceleration cannot be constant. Constant acceleration in a plane results in either straight-line or parabolic motion, never a closed or circular path.\n\nStatements (2) and (3) are correct: the angle between velocity and acceleration is $90^\\circ$ in uniform circular motion, and can be different from $90^\\circ$ in non-uniform circular motion or projectile motion.\n\nTherefore, statement (1) is incorrect."
+  },
+  {
+    "question_number": 113,
+    "question_type": "mcq",
+    "question_text": "Radius vector of a particle moving on a circle is given by $\\vec{r} = A\\cos(Bt)\\hat{j} + A\\sin(Bt)\\hat{k}$ ($A$ and $B$ are constants). Radius of the circle and speed of the particle, respectively are",
+    "options": [
+      "$A$, $AB$",
+      "$A$, $\\frac{A^2}{B}$",
+      "$B$, $AB$",
+      "$B$, $\\frac{A^2}{B}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The radius of the circle is the magnitude of the position vector $\\vec{r}$:\n$$r = |\\vec{r}| = \\sqrt{(A\\cos Bt)^2 + (A\\sin Bt)^2} = A\\sqrt{\\cos^2 Bt + \\sin^2 Bt} = A$$\n\nThe velocity vector is obtained by differentiating $\\vec{r}$ with respect to time $t$:\n$$\\vec{v} = \\frac{d\\vec{r}}{dt} = -AB\\sin(Bt)\\hat{j} + AB\\cos(Bt)\\hat{k}$$\n\nThe speed of the particle is the magnitude of the velocity vector:\n$$v = |\\vec{v}| = \\sqrt{(-AB\\sin Bt)^2 + (AB\\cos Bt)^2} = AB\\sqrt{\\sin^2 Bt + \\cos^2 Bt} = AB$$\n\nThus, the radius is $A$ and the speed is $AB$."
+  },
+  {
+    "question_number": 114,
+    "question_type": "mcq",
+    "question_text": "A particle is projected on an incline of inclination $45^\\circ$ as shown in the given figure. Acceleration of the particle at its highest point is",
+    "options": [
+      "$g$",
+      "$\\frac{g}{2}$",
+      "$\\frac{g}{\\sqrt{2}}$",
+      "$\\frac{\\sqrt{3}g}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": true,
+    "diagram_description": "The figure shows an inclined plane with an inclination angle of $45^\\circ$ to the ground. A particle is projected from the top of the incline at an angle of $30^\\circ$ to the inclined plane.",
+    "solution": "Once the particle is in flight (under free fall), the only force acting on it is the gravitational force directed vertically downward.\n\nTherefore, the acceleration of the projectile at any point in its trajectory, including the highest point, is simply the acceleration due to gravity, $g$, directed vertically downward."
+  },
+  {
+    "question_number": 115,
+    "question_type": "mcq",
+    "question_text": "Two projectiles, one fired from the surface of the earth with speed $5\\text{ m/s}$ and the other fired from the surface of a planet with initial speed $3\\text{ m/s}$ with some angle of projection, trace identical trajectories. Neglecting friction effect, the value of acceleration due to gravity on the planet is",
+    "options": [
+      "$5.9\\text{ m/s}^2$",
+      "$3.5\\text{ m/s}^2$",
+      "$16.3\\text{ m/s}^2$",
+      "$8.5\\text{ m/s}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The equation of trajectory for a projectile is given by:\n$$y = x\\tan\\theta - \\frac{g x^2}{2u^2\\cos^2\\theta}$$\n\nFor the two projectiles to trace identical trajectories, the angles of projection must be equal ($\\theta_1 = \\theta_2$), and the coefficient of $x^2$ must be identical:\n$$\\frac{g_{\\text{earth}}}{u_{\\text{earth}}^2} = \\frac{g_{\\text{planet}}}{u_{\\text{planet}}^2}$$\n\nGiven $u_{\\text{earth}} = 5\\text{ m/s}$, $u_{\\text{planet}} = 3\\text{ m/s}$, and $g_{\\text{earth}} \\approx 9.8\\text{ m/s}^2$:\n$$g_{\\text{planet}} = g_{\\text{earth}} \\left(\\frac{u_{\\text{planet}}}{u_{\\text{earth}}}\\right)^2 = 9.8 \\times \\left(\\frac{3}{5}\\right)^2 = 9.8 \\times 0.36 = 3.528\\text{ m/s}^2 \\approx 3.5\\text{ m/s}^2$$"
+  },
+  {
+    "question_number": 116,
+    "question_type": "mcq",
+    "question_text": "During the downward motion of an oblique projectile from top point of its trajectory, the radius of curvature of its trajectory will",
+    "options": [
+      "Remain constant",
+      "Increase",
+      "Decrease",
+      "May increase or decrease"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The radius of curvature of a path at any point is given by:\n$$R = \\frac{v^2}{a_\\perp}$$\nwhere $v$ is the instantaneous speed and $a_\\perp$ is the normal component of acceleration.\n\nIf $\\alpha$ is the angle made by the velocity vector with the horizontal at any instant, then the horizontal component of velocity is constant:\n$$v_x = v\\cos\\alpha = u\\cos\\theta \\implies \\cos\\alpha = \\frac{u\\cos\\theta}{v}$$\n\nThe component of acceleration perpendicular to velocity is:\n$$a_\\perp = g\\cos\\alpha$$\n\nSubstituting this into the radius of curvature formula:\n$$R = \\frac{v^2}{g\\cos\\alpha} = \\frac{v^2}{g\\left(\\frac{u\\cos\\theta}{v}\\right)} = \\frac{v^3}{gu\\cos\\theta}$$\n\nDuring downward motion from the highest point, the speed $v$ continuously increases. Since $R \\propto v^3$, the radius of curvature $R$ continuously increases."
+  }
+]

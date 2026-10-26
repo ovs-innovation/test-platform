@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 146,
+    "question_type": "mcq",
+    "question_text": "A particle started revolving from rest with a constant angular acceleration $a$ in a circular path of radius $r$. If centripetal acceleration becomes numerically equal to tangential acceleration at time $t$, then $t$ is equal to",
+    "options": [
+      "$t = \\frac{1}{a}$",
+      "$t = \\frac{1}{a^2}$",
+      "$t = \\frac{1}{\\sqrt{a}}$",
+      "$t = \\sqrt{a}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial angular velocity $\\omega_0 = 0$\nAngular acceleration $= a$\nAt time $t$, the angular velocity is $\\omega = \\omega_0 + at = at$.\n\nThe centripetal acceleration is:\n$a_c = \\omega^2 r = (at)^2 r = a^2 t^2 r$\n\nThe tangential acceleration is:\n$a_t = a r$\n\nAccording to the problem, centripetal acceleration is numerically equal to tangential acceleration:\n$a_c = a_t$\n$a^2 t^2 r = a r$\n$a t^2 = 1 \\implies t^2 = \\frac{1}{a} \\implies t = \\frac{1}{\\sqrt{a}}$\n\nThus, option (3) is correct."
+  },
+  {
+    "question_number": 147,
+    "question_type": "mcq",
+    "question_text": "An object of mass $m$ is projected from ground with a momentum $P$ at such an angle that its maximum height is $1/4^{\\text{th}}$ of its horizontal range. Minimum kinetic energy in its path will be",
+    "options": [
+      "$\\frac{P^2}{8m}$",
+      "$\\frac{P^2}{4m}$",
+      "$\\frac{3P^2}{4m}$",
+      "$\\frac{P^2}{m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given that the maximum height $H$ is $\\frac{1}{4}$ of the horizontal range $R$:\n$H = \\frac{1}{4} R$\n\nWe know that:\n$H = \\frac{u^2 \\sin^2\\theta}{2g}$\n$R = \\frac{2u^2 \\sin\\theta \\cos\\theta}{g}$\n\nTherefore:\n$\\frac{H}{R} = \\frac{\\tan\\theta}{4}$\n\nGiven $\\frac{H}{R} = \\frac{1}{4}$, we have:\n$\\frac{\\tan\\theta}{4} = \\frac{1}{4} \\implies \\tan\\theta = 1 \\implies \\theta = 45^\\circ$\n\nInitial momentum is $P = mu \\implies u = \\frac{P}{m}$.\nInitial kinetic energy is $K_0 = \\frac{1}{2} m u^2 = \\frac{P^2}{2m}$.\n\nThe kinetic energy is minimum at the highest point of the trajectory, where the vertical velocity component is zero and the horizontal velocity is $u_x = u \\cos\\theta$:\n$K_{\\min} = \\frac{1}{2} m (u \\cos\\theta)^2 = K_0 \\cos^2\\theta$\n\nSince $\\theta = 45^\\circ$:\n$\\cos 45^\\circ = \\frac{1}{\\sqrt{2}} \\implies \\cos^2 45^\\circ = \\frac{1}{2}$\n\nThus:\n$K_{\\min} = \\frac{P^2}{2m} \\times \\frac{1}{2} = \\frac{P^2}{4m}$\n\nHence, option (2) is correct."
+  },
+  {
+    "question_number": 148,
+    "question_type": "mcq",
+    "question_text": "The resultant vector of $\\vec{P}$ and $\\vec{Q}$ makes angle $\\theta_1$ with $\\vec{P}$ and $\\theta_2$ with $\\vec{Q}$. Then",
+    "options": [
+      "$\\theta_1 > \\theta_2$",
+      "$\\theta_1 < \\theta_2$ if $P > Q$",
+      "$\\theta_1 < \\theta_2$ if $P < Q$",
+      "$\\theta_1 > \\theta_2$ if $P = Q$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the resultant vector be $\\vec{R} = \\vec{P} + \\vec{Q}$.\nThe resultant always leans closer to the vector with the greater magnitude.\n- If $P > Q$, the resultant $\\vec{R}$ is closer to $\\vec{P}$ than to $\\vec{Q}$, meaning $\\theta_1 < \\theta_2$.\n- If $P < Q$, the resultant $\\vec{R}$ is closer to $\\vec{Q}$, meaning $\\theta_1 > \\theta_2$.\n- If $P = Q$, the resultant bisects the angle between them, meaning $\\theta_1 = \\theta_2$.\n\nTherefore, $\\theta_1 < \\theta_2$ if $P > Q$.\nHence, option (2) is correct."
+  },
+  {
+    "question_number": 149,
+    "question_type": "mcq",
+    "question_text": "A projectile is projected at an angle $\\theta$ ($> 45^\\circ$) with initial speed $u$. The time $t$ at which magnitude of vertical component of its velocity is equal to magnitude of horizontal component of its velocity, is",
+    "options": [
+      "$t = \\frac{u}{g}(\\sin^2\\theta - \\cos^2\\theta)$",
+      "$t = \\frac{u}{g}(\\sin\\theta - \\cos\\theta)$",
+      "$t = \\frac{u}{g}(\\cos\\theta - \\sin\\theta)$",
+      "$t = \\frac{u}{g}(\\cos\\theta + \\sin\\theta)$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Horizontal component of velocity remains constant:\n$v_x = u \\cos\\theta$\n\nVertical component of velocity at time $t$ during the upward journey is:\n$v_y = u \\sin\\theta - gt$\n\nSince $\\theta > 45^\\circ$, initially $u \\sin\\theta > u \\cos\\theta$. While going up, $v_y$ decreases until its magnitude equals $v_x$:\n$v_y = v_x$\n$u \\sin\\theta - gt = u \\cos\\theta$\n$gt = u \\sin\\theta - u \\cos\\theta$\n$t = \\frac{u}{g}(\\sin\\theta - \\cos\\theta)$\n\nTherefore, option (2) is correct."
+  },
+  {
+    "question_number": 150,
+    "question_type": "mcq",
+    "question_text": "Figure shows $ABCDEF$ as a regular hexagon with center $O$. What is the value of $\\vec{AB} + \\vec{AC} + \\vec{AD} + \\vec{AE} + \\vec{AF}$?",
+    "options": [
+      "$\\vec{AO}$",
+      "$2\\vec{AO}$",
+      "$4\\vec{AO}$",
+      "$6\\vec{AO}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Vectors",
+    "has_diagram": true,
+    "diagram_description": "A regular hexagon ABCDEF with vertices labeled counterclockwise starting from bottom-left A, then bottom-right B, middle-right C, top-right D, top-left E, and middle-left F. Point O is the center of the hexagon, connected to all six vertices by dashed lines.",
+    "solution": "Let the position vectors of the vertices with respect to the center $O$ be $\\vec{r}_A, \\vec{r}_B, \\vec{r}_C, \\vec{r}_D, \\vec{r}_E, \\vec{r}_F$.\nFor a regular hexagon with center $O$:\n$\\vec{r}_A + \\vec{r}_D = \\vec{0} \\implies \\vec{r}_D = -\\vec{r}_A$\n$\\vec{r}_B + \\vec{r}_E = \\vec{0} \\implies \\vec{r}_E = -\\vec{r}_B$\n$\\vec{r}_C + \\vec{r}_F = \\vec{0} \\implies \\vec{r}_F = -\\vec{r}_C$\n\nAlso, the sum of position vectors of all vertices of a regular polygon with respect to its center is zero:\n$\\vec{r}_A + \\vec{r}_B + \\vec{r}_C + \\vec{r}_D + \\vec{r}_E + \\vec{r}_F = \\vec{0}$\n\nNow consider the sum:\n$\\vec{S} = \\vec{AB} + \\vec{AC} + \\vec{AD} + \\vec{AE} + \\vec{AF}$\nExpressing each vector in terms of position vectors relative to $O$:\n$\\vec{AB} = \\vec{r}_B - \\vec{r}_A$\n$\\vec{AC} = \\vec{r}_C - \\vec{r}_A$\n$\\vec{AD} = \\vec{r}_D - \\vec{r}_A$\n$\\vec{AE} = \\vec{r}_E - \\vec{r}_A$\n$\\vec{AF} = \\vec{r}_F - \\vec{r}_A$\n\nAdding these equations:\n$\\vec{S} = (\\vec{r}_B + \\vec{r}_C + \\vec{r}_D + \\vec{r}_E + \\vec{r}_F) - 5\\vec{r}_A$\n\nSince $\\vec{r}_A + \\vec{r}_B + \\vec{r}_C + \\vec{r}_D + \\vec{r}_E + \\vec{r}_F = \\vec{0}$, we have:\n$\\vec{r}_B + \\vec{r}_C + \\vec{r}_D + \\vec{r}_E + \\vec{r}_F = -\\vec{r}_A$\n\nSubstituting this into the sum:\n$\\vec{S} = -\\vec{r}_A - 5\\vec{r}_A = -6\\vec{r}_A$\n\nSince $\\vec{r}_A = \\vec{OA}$, we have:\n$\\vec{S} = -6\\vec{OA} = 6\\vec{AO}$\n\nAlternatively:\n$\\vec{AB} + \\vec{AF} = \\vec{AO}$\n$\\vec{AC} + \\vec{AE} = 2\\vec{AO}$ (since $\\vec{AC} = \\vec{AB} + \\vec{BC} = \\vec{AO} + \\vec{OC}$, and so on)\n$\\vec{AD} = 2\\vec{AO}$\nSum $= \\vec{AO} + 2\\vec{AO} + 2\\vec{AO} + \\vec{AO} = 6\\vec{AO}$.\n\nThus, option (4) is correct."
+  }
+]

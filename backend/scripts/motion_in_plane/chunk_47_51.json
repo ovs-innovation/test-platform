@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 47,
+    "question_type": "mcq",
+    "question_text": "A fan makes $2400\\text{ rpm}$. If after switching off, it comes to rest in $10\\text{ seconds}$, then find the number of times it will rotate before it comes to rest, after it is switched off. (Assume constant retardation)",
+    "options": [
+      "100",
+      "200",
+      "400",
+      "800"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial rotational frequency: $$n_0 = 2400\\text{ rpm} = \\frac{2400}{60} = 40\\text{ rev/s}$$\nFinal rotational frequency: $$n = 0$$\nTime: $$t = 10\\text{ s}$$\n\nWith uniform angular retardation, the average rotational frequency is:\n$$n_{\\text{avg}} = \\frac{n_0 + n}{2} = \\frac{40 + 0}{2} = 20\\text{ rev/s}$$\n\nThe total number of revolutions $N$ before coming to rest is:\n$$N = n_{\\text{avg}} \\times t = 20 \\times 10 = 200$$\n\nThus, the fan rotates $200$ times before stopping."
+  },
+  {
+    "question_number": 48,
+    "question_type": "mcq",
+    "question_text": "A motor car is travelling at $30\\text{ m/s}$ on a circular road of radius $500\\text{ m}$. It is increasing its speed at the rate of $2\\text{ m/s}^2$, what is its acceleration at that instant?",
+    "options": [
+      "$2\\text{ m/s}^2$",
+      "$1.8\\text{ m/s}^2$",
+      "$2.7\\text{ m/s}^2$",
+      "$3.8\\text{ m/s}^2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nSpeed $v = 30\\text{ m/s}$\nRadius $r = 500\\text{ m}$\nTangential acceleration $a_t = 2\\text{ m/s}^2$\n\nThe radial (centripetal) acceleration is:\n$$a_c = \\frac{v^2}{r} = \\frac{30^2}{500} = \\frac{900}{500} = 1.8\\text{ m/s}^2$$\n\nSince tangential and radial accelerations are mutually perpendicular, the net acceleration is:\n$$a = \\sqrt{a_t^2 + a_c^2} = \\sqrt{2^2 + 1.8^2} = \\sqrt{4 + 3.24} = \\sqrt{7.24} \\approx 2.69\\text{ m/s}^2 \\approx 2.7\\text{ m/s}^2$$"
+  },
+  {
+    "question_number": 49,
+    "question_type": "mcq",
+    "question_text": "A person is standing at $(0, a)$ and is observing another person moving with constant velocity $v$ along $x$-axis starting from origin. Find at what rate the angular position of the particle is changing with respect to the person $\\frac{\\sqrt{3}a}{v}\\text{ s}$ later",
+    "options": [
+      "$\\frac{v}{2a}$",
+      "$\\frac{v}{4a}$",
+      "$\\frac{v}{a}$",
+      "$\\frac{v}{\\sqrt{3}a}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Relative Motion & Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the observer be at $P(0, a)$. The particle moves along the $x$-axis starting from origin with constant speed $v$, so at time $t$ its position is $(vt, 0)$.\n\nLet $\\theta$ be the angle that the line of sight makes with the vertical ($y$-axis):\n$$\\tan\\theta = \\frac{x}{a} = \\frac{vt}{a}$$\n\nDifferentiating with respect to time $t$:\n$$\\sec^2\\theta \\frac{d\\theta}{dt} = \\frac{v}{a}$$\n\nAt time $t = \\frac{\\sqrt{3}a}{v}$:\n$$\\tan\\theta = \\frac{v \\cdot \\frac{\\sqrt{3}a}{v}}{a} = \\sqrt{3} \\implies \\theta = 60^\\circ$$\n\nThus, $\\sec\\theta = \\sec 60^\\circ = 2$, so $\\sec^2\\theta = 4$.\n\nSubstituting into the derivative equation:\n$$4 \\frac{d\\theta}{dt} = \\frac{v}{a} \\implies \\frac{d\\theta}{dt} = \\frac{v}{4a}$$\n\nHence, the rate of change of angular position is $\\frac{v}{4a}$."
+  },
+  {
+    "question_number": 50,
+    "question_type": "mcq",
+    "question_text": "A particle moves in $xy$-plane with velocity $\\vec{v} = (2 - t)\\hat{i} + \\frac{t^2}{4}\\hat{j}$, where $t$ in $\\text{s}$ and $v$ in $\\text{m/s}$. The particle starts from origin. Find the $y$-coordinate when the $x$-coordinate becomes zero after start.",
+    "options": [
+      "$\\frac{8}{5}\\text{ m}$",
+      "$\\frac{24}{3}\\text{ m}$",
+      "$\\frac{4}{3}\\text{ m}$",
+      "$\\frac{16}{3}\\text{ m}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Motion in Two Dimensions",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given velocity:\n$$\\vec{v} = \\frac{dx}{dt}\\hat{i} + \\frac{dy}{dt}\\hat{j} = (2 - t)\\hat{i} + \\frac{t^2}{4}\\hat{j}$$\n\nIntegrating the $x$-component with initial condition $x(0) = 0$:\n$$x(t) = \\int_0^t (2 - t') dt' = 2t - \\frac{t^2}{2}$$\n\nThe $x$-coordinate becomes zero again when $x(t) = 0$ for $t > 0$:\n$$t\\left(2 - \\frac{t}{2}\\right) = 0 \\implies t = 4\\text{ s}$$\n\nIntegrating the $y$-component with initial condition $y(0) = 0$:\n$$y(t) = \\int_0^t \\frac{t'^2}{4} dt' = \\left[ \\frac{t'^3}{12} \\right]_0^t = \\frac{t^3}{12}$$\n\nAt $t = 4\\text{ s}$:\n$$y(4) = \\frac{4^3}{12} = \\frac{64}{12} = \\frac{16}{3}\\text{ m}$$\n\nTherefore, the $y$-coordinate is $\\frac{16}{3}\\text{ m}$."
+  },
+  {
+    "question_number": 51,
+    "question_type": "mcq",
+    "question_text": "A man starts from point $P$ and goes $20\\text{ m}$ due east, then $5\\text{ m}$ due North, then $35\\text{ m}$ due west and finally $25\\text{ m}$ due South. His displacement from point $P$ is",
+    "options": [
+      "$25\\text{ m at }\\tan^{-1}\\left(\\frac{3}{4}\\right)\\text{ South of West}$",
+      "$85\\text{ m at South West}$",
+      "$25\\text{ m at }\\tan^{-1}\\left(\\frac{4}{3}\\right)\\text{ South of West}$",
+      "$25\\text{ m at }\\tan^{-1}\\left(\\frac{4}{3}\\right)\\text{ West of South}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let East be along $+\\hat{i}$, North along $+\\hat{j}$, West along $-\\hat{i}$, and South along $-\\hat{j}$.\n\nThe successive displacements are:\n$$\\vec{s}_1 = 20\\hat{i}$$\n$$\\vec{s}_2 = 5\\hat{j}$$\n$$\\vec{s}_3 = -35\\hat{i}$$\n$$\\vec{s}_4 = -25\\hat{j}$$\n\nThe net displacement vector $\\vec{S}$ is:\n$$\\vec{S} = \\vec{s}_1 + \\vec{s}_2 + \\vec{s}_3 + \\vec{s}_4 = (20 - 35)\\hat{i} + (5 - 25)\\hat{j} = -15\\hat{i} - 20\\hat{j}$$\n\nThe magnitude of displacement is:\n$$|\\vec{S}| = \\sqrt{(-15)^2 + (-20)^2} = \\sqrt{225 + 400} = \\sqrt{625} = 25\\text{ m}$$\n\nSince both components are negative, the displacement is in the third quadrant (South-West).\nThe angle $\\theta$ with respect to West (negative $x$-axis) towards South (negative $y$-axis) is:\n$$\\tan\\theta = \\frac{|S_y|}{|S_x|} = \\frac{20}{15} = \\frac{4}{3} \\implies \\theta = \\tan^{-1}\\left(\\frac{4}{3}\\right)\\text{ South of West}$$\n\nTherefore, the displacement is $25\\text{ m at }\\tan^{-1}\\left(\\frac{4}{3}\\right)\\text{ South of West}$."
+  }
+]

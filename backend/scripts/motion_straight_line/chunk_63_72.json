@@ -1,0 +1,172 @@
+[
+  {
+    "question_number": 63,
+    "question_type": "mcq",
+    "question_text": "A particle is thrown vertically such that it passes same height at $1\\text{ s}$ and $5\\text{ s}$. Its speed of projection is ($g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$80\\text{ m/s}$",
+      "$50\\text{ m/s}$",
+      "$30\\text{ m/s}$",
+      "$10\\text{ m/s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For vertical motion under gravity, a body passes the same height at two times $t_1$ and $t_2$, where:\n$$t_1 + t_2 = \\frac{2u}{g} = T \\quad (\\text{total time of flight})$$\n\nGiven $t_1 = 1\\text{ s}$ and $t_2 = 5\\text{ s}$:\n$$1 + 5 = \\frac{2u}{g} \\implies 6 = \\frac{2u}{10} \\implies u = \\frac{60}{2} = 30\\text{ m/s}$$"
+  },
+  {
+    "question_number": 64,
+    "question_type": "mcq",
+    "question_text": "A body is thrown vertically upward, such that the distance travelled by it in fifth and sixth seconds are equal. The maximum height reached by the body is",
+    "options": [
+      "$30\\text{ m}$",
+      "$60\\text{ m}$",
+      "$125\\text{ m}$",
+      "$120\\text{ m}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Due to symmetry in vertical motion under gravity, the distance travelled in the last second of ascent equals the distance travelled in the first second of descent.\nSince the distance in the $5^{\\text{th}}$ second equals the distance in the $6^{\\text{th}}$ second:\n- The body finishes its upward journey at $t = 5\\text{ s}$ ($v = 0$ at $t = 5\\text{ s}$).\n- The time taken to reach the maximum height is $t = 5\\text{ s}$.\n\nInitial velocity:\n$$u = gt = 10 \\times 5 = 50\\text{ m/s}$$\n\nMaximum height reached:\n$$H_{\\text{max}} = \\frac{u^2}{2g} = \\frac{(50)^2}{2(10)} = \\frac{2500}{20} = 125\\text{ m}$$"
+  },
+  {
+    "question_number": 65,
+    "question_type": "mcq",
+    "question_text": "Velocity ($v$) versus displacement ($s$) graph of a body moving in a straight line is as shown in figure. Its corresponding acceleration ($a$) versus displacement ($s$) is\n\n[Refer to the given $v\\text{--}s$ graph]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "The question shows a $v\\text{--}s$ graph as a straight line with positive intercept on $v$-axis and positive slope $m > 0$. The four options are $a\\text{--}s$ graphs: (1) upward-opening curve; (2) horizontal line; (3) straight line with positive slope and positive intercept; (4) downward-sloping curve.",
+    "solution": "From the given $v\\text{--}s$ graph, $v$ is a linear function of $s$:\n$$v(s) = v_0 + ms \\quad (v_0 > 0, m > 0)$$\n\nAcceleration is related to $v$ and $s$ by:\n$$a = v \\frac{dv}{ds}$$\nSince $\\frac{dv}{ds} = m = \\text{constant}$:\n$$a(s) = (v_0 + ms)m = m v_0 + m^2 s$$\n\nThis is a straight-line equation of the form $a = m^2 s + c$ with:\n- Positive slope: $m^2 > 0$\n- Positive intercept on the $a$-axis: $c = m v_0 > 0$\n\nTherefore, the acceleration versus displacement graph is a straight line with positive slope and positive intercept, accurately shown in Graph (3)."
+  },
+  {
+    "question_number": 66,
+    "question_type": "mcq",
+    "question_text": "Position of a particle moving on a straight line is given by $x = 2t^2 - 6t$. The distance travelled by the particle in first four seconds is",
+    "options": [
+      "$3\\text{ m}$",
+      "$17\\text{ m}$",
+      "$22\\text{ m}$",
+      "$28\\text{ m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given position $x(t) = 2t^2 - 6t$.\nVelocity is:\n$$v(t) = \\frac{dx}{dt} = 4t - 6$$\n\nThe particle stops and changes direction when $v = 0$:\n$$4t - 6 = 0 \\implies t = 1.5\\text{ s}$$\nSince $t = 1.5\\text{ s}$ lies within the interval $[0, 4\\text{ s}]$, distance must be computed by summing distances before and after reversal:\n\n1. At $t = 0$: $x(0) = 0\\text{ m}$\n2. At $t = 1.5\\text{ s}$: $x(1.5) = 2(1.5)^2 - 6(1.5) = 4.5 - 9 = -4.5\\text{ m}$\n   Distance in first interval: $|-4.5 - 0| = 4.5\\text{ m}$\n\n3. At $t = 4\\text{ s}$: $x(4) = 2(4)^2 - 6(4) = 32 - 24 = 8\\text{ m}$\n   Distance in second interval: $|8 - (-4.5)| = 12.5\\text{ m}$\n\nTotal distance travelled in first $4\\text{ seconds}$:\n$$d = 4.5\\text{ m} + 12.5\\text{ m} = 17\\text{ m}$$"
+  },
+  {
+    "question_number": 67,
+    "question_type": "mcq",
+    "question_text": "A ball is dropped from a height on the floor. On colliding with floor it loses some of its energy. Which speed-time graphs best represents the motion of the ball?\n\n[Refer to the given speed-time graph options]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four speed-time graphs. Graph (1) shows symmetric triangular peaks with speed starting at zero. Graph (2) shows speed starting from a peak and bouncing. Graph (3) shows speed increasing linearly from zero, dropping discontinuously to a smaller non-zero value upon collision, decreasing linearly to zero, then increasing again. Graph (4) shows speed dropping abruptly to zero upon collision.",
+    "solution": "1. Initially dropped from rest, speed increases linearly under gravity: $v = gt$ (straight line from origin with slope $g$).\n2. When colliding with the floor, energy is lost, so the rebound speed $v_2 = e v_1 < v_1$. This appears as a sudden vertical drop in speed at collision time (from $v_1$ to $v_2 > 0$).\n3. As the ball moves upward against gravity, its speed decreases linearly to zero ($v = v_2 - gt$) at its maximum height.\n4. Therefore, the graph rises linearly from 0, suffers an abrupt discontinuous decrease at impact, then slopes linearly down to zero at peak height, which is correctly depicted in Graph (3)."
+  },
+  {
+    "question_number": 68,
+    "question_type": "mcq",
+    "question_text": "A body is moving towards north with initial velocity of $13\\text{ ms}^{-1}$. It is subjected to a retardation of $2\\text{ ms}^{-2}$ towards south. The distance travelled by it in $7^{\\text{th}}$ second is",
+    "options": [
+      "$\\text{Zero}$",
+      "$0.75\\text{ m}$",
+      "$0.25\\text{ m}$",
+      "$0.5\\text{ m}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initial velocity $u = 13\\text{ m/s}$ (north), acceleration $a = -2\\text{ m/s}^2$ (south).\nThe body momentarily comes to rest at time $t_0$:\n$$v = u + at_0 = 0 \\implies 13 - 2t_0 = 0 \\implies t_0 = 6.5\\text{ s}$$\n\nThe $7^{\\text{th}}$ second spans from $t = 6\\text{ s}$ to $t = 7\\text{ s}$. The reversal occurs at the midpoint $t = 6.5\\text{ s}$:\n\n1. From $t = 6\\text{ s}$ to $t = 6.5\\text{ s}$:\n   Velocity at $t = 6\\text{ s}$: $v(6) = 13 - 2(6) = 1\\text{ m/s}$.\n   Distance covered until coming to rest:\n   $$d_1 = \\frac{v(6)^2}{2|a|} = \\frac{1^2}{2(2)} = \\frac{1}{4} = 0.25\\text{ m}$$\n\n2. From $t = 6.5\\text{ s}$ to $t = 7\\text{ s}$ (duration $\\Delta t = 0.5\\text{ s}$):\n   The particle moves towards south from rest ($u = 0$) with acceleration $2\\text{ m/s}^2$:\n   $$d_2 = \\frac{1}{2}|a|(\\Delta t)^2 = \\frac{1}{2}(2)(0.5)^2 = 0.25\\text{ m}$$\n\nTotal distance travelled in the $7^{\\text{th}}$ second:\n$$d = d_1 + d_2 = 0.25 + 0.25 = 0.5\\text{ m}$$\n(Note: The displacement is zero, but the distance is $0.5\\text{ m}$)."
+  },
+  {
+    "question_number": 69,
+    "question_type": "mcq",
+    "question_text": "The acceleration versus time graph for a body moving along a straight line is shown in the figure. If at $t = 0$ the body starts from rest, then select correct statement\n\n[Refer to the given $a\\text{--}t$ graph]",
+    "options": [
+      "Body has same velocity at $t = 6\\text{ s}$ and $t = 10\\text{ s}$",
+      "Body has maximum speed at $t = 8\\text{ s}$",
+      "Motion is uniformly accelerated between $t = 2\\text{ s}$ and $t = 6\\text{ s}$",
+      "All of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "An acceleration-time ($a\\text{--}t$) graph. From $t = 0$ to $2\\text{ s}$, $a$ rises linearly from $0$ to $5\\text{ m/s}^2$. From $t = 2$ to $6\\text{ s}$, $a$ is constant at $5\\text{ m/s}^2$. From $t = 6$ to $8\\text{ s}$, $a$ decreases linearly from $5\\text{ m/s}^2$ to $0$. From $t = 8$ to $10\\text{ s}$, $a$ continues linearly into negative values, reaching $-5\\text{ m/s}^2$ at $t = 10\\text{ s}$.",
+    "solution": "Let us evaluate each statement:\n\n1. Statement (1): The change in velocity between $t = 6\\text{ s}$ and $t = 10\\text{ s}$ is the net area under the $a\\text{--}t$ graph:\n   - Triangle from $t = 6$ to $8$: $\\frac{1}{2} \\times (8 - 6) \\times 5 = +5\\text{ m/s}$\n   - Triangle from $t = 8$ to $10$: $\\frac{1}{2} \\times (10 - 8) \\times (-5) = -5\\text{ m/s}$\n   - Net area $= +5 - 5 = 0 \\implies v(10) = v(6)$. Statement (1) is true.\n\n2. Statement (2): For $0 \\le t < 8\\text{ s}$, $a(t) > 0$, so velocity is continuously increasing. For $t > 8\\text{ s}$, $a(t) < 0$, so velocity decreases. Thus velocity is maximum at $t = 8\\text{ s}$. Statement (2) is true.\n\n3. Statement (3): Between $t = 2\\text{ s}$ and $t = 6\\text{ s}$, $a = 5\\text{ m/s}^2$ (constant), which by definition is uniformly accelerated motion. Statement (3) is true.\n\nSince all statements (1), (2), and (3) are true, option (4) \"All of these\" is the correct choice."
+  },
+  {
+    "question_number": 70,
+    "question_type": "mcq",
+    "question_text": "A car travels a distance $s\\text{ km}$ on a straight road in two hours and then returns to the starting point in the next three hours. Its average speed in four hours (in km/h) is",
+    "options": [
+      "$\\frac{s}{5}$",
+      "$\\frac{5s}{12}$",
+      "$\\frac{2s}{5}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Average Speed",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. In the outward journey:\n   - Distance $= s\\text{ km}$\n   - Time $= 2\\text{ h}$\n   - Speed $v_1 = \\frac{s}{2}\\text{ km/h}$\n\n2. In the return journey:\n   - Distance $= s\\text{ km}$\n   - Time $= 3\\text{ h}$\n   - Speed $v_2 = \\frac{s}{3}\\text{ km/h}$\n\n3. In a total elapsed time of $4\\text{ hours}$:\n   - First $2\\text{ hours}$ (outward journey): covers distance $s\\text{ km}$.\n   - Next $2\\text{ hours}$ (part of return journey): travels at speed $v_2 = \\frac{s}{3}$ for $2\\text{ hours}$, covering:\n     $$d_2 = v_2 \\times 2 = \\frac{s}{3} \\times 2 = \\frac{2s}{3}\\text{ km}$$\n\n4. Total distance covered in $4\\text{ hours}$:\n   $$D = s + \\frac{2s}{3} = \\frac{5s}{3}\\text{ km}$$\n\n5. Average speed in four hours:\n   $$v_{\\text{avg}} = \\frac{\\text{Total distance}}{\\text{Total time}} = \\frac{\\frac{5s}{3}}{4} = \\frac{5s}{12}\\text{ km/h}$$"
+  },
+  {
+    "question_number": 71,
+    "question_type": "mcq",
+    "question_text": "A bird flies for $4\\text{ s}$ with a velocity of $|t - 2|\\text{ m/s}$ in a straight line, where $t$ is time in seconds. It covers a distance of",
+    "options": [
+      "$2\\text{ m}$",
+      "$4\\text{ m}$",
+      "$6\\text{ m}$",
+      "$8\\text{ m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since speed is always non-negative ($v(t) = |t - 2| \\ge 0$), the distance covered is the integral of speed over time from $t = 0$ to $t = 4\\text{ s}$:\n$$s = \\int_0^4 |t - 2|\\, dt$$\n\nSplitting the integral at $t = 2\\text{ s}$ where $t - 2 = 0$:\n$$s = \\int_0^2 (2 - t)\\, dt + \\int_2^4 (t - 2)\\, dt$$\n\nEvaluating the first integral:\n$$\\int_0^2 (2 - t)\\, dt = \\left[ 2t - \\frac{t^2}{2} \\right]_0^2 = 4 - 2 = 2\\text{ m}$$\n\nEvaluating the second integral:\n$$\\int_2^4 (t - 2)\\, dt = \\left[ \\frac{t^2}{2} - 2t \\right]_2^4 = (8 - 8) - (2 - 4) = 0 - (-2) = 2\\text{ m}$$\n\nTotal distance covered:\n$$s = 2\\text{ m} + 2\\text{ m} = 4\\text{ m}$$"
+  },
+  {
+    "question_number": 72,
+    "question_type": "mcq",
+    "question_text": "From the velocity-time graph of a particle moving in a straight line. The ratio of average velocity for interval $3\\text{ s}$ and instantaneous velocity at $3\\text{ s}$ is\n\n[Refer to the given $v\\text{--}t$ graph]",
+    "options": [
+      "$1 : 1$",
+      "$1 : 2$",
+      "$7 : 3$",
+      "$3 : 2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "A $v\\text{--}t$ graph. From $t = 0$ to $t = 4\\text{ s}$, velocity increases linearly from $0$ to $8\\text{ m/s}$. The grid marks show: at $t = 1\\text{ s}, v = 2\\text{ m/s}$; at $t = 2\\text{ s}, v = 4\\text{ m/s}$; at $t = 3\\text{ s}, v = 6\\text{ m/s}$; and at $t = 4\\text{ s}, v = 8\\text{ m/s}$. Beyond $t = 4\\text{ s}$, velocity remains constant at $8\\text{ m/s}$.",
+    "solution": "1. Instantaneous velocity at $t = 3\\text{ s}$:\n   Reading directly from the graph at $t = 3\\text{ s}$:\n   $$v(3) = 6\\text{ m/s}$$\n\n2. Average velocity for the interval $[0, 3\\text{ s}]$:\n   Displacement is the triangular area under the $v\\text{--}t$ graph from $t = 0$ to $3\\text{ s}$:\n   $$\\Delta x = \\frac{1}{2} \\times \\text{base} \\times \\text{height} = \\frac{1}{2} \\times 3\\text{ s} \\times 6\\text{ m/s} = 9\\text{ m}$$\n   Average velocity is:\n   $$v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t} = \\frac{9\\text{ m}}{3\\text{ s}} = 3\\text{ m/s}$$\n\n3. Ratio of average velocity to instantaneous velocity at $3\\text{ s}$:\n   $$\\frac{v_{\\text{avg}}}{v(3)} = \\frac{3}{6} = \\frac{1}{2} = 1 : 2$$"
+  }
+]

@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 13,
+    "question_type": "mcq",
+    "question_text": "The velocity of a particle is given by $v = \\sqrt{160 - 16x}$, where $x$ is position in $\\text{m}$ and $v$ is in $\\text{m/s}$. Its acceleration will be",
+    "options": [
+      "$-8\\text{ m s}^{-2}$",
+      "$5\\text{ m s}^{-2}$",
+      "$-9\\text{ m s}^{-2}$",
+      "$10\\text{ m s}^{-2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the velocity function:\n$$v = \\sqrt{160 - 16x}$$\n\nSquaring both sides:\n$$v^2 = 160 - 16x$$\n\nDifferentiating both sides with respect to position $x$:\n$$2v \\frac{\\mathrm{d}v}{\\mathrm{d}x} = -16$$\n\nSince acceleration is given by $a = v \\frac{\\mathrm{d}v}{\\mathrm{d}x}$:\n$$2a = -16 \\implies a = -8\\text{ m/s}^2$$\n\nThus, the correct option is (1)."
+  },
+  {
+    "question_number": 14,
+    "question_type": "mcq",
+    "question_text": "The distance travelled by a particle starting from rest and moving with an acceleration $\\frac{4}{3}\\text{ ms}^{-2}$ in the third second is",
+    "options": [
+      "$6\\text{ m}$",
+      "$4\\text{ m}$",
+      "$\\frac{10}{3}\\text{ m}$",
+      "$\\frac{19}{3}\\text{ m}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The distance travelled by a particle in the $n^{\\text{th}}$ second under constant acceleration is given by:\n$$S_n = u + \\frac{a}{2}(2n - 1)$$\n\nHere, the particle starts from rest, so $u = 0$.\nGiven:\n- Acceleration, $a = \\frac{4}{3}\\text{ m/s}^2$\n- Time interval, $n = 3$\n\nSubstituting these values:\n$$S_3 = 0 + \\frac{1}{2} \\left(\\frac{4}{3}\\right) (2 \\times 3 - 1) = \\frac{2}{3} \\times 5 = \\frac{10}{3}\\text{ m}$$\n\nThus, the correct option is (3)."
+  },
+  {
+    "question_number": 15,
+    "question_type": "mcq",
+    "question_text": "A ball is projected upwards from a height $h$ above the surface of the earth with velocity $v$. The time at which the ball strikes the ground is",
+    "options": [
+      "$\\frac{v}{g} + \\sqrt{\\frac{2h}{g}}$",
+      "$\\frac{2v}{g} - \\sqrt{\\frac{2h}{g}}$",
+      "$\\frac{v}{g}\\left[1 + \\sqrt{1 + \\frac{2gh}{v^2}}\\right]$",
+      "None of these"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Taking the point of projection as origin and the vertically upward direction as positive:\n- Initial velocity, $u = +v$\n- Acceleration, $a = -g$\n- Net vertical displacement when it strikes the ground, $s = -h$\n\nUsing the second equation of motion:\n$$s = ut + \\frac{1}{2}at^2$$\n$$-h = vt - \\frac{1}{2}gt^2$$\n$$\\frac{1}{2}gt^2 - vt - h = 0$$\n\nMultiplying by $2$:\n$$gt^2 - 2vt - 2h = 0$$\n\nUsing the quadratic formula to solve for time $t$ ($t > 0$):\n$$t = \\frac{-(-2v) \\pm \\sqrt{(-2v)^2 - 4(g)(-2h)}}{2g}$$\n$$t = \\frac{2v + \\sqrt{4v^2 + 8gh}}{2g}$$\n$$t = \\frac{v + \\sqrt{v^2 + 2gh}}{g} = \\frac{v}{g}\\left[1 + \\sqrt{1 + \\frac{2gh}{v^2}}\\right]$$\n\nThus, the correct option is (3)."
+  },
+  {
+    "question_number": 16,
+    "question_type": "mcq",
+    "question_text": "A motor boat covers a given distance in $6\\text{ hour}$ moving downstream on a river. It covers the same distance in $10\\text{ hour}$ moving upstream. The time it takes to cover the same distance in still water is",
+    "options": [
+      "$9.5\\text{ hour}$",
+      "$7.5\\text{ hour}$",
+      "$6.5\\text{ hour}$",
+      "$8\\text{ hour}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let $d$ be the distance covered, $v_b$ be the speed of the motor boat in still water, and $v_r$ be the speed of the river current.\n\nDownstream motion:\n$$v_b + v_r = \\frac{d}{t_1} = \\frac{d}{6}$$\n\nUpstream motion:\n$$v_b - v_r = \\frac{d}{t_2} = \\frac{d}{10}$$\n\nAdding the two equations:\n$$2v_b = d \\left(\\frac{1}{6} + \\frac{1}{10}\\right) = d \\left(\\frac{5 + 3}{30}\\right) = \\frac{8d}{30} = \\frac{4d}{15}$$\n$$v_b = \\frac{2d}{15}$$\n\nThe time taken by the boat to cover the distance $d$ in still water is:\n$$t = \\frac{d}{v_b} = \\frac{d}{\\frac{2d}{15}} = \\frac{15}{2} = 7.5\\text{ hours}$$\n\nAlternatively, using the formula $t = \\frac{2 t_1 t_2}{t_1 + t_2}$:\n$$t = \\frac{2 \\times 6 \\times 10}{6 + 10} = \\frac{120}{16} = 7.5\\text{ hours}$$\n\nThus, the correct option is (2)."
+  },
+  {
+    "question_number": 17,
+    "question_type": "mcq",
+    "question_text": "A police jeep is chasing a thief with velocity of $45\\text{ km hr}^{-1}$ who is moving in another jeep moving with velocity $153\\text{ km hr}^{-1}$. Police fires a bullet with muzzle velocity of $180\\text{ m s}^{-1}$. The velocity with which the bullet appears to strike the jeep of the thief, to the thief is",
+    "options": [
+      "$150\\text{ m s}^{-1}$",
+      "$27\\text{ m s}^{-1}$",
+      "$450\\text{ m s}^{-1}$",
+      "$250\\text{ m s}^{-1}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Convert the velocities into $\\text{m/s}$:\n- Speed of police jeep: \n$$v_p = 45 \\times \\frac{5}{18} = 12.5\\text{ m/s}$$\n- Speed of thief's jeep: \n$$v_t = 153 \\times \\frac{5}{18} = 42.5\\text{ m/s}$$\n- Muzzle speed of the bullet (relative to the police jeep): \n$$v_{b/p} = 180\\text{ m/s}$$\n\nThe speed of the bullet relative to the ground is:\n$$v_b = v_{b/p} + v_p = 180 + 12.5 = 192.5\\text{ m/s}$$\n\nThe velocity with which the bullet appears to strike the thief's jeep (relative to the thief) is:\n$$v_{b/t} = v_b - v_t = 192.5 - 42.5 = 150\\text{ m/s}$$\n\nThus, the correct option is (1)."
+  }
+]

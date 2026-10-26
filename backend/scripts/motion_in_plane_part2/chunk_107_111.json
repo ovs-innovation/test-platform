@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 107,
+    "question_type": "mcq",
+    "question_text": "A cricketer can throw a ball to a maximum horizontal distance of $50\\text{ m}$. How much high above the ground can he throw the same ball?",
+    "options": [
+      "$50\\text{ m}$",
+      "$25\\text{ m}$",
+      "$75\\text{ m}$",
+      "$100\\text{ m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum horizontal range of a projectile is given by:\n$$R_{\\max} = \\frac{u^2}{g}$$\nGiven, $R_{\\max} = 50\\text{ m}$, so:\n$$\\frac{u^2}{g} = 50\\text{ m}$$\n\nTo throw the ball to the maximum height, it must be thrown vertically upward (projection angle $\\theta = 90^\\circ$):\n$$H_{\\max} = \\frac{u^2}{2g} = \\frac{R_{\\max}}{2} = \\frac{50}{2} = 25\\text{ m}$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 108,
+    "question_type": "mcq",
+    "question_text": "Coordinates of a particle as a function of time $t$ are $x = 2t$, $y = 4t$. Path of the particle is a/an",
+    "options": [
+      "Straight line",
+      "Ellipse",
+      "Parabola",
+      "Hyperbola"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Kinematics in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the parametric equations of motion:\n$$x = 2t \\implies t = \\frac{x}{2}$$\n$$y = 4t$$\n\nSubstituting $t = \\frac{x}{2}$ into the equation for $y$:\n$$y = 4\\left(\\frac{x}{2}\\right) = 2x$$\n\nThis is an equation of the form $y = mx$, which represents a straight line passing through the origin.\n\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 109,
+    "question_type": "mcq",
+    "question_text": "A particle is moving with speed $v$ on a circle (of radius $r$ and centered at origin) as shown in the given figure, in anticlockwise fashion. Average acceleration of the particle during its motion from point $A$ to point $B$ is",
+    "options": [
+      "$\\frac{-2v^2}{\\pi r}(\\hat{i} - \\hat{j})$",
+      "$\\frac{-2v^2}{\\pi r}(\\hat{i} + \\hat{j})$",
+      "$\\frac{2v^2}{\\pi r}(\\hat{i} + \\hat{j})$",
+      "$\\frac{2v^2}{\\pi r}(\\hat{i} - \\hat{j})$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": true,
+    "diagram_description": "A circle of radius $r$ centered at origin $O$ on an $xy$-plane. Point $A$ lies on the positive $x$-axis at $(r, 0)$ and point $B$ lies on the positive $y$-axis at $(0, r)$. A particle moves counterclockwise along the perimeter from $A$ to $B$.",
+    "solution": "At point $A(r, 0)$, the particle is moving anticlockwise, so its velocity vector is in the $+y$-direction:\n$$\\vec{v}_A = v\\hat{j}$$\n\nAt point $B(0, r)$, its velocity vector is in the $-x$-direction:\n$$\\vec{v}_B = -v\\hat{i}$$\n\nThe change in velocity between points $A$ and $B$ is:\n$$\\Delta \\vec{v} = \\vec{v}_B - \\vec{v}_A = -v\\hat{i} - v\\hat{j} = -v(\\hat{i} + \\hat{j})$$\n\nThe distance covered along the circular arc from $A$ to $B$ is one-quarter of the circumference:\n$$s = \\frac{2\\pi r}{4} = \\frac{\\pi r}{2}$$\n\nSince speed $v$ is constant, the time taken is:\n$$\\Delta t = \\frac{s}{v} = \\frac{\\pi r}{2v}$$\n\nTherefore, the average acceleration is:\n$$\\vec{a}_{\\text{avg}} = \\frac{\\Delta \\vec{v}}{\\Delta t} = \\frac{-v(\\hat{i} + \\hat{j})}{\\frac{\\pi r}{2v}} = \\frac{-2v^2}{\\pi r}(\\hat{i} + \\hat{j})$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 110,
+    "question_type": "mcq",
+    "question_text": "When a man walks on a horizontal road with velocity $1\\text{ km/h}$, the rain appears to fall vertically at a speed of $2\\text{ km/h}$. The actual speed of the rain w.r.t. ground is",
+    "options": [
+      "$\\sqrt{3}\\text{ km/h}$",
+      "$\\sqrt{5}\\text{ km/h}$",
+      "$1\\text{ km/h}$",
+      "$3\\text{ km/h}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the horizontal direction along which the man walks be the $+x$-direction ($\\hat{i}$) and the vertically downward direction be the $-\\hat{j}$ direction.\n\nVelocity of the man:\n$$\\vec{v}_m = 1\\hat{i}\\text{ km/h}$$\n\nRelative velocity of the rain with respect to the man:\n$$\\vec{v}_{r/m} = -2\\hat{j}\\text{ km/h}$$\n\nBy relative velocity formula:\n$$\\vec{v}_{r/m} = \\vec{v}_r - \\vec{v}_m$$\n$$\\vec{v}_r = \\vec{v}_{r/m} + \\vec{v}_m = 1\\hat{i} - 2\\hat{j}\\text{ km/h}$$\n\nThe actual speed of the rain with respect to the ground is:\n$$|\\vec{v}_r| = \\sqrt{(1)^2 + (-2)^2} = \\sqrt{1 + 4} = \\sqrt{5}\\text{ km/h}$$\n\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 111,
+    "question_type": "mcq",
+    "question_text": "Path of a projectile as seen from another projectile is",
+    "options": [
+      "Straight",
+      "Circular",
+      "Hyperbolic",
+      "Parabolic"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The acceleration of any projectile near the surface of the Earth is constant and equal to the acceleration due to gravity, $\\vec{a} = \\vec{g}$ (downwards).\n\nFor two projectiles $1$ and $2$:\n$$\\vec{a}_1 = \\vec{g}, \\quad \\vec{a}_2 = \\vec{g}$$\n\nThe relative acceleration of projectile $1$ with respect to projectile $2$ is:\n$$\\vec{a}_{12} = \\vec{a}_1 - \\vec{a}_2 = \\vec{g} - \\vec{g} = 0$$\n\nSince the relative acceleration is zero, the relative velocity $\\vec{v}_{12} = \\vec{u}_1 - \\vec{u}_2$ remains constant in both magnitude and direction.\n\nConsequently, the relative position vector varies linearly with time:\n$$\\vec{r}_{12}(t) = \\vec{r}_{12}(0) + \\vec{v}_{12} t$$\n\nThus, the trajectory of one projectile as observed from another projectile is a straight line.\n\nHence, the correct option is (1)."
+  }
+]

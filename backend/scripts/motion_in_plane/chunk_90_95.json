@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 90,
+    "question_type": "mcq",
+    "question_text": "Which of the following quantities is not a vector quantity?",
+    "options": [
+      "Tension",
+      "Angular momentum",
+      "Speed",
+      "Linear momentum"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vectors & Scalars",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A scalar quantity has only magnitude and no specific direction in space, whereas a vector quantity has both magnitude and direction and obeys vector addition laws.\n\n- Tension is a pulling force exerted by a string, rope, or cable, which is a vector quantity.\n- Angular momentum ($\\vec{L} = \\vec{r} \\times \\vec{p}$) is an axial vector quantity.\n- Linear momentum ($\\vec{p} = m\\vec{v}$) is a polar vector quantity.\n- Speed is the magnitude of velocity ($v = |\\vec{v}|$) and has no direction, so it is a scalar quantity.\n\nTherefore, speed is not a vector quantity."
+  },
+  {
+    "question_number": 91,
+    "question_type": "mcq",
+    "question_text": "The angle made by the vector $\\vec{A} = \\sqrt{3}\\hat{i} + 3\\hat{j} + 2\\hat{k}$ with $y$-axis is",
+    "options": [
+      "$\\sin^{-1}\\left(\\frac{3}{\\sqrt{14}}\\right)$",
+      "$\\sin^{-1}\\left(\\frac{\\sqrt{7}}{4}\\right)$",
+      "$\\cos^{-1}\\left(\\frac{4}{3}\\right)$",
+      "$\\cos^{-1}\\left(\\frac{3}{5}\\right)$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Vectors & Direction Cosines",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given vector:\n$$\\vec{A} = \\sqrt{3}\\hat{i} + 3\\hat{j} + 2\\hat{k}$$\n\nThe magnitude of $\\vec{A}$ is:\n$$|\\vec{A}| = \\sqrt{(\\sqrt{3})^2 + 3^2 + 2^2} = \\sqrt{3 + 9 + 4} = \\sqrt{16} = 4$$\n\nThe direction cosine with respect to the $y$-axis is:\n$$\\cos\\beta = \\frac{A_y}{|\\vec{A}|} = \\frac{3}{4}$$\n\nUsing the trigonometric identity $\\sin^2\\beta + \\cos^2\\beta = 1$:\n$$\\sin\\beta = \\sqrt{1 - \\cos^2\\beta} = \\sqrt{1 - \\left(\\frac{3}{4}\\right)^2} = \\sqrt{1 - \\frac{9}{16}} = \\sqrt{\\frac{7}{16}} = \\frac{\\sqrt{7}}{4}$$\n\nTherefore:\n$$\\beta = \\sin^{-1}\\left(\\frac{\\sqrt{7}}{4}\\right)$$"
+  },
+  {
+    "question_number": 92,
+    "question_type": "mcq",
+    "question_text": "A particle is moving towards east with a velocity of $20\\text{ m/s}$. If in $20\\text{ s}$, it changes its velocity to $60^\\circ$ north of east, then its average acceleration will be",
+    "options": [
+      "$\\sqrt{3}\\text{ m/s}^2$",
+      "$2\\text{ m/s}^2$",
+      "$1\\text{ m/s}^2$",
+      "$0.5\\text{ m/s}^2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Vectors & Average Acceleration",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial velocity $\\vec{v}_1 = 20\\hat{i}\\text{ m/s}$ (due East)\nFinal velocity $\\vec{v}_2$ has magnitude $20\\text{ m/s}$ directed at $60^\\circ$ North of East:\n$$\\vec{v}_2 = 20\\cos 60^\\circ\\hat{i} + 20\\sin 60^\\circ\\hat{j} = 20(0.5)\\hat{i} + 20\\left(\\frac{\\sqrt{3}}{2}\\right)\\hat{j} = 10\\hat{i} + 10\\sqrt{3}\\hat{j}\\text{ m/s}$$\n\nChange in velocity $\\Delta\\vec{v}$:\n$$\\Delta\\vec{v} = \\vec{v}_2 - \\vec{v}_1 = (10 - 20)\\hat{i} + 10\\sqrt{3}\\hat{j} = -10\\hat{i} + 10\\sqrt{3}\\hat{j}$$\n\nMagnitude of change in velocity:\n$$|\\Delta\\vec{v}| = \\sqrt{(-10)^2 + (10\\sqrt{3})^2} = \\sqrt{100 + 300} = \\sqrt{400} = 20\\text{ m/s}$$\n\nAlternatively, using $|\\Delta\\vec{v}| = 2v\\sin\\left(\\frac{\\theta}{2}\\right) = 2(20)\\sin(30^\\circ) = 20\\text{ m/s}$.\n\nThe average acceleration is:\n$$a_{\\text{avg}} = \\frac{|\\Delta\\vec{v}|}{\\Delta t} = \\frac{20\\text{ m/s}}{20\\text{ s}} = 1\\text{ m/s}^2$$"
+  },
+  {
+    "question_number": 93,
+    "question_type": "mcq",
+    "question_text": "In uniform circular motion, which of the following physical quantity remains constant?",
+    "options": [
+      "Angular velocity",
+      "Angular momentum",
+      "Angular speed",
+      "All of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In uniform circular motion:\n1. **Angular speed ($\\omega$)**: The rate of change of angular displacement is constant in magnitude.\n2. **Angular velocity ($\\vec{\\omega}$)**: Directed perpendicular to the plane of rotation along the fixed axis of rotation. Both its magnitude and direction remain unchanged, so $\\vec{\\omega}$ is constant.\n3. **Angular momentum ($\\vec{L} = I\\vec{\\omega}$)**: With respect to the center of the circular orbit, both $I$ and $\\vec{\\omega}$ are constant in magnitude and direction, so $\\vec{L}$ remains constant.\n\nTherefore, all of these physical quantities remain constant."
+  },
+  {
+    "question_number": 94,
+    "question_type": "mcq",
+    "question_text": "A body is projected with velocity $\\vec{v} = (\\alpha\\hat{i} + \\beta\\hat{j})\\text{ m/s}$. The time of flight of body is [considering $x$-axis as horizontal and $y$-axis as vertical axis and $g$ is acceleration due to gravity]",
+    "options": [
+      "$\\frac{2\\beta}{g}$",
+      "$\\frac{2\\alpha}{g}$",
+      "$\\frac{2\\alpha\\beta}{g}$",
+      "$\\frac{2\\alpha}{g\\beta}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given initial velocity:\n$$\\vec{v} = u_x\\hat{i} + u_y\\hat{j} = \\alpha\\hat{i} + \\beta\\hat{j}$$\n\nHere, the horizontal component is $u_x = \\alpha$ and the vertical component is $u_y = \\beta$.\n\nTime of flight $T$ is determined solely by the vertical motion under constant downward acceleration $g$:\n$$y = u_y t - \\frac{1}{2}gt^2$$\nSetting $y = 0$ for landing:\n$$0 = t\\left(u_y - \\frac{1}{2}gt\\right) \\implies T = \\frac{2u_y}{g} = \\frac{2\\beta}{g}$$\n\nHence, the time of flight is $\\frac{2\\beta}{g}$."
+  },
+  {
+    "question_number": 95,
+    "question_type": "mcq",
+    "question_text": "A body is projected horizontally with speed $u$ from a tower of height $h$. The magnitude of velocity with which it will collide with ground will be [$g$ is acceleration due to gravity]",
+    "options": [
+      "$\\sqrt{2gh}$",
+      "$u + \\sqrt{2gh}$",
+      "$u^2 + \\sqrt{2gh}$",
+      "$\\sqrt{u^2 + 2gh}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Horizontal Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial horizontal speed, $u_x = u$\nInitial vertical speed, $u_y = 0$\nHeight of tower, $h$\n\nSince there is no horizontal acceleration:\n$$v_x = u_x = u$$\n\nFor vertical motion, using $v_y^2 = u_y^2 + 2gh$:\n$$v_y^2 = 0 + 2gh = 2gh \\implies v_y = \\sqrt{2gh}$$\n\nThe magnitude of the resultant velocity upon hitting the ground is:\n$$v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{u^2 + 2gh}$$\n\nAlternatively, by Conservation of Mechanical Energy:\n$$E_i = E_f \\implies \\frac{1}{2}mu^2 + mgh = \\frac{1}{2}mv^2 \\implies v^2 = u^2 + 2gh \\implies v = \\sqrt{u^2 + 2gh}$$\n\nHence, option (4) is correct."
+  }
+]

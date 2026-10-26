@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 7,
+    "question_type": "mcq",
+    "question_text": "A particle moving in the positive $x$ direction has initial velocity $v_0$. The particle undergoes retardation $k v^2$, where $v$ is instantaneous velocity. The velocity of the particle as a function of time is",
+    "options": [
+      "$v = \\frac{v_0}{1 + k v_0 t}$",
+      "$v = \\frac{2 v_0}{1 + k t}$",
+      "$v = \\frac{v_0}{k t}$",
+      "$v = \\frac{v_0}{(1 + k^2 v_0^2 t)}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The acceleration is given as retardation $a = -k v^2$.\nSince $a = \\frac{dv}{dt}$:\n$$\\frac{dv}{dt} = -k v^2$$\nSeparating variables:\n$$\\frac{dv}{v^2} = -k \\, dt$$\nIntegrating from initial velocity $v_0$ at $t = 0$ to velocity $v$ at time $t$:\n$$\\int_{v_0}^v \\frac{dv}{v^2} = -k \\int_0^t dt$$\n$$\\left[ -\\frac{1}{v} \\right]_{v_0}^v = -k t$$\n$$-\\frac{1}{v} + \\frac{1}{v_0} = -k t$$\n$$\\frac{1}{v} = \\frac{1}{v_0} + k t = \\frac{1 + k v_0 t}{v_0}$$\n$$v = \\frac{v_0}{1 + k v_0 t}$$\nThus, the correct option is (1)."
+  },
+  {
+    "question_number": 8,
+    "question_type": "mcq",
+    "question_text": "Two cars leave one after the other and travel with an acceleration of $4\\text{ m/s}^2$. Two minutes after the departure of the first, the distance between the cars becomes $28\\text{ km}$. The time interval between the departures of the cars is",
+    "options": [
+      "$190\\text{ sec}$",
+      "$100\\text{ sec}$",
+      "$80\\text{ sec}$",
+      "$140\\text{ sec}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the time interval between the departures of the two cars be $\\Delta t$ seconds.\nBoth cars start from rest with acceleration $a = 4\\text{ m/s}^2$.\nAt time $t_1 = 2\\text{ minutes} = 120\\text{ s}$ after the departure of the first car, its distance travelled is:\n$$s_1 = \\frac{1}{2} a t_1^2 = \\frac{1}{2} (4) (120)^2 = 2 \\times 14400 = 28800\\text{ m}$$\nThe second car has been travelling for time $t_2 = 120 - \\Delta t$.\nThe distance between the two cars is given as $28\\text{ km} = 28000\\text{ m}$:\n$$s_1 - s_2 = 28000\\text{ m}$$\n$$28800 - s_2 = 28000 \\implies s_2 = 800\\text{ m}$$\nSince the second car also started from rest with acceleration $a = 4\\text{ m/s}^2$:\n$$s_2 = \\frac{1}{2} a t_2^2$$\n$$800 = \\frac{1}{2} (4) t_2^2 = 2 t_2^2$$\n$$t_2^2 = 400 \\implies t_2 = 20\\text{ s}$$\nSince $t_2 = 120 - \\Delta t$:\n$$120 - \\Delta t = 20 \\implies \\Delta t = 100\\text{ s}$$\nWait, let's re-verify the calculation:\nIf $t_2 = 20\\text{ s}$, then $\\Delta t = 120 - 20 = 100\\text{ s}$.\nLet's check the options: (1) $190\\text{ sec}$, (2) $100\\text{ sec}$, (3) $80\\text{ sec}$, (4) $140\\text{ sec}$.\nOption (2) is $100\\text{ sec}$. Thus, correct option is (2)."
+  },
+  {
+    "question_number": 9,
+    "question_type": "mcq",
+    "question_text": "A rocket is fired vertically up from the ground with an acceleration of $10\\text{ m/s}^2$. The fuel is finished in $1\\text{ minute}$ and the rocket continues to move up. The maximum height attained by the rocket from the ground is ($g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$18\\text{ km}$",
+      "$26\\text{ km}$",
+      "$36\\text{ km}$",
+      "$20\\text{ km}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "During the first phase (fuel burning), $t_1 = 1\\text{ min} = 60\\text{ s}$:\nInitial velocity $u = 0$, acceleration $a = 10\\text{ m/s}^2$.\nHeight attained during powered flight:\n$$h_1 = \\frac{1}{2} a t_1^2 = \\frac{1}{2} (10) (60)^2 = 5 \\times 3600 = 18000\\text{ m} = 18\\text{ km}$$\nVelocity at burnout:\n$$v_1 = a t_1 = 10 \\times 60 = 600\\text{ m/s}$$\nDuring the second phase (free flight under gravity, $g = 10\\text{ m/s}^2$):\nAdditional height attained until vertical velocity becomes zero:\n$$h_2 = \\frac{v_1^2}{2g} = \\frac{(600)^2}{2 \\times 10} = \\frac{360000}{20} = 18000\\text{ m} = 18\\text{ km}$$\nTotal maximum height attained from the ground:\n$$H = h_1 + h_2 = 18\\text{ km} + 18\\text{ km} = 36\\text{ km}$$\nTherefore, the correct option is (3)."
+  },
+  {
+    "question_number": 10,
+    "question_type": "mcq",
+    "question_text": "Two objects are moving along the same straight line. They cross a point $A$ with acceleration $a, 2a$ and velocity $2u, u$ at time $t = 0$. The distance moved by the object when one overtakes the other is",
+    "options": [
+      "$\\frac{6u^2}{a}$",
+      "$\\frac{2u^2}{a}$",
+      "$\\frac{4u^2}{a}$",
+      "$\\frac{8u^2}{a}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the displacements of the two objects from point $A$ be $s_1$ and $s_2$.\nFor the first object: $u_1 = 2u$, $a_1 = a$.\n$$s_1 = u_1 t + \\frac{1}{2} a_1 t^2 = 2u t + \\frac{1}{2} a t^2$$\nFor the second object: $u_2 = u$, $a_2 = 2a$.\n$$s_2 = u_2 t + \\frac{1}{2} a_2 t^2 = u t + \\frac{1}{2} (2a) t^2 = u t + a t^2$$\nWhen one overtakes the other, $s_1 = s_2$ (at $t > 0$):\n$$2u t + \\frac{1}{2} a t^2 = u t + a t^2$$\n$$u t = \\frac{1}{2} a t^2$$\nSince $t \\neq 0$:\n$$t = \\frac{2u}{a}$$\nThe distance moved by either object at this time is:\n$$s = 2u \\left(\\frac{2u}{a}\\right) + \\frac{1}{2} a \\left(\\frac{2u}{a}\\right)^2 = \\frac{4u^2}{a} + \\frac{1}{2} a \\left(\\frac{4u^2}{a^2}\\right) = \\frac{4u^2}{a} + \\frac{2u^2}{a} = \\frac{6u^2}{a}$$\nThus, the correct option is (1)."
+  },
+  {
+    "question_number": 11,
+    "question_type": "mcq",
+    "question_text": "A juggler maintains four balls in motion, making each of them to rise a height of $20\\text{ m}$ from his hand. What time interval should he maintain between throws of successive balls? (Take $g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$3\\text{ s}$",
+      "$\\frac{3}{2}\\text{ s}$",
+      "$1\\text{ s}$",
+      "$2\\text{ s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum height attained by each ball is $h = 20\\text{ m}$.\nThe total time of flight of each ball is:\n$$T = 2 \\sqrt{\\frac{2h}{g}} = 2 \\sqrt{\\frac{2 \\times 20}{10}} = 2 \\times 2 = 4\\text{ s}$$\nSince the juggler maintains 4 balls in motion, a ball is thrown at equal intervals $\\Delta t$.\nTo maintain 4 balls in the air (or in motion cycle), the interval between successive throws is:\n$$\\Delta t = \\frac{T}{n} = \\frac{4\\text{ s}}{4} = 1\\text{ s}$$\nThus, the correct option is (3)."
+  },
+  {
+    "question_number": 12,
+    "question_type": "mcq",
+    "question_text": "Two particles $A$ and $B$ are thrown in directions as shown in figure simultaneously with velocities $5\\text{ m/s}$ and $20\\text{ m/s}$. Initially the particle $A$ is at a height $20\\text{ m}$ from ground. The time when the particles will collide is ($g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$0.2\\text{ sec}$",
+      "$0.8\\text{ sec}$",
+      "$0.6\\text{ sec}$",
+      "$0.5\\text{ sec}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": true,
+    "diagram_description": "A vertical schematic showing particle A at a height of 20 m above the ground moving vertically downward with a speed of 5 m/s, and particle B on the ground moving vertically upward with a speed of 20 m/s.",
+    "solution": "Let the upward direction be positive.\nFor particle $A$:\n- Initial position $y_A(0) = 20\\text{ m}$\n- Initial velocity $u_A = -5\\text{ m/s}$ (directed downwards)\n- Acceleration $a_A = -g = -10\\text{ m/s}^2$\n\nFor particle $B$:\n- Initial position $y_B(0) = 0\\text{ m}$\n- Initial velocity $u_B = +20\\text{ m/s}$ (directed upwards)\n- Acceleration $a_B = -g = -10\\text{ m/s}^2$\n\nThe relative acceleration between the two particles is:\n$$a_{\\text{rel}} = a_A - a_B = -g - (-g) = 0$$\nThe relative velocity of $A$ with respect to $B$ is:\n$$u_{\\text{rel}} = u_A - u_B = -5 - 20 = -25\\text{ m/s}$$\nThe magnitude of the relative velocity of approach is:\n$$v_{\\text{approach}} = 20 - (-5) = 25\\text{ m/s}$$\nThe initial separation between $A$ and $B$ is $d = 20\\text{ m}$.\nSince the relative acceleration is zero, the time of collision is:\n$$t = \\frac{d}{v_{\\text{approach}}} = \\frac{20}{25} = 0.8\\text{ s}$$\nTherefore, the correct option is (2)."
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 130,
+    "question_type": "mcq",
+    "question_text": "A particle starts moving from origin in $xy$ plane and its velocity after time $t$ is given by $\\vec{v} = 4\\hat{i} + 2t\\hat{j}$. The trajectory of particle is correctly shown in figure",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Trajectory of Particle in 2D",
+    "has_diagram": true,
+    "diagram_description": "Four trajectory graphs are shown: Graph (1) shows a curve concave downward. Graph (2) shows a straight line through the origin. Graph (3) shows an upward-opening parabola y ∝ x². Graph (4) shows a linear downward sloping line.",
+    "solution": "Given the velocity vector:\n$$\\vec{v} = \\frac{dx}{dt}\\hat{i} + \\frac{dy}{dt}\\hat{j} = 4\\hat{i} + 2t\\hat{j}$$\n\nIntegrating $x$-component with initial condition $x(0) = 0$:\n$$x(t) = \\int_0^t 4 dt' = 4t \\implies t = \\frac{x}{4}$$\n\nIntegrating $y$-component with initial condition $y(0) = 0$:\n$$y(t) = \\int_0^t 2t' dt' = t^2$$\n\nSubstituting $t = \\frac{x}{4}$ into the equation for $y$:\n$$y = \\left(\\frac{x}{4}\\right)^2 = \\frac{x^2}{16}$$\n\nThis is the equation of a parabola opening upwards with its vertex at the origin $(0, 0)$.\n\nTherefore, Graph (3) correctly represents the trajectory."
+  },
+  {
+    "question_number": 131,
+    "question_type": "mcq",
+    "question_text": "A body $A$ is projected vertically upwards. Another body $B$ of same mass is projected at an angle of $60^\\circ$ with the horizontal. If both the bodies attain same maximum height, then ratio of initial kinetic energy of body $A$ to that of body $B$ is",
+    "options": [
+      "$\\frac{3}{4}$",
+      "$\\frac{\\sqrt{3}}{2}$",
+      "$\\frac{1}{\\sqrt{2}}$",
+      "$\\frac{1}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion & Kinetic Energy",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For body $A$ projected vertically upwards with initial velocity $u_A$:\n$$H_A = \\frac{u_A^2}{2g}$$\n\nFor body $B$ projected at an angle $\\theta = 60^\\circ$ with initial velocity $u_B$:\n$$H_B = \\frac{u_B^2 \\sin^2(60^\\circ)}{2g} = \\frac{u_B^2 \\left(\\frac{\\sqrt{3}}{2}\\right)^2}{2g} = \\frac{3 u_B^2}{8g}$$\n\nGiven $H_A = H_B$:\n$$\\frac{u_A^2}{2g} = \\frac{3 u_B^2}{8g} \\implies \\frac{u_A^2}{u_B^2} = \\frac{3}{4}$$\n\nSince both bodies have the same mass $m$, the ratio of their initial kinetic energies is:\n$$\\frac{K_A}{K_B} = \\frac{\\frac{1}{2}m u_A^2}{\\frac{1}{2}m u_B^2} = \\frac{u_A^2}{u_B^2} = \\frac{3}{4}$$\n\nHence, option (1) is correct."
+  },
+  {
+    "question_number": 132,
+    "question_type": "mcq",
+    "question_text": "Particles $P$ and $Q$ are at $\\vec{r}_P = 3\\hat{i} + 2\\hat{j}$ and $\\vec{r}_Q = 2\\hat{i} + \\hat{j}$. Their velocities at these positions are $\\vec{v}_P = 2\\hat{i} + 3\\hat{j}$ and $\\vec{v}_Q = 3\\hat{i} + c\\hat{j}$ respectively. If they collide after one second, then the value of $c$ is",
+    "options": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "$4$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Relative Motion & Collision Condition",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the particles to collide after time $t = 1\\text{ s}$, their position vectors at $t = 1\\text{ s}$ must be identical:\n$$\\vec{r}_P(1) = \\vec{r}_Q(1)$$\n\nPosition of particle $P$ at $t = 1\\text{ s}$:\n$$\\vec{r}_P(1) = \\vec{r}_P + \\vec{v}_P \\times 1 = (3\\hat{i} + 2\\hat{j}) + (2\\hat{i} + 3\\hat{j}) = 5\\hat{i} + 5\\hat{j}$$\n\nPosition of particle $Q$ at $t = 1\\text{ s}$:\n$$\\vec{r}_Q(1) = \\vec{r}_Q + \\vec{v}_Q \\times 1 = (2\\hat{i} + \\hat{j}) + (3\\hat{i} + c\\hat{j}) = 5\\hat{i} + (1 + c)\\hat{j}$$\n\nEquating the $y$-components:\n$$5 = 1 + c \\implies c = 4$$\n\nTherefore, the value of $c$ is $4$."
+  },
+  {
+    "question_number": 133,
+    "question_type": "mcq",
+    "question_text": "If the block is pulled by the rope moving with speed $v$ as shown, then the horizontal velocity of the block is",
+    "options": [
+      "$v$",
+      "$v \\cos\\theta$",
+      "$\\frac{v}{\\cos\\theta}$",
+      "$\\frac{v}{\\sin\\theta}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Constrained Motion",
+    "has_diagram": true,
+    "diagram_description": "A block of mass m on a horizontal floor connected to a rope passing over a fixed pulley. The rope segment between block and pulley makes an angle θ with the vertical. The free end of the rope is pulled with speed v.",
+    "solution": "Let $h$ be the vertical height of the pulley above the block, and $x$ be the horizontal distance of the block from the vertical line passing through the pulley.\n\nThe length of the rope between the pulley and the block is:\n$$L = \\sqrt{x^2 + h^2}$$\n\nDifferentiating with respect to time $t$:\n$$\\frac{dL}{dt} = \\frac{x}{\\sqrt{x^2 + h^2}} \\frac{dx}{dt} = \\frac{x}{L} \\frac{dx}{dt}$$\n\nFrom the geometry of the triangle, the angle $\\theta$ is made with the vertical:\n$$\\sin\\theta = \\frac{x}{L}$$\n\nThe rate of shortening of the rope is the speed with which the rope is pulled:\n$$-\\frac{dL}{dt} = v$$\n\nThe horizontal velocity of the block is $v_{\\text{block}} = -\\frac{dx}{dt}$:\n$$v = \\sin\\theta \\cdot v_{\\text{block}} \\implies v_{\\text{block}} = \\frac{v}{\\sin\\theta}$$\n\nHence, option (4) is correct."
+  }
+]

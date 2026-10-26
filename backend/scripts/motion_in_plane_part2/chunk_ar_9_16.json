@@ -1,0 +1,154 @@
+[
+  {
+    "question_number": 9,
+    "question_type": "assertion_reason",
+    "assertion_text": "A food packet is dropped from an aeroplane flying horizontally. The path of food packet is straight line for the pilot.",
+    "reason_text": "Horizontal velocity of plane and food packet is same.",
+    "question_text": "Assertion (A): A food packet is dropped from an aeroplane flying horizontally. The path of food packet is straight line for the pilot.\nReason (R): Horizontal velocity of plane and food packet is same.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** When a food packet is dropped from an aeroplane flying horizontally at a constant speed, the packet shares the horizontal velocity of the plane. In the reference frame of the pilot, there is no relative velocity and no relative acceleration along the horizontal direction ($u_{rel, x} = 0$, $a_{rel, x} = 0$). Vertically, the packet accelerates downwards under gravity ($a_{rel, y} = g$). Therefore, relative to the pilot, the packet moves purely vertically downward in a straight line. Thus, the Assertion is true.\n\n2. **Reason Analysis:** In the absence of air resistance, the horizontal velocity of the food packet remains equal to the horizontal velocity of the plane throughout its flight. Thus, the Reason is true.\n\n3. **Explanation Check:** Since the horizontal velocities remain identical, there is no horizontal separation between the aeroplane and the packet at any instant, which directly explains why the path appears as a straight vertical line to the pilot. Hence, Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 10,
+    "question_type": "assertion_reason",
+    "assertion_text": "Instantaneous velocity of a particle is always along the tangent to its path.",
+    "reason_text": "$\\frac{d|\\vec{v}|}{dt}$ is a component of acceleration which is at $90^\\circ$ from the velocity vector.",
+    "question_text": "Assertion (A): Instantaneous velocity of a particle is always along the tangent to its path.\nReason (R): $\\frac{d|\\vec{v}|}{dt}$ is a component of acceleration which is at $90^\\circ$ from the velocity vector.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Kinematics in Two Dimensions",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** By definition, the instantaneous velocity vector is given by $\\vec{v} = \\frac{d\\vec{r}}{dt}$. As $\\Delta t \\to 0$, the displacement vector $\\Delta \\vec{r}$ lies along the tangent to the trajectory at that point. Thus, instantaneous velocity is always tangential to the path. The Assertion is true.\n\n2. **Reason Analysis:** The term $\\frac{d|\\vec{v}|}{dt}$ represents the rate of change of speed, which is the **tangential component of acceleration** ($a_t$). Tangential acceleration acts along the direction of velocity (parallel or anti-parallel, i.e., at $0^\\circ$ or $180^\\circ$), not at $90^\\circ$. It is the normal (centripetal) acceleration that acts perpendicular ($90^\\circ$) to the velocity vector. Thus, the Reason is false."
+  },
+  {
+    "question_number": 11,
+    "question_type": "assertion_reason",
+    "assertion_text": "Three vectors equal in magnitude cannot produce zero resultant.",
+    "reason_text": "Minimum four vectors are required to produce zero resultant.",
+    "question_text": "Assertion (A): Three vectors equal in magnitude cannot produce zero resultant.\nReason (R): Minimum four vectors are required to produce zero resultant.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** Three coplanar vectors of equal magnitude can produce a zero resultant if they are oriented at an angle of $120^\\circ$ with respect to each other, forming a closed equilateral triangle. Hence, they *can* produce a zero resultant, making the Assertion false.\n\n2. **Reason Analysis:** To produce a zero resultant:\n- With vectors of equal magnitude, a minimum of **two** vectors (equal in magnitude and opposite in direction) are required.\n- With vectors of unequal coplanar magnitudes, a minimum of **three** vectors are required.\nThus, minimum four vectors are not required to give a zero resultant in general, making the Reason false.\n\nBoth Assertion and Reason are false statements."
+  },
+  {
+    "question_number": 12,
+    "question_type": "assertion_reason",
+    "assertion_text": "Path of a projected ball is parabolic in uniform gravitational field for oblique projection in absence of air resistance.",
+    "reason_text": "Gravitational force always acts perpendicular to velocity during the motion of a projectile.",
+    "question_text": "Assertion (A): Path of a projected ball is parabolic in uniform gravitational field for oblique projection in absence of air resistance.\nReason (R): Gravitational force always acts perpendicular to velocity during the motion of a projectile.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** For an oblique projection in a uniform gravitational field without air resistance, the horizontal acceleration is zero while the vertical acceleration is constant ($-g$). The resulting trajectory equation is quadratic in $x$ ($y = x\\tan\\theta - \\frac{gx^2}{2u^2\\cos^2\\theta}$), which represents a parabola. Hence, the Assertion is true.\n\n2. **Reason Analysis:** Gravitational force always acts vertically downwards, whereas the velocity vector continuously changes its direction. The gravitational force is perpendicular to velocity **only at the highest point** of the trajectory. During all other points, the angle between gravity and velocity is either obtuse or acute. Thus, the Reason is false."
+  },
+  {
+    "question_number": 13,
+    "question_type": "assertion_reason",
+    "assertion_text": "Zero vector has specific direction.",
+    "reason_text": "Physical quantities having magnitude and direction are known as vectors.",
+    "question_text": "Assertion (A): Zero vector has specific direction.\nReason (R): Physical quantities having magnitude and direction are known as vectors.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** A zero (or null) vector has zero magnitude, and its direction is indeterminate (arbitrary), not specific. Therefore, the Assertion is false.\n\n2. **Reason Analysis:** For a physical quantity to be classified as a vector, having magnitude and direction is not sufficient; it must also obey the laws of vector addition (e.g., triangle law or parallelogram law). For instance, electric current has both magnitude and a specific direction, yet it is a scalar quantity because it follows algebraic addition. Thus, the Reason statement is false.\n\nBoth Assertion and Reason are false statements."
+  },
+  {
+    "question_number": 14,
+    "question_type": "assertion_reason",
+    "assertion_text": "Cross product of two vectors is either scalar or vector.",
+    "reason_text": "Cross product of two vectors is always a scalar.",
+    "question_text": "Assertion (A): Cross product of two vectors is either scalar or vector.\nReason (R): Cross product of two vectors is always a scalar.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** The cross product (vector product) of two vectors $\\vec{A}$ and $\\vec{B}$ is given by $\\vec{A} \\times \\vec{B} = AB\\sin\\theta\\,\\hat{n}$, which is **always a vector** quantity perpendicular to the plane containing the two vectors. It can never be a scalar. Thus, the Assertion is false.\n\n2. **Reason Analysis:** As stated above, the cross product of two vectors is always a vector, not a scalar (the dot product is a scalar). Thus, the Reason is also false.\n\nBoth Assertion and Reason are false statements."
+  },
+  {
+    "question_number": 15,
+    "question_type": "assertion_reason",
+    "assertion_text": "Shortest time taken to cross a river does not depend on the flow velocity of river.",
+    "reason_text": "Time taken to cross a river by shortest path increases with increase in flow velocity of river.",
+    "question_text": "Assertion (A): Shortest time taken to cross a river does not depend on the flow velocity of river.\nReason (R): Time taken to cross a river by shortest path increases with increase in flow velocity of river.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Relative Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** To cross a river in the shortest time, the swimmer must swim directly perpendicular to the river bank ($90^\\circ$ relative to the flow). The time taken is $t_{\\text{min}} = \\frac{d}{v_{br}}$, where $d$ is the river width and $v_{br}$ is the swimmer's speed in still water. This formula is independent of the river flow speed $v_r$. Thus, the Assertion is true.\n\n2. **Reason Analysis:** For the shortest path (directly across, perpendicular to banks), the resultant velocity across the river is $v_{\\text{res}} = \\sqrt{v_{br}^2 - v_r^2}$. The time taken is $t = \\frac{d}{\\sqrt{v_{br}^2 - v_r^2}}$. As river flow velocity $v_r$ increases, the denominator decreases, and hence the time $t$ increases. Thus, the Reason is also true.\n\n3. **Explanation Check:** While both statements are scientifically true, the Reason describes the condition for the *shortest path*, whereas the Assertion pertains to the *shortest time*. Hence, Reason is not the correct explanation of Assertion."
+  },
+  {
+    "question_number": 16,
+    "question_type": "assertion_reason",
+    "assertion_text": "A packet is dropped from a plane accelerating horizontally with constant acceleration. Path of the packet as seen from plane will not be a straight line.",
+    "reason_text": "The particle will have both horizontal and vertical acceleration with respect to plane. So, the path will be parabola.",
+    "question_text": "Assertion (A): A packet is dropped from a plane accelerating horizontally with constant acceleration. Path of the packet as seen from plane will not be a straight line.\nReason (R): The particle will have both horizontal and vertical acceleration with respect to plane. So, the path will be parabola.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "hard",
+    "topic": "Relative Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Assertion Analysis:** Let the horizontal acceleration of the plane be $\\vec{a}_p = a\\hat{i}$. With respect to the ground, the acceleration of the packet after release is $\\vec{a} = -g\\hat{j}$. In the frame of reference of the plane, the relative acceleration of the packet is:\n$$\\vec{a}_{\\text{rel}} = \\vec{a} - \\vec{a}_p = -a\\hat{i} - g\\hat{j}$$\nSince both $a$ and $g$ are constant, $\\vec{a}_{\\text{rel}}$ is a constant vector.\nAt the moment of release, the packet has zero relative velocity: $\\vec{v}_{\\text{rel}, 0} = 0$.\nA particle starting from rest under a constant net acceleration moves in a straight line along the direction of that acceleration. Therefore, the path of the packet as seen from the plane **is a straight line**. Thus, the Assertion is false.\n\n2. **Reason Analysis:** Although the particle has both horizontal and vertical relative accelerations, their resultant relative acceleration is constant, and the initial relative velocity is zero. For a particle released from rest under constant acceleration, the path is always a straight line, not a parabola. Thus, the Reason is false.\n\nBoth Assertion and Reason are false statements."
+  }
+]

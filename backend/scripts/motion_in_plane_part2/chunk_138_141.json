@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 138,
+    "question_type": "mcq",
+    "question_text": "An open trolley is moving on a horizontal road with constant velocity $v_1$. A man on the trolley throws a ball vertically upward (with respect to trolley) with velocity $v_2$. Select the correct statement.",
+    "options": [
+      "Time of flight of the ball to a man on the ground and the man on the trolley will be different",
+      "Maximum height attained by the ball for both men will be different",
+      "Horizontal range of the ball for both men will be different",
+      "Horizontal range of the ball for both men will be same"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. **Time of flight:** The vertical motion is governed by gravity $g$ and the vertical velocity $v_2$. Since vertical motion is independent of horizontal motion, the time of flight for both observers is $T = \\frac{2v_2}{g}$, which is identical for both observers.\n\n2. **Maximum height:** The maximum height depends only on the vertical component of velocity: $H = \\frac{v_2^2}{2g}$. This is also the same for both observers.\n\n3. **Horizontal range:** \n- To the man on the trolley, the ball is thrown purely vertically and lands back at the same point on the trolley, so the horizontal range observed is $R_{\\text{trolley}} = 0$.\n- To the man on the ground, the ball has a horizontal velocity component $v_1$, so it travels a horizontal distance $R_{\\text{ground}} = v_1 T = \\frac{2v_1 v_2}{g} \\neq 0$.\n\nTherefore, the horizontal range of the ball will be different for the two observers."
+  },
+  {
+    "question_number": 139,
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is incorrect?",
+    "options": [
+      "Average speed of a particle in given time interval cannot be less than magnitude of average velocity",
+      "It is possible to have a situation $\\left|\\frac{d\\vec{v}}{dt}\\right| \\neq 0$ but $\\frac{d|\\vec{v}|}{dt} = 0$",
+      "The average velocity of a particle is zero in a time interval and it is possible that instantaneous velocity is never zero in that interval",
+      "It is possible to have a situation in which $\\left|\\frac{d\\vec{v}}{dt}\\right| = 0$, but $\\frac{d|\\vec{v}|}{dt} \\neq 0$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Kinematics Constraints",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us analyze each statement:\n1. $\\text{Average speed} = \\frac{\\text{Distance}}{\\Delta t}$ and $|\\text{Average velocity}| = \\frac{|\\text{Displacement}|}{\\Delta t}$. Since $\\text{Distance} \\ge |\\text{Displacement}|$, average speed cannot be less than the magnitude of average velocity. (Correct)\n\n2. $\\left|\\frac{d\\vec{v}}{dt}\\right|$ is the magnitude of total acceleration, while $\\frac{d|\\vec{v}|}{dt}$ is the rate of change of speed (tangential acceleration). In uniform circular motion, acceleration is non-zero (centripetal acceleration exists), so $\\left|\\frac{d\\vec{v}}{dt}\\right| \\neq 0$, but speed is constant, so $\\frac{d|\\vec{v}|}{dt} = 0$. (Correct)\n\n3. In uniform circular motion completing one full revolution, net displacement is zero, so average velocity is zero, while instantaneous speed/velocity is never zero. (Correct)\n\n4. If $\\left|\\frac{d\\vec{v}}{dt}\\right| = 0$, it implies that the velocity vector $\\vec{v}$ is constant in both magnitude and direction. Thus, speed $|\\vec{v}|$ is constant, which strictly implies $\\frac{d|\\vec{v}|}{dt} = 0$. It is impossible for $\\frac{d|\\vec{v}|}{dt} \\neq 0$ when acceleration is zero. Hence, statement (4) is incorrect."
+  },
+  {
+    "question_number": 140,
+    "question_type": "mcq",
+    "question_text": "Compared to ideal projectile motion under gravity, which of the following is incorrect regarding another projectile motion in which air-friction is also considered?",
+    "options": [
+      "Time of flight decreases",
+      "Decrease in horizontal component of velocity continuously",
+      "Angle with horizontal is less at the time of striking the ground compared to angle of projection with horizontal",
+      "Angle with vertical is less at the time of striking the ground with respect to angle of projection with vertical"
+    ],
+    "correct_index": 2,
+    "difficulty": "hard",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When air resistance is considered:\n1. Air resistance continuously opposes the motion. The horizontal component of drag decelerates the projectile horizontally throughout the entire flight, so the horizontal component of velocity $v_x$ continuously decreases.\n2. Near the end of the trajectory, the horizontal velocity $v_x$ has reduced significantly compared to its initial value, causing the trajectory to become much steeper during descent.\n3. Because the trajectory becomes steeper, the angle with the horizontal at impact, $\\theta = \\tan^{-1}\\left(\\frac{|v_y|}{v_x}\\right)$, is **greater** than the angle of projection with the horizontal, not less.\n4. Consequently, the angle with the vertical at striking is **less** than the angle with the vertical at projection.\n\nTherefore, statement (3) is incorrect."
+  },
+  {
+    "question_number": 141,
+    "question_type": "mcq",
+    "question_text": "5 people are standing at the vertices of a regular pentagon of side $a$. Each person moves towards the person standing at the adjacent corner with same speed $v$. Then the people",
+    "options": [
+      "Meet at the centre of pentagon at time $t = \\frac{a}{v(1-\\cos 60^\\circ)}$",
+      "Meet at the centre of pentagon after covering distance $\\frac{a}{1-\\cos 72^\\circ}$",
+      "Never meet",
+      "Meet at the centre of pentagon after time $\\frac{a}{v}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Consider any two adjacent persons $A$ and $B$ separated by distance $a$ along the edge of the regular pentagon:\n- The exterior angle of a regular pentagon is $\\theta = \\frac{360^\\circ}{5} = 72^\\circ$.\n- Person $A$ moves directly toward person $B$ with speed $v$.\n- Person $B$ moves towards person $C$ with speed $v$. The velocity of $B$ makes an angle of $72^\\circ$ with the line connecting $A$ and $B$.\n- The component of $B$'s velocity along the line $AB$ directed away from $A$ is $v \\cos 72^\\circ$.\n- Therefore, the relative velocity of approach between $A$ and $B$ along the side of length $a$ is:\n  $$v_{\\text{app}} = v - v \\cos 72^\\circ = v(1 - \\cos 72^\\circ)$$\n- By symmetry, this rate of approach remains constant throughout the motion until they meet at the center.\n- The total time taken to meet is:\n  $$t = \\frac{a}{v_{\\text{app}}} = \\frac{a}{v(1 - \\cos 72^\\circ)}$$\n- The total distance covered by each person is:\n  $$d = v \\times t = \\frac{a}{1 - \\cos 72^\\circ}$$\n\nHence, they meet at the centre of the pentagon after covering a distance of $\\frac{a}{1 - \\cos 72^\\circ}$."
+  }
+]

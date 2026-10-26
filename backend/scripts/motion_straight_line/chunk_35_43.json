@@ -1,0 +1,155 @@
+[
+  {
+    "question_number": 35,
+    "question_type": "mcq",
+    "question_text": "Among the four graphs, there is only one graph for which average velocity $= 0$ is possible for a particular time interval starting from $t = 0$. Which one is it?",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four position-time (x-t) graphs are shown: Graph (1) starts at the origin (0, 0), rises to a peak, and then decreases back to cross the time axis at a later time t; Graph (2) starts at a positive position, rises and then falls slightly but never reaches its initial position; Graph (3) starts at a positive position and decreases smoothly towards the time axis; Graph (4) starts at the origin (0, 0) and increases monotonically.",
+    "solution": "Average velocity over a time interval $[0, t]$ is defined as:\n$$v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t} = \\frac{x(t) - x(0)}{t}$$\nFor the average velocity to be zero, the displacement must be zero, meaning:\n$$\\Delta x = 0 \\implies x(t) = x(0)$$\nIn Graph (1), the particle starts at $x(0) = 0$, reaches a maximum positive position, and then returns to $x(t) = 0$ at some later time $t > 0$. At this point, $\\Delta x = 0$, giving an average velocity of zero.\nNone of the other graphs return to their initial position at any later time."
+  },
+  {
+    "question_number": 36,
+    "question_type": "mcq",
+    "question_text": "If the relation between distance $x$ and time $t$ is given as $t = \\alpha x^2 + \\beta x$, $\\alpha$ and $\\beta$ being appropriate constants, then the retardation of the particle is ($v$ is the velocity of the particle):",
+    "options": [
+      "$2\\alpha v^3$",
+      "$2\\beta v^3$",
+      "$2\\alpha\\beta v^3$",
+      "$2\\beta^2 v^3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the relationship between time $t$ and position $x$:\n$$t = \\alpha x^2 + \\beta x$$\nDifferentiating both sides with respect to time $t$:\n$$\\frac{dt}{dt} = 2\\alpha x \\frac{dx}{dt} + \\beta \\frac{dx}{dt}$$\n$$1 = (2\\alpha x + \\beta) v \\implies v = (2\\alpha x + \\beta)^{-1}$$\nNow, differentiate velocity $v$ with respect to time $t$ to find acceleration $a$:\n$$a = \\frac{dv}{dt} = -(2\\alpha x + \\beta)^{-2} \\cdot 2\\alpha \\frac{dx}{dt}$$\n$$a = -\\frac{1}{(2\\alpha x + \\beta)^2} \\cdot 2\\alpha v = -v^2 \\cdot 2\\alpha v = -2\\alpha v^3$$\nRetardation is the negative of acceleration:\n$$\\text{Retardation} = -a = 2\\alpha v^3$$"
+  },
+  {
+    "question_number": 37,
+    "question_type": "mcq",
+    "question_text": "A person driving a car with a speed $72\\text{ km/hr}$, suddenly sees a boy crossing the road. If the distance moved by the car before the person applies brakes is $5\\text{ m}$, the reaction time of the person is:",
+    "options": [
+      "$0.5\\text{ s}$",
+      "$0.10\\text{ s}$",
+      "$10\\text{ s}$",
+      "$0.25\\text{ s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "First, convert the speed of the car from $\\text{km/hr}$ to $\\text{m/s}$:\n$$u = 72\\text{ km/hr} = 72 \\times \\frac{5}{18}\\text{ m/s} = 20\\text{ m/s}$$\nDuring the reaction time $t_r$, the car continues to move at its initial speed without any deceleration:\n$$d = u \\times t_r$$\nGiven $d = 5\\text{ m}$:\n$$5 = 20 \\times t_r \\implies t_r = \\frac{5}{20} = 0.25\\text{ s}$$"
+  },
+  {
+    "question_number": 38,
+    "question_type": "mcq",
+    "question_text": "A particle starts from rest from $x = 5\\text{ m}$. Its velocity-time curve is shown in figure. Determine the position of particle after $6\\text{ seconds}$, assuming particle moves in a straight line path along $x$-axis.",
+    "options": [
+      "$54\\text{ m}$",
+      "$50\\text{ m}$",
+      "$45\\text{ m}$",
+      "$40\\text{ m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "A velocity-time graph showing $v$ starting from $0\\text{ m/s}$ at $t = 0$ and increasing linearly to $10\\text{ m/s}$ at $t = 3\\text{ s}$. From $t = 3\\text{ s}$ to $t = 6\\text{ s}$, the velocity remains constant at $10\\text{ m/s}$.",
+    "solution": "The displacement of the particle is the area under the $v-t$ curve between $t = 0$ and $t = 6\\text{ s}$.\n$$\\Delta x = \\text{Area of triangle} + \\text{Area of rectangle}$$\n$$\\Delta x = \\left(\\frac{1}{2} \\times 3\\text{ s} \\times 10\\text{ m/s}\\right) + \\left((6 - 3)\\text{ s} \\times 10\\text{ m/s}\\right)$$\n$$\\Delta x = 15\\text{ m} + 30\\text{ m} = 45\\text{ m}$$\nThe initial position is $x_0 = 5\\text{ m}$. Therefore, the position at $t = 6\\text{ s}$ is:\n$$x(6) = x_0 + \\Delta x = 5\\text{ m} + 45\\text{ m} = 50\\text{ m}$$"
+  },
+  {
+    "question_number": 39,
+    "question_type": "mcq",
+    "question_text": "The velocity ($v$) of a particle moving along $x$-axis varies with its position $x$ as shown in figure. The acceleration $a$ of the particle varies with position as:",
+    "options": [
+      "$a = x + 2$",
+      "$a = 2x^2 + 4$",
+      "$a = x^2 + 2$",
+      "$a = x - 4$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "A straight-line graph of velocity $v$ against position $x$. The vertical axis intercept is at $v = 2$, and the straight line is inclined at an angle of $45^\\circ$ to the positive $x$-axis.",
+    "solution": "From the given $v-x$ graph, the curve is a straight line with:\n- $v$-intercept $c = 2$\n- Slope $m = \\tan(45^\\circ) = 1$\n\nThus, the equation of the line is:\n$$v = x + 2$$\nThe derivative of velocity with respect to position is:\n$$\\frac{dv}{dx} = 1$$\nAcceleration in terms of position is given by:\n$$a = v \\frac{dv}{dx}$$\n$$a = (x + 2) \\times 1 = x + 2$$"
+  },
+  {
+    "question_number": 40,
+    "question_type": "mcq",
+    "question_text": "A body is released from a height and falls freely towards ground. Exactly $1\\text{ sec}$ later another body is released. What is the distance between the two bodies $2\\text{ sec}$ after the release of the second body if $g = 9.8\\text{ m/s}^2$ and nobody has reached ground by then?",
+    "options": [
+      "$45\\text{ m}$",
+      "$44.3\\text{ m}$",
+      "$25\\text{ m}$",
+      "$24.5\\text{ m}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The second body has fallen for time $t_2 = 2\\text{ s}$.\nSince the first body was released $1\\text{ s}$ earlier, it has been falling for:\n$$t_1 = 2 + 1 = 3\\text{ s}$$\nThe distance fallen by the first body is:\n$$s_1 = \\frac{1}{2} g t_1^2 = \\frac{1}{2} \\times 9.8 \\times (3)^2 = 4.9 \\times 9 = 44.1\\text{ m}$$\nThe distance fallen by the second body is:\n$$s_2 = \\frac{1}{2} g t_2^2 = \\frac{1}{2} \\times 9.8 \\times (2)^2 = 4.9 \\times 4 = 19.6\\text{ m}$$\nThe separation between the two bodies is:\n$$\\Delta s = s_1 - s_2 = 44.1 - 19.6 = 24.5\\text{ m}$$\nAlternatively:\n$$\\Delta s = \\frac{1}{2} g (t_1^2 - t_2^2) = \\frac{1}{2} \\times 9.8 \\times (9 - 4) = 4.9 \\times 5 = 24.5\\text{ m}$$"
+  },
+  {
+    "question_number": 41,
+    "question_type": "mcq",
+    "question_text": "A body starts accelerating uniformly from rest. If $t_1, t_2$ and $t_3$ are the time taken by the body to cover successive equal distances, then $t_1 : t_2 : t_3$ is:",
+    "options": [
+      "$1 : \\sqrt{2} : \\sqrt{3}$",
+      "$1 : (\\sqrt{2} - 1) : (\\sqrt{3} - \\sqrt{2})$",
+      "$1 : 2 : 3$",
+      "None of these"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the successive equal distances be $d$, and acceleration be $a$.\nUsing $s = \\frac{1}{2}at^2$, the total time $T_n$ to cover distance $n \\cdot d$ from rest is:\n$$T_n = \\sqrt{\\frac{2nd}{a}}$$\nThus:\n- Total time to cover distance $d$: $T_1 = \\sqrt{\\frac{2d}{a}}$\n- Total time to cover distance $2d$: $T_2 = \\sqrt{\\frac{4d}{a}} = \\sqrt{2} \\sqrt{\\frac{2d}{a}} = \\sqrt{2} T_1$\n- Total time to cover distance $3d$: $T_3 = \\sqrt{\\frac{6d}{a}} = \\sqrt{3} \\sqrt{\\frac{2d}{a}} = \\sqrt{3} T_1$\n\nThe time taken for each individual interval of distance $d$ is:\n- $t_1 = T_1$\n- $t_2 = T_2 - T_1 = (\\sqrt{2} - 1) T_1$\n- $t_3 = T_3 - T_2 = (\\sqrt{3} - \\sqrt{2}) T_1$\n\nTherefore:\n$$t_1 : t_2 : t_3 = 1 : (\\sqrt{2} - 1) : (\\sqrt{3} - \\sqrt{2})$$"
+  },
+  {
+    "question_number": 42,
+    "question_type": "mcq",
+    "question_text": "A car covers $\\frac{2}{5}\\text{th}$ of a distance at a speed of $80\\text{ km/h}$ and $\\frac{3}{5}\\text{th}$ of the distance at a speed of $60\\text{ km/h}$. Average speed of car for complete journey is:",
+    "options": [
+      "$65\\text{ km/h}$",
+      "$70.5\\text{ km/h}$",
+      "$66.67\\text{ km/h}$",
+      "$77.5\\text{ km/h}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the total distance be $d$.\nTime taken to cover the first $\\frac{2}{5}d$:\n$$t_1 = \\frac{\\frac{2}{5}d}{80} = \\frac{2d}{400} = \\frac{d}{200}$$\nTime taken to cover the remaining $\\frac{3}{5}d$:\n$$t_2 = \\frac{\\frac{3}{5}d}{60} = \\frac{3d}{300} = \\frac{d}{100} = \\frac{2d}{200}$$\nTotal time for the journey:\n$$t = t_1 + t_2 = \\frac{d}{200} + \\frac{2d}{200} = \\frac{3d}{200}$$\nAverage speed is defined as total distance divided by total time:\n$$v_{\\text{avg}} = \\frac{d}{t} = \\frac{d}{\\frac{3d}{200}} = \\frac{200}{3} \\approx 66.67\\text{ km/h}$$"
+  },
+  {
+    "question_number": 43,
+    "question_type": "mcq",
+    "question_text": "A body starting from rest moves with uniform acceleration on a horizontal surface. The body covers $3$ consecutive equal distances from beginning in time $t_1, t_2$ and $t_3$ seconds. The ratio $t_1 : t_2 : t_3$ is:",
+    "options": [
+      "$1 : 2 : 3$",
+      "$1 : \\sqrt{2} : \\sqrt{3}$",
+      "$1 : (\\sqrt{2}-1) : (\\sqrt{3}-\\sqrt{2})$",
+      "$\\sqrt{3} : \\sqrt{2} : 1$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the body start from rest ($u = 0$) with uniform acceleration $a$, and let each of the consecutive equal distances be $s$.\nFrom $s = \\frac{1}{2} a t^2$, the total time taken to travel a distance $x$ from the start is $t = \\sqrt{\\frac{2x}{a}}$.\n- Time to cover the first distance $s$: $T_1 = \\sqrt{\\frac{2s}{a}} = t_1$\n- Time to cover total distance $2s$: $T_2 = \\sqrt{\\frac{4s}{a}} = \\sqrt{2} t_1$\n- Time to cover total distance $3s$: $T_3 = \\sqrt{\\frac{6s}{a}} = \\sqrt{3} t_1$\n\nThe time taken to cover each individual interval is:\n- $t_1 = T_1$\n- $t_2 = T_2 - T_1 = (\\sqrt{2} - 1) t_1$\n- $t_3 = T_3 - T_2 = (\\sqrt{3} - \\sqrt{2}) t_1$\n\nHence, the ratio is:\n$$t_1 : t_2 : t_3 = 1 : (\\sqrt{2} - 1) : (\\sqrt{3} - \\sqrt{2})$$"
+  }
+]

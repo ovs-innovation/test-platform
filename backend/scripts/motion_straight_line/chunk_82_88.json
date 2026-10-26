@@ -1,0 +1,121 @@
+[
+  {
+    "question_number": 82,
+    "question_type": "mcq",
+    "question_text": "If velocity of the particle $v = k x^{3/2}$, then the acceleration versus displacement graph is",
+    "options": [
+      "Parabola",
+      "Circle",
+      "Straight line",
+      "Rectangular hyperbola"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs & Calculus",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given velocity as a function of position:\n$$v = k x^{3/2}$$\n\nAcceleration in terms of velocity and position is:\n$$a = v \\frac{dv}{dx}$$\n\nDifferentiating $v$ with respect to $x$:\n$$\\frac{dv}{dx} = \\frac{d}{dx}\\left(k x^{3/2}\\right) = \\frac{3}{2} k x^{1/2}$$\n\nSubstituting into the expression for acceleration:\n$$a = \\left(k x^{3/2}\\right) \\cdot \\left(\\frac{3}{2} k x^{1/2}\\right) = \\frac{3}{2} k^2 x^2$$\n\nSince $a \\propto x^2$, the graph between acceleration and displacement is a parabola."
+  },
+  {
+    "question_number": 83,
+    "question_type": "mcq",
+    "question_text": "Which of the following graphs is not possible?\n\n[Refer to the given graph options]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four kinematic graphs: (1) $v\\text{--}t$ curve increasing quadratically; (2) $v\\text{--}x$ graph containing a vertical line segment where velocity suddenly drops from a peak to zero at the same displacement $x$; (3) $v\\text{--}x$ graph with two continuous triangular/curved peaks; (4) $v\\text{--}t$ graph with constant velocity horizontal line.",
+    "solution": "In Graph (2), the $v\\text{--}x$ graph contains a vertical straight line segment at a single position $x$.\n1. A vertical line on a $v\\text{--}x$ graph implies that at that single instantaneous position $x$, the particle possesses an infinite number of different velocities simultaneously, which is physically impossible for a single particle.\n2. Furthermore, the slope $\\frac{dv}{dx} = \\infty$, which would require infinite acceleration $a = v \\frac{dv}{dx} = \\infty$ and therefore an infinite force.\n\nThus, Graph (2) is not physically possible."
+  },
+  {
+    "question_number": 84,
+    "question_type": "mcq",
+    "question_text": "If velocity of a particle is given by the equation $v = k |x|$, then the graph between acceleration and displacement is\n\n[Refer to the given $a\\text{--}x$ graph options]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs & Calculus",
+    "has_diagram": true,
+    "diagram_description": "Four acceleration-displacement ($a\\text{--}x$) graphs for $x > 0$: (1) straight line with negative slope; (2) curve concave upward; (3) straight line passing through origin with positive slope; (4) horizontal line (constant acceleration).",
+    "solution": "For $x > 0$, the velocity is given by:\n$$v = k x$$\n\nAcceleration is:\n$$a = v \\frac{dv}{dx}$$\n\nDifferentiating with respect to $x$:\n$$\\frac{dv}{dx} = k$$\n\nSubstituting into acceleration:\n$$a = (kx)(k) = k^2 x$$\n\nThis is a straight-line equation of the form $a = mx$ passing through the origin with positive slope $m = k^2 > 0$.\n\nGraph (3) correctly displays this straight line passing through the origin with positive slope."
+  },
+  {
+    "question_number": 85,
+    "question_type": "mcq",
+    "question_text": "Which of the following is not true?",
+    "options": [
+      "All the kinematic equations of motion are valid for uniformly accelerated motion",
+      "In equation $S = ut + \\frac{1}{2}at^2$, $S$ is distance travelled by the body",
+      "In equation $v^2 = u^2 + 2aS$, $v^2$ and $u^2$ are scalars",
+      "In equation $S_{n^{\\text{th}}} = u + \\frac{1}{2}a(2n - 1)$, dimension of $S$ is $[\\text{L}]$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Equations of Motion Fundamentals",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let us examine the statements:\n1. Statement (1) is true: The standard kinematic equations ($v = u + at$, $S = ut + \\frac{1}{2}at^2$, $v^2 = u^2 + 2aS$) are strictly derived under the condition of constant (uniform) acceleration.\n2. Statement (2) is NOT true: In the kinematic equation $S = ut + \\frac{1}{2}at^2$, $S$ represents displacement (the vector change in position), NOT distance. If a particle reverses direction, distance travelled differs from displacement.\n3. Statement (3) is true: Speed squared $v^2 = \\vec{v} \\cdot \\vec{v}$ is a scalar quantity.\n4. Statement (4) is true: While numerically $S_{n^{\\text{th}}}$ represents displacement in 1 second, physically its dimension is length $[\\text{L}]$.\n\nTherefore, statement (2) is the incorrect (not true) statement."
+  },
+  {
+    "question_number": 86,
+    "question_type": "mcq",
+    "question_text": "Two objects are moving in a straight line. Their position ($x$) versus time ($t$) graphs are as in figure. The relative velocity of $A$ with respect to $B$ is $\\left(\\sin 37^\\circ = \\frac{3}{5}\\right)$\n\n[Refer to the given $x\\text{--}t$ graph]",
+    "options": [
+      "$\\frac{6}{5}\\text{ m/s}$",
+      "$\\frac{3}{4}\\text{ m/s}$",
+      "$\\frac{3}{2}\\text{ m/s}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Velocity",
+    "has_diagram": true,
+    "diagram_description": "A position-time ($x\\text{--}t$) graph showing lines for two objects $A$ and $B$. Line $A$ passes through the origin and makes an angle of $37^\\circ$ with the horizontal time ($t$) axis. Line $B$ starts at a positive position on the $x$-axis, slopes downward to the right, and makes an angle of $53^\\circ$ with the vertical position ($x$) axis.",
+    "solution": "Velocity on an $x\\text{--}t$ graph is given by the slope with respect to the time axis, $v = \\frac{dx}{dt}$:\n\n1. For object $A$:\n   The line makes an angle of $37^\\circ$ with the horizontal $t$-axis and slopes upward:\n   $$v_A = +\\tan 37^\\circ = \\frac{\\sin 37^\\circ}{\\cos 37^\\circ} = \\frac{3/5}{4/5} = \\frac{3}{4}\\text{ m/s}$$\n\n2. For object $B$:\n   The line makes an angle of $53^\\circ$ with the vertical $x$-axis and slopes downward.\n   The angle it makes with the horizontal $t$-axis is $90^\\circ - 53^\\circ = 37^\\circ$.\n   Since it slopes downward, its slope is negative:\n   $$v_B = -\\tan 37^\\circ = -\\frac{3}{4}\\text{ m/s}$$\n\n3. The relative velocity of $A$ with respect to $B$ is:\n   $$v_{AB} = v_A - v_B = \\frac{3}{4} - \\left(-\\frac{3}{4}\\right) = \\frac{3}{4} + \\frac{3}{4} = \\frac{6}{4} = \\frac{3}{2}\\text{ m/s}$$\n\nThus, option (3) $\\frac{3}{2}\\text{ m/s}$ is correct."
+  },
+  {
+    "question_number": 87,
+    "question_type": "mcq",
+    "question_text": "If acceleration of a particle is negative, then its speed is",
+    "options": [
+      "Increasing",
+      "Decreasing",
+      "Remains same",
+      "May be increasing or decreasing"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Velocity and Acceleration Concepts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Speed is the magnitude of velocity, $|v|$:\n- If velocity is positive ($v > 0$) and acceleration is negative ($a < 0$), velocity decreases towards zero, so speed $|v|$ is decreasing.\n- If velocity is negative ($v < 0$) and acceleration is negative ($a < 0$), velocity becomes more negative, so speed $|v|$ is increasing.\n- If the particle is momentarily at rest ($v = 0$), negative acceleration causes it to move in the negative direction, so speed increases from zero.\n\nTherefore, a negative acceleration can cause the speed to either increase or decrease depending on the direction of velocity. Thus, option (4) \"May be increasing or decreasing\" is correct."
+  },
+  {
+    "question_number": 88,
+    "question_type": "mcq",
+    "question_text": "A ball of mass $m$ is pushed from origin $O$ towards right direction with the velocity $v$ and it collides with the walls (normally). If there is no loss of kinetic energy due to collision, then the position-time graph of ball is best represented by\n\n[Refer to the given figure of the ball between two walls separated by distance $2l$]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "The system diagram shows origin $O$ situated halfway between two vertical rigid walls located at distance $l$ to the left (position $-l$) and $l$ to the right (position $+l$). The ball moves initially to the right with velocity $v$. Option (1) shows a symmetric triangular wave oscillating linearly between $+l$ and $-l$ passing through zero. Option (2) shows a sawtooth curve with discontinuous vertical jumps from $+l$ to $0$.",
+    "solution": "1. The ball starts at origin $x = 0$ with constant velocity $+v$, so position increases linearly: $x(t) = vt$.\n2. At time $t_1 = \\frac{l}{v}$, it reaches the right wall at $x = +l$. Since the collision is perfectly elastic with no loss of kinetic energy, it rebounds with velocity $-v$.\n3. With velocity $-v$, it travels back through $x = 0$ to reach the left wall at $x = -l$ at time $t_2 = \\frac{3l}{v}$.\n4. At $x = -l$, it again rebounds elastically with velocity $+v$ towards origin.\n\nSince velocity is constant in magnitude between collisions, the position-time graph consists of straight line segments of alternating slopes $+v$ and $-v$, forming a triangular wave oscillating between $+l$ and $-l$.\n\nGraph (1) correctly portrays this triangular wave motion."
+  }
+]

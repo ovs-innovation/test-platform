@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 8,
+    "question_type": "mcq",
+    "question_text": "A particle is performing uniform circular motion of radius $3\\text{ m}$ with an angular velocity $2\\text{ rad/s}$ in clockwise direction as shown. Find acceleration of particle at point $Q$.",
+    "options": [
+      "$(-6\\hat{i} - 6\\sqrt{3}\\hat{j})\\text{ m/s}^2$",
+      "$(-6\\sqrt{3}\\hat{i} - 6\\hat{j})\\text{ m/s}^2$",
+      "$(-6\\hat{i} + 6\\sqrt{3}\\hat{j})\\text{ m/s}^2$",
+      "$(6\\hat{i} - 6\\sqrt{3}\\hat{j})\\text{ m/s}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": true,
+    "diagram_description": "A circle in the Cartesian coordinate plane centered at the origin. Point Q is located on the circumference in the first quadrant, with its position vector making an angle of 60° with the positive x-axis. The particle moves in a clockwise direction with radius R = 3 m and angular velocity ω = 2 rad/s.",
+    "solution": "In uniform circular motion, the particle has only centripetal acceleration directed radially inward toward the center (the origin).\n\nThe magnitude of the centripetal acceleration is:\n$$a_c = \\omega^2 R = (2\\text{ rad/s})^2 \\times 3\\text{ m} = 12\\text{ m/s}^2$$\n\nThe position vector of point $Q$ which makes an angle of $60^\\circ$ with the $+x$-axis is:\n$$\\hat{r} = \\cos 60^\\circ\\hat{i} + \\sin 60^\\circ\\hat{j} = \\frac{1}{2}\\hat{i} + \\frac{\\sqrt{3}}{2}\\hat{j}$$\n\nSince centripetal acceleration is directed toward the origin (opposite to $\\hat{r}$):\n$$\\vec{a}_c = -a_c \\hat{r} = -12\\left(\\frac{1}{2}\\hat{i} + \\frac{\\sqrt{3}}{2}\\hat{j}\\right) = (-6\\hat{i} - 6\\sqrt{3}\\hat{j})\\text{ m/s}^2$$\n\nTherefore, the correct option is (1)."
+  },
+  {
+    "question_number": 9,
+    "question_type": "mcq",
+    "question_text": "Find magnitude of average acceleration between the points $P$ and $Q$ for a particle performing uniform circular motion. Radius of circle is $2\\text{ m}$.",
+    "options": [
+      "$\\frac{84}{11}\\text{ m/s}^2$",
+      "$\\frac{82}{11}\\text{ m/s}^2$",
+      "$\\frac{84}{22}\\text{ m/s}^2$",
+      "$\\frac{82}{22}\\text{ m/s}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": true,
+    "diagram_description": "A circular path with radius R = 2 m. Point P is on the horizontal axis with velocity 4 m/s directed upwards. Point Q is located along the circle such that the angle subtended at the center by arc PQ is 60°, and the velocity at Q has a magnitude of 4 m/s tangent to the circle.",
+    "solution": "The magnitude of the change in velocity for a particle moving at constant speed $v$ turning through an angle $\\theta$ is:\n$$|\\Delta \\vec{v}| = 2v \\sin\\left(\\frac{\\theta}{2}\\right)$$\nGiven $v = 4\\text{ m/s}$ and $\\theta = 60^\\circ$:\n$$|\\Delta \\vec{v}| = 2(4) \\sin(30^\\circ) = 8 \\times \\frac{1}{2} = 4\\text{ m/s}$$\n\nThe time taken $\\Delta t$ to travel along the arc from $P$ to $Q$ is:\n$$\\Delta t = \\frac{s}{v} = \\frac{R\\theta}{v} = \\frac{2 \\times \\frac{\\pi}{3}}{4} = \\frac{\\pi}{6}\\text{ s}$$\n\nThe magnitude of the average acceleration is:\n$$a_{\\text{avg}} = \\frac{|\\Delta \\vec{v}|}{\\Delta t} = \\frac{4}{\\frac{\\pi}{6}} = \\frac{24}{\\pi}\\text{ m/s}^2$$\n\nTaking $\\pi \\approx \\frac{22}{7}$:\n$$a_{\\text{avg}} = \\frac{24 \\times 7}{22} = \\frac{168}{22} = \\frac{84}{11}\\text{ m/s}^2$$\n\nTherefore, the correct option is (1)."
+  },
+  {
+    "question_number": 10,
+    "question_type": "mcq",
+    "question_text": "A man can swim at a speed of $5\\text{ km/h}$ w.r.t. water. He wants to cross a $1.5\\text{ km}$ wide river flowing at $3\\text{ km/h}$. He always keeps himself at an angle of $60^\\circ$ with the flow direction while swimming. The time taken by him to cross the river will be",
+    "options": [
+      "$0.25\\text{ h}$",
+      "$0.35\\text{ h}$",
+      "$0.45\\text{ h}$",
+      "$0.55\\text{ h}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "River-Boat Problems",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the river flow along the positive $x$-direction with speed $v_r = 3\\text{ km/h}$.\nThe width of the river along the $y$-direction is $d = 1.5\\text{ km}$.\n\nThe swimmer moves at speed $v_{m/w} = 5\\text{ km/h}$ at an angle of $60^\\circ$ with the river flow direction.\nThe component of his velocity perpendicular to the river flow (responsible for crossing the river) is:\n$$v_y = v_{m/w} \\sin 60^\\circ = 5 \\times \\frac{\\sqrt{3}}{2} = 2.5\\sqrt{3}\\text{ km/h}$$\n\nThe time taken to cross the river is:\n$$t = \\frac{d}{v_y} = \\frac{1.5}{2.5\\sqrt{3}} = \\frac{3}{5\\sqrt{3}} = \\frac{\\sqrt{3}}{5}\\text{ h}$$\n\nUsing $\\sqrt{3} \\approx 1.732$:\n$$t \\approx \\frac{1.732}{5} \\approx 0.3464\\text{ h} \\approx 0.35\\text{ h}$$\n\nTherefore, the correct option is (2)."
+  },
+  {
+    "question_number": 11,
+    "question_type": "mcq",
+    "question_text": "Two particles 1 and 2 are allowed to descend on the two frictionless chords $OA$ and $OB$ of vertical circle at the same instant from point $O$. The ratio of the velocities of the particles 1 and 2, when they reach the circumference will be ($OB$ is diameter)",
+    "options": [
+      "$\\cos\\alpha : 1$",
+      "$\\sin\\alpha : 1$",
+      "$1 : 1$",
+      "$\\cos^2\\alpha : 1$"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "Motion under Gravity",
+    "has_diagram": true,
+    "diagram_description": "A vertical circle with top-most point O. Chord OB represents the vertical diameter of length D. Chord OA is inclined at an angle α with the vertical diameter OB. Particles 1 and 2 descend from O along OA and OB, respectively.",
+    "solution": "Let the vertical diameter $OB = D$.\n\nFor particle 2 descending along the vertical diameter $OB$:\n- Distance $s_2 = D$\n- Acceleration $a_2 = g$\n- Velocity at $B$:\n$$v_2 = \\sqrt{2 a_2 s_2} = \\sqrt{2 g D}$$\n\nFor particle 1 descending along chord $OA$ inclined at an angle $\\alpha$ to the vertical diameter $OB$:\n- Since $\\angle OAB = 90^\\circ$ (angle inscribed in a semicircle), the length of chord $OA$ is:\n$$s_1 = D \\cos\\alpha$$\n- The acceleration along the chord $OA$ is the component of gravity along $OA$:\n$$a_1 = g \\cos\\alpha$$\n- Velocity at $A$:\n$$v_1 = \\sqrt{2 a_1 s_1} = \\sqrt{2 (g \\cos\\alpha)(D \\cos\\alpha)} = \\sqrt{2 g D \\cos^2\\alpha} = \\sqrt{2 g D} \\cos\\alpha$$\n\nTaking the ratio of their velocities:\n$$\\frac{v_1}{v_2} = \\frac{\\sqrt{2 g D}\\cos\\alpha}{\\sqrt{2 g D}} = \\cos\\alpha$$\nThus, the ratio is $\\cos\\alpha : 1$.\n\nTherefore, the correct option is (1)."
+  }
+]

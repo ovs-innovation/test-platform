@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 16,
+    "question_type": "mcq",
+    "question_text": "A particle is moving in $X\\text{-}Y$ plane such that $v_x = 4 + 4t$ and $v_y = 4t$ ($t$ in second and $v_x$, $v_y$ in $\\text{m/s}$). If the initial position of particle is $(1, 2)\\text{ m}$, then the equation of trajectory is",
+    "options": [
+      "$y^2 = 4x$",
+      "$y = 2x$",
+      "$x^2 - \\frac{y}{2}$",
+      "None of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Equation of Trajectory",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\n$$v_x = \\frac{dx}{dt} = 4 + 4t$$\nIntegrating with initial condition $x(0) = 1\\text{ m}$:\n$$x(t) - 1 = \\int_0^t (4 + 4t)\\,dt = 4t + 2t^2 \\implies x = 1 + 4t + 2t^2$$\n\nSimilarly:\n$$v_y = \\frac{dy}{dt} = 4t$$\nIntegrating with initial condition $y(0) = 2\\text{ m}$:\n$$y(t) - 2 = \\int_0^t 4t\\,dt = 2t^2 \\implies y = 2 + 2t^2$$\n\nFrom the equation for $y$, we get:\n$$2t^2 = y - 2 \\implies t^2 = \\frac{y - 2}{2}$$\nSubstituting $2t^2 = y - 2$ into the expression for $x$:\n$$x = 1 + 4t + (y - 2) = y - 1 + 4t$$\n$$x - y + 1 = 4t$$\nSquaring both sides:\n$$(x - y + 1)^2 = 16t^2 = 16\\left(\\frac{y - 2}{2}\\right) = 8(y - 2)$$\n\nThis represents a parabola whose equation is $(x - y + 1)^2 = 8(y - 2)$. None of the options (1), (2), or (3) match this equation, so the correct option is \"None of these\"."
+  },
+  {
+    "question_number": 17,
+    "question_type": "mcq",
+    "question_text": "A particle moves in a circle of radius $1.0\\text{ cm}$ at a speed given by $v = 2.0t$, where $v$ is in $\\text{cm/s}$ and $t$ in seconds. The magnitude of total acceleration at $t = 1\\text{ s}$ is nearest to",
+    "options": [
+      "$4.5\\text{ cm/s}^2$",
+      "$2.5\\text{ cm/s}^2$",
+      "$6.2\\text{ cm/s}^2$",
+      "$8.5\\text{ cm/s}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nRadius $r = 1.0\\text{ cm}$\nSpeed $v(t) = 2.0t\\text{ cm/s}$\n\nAt $t = 1\\text{ s}$:\nSpeed $v = 2.0(1) = 2.0\\text{ cm/s}$\n\nTangential acceleration:\n$$a_t = \\frac{dv}{dt} = 2.0\\text{ cm/s}^2$$\n\nCentripetal (radial) acceleration:\n$$a_c = \\frac{v^2}{r} = \\frac{(2.0)^2}{1.0} = 4.0\\text{ cm/s}^2$$\n\nTotal acceleration is the vector sum of $a_t$ and $a_c$:\n$$a = \\sqrt{a_t^2 + a_c^2} = \\sqrt{2.0^2 + 4.0^2} = \\sqrt{4 + 16} = \\sqrt{20} \\approx 4.47\\text{ cm/s}^2 \\approx 4.5\\text{ cm/s}^2$$"
+  },
+  {
+    "question_number": 18,
+    "question_type": "mcq",
+    "question_text": "If speed of an object revolving in a circular path is doubled and angular speed is reduced to half of original value, then centripetal acceleration will become/remain",
+    "options": [
+      "Same",
+      "Double",
+      "Half",
+      "Quadruple"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The centripetal acceleration is given by:\n$$a_c = v \\omega$$\n\nLet the new speed be $v' = 2v$ and new angular speed be $\\omega' = \\frac{\\omega}{2}$.\n\nThe new centripetal acceleration is:\n$$a_c' = v' \\omega' = (2v)\\left(\\frac{\\omega}{2}\\right) = v\\omega = a_c$$\n\nTherefore, the centripetal acceleration remains the same."
+  },
+  {
+    "question_number": 19,
+    "question_type": "mcq",
+    "question_text": "A ball is moving in a circular path of radius $5\\text{ m}$. If tangential acceleration at an instant is $10\\text{ m s}^{-2}$ and the net acceleration makes an angle $30^\\circ$ with the centripetal acceleration, then the instantaneous speed is",
+    "options": [
+      "$50\\sqrt{3}\\text{ ms}^{-1}$",
+      "$9.3\\text{ ms}^{-1}$",
+      "$6.6\\text{ ms}^{-1}$",
+      "$5.4\\text{ ms}^{-1}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the angle between net acceleration and centripetal acceleration be $\\theta = 30^\\circ$.\nSince tangential acceleration $a_t$ is perpendicular to centripetal acceleration $a_c$:\n$$\\tan\\theta = \\frac{a_t}{a_c}$$\n$$\\tan 30^\\circ = \\frac{10}{a_c} \\implies \\frac{1}{\\sqrt{3}} = \\frac{10}{a_c} \\implies a_c = 10\\sqrt{3}\\text{ m/s}^2$$\n\nCentripetal acceleration is related to speed $v$ and radius $R = 5\\text{ m}$ by:\n$$a_c = \\frac{v^2}{R}$$\n$$v^2 = a_c R = 10\\sqrt{3} \\times 5 = 50\\sqrt{3}\\text{ m}^2/\\text{s}^2$$\n$$v = \\sqrt{50\\sqrt{3}} \\approx \\sqrt{50 \\times 1.732} = \\sqrt{86.6} \\approx 9.3\\text{ m s}^{-1}$$"
+  },
+  {
+    "question_number": 20,
+    "question_type": "mcq",
+    "question_text": "To a man walking due west with a speed of $4\\text{ m/s}$, wind appears to blow from the north-east. When he increases his speed to $7\\text{ m/s}$, the wind appears to blow from the north. Find velocity of wind with respect to ground.",
+    "options": [
+      "$\\sqrt{50}$",
+      "$\\sqrt{40}$",
+      "$\\sqrt{58}$",
+      "$\\sqrt{42}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "hard",
+    "topic": "Relative Motion in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the east and north directions be along $+\\hat{i}$ and $+\\hat{j}$, respectively.\nLet the velocity of wind with respect to ground be:\n$$\\vec{v}_w = v_x\\hat{i} + v_y\\hat{j}$$\n\n**Case 1:**\nMan's velocity is $\\vec{v}_{m1} = -4\\hat{i}\\text{ m/s}$.\nRelative velocity of wind with respect to man:\n$$\\vec{v}_{w/m1} = \\vec{v}_w - \\vec{v}_{m1} = (v_x + 4)\\hat{i} + v_y\\hat{j}$$\nWind appears to blow *from* the north-east, which means it blows *towards* the south-west (direction $-\\hat{i} - \\hat{j}$ at $45^\\circ$):\n$$v_x + 4 = v_y \\quad \\text{with } v_x + 4 < 0, \\; v_y < 0 \\quad \\text{--- (1)}$$\n\n**Case 2:**\nMan increases his speed to $7\\text{ m/s}$ due west, so $\\vec{v}_{m2} = -7\\hat{i}\\text{ m/s}$.\nRelative velocity of wind:\n$$\\vec{v}_{w/m2} = \\vec{v}_w - \\vec{v}_{m2} = (v_x + 7)\\hat{i} + v_y\\hat{j}$$\nWind appears to blow *from* the north, meaning it blows *towards* the south (no component along east-west):\n$$v_x + 7 = 0 \\implies v_x = -7\\text{ m/s}$$\n\nFrom equation (1):\n$$v_y = v_x + 4 = -7 + 4 = -3\\text{ m/s}$$\n\nThus, the velocity of wind with respect to ground is:\n$$\\vec{v}_w = -7\\hat{i} - 3\\hat{j}\\text{ m/s}$$\nThe magnitude of the velocity of wind is:\n$$|\\vec{v}_w| = \\sqrt{(-7)^2 + (-3)^2} = \\sqrt{49 + 9} = \\sqrt{58}\\text{ m/s}$$"
+  },
+  {
+    "question_number": 21,
+    "question_type": "mcq",
+    "question_text": "A swimmer heads directly across a river swimming at $1.6\\text{ m/s}$ relative to water. She arrives at a point $40\\text{ m}$ downstream from the point directly across the river, which is $80\\text{ m}$ wide. Find time taken to cross the river?",
+    "options": [
+      "$30\\text{ s}$",
+      "$40\\text{ s}$",
+      "$50\\text{ s}$",
+      "$60\\text{ s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "River-Boat Problems",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The swimmer heads directly across the river, meaning her velocity component perpendicular to the river banks is solely due to her swimming velocity relative to water:\n$$v_y = 1.6\\text{ m/s}$$\n\nThe width of the river is $d = 80\\text{ m}$.\n\nThe time taken to cross the river depends entirely on the motion perpendicular to the banks:\n$$t = \\frac{d}{v_y} = \\frac{80\\text{ m}}{1.6\\text{ m/s}} = 50\\text{ s}$$\n\n(Note: The river velocity can also be found as $v_r = \\frac{\\text{drift}}{t} = \\frac{40\\text{ m}}{50\\text{ s}} = 0.8\\text{ m/s}$)."
+  }
+]

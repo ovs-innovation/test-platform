@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 27,
+    "question_type": "mcq",
+    "question_text": "Rain is falling vertically with a speed of $30\\text{ m/s}$. Wind starts blowing after some time with a speed of $15\\text{ m/s}$ from east to west direction. In which direction should a boy waiting for bus hold his umbrella?",
+    "options": [
+      "At an angle $\\tan^{-1}\\left(\\frac{1}{2}\\right)$ with vertical towards east",
+      "At an angle $\\tan^{-1}\\left(\\frac{1}{2}\\right)$ with vertical towards west",
+      "At an angle $\\tan^{-1}(2)$ with vertical towards east",
+      "At an angle $\\tan^{-1}(2)$ with vertical towards west"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Motion & Rain Problems",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Velocity of rain: $\\vec{v}_r = -30\\hat{j}\\text{ m/s}$ (vertically downward).\nVelocity of wind blowing from east to west (towards west): $\\vec{v}_w = -15\\hat{i}\\text{ m/s}$.\n\nThe resultant velocity of rain with respect to ground is:\n$$\\vec{v} = \\vec{v}_w + \\vec{v}_r = -15\\hat{i} - 30\\hat{j}$$\n\nThe angle $\\theta$ made by the rain with the vertical is given by:\n$$\\tan\\theta = \\frac{|v_x|}{|v_y|} = \\frac{15}{30} = \\frac{1}{2} \\implies \\theta = \\tan^{-1}\\left(\\frac{1}{2}\\right)$$\n\nSince the rain moves towards the west, it arrives from the east. To protect himself from the oncoming rain, the boy must hold his umbrella tilted at an angle $\\tan^{-1}\\left(\\frac{1}{2}\\right)$ with the vertical towards the east."
+  },
+  {
+    "question_number": 28,
+    "question_type": "mcq",
+    "question_text": "The coordinates of a projectile projected from surface of a planet is given by $y = (4t - 2t^2)$ and $x = 4t$, where $t$ is in second, $x$ and $y$ in m, point of projection is taken as origin, horizontal and vertical direction as x and y-axes. Initial direction of motion of particle makes an angle $\\theta$ with x-axis where $\\theta$ is",
+    "options": [
+      "$45^\\circ$",
+      "$37^\\circ$",
+      "$30^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The velocity components at any time $t$ are obtained by differentiating the position coordinates:\n$$v_x = \\frac{dx}{dt} = \\frac{d}{dt}(4t) = 4\\text{ m/s}$$\n$$v_y = \\frac{dy}{dt} = \\frac{d}{dt}(4t - 2t^2) = 4 - 4t$$\n\nAt the instant of projection ($t = 0$):\n$$u_x = 4\\text{ m/s}$$\n$$u_y = 4 - 4(0) = 4\\text{ m/s}$$\n\nThe angle of projection $\\theta$ with the $x$-axis is:\n$$\\tan\\theta = \\frac{u_y}{u_x} = \\frac{4}{4} = 1 \\implies \\theta = 45^\\circ$$"
+  },
+  {
+    "question_number": 29,
+    "question_type": "mcq",
+    "question_text": "If $|\\vec{A} + \\vec{B}| = |\\vec{A} - \\vec{B}|$, then angle between $\\vec{A}$ and $\\vec{B}$ will be",
+    "options": [
+      "$90^\\circ$",
+      "$120^\\circ$",
+      "$0^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Squaring both sides of the given equation $|\\vec{A} + \\vec{B}| = |\\vec{A} - \\vec{B}|$:\n$$|\\vec{A} + \\vec{B}|^2 = |\\vec{A} - \\vec{B}|^2$$\n$$A^2 + B^2 + 2AB\\cos\\theta = A^2 + B^2 - 2AB\\cos\\theta$$\n$$4AB\\cos\\theta = 0$$\n\nAssuming non-zero vectors $A \\ne 0$ and $B \\ne 0$:\n$$\\cos\\theta = 0 \\implies \\theta = 90^\\circ$$\nHence, the vectors $\\vec{A}$ and $\\vec{B}$ are mutually perpendicular ($90^\\circ$)."
+  },
+  {
+    "question_number": 30,
+    "question_type": "mcq",
+    "question_text": "The resultant of two vectors $\\vec{P}$ and $\\vec{Q}$ is $\\vec{R}$. If the magnitude of $\\vec{Q}$ is doubled, the new resultant becomes perpendicular to $\\vec{P}$. Then the ratio $|\\vec{R}| : |\\vec{Q}|$ will be",
+    "options": [
+      "$1 : 2$",
+      "$1 : 1$",
+      "$2 : 1$",
+      "$\\sqrt{2} : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given that $\\vec{R} = \\vec{P} + \\vec{Q}$.\nWhen $\\vec{Q}$ is doubled, the new resultant vector is $\\vec{R}' = \\vec{P} + 2\\vec{Q}$.\n\nSince $\\vec{R}'$ is perpendicular to $\\vec{P}$:\n$$\\vec{R}' \\cdot \\vec{P} = 0$$\n$$(\\vec{P} + 2\\vec{Q}) \\cdot \\vec{P} = 0$$\n$$P^2 + 2(\\vec{P} \\cdot \\vec{Q}) = 0 \\implies 2(\\vec{P} \\cdot \\vec{Q}) = -P^2$$\n\nNow, calculate the magnitude squared of $\\vec{R}$:\n$$R^2 = |\\vec{P} + \\vec{Q}|^2 = P^2 + Q^2 + 2(\\vec{P} \\cdot \\vec{Q})$$\nSubstitute $2(\\vec{P} \\cdot \\vec{Q}) = -P^2$:\n$$R^2 = P^2 + Q^2 - P^2 = Q^2 \\implies R = Q$$\n\nTherefore, the ratio $|\\vec{R}| : |\\vec{Q}| = 1 : 1$."
+  },
+  {
+    "question_number": 31,
+    "question_type": "mcq",
+    "question_text": "A ball is projected horizontally from the top of a tower with a velocity $v_0$. It will be moving at an angle of $60^\\circ$ with the horizontal after time",
+    "options": [
+      "$\\frac{\\sqrt{v_0}}{g}$",
+      "$\\frac{v_0}{3g}$",
+      "$\\frac{\\sqrt{3}v_0}{g}$",
+      "$\\frac{\\sqrt{v_0}}{3g}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For horizontal projection from height:\n- Horizontal velocity component is constant: $v_x = v_0$.\n- Vertical velocity component after time $t$ under gravity ($u_y = 0$): $v_y = gt$.\n\nThe angle $\\alpha$ made by the velocity vector with the horizontal is given by:\n$$\\tan\\alpha = \\frac{v_y}{v_x} = \\frac{gt}{v_0}$$\n\nGiven $\\alpha = 60^\\circ$:\n$$\\tan 60^\\circ = \\sqrt{3} = \\frac{gt}{v_0} \\implies t = \\frac{\\sqrt{3}v_0}{g}$$"
+  }
+]

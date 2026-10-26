@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 65,
+    "question_type": "mcq",
+    "question_text": "A particle is projected horizontally with speed $20\\text{ m/s}$ from a cliff of height $20\\text{ m}$. The magnitude of velocity of particle when it reaches ground is",
+    "options": [
+      "$20\\text{ m/s}$",
+      "$40\\text{ m/s}$",
+      "$20\\sqrt{2}\\text{ m/s}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Horizontal Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial horizontal speed, $u_x = 20\\text{ m/s}$\nInitial vertical speed, $u_y = 0$\nHeight of cliff, $h = 20\\text{ m}$\nAcceleration due to gravity, $g = 10\\text{ m/s}^2$\n\nHorizontal velocity remains unchanged throughout motion:\n$$v_x = u_x = 20\\text{ m/s}$$\n\nVertical velocity upon reaching the ground is given by:\n$$v_y^2 = u_y^2 + 2gh = 0 + 2(10)(20) = 400 \\implies v_y = 20\\text{ m/s}$$\n\nThe magnitude of the resultant velocity when hitting the ground is:\n$$v = \\sqrt{v_x^2 + v_y^2} = \\sqrt{20^2 + 20^2} = 20\\sqrt{2}\\text{ m/s}$$"
+  },
+  {
+    "question_number": 66,
+    "question_type": "mcq",
+    "question_text": "Which is true for given figure?",
+    "options": [
+      "$\\vec{B} = \\vec{A} + \\vec{C}$",
+      "$\\vec{A} = \\vec{B} + \\vec{C}$",
+      "$\\vec{C} = \\vec{A} + \\vec{B}$",
+      "All of these"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Triangle Law of Vector Addition",
+    "has_diagram": true,
+    "diagram_description": "A vector triangle where vector C goes from the initial point of A to the vertex, vector B continues from the head of C to the head of A, and vector A goes directly from the tail of C to the head of B.",
+    "solution": "By the triangle law of vector addition:\nIf two vectors are represented in magnitude and direction by two sides of a triangle taken in the same order (tail-to-head sequence), their resultant is represented by the third side taken in the opposite order.\n\nFrom the figure, following $\\vec{C}$ from its tail to head, and then following $\\vec{B}$ from its tail to head, the resultant starting from the tail of $\\vec{C}$ to the head of $\\vec{B}$ is vector $\\vec{A}$.\n\nTherefore:\n$$\\vec{A} = \\vec{B} + \\vec{C}$$\n\nHence, option (2) is correct."
+  },
+  {
+    "question_number": 67,
+    "question_type": "mcq",
+    "question_text": "A projectile is thrown with initial velocity $20\\text{ m/s}$ at an angle $60^\\circ$ with horizontal, then angle of velocity of projectile with horizontal after time $0.732\\text{ s}$ is",
+    "options": [
+      "$45^\\circ$",
+      "$30^\\circ$",
+      "$0^\\circ$",
+      "$15^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nInitial speed, $u = 20\\text{ m/s}$\nAngle of projection, $\\theta = 60^\\circ$\nAcceleration due to gravity, $g = 10\\text{ m/s}^2$\nTime, $t = 0.732\\text{ s}$\n\nComponents of initial velocity:\n$$u_x = u \\cos 60^\\circ = 20 \\times 0.5 = 10\\text{ m/s}$$\n$$u_y = u \\sin 60^\\circ = 20 \\times \\frac{\\sqrt{3}}{2} = 10\\sqrt{3} \\approx 10 \\times 1.732 = 17.32\\text{ m/s}$$\n\nVelocity components at $t = 0.732\\text{ s}$:\n$$v_x = u_x = 10\\text{ m/s}$$\n$$v_y = u_y - gt = 17.32 - 10(0.732) = 17.32 - 7.32 = 10\\text{ m/s}$$\n\nLet $\\alpha$ be the angle of velocity with the horizontal:\n$$\\tan\\alpha = \\frac{v_y}{v_x} = \\frac{10}{10} = 1 \\implies \\alpha = 45^\\circ$$\n\nThus, the angle is $45^\\circ$."
+  },
+  {
+    "question_number": 68,
+    "question_type": "mcq",
+    "question_text": "If $a_r$ and $a_t$ represent radial and tangential accelerations, then the motion of particle will be uniformly circular for",
+    "options": [
+      "$a_r = 0,\\; a_t = 0$",
+      "$a_r = 0,\\; a_t \\neq 0$",
+      "$a_r \\neq 0,\\; a_t = 0$",
+      "$a_r \\neq 0,\\; a_t \\neq 0$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In uniform circular motion:\n1. The speed $v$ is constant, so tangential acceleration is:\n$$a_t = \\frac{dv}{dt} = 0$$\n2. The direction of velocity changes continuously, which means there must be a non-zero radial (centripetal) acceleration pointing toward the center:\n$$a_r = \\frac{v^2}{r} \\neq 0$$\n\nTherefore, the condition for uniform circular motion is $a_r \\neq 0$ and $a_t = 0$."
+  },
+  {
+    "question_number": 69,
+    "question_type": "mcq",
+    "question_text": "A helicopter flies from a city $A$ to $B$. The line joining $A$ and $B$ is along north-south and its length is $100\\text{ km}$. The speed of the helicopter is kept $100\\text{ km/h}$ and wind blows from west to east with a speed of $60\\text{ km/h}$. The time taken by the helicopter is",
+    "options": [
+      "$0.75\\text{ h}$",
+      "$1.0\\text{ h}$",
+      "$1.25\\text{ h}$",
+      "$1.33\\text{ h}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Motion & Wind-Airplane",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nDistance between $A$ and $B$, $d = 100\\text{ km}$ along North-South.\nSpeed of helicopter relative to air, $v_h = 100\\text{ km/h}$.\nSpeed of wind blowing West to East, $v_w = 60\\text{ km/h}$.\n\nTo move directly along the North-South track, the helicopter must head into the wind at an angle $\\theta$ west of north/south such that the wind velocity is cancelled by the westward component of the helicopter's air velocity:\n$$v_h \\sin\\theta = v_w \\implies \\sin\\theta = \\frac{60}{100} = 0.6$$\n\nThe resultant speed along the line $AB$ is:\n$$v_{\\text{res}} = \\sqrt{v_h^2 - v_w^2} = \\sqrt{100^2 - 60^2} = \\sqrt{10000 - 3600} = \\sqrt{6400} = 80\\text{ km/h}$$\n\nThe time taken is:\n$$t = \\frac{d}{v_{\\text{res}}} = \\frac{100\\text{ km}}{80\\text{ km/h}} = 1.25\\text{ h}$$\n\nHence, the time taken is $1.25\\text{ h}$."
+  },
+  {
+    "question_number": 70,
+    "question_type": "mcq",
+    "question_text": "Four particles lie initially at the corners of a square of side length $L$. All the particles start to move with speed $v$. $A$ moves towards $B$, $B$ moves towards $C$, $C$ moves towards $D$ and $D$ moves towards $A$. The distance covered by a particle till they meet, is",
+    "options": [
+      "$\\frac{L}{\\sqrt{2}}$",
+      "$L$",
+      "$\\sqrt{2}L$",
+      "$2L$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Pursuit Problem (Relative Motion)",
+    "has_diagram": true,
+    "diagram_description": "A square ABCD of side length L with particles at each corner pursuing the adjacent particle cyclically.",
+    "solution": "Due to rotational symmetry, at every instant the four particles form a square that gradually shrinks and rotates, finally meeting at the centre.\n\nConsider particle $A$ pursuing particle $B$:\n- The velocity of $A$ along the line $AB$ is $v$.\n- Particle $B$ is moving towards $C$, which is perpendicular to $AB$. Thus, the component of velocity of $B$ along $AB$ towards $A$ is $v \\cos 90^\\circ = 0$.\n\nThe velocity of approach between $A$ and $B$ is:\n$$v_{\\text{app}} = v - 0 = v$$\n\nThe initial separation between $A$ and $B$ is $L$.\nTherefore, the time taken to meet is:\n$$t = \\frac{\\text{Initial Separation}}{v_{\\text{app}}} = \\frac{L}{v}$$\n\nThe total distance covered by each particle is:\n$$\\text{Distance} = v \\times t = v \\times \\frac{L}{v} = L$$\n\nHence, the distance covered is $L$."
+  }
+]

@@ -625,6 +625,25 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'Motion in straight line',
+    subjects: ['physics'],
+    patterns: [
+      /\bmotion in straight line\b|\bmotion in a straight line\b|\brectilinear motion\b/i,
+      /\bstopping distance\b|\breaction time\b|\bfreely falling\b|\bacceleration due to gravity\b/i,
+      /\bvelocity-time graph\b|\bdisplacement-time graph\b|\binstantaneous acceleration\b/i,
+    ],
+  },
+  {
+    chapter: 'motion in a plane',
+    subjects: ['physics'],
+    patterns: [
+      /\bmotion in a plane\b|\bmotion in plane\b/i,
+      /\bprojectile motion\b|\bhorizontal range\b|\bmaximum height of projectile\b|\btime of flight\b/i,
+      /\briver[- ]boat\b|\bswimmer[- ]river\b|\bcircular motion\b|\bcentripetal acceleration\b|\brangential acceleration\b/i,
+      /\btrajectory of projectile\b|\brelative velocity in 2d\b|\bangular speed\b|\bangular velocity\b/i,
+    ],
+  },
+  {
     chapter: 'Electrostatics & Capacitance',
     subjects: ['physics'],
     patterns: [
@@ -731,11 +750,8 @@ const CHAPTER_RULES = [
     subjects: ['physics'],
     patterns: [
       /\bkinematics\b/i,
-      /\bmotion in a straight line\b|\buniformly accelerated motion\b/i,
-      /\bprojectile motion\b|\bhorizontal range\b|\bmaximum height\b|\btime of flight\b/i,
-      /\brelative velocity\b/i,
-      /\bcircular motion\b|\bcentripetal\b|\bcentrifugal\b/i,
-      /\bvectors?\b/i,
+      /\buniformly accelerated motion\b/i,
+      /\bacceleration and velocity\b/i,
     ],
   },
   {

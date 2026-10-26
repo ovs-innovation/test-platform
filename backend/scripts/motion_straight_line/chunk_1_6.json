@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "mcq",
+    "question_text": "Two cars are moving in the same direction at the same speed $u$. The cars maintained a constant distance $x$ between them. An another car (third car) coming from opposite direction meets the two cars at an interval of $t$. Then find the speed of the third car.",
+    "options": [
+      "$\\frac{x}{t} u$",
+      "$\\frac{x}{t}$",
+      "$u - \\frac{x}{t}$",
+      "$\\frac{x}{t} - u$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the speed of the third car be $v$.\nSince the third car is moving in the opposite direction to the two cars, the relative speed between the third car and each of the two cars is:\n$$v_{\\text{rel}} = v + u$$\n\nThe separation between the two cars moving in the same direction is $x$.\nThe time interval between meeting the first and the second car is $t$, so:\n$$t = \\frac{x}{v_{\\text{rel}}} = \\frac{x}{v + u}$$\n\nRearranging to solve for $v$:\n$$v + u = \\frac{x}{t} \\implies v = \\frac{x}{t} - u$$\n\nThus, the speed of the third car is $\\frac{x}{t} - u$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "mcq",
+    "question_text": "The acceleration of a particle starting from rest, varies with time according to the relation $a = (kt + c)$ where $k$ and $c$ are positive constants. The velocity of the particle after time $t$ will be",
+    "options": [
+      "$kt^2 + ct$",
+      "$\\frac{1}{2}kt^2 + ct$",
+      "$\\frac{1}{2}(kt^2 + c)$",
+      "$kt^2 + \\frac{1}{2}ct$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Acceleration is defined as the time derivative of velocity:\n$$a = \\frac{dv}{dt} = kt + c$$\n\nSeparating variables and integrating from $t = 0$ (where $v = 0$ since it starts from rest) to time $t$:\n$$\\int_{0}^{v} dv = \\int_{0}^{t} (kt + c)\\, dt$$\n$$v = \\left[ \\frac{1}{2}kt^2 + ct \\right]_{0}^{t} = \\frac{1}{2}kt^2 + ct$$\n\nTherefore, the velocity after time $t$ is $\\frac{1}{2}kt^2 + ct$."
+  },
+  {
+    "question_number": 3,
+    "question_type": "mcq",
+    "question_text": "A thief is running away on a straight road in a jeep moving with a speed of $9\\text{ m/s}$. A policeman chases him on a motorcycle moving at a speed of $10\\text{ m/s}$ and the instantaneous separation of the jeep from the motorcycle is $100\\text{ m}$, how long will it take for the policeman to catch the thief?",
+    "options": [
+      "$1\\text{ s}$",
+      "$19\\text{ s}$",
+      "$90\\text{ s}$",
+      "$100\\text{ s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The velocity of the policeman is $v_p = 10\\text{ m/s}$.\nThe velocity of the thief is $v_t = 9\\text{ m/s}$.\n\nThe relative velocity of the policeman with respect to the thief is:\n$$v_{\\text{rel}} = v_p - v_t = 10 - 9 = 1\\text{ m/s}$$\n\nThe initial relative separation is $d = 100\\text{ m}$.\n\nTherefore, the time required to catch the thief is:\n$$t = \\frac{d}{v_{\\text{rel}}} = \\frac{100\\text{ m}}{1\\text{ m/s}} = 100\\text{ s}$$"
+  },
+  {
+    "question_number": 4,
+    "question_type": "mcq",
+    "question_text": "If a particle travels distance $s_1$, $s_2$ and $s_3$ taking equal time to cover the respective distances. Find average speed of the particle, if it travels with a velocity $v_1$, $v_2$ and $v_3$ for the respective distances.",
+    "options": [
+      "$\\frac{v_1 + v_2 + v_3}{\\frac{s_1}{v_1} + \\frac{s_2}{v_2} + \\frac{s_3}{v_3}}$",
+      "$\\frac{v_1 + v_2 + v_3}{3}$",
+      "$\\frac{s_1 + s_2 + s_3}{3\\left(\\frac{s_1}{v_1}\\right)}$",
+      "Both (2) and (3)"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Average Speed",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the equal time taken for each of the three intervals be $t$.\nThen:\n$$t = \\frac{s_1}{v_1} = \\frac{s_2}{v_2} = \\frac{s_3}{v_3}$$\n\nThe total distance covered is $s_{\\text{total}} = s_1 + s_2 + s_3$.\nThe total time taken is $t_{\\text{total}} = 3t$.\n\n1. In terms of velocities:\n$$s_1 = v_1 t, \\quad s_2 = v_2 t, \\quad s_3 = v_3 t$$\n$$v_{\\text{avg}} = \\frac{s_{\\text{total}}}{t_{\\text{total}}} = \\frac{v_1 t + v_2 t + v_3 t}{3t} = \\frac{v_1 + v_2 + v_3}{3}$$\nThis corresponds to option (2).\n\n2. In terms of distances and time $t = \\frac{s_1}{v_1}$:\n$$v_{\\text{avg}} = \\frac{s_1 + s_2 + s_3}{3t} = \\frac{s_1 + s_2 + s_3}{3\\left(\\frac{s_1}{v_1}\\right)}$$\nThis corresponds to option (3).\n\nSince both representations (2) and (3) are correct, option (4) \"Both (2) and (3)\" is the correct choice."
+  },
+  {
+    "question_number": 5,
+    "question_type": "mcq",
+    "question_text": "A car is moving on a straight road. The velocity of the car varies with time as shown in the figure. Initially (at $t = 0$) the car was at $x = 0$, where $x$ is the position of the car at any time $t$. Find acceleration of car at time $t = 15\\text{ sec}$ and $t = 55\\text{ sec}$.\n\n[Refer to the given $v\\text{--}t$ graph]",
+    "options": [
+      "$(0, \\frac{5}{2})\\text{ m/s}^2$",
+      "$(0, 0.4)\\text{ m/s}^2$",
+      "$(0, -0.4)\\text{ m/s}^2$",
+      "$(0, 0.2)\\text{ m/s}^2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "A velocity-time graph with time $t$ (in seconds) on the horizontal axis and velocity $v$ (in m/s) on the vertical axis. The graph consists of several linear segments: from $(0, 0)$ to $(10, 4)$; a horizontal segment from $(10, 4)$ to $(20, 4)$; a segment rising from $(20, 4)$ to $(30, 6)$; a segment sloping down from $(30, 6)$, passing through $(50, 0)$ to $(60, -4)$; and then rising from $(60, -4)$ to $(70, 0)$.",
+    "solution": "The acceleration at any time $t$ is given by the slope of the $v\\text{--}t$ graph, $a = \\frac{dv}{dt}$.\n\n1. At $t = 15\\text{ s}$:\nBetween $t = 10\\text{ s}$ and $t = 20\\text{ s}$, the velocity is constant at $v = 4\\text{ m/s}$.\nTherefore, the acceleration is:\n$$a(15) = \\frac{4 - 4}{20 - 10} = 0\\text{ m/s}^2$$\n\n2. At $t = 55\\text{ s}$:\nThe straight-line segment goes from $(30\\text{ s}, 6\\text{ m/s})$ through $(50\\text{ s}, 0\\text{ m/s})$ to $(60\\text{ s}, -4\\text{ m/s})$.\nThe slope of this line segment is:\n$$a = \\frac{0 - 6}{50 - 30} = \\frac{-6}{20} = -0.3\\text{ m/s}^2$$\nOr between $(50\\text{ s}, 0\\text{ m/s})$ and $(60\\text{ s}, -4\\text{ m/s})$:\n$$a = \\frac{-4 - 0}{60 - 50} = \\frac{-4}{10} = -0.4\\text{ m/s}^2$$\nTaking the linear segment containing $t = 55\\text{ s}$, which connects $(50, 0)$ and $(60, -4)$, the slope is:\n$$a(55) = \\frac{-4 - 0}{60 - 50} = -0.4\\text{ m/s}^2$$\n\nThus, the accelerations at $t = 15\\text{ s}$ and $t = 55\\text{ s}$ are $(0, -0.4)\\text{ m/s}^2$."
+  },
+  {
+    "question_number": 6,
+    "question_type": "mcq",
+    "question_text": "The acceleration-time graph of a particle moving along a straight line is as shown in the figure. What is the velocity of the particle at $t = 8\\text{ sec}$, if initial velocity of particle is $3\\text{ m/s}$?\n\n[Refer to the given $a\\text{--}t$ graph]",
+    "options": [
+      "$4\\text{ m/s}$",
+      "$5\\text{ m/s}$",
+      "$1\\text{ m/s}$",
+      "$7\\text{ m/s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "An acceleration-time graph showing $a$ (in $\\text{m/s}^2$) on the vertical axis and $t$ (in seconds) on the horizontal axis. From $t = 0$ to $t = 4\\text{ s}$, there is a triangle with base along the time axis from $0$ to $4$ and height extending up to $a = 4\\text{ m/s}^2$ at its peak. From $t = 4\\text{ s}$ to $t = 8\\text{ s}$, there is a rectangle below the time axis with constant acceleration $a = -1\\text{ m/s}^2$.",
+    "solution": "The change in velocity $\\Delta v$ is given by the area under the acceleration-time graph:\n$$\\Delta v = v(8) - v(0) = \\int_0^8 a\\, dt$$\n\n1. Area of the positive triangular region from $t = 0$ to $t = 4\\text{ s}$:\n$$A_1 = \\frac{1}{2} \\times \\text{base} \\times \\text{height} = \\frac{1}{2} \\times 4 \\times 4 = 8\\text{ m/s}$$\n\n2. Area of the negative rectangular region from $t = 4\\text{ s}$ to $t = 8\\text{ s}$:\n$$A_2 = \\text{base} \\times \\text{height} = (8 - 4) \\times (-1) = -4\\text{ m/s}$$\n\nTotal change in velocity:\n$$\\Delta v = A_1 + A_2 = 8 - 4 = 4\\text{ m/s}$$\n\nGiven initial velocity $v(0) = 3\\text{ m/s}$:\n$$v(8) = v(0) + \\Delta v = 3 + 4 = 7\\text{ m/s}$$\n\nThus, the velocity at $t = 8\\text{ s}$ is $7\\text{ m/s}$."
+  }
+]

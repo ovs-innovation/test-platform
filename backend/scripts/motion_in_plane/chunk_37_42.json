@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 37,
+    "question_type": "mcq",
+    "question_text": "For two vectors $\\vec{A}$ and $\\vec{B}$, $|\\vec{A} + \\vec{B}| = |\\vec{A} - \\vec{B}|$ is always true when\n(i) $|\\vec{A}| = |\\vec{B}| \\neq 0$.\n(ii) $\\vec{A}$ is perpendicular to $\\vec{B}$.\n(iii) $\\vec{A}$ and $\\vec{B}$ are parallel or antiparallel.\n(iv) When either $|\\vec{A}|$ or $|\\vec{B}|$ is zero.",
+    "options": [
+      "(i, iv)",
+      "(ii, iii)",
+      "(ii, iv)",
+      "(i, ii, iv)"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the condition:\n$$|\\vec{A} + \\vec{B}| = |\\vec{A} - \\vec{B}|$$\nSquaring both sides:\n$$|\\vec{A} + \\vec{B}|^2 = |\\vec{A} - \\vec{B}|^2$$\n$$A^2 + B^2 + 2\\vec{A} \\cdot \\vec{B} = A^2 + B^2 - 2\\vec{A} \\cdot \\vec{B}$$\n$$4\\vec{A} \\cdot \\vec{B} = 0 \\implies \\vec{A} \\cdot \\vec{B} = 0$$\n$$AB\\cos\\theta = 0$$\nThis equality holds if:\n1. $\\cos\\theta = 0$, which means $\\theta = 90^\\circ$ (i.e., $\\vec{A}$ is perpendicular to $\\vec{B}$, condition (ii)).\n2. Either $A = 0$ or $B = 0$ (i.e., when either $|\\vec{A}|$ or $|\\vec{B}|$ is zero, condition (iv)).\n\nTherefore, statements (ii) and (iv) are correct."
+  },
+  {
+    "question_number": 38,
+    "question_type": "mcq",
+    "question_text": "Out of the following set of forces, the resultant of which pair cannot be $4\\text{ newton}$?",
+    "options": [
+      "$2\\text{ N}$ and $2\\text{ N}$",
+      "$2\\text{ N}$ and $4\\text{ N}$",
+      "$2\\text{ N}$ and $6\\text{ N}$",
+      "$2\\text{ N}$ and $8\\text{ N}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resultant $R$ of two forces $F_1$ and $F_2$ lies in the range:\n$$|F_1 - F_2| \\le R \\le F_1 + F_2$$\n\nChecking each option:\n1. For $2\\text{ N}$ and $2\\text{ N}$: $R \\in [|2-2|, 2+2] = [0\\text{ N}, 4\\text{ N}]$. $4\\text{ N}$ is included.\n2. For $2\\text{ N}$ and $4\\text{ N}$: $R \\in [|2-4|, 2+4] = [2\\text{ N}, 6\\text{ N}]$. $4\\text{ N}$ is included.\n3. For $2\\text{ N}$ and $6\\text{ N}$: $R \\in [|2-6|, 2+6] = [4\\text{ N}, 8\\text{ N}]$. $4\\text{ N}$ is included.\n4. For $2\\text{ N}$ and $8\\text{ N}$: $R \\in [|2-8|, 2+8] = [6\\text{ N}, 10\\text{ N}]$. $4\\text{ N}$ is NOT included.\n\nThus, the resultant of $2\\text{ N}$ and $8\\text{ N}$ cannot be $4\\text{ N}$."
+  },
+  {
+    "question_number": 39,
+    "question_type": "mcq",
+    "question_text": "A car with a vertical windshield moves horizontally in a rain storm at a speed of $40\\text{ km/h}$. The rain drops fall vertically with constant speed of $20\\text{ m/s}$ with respect to ground. The angle at which rain drops strike the windshield is",
+    "options": [
+      "$\\tan^{-1}\\left(\\frac{2}{3}\\right)$",
+      "$\\tan^{-1}\\left(\\frac{3}{2}\\right)$",
+      "$\\tan^{-1}\\left(\\frac{5}{9}\\right)$",
+      "$\\tan^{-1}(2)$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Motion in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Speed of the car horizontally:\n$$v_c = 40\\text{ km/h} = 40 \\times \\frac{5}{18}\\text{ m/s} = \\frac{100}{9}\\text{ m/s}$$\nSpeed of falling rain vertically:\n$$v_r = 20\\text{ m/s}$$\n\nThe velocity of rain relative to the car is:\n$$\\vec{v}_{r/c} = \\vec{v}_r - \\vec{v}_c = -20\\hat{j} - \\frac{100}{9}\\hat{i}$$\nSince the windshield is vertical, the angle $\\theta$ at which the raindrops strike the windshield is the angle between the relative velocity of the rain and the vertical windshield:\n$$\\tan\\theta = \\frac{v_c}{v_r} = \\frac{\\frac{100}{9}}{20} = \\frac{5}{9}$$\n$$\\theta = \\tan^{-1}\\left(\\frac{5}{9}\\right)$$"
+  },
+  {
+    "question_number": 40,
+    "question_type": "mcq",
+    "question_text": "The equation of projectile on a certain planet is $y = \\sqrt{3}x - 5x^2$. The ratio of maximum height attained to horizontal range is",
+    "options": [
+      "$\\sqrt{3}$",
+      "$\\frac{\\sqrt{3}}{4}$",
+      "$\\frac{4}{\\sqrt{3}}$",
+      "$\\frac{2}{\\sqrt{3}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Trajectory Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The standard equation of a projectile trajectory is:\n$$y = x\\tan\\theta - \\frac{g}{2u^2\\cos^2\\theta}x^2 = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)$$\nComparing $y = \\sqrt{3}x - 5x^2$ with $y = x\\tan\\theta\\left(1 - \\frac{x}{R}\\right)$:\n$$y = \\sqrt{3}x\\left(1 - \\frac{5}{\\sqrt{3}}x\\right)$$\nThis gives:\n$$\\tan\\theta = \\sqrt{3}$$\n$$R = \\frac{\\sqrt{3}}{5}$$\n\nThe relation between horizontal range $R$ and maximum height $H$ is:\n$$H = \\frac{R\\tan\\theta}{4} \\implies \\frac{H}{R} = \\frac{\\tan\\theta}{4}$$\nSubstituting $\\tan\\theta = \\sqrt{3}$:\n$$\\frac{H}{R} = \\frac{\\sqrt{3}}{4}$$"
+  },
+  {
+    "question_number": 41,
+    "question_type": "mcq",
+    "question_text": "A ball rolls from the top of a stairway with a horizontal velocity $u\\text{ m/s}$. If the steps are of height $h$ and width $b$, the ball will hit the edge of the $n^{\\text{th}}$ step when $n$ is equal to",
+    "options": [
+      "$\\frac{hu^2}{2gb^2}$",
+      "$\\frac{hu^2}{4gb^2}$",
+      "$\\frac{4hu^2}{gb^2}$",
+      "$\\frac{2hu^2}{gb^2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the ball to strike the edge of the $n^{\\text{th}}$ step:\n- Total horizontal distance covered: $x = n b$\n- Total vertical distance fallen: $y = n h$\n\nHorizontal motion is uniform:\n$$x = u t \\implies t = \\frac{x}{u} = \\frac{n b}{u}$$\n\nVertical motion is under gravity with initial vertical velocity $u_y = 0$:\n$$y = \\frac{1}{2}gt^2$$\nSubstitute $y = n h$ and $t = \\frac{n b}{u}$:\n$$n h = \\frac{1}{2} g \\left(\\frac{n b}{u}\\right)^2 = \\frac{g n^2 b^2}{2 u^2}$$\nDividing both sides by $n$ ($n \\neq 0$):\n$$h = \\frac{g n b^2}{2 u^2} \\implies n = \\frac{2 h u^2}{g b^2}$$"
+  },
+  {
+    "question_number": 42,
+    "question_type": "mcq",
+    "question_text": "Two forces $\\vec{F}_1 = 500\\text{ N}$ due east and $\\vec{F}_2 = 250\\text{ N}$ due north have a common initial point. Then $(\\vec{F}_2 - \\vec{F}_1)$ is",
+    "options": [
+      "$250\\sqrt{5}\\text{ N},\\; \\tan^{-1}(2)\\text{ West of North}$",
+      "$250\\text{ N},\\; \\tan^{-1}(2)\\text{ West of North}$",
+      "$\\text{Zero}$",
+      "$750\\text{ N},\\; \\tan^{-1}\\left(\\frac{3}{4}\\right)\\text{ North of West}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Vectors and Resolution",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Taking east along $+\\hat{i}$ and north along $+\\hat{j}$:\n$$\\vec{F}_1 = 500\\hat{i}\\text{ N}$$\n$$\\vec{F}_2 = 250\\hat{j}\\text{ N}$$\n\nNow, calculate the vector difference:\n$$\\vec{F} = \\vec{F}_2 - \\vec{F}_1 = -500\\hat{i} + 250\\hat{j}$$\n\nMagnitude of $\\vec{F}$:\n$$|\\vec{F}| = \\sqrt{(-500)^2 + (250)^2} = 250\\sqrt{(-2)^2 + 1^2} = 250\\sqrt{5}\\text{ N}$$\n\nDirection:\nThe components are $250\\text{ N}$ along North and $500\\text{ N}$ along West.\nThe angle $\\theta$ with respect to North towards West is:\n$$\\tan\\theta = \\frac{\\text{West component}}{\\text{North component}} = \\frac{500}{250} = 2 \\implies \\theta = \\tan^{-1}(2)\\text{ West of North}$$\n\nThus, $\\vec{F}_2 - \\vec{F}_1 = 250\\sqrt{5}\\text{ N}, \\tan^{-1}(2)\\text{ West of North}$."
+  }
+]

@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 26,
+    "question_type": "mcq",
+    "question_text": "An object is dropped from rest. Its velocity versus displacement graph is (assume downward direction to be positive)",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four velocity versus displacement ($v-s$) graphs are shown:\n- Graph (1): A straight line passing through the origin with a constant positive slope ($v \\propto s$).\n- Graph (2): A curve starting from the origin that is concave upward (slope $\\frac{dv}{ds}$ increases with $s$).\n- Graph (3): A parabolic curve starting from the origin that is concave downward towards the $s$-axis (slope $\\frac{dv}{ds}$ decreases with $s$, representing $v \\propto \\sqrt{s}$).\n- Graph (4): A curve starting at a positive value on the $v$-axis and curving downward to intersect the $s$-axis.",
+    "solution": "For an object dropped from rest under gravity (taking the downward direction as positive):\nInitial velocity $u = 0$, acceleration $a = g$.\n\nUsing the third equation of motion:\n$$v^2 = u^2 + 2gs$$\n$$v^2 = 2gs \\implies v = \\sqrt{2gs}$$\n\nThis represents a parabola symmetric about the displacement ($s$) axis, opening to the right.\n\nDifferentiating with respect to $s$ to find the slope of the $v-s$ graph:\n$$\\frac{dv}{ds} = \\frac{d}{ds}(\\sqrt{2gs}) = \\frac{\\sqrt{2g}}{2\\sqrt{s}} = \\frac{g}{v}$$\n\n- At the start ($s = 0$, $v = 0$), the slope $\\frac{dv}{ds} \\to \\infty$ (vertical tangent at the origin).\n- As $s$ increases, the slope $\\frac{dv}{ds}$ continuously decreases.\n\nThus, the curve starts at the origin and is concave downward (bending towards the displacement axis), which corresponds to Graph (3)."
+  },
+  {
+    "question_number": 27,
+    "question_type": "mcq",
+    "question_text": "Two bodies of different masses $m_a$ and $m_b$ are dropped from two different heights $a$ and $b$. The ratio of time taken by the two bodies through these distances is",
+    "options": [
+      "$a^2 : b^2$",
+      "$\\sqrt{a} : \\sqrt{b}$",
+      "$\\frac{a}{b}$",
+      "$\\frac{m_a}{m_b} \\sqrt{\\frac{b}{a}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When a body is dropped from rest ($u = 0$) under gravity, the distance $h$ fallen in time $t$ is given by the second equation of motion:\n$$h = ut + \\frac{1}{2}gt^2 = \\frac{1}{2}gt^2$$\n\nSolving for time $t$:\n$$t = \\sqrt{\\frac{2h}{g}}$$\n\nNotice that the time of fall is completely independent of the mass of the body.\n\nFor the first body dropped from height $a$:\n$$t_a = \\sqrt{\\frac{2a}{g}}$$\n\nFor the second body dropped from height $b$:\n$$t_b = \\sqrt{\\frac{2b}{g}}$$\n\nTaking the ratio of the times taken:\n$$\\frac{t_a}{t_b} = \\frac{\\sqrt{\\frac{2a}{g}}}{\\sqrt{\\frac{2b}{g}}} = \\frac{\\sqrt{a}}{\\sqrt{b}}$$\n\nTherefore, the ratio is $\\sqrt{a} : \\sqrt{b}$."
+  },
+  {
+    "question_number": 28,
+    "question_type": "mcq",
+    "question_text": "A ball is released from the top of a tower of height $h\\text{ m}$. It takes $T\\text{ s}$ to reach the ground. What is the position of the ball in $\\frac{T}{3}\\text{ s}$?",
+    "options": [
+      "$\\frac{h}{9}\\text{ m}$ from the ground",
+      "$\\frac{8h}{9}\\text{ m}$ from the ground",
+      "$\\frac{7h}{9}\\text{ m}$ from the ground",
+      "$\\frac{17h}{9}\\text{ m}$ from the ground"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the ball be dropped from rest ($u = 0$) from the top of a tower of height $h$.\n\nThe total distance fallen in time $T$ is:\n$$h = \\frac{1}{2}gT^2$$\n\nThe distance fallen from the top in time $t = \\frac{T}{3}$ is:\n$$y = \\frac{1}{2}g\\left(\\frac{T}{3}\\right)^2 = \\frac{1}{9}\\left(\\frac{1}{2}gT^2\\right) = \\frac{h}{9}$$\n\nTherefore, the position (height) of the ball measured from the ground at time $\\frac{T}{3}\\text{ s}$ is:\n$$h' = h - y = h - \\frac{h}{9} = \\frac{8h}{9}\\text{ m}\\text{ from the ground}.$$"
+  },
+  {
+    "question_number": 29,
+    "question_type": "mcq",
+    "question_text": "Two objects $A$ and $B$ are moving with velocities $V_A$ and $V_B$ respectively along positive $x$-axis. If $V_A < V_B$ then, which of the following position-time graphs is correctly showing the velocity of $A$ and $B$?",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four position-time ($x-t$) graphs are shown:\n- Graph (1): Two parallel straight lines with positive slopes, where line A is positioned above line B.\n- Graph (2): Two parallel straight lines with positive slopes, where line B is positioned above line A.\n- Graph (3): Line A starts at a positive position on the vertical axis with a smaller positive slope. Line B starts at the origin $(0,0)$ with a steeper positive slope, intersecting and crossing line A.\n- Graph (4): Line B starts at a positive position on the vertical axis with a smaller positive slope. Line A starts at the origin $(0,0)$ with a steeper positive slope, intersecting and crossing line B.",
+    "solution": "In a position-time ($x-t$) graph:\n1. The slope of the line represents the velocity of the object: $\\text{Slope} = \\frac{dx}{dt} = v$.\n2. Since $V_A < V_B$, the slope of line $B$ must be greater than the slope of line $A$:\n$$\\text{Slope}(B) > \\text{Slope}(A)$$\n3. If object $B$ starts from behind object $A$ (for example, object $B$ at the origin $x = 0$ and object $A$ ahead at some $x > 0$), then because $V_B > V_A$, object $B$ will eventually catch up with and overtake object $A$. This is depicted by line $B$ starting from the origin with a steeper slope and intersecting line $A$.\n\nIn Graph (3):\n- Line $B$ starts at the origin with a steeper slope (larger velocity).\n- Line $A$ starts ahead with a smaller slope (smaller velocity).\n- The lines intersect, correctly representing $V_B > V_A$ ($V_A < V_B$).\n\nHence, Graph (3) is the correct representation."
+  }
+]

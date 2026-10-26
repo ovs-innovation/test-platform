@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 61,
+    "question_type": "mcq",
+    "question_text": "A projectile thrown at an angle $30^\\circ$ with horizontal from level ground reaches to maximum height $20\\text{ m}$. What will be the maximum height if it is thrown at an angle $60^\\circ$ with same speed?",
+    "options": [
+      "$20\\text{ m}$",
+      "$30\\text{ m}$",
+      "$50\\text{ m}$",
+      "$60\\text{ m}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum height attained by a projectile is given by:\n$$H = \\frac{u^2 \\sin^2\\theta}{2g}$$\nFor the first throw with $\\theta_1 = 30^\\circ$:\n$$H_1 = \\frac{u^2 \\sin^2 30^\\circ}{2g} = \\frac{u^2}{2g} \\left(\\frac{1}{2}\\right)^2 = \\frac{u^2}{8g} = 20\\text{ m}$$\nThis gives:\n$$\\frac{u^2}{2g} = 4 \\times 20 = 80\\text{ m}$$\nFor the second throw with $\\theta_2 = 60^\\circ$:\n$$H_2 = \\frac{u^2 \\sin^2 60^\\circ}{2g} = \\frac{u^2}{2g} \\left(\\frac{\\sqrt{3}}{2}\\right)^2 = \\frac{3}{4} \\left(\\frac{u^2}{2g}\\right)$$\nSubstituting the value of $\\frac{u^2}{2g}$:\n$$H_2 = \\frac{3}{4} \\times 80\\text{ m} = 60\\text{ m}$$\nHence, the correct option is (4)."
+  },
+  {
+    "question_number": 62,
+    "question_type": "mcq",
+    "question_text": "A body is moving in uniform circular motion with speed $v$. The magnitude of change in its velocity after it rotates by an angle $120^\\circ$ is",
+    "options": [
+      "$2v$",
+      "$\\sqrt{3}v$",
+      "$v$",
+      "$\\frac{\\sqrt{3}}{2}v$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In uniform circular motion, the magnitude of the velocity remains constant, i.e., $|\\vec{v}_1| = |\\vec{v}_2| = v$.\nThe angle between the initial velocity vector $\\vec{v}_1$ and final velocity vector $\\vec{v}_2$ after the body rotates by an angle $\\theta$ is $\\theta$.\nThe magnitude of change in velocity is given by:\n$$|\\Delta \\vec{v}| = 2v \\sin\\left(\\frac{\\theta}{2}\\right)$$\nGiven $\\theta = 120^\\circ$:\n$$|\\Delta \\vec{v}| = 2v \\sin\\left(\\frac{120^\\circ}{2}\\right) = 2v \\sin(60^\\circ) = 2v \\left(\\frac{\\sqrt{3}}{2}\\right) = \\sqrt{3}v$$\nHence, the correct option is (2)."
+  },
+  {
+    "question_number": 63,
+    "question_type": "mcq",
+    "question_text": "A car moves on a circular path such that its speed is given by $v = Kt$, where $K = \\text{constant}$ and $t$ is time, the radius of circular path is $r$, then net acceleration of the car at time $t$ is",
+    "options": [
+      "$\\sqrt{K^2 + \\left(\\frac{K^2 t^2}{r}\\right)^2}$",
+      "$2K$",
+      "$K$",
+      "$\\sqrt{K^2 + K^2 t^2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The speed of the car is $v = Kt$.\n1. Tangential acceleration ($a_t$):\n$$a_t = \\frac{dv}{dt} = \\frac{d}{dt}(Kt) = K$$\n2. Radial (centripetal) acceleration ($a_c$):\n$$a_c = \\frac{v^2}{r} = \\frac{(Kt)^2}{r} = \\frac{K^2 t^2}{r}$$\nSince tangential and radial accelerations are mutually perpendicular, the net acceleration $a$ is:\n$$a = \\sqrt{a_t^2 + a_c^2} = \\sqrt{K^2 + \\left(\\frac{K^2 t^2}{r}\\right)^2}$$\nHence, the correct option is (1)."
+  },
+  {
+    "question_number": 64,
+    "question_type": "mcq",
+    "question_text": "An object of mass $10\\text{ kg}$ is projected from level ground with speed $40\\text{ m/s}$ at angle $30^\\circ$ with horizontal. The rate of change of momentum of object [in SI units] $1\\text{ second}$ after the projection is [neglect air resistance]",
+    "options": [
+      "$100$",
+      "$50$",
+      "$25$",
+      "$75$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Newton's Second Law of Motion, the rate of change of momentum of a body equals the net external force acting on it:\n$$\\frac{d\\vec{p}}{dt} = \\vec{F}_{\\text{net}}$$\nFor a projectile in flight (neglecting air resistance), the only force acting on it is the force of gravity, directed vertically downwards:\n$$\\vec{F}_{\\text{net}} = m\\vec{g}$$\nFirst, checking the total time of flight:\n$$T = \\frac{2u \\sin\\theta}{g} = \\frac{2 \\times 40 \\times \\sin 30^\\circ}{10} = \\frac{2 \\times 40 \\times 0.5}{10} = 4\\text{ s}$$\nAt $t = 1\\text{ s}$, the projectile is in flight.\nThus, the magnitude of the rate of change of momentum is:\n$$\\left|\\frac{d\\vec{p}}{dt}\\right| = mg = 10\\text{ kg} \\times 10\\text{ m/s}^2 = 100\\text{ N} \\text{ (or } \\text{kg}\\cdot\\text{m/s}^2\\text{)}$$\nHence, the correct option is (1)."
+  }
+]

@@ -1,0 +1,104 @@
+[
+  {
+    "question_number": 101,
+    "question_type": "mcq",
+    "question_text": "A projectile is projected at an angle of $60^\\circ$ from horizontal. At an instant it is moving at an angle of $30^\\circ$ with horizontal with velocity $10\\text{ m/s}$. The radial acceleration of particle at that instant is",
+    "options": [
+      "$\\frac{20}{\\sqrt{3}}\\text{ m/s}^2$",
+      "$\\frac{10}{\\sqrt{3}}\\text{ m/s}^2$",
+      "$20\\sqrt{3}\\text{ m/s}^2$",
+      "$5\\sqrt{3}\\text{ m/s}^2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The radial (or normal/centripetal) acceleration of a projectile is the component of its acceleration perpendicular to the instantaneous velocity vector.\n\nAt any point in the trajectory, the total acceleration of the projectile is the acceleration due to gravity, $\\vec{g}$, acting vertically downwards.\n\nGiven:\n- Velocity vector makes an angle $\\theta = 30^\\circ$ with the horizontal.\n- Acceleration due to gravity $g = 10\\text{ m/s}^2$ acts vertically downwards.\n\nThe component of acceleration perpendicular to the velocity (radial acceleration $a_r$) is:\n$$a_r = g \\cos\\theta = 10 \\cos(30^\\circ) = 10 \\times \\frac{\\sqrt{3}}{2} = 5\\sqrt{3}\\text{ m/s}^2$$\n\nThus, the radial acceleration is $5\\sqrt{3}\\text{ m/s}^2$."
+  },
+  {
+    "question_number": 102,
+    "question_type": "mcq",
+    "question_text": "Initial velocity of a projectile is given by $\\vec{v} = (20\\hat{i} + 50\\hat{j} + 70\\hat{k})\\text{ m/s}$. If acceleration due to gravity is $g = 10(-\\hat{k})\\text{ m/s}^2$, then the time after which projectile returns to the same horizontal level is (axis system is given below):",
+    "options": [
+      "$4\\text{ s}$",
+      "$10\\text{ s}$",
+      "$14\\text{ s}$",
+      "$12\\text{ s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": true,
+    "diagram_description": "A 3D Cartesian coordinate system showing horizontal axes $x$ and $y$, and vertical axis $z$ pointing upwards.",
+    "solution": "The acceleration due to gravity acts along the negative $z$-axis: $\\vec{g} = -10\\hat{k}\\text{ m/s}^2$.\nTherefore, the vertical motion is along the $z$-axis.\n\nFrom the given initial velocity vector:\n$$u_z = 70\\text{ m/s}$$\n$$a_z = -10\\text{ m/s}^2$$\n\nThe projectile returns to the same horizontal level when its displacement along the vertical axis is zero ($z = 0$):\n$$z = u_z t + \\frac{1}{2} a_z t^2 = 0$$\n$$70 t - \\frac{1}{2}(10) t^2 = 0$$\n$$t(70 - 5t) = 0$$\n\nSince $t \\neq 0$, the time of flight is:\n$$t = \\frac{70}{5} = 14\\text{ s}$$"
+  },
+  {
+    "question_number": 103,
+    "question_type": "mcq",
+    "question_text": "Two cars $A$ and $B$ are moving with constant velocities $10\\text{ m/s}$ east and $40\\text{ m/s}$ west respectively. The acceleration of $A$ w.r.t. $B$ is",
+    "options": [
+      "$20\\text{ m s}^{-2}\\text{ west}$",
+      "$50\\text{ m s}^{-2}\\text{ west}$",
+      "$50\\text{ m s}^{-2}\\text{ east}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Both cars $A$ and $B$ are moving with constant velocities, which means their individual accelerations are zero:\n$$\\vec{a}_A = 0$$\n$$\\vec{a}_B = 0$$\n\nThe acceleration of car $A$ with respect to car $B$ is:\n$$\\vec{a}_{AB} = \\vec{a}_A - \\vec{a}_B = 0 - 0 = \\text{Zero}$$"
+  },
+  {
+    "question_number": 104,
+    "question_type": "mcq",
+    "question_text": "In projectile motion, accelerations of the projectile when it is gaining height and losing height respectively are",
+    "options": [
+      "$g\\text{ upward}, g\\text{ upward}$",
+      "$g\\text{ upward}, g\\text{ downward}$",
+      "$g\\text{ downward}, g\\text{ downward}$",
+      "$g\\text{ downward}, g\\text{ upward}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In projectile motion under the influence of gravity alone, the only force acting on the particle is gravity, which acts vertically downwards at all times.\n\nTherefore, whether the projectile is rising (gaining height) or falling (losing height), the acceleration is always constant and directed downwards with magnitude $g$.\n\nHence, the accelerations are $g\\text{ downward}, g\\text{ downward}$."
+  },
+  {
+    "question_number": 105,
+    "question_type": "mcq",
+    "question_text": "Position vector of a particle as function of time $t$ (in second) is $\\vec{r} = (2t\\hat{i} + 2t^2\\hat{j})\\text{ m}$. The initial acceleration of the particle is",
+    "options": [
+      "$2\\text{ m/s}^2$",
+      "$3\\text{ m/s}^2$",
+      "$4\\text{ m/s}^2$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Vectors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given the position vector:\n$$\\vec{r}(t) = 2t\\hat{i} + 2t^2\\hat{j}$$\n\nDifferentiating with respect to time to find velocity:\n$$\\vec{v}(t) = \\frac{d\\vec{r}}{dt} = 2\\hat{i} + 4t\\hat{j}$$\n\nDifferentiating again to find acceleration:\n$$\\vec{a}(t) = \\frac{d\\vec{v}}{dt} = 4\\hat{j}\\text{ m/s}^2$$\n\nThe acceleration is constant for all $t$, so at $t = 0$ (initial acceleration):\n$$|\\vec{a}(0)| = 4\\text{ m/s}^2$$"
+  },
+  {
+    "question_number": 106,
+    "question_type": "mcq",
+    "question_text": "Velocity and acceleration vectors of a particle moving on a circular path are shown below. At the instant shown",
+    "options": [
+      "The speed of the particle must be decreasing",
+      "Acceleration of particle must be increasing in magnitude",
+      "Dot product of $\\vec{v}$ and $\\vec{a}$ is positive",
+      "Momentum of the particle must be increasing in magnitude"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": true,
+    "diagram_description": "A circle with center $O$. A particle is positioned on the upper-left part of the circular path. Its velocity vector $\\vec{v}$ is tangent to the circle pointing downwards and to the left. Its acceleration vector $\\vec{a}$ points into the circle towards the right, forming an obtuse angle (greater than $90^\\circ$) with $\\vec{v}$.",
+    "solution": "From the given diagram, the angle $\\theta$ between the velocity vector $\\vec{v}$ and the acceleration vector $\\vec{a}$ is obtuse, i.e., $\\theta > 90^\\circ$.\n\n1. The dot product is:\n$$\\vec{v} \\cdot \\vec{a} = v a \\cos\\theta < 0$$\nSince $\\cos\\theta < 0$ for $\\theta > 90^\\circ$, the dot product is negative.\n\n2. The tangential acceleration component is:\n$$a_t = a \\cos\\theta = \\frac{dv}{dt} < 0$$\nBecause the tangential acceleration is directed opposite to the velocity vector, the speed $v$ of the particle is decreasing with time.\n\n3. Since speed is decreasing, the magnitude of momentum $p = mv$ is also decreasing.\n\nTherefore, the correct statement is that the speed of the particle must be decreasing."
+  }
+]

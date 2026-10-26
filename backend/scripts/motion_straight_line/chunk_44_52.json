@@ -1,0 +1,155 @@
+[
+  {
+    "question_number": 44,
+    "question_type": "mcq",
+    "question_text": "A bird is flying due North at a speed of $10\\text{ m/s}$. A train $250\\text{ m}$ long is also travelling due North at a speed of $20\\text{ m/s}$. Bird and train are moving in the same vertical plane. How long will the train take to overtake the bird completely?",
+    "options": [
+      "$25\\text{ s}$",
+      "$50\\text{ s}$",
+      "$20\\text{ s}$",
+      "$8.33\\text{ s}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Relative Velocity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Both the bird and the train are moving in the same direction (due North).\nRelative velocity of the train with respect to the bird is:\n$$v_{\\text{rel}} = v_{\\text{train}} - v_{\\text{bird}} = 20 - 10 = 10\\text{ m/s}$$\n\nTo overtake the bird completely, the train must cover a distance equal to its length, $L = 250\\text{ m}$.\nTherefore, time taken is:\n$$t = \\frac{L}{v_{\\text{rel}}} = \\frac{250\\text{ m}}{10\\text{ m/s}} = 25\\text{ s}$$"
+  },
+  {
+    "question_number": 45,
+    "question_type": "mcq",
+    "question_text": "A stone is dropped into water from a bridge $44.1\\text{ m}$ above the water. Time taken by the stone to reach water is",
+    "options": [
+      "$1\\text{ s}$",
+      "$3\\text{ s}$",
+      "$2\\text{ s}$",
+      "$4\\text{ s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initial velocity $u = 0$.\nDistance fallen $h = 44.1\\text{ m}$.\nAcceleration $g = 9.8\\text{ m/s}^2$.\n\nUsing equation of motion:\n$$h = ut + \\frac{1}{2}gt^2$$\n$$44.1 = 0 + \\frac{1}{2}(9.8)t^2 = 4.9t^2$$\n$$t^2 = \\frac{44.1}{4.9} = 9 \\implies t = 3\\text{ s}$$"
+  },
+  {
+    "question_number": 46,
+    "question_type": "mcq",
+    "question_text": "For the given acceleration ($a$) versus time ($t$) graph of a body, the body is initially at rest. The velocity ($v$) versus time ($t$) graph will be\n\n[Refer to the given $a\\text{--}t$ graph]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Question diagram shows an acceleration-time graph with acceleration decreasing linearly from $a_0$ at $t=0$ to $0$ at time $t$. The options show four velocity-time graphs: (1) straight line with positive slope starting from origin; (2) straight line with negative slope; (3) parabolic curve concave downwards starting from origin with slope decreasing to zero; (4) parabolic curve concave upwards starting from origin.",
+    "solution": "From the given $a\\text{--}t$ graph, acceleration decreases linearly with time:\n$$a(t) = a_0 - k t$$\nSince $a = \\frac{dv}{dt}$, velocity is obtained by integrating acceleration with initial condition $v(0) = 0$:\n$$v(t) = \\int_0^t (a_0 - kt)\\, dt = a_0 t - \\frac{1}{2}kt^2$$\n\n1. At $t = 0$, $v = 0$ and the slope $\\frac{dv}{dt} = a_0 > 0$.\n2. As $t$ increases, the slope $\\frac{dv}{dt} = a(t)$ decreases, reaching zero when $a = 0$.\n3. Therefore, the $v\\text{--}t$ curve is a parabolic curve concave downwards whose slope continuously decreases to zero, represented by Graph (3)."
+  },
+  {
+    "question_number": 47,
+    "question_type": "mcq",
+    "question_text": "A ball is dropped from the roof of a lift. At this moment, the lift is moving downward with an acceleration $a$ ($a < g$). The ratio of acceleration of the ball for an observer inside the lift to the acceleration of ball for an observer on the ground will be",
+    "options": [
+      "$(g + a) : g$",
+      "$g : (g + a)$",
+      "$(g - a) : g$",
+      "$(g - a) : (g - a)$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Motion & Pseudo Force",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. For an observer on the ground (inertial frame), once released, the ball is under the sole influence of gravity, so its acceleration is $a_{\\text{ground}} = g$ downwards.\n\n2. For an observer inside the lift (non-inertial frame accelerating downward with acceleration $a$):\n$$a_{\\text{lift}} = g - a \\quad (\\text{downwards})$$\n\n3. The ratio of the acceleration observed inside the lift to that on the ground is:\n$$\\frac{a_{\\text{lift}}}{a_{\\text{ground}}} = \\frac{g - a}{g}$$\nHence, the ratio is $(g - a) : g$."
+  },
+  {
+    "question_number": 48,
+    "question_type": "mcq",
+    "question_text": "A particle moves with a velocity $v = \\alpha t^2$ along a straight line. The average speed in time interval $t = 0$ to $t = T$ is",
+    "options": [
+      "$\\alpha T^3$",
+      "$\\frac{\\alpha T^3}{2}$",
+      "$\\frac{\\alpha T^3}{3}$",
+      "$\\frac{\\alpha T^2}{3}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Average Speed",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Average speed is given by the total distance covered divided by total time:\n$$v_{\\text{avg}} = \\frac{\\int_0^T v\\, dt}{\\int_0^T dt}$$\n\nEvaluating the numerator:\n$$\\int_0^T \\alpha t^2\\, dt = \\left[ \\frac{\\alpha t^3}{3} \\right]_0^T = \\frac{\\alpha T^3}{3}$$\n\nDividing by total time $T$:\n$$v_{\\text{avg}} = \\frac{\\frac{\\alpha T^3}{3}}{T} = \\frac{\\alpha T^2}{3}$$"
+  },
+  {
+    "question_number": 49,
+    "question_type": "mcq",
+    "question_text": "The position ($x$) of a particle on a straight-line motion is given by $x = 2 + 10t - 5t^2\\text{ (m)}$. Its velocity ($v$) is best represented by\n\n[Refer to the given $v\\text{--}t$ graph options]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Option (1) shows a straight line starting at $v = 10\\text{ m/s}$ at $t = 0$ and decreasing linearly to $v = 0$ at $t = 1\\text{ s}$. Option (2) starts at $v = 20\\text{ m/s}$ and decreases linearly to $0$ at $t = 1\\text{ s}$. Options (3) and (4) show non-linear curves.",
+    "solution": "Given position equation:\n$$x = 2 + 10t - 5t^2$$\nVelocity is the derivative of position with respect to time:\n$$v = \\frac{dx}{dt} = 10 - 10t$$\n\nThis is the equation of a straight line $v = -10t + 10$ with:\n- Intercept on $v$-axis (at $t = 0$): $v = 10\\text{ m/s}$\n- Intercept on $t$-axis (when $v = 0$): $10 - 10t = 0 \\implies t = 1\\text{ s}$\n- Slope: $-10\\text{ m/s}^2$ (constant negative acceleration)\n\nGraph (1) correctly shows a straight line starting from $v = 10\\text{ m/s}$ at $t = 0$ and reaching $0$ at $t = 1\\text{ s}$."
+  },
+  {
+    "question_number": 50,
+    "question_type": "mcq",
+    "question_text": "A car travels $A$ to $B$ with speed $V_1$ and returns to $A$ with speed $V_2$, the average speed of the car $V$ is",
+    "options": [
+      "$\\text{Zero}$",
+      "$\\frac{V_1 + V_2}{2}$",
+      "$\\frac{2V_1 V_2}{V_1 + V_2}$",
+      "$\\frac{V_1 V_2}{2(V_1 + V_2)}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Average Speed",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let distance from $A$ to $B$ be $d$.\nTotal distance covered for round trip is $2d$.\n\nTime taken to travel from $A$ to $B$:\n$$t_1 = \\frac{d}{V_1}$$\nTime taken to return from $B$ to $A$:\n$$t_2 = \\frac{d}{V_2}$$\n\nTotal time taken:\n$$t = t_1 + t_2 = \\frac{d}{V_1} + \\frac{d}{V_2} = d\\left(\\frac{V_1 + V_2}{V_1 V_2}\\right)$$\n\nAverage speed:\n$$V_{\\text{avg}} = \\frac{\\text{Total Distance}}{\\text{Total Time}} = \\frac{2d}{d\\left(\\frac{V_1 + V_2}{V_1 V_2}\\right)} = \\frac{2V_1 V_2}{V_1 + V_2}$$\nNote: While average velocity is zero, average speed is non-zero and equals $\\frac{2V_1 V_2}{V_1 + V_2}$."
+  },
+  {
+    "question_number": 51,
+    "question_type": "mcq",
+    "question_text": "A boy fallen freely from a building of height $320\\text{ m}$. After $5\\text{ second}$ superman jumps downward with initial speed $u$. Such that the boy can be saved. The minimum value of $u$ is (assume $g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$95.1\\text{ m/s}$",
+      "$98.3\\text{ m/s}$",
+      "$91.6\\text{ m/s}$",
+      "$85.6\\text{ m/s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "1. Time taken by the falling boy to reach the ground ($h = 320\\text{ m}$, $u_0 = 0$):\n$$h = \\frac{1}{2}gt_1^2 \\implies 320 = \\frac{1}{2}(10)t_1^2 = 5t_1^2$$\n$$t_1^2 = 64 \\implies t_1 = 8\\text{ s}$$\n\n2. Superman jumps $5\\text{ s}$ later, so the maximum time Superman has to catch the boy before hitting ground is:\n$$t_2 = 8 - 5 = 3\\text{ s}$$\n\n3. In this time interval $t_2 = 3\\text{ s}$, Superman must cover the same distance $320\\text{ m}$:\n$$h = ut_2 + \\frac{1}{2}gt_2^2$$\n$$320 = u(3) + \\frac{1}{2}(10)(3)^2 = 3u + 45$$\n$$3u = 320 - 45 = 275 \\implies u = \\frac{275}{3} \\approx 91.67\\text{ m/s}$$\n\nRounding off gives $91.6\\text{ m/s}$."
+  },
+  {
+    "question_number": 52,
+    "question_type": "mcq",
+    "question_text": "The displacement $x$ of a body having relation with time as $x = 3t^2 - 6t + 7$, then distance covered by body in first two seconds is [where $x$ is in metre and $t$ is in second]",
+    "options": [
+      "$\\text{Zero}$",
+      "$6\\text{ m}$",
+      "$3\\text{ m}$",
+      "$9\\text{ m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Calculus in Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Velocity of the body is given by:\n$$v = \\frac{dx}{dt} = 6t - 6$$\n\nThe particle changes its direction of motion when $v = 0$:\n$$6t - 6 = 0 \\implies t = 1\\text{ s}$$\nSince $t = 1\\text{ s}$ falls within the interval $[0, 2\\text{ s}]$, distance must be computed separately for each segment of monotonic motion:\n\n1. At $t = 0\\text{ s}$: $x(0) = 3(0)^2 - 6(0) + 7 = 7\\text{ m}$\n2. At $t = 1\\text{ s}$: $x(1) = 3(1)^2 - 6(1) + 7 = 4\\text{ m}$\n   Distance in first second: $|x(1) - x(0)| = |4 - 7| = 3\\text{ m}$\n\n3. At $t = 2\\text{ s}$: $x(2) = 3(2)^2 - 6(2) + 7 = 12 - 12 + 7 = 7\\text{ m}$\n   Distance in second second: $|x(2) - x(1)| = |7 - 4| = 3\\text{ m}$\n\nTotal distance covered in first 2 seconds:\n$$d = 3\\text{ m} + 3\\text{ m} = 6\\text{ m}$$"
+  }
+]

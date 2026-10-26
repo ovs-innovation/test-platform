@@ -1,0 +1,154 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "assertion_text": "The path of a projectile with respect to another projectile is a straight line.",
+    "reason_text": "The acceleration of one projectile with respect to the other is zero.",
+    "question_text": "Assertion (A): The path of a projectile with respect to another projectile is a straight line.\nReason (R): The acceleration of one projectile with respect to the other is zero.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For two projectiles in free flight under gravity, both have an acceleration equal to $\\vec{g}$ directed vertically downwards. Therefore, the relative acceleration between them is $\\vec{a}_{\\text{rel}} = \\vec{a}_1 - \\vec{a}_2 = \\vec{g} - \\vec{g} = 0$. Since the relative acceleration is zero, the relative velocity $\\vec{v}_{\\text{rel}}$ remains constant in both magnitude and direction over time. A motion with constant velocity is a straight-line motion. Thus, the path of one projectile with respect to another is a straight line, and the reason correctly explains the assertion."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "assertion_text": "During projectile motion of a particle near earth's surface, only vertical component of its velocity changes.",
+    "reason_text": "Acceleration due to gravity near earth's surface is in vertically downward direction.",
+    "question_text": "Assertion (A): During projectile motion of a particle near earth's surface, only vertical component of its velocity changes.\nReason (R): Acceleration due to gravity near earth's surface is in vertically downward direction.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In projectile motion near the Earth's surface (neglecting air resistance), the only force acting on the particle is gravity, which acts vertically downwards. Consequently, the acceleration has only a vertical component ($a_y = -g$) and zero horizontal component ($a_x = 0$). Since $a_x = 0$, the horizontal component of velocity remains constant, while the vertical component changes continuously under the influence of gravity. Hence, both Assertion and Reason are true, and the Reason correctly explains the Assertion."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "assertion_text": "Force acting on a particle in uniform circular motion is constant.",
+    "reason_text": "Acceleration of a particle in uniform circular motion is constant.",
+    "question_text": "Assertion (A): Force acting on a particle in uniform circular motion is constant.\nReason (R): Acceleration of a particle in uniform circular motion is constant.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In uniform circular motion (UCM), the speed of the particle remains constant, but the direction of velocity changes continuously. This gives rise to a centripetal acceleration $\\vec{a}_c = -\\frac{v^2}{r}\\hat{r}$. Although the magnitude of centripetal acceleration ($v^2/r$) is constant, its direction is continuously changing (always pointing towards the center of the circle). Since acceleration is a vector quantity, $\\vec{a}$ is not constant. Consequently, the centripetal force $\\vec{F} = m\\vec{a}$ also continuously changes its direction and is not constant. Therefore, both Assertion and Reason are false statements."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "assertion_text": "Range for projectile motion on a horizontal plane is maximum for angle of projection equal to $45^\\circ$.",
+    "reason_text": "Time of flight of a projectile on a horizontal plane does not depend on the horizontal component of velocity.",
+    "question_text": "Assertion (A): Range for projectile motion on a horizontal plane is maximum for angle of projection equal to $45^\\circ$.\nReason (R): Time of flight of a projectile on a horizontal plane does not depend on the horizontal component of velocity.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The horizontal range of a projectile is given by $R = \\frac{u^2 \\sin(2\\theta)}{g}$. For a given projection speed $u$, the range is maximum when $\\sin(2\\theta) = 1$, which corresponds to $2\\theta = 90^\\circ \\implies \\theta = 45^\\circ$. Thus, the Assertion is true.\nThe time of flight is given by $T = \\frac{2u_y}{g} = \\frac{2u\\sin\\theta}{g}$, which depends solely on the vertical component of velocity $u_y$ and is independent of the horizontal component $u_x$. Thus, the Reason is also true.\nHowever, the maximum range at $\\theta = 45^\\circ$ arises from the maximization of the product $u_x u_y$ (since $R = u_x T = \\frac{2 u_x u_y}{g}$), and not solely because $T$ does not depend on $u_x$. Therefore, Reason is not the correct explanation of Assertion."
+  },
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "assertion_text": "A body either dropped or thrown horizontally from same height, reach the ground in same time interval.",
+    "reason_text": "The horizontal velocity of a particle has no effect on its vertical motion.",
+    "question_text": "Assertion (A): A body either dropped or thrown horizontally from same height, reach the ground in same time interval.\nReason (R): The horizontal velocity of a particle has no effect on its vertical motion.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the principle of physical independence of perpendicular motions, the motion along the horizontal axis does not affect the motion along the vertical axis. For both the dropped body and the horizontally thrown body, the initial vertical velocity is $u_y = 0$, vertical acceleration is $a_y = g$, and the vertical displacement is $h$. Using $h = \\frac{1}{2}gt^2$, the time taken to hit the ground for both bodies is $t = \\sqrt{\\frac{2h}{g}}$. Thus, they reach the ground simultaneously. Both Assertion and Reason are true, and the Reason correctly explains the Assertion."
+  },
+  {
+    "question_number": 6,
+    "question_type": "assertion_reason",
+    "assertion_text": "A safe turn by a cyclist should neither be too fast nor too sharp.",
+    "reason_text": "This is so because it increases the chances of skidding.",
+    "question_text": "Assertion (A): A safe turn by a cyclist should neither be too fast nor too sharp.\nReason (R): This is so because it increases the chances of skidding.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "To negotiate a circular turn of radius $r$ at speed $v$, the required centripetal acceleration is $a_c = \\frac{v^2}{r}$. The necessary centripetal force is provided by friction between the tyres and the road ($f_s \\le \\mu_s mg$). If the turn is too fast (large $v$) or too sharp (small radius $r$), the term $\\frac{v^2}{r}$ becomes very large, requiring a centripetal force greater than the maximum available static friction ($\\,\\mu_s mg$). Consequently, the cyclist will skid. Therefore, to make a safe turn, it should neither be too fast nor too sharp to avoid skidding. Both Assertion and Reason are true, and Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 7,
+    "question_type": "assertion_reason",
+    "assertion_text": "Uniform circular motion is an unaccelerated motion.",
+    "reason_text": "Velocity remains constant in uniform circular motion.",
+    "question_text": "Assertion (A): Uniform circular motion is an unaccelerated motion.\nReason (R): Velocity remains constant in uniform circular motion.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In uniform circular motion, only the speed of the body remains constant. The direction of the velocity vector is continuously tangential to the circular path and therefore changes continuously. Since velocity changes with time, the acceleration $\\vec{a} = \\frac{d\\vec{v}}{dt} \\ne 0$ (centripetal acceleration exists). Hence, uniform circular motion is an accelerated motion, not an unaccelerated motion. Therefore, both the Assertion and the Reason are false statements."
+  },
+  {
+    "question_number": 8,
+    "question_type": "assertion_reason",
+    "assertion_text": "A body is momentarily at rest when it reverses the direction of motion.",
+    "reason_text": "A body cannot have acceleration if its velocity is zero at a given instant of time.",
+    "question_text": "Assertion (A): A body is momentarily at rest when it reverses the direction of motion.\nReason (R): A body cannot have acceleration if its velocity is zero at a given instant of time.",
+    "options": [
+      "If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).",
+      "If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).",
+      "If Assertion is true statement but Reason is false, then mark (3).",
+      "If both Assertion and Reason are false statements, then mark (4)."
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When a body moves along a line and reverses its direction of motion, its velocity changes sign (e.g., from positive to negative). Since velocity is a continuous function of time, by the intermediate value theorem, it must pass through zero. Thus, the body is momentarily at rest ($v = 0$) at the turning point. So the Assertion is true.\nHowever, acceleration is the rate of change of velocity ($a = \\frac{dv}{dt}$), which can be non-zero even when instantaneous velocity is zero. For example, when a ball is thrown vertically upwards, at the highest point its velocity is zero, but its acceleration is $g$ downwards. Hence, the Reason is false."
+  }
+]

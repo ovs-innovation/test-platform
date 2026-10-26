@@ -1,0 +1,155 @@
+[
+  {
+    "question_number": 73,
+    "question_type": "mcq",
+    "question_text": "The acceleration-time graph of a particle moving along straight line is given. At what time, velocity of particle becomes equal to its initial velocity?\n\n[Refer to the given $a\\text{--}t$ graph]",
+    "options": [
+      "$10\\text{ s}$",
+      "$8\\text{ s}$",
+      "$6\\text{ s}$",
+      "$4\\text{ s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "An acceleration-time ($a\\text{--}t$) graph. The curve starts at $(0, 10)$, slopes downward as a straight line crossing the time axis at $(4, 0)$, reaches $(8, -10)$, and then slopes upward to $(10, 0)$.",
+    "solution": "The change in velocity is the area under the acceleration-time graph:\n$$\\Delta v = v(t) - v(0) = \\int_0^t a\\, dt$$\n\nFor $v(t) = v(0)$, the change in velocity must be zero, so the net area under the $a\\text{--}t$ curve must equal zero:\n\n1. Positive triangular area above the time axis (from $t = 0$ to $t = 4\\text{ s}$):\n$$A_1 = \\frac{1}{2} \\times 4 \\times 10 = +20\\text{ m/s}$$\n\n2. Negative triangular area below the time axis (from $t = 4$ to $t = 8\\text{ s}$):\n$$A_2 = \\frac{1}{2} \\times (8 - 4) \\times (-10) = -20\\text{ m/s}$$\n\n3. Net area from $t = 0$ to $t = 8\\text{ s}$:\n$$A_1 + A_2 = +20 - 20 = 0\\text{ m/s}$$\n\nTherefore, at $t = 8\\text{ s}$, the velocity of the particle becomes equal to its initial velocity."
+  },
+  {
+    "question_number": 74,
+    "question_type": "mcq",
+    "question_text": "The velocity of a particle along a straight line with a constant acceleration $a$ reduces to $\\frac{1}{5}$ of its initial velocity in time $\\tau$. The total time taken by the body till its velocity becomes zero is",
+    "options": [
+      "$\\frac{4\\tau}{3}$",
+      "$\\frac{5\\tau}{4}$",
+      "$\\frac{4\\tau}{5}$",
+      "$\\frac{3\\tau}{4}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let initial velocity be $u$. Since velocity decreases, the acceleration is retarding with magnitude $a$:\n$$v = u - at$$\n\nGiven that at $t = \\tau$, velocity reduces to $\\frac{u}{5}$:\n$$\\frac{u}{5} = u - a\\tau \\implies a\\tau = u - \\frac{u}{5} = \\frac{4u}{5} \\implies a = \\frac{4u}{5\\tau}$$\n\nLet $T$ be the total time taken from start until the velocity becomes zero ($v = 0$):\n$$0 = u - aT \\implies T = \\frac{u}{a}$$\n\nSubstituting $a = \\frac{4u}{5\\tau}$:\n$$T = \\frac{u}{\\frac{4u}{5\\tau}} = \\frac{5\\tau}{4}$$\n\nThus, option (2) $\\frac{5\\tau}{4}$ is correct."
+  },
+  {
+    "question_number": 75,
+    "question_type": "mcq",
+    "question_text": "Two balls are projected from a tower such that one is vertically upward with a velocity of $9\\text{ m/s}$ and other horizontally with same speed. The relative acceleration of one ball w.r.t. other is ($g = 10\\text{ m/s}^2$)",
+    "options": [
+      "$10\\text{ m/s}^2$",
+      "$20\\text{ m/s}^2$",
+      "$18\\text{ m/s}^2$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Relative Motion & Projectiles",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Once released, both balls are in free flight under the sole action of gravity:\n- Acceleration of the first ball: $\\vec{a}_1 = -g\\hat{j}$\n- Acceleration of the second ball: $\\vec{a}_2 = -g\\hat{j}$\n\nThe relative acceleration of one ball with respect to the other is:\n$$\\vec{a}_{12} = \\vec{a}_1 - \\vec{a}_2 = (-g\\hat{j}) - (-g\\hat{j}) = \\vec{0}$$\n\nHence, the relative acceleration is zero."
+  },
+  {
+    "question_number": 76,
+    "question_type": "mcq",
+    "question_text": "Two balls are projected vertically upward direction with same speed $60\\text{ m/s}$ at an interval of $2\\text{ s}$. The time from the projection of the second body after they will meet is [take $g = 10\\text{ m/s}^2$]",
+    "options": [
+      "$5\\text{ s}$",
+      "$6\\text{ s}$",
+      "$7\\text{ s}$",
+      "$8\\text{ s}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Motion Under Gravity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let $t$ be the time elapsed after the projection of the second body when they meet.\n- First body has been in motion for time $(t + 2)$ seconds.\n- Second body has been in motion for time $t$ seconds.\n\nEquating their vertical displacements from the launch point:\n$$y_1 = y_2$$\n$$u(t + 2) - \\frac{1}{2}g(t + 2)^2 = ut - \\frac{1}{2}gt^2$$\n$$ut + 2u - \\frac{1}{2}g(t^2 + 4t + 4) = ut - \\frac{1}{2}gt^2$$\n$$2u - 2gt - 2g = 0$$\n\nSubstitute $u = 60\\text{ m/s}$ and $g = 10\\text{ m/s}^2$:\n$$2(60) - 2(10)t - 2(10) = 0$$\n$$120 - 20 - 20t = 0 \\implies 100 = 20t \\implies t = 5\\text{ s}$$\n\nThus, they meet $5\\text{ s}$ after the projection of the second body."
+  },
+  {
+    "question_number": 77,
+    "question_type": "mcq",
+    "question_text": "A body is projected vertically upward with speed $u$. The velocity $v$ versus position $x$ is best represented by\n\n[Refer to the given $v\\text{--}x$ graph options]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "Four $v\\text{--}x$ graphs showing the trajectory of a vertical projectile. Graph (1) shows a parabola opening to the left with vertex at $(x, v) = (\\frac{u^2}{2g}, 0)$ and symmetric vertical intercepts at $+u$ and $-u$. Graph (2) shows two straight line segments forming a triangle. Graph (3) shows a single straight line. Graph (4) shows two disconnected curves in different quadrants.",
+    "solution": "The relation between velocity $v$ and vertical position $x$ for a particle projected upward with initial speed $u$ is:\n$$v^2 = u^2 - 2gx$$\n\nRearranging for $x$:\n$$x = \\frac{u^2 - v^2}{2g} = \\frac{u^2}{2g} - \\frac{1}{2g}v^2$$\n\nThis is the equation of a parabola of the form $x = x_0 - C v^2$ where:\n1. The axis of symmetry is the $x$-axis ($v = 0$).\n2. The vertex is at $(x, v) = \\left(\\frac{u^2}{2g}, 0\\right)$, which represents the maximum height reached where $v = 0$.\n3. The parabola opens towards the left (decreasing $x$).\n4. At $x = 0$ (ground level), $v = \\pm u$ ($+u$ on the way up, $-u$ on the way down).\n\nGraph (1) correctly portrays this horizontal parabola symmetric about the $x$-axis."
+  },
+  {
+    "question_number": 78,
+    "question_type": "mcq",
+    "question_text": "A car is moving on a straight road with uniform velocity $72\\text{ kmh}^{-1}$. Suddenly the driver saw a child in the middle of road and applies brakes. If he is just able to save the child, then reaction time of the driver is (initial distance between car and child is $5\\text{ m}$ and due to application of brakes uniform retardation of $50\\text{ ms}^{-2}$ is developed)",
+    "options": [
+      "$0.04\\text{ s}$",
+      "$0.4\\text{ s}$",
+      "$0.05\\text{ s}$",
+      "$0.45\\text{ s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Uniformly Accelerated Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initial speed of the car:\n$$u = 72\\text{ km/h} = 72 \\times \\frac{5}{18} = 20\\text{ m/s}$$\n\n1. Distance travelled during braking until coming to rest ($v = 0$, $a = 50\\text{ m/s}^2$):\n$$v^2 = u^2 - 2as_{\\text{brake}} \\implies 0 = 20^2 - 2(50)s_{\\text{brake}}$$\n$$100 s_{\\text{brake}} = 400 \\implies s_{\\text{brake}} = 4\\text{ m}$$\n\n2. The total distance available before hitting the child is $d = 5\\text{ m}$.\nTherefore, distance travelled during the driver's reaction time $t_r$ is:\n$$s_{\\text{reaction}} = d - s_{\\text{brake}} = 5 - 4 = 1\\text{ m}$$\n\n3. Since the car moves at constant speed $u = 20\\text{ m/s}$ during the reaction time:\n$$s_{\\text{reaction}} = u \\cdot t_r \\implies 1 = 20 \\cdot t_r \\implies t_r = \\frac{1}{20} = 0.05\\text{ s}$$"
+  },
+  {
+    "question_number": 79,
+    "question_type": "mcq",
+    "question_text": "Two trains are moving on the same track. The velocity of first train is $72\\text{ km/h}$ and the second is $36\\text{ km/h}$. If the first train is behind the second train, then the minimum distance between the trains such that they will not collide is (retardation by brakes of first train is $0.05\\text{ m/s}^2$)",
+    "options": [
+      "$1000\\text{ m}$",
+      "$500\\text{ m}$",
+      "$100\\text{ m}$",
+      "$3000\\text{ m}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Motion & Collision Avoidance",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Convert velocities to $\\text{m/s}$:\n- First train: $u_1 = 72\\text{ km/h} = 72 \\times \\frac{5}{18} = 20\\text{ m/s}$\n- Second train: $u_2 = 36\\text{ km/h} = 36 \\times \\frac{5}{18} = 10\\text{ m/s}$\n\nRelative velocity of the first train with respect to the second train:\n$$u_{\\text{rel}} = u_1 - u_2 = 20 - 10 = 10\\text{ m/s}$$\n\nRelative retardation of the first train:\n$$a_{\\text{rel}} = 0.05\\text{ m/s}^2$$\n\nTo just avoid a collision, the relative velocity must drop to zero ($v_{\\text{rel}} = 0$):\n$$v_{\\text{rel}}^2 = u_{\\text{rel}}^2 - 2 a_{\\text{rel}} s_{\\text{min}}$$\n$$0 = 10^2 - 2(0.05) s_{\\text{min}}$$\n$$0.1 s_{\\text{min}} = 100 \\implies s_{\\text{min}} = \\frac{100}{0.1} = 1000\\text{ m}$$"
+  },
+  {
+    "question_number": 80,
+    "question_type": "mcq",
+    "question_text": "From the given position ($x$) versus time ($t$) graph average velocity of which part is maximum?\n\n[Refer to the given $x\\text{--}t$ curve]",
+    "options": [
+      "$AB$",
+      "$AC$",
+      "$BC$",
+      "$AE$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "An $x\\text{--}t$ position-time curve starting from the origin $O$ and sequentially passing through marked points $A, B, C, D, E$. The curve starts convex, steepens sharply through segment $BC$, and then curves to become horizontal at $E$.",
+    "solution": "The average velocity between any two points on a position-time ($x\\text{--}t$) graph is given by the slope of the chord (secant line) connecting those two points:\n$$v_{\\text{avg}} = \\frac{\\Delta x}{\\Delta t}$$\n\nInspecting the slope of the chord connecting the points for each option:\n- Chord $AB$ has a moderate positive slope.\n- Chord $BC$ connects the region where the curve rises most steeply, having the highest value of $\\frac{\\Delta x}{\\Delta t}$.\n- Chords $AC$ and $AE$ have lower average slopes because the displacement is averaged over larger time intervals including less steep portions.\n\nTherefore, the chord $BC$ has the greatest slope, meaning the average velocity is maximum for segment $BC$."
+  },
+  {
+    "question_number": 81,
+    "question_type": "mcq",
+    "question_text": "For given acceleration ($a$) versus time ($t$) graph velocity ($v$) versus time ($t$) graph is\n\n[Refer to the given $a\\text{--}t$ graph]",
+    "options": [
+      "Graph (1)",
+      "Graph (2)",
+      "Graph (3)",
+      "Graph (4)"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Kinematic Graphs",
+    "has_diagram": true,
+    "diagram_description": "The question shows an acceleration-time graph which is a straight line through the origin with positive slope, $a = kt$. Four options for velocity-time ($v\\text{--}t$) graph are given: (1) straight line through origin; (2) parabola opening upwards, tangent horizontal at origin; (3) curve opening downwards; (4) straight line sloping downward.",
+    "solution": "From the given $a\\text{--}t$ graph, acceleration increases linearly with time:\n$$a(t) = kt \\quad (k > 0)$$\n\nVelocity is obtained by integrating acceleration with respect to time (assuming starting from rest, $v(0) = 0$):\n$$v(t) = \\int_0^t kt\\, dt = \\frac{1}{2}kt^2$$\n\nProperties of this curve:\n1. At $t = 0$, $v = 0$ and slope $\\frac{dv}{dt} = a(0) = 0$ (horizontal tangent at origin).\n2. As $t$ increases, slope $\\frac{dv}{dt} = kt$ increases continuously.\n3. The curve is a parabola opening upwards (concave upward).\n\nGraph (2) correctly represents this parabolic relationship."
+  }
+]

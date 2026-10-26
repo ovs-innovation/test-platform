@@ -1,0 +1,87 @@
+[
+  {
+    "question_number": 22,
+    "question_type": "mcq",
+    "question_text": "Rain is falling with a speed of $4\\text{ m/s}$ in a direction making an angle of $30^\\circ$ with vertical towards south. What should be the magnitude and direction of velocity of cyclist holding his umbrella exactly vertical, so that rain does not wet him?",
+    "options": [
+      "$2\\text{ m/s}$ towards north",
+      "$4\\text{ m/s}$ towards south",
+      "$2\\text{ m/s}$ towards south",
+      "$4\\text{ m/s}$ towards north"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Relative Motion in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the vertical downward direction be $-\\hat{j}$ and the south direction be $+\\hat{i}$.\nThe velocity of the rain is:\n$$\\vec{v}_r = (v_r \\sin 30^\\circ)\\hat{i} - (v_r \\cos 30^\\circ)\\hat{j} = (4 \\sin 30^\\circ)\\hat{i} - (4 \\cos 30^\\circ)\\hat{j} = 2\\hat{i} - 2\\sqrt{3}\\hat{j}\\text{ m/s}$$\nLet the velocity of the cyclist be $\\vec{v}_c = v_c\\hat{i}$.\nThe relative velocity of rain with respect to the cyclist is:\n$$\\vec{v}_{r/c} = \\vec{v}_r - \\vec{v}_c = (2 - v_c)\\hat{i} - 2\\sqrt{3}\\hat{j}$$\nFor the cyclist to hold the umbrella vertically, the rain must appear to fall purely vertically, which means the horizontal component of $\\vec{v}_{r/c}$ must be zero:\n$$2 - v_c = 0 \\implies v_c = 2\\text{ m/s}$$\nSince the positive horizontal direction was chosen towards the south, the cyclist should move with a velocity of $2\\text{ m/s}$ towards south."
+  },
+  {
+    "question_number": 23,
+    "question_type": "mcq",
+    "question_text": "A particle moves with a constant speed $v$ along a parabolic path $y = kx^2$, where $k$ is a positive constant. Find the acceleration of the particle at the point $x = 0$.",
+    "options": [
+      "$k v^2$",
+      "$\\frac{1}{2} k v^2$",
+      "$2 k v^2$",
+      "$3 k v^2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Motion in a Plane",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The equation of the path is $y = kx^2$.\nThe radius of curvature $R$ of a curve $y = f(x)$ at any point is given by:\n$$R = \\frac{\\left[1 + \\left(\\frac{dy}{dx}\\right)^2\\right]^{3/2}}{\\left|\\frac{d^2y}{dx^2}\\right|}$$\nFirst derivative:\n$$\\frac{dy}{dx} = 2kx$$\nAt $x = 0$, $\\frac{dy}{dx} = 0$.\nSecond derivative:\n$$\\frac{d^2y}{dx^2} = 2k$$\nAt $x = 0$, the radius of curvature is:\n$$R = \\frac{[1 + 0]^{3/2}}{2k} = \\frac{1}{2k}$$\nSince the speed $v$ is constant, the tangential acceleration is zero ($a_t = 0$), so the total acceleration is purely centripetal:\n$$a = a_n = \\frac{v^2}{R} = \\frac{v^2}{1/(2k)} = 2kv^2$$"
+  },
+  {
+    "question_number": 24,
+    "question_type": "mcq",
+    "question_text": "A particle is moving with a velocity $\\vec{v} = k(y\\hat{i} + x\\hat{j})$, where $k$ is a constant. The general equation of the path is",
+    "options": [
+      "$y^2 = x^2 + \\text{constant}$",
+      "$y = x^2 + \\text{constant}$",
+      "$y^2 = x + \\text{constant}$",
+      "$xy = \\text{constant}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Trajectory Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The velocity vector is given by:\n$$\\vec{v} = v_x\\hat{i} + v_y\\hat{j} = k(y\\hat{i} + x\\hat{j})$$\nThus,\n$$v_x = \\frac{dx}{dt} = ky$$\n$$v_y = \\frac{dy}{dt} = kx$$\nThe slope of the trajectory is:\n$$\\frac{dy}{dx} = \\frac{dy/dt}{dx/dt} = \\frac{kx}{ky} = \\frac{x}{y}$$\nSeparating variables:\n$$y\\,dy = x\\,dx$$\nIntegrating both sides:\n$$\\int y\\,dy = \\int x\\,dx$$\n$$\\frac{y^2}{2} = \\frac{x^2}{2} + C'$$\n$$y^2 = x^2 + \\text{constant}$$"
+  },
+  {
+    "question_number": 25,
+    "question_type": "mcq",
+    "question_text": "A particle is moving at a constant speed in a circular trajectory centred at the origin of an $xy$ coordinate system. At one point $(x = 4\\text{ m}, y = 0\\text{ m})$ the particle has a velocity $-5.0\\hat{j}\\text{ m/s}$. Determine acceleration of particle.",
+    "options": [
+      "$-6.25\\hat{i}\\text{ m/s}^2$",
+      "$6.25\\hat{i}\\text{ m/s}^2$",
+      "$6.25\\hat{j}\\text{ m/s}^2$",
+      "$6.25(-\\hat{j})\\text{ m/s}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": true,
+    "diagram_description": "A circular path centered at origin (0,0) in the xy-plane. At the point on the positive x-axis, an arrow represents the velocity vector u directed vertically downwards along -y.",
+    "solution": "The particle moves in a circle of radius $R = 4\\text{ m}$ centered at $(0,0)$ with a constant speed $v = 5.0\\text{ m/s}$.\nSince the speed is constant, the tangential acceleration is zero, and the acceleration is purely centripetal, directed towards the center of the circular trajectory (the origin $(0,0)$).\nAt the point $(4\\text{ m}, 0\\text{ m})$, the center is in the $-\\hat{i}$ direction relative to the particle.\nThe magnitude of the centripetal acceleration is:\n$$a_c = \\frac{v^2}{R} = \\frac{(5.0)^2}{4} = \\frac{25}{4} = 6.25\\text{ m/s}^2$$\nSince it is directed towards the center (in the $-\\hat{i}$ direction):\n$$\\vec{a} = -6.25\\hat{i}\\text{ m/s}^2$$"
+  },
+  {
+    "question_number": 26,
+    "question_type": "mcq",
+    "question_text": "Speed of a particle moving in a circular path of radius $1\\text{ m}$ varies with time as $v = 2t^2$. Here $v$ and $t$ are measured in SI units. Find acceleration of particle at $t = 1\\text{ s}$.",
+    "options": [
+      "$2\\sqrt{2}\\text{ m/s}^2$",
+      "$4\\sqrt{2}\\text{ m/s}^2$",
+      "$4\\text{ m/s}^2$",
+      "$2\\text{ m/s}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Uniform Circular Motion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The speed of the particle is given by $v = 2t^2$ and radius $R = 1\\text{ m}$.\nAt $t = 1\\text{ s}$:\n$$v = 2(1)^2 = 2\\text{ m/s}$$\nThe tangential acceleration $a_t$ is:\n$$a_t = \\frac{dv}{dt} = \\frac{d}{dt}(2t^2) = 4t$$\nAt $t = 1\\text{ s}$:\n$$a_t = 4(1) = 4\\text{ m/s}^2$$\nThe centripetal (radial) acceleration $a_c$ is:\n$$a_c = \\frac{v^2}{R} = \\frac{2^2}{1} = 4\\text{ m/s}^2$$\nThe total acceleration $a$ is:\n$$a = \\sqrt{a_t^2 + a_c^2} = \\sqrt{4^2 + 4^2} = 4\\sqrt{2}\\text{ m/s}^2$$"
+  }
+]

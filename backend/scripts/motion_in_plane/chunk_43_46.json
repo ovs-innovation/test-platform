@@ -1,0 +1,70 @@
+[
+  {
+    "question_number": 43,
+    "question_type": "mcq",
+    "question_text": "The angular velocity of a particle moving in a circle of radius $50\\text{ cm}$ is increased from $100\\text{ revolutions per minute}$ to $400\\text{ revolutions per minute}$ in $5\\text{ min}$. The average tangential acceleration of the particle is",
+    "options": [
+      "$60\\text{ m s}^{-2}$",
+      "$\\frac{\\pi}{30}\\text{ m s}^{-2}$",
+      "$\\frac{\\pi}{15}\\text{ m s}^{-2}$",
+      "$\\frac{\\pi}{60}\\text{ m s}^{-2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Circular Motion Kinematics",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given:\nRadius, $r = 50\\text{ cm} = 0.5\\text{ m}$\nInitial angular velocity, $\\omega_1 = 100\\text{ rpm} = 100 \\times \\frac{2\\pi}{60} = \\frac{10\\pi}{3}\\text{ rad/s}$\nFinal angular velocity, $\\omega_2 = 400\\text{ rpm} = 400 \\times \\frac{2\\pi}{60} = \\frac{40\\pi}{3}\\text{ rad/s}$\nTime taken, $\\Delta t = 5\\text{ min} = 5 \\times 60 = 300\\text{ s}$\n\nThe average angular acceleration $\\alpha$ is:\n$$\\alpha = \\frac{\\omega_2 - \\omega_1}{\\Delta t} = \\frac{\\frac{40\\pi}{3} - \\frac{10\\pi}{3}}{300} = \\frac{10\\pi}{300} = \\frac{\\pi}{30}\\text{ rad/s}^2$$\n\nThe average tangential acceleration $a_t$ is given by:\n$$a_t = r \\alpha = 0.5 \\times \\frac{\\pi}{30} = \\frac{\\pi}{60}\\text{ m s}^{-2}$$\n\nHence, option (4) is correct."
+  },
+  {
+    "question_number": 44,
+    "question_type": "mcq",
+    "question_text": "A particle starts moving from origin in $xy$-plane such that its instantaneous velocity in $\\text{m/s}$ is $\\vec{v} = 5y^2\\hat{i} + 2t\\hat{j}$ where $y$ and $t$ are the instantaneous $y$-coordinate (in $\\text{m}$) and time (in $\\text{sec}$) respectively. Find the locus of the particle.",
+    "options": [
+      "$y^5 = x^2$",
+      "$y^2 = x^4$",
+      "$y^3 = x^2$",
+      "$y^2 = x^3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Kinematics in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The velocity vector is given by:\n$$\\vec{v} = v_x\\hat{i} + v_y\\hat{j} = 5y^2\\hat{i} + 2t\\hat{j}$$\n\nFrom the $y$-component:\n$$v_y = \\frac{dy}{dt} = 2t$$\nIntegrating with initial condition at $t = 0$, $y = 0$:\n$$\\int_0^y dy = \\int_0^t 2t \\, dt \\implies y = t^2$$\n\nFrom the $x$-component:\n$$v_x = \\frac{dx}{dt} = 5y^2 = 5(t^2)^2 = 5t^4$$\nIntegrating with initial condition at $t = 0$, $x = 0$:\n$$\\int_0^x dx = \\int_0^t 5t^4 \\, dt \\implies x = t^5$$\n\nNow, eliminating the parameter $t$ between $x$ and $y$:\n$$t = y^{1/2}$$\n$$x = (y^{1/2})^5 = y^{5/2}$$\nSquaring both sides:\n$$x^2 = y^5 \\quad \\text{or} \\quad y^5 = x^2$$\n\nHence, option (1) is correct."
+  },
+  {
+    "question_number": 45,
+    "question_type": "mcq",
+    "question_text": "Three particles $A$, $B$ and $C$ start moving from the vertices of an equilateral triangle of side length $l$ with speed $u$ each such that $A$ moves towards $B$, $B$ towards $C$ and $C$ towards $A$. Find the initial angular velocity of $B$ w.r.t. $A$.",
+    "options": [
+      "$\\frac{\\sqrt{3}u}{2l}$",
+      "$\\frac{u}{2l}$",
+      "$\\frac{3u}{2l}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Relative Motion in 2D",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular velocity of $B$ with respect to $A$ is given by:\n$$\\omega_{B/A} = \\frac{v_{\\perp}}{r_{AB}}$$\nwhere $v_{\\perp}$ is the relative velocity component perpendicular to the line joining $A$ and $B$, and $r_{AB} = l$.\n\n- Particle $A$ moves directly towards $B$, so its velocity is along the line $AB$. Thus, the component of $A$'s velocity perpendicular to the line $AB$ is $v_{A\\perp} = 0$.\n- Particle $B$ moves towards $C$. In an equilateral triangle, the angle between the side $AB$ and the side $BC$ is $60^\\circ$. The component of velocity of $B$ perpendicular to the line $AB$ is:\n$$v_{B\\perp} = u \\sin(60^\\circ) = u \\frac{\\sqrt{3}}{2}$$\n\nTherefore, the relative perpendicular velocity is:\n$$v_{\\perp} = v_{B\\perp} - v_{A\\perp} = \\frac{\\sqrt{3}u}{2} - 0 = \\frac{\\sqrt{3}u}{2}$$\n\nHence, the initial angular velocity is:\n$$\\omega_{B/A} = \\frac{v_{\\perp}}{l} = \\frac{\\sqrt{3}u}{2l}$$\n\nHence, option (1) is correct."
+  },
+  {
+    "question_number": 46,
+    "question_type": "mcq",
+    "question_text": "A bullet is to be fired from ground with a speed $2000\\text{ m s}^{-1}$ to hit a target $200\\text{ m}$ away on a level ground. If $g = 10\\text{ m/s}^2$, the gun should be aimed",
+    "options": [
+      "$10\\text{ cm above the target}$",
+      "$15\\text{ cm above the target}$",
+      "$5\\text{ cm above the target}$",
+      "$2\\text{ cm above the target}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Projectile Motion",
+    "has_diagram": true,
+    "diagram_description": "A sketch showing a projectile launched from ground level toward a target located at a horizontal distance of 200 m. A dashed straight line of sight represents the aiming line directed at a height h vertically above the target, while a curved trajectory shows the bullet's parabolic path landing on the target.",
+    "solution": "Let the angle of projection be $\\theta$. Since the bullet speed $u = 2000\\text{ m/s}$ is very large compared to the distance $R = 200\\text{ m}$, the angle $\\theta$ is very small.\n\nThe time taken by the bullet to reach the target is approximately:\n$$t \\approx \\frac{R}{u} = \\frac{200}{2000} = 0.1\\text{ s}$$\n\nDuring this time, the vertical downward displacement (drop) due to gravity is:\n$$h = \\frac{1}{2}gt^2 = \\frac{1}{2} \\times 10 \\times (0.1)^2 = 5 \\times 0.01 = 0.05\\text{ m} = 5\\text{ cm}$$\n\nAlternatively, using the range formula for small angles:\n$$R = \\frac{u^2 \\sin(2\\theta)}{g} \\approx \\frac{2u^2 \\theta}{g}$$\nSince $\\theta \\approx \\tan\\theta = \\frac{h}{R}$:\n$$R = \\frac{2u^2 \\left(\\frac{h}{R}\\right)}{g} \\implies h = \\frac{g R^2}{2u^2} = \\frac{10 \\times (200)^2}{2 \\times (2000)^2} = \\frac{400000}{8000000} = 0.05\\text{ m} = 5\\text{ cm}$$\n\nThus, the gun should be aimed $5\\text{ cm}$ above the target.\n\nHence, option (3) is correct."
+  }
+]
