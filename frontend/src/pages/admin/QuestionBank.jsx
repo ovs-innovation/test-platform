@@ -119,7 +119,6 @@ export default function AdminQuestionBank() {
   const toast = useToast();
   const [category, setCategory] = useState('Physics');
   const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
-  const [selectedChapter, setSelectedChapter] = useState('All');
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -186,7 +185,7 @@ export default function AdminQuestionBank() {
   };
 
   const handleSelectAllVisible = () => {
-    const visibleIds = displayedQuestions.map((q) => q.id);
+    const visibleIds = questions.map((q) => q.id);
     const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
     if (allSelected) {
       setSelectedQuestionIds((prev) => prev.filter((id) => !visibleIds.includes(id)));
@@ -200,7 +199,7 @@ export default function AdminQuestionBank() {
       setSelectedQuestionIds(Array.from(newIdsSet));
       setSelectedQuestionsMap((prev) => {
         const next = { ...prev };
-        displayedQuestions.forEach((q) => { next[q.id] = q; });
+        questions.forEach((q) => { next[q.id] = q; });
         return next;
       });
     }
@@ -517,7 +516,6 @@ export default function AdminQuestionBank() {
   };
 
   useEffect(() => {
-    setSelectedChapter('All');
     load();
   }, [category]);
 
@@ -547,23 +545,6 @@ export default function AdminQuestionBank() {
       serialNumber: idx + 1,
     }));
   }, [questions]);
-
-  const availableChapters = useMemo(() => {
-    const map = new Map();
-    (questions || []).forEach((q) => {
-      const ch = (q.chapter || q.chapter_name || 'General').trim();
-      map.set(ch, (map.get(ch) || 0) + 1);
-    });
-    return Array.from(map.entries()).map(([name, count]) => ({ name, count }));
-  }, [questions]);
-
-  const displayedQuestions = useMemo(() => {
-    if (!selectedChapter || selectedChapter === 'All') return questionsWithSerial;
-    return questionsWithSerial.filter((q) => {
-      const ch = (q.chapter || q.chapter_name || 'General').trim();
-      return ch.toLowerCase() === selectedChapter.toLowerCase();
-    });
-  }, [questionsWithSerial, selectedChapter]);
 
   const openAdd = () => {
     setEditing(null);
@@ -873,7 +854,7 @@ export default function AdminQuestionBank() {
         </div>
       )}
 
-      <div className="mb-3 flex flex-wrap gap-2">
+      <div className="mb-4 flex flex-wrap gap-2">
         {categoriesList.map((c) => (
           <button
             key={c}
@@ -882,63 +863,12 @@ export default function AdminQuestionBank() {
               ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
               : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
               }`}
-            onClick={() => {
-              setCategory(c);
-              setSelectedChapter('All');
-            }}
+            onClick={() => setCategory(c)}
           >
             {c}
           </button>
         ))}
       </div>
-
-      {/* Chapter Sub-filter Bar */}
-      {availableChapters.length > 0 && (
-        <div className="mb-4 flex flex-wrap items-center gap-1.5 p-2 rounded-2xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800">
-          <span className="text-[11px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 px-2 flex items-center gap-1">
-            <BookOpen className="h-3.5 w-3.5 text-blue-500" />
-            Chapters:
-          </span>
-          <button
-            type="button"
-            onClick={() => setSelectedChapter('All')}
-            className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-              selectedChapter === 'All'
-                ? 'bg-blue-600 text-white shadow-xs font-black'
-                : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
-            }`}
-          >
-            <span>All Chapters</span>
-            <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-              selectedChapter === 'All' ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
-            }`}>
-              {questions.length}
-            </span>
-          </button>
-          {availableChapters.map(({ name, count }) => {
-            const isSelected = selectedChapter.toLowerCase() === name.toLowerCase();
-            return (
-              <button
-                key={name}
-                type="button"
-                onClick={() => setSelectedChapter(name)}
-                className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
-                  isSelected
-                    ? 'bg-indigo-600 text-white shadow-xs font-black'
-                    : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700'
-                }`}
-              >
-                <span>{name}</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-black ${
-                  isSelected ? 'bg-white/20 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300'
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      )}
 
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
@@ -949,7 +879,7 @@ export default function AdminQuestionBank() {
                 key: 'select',
                 sortable: false,
                 headerRender: () => {
-                  const visibleIds = displayedQuestions.map((q) => q.id);
+                  const visibleIds = questions.map((q) => q.id);
                   const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
                   const someSelected = visibleIds.some((id) => selectedQuestionIds.includes(id));
                   return (
@@ -1196,12 +1126,8 @@ export default function AdminQuestionBank() {
                 )
               },
             ]}
-            rows={displayedQuestions}
-            emptyMessage={
-              selectedChapter !== 'All'
-                ? `No questions found for chapter "${selectedChapter}" in ${category}.`
-                : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`
-            }
+            rows={questionsWithSerial}
+            emptyMessage={`No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
           />
         </div>
       )}
