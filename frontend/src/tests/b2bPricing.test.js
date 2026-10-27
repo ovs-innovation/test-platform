@@ -45,4 +45,16 @@ describe('institutional pricing calculator', () => {
     expect(quote.taxAmount).toBe(61812);
     expect(quote.grandTotal).toBe(405212);
   });
+
+  it('configures 39 tests for One-Year program and 78 tests for Two-Year program with matching breakdowns', () => {
+    const oneYear = B2B_PACKAGES.find((p) => p.id === 'neet-2027-1yr');
+    const twoYear = B2B_PACKAGES.find((p) => p.id === 'neet-2028-2yr');
+
+    expect(oneYear.totalTests).toBe(39);
+    expect(oneYear.breakdown.aiets + oneYear.breakdown.unitTests + oneYear.breakdown.partTests + oneYear.breakdown.cumulativeTests + oneYear.breakdown.fullMocks).toBe(39);
+
+    expect(twoYear.totalTests).toBe(78);
+    expect(twoYear.breakdown.aiets + twoYear.breakdown.unitTests + twoYear.breakdown.partTests + twoYear.breakdown.cumulativeTests + twoYear.breakdown.fullMocks).toBe(78);
+    expect(twoYear.features[0]).toContain('78 NEET UG-Pattern Full CBT Tests across 2 Years');
+  });
 });
