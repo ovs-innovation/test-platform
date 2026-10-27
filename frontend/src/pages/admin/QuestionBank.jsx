@@ -748,6 +748,40 @@ export default function AdminQuestionBank() {
     e.target.value = '';
   };
 
+  const handleQuickSetAnswerKey = async (q, optionIndex) => {
+    try {
+      const updatedOpts = tryParseArray(q.options);
+      // Optimistically update the list
+      setQuestions((prev) =>
+        prev.map((item) =>
+          item.id === q.id
+            ? { ...item, correct_index: optionIndex, correct_indices: [optionIndex] }
+            : item
+        )
+      );
+      await questionBankService.update(q.id, {
+        question_type: q.question_type || 'mcq',
+        question_text: q.question_text,
+        options: updatedOpts,
+        correct_index: optionIndex,
+        correct_indices: [optionIndex],
+        marks: Number(q.marks ?? 4),
+        solution: q.solution ?? '',
+        subject_id: q.subject_id || null,
+        chapter_id: q.chapter_id || null,
+        chapter: q.chapter || '',
+        subject: q.subject || category,
+        topic: q.topic || '',
+        difficulty: q.difficulty || 'medium',
+      });
+      const letter = ['A', 'B', 'C', 'D', 'E'][optionIndex] || (optionIndex + 1);
+      toast.success(`Option ${letter} set as correct answer key for Question #${q.serialNumber || q.id}`);
+    } catch {
+      toast.error('Failed to update answer key');
+      load();
+    }
+  };
+
   return (
     <div className="w-full max-w-full space-y-6">
       <AdminHeader
@@ -1006,20 +1040,30 @@ export default function AdminQuestionBank() {
                             const optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
                             const isCorrect = hasAnswerKey && i === correctIdx;
                             return (
-                              <div
+                              <button
+                                type="button"
                                 key={i}
-                                className={`flex items-start gap-1.5 rounded-lg px-2 py-1 text-[11px] leading-snug ${
+                                title={isCorrect ? `Option ${OPTION_KEYS[i]} is selected as correct answer` : `Click to select Option ${OPTION_KEYS[i]} as the correct answer key`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleQuickSetAnswerKey(q, i);
+                                }}
+                                className={`group flex items-start gap-1.5 rounded-lg px-2 py-1 text-[11px] leading-snug text-left transition-all cursor-pointer select-none ${
                                   isCorrect
-                                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/60 text-emerald-900 dark:text-emerald-200'
-                                    : 'bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300'
+                                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-400 dark:border-emerald-600/70 text-emerald-900 dark:text-emerald-200 font-bold ring-1 ring-emerald-500/30 shadow-xs'
+                                    : 'bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
                                 }`}
                               >
-                                <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'}`}>
+                                <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'}`}>
                                   {OPTION_KEYS[i] || (i + 1)}.
                                 </span>
                                 <MathRenderer text={optText} className="flex-1 min-w-0" />
-                                {isCorrect && <Check className="h-3 w-3 shrink-0 text-emerald-500 mt-0.5" />}
-                              </div>
+                                {isCorrect ? (
+                                  <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />
+                                ) : (
+                                  <span className="opacity-0 group-hover:opacity-100 text-[9px] text-emerald-600 dark:text-emerald-400 font-bold shrink-0 mt-0.5 transition-opacity">Select</span>
+                                )}
+                              </button>
                             );
                           })}
                         </div>
@@ -1029,7 +1073,7 @@ export default function AdminQuestionBank() {
                       {!isInteger && !hasAnswerKey && opts.length > 0 && (
                         <div className="text-[10px] text-amber-600 dark:text-amber-400 font-medium mt-0.5 flex items-center gap-1">
                           <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-                          <span>Answer key not provided</span>
+                          <span>Answer key not provided (click an option above to select)</span>
                         </div>
                       )}
 
