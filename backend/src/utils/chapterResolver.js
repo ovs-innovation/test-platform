@@ -45,6 +45,31 @@ const CHAPTER_RULES = [
       /\bpower\b/i,
     ]
   },
+  {
+    chapter: 'Thermodynamics',
+    subjects: ['physics'],
+    patterns: [
+      /\bthermodynamics\b/i,
+      /\bfirst law of thermodynamics\b/i,
+      /\bsecond law of thermodynamics\b/i,
+      /\bzeroth law of thermodynamics\b/i,
+      /\bcarnot('s)? engine\b/i,
+      /\bcarnot cycle\b/i,
+      /\bisothermal process\b/i,
+      /\badiabatic process\b/i,
+      /\bisochoric process\b/i,
+      /\bisobaric process\b/i,
+      /\bpolytropic process\b/i,
+      /\bmolar heat capacity\b/i,
+      /\bmolar specific heat\b/i,
+      /\bcyclic process\b/i,
+      /\bfree expansion\b/i,
+      /\bheat engine\b/i,
+      /\breversible process\b/i,
+      /\bquasistatic process\b|\bquasi-static process\b/i,
+      /\bentropy\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // BOTANY & BIOLOGY
   // ═══════════════════════════════════════════════════════════════════════════
