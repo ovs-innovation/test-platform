@@ -8,8 +8,43 @@
  * micro-level question topics (e.g., "Pollen Grain Viability" or "Double Fertilization").
  */
 
-// Comprehensive dictionary of standard curriculum chapters and their subtopic keywords/patterns
 const CHAPTER_RULES = [
+  // ═══════════════════════════════════════════════════════════════════════════
+  // PHYSICS
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    chapter: 'System of Particles and Rotational Motion',
+    subjects: ['physics'],
+    patterns: [
+      /\bsystem of particles and rotational motion\b/i,
+      /\brotational motion\b/i,
+      /\brotational dynamics\b/i,
+      /\brotational mechanics\b/i,
+      /\bmoment of inertia\b/i,
+      /\bradius of gyration\b/i,
+      /\bcentre of mass\b|\bcenter of mass\b/i,
+      /\bangular momentum\b/i,
+      /\btorque\b/i,
+      /\btoppling\b/i,
+      /\brolling motion\b/i,
+    ]
+  },
+  {
+    chapter: 'Work, Power and Energy',
+    subjects: ['physics'],
+    patterns: [
+      /\bwork[, ]+power and energy\b/i,
+      /\bwork[, ]+energy and power\b/i,
+      /\bwork[- ]energy theorem\b/i,
+      /\bkinetic energy\b/i,
+      /\bpotential energy\b/i,
+      /\bconservative force\b/i,
+      /\bcoefficient of restitution\b/i,
+      /\belastic collision\b/i,
+      /\binelastic collision\b/i,
+      /\bpower\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // BOTANY & BIOLOGY
   // ═══════════════════════════════════════════════════════════════════════════

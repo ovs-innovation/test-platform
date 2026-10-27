@@ -494,7 +494,7 @@ export const studentLogin = asyncHandler(async (req, res) => {
   // 3. Institute Code + Enrollment ID Mode
   else if (instituteCode || enrollmentId) {
     const codeClean = (instituteCode || '').trim().toLowerCase();
-    const enrollClean = (enrollmentId || '').trim().toLowerCase();
+    const enrollClean = (enrollmentId || targetIdentifier || '').trim().toLowerCase();
 
     if (!enrollClean) {
       throw ApiError.badRequest('Please enter your Student Enrollment ID / Roll No.');
@@ -504,33 +504,57 @@ export const studentLogin = asyncHandler(async (req, res) => {
     let targetInstId = null;
     if (codeClean) {
       const instRes = await query(
-        `SELECT id, name FROM institutions WHERE LOWER(code) = $1 OR LOWER(name) = $1 OR id::text = $1 LIMIT 1`,
+        `SELECT id, name, code, logo_url, logo_badge, tagline, accent_color, city, state, institution_type, is_active
+         FROM institutions 
+         WHERE LOWER(code) = $1 
+            OR LOWER(name) = $1 
+            OR LOWER(REPLACE(name, ' ', '-')) = $1 
+            OR id::text = $1 
+         LIMIT 1`,
         [codeClean]
       );
       if (instRes.rowCount > 0) {
+        if (!instRes.rows[0].is_active) {
+          throw ApiError.forbidden('This institution portal is currently inactive. Please contact support.');
+        }
         targetInstId = instRes.rows[0].id;
+      } else {
+        throw ApiError.notFound(`Institution with code "${instituteCode}" not found.`);
       }
     }
 
     const result = await query(
       `SELECT u.id, u.name, u.email, u.role, u.is_blocked, u.roll_number, u.institution_id, u.batch_id, u.password_hash
        FROM users u
-       WHERE (LOWER(COALESCE(u.roll_number, '')) = $1 OR LOWER(u.email) = $1)
+       LEFT JOIN student_profiles sp ON sp.user_id = u.id
+       WHERE (
+         LOWER(COALESCE(u.roll_number, '')) = $1
+         OR LOWER(COALESCE(sp.roll_number, '')) = $1
+         OR LOWER(u.email) = $1
+         OR u.id::text = $1
+         OR (u.roll_number IS NOT NULL AND LOWER(u.roll_number) LIKE '%' || $1)
+         OR (sp.roll_number IS NOT NULL AND LOWER(sp.roll_number) LIKE '%' || $1)
+       )
          AND ($2::int IS NULL OR u.institution_id = $2::int)
-         AND u.role = 'candidate'`,
+         AND u.role = 'candidate'
+       ORDER BY (LOWER(COALESCE(u.roll_number, '')) = $1) DESC
+       LIMIT 1`,
       [enrollClean, targetInstId]
     );
     user = result.rows[0];
 
     if (!user) {
-      throw ApiError.unauthorized('Invalid Enrollment ID or Institution Code. Please contact your institution administrator.');
+      throw ApiError.unauthorized('Invalid Enrollment ID or Roll Number for this institution. Please contact your administrator.');
     }
 
-    if (password) {
-      const ok = (await comparePassword(password, user.password_hash)) ||
-                 (user.roll_number?.startsWith('DRON-') && (password === 'drona123' || password === 'Student@123' || password === 'Drona@2026'));
-      if (!ok) throw ApiError.unauthorized('Invalid Enrollment ID or Password.');
+    const cleanPassword = (password || '').trim();
+    if (!cleanPassword) {
+      throw ApiError.badRequest('Password is required. Please enter your account password.');
     }
+
+    const ok = (user.password_hash && (await comparePassword(cleanPassword, user.password_hash))) ||
+               (user.roll_number?.startsWith('DRON-') && (cleanPassword === 'drona123' || cleanPassword === 'Student@123' || cleanPassword === 'Drona@2026'));
+    if (!ok) throw ApiError.unauthorized('Invalid Enrollment ID or Password.');
   } else {
     throw ApiError.badRequest('Please provide valid login credentials.');
   }
@@ -1951,4 +1975,85 @@ export const logoutAllDevices = asyncHandler(async (req, res) => {
 
   res.json({ success: true, message: 'All active sessions revoked across all devices' });
 });
+
+/**
+ * GET /api/auth/institution/:identifier
+ * Public endpoint to fetch institution branding details by code, slug, or ID
+ */
+export const getPublicInstitution = asyncHandler(async (req, res) => {
+  const { identifier } = req.params;
+  const cleanId = (identifier || '').trim().toLowerCase();
+
+  if (!cleanId) {
+    throw ApiError.badRequest('Institution code or identifier is required');
+  }
+
+  const result = await query(
+    `SELECT id, name, code, logo_url, logo_badge, tagline, accent_color, city, state, institution_type, is_active
+     FROM institutions
+     WHERE LOWER(code) = $1
+        OR LOWER(name) = $1
+        OR LOWER(REPLACE(name, ' ', '-')) = $1
+        OR id::text = $1
+     LIMIT 1`,
+    [cleanId]
+  );
+
+  if (result.rowCount === 0) {
+    throw ApiError.notFound(`Institution "${identifier}" not found`);
+  }
+
+  const row = result.rows[0];
+  if (!row.is_active) {
+    throw ApiError.forbidden('This institution portal is currently inactive. Please contact your institution administrator.');
+  }
+
+  res.json({
+    success: true,
+    institution: {
+      id: row.id,
+      name: row.name,
+      code: row.code,
+      logo_url: row.logo_url || (row.code === 'DRON-2026' ? '/edvedum/drona-academy-logo.svg' : null),
+      logo_badge: row.logo_badge || (row.code === 'DRON-2026' ? 'DRO' : row.name.slice(0, 3).toUpperCase()),
+      tagline: row.tagline || 'Premier Educational Institution',
+      accent_color: row.accent_color || '#2563eb',
+      city: row.city || '',
+      state: row.state || '',
+      institution_type: row.institution_type || 'School / Coaching Institute',
+    }
+  });
+});
+
+/**
+ * GET /api/auth/institutions
+ * Public endpoint to list active partner institutions for the student portal switcher
+ */
+export const getPublicInstitutions = asyncHandler(async (req, res) => {
+  const result = await query(
+    `SELECT id, name, code, logo_url, logo_badge, tagline, accent_color, city, state, institution_type
+     FROM institutions
+     WHERE is_active = TRUE
+     ORDER BY name ASC`
+  );
+
+  const list = result.rows.map(row => ({
+    id: row.id,
+    name: row.name,
+    code: row.code,
+    logo_url: row.logo_url || (row.code === 'DRON-2026' ? '/edvedum/drona-academy-logo.svg' : null),
+    logo_badge: row.logo_badge || (row.code === 'DRON-2026' ? 'DRO' : row.name.slice(0, 3).toUpperCase()),
+    tagline: row.tagline || 'Premier Educational Institution',
+    accent_color: row.accent_color || '#2563eb',
+    city: row.city || '',
+    state: row.state || '',
+    institution_type: row.institution_type || 'School / Coaching Institute',
+  }));
+
+  res.json({
+    success: true,
+    institutions: list,
+  });
+});
+
 

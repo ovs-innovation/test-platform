@@ -257,7 +257,7 @@ export default function InstitutionDashboard() {
       };
       setStudents((prev) => [newSt, ...prev]);
       toast.success('Student enrolled successfully');
-      return { success: true, student: newSt };
+      return { success: true, student: newSt, generatedPassword: studentData.password, enrollmentId: newSt.roll_number };
     }
   };
 

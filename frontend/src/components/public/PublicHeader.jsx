@@ -1,7 +1,9 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { ChevronDown, GraduationCap, Building2 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext.jsx';
 import { EDVEDUM_LOGO, EDVEDUM_LOGO_ALT, NAV_MENUS, CONTACT } from '../../data/edvedumContent.js';
+import SelectInstituteModal from './SelectInstituteModal.jsx';
 
 const MAIN_NAV = [
   { to: '/', label: 'Home', exact: true },
@@ -97,8 +99,11 @@ export default function PublicHeader({ onHeightChange }) {
   const [showNavbar, setShowNavbar] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [measuredHeight, setMeasuredHeight] = useState(0);
+  const [studentDropdownOpen, setStudentDropdownOpen] = useState(false);
+  const [instituteModalOpen, setInstituteModalOpen] = useState(false);
   const navRef = useRef(null);
   const headerRef = useRef(null);
+  const studentDropdownRef = useRef(null);
   const navbarVisibleRef = useRef(true);
 
   // Measure static header height once on mount & window resize
@@ -202,6 +207,7 @@ export default function PublicHeader({ onHeightChange }) {
   useEffect(() => {
     setOpenMenu(null);
     setMenuOpen(false);
+    setStudentDropdownOpen(false);
   }, [pathname, search]);
 
   // Close dropdown when clicking anywhere outside or on non-dropdown links
@@ -209,6 +215,9 @@ export default function PublicHeader({ onHeightChange }) {
     const close = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setOpenMenu(null);
+      }
+      if (studentDropdownRef.current && !studentDropdownRef.current.contains(e.target)) {
+        setStudentDropdownOpen(false);
       }
     };
     document.addEventListener('click', close);
@@ -242,7 +251,7 @@ export default function PublicHeader({ onHeightChange }) {
         } ${isScrolled ? 'shadow-lg' : ''}`}
     >
       <div className="bg-[#0a1628] text-white">
-        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-xs whitespace-nowrap overflow-x-hidden">
+        <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-2 px-3 sm:px-6 py-1.5 sm:py-2 text-[10px] sm:text-xs whitespace-nowrap">
           <div className="flex items-center gap-3 shrink-0">
             <a href={CONTACT.phoneHref} className="flex items-center gap-1.5 text-white/90 hover:text-white transition-colors text-[10px] sm:text-xs font-semibold">
               {CONTACT.phone}
@@ -277,9 +286,68 @@ export default function PublicHeader({ onHeightChange }) {
               </>
             ) : (
               <>
-                <Link to="/login" onClick={() => setOpenMenu(null)} className="text-white/85 hover:text-white transition-colors">
-                  Student Login
-                </Link>
+                <div className="relative inline-block" ref={studentDropdownRef}>
+                  <button
+                    type="button"
+                    onClick={() => setStudentDropdownOpen((v) => !v)}
+                    className="flex items-center gap-1 text-white/90 hover:text-white transition-colors cursor-pointer font-medium focus:outline-none"
+                    aria-expanded={studentDropdownOpen}
+                  >
+                    <span>Student Login</span>
+                    <ChevronDown className={`h-3 w-3 transition-transform duration-200 ${studentDropdownOpen ? 'rotate-180 text-cyan-400' : ''}`} />
+                  </button>
+
+                  {studentDropdownOpen && (
+                    <div className="absolute right-0 top-full mt-2 w-72 sm:w-80 rounded-2xl border border-slate-200 bg-white p-2.5 shadow-[0_20px_50px_rgba(0,0,0,0.18)] z-[1100] animate-in fade-in slide-in-from-top-1 text-left whitespace-normal">
+                      <div className="px-3 py-2 border-b border-slate-100 mb-1.5">
+                        <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#0D6EFD]">Choose Login Type</p>
+                        <p className="text-[11px] text-slate-500">Select how you want to log in</p>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStudentDropdownOpen(false);
+                          setOpenMenu(null);
+                          navigate('/student-login');
+                        }}
+                        className="w-full flex items-start gap-3 p-2.5 rounded-xl transition hover:bg-slate-50 group text-left cursor-pointer"
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center text-[#0D6EFD] shrink-0 group-hover:scale-105 transition-transform">
+                          <GraduationCap className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-slate-900 text-xs group-hover:text-[#0D6EFD] transition-colors">Direct Student Login</span>
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-bold border border-blue-200/60">Direct</span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">Log in with your Student ID, Email or Mobile OTP</p>
+                        </div>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStudentDropdownOpen(false);
+                          setOpenMenu(null);
+                          setInstituteModalOpen(true);
+                        }}
+                        className="w-full flex items-start gap-3 p-2.5 rounded-xl transition hover:bg-slate-50 group text-left cursor-pointer mt-1"
+                      >
+                        <div className="h-9 w-9 rounded-xl bg-indigo-50 border border-indigo-200/60 flex items-center justify-center text-indigo-600 shrink-0 group-hover:scale-105 transition-transform">
+                          <Building2 className="h-5 w-5" />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center justify-between">
+                            <span className="font-bold text-slate-900 text-xs group-hover:text-indigo-600 transition-colors">Via Institute / School</span>
+                            <span className="text-[9px] px-1.5 py-0.5 rounded-full bg-indigo-50 text-indigo-700 font-bold border border-indigo-200/60">Partner</span>
+                          </div>
+                          <p className="text-[10px] text-slate-500 mt-0.5 leading-snug">Choose your School / Coaching for direct portal</p>
+                        </div>
+                      </button>
+                    </div>
+                  )}
+                </div>
                 <span className="text-white/30" aria-hidden="true">|</span>
                 <Link to="/admin-login" onClick={() => setOpenMenu(null)} className="text-white/85 hover:text-white transition-colors">
                   Center Login
@@ -458,6 +526,34 @@ export default function PublicHeader({ onHeightChange }) {
                   <SocialIcon type="linkedin" />
                 </div>
               </div>
+              <div className="mt-3 pt-3 border-t border-slate-100 flex flex-col gap-1.5">
+                <p className="text-[11px] font-bold uppercase tracking-wider text-slate-400">Student Portal Access</p>
+                <Link
+                  to="/student-login"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center justify-between py-2 text-xs font-semibold text-slate-700 hover:text-[#0D6EFD]"
+                >
+                  <span className="flex items-center gap-2">
+                    <GraduationCap className="h-4 w-4 text-blue-600" />
+                    <span>Direct Student Login</span>
+                  </span>
+                  <span className="text-[10px] text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full font-bold">Direct</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMenuOpen(false);
+                    setInstituteModalOpen(true);
+                  }}
+                  className="flex items-center justify-between py-2 text-xs font-semibold text-slate-700 hover:text-[#0D6EFD] text-left cursor-pointer"
+                >
+                  <span className="flex items-center gap-2">
+                    <Building2 className="h-4 w-4 text-indigo-600" />
+                    <span>Via Institute / School</span>
+                  </span>
+                  <span className="text-[10px] text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full font-bold">Select Institute</span>
+                </button>
+              </div>
               <div className="mt-4 flex flex-col gap-2">
                 <Link
                   to="/signup"
@@ -478,6 +574,11 @@ export default function PublicHeader({ onHeightChange }) {
           </div>
         )}
       </div>
+
+      <SelectInstituteModal
+        isOpen={instituteModalOpen}
+        onClose={() => setInstituteModalOpen(false)}
+      />
     </header>
   );
 }

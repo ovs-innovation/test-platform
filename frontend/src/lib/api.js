@@ -148,6 +148,8 @@ api.interceptors.response.use(
           path.startsWith('/student-login') ||
           path.startsWith('/admin-login') ||
           path.startsWith('/institution-login') ||
+          path.startsWith('/institute') ||
+          path.startsWith('/portal') ||
           path.startsWith('/signup') ||
           path.startsWith('/invite/');
 
@@ -155,7 +157,7 @@ api.interceptors.response.use(
           sessionRedirecting = true;
           const targetLogin = path.startsWith('/admin')
             ? '/admin-login'
-            : path.startsWith('/institution') || path.startsWith('/school')
+            : (path.startsWith('/institution-login') || (path.startsWith('/institution') && !path.includes('/login')))
             ? '/institution-login'
             : '/student-login';
           window.location.replace(targetLogin);

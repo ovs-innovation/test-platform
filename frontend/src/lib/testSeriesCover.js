@@ -217,6 +217,14 @@ export function getSeriesClass(series) {
     return '11';
   }
 
+  // Standalone Class 11 check (not 11 + 12)
+  if (
+    /\b(class\s*11|11th)\b/i.test(`${title} ${targetClass}`) &&
+    !/11\s*(?:\+|&|and)\s*12/i.test(`${title} ${targetClass} ${slug}`)
+  ) {
+    return '11';
+  }
+
   // 3. Dropper check from target_class only if not explicit Class 12
   if (!isClass12Explicit && (targetClass.includes('dropper') || targetClass.includes('passed') || targetClass.includes('rm'))) {
     if (!targetClass.includes('xii') && !targetClass.includes('12')) {
@@ -232,11 +240,23 @@ export function getSeriesClass(series) {
  * Returns user-facing class badge label ('11 + 12', 'Class 12', 'Class 10', etc.)
  */
 export function getSeriesClassBadge(series) {
+  if (!series) return 'Class 12';
+  if (series.target_class) {
+    const tc = String(series.target_class).trim();
+    if (
+      tc === 'Class 11' ||
+      tc === 'Class 9 + 10' ||
+      tc.includes('Foundation') ||
+      tc.includes('All Classes')
+    ) {
+      return tc;
+    }
+  }
   const c = getSeriesClass(series);
   if (c >= '6' && c <= '10') return `Class ${c}`;
-  if (c === '11') return '11 + 12';
+  if (c === '11') return series?.target_class === 'Class 11' ? 'Class 11' : '11 + 12';
   if (c === 'passed-12') return 'Dropper / 12 Passed';
-  return 'Class 12';
+  return series?.target_class || 'Class 12';
 }
 
 /** Cover image — used on detail page and candidate dashboard. */

@@ -212,6 +212,12 @@ export default function App() {
         <Route path="/center-login" element={<Navigate to="/institution-login" replace />} />
         <Route path="/login" element={<Navigate to="/student-login" replace />} />
         <Route path="/student-login" element={<StudentLogin />} />
+        {/* DEDICATED INSTITUTIONAL STUDENT LOGIN PORTAL ROUTES */}
+        <Route path="/institute/:code/login" element={<StudentLogin />} />
+        <Route path="/institute/:code" element={<StudentLogin />} />
+        <Route path="/institution/:code/login" element={<StudentLogin />} />
+        <Route path="/portal/:code/login" element={<StudentLogin />} />
+        <Route path="/portal/:code" element={<StudentLogin />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/signup" element={<Signup />} />

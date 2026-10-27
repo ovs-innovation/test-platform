@@ -232,14 +232,18 @@ export default function AdminTestSeries() {
 
   const handleOpenEdit = (s) => {
     setEditing(s);
-    const resolvedClass = resolveTargetClass(s);
+    let resolvedClass = s.target_class || resolveTargetClass(s);
+    if (resolvedClass === '12') resolvedClass = 'Class 12';
+    else if (resolvedClass === 'dropper/ 12 passed' || resolvedClass === 'Dropper / RM') resolvedClass = 'Dropper / 12 Passed';
+    else if (resolvedClass === 'Classes XI & XII') resolvedClass = '11 + 12';
+
     setForm({
       title: s.title || '',
       description: s.description || '',
       price: Number(s.price) || 0,
       exam_type: s.exam_type || 'NEET UG',
       target_class: resolvedClass,
-      program_type: s.program_type || (resolvedClass === '11 + 12' ? 'Two Year' : resolvedClass === 'Dropper / 12 Passed' ? 'Repeater' : 'One Year'),
+      program_type: s.program_type || (resolvedClass === '11 + 12' ? 'Two Year' : resolvedClass === 'Dropper / 12 Passed' ? 'Repeater' : /foundation/i.test(resolvedClass) ? 'Foundation' : 'One Year'),
       target_year: s.target_year || (resolvedClass === '11 + 12' ? '2028' : '2027'),
       planned_tests: s.planned_tests ?? (s.test_count || 0),
       duration_months: s.duration_months || (resolvedClass === '11 + 12' ? 24 : 12),
@@ -284,9 +288,10 @@ export default function AdminTestSeries() {
   const handleClassChange = (selectedClass) => {
     setForm((f) => {
       let program_type = 'One Year';
-      let target_year = '2027';
-      let duration_months = 12;
+      let target_year = f.target_year || '2027';
+      let duration_months = f.duration_months || 12;
       let duration_text = f.duration_text;
+      let exam_type = f.exam_type;
 
       if (selectedClass === '11 + 12') {
         program_type = 'Two Year';
@@ -298,6 +303,21 @@ export default function AdminTestSeries() {
         duration_months = 12;
         if (!duration_text) {
           duration_text = getRepeaterDurationText(f.exam_type, target_year);
+        }
+      } else if (selectedClass === 'Class 11') {
+        program_type = 'One Year';
+        target_year = '2028';
+        duration_months = 12;
+      } else if (/Class (?:6|7|8|9|10)/.test(selectedClass)) {
+        program_type = 'Foundation';
+        duration_months = 12;
+        if (selectedClass === 'Class 10') target_year = '2027';
+        else if (selectedClass === 'Class 9') target_year = '2028';
+        else if (selectedClass === 'Class 8') target_year = '2029';
+        else if (selectedClass === 'Class 7') target_year = '2030';
+        else if (selectedClass === 'Class 6') target_year = '2031';
+        if (!exam_type || exam_type === 'NEET UG' || exam_type === 'General') {
+          exam_type = 'Foundation';
         }
       } else {
         program_type = 'One Year';
@@ -312,6 +332,7 @@ export default function AdminTestSeries() {
         target_year,
         duration_months,
         duration_text,
+        exam_type,
       };
     });
   };
@@ -323,8 +344,15 @@ export default function AdminTestSeries() {
         updates.exam_type = /main/i.test(val) ? 'JEE Main' : 'JEE';
       } else if (/neet/i.test(val)) {
         updates.exam_type = /neet[- ]?pg/i.test(val) ? 'NEET PG' : 'NEET UG';
+      } else if (/foundation|olympiad|ntse/i.test(val)) {
+        updates.exam_type = 'Foundation';
       }
-      if (/two[- ]?year|2028|2[- ]year|11\s*(?:&|and|\+)\s*12/i.test(val) && f.target_class !== '11 + 12') {
+
+      const matchFound = val.match(/\b(?:class|grade)\s*(6|7|8|9|10)\b/i);
+      if (matchFound) {
+        updates.target_class = `Class ${matchFound[1]}`;
+        updates.program_type = 'Foundation';
+      } else if (/two[- ]?year|2028|2[- ]year|11\s*(?:&|and|\+)\s*12/i.test(val) && f.target_class !== '11 + 12') {
         updates.target_class = '11 + 12';
         updates.program_type = 'Two Year';
         updates.target_year = '2028';
@@ -725,13 +753,29 @@ export default function AdminTestSeries() {
             <div>
               <label className="label text-[11px] font-semibold text-slate-500 mb-0.5">Class</label>
               <select
-                className="input font-semibold"
+                className="input font-semibold cursor-pointer"
                 value={form.target_class || 'Class 12'}
                 onChange={(e) => handleClassChange(e.target.value)}
               >
-                <option value="11 + 12">11 + 12</option>
-                <option value="Class 12">12</option>
-                <option value="Dropper / 12 Passed">dropper/ 12 passed</option>
+                <optgroup label="Senior Secondary / Entrance">
+                  <option value="Class 12">Class 12</option>
+                  <option value="Class 11">Class 11</option>
+                  <option value="11 + 12">11 + 12 (Two-Year Integrated)</option>
+                  <option value="Dropper / 12 Passed">Dropper / 12 Passed (Repeater)</option>
+                </optgroup>
+                <optgroup label="Foundation (Class 6 – 10)">
+                  <option value="Class 6">Class 6</option>
+                  <option value="Class 7">Class 7</option>
+                  <option value="Class 8">Class 8</option>
+                  <option value="Class 9">Class 9</option>
+                  <option value="Class 10">Class 10</option>
+                </optgroup>
+                {form.target_class && ![
+                  'Class 12', 'Class 11', '11 + 12', 'Dropper / 12 Passed',
+                  'Class 6', 'Class 7', 'Class 8', 'Class 9', 'Class 10'
+                ].includes(form.target_class) && (
+                  <option value={form.target_class}>{form.target_class}</option>
+                )}
               </select>
             </div>
             <div>

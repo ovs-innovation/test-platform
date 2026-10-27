@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { UserPlus, X, Key, Copy, Check, ShieldCheck, AlertCircle } from 'lucide-react';
+import { UserPlus, X, Key, Copy, Check, ShieldCheck, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { Spinner } from '../../ui.jsx';
 
 export default function AddStudentModal({
@@ -28,6 +28,7 @@ export default function AddStudentModal({
   const [error, setError] = useState('');
   const [createdCredential, setCreatedCredential] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -36,6 +37,7 @@ export default function AddStudentModal({
       setCreatedCredential(null);
       setError('');
       setCopied(false);
+      setShowPassword(false);
       setForm({
         name: '',
         email: '',
@@ -77,6 +79,14 @@ export default function AddStudentModal({
     }
     if (!form.email.trim() || !form.email.includes('@')) {
       setError('Please enter a valid email address.');
+      return;
+    }
+    if (!form.password.trim()) {
+      setError('Please enter a password for this student.');
+      return;
+    }
+    if (form.password.trim().length < 6) {
+      setError('Password must be at least 6 characters.');
       return;
     }
     if (form.mobile.trim()) {
@@ -121,7 +131,7 @@ export default function AddStudentModal({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  return createPortal(
+  const modalContent = (
     <div
       role="dialog"
       aria-modal="true"
@@ -170,7 +180,7 @@ export default function AddStudentModal({
                 <span className={`font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>{createdCredential.email}</span>
               </div>
               <div className="flex justify-between">
-                <span className={isDarkMode ? 'text-slate-400' : 'text-slate-600'}>Temporary Password:</span>
+                <span className={isDarkMode ? 'text-slate-400' : 'text-slate-600'}>Assigned Password:</span>
                 <span className="font-bold text-amber-400">{createdCredential.password}</span>
               </div>
             </div>
@@ -319,17 +329,36 @@ export default function AddStudentModal({
             </div>
 
             <div>
-              <label className={`block text-xs font-semibold uppercase mb-1 ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Temporary Password (Optional)
-              </label>
-              <input
-                type="text"
-                name="password"
-                placeholder="Leave blank for secure auto-generation"
-                value={form.password}
-                onChange={handleChange}
-                className={`w-full py-2.5 px-3.5 text-xs font-semibold rounded-xl border transition focus:border-cyan-500 focus:outline-none ${isDarkMode ? 'border-slate-800 bg-slate-950 text-white placeholder-slate-500' : 'border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400'}`}
-              />
+              <div className="flex items-center justify-between mb-1">
+                <label className={`block text-xs font-semibold uppercase ${isDarkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                  Student Password <span className="text-rose-500">*</span>
+                </label>
+                <span className="text-[10px] text-rose-400 font-semibold tracking-wide uppercase">Required (min. 6 chars)</span>
+              </div>
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  required
+                  placeholder="Enter student password (min. 6 characters)"
+                  value={form.password}
+                  onChange={handleChange}
+                  className={`w-full py-2.5 pl-3.5 pr-10 text-xs font-semibold rounded-xl border transition focus:border-cyan-500 focus:outline-none ${isDarkMode ? 'border-slate-800 bg-slate-950 text-white placeholder-slate-500' : 'border-slate-300 bg-slate-50 text-slate-900 placeholder-slate-400'}`}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className={`absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-lg transition cursor-pointer ${
+                    isDarkMode ? 'text-slate-400 hover:text-white' : 'text-slate-500 hover:text-slate-800'
+                  }`}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
+              <p className={`text-[11px] mt-1.5 ${isDarkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                Mandatory: The student will use this password to sign in to their institution portal.
+              </p>
             </div>
 
             <div className="pt-3 flex items-center justify-end gap-3">
@@ -360,7 +389,9 @@ export default function AddStudentModal({
         )}
 
       </div>
-    </div>,
-    document.body
+    </div>
   );
+
+  if (typeof document === 'undefined') return modalContent;
+  return createPortal(modalContent, document.body);
 }

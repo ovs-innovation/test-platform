@@ -132,6 +132,10 @@ export const authService = {
         }
         throw err;
       }),
+  getPublicInstitution: (identifier) =>
+    api.get(`/auth/institution/${encodeURIComponent(identifier)}`).then((r) => r.data),
+  getPublicInstitutions: () =>
+    api.get('/auth/institutions').then((r) => r.data),
   forgotPassword: (data) => api.post('/auth/forgot-password', data).then((r) => r.data),
   resetPassword: (data) => api.post('/auth/reset-password', data).then((r) => r.data),
   sendOtp: (data) => api.post('/auth/otp/send', data).then((r) => r.data),

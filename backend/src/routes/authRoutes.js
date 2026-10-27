@@ -1,11 +1,15 @@
 import { Router } from 'express';
-import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, sendSignupOtp, firebaseLogin, me, candidateDashboard, forgotPassword, resetPassword, refreshTokens, logout, logoutAllDevices } from '../controllers/authController.js';
+import { login, register, studentLogin, sendOtp, verifyOtpCode, sendLoginOtp, verifyLoginOtp, sendSignupOtp, firebaseLogin, me, candidateDashboard, forgotPassword, resetPassword, refreshTokens, logout, logoutAllDevices, getPublicInstitution, getPublicInstitutions } from '../controllers/authController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { authLimiter } from '../middleware/rateLimiter.js';
 import { loginSchema, studentLoginSchema, registerSchema, forgotPasswordSchema, resetPasswordSchema, otpSendSchema, otpVerifySchema, otpSendLoginSchema, otpVerifyLoginSchema, otpSendSignupSchema, firebaseLoginSchema } from '../validators/schemas.js';
 
 const router = Router();
+
+// Public Institutional Branding for Student Dedicated Login
+router.get('/institutions', getPublicInstitutions);
+router.get('/institution/:identifier', getPublicInstitution);
 
 router.post('/login', authLimiter, validate(loginSchema), login);
 router.post('/register', authLimiter, validate(registerSchema), register);

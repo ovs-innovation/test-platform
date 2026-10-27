@@ -74,6 +74,9 @@ export const createTestSeries = asyncHandler(async (req, res) => {
       detectedTargetClass = '11 + 12';
     } else if (/rm|repeater|dropper/i.test(title)) {
       detectedTargetClass = 'Dropper / 12 Passed';
+    } else if (/foundation/i.test(title)) {
+      const m = title.match(/\b(?:class|grade)\s*(6|7|8|9|10)\b/i);
+      detectedTargetClass = m ? `Class ${m[1]}` : 'Class 10';
     } else {
       detectedTargetClass = 'Class 12';
     }
@@ -84,20 +87,23 @@ export const createTestSeries = asyncHandler(async (req, res) => {
   if (!detectedProgramType) {
     if (detectedTargetClass === '11 + 12') detectedProgramType = 'Two Year';
     else if (detectedTargetClass === 'Dropper / 12 Passed') detectedProgramType = 'Repeater';
-    else if (detectedTargetClass === 'Foundation') detectedProgramType = 'Foundation';
+    else if (detectedTargetClass === 'Class 9 + 10') detectedProgramType = 'Two Year Foundation';
+    else if (/foundation|class\s*(?:[6-9]|10)/i.test(detectedTargetClass)) detectedProgramType = 'Foundation';
     else detectedProgramType = /two[- ]?year|2028|2[- ]year/i.test(title) ? 'Two Year' : 'One Year';
   }
 
   // Auto-detect target year if not provided
   let detectedTargetYear = target_year;
   if (!detectedTargetYear) {
-    detectedTargetYear = (detectedProgramType === 'Two Year' || detectedTargetClass === '11 + 12') ? '2028' : '2027';
+    detectedTargetYear = (detectedProgramType === 'Two Year' || detectedTargetClass === '11 + 12' || detectedTargetClass === 'Class 9 + 10') ? '2028' : '2027';
   }
 
   // Auto-detect exam type if General or default
   let detectedExamType = exam_type || 'General';
   if ((!exam_type || exam_type === 'JEE Main' || exam_type === 'General') && /neet/i.test(title)) {
     detectedExamType = /neet[- ]?pg/i.test(title) ? 'NEET PG' : 'NEET UG';
+  } else if ((!exam_type || exam_type === 'General') && (/foundation/i.test(title) || /foundation|class\s*(?:[6-9]|10)/i.test(detectedTargetClass))) {
+    detectedExamType = 'Foundation';
   }
 
   const numericPlanned = Number(planned_tests) || 0;

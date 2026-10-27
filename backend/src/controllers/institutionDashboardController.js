@@ -165,6 +165,9 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
   const { name, email, mobile, password, batch_id, roll_number, class: studentClass, target_exam, gender, dob } = req.body;
 
   if (!name || !email) throw ApiError.badRequest('Student name and email are required');
+  const cleanPass = (password || '').trim();
+  if (!cleanPass) throw ApiError.badRequest('Student password is required.');
+  if (cleanPass.length < 6) throw ApiError.badRequest('Password must be at least 6 characters.');
   const normEmail = email.trim().toLowerCase();
 
   // 1. Check Licence Availability
@@ -202,7 +205,7 @@ export const addInstitutionStudent = asyncHandler(async (req, res) => {
     if (dupRoll.rowCount > 0) throw ApiError.conflict(`Roll Number / Enrollment ID ${finalRollNumber} is already assigned to another student in your institution.`);
   }
 
-  const rawPass = password && password.trim() ? password.trim() : `Edu@${Math.floor(100000 + Math.random() * 900000)}`;
+  const rawPass = cleanPass;
   const passHash = await hashPassword(rawPass);
 
   const student = await withTransaction(async (client) => {

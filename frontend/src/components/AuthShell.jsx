@@ -98,10 +98,27 @@ function AdminHeroVisual() {
   );
 }
 
-export default function AuthShell({ children, title, subtitle, variant = 'student' }) {
+export default function AuthShell({ children, title, subtitle, variant = 'student', institution = null }) {
   const isAdmin = variant === 'admin';
-  const points = isAdmin ? ADMIN_POINTS : STUDENT_POINTS;
-  const badges = isAdmin ? ADMIN_BADGES : STUDENT_BADGES;
+  const points = institution
+    ? [
+        `Direct examination access for ${institution.name} students`,
+        'Official NEET, JEE & Foundation CBT mock series',
+        'Instant Institute Rank, AIR & comprehensive analytics',
+      ]
+    : isAdmin
+    ? ADMIN_POINTS
+    : STUDENT_POINTS;
+
+  const badges = institution
+    ? [
+        { icon: ShieldCheck, text: 'Verified Institute Portal' },
+        { icon: Activity, text: 'Real-Time Rank Analytics' },
+        { icon: BarChart3, text: `${institution.city || 'National'} CBT Center` },
+      ]
+    : isAdmin
+    ? ADMIN_BADGES
+    : STUDENT_BADGES;
 
   // Mobile / Tablet Collapsible Showcase State
   const [showcaseOpen, setShowcaseOpen] = useState(false);
@@ -129,24 +146,61 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
         {/* LEFT PANEL: HERO SHOWCASE */}
         <div className="w-[48%] xl:w-[46%] relative bg-gradient-to-br from-[#060c1e] via-[#0b1736] to-[#040816] p-6 xl:p-7 flex flex-col justify-between border-r border-slate-800/80 overflow-y-auto">
           {/* Logo Header */}
-          <Link to="/" className="inline-flex items-center gap-3 w-fit">
-            <img
-              src={EDVEDUM_LOGO}
-              alt={EDVEDUM_LOGO_ALT}
-              className="h-9 w-auto max-w-[40px] object-contain shrink-0"
-              style={{ height: '36px', width: 'auto', maxWidth: '40px', objectFit: 'contain' }}
-            />
-            <div className="text-left leading-none space-y-1">
-              <span className="block font-serif font-black tracking-wider text-white text-base uppercase">
-                EDVEDUM
-              </span>
-              <div className="flex items-center gap-1 text-[9px] font-bold tracking-[0.25em] text-[#C5A059] uppercase">
-                <span>—</span>
-                <span>{isAdmin ? 'ADMIN PORTAL' : 'ACADEMY'}</span>
-                <span>—</span>
+          {institution ? (
+            <div className="space-y-2.5">
+              <div className="flex items-center gap-3.5">
+                {institution.logo_url ? (
+                  <img
+                    src={institution.logo_url}
+                    alt={institution.name}
+                    className="h-12 w-auto max-w-[56px] max-h-[48px] object-contain rounded-xl bg-white/10 p-1 border border-white/15 shadow-md shrink-0"
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      const badgeEl = e.currentTarget.nextElementSibling;
+                      if (badgeEl) badgeEl.style.display = 'flex';
+                    }}
+                  />
+                ) : null}
+                <div
+                  className={`h-11 w-11 rounded-xl items-center justify-center font-black text-white text-base shadow-lg shrink-0 ${institution.logo_url ? 'hidden' : 'flex'}`}
+                  style={{ backgroundColor: institution.accent_color || '#4f46e5' }}
+                >
+                  {institution.logo_badge || institution.name?.substring(0, 3).toUpperCase() || 'INS'}
+                </div>
+                <div className="text-left leading-tight">
+                  <span className="block font-black tracking-wide text-white text-lg xl:text-xl font-sans">
+                    {institution.name}
+                  </span>
+                  <span className="text-[10px] font-bold text-slate-400 tracking-wider uppercase block mt-0.5">
+                    {institution.tagline || (institution.city ? `${institution.city} · Student Portal` : 'Official Student Portal')}
+                  </span>
+                </div>
+              </div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/10 border border-blue-500/25 text-[10px] font-semibold text-blue-300">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Verified Partner Assessment Center</span>
               </div>
             </div>
-          </Link>
+          ) : (
+            <Link to="/" className="inline-flex items-center gap-3 w-fit">
+              <img
+                src={EDVEDUM_LOGO}
+                alt={EDVEDUM_LOGO_ALT}
+                className="h-9 w-auto max-w-[40px] object-contain shrink-0"
+                style={{ height: '36px', width: 'auto', maxWidth: '40px', objectFit: 'contain' }}
+              />
+              <div className="text-left leading-none space-y-1">
+                <span className="block font-serif font-black tracking-wider text-white text-base uppercase">
+                  EDVEDUM
+                </span>
+                <div className="flex items-center gap-1 text-[9px] font-bold tracking-[0.25em] text-[#C5A059] uppercase">
+                  <span>—</span>
+                  <span>{isAdmin ? 'ADMIN PORTAL' : 'ACADEMY'}</span>
+                  <span>—</span>
+                </div>
+              </div>
+            </Link>
+          )}
 
           {/* Hero Visual & Feature Content */}
           <div className="my-auto py-3">
@@ -175,7 +229,11 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-500 pt-1">© {new Date().getFullYear()} EDVEDUM Academy · All rights reserved</p>
+          <p className="text-[11px] text-slate-500 pt-1">
+            {institution
+              ? `© ${new Date().getFullYear()} ${institution.name} · In Association with EDVEDUM Academy`
+              : `© ${new Date().getFullYear()} EDVEDUM Academy · All rights reserved`}
+          </p>
         </div>
 
         {/* RIGHT PANEL: LOGIN FORM */}
@@ -205,26 +263,63 @@ export default function AuthShell({ children, title, subtitle, variant = 'studen
             </Link>
           </div>
 
-          {/* ROW 2: EDVEDUM Logo & Branding Header (Enhanced Size) */}
-          <div className="text-center mt-3 mb-7 sm:mb-8">
-            <Link to="/" className="inline-flex items-center justify-center gap-3 max-w-[210px] mx-auto">
-              <img
-                src={EDVEDUM_LOGO}
-                alt={EDVEDUM_LOGO_ALT}
-                className="h-10 sm:h-11 w-auto max-w-[44px] max-h-[44px] object-contain shrink-0 flex-shrink-0"
-                style={{ height: '42px', width: 'auto', maxWidth: '44px', maxHeight: '44px', objectFit: 'contain' }}
-              />
-              <div className="text-left leading-none space-y-0.5 shrink-0">
-                <span className="block font-serif font-black tracking-wider text-white text-lg uppercase">
-                  EDVEDUM
-                </span>
-                <div className="flex items-center gap-1 text-[8.5px] font-bold tracking-[0.24em] text-[#C5A059] uppercase">
-                  <span>—</span>
-                  <span>{isAdmin ? 'ADMIN PORTAL' : 'ACADEMY'}</span>
-                  <span>—</span>
+          {/* ROW 2: Branding Header (EDVEDUM or Client Institute) */}
+          <div className="text-center mt-3 mb-6 sm:mb-7">
+            {institution ? (
+              <div className="flex flex-col items-center justify-center gap-2">
+                <div className="flex items-center justify-center gap-3">
+                  {institution.logo_url ? (
+                    <img
+                      src={institution.logo_url}
+                      alt={institution.name}
+                      className="h-11 sm:h-12 w-auto max-w-[50px] max-h-[50px] object-contain shrink-0 rounded-xl bg-white/10 p-1 border border-white/15 shadow-md"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const badgeEl = e.currentTarget.nextElementSibling;
+                        if (badgeEl) badgeEl.style.display = 'flex';
+                      }}
+                    />
+                  ) : null}
+                  <div
+                    className={`h-10 w-10 rounded-xl items-center justify-center font-black text-white text-sm shadow-md shrink-0 ${institution.logo_url ? 'hidden' : 'flex'}`}
+                    style={{ backgroundColor: institution.accent_color || '#4f46e5' }}
+                  >
+                    {institution.logo_badge || institution.name?.substring(0, 3).toUpperCase() || 'INS'}
+                  </div>
+                  <div className="text-left leading-tight">
+                    <span className="block font-black tracking-wide text-white text-base sm:text-lg font-sans">
+                      {institution.name}
+                    </span>
+                    <span className="text-[9.5px] font-bold text-slate-400 tracking-wider uppercase block">
+                      {institution.tagline || (institution.city ? `${institution.city} · Student Portal` : 'Official Student Portal')}
+                    </span>
+                  </div>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/25 text-[9.5px] font-semibold text-blue-300">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Verified Partner Assessment Center</span>
                 </div>
               </div>
-            </Link>
+            ) : (
+              <Link to="/" className="inline-flex items-center justify-center gap-3 max-w-[210px] mx-auto">
+                <img
+                  src={EDVEDUM_LOGO}
+                  alt={EDVEDUM_LOGO_ALT}
+                  className="h-10 sm:h-11 w-auto max-w-[44px] max-h-[44px] object-contain shrink-0 flex-shrink-0"
+                  style={{ height: '42px', width: 'auto', maxWidth: '44px', maxHeight: '44px', objectFit: 'contain' }}
+                />
+                <div className="text-left leading-none space-y-0.5 shrink-0">
+                  <span className="block font-serif font-black tracking-wider text-white text-lg uppercase">
+                    EDVEDUM
+                  </span>
+                  <div className="flex items-center gap-1 text-[8.5px] font-bold tracking-[0.24em] text-[#C5A059] uppercase">
+                    <span>—</span>
+                    <span>{isAdmin ? 'ADMIN PORTAL' : 'ACADEMY'}</span>
+                    <span>—</span>
+                  </div>
+                </div>
+              </Link>
+            )}
           </div>
 
           {/* ROW 3: SINGLE AUTH CARD (SIGN IN FIRST - DROPPED DOWN SLIGHTLY) */}
