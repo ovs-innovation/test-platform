@@ -1,0 +1,53 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <defs>
+    <marker id="arrow96" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#1e293b" />
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+  
+  <!-- Graph 1 -->
+  <g transform="translate(60, 40)">
+    <text x="-35" y="100" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">(1)</text>
+    <line x1="20" y1="180" x2="20" y2="20" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <line x1="20" y1="180" x2="180" y2="180" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <text x="5" y="18" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">KR</text>
+    <text x="185" y="185" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">n</text>
+    <!-- curve: straight line through origin -->
+    <line x1="20" y1="180" x2="150" y2="50" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Graph 2 -->
+  <g transform="translate(360, 40)">
+    <text x="-35" y="100" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">(2)</text>
+    <line x1="20" y1="180" x2="20" y2="20" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <line x1="20" y1="180" x2="180" y2="180" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <text x="5" y="18" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">KR</text>
+    <text x="185" y="185" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">n</text>
+    <!-- curve: horizontal constant line -->
+    <line x1="20" y1="70" x2="160" y2="70" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Graph 3 -->
+  <g transform="translate(60, 270)">
+    <text x="-35" y="100" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">(3)</text>
+    <line x1="20" y1="180" x2="20" y2="20" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <line x1="20" y1="180" x2="180" y2="180" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <text x="5" y="18" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">KR</text>
+    <text x="185" y="185" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">n</text>
+    <!-- curve: upward curved -->
+    <path d="M 20 180 Q 90 170 160 50" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+
+  <!-- Graph 4 -->
+  <g transform="translate(360, 270)">
+    <text x="-35" y="100" font-family="sans-serif" font-size="20" font-weight="bold" fill="#1e293b">(4)</text>
+    <line x1="20" y1="180" x2="20" y2="20" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <line x1="20" y1="180" x2="180" y2="180" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow96)" />
+    <text x="5" y="18" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">KR</text>
+    <text x="185" y="185" font-family="sans-serif" font-size="16" font-style="italic" font-weight="bold" fill="#1e293b">n</text>
+    <!-- curve: downward hyperbolic decay -->
+    <path d="M 30 50 Q 50 140 160 175" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round" />
+  </g>
+</svg>

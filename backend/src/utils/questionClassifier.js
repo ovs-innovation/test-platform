@@ -56,8 +56,16 @@ const SUBJECT_PATTERNS = [
         keywords: ['resistivity', 'ohm', 'kirchhoff', 'current', 'voltage', 'resistor', 'junction rule']
       },
       {
-        name: 'Magnetism & Electromagnetic Induction',
-        keywords: ['magnetic', 'flux', 'weber', 'tesla', 'inductor', 'induction', 'transformer', 'henry']
+        name: 'Moving Charges and Magnetism',
+        keywords: ['biot savart', 'ampere', 'lorentz', 'solenoid', 'toroid', 'cyclotron', 'galvanometer']
+      },
+      {
+        name: 'Magnetism and Matter',
+        keywords: ['diamagnetic', 'paramagnetic', 'ferromagnetic', 'hysteresis', 'dipole moment', 'susceptibility', 'curie']
+      },
+      {
+        name: 'Electromagnetic Induction',
+        keywords: ['magnetic flux', 'faraday', 'lenz', 'motional emf', 'induced current', 'inductance', 'inductor', 'eddy current']
       },
       {
         name: 'Modern Physics & Nuclear Physics',

@@ -1,0 +1,26 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 260" width="460" height="260">
+  <defs>
+    <marker id="arrow-down-q59" viewBox="0 0 10 10" refX="5" refY="6" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 1 0 L 5 10 L 9 0 z" fill="#1e293b" />
+    </marker>
+  </defs>
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- 3 Levels -->
+  <line x1="40" y1="40" x2="420" y2="40" stroke="#1e293b" stroke-width="3" stroke-linecap="round" />
+  <line x1="40" y1="130" x2="420" y2="130" stroke="#1e293b" stroke-width="3" stroke-linecap="round" />
+  <line x1="40" y1="220" x2="420" y2="220" stroke="#1e293b" stroke-width="3" stroke-linecap="round" />
+
+  <!-- Transition a (top to middle) -->
+  <line x1="120" y1="40" x2="120" y2="125" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow-down-q59)" />
+  <text x="85" y="90" font-family="sans-serif" font-size="20" font-style="italic" font-weight="bold" fill="#1e293b">λₐ</text>
+
+  <!-- Transition b (middle to bottom) -->
+  <line x1="230" y1="130" x2="230" y2="215" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow-down-q59)" />
+  <text x="195" y="180" font-family="sans-serif" font-size="20" font-style="italic" font-weight="bold" fill="#1e293b">λ₆</text>
+
+  <!-- Transition c (top to bottom) -->
+  <line x1="340" y1="40" x2="340" y2="215" stroke="#1e293b" stroke-width="2.5" marker-end="url(#arrow-down-q59)" />
+  <text x="355" y="135" font-family="sans-serif" font-size="20" font-style="italic" font-weight="bold" fill="#1e293b">λ꜀</text>
+</svg>

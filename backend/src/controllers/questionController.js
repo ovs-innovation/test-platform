@@ -666,8 +666,14 @@ export const bulkUpdateQuestionMarks = asyncHandler(async (req, res) => {
   }
 
   if (question_type && question_type !== 'all') {
-    values.push(question_type);
-    clauses.push(`question_type = $${values.length}`);
+    if (question_type === 'single_choice' || question_type === 'mcq') {
+      clauses.push(`question_type IN ('single_choice', 'mcq', 'single_correct')`);
+    } else if (question_type === 'multi_select' || question_type === 'multiple_choice') {
+      clauses.push(`question_type IN ('multi_select', 'multiple_choice', 'multiple_correct')`);
+    } else {
+      values.push(question_type);
+      clauses.push(`question_type = $${values.length}`);
+    }
   }
 
   const updateQuery = `

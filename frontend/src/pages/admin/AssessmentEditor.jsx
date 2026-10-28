@@ -14,7 +14,7 @@ import { formatDate } from '../../lib/format.js';
 import { CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import DateTimePickerWithAmPm from '../../components/common/DateTimePickerWithAmPm.jsx';
-import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye, Sparkles, RotateCcw } from 'lucide-react';
+import { ChevronDown, Check, Copy, Download, Code, Zap, Image as ImageIcon, Upload, X, ArrowUp, ArrowDown, Move, Plus, Eye, Sparkles, RotateCcw, Edit3 } from 'lucide-react';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
 import { getMediaUrl, getQuestionDiagrams, hasQuestionDiagram } from '../../lib/media.js';
 
@@ -41,14 +41,23 @@ const ASSERTION_REASON_OPTIONS = [
   'Assertion (A) is false but Reason (R) is true',
 ];
 
+export const isSingleChoiceType = (type) =>
+  type === 'mcq' || type === 'single_choice' || type === 'single_correct';
+
+export const isMultiChoiceType = (type) =>
+  type === 'multi_select' || type === 'multiple_choice' || type === 'multiple_correct';
+
+export const isChoiceType = (type) =>
+  isSingleChoiceType(type) || isMultiChoiceType(type);
+
 const QUESTION_TYPES = [
-  { id: 'mcq', label: 'Single correct MCQ' },
-  { id: 'multi_select', label: 'Multiple correct MCQ' },
-  { id: 'integer', label: 'Integer type' },
-  { id: 'numerical', label: 'Numerical answer type' },
-  { id: 'assertion_reason', label: 'Assertion-reason type' },
-  { id: 'coding', label: 'Coding' },
-  { id: 'subjective', label: 'Subjective' },
+  { id: 'single_choice', label: 'Single correct MCQ', aliases: ['mcq', 'single_correct', 'single_choice'] },
+  { id: 'multi_select', label: 'Multiple correct MCQ', aliases: ['multi_select', 'multiple_choice', 'multiple_correct'] },
+  { id: 'integer', label: 'Integer type', aliases: ['integer'] },
+  { id: 'numerical', label: 'Numerical answer type', aliases: ['numerical'] },
+  { id: 'assertion_reason', label: 'Assertion-reason type', aliases: ['assertion_reason'] },
+  { id: 'coding', label: 'Coding', aliases: ['coding'] },
+  { id: 'subjective', label: 'Subjective', aliases: ['subjective'] },
 ];
 
 const SECTION_TYPES = [
@@ -68,14 +77,16 @@ const normalizeOptions = (rawList, type) => {
     }
   }
   if (!list.length) {
-    list = type === 'assertion_reason' ? [...ASSERTION_REASON_OPTIONS] : ['', ''];
+    list = type === 'assertion_reason'
+      ? [...ASSERTION_REASON_OPTIONS]
+      : (isChoiceType(type) ? ['', '', '', ''] : ['', '']);
   }
   return list.map((opt, idx) => {
     const expectedKey = String.fromCharCode(65 + idx);
     if (typeof opt === 'object' && opt !== null) {
       const img = opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '';
       return {
-        key: expectedKey,
+        key: opt.key || expectedKey,
         text: opt.text != null ? String(opt.text) : '',
         image_url: img,
         media: Array.isArray(opt.media) && opt.media.length > 0 ? opt.media : (img ? [{ id: `opt-${idx}-img`, type: 'diagram', url: img }] : []),
@@ -90,7 +101,7 @@ const normalizeOptions = (rawList, type) => {
   });
 };
 
-const emptyForm = (type) => ({
+const emptyForm = (type = 'single_choice') => ({
   question_type: type,
   question_text: '',
   options: normalizeOptions([], type),
@@ -773,7 +784,7 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
     setEditing(null);
     setInsertMeta(null);
     const f = emptyForm(type);
-    const sec = sections.find((s) => s.section_type.includes(type === 'mcq' || type === 'multi_select' ? 'mcq' : type)) || sections[0];
+    const sec = sections.find((s) => s.section_type.includes(isChoiceType(type) ? 'mcq' : type)) || sections[0];
     setForm({
       ...f,
       options: normalizeOptions(f.options, type),
@@ -788,17 +799,35 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
     setEditing(q);
     setInsertMeta(null);
     const opts = normalizeOptions(q.options, q.question_type);
-    const indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
+    const isMulti = isMultiChoiceType(q.question_type);
+
+    let indices = Array.isArray(q.correct_indices) ? q.correct_indices : [];
+    if (typeof q.correct_indices === 'string') {
+      try { indices = JSON.parse(q.correct_indices); } catch (_) { indices = []; }
+    }
+    let singleIndex = q.correct_index != null && q.correct_index !== '' ? Number(q.correct_index) : 0;
+    if (isNaN(singleIndex)) singleIndex = 0;
+
+    if (isMulti && indices.length === 0 && q.correct_index != null && q.correct_index !== '') {
+      indices = [Number(q.correct_index)];
+    }
+    if (!isMulti && (q.correct_index == null || q.correct_index === '') && indices.length > 0) {
+      singleIndex = indices[0];
+    }
+
     const subjId = q.subject_id ? Number(q.subject_id) : null;
     const chapId = q.chapter_id ? Number(q.chapter_id) : null;
     if (subjId) setLastSubjectId(subjId);
     if (chapId) setLastChapterId(chapId);
 
+    const questionDiagrams = getQuestionDiagrams(q);
+    const resolvedImageUrl = q.image_url || (questionDiagrams.length > 0 ? (typeof questionDiagrams[0] === 'string' ? questionDiagrams[0] : questionDiagrams[0].url) : '');
+
     setForm({
-      question_type: q.question_type || 'mcq',
-      question_text: q.question_text,
+      question_type: q.question_type || 'single_choice',
+      question_text: q.question_text || '',
       options: opts,
-      correct_index: q.correct_index ?? 0,
+      correct_index: singleIndex,
       correct_indices: indices,
       numeric_answer: q.numeric_answer ?? (q.question_type === 'integer' || q.question_type === 'numerical' ? 0 : null),
       numerical_tolerance: q.numerical_tolerance ?? (q.question_type === 'numerical' ? 0.01 : 0),
@@ -809,7 +838,7 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
       starter_code: q.starter_code || '',
       test_cases: q.test_cases?.length ? q.test_cases : [{ input: '', expected: '' }],
       solution: q.solution || '',
-      image_url: q.image_url || '',
+      image_url: resolvedImageUrl || '',
       solution_image_url: q.solution_image_url || '',
       subject_id: subjId,
       subject: q.subject || '',
@@ -938,9 +967,10 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
       if (form.subject_id) setLastSubjectId(form.subject_id);
       if (form.chapter_id) setLastChapterId(form.chapter_id);
 
-      const isChoiceType = ['mcq', 'single_choice', 'multi_select', 'assertion_reason'].includes(form.question_type);
+      const isChoice = isChoiceType(form.question_type) || form.question_type === 'assertion_reason';
+      const isMulti = isMultiChoiceType(form.question_type);
 
-      const processedOptions = isChoiceType
+      const processedOptions = isChoice
         ? (form.options || []).map((o, idx) => {
             const text = typeof o === 'object' ? (o.text ?? '') : String(o ?? '');
             const imgUrl = typeof o === 'object' ? (o.image_url || (Array.isArray(o.media) && o.media[0]?.url) || '') : '';
@@ -968,8 +998,8 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         topic: form.topic || '',
         section_id: form.section_id || null,
         options: processedOptions,
-        correct_index: isChoiceType ? (form.correct_index ?? 0) : null,
-        correct_indices: isChoiceType ? (form.correct_indices || []) : [],
+        correct_index: isChoice ? (!isMulti ? (form.correct_index ?? 0) : null) : null,
+        correct_indices: isChoice ? (isMulti ? (form.correct_indices || []) : []) : [],
         numeric_answer: form.numeric_answer != null && form.numeric_answer !== '' ? Number(form.numeric_answer) : null,
         numerical_tolerance: form.numerical_tolerance != null && form.numerical_tolerance !== '' ? Number(form.numerical_tolerance) : 0,
         negative_marks: form.negative_marks != null && form.negative_marks !== '' ? Number(form.negative_marks) : 0,
@@ -979,12 +1009,12 @@ function QuestionsTab({ assessmentId, assessment, questions, sections, onReload,
         reference_question_id: insertMeta?.referenceQuestionId || form.reference_question_id || null,
         client_updated_at: assessment?.updated_at || null,
       };
-      if (['mcq', 'single_choice', 'multi_select'].includes(payload.question_type) && payload.options.length < 2) {
+      if (isChoiceType(payload.question_type) && payload.options.length < 2) {
         toast.error('Need at least 2 options');
         setSaving(false);
         return;
       }
-      if (payload.question_type === 'multi_select' && (!payload.correct_indices?.length)) {
+      if (isMulti && (!payload.correct_indices?.length)) {
         toast.error('Select at least one correct answer');
         setSaving(false);
         return;
@@ -1875,7 +1905,8 @@ function BulkMarksModal({
     }
     if (bulkScope === 'type') {
       if (bulkQuestionType === 'all') return questions;
-      return questions.filter((q) => q.question_type === bulkQuestionType);
+      const tObj = QUESTION_TYPES.find((t) => t.id === bulkQuestionType);
+      return questions.filter((q) => q.question_type === bulkQuestionType || tObj?.aliases?.includes(q.question_type));
     }
     return questions; // 'all'
   };
@@ -1993,7 +2024,7 @@ function BulkMarksModal({
             >
               <option value="all">All Types ({questions.length} questions)</option>
               {QUESTION_TYPES.map((t) => {
-                const count = questions.filter((q) => q.question_type === t.id).length;
+                const count = questions.filter((q) => q.question_type === t.id || t.aliases?.includes(q.question_type)).length;
                 return (
                   <option key={t.id} value={t.id}>
                     {t.label} ({count} questions)
@@ -2092,11 +2123,14 @@ function QuestionCard({
   disabled,
 }) {
   const opts = Array.isArray(q.options) ? q.options : [];
-  const typeLabel = QUESTION_TYPES.find((t) => t.id === q.question_type)?.label || q.question_type;
+  const typeObj = QUESTION_TYPES.find((t) => t.id === q.question_type || t.aliases?.includes(q.question_type));
+  const typeLabel = typeObj?.label || q.question_type;
 
+  const isMulti = isMultiChoiceType(q.question_type);
+  const isChoice = isChoiceType(q.question_type);
   const isInteger = q.question_type === 'integer' || q.question_type === 'numerical';
   const hasAnswerKey = Boolean(
-    q.question_type === 'multi_select'
+    isMulti
       ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
       : (isInteger
           ? (q.numeric_answer !== null && q.numeric_answer !== undefined && q.numeric_answer !== '')
@@ -2223,13 +2257,15 @@ function QuestionCard({
                 <Plus className="h-3 w-3" />
                 <span>After</span>
               </button>
-              <div className="flex items-center gap-1 pl-1 border-l border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-1.5 pl-1 border-l border-slate-200 dark:border-slate-800">
                 <button
                   type="button"
-                  className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline px-1.5 py-1 cursor-pointer"
+                  className="btn-primary py-1 px-2.5 text-xs flex items-center gap-1.5 cursor-pointer shadow-xs"
                   onClick={onEdit}
+                  title="Edit question text, options, and diagram"
                 >
-                  Edit
+                  <Edit3 className="h-3 w-3" />
+                  <span>Edit</span>
                 </button>
                 <button
                   type="button"
@@ -2248,26 +2284,53 @@ function QuestionCard({
           
           {(() => {
             const mediaList = getQuestionDiagrams(q);
-            if (!mediaList.length) return null;
+            if (!mediaList.length) {
+              return (
+                <div className="mt-2">
+                  <button
+                    type="button"
+                    onClick={onEdit}
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-dashed border-slate-300 dark:border-slate-700 text-[11px] font-medium text-slate-500 hover:text-blue-600 hover:border-blue-400 transition-colors cursor-pointer bg-slate-50/50 dark:bg-slate-900/40"
+                    title="Add a diagram to this question"
+                  >
+                    <ImageIcon className="h-3.5 w-3.5 text-blue-500" />
+                    <span>+ Add Diagram</span>
+                  </button>
+                </div>
+              );
+            }
 
             return (
-              <div className="mt-2 flex flex-wrap gap-2.5">
-                {mediaList.map((m, mIdx) => {
-                  const mUrl = typeof m === 'string' ? m : m.url;
-                  if (!mUrl) return null;
-                  return (
-                    <div key={mIdx} className="max-w-xs">
-                      <img
-                        src={getMediaUrl(mUrl)}
-                        alt={m.description || `Question Diagram ${mIdx + 1}`}
-                        className="max-h-40 rounded-lg border border-slate-200 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90 shadow-xs"
-                        onClick={() => window.open(getMediaUrl(mUrl), '_blank')}
-                        title="Click to view full diagram"
-                      />
-                      {m.description && <p className="text-[10px] text-slate-500 mt-0.5 truncate">{m.description}</p>}
-                    </div>
-                  );
-                })}
+              <div className="mt-2.5 space-y-1.5">
+                <div className="flex flex-wrap items-start gap-3">
+                  {mediaList.map((m, mIdx) => {
+                    const mUrl = typeof m === 'string' ? m : m.url;
+                    if (!mUrl) return null;
+                    return (
+                      <div key={mIdx} className="group relative rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 p-1.5 shadow-xs max-w-sm">
+                        <img
+                          src={getMediaUrl(mUrl)}
+                          alt={m.description || `Question Diagram ${mIdx + 1}`}
+                          className="max-h-48 max-w-full rounded-lg object-contain cursor-pointer hover:opacity-95"
+                          onClick={() => window.open(getMediaUrl(mUrl), '_blank')}
+                          title="Click to view full diagram"
+                        />
+                        {m.description && <p className="text-[10px] text-slate-500 mt-1 px-1 truncate">{m.description}</p>}
+                        <div className="mt-1 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-1 px-1">
+                          <span className="text-[10px] font-medium text-slate-400">Diagram #{mIdx + 1}</span>
+                          <button
+                            type="button"
+                            onClick={onEdit}
+                            className="inline-flex items-center gap-1 text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer"
+                          >
+                            <Edit3 className="h-2.5 w-2.5" />
+                            <span>Edit Diagram</span>
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             );
           })()}
@@ -2289,60 +2352,82 @@ function QuestionCard({
             </div>
           )}
 
-          {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
-            <ul className="mt-2 space-y-1 text-sm">
-              {opts.map((opt, i) => {
-                const rawOptText = typeof opt === 'object' && opt !== null ? (opt.text ?? '') : String(opt ?? '');
-                const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(rawOptText);
-                const optText = isMatchMapping ? rawOptText : rawOptText.replace(/^(?:\([a-eA-E1-4]\)\s*|[a-eA-E][\.\:\)]\s+|[1-4]\)\s*|[1-4]\.(?!\d)\s+)/, '').trim();
-                const optMedia = (typeof opt === 'object' && Array.isArray(opt.media))
-                  ? opt.media
-                  : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
-                const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
-                const isCorrect = (
-                  q.question_type === 'multi_select'
-                    ? (q.correct_indices || []).includes(i)
-                    : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && i === Number(q.correct_index))
-                );
-                return (
-                  <li
-                    key={i}
-                    className={
-                      isCorrect
-                        ? 'font-medium text-emerald-600 dark:text-emerald-400 flex flex-col gap-1'
-                        : 'text-slate-600 dark:text-slate-300 flex flex-col gap-1'
-                    }
-                  >
-                    <div className="flex items-center gap-1.5">
-                      {isCorrect && <span className="text-xs font-bold">✓</span>}
-                      <span className="font-semibold text-slate-500 dark:text-slate-400">({String.fromCharCode(65 + i)})</span>
-                      {optText || rawOptText ? (
-                        <MathRenderer text={optText || rawOptText} />
-                      ) : (
-                        optImg ? (
-                          <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">
-                            [Image Option]
-                          </span>
-                        ) : (
-                          <span className="italic text-slate-400">Empty option</span>
-                        )
-                      )}
-                    </div>
-                    {optImg && (
-                      <div className="ml-5 mt-0.5">
-                        <img
-                          src={getMediaUrl(optImg)}
-                          alt={`Option ${String.fromCharCode(65 + i)} diagram`}
-                          className="max-h-24 rounded border border-slate-300 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-0.5 cursor-pointer hover:opacity-90"
-                          onClick={() => window.open(getMediaUrl(optImg), '_blank')}
-                          title="Click to view full image"
-                        />
+          {(isChoice || q.question_type === 'assertion_reason') && (
+            <div className="mt-3">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Options & Answer Key:
+                </span>
+                <button
+                  type="button"
+                  onClick={onEdit}
+                  className="text-[11px] font-medium text-blue-600 dark:text-blue-400 hover:underline cursor-pointer flex items-center gap-1"
+                >
+                  <Edit3 className="h-2.5 w-2.5" />
+                  <span>Edit Options</span>
+                </button>
+              </div>
+              <ul className="space-y-1.5 text-sm">
+                {opts.map((opt, i) => {
+                  const rawOptText = typeof opt === 'object' && opt !== null ? (opt.text ?? '') : String(opt ?? '');
+                  const isMatchMapping = /(?:\(?[a-eA-E1-4ivx]+\)?\s*[-–—>:=]\s*\(?[a-zA-Z0-9ivxlcdmIVXLCDM]+\)?.*[,;]|[,;].*\(?[b-eB-E2-4ivx]+\)?\s*[-–—>:=]|(?:^|,)\s*\(?[a-eA-E1-4]\)\s*[-–—>:=]|^\([a-z]\)\s*[-–—]|\([iIvVxX]+\)[^,\n]+,\s*\([iIvVxX]+\))/i.test(rawOptText);
+                  const optText = isMatchMapping ? rawOptText : rawOptText.replace(/^(?:\([a-eA-E1-4]\)\s*|[a-eA-E][\.\:\)]\s+|[1-4]\)\s*|[1-4]\.(?!\d)\s+)/, '').trim();
+                  const optMedia = (typeof opt === 'object' && Array.isArray(opt.media))
+                    ? opt.media
+                    : ((typeof opt === 'object' && opt.image_url) ? [{ url: opt.image_url }] : []);
+                  const optImg = (typeof opt === 'object' && opt.image_url) ? opt.image_url : (optMedia[0]?.url || '');
+                  const isCorrect = (
+                    isMulti
+                      ? (q.correct_indices || []).includes(i)
+                      : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && i === Number(q.correct_index))
+                  );
+                  return (
+                    <li
+                      key={i}
+                      className={`flex flex-col gap-1 p-1.5 rounded-lg transition-colors ${
+                        isCorrect
+                          ? 'bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-800/60 font-medium text-emerald-800 dark:text-emerald-300'
+                          : 'text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800/40'
+                      }`}
+                    >
+                      <div className="flex items-start gap-2">
+                        <span className={`inline-flex items-center justify-center h-5 w-5 rounded-full text-xs font-bold shrink-0 mt-0.5 ${
+                          isCorrect
+                            ? 'bg-emerald-600 text-white'
+                            : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                        }`}>
+                          {isCorrect ? '✓' : String.fromCharCode(65 + i)}
+                        </span>
+                        <div className="min-w-0 flex-1">
+                          {optText || rawOptText ? (
+                            <MathRenderer text={optText || rawOptText} />
+                          ) : (
+                            optImg ? (
+                              <span className="text-xs font-semibold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">
+                                [Image Option]
+                              </span>
+                            ) : (
+                              <span className="italic text-slate-400">Empty option</span>
+                            )
+                          )}
+                        </div>
                       </div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
+                      {optImg && (
+                        <div className="ml-7 mt-1">
+                          <img
+                            src={getMediaUrl(optImg)}
+                            alt={`Option ${String.fromCharCode(65 + i)} diagram`}
+                            className="max-h-24 rounded border border-slate-300 dark:border-slate-700 object-contain bg-white dark:bg-slate-950 p-1 cursor-pointer hover:opacity-90"
+                            onClick={() => window.open(getMediaUrl(optImg), '_blank')}
+                            title="Click to view full image"
+                          />
+                        </div>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           )}
 
           {q.solution && (
@@ -2380,12 +2465,14 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
   const getOptVal = (o) => (o.id !== undefined ? o.id : (o.value !== undefined ? o.value : o.name));
 
   const isMatchingOpt = (opt, targetVal) => {
+    const optVal = getOptVal(opt);
     if (targetVal === '' || targetVal === null || targetVal === undefined) {
-      const optVal = getOptVal(opt);
       return optVal === '' || optVal === null || optVal === undefined;
     }
-    const optVal = getOptVal(opt);
-    if (optVal !== undefined && optVal !== null && String(optVal) === String(targetVal)) {
+    if (optVal !== undefined && optVal !== null && String(optVal).toLowerCase() === String(targetVal).toLowerCase()) {
+      return true;
+    }
+    if (opt.aliases && Array.isArray(opt.aliases) && opt.aliases.map(a => String(a).toLowerCase()).includes(String(targetVal).toLowerCase())) {
       return true;
     }
     if (opt.name && String(opt.name).toLowerCase() === String(targetVal).toLowerCase()) {
@@ -2397,7 +2484,8 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
     return false;
   };
 
-  const selected = options.find((o) => isMatchingOpt(o, value));
+  const optList = Array.isArray(options) ? options : [];
+  const selected = optList.find((o) => isMatchingOpt(o, value));
   const displayLabel = selected ? (selected.label || selected.name) : (typeof value === 'string' && isNaN(Number(value)) && value !== '' ? value : placeholder);
 
   if (placeholder === 'Select chapter') {
@@ -2442,7 +2530,7 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
           className="absolute left-0 top-full mt-1.5 w-full z-50 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] shadow-2xl p-1.5 space-y-1 animate-in fade-in zoom-in-95 duration-150 max-h-60 overflow-y-auto"
           onMouseDown={(e) => e.stopPropagation()}
         >
-          {options.map((opt, idx) => {
+          {optList.map((opt, idx) => {
             const optVal = getOptVal(opt);
             const isSelected = isMatchingOpt(opt, value);
             return (
@@ -2477,7 +2565,8 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
 }
 
 function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections, onSubmit, saving, insertMeta }) {
-  const isChoice = form.question_type === 'mcq' || form.question_type === 'multi_select';
+  const isChoice = isChoiceType(form.question_type);
+  const isMulti = isMultiChoiceType(form.question_type);
   const [subjectsList, setSubjectsList] = useState([]);
   const [chaptersList, setChaptersList] = useState([]);
 
@@ -2743,21 +2832,30 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
             <CustomSelectDropdown
               value={form.question_type}
               options={QUESTION_TYPES}
-              onChange={(val) => setForm((f) => ({
-                ...emptyForm(val),
-                question_text: f.question_text,
-                section_id: f.section_id,
-                subject_id: f.subject_id,
-                subject: f.subject,
-                chapter_id: f.chapter_id,
-                topic: f.topic,
-                difficulty: f.difficulty,
-                marks: f.marks,
-                image_url: f.image_url,
-                solution_image_url: f.solution_image_url,
-                solution: f.solution,
-                explanation: f.explanation
-              }))}
+              onChange={(val) => setForm((f) => {
+                const nextType = val;
+                const wasChoice = isChoiceType(f.question_type);
+                const willBeChoice = isChoiceType(nextType);
+                return {
+                  ...emptyForm(nextType),
+                  question_text: f.question_text,
+                  options: (wasChoice && willBeChoice && f.options?.length) ? f.options : normalizeOptions([], nextType),
+                  correct_index: f.correct_index,
+                  correct_indices: f.correct_indices,
+                  section_id: f.section_id,
+                  subject_id: f.subject_id,
+                  subject: f.subject,
+                  chapter_id: f.chapter_id,
+                  topic: f.topic,
+                  difficulty: f.difficulty,
+                  marks: f.marks,
+                  image_url: f.image_url,
+                  solution_image_url: f.solution_image_url,
+                  solution: f.solution,
+                  explanation: f.explanation,
+                  original_question_number: f.original_question_number,
+                };
+              })}
             />
           </div>
           <div>
@@ -2834,7 +2932,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <label className="label mb-0">
-                {form.question_type === 'multi_select'
+                {isMulti
                   ? 'Options (check all correct; diagram/image upload available per option)'
                   : 'Options (select one correct; diagram/image upload available per option)'}
               </label>
@@ -2855,7 +2953,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                     className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/50 p-3 space-y-2 transition-all hover:border-slate-300 dark:hover:border-slate-700"
                   >
                     <div className="flex items-center gap-2.5">
-                      {form.question_type === 'multi_select' ? (
+                      {isMulti ? (
                         <input
                           type="checkbox"
                           className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
@@ -2867,7 +2965,7 @@ function QuestionBuilderModal({ open, onClose, editing, form, setForm, sections,
                           type="radio"
                           name="correct"
                           className="h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
-                          checked={form.correct_index === i}
+                          checked={Number(form.correct_index) === i}
                           onChange={() => setForm((f) => ({ ...f, correct_index: i }))}
                         />
                       )}
@@ -3473,23 +3571,37 @@ function PreviewModal({ open, onClose, data }) {
           <ol className="space-y-4">
             {questions.map((q, i) => {
               const opts = Array.isArray(q.options) ? q.options : [];
+              const typeObj = QUESTION_TYPES.find((t) => t.id === q.question_type || t.aliases?.includes(q.question_type));
+              const typeLabel = typeObj?.label || q.question_type;
+              const isMulti = isMultiChoiceType(q.question_type);
+              const isChoice = isChoiceType(q.question_type);
+              const diagrams = getQuestionDiagrams(q);
+
               return (
                 <li key={q.id} className="rounded-lg border border-slate-200 p-4">
                   <div className="flex gap-2">
-                    <Badge color="blue">{q.question_type}</Badge>
+                    <Badge color="blue">{typeLabel}</Badge>
                     <Badge color="green">{q.marks} mk</Badge>
+                    {diagrams.length > 0 && <Badge color="amber">🖼️ Diagram</Badge>}
                   </div>
                   <p className="mt-2 font-medium">Q{i + 1}. {q.question_text}</p>
-                  {(q.question_type === 'mcq' || q.question_type === 'multi_select') && (
+                  {diagrams.length > 0 && (
+                    <div className="mt-2 flex flex-wrap gap-2">
+                      {diagrams.map((d, dIdx) => (
+                        <img
+                          key={dIdx}
+                          src={getMediaUrl(typeof d === 'string' ? d : d.url)}
+                          alt="Question diagram"
+                          className="max-h-28 rounded border border-slate-200 p-1 object-contain bg-white"
+                        />
+                      ))}
+                    </div>
+                  )}
+                  {(isChoice || q.question_type === 'assertion_reason') && (
                     <ul className="mt-2 text-sm">
                       {opts.map((o, j) => {
-                        const hasAnswerKey = Boolean(
-                          q.question_type === 'multi_select'
-                            ? Array.isArray(q.correct_indices) && q.correct_indices.length > 0
-                            : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '')
-                        );
                         const isCorrect = (
-                          q.question_type === 'multi_select'
+                          isMulti
                             ? (q.correct_indices || []).includes(j)
                             : (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '' && j === Number(q.correct_index))
                         );
@@ -3500,7 +3612,7 @@ function PreviewModal({ open, onClose, data }) {
                             className={isCorrect ? 'text-emerald-700 font-medium' : 'text-slate-600'}
                           >
                             {isCorrect && '✓ '}
-                            {optText}
+                            ({String.fromCharCode(65 + j)}) {optText}
                           </li>
                         );
                       })}
