@@ -1,0 +1,76 @@
+[
+  {
+    "question_number": 243,
+    "question_type": "single_choice",
+    "question_text": "A particle is thrown at an angle $\\alpha = \\sin^{-1}\\left(\\frac{3}{5}\\right)$ with the horizontal in air as shown in the figure. The angle of projection as observed from inside water $\\left(\\mu_{\\text{water}} = \\frac{4}{3}\\right)$ is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15^\\circ$",
+      "$45^\\circ$",
+      "$30^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A horizontal interface separates water of refractive index $\\mu = 4/3$ below from air above. In air, an arrow indicates a particle projected at an angle $\\alpha$ to the horizontal.",
+    "solution": "From inside water, apparent vertical velocity is $v_y' = \\mu v_y$ while horizontal velocity remains unchanged $v_x' = v_x$. Thus, $\\tan \\theta' = \\mu \\tan \\alpha = \\frac{4}{3} \\times \\frac{3}{4} = 1 \\implies \\theta' = 45^\\circ$."
+  },
+  {
+    "question_number": 244,
+    "question_type": "single_choice",
+    "question_text": "A ray of light is incident grazing on an equilateral prism of refractive index $\\mu = 2$. The angle of emergence is:",
+    "options": [
+      "$30^\\circ$",
+      "$60^\\circ$",
+      "$75^\\circ$",
+      "$90^\\circ$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For grazing incidence $i_1 = 90^\\circ$, $\\sin r_1 = \\frac{\\sin 90^\\circ}{\\mu} = \\frac{1}{2} \\implies r_1 = 30^\\circ$. Since $A = r_1 + r_2 = 60^\\circ$, $r_2 = 30^\\circ$. By Snell's law at the second face, $\\sin e = \\mu \\sin r_2 = 2 \\times \\frac{1}{2} = 1 \\implies e = 90^\\circ$."
+  },
+  {
+    "question_number": 245,
+    "question_type": "single_choice",
+    "question_text": "A point source of light is emitting light in vertically upward direction and the container is filled with a liquid of refractive index $\\sqrt{2}$. If it starts accelerating along the $x$-axis with acceleration $a = \\frac{g}{\\sqrt{3}}$, then the light coming out of liquid is deviated by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5^\\circ$",
+      "$10^\\circ$",
+      "$15^\\circ$",
+      "$20^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A container filled with liquid of refractive index $\\mu = \\sqrt{2}$ rests on a horizontal wheeled cart. A point light source $S$ at the bottom emits a vertical light ray towards the surface.",
+    "solution": "The liquid surface tilts at an angle $\\theta$ given by $\\tan\\theta = \\frac{a}{g} = \\frac{1}{\\sqrt{3}} \\implies \\theta = 30^\\circ$. The angle of incidence of the vertical ray is $i = 30^\\circ$. By Snell's law, $\\sqrt{2}\\sin 30^\\circ = 1\\cdot\\sin r \\implies \\sin r = \\frac{1}{\\sqrt{2}} \\implies r = 45^\\circ$. Deviation $\\delta = r - i = 45^\\circ - 30^\\circ = 15^\\circ$."
+  },
+  {
+    "question_number": 246,
+    "question_type": "single_choice",
+    "question_text": "A compound microscope has an objective lens with a focal length of $1.5\\text{ cm}$ and an eyepiece of focal length $5\\text{ cm}$. It is focussed on an object which is at a distance of $1.8\\text{ cm}$ from the objective. The length of the microscope for normal adjustment is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$14\\text{ cm}$",
+      "$4\\text{ cm}$",
+      "$19\\text{ cm}$",
+      "$9.5\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using lens formula for objective: $\\frac{1}{v_o} - \\frac{1}{-1.8} = \\frac{1}{1.5} \\implies v_o = 9\\text{ cm}$. For normal adjustment, the final image is at infinity, so $L = v_o + f_e = 9 + 5 = 14\\text{ cm}$."
+  }
+]

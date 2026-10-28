@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 7,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** A convex lens may behave as a diverging lens.\n**Reason (R):** Nature of a lens depends upon refractive index of the lens and that of the surrounding medium.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "A convex lens may behave as a diverging lens.",
+    "reason_text": "Nature of a lens depends upon refractive index of the lens and that of the surrounding medium.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Lens Maker's formula, $\\frac{1}{f} = \\left(\\frac{\\mu_l}{\\mu_m} - 1\\right)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right)$. When a convex lens is placed in a medium where $\\mu_m > \\mu_l$, the focal length becomes negative, causing it to diverge light."
+  },
+  {
+    "question_number": 8,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** A convex mirror is used as a rear view mirror.\n**Reason (R):** Convex mirror always forms virtual, erect and diminished image for real objects.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "A convex mirror is used as a rear view mirror.",
+    "reason_text": "Convex mirror always forms virtual, erect and diminished image for real objects.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A convex mirror always forms an erect and diminished virtual image of a real object, which provides a significantly wider field of view, making it ideal as a rear view mirror."
+  },
+  {
+    "question_number": 9,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When a convex glass lens is dipped in water, its focal length increases.\n**Reason (R):** When the convex lens is dipped in water, its light bending capacity increases.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When a convex glass lens is dipped in water, its focal length increases.",
+    "reason_text": "When the convex lens is dipped in water, its light bending capacity increases.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since $\\frac{1}{f} \\propto (\\mu_{\\text{rel}} - 1)$, dipping the lens in water decreases the relative refractive index, increasing $f$ and decreasing its optical power (light bending capacity). Thus, Reason is false."
+  },
+  {
+    "question_number": 10,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Number of images of an object held between two plane mirrors perpendicular to each other is $3$.\n**Reason (R):** Image formed by a plane mirror is at equal distance from mirror as the object is from it.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Number of images of an object held between two plane mirrors perpendicular to each other is 3.",
+    "reason_text": "Image formed by a plane mirror is at equal distance from mirror as the object is from it.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For $\\theta = 90^\\circ$, the number of images is $n = \\frac{360^\\circ}{\\theta} - 1 = 4 - 1 = 3$. While both statements are scientifically true, the distance property alone does not explain the formula for the number of images formed by inclined mirrors."
+  },
+  {
+    "question_number": 11,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When incident angle is less than critical angle, then reflected ray is always less intense than the incident ray, howsoever smooth the reflecting surface may be.\n**Reason (R):** When light gets reflected by a surface, normally some fraction of it gets transmitted.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When incident angle is less than critical angle, then reflected ray is always less intense than the incident ray, howsoever smooth the reflecting surface may be.",
+    "reason_text": "When light gets reflected by a surface, normally some fraction of it gets transmitted.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an angle of incidence $i < i_c$, total internal reflection does not occur; instead, partial reflection and partial refraction (transmission) take place, so the reflected beam carries only a fraction of the incident intensity."
+  },
+  {
+    "question_number": 12,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Once light enters a diamond, it is very likely to undergo total internal reflection inside it.\n**Reason (R):** The critical angle for diamond-air interface is very small.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Once light enters a diamond, it is very likely to undergo total internal reflection inside it.",
+    "reason_text": "The critical angle for diamond-air interface is very small.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true statement but Reason is false",
+      "Both Assertion and Reason are false statements"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Diamond has a high refractive index ($\\mu \\approx 2.42$), giving a very small critical angle ($i_c = \\sin^{-1}(1/\\mu) \\approx 24.4^\\circ$). Thus, light rays striking faces inside diamond easily exceed this angle and undergo multiple total internal reflections."
+  }
+]

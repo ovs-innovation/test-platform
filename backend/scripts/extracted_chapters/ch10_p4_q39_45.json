@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 39,
+    "question_type": "single_choice",
+    "question_text": "Light from a sodium lamp ($\\lambda = 590\\text{ nm}$) is diffracted by a slit of width $d = 0.30\\text{ mm}$. The distance from the slit to the screen is $D = 0.87\\text{ m}$. The width of the central maximum will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3.9\\text{ mm}$",
+      "$3.4\\text{ mm}$",
+      "$3.0\\text{ mm}$",
+      "$4\\text{ mm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The linear width of the central maximum in single-slit diffraction is given by:\n$$\\beta_0 = \\frac{2\\lambda D}{d}$$\nSubstituting the given values:\n$$\\beta_0 = \\frac{2 \\times (590 \\times 10^{-9}\\text{ m}) \\times 0.87\\text{ m}}{0.30 \\times 10^{-3}\\text{ m}} = 3.422 \\times 10^{-3}\\text{ m} \\approx 3.4\\text{ mm}$$"
+  },
+  {
+    "question_number": 40,
+    "question_type": "single_choice",
+    "question_text": "A star is going away from the earth. Then it shows",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Red shift",
+      "Blue shift",
+      "Yellow shift",
+      "Green shift"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Due to the Doppler effect in light, when a celestial source moves away from the observer, its apparent wavelength increases towards the longer wavelength (red) region of the visible spectrum. This phenomenon is known as a red shift."
+  },
+  {
+    "question_number": 41,
+    "question_type": "single_choice",
+    "question_text": "Two light sources are coherent when",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Their amplitudes are equal",
+      "Their frequencies are equal",
+      "Their wavelengths are equal",
+      "Their frequencies are equal and their phase difference is constant"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Two light sources are said to be coherent if they emit light waves of the same frequency (or wavelength) with a zero or constant phase difference over time."
+  },
+  {
+    "question_number": 42,
+    "question_type": "single_choice",
+    "question_text": "In a Young's double-slit experiment using monochromatic light, the fringe width is $4\\text{ mm}$. Now the whole arrangement is dipped in water $\\left(\\mu = \\frac{4}{3}\\right)$. Then the fringe width will be now",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\text{ mm}$",
+      "$2\\text{ mm}$",
+      "$3\\text{ mm}$",
+      "$6\\text{ mm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fringe width in a medium of refractive index $\\mu$ is given by:\n$$\\beta' = \\frac{\\beta}{\\mu}$$\nGiven $\\beta = 4\\text{ mm}$ and $\\mu = \\frac{4}{3}$:\n$$\\beta' = \\frac{4}{4/3} = 3\\text{ mm}$$"
+  },
+  {
+    "question_number": 43,
+    "question_type": "single_choice",
+    "question_text": "If the screen (in YDSE) is perpendicular to the $y$-axis (line joining the sources), i.e., placed in the $x\\text{-}z$ plane, the fringes will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Hyperbolic",
+      "Straight",
+      "Circular",
+      "Parabolic"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The locus of points having a constant path difference from two point sources is a hyperboloid of revolution with the line joining the sources as the axis of symmetry. A plane screen perpendicular to this axis intersects the surfaces of constant phase difference in concentric circles. Hence, the fringes are circular."
+  },
+  {
+    "question_number": 44,
+    "question_type": "single_choice",
+    "question_text": "Choose the correct statement.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "In interference and diffraction the width of all maxima are equal",
+      "In interference width of all maxima are equal but the width of central maxima is triple the width of secondary maxima in diffraction",
+      "In interference width of all maxima are same and in diffraction width of central maxima is double of the width of secondary maxima",
+      "None of these"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In interference (YDSE), all fringes have the same width $\\beta = \\frac{\\lambda D}{d}$. In Fraunhofer diffraction by a single slit, the width of the central maximum is $\\beta_0 = \\frac{2\\lambda D}{a}$, which is twice the width of any secondary maximum $\\beta = \\frac{\\lambda D}{a}$."
+  },
+  {
+    "question_number": 45,
+    "question_type": "single_choice",
+    "question_text": "Two Nicol prisms are first crossed and then one of them is rotated through $60^\\circ$. The percentage of incident light transmitted is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.25\\%$",
+      "$25\\%$",
+      "$37.5\\%$",
+      "$50\\%$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let unpolarized light of intensity $I_0$ fall on the first Nicol prism. The transmitted intensity is $I_1 = \\frac{I_0}{2}$.\nInitially, the prisms are crossed (angle $= 90^\\circ$). When one is rotated by $60^\\circ$, the angle between their transmission axes becomes $\\theta = 90^\\circ - 60^\\circ = 30^\\circ$.\nBy Malus's Law, the final transmitted intensity is:\n$$I = I_1 \\cos^2(30^\\circ) = \\frac{I_0}{2} \\left(\\frac{\\sqrt{3}}{2}\\right)^2 = \\frac{3}{8} I_0 = 0.375 I_0$$\nThus, the percentage of incident light transmitted is $37.5\\%$."
+  }
+]

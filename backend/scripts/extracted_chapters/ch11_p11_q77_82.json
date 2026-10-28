@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 77,
+    "question_type": "single_choice",
+    "question_text": "Work functions of two metal surfaces are $2.0\\text{ eV}$ and $3.0\\text{ eV}$. Both are illuminated by light of photon energy greater than $3\\text{ eV}$. If a graph is plotted between maximum kinetic energy and frequency for both surfaces, then the slope of the graphs are in the ratio",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2 : 3$",
+      "$3 : 2$",
+      "$1 : 1$",
+      "$4 : 9$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Einstein's photoelectric equation, $K_{\\text{max}} = h\\nu - \\phi_0$. When $K_{\\text{max}}$ is plotted against frequency $\\nu$, the equation represents a straight line with slope equal to Planck's constant $h$. Since $h$ is a universal constant, the slope is independent of the metal and the ratio of the slopes is $1 : 1$."
+  },
+  {
+    "question_number": 78,
+    "question_type": "single_choice",
+    "question_text": "In the given graph of a photoelectric experiment, the maximum kinetic energy of the emitted photoelectrons will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2\\text{ eV}$",
+      "$0\\text{ eV}$",
+      "$4\\text{ eV}$",
+      "$4\\text{ J}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": true,
+    "diagram_description": "A graph of photoelectric current $i$ versus collector plate potential $V$. The current drops to zero at a retarding potential of $V = -4\\text{ V}$, indicating the stopping potential is $V_0 = 4\\text{ V}$.",
+    "solution": "From the given graph, the retarding potential at which photoelectric current becomes zero is the stopping potential, so $V_0 = 4\\text{ V}$. The maximum kinetic energy of the photoelectrons is $K_{\\text{max}} = e V_0 = e(4\\text{ V}) = 4\\text{ eV}$."
+  },
+  {
+    "question_number": 79,
+    "question_type": "single_choice",
+    "question_text": "Light of wavelength $\\lambda$ strikes a photosensitive surface and electrons are ejected with kinetic energy $E$. If the kinetic energy is to be increased to $2E$, then the wavelength must be changed to $\\lambda'$, where",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\lambda' = \\frac{\\lambda}{2}$",
+      "$\\lambda' = 2\\lambda$",
+      "$\\frac{\\lambda}{2} < \\lambda' < \\lambda$",
+      "$\\lambda' > \\lambda$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initially, $E = \\frac{hc}{\\lambda} - \\phi$. For kinetic energy $2E$, we have $2E = \\frac{hc}{\\lambda'} - \\phi$. Substituting $E$, we get $2\\left(\\frac{hc}{\\lambda} - \\phi\\right) = \\frac{hc}{\\lambda'} - \\phi \\implies \\frac{hc}{\\lambda'} = \\frac{2hc}{\\lambda} - \\phi$. Since $\\phi > 0$, $\\frac{hc}{\\lambda'} < \\frac{2hc}{\\lambda} \\implies \\lambda' > \\frac{\\lambda}{2}$. Also, since $2E > E$, the photon energy must be greater, so $\\lambda' < \\lambda$. Hence, $\\frac{\\lambda}{2} < \\lambda' < \\lambda$."
+  },
+  {
+    "question_number": 80,
+    "question_type": "single_choice",
+    "question_text": "If a stationary proton and an $\\alpha$-particle are accelerated through the same potential difference, the ratio of their de-Broglie wavelengths will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2$",
+      "$1$",
+      "$2\\sqrt{2}$",
+      "$\\sqrt{2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of a charged particle accelerated through potential difference $V$ is $\\lambda = \\frac{h}{\\sqrt{2mqV}}$. Thus, $\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{m_\\alpha q_\\alpha}{m_p q_p}}$. For an $\\alpha$-particle, $m_\\alpha = 4m_p$ and $q_\\alpha = 2q_p$. Therefore, $\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{4 \\times 2}{1 \\times 1}} = \\sqrt{8} = 2\\sqrt{2}$."
+  },
+  {
+    "question_number": 81,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of an electron is the same as that of a photon of wavelength $\\lambda$. If the mass of the electron is $m$, then its kinetic energy is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h^2 m}{2\\lambda^2}$",
+      "$\\frac{2mh^2}{\\lambda^2}$",
+      "$\\frac{h^2 \\lambda^2}{2m}$",
+      "$\\frac{h^2}{2m\\lambda^2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of the electron is $\\lambda = \\frac{h}{p}$, which gives momentum $p = \\frac{h}{\\lambda}$. The kinetic energy of the electron is $K = \\frac{p^2}{2m} = \\frac{(h/\\lambda)^2}{2m} = \\frac{h^2}{2m\\lambda^2}$."
+  },
+  {
+    "question_number": 82,
+    "question_type": "single_choice",
+    "question_text": "The figure shows different graphs between stopping potential $V_0$ and frequency $\\nu$ for photosensitive surfaces of cesium, potassium, sodium, and lithium. The plots are parallel. Which of the following orders with regard to their work function is correct?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(\\text{i}) > (\\text{ii}) > (\\text{iii}) > (\\text{iv})$",
+      "$(\\text{i}) > (\\text{iii}) > (\\text{ii}) > (\\text{iv})$",
+      "$(\\text{iv}) > (\\text{iii}) > (\\text{ii}) > (\\text{i})$",
+      "$(\\text{i}) = (\\text{iii}) > (\\text{ii}) = (\\text{iv})$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": true,
+    "diagram_description": "Graph of stopping potential $V_0$ versus frequency $\\nu$ (in $10^{14}\\text{ Hz}$) for four metals: (i) Cesium with intercept $\\nu_0 \\approx 5.2$, (ii) Potassium with $\\nu_0 \\approx 5.4$, (iii) Sodium with $\\nu_0 \\approx 5.6$, and (iv) Lithium with $\\nu_0 \\approx 5.8$.",
+    "solution": "The work function is related to the threshold frequency by $\\phi_0 = h\\nu_0$. From the graph, the threshold frequencies (intercepts on the frequency axis) satisfy $\\nu_{0\\text{,(iv)}} > \\nu_{0\\text{,(iii)}} > \\nu_{0\\text{,(ii)}} > \\nu_{0\\text{,(i)}}$. Therefore, the work functions follow the order $(\\text{iv}) > (\\text{iii}) > (\\text{ii}) > (\\text{i})$."
+  }
+]

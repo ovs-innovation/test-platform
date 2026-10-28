@@ -1,0 +1,142 @@
+[
+  {
+    "question_number": 65,
+    "question_type": "single_choice",
+    "question_text": "The bottom of a beaker is silvered which contains water of refractive index $\\frac{4}{3}$ up to a height $2H$. A fish is at a height $H$ from the bottom of the beaker. At what distances from him, the fish and its image appear to a man whose eyes are at a height $H$ from the surface of water?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{10H}{3},\\, 5H$",
+      "$\\dfrac{4H}{3},\\, 4H$",
+      "$\\dfrac{3H}{4},\\, \\dfrac{9H}{4}$",
+      "$\\dfrac{7H}{4},\\, \\dfrac{13H}{4}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A beaker containing water of refractive index 4/3 up to height 2H, with silvered bottom. A fish is at height H from the bottom. An observer's eye is at height H above the water surface.",
+    "solution": "Distance of the fish directly from the surface is $d_1 = 2H - H = H$. Apparent depth of the fish from the water surface is $d'_1 = \\frac{H}{\\mu} = \\frac{H}{4/3} = \\frac{3H}{4}$. Distance from the eye is $H + d'_1 = H + \\frac{3H}{4} = \\frac{7H}{4}$. For the image formed by the silvered bottom: the bottom mirror reflects the fish which is at distance $H$ above it, forming a virtual image at distance $H$ below the bottom, which is at real depth $2H + H = 3H$ from the water surface. Apparent depth of this image is $d'_2 = \\frac{3H}{\\mu} = \\frac{3H}{4/3} = \\frac{9H}{4}$. Distance from the eye is $H + d'_2 = H + \\frac{9H}{4} = \\frac{13H}{4}$. Thus, the distances are $\\frac{7H}{4}$ and $\\frac{13H}{4}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 66,
+    "question_type": "single_choice",
+    "question_text": "An achromatic convergent lens of focal length $+20\\text{ cm}$ is made of two lenses (in contact) of materials having dispersive powers in the ratio of $1 : 2$ and having focal lengths $f_1$ and $f_2$ respectively. Which of the following is true?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_1 = 10\\text{ cm},\\, f_2 = -20\\text{ cm}$",
+      "$f_1 = 20\\text{ cm},\\, f_2 = 10\\text{ cm}$",
+      "$f_1 = -10\\text{ cm},\\, f_2 = -20\\text{ cm}$",
+      "$f_1 = 20\\text{ cm},\\, f_2 = -10\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Condition for achromatism of two thin lenses in contact is $\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0 \\implies \\frac{f_1}{f_2} = -\\frac{\\omega_1}{\\omega_2} = -\\frac{1}{2}$, so $f_2 = -2f_1$. The combination has an equivalent focal length $F = +20\\text{ cm}$: $\\frac{1}{F} = \\frac{1}{f_1} + \\frac{1}{f_2} \\implies \\frac{1}{20} = \\frac{1}{f_1} - \\frac{1}{2f_1} = \\frac{1}{2f_1}$. Thus, $2f_1 = 20 \\implies f_1 = 10\\text{ cm}$ and $f_2 = -20\\text{ cm}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 67,
+    "question_type": "single_choice",
+    "question_text": "A convex lens makes a real image $4\\text{ cm}$ long on a screen. When the lens is shifted to a new position without disturbing the object or the screen, we again get a real image on the screen which is $9\\text{ cm}$ long. The length of object must be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2.25\\text{ cm}$",
+      "$6\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$12\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By displacement method, the size of the object $O$ is given by the geometric mean of the two image sizes: $O = \\sqrt{I_1 I_2} = \\sqrt{4\\text{ cm} \\times 9\\text{ cm}} = \\sqrt{36} = 6\\text{ cm}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 68,
+    "question_type": "single_choice",
+    "question_text": "In the figure shown, for an angle of incidence $45^\\circ$ at the top surface, what is the minimum refractive index needed so that no light will emerge from vertical face $AD$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{\\sqrt{2} + 1}{2}$",
+      "$\\dfrac{1}{\\sqrt{2}}$",
+      "$\\sqrt{\\dfrac{3}{2}}$",
+      "$\\sqrt{2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A rectangular block ABCD with a light ray incident on top face AB at angle of incidence 45 degrees, refracting towards face AD, where it undergoes total internal reflection.",
+    "solution": "At face $AB$, by Snell's law: $1 \\cdot \\sin 45^\\circ = \\mu \\sin r_1 \\implies \\sin r_1 = \\frac{1}{\\sqrt{2}\\mu}$. At face $AD$, the angle of incidence is $r_2 = 90^\\circ - r_1$. For total internal reflection at face $AD$, $r_2 \\ge \\theta_c \\implies \\sin r_2 \\ge \\sin \\theta_c = \\frac{1}{\\mu}$. Since $\\sin r_2 = \\cos r_1 = \\sqrt{1 - \\sin^2 r_1} = \\sqrt{1 - \\frac{1}{2\\mu^2}}$, we have $\\sqrt{1 - \\frac{1}{2\\mu^2}} \\ge \\frac{1}{\\mu}$. Squaring both sides: $1 - \\frac{1}{2\\mu^2} \\ge \\frac{1}{\\mu^2} \\implies 1 \\ge \\frac{3}{2\\mu^2} \\implies \\mu^2 \\ge \\frac{3}{2} \\implies \\mu \\ge \\sqrt{\\frac{3}{2}}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 69,
+    "question_type": "single_choice",
+    "question_text": "The plane face of a plano-convex lens of glass ($\\mu = 3/2$) having focal length $20\\text{ cm}$ is silvered. What type of mirror will it become and of what focal length $f$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Convex, $f = 20\\text{ cm}$",
+      "Concave, $f = 20\\text{ cm}$",
+      "Convex, $f = 10\\text{ cm}$",
+      "Concave, $f = 10\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the silvered system is $P = 2P_L + P_M$. Since the plane surface is silvered, $R_M = \\infty \\implies P_M = 0$. Therefore, $P = 2P_L = 2 \\times \\frac{1}{f_L} = \\frac{2}{20\\text{ cm}} = \\frac{1}{10\\text{ cm}}$. The effective mirror has focal length $F = -\\frac{1}{P} = -10\\text{ cm}$. A negative focal length corresponds to a concave mirror of focal length $10\\text{ cm}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 70,
+    "question_type": "single_choice",
+    "question_text": "A small pin fixed on a table top is viewed from above from a distance of $50\\text{ cm}$. By what distance would the pin appear to be raised if it is viewed from the same point through a $15\\text{ cm}$ thick glass slab held parallel to table? (R.I of glass $= \\frac{3}{2}$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$35\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The apparent upward shift produced by a glass slab of thickness $t$ and refractive index $\\mu$ is $\\Delta x = t\\left(1 - \\frac{1}{\\mu}\\right) = 15\\left(1 - \\frac{1}{3/2}\\right) = 15\\left(1 - \\frac{2}{3}\\right) = 15 \\times \\frac{1}{3} = 5\\text{ cm}$.",
+    "hint_or_explanation": null
+  },
+  {
+    "question_number": 71,
+    "question_type": "single_choice",
+    "question_text": "A long sighted person has a minimum distance of distinct vision of $50\\text{ cm}$. He wants to reduce it to $25\\text{ cm}$. He should use a",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Convex lens of focal length $50\\text{ cm}$",
+      "Convex lens of focal length $25\\text{ cm}$",
+      "Concave lens of focal length $50\\text{ cm}$",
+      "Concave lens of focal length $25\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The person has hypermetropia (long-sightedness). To see an object at $u = -25\\text{ cm}$, the image should be formed at his near point $v = -50\\text{ cm}$. Using the lens formula: $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = -\\frac{1}{50} - \\left(-\\frac{1}{25}\\right) = -\\frac{1}{50} + \\frac{1}{25} = +\\frac{1}{50\\text{ cm}}$. Thus, $f = +50\\text{ cm}$, which is a convex lens of focal length $50\\text{ cm}$.",
+    "hint_or_explanation": null
+  }
+]

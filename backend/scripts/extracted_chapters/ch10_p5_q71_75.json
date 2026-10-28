@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 71,
+    "question_type": "single_choice",
+    "question_text": "In Young's double-slit experiment (YDSE), if a liquid is filled in the space between the screen and the slits, then the:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Central bright fringe will shift upward",
+      "Central bright fringe will not shift",
+      "Central bright fringe will shift downward",
+      "Central fringe may shift downward or upward"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The position of the central bright fringe corresponds to zero optical path difference, i.e., $\\Delta x = \\mu(S_2 P - S_1 P) = 0$, which yields $S_2 P - S_1 P = 0$. Since the liquid fills the entire region uniformly, the path difference remains zero at the central axis. Therefore, the central bright fringe does not shift."
+  },
+  {
+    "question_number": 72,
+    "question_type": "single_choice",
+    "question_text": "Light waves of intensities $I$ and $9I$ interfere to produce a fringe pattern on a screen. The phase difference between the waves at a point $P$ is $\\frac{3\\pi}{2}$ and at another point $Q$ is $2\\pi$. Then the ratio of intensities at $P$ and $Q$ is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$8 : 5$",
+      "$5 : 8$",
+      "$1 : 4$",
+      "$9 : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resultant intensity is given by $I_R = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi = I + 9I + 2\\sqrt{9I^2}\\cos\\phi = 10I + 6I\\cos\\phi$.\nAt point $P$ ($\\phi = 3\\pi/2$): $I_P = 10I + 6I\\cos(3\\pi/2) = 10I$.\nAt point $Q$ ($\\phi = 2\\pi$): $I_Q = 10I + 6I\\cos(2\\pi) = 16I$.\nThus, $\\frac{I_P}{I_Q} = \\frac{10I}{16I} = \\frac{5}{8}$."
+  },
+  {
+    "question_number": 73,
+    "question_type": "single_choice",
+    "question_text": "In YDSE, two thin transparent films of mica and glass are placed in the path of two waves from coherent sources $S_1$ and $S_2$ respectively. If their thicknesses are $3t$ and $2t$ respectively, what should be the refractive index of mica so that the central maximum is found at point $O$ on the screen equidistant from the slits ($μ_{\\text{glass}} = 1.5$)?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.25$",
+      "$1.5$",
+      "$1.75$",
+      "$1.33$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": true,
+    "diagram_description": "Schematic diagram of Young's double slit experiment. Slit $S_1$ has a mica sheet of thickness $3t$ placed in front of it, and slit $S_2$ has a glass sheet of thickness $2t$ placed in front of it. Point $O$ is located on the screen at distance $D$, aligned along the perpendicular bisector between $S_1$ and $S_2$.",
+    "solution": "For the central maximum to remain at the central point $O$, the net optical path difference introduced by the films must be zero:\n$(\\mu_{\\text{mica}} - 1)(3t) = (\\mu_{\\text{glass}} - 1)(2t)$\n$3(\\mu_{\\text{mica}} - 1) = 2(1.5 - 1) = 2(0.5) = 1$\n$\\mu_{\\text{mica}} - 1 = \\frac{1}{3} \\implies \\mu_{\\text{mica}} = 1 + \\frac{1}{3} = \\frac{4}{3} \\approx 1.33$."
+  },
+  {
+    "question_number": 74,
+    "question_type": "single_choice",
+    "question_text": "In a Young's double slit experiment, sources of equal intensities are used. The distance between the slits is $d$ and the wavelength of light used is $\\lambda$ ($\\lambda \\ll d$). The angular separation of nearest points on either side of the central maximum where the intensities become half of the maximum value is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\lambda}{d}$",
+      "$\\frac{\\lambda}{2d}$",
+      "$\\frac{\\lambda}{4d}$",
+      "$\\frac{\\lambda}{6d}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity is given by $I = I_{\\max} \\cos^2\\left(\\frac{\\phi}{2}\\right)$. For $I = \\frac{I_{\\max}}{2}$, we have $\\cos^2\\left(\\frac{\\phi}{2}\\right) = \\frac{1}{2} \\implies \\phi = \\frac{\\pi}{2}$.\nSince $\\phi = \\frac{2\\pi}{\\lambda}d\\theta$, the angular position on one side is $\\theta = \\frac{\\lambda}{4d}$.\nThe angular separation between the two symmetric points on either side of the central maximum is $\\Delta\\theta = 2\\theta = 2\\left(\\frac{\\lambda}{4d}\\right) = \\frac{\\lambda}{2d}$."
+  },
+  {
+    "question_number": 75,
+    "question_type": "single_choice",
+    "question_text": "The angular width of the principal maximum in Fraunhofer single-slit diffraction is $0.1\\text{ radian}$. The angular width of the second-order secondary maximum is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.05\\text{ radian}$",
+      "$0.1\\text{ radian}$",
+      "$0.5\\text{ radian}$",
+      "$0.25\\text{ radian}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular width of the central (principal) maximum in single-slit diffraction is $2\\theta = \\frac{2\\lambda}{a} = 0.1\\text{ rad}$.\nThe angular width of any secondary maximum is given by $\\beta_\\theta = \\frac{\\lambda}{a}$.\nTherefore, $\\beta_\\theta = \\frac{0.1}{2} = 0.05\\text{ radian}$."
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "question_number": 5,
+    "question_type": "single_choice",
+    "question_text": "When a metallic surface is illuminated with a light of wavelength $\\lambda$, the stopping potential is $V\\text{ volt}$. When the same surface is illuminated by a light of wavelength $2\\lambda$, the stopping potential is $\\frac{V}{3}\\text{ volt}$. Threshold wavelength for the metallic surface is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{4\\lambda}{3}$",
+      "$4\\lambda$",
+      "$6\\lambda$",
+      "$\\frac{8\\lambda}{3}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation:\n$eV = \\frac{hc}{\\lambda} - \\frac{hc}{\\lambda_0}$ and $e\\left(\\frac{V}{3}\\right) = \\frac{hc}{2\\lambda} - \\frac{hc}{\\lambda_0}$\nMultiplying the second equation by $3$ gives:\n$eV = \\frac{3hc}{2\\lambda} - \\frac{3hc}{\\lambda_0}$\nEquating the two expressions for $eV$:\n$\\frac{hc}{\\lambda} - \\frac{hc}{\\lambda_0} = \\frac{3hc}{2\\lambda} - \\frac{3hc}{\\lambda_0} \\implies \\frac{2}{\\lambda_0} = \\frac{1}{2\\lambda} \\implies \\lambda_0 = 4\\lambda$."
+  },
+  {
+    "question_number": 6,
+    "question_type": "single_choice",
+    "question_text": "Ultraviolet light of wavelength $2000\\text{ \\AA}$ causes photoemission from a surface. The stopping potential is $2\\text{ V}$. The maximum speed of photoelectron is (nearly)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10.4 \\times 10^5\\text{ m/s}$",
+      "$8.4 \\times 10^5\\text{ m/s}$",
+      "$6.4 \\times 10^5\\text{ m/s}$",
+      "$4.4 \\times 10^5\\text{ m/s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum kinetic energy is related to the stopping potential by $K_{\\text{max}} = \\frac{1}{2}m v_{\\text{max}}^2 = eV_0$.\nThus, $v_{\\text{max}} = \\sqrt{\\frac{2eV_0}{m}} = \\sqrt{\\frac{2 \\times 1.6 \\times 10^{-19} \\times 2}{9.1 \\times 10^{-31}}} = \\sqrt{7.03 \\times 10^{11}} \\approx 8.4 \\times 10^5\\text{ m/s}$."
+  },
+  {
+    "question_number": 7,
+    "question_type": "single_choice",
+    "question_text": "Minimum de-Broglie wavelength of photoelectron from a metal surface whose stopping potential is $V_0$ is (given '$m$' is mass of $\\text{e}^-$ and '$h$' is Planck's constant)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h}{\\sqrt{2meV_0}}$",
+      "$\\frac{hc}{eV_0}$",
+      "$\\frac{hc}{\\sqrt{2mV_0}}$",
+      "$\\frac{hc}{\\sqrt{2meV_0}}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum kinetic energy of emitted photoelectrons is $K_{\\text{max}} = eV_0$.\nThe minimum de-Broglie wavelength corresponds to maximum momentum:\n$\\lambda_{\\text{min}} = \\frac{h}{p_{\\text{max}}} = \\frac{h}{\\sqrt{2m K_{\\text{max}}}} = \\frac{h}{\\sqrt{2meV_0}}$."
+  },
+  {
+    "question_number": 8,
+    "question_type": "single_choice",
+    "question_text": "A proton and an $\\alpha$-particle are accelerated through same potential difference. The ratio of their de-Broglie wavelength is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{2}$",
+      "$2$",
+      "$2\\sqrt{2}$",
+      "$4\\sqrt{2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength is given by $\\lambda = \\frac{h}{\\sqrt{2mqV}}$.\nFor the same potential difference $V$:\n$\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{m_\\alpha q_\\alpha}{m_p q_p}} = \\sqrt{\\frac{4m_p \\times 2e}{m_p \\times e}} = \\sqrt{8} = 2\\sqrt{2}$."
+  }
+]

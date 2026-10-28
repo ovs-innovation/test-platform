@@ -1,0 +1,92 @@
+[
+  {
+    "question_number": 21,
+    "question_type": "single_choice",
+    "question_text": "A luminous object and a screen are fixed at distance $D$ apart. A converging lens of focal length $f$ capable of forming a real image of the object on the screen will do so for two positions of the lens that are separated by distance $d$ such that:",
+    "options": [
+      "$d = D(D - 4f)$",
+      "$d = \\sqrt{D(D - f)}$",
+      "$d = \\sqrt{D(D - 4f)}$",
+      "$d = \\sqrt{D(2D - f)}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Lens Displacement Method",
+    "solution": "By the lens displacement method, the focal length is $f = \\frac{D^2 - d^2}{4D}$. Rearranging: $d^2 = D^2 - 4Df = D(D - 4f) \\implies d = \\sqrt{D(D - 4f)}$."
+  },
+  {
+    "question_number": 22,
+    "question_type": "single_choice",
+    "question_text": "A liquid of refractive index $1.6$ is contained in the thin cavity of a glass specimen having refractive index $1.5$ as shown in the figure. If each of the curved surfaces has a radius of curvature of $0.20\\text{ m}$, then the arrangement behaves as a:",
+    "options": [
+      "Converging lens of focal length $0.25\\text{ m}$",
+      "Diverging lens of focal length $0.25\\text{ m}$",
+      "Diverging lens of focal length $0.17\\text{ m}$",
+      "Converging lens of focal length $0.72\\text{ m}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "Combination of Refracting Surfaces",
+    "solution": "The power of the system is the sum of powers at each refracting interface: $P = \\frac{1.5-1}{0.2} + \\frac{1.6-1.5}{-0.2} + \\frac{1.5-1.6}{0.2} + \\frac{1-1.5}{-0.2} = 2.5 - 0.5 - 0.5 + 2.5 = +4\\text{ D}$. Thus, $f = \\frac{1}{P} = +0.25\\text{ m}$ (converging lens)."
+  },
+  {
+    "question_number": 23,
+    "question_type": "single_choice",
+    "question_text": "In the figure, an air lens of radii of curvature $10\\text{ cm}$ ($R_1 = R_2 = 10\\text{ cm}$) is cut in a large cylinder of glass ($\\mu = 3/2$). The focal length and the nature of the lens is:",
+    "options": [
+      "$15\\text{ cm}$, convex",
+      "$15\\text{ cm}$, concave",
+      "$\\infty$, neither concave nor convex",
+      "$0$, concave"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Lenses in Medium",
+    "solution": "Using the lens maker formula in a surrounding medium: $\\frac{\\mu_m}{f} = (\\mu_l - \\mu_m)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right)$. Here, $\\frac{1.5}{f} = (1 - 1.5)\\left(\\frac{1}{10} - \\left(-\\frac{1}{10}\\right)\\right) = -0.1 \\implies f = -15\\text{ cm}$ (diverging/concave nature)."
+  },
+  {
+    "question_number": 24,
+    "question_type": "single_choice",
+    "question_text": "A presbyopic patient has near point $30\\text{ cm}$. The optical power for the corrective lens for seeing an object placed at normal near point ($25\\text{ cm}$) is:",
+    "options": [
+      "$\\frac{5}{2}\\text{ D}$",
+      "$\\frac{2}{5}\\text{ D}$",
+      "$\\frac{2}{3}\\text{ D}$",
+      "$\\frac{3}{2}\\text{ D}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Defects of Vision",
+    "solution": "Here $u = -25\\text{ cm}$ and $v = -30\\text{ cm}$. Using lens formula: $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = -\\frac{1}{30} + \\frac{1}{25} = \\frac{1}{150}\\text{ cm}^{-1}$. Optical power $P = \\frac{100}{f} = \\frac{100}{150} = +\\frac{2}{3}\\text{ D}$."
+  },
+  {
+    "question_number": 25,
+    "question_type": "single_choice",
+    "question_text": "A compound microscope uses an objective lens of focal length $4\\text{ cm}$ and eyepiece of focal length $10\\text{ cm}$. An object is placed $6\\text{ cm}$ from the objective lens. Calculate the maximum magnifying power of the compound microscope. (Assume normal near point is at $25\\text{ cm}$):",
+    "options": [
+      "$-2$",
+      "$-7$",
+      "$-4$",
+      "$-8$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Compound Microscope",
+    "solution": "For objective: $\\frac{1}{v_o} - \\frac{1}{-6} = \\frac{1}{4} \\implies v_o = 12\\text{ cm}$, giving linear magnification $m_o = -\\frac{v_o}{u_o} = -2$. For eyepiece at near point: $m_e = 1 + \\frac{D}{f_e} = 1 + \\frac{25}{10} = 3.5$. Total magnifying power $M = m_o \\times m_e = -2 \\times 3.5 = -7$."
+  },
+  {
+    "question_number": 26,
+    "question_type": "single_choice",
+    "question_text": "In an astronomical telescope using objective and eyepiece of focal length $50\\text{ cm}$ and $5\\text{ cm}$ respectively, the length of telescope obtained is $54.5\\text{ cm}$, when the final image of a star is formed at distance $x\\text{ cm}$ from the eyepiece. Find $x$:",
+    "options": [
+      "$35$",
+      "$45$",
+      "$25$",
+      "$15$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Astronomical Telescope",
+    "solution": "Length of telescope is $L = f_o + |u_e| \\implies 54.5 = 50 + |u_e| \\implies |u_e| = 4.5\\text{ cm}$. For eyepiece: $\\frac{1}{v_e} - \\frac{1}{-4.5} = \\frac{1}{5} \\implies \\frac{1}{v_e} = \\frac{1}{5} - \\frac{2}{9} = -\\frac{1}{45}\\text{ cm}^{-1}$. Thus distance $x = |v_e| = 45\\text{ cm}$."
+  }
+]

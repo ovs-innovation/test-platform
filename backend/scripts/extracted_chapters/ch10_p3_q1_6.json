@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "single_choice",
+    "question_text": "The light waves having wave equations $y_1 = 10\\sin(\\omega t - kx)$ and $y_2 = 5\\sin(kx - \\omega t + \\phi)$ interfere. The ratio of maximum to the minimum intensity of light in the interference pattern is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$9 : 1$",
+      "$3 : 1$",
+      "$2 : 1$",
+      "$81 : 1$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The amplitudes of the two waves are $A_1 = 10$ and $A_2 = 5$.\nMaximum amplitude $A_{\\max} = A_1 + A_2 = 10 + 5 = 15$ and minimum amplitude $A_{\\min} = |A_1 - A_2| = |10 - 5| = 5$.\nThe ratio of maximum to minimum intensity is $\\frac{I_{\\max}}{I_{\\min}} = \\left(\\frac{A_{\\max}}{A_{\\min}}\\right)^2 = \\left(\\frac{15}{5}\\right)^2 = 3^2 = 9 : 1$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "single_choice",
+    "question_text": "The first diffraction minimum due to a single slit of width $1.0 \\times 10^{-5}\\text{ cm}$ is observed at an angle of diffraction of $30^\\circ$. The wavelength of the light used is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$400\\text{ \\AA}$",
+      "$500\\text{ \\AA}$",
+      "$600\\text{ \\AA}$",
+      "$700\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the first minimum in single-slit diffraction, the condition is $a\\sin\\theta = \\lambda$.\nGiven slit width $a = 1.0 \\times 10^{-5}\\text{ cm} = 1.0 \\times 10^{-7}\\text{ m}$ and $\\theta = 30^\\circ$.\n$\\lambda = a\\sin 30^\\circ = 1.0 \\times 10^{-7} \\times 0.5 = 0.5 \\times 10^{-7}\\text{ m} = 500\\text{ \\AA}$."
+  },
+  {
+    "question_number": 3,
+    "question_type": "single_choice",
+    "question_text": "For what distance is ray optics a good approximation when a plane light wave is incident on a slit aperture of width $2\\text{ mm}$ having wavelength $600\\text{ nm}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6\\text{ m}$",
+      "$8\\text{ m}$",
+      "$6.7\\text{ m}$",
+      "$4\\text{ m}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Ray optics is a good approximation over distances up to the Fresnel distance $Z_F$.\n$Z_F = \\frac{a^2}{\\lambda} = \\frac{(2 \\times 10^{-3}\\text{ m})^2}{600 \\times 10^{-9}\\text{ m}} = \\frac{4 \\times 10^{-6}}{6 \\times 10^{-7}} = \\frac{40}{6} \\approx 6.7\\text{ m}$."
+  },
+  {
+    "question_number": 4,
+    "question_type": "single_choice",
+    "question_text": "An unpolarized light beam passes through two polarizers. If the intensity of the transmitted light is $20\\%$ of that of the original incident light, what is the angle between the transmission axes of the two polarizing sheets?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\cos^{-1}\\sqrt{0.3}$",
+      "$\\cos^{-1}\\sqrt{0.4}$",
+      "$\\cos^{-1}\\sqrt{0.6}$",
+      "$\\cos^{-1}\\sqrt{0.7}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the original unpolarized light intensity be $I_0$.\nAfter passing through the first polarizer, $I_1 = \\frac{I_0}{2}$.\nAfter passing through the second polarizer, by Malus' law: $I_2 = I_1\\cos^2\\theta = \\frac{I_0}{2}\\cos^2\\theta$.\nGiven $I_2 = 0.20 I_0$, we have $\\frac{1}{2}\\cos^2\\theta = 0.20 \\implies \\cos^2\\theta = 0.4 \\implies \\theta = \\cos^{-1}\\sqrt{0.4}$."
+  },
+  {
+    "question_number": 5,
+    "question_type": "single_choice",
+    "question_text": "In Young's double-slit experiment, if the individual intensities from the two slits are in the ratio $4 : 9$, the ratio of the intensity of maxima to the intensity of minima in the interference pattern will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$25 : 1$",
+      "$9 : 4$",
+      "$3 : 2$",
+      "$81 : 16$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given $\\frac{I_1}{I_2} = \\frac{4}{9}$, the amplitude ratio is $\\frac{A_1}{A_2} = \\sqrt{\\frac{4}{9}} = \\frac{2}{3}$.\nThe ratio of maximum to minimum intensity is:\n$\\frac{I_{\\max}}{I_{\\min}} = \\left(\\frac{A_1 + A_2}{A_1 - A_2}\\right)^2 = \\left(\\frac{2 + 3}{3 - 2}\\right)^2 = \\left(\\frac{5}{1}\\right)^2 = 25 : 1$."
+  },
+  {
+    "question_number": 6,
+    "question_type": "single_choice",
+    "question_text": "In a Young's double-slit experiment, how many maxima can be obtained on the screen (excluding the central maximum) on both sides of the central fringe if $\\lambda = 2000\\text{ \\AA}$ and the slit separation is $d = 7000\\text{ \\AA}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$12$",
+      "$6$",
+      "$18$",
+      "$9$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For maxima, $d\\sin\\theta = n\\lambda$.\nSince $\\sin\\theta \\le 1$, we have $n \\le \\frac{d}{\\lambda} = \\frac{7000\\text{ \\AA}}{2000\\text{ \\AA}} = 3.5$.\nThus, the maximum order on one side of the central maximum is $n = 3$.\nExcluding the central maximum, the total number of maxima on both sides is $2 \\times 3 = 6$."
+  }
+]

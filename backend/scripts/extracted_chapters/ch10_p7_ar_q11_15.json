@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 11,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): In a diffraction setup, we place a converging lens after the slits and place the screen at the focus.\nReason (R): The lens introduces extra path difference in the parallel beam and gives less intensity than placing the screen far away.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "In a diffraction setup, we place a converging lens after the slits and place the screen at the focus.",
+    "reason_text": "The lens introduces extra path difference in the parallel beam and gives less intensity than placing the screen far away.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In Fraunhofer diffraction, a convex lens is placed after the slit to bring parallel diffracted rays to a focus on a screen placed at its focal plane. A convex lens introduces no additional optical path difference between parallel rays focusing at the focal point, and it concentrates the light to give much greater intensity. Therefore, Assertion is true, but Reason is false."
+  },
+  {
+    "question_number": 12,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): When unpolarised light is incident on a polaroid, it transmits only half of the original intensity.\nReason (R): When polarised light is viewed through a polaroid whose axis turns through $2\\pi$, two maxima and two minima of intensity are seen.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When unpolarised light is incident on a polaroid, it transmits only half of the original intensity.",
+    "reason_text": "When polarised light is viewed through a polaroid whose axis turns through $2\\pi$, two maxima and two minima of intensity are seen.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For unpolarised light, the transmitted intensity is $I = \\frac{1}{2}I_0$ because the average value of $\\cos^2\\theta$ over all possible orientations is $\\frac{1}{2}$. For plane-polarised light, according to Malus's law, $I = I_0\\cos^2\\theta$; as $\\theta$ varies through $2\\pi$, $\\cos^2\\theta$ is maximum at $0$ and $\\pi$ (2 maxima) and zero at $\\pi/2$ and $3\\pi/2$ (2 minima). Both statements are true, but Reason does not explain Assertion."
+  },
+  {
+    "question_number": 13,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): Most interference and diffraction effects exist even for longitudinal waves like sound in air.\nReason (R): Polarisation phenomena are special to transverse waves like light waves.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Most interference and diffraction effects exist even for longitudinal waves like sound in air.",
+    "reason_text": "Polarisation phenomena are special to transverse waves like light waves.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Interference and diffraction are general wave properties displayed by all types of waves, both longitudinal and transverse. Polarisation, however, requires vibrations perpendicular to the direction of propagation and thus is uniquely exhibited by transverse waves. Both statements are correct, but Reason is not the explanation for Assertion."
+  },
+  {
+    "question_number": 14,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): When the source moves away from the observer, the frequency as measured by the observer will be smaller.\nReason (R): When the source moves away from the observer, later wavefronts have to travel a greater distance to reach the observer and hence take a longer time.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When the source moves away from the observer, the frequency as measured by the observer will be smaller.",
+    "reason_text": "When the source moves away from the observer, later wavefronts have to travel a greater distance to reach the observer and hence take a longer time.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Due to the Doppler effect, when a source recedes from an observer, each successive wavefront is emitted from a location further away from the observer. Consequently, the time interval between the arrivals of successive wavefronts increases ($T' > T$), resulting in a decrease in the observed frequency ($\\nu' < \\nu$). Thus, both Assertion and Reason are true, and Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 15,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\nAssertion (A): The wave theory of light was not readily accepted.\nReason (R): The reason is Newton's authority and also light could travel through vacuum and it was felt that a wave would always require a medium to propagate.\n\nIn light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "The wave theory of light was not readily accepted.",
+    "reason_text": "The reason is Newton's authority and also light could travel through vacuum and it was felt that a wave would always require a medium to propagate.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Huygens proposed the wave theory of light in 1678, but it was not readily accepted mainly due to Isaac Newton's immense authority supporting the corpuscular theory. Furthermore, it was widely believed that waves strictly required a material medium to propagate, whereas light was known to travel across empty space (vacuum). Hence, Reason correctly explains the Assertion."
+  }
+]

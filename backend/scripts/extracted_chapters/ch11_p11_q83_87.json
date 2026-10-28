@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 83,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of a neutron with kinetic energy $1\\text{ eV}$ is approximately",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.286\\text{ \\AA}$",
+      "$12.27\\text{ \\AA}$",
+      "$12400\\text{ \\AA}$",
+      "$1\\text{ \\AA}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of a neutron is given by $\\lambda = \\frac{h}{\\sqrt{2m_n E}} = \\frac{0.286}{\\sqrt{E\\text{ (in eV)}}}\\text{ \\AA}$. For $E = 1\\text{ eV}$, $\\lambda = \\frac{0.286}{\\sqrt{1}}\\text{ \\AA} = 0.286\\text{ \\AA}$."
+  },
+  {
+    "question_number": 84,
+    "question_type": "single_choice",
+    "question_text": "If a graph is plotted by taking stopping potential ($V$) along the $y$-axis and frequency ($\\nu$) of incident light on a photosensitive surface along the $x$-axis in a photoelectric experiment, the slope of the graph obtained is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h}{e}$",
+      "$h$",
+      "$\\frac{e}{h}$",
+      "$\\frac{1}{h}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation, $e V_0 = h\\nu - \\phi_0 \\implies V_0 = \\left(\\frac{h}{e}\\right)\\nu - \\frac{\\phi_0}{e}$. Comparing with the equation of a straight line $y = mx + c$, the slope $m$ is $\\frac{h}{e}$."
+  },
+  {
+    "question_number": 85,
+    "question_type": "single_choice",
+    "question_text": "The maximum kinetic energy of photoelectrons depends upon the",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "ratio of the frequency of light used and the threshold frequency",
+      "sum of the frequency of incident light and threshold frequency",
+      "difference between the frequency of the incident light and the threshold frequency",
+      "intensity of incident light"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Einstein's photoelectric equation, $K_{\\text{max}} = h\\nu - h\\nu_0 = h(\\nu - \\nu_0)$. Hence, the maximum kinetic energy depends directly on the difference between the incident frequency and the threshold frequency."
+  },
+  {
+    "question_number": 86,
+    "question_type": "single_choice",
+    "question_text": "The kinetic energy of the most energetic photoelectrons emitted from a metal surface is doubled when the wavelength of the incident radiation is reduced from $2\\lambda$ to $1.5\\lambda$. The work function of the metal is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{hc}{3\\lambda}$",
+      "$\\frac{2hc}{\\lambda}$",
+      "$\\frac{2hc}{3\\lambda}$",
+      "$\\frac{hc}{\\lambda}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initially, $K_1 = \\frac{hc}{2\\lambda} - \\phi$. When the wavelength is reduced to $1.5\\lambda = \\frac{3}{2}\\lambda$, $K_2 = \\frac{2hc}{3\\lambda} - \\phi$. Given $K_2 = 2K_1$: $\\frac{2hc}{3\\lambda} - \\phi = 2\\left(\\frac{hc}{2\\lambda} - \\phi\\right) = \\frac{hc}{\\lambda} - 2\\phi$. Rearranging terms gives $\\phi = \\frac{hc}{\\lambda} - \\frac{2hc}{3\\lambda} = \\frac{hc}{3\\lambda}$."
+  },
+  {
+    "question_number": 87,
+    "question_type": "single_choice",
+    "question_text": "The threshold frequency for a certain metal is $3.3 \\times 10^{14}\\text{ Hz}$. If light of frequency $8.2 \\times 10^{14}\\text{ Hz}$ is incident on the metal, then the cut-off voltage for the photoelectric emission is approximately",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6\\text{ V}$",
+      "$5\\text{ V}$",
+      "$4\\text{ V}$",
+      "$2\\text{ V}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The stopping potential is given by $V_0 = \\frac{h}{e}(\\nu - \\nu_0)$. Here, $\\nu - \\nu_0 = (8.2 - 3.3) \\times 10^{14} = 4.9 \\times 10^{14}\\text{ Hz}$. Thus, $V_0 = \\frac{6.63 \\times 10^{-34} \\times 4.9 \\times 10^{14}}{1.6 \\times 10^{-19}} \\approx \\frac{32.487 \\times 10^{-20}}{1.6 \\times 10^{-19}} \\approx 2.03\\text{ V} \\approx 2\\text{ V}$."
+  }
+]

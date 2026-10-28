@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 52,
+    "question_type": "single_choice",
+    "question_text": "A glass lens ($\\mu = 1.5$) of focal length $20\\text{ cm}$ in air is dipped in water $\\left(\\mu = \\frac{4}{3}\\right)$. Now the focal length of the lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$80\\text{ cm}$",
+      "$60\\text{ cm}$",
+      "$40\\text{ cm}$",
+      "$20\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using Lens Maker's formula: $\\frac{f_w}{f_a} = \\frac{\\mu_g - 1}{\\frac{\\mu_g}{\\mu_w} - 1} = \\frac{1.5 - 1}{\\frac{1.5}{4/3} - 1} = \\frac{0.5}{1.125 - 1} = \\frac{0.5}{0.125} = 4$. Thus, $f_w = 4 \\times f_a = 4 \\times 20\\text{ cm} = 80\\text{ cm}$."
+  },
+  {
+    "question_number": 53,
+    "question_type": "single_choice",
+    "question_text": "A combination of a concave and convex lens has power $5\\text{ D}$. If the magnitude of focal length of the concave lens is $100\\text{ cm}$, the power of the convex lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1\\text{ D}$",
+      "$2\\text{ D}$",
+      "$4\\text{ D}$",
+      "$6\\text{ D}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the concave lens is $P_1 = -\\frac{1}{f_1} = -\\frac{100}{100} = -1\\text{ D}$. The total power of the combination is $P = P_1 + P_2 \\implies 5\\text{ D} = -1\\text{ D} + P_2 \\implies P_2 = 6\\text{ D}$."
+  },
+  {
+    "question_number": 54,
+    "question_type": "single_choice",
+    "question_text": "An isotropic point source of light is placed at a depth $h$ below the water surface. A floating opaque disc is placed on the surface of water, so that the source is not visible from the surface. The minimum radius of the disc is (R.I. of water $= \\mu$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h}{\\sqrt{\\mu^2 + 1}}$",
+      "$\\frac{h}{\\sqrt{1 - \\mu^2}}$",
+      "$\\frac{h}{\\sqrt{\\mu^2 - 1}}$",
+      "$\\frac{h}{\\mu^2 - 1}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Light escapes only if the angle of incidence is less than or equal to the critical angle $\\theta_c$, where $\\sin\\theta_c = \\frac{1}{\\mu}$. The minimum radius of the disc is $r = h\\tan\\theta_c = \\frac{h\\sin\\theta_c}{\\sqrt{1-\\sin^2\\theta_c}} = \\frac{h}{\\sqrt{\\mu^2 - 1}}$."
+  },
+  {
+    "question_number": 55,
+    "question_type": "single_choice",
+    "question_text": "In an equilateral prism, minimum deviation occurs for an angle of incidence $60^\\circ$. The refractive index of the prism is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{2}$",
+      "$\\sqrt{3}$",
+      "$\\frac{\\sqrt{2}}{\\sqrt{3}}$",
+      "$\\frac{\\sqrt{3}}{\\sqrt{2}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an equilateral prism, the prism angle is $A = 60^\\circ$. At minimum deviation, $r = \\frac{A}{2} = 30^\\circ$. Given angle of incidence $i = 60^\\circ$, by Snell's law: $\\mu = \\frac{\\sin i}{\\sin r} = \\frac{\\sin 60^\\circ}{\\sin 30^\\circ} = \\frac{\\sqrt{3}/2}{1/2} = \\sqrt{3}$."
+  },
+  {
+    "question_number": 56,
+    "question_type": "single_choice",
+    "question_text": "In a compound microscope, the intermediate image formed is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Virtual, erect and magnified",
+      "Real, inverted and diminished",
+      "Virtual, erect and diminished",
+      "Real, inverted and magnified"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intermediate image in a compound microscope is produced by the objective lens for an object placed just beyond its focal point, forming a real, inverted, and magnified image."
+  },
+  {
+    "question_number": 57,
+    "question_type": "single_choice",
+    "question_text": "The focal length of eye piece of a telescope is $3\\text{ cm}$. To obtain the magnification of $20$, the focal length of objective may be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$50\\text{ cm}$",
+      "$60\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The magnifying power of an astronomical telescope in normal adjustment is given by $m = \\frac{f_o}{f_e}$. Therefore, $f_o = m \\times f_e = 20 \\times 3\\text{ cm} = 60\\text{ cm}$."
+  },
+  {
+    "question_number": 58,
+    "question_type": "single_choice",
+    "question_text": "An astronomical telescope for normal adjustment has magnitude of magnifying power $24$ and tube length $150\\text{ cm}$. The focal lengths of eye piece and objective lens are respectively",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$144\\text{ cm}$ and $6\\text{ cm}$",
+      "$120\\text{ cm}$ and $30\\text{ cm}$",
+      "$6\\text{ cm}$ and $144\\text{ cm}$",
+      "$30\\text{ cm}$ and $120\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In normal adjustment, $m = \\frac{f_o}{f_e} = 24 \\implies f_o = 24f_e$. The tube length is $L = f_o + f_e = 24f_e + f_e = 25f_e = 150\\text{ cm} \\implies f_e = 6\\text{ cm}$. Hence, $f_o = 24 \\times 6 = 144\\text{ cm}$. Therefore, the focal lengths of the eye piece and objective lens are $6\\text{ cm}$ and $144\\text{ cm}$ respectively."
+  }
+]

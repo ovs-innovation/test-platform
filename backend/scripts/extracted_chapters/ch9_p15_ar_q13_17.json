@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 13,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** An observer can see a rainbow only when his back is towards the sun.\n**Reason (R):** Condition for observing a rainbow are that the sun should be shining in one part of the sky while it is raining in the opposite part of the sky.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "An observer can see a rainbow only when his back is towards the sun.",
+    "reason_text": "Condition for observing a rainbow are that the sun should be shining in one part of the sky while it is raining in the opposite part of the sky.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Light from the sun enters raindrops and is dispersed, internally reflected, and refracted back toward the observer. Hence, the observer must face the rain with the sun behind them."
+  },
+  {
+    "question_number": 14,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When image is formed at near point of eye, the eye will be in most relaxed condition.\n**Reason (R):** When image formed at infinity, it causes some strain on eye.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When image is formed at near point of eye, the eye will be in most relaxed condition.",
+    "reason_text": "When image formed at infinity, it causes some strain on eye.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The eye is most relaxed when focused at infinity (ciliary muscles are fully relaxed) and experiences maximum strain when focusing on an image at the near point."
+  },
+  {
+    "question_number": 15,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Violet gets scattered even more than blue, having a shorter wavelength, but we see the sky blue.\n**Reason (R):** Our eyes are more sensitive to blue than violet.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Violet gets scattered even more than blue, having a shorter wavelength, but we see the sky blue.",
+    "reason_text": "Our eyes are more sensitive to blue than violet.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Rayleigh scattering intensity is proportional to $1/\\lambda^4$, making violet scattered more than blue; however, the sky appears blue primarily because human eyes are much more sensitive to blue light."
+  },
+  {
+    "question_number": 16,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The secondary rainbow is fainter than the primary rainbow.\n**Reason (R):** The intensity of light is reduced at the second reflection.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "The secondary rainbow is fainter than the primary rainbow.",
+    "reason_text": "The intensity of light is reduced at the second reflection.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A secondary rainbow involves two internal reflections inside the water droplets; at each internal reflection, some light is lost through transmission, making it significantly fainter."
+  },
+  {
+    "question_number": 17,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** A person having hypermetropic eye prefers not to use spectacles for far objects.\n**Reason (R):** Wearing spectacles of converging lenses will amount to more converging power than needed for parallel rays.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "A person having hypermetropic eye prefers not to use spectacles for far objects.",
+    "reason_text": "Wearing spectacles of converging lenses will amount to more converging power than needed for parallel rays.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A hypermetropic eye can focus parallel rays onto the retina; adding a converging lens provides excess converging power, focusing parallel rays in front of the retina and blurring distant objects."
+  }
+]

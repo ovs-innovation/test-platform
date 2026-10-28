@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 59,
+    "question_type": "single_choice",
+    "question_text": "If the frequency of incident radiation is doubled, then which of the following will increase?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Kinetic energy of electron",
+      "Photoelectric current",
+      "Stopping potential",
+      "Both (1) & (3)"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation, $K_{\\text{max}} = h\\nu - \\phi_0$ and $e V_0 = K_{\\text{max}}$. When the frequency $\\nu$ is doubled, the maximum kinetic energy of the emitted photoelectrons increases, which in turn increases the stopping potential $V_0$. The photoelectric current depends on the intensity of light, not the frequency."
+  },
+  {
+    "question_number": 60,
+    "question_type": "single_choice",
+    "question_text": "The magnitude of the intercept of the graph between stopping potential ($V_0$) and frequency ($\\nu$) on the potential axis is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h\\nu_0}{e}$",
+      "$\\frac{e}{h\\nu_0}$",
+      "$\\frac{he}{\\nu_0}$",
+      "$\\frac{\\nu_0}{he}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Einstein's equation is $e V_0 = h\\nu - \\phi_0 = h\\nu - h\\nu_0$, which gives $V_0 = \\left(\\frac{h}{e}\\right)\\nu - \\frac{h\\nu_0}{e}$. Comparing with $y = mx + c$, the intercept on the stopping potential axis is $-\\frac{h\\nu_0}{e}$, whose magnitude is $\\frac{h\\nu_0}{e}$."
+  },
+  {
+    "question_number": 61,
+    "question_type": "single_choice",
+    "question_text": "When light of wavelength $400\\text{ nm}$ falls on a photoelectric emitter, photoelectrons are just emitted. For another emitter, $600\\text{ nm}$ is sufficient for liberating photoelectrons. The ratio of the work function of the two emitters is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2 : 1$",
+      "$3 : 2$",
+      "$4 : 1$",
+      "$2 : 3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The work function $\\phi_0$ is related to the threshold wavelength $\\lambda_0$ by $\\phi_0 = \\frac{hc}{\\lambda_0}$. Therefore, the ratio of work functions is $\\frac{\\phi_1}{\\phi_2} = \\frac{\\lambda_{02}}{\\lambda_{01}} = \\frac{600\\text{ nm}}{400\\text{ nm}} = \\frac{3}{2} = 3 : 2$."
+  },
+  {
+    "question_number": 62,
+    "question_type": "single_choice",
+    "question_text": "In a photoelectric experiment, if the wavelength of incident radiation is decreased, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Stopping potential will decrease",
+      "Kinetic energy of electrons will decrease",
+      "Stopping potential will increase",
+      "Work function will decrease"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Energy of incident photons is $E = \\frac{hc}{\\lambda}$. Decreasing $\\lambda$ increases photon energy $E$. Since $K_{\\text{max}} = E - \\phi_0$ and $e V_0 = K_{\\text{max}}$, the maximum kinetic energy and the stopping potential both increase."
+  },
+  {
+    "question_number": 63,
+    "question_type": "single_choice",
+    "question_text": "When monochromatic photons of wavelength $4000\\text{ \\AA}$ are incident on a metal plate of work function $2.1\\text{ eV}$, the stopping potential for the photocurrent is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1\\text{ V}$",
+      "$2.1\\text{ V}$",
+      "$3.1\\text{ V}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Energy of the incident photon is $E = \\frac{hc}{\\lambda} = \\frac{12400\\text{ eV}\\cdot\\text{\\AA}}{4000\\text{ \\AA}} = 3.1\\text{ eV}$. The maximum kinetic energy is $K_{\\text{max}} = E - \\phi_0 = 3.1\\text{ eV} - 2.1\\text{ eV} = 1.0\\text{ eV}$. Therefore, the stopping potential is $V_0 = \\frac{K_{\\text{max}}}{e} = 1\\text{ V}$."
+  },
+  {
+    "question_number": 64,
+    "question_type": "single_choice",
+    "question_text": "The stopping potential is $4V$ when the wavelength of incident monochromatic radiation is $\\lambda$. If the wavelength of incident radiation is doubled for the same photosensitive material, the stopping potential becomes $V$. The threshold wavelength of the photosensitive material is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{4}{3}\\lambda$",
+      "$\\frac{3}{2}\\lambda$",
+      "$3\\lambda$",
+      "$\\frac{\\lambda}{4}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation:\n$4eV = \\frac{hc}{\\lambda} - \\phi_0$  ...(i)\n$eV = \\frac{hc}{2\\lambda} - \\phi_0$  ...(ii)\nMultiplying (ii) by $4$ gives $4eV = \\frac{2hc}{\\lambda} - 4\\phi_0$. Equating this to (i):\n$\\frac{hc}{\\lambda} - \\phi_0 = \\frac{2hc}{\\lambda} - 4\\phi_0 \\implies 3\\phi_0 = \\frac{hc}{\\lambda} \\implies \\phi_0 = \\frac{hc}{3\\lambda}$.\nSince $\\phi_0 = \\frac{hc}{\\lambda_0}$, the threshold wavelength is $\\lambda_0 = 3\\lambda$."
+  }
+]

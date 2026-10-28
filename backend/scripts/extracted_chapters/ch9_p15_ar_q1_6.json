@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** A convex lens made up of glass can never form a virtual, erect and diminished image.\n**Reason (R):** Convex lens can only give virtual enlarged image when an object is placed between focus and optical centre of lens.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "A convex lens made up of glass can never form a virtual, erect and diminished image.",
+    "reason_text": "Convex lens can only give virtual enlarged image when an object is placed between focus and optical centre of lens.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "If a glass convex lens is immersed in a medium of refractive index greater than that of glass ($\\mu_m > \\mu_g$), it behaves as a diverging lens, forming a virtual, erect, and diminished image. Hence, both Assertion and Reason are false."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When a convex mirror is immersed in water, its focal length increases.\n**Reason (R):** The focal length of a mirror is inversely proportional to the refractive index of the medium.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "When a convex mirror is immersed in water, its focal length increases.",
+    "reason_text": "The focal length of a mirror is inversely proportional to the refractive index of the medium.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The focal length of a spherical mirror depends only on its radius of curvature ($f = R/2$) and is independent of the surrounding medium. Thus, both statements are false."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** A beam of white light passing through a thin hollow prism does not give spectrum.\n**Reason (R):** The speed of light inside and outside the prism is same.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "A beam of white light passing through a thin hollow prism does not give spectrum.",
+    "reason_text": "The speed of light inside and outside the prism is same.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Inside a hollow prism, air is enclosed. The medium inside and outside is identical, so the speed of light remains unchanged and no dispersion occurs."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When white light incident on a prism it will disperse.\n**Reason (R):** Deviation produced by prism is different for different wavelengths of light.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "When white light incident on a prism it will disperse.",
+    "reason_text": "Deviation produced by prism is different for different wavelengths of light.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since refractive index depends on wavelength ($\\mu \\propto 1/\\lambda^2$), deviation $\\delta \\approx (\\mu - 1)A$ is different for different colors, causing dispersion."
+  },
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The focal length of a convex mirror is always taken as positive.\n**Reason (R):** A real image of a real object cannot be obtained with a convex mirror.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The focal length of a convex mirror is always taken as positive.",
+    "reason_text": "A real image of a real object cannot be obtained with a convex mirror.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Both statements are factually correct, but the sign of focal length is determined by Cartesian sign conventions (focus lies behind mirror), not because it cannot form a real image."
+  },
+  {
+    "question_number": 6,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The nature of image of an object depends on the size of mirror.\n**Reason (R):** It is not possible to obtain real image by a plane mirror in any situation.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The nature of image of an object depends on the size of mirror.",
+    "reason_text": "It is not possible to obtain real image by a plane mirror in any situation.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The size of a mirror affects only intensity and field of view, not the image nature. Also, a plane mirror forms a real image when a virtual object (converging rays) is used."
+  }
+]

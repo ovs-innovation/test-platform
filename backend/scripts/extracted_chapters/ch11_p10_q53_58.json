@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 53,
+    "question_type": "single_choice",
+    "question_text": "If stopping potential ($V_0$) is plotted against frequency ($\\nu$) in an experiment on the photoelectric effect, the graph shown below is obtained. Then Planck's constant is equal to ($e$ is electronic charge):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\text{Planck's constant} = \\dfrac{b}{a}$",
+      "$\\text{Planck's constant} = \\dfrac{eb}{a}$",
+      "$\\text{Planck's constant} = \\dfrac{a}{b}$",
+      "$\\text{Planck's constant} = \\dfrac{ea}{b}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": true,
+    "diagram_description": "A graph showing stopping potential $V_0$ on the vertical axis against frequency $\\nu$ on the horizontal axis. The straight line has an x-intercept at distance $a$ from the origin along the positive frequency axis, and a negative y-intercept of magnitude $b$ on the negative potential axis.",
+    "solution": "From Einstein's photoelectric equation, $e V_0 = h\\nu - \\phi_0$, which gives $V_0 = \\left(\\frac{h}{e}\\right)\\nu - \\frac{\\phi_0}{e}$. The slope of the line is $\\frac{h}{e}$. From the graph, the slope is $\\frac{\\Delta V_0}{\\Delta \\nu} = \\frac{b}{a}$. Therefore, $\\frac{h}{e} = \\frac{b}{a} \\implies h = \\frac{eb}{a}$."
+  },
+  {
+    "question_number": 54,
+    "question_type": "single_choice",
+    "question_text": "What is the value of the de-Broglie wavelength of an electron when it is accelerated from rest through a potential difference of $150\\text{ V}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.5\\text{ \\AA}$",
+      "$1.0\\text{ \\AA}$",
+      "$1.5\\text{ \\AA}$",
+      "$2.0\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of an electron accelerated through potential difference $V$ is given by $\\lambda = \\sqrt{\\frac{150}{V}}\\text{ \\AA}$. Substituting $V = 150\\text{ V}$, we get $\\lambda = \\sqrt{\\frac{150}{150}}\\text{ \\AA} = 1.0\\text{ \\AA}$."
+  },
+  {
+    "question_number": 55,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of a proton is $\\lambda$. When the momentum of the proton is decreased by $50\\%$, the de-Broglie wavelength becomes:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{\\lambda}{2}$",
+      "$1.2\\lambda$",
+      "$1.5\\lambda$",
+      "$2\\lambda$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength is inversely proportional to momentum: $\\lambda = \\frac{h}{p}$. When momentum is decreased by $50\\%$, the new momentum is $p' = p - 0.5p = 0.5p = \\frac{p}{2}$. Thus, the new wavelength is $\\lambda' = \\frac{h}{p'} = \\frac{h}{p/2} = 2\\lambda$."
+  },
+  {
+    "question_number": 56,
+    "question_type": "single_choice",
+    "question_text": "Monochromatic photons each of energy $5\\text{ eV}$ are incident on a photosensitive plate of work function $2\\text{ eV}$. The kinetic energy of a photo-electron is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Between zero and $3\\text{ eV}$",
+      "Between $2\\text{ eV}$ and $5\\text{ eV}$",
+      "Always $3\\text{ eV}$",
+      "May be $5\\text{ eV}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum kinetic energy is $K_{\\text{max}} = E - \\phi = 5\\text{ eV} - 2\\text{ eV} = 3\\text{ eV}$. Due to collisions with other electrons and ions inside the metal, photoelectrons can lose energy before escaping, so their kinetic energy ranges between $0$ and $3\\text{ eV}$."
+  },
+  {
+    "question_number": 57,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of electrons is $n$ times that of protons when accelerated by the same potential difference. The value of $n$ is approximately equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$43$",
+      "$27$",
+      "$10$",
+      "$5$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength is $\\lambda = \\frac{h}{\\sqrt{2mqV}}$. For identical potential difference $V$ and charge magnitude $q = e$, $\\frac{\\lambda_e}{\\lambda_p} = \\sqrt{\\frac{m_p}{m_e}} \\approx \\sqrt{\\frac{1.67 \\times 10^{-27}\\text{ kg}}{9.1 \\times 10^{-31}\\text{ kg}}} = \\sqrt{1836} \\approx 42.85 \\approx 43$. Hence, $n \\approx 43$."
+  },
+  {
+    "question_number": 58,
+    "question_type": "single_choice",
+    "question_text": "The saturation photoelectric current depends on:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Frequency of photon",
+      "Wavelength of photon",
+      "Intensity of photon",
+      "Stopping potential"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The saturation photoelectric current is proportional to the number of photoelectrons emitted per second, which in turn is directly proportional to the number of photons striking the surface per second (i.e., the intensity of the incident radiation)."
+  }
+]

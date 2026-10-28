@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 238,
+    "question_type": "single_choice",
+    "question_text": "A diverging lens of focal length $20\\text{ cm}$ and a converging mirror of focal length $10\\text{ cm}$ are placed $5\\text{ cm}$ apart coaxially. Where should an object be placed so that the object and its real image coincide?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$ away from lens",
+      "$60\\text{ cm}$ away from lens",
+      "$30\\text{ cm}$ away from lens",
+      "$45\\text{ cm}$ away from lens"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the rays to retrace their path, the virtual image formed by the lens must lie at the center of curvature of the mirror ($R = 2f = 20\\text{ cm}$). Thus, $v = -(20 - 5) = -15\\text{ cm}$. Using $\\frac{1}{v} - \\frac{1}{u} = \\frac{1}{f}$, $-\\frac{1}{15} - \\frac{1}{-u} = -\\frac{1}{20} \\implies u = 60\\text{ cm}$."
+  },
+  {
+    "question_number": 239,
+    "question_type": "single_choice",
+    "question_text": "A, B, and C are three optical media of respective critical angles $i_A$, $i_B$, and $i_C$. Total internal reflection of light can occur from A to B and also from B to C, but not from C to A. The correct relation between their critical angles is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$i_A < i_B < i_C$",
+      "$i_A > i_B > i_C$",
+      "$i_A = i_B = i_C$",
+      "$i_C > i_A > i_B$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "TIR occurs from denser to rarer medium, so $\\mu_A > \\mu_B > \\mu_C$. Since critical angle is given by $\\sin i_c = \\frac{1}{\\mu}$, a higher refractive index gives a smaller critical angle, so $i_A < i_B < i_C$."
+  },
+  {
+    "question_number": 240,
+    "question_type": "single_choice",
+    "question_text": "The angle of a prism for which there is no emergent ray will be ($i_c = \\text{critical angle}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2i_c$",
+      "$> i_c$",
+      "$< i_c$",
+      "$> 2i_c$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For no emergence at the second face for any incident ray, $r_{2,\\text{min}} > i_c$. Since $r_1 \\le i_c$, $r_{2,\\text{min}} = A - i_c > i_c \\implies A > 2i_c$."
+  },
+  {
+    "question_number": 241,
+    "question_type": "single_choice",
+    "question_text": "An object and a screen are fixed at a distance $d$ apart. When a lens of focal length $f$ is moved between the object and the screen, sharp images of the object are formed on the screen for two positions of the lens. The magnifications produced at these two positions are $M_1$ and $M_2$, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$|M_1| = |M_2| = 1$",
+      "$d > 4f$",
+      "$M_1 = \\frac{1}{M_2}$",
+      "Both (2) & (3) are correct"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In the displacement method, two real conjugate images are formed when $d > 4f$, and the magnifications satisfy $M_1 = \\frac{v_1}{u_1} = \\frac{u_2}{v_2} = \\frac{1}{M_2}$."
+  },
+  {
+    "question_number": 242,
+    "question_type": "single_choice",
+    "question_text": "A compound microscope has a two-convex-lens system with focal lengths $2\\text{ cm}$ and $5\\text{ cm}$. An object is $2.5\\text{ cm}$ away from the objective lens. The tube length of the microscope when magnification is maximum is equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$18.2\\text{ cm}$",
+      "$14.2\\text{ cm}$",
+      "$8.2\\text{ cm}$",
+      "$4.2\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the objective: $\\frac{1}{v_o} - \\frac{1}{-2.5} = \\frac{1}{2} \\implies v_o = 10\\text{ cm}$. For maximum magnification, $v_e = -25\\text{ cm}$, giving $\\frac{1}{|u_e|} = \\frac{1}{5} + \\frac{1}{25} \\implies |u_e| = \\frac{25}{6} \\approx 4.17\\text{ cm}$. Thus, tube length $L = v_o + |u_e| = 14.17\\text{ cm} \\approx 14.2\\text{ cm}$."
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 189,
+    "question_type": "single_choice",
+    "question_text": "A prism of refracting angle $30^\\circ$ has one of its refracting faces polished. A beam of light incident on the other refracting face with an angle of incidence $i = 60^\\circ$ will retrace its path, if the refractive index of the prism is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{2}$",
+      "$\\sqrt{3}$",
+      "$\\sqrt{5}$",
+      "$\\sqrt{7}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the ray to retrace its path after normal incidence on the silvered face, $r_2 = 0$. Since $r_1 + r_2 = A$, we have $r_1 = 30^\\circ$. Using Snell's law, $\\sin 60^\\circ = \\mu \\sin 30^\\circ \\implies \\mu = \\frac{\\sin 60^\\circ}{\\sin 30^\\circ} = \\sqrt{3}$."
+  },
+  {
+    "question_number": 190,
+    "question_type": "single_choice",
+    "question_text": "An object is placed at a distance of $20\\text{ cm}$ from the thin lens as shown in the figure. The points $C_1$ and $C_2$ denote the centres of curvature. The magnification produced by the lens is (Refractive index of glass is $1.5$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$-2$",
+      "$+2$",
+      "$-\\frac{1}{2}$",
+      "$+\\frac{1}{2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A meniscus convex-concave lens with both centres of curvature lying to the right along the principal axis. The first surface has radius of curvature $R_1 = +10\\text{ cm}$ with centre $C_1$, and the second surface has radius of curvature $R_2 = +20\\text{ cm}$ with centre $C_2$.",
+    "solution": "Using the lens maker's formula, $\\frac{1}{f} = (1.5 - 1)\\left(\\frac{1}{10} - \\frac{1}{20}\\right) = 0.5 \\times \\frac{1}{20} = \\frac{1}{40} \\implies f = +40\\text{ cm}$. Magnification is $m = \\frac{f}{f + u} = \\frac{40}{40 + (-20)} = +2$."
+  },
+  {
+    "question_number": 191,
+    "question_type": "single_choice",
+    "question_text": "A ray of light incident at angle $i$ is refracted at angle $r$ into a glass slab of thickness $t$. The lateral displacement of the emergent ray is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{t\\sin i}{\\cos r}$",
+      "$\\frac{t\\sin(i - r)}{\\cos r}$",
+      "$t\\sin(i - r)\\cos r$",
+      "$\\frac{t\\sin(i + r)}{\\cos r}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The lateral shift produced by a parallel-sided slab of thickness $t$ is given by the standard formula $d = \\frac{t\\sin(i - r)}{\\cos r}$."
+  },
+  {
+    "question_number": 192,
+    "question_type": "single_choice",
+    "question_text": "A convex mirror of focal length $f$ (in air) is immersed in water ($\\mu = \\frac{4}{3}$). The focal length of the mirror in water will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f$",
+      "$\\frac{4}{3}f$",
+      "$\\frac{3}{4}f$",
+      "$4f$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The focal length of a spherical mirror depends only on its radius of curvature ($f = R/2$) and is completely independent of the refractive index of the surrounding medium."
+  },
+  {
+    "question_number": 193,
+    "question_type": "single_choice",
+    "question_text": "The diameter of a plano-convex lens is $5\\text{ cm}$ and its thickness at the centre is $5\\text{ mm}$. If the refractive index of the material of the lens is $1.5$, the focal length of the lens is approximately:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$13\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$6.25\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using the relation $R = \\frac{r^2 + t^2}{2t}$ with semi-aperture $r = 2.5\\text{ cm}$ and thickness $t = 0.5\\text{ cm}$, we get $R = \\frac{2.5^2 + 0.5^2}{2(0.5)} = 6.5\\text{ cm}$. Then $f = \\frac{R}{\\mu - 1} = \\frac{6.5}{1.5 - 1} = 13\\text{ cm}$."
+  },
+  {
+    "question_number": 194,
+    "question_type": "single_choice",
+    "question_text": "If the angle of a triangular prism is $A$ and the refractive index of the material is $\\mu$, then under what condition will there be no emergent ray from the second face for any angle of incidence?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$A = 2\\sin^{-1}\\left(\\frac{1}{\\mu}\\right)$",
+      "$A < \\sin^{-1}\\left(\\frac{1}{\\mu}\\right)$",
+      "$\\sin^{-1}\\left(\\frac{1}{\\mu}\\right) < A < 2\\sin^{-1}\\left(\\frac{1}{\\mu}\\right)$",
+      "$A > 2\\sin^{-1}\\left(\\frac{1}{\\mu}\\right)$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For no emergence at any incident angle, total internal reflection must occur at the second surface even for the minimum value of $r_2$. Since $r_{2,\\text{min}} = A - \\theta_c$, we require $A - \\theta_c > \\theta_c \\implies A > 2\\theta_c = 2\\sin^{-1}\\left(\\frac{1}{\\mu}\\right)$."
+  }
+]

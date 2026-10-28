@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 65,
+    "question_type": "single_choice",
+    "question_text": "Two light waves given by $y_1 = a \\sin(2\\pi t)$ and $y_2 = 2a \\sin\\left(2\\pi t + \\frac{\\pi}{3}\\right)$ superimpose at a point. The resultant amplitude of the wave is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$a\\sqrt{6}$",
+      "$a\\sqrt{5}$",
+      "$a\\sqrt{3}$",
+      "$a\\sqrt{7}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resultant amplitude is given by $A = \\sqrt{A_1^2 + A_2^2 + 2A_1 A_2 \\cos\\phi}$. Here, $A_1 = a$, $A_2 = 2a$, and $\\phi = \\frac{\\pi}{3}$. Thus, $A = \\sqrt{a^2 + 4a^2 + 2(a)(2a)\\cos(60^\\circ)} = \\sqrt{5a^2 + 2a^2} = a\\sqrt{7}$."
+  },
+  {
+    "question_number": 66,
+    "question_type": "single_choice",
+    "question_text": "Which of the following statements is not true for the polarisation of light?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Light vibrations are restrained only in one plane",
+      "Establishes longitudinal nature of light",
+      "Intensity of light decreases",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Polarisation occurs only in transverse waves, where vibrations are perpendicular to the direction of propagation. Hence, polarisation establishes the transverse nature of light, not longitudinal."
+  },
+  {
+    "question_number": 67,
+    "question_type": "single_choice",
+    "question_text": "On passing through an analyser, the intensity of polarized light becomes $\\frac{1}{a}$ times its initial intensity. The angle between the transmission axis of the analyser and the polarizer is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\theta = \\tan^{-1}\\sqrt{a - 1}$",
+      "$\\theta = \\tan^{-1}\\left(\\frac{1}{\\sqrt{a}}\\right)$",
+      "$\\theta = \\sin^{-1}(\\sqrt{a - 1})$",
+      "$\\theta = \\sin^{-1}\\left(\\frac{1}{\\sqrt{a}}\\right)$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Malus's Law, $I = I_0 \\cos^2\\theta$. Given $I = \\frac{I_0}{a}$, we have $\\cos^2\\theta = \\frac{1}{a}$, so $\\cos\\theta = \\frac{1}{\\sqrt{a}}$. Therefore, $\\tan\\theta = \\frac{\\sqrt{1 - \\cos^2\\theta}}{\\cos\\theta} = \\frac{\\sqrt{1 - 1/a}}{1/\\sqrt{a}} = \\sqrt{a - 1}$, which gives $\\theta = \\tan^{-1}\\sqrt{a - 1}$."
+  },
+  {
+    "question_number": 68,
+    "question_type": "single_choice",
+    "question_text": "In a Young's double slit experiment, if the intensity ratio of the bright and dark fringes is $81 : 25$, the ratio of the intensities of the two interfering waves is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1 : 49$",
+      "$49 : 4$",
+      "$1 : 4$",
+      "$49 : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "We are given $\\frac{I_{\\max}}{I_{\\min}} = \\frac{(\\sqrt{I_1} + \\sqrt{I_2})^2}{(\\sqrt{I_1} - \\sqrt{I_2})^2} = \\frac{81}{25}$. Taking the square root, $\\frac{\\sqrt{I_1} + \\sqrt{I_2}}{\\sqrt{I_1} - \\sqrt{I_2}} = \\frac{9}{5}$. By componendo and dividendo, $\\frac{\\sqrt{I_1}}{\\sqrt{I_2}} = \\frac{9 + 5}{9 - 5} = \\frac{14}{4} = \\frac{7}{2}$. Squaring both sides gives $\\frac{I_1}{I_2} = \\frac{49}{4}$."
+  },
+  {
+    "question_number": 69,
+    "question_type": "single_choice",
+    "question_text": "Two monochromatic waves each of amplitude $A$ have a phase difference of $\\frac{\\pi}{2}$ between them. When they superimpose, the amplitude of the resultant wave is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2A$",
+      "$\\text{Zero}$",
+      "$4A$",
+      "$A\\sqrt{2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resultant amplitude is $A_{\\text{res}} = \\sqrt{A^2 + A^2 + 2A^2 \\cos(\\pi/2)} = \\sqrt{2A^2 + 0} = A\\sqrt{2}$."
+  },
+  {
+    "question_number": 70,
+    "question_type": "single_choice",
+    "question_text": "A screen is placed $100\\text{ cm}$ from a single slit which is illuminated with light of wavelength $5000\\text{ \\AA}$. If the distance between the first and third minima in the diffraction pattern on the same side is $5\\text{ mm}$, the width of the slit is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2\\text{ mm}$",
+      "$0.2\\text{ }\\mu\\text{m}$",
+      "$2 \\times 10^{-4}\\text{ m}$",
+      "$4 \\times 10^{-5}\\text{ m}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The position of the $n$-th minimum in single-slit diffraction is $y_n = \\frac{n\\lambda D}{a}$. The distance between the first and third minima on the same side is $\\Delta y = y_3 - y_1 = \\frac{2\\lambda D}{a}$. Given $\\Delta y = 5 \\times 10^{-3}\\text{ m}$, $D = 1\\text{ m}$, and $\\lambda = 5 \\times 10^{-7}\\text{ m}$, we get $a = \\frac{2 \\times (5 \\times 10^{-7}) \\times 1}{5 \\times 10^{-3}} = 2 \\times 10^{-4}\\text{ m}$."
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 19,
+    "question_type": "single_choice",
+    "question_text": "The intensity of a plane electromagnetic wave is $5\\text{ W/m}^2$. It is incident normally on a perfectly reflecting surface. Find the radiation pressure exerted on the surface.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3.33 \\times 10^{-9}\\text{ N/m}^2$",
+      "$3.33 \\times 10^{-8}\\text{ N/m}^2$",
+      "$8.0 \\times 10^{-8}\\text{ N/m}^2$",
+      "$8.0 \\times 10^{-9}\\text{ N/m}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a perfectly reflecting surface, the radiation pressure is given by $P = \\frac{2I}{c}$. Substituting the given values: $P = \\frac{2 \\times 5}{3 \\times 10^8} = \\frac{10}{3 \\times 10^8} \\approx 3.33 \\times 10^{-8}\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 20,
+    "question_type": "single_choice",
+    "question_text": "The electric field of a plane electromagnetic wave in vacuum is represented by $E_x = 0$, $E_y = 0.5\\cos\\left[2\\pi \\times 10^8\\left(t - \\frac{x}{c}\\right)\\right]$, $E_z = 0$. What is the direction of propagation of the electromagnetic wave?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$+x$-axis",
+      "$+y$-axis",
+      "$-z$-axis",
+      "$+z$-axis"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The harmonic wave expression is of the form $E_y = E_0\\cos(\\omega t - kx)$ where the term $\\left(t - \\frac{x}{c}\\right)$ has a negative sign before $x$. This indicates that the wave propagates along the positive $x$-axis ($+x$-direction)."
+  },
+  {
+    "question_number": 21,
+    "question_type": "single_choice",
+    "question_text": "The rms value of the electric field of light coming from the sun is $720\\text{ N/C}$. Find the average total energy density of the electromagnetic wave.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5.6 \\times 10^{-6}\\text{ J/m}^3$",
+      "$4.58 \\times 10^{-6}\\text{ J/m}^3$",
+      "$1.3 \\times 10^{-6}\\text{ J/m}^3$",
+      "$1.56 \\times 10^{-6}\\text{ J/m}^3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average total energy density of an electromagnetic wave is given by $u = \\epsilon_0 E_{\\text{rms}}^2$. Substituting the values: $u = 8.854 \\times 10^{-12} \\times (720)^2 = 8.854 \\times 10^{-12} \\times 518400 \\approx 4.58 \\times 10^{-6}\\text{ J/m}^3$."
+  },
+  {
+    "question_number": 22,
+    "question_type": "single_choice",
+    "question_text": "If $E_0$ and $B_0$ are the amplitudes of the electric and magnetic field vectors in an electromagnetic wave, respectively, then the value of $\\frac{B_0}{E_0}$ is ($c = \\text{speed of the electromagnetic wave}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$c$",
+      "$\\frac{1}{c}$",
+      "$c^2$",
+      "$\\frac{1}{c^2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the ratio of the amplitude of the electric field to that of the magnetic field is equal to the speed of light: $\\frac{E_0}{B_0} = c$. Therefore, $\\frac{B_0}{E_0} = \\frac{1}{c}$."
+  },
+  {
+    "question_number": 23,
+    "question_type": "single_choice",
+    "question_text": "A $100\\ \\Omega$ resistance and a capacitor of $100\\ \\Omega$ reactance are connected in series across a $220\\text{ V}$ AC source. The peak value of the displacement current is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\text{ A}$",
+      "$11\\sqrt{2}\\text{ A}$",
+      "$2.2\\text{ A}$",
+      "$11\\text{ A}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The impedance of the circuit is $Z = \\sqrt{R^2 + X_C^2} = \\sqrt{100^2 + 100^2} = 100\\sqrt{2}\\ \\Omega$. The peak source voltage is $V_0 = V_{\\text{rms}}\\sqrt{2} = 220\\sqrt{2}\\text{ V}$. The peak conduction current is $I_0 = \\frac{V_0}{Z} = \\frac{220\\sqrt{2}}{100\\sqrt{2}} = 2.2\\text{ A}$. Since the displacement current between the plates of a capacitor is equal to the conduction current in the circuit, the peak displacement current is $2.2\\text{ A}$."
+  },
+  {
+    "question_number": 24,
+    "question_type": "single_choice",
+    "question_text": "The radiation pressure exerted by an electromagnetic wave of intensity $I\\ (\\text{W/m}^2)$ incident normally on a non-reflecting (completely absorbing) surface is ($c = \\text{speed of light}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I c$",
+      "$I c^2$",
+      "$\\frac{I}{c}$",
+      "$\\frac{I}{c^2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a non-reflecting (completely absorbing) surface, the momentum transferred per unit area per unit time is $\\frac{\\Delta p}{A \\Delta t} = \\frac{U}{c A \\Delta t} = \\frac{I}{c}$. Therefore, the radiation pressure is $P = \\frac{I}{c}$."
+  }
+]

@@ -1,0 +1,154 @@
+[
+  {
+    "question_number": 134,
+    "question_type": "single_choice",
+    "question_text": "If one surface of a biconvex lens of focal length $f$ and refractive index $\\mu$ is silvered, then the system behaves as:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "A concave mirror of focal length $\\frac{R}{4\\mu - 2}$",
+      "A concave mirror of focal length $\\frac{R}{2\\mu}$",
+      "A convex mirror of focal length $\\frac{R}{4\\mu - 2}$",
+      "A concave mirror of focal length $\\frac{R}{2\\mu - 2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the silvered lens system is given by $P = 2P_L + P_M$.\nFor a biconvex lens with radius of curvature $R$, $\\frac{1}{f_L} = (\\mu - 1)\\left(\\frac{1}{R} - \\left(-\\frac{1}{R}\\right)\\right) = \\frac{2(\\mu - 1)}{R}$.\nThe silvered surface acts as a concave mirror of focal length $f_M = \\frac{R}{2}$.\nThus, $\\frac{1}{F} = \\frac{2}{f_L} + \\frac{1}{f_M} = 2\\left[\\frac{2(\\mu - 1)}{R}\\right] + \\frac{2}{R} = \\frac{4\\mu - 4 + 2}{R} = \\frac{4\\mu - 2}{R}$.\nSince the combination converges light, it acts as a concave mirror of focal length $F = \\frac{R}{4\\mu - 2}$."
+  },
+  {
+    "question_number": 135,
+    "question_type": "single_choice",
+    "question_text": "A liquid of refractive index $\\frac{4}{3}$ is placed between two identical plano-convex lenses touching each other at their spherical surfaces of radius $R$. If the refractive index of each lens is $1.50$, then the combination behaves as:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Convergent with power $P = \\frac{1}{3R}$",
+      "Convergent with power $P = \\frac{1}{6R}$",
+      "Divergent with power $P = \\frac{1}{3R}$",
+      "Divergent with power $P = \\frac{1}{6R}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Power of each plano-convex lens is $P_1 = P_2 = (1.5 - 1)\\left(\\frac{1}{R}\\right) = \\frac{1}{2R}$.\nThe liquid enclosed between the two convex surfaces forms an equiconcave lens with radii $R_1 = -R$ and $R_2 = +R$.\nIts power is $P_l = \\left(\\frac{4}{3} - 1\\right)\\left(-\\frac{1}{R} - \\frac{1}{R}\\right) = \\frac{1}{3}\\left(-\\frac{2}{R}\\right) = -\\frac{2}{3R}$.\nTotal power of the combination is $P = P_1 + P_2 + P_l = \\frac{1}{2R} + \\frac{1}{2R} - \\frac{2}{3R} = \\frac{1}{R} - \\frac{2}{3R} = \\frac{1}{3R}$.\nSince $P > 0$, the system is convergent with power $P = \\frac{1}{3R}$."
+  },
+  {
+    "question_number": 136,
+    "question_type": "single_choice",
+    "question_text": "A lens of focal length $f_a$ in air consists of glass of refractive index $\\mu_g$. If $f_l$ is its focal length in a liquid of refractive index $\\mu_l$, then for $\\mu_l = \\mu_g$:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_l = 0$",
+      "$\\infty > f_l > f_a$",
+      "$0 < f_l < f_a$",
+      "$f_l = \\infty$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Lens Maker's formula, $\\frac{1}{f_l} = \\left(\\frac{\\mu_g}{\\mu_l} - 1\\right)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right)$.\nWhen $\\mu_l = \\mu_g$, $\\frac{\\mu_g}{\\mu_l} - 1 = 1 - 1 = 0$, which gives $\\frac{1}{f_l} = 0 \\implies f_l = \\infty$."
+  },
+  {
+    "question_number": 137,
+    "question_type": "single_choice",
+    "question_text": "If four convex lenses are given to you having focal lengths $f_1 < f_2 < f_3 < f_4$, then which of the following combinations will you prefer to form a compound microscope?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_1$ as objective and $f_4$ as eye-lens",
+      "$f_1$ as objective and $f_2$ as eye-lens",
+      "$f_4$ as objective and $f_1$ as eye-lens",
+      "$f_2$ as objective and $f_3$ as eye-lens"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For high magnifying power in a compound microscope, both the objective and eyepiece should have short focal lengths with $f_o < f_e$.\nThus, the smallest focal length $f_1$ is chosen for the objective, and the next smallest focal length $f_2$ is chosen for the eye-lens."
+  },
+  {
+    "question_number": 138,
+    "question_type": "single_choice",
+    "question_text": "The ratio of velocity of light in a medium to velocity of light in vacuum is $\\frac{4}{5}$. If a ray of light is emerging from this medium into air, then the critical angle for this interface of medium and air will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30^\\circ$",
+      "$37^\\circ$",
+      "$53^\\circ$",
+      "$45^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The refractive index of the medium is $\\mu = \\frac{c}{v} = \\frac{5}{4}$.\nThe critical angle $\\theta_c$ is given by $\\sin\\theta_c = \\frac{1}{\\mu} = \\frac{4}{5} = 0.8$.\nSince $\\sin 53^\\circ \\approx 0.8$, we have $\\theta_c = 53^\\circ$."
+  },
+  {
+    "question_number": 139,
+    "question_type": "single_choice",
+    "question_text": "A light ray is incident normally on face $AB$ of a triangular prism with angles $\\angle B = 50^\\circ$ and $\\angle C = 70^\\circ$. For no emergent ray to leave the second face $AC$, the refractive index $\\mu$ of the prism must satisfy:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\mu = \\frac{2}{\\sqrt{3}}$",
+      "$\\mu > \\frac{2}{\\sqrt{3}}$",
+      "$\\mu < \\frac{2}{\\sqrt{3}}$",
+      "$\\mu$ can have any value"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": true,
+    "diagram_description": "A triangular prism ABC with base BC having angle B = 50 degrees and angle C = 70 degrees. A light ray is incident normally on the face AB.",
+    "solution": "The apex angle of the prism is $A = 180^\\circ - (50^\\circ + 70^\\circ) = 60^\\circ$.\nSince the ray is incident normally on face $AB$, the angle of refraction at the first surface is $r_1 = 0^\\circ$.\nThe angle of incidence on face $AC$ is $r_2 = A - r_1 = 60^\\circ$.\nFor no ray to emerge from face $AC$, total internal reflection must occur: $r_2 > \\theta_c \\implies \\sin 60^\\circ > \\sin\\theta_c = \\frac{1}{\\mu}$.\nHence, $\\frac{\\sqrt{3}}{2} > \\frac{1}{\\mu} \\implies \\mu > \\frac{2}{\\sqrt{3}}$."
+  },
+  {
+    "question_number": 140,
+    "question_type": "single_choice",
+    "question_text": "A lens forms the image of a point object placed at a distance of $20\\text{ cm}$ from it, just in front of the object at a distance of $4\\text{ cm}$ from the object towards the lens. The power of the lens is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$-2.25\\text{ D}$",
+      "$1.75\\text{ D}$",
+      "$-1.25\\text{ D}$",
+      "$1.4\\text{ D}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The object is at $u = -20\\text{ cm}$.\nThe image is formed $4\\text{ cm}$ closer to the lens on the same side, so $v = -(20 - 4)\\text{ cm} = -16\\text{ cm}$.\nUsing the lens formula: $\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = -\\frac{1}{16} - \\left(-\\frac{1}{20}\\right) = -\\frac{1}{80}\\text{ cm}^{-1}$.\nTherefore, $f = -80\\text{ cm} = -0.8\\text{ m}$.\nPower $P = \\frac{1}{f} = -\\frac{1}{0.8} = -1.25\\text{ D}$."
+  },
+  {
+    "question_number": 141,
+    "question_type": "single_choice",
+    "question_text": "The distance between an object and its real image formed by a concave mirror is minimum when the distance of the object from the centre of curvature of the mirror is ($f$ is the focal length of the mirror):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Zero",
+      "$\\frac{f}{2}$",
+      "$f$",
+      "$2f$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a concave mirror, when the object is placed at the centre of curvature ($C$), the real image is also formed at $C$.\nThe distance between the object and the real image is $|v - u| = 0$, which is the minimum possible separation.\nHence, the distance of the object from the centre of curvature is zero."
+  }
+]

@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 46,
+    "question_type": "single_choice",
+    "question_text": "A light source emitting a light of frequency $6 \\times 10^{15}\\text{ Hz}$ is moving away from an observer with a speed of $4\\text{ m/s}$. The apparent change in the frequency of light as observed by the observer will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$8 \\times 10^7\\text{ Hz}$",
+      "$4 \\times 10^7\\text{ Hz}$",
+      "$2 \\times 10^7\\text{ Hz}$",
+      "$8 \\times 10^8\\text{ Hz}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The apparent change in frequency due to the Doppler effect for light (for $v \\ll c$) is given by $\\Delta \\nu = \\frac{v}{c}\\nu$.\nSubstituting the values:\n$$\\Delta \\nu = \\frac{4\\text{ m/s}}{3 \\times 10^8\\text{ m/s}} \\times (6 \\times 10^{15}\\text{ Hz}) = 8 \\times 10^7\\text{ Hz}$$"
+  },
+  {
+    "question_number": 47,
+    "question_type": "single_choice",
+    "question_text": "If two waves $y_1 = \\sqrt{3}\\sin\\left(\\omega t + \\frac{\\pi}{3}\\right)$ and $y_2 = 3\\cos\\omega t$ interfere at a point, then the amplitude of the resulting wave will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5.8$",
+      "$2.7$",
+      "$4.6$",
+      "$6.8$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Expressing both waves in sine form:\n$$y_1 = \\sqrt{3}\\sin\\left(\\omega t + \\frac{\\pi}{3}\\right), \\quad y_2 = 3\\sin\\left(\\omega t + \\frac{\\pi}{2}\\right)$$\nThe phase difference is $\\phi = \\frac{\\pi}{2} - \\frac{\\pi}{3} = \\frac{\\pi}{6} = 30^\\circ$.\nThe resultant amplitude is:\n$$A = \\sqrt{A_1^2 + A_2^2 + 2A_1A_2\\cos\\phi} = \\sqrt{(\\sqrt{3})^2 + 3^2 + 2(\\sqrt{3})(3)\\cos 30^\\circ} = \\sqrt{3 + 9 + 6\\sqrt{3}\\left(\\frac{\\sqrt{3}}{2}\\right)} = \\sqrt{21} \\approx 4.58 \\approx 4.6$$"
+  },
+  {
+    "question_number": 48,
+    "question_type": "single_choice",
+    "question_text": "A single slit of width $12 \\times 10^{-5}\\text{ cm}$ is illuminated with light of wavelength $6000\\text{ \\AA}$. The angular width of the central maximum is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2\\text{ rad}$",
+      "$3\\text{ rad}$",
+      "$1\\text{ rad}$",
+      "$8\\text{ rad}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular width of the central maximum in single-slit diffraction is given by:\n$$2\\theta = \\frac{2\\lambda}{a}$$\nGiven $a = 12 \\times 10^{-5}\\text{ cm} = 1.2 \\times 10^{-6}\\text{ m}$ and $\\lambda = 6000\\text{ \\AA} = 6 \\times 10^{-7}\\text{ m}$:\n$$2\\theta = \\frac{2 \\times 6 \\times 10^{-7}\\text{ m}}{1.2 \\times 10^{-6}\\text{ m}} = 1\\text{ rad}$$"
+  },
+  {
+    "question_number": 49,
+    "question_type": "single_choice",
+    "question_text": "Which of the following optical devices produces coherent sources?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Ordinary prism",
+      "Biprism",
+      "Nicol prism",
+      "Achromatic prism"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Fresnel's biprism divides a single wavefront into two virtual coherent sources by refraction, producing sustained interference patterns."
+  },
+  {
+    "question_number": 50,
+    "question_type": "single_choice",
+    "question_text": "For what approximate distance is ray optics a good approximation, when the aperture is $4\\text{ mm}$ wide and the wavelength of the light used is $400\\text{ nm}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ m}$",
+      "$80\\text{ m}$",
+      "$40\\text{ m}$",
+      "$4\\text{ m}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Ray optics remains a good approximation up to the Fresnel distance ($Z_F$):\n$$Z_F = \\frac{a^2}{\\lambda} = \\frac{(4 \\times 10^{-3}\\text{ m})^2}{400 \\times 10^{-9}\\text{ m}} = \\frac{16 \\times 10^{-6}}{4 \\times 10^{-7}} = 40\\text{ m}$$"
+  },
+  {
+    "question_number": 51,
+    "question_type": "single_choice",
+    "question_text": "When a film of transparent material of thickness $2.5 \\times 10^{-3}\\text{ cm}$ is placed over one of the slits in YDSE, the fringe pattern shifts by a distance equal to $20$ fringe widths. The refractive index ($\\mu$) of the material of the film is (take $\\lambda = 5000\\text{ \\AA}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.25$",
+      "$1.35$",
+      "$1.40$",
+      "$1.50$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fringe shift is given by $\\Delta y = \\frac{D}{d}(\\mu - 1)t = n\\beta$, where $\\beta = \\frac{\\lambda D}{d}$.\nThus, $(\\mu - 1)t = n\\lambda$:\n$$(\\mu - 1) = \\frac{n\\lambda}{t} = \\frac{20 \\times (5000 \\times 10^{-8}\\text{ cm})}{2.5 \\times 10^{-3}\\text{ cm}} = \\frac{10^{-3}}{2.5 \\times 10^{-3}} = 0.40$$\n$$\\mu = 1 + 0.40 = 1.40$$"
+  },
+  {
+    "question_number": 52,
+    "question_type": "single_choice",
+    "question_text": "In YDSE with light of wavelength $\\lambda = 5000\\text{ \\AA}$, the distance between the slits is $0.2\\text{ mm}$ and the distance between the plane of slits and screen is $2\\text{ m}$. The central maximum is at $y = 0$. The fourth maximum will appear at $y$ equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.75\\text{ cm}$",
+      "$2\\text{ cm}$",
+      "$1.5\\text{ cm}$",
+      "$2.5\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The position of the $n^{\\text{th}}$ bright fringe is given by:\n$$y_n = \\frac{n\\lambda D}{d}$$\nFor $n = 4$:\n$$y_4 = \\frac{4 \\times (5000 \\times 10^{-10}\\text{ m}) \\times 2\\text{ m}}{0.2 \\times 10^{-3}\\text{ m}} = \\frac{4 \\times 10^{-6}}{2 \\times 10^{-4}} = 2 \\times 10^{-2}\\text{ m} = 2\\text{ cm}$$"
+  }
+]

@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** Electric conduction in gases is not possible at normal pressure.\n**Reason (R):** The potential below the breakdown potential of gases doesn't produce sufficient ions (charge carriers) to allow the flow of current.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Electric conduction in gases is not possible at normal pressure.",
+    "reason_text": "The potential below the breakdown potential of gases doesn't produce sufficient ion (charge carriers) to allow the flow of current.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Conduction of Electricity Through Gases",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "At normal pressure, gases consist of neutral molecules and the mean free path is very small. Conduction requires ionization, which only occurs when an applied potential exceeds the breakdown potential. Below this threshold, there are insufficient free charge carriers to sustain an electric current. Thus, both statements are true and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** If momentum of an electron is doubled, the de-Broglie wavelength becomes half.\n**Reason (R):** de-Broglie wavelength is inversely proportional to the momentum.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "If momentum of an electron is doubled, the de-Broglie wavelength becomes half.",
+    "reason_text": "de-Broglie wavelength is inversely proportional to the momentum.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de Broglie wavelength is given by $\\lambda = \\frac{h}{p}$. Since $\\lambda \\propto \\frac{1}{p}$, doubling the momentum ($p' = 2p$) results in the new wavelength being $\\lambda' = \\frac{\\lambda}{2}$. Therefore, both Assertion and Reason are true, and Reason is the correct explanation."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** When the maximum kinetic energy of the photoelectrons becomes two times, stopping potential also becomes two times.\n**Reason (R):** The stopping potential is directly proportional to the maximum kinetic energy of the photoelectrons.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "When the maximum kinetic energy of the photoelectrons becomes two times, stopping potential also becomes two times.",
+    "reason_text": "The stopping potential is directly proportional to the maximum kinetic energy of the photoelectrons.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Stopping potential $V_0$ is related to maximum kinetic energy by $e V_0 = K_{\\text{max}}$, which gives $V_0 = \\frac{K_{\\text{max}}}{e}$. Since $V_0 \\propto K_{\\text{max}}$, doubling $K_{\\text{max}}$ doubles the stopping potential $V_0$. Thus, both statements are true and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** The number of photoelectrons is proportional to intensity of light.\n**Reason (R):** Photoelectric effect shows the particle nature of light.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "The number of photoelectrons is proportional to intensity of light.",
+    "reason_text": "Photoelectric effect shows the particle nature of light.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The number of emitted photoelectrons per second is directly proportional to the intensity of incident radiation because higher intensity corresponds to more photons incident per unit time. The photoelectric effect as a whole confirms the particle nature of light. While both statements are true, the statement that photoelectric effect shows particle nature is not the specific explanation of why photoelectron yield is proportional to intensity."
+  },
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** In an experiment of Photoelectric effect, the energies of emitted photoelectrons are different.\n**Reason (R):** Different electrons lose different amount of energy in the process of coming out from the metal.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "In an experiment of Photoelectric effect, the energies of emitted photoelectrons are different.",
+    "reason_text": "Different electrons lose different amount of energy in the process of coming out from the metal.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Incident photons transfer energy $h\\nu$ to electrons located at various depths within the metal. Electrons situated deeper collide with lattice ions and lose varying amounts of energy before emerging from the surface, leading to a spectrum of kinetic energies ranging from $0$ to $K_{\\text{max}} = h\\nu - \\phi_0$. Hence, both Assertion and Reason are true and Reason is the correct explanation."
+  },
+  {
+    "question_number": 6,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** Photoelectric effect demonstrates the particle nature of light.\n**Reason (R):** Compton effect confirms the particle nature of light.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Photoelectric effect demonstrates the particle nature of light.",
+    "reason_text": "Compton effect confirms the particle nature of light.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Both the photoelectric effect and the Compton effect independently demonstrate the quantum or particle (photon) nature of electromagnetic radiation. However, the occurrence of the Compton effect is not the underlying explanation for why the photoelectric effect demonstrates particle nature. Thus, both statements are true, but Reason is not the correct explanation of Assertion."
+  },
+  {
+    "question_number": 7,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: an Assertion (A) and a Reason (R).\n\n**Assertion (A):** Photons are not deflected by electric and magnetic field.\n**Reason (R):** Photons are electrically neutral.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Photons are not deflected by electric and magnetic field.",
+    "reason_text": "Photons are electrically neutral.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Electromagnetic Lorentz force acting on a particle is given by $\\vec{F} = q(\\vec{E} + \\vec{v} \\times \\vec{B})$. Since photons have zero electric charge ($q = 0$), they experience zero force in electric and magnetic fields, and hence are not deflected. Thus, both statements are true and Reason is the correct explanation of Assertion."
+  }
+]

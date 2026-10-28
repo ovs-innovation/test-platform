@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 72,
+    "question_type": "single_choice",
+    "question_text": "An astronomical telescope has an angular magnification of magnitude $5$ for distant objects. The focal length of the objective and the eyepiece are $30\\text{ cm}$ and $6\\text{ cm}$ respectively. Then the length of the tube of the telescope will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$36\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$150\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an astronomical telescope in normal adjustment, the tube length is given by $L = f_o + f_e$. Substituting the given values, $L = 30\\text{ cm} + 6\\text{ cm} = 36\\text{ cm}$."
+  },
+  {
+    "question_number": 73,
+    "question_type": "single_choice",
+    "question_text": "The focal length of a biconvex lens in air is $10\\text{ cm}$. If it is dipped in water, then its focal length will be (given $\\mu_L = 1.5$, $\\mu_w = \\frac{4}{3}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$-10\\text{ cm}$",
+      "$40\\text{ cm}$",
+      "$-40\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using Lens Maker's formula, $\\frac{f_w}{f_a} = \\frac{\\mu_L - 1}{\\frac{\\mu_L}{\\mu_w} - 1} = \\frac{1.5 - 1}{\\frac{1.5}{4/3} - 1} = \\frac{0.5}{\\frac{9}{8} - 1} = \\frac{0.5}{1/8} = 4$. Thus, $f_w = 4 \\times f_a = 4 \\times 10\\text{ cm} = 40\\text{ cm}$."
+  },
+  {
+    "question_number": 74,
+    "question_type": "single_choice",
+    "question_text": "For the given figure, the possible value of $\\mu$ for which the image is formed on the right of the sphere at a distance $R$ from the sphere is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.5$",
+      "$1.33$",
+      "$2$",
+      "$2.5$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A glass sphere of radius $R$ and refractive index $\\mu$ with an object $O$ located at a distance $R$ to the left of the sphere along the principal axis.",
+    "solution": "For the first surface, $\\frac{\\mu}{v_1} - \\frac{1}{-R} = \\frac{\\mu - 1}{R} \\implies \\frac{\\mu}{v_1} = \\frac{\\mu - 2}{R}$. If $\\mu = 2$, $v_1 = \\infty$, meaning rays become parallel inside the sphere. Then at the second surface, $\\frac{1}{v_2} - \\frac{\\mu}{\\infty} = \\frac{1 - \\mu}{-R} \\implies \\frac{1}{v_2} = \\frac{1 - 2}{-R} = \\frac{1}{R} \\implies v_2 = R$. Hence, the final image forms at a distance $R$ from the right surface when $\\mu = 2$."
+  },
+  {
+    "question_number": 75,
+    "question_type": "single_choice",
+    "question_text": "A convex lens of focal length $f_1$ and dispersive power $\\omega_1$ is combined with a concave lens of focal length $f_2$ and dispersive power $\\omega_2$ in such a way that an achromatic doublet of focal length $40\\text{ cm}$ is obtained. If $\\frac{\\omega_1}{\\omega_2} = \\frac{2}{3}$, then $f_1$ and $f_2$ (in $\\text{cm}$) are respectively:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{40}{3},\\; 20$",
+      "$20,\\; -\\frac{40}{3}$",
+      "$\\frac{40}{3},\\; -20$",
+      "$-20,\\; \\frac{40}{3}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The condition for achromatism is $\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0 \\implies f_2 = -\\frac{\\omega_2}{\\omega_1} f_1 = -\\frac{3}{2} f_1$. The combination focal length is $\\frac{1}{F} = \\frac{1}{f_1} + \\frac{1}{f_2} = \\frac{1}{f_1} - \\frac{2}{3f_1} = \\frac{1}{3f_1}$. Given $F = 40\\text{ cm}$, we have $3f_1 = 40 \\implies f_1 = \\frac{40}{3}\\text{ cm}$ and $f_2 = -\\frac{3}{2}\\left(\\frac{40}{3}\\right) = -20\\text{ cm}$."
+  },
+  {
+    "question_number": 76,
+    "question_type": "single_choice",
+    "question_text": "In a thin prism of glass ($\\mu_g = 1.5$), which of the following relations between the angle of minimum deviation $\\delta_m$ and the angle of the prism $r$ is correct?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\delta_m = r$",
+      "$\\delta_m = 1.5r$",
+      "$\\delta_m = 2r$",
+      "$\\delta_m = \\frac{r}{2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a thin prism with prism angle $r$, the deviation is $\\delta_m = (\\mu - 1)r$. Substituting $\\mu = 1.5$, we get $\\delta_m = (1.5 - 1)r = 0.5r = \\frac{r}{2}$."
+  },
+  {
+    "question_number": 77,
+    "question_type": "single_choice",
+    "question_text": "A ray is incident on face $PQ$ of a prism at an angle of $45^\\circ$. The refracted ray undergoes reflection on the silvered face $PR$ and retraces its path. If the refracting angle at vertex $P$ is $30^\\circ$, the refractive index of the prism is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{2}$",
+      "$\\frac{3}{\\sqrt{2}}$",
+      "$1.5$",
+      "$1.33$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": true,
+    "diagram_description": "A triangular prism $PQR$ with apex angle $P = 30^\\circ$. Face $PR$ is silvered. An incident ray enters face $PQ$ at an angle of incidence $45^\\circ$, refracts, and strikes face $PR$ normally, retracing its path.",
+    "solution": "Since the ray retraces its path after reflection at face $PR$, it strikes face $PR$ normally, so $r_2 = 0^\\circ$. For a prism, $A = r_1 + r_2 \\implies r_1 = A = 30^\\circ$. Applying Snell's law at face $PQ$: $1 \\cdot \\sin(45^\\circ) = \\mu \\sin(30^\\circ) \\implies \\frac{1}{\\sqrt{2}} = \\mu \\left(\\frac{1}{2}\\right) \\implies \\mu = \\sqrt{2}$."
+  },
+  {
+    "question_number": 78,
+    "question_type": "single_choice",
+    "question_text": "The total number of images formed by the two plane mirrors as shown in the figure will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4$",
+      "$5$",
+      "$6$",
+      "$7$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "Two plane mirrors inclined at an angle $\\theta = 36^\\circ + 36^\\circ = 72^\\circ$, with an object $O$ placed symmetrically on the angle bisector.",
+    "solution": "The angle between the two mirrors is $\\theta = 36^\\circ + 36^\\circ = 72^\\circ$. Here, $\\frac{360^\\circ}{\\theta} = \\frac{360^\\circ}{72^\\circ} = 5$ (an odd integer). Since the object lies symmetrically on the angle bisector, the number of images is $n = \\frac{360^\\circ}{\\theta} - 1 = 5 - 1 = 4$."
+  }
+]

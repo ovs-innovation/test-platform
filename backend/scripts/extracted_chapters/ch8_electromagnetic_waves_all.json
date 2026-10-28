@@ -1,0 +1,1104 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "single_choice",
+    "question_text": "A perfectly reflecting mirror of mass $m$ and surface area $A$ is exposed to electromagnetic radiation of intensity $I$ on a rough horizontal surface with coefficient of friction $\\mu = \\frac{1}{3}$ as shown. The minimum value of pulling force required to move the mirror is $\\frac{mg}{2}$. The value of $\\frac{mgc}{IA}$ (where $c$ is speed of light) is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4$",
+      "$\\frac{1}{4}$",
+      "$\\frac{2}{3}$",
+      "$\\frac{3}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": true,
+    "diagram_description": "A block of mass m rests on a rough horizontal surface. Radiation of intensity I is incident vertically downward onto its upper surface of area A. A horizontal pulling force F acts on the block.",
+    "solution": "The radiation pressure exerted on a perfectly reflecting mirror is $P_{\\text{rad}} = \\frac{2I}{c}$, giving a downward force $F_{\\text{rad}} = \\frac{2IA}{c}$. The normal reaction is $N = mg + \\frac{2IA}{c}$. The minimum force required to move the mirror is $F = \\mu N = \\frac{1}{3}\\left(mg + \\frac{2IA}{c}\\right)$. Equating this to $\\frac{mg}{2}$, we get $mg + \\frac{2IA}{c} = \\frac{3}{2}mg \\implies \\frac{2IA}{c} = \\frac{mg}{2} \\implies \\frac{mgc}{IA} = 4$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "single_choice",
+    "question_text": "If in a region, there is a time varying electric field, then which of the following Maxwell's equation will be most suitable?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 i$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\left[ \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Ampere-Maxwell law incorporates displacement current due to a time-varying electric field and is given by $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left(i_c + i_d\\right) = \\mu_0\\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$."
+  },
+  {
+    "question_number": 3,
+    "question_type": "single_choice",
+    "question_text": "The amplitude of electric field in an electromagnetic wave at a distance $r$ from a point source of power $P$ is (taking efficiency $100\\%$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{\\frac{P}{2\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\sqrt{\\frac{P}{4\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\sqrt{\\frac{P}{8\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\frac{P}{2\\pi r^2 \\varepsilon_0 c}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity at distance $r$ from an isotropic source is $I = \\frac{P}{4\\pi r^2}$. The intensity in terms of the electric field amplitude $E_0$ is $I = \\frac{1}{2}\\varepsilon_0 E_0^2 c$. Equating the two expressions gives $\\frac{1}{2}\\varepsilon_0 E_0^2 c = \\frac{P}{4\\pi r^2} \\implies E_0 = \\sqrt{\\frac{P}{2\\pi r^2 \\varepsilon_0 c}}$."
+  },
+  {
+    "question_number": 4,
+    "question_type": "single_choice",
+    "question_text": "In an electromagnetic wave, the effective value of electric field is $100\\text{ V/m}$. The intensity of the wave is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$26.5\\text{ W/m}^2$",
+      "$36.5\\text{ W/m}^2$",
+      "$46.7\\text{ W/m}^2$",
+      "$76.5\\text{ W/m}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity of an electromagnetic wave is given by $I = \\varepsilon_0 E_{\\text{rms}}^2 c$. Substituting the values: $I = 8.854 \\times 10^{-12} \\times (100)^2 \\times 3 \\times 10^8 \\approx 26.55\\text{ W/m}^2 \\approx 26.5\\text{ W/m}^2$."
+  },
+  {
+    "question_number": 5,
+    "question_type": "single_choice",
+    "question_text": "A parallel plate capacitor consists of two circular plates each of radius $2\\text{ cm}$ separated by distance of $0.1\\text{ m}$. If voltage across the plates is varying at a rate of $5 \\times 10^{13}\\text{ V/s}$, then value of displacement current is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$7.60\\text{ A}$",
+      "$5.56 \\times 10^2\\text{ A}$",
+      "$5.56\\text{ A}$",
+      "$2.28 \\times 10^4\\text{ A}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Displacement current is $I_d = C \\frac{dV}{dt} = \\frac{\\varepsilon_0 A}{d} \\frac{dV}{dt}$. Here, $A = \\pi r^2 = \\pi (0.02)^2 = 4\\pi \\times 10^{-4}\\text{ m}^2$, $d = 0.1\\text{ m}$, and $\\frac{dV}{dt} = 5 \\times 10^{13}\\text{ V/s}$. Thus, $I_d = \\frac{8.854 \\times 10^{-12} \\times 4\\pi \\times 10^{-4}}{0.1} \\times 5 \\times 10^{13} \\approx 5.56\\text{ A}$."
+  },
+  {
+    "question_number": 6,
+    "question_type": "single_choice",
+    "question_text": "The energy of a photon of EM radiation is of the order of $15\\text{ keV}$. To which part of spectrum does it belong?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\gamma\\text{-ray}$",
+      "$\\text{X-ray}$",
+      "$\\text{Infra-red rays}$",
+      "$\\text{U-V rays}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The wavelength is $\\lambda = \\frac{hc}{E} = \\frac{12400\\text{ eV}\\cdot\\text{\\AA}}{15000\\text{ eV}} \\approx 0.83\\text{ \\AA} = 0.083\\text{ nm}$. This wavelength corresponds to the X-ray region of the electromagnetic spectrum (typically $0.01\\text{ nm}$ to $10\\text{ nm}$)."
+  },
+  {
+    "question_number": 7,
+    "question_type": "single_choice",
+    "question_text": "For an electromagnetic wave travelling along the $y$-axis, the electric field component is known to be along $(3\\hat{i} - 4\\hat{k})$ at an instant. The direction of the magnetic field at this instant is along",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(-3\\hat{i} - 4\\hat{k})$",
+      "$(3\\hat{i} + 4\\hat{k})$",
+      "$(-4\\hat{i} - 3\\hat{k})$",
+      "$(4\\hat{i} + 3\\hat{k})$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Electromagnetic Waves Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The direction of propagation of an electromagnetic wave is given by $\\hat{v} = \\hat{E} \\times \\hat{B} = \\hat{j}$. Also, $\\vec{E} \\cdot \\vec{B} = 0$. Checking the cross product for option (3): $(3\\hat{i} - 4\\hat{k}) \\times (-4\\hat{i} - 3\\hat{k}) = -9(\\hat{i} \\times \\hat{k}) + 16(\\hat{k} \\times \\hat{i}) = 9\\hat{j} + 16\\hat{j} = 25\\hat{j}$, which points in the positive $y$-direction. Hence, the magnetic field is along $(-4\\hat{i} - 3\\hat{k})$."
+  },
+  {
+    "question_number": 8,
+    "question_type": "single_choice",
+    "question_text": "A parallel plate capacitor consists of two circular plates of radius $R = 0.1\\text{ m}$. They are separated by a distance of $1\\text{ mm}$. If the rate of change of electric field between the capacitor plates is $\\frac{dE}{dt} = 5 \\times 10^{13}\\text{ V}\\cdot\\text{m}^{-1}\\text{s}^{-1}$, the displacement current between the plates is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$13.9\\text{ A}$",
+      "$0.39\\text{ A}$",
+      "$23.9\\text{ A}$",
+      "$2.39\\text{ A}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Displacement current is given by $I_d = \\epsilon_0 \\frac{d\\Phi_E}{dt} = \\epsilon_0 A \\frac{dE}{dt}$. Here, $A = \\pi R^2 = \\pi (0.1)^2 = 0.01\\pi\\text{ m}^2$. Thus, $I_d = 8.854 \\times 10^{-12} \\times (0.01\\pi) \\times (5 \\times 10^{13}) \\approx 13.9\\text{ A}$."
+  },
+  {
+    "question_number": 9,
+    "question_type": "single_choice",
+    "question_text": "The electric field amplitude in an electromagnetic wave radiated by a $200\\text{ W}$ bulb at a distance of $2\\text{ m}$ is (assuming the efficiency of the bulb is $10\\%$ in converting electrical energy into light energy and the bulb is a point source)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{\\frac{25}{2}}\\text{ V/m}$",
+      "$10\\sqrt{3}\\text{ V/m}$",
+      "$\\sqrt{\\frac{5}{2}}\\text{ V/m}$",
+      "$\\sqrt{\\frac{30}{7}}\\text{ V/m}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Radiated power $P = 10\\% \\text{ of } 200\\text{ W} = 20\\text{ W}$. Intensity at distance $r = 2\\text{ m}$ is $I = \\frac{P}{4\\pi r^2} = \\frac{20}{4\\pi(2)^2} = \\frac{5}{4\\pi}\\text{ W/m}^2$. Since $I = \\frac{1}{2}\\epsilon_0 c E_0^2$, we have $E_0^2 = \\frac{2I}{\\epsilon_0 c} = \\frac{2}{\\epsilon_0 c} \\left(\\frac{5}{4\\pi}\\right) = \\frac{5}{2\\pi \\epsilon_0 c} = \\frac{5 \\times (18 \\times 10^9)}{3 \\times 10^8} = 300$, giving $E_0 = \\sqrt{300} = 10\\sqrt{3}\\text{ V/m}$."
+  },
+  {
+    "question_number": 10,
+    "question_type": "single_choice",
+    "question_text": "A parallel plate capacitor is charged to $60\\text{ }\\mu\\text{C}$. The plate loses charge at the rate of $1.8 \\times 10^{-8}\\text{ C s}^{-1}$. The magnitude of displacement current is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.8 \\times 10^{-8}\\text{ C s}^{-1}$",
+      "$3.6 \\times 10^{-8}\\text{ C s}^{-1}$",
+      "$4.1 \\times 10^{-11}\\text{ C s}^{-1}$",
+      "$5.7 \\times 10^{-12}\\text{ C s}^{-1}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Displacement current $I_d$ in the capacitor equals the conduction current $I_c$ discharging the plates: $I_d = \\left|\\frac{dq}{dt}\\right| = 1.8 \\times 10^{-8}\\text{ C s}^{-1}$."
+  },
+  {
+    "question_number": 11,
+    "question_type": "single_choice",
+    "question_text": "A plane electromagnetic wave propagating in the $x$-direction has a wavelength of $6.0\\text{ mm}$. The electric field is in the $y$-direction and its maximum magnitude is $33\\text{ V m}^{-1}$. The equation for the electric field as a function of $x$ and $t$ may be represented as ($t$ is in seconds, $x$ is in meters, $c$ is the speed of light)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$11\\sin\\left(\\pi\\left(t - \\frac{x}{c}\\right)\\right)$",
+      "$33\\sin\\left(\\pi \\times 10^{11}\\left(t - \\frac{x}{c}\\right)\\right)$",
+      "$33\\sin\\left(\\pi\\left(t - \\frac{x}{c}\\right)\\right)$",
+      "$11\\sin\\left(\\pi \\times 10^{11}\\left(t - \\frac{x}{c}\\right)\\right)$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The electric field equation is $E_y = E_0 \\sin\\left[\\omega\\left(t - \\frac{x}{c}\\right)\\right]$. Here, $E_0 = 33\\text{ V m}^{-1}$ and $\\omega = 2\\pi f = \\frac{2\\pi c}{\\lambda} = \\frac{2\\pi \\times 3 \\times 10^8}{6.0 \\times 10^{-3}} = \\pi \\times 10^{11}\\text{ rad/s}$. Thus, $E_y = 33\\sin\\left(\\pi \\times 10^{11}\\left(t - \\frac{x}{c}\\right)\\right)$."
+  },
+  {
+    "question_number": 12,
+    "question_type": "single_choice",
+    "question_text": "A capacitor is connected across a battery for charging. Current through the battery at an instant is $3\\text{ A}$. Displacement current through the capacitor at that instant is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3\\text{ A}$",
+      "$1.5\\text{ A}$",
+      "$2\\text{ A}$",
+      "$2.5\\text{ A}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Maxwell's concept of continuity of current, the displacement current $I_d$ inside the capacitor at any instant is equal to the conduction current $I_c$ flowing in the external circuit. Hence, $I_d = I_c = 3\\text{ A}$."
+  },
+  {
+    "question_number": 13,
+    "question_type": "single_choice",
+    "question_text": "An EM wave transports energy along the $y$-axis. If at any instant, the magnetic field vector is along the $x$-axis, the electric field vector at this instant is along:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$z$-axis",
+      "$-z$-axis",
+      "$-x$-axis",
+      "$x$-axis"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The direction of energy propagation is given by the Poynting vector $\\hat{S} = \\hat{E} \\times \\hat{B}$. Here, energy transports along the $+y$-axis ($\\hat{j}$) and the magnetic field is along the $+x$-axis ($\\hat{i}$). Since $\\hat{k} \\times \\hat{i} = \\hat{j}$, the electric field vector $\\vec{E}$ must be directed along the $+z$-axis."
+  },
+  {
+    "question_number": 14,
+    "question_type": "single_choice",
+    "question_text": "The electric field in an electromagnetic wave is given by $E = 100 \\cos(2 \\times 10^6 t - 5x)\\text{ V m}^{-1}$. The average energy density of the E.M. wave is (in S.I. units):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{10^5}{36\\pi}$",
+      "$\\dfrac{10^5}{72\\pi}$",
+      "$\\dfrac{10^{-5}}{36\\pi}$",
+      "$\\dfrac{10^{-5}}{72\\pi}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average energy density of an EM wave is $u_{\\text{avg}} = \\frac{1}{2}\\epsilon_0 E_0^2$. Given $E_0 = 100\\text{ V/m}$ and $\\epsilon_0 = \\frac{1}{4\\pi \\times 9 \\times 10^9}\\text{ F/m} = \\frac{1}{36\\pi \\times 10^9}\\text{ F/m}$, we have:\n$$u_{\\text{avg}} = \\frac{1}{2} \\times \\frac{1}{36\\pi \\times 10^9} \\times (100)^2 = \\frac{10^4}{72\\pi \\times 10^9} = \\frac{10^{-5}}{72\\pi}\\text{ J/m}^3$$"
+  },
+  {
+    "question_number": 15,
+    "question_type": "single_choice",
+    "question_text": "A parallel plate capacitor consists of two circular plates of radius $10\\text{ cm}$. If the conduction current is $2\\pi\\text{ A}$, then the magnetic field at $8\\text{ cm}$ from the axis of the plates due to displacement current is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10 \\times 10^{-6}\\text{ T}$",
+      "$5 \\times 10^{-6}\\text{ T}$",
+      "$15 \\times 10^{-6}\\text{ T}$",
+      "$2.5 \\times 10^{-6}\\text{ T}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": true,
+    "diagram_description": "Schematic diagram showing two circular parallel plates of radius 10 cm separated by a gap, with an axis passing through their centers and a point located at a radial distance of 8 cm from the axis between the plates.",
+    "solution": "The total displacement current equals the conduction current: $I_D = I_C = 2\\pi\\text{ A}$. The displacement current enclosed within a radius $r < R$ is $I_D' = I_D \\left(\\frac{r}{R}\\right)^2$. Using Ampere-Maxwell's law:\n$$B = \\frac{\\mu_0 I_D r}{2\\pi R^2} = \\frac{(4\\pi \\times 10^{-7})(2\\pi)(0.08)}{2\\pi (0.10)^2} = 32\\pi \\times 10^{-7}\\text{ T} \\approx 10.05 \\times 10^{-6}\\text{ T} \\approx 10 \\times 10^{-6}\\text{ T}$$"
+  },
+  {
+    "question_number": 16,
+    "question_type": "single_choice",
+    "question_text": "A plane electromagnetic wave is incident on a plane surface of area $A$ perpendicularly. If the surface absorbs the radiation falling on it completely and if $E$ is the energy that strikes the surface in time $t$, then the average radiation pressure exerted on the surface is ($c = \\text{speed of light}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{2E}{Atc}$",
+      "$\\dfrac{E}{c}$",
+      "$\\dfrac{E}{Atc}$",
+      "$\\dfrac{Et}{Ac}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For complete absorption, the momentum transferred to the surface is $p = \\frac{E}{c}$. The average force exerted is $F = \\frac{p}{t} = \\frac{E}{ct}$. Therefore, the radiation pressure is:\n$$P = \\frac{F}{A} = \\frac{E}{Atc}$$"
+  },
+  {
+    "question_number": 17,
+    "question_type": "single_choice",
+    "question_text": "In an electromagnetic wave, the electric field amplitude is $E_0 = 100\\text{ V/m}$. Find the amplitude of the Poynting vector.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$13.25\\text{ W/m}^2$",
+      "$26.5\\text{ W/m}^2$",
+      "$18.25\\text{ W/m}^2$",
+      "$19.7\\text{ W/m}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The amplitude of the Poynting vector is given by $S_0 = \\frac{E_0 B_0}{\\mu_0} = c\\epsilon_0 E_0^2$.\nSubstituting the values:\n$$S_0 = (3 \\times 10^8) \\times (8.854 \\times 10^{-12}) \\times (100)^2 = 26.56\\text{ W/m}^2 \\approx 26.5\\text{ W/m}^2$$"
+  },
+  {
+    "question_number": 18,
+    "question_type": "single_choice",
+    "question_text": "The average energy density of an electromagnetic wave given by $E = (50\\text{ N/C}) \\sin(\\omega t - kx)$ will be nearly:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.1 \\times 10^{-8}\\text{ J/m}^3$",
+      "$10^{-7}\\text{ J/m}^3$",
+      "$10^{-6}\\text{ J/m}^3$",
+      "$10^{-5}\\text{ J/m}^3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average energy density of an EM wave is:\n$$u_{\\text{avg}} = \\frac{1}{2}\\epsilon_0 E_0^2 = \\frac{1}{2} \\times (8.854 \\times 10^{-12}) \\times (50)^2 = 1.107 \\times 10^{-8}\\text{ J/m}^3 \\approx 1.1 \\times 10^{-8}\\text{ J/m}^3$$"
+  },
+  {
+    "question_number": 19,
+    "question_type": "single_choice",
+    "question_text": "The intensity of a plane electromagnetic wave is $5\\text{ W/m}^2$. It is incident normally on a perfectly reflecting surface. Find the radiation pressure exerted on the surface.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3.33 \\times 10^{-9}\\text{ N/m}^2$",
+      "$3.33 \\times 10^{-8}\\text{ N/m}^2$",
+      "$8.0 \\times 10^{-8}\\text{ N/m}^2$",
+      "$8.0 \\times 10^{-9}\\text{ N/m}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a perfectly reflecting surface, the radiation pressure is given by $P = \\frac{2I}{c}$. Substituting the given values: $P = \\frac{2 \\times 5}{3 \\times 10^8} = \\frac{10}{3 \\times 10^8} \\approx 3.33 \\times 10^{-8}\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 20,
+    "question_type": "single_choice",
+    "question_text": "The electric field of a plane electromagnetic wave in vacuum is represented by $E_x = 0$, $E_y = 0.5\\cos\\left[2\\pi \\times 10^8\\left(t - \\frac{x}{c}\\right)\\right]$, $E_z = 0$. What is the direction of propagation of the electromagnetic wave?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$+x$-axis",
+      "$+y$-axis",
+      "$-z$-axis",
+      "$+z$-axis"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The harmonic wave expression is of the form $E_y = E_0\\cos(\\omega t - kx)$ where the term $\\left(t - \\frac{x}{c}\\right)$ has a negative sign before $x$. This indicates that the wave propagates along the positive $x$-axis ($+x$-direction)."
+  },
+  {
+    "question_number": 21,
+    "question_type": "single_choice",
+    "question_text": "The rms value of the electric field of light coming from the sun is $720\\text{ N/C}$. Find the average total energy density of the electromagnetic wave.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5.6 \\times 10^{-6}\\text{ J/m}^3$",
+      "$4.58 \\times 10^{-6}\\text{ J/m}^3$",
+      "$1.3 \\times 10^{-6}\\text{ J/m}^3$",
+      "$1.56 \\times 10^{-6}\\text{ J/m}^3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average total energy density of an electromagnetic wave is given by $u = \\epsilon_0 E_{\\text{rms}}^2$. Substituting the values: $u = 8.854 \\times 10^{-12} \\times (720)^2 = 8.854 \\times 10^{-12} \\times 518400 \\approx 4.58 \\times 10^{-6}\\text{ J/m}^3$."
+  },
+  {
+    "question_number": 22,
+    "question_type": "single_choice",
+    "question_text": "If $E_0$ and $B_0$ are the amplitudes of the electric and magnetic field vectors in an electromagnetic wave, respectively, then the value of $\\frac{B_0}{E_0}$ is ($c = \\text{speed of the electromagnetic wave}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$c$",
+      "$\\frac{1}{c}$",
+      "$c^2$",
+      "$\\frac{1}{c^2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Wave Propagation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the ratio of the amplitude of the electric field to that of the magnetic field is equal to the speed of light: $\\frac{E_0}{B_0} = c$. Therefore, $\\frac{B_0}{E_0} = \\frac{1}{c}$."
+  },
+  {
+    "question_number": 23,
+    "question_type": "single_choice",
+    "question_text": "A $100\\ \\Omega$ resistance and a capacitor of $100\\ \\Omega$ reactance are connected in series across a $220\\text{ V}$ AC source. The peak value of the displacement current is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\text{ A}$",
+      "$11\\sqrt{2}\\text{ A}$",
+      "$2.2\\text{ A}$",
+      "$11\\text{ A}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The impedance of the circuit is $Z = \\sqrt{R^2 + X_C^2} = \\sqrt{100^2 + 100^2} = 100\\sqrt{2}\\ \\Omega$. The peak source voltage is $V_0 = V_{\\text{rms}}\\sqrt{2} = 220\\sqrt{2}\\text{ V}$. The peak conduction current is $I_0 = \\frac{V_0}{Z} = \\frac{220\\sqrt{2}}{100\\sqrt{2}} = 2.2\\text{ A}$. Since the displacement current between the plates of a capacitor is equal to the conduction current in the circuit, the peak displacement current is $2.2\\text{ A}$."
+  },
+  {
+    "question_number": 24,
+    "question_type": "single_choice",
+    "question_text": "The radiation pressure exerted by an electromagnetic wave of intensity $I\\ (\\text{W/m}^2)$ incident normally on a non-reflecting (completely absorbing) surface is ($c = \\text{speed of light}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I c$",
+      "$I c^2$",
+      "$\\frac{I}{c}$",
+      "$\\frac{I}{c^2}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a non-reflecting (completely absorbing) surface, the momentum transferred per unit area per unit time is $\\frac{\\Delta p}{A \\Delta t} = \\frac{U}{c A \\Delta t} = \\frac{I}{c}$. Therefore, the radiation pressure is $P = \\frac{I}{c}$."
+  },
+  {
+    "question_number": 25,
+    "question_type": "single_choice",
+    "question_text": "What is the energy density of the electric field at a distance of $5\\text{ m}$ from a point source of an EM wave, if the electric field strength at that point is $100\\text{ V/m}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$44 \\times 10^{-9}\\text{ J/m}^3$",
+      "$11 \\times 10^{-9}\\text{ J/m}^3$",
+      "$22 \\times 10^{-9}\\text{ J/m}^3$",
+      "$88 \\times 10^{-9}\\text{ J/m}^3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The energy density of an electric field is given by $u_E = \\frac{1}{2}\\varepsilon_0 E^2$.\nSubstituting the values:\n$u_E = \\frac{1}{2} \\times (8.854 \\times 10^{-12}\\text{ F/m}) \\times (100\\text{ V/m})^2 = 4.427 \\times 10^{-8}\\text{ J/m}^3 \\approx 44 \\times 10^{-9}\\text{ J/m}^3$."
+  },
+  {
+    "question_number": 26,
+    "question_type": "single_choice",
+    "question_text": "An electromagnetic wave is deflected by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Electric field",
+      "Magnetic field",
+      "Both (1) & (2)",
+      "Neither electric nor magnetic field"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Properties of EM Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Electromagnetic waves consist of uncharged quanta (photons) and do not possess any net electric charge. Therefore, they are not deflected by either static electric or magnetic fields."
+  },
+  {
+    "question_number": 27,
+    "question_type": "single_choice",
+    "question_text": "If $U$ is the energy density of an electromagnetic wave in vacuum and $c$ is the speed of light in vacuum, then the intensity of the electromagnetic wave in vacuum is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I = \\frac{U}{c}$",
+      "$I = \\frac{U^2}{c^2}$",
+      "$I = Uc$",
+      "$I = U^2 c^2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity $I$ of an electromagnetic wave is the energy transported per unit area per unit time: $I = \\frac{\\Delta U}{A \\Delta t} = \\frac{u \\cdot (A \\cdot c \\Delta t)}{A \\Delta t} = Uc$."
+  },
+  {
+    "question_number": 28,
+    "question_type": "single_choice",
+    "question_text": "The phase difference between the electric field and magnetic field in an electromagnetic wave is always:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0$",
+      "$\\frac{\\pi}{4}$",
+      "$\\frac{\\pi}{2}$",
+      "$\\pi$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Properties of EM Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In a plane electromagnetic wave propagating through free space, the oscillating electric field $\\vec{E}$ and magnetic field $\\vec{B}$ reach their maxima and minima at the same time and position, meaning their phase difference is $0$."
+  },
+  {
+    "question_number": 29,
+    "question_type": "single_choice",
+    "question_text": "The ratio of the magnitudes of the magnetic field vector and the electric field vector in free space for an electromagnetic wave [in SI units] is equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1$",
+      "$3 \\times 10^8$",
+      "$3.33 \\times 10^{-9}$",
+      "$376.7$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Properties of EM Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an electromagnetic wave in vacuum, the relation between the magnitudes is $E = cB$. Therefore, the ratio of the magnetic field to the electric field is:\n$\\frac{B}{E} = \\frac{1}{c} = \\frac{1}{3 \\times 10^8\\text{ m/s}} \\approx 3.33 \\times 10^{-9}\\text{ s/m}$."
+  },
+  {
+    "question_number": 30,
+    "question_type": "single_choice",
+    "question_text": "For an electromagnetic wave propagating through vacuum, the amplitude of the electric field vector is $30\\text{ V/m}$. The maximum rate of energy flow per unit area due to the electromagnetic wave through the medium is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.33\\text{ mW/m}^2$",
+      "$2.38\\text{ W/m}^2$",
+      "$3.33\\text{ mW/m}^2$",
+      "$10\\text{ }\\mu\\text{W/m}^2$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The rate of energy flow per unit area is given by the Poynting vector $\\vec{S}$. Its maximum magnitude is:\n$S_{\\max} = \\frac{E_0 B_0}{\\mu_0} = \\frac{E_0^2}{\\mu_0 c} = \\frac{30^2}{(4\\pi \\times 10^{-7}) \\times (3 \\times 10^8)} = \\frac{900}{120\\pi} \\approx \\frac{900}{377} \\approx 2.38\\text{ W/m}^2$."
+  },
+  {
+    "question_number": 31,
+    "question_type": "single_choice",
+    "question_text": "Electromagnetic radiations of intensity $1\\text{ W/m}^2$ strike the surface of a substance, which reflects $80\\%$ of the incident radiation back into the same medium. The radiation pressure on the surface of the substance is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4 \\times 10^{-8}\\text{ N/m}^2$",
+      "$2.5 \\times 10^{-7}\\text{ N/m}^2$",
+      "$8 \\times 10^{-8}\\text{ N/m}^2$",
+      "$6 \\times 10^{-9}\\text{ N/m}^2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Radiation pressure for a surface with reflection coefficient $r$ is given by $P = \\frac{I}{c}(1 + r)$. Given $I = 1\\text{ W/m}^2$ and $r = 0.80$, we have $P = \\frac{1}{3 \\times 10^8}(1 + 0.80) = \\frac{1.8}{3 \\times 10^8} = 6 \\times 10^{-9}\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 32,
+    "question_type": "single_choice",
+    "question_text": "The laser beam from a source which radiates energy at the rate of $25\\text{ }\\mu\\text{W}$ and wavelength $5000\\text{ \\AA}$ is focused on a perfectly absorbing surface having an area equal to the square of the wavelength of the beam. The radiation pressure on the surface is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.33\\text{ N/m}^2$",
+      "$1.44\\text{ N/m}^2$",
+      "$1.33\\text{ N/m}^2$",
+      "$1.67\\text{ N/m}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Area $A = \\lambda^2 = (5 \\times 10^{-7}\\text{ m})^2 = 25 \\times 10^{-14}\\text{ m}^2$. The intensity is $I = \\frac{\\text{Power}}{A} = \\frac{25 \\times 10^{-6}}{25 \\times 10^{-14}} = 10^8\\text{ W/m}^2$. For a perfectly absorbing surface, radiation pressure is $P = \\frac{I}{c} = \\frac{10^8}{3 \\times 10^8} \\approx 0.33\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 33,
+    "question_type": "single_choice",
+    "question_text": "Which one of the following rays (or waves) has the maximum speed in air?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\beta$-rays",
+      "Heat radiations",
+      "Cosmic rays",
+      "Ultrasonic waves"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Heat radiations are electromagnetic waves (infrared radiation) and travel with the speed of light ($c \\approx 3 \\times 10^8\\text{ m/s}$) in air. In contrast, $\\beta$-rays and cosmic rays are material particles moving at speeds less than $c$, and ultrasonic waves are sound waves that propagate at only around $340\\text{ m/s}$."
+  },
+  {
+    "question_number": 34,
+    "question_type": "single_choice",
+    "question_text": "Which of the following phenomena proves the transverse nature of electromagnetic waves?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Polarisation",
+      "Interference",
+      "Diffraction",
+      "Reflection"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Interference, diffraction, and reflection can occur for both longitudinal and transverse waves. Polarisation is a characteristic phenomenon exhibited exclusively by transverse waves, thus establishing the transverse nature of electromagnetic waves."
+  },
+  {
+    "question_number": 35,
+    "question_type": "single_choice",
+    "question_text": "If the amplitudes of the electric field and magnetic field in an electromagnetic wave are $E_0$ and $B_0$ respectively and the speed of light is $c$, then which of the following is incorrect?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Intensity of the wave is $\\frac{1}{2}\\varepsilon_0 E_0^2 c$",
+      "Intensity of the wave is $\\frac{1}{2}\\left(\\frac{B_0^2}{\\mu_0}\\right)c$",
+      "Intensity of the wave is $\\frac{1}{4}\\left[\\varepsilon_0 E_0^2 + \\frac{B_0^2}{\\mu_0}\\right]c$",
+      "$c E_0 = B_0$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The relation between field amplitudes in an electromagnetic wave is $E_0 = c B_0$, which means $B_0 = \\frac{E_0}{c}$. Therefore, the relation $c E_0 = B_0$ is incorrect."
+  },
+  {
+    "question_number": 36,
+    "question_type": "single_choice",
+    "question_text": "The impulse imparted by an electromagnetic pulse of energy $1.5 \\times 10^{-2}\\text{ J}$ when it falls normally on a perfectly reflecting surface is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$2 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$0.5 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For normal incidence on a perfectly reflecting surface, the change in momentum (impulse imparted) is $\\Delta p = \\frac{2U}{c} = \\frac{2 \\times 1.5 \\times 10^{-2}}{3 \\times 10^8} = 10^{-10}\\text{ kg}\\cdot\\text{m/s}$."
+  },
+  {
+    "question_number": 37,
+    "question_type": "single_choice",
+    "question_text": "The speed of an electromagnetic wave in a medium which has relative permittivity and relative permeability of $4.5$ and $2$ respectively, is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.5 \\times 10^7\\text{ m/s}$",
+      "$1.0 \\times 10^8\\text{ m/s}$",
+      "$2.2 \\times 10^8\\text{ m/s}$",
+      "$6.5 \\times 10^7\\text{ m/s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The speed of an electromagnetic wave in a material medium is given by $v = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}}$. Substituting the given values, $v = \\frac{3 \\times 10^8\\text{ m/s}}{\\sqrt{2 \\times 4.5}} = \\frac{3 \\times 10^8}{\\sqrt{9}} = 1.0 \\times 10^8\\text{ m/s}$."
+  },
+  {
+    "question_number": 38,
+    "question_type": "single_choice",
+    "question_text": "Which of the following pairs of space and time varying electric field and magnetic field would generate a plane electromagnetic wave travelling in the $z$-direction?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$E\\hat{i}$, $B\\hat{j}$",
+      "$E\\hat{i}$, $B\\hat{i}$",
+      "$E\\hat{i}$, $B\\hat{k}$",
+      "$E\\hat{k}$, $B\\hat{i}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The direction of propagation of an electromagnetic wave is given by the cross product of the electric field vector and the magnetic field vector, i.e., along $\\hat{E} \\times \\hat{B}$. For $\\vec{E}$ along $\\hat{i}$ and $\\vec{B}$ along $\\hat{j}$, we have $\\hat{i} \\times \\hat{j} = \\hat{k}$, which corresponds to the positive $z$-direction."
+  },
+  {
+    "question_number": 39,
+    "question_type": "single_choice",
+    "question_text": "The direction of the Poynting vector is along (symbols have their usual meaning):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{E} \\times \\vec{B}$",
+      "$\\vec{B} \\times \\vec{E}$",
+      "$\\vec{E}$",
+      "$\\vec{B}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Poynting vector is defined as $\\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})$, representing the directional energy flux density of an electromagnetic field. Thus, its direction is along $\\vec{E} \\times \\vec{B}$."
+  },
+  {
+    "question_number": 40,
+    "question_type": "single_choice",
+    "question_text": "The average magnetic energy density in a plane electromagnetic wave is $x$. The average electric energy density is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$x$",
+      "$2x$",
+      "$\\frac{x}{2}$",
+      "$\\sqrt{x}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the total energy is divided equally between the electric field and the magnetic field. Therefore, the average electric energy density equals the average magnetic energy density, so $u_E = u_B = x$."
+  },
+  {
+    "question_number": 41,
+    "question_type": "single_choice",
+    "question_text": "The frequency of oscillation of the energy density of an electromagnetic wave is equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Frequency of wave",
+      "Half the frequency of wave",
+      "Double the frequency of wave",
+      "Zero"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The instantaneous electric energy density is proportional to $E^2 = E_0^2 \\sin^2(\\omega t - kx) = \\frac{E_0^2}{2}[1 - \\cos(2\\omega t - 2kx)]$. The term oscillates with angular frequency $2\\omega$, which means the frequency of oscillation of energy density is $2\\nu$, i.e., double the frequency of the wave."
+  },
+  {
+    "question_number": 42,
+    "question_type": "single_choice",
+    "question_text": "X-rays cannot be deflected by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "An electric field",
+      "A magnetic field",
+      "A gravitational field",
+      "Any of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "X-rays are neutral electromagnetic waves consisting of photons that have no electric charge. Consequently, they experience no deflection in electric or magnetic fields. In the classical domain, having zero rest mass, they are considered undeflected by any of these fields."
+  },
+  {
+    "question_number": 43,
+    "question_type": "single_choice",
+    "question_text": "If $\\vec{E}$ and $\\vec{B}$ are the instantaneous electric field and magnetic field in an electromagnetic wave, then the direction of propagation of the electromagnetic wave is along",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{E} + \\vec{B}$",
+      "$\\vec{E} \\times \\vec{B}$",
+      "$\\vec{B} \\times \\vec{E}$",
+      "$\\vec{E} - \\vec{B}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Poynting vector, which indicates the direction of energy propagation of an electromagnetic wave, is given by $\\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})$. Thus, the wave propagates in the direction of the vector cross product $\\vec{E} \\times \\vec{B}$."
+  },
+  {
+    "question_number": 44,
+    "question_type": "single_choice",
+    "question_text": "If $\\lambda_v$, $\\lambda_x$, and $\\lambda_m$ represent the wavelengths of visible light, X-rays, and microwaves respectively, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\lambda_m > \\lambda_x > \\lambda_v$",
+      "$\\lambda_v > \\lambda_m > \\lambda_x$",
+      "$\\lambda_v > \\lambda_x > \\lambda_m$",
+      "$\\lambda_m > \\lambda_v > \\lambda_x$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In the electromagnetic spectrum, microwaves have the longest wavelength among the three ($\\sim 1\\text{ mm}$ to $1\\text{ m}$), visible light has intermediate wavelength ($\\sim 400\\text{ nm}$ to $700\\text{ nm}$), and X-rays have the shortest wavelength ($\\sim 0.01\\text{ nm}$ to $10\\text{ nm}$). Therefore, $\\lambda_m > \\lambda_v > \\lambda_x$."
+  },
+  {
+    "question_number": 45,
+    "question_type": "single_choice",
+    "question_text": "The electric field vector of an electromagnetic wave is given by $\\vec{E} = E_0 \\sin(\\omega t - kx)\\hat{j}$. The corresponding expression for the magnetic field is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{B} = B_0 \\sin(\\omega t + kx)\\hat{k}$",
+      "$\\vec{B} = B_0 \\sin(\\omega t - kx)\\hat{k}$",
+      "$\\vec{B} = -B_0 \\sin(\\omega t + kx)\\hat{k}$",
+      "$\\vec{B} = -B_0 \\sin(\\omega t - kx)\\hat{k}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The wave is propagating along the $+x$-direction, so its propagation unit vector is $\\hat{i}$. The electric field is along $\\hat{j}$. Since the direction of propagation is given by $\\hat{E} \\times \\hat{B} = \\hat{i}$, we must have $\\hat{j} \\times \\hat{B} = \\hat{i}$, which means $\\hat{B} = \\hat{k}$. Thus, $\\vec{B} = B_0 \\sin(\\omega t - kx)\\hat{k}$."
+  },
+  {
+    "question_number": 46,
+    "question_type": "single_choice",
+    "question_text": "Electromagnetic waves are produced by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Static charges",
+      "Charges in uniform motion",
+      "An oscillating charge",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Static charges produce only electrostatic fields, and charges moving with uniform velocity produce steady magnetic fields without radiating energy. An accelerated or oscillating charge produces a time-varying electric and magnetic field, thus radiating electromagnetic waves."
+  },
+  {
+    "question_number": 47,
+    "question_type": "single_choice",
+    "question_text": "Electric field $\\vec{E}$ and magnetic field $\\vec{B}$ of an electromagnetic wave are at angles $\\theta_1$ and $\\theta_2$ respectively with the direction of propagation of the electromagnetic wave, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\theta_1 = \\theta_2 = 90^\\circ$",
+      "$\\theta_1 = 90^\\circ,\\; \\theta_2 \\neq 90^\\circ$",
+      "$\\theta_1 \\neq 90^\\circ,\\; \\theta_2 = 90^\\circ$",
+      "$\\theta_1$ and $\\theta_2$ both are zero"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Electromagnetic waves are transverse in nature, meaning both the electric field vector $\\vec{E}$ and the magnetic field vector $\\vec{B}$ oscillate perpendicular to the direction of propagation. Hence, $\\theta_1 = \\theta_2 = 90^\\circ$."
+  },
+  {
+    "question_number": 48,
+    "question_type": "single_choice",
+    "question_text": "The average energy density of an electromagnetic wave with $E_y = E_0 \\sin(kx - \\omega t)$ and $B_z = B_0 \\sin(kx - \\omega t)$ is given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{2}\\varepsilon_0 E_0^2$",
+      "$\\frac{B_0^2}{2\\mu_0}$",
+      "$\\frac{\\varepsilon_0 E_0^2}{4} + \\frac{B_0^2}{4\\mu_0}$",
+      "All of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average total energy density is $u_{\\text{avg}} = \\langle u_E \\rangle + \\langle u_B \\rangle = \\frac{1}{4}\\varepsilon_0 E_0^2 + \\frac{B_0^2}{4\\mu_0}$. Since $E_0 = cB_0$ and $c = 1/\\sqrt{\\mu_0 \\varepsilon_0}$, the electric and magnetic energy densities are equal: $\\langle u_E \\rangle = \\langle u_B \\rangle$. Thus, $u_{\\text{avg}} = \\frac{1}{2}\\varepsilon_0 E_0^2 = \\frac{B_0^2}{2\\mu_0} = \\frac{\\varepsilon_0 E_0^2}{4} + \\frac{B_0^2}{4\\mu_0}$, making all the given expressions equivalent."
+  },
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The energy in an EM wave is divided equally between the electric and magnetic field.\n**Reason (R):** The magnitude of electric field vector is $3 \\times 10^8$ times the magnitude of magnetic field vector in vacuum.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The energy in an EM wave is divided equally between the electric and magnetic field.",
+    "reason_text": "The magnitude of electric field vector is $3 \\times 10^8$ times the magnitude of magnetic field vector in vacuum.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average electric energy density is $u_E = \\frac{1}{4}\\varepsilon_0 E_0^2$ and the average magnetic energy density is $u_B = \\frac{B_0^2}{4\\mu_0}$. Since $E_0 = c B_0$ and $c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}$, substituting gives $u_E = u_B$, so energy is divided equally (Assertion is true). The ratio of field magnitudes is $E/B = c = 3 \\times 10^8\\text{ m/s}$ in vacuum (Reason is true). However, Reason alone does not fully explain equal energy distribution without the relation $c = 1/\\sqrt{\\mu_0 \\varepsilon_0}$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Electric energy density in electric field of electromagnetic wave is $c^2$ times the magnetic energy density in its magnetic field.\n**Reason (R):** Amplitude of electric field is $\\frac{1}{c}$ times the amplitude of magnetic field.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Electric energy density in electric field of electromagnetic wave is $c^2$ times the magnetic energy density in its magnetic field.",
+    "reason_text": "Amplitude of electric field is $\\frac{1}{c}$ times the amplitude of magnetic field.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the electric energy density and magnetic energy density are equal ($u_E = u_B$), not $c^2$ times each other, making the Assertion false. Furthermore, the amplitude of the electric field is related to the magnetic field by $E_0 = c B_0$, which means $E_0$ is $c$ times $B_0$, not $\\frac{1}{c}$ times, making the Reason false."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Sound waves cannot travel in vacuum but light waves can travel in vacuum.\n**Reason (R):** Sound waves are non-mechanical waves but electromagnetic waves are mechanical waves.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Sound waves cannot travel in vacuum but light waves can travel in vacuum.",
+    "reason_text": "Sound waves are non-mechanical waves but electromagnetic waves are mechanical waves.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Sound waves require a material medium for propagation, so they cannot travel in vacuum, whereas light (an electromagnetic wave) can propagate through vacuum; hence Assertion is true. Sound waves are mechanical waves, while electromagnetic waves are non-mechanical waves, so Reason is false."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The speed of electromagnetic wave in vacuum increases as we move from radio waves to $\\gamma$-rays.\n**Reason (R):** Speed of electromagnetic wave is proportional to frequency.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The speed of electromagnetic wave in vacuum increases as we move from radio waves to $\\gamma$-rays.",
+    "reason_text": "Speed of electromagnetic wave is proportional to frequency.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "All electromagnetic waves travel at the same constant speed $c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 3 \\times 10^8\\text{ m/s}$ in vacuum, regardless of their wavelength or frequency. Thus, the speed neither increases from radio waves to $\\gamma$-rays nor is it proportional to frequency in vacuum. Both Assertion and Reason are false."
+  },
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** In electromagnetic wave, the direction of variation of electric and magnetic field are perpendicular to each other and also perpendicular to the direction of wave propagation.\n**Reason (R):** Electromagnetic waves are transverse in nature.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "In electromagnetic wave, the direction of variation of electric and magnetic field are perpendicular to each other and also perpendicular to the direction of wave propagation.",
+    "reason_text": "Electromagnetic waves are transverse in nature.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an EM wave, $\\vec{E} \\perp \\vec{B}$ and both are perpendicular to the propagation vector $\\vec{k}$ (Assertion is true). Waves whose field oscillations are perpendicular to the direction of energy propagation are classified as transverse waves (Reason is true). However, being transverse does not explain why the electric and magnetic fields must be mutually perpendicular to each other; that arises from Maxwell's curl equations."
+  },
+  {
+    "question_number": 6,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} X-rays are dangerous to human beings.\n\\textbf{Reason (R):} X-ray imaging is used to diagnose defects in bone and teeth structures.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "X-rays are dangerous to human beings.",
+    "reason_text": "X-ray imaging is used to diagnose defects in bone and teeth structures.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "X-rays have high frequency and high energy, which can ionize atoms and damage living tissues or DNA, making them hazardous to human beings (Assertion is true). X-ray imaging can pass through soft tissues but is absorbed by bones and teeth, so it is used for medical diagnosis (Reason is true). However, Reason does not explain why they are dangerous."
+  },
+  {
+    "question_number": 7,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} When an electromagnetic wave incident normal to surface of an object is absorbed, then it exerts a pressure on the object which equals to $\\left(\\frac{I}{c}\\right)$.\n\\textbf{Reason (R):} Radiation pressure results from the exchange of momentum between an object and electromagnetic field of the wave.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "When an electromagnetic wave incident normal to surface of an object is absorbed, then it exerts a pressure on the object which equals to $\\left(\\frac{I}{c}\\right)$.",
+    "reason_text": "Radiation pressure results from the exchange of momentum between an object and electromagnetic field of the wave.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "An electromagnetic wave carries momentum $p = U/c$. When it is completely absorbed by a surface, the momentum transferred per unit area per unit time gives radiation pressure $P = \\frac{dp/dt}{A} = \\frac{1}{A}\\frac{dU/dt}{c} = \\frac{I}{c}$. This pressure arises directly from the transfer/exchange of momentum from the field to the object, making the Reason the correct explanation of the Assertion."
+  },
+  {
+    "question_number": 8,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} RADAR system use microwaves.\n\\textbf{Reason (R):} Microwaves have longer wavelengths allowing them to travel through atmosphere with minimal absorption and scattering for long distances even in adverse weather conditions and detect fast moving objects.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "RADAR system use microwaves.",
+    "reason_text": "Microwaves have longer wavelengths allowing them to travel through atmosphere with minimal absorption and scattering for long distances even in adverse weather conditions and detect fast moving objects.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Microwaves have wavelengths in the range of millimeters to centimeters, which allows them to penetrate clouds, fog, and rain with low atmospheric attenuation and scattering compared to shorter wavelengths, making them ideal for RADAR detection of aircraft and other moving targets. Hence, both Assertion and Reason are true, and Reason correctly explains the Assertion."
+  },
+  {
+    "question_number": 9,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} Speed of an electromagnetic wave in a medium depends on relative permittivity and relative permeability of the medium.\n\\textbf{Reason (R):} Speed of an electromagnetic wave, $v = \\sqrt{\\mu_r \\varepsilon_r}$.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Speed of an electromagnetic wave in a medium depends on relative permittivity and relative permeability of the medium.",
+    "reason_text": "Speed of an electromagnetic wave, $v = \\sqrt{\\mu_r \\varepsilon_r}$.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The speed of an electromagnetic wave in a medium is given by $v = \\frac{1}{\\sqrt{\\mu \\varepsilon}} = \\frac{1}{\\sqrt{\\mu_0 \\mu_r \\varepsilon_0 \\varepsilon_r}} = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}}$. Therefore, the speed depends on $\\varepsilon_r$ and $\\mu_r$ (Assertion is true). The expression given in Reason is $v = \\sqrt{\\mu_r \\varepsilon_r}$, which is incorrect because the refractive index is $n = \\sqrt{\\mu_r \\varepsilon_r}$ and $v = c/n = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}}$ (Reason is false)."
+  },
+  {
+    "question_number": 10,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} There is no magnetic field between plates of a parallel-plate capacitor connected to an AC source.\n\\textbf{Reason (R):} There is no current in the space between plates of the capacitor.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "There is no magnetic field between plates of a parallel-plate capacitor connected to an AC source.",
+    "reason_text": "There is no current in the space between plates of the capacitor.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When connected to an AC source, the electric field between the capacitor plates changes continuously with time, producing a time-varying electric flux and therefore a displacement current $I_d = \\varepsilon_0 \\frac{d\\Phi_E}{dt}$. This displacement current acts as a source of magnetic field between the plates according to Ampere-Maxwell law: $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 I_d$. Thus, a magnetic field exists between the plates (Assertion is false) and there is a displacement current present (Reason is false)."
+  }
+]

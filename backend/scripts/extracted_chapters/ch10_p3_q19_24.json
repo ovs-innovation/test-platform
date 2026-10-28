@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 19,
+    "question_type": "single_choice",
+    "question_text": "The observed wavelength of light coming from a distant galaxy is found to increase by $0.5\\%$ as compared with that coming from a terrestrial source. The galaxy is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Stationary with respect to earth",
+      "Approaching earth with a velocity of $1.5 \\times 10^6\\text{ m/s}$",
+      "Receding from earth with velocity of light",
+      "Receding from earth with a velocity equal to $1.5 \\times 10^6\\text{ m/s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "An increase in observed wavelength indicates a red shift, meaning the galaxy is receding from Earth. Using Doppler's formula for light, $\\frac{\\Delta \\lambda}{\\lambda} = \\frac{v}{c}$. Given $\\frac{\\Delta \\lambda}{\\lambda} = 0.5\\% = 0.005$, the recessional velocity is $v = 0.005 \\times 3 \\times 10^8\\text{ m/s} = 1.5 \\times 10^6\\text{ m/s}$."
+  },
+  {
+    "question_number": 20,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, $D$ equals the distance of screen from slits and $d$ is the separation between the slits. The distance of the nearest point to the central maxima where intensity is same as that due to a single slit, is equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\dfrac{D\\lambda}{d}$",
+      "$\\dfrac{D\\lambda}{2d}$",
+      "$\\dfrac{D\\lambda}{3d}$",
+      "$\\dfrac{2\\lambda D}{d}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Intensity at any point in YDSE is $I = 4I_0 \\cos^2\\left(\\frac{\\phi}{2}\\right)$. Setting $I = I_0$, we get $\\cos^2\\left(\\frac{\\phi}{2}\\right) = \\frac{1}{4} \\implies \\frac{\\phi}{2} = \\frac{\\pi}{3} \\implies \\phi = \\frac{2\\pi}{3}$. The phase difference is $\\phi = \\frac{2\\pi}{\\lambda}\\left(\\frac{yd}{D}\\right)$. Equating gives $\\frac{2\\pi}{\\lambda}\\frac{yd}{D} = \\frac{2\\pi}{3} \\implies y = \\frac{\\lambda D}{3d}$."
+  },
+  {
+    "question_number": 21,
+    "question_type": "single_choice",
+    "question_text": "Angular width of central maximum in the Fraunhofer's diffraction pattern is measured. Slit is illuminated by the light of wavelength $6000\\text{ \\AA}$. If slit is illuminated by light of another wavelength, angular width decreases by $30\\%$. The wavelength of light used is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3500\\text{ \\AA}$",
+      "$4200\\text{ \\AA}$",
+      "$4700\\text{ \\AA}$",
+      "$6000\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular width of the central maximum is $2\\theta = \\frac{2\\lambda}{a} \\propto \\lambda$. A decrease of $30\\%$ implies the new angular width is $70\\%$ of the initial value. Thus, $\\lambda' = 0.70 \\times \\lambda = 0.70 \\times 6000\\text{ \\AA} = 4200\\text{ \\AA}$."
+  },
+  {
+    "question_number": 22,
+    "question_type": "single_choice",
+    "question_text": "A ray of light is incident on the surface of a glass plate of refractive index $\\sqrt{3}$ at the polarising angle. The angle of refraction is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$60^\\circ$",
+      "$30^\\circ$",
+      "$45^\\circ$",
+      "$50^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Brewster's law, $\\tan i_p = \\mu = \\sqrt{3} \\implies i_p = 60^\\circ$. At the Brewster angle, the reflected and refracted rays are perpendicular, so $i_p + r = 90^\\circ$. Therefore, the angle of refraction is $r = 90^\\circ - 60^\\circ = 30^\\circ$."
+  },
+  {
+    "question_number": 23,
+    "question_type": "single_choice",
+    "question_text": "Young's double slit experiment is performed with light of wavelength $5000\\text{ \\AA}$. If a glass plate of thickness $1\\text{ }\\mu\\text{m}$ and refractive index $1.5$ is kept in front of one of the slits, then the number of fringes that passes through the field of view is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1$",
+      "$2$",
+      "$3$",
+      "$4$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fringe shift in terms of the number of fringes is $n = \\frac{(\\mu - 1)t}{\\lambda}$. Substituting the given values: $n = \\frac{(1.5 - 1) \\times 10^{-6}\\text{ m}}{5000 \\times 10^{-10}\\text{ m}} = \\frac{0.5 \\times 10^{-6}}{0.5 \\times 10^{-6}} = 1$."
+  },
+  {
+    "question_number": 24,
+    "question_type": "single_choice",
+    "question_text": "In YDSE, distance between two slits is $4\\text{ mm}$, $D = 1\\text{ m}$ and $\\lambda = 12000\\text{ \\AA}$. If intensity of coherent light from two slits are $I_0$ and $16I_0$, then find intensity at $y = 0.1\\text{ mm}$ on the screen.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$7I_0$",
+      "$10I_0$",
+      "$13I_0$",
+      "$16I_0$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The path difference is $\\Delta x = \\frac{yd}{D} = \\frac{0.1 \\times 10^{-3} \\times 4 \\times 10^{-3}}{1} = 4 \\times 10^{-7}\\text{ m}$. The phase difference is $\\phi = \\frac{2\\pi}{\\lambda}\\Delta x = \\frac{2\\pi}{12000 \\times 10^{-10}} \\times 4 \\times 10^{-7} = \\frac{2\\pi}{3}$. The resultant intensity is $I = I_1 + I_2 + 2\\sqrt{I_1 I_2}\\cos\\phi = I_0 + 16I_0 + 2\\sqrt{16I_0^2}\\cos\\left(\\frac{2\\pi}{3}\\right) = 17I_0 + 8I_0\\left(-\\frac{1}{2}\\right) = 13I_0$."
+  }
+]

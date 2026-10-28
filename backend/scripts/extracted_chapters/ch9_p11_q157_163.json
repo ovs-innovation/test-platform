@@ -1,0 +1,107 @@
+[
+  {
+    "question_number": 157,
+    "question_type": "single_choice",
+    "question_text": "A ray of light strikes on a glass sphere at point A. If A is midway between P and Q, then the deviation of the ray as it emerges out of the sphere will be:",
+    "options": [
+      "$30^\\circ$",
+      "$45^\\circ$",
+      "$65^\\circ$",
+      "$85^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surface",
+    "solution": "Angle of incidence at point A is $45^\\circ$. Using $\\mu = \\sqrt{2}$, $\\sin r = \\frac{\\sin 45^\\circ}{\\sqrt{2}} = \\frac{1}{2} \\implies r = 30^\\circ$. Total deviation $\\delta = 2(i - r) = 2(45^\\circ - 30^\\circ) = 30^\\circ$."
+  },
+  {
+    "question_number": 158,
+    "question_type": "single_choice",
+    "question_text": "A thin lens of focal length $10\\text{ cm}$ is cut into two equal halves and are kept as shown in figure. If an object O is placed at distance $10\\text{ cm}$ from the optical centre of combination, then the distance of image from object will be:",
+    "options": [
+      "$5\\text{ cm}$",
+      "$7.5\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$20\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Cutting and Combination of Lenses",
+    "solution": "Each half cut along the principal axis retains focal length $f = 10\\text{ cm}$. In contact, $F = 5\\text{ cm}$. Since the object is at $u = -10\\text{ cm} = -2F$, the image is at $v = +2F = 10\\text{ cm}$. Total distance = $10 + 10 = 20\\text{ cm}$."
+  },
+  {
+    "question_number": 159,
+    "question_type": "single_choice",
+    "question_text": "The average value of focal length of a normal human eye-lens is approximately:",
+    "options": [
+      "$2\\text{ cm}$",
+      "$25\\text{ cm}$",
+      "$100\\text{ cm}$",
+      "Infinity"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "The Human Eye",
+    "solution": "The distance between the eye-lens and the retina in a normal human eye is approximately $2\\text{ cm}$."
+  },
+  {
+    "question_number": 160,
+    "question_type": "single_choice",
+    "question_text": "What should be the angle between two plane mirrors, if an object placed unsymmetrically between them has five images?",
+    "options": [
+      "$72^\\circ$",
+      "$60^\\circ$",
+      "$120^\\circ$",
+      "$49^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Multiple Images in Inclined Mirrors",
+    "solution": "For unsymmetrical placement with an odd integer $m = \\frac{360^\\circ}{\\theta}$, the number of images is $n = m$. Thus, $\\frac{360^\\circ}{\\theta} = 5 \\implies \\theta = 72^\\circ$."
+  },
+  {
+    "question_number": 161,
+    "question_type": "single_choice",
+    "question_text": "A converging spherical wavefront is obtained from:",
+    "options": [
+      "Light emerging from a convex lens when a point source is placed at its focus",
+      "A parallel beam of light incident on the convex lens",
+      "Light converging at a point",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Wavefronts",
+    "solution": "A parallel beam focused by a convex lens converges to the focus, and any light beam converging towards a point forms a converging spherical wavefront."
+  },
+  {
+    "question_number": 162,
+    "question_type": "single_choice",
+    "question_text": "A ray is incident normally on a right angled prism whose refractive index is $\\sqrt{3}$ and prism angle $\\alpha = 30^\\circ$. Deviation to the ray is equal to:",
+    "options": [
+      "$\\frac{\\pi}{2}$",
+      "$\\frac{\\pi}{6}$",
+      "$\\frac{3\\pi}{2}$",
+      "$2\\pi$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Prism Deviation",
+    "solution": "At the first face, $r_1 = 0$, so at the second face the angle of incidence is $r_2 = \\alpha = 30^\\circ$. By Snell's law: $\\sqrt{3}\\sin 30^\\circ = \\sin e \\implies e = 60^\\circ$. Deviation $\\delta = e - r_2 = 60^\\circ - 30^\\circ = 30^\\circ = \\frac{\\pi}{6}$."
+  },
+  {
+    "question_number": 163,
+    "question_type": "single_choice",
+    "question_text": "A convex lens forms an image of a point object O on the screen. If a glass slab of thickness $3\\text{ cm}$ and refractive index $1.5$ is introduced before the lens, then to have the image of the object on the screen again, the object should be shifted:",
+    "options": [
+      "Away from the lens by $1\\text{ cm}$",
+      "Away from the lens by $1.5\\text{ cm}$",
+      "Towards the lens by $1\\text{ cm}$",
+      "Towards the lens by $1.5\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Normal Shift through Glass Slab",
+    "solution": "Normal shift by slab is $\\Delta x = t\\left(1 - \\frac{1}{\\mu}\\right) = 3\\left(1 - \\frac{1}{1.5}\\right) = 1\\text{ cm}$ towards the lens. To restore the apparent position, the object must be moved 1 cm away from the lens."
+  }
+]

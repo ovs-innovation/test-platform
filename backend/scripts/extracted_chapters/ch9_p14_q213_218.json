@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 213,
+    "question_type": "single_choice",
+    "question_text": "We combined a convex lens of focal length $f_1$ with a concave lens of focal length $f_2$ and their combined focal length is $F$. The combination of these lenses will behave like a concave lens, if",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_1 > f_2$",
+      "$f_1 < f_2$",
+      "$f_1 = f_2$",
+      "$f_1 \\le f_2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the combination is $P = \\frac{1}{f_1} - \\frac{1}{f_2}$. For it to behave as a concave lens, $P < 0 \\implies \\frac{1}{f_1} < \\frac{1}{f_2} \\implies f_1 > f_2$."
+  },
+  {
+    "question_number": 214,
+    "question_type": "single_choice",
+    "question_text": "A ray of light is incident on an equilateral glass prism placed on a horizontal table as shown. For minimum deviation, the true statement is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$PQ$ is horizontal",
+      "$QR$ is horizontal",
+      "$RS$ is horizontal",
+      "Either $PQ$ or $RS$ is horizontal"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": true,
+    "diagram_description": "An equilateral prism is placed with its base lying horizontally on a table. A ray of light $PQ$ enters the prism from the left face, refracts as ray $QR$ inside the prism, and emerges from the right face as ray $RS$.",
+    "solution": "At minimum deviation in an equilateral prism, the refracted ray inside the prism is parallel to the base. Since the base is placed horizontally, the ray $QR$ is horizontal."
+  },
+  {
+    "question_number": 215,
+    "question_type": "single_choice",
+    "question_text": "The length of a compound microscope is $14\\text{ cm}$. The magnifying power for relaxed eye is $25$. If the focal length of the eye lens is $5\\text{ cm}$, then the object distance for the objective lens will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.8\\text{ cm}$",
+      "$1.5\\text{ cm}$",
+      "$2.1\\text{ cm}$",
+      "$2.4\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a relaxed eye, $L = v_o + f_e \\implies 14 = v_o + 5 \\implies v_o = 9\\text{ cm}$. Magnifying power is $m = \\frac{v_o}{u_o}\\left(\\frac{D}{f_e}\\right) \\implies 25 = \\frac{9}{u_o}\\left(\\frac{25}{5}\\right) \\implies u_o = \\frac{45}{25} = 1.8\\text{ cm}$."
+  },
+  {
+    "question_number": 216,
+    "question_type": "single_choice",
+    "question_text": "The minimum magnifying power of a telescope is $M$. If the focal length of its eye lens is halved, then the magnifying power will become",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{M}{2}$",
+      "$2M$",
+      "$3M$",
+      "$4M$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Minimum magnifying power is given by $M = \\frac{f_o}{f_e}$. When $f_e$ is halved, $M' = \\frac{f_o}{f_e/2} = 2M$."
+  },
+  {
+    "question_number": 217,
+    "question_type": "single_choice",
+    "question_text": "When a ray of light falls on a given plate at an angle of incidence $60^\\circ$, the reflected and refracted rays are found to be normal to each other. The refractive index of the material of the plate is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\sqrt{3}}{2}$",
+      "$1.5$",
+      "$1.732$",
+      "$2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Brewster's Law, when the reflected and refracted rays are perpendicular, $\\mu = \\tan(i_p) = \\tan 60^\\circ = \\sqrt{3} \\approx 1.732$."
+  },
+  {
+    "question_number": 218,
+    "question_type": "single_choice",
+    "question_text": "A white beam of light can be deviated without dispersion by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Using two suitable glass prisms placed in same sense",
+      "Using two suitable glass prisms placed in opposite sense",
+      "Using a suitable glass prism",
+      "None of these"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For achromatic combination (deviation without dispersion), two prisms of different materials are placed with their refracting angles in opposite senses such that net dispersion $\\delta(\\omega_1 - \\omega_2) = 0$."
+  }
+]

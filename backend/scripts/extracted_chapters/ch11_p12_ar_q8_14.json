@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 8,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** According to wave theory of light, photoelectric effect can take place for any frequency.\n**Reason (R):** Even if frequency of radiation is small, after a sufficiently long time, enough energy can be imparted to emit photoelectrons.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "According to wave theory of light, photoelectric effect can take place for any frequency.",
+    "reason_text": "Even if frequency of radiation is small, after a sufficiently long time, enough energy can be imparted to emit photoelectrons.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the classical wave theory of light, energy transfer occurs continuously over the wave front and depends on intensity, not frequency. Therefore, radiation of any frequency, if incident for a sufficiently long time, should accumulate enough energy to eject electrons. Thus, both statements are true and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 9,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Copper cannot emit photoelectrons for visible light.\n**Reason (R):** Copper is very good conductor of electricity.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Copper cannot emit photoelectrons for visible light.",
+    "reason_text": "Copper is very good conductor of electricity.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The work function of copper is approximately $4.65\\text{ eV}$, while the maximum photon energy in visible light is about $3.2\\text{ eV}$, so visible light cannot cause photoemission from copper (Assertion is true). Copper is indeed a very good conductor of electricity (Reason is true). However, high electrical conductivity is not the reason for the high work function."
+  },
+  {
+    "question_number": 10,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** For a given frequency of incident radiation, the stopping potential is independent of its intensity.\n**Reason (R):** $K_{\\text{max}} = h\\nu - \\phi_0$\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "For a given frequency of incident radiation, the stopping potential is independent of its intensity.",
+    "reason_text": "$K_{\\text{max}} = h\\nu - \\phi_0$",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Einstein's equation, $e V_0 = K_{\\text{max}} = h\\nu - \\phi_0$, which gives $V_0 = \\frac{h\\nu - \\phi_0}{e}$. This depends only on the frequency of the radiation $\\nu$ and the work function $\\phi_0$, and is independent of intensity. Thus, both statements are true and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 11,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** For $\\nu > \\nu_0$, photoelectric current is proportional to intensity.\n**Reason (R):** In particle nature, intensity of radiation is proportional to number of photons.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "For $\\nu > \\nu_0$, photoelectric current is proportional to intensity.",
+    "reason_text": "In particle nature, intensity of radiation is proportional to number of photons.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Intensity is proportional to the number of incident photons per unit area per second. Since each photon ejects at most one electron, a greater intensity results in more emitted electrons per second and therefore a proportional increase in photoelectric current. Thus, Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 12,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Focussing mechanism of light by the eye-lens is well described in the wave picture.\n**Reason (R):** Absorption of light by the rods and cones of the retina requires the photon picture.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Focussing mechanism of light by the eye-lens is well described in the wave picture.",
+    "reason_text": "Absorption of light by the rods and cones of the retina requires the photon picture.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The focusing of light through the eye lens is a refraction phenomenon best described by wave optics. The absorption of light by retinal photoreceptors involves quantum-level energy transfer, requiring the photon (particle) picture. Both are true NCERT statements, but R does not explain A."
+  },
+  {
+    "question_number": 13,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** For a photon, de-Broglie's wavelength is equal to wavelength of electromagnetic radiation of which photon is a quantum of energy and momentum.\n**Reason (R):** For photon, $p = \\frac{E}{c} = \\frac{h\\nu}{c}$ and $\\lambda = \\frac{h}{p}$.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "For a photon, de-Broglie's wavelength is equal to wavelength of electromagnetic radiation of which photon is a quantum of energy and momentum.",
+    "reason_text": "For photon, $p = \\frac{E}{c} = \\frac{h\\nu}{c}$ and $\\lambda = \\frac{h}{p}$.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a photon, $p = \\frac{h\\nu}{c}$. Substituting this into the de Broglie relation yields $\\lambda = \\frac{h}{p} = \\frac{h}{h\\nu/c} = \\frac{c}{\\nu}$, which is precisely the wavelength of the electromagnetic wave. Therefore, Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 14,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** For matter wave, phase velocity $v_p$ has no physical significance but group velocity is physically meaningful.\n**Reason (R):** For matter wave, group velocity is equal to velocity of particle.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "For matter wave, phase velocity $v_p$ has no physical significance but group velocity is physically meaningful.",
+    "reason_text": "For matter wave, group velocity is equal to velocity of particle.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Phase velocity of a matter wave is $v_p = \\frac{\\omega}{k} = \\frac{c^2}{v} > c$, which has no direct physical meaning as it cannot convey energy or signals. The wave packet moves with the group velocity $v_g = \\frac{d\\omega}{dk} = v$, which is identical to the particle velocity and carries the energy. Thus, Reason correctly explains Assertion."
+  }
+]

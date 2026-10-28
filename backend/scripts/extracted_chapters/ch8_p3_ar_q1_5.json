@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The energy in an EM wave is divided equally between the electric and magnetic field.\n**Reason (R):** The magnitude of electric field vector is $3 \\times 10^8$ times the magnitude of magnetic field vector in vacuum.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The energy in an EM wave is divided equally between the electric and magnetic field.",
+    "reason_text": "The magnitude of electric field vector is $3 \\times 10^8$ times the magnitude of magnetic field vector in vacuum.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average electric energy density is $u_E = \\frac{1}{4}\\varepsilon_0 E_0^2$ and the average magnetic energy density is $u_B = \\frac{B_0^2}{4\\mu_0}$. Since $E_0 = c B_0$ and $c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}}$, substituting gives $u_E = u_B$, so energy is divided equally (Assertion is true). The ratio of field magnitudes is $E/B = c = 3 \\times 10^8\\text{ m/s}$ in vacuum (Reason is true). However, Reason alone does not fully explain equal energy distribution without the relation $c = 1/\\sqrt{\\mu_0 \\varepsilon_0}$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Electric energy density in electric field of electromagnetic wave is $c^2$ times the magnetic energy density in its magnetic field.\n**Reason (R):** Amplitude of electric field is $\\frac{1}{c}$ times the amplitude of magnetic field.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Electric energy density in electric field of electromagnetic wave is $c^2$ times the magnetic energy density in its magnetic field.",
+    "reason_text": "Amplitude of electric field is $\\frac{1}{c}$ times the amplitude of magnetic field.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the electric energy density and magnetic energy density are equal ($u_E = u_B$), not $c^2$ times each other, making the Assertion false. Furthermore, the amplitude of the electric field is related to the magnetic field by $E_0 = c B_0$, which means $E_0$ is $c$ times $B_0$, not $\\frac{1}{c}$ times, making the Reason false."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Sound waves cannot travel in vacuum but light waves can travel in vacuum.\n**Reason (R):** Sound waves are non-mechanical waves but electromagnetic waves are mechanical waves.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Sound waves cannot travel in vacuum but light waves can travel in vacuum.",
+    "reason_text": "Sound waves are non-mechanical waves but electromagnetic waves are mechanical waves.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Sound waves require a material medium for propagation, so they cannot travel in vacuum, whereas light (an electromagnetic wave) can propagate through vacuum; hence Assertion is true. Sound waves are mechanical waves, while electromagnetic waves are non-mechanical waves, so Reason is false."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The speed of electromagnetic wave in vacuum increases as we move from radio waves to $\\gamma$-rays.\n**Reason (R):** Speed of electromagnetic wave is proportional to frequency.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The speed of electromagnetic wave in vacuum increases as we move from radio waves to $\\gamma$-rays.",
+    "reason_text": "Speed of electromagnetic wave is proportional to frequency.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "All electromagnetic waves travel at the same constant speed $c = \\frac{1}{\\sqrt{\\mu_0 \\varepsilon_0}} \\approx 3 \\times 10^8\\text{ m/s}$ in vacuum, regardless of their wavelength or frequency. Thus, the speed neither increases from radio waves to $\\gamma$-rays nor is it proportional to frequency in vacuum. Both Assertion and Reason are false."
+  },
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** In electromagnetic wave, the direction of variation of electric and magnetic field are perpendicular to each other and also perpendicular to the direction of wave propagation.\n**Reason (R):** Electromagnetic waves are transverse in nature.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "In electromagnetic wave, the direction of variation of electric and magnetic field are perpendicular to each other and also perpendicular to the direction of wave propagation.",
+    "reason_text": "Electromagnetic waves are transverse in nature.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an EM wave, $\\vec{E} \\perp \\vec{B}$ and both are perpendicular to the propagation vector $\\vec{k}$ (Assertion is true). Waves whose field oscillations are perpendicular to the direction of energy propagation are classified as transverse waves (Reason is true). However, being transverse does not explain why the electric and magnetic fields must be mutually perpendicular to each other; that arises from Maxwell's curl equations."
+  }
+]

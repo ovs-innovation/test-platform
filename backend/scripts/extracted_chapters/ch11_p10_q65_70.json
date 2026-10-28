@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 65,
+    "question_type": "single_choice",
+    "question_text": "A metallic surface is exposed to two radiations separately, one of wavelength $4000\\text{ \\AA}$ and other of $8000\\text{ \\AA}$. If the work function of the metal is $1\\text{ eV}$, then the ratio of maximum kinetic energies of photoelectrons for the two cases is nearly equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{32}{11}$",
+      "$\\frac{42}{11}$",
+      "$\\frac{52}{11}$",
+      "$\\frac{62}{11}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The energy of incident photon is $E = \\frac{hc}{\\lambda} \\approx \\frac{12400}{\\lambda\\text{ (in \\AA)}}\\text{ eV}$.\nFor $\\lambda_1 = 4000\\text{ \\AA}$, $E_1 = \\frac{12400}{4000} = 3.10\\text{ eV}$, so $K_1 = E_1 - \\phi = 3.10 - 1 = 2.10\\text{ eV}$.\nFor $\\lambda_2 = 8000\\text{ \\AA}$, $E_2 = \\frac{12400}{8000} = 1.55\\text{ eV}$, so $K_2 = E_2 - \\phi = 1.55 - 1 = 0.55\\text{ eV}$.\nThe ratio is $\\frac{K_1}{K_2} = \\frac{2.10}{0.55} = \\frac{42}{11}$."
+  },
+  {
+    "question_number": 66,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of an electron in the second orbit of a hydrogen atom is equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Perimeter of the orbit",
+      "Half the perimeter of the orbit",
+      "Half the diameter of the orbit",
+      "Diameter of the orbit"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Bohr's postulate and de-Broglie's relation, the circumference of the $n^{\\text{th}}$ orbit is an integral multiple of de-Broglie wavelength: $2\\pi r_n = n\\lambda$.\nFor the second orbit ($n = 2$):\n$2\\pi r_2 = 2\\lambda \\implies \\lambda = \\frac{2\\pi r_2}{2} = \\frac{1}{2}(\\text{Perimeter of the orbit})$."
+  },
+  {
+    "question_number": 67,
+    "question_type": "single_choice",
+    "question_text": "From a certain metal, violet light can cause photoelectric emission but blue light cannot. If sodium light is incident on the metal, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Maximum kinetic energy of electrons increases",
+      "Photoelectric current increases",
+      "Photoelectric emission does not occur",
+      "Photoelectric current decreases"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since blue light cannot cause photoelectric emission, the threshold frequency $\\nu_0$ is greater than the frequency of blue light ($\\nu_{\\text{blue}} < \\nu_0$).\nSodium light is yellow in color, which has a longer wavelength and lower frequency than blue light ($\\nu_{\\text{sodium}} < \\nu_{\\text{blue}} < \\nu_0$).\nSince the frequency of sodium light is less than the threshold frequency, photoelectric emission does not occur."
+  },
+  {
+    "question_number": 68,
+    "question_type": "single_choice",
+    "question_text": "An electron is moving with speed $\\frac{2c}{5}$ ($c =$ speed of light). If its de-Broglie wavelength is equal to the wavelength of a photon, then the ratio of the kinetic energy of the electron to that of the photon is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{2}$",
+      "$\\frac{1}{3}$",
+      "$\\frac{1}{4}$",
+      "$\\frac{1}{5}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since de-Broglie wavelength $\\lambda$ is the same for both, they have the same momentum $p = \\frac{h}{\\lambda}$.\nKinetic energy of the electron is $K_e = \\frac{1}{2}mv^2 = \\frac{1}{2}pv$.\nEnergy of the photon is $E_{ph} = pc$.\nTherefore, the ratio is $\\frac{K_e}{E_{ph}} = \\frac{\\frac{1}{2}pv}{pc} = \\frac{v}{2c} = \\frac{1}{2}\\left(\\frac{2}{5}\\right) = \\frac{1}{5}$."
+  },
+  {
+    "question_number": 69,
+    "question_type": "single_choice",
+    "question_text": "When the energy of incident radiation is increased by $20\\%$, the kinetic energy of the most energetic electrons is increased from $0.80\\text{ eV}$ to $1.10\\text{ eV}$. The work function of the metal is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.3\\text{ eV}$",
+      "$0.5\\text{ eV}$",
+      "$0.7\\text{ eV}$",
+      "$0.9\\text{ eV}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Einstein's photoelectric equation:\n$K_1 = E - \\phi \\implies 0.80 = E - \\phi$\nWhen incident energy increases by $20\\%$, $E' = 1.20E$:\n$K_2 = 1.20E - \\phi \\implies 1.10 = 1.20E - \\phi$\nSubtracting the first equation from the second:\n$0.30 = 0.20E \\implies E = 1.5\\text{ eV}$.\nThus, the work function is $\\phi = E - 0.80 = 1.5 - 0.80 = 0.7\\text{ eV}$."
+  },
+  {
+    "question_number": 70,
+    "question_type": "single_choice",
+    "question_text": "Photoelectric current in a photocell is $I$, when it is kept at a distance $r$ from a point light source. If its distance from the light source is increased to $2r$, then the new photoelectric current is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I$",
+      "$\\frac{I}{2}$",
+      "$\\frac{I}{4}$",
+      "$\\frac{I}{8}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a point light source, the intensity of light on the photocell varies inversely as the square of the distance: $\\text{Intensity} \\propto \\frac{1}{r^2}$.\nPhotoelectric current is directly proportional to the intensity of incident light: $I_{\\text{current}} \\propto \\frac{1}{r^2}$.\nWhen the distance is doubled ($r' = 2r$), the intensity becomes $\\frac{1}{4}$ of its initial value, so the new photoelectric current becomes $\\frac{I}{4}$."
+  }
+]

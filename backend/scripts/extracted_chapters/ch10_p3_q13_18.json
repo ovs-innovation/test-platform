@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 13,
+    "question_type": "single_choice",
+    "question_text": "The light of wavelength $6328\\text{ \\AA}$ is incident on a slit of width $0.2\\text{ mm}$ perpendicularly. The angular fringe width of central maxima will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.36^\\circ$",
+      "$0.18^\\circ$",
+      "$0.72^\\circ$",
+      "$0.09^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular width of the central maximum in single-slit diffraction is given by $2\\theta = \\frac{2\\lambda}{a}$. Substituting the given values: $2\\theta = \\frac{2 \\times 6328 \\times 10^{-10}\\text{ m}}{0.2 \\times 10^{-3}\\text{ m}} = 6.328 \\times 10^{-3}\\text{ rad}$. Converting to degrees: $2\\theta = 6.328 \\times 10^{-3} \\times \\frac{180^\\circ}{\\pi} \\approx 0.36^\\circ$."
+  },
+  {
+    "question_number": 14,
+    "question_type": "single_choice",
+    "question_text": "A beam of unpolarised light passes through a tourmaline crystal A and then it passes through a second tourmaline crystal B oriented so that its principal section is parallel to that of A. The intensity of the emergent light is $I_0$. Now B is rotated by $45^\\circ$ about the ray. The emergent light will have intensity",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{I_0}{4}$",
+      "$\\frac{I_0}{2}$",
+      "$\\frac{I_0}{\\sqrt{2}}$",
+      "$\\frac{I_0}{2\\sqrt{2}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When the axes of A and B are parallel, the transmitted intensity through B is $I_0$. When B is rotated by an angle $\\theta = 45^\\circ$, by Malus's law, the new emergent intensity is $I = I_0 \\cos^2(45^\\circ) = I_0 \\left(\\frac{1}{\\sqrt{2}}\\right)^2 = \\frac{I_0}{2}$."
+  },
+  {
+    "question_number": 15,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, interference pattern is found to have an intensity ratio between bright and dark fringes as $9$. Then amplitude ratio of the wave reaching the screen from two sources is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1$",
+      "$2$",
+      "$9$",
+      "$3$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given $\\frac{I_{\\text{max}}}{I_{\\text{min}}} = 9$. Since $\\frac{I_{\\text{max}}}{I_{\\text{min}}} = \\left(\\frac{A_1 + A_2}{A_1 - A_2}\\right)^2$, we have $\\frac{A_1 + A_2}{A_1 - A_2} = 3$. Solving for the ratio of amplitudes: $A_1 + A_2 = 3A_1 - 3A_2 \\implies 2A_1 = 4A_2 \\implies \\frac{A_1}{A_2} = 2$."
+  },
+  {
+    "question_number": 16,
+    "question_type": "single_choice",
+    "question_text": "A beam of monochromatic green light is diffracted by a slit of width $0.550\\text{ mm}$. The diffraction pattern forms on a wall $2.06\\text{ m}$ beyond the slit. The distance between the positions of zero intensity on both sides of central bright fringe is $4.10\\text{ mm}$. Wavelength of the light used is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$400\\text{ nm}$",
+      "$725\\text{ nm}$",
+      "$642\\text{ nm}$",
+      "$547\\text{ nm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The distance between the first minima on either side of the central maximum is the linear width $\\beta_0 = \\frac{2\\lambda D}{a}$. Rearranging for wavelength: $\\lambda = \\frac{\\beta_0 \\cdot a}{2D} = \\frac{(4.10 \\times 10^{-3}\\text{ m}) \\times (0.550 \\times 10^{-3}\\text{ m})}{2 \\times 2.06\\text{ m}} \\approx 5.47 \\times 10^{-7}\\text{ m} = 547\\text{ nm}$."
+  },
+  {
+    "question_number": 17,
+    "question_type": "single_choice",
+    "question_text": "Maximum distance from diffraction slit of slit width $a$ upto which ray optics holds for wavelength $\\lambda$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{a^2}{\\lambda}$",
+      "$\\frac{\\lambda^3}{a^2}$",
+      "$\\frac{a^3}{\\lambda^2}$",
+      "$\\frac{\\lambda^2}{a}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The distance beyond which divergence of the beam becomes significant is given by the Fresnel distance $Z_F = \\frac{a^2}{\\lambda}$. Thus, ray optics is a valid approximation up to a distance of $\\frac{a^2}{\\lambda}$."
+  },
+  {
+    "question_number": 18,
+    "question_type": "single_choice",
+    "question_text": "A polaroid sheet and an analyzer are placed such that their transmission axes are parallel. The analyzer is then rotated by $22.5^\\circ$. What is the intensity of the transmitted light as a fraction of intensity of light incident on analyser?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.45$",
+      "$0.68$",
+      "$0.41$",
+      "$0.85$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Malus's Law, the transmitted intensity through the analyzer is $I = I_i \\cos^2(\\theta)$, where $I_i$ is the intensity incident on the analyzer. Here, $\\theta = 22.5^\\circ$. Thus, the fraction is $\\frac{I}{I_i} = \\cos^2(22.5^\\circ) = \\frac{1 + \\cos(45^\\circ)}{2} = \\frac{1 + \\frac{1}{\\sqrt{2}}}{2} = \\frac{1 + 0.7071}{2} \\approx 0.85$."
+  }
+]

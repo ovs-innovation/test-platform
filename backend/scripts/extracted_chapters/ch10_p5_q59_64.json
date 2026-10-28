@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 59,
+    "question_type": "single_choice",
+    "question_text": "The geometrical path of a ray of light in a medium of refractive index $2$ is $8\\text{ m}$. The optical path is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$16\\text{ m}$",
+      "$4\\text{ m}$",
+      "$2\\text{ m}$",
+      "$1\\text{ m}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The optical path length $\\Delta x$ is related to the geometrical path length $x$ and refractive index $\\mu$ by the relation:\n$$\\Delta x = \\mu \\times x = 2 \\times 8\\text{ m} = 16\\text{ m}$$"
+  },
+  {
+    "question_number": 60,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, if the separation of the screen is increased from the slits, the fringe width will",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Decrease",
+      "Increase",
+      "Remain the same",
+      "Any of the above depending on the wavelength of the light used"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fringe width in YDSE is given by $\\beta = \\frac{\\lambda D}{d}$. Since $\\beta \\propto D$, increasing the distance $D$ between the screen and the slits will increase the fringe width."
+  },
+  {
+    "question_number": 61,
+    "question_type": "single_choice",
+    "question_text": "Five identical polaroids are placed coaxially with a $45^\\circ$ angular separation between adjacent ones as shown in the figure. If $I_0$ is the intensity of the incident unpolarised light, the intensity $I$ of light emerging out of the $5^{\\text{th}}$ polaroid is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{I_0}{4}$",
+      "$\\frac{I_0}{8}$",
+      "$\\frac{I_0}{16}$",
+      "$\\frac{I_0}{32}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": true,
+    "diagram_description": "A beam of unpolarised light of intensity $I_0$ passes coaxially through a series of five circular polaroids numbered (1) to (5). Each adjacent pair of polaroids has their transmission axes rotated by an angle of $45^\\circ$ relative to each other.",
+    "solution": "Intensity transmitted through the first polaroid is $I_1 = \\frac{I_0}{2}$.\nBy Malus's Law, for each subsequent polaroid with angle $\\theta = 45^\\circ$, intensity decreases by a factor of $\\cos^2(45^\\circ) = \\frac{1}{2}$.\nSince there are 4 successive transitions:\n$$I_5 = I_1 \\left(\\cos^2 45^\\circ\\right)^4 = \\frac{I_0}{2} \\left(\\frac{1}{2}\\right)^4 = \\frac{I_0}{32}$$"
+  },
+  {
+    "question_number": 62,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, how many minimas can be obtained on a screen, if the wavelength of light used is $2000\\text{ \\AA}$ and the distance between the slits is $0.0008\\text{ mm}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6$",
+      "$7$",
+      "$8$",
+      "$9$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given $d = 0.0008\\text{ mm} = 8 \\times 10^{-7}\\text{ m}$ and $\\lambda = 2000\\text{ \\AA} = 2 \\times 10^{-7}\\text{ m}$.\nThe condition for minima is $d\\sin\\theta = (2n - 1)\\frac{\\lambda}{2}$.\nFor fringes on a screen, $\\sin\\theta < 1$:\n$$(2n - 1)\\frac{\\lambda}{2} < d \\implies 2n - 1 < \\frac{2d}{\\lambda} = \\frac{2 \\times 8 \\times 10^{-7}}{2 \\times 10^{-7}} = 8$$\n$$2n < 9 \\implies n < 4.5$$\nThus, $n = 1, 2, 3, 4$ on each side of the central maximum. Total number of minima on the screen $= 2 \\times 4 = 8$."
+  },
+  {
+    "question_number": 63,
+    "question_type": "single_choice",
+    "question_text": "When YDSE is carried out in a liquid, the $5^{\\text{th}}$ bright fringe lies at a point on the screen where the $3^{\\text{rd}}$ dark fringe was lying in air. The refractive index of the medium is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.5$",
+      "$3$",
+      "$2$",
+      "$1.2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Position of the $3^{\\text{rd}}$ dark fringe in air:\n$$y = (2 \\times 3 - 1)\\frac{\\lambda_{\\text{air}} D}{2d} = \\frac{5}{2}\\frac{\\lambda_{\\text{air}} D}{d}$$\nPosition of the $5^{\\text{th}}$ bright fringe in liquid:\n$$y' = 5\\frac{\\lambda_{\\text{liq}} D}{d} = 5\\frac{\\lambda_{\\text{air}}}{\\mu}\\frac{D}{d}$$\nEquating the two positions:\n$$\\frac{5}{\\mu}\\frac{\\lambda_{\\text{air}} D}{d} = \\frac{5}{2}\\frac{\\lambda_{\\text{air}} D}{d} \\implies \\mu = 2$$"
+  },
+  {
+    "question_number": 64,
+    "question_type": "single_choice",
+    "question_text": "In Y.D.S.E., the ratio of maximum intensity at a point to the intensity at the same point when one slit is closed is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2$",
+      "$3$",
+      "$4$",
+      "$1$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Let the intensity due to each slit be $I_0$. When both slits are open, the maximum intensity is:\n$$I_{\\max} = (\\sqrt{I_0} + \\sqrt{I_0})^2 = 4I_0$$\nWhen one slit is closed, the intensity at that point is simply that from the single slit, which is $I_0$.\n$$\\text{Ratio} = \\frac{I_{\\max}}{I_0} = \\frac{4I_0}{I_0} = 4$$"
+  }
+]

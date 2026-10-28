@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 21,
+    "question_type": "single_choice",
+    "question_text": "Minimum de-Broglie wavelength of photoelectrons emitted from a metal surface whose work function is $\\phi$ and frequency of light incident on it is $\\nu$ (given '$m$' is mass of electron and '$h$' is Planck's constant and $h\\nu > \\phi$) is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h}{\\sqrt{2m(h\\nu - \\phi)}}$",
+      "$\\frac{h}{\\sqrt{m(h\\nu - \\phi)}}$",
+      "$\\frac{hc}{(h\\nu - \\phi)}$",
+      "$\\frac{h}{\\sqrt{2m(h\\nu + \\phi)}}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The maximum kinetic energy of the emitted photoelectrons is given by Einstein's photoelectric equation: $K_{\\text{max}} = h\\nu - \\phi$. The minimum de-Broglie wavelength corresponds to maximum kinetic energy: $\\lambda_{\\text{min}} = \\frac{h}{p_{\\text{max}}} = \\frac{h}{\\sqrt{2mK_{\\text{max}}}} = \\frac{h}{\\sqrt{2m(h\\nu - \\phi)}}$."
+  },
+  {
+    "question_number": 22,
+    "question_type": "single_choice",
+    "question_text": "What is the de-Broglie wavelength of an $\\alpha$-particle accelerated through a potential difference '$V$'?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{0.287}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{12.27}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{0.101}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{0.202}{\\sqrt{V}}\\text{ \\AA}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an $\\alpha$-particle, charge $q = 2e$ and mass $m = 4m_p \\approx 4 \\times 1.67 \\times 10^{-27}\\text{ kg}$. The de-Broglie wavelength is $\\lambda = \\frac{h}{\\sqrt{2mqV}} = \\frac{6.626 \\times 10^{-34}}{\\sqrt{2 \\times (4 \\times 1.67 \\times 10^{-27}) \\times (2 \\times 1.6 \\times 10^{-19})V}} \\approx \\frac{0.101}{\\sqrt{V}}\\text{ \\AA}$."
+  },
+  {
+    "question_number": 23,
+    "question_type": "single_choice",
+    "question_text": "The kinetic energy of an electron with de-Broglie wavelength of $0.3\\text{ nm}$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.168\\text{ eV}$",
+      "$16.8\\text{ eV}$",
+      "$1.68\\text{ eV}$",
+      "$2.5\\text{ eV}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an electron, $\\lambda = \\frac{1.227}{\\sqrt{V}}\\text{ nm} = \\sqrt{\\frac{150}{V}}\\text{ \\AA}$. Here $\\lambda = 0.3\\text{ nm} = 3\\text{ \\AA}$. Thus, $V = \\frac{150}{\\lambda^2} = \\frac{150}{3^2} = \\frac{150}{9} \\approx 16.67\\text{ V} \\approx 16.8\\text{ V}$. Therefore, the kinetic energy is $K = eV = 16.8\\text{ eV}$."
+  },
+  {
+    "question_number": 24,
+    "question_type": "single_choice",
+    "question_text": "Compton scattering experiment confirmed",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Dual nature of particles",
+      "Wave nature of light",
+      "Particle nature of light",
+      "X-ray is an electromagnetic wave"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Compton effect involves an elastic collision between a photon and a stationary electron, which directly proves the particle nature of light (radiation)."
+  },
+  {
+    "question_number": 25,
+    "question_type": "single_choice",
+    "question_text": "In de-Broglie hypothesis, the momentum is inversely proportional to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\lambda$",
+      "$\\frac{1}{v}$",
+      "$v$",
+      "Both (1) & (2)"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to the de-Broglie hypothesis, $p = \\frac{h}{\\lambda} \\implies p \\propto \\frac{1}{\\lambda}$. Also, since $p = mv$, $p \\propto v$, which means $p \\propto \\frac{1}{(1/v)}$ (i.e. inversely proportional to $1/v$). Hence, momentum is inversely proportional to both $\\lambda$ and $\\frac{1}{v}$."
+  }
+]

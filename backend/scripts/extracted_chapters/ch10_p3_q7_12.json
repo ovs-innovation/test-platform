@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 7,
+    "question_type": "single_choice",
+    "question_text": "In the far field diffraction pattern of a single slit under polychromatic illumination, the first dark fringe of wavelength $\\lambda_1$ is found to be coincident with the third bright fringe of $\\lambda_2$. Which of the following is correct?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3\\lambda_1 = 0.3\\lambda_2$",
+      "$6\\lambda_1 = \\lambda_2$",
+      "$\\lambda_1 = 3.5\\lambda_2$",
+      "$6\\lambda_2 = \\lambda_1$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For single-slit diffraction, the condition for minima (dark fringes) is $a \\sin\\theta = n\\lambda$. For the first dark fringe of $\\lambda_1$, $a \\sin\\theta_1 = 1\\cdot\\lambda_1$.\nThe condition for secondary maxima (bright fringes) is $a \\sin\\theta = (2n + 1)\\frac{\\lambda}{2}$. For the third bright fringe of $\\lambda_2$ ($n = 3$), $a \\sin\\theta_2 = (2 \\times 3 + 1)\\frac{\\lambda_2}{2} = \\frac{7}{2}\\lambda_2 = 3.5\\lambda_2$.\nSince the fringes coincide, $\\theta_1 = \\theta_2 \\implies \\lambda_1 = 3.5\\lambda_2$."
+  },
+  {
+    "question_number": 8,
+    "question_type": "single_choice",
+    "question_text": "A light has amplitude $A$ after coming out from a polariser. The angle between the transmission axis of the analyser and the polariser is $60^\\circ$. The light passing through the analyser has an amplitude of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{2}A$",
+      "$\\frac{A}{\\sqrt{2}}$",
+      "$\\frac{\\sqrt{3}A}{2}$",
+      "$\\frac{A}{2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Brewster's Law & Malus' Law",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The component of the electric field amplitude transmitted through an analyser whose transmission axis is inclined at an angle $\\theta$ to the polariser is given by $A' = A\\cos\\theta$.\nGiven $\\theta = 60^\\circ$, we have $A' = A\\cos 60^\\circ = \\frac{A}{2}$."
+  },
+  {
+    "question_number": 9,
+    "question_type": "single_choice",
+    "question_text": "Huygens' principle of secondary wavelets may not be used to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Find the new position of a wavefront",
+      "Explain Snell's law",
+      "Explain laws of reflection",
+      "Explain particle behaviour of light"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Huygens' principle is purely based on the wave nature of light and successfully explains wavefront propagation, reflection, and refraction (Snell's law). It cannot explain particle phenomena such as the photoelectric effect or Compton scattering."
+  },
+  {
+    "question_number": 10,
+    "question_type": "single_choice",
+    "question_text": "It is found that when waves from two identical coherent sources superpose at a certain point with the same individual intensity, then the resultant intensity is equal to the intensity of one wave only. This means that the phase difference between the two waves at that point is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\text{Zero}$",
+      "$\\pi/3$",
+      "$2\\pi/3$",
+      "$\\pi$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The resultant intensity of two coherent waves each of intensity $I_0$ is given by $I = 4I_0 \\cos^2\\left(\\frac{\\phi}{2}\\right)$.\nGiven $I = I_0$, we have $I_0 = 4I_0 \\cos^2\\left(\\frac{\\phi}{2}\\right) \\implies \\cos\\left(\\frac{\\phi}{2}\\right) = \\frac{1}{2}$.\nThus, $\\frac{\\phi}{2} = \\frac{\\pi}{3} \\implies \\phi = \\frac{2\\pi}{3}$."
+  },
+  {
+    "question_number": 11,
+    "question_type": "single_choice",
+    "question_text": "Two slits are separated by a distance of $1\\text{ mm}$ and illuminated with red light of wavelength $6.5 \\times 10^{-7}\\text{ m}$. The interference fringes are observed on a screen placed $1\\text{ m}$ away from the slits. The distance between the $3^{\\text{rd}}$ dark fringe and fifth bright fringe is equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.65\\text{ mm}$",
+      "$1.63\\text{ mm}$",
+      "$3.23\\text{ mm}$",
+      "$4.68\\text{ mm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Fringe width $\\beta = \\frac{\\lambda D}{d} = \\frac{6.5 \\times 10^{-7} \\times 1}{10^{-3}} = 0.65 \\times 10^{-3}\\text{ m} = 0.65\\text{ mm}$.\nThe position of the $n^{\\text{th}}$ dark fringe is $y_{n,\\text{dark}} = (2n - 1)\\frac{\\beta}{2}$, so for $n = 3$, $y_{3,\\text{dark}} = 2.5\\beta$.\nThe position of the $5^{\\text{th}}$ bright fringe is $y_{5,\\text{bright}} = 5\\beta$.\nThe distance between them is $\\Delta y = 5\\beta - 2.5\\beta = 2.5\\beta = 2.5 \\times 0.65\\text{ mm} = 1.625\\text{ mm} \\approx 1.63\\text{ mm}$."
+  },
+  {
+    "question_number": 12,
+    "question_type": "single_choice",
+    "question_text": "When a thin transparent plate of thickness $t$ and refractive index $\\mu$ is placed in the path of one of the two interfering beams of light, then the path difference between the two waves at the position of the central maximum is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(\\mu + 1)t$",
+      "$(\\mu - 1)t$",
+      "$\\frac{\\mu + 1}{t}$",
+      "$\\mu t$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Introducing a sheet of thickness $t$ and refractive index $\\mu$ increases the optical path of that ray by $\\mu t - t = (\\mu - 1)t$.\nAt the position of the original central maximum (where geometrical path difference is zero), the net path difference between the two waves becomes $\\Delta x = (\\mu - 1)t$."
+  }
+]

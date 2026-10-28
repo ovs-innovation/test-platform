@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 48,
+    "question_type": "single_choice",
+    "question_text": "The de Broglie wavelength associated with the orbital electron in the $n^{\\text{th}}$ orbit of a hydrogen atom is approximately given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(1.1n)\\text{ \\AA}$",
+      "$(2.2n)\\text{ \\AA}$",
+      "$(3.3n)\\text{ \\AA}$",
+      "$(4.4n)\\text{ \\AA}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Bohr's quantization condition for electron orbits, the circumference of the $n^{\\text{th}}$ orbit is an integral multiple of the de Broglie wavelength: $2\\pi r_n = n\\lambda$. For a hydrogen atom, the orbital radius is $r_n = 0.529 n^2\\text{ \\AA}$. Thus, $\\lambda = \\frac{2\\pi r_n}{n} = \\frac{2\\pi (0.529 n^2)}{n} \\approx 2 \\times 3.1416 \\times 0.529 n\\text{ \\AA} \\approx (3.3n)\\text{ \\AA}$."
+  },
+  {
+    "question_number": 49,
+    "question_type": "single_choice",
+    "question_text": "The de Broglie wavelength of an electron in the first orbit of a hydrogen atom is equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Diameter of the orbit",
+      "Perimeter of the orbit",
+      "Half the perimeter of the orbit",
+      "Half the radius of first orbit"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to de Broglie's hypothesis explaining Bohr's postulate, a stationary orbit contains an integral number of de Broglie wavelengths: $2\\pi r_n = n\\lambda$. For the first orbit ($n = 1$), $2\\pi r_1 = 1 \\cdot \\lambda$, which means $\\lambda = 2\\pi r_1$, the perimeter (circumference) of the orbit."
+  },
+  {
+    "question_number": 50,
+    "question_type": "single_choice",
+    "question_text": "The work function of a metal is $1.72\\text{ eV}$. The threshold wavelength for it is nearly",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6400\\text{ \\AA}$",
+      "$7200\\text{ \\AA}$",
+      "$8000\\text{ \\AA}$",
+      "$1240\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Threshold wavelength $\\lambda_0$ is given by $\\lambda_0 = \\frac{hc}{\\phi_0}$. Using $hc \\approx 12400\\text{ eV}\\cdot\\text{\\AA}$, we get $\\lambda_0 = \\frac{12400\\text{ eV}\\cdot\\text{\\AA}}{1.72\\text{ eV}} \\approx 7209\\text{ \\AA} \\approx 7200\\text{ \\AA}$."
+  },
+  {
+    "question_number": 51,
+    "question_type": "single_choice",
+    "question_text": "The wavelength of matter waves is independent of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Mass",
+      "Velocity",
+      "Momentum",
+      "Charge"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de Broglie wavelength is given by $\\lambda = \\frac{h}{p} = \\frac{h}{mv}$. It explicitly depends on mass ($m$), velocity ($v$), and momentum ($p$), but is fundamentally independent of the electric charge of the particle."
+  },
+  {
+    "question_number": 52,
+    "question_type": "single_choice",
+    "question_text": "The frequency of incident light falling on a metal plate is doubled. The maximum kinetic energy of the emitted photoelectrons is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Unchanged",
+      "Doubled",
+      "More than double",
+      "Less than double"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Initially, $K_1 = h\\nu - \\phi$. When the frequency is doubled, the new maximum kinetic energy is $K_2 = h(2\\nu) - \\phi = 2(h\\nu - \\phi) + \\phi = 2K_1 + \\phi$. Since the work function $\\phi > 0$, $K_2 > 2K_1$, meaning the maximum kinetic energy becomes more than double."
+  }
+]

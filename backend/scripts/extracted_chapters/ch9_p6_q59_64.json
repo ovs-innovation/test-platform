@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 59,
+    "question_type": "single_choice",
+    "question_text": "In a simple microscope ($f = 6\\text{ cm}$), the final image is produced at infinity. The eye is placed at a distance of $1\\text{ cm}$ behind the lens. Taking the least distance of distinct vision $D = 25\\text{ cm}$, the magnification produced is nearly:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "6",
+      "5.5",
+      "5.0",
+      "4"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When the final image is formed at infinity, parallel rays emerge from the lens. The visual angle subtended at the eye is independent of the distance of the eye from the lens. The magnifying power in normal adjustment is given by:\n$$m = \\frac{D}{f} = \\frac{25\\text{ cm}}{6\\text{ cm}} \\approx 4.17 \\approx 4$$"
+  },
+  {
+    "question_number": 60,
+    "question_type": "single_choice",
+    "question_text": "To get four images of an object placed symmetrically between two plane mirrors, the angle between the mirrors must be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$90^\\circ$",
+      "$36^\\circ$",
+      "$72^\\circ$",
+      "$120^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an object placed symmetrically between two plane mirrors inclined at an angle $\\theta$, the number of images formed is given by:\n$$n = \\frac{360^\\circ}{\\theta} - 1$$\nGiven $n = 4$:\n$$4 = \\frac{360^\\circ}{\\theta} - 1 \\implies \\frac{360^\\circ}{\\theta} = 5 \\implies \\theta = \\frac{360^\\circ}{5} = 72^\\circ$$"
+  },
+  {
+    "question_number": 61,
+    "question_type": "single_choice",
+    "question_text": "$ABC$ is a right-angled prism made of a transparent material of refractive index $\\mu$, such that $\\angle B < \\angle A$ and $\\angle C = 90^\\circ$, as shown in the figure. A ray of light incident normally on face $AB$ emerges parallel to the incident ray after two internal reflections. The minimum value of $\\mu$ is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{\\sin A}$",
+      "$\\frac{1}{\\sin B}$",
+      "$\\frac{\\sin A}{\\sin B}$",
+      "$\\sin A \\sin B$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A right-angled triangular prism ABC with horizontal hypotenuse AB and right angle at bottom vertex C. A ray enters face AB normally, undergoes total internal reflection at face AC, then undergoes another total internal reflection at face BC, and emerges from face AB parallel to the original incident ray.",
+    "solution": "The ray enters face $AB$ at normal incidence. The angle of incidence at face $AC$ is $i_1 = A$. After reflection, it strikes face $BC$ at an angle of incidence $i_2 = 90^\\circ - i_1 = B$.\nSince $\\angle B < \\angle A$, the smaller angle of incidence is $i_2 = B$.\nFor total internal reflection to occur at both faces, the smaller angle must satisfy:\n$$B \\ge \\theta_c \\implies \\sin B \\ge \\sin \\theta_c = \\frac{1}{\\mu} \\implies \\mu \\ge \\frac{1}{\\sin B}$$\nHence, the minimum value of $\\mu$ is $\\frac{1}{\\sin B}$."
+  },
+  {
+    "question_number": 62,
+    "question_type": "single_choice",
+    "question_text": "A glass slab of refractive index $2\\mu$ is sandwiched between two transparent slabs of refractive indices $\\sqrt{2}\\mu$ and $\\sqrt{3}\\mu$ respectively, as shown in the figure. What should be the limiting angle of incidence ($i$) in air such that light once entered into the middle slab will not leave through its lateral faces?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sin^{-1}\\left(\\frac{\\mu}{2}\\right)$",
+      "$\\sin^{-1}(\\sqrt{3}\\mu)$",
+      "$\\sin^{-1}(\\sqrt{2}\\mu)$",
+      "$\\sin^{-1}(\\mu)$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A central horizontal slab of refractive index $2\\mu$ bounded by a top slab of index $\\sqrt{2}\\mu$ and a bottom slab of index $\\sqrt{3}\\mu$. A light ray from air is incident on the left vertical entrance face of the central slab at angle of incidence $i$.",
+    "solution": "At the entrance face, by Snell's law:\n$$1 \\cdot \\sin i = 2\\mu \\sin r$$\nThe angle of incidence on the lateral faces inside the slab is $\\theta = 90^\\circ - r$.\nTo avoid leaving through the lateral faces, total internal reflection must occur at both interfaces. The critical angle is larger for the denser surrounding medium $(\\sqrt{3}\\mu)$:\n$$\\sin \\theta_c = \\frac{\\sqrt{3}\\mu}{2\\mu} = \\frac{\\sqrt{3}}{2}$$\nFor TIR at this interface:\n$$\\theta \\ge \\theta_c \\implies \\cos r \\ge \\frac{\\sqrt{3}}{2} \\implies \\sin r \\le \\frac{1}{2}$$\nSubstituting into Snell's law:\n$$\\sin i = 2\\mu \\sin r \\le 2\\mu \\left(\\frac{1}{2}\\right) = \\mu \\implies i = \\sin^{-1}(\\mu)$$"
+  },
+  {
+    "question_number": 63,
+    "question_type": "single_choice",
+    "question_text": "The focal lengths of the objective and eyepiece of an astronomical telescope are $50\\text{ cm}$ and $5\\text{ cm}$ respectively. If the final image is formed at the least distance of distinct vision ($D = 25\\text{ cm}$), the length of the telescope is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{275}{6}\\text{ cm}$",
+      "$\\frac{325}{6}\\text{ cm}$",
+      "$55\\text{ cm}$",
+      "$45\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the eyepiece, the final image is at $v_e = -25\\text{ cm}$ with $f_e = 5\\text{ cm}$:\n$$\\frac{1}{v_e} - \\frac{1}{u_e} = \\frac{1}{f_e} \\implies -\\frac{1}{25} - \\frac{1}{u_e} = \\frac{1}{5} \\implies -\\frac{1}{u_e} = \\frac{6}{25} \\implies |u_e| = \\frac{25}{6}\\text{ cm}$$\nThe length of the telescope is:\n$$L = f_o + |u_e| = 50 + \\frac{25}{6} = \\frac{325}{6}\\text{ cm}$$"
+  },
+  {
+    "question_number": 64,
+    "question_type": "single_choice",
+    "question_text": "In the lens displacement method, two distinct images are formed on a fixed screen for two positions of a convex lens. If the first position of the lens is at a distance $x$ from the object and the second position is at a distance $2x$ from the object, the focal length of the lens is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{x}{3}$",
+      "$2x$",
+      "$\\frac{2x}{3}$",
+      "$6x$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "An object and a screen are placed at fixed positions with a convex lens shown in two positions between them. Position 1 is at a distance $x$ from the object, and position 2 is at a distance $2x$ from the object.",
+    "solution": "By the principle of reversibility in the displacement method, the object distance in the second position equals the image distance in the first position:\n$$u_1 = x, \\quad v_1 = u_2 = 2x$$\nThe distance between the object and the screen is $D = u_1 + v_1 = x + 2x = 3x$.\nThe lens displacement is $d = 2x - x = x$.\nUsing the displacement formula for focal length:\n$$f = \\frac{D^2 - d^2}{4D} = \\frac{(3x)^2 - x^2}{4(3x)} = \\frac{8x^2}{12x} = \\frac{2x}{3}$$"
+  }
+]

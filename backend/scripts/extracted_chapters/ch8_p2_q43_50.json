@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 43,
+    "question_type": "single_choice",
+    "question_text": "If $\\vec{E}$ and $\\vec{B}$ are the instantaneous electric field and magnetic field in an electromagnetic wave, then the direction of propagation of the electromagnetic wave is along",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{E} + \\vec{B}$",
+      "$\\vec{E} \\times \\vec{B}$",
+      "$\\vec{B} \\times \\vec{E}$",
+      "$\\vec{E} - \\vec{B}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Poynting vector, which indicates the direction of energy propagation of an electromagnetic wave, is given by $\\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})$. Thus, the wave propagates in the direction of the vector cross product $\\vec{E} \\times \\vec{B}$."
+  },
+  {
+    "question_number": 44,
+    "question_type": "single_choice",
+    "question_text": "If $\\lambda_v$, $\\lambda_x$, and $\\lambda_m$ represent the wavelengths of visible light, X-rays, and microwaves respectively, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\lambda_m > \\lambda_x > \\lambda_v$",
+      "$\\lambda_v > \\lambda_m > \\lambda_x$",
+      "$\\lambda_v > \\lambda_x > \\lambda_m$",
+      "$\\lambda_m > \\lambda_v > \\lambda_x$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In the electromagnetic spectrum, microwaves have the longest wavelength among the three ($\\sim 1\\text{ mm}$ to $1\\text{ m}$), visible light has intermediate wavelength ($\\sim 400\\text{ nm}$ to $700\\text{ nm}$), and X-rays have the shortest wavelength ($\\sim 0.01\\text{ nm}$ to $10\\text{ nm}$). Therefore, $\\lambda_m > \\lambda_v > \\lambda_x$."
+  },
+  {
+    "question_number": 45,
+    "question_type": "single_choice",
+    "question_text": "The electric field vector of an electromagnetic wave is given by $\\vec{E} = E_0 \\sin(\\omega t - kx)\\hat{j}$. The corresponding expression for the magnetic field is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{B} = B_0 \\sin(\\omega t + kx)\\hat{k}$",
+      "$\\vec{B} = B_0 \\sin(\\omega t - kx)\\hat{k}$",
+      "$\\vec{B} = -B_0 \\sin(\\omega t + kx)\\hat{k}$",
+      "$\\vec{B} = -B_0 \\sin(\\omega t - kx)\\hat{k}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The wave is propagating along the $+x$-direction, so its propagation unit vector is $\\hat{i}$. The electric field is along $\\hat{j}$. Since the direction of propagation is given by $\\hat{E} \\times \\hat{B} = \\hat{i}$, we must have $\\hat{j} \\times \\hat{B} = \\hat{i}$, which means $\\hat{B} = \\hat{k}$. Thus, $\\vec{B} = B_0 \\sin(\\omega t - kx)\\hat{k}$."
+  },
+  {
+    "question_number": 46,
+    "question_type": "single_choice",
+    "question_text": "Electromagnetic waves are produced by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Static charges",
+      "Charges in uniform motion",
+      "An oscillating charge",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Static charges produce only electrostatic fields, and charges moving with uniform velocity produce steady magnetic fields without radiating energy. An accelerated or oscillating charge produces a time-varying electric and magnetic field, thus radiating electromagnetic waves."
+  },
+  {
+    "question_number": 47,
+    "question_type": "single_choice",
+    "question_text": "Electric field $\\vec{E}$ and magnetic field $\\vec{B}$ of an electromagnetic wave are at angles $\\theta_1$ and $\\theta_2$ respectively with the direction of propagation of the electromagnetic wave, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\theta_1 = \\theta_2 = 90^\\circ$",
+      "$\\theta_1 = 90^\\circ,\\; \\theta_2 \\neq 90^\\circ$",
+      "$\\theta_1 \\neq 90^\\circ,\\; \\theta_2 = 90^\\circ$",
+      "$\\theta_1$ and $\\theta_2$ both are zero"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Electromagnetic waves are transverse in nature, meaning both the electric field vector $\\vec{E}$ and the magnetic field vector $\\vec{B}$ oscillate perpendicular to the direction of propagation. Hence, $\\theta_1 = \\theta_2 = 90^\\circ$."
+  },
+  {
+    "question_number": 48,
+    "question_type": "single_choice",
+    "question_text": "The average energy density of an electromagnetic wave with $E_y = E_0 \\sin(kx - \\omega t)$ and $B_z = B_0 \\sin(kx - \\omega t)$ is given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{2}\\varepsilon_0 E_0^2$",
+      "$\\frac{B_0^2}{2\\mu_0}$",
+      "$\\frac{\\varepsilon_0 E_0^2}{4} + \\frac{B_0^2}{4\\mu_0}$",
+      "All of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average total energy density is $u_{\\text{avg}} = \\langle u_E \\rangle + \\langle u_B \\rangle = \\frac{1}{4}\\varepsilon_0 E_0^2 + \\frac{B_0^2}{4\\mu_0}$. Since $E_0 = cB_0$ and $c = 1/\\sqrt{\\mu_0 \\varepsilon_0}$, the electric and magnetic energy densities are equal: $\\langle u_E \\rangle = \\langle u_B \\rangle$. Thus, $u_{\\text{avg}} = \\frac{1}{2}\\varepsilon_0 E_0^2 = \\frac{B_0^2}{2\\mu_0} = \\frac{\\varepsilon_0 E_0^2}{4} + \\frac{B_0^2}{4\\mu_0}$, making all the given expressions equivalent."
+  }
+]

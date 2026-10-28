@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 79,
+    "question_type": "single_choice",
+    "question_text": "A far-sighted person has his near point at $50\\text{ cm}$. Find the power of the lens he should use to see an object clearly at $25\\text{ cm}$.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$+1\\text{ D}$",
+      "$+2\\text{ D}$",
+      "$-2\\text{ D}$",
+      "$-1\\text{ D}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "To correct hypermetropia, an object placed at $u = -25\\text{ cm}$ must form an image at the near point $v = -50\\text{ cm}$. Using the lens formula:\n$$\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = -\\frac{1}{50} - \\left(-\\frac{1}{25}\\right) = \\frac{1}{50}\\text{ cm}^{-1}$$\nThus, $f = +50\\text{ cm} = +0.5\\text{ m}$. The required power is $P = \\frac{1}{f} = \\frac{1}{0.5} = +2\\text{ D}$."
+  },
+  {
+    "question_number": 80,
+    "question_type": "single_choice",
+    "question_text": "A microscope has an objective of $5\\text{ mm}$ focal length and an eyepiece of $30\\text{ mm}$ focal length. If the magnifying power is $250$, then the length of the microscope tube for normal adjustment will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$150\\text{ mm}$",
+      "$50\\text{ mm}$",
+      "$100\\text{ mm}$",
+      "$75\\text{ mm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using the standard magnification relation for a compound microscope: $m = \\frac{L}{f_o} \\cdot \\frac{D}{f_e}$, where $D = 250\\text{ mm}$, $f_o = 5\\text{ mm}$, and $f_e = 30\\text{ mm}$.\n$$250 = \\frac{L}{5} \\times \\frac{250}{30} \\implies L = 5 \\times 30 = 150\\text{ mm}$$.\nHence, the length of the microscope tube is $150\\text{ mm}$."
+  },
+  {
+    "question_number": 81,
+    "question_type": "single_choice",
+    "question_text": "A telescope has an objective lens of focal length $200\\text{ cm}$ and an eyepiece of focal length $2\\text{ cm}$. If this telescope is used to see a $50\\text{ m}$ tall building at a distance of $2\\text{ km}$, what is the height of the image of the building formed by the objective lens?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$1\\text{ cm}$",
+      "$2\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angle subtended by the building at the objective lens is $\\theta = \\frac{h}{u} = \\frac{50\\text{ m}}{2000\\text{ m}} = \\frac{1}{40}\\text{ rad}$.\nSince the object is very distant, its image forms in the focal plane of the objective lens ($v \\approx f_o = 200\\text{ cm}$).\nHeight of the image, $h_i = f_o \\cdot \\theta = 200\\text{ cm} \\times \\frac{1}{40} = 5\\text{ cm}$."
+  },
+  {
+    "question_number": 82,
+    "question_type": "single_choice",
+    "question_text": "An equiconvex lens of focal length $f$ is cut into two equal parts. In the $1^{\\text{st}}$ case, it is cut perpendicular to the principal axis, and in the $2^{\\text{nd}}$ case, it is cut parallel to the principal axis. The focal lengths of each piece in the two cases will be respectively:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2f,\\, f$",
+      "$2f,\\, 2f$",
+      "$\\frac{f}{2},\\, \\frac{f}{2}$",
+      "$f,\\, 2f$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When cut perpendicular to the principal axis, each half becomes a plano-convex lens with focal length $f_1 = 2f$.\nWhen cut parallel to the principal axis, the radius of curvature of both refracting surfaces remains unchanged, so the focal length remains $f_2 = f$.\nThus, the focal lengths are $2f$ and $f$ respectively."
+  },
+  {
+    "question_number": 83,
+    "question_type": "single_choice",
+    "question_text": "Spherical aberration in a thin lens can be reduced by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Using monochromatic light",
+      "Using a doublet combination",
+      "Using a circular annular mask over the lens",
+      "Increasing the size of lens"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Spherical aberration occurs because paraxial and marginal rays focus at different points. Using stops or circular annular masks obstructs either marginal or paraxial rays, thereby significantly reducing spherical aberration."
+  },
+  {
+    "question_number": 84,
+    "question_type": "single_choice",
+    "question_text": "In a tank, a $4\\text{ cm}$ thick layer of water $\\left(\\mu = \\frac{4}{3}\\right)$ floats on a $6\\text{ cm}$ thick layer of an organic liquid $(\\mu = 1.50)$. Viewing at normal incidence, how far below the water surface does the bottom of the tank appear to be?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$6\\text{ cm}$",
+      "$7\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The apparent depth of the bottom of the tank from the top water surface is the sum of apparent depths of the individual liquid layers:\n$$d_{\\text{app}} = \\frac{t_1}{\\mu_1} + \\frac{t_2}{\\mu_2} = \\frac{4}{4/3} + \\frac{6}{1.50} = 3\\text{ cm} + 4\\text{ cm} = 7\\text{ cm}$$."
+  }
+]

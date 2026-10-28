@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 15,
+    "question_type": "single_choice",
+    "question_text": "A ray of light travelling from air towards glass of refractive index $\\mu$ is incident normally. This ray starts rotating at constant angular velocity $\\omega_1$ about the point of incidence. The angular velocity of the refracted ray is $\\omega_2$, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\omega_1}{\\omega_2} = \\mu$",
+      "$\\frac{\\omega_1}{\\omega_2} = \\frac{1}{\\mu}$",
+      "$\\vec{\\omega}_1 \\cdot \\vec{\\omega}_2 < 0$",
+      "Both (2) and (3)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Snell's law, $\\sin i = \\mu \\sin r$. Differentiating with respect to time gives $\\cos i \\frac{di}{dt} = \\mu \\cos r \\frac{dr}{dt}$, where $\\frac{di}{dt} = \\omega_1$ and $\\frac{dr}{dt} = \\omega_2$. For normal incidence, $i \\to 0$ and $r \\to 0$, so $\\cos i = \\cos r = 1$. Hence, $\\omega_1 = \\mu \\omega_2 \\implies \\frac{\\omega_1}{\\omega_2} = \\mu$."
+  },
+  {
+    "question_number": 16,
+    "question_type": "single_choice",
+    "question_text": "A ray of light travelling in a transparent medium falls on a surface separating the medium from air at an angle of incidence of $45^\\circ$. The ray undergoes total internal reflection. If $n$ is the refractive index of the medium with respect to air, select the possible value of $n$ from the following:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.2$",
+      "$4/3$",
+      "$1.4$",
+      "$1.5$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For total internal reflection to occur, the angle of incidence must satisfy $i \\ge \\theta_c$. Therefore, $\\sin 45^\\circ \\ge \\frac{1}{n} \\implies \\frac{1}{\\sqrt{2}} \\ge \\frac{1}{n} \\implies n \\ge \\sqrt{2} \\approx 1.414$. Among the given options, only $n = 1.5$ satisfies this condition."
+  },
+  {
+    "question_number": 17,
+    "question_type": "single_choice",
+    "question_text": "A point object $O$ is placed in front of a concave mirror of focal length $10\\text{ cm}$. A glass slab of refractive index $\\mu = 3/2$ and thickness $6\\text{ cm}$ is inserted between the object and mirror. The position of final image when the distance $x$ is $5\\text{ cm}$ as shown in the figure is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15\\text{ cm}$",
+      "$17\\text{ cm}$",
+      "$2\\text{ cm}$",
+      "$13\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "A concave mirror is positioned on the right facing left. An object O is situated at a distance of 32 cm from the mirror. A glass slab of thickness 6 cm is located between O and the mirror, at a distance x = 5 cm from the mirror.",
+    "solution": "The shift produced by the slab on the incident light is $\\Delta x = t\\left(1 - \\frac{1}{\\mu}\\right) = 6\\left(1 - \\frac{2}{3}\\right) = 2\\text{ cm}$ towards the mirror. The apparent object distance for the mirror is $u = -(32 - 2) = -30\\text{ cm}$. Using the mirror formula, $\\frac{1}{v} + \\frac{1}{-30} = -\\frac{1}{10} \\implies v = -15\\text{ cm}$. The reflected rays re-enter the slab (located between $5\\text{ cm}$ and $11\\text{ cm}$ from the mirror) on their way to forming the image at $15\\text{ cm}$, shifting by another $2\\text{ cm}$ away from the mirror. Thus, the final image is at $15 + 2 = 17\\text{ cm}$ from the mirror."
+  },
+  {
+    "question_number": 18,
+    "question_type": "single_choice",
+    "question_text": "A cylindrical lens is required to correct",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Myopia",
+      "Presbyopia",
+      "Hypermetropia",
+      "Astigmatism"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Astigmatism arises when the cornea does not have a spherical curvature (different curvatures in different planes). It is corrected using a cylindrical lens of suitable focal length and axis."
+  },
+  {
+    "question_number": 19,
+    "question_type": "single_choice",
+    "question_text": "When light of wavelength $\\lambda$ is incident on an equilateral prism kept in its minimum deviation position, it is found that the angle of deviation equals the angle of prism itself. The refractive index of the material of the prism for the wavelength $\\lambda$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{3}$",
+      "$\\frac{\\sqrt{3}}{2}$",
+      "$2$",
+      "$\\sqrt{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an equilateral prism, angle of prism $A = 60^\\circ$. Given $\\delta_m = A = 60^\\circ$. Using the prism formula: $\\mu = \\frac{\\sin\\left(\\frac{A + \\delta_m}{2}\\right)}{\\sin\\left(\\frac{A}{2}\\right)} = \\frac{\\sin 60^\\circ}{\\sin 30^\\circ} = \\frac{\\sqrt{3}/2}{1/2} = \\sqrt{3}$."
+  },
+  {
+    "question_number": 20,
+    "question_type": "single_choice",
+    "question_text": "The focal length of a thin convex lens for red and blue colours is $100.5\\text{ cm}$ and $99.5\\text{ cm}$ respectively. The dispersive power of the lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.02$",
+      "$1.005$",
+      "$0.995$",
+      "$0.01$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The mean focal length is $f = \\frac{f_r + f_b}{2} = \\frac{100.5 + 99.5}{2} = 100\\text{ cm}$. The dispersive power of the lens material is given by $\\omega = \\frac{f_r - f_b}{f} = \\frac{100.5 - 99.5}{100} = \\frac{1.0}{100} = 0.01$."
+  }
+]

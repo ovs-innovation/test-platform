@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 37,
+    "question_type": "single_choice",
+    "question_text": "Two electrons are ejected from the same metal surface by two incident photons having energies of $3\\text{ eV}$ and $4\\text{ eV}$, respectively. The ejected electrons then enter a region of uniform magnetic field with their velocities at right angles to the direction of the magnetic field. If the work function of the metal is $2\\text{ eV}$, then the ratio of the radii of the circular paths of these two electrons will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1 : 2$",
+      "$1 : \\sqrt{2}$",
+      "$1 : 4$",
+      "$2 : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation, the maximum kinetic energy is $K = E - \\phi_0$.\nFor the first electron: $K_1 = 3\\text{ eV} - 2\\text{ eV} = 1\\text{ eV}$.\nFor the second electron: $K_2 = 4\\text{ eV} - 2\\text{ eV} = 2\\text{ eV}$.\nThe radius of an electron's circular path in a magnetic field is given by $r = \\frac{mv}{qB} = \\frac{\\sqrt{2mK}}{qB}$, so $r \\propto \\sqrt{K}$.\nTherefore, $\\frac{r_1}{r_2} = \\sqrt{\\frac{K_1}{K_2}} = \\sqrt{\\frac{1}{2}} = 1 : \\sqrt{2}$."
+  },
+  {
+    "question_number": 38,
+    "question_type": "single_choice",
+    "question_text": "A Young's double-slit interference experiment is performed twice, once with a parallel beam of electrons and next with a parallel beam of protons, both using the same setup. Given that the electron and proton have the same kinetic energy, the ratio of the interference fringe widths for electrons and protons respectively will be ($M_p$ and $M_e$ are the masses of a proton and an electron, respectively)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{M_p}{M_e}$",
+      "$\\frac{M_e}{M_p}$",
+      "$\\sqrt{\\frac{M_p}{M_e}}$",
+      "$\\sqrt{\\frac{M_e}{M_p}}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Fringe width is given by $\\beta = \\frac{\\lambda D}{d}$, which implies $\\beta \\propto \\lambda$.\nThe de Broglie wavelength for a particle of mass $m$ and kinetic energy $K$ is $\\lambda = \\frac{h}{\\sqrt{2mK}}$.\nSince kinetic energy $K$ and the experimental setup ($D, d$) are identical, $\\beta \\propto \\frac{1}{\\sqrt{m}}$.\nHence, $\\frac{\\beta_e}{\\beta_p} = \\frac{\\lambda_e}{\\lambda_p} = \\sqrt{\\frac{M_p}{M_e}}$."
+  },
+  {
+    "question_number": 39,
+    "question_type": "single_choice",
+    "question_text": "A monochromatic light source of power $5\\text{ mW}$ emits $8 \\times 10^{15}\\text{ photons per second}$. This light ejects photoelectrons from a metal surface. Given that the work function of this metal is $1.9\\text{ eV}$, the stopping potential for this setup is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2.0\\text{ V}$",
+      "$2.5\\text{ V}$",
+      "$1.5\\text{ V}$",
+      "$1.0\\text{ V}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The energy of each incident photon is $E = \\frac{P}{n} = \\frac{5 \\times 10^{-3}\\text{ J/s}}{8 \\times 10^{15}\\text{ s}^{-1}} = 6.25 \\times 10^{-19}\\text{ J}$.\nConverting to electron-volts: $E = \\frac{6.25 \\times 10^{-19}}{1.6 \\times 10^{-19}}\\text{ eV} \\approx 3.9\\text{ eV}$.\nUsing Einstein's photoelectric equation, $e V_0 = E - \\phi_0 = 3.9\\text{ eV} - 1.9\\text{ eV} = 2.0\\text{ eV}$.\nThus, the stopping potential is $V_0 = 2.0\\text{ V}$."
+  },
+  {
+    "question_number": 40,
+    "question_type": "single_choice",
+    "question_text": "The de Broglie wavelength associated with a proton accelerated from rest through a potential difference $V$ is given by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{0.202}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{12.27}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{0.286}{\\sqrt{V}}\\text{ \\AA}$",
+      "$\\frac{0.101}{\\sqrt{V}}\\text{ \\AA}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de Broglie wavelength of a charged particle accelerated through a potential difference $V$ is $\\lambda = \\frac{h}{\\sqrt{2mqV}}$.\nFor a proton, $m = 1.67 \\times 10^{-27}\\text{ kg}$ and $q = 1.6 \\times 10^{-19}\\text{ C}$.\nSubstituting these values gives $\\lambda = \\frac{0.286}{\\sqrt{V}}\\text{ \\AA}$."
+  },
+  {
+    "question_number": 41,
+    "question_type": "single_choice",
+    "question_text": "In a photoelectric effect experiment, for a given photosensitive metal and a constant frequency of incident radiation, if light beams of different intensities $I_1 > I_2 > I_3$ are used such that the corresponding stopping potentials are $V_{01}, V_{02}$ and $V_{03}$, then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$V_{01} > V_{02} > V_{03}$",
+      "$V_{01} < V_{02} < V_{03}$",
+      "$V_{01} = V_{02} = V_{03}$",
+      "In the given condition, relation between $V_{01}, V_{02}$ and $V_{03}$ cannot be determined"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Stopping potential depends solely on the frequency of the incident radiation and the work function of the cathode material ($e V_0 = h\\nu - \\phi_0$). It is independent of the intensity of incident radiation. Therefore, $V_{01} = V_{02} = V_{03}$."
+  },
+  {
+    "question_number": 42,
+    "question_type": "single_choice",
+    "question_text": "The slope and $y$-intercept of the graph between stopping potential ($V_0$) along the $y$-axis and frequency of incident radiation ($\\nu$) along the $x$-axis are respectively",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$h,\\; \\frac{\\phi_0}{e}$",
+      "$\\frac{h}{e},\\; -\\phi_0$",
+      "$\\frac{h}{e},\\; -\\frac{\\phi_0}{e}$",
+      "$h,\\; -\\phi_0$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Einstein's photoelectric equation is $e V_0 = h\\nu - \\phi_0$, which can be rearranged as $V_0 = \\left(\\frac{h}{e}\\right)\\nu - \\frac{\\phi_0}{e}$.\nComparing this with the linear equation $y = mx + c$:\nSlope $m = \\frac{h}{e}$ and $y$-intercept $c = -\\frac{\\phi_0}{e}$."
+  }
+]

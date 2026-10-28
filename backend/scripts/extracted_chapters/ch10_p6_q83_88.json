@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 83,
+    "question_type": "single_choice",
+    "question_text": "If the $5^{\\text{th}}$ order maxima of wavelength $4000\\text{ \\AA}$ in Young's double slit experiment coincides with the $n^{\\text{th}}$ order maxima of wavelength $5000\\text{ \\AA}$, then $n$ is equal to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5$",
+      "$8$",
+      "$4$",
+      "$10$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For coincidence of maxima, $y_1 = y_2 \\implies n_1 \\lambda_1 \\frac{D}{d} = n_2 \\lambda_2 \\frac{D}{d}$. Thus, $n_1 \\lambda_1 = n_2 \\lambda_2 \\implies 5 \\times 4000 = n \\times 5000$, giving $n = 4$."
+  },
+  {
+    "question_number": 84,
+    "question_type": "single_choice",
+    "question_text": "A light of wavelength $6000\\text{ \\AA}$ in air enters a medium of refractive index $1.5$. The frequency and wavelength of light in the medium respectively are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5 \\times 10^{14}\\text{ Hz},\\, 6000\\text{ \\AA}$",
+      "$5 \\times 10^{14}\\text{ Hz},\\, 4000\\text{ \\AA}$",
+      "$\\frac{10}{3} \\times 10^{14}\\text{ Hz},\\, 4000\\text{ \\AA}$",
+      "$\\frac{10}{3} \\times 10^{14}\\text{ Hz},\\, 6000\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Frequency does not change when light enters another medium: $\\nu = \\frac{c}{\\lambda} = \\frac{3 \\times 10^8}{6000 \\times 10^{-10}} = 5 \\times 10^{14}\\text{ Hz}$. The wavelength in the medium is $\\lambda' = \\frac{\\lambda}{\\mu} = \\frac{6000\\text{ \\AA}}{1.5} = 4000\\text{ \\AA}$."
+  },
+  {
+    "question_number": 85,
+    "question_type": "single_choice",
+    "question_text": "The ratio of the angular width of the principal maximum to the angular width of the second secondary maximum in single slit diffraction is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4 : 1$",
+      "$2 : 1$",
+      "$5 : 1$",
+      "$3 : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The angular width of the principal (central) maximum is $2\\theta_0 = \\frac{2\\lambda}{a}$. The angular width of any secondary maximum is $\\beta_\\theta = \\frac{\\lambda}{a}$. Therefore, the required ratio is $\\frac{2\\lambda/a}{\\lambda/a} = 2 : 1$."
+  },
+  {
+    "question_number": 86,
+    "question_type": "single_choice",
+    "question_text": "Light of wavelength $5000\\text{ \\AA}$ travelling at a speed of $2 \\times 10^8\\text{ m/s}$ in medium 1 is incident on a boundary and gets refracted into medium 2. Its wavelength after refraction is found to be $5500\\text{ \\AA}$. Which of the following is incorrect?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Refractive index of medium 2 is $\\frac{11}{10}$",
+      "On entering medium 2, light bends away from normal",
+      "Speed of light is more in medium 2 than in medium 1",
+      "Its frequency remains unchanged"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Frequency remains constant: $\\nu = \\frac{v_1}{\\lambda_1} = \\frac{v_2}{\\lambda_2}$. Hence, $v_2 = v_1 \\left(\\frac{\\lambda_2}{\\lambda_1}\\right) = 2 \\times 10^8 \\times \\frac{5500}{5000} = 2.2 \\times 10^8\\text{ m/s} > v_1$. Since $v_2 > v_1$, medium 2 is optically rarer, so light bends away from the normal. The relative refractive index of medium 2 with respect to medium 1 is $^{1}\\mu_2 = \\frac{v_1}{v_2} = \\frac{10}{11}$, and its absolute refractive index is $\\mu_2 = \\frac{c}{v_2} = \\frac{3 \\times 10^8}{2.2 \\times 10^8} = \\frac{15}{11} \\neq \\frac{11}{10}$. Thus, statement (1) is incorrect."
+  },
+  {
+    "question_number": 87,
+    "question_type": "single_choice",
+    "question_text": "Young's double slit experiment is performed in a liquid. The $10^{\\text{th}}$ bright fringe in the liquid lies where the $8^{\\text{th}}$ dark fringe lies in vacuum. The refractive index of the liquid is approximately",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.81$",
+      "$1.67$",
+      "$1.54$",
+      "$1.33$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Position of the $8^{\\text{th}}$ dark fringe in vacuum is $y = \\left(8 - \\frac{1}{2}\\right)\\frac{\\lambda D}{d} = 7.5\\frac{\\lambda D}{d}$. Position of the $10^{\\text{th}}$ bright fringe in liquid is $y' = 10\\frac{\\lambda' D}{d} = 10\\frac{\\lambda D}{\\mu d}$. Equating them gives $7.5 = \\frac{10}{\\mu} \\implies \\mu = \\frac{10}{7.5} = \\frac{4}{3} \\approx 1.33$."
+  },
+  {
+    "question_number": 88,
+    "question_type": "single_choice",
+    "question_text": "A diffraction pattern is obtained by using a beam of red light. What will happen if the red light is replaced by blue light?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Bands will become narrower",
+      "Bands become broader",
+      "No change will take place",
+      "Bands disappear"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fringe width/angular width in diffraction is directly proportional to wavelength ($\\beta \\propto \\lambda$). Since the wavelength of blue light is less than that of red light ($\\lambda_{\\text{blue}} < \\lambda_{\\text{red}}$), the diffraction bands will become narrower."
+  }
+]

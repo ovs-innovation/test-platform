@@ -1,0 +1,142 @@
+[
+  {
+    "question_number": 76,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, the distance between the slits is $1\\text{ mm}$. The wavelength of the light used is $600\\text{ nm}$. The fringe width of the interference pattern (as shown in the figure) is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.6\\text{ mm}$",
+      "$0.3\\text{ mm}$",
+      "$0.4\\text{ mm}$",
+      "$0.2\\text{ mm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": true,
+    "diagram_description": "A Young's double slit experimental setup showing two slits $S_1$ and $S_2$ separated by a distance $d = 1\\text{ mm}$, and a screen placed at a distance $D = 0.5\\text{ m}$ from the slits.",
+    "solution": "The fringe width $\\beta$ in Young's double slit experiment is given by $\\beta = \\frac{\\lambda D}{d}$. Substituting the given values: $\\beta = \\frac{600 \\times 10^{-9}\\text{ m} \\times 0.5\\text{ m}}{1 \\times 10^{-3}\\text{ m}} = 300 \\times 10^{-6}\\text{ m} = 0.3\\text{ mm}$.",
+    "source": null
+  },
+  {
+    "question_number": 77,
+    "question_type": "single_choice",
+    "question_text": "Four coherent sources of intensity $I$ are superimposed constructively at a point. The intensity at that point is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4I$",
+      "$8I$",
+      "$16I$",
+      "$24I$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For constructive interference of $N$ identical coherent sources each of amplitude $A_0$, the resultant amplitude is $A = N A_0$. Since intensity is proportional to the square of amplitude, $I_{\\text{net}} = N^2 I_0$. For $N = 4$, $I_{\\text{net}} = 4^2 I = 16I$.",
+    "source": null
+  },
+  {
+    "question_number": 78,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, the intensity at the point of maxima and minima are $I_0$ and zero respectively. The intensities of the individual sources are",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4I_0$",
+      "$\\frac{I_0}{2}$",
+      "$2I_0$",
+      "$\\frac{I_0}{4}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since the minimum intensity is zero, $I_{\\text{min}} = (\\sqrt{I_1} - \\sqrt{I_2})^2 = 0 \\implies I_1 = I_2 = I'$. The maximum intensity is $I_{\\text{max}} = (\\sqrt{I'} + \\sqrt{I'})^2 = 4I' = I_0$. Therefore, the intensity of each individual source is $I' = \\frac{I_0}{4}$.",
+    "source": null
+  },
+  {
+    "question_number": 79,
+    "question_type": "single_choice",
+    "question_text": "Two coherent light sources $S_1$ and $S_2$ are kept at equal distances $\\lambda$ from the centre of a circle on the same plane of the circle as shown in the figure. In one complete revolution on the circular path, the number of maxima observed is (where $\\lambda$ is the wavelength of light used)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4$",
+      "$6$",
+      "$8$",
+      "$12$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": true,
+    "diagram_description": "A circle with center $O$ having two coherent sources $S_1$ and $S_2$ located along a diameter on opposite sides of $O$ such that the distance of each source from $O$ is $\\lambda$.",
+    "solution": "The separation between the two sources is $d = 2\\lambda$. The path difference at any point on the circular path is $\\Delta x = d \\cos\\theta = 2\\lambda \\cos\\theta$. For maxima, $\\Delta x = n\\lambda$, which gives $\\cos\\theta = \\frac{n}{2}$. For $-1 \\le \\cos\\theta \\le 1$, the possible integer values for $n$ are $-2, -1, 0, 1, 2$. For $n = \\pm 2$, $\\cos\\theta = \\pm 1$ gives $1$ point each ($2$ points). For $n = 0, \\pm 1$, each value gives $2$ points ($3 \\times 2 = 6$ points). Thus, the total number of maxima is $2 + 6 = 8$.",
+    "source": null
+  },
+  {
+    "question_number": 80,
+    "question_type": "single_choice",
+    "question_text": "The ratio of intensities in consecutive maxima in a diffraction pattern due to a single slit is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1 : \\frac{4}{9\\pi^2} : \\frac{4}{25\\pi^2}$",
+      "$1 : \\frac{4}{9} : \\frac{4}{25}$",
+      "$1 : \\frac{4}{\\pi^2} : \\frac{9}{\\pi^2}$",
+      "$1 : 4 : 9$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In single slit Fraunhofer diffraction, the intensity of the central maximum is $I_0$, and the intensities of the successive secondary maxima are given approximately by $I_n = I_0 \\left[\\frac{\\sin((2n+1)\\pi/2)}{(2n+1)\\pi/2}\\right]^2 = \\frac{4I_0}{(2n+1)^2\\pi^2}$. For $n = 1$ and $n = 2$, this gives $I_1 = \\frac{4}{9\\pi^2}I_0$ and $I_2 = \\frac{4}{25\\pi^2}I_0$. Thus, the ratio of intensities is $1 : \\frac{4}{9\\pi^2} : \\frac{4}{25\\pi^2}$.",
+    "source": null
+  },
+  {
+    "question_number": 81,
+    "question_type": "single_choice",
+    "question_text": "In an interference pattern, the position of the central maximum is $5\\text{ mm}$ from a certain point $P$ on the screen. The fringe width is $0.6\\text{ mm}$. The distance of the third minimum from point $P$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3.2\\text{ mm}$",
+      "$3.3\\text{ mm}$",
+      "$3.5\\text{ mm}$",
+      "$3.8\\text{ mm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The distance of the $n^{\\text{th}}$ minimum from the central maximum is $y_n = \\left(n - \\frac{1}{2}\\right)\\beta$. For the third minimum ($n = 3$), $y_3 = 2.5\\beta = 2.5 \\times 0.6\\text{ mm} = 1.5\\text{ mm}$. Since the central maximum is at a distance of $5\\text{ mm}$ from point $P$, the distance of the third minimum on the side towards $P$ is $5\\text{ mm} - 1.5\\text{ mm} = 3.5\\text{ mm}$.",
+    "source": null
+  },
+  {
+    "question_number": 82,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, the separation between the slits is $4\\lambda$ (where $\\lambda$ is the wavelength of the light used). The maximum number of maxima formed on the screen placed at a distance of $1\\text{ m}$ from the slits is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6$",
+      "$7$",
+      "$13$",
+      "$11$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The condition for maxima is $d \\sin\\theta = n\\lambda \\implies 4\\lambda \\sin\\theta = n\\lambda \\implies \\sin\\theta = \\frac{n}{4}$. On a plane screen at a finite distance, the angular positions are bounded by $-90^\\circ < \\theta < 90^\\circ$, which means $-1 < \\sin\\theta < 1$. Thus, $-1 < \\frac{n}{4} < 1 \\implies -4 < n < 4$. The possible integer values of $n$ are $-3, -2, -1, 0, 1, 2, 3$, giving a total of $7$ maxima.",
+    "source": null
+  }
+]

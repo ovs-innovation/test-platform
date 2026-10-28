@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 207,
+    "question_type": "single_choice",
+    "question_text": "The angle of a prism is $A$ and one of its refracting surfaces is silvered. Light rays falling at an angle of incidence $2A$ on the first surface return through the same path after suffering reflection at the second (silvered) surface. The refractive index of the material is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2\\sin A$",
+      "$2\\cos A$",
+      "$\\frac{1}{2}\\cos A$",
+      "$\\tan A$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The ray retraces its path, so it strikes the second surface normally: $r_2 = 0^{\\circ}$, giving $r_1 = A$. By Snell's law at the first surface, $\\sin(2A) = \\mu \\sin A \\implies 2\\sin A \\cos A = \\mu \\sin A \\implies \\mu = 2\\cos A$."
+  },
+  {
+    "question_number": 208,
+    "question_type": "single_choice",
+    "question_text": "An object $O$ is placed on one side of two glass slabs $A$ and $B$ of thickness $1.5\\text{ cm}$ and refractive index $1.5$ as shown. Separation between the slabs is $1.5\\text{ cm}$. The position of the image of $O$, when viewed from the other side of slab $B$, will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1\\text{ cm}$ toward the slab $A$",
+      "$1.5\\text{ cm}$ away from the slab $A$",
+      "$2\\text{ cm}$ toward the slab $A$",
+      "$2.5\\text{ cm}$ away from the slab $A$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "Two identical parallel glass slabs A and B, each of thickness 1.5 cm and refractive index 1.5, separated by 1.5 cm. An object O is placed 2 cm to the left of slab A, and an observer views it from the right side of slab B.",
+    "solution": "The total normal shift due to both slabs is $\\Delta s = 2 \\times t\\left(1 - \\frac{1}{\\mu}\\right) = 2 \\times 1.5\\left(1 - \\frac{1}{1.5}\\right) = 1\\text{ cm}$ toward the slabs."
+  },
+  {
+    "question_number": 209,
+    "question_type": "single_choice",
+    "question_text": "Focal length of an equiconvex glass lens in air is $20\\text{ cm}$. Relative refractive index of glass with respect to water is $\\frac{9}{8}$. If the lens is dipped in water, then its new focal length in water is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$",
+      "$-20\\text{ cm}$",
+      "$80\\text{ cm}$",
+      "$-80\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using Lens Maker's formula, $\\frac{1}{f_a} = (\\mu_g - 1)\\frac{2}{R} = \\frac{1}{20}$ (for $\\mu_g = 1.5$, $R = 20\\text{ cm}$). In water, $\\frac{1}{f_w} = (\\mu_{g/w} - 1)\\frac{2}{R} = \\left(\\frac{9}{8} - 1\\right)\\frac{2}{20} = \\frac{1}{80}\\text{ cm}^{-1} \\implies f_w = 80\\text{ cm}$."
+  },
+  {
+    "question_number": 210,
+    "question_type": "single_choice",
+    "question_text": "The correct statement is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Intermediate image in compound microscope is real, erect and magnified",
+      "Intermediate image in compound microscope is real, inverted, but diminished",
+      "Intermediate image in compound microscope is virtual, erect and magnified",
+      "Intermediate image in compound microscope is real, inverted and magnified"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In a compound microscope, the objective lens forms a real, inverted, and magnified intermediate image, which then acts as the object for the eyepiece."
+  },
+  {
+    "question_number": 211,
+    "question_type": "single_choice",
+    "question_text": "An astronomical telescope has objective and ocular of focal length $100\\text{ cm}$ and $1\\text{ cm}$ respectively. Minimum magnifying power of the telescope is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$50$",
+      "$100$",
+      "$96$",
+      "$48$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Minimum magnifying power corresponds to the normal adjustment (final image at infinity): $m_{\\min} = \\frac{f_o}{f_e} = \\frac{100}{1} = 100$."
+  },
+  {
+    "question_number": 212,
+    "question_type": "single_choice",
+    "question_text": "A convex mirror of focal length $f$ forms an image, which is $\\left(\\frac{1}{n}\\right)$ times the size of the object. The distance of the object from the mirror is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$(n-1)f$",
+      "$\\left(\\frac{n-1}{n}\\right)f$",
+      "$\\left(\\frac{n+1}{n}\\right)f$",
+      "$(n+1)f$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a convex mirror, magnification $m = +\\frac{1}{n} = \\frac{f}{f - u}$. Solving for $u$ gives $f - u = nf \\implies -u = (n - 1)f$, so the object distance is $(n - 1)f$."
+  }
+]

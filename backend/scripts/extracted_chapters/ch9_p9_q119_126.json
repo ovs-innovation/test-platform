@@ -1,0 +1,154 @@
+[
+  {
+    "question_number": 119,
+    "question_type": "single_choice",
+    "question_text": "The refractive indices of a prism for red, yellow and violet colours are $1.52$, $1.57$ and $1.62$ respectively. The dispersive power of the material of the prism will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.57$",
+      "$\\frac{1}{5.7}$",
+      "$5.7$",
+      "$1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Dispersive power is given by $\\omega = \\frac{\\mu_v - \\mu_r}{\\mu_y - 1}$.\nSubstituting the given values:\n$\\omega = \\frac{1.62 - 1.52}{1.57 - 1} = \\frac{0.10}{0.57} = \\frac{1}{5.7}$."
+  },
+  {
+    "question_number": 120,
+    "question_type": "single_choice",
+    "question_text": "The magnification of a compound microscope for the final image at the least distance of distinct vision is $90$. If the magnification of the objective lens is $15$, the focal length of the eyepiece will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5\\text{ cm}$",
+      "$6\\text{ cm}$",
+      "$\\frac{1}{6}\\text{ cm}$",
+      "$12\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Total magnification is $m = m_o \\times m_e$.\n$90 = 15 \\times m_e \\implies m_e = 6$.\nFor the final image formed at the near point ($D = 25\\text{ cm}$):\n$m_e = 1 + \\frac{D}{f_e} \\implies 6 = 1 + \\frac{25}{f_e} \\implies \\frac{25}{f_e} = 5 \\implies f_e = 5\\text{ cm}$."
+  },
+  {
+    "question_number": 121,
+    "question_type": "single_choice",
+    "question_text": "A terrestrial telescope is made by introducing an inverting lens of focal length $f_i$. The focal lengths of the objective and eyepiece are $f_o$ and $f_e$ respectively. Then the length of the telescope for normal adjustment is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_o + f_e + f_i$",
+      "$f_o + f_e + 2f_i$",
+      "$2f_o + 2f_e + f_i$",
+      "$f_o + f_e + 4f_i$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "An erecting lens of focal length $f_i$ is placed at a distance $2f_i$ from the intermediate image formed by the objective lens, and it forms an erect image at a distance $2f_i$ on the other side.\nThus, the distance added between the objective and the eyepiece is $2f_i + 2f_i = 4f_i$.\nTherefore, the total length of the telescope is $L = f_o + 4f_i + f_e$."
+  },
+  {
+    "question_number": 122,
+    "question_type": "single_choice",
+    "question_text": "The reflected light wave and incident light wave differ from each other by a phase angle of $180^\\circ$, when",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Light enters into glass from air",
+      "Light enters into air from glass",
+      "Light enters into glass from diamond",
+      "Light enters into water from glass"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When light traveling in a rarer medium is reflected from the surface of an optically denser medium (e.g., from air to glass), it suffers a phase reversal of $\\pi$ radians ($180^\\circ$). Reflection at a rarer medium boundary incurs no phase change."
+  },
+  {
+    "question_number": 123,
+    "question_type": "single_choice",
+    "question_text": "Converging rays are incident on a convex lens, the image formed",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "May be virtual",
+      "Must be virtual",
+      "May be real",
+      "Must be real"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For converging rays, the object is virtual, which means $u > 0$.\nFor a convex lens, $f > 0$.\nUsing the lens formula: $\\frac{1}{v} = \\frac{1}{f} + \\frac{1}{u}$.\nSince both $f > 0$ and $u > 0$, $\\frac{1}{v} > 0$, which ensures $v > 0$ always.\nHence, the image must always be real."
+  },
+  {
+    "question_number": 124,
+    "question_type": "single_choice",
+    "question_text": "One of the refracting surfaces of a prism is silvered. A ray is incident at an angle of $60^\\circ$ such that it retraces its path. The angle of the prism is (refractive index of the prism $\\mu = \\sqrt{3}$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30^\\circ$",
+      "$45^\\circ$",
+      "$60^\\circ$",
+      "$75^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the ray to retrace its path after reflecting from the silvered surface, it must hit that surface normally, so $r_2 = 0^\\circ$.\nSince $A = r_1 + r_2$, we have $r_1 = A$.\nApplying Snell's law at the first surface:\n$\\sin i = \\mu \\sin r_1 \\implies \\sin 60^\\circ = \\sqrt{3}\\sin A$.\n$\\frac{\\sqrt{3}}{2} = \\sqrt{3}\\sin A \\implies \\sin A = \\frac{1}{2} \\implies A = 30^\\circ$."
+  },
+  {
+    "question_number": 125,
+    "question_type": "single_choice",
+    "question_text": "A concave lens forms the image of an object such that the distance between the object and image is $10\\text{ cm}$. If the magnification of the image is $\\frac{1}{4}$, the focal length of the lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6\\text{ cm}$",
+      "$\\frac{20}{3}\\text{ cm}$",
+      "$\\frac{10}{7}\\text{ cm}$",
+      "$\\frac{40}{9}\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a concave lens, a virtual image is formed on the same side as the object: $m = \\frac{v}{u} = +\\frac{1}{4} \\implies u = 4v$.\nThe distance between object and image is $|u| - |v| = 10\\text{ cm} \\implies 3|v| = 10 \\implies |v| = \\frac{10}{3}\\text{ cm}$ and $|u| = \\frac{40}{3}\\text{ cm}$.\nWith sign conventions: $v = -\\frac{10}{3}\\text{ cm}$ and $u = -\\frac{40}{3}\\text{ cm}$.\nUsing the lens formula:\n$\\frac{1}{f} = \\frac{1}{v} - \\frac{1}{u} = -\\frac{3}{10} - \\left(-\\frac{3}{40}\\right) = -\\frac{9}{40}\\text{ cm}^{-1} \\implies |f| = \\frac{40}{9}\\text{ cm}$."
+  },
+  {
+    "question_number": 126,
+    "question_type": "single_choice",
+    "question_text": "A ray of light is incident on a prism of angle $A$ and refractive index $\\mu$. The light will not emerge out of the prism for any angle of incidence, if",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\mu > \\sin\\frac{A}{2}$",
+      "$\\mu > \\cos A$",
+      "$\\mu < \\frac{1}{\\sin A}$",
+      "$\\mu > \\frac{1}{\\sin\\frac{A}{2}}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For total internal reflection at the second face for all angles of incidence, the angle of prism must satisfy $A > 2\\theta_c$, where $\\theta_c$ is the critical angle.\n$\\theta_c < \\frac{A}{2} \\implies \\sin\\theta_c < \\sin\\frac{A}{2}$.\nSince $\\sin\\theta_c = \\frac{1}{\\mu}$, we have:\n$\\frac{1}{\\mu} < \\sin\\frac{A}{2} \\implies \\mu > \\frac{1}{\\sin\\frac{A}{2}}$."
+  }
+]

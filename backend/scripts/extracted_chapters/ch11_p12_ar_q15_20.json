@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 15,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Because of the energy distribution of free electrons in a metal, the energy required by an electron to come out of the metal is different for different electrons.\n**Reason (R):** Work function is the least energy required by an electron to come out of the metal.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Because of the energy distribution of free electrons in a metal, the energy required by an electron to come out of the metal is different for different electrons.",
+    "reason_text": "Work function is the least energy required by an electron to come out of the metal.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Electrons in a metal occupy various discrete energy levels up to the Fermi energy level; hence, different electrons require different amounts of energy to overcome the surface barrier. The work function $\\phi_0$ is defined as the minimum energy required by the most energetic electron (at the Fermi level) to escape. Both statements are true, but Reason does not explain the energy distribution inside the metal."
+  },
+  {
+    "question_number": 16,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Einstein's photoelectric equation is in accordance with the energy conservation law as applied to the photon absorption by an electron in the metal.\n**Reason (R):** Millikan's first precise measurements confirmed the Einstein's photoelectric equation and obtained an accurate value of Planck's constant $h$.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Einstein's photoelectric equation is in accordance with the energy conservation law as applied to the photon absorption by an electron in the metal.",
+    "reason_text": "Millikan's first precise measurements confirmed the Einstein's photoelectric equation and obtained an accurate value of Planck's constant $h$.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Einstein's photoelectric equation $h\\nu = \\phi_0 + K_{\\text{max}}$ expresses conservation of energy during a single photon-electron interaction. Millikan experimentally verified this relation and measured $h$. While both statements are true, experimental confirmation (Reason) is not the theoretical explanation for why the equation obeys energy conservation (Assertion)."
+  },
+  {
+    "question_number": 17,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** If intensity increases, then the number of electrons coming out of the metal ($\\nu > \\nu_0$) increases.\n**Reason (R):** Intensity is proportional to the number of energy quanta per unit area per unit time. The greater the number of energy quanta available, the greater is the number of electrons absorbing the energy quanta.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "If intensity increases, then the number of electrons coming out of the metal ($\\nu > \\nu_0$) increases.",
+    "reason_text": "Intensity is proportional to the number of energy quanta per unit area per unit time. The greater the number of energy quanta available, the greater is the number of electrons absorbing the energy quanta.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a fixed frequency $\\nu > \\nu_0$, increasing the intensity increases the number of incident photons (energy quanta) per second. Since one photon is absorbed by one electron, a greater photon flux leads to more emitted photoelectrons. Thus, Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 18,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Photoelectric emission is possible only if $h\\nu > \\phi_0$ or $\\nu > \\nu_0$.\n**Reason (R):** $K_{\\text{max}} = h\\nu - \\phi_0$ and $K_{\\text{max}}$ must be non-negative.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Photoelectric emission is possible only if $h\\nu > \\phi_0$ or $\\nu > \\nu_0$.",
+    "reason_text": "$K_{\\text{max}} = h\\nu - \\phi_0$ and $K_{\\text{max}}$ must be non-negative.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Einstein's equation, $K_{\\text{max}} = h\\nu - \\phi_0$. Since kinetic energy cannot be negative, photoemission can only occur if $K_{\\text{max}} \\ge 0$, which requires $h\\nu \\ge \\phi_0$ (or $\\nu \\ge \\nu_0$). Thus, Reason correctly explains the condition for photoelectric emission."
+  },
+  {
+    "question_number": 19,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** In the wave picture, a single electron from a metal should take hours or more to pick up sufficient energy to overcome the work function and come out from the metal.\n**Reason (R):** In this model, since a large number of electrons absorb energy, the energy absorbed per electron per unit time turns out to be small.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "In the wave picture, single electron from metal should take hours or more to pick up sufficient energy to overcome the work function and come out from the metal.",
+    "reason_text": "In this model, since a large number of electrons absorb energy, the energy absorbed per electron per unit time turns out to be small.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to classical wave theory, continuous wavefronts illuminate a large area and energy is shared equally among millions of target electrons. As a result, the rate of energy absorption per electron is extremely low, leading to a theoretical time lag of hours. Thus, Reason is the correct explanation for Assertion."
+  },
+  {
+    "question_number": 20,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Observation on photoelectric effect implies that in the event of matter light interaction, absorption of energy takes place in discrete units of $h\\nu$.\n**Reason (R):** This is not quite the same as saying that light consists of particles each of energy $h\\nu$.\n\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Observation on photoelectric effect implies that in the event of matter light interaction, absorption of energy takes place in discrete units of $h\\nu$.",
+    "reason_text": "This is not quite the same as saying that light consists of particles each of energy $h\\nu$.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 1,
+    "difficulty": "hard",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The photoelectric effect demonstrates quantized energy absorption ($E = h\\nu$) during interaction with matter. However, confirming that light itself consists of corpuscular packets (photons) possessing definite momentum $p = h/\\lambda$ required further evidence like the Compton effect. Both statements are true, but Reason is a conceptual clarification rather than the explanation of Assertion."
+  }
+]

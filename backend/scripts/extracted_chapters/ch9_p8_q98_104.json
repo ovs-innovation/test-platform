@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 98,
+    "question_type": "single_choice",
+    "question_text": "If the tube length of an astronomical telescope is $95\\text{ cm}$ and its magnifying power is $18$ for normal adjustment, then the focal length of the eyepiece is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$90\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$25\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In normal adjustment of an astronomical telescope, the tube length is $L = f_o + f_e$ and the magnifying power is $m = \\frac{f_o}{f_e}$. Given $m = 18$, we have $f_o = 18f_e$. Substituting into the tube length equation: $18f_e + f_e = 95\\text{ cm} \\implies 19f_e = 95\\text{ cm} \\implies f_e = 5\\text{ cm}$."
+  },
+  {
+    "question_number": 99,
+    "question_type": "single_choice",
+    "question_text": "Which of the following pairs can produce an erect, diminished, and virtual image for a real object?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Convex mirror and concave lens",
+      "Convex lens and convex mirror",
+      "Convex lens and concave mirror",
+      "Concave lens and concave mirror"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A convex mirror and a concave (diverging) lens always form virtual, erect, and diminished images of a real object placed anywhere in front of them."
+  },
+  {
+    "question_number": 100,
+    "question_type": "single_choice",
+    "question_text": "In a compound microscope, the focal lengths of the two lenses are $1.5\\text{ cm}$ and $6.25\\text{ cm}$. If an object is placed at $2\\text{ cm}$ from the objective and the final image is formed at $25\\text{ cm}$ from the eye lens, the distance between the two lenses is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6\\text{ cm}$",
+      "$7.75\\text{ cm}$",
+      "$9.25\\text{ cm}$",
+      "$11\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the objective lens: $f_o = 1.5\\text{ cm}$, $u_o = -2\\text{ cm}$. Using the lens formula $\\frac{1}{v_o} - \\frac{1}{u_o} = \\frac{1}{f_o} \\implies \\frac{1}{v_o} - \\frac{1}{-2} = \\frac{1}{1.5} \\implies v_o = 6\\text{ cm}$. For the eyepiece: $f_e = 6.25\\text{ cm}$, $v_e = -25\\text{ cm}$. Using $\\frac{1}{v_e} - \\frac{1}{u_e} = \\frac{1}{f_e} \\implies -\\frac{1}{25} - \\frac{1}{u_e} = \\frac{1}{6.25} = \\frac{4}{25} \\implies u_e = -5\\text{ cm}$. The distance between the lenses is $L = |v_o| + |u_e| = 6\\text{ cm} + 5\\text{ cm} = 11\\text{ cm}$."
+  },
+  {
+    "question_number": 101,
+    "question_type": "single_choice",
+    "question_text": "A plano-convex lens fits exactly into a plano-concave lens. Their plane surfaces are parallel to each other. If the lenses are made of different materials of refractive indices $\\mu_1$ and $\\mu_2$, and $R$ is the radius of curvature of the curved surface of the lenses, then the focal length of the combination is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{R}{2(\\mu_1 - \\mu_2)}$",
+      "$\\frac{R}{(\\mu_1 - \\mu_2)}$",
+      "$\\frac{2R}{(\\mu_1 - \\mu_2)}$",
+      "$\\frac{R}{2(\\mu_1 + \\mu_2)}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the plano-convex lens: $\\frac{1}{f_1} = (\\mu_1 - 1)\\left(\\frac{1}{R}\\right)$. For the plano-concave lens fitting into it: $\\frac{1}{f_2} = (\\mu_2 - 1)\\left(-\\frac{1}{R}\\right)$. The equivalent focal length $F$ of the combination in contact is given by $\\frac{1}{F} = \\frac{1}{f_1} + \\frac{1}{f_2} = \\frac{\\mu_1 - 1}{R} - \\frac{\\mu_2 - 1}{R} = \\frac{\\mu_1 - \\mu_2}{R} \\implies F = \\frac{R}{\\mu_1 - \\mu_2}$."
+  },
+  {
+    "question_number": 102,
+    "question_type": "single_choice",
+    "question_text": "Two lenses in contact form an achromatic lens and their focal lengths are in the ratio $2 : 3$. Their dispersive powers must be in the ratio of",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1 : 3$",
+      "$2 : 3$",
+      "$3 : 2$",
+      "$3 : 1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The condition for achromatism of two lenses in contact is $\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0 \\implies \\left|\\frac{\\omega_1}{\\omega_2}\\right| = \\frac{f_1}{f_2}$. Since $\\frac{f_1}{f_2} = \\frac{2}{3}$, the ratio of their dispersive powers is $2 : 3$."
+  },
+  {
+    "question_number": 103,
+    "question_type": "single_choice",
+    "question_text": "A plano-convex lens of refractive index $1.5$ and radius of curvature $30\\text{ cm}$ is silvered at the curved surface. Now this lens has been used to form the image of an object. At what distance from this lens should an object be placed in order to have a real image of the same size as the object?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$60\\text{ cm}$",
+      "$80\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the silvered lens system is $P = 2P_L + P_M$, or equivalently $\\frac{1}{F} = \\frac{2}{f_L} + \\frac{1}{f_M}$. Here, $\\frac{1}{f_L} = (\\mu - 1)\\frac{1}{R} = (1.5 - 1)\\frac{1}{30} = \\frac{1}{60}\\text{ cm}^{-1}$, and the silvered surface acts as a concave mirror of focal length $f_M = \\frac{R}{2} = 15\\text{ cm}$, so $\\frac{1}{f_M} = \\frac{1}{15}\\text{ cm}^{-1}$. Thus, $\\frac{1}{F} = \\frac{2}{60} + \\frac{1}{15} = \\frac{1}{10}\\text{ cm}^{-1} \\implies F = 10\\text{ cm}$. The system acts as a concave mirror of focal length $10\\text{ cm}$. A real image of the same size as the object is formed at the center of curvature, which is at a distance of $u = 2F = 20\\text{ cm}$."
+  },
+  {
+    "question_number": 104,
+    "question_type": "single_choice",
+    "question_text": "An object is placed at $15\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. At what distance from the lens should another convex mirror of radius of curvature $12\\text{ cm}$ be placed such that the final image will coincide with the object?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$18\\text{ cm}$",
+      "$17\\text{ cm}$",
+      "$14\\text{ cm}$",
+      "$20\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the convex lens: $\\frac{1}{v} - \\frac{1}{-15} = \\frac{1}{10} \\implies \\frac{1}{v} = \\frac{1}{10} - \\frac{1}{15} = \\frac{1}{30} \\implies v = 30\\text{ cm}$. For the final image to retrace its path and coincide with the object, light rays must fall normally on the convex mirror, converging toward its center of curvature. The center of curvature lies at a distance of $R = 12\\text{ cm}$ behind the mirror. If $d$ is the distance between the lens and the mirror, then $d + R = v \\implies d + 12 = 30 \\implies d = 18\\text{ cm}$."
+  }
+]

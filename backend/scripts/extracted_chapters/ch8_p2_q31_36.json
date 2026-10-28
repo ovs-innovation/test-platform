@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 31,
+    "question_type": "single_choice",
+    "question_text": "Electromagnetic radiations of intensity $1\\text{ W/m}^2$ strike the surface of a substance, which reflects $80\\%$ of the incident radiation back into the same medium. The radiation pressure on the surface of the substance is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4 \\times 10^{-8}\\text{ N/m}^2$",
+      "$2.5 \\times 10^{-7}\\text{ N/m}^2$",
+      "$8 \\times 10^{-8}\\text{ N/m}^2$",
+      "$6 \\times 10^{-9}\\text{ N/m}^2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Radiation pressure for a surface with reflection coefficient $r$ is given by $P = \\frac{I}{c}(1 + r)$. Given $I = 1\\text{ W/m}^2$ and $r = 0.80$, we have $P = \\frac{1}{3 \\times 10^8}(1 + 0.80) = \\frac{1.8}{3 \\times 10^8} = 6 \\times 10^{-9}\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 32,
+    "question_type": "single_choice",
+    "question_text": "The laser beam from a source which radiates energy at the rate of $25\\text{ }\\mu\\text{W}$ and wavelength $5000\\text{ \\AA}$ is focused on a perfectly absorbing surface having an area equal to the square of the wavelength of the beam. The radiation pressure on the surface is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.33\\text{ N/m}^2$",
+      "$1.44\\text{ N/m}^2$",
+      "$1.33\\text{ N/m}^2$",
+      "$1.67\\text{ N/m}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Area $A = \\lambda^2 = (5 \\times 10^{-7}\\text{ m})^2 = 25 \\times 10^{-14}\\text{ m}^2$. The intensity is $I = \\frac{\\text{Power}}{A} = \\frac{25 \\times 10^{-6}}{25 \\times 10^{-14}} = 10^8\\text{ W/m}^2$. For a perfectly absorbing surface, radiation pressure is $P = \\frac{I}{c} = \\frac{10^8}{3 \\times 10^8} \\approx 0.33\\text{ N/m}^2$."
+  },
+  {
+    "question_number": 33,
+    "question_type": "single_choice",
+    "question_text": "Which one of the following rays (or waves) has the maximum speed in air?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\beta$-rays",
+      "Heat radiations",
+      "Cosmic rays",
+      "Ultrasonic waves"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Heat radiations are electromagnetic waves (infrared radiation) and travel with the speed of light ($c \\approx 3 \\times 10^8\\text{ m/s}$) in air. In contrast, $\\beta$-rays and cosmic rays are material particles moving at speeds less than $c$, and ultrasonic waves are sound waves that propagate at only around $340\\text{ m/s}$."
+  },
+  {
+    "question_number": 34,
+    "question_type": "single_choice",
+    "question_text": "Which of the following phenomena proves the transverse nature of electromagnetic waves?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Polarisation",
+      "Interference",
+      "Diffraction",
+      "Reflection"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Interference, diffraction, and reflection can occur for both longitudinal and transverse waves. Polarisation is a characteristic phenomenon exhibited exclusively by transverse waves, thus establishing the transverse nature of electromagnetic waves."
+  },
+  {
+    "question_number": 35,
+    "question_type": "single_choice",
+    "question_text": "If the amplitudes of the electric field and magnetic field in an electromagnetic wave are $E_0$ and $B_0$ respectively and the speed of light is $c$, then which of the following is incorrect?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Intensity of the wave is $\\frac{1}{2}\\varepsilon_0 E_0^2 c$",
+      "Intensity of the wave is $\\frac{1}{2}\\left(\\frac{B_0^2}{\\mu_0}\\right)c$",
+      "Intensity of the wave is $\\frac{1}{4}\\left[\\varepsilon_0 E_0^2 + \\frac{B_0^2}{\\mu_0}\\right]c$",
+      "$c E_0 = B_0$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The relation between field amplitudes in an electromagnetic wave is $E_0 = c B_0$, which means $B_0 = \\frac{E_0}{c}$. Therefore, the relation $c E_0 = B_0$ is incorrect."
+  },
+  {
+    "question_number": 36,
+    "question_type": "single_choice",
+    "question_text": "The impulse imparted by an electromagnetic pulse of energy $1.5 \\times 10^{-2}\\text{ J}$ when it falls normally on a perfectly reflecting surface is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$2 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$10^{-10}\\text{ kg}\\cdot\\text{m/s}$",
+      "$0.5 \\times 10^{-10}\\text{ kg}\\cdot\\text{m/s}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For normal incidence on a perfectly reflecting surface, the change in momentum (impulse imparted) is $\\Delta p = \\frac{2U}{c} = \\frac{2 \\times 1.5 \\times 10^{-2}}{3 \\times 10^8} = 10^{-10}\\text{ kg}\\cdot\\text{m/s}$."
+  }
+]

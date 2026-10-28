@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 164,
+    "question_type": "single_choice",
+    "question_text": "In the following diagram, what is the distance $x$ if the radius of curvature of the convex spherical surface is $R = 15\\text{ cm}$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$10\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A ray diagram showing light rays diverging from a point source on the principal axis at a distance $x$ in a medium of refractive index $\\mu_1 = 1$. The rays strike a convex spherical interface of radius of curvature $R = 15\\text{ cm}$ bordering a medium of refractive index $\\mu_2 = 1.5$, and after refraction emerge parallel to the principal axis.",
+    "solution": "Using the spherical refraction formula $\\frac{\\mu_2}{v} - \\frac{\\mu_1}{u} = \\frac{\\mu_2 - \\mu_1}{R}$, with $v = \\infty$, $u = -x$, and $R = +15\\text{ cm}$:\n$\\frac{1.5}{\\infty} - \\frac{1}{-x} = \\frac{1.5 - 1}{15} \\implies \\frac{1}{x} = \\frac{0.5}{15} = \\frac{1}{30} \\implies x = 30\\text{ cm}$."
+  },
+  {
+    "question_number": 165,
+    "question_type": "single_choice",
+    "question_text": "Focal lengths of the objective and eyepiece of a Galilean telescope have magnitudes of $100\\text{ cm}$ and $5\\text{ cm}$ respectively. In normal adjustment, the distance between the objective and eyepiece is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$105\\text{ cm}$",
+      "$100\\text{ cm}$",
+      "$95\\text{ cm}$",
+      "$90\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In a Galilean telescope, the eyepiece is a diverging lens ($f_e = -5\\text{ cm}$) and the objective is converging ($f_o = 100\\text{ cm}$). In normal adjustment, the tube length is $L = f_o - |f_e| = 100 - 5 = 95\\text{ cm}$."
+  },
+  {
+    "question_number": 166,
+    "question_type": "single_choice",
+    "question_text": "In the diagram shown below, the image of the point object $O$ is formed at $I$ by the convex lens of focal length $20\\text{ cm}$, where $F_1$ and $F_2$ are the foci of the lens. The value of $x'$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$40\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A convex lens of focal length $f = 20\\text{ cm}$ with principal foci $F_1$ and $F_2$. An object $O$ is positioned $10\\text{ cm}$ to the left of $F_1$, and its image $I$ is formed at a distance $x'$ to the right of $F_2$.",
+    "solution": "By Newton's formula for a thin lens, $x_1 x_2 = f^2$. Here, $x_1 = 10\\text{ cm}$, $x_2 = x'$, and $f = 20\\text{ cm}$. Thus, $10 \\times x' = 20^2 = 400 \\implies x' = 40\\text{ cm}$."
+  },
+  {
+    "question_number": 167,
+    "question_type": "single_choice",
+    "question_text": "An astronomical telescope has an angular magnification of $40$ in normal adjustment. If the focal length of the eyepiece is $5\\text{ cm}$, the length of the telescope is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$190\\text{ cm}$",
+      "$200\\text{ cm}$",
+      "$205\\text{ cm}$",
+      "$210\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Magnification $m = \\frac{f_o}{f_e} = 40 \\implies f_o = 40 \\times 5 = 200\\text{ cm}$. In normal adjustment, the length of the telescope is $L = f_o + f_e = 200 + 5 = 205\\text{ cm}$."
+  },
+  {
+    "question_number": 168,
+    "question_type": "single_choice",
+    "question_text": "The focal length of a convex lens is $40\\text{ cm}$ and the size of the inverted image formed is half of the object. The object distance is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$60\\text{ cm}$",
+      "$120\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$180\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an inverted image, magnification $m = -\\frac{1}{2}$. Using $m = \\frac{f}{f+u}$:\n$-\\frac{1}{2} = \\frac{40}{40 + u} \\implies 40 + u = -80 \\implies u = -120\\text{ cm}$. Thus, the object distance is $120\\text{ cm}$."
+  },
+  {
+    "question_number": 169,
+    "question_type": "single_choice",
+    "question_text": "The condition of minimum deviation is achieved in an equilateral prism kept on the prism table of a spectrometer. If the angle of incidence is $50^\\circ$, the angle of deviation is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$25^\\circ$",
+      "$40^\\circ$",
+      "$50^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an equilateral prism, prism angle $A = 60^\\circ$. At minimum deviation, $i = e = 50^\\circ$. The angle of minimum deviation is $\\delta_m = 2i - A = 2(50^\\circ) - 60^\\circ = 40^\\circ$."
+  },
+  {
+    "question_number": 170,
+    "question_type": "single_choice",
+    "question_text": "A small air bubble is at the centre of a glass sphere of radius $10\\text{ cm}$ and refractive index $1.5$. The distance of the bubble from the surface when viewed from outside the sphere is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2.5\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$7.5\\text{ cm}$",
+      "$10\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Rays originating from the center of the sphere strike the surface along the normal, hence they pass without any deviation. The image is formed at the center itself, at a distance of $10\\text{ cm}$ from the surface."
+  }
+]

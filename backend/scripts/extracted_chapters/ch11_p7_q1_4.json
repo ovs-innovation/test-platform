@@ -1,0 +1,78 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "single_choice",
+    "question_text": "A photon of energy $h\\nu$ strikes an electron of a metal of work function $\\phi$ $(\\phi < h\\nu)$. The correct statement is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "The electron is sure to come out with a kinetic energy in the range $0$ to $h\\nu - \\phi$",
+      "The electron is sure to come out with a kinetic energy $h\\nu - \\phi$",
+      "Either the electron does not come out or if it comes out, it has a kinetic energy $h\\nu - \\phi$",
+      "The electron may come out with a kinetic energy in the range $0$ to $h\\nu - \\phi$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "An electron that absorbs a photon may undergo collisions with atoms inside the metal and lose part or all of its energy before reaching the surface. Therefore, the electron is not guaranteed to emerge; if it does emerge, its kinetic energy will lie in the range $0 \\le K \\le (h\\nu - \\phi)$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "single_choice",
+    "question_text": "The energy that should be added to an electron's kinetic energy so that its de-Broglie wavelength changes from $2 \\times 10^{-9}\\text{ m}$ to $0.5 \\times 10^{-9}\\text{ m}$ is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.1\\text{ eV}$",
+      "$0.56\\text{ eV}$",
+      "$8.56\\text{ eV}$",
+      "$5.67\\text{ eV}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The kinetic energy is $E = \\frac{h^2}{2m\\lambda^2}$. For $\\lambda_1 = 2\\text{ nm}$, $E_1 = \\frac{150}{(20)^2}\\text{ eV} \\approx 0.377\\text{ eV}$. Since $\\lambda_2 = \\frac{\\lambda_1}{4}$, the final kinetic energy is $E_2 = 16E_1$. Thus, the energy added is $\\Delta E = 15E_1 = 15 \\times 0.377\\text{ eV} \\approx 5.67\\text{ eV}$."
+  },
+  {
+    "question_number": 3,
+    "question_type": "single_choice",
+    "question_text": "A proton has kinetic energy equal to that of a photon of energy $E$. If $\\lambda_1$ is the de-Broglie wavelength of proton and $\\lambda_2$ is the wavelength of the photon, the ratio $\\frac{\\lambda_1}{\\lambda_2}$ is proportional to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{E}$",
+      "$\\frac{1}{\\sqrt{E}}$",
+      "$E$",
+      "$\\frac{1}{E}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the proton, $\\lambda_1 = \\frac{h}{\\sqrt{2mE}}$. For the photon, $\\lambda_2 = \\frac{hc}{E}$. Dividing the two gives $\\frac{\\lambda_1}{\\lambda_2} = \\frac{h}{\\sqrt{2mE}} \\times \\frac{E}{hc} = \\frac{\\sqrt{E}}{c\\sqrt{2m}} \\propto \\sqrt{E}$."
+  },
+  {
+    "question_number": 4,
+    "question_type": "single_choice",
+    "question_text": "In a photoelectric experiment anode potential with respect to cathode is plotted against photocurrent. From the graph, we can conclude that",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "A and B will have equal photon flux while B and C will have different frequencies",
+      "B and C will have different photon flux while A and C will have different frequencies",
+      "A and B will have different photon flux while A and C will have equal frequencies",
+      "B and C will have equal photon flux while A and B will have same frequencies"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": true,
+    "diagram_description": "A graph plotting photocurrent $I$ on the vertical axis against collector plate potential $V$ on the horizontal axis for three radiation curves labeled A, B, and C. Curves A and B originate from the same stopping potential on the negative voltage axis, with A having a higher saturation current than B. Curve C originates from a more negative stopping potential and reaches the same saturation current level as curve A.",
+    "solution": "Saturation current is directly proportional to photon flux (intensity), while stopping potential depends on frequency. Since B and C have different saturation currents, they have different photon fluxes. Since A and C have different stopping potentials, they have different frequencies. Thus, option (2) is correct."
+  }
+]

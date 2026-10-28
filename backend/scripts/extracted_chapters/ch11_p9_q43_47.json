@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 43,
+    "question_type": "single_choice",
+    "question_text": "Maximum speed of the photoelectrons emitted from a metallic surface is proportional to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\nu - \\nu_0$",
+      "$\\sqrt{\\nu - \\nu_0}$",
+      "$(\\nu - \\nu_0)^2$",
+      "$\\nu$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Einstein's photoelectric equation, the maximum kinetic energy of emitted electrons is given by $K_{\\text{max}} = \\frac{1}{2}m v_{\\text{max}}^2 = h(\\nu - \\nu_0)$. Therefore, the maximum speed is $v_{\\text{max}} = \\sqrt{\\frac{2h(\\nu - \\nu_0)}{m}} \\propto \\sqrt{\\nu - \\nu_0}$."
+  },
+  {
+    "question_number": 44,
+    "question_type": "single_choice",
+    "question_text": "A photon of energy $E$ ejects a photoelectron from a metal surface whose work function is $W_0$. If this electron enters into a uniform magnetic field of induction $B$ in a direction perpendicular to the field and describes a circular path of radius $r$, then the radius $r$ is given by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\sqrt{m(E-W_0)}}{eB}$",
+      "$\\sqrt{2m(E-W_0)}eB$",
+      "$\\frac{\\sqrt{2e(E-W_0)}}{mB}$",
+      "$\\frac{\\sqrt{2m(E-W_0)}}{eB}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The kinetic energy of the ejected photoelectron is $K = E - W_0$. The linear momentum of the electron is $p = \\sqrt{2mK} = \\sqrt{2m(E - W_0)}$. The radius of the circular path in a transverse magnetic field is given by $r = \\frac{p}{eB} = \\frac{\\sqrt{2m(E - W_0)}}{eB}$."
+  },
+  {
+    "question_number": 45,
+    "question_type": "single_choice",
+    "question_text": "An electron of mass $m$ when accelerated through a potential difference $V$ has de-Broglie wavelength $\\lambda$. The de-Broglie wavelength associated with a proton of mass $M$ accelerated through the same potential difference will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\lambda m}{M}$",
+      "$\\lambda \\sqrt{\\frac{m}{M}}$",
+      "$\\frac{\\lambda M}{m}$",
+      "$\\lambda \\sqrt{\\frac{M}{m}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of a charged particle accelerated through a potential difference $V$ is $\\lambda = \\frac{h}{\\sqrt{2mqV}}$. Since both electron and proton have the same magnitude of charge $q = e$ and the same potential difference $V$, $\\lambda \\propto \\frac{1}{\\sqrt{m}}$. Thus, $\\lambda_p = \\lambda_e \\sqrt{\\frac{m}{M}} = \\lambda \\sqrt{\\frac{m}{M}}$."
+  },
+  {
+    "question_number": 46,
+    "question_type": "single_choice",
+    "question_text": "The slope of the graph between frequency of incident radiation (along the $x$-axis) and kinetic energy of the photoelectron (along the $y$-axis) in a photoelectric phenomenon is ($e \\rightarrow$ charge on electron, $h \\rightarrow$ Planck's constant):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$e$",
+      "$eh$",
+      "$h/e$",
+      "$h$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Einstein's photoelectric equation is $K_{\\text{max}} = h\\nu - \\phi_0$. Comparing this with the straight-line equation $y = mx + c$, where $y = K_{\\text{max}}$ and $x = \\nu$, the slope $m$ is equal to Planck's constant $h$."
+  },
+  {
+    "question_number": 47,
+    "question_type": "single_choice",
+    "question_text": "The work function of a metal is $1.84\\text{ eV}$. If the wavelength of the incident photon is $4000\\text{ \\AA}$, then the approximate maximum kinetic energy of the emitted photoelectron will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.26\\text{ eV}$",
+      "$3.1\\text{ eV}$",
+      "$0.58\\text{ eV}$",
+      "$1.8\\text{ eV}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The energy of the incident photon is $E = \\frac{hc}{\\lambda} = \\frac{12400\\text{ eV}\\cdot\\text{\\AA}}{4000\\text{ \\AA}} = 3.10\\text{ eV}$. The maximum kinetic energy of the emitted photoelectron is $K_{\\text{max}} = E - W_0 = 3.10\\text{ eV} - 1.84\\text{ eV} = 1.26\\text{ eV}$."
+  }
+]

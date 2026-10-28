@@ -24,6 +24,7 @@ backend/scripts/*_pages_batch*/
 backend/scripts/*_batch*_pages/
 backend/scripts/fluids_batch*/
 backend/scripts/laws_of_motion/
+backend/pdf_rendered_pages/
 backend/test_fixed_diag*.png
 
 

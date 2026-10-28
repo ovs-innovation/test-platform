@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 53,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, two slits are a distance $d$ apart. An interference pattern is observed on a screen at a distance $D$ from the plane of the slits. A bright fringe is observed on the screen directly opposite to one of the slits. The wavelength of light is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{D^2}{2d}$",
+      "$\\frac{d^2}{2D}$",
+      "$\\frac{D^2}{d}$",
+      "$\\frac{d^2}{D}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The point directly opposite to one of the slits is at a distance $y = \\frac{d}{2}$ from the central maximum. The path difference at this point is $\\Delta x = \\frac{y d}{D} = \\frac{(d/2) d}{D} = \\frac{d^2}{2D}$. For a bright fringe to occur at this point, $\\Delta x = n\\lambda$. For $n = 1$, the wavelength is $\\lambda = \\frac{d^2}{2D}$."
+  },
+  {
+    "question_number": 54,
+    "question_type": "single_choice",
+    "question_text": "A plate of thickness $t$ made of a material of refractive index $\\mu$ is placed in front of one of the slits in a double-slit experiment. What should be the minimum thickness $t$ which will make the intensity at the centre of the fringe pattern zero?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{(\\mu - 1)\\lambda}{2}$",
+      "$(\\mu - 1)\\lambda$",
+      "$\\frac{\\lambda}{2(\\mu - 1)}$",
+      "$\\frac{\\lambda}{\\mu - 1}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The optical path difference introduced at the centre of the screen by inserting the plate is $\\Delta x = (\\mu - 1)t$. For the intensity at the centre to be zero (destructive interference), the condition is $\\Delta x = (2n - 1)\\frac{\\lambda}{2}$. For the minimum thickness ($n = 1$), $(\\mu - 1)t = \\frac{\\lambda}{2} \\implies t = \\frac{\\lambda}{2(\\mu - 1)}$."
+  },
+  {
+    "question_number": 55,
+    "question_type": "single_choice",
+    "question_text": "Which of the following properties of light is a sure proof of the wave nature of light?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Interference",
+      "Diffraction",
+      "Photoelectric effect",
+      "Both (1) & (2)"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Both interference and diffraction are characteristic phenomena that can solely be explained on the basis of the wave nature of light. The photoelectric effect, on the other hand, demonstrates the particle (quantum) nature of light."
+  },
+  {
+    "question_number": 56,
+    "question_type": "single_choice",
+    "question_text": "On superposition of two waves $y_1 = 3\\sin(\\omega t - kx)$ and $y_2 = 4\\sin\\left(\\omega t - kx + \\frac{\\pi}{2}\\right)$ at a point, the amplitude of the resulting wave will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$7$",
+      "$5$",
+      "$\\sqrt{7}$",
+      "$6.5$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The amplitudes of the two waves are $A_1 = 3$ and $A_2 = 4$, with a phase difference $\\phi = \\frac{\\pi}{2}$. The resultant amplitude is $A = \\sqrt{A_1^2 + A_2^2 + 2A_1A_2\\cos\\phi} = \\sqrt{3^2 + 4^2 + 2(3)(4)\\cos(\\pi/2)} = \\sqrt{9 + 16} = 5$."
+  },
+  {
+    "question_number": 57,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment, a slit is covered with a thin film so that the optical path difference introduced between the coherent waves is $5\\lambda$. Then the new position of the central maximum will be at:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "The initial position of $5^{\\text{th}}$ maxima",
+      "The initial position of $3^{\\text{rd}}$ minima",
+      "The initial position of $2^{\\text{nd}}$ minima",
+      "The initial position of $3^{\\text{rd}}$ maxima"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Introducing a path difference of $\\Delta x = 5\\lambda$ shifts the entire fringe pattern by $y_0 = \\frac{D}{d}\\Delta x = 5\\left(\\frac{\\lambda D}{d}\\right) = 5\\beta$. Since the central maximum shifts by $5$ fringe widths, its new location corresponds exactly to the initial position of the $5^{\\text{th}}$ maximum."
+  },
+  {
+    "question_number": 58,
+    "question_type": "single_choice",
+    "question_text": "In Young's double slit experiment using light of wavelength '$\\lambda$', $60$ fringes are seen on a screen. If the wavelength of light is decreased by $50\\%$, then the number of fringes seen on the same screen will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30$",
+      "$60$",
+      "$120$",
+      "$90$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The total width of the field of view is $W = n_1 \\beta_1 = n_2 \\beta_2$. Since fringe width $\\beta \\propto \\lambda$, we have $n_1 \\lambda_1 = n_2 \\lambda_2$. Given $n_1 = 60$, $\\lambda_1 = \\lambda$, and $\\lambda_2 = 0.5\\lambda$, we obtain $n_2 = \\frac{n_1 \\lambda_1}{\\lambda_2} = \\frac{60\\lambda}{0.5\\lambda} = 120$."
+  }
+]

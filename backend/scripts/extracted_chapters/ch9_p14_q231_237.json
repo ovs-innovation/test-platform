@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 231,
+    "question_type": "single_choice",
+    "question_text": "If $\\theta_1$, $\\theta_2$, and $\\theta_3$ are the critical angles of a glass-air interface for red, violet, and yellow colours respectively, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\theta_3 > \\theta_2 > \\theta_1$",
+      "$\\theta_1 > \\theta_2 > \\theta_3$",
+      "$\\theta_1 = \\theta_2 = \\theta_3$",
+      "$\\theta_1 > \\theta_3 > \\theta_2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Critical angle is given by $\\sin\\theta_c = \\frac{1}{\\mu}$. Since $\\lambda_r > \\lambda_y > \\lambda_v$, we have $\\mu_r < \\mu_y < \\mu_v$, which implies $\\theta_1 > \\theta_3 > \\theta_2$."
+  },
+  {
+    "question_number": 232,
+    "question_type": "single_choice",
+    "question_text": "A concave lens and a convex lens have the same focal length of $20\\text{ cm}$ and are put into contact to form a lens combination. The combination is used to view an object of $5\\text{ cm}$ length kept at $20\\text{ cm}$ from the lens combination. As compared to the object, the image will be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Of same size as the object and erect",
+      "Of same size as the object but inverted",
+      "Magnified and inverted",
+      "Reduced and erect"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The power of the combination is $P = \\frac{1}{f_1} + \\frac{1}{f_2} = \\frac{1}{20} - \\frac{1}{20} = 0$, so $F = \\infty$. It behaves as a plane glass slab with magnification $m = 1$, producing a virtual, erect image of the same size."
+  },
+  {
+    "question_number": 233,
+    "question_type": "single_choice",
+    "question_text": "A concave lens made of glass of refractive index $1.5$ has both surfaces of the same radius of curvature $R$. On immersion in a medium of refractive index $1.75$, it will behave as a:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Divergent lens of focal length $3R$",
+      "Divergent lens of focal length $4R$",
+      "Convergent lens of focal length $3.5R$",
+      "Convergent lens of focal length $5R$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using Lens Maker's Formula: $\\frac{1}{f_m} = \\left(\\frac{1.5}{1.75} - 1\\right)\\left(-\\frac{2}{R}\\right) = \\left(-\\frac{1}{7}\\right)\\left(-\\frac{2}{R}\\right) = +\\frac{2}{7R}$. Thus, $f_m = +3.5R$, behaving as a convergent lens."
+  },
+  {
+    "question_number": 234,
+    "question_type": "single_choice",
+    "question_text": "Two convex lenses of focal lengths $f_1$ and $f_2$ are separated co-axially by a distance $d$. The power of the combination will be zero, if $d$ equals:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{f_1 f_2}$",
+      "$f_1 + f_2$",
+      "$\\frac{f_1 - f_2}{2}$",
+      "$\\frac{f_1 + f_2}{2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The equivalent power is $P = P_1 + P_2 - d P_1 P_2 = \\frac{1}{f_1} + \\frac{1}{f_2} - \\frac{d}{f_1 f_2}$. Setting $P = 0$ gives $d = f_1 + f_2$."
+  },
+  {
+    "question_number": 235,
+    "question_type": "single_choice",
+    "question_text": "In case of refraction through a glass slab if the angle of incidence $i$ is very small, the lateral shift is ($t$ is the thickness, $\\mu$ is the refractive index):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$t\\left(1 + \\frac{1}{\\mu}\\right)i$",
+      "$t\\left(1 - \\frac{1}{\\mu}\\right)i$",
+      "$t\\left(2 + \\frac{1}{\\mu}\\right)i$",
+      "$t\\left(2 - \\frac{1}{\\mu}\\right)i$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Lateral shift is $x = \\frac{t \\sin(i - r)}{\\cos r}$. For small angles, $\\cos r \\approx 1$, $\\sin(i - r) \\approx i - r$, and $r \\approx \\frac{i}{\\mu}$, giving $x = t\\left(1 - \\frac{1}{\\mu}\\right)i$."
+  },
+  {
+    "question_number": 236,
+    "question_type": "single_choice",
+    "question_text": "A candle is held $3\\text{ cm}$ away from a concave mirror of focal length $12\\text{ cm}$, then the nature of the image formed by the mirror is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Real, inverted",
+      "Virtual, erect",
+      "Real, erected",
+      "Virtual, inverted"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Since the object distance $|u| = 3\\text{ cm}$ is less than the focal length $|f| = 12\\text{ cm}$, the object lies between the pole and focus, forming a virtual and erect image."
+  },
+  {
+    "question_number": 237,
+    "question_type": "single_choice",
+    "question_text": "Each lens in a combination magnifies the image three times the object. The total magnification given by a combination of three such lenses is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3$",
+      "$9$",
+      "$27$",
+      "$81$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Total magnification for lenses in combination is the product of individual magnifications: $M = m_1 \\times m_2 \\times m_3 = 3 \\times 3 \\times 3 = 27$."
+  }
+]

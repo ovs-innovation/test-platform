@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 31,
+    "question_type": "single_choice",
+    "question_text": "The human eye can detect $5 \\times 10^4\\text{ photons}$ per square meter per second of green light (wavelength $\\lambda = 500\\text{ nm}$), while the ear can detect a minimum intensity of $10^{-13}\\text{ W/m}^2$. Find the factor by which the eye is more sensitive as a power detector than the ear.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "2",
+      "5",
+      "7",
+      "10"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photons & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The energy of each photon of green light is $E = \\frac{hc}{\\lambda} = \\frac{6.63 \\times 10^{-34} \\times 3 \\times 10^8}{500 \\times 10^{-9}} \\approx 4 \\times 10^{-19}\\text{ J}$. The minimum intensity detectable by the eye is $I_{\\text{eye}} = nE = (5 \\times 10^4) \\times (4 \\times 10^{-19}) = 2 \\times 10^{-14}\\text{ W/m}^2$. Since sensitivity is inversely proportional to the minimum detectable intensity, the relative sensitivity factor is $\\frac{S_{\\text{eye}}}{S_{\\text{ear}}} = \\frac{I_{\\text{ear}}}{I_{\\text{eye}}} = \\frac{10^{-13}}{2 \\times 10^{-14}} = 5$."
+  },
+  {
+    "question_number": 32,
+    "question_type": "single_choice",
+    "question_text": "The figure shows the variation of photocurrent with anode potential for a photosensitive surface under three different radiations. Let $I_a$, $I_b$, and $I_c$ be the intensities, and $f_a$, $f_b$, and $f_c$ be the frequencies corresponding to curves $a$, $b$, and $c$ respectively. Which of the following relationships is correct?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$f_a = f_b$ and $I_a \\neq I_b$",
+      "$f_a = f_c$ and $I_a = I_c$",
+      "$f_a = f_b$ and $I_a = I_b$",
+      "$f_b = f_c$ and $I_b = I_c$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": true,
+    "diagram_description": "A graph of photocurrent versus anode potential for three curves a, b, and c. Curves a and b originate from the same stopping potential on the negative potential axis but reach different saturation currents, with curve b having a higher saturation current than curve a. Curve c originates from a more negative stopping potential and reaches the same saturation current as curve b.",
+    "solution": "Stopping potential depends solely on the frequency of the incident radiation for a given photosensitive material. Curves $a$ and $b$ have the same stopping potential (same intercept on the negative potential axis), so $f_a = f_b$. Since they have different saturation currents, their intensities are different ($I_a \\neq I_b$)."
+  },
+  {
+    "question_number": 33,
+    "question_type": "single_choice",
+    "question_text": "Two identical photocathodes receive light of frequencies $\\nu_1$ and $\\nu_2$. If the maximum velocities of the emitted photoelectrons (of mass $m$) are $v_1$ and $v_2$ respectively, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$v_1 - v_2 = \\left[\\frac{2h}{m}(\\nu_1 - \\nu_2)\\right]^{1/2}$",
+      "$v_1^2 - v_2^2 = \\frac{2h}{m}(\\nu_1 - \\nu_2)$",
+      "$v_1 + v_2 = \\left[\\frac{2h}{m}(\\nu_1 - \\nu_2)\\right]^{1/2}$",
+      "$v_1^2 + v_2^2 = \\frac{2h}{m}(\\nu_1 - \\nu_2)$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "By Einstein's photoelectric equation, $\\frac{1}{2}mv_1^2 = h\\nu_1 - \\phi$ and $\\frac{1}{2}mv_2^2 = h\\nu_2 - \\phi$. Subtracting the two equations gives $\\frac{1}{2}m(v_1^2 - v_2^2) = h(\\nu_1 - \\nu_2)$, which rearranges to $v_1^2 - v_2^2 = \\frac{2h}{m}(\\nu_1 - \\nu_2)$."
+  },
+  {
+    "question_number": 34,
+    "question_type": "single_choice",
+    "question_text": "A proton accelerated through a potential difference of $100\\text{ V}$ has a de-Broglie wavelength $\\lambda_0$. The de-Broglie wavelength of an $\\alpha$-particle accelerated through a potential difference of $800\\text{ V}$ is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{\\lambda_0}{4}$",
+      "$\\frac{\\lambda_0}{8}$",
+      "$\\frac{\\lambda_0}{2}$",
+      "$\\frac{\\lambda_0}{\\sqrt{2}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of a charged particle accelerated through potential $V$ is $\\lambda = \\frac{h}{\\sqrt{2mqV}}$. Therefore, $\\frac{\\lambda_\\alpha}{\\lambda_p} = \\sqrt{\\frac{m_p q_p V_p}{m_\\alpha q_\\alpha V_\\alpha}} = \\sqrt{\\frac{m_p \\cdot e \\cdot 100}{(4m_p) \\cdot (2e) \\cdot 800}} = \\sqrt{\\frac{100}{6400}} = \\frac{1}{8}$. Thus, $\\lambda_\\alpha = \\frac{\\lambda_0}{8}$."
+  },
+  {
+    "question_number": 35,
+    "question_type": "single_choice",
+    "question_text": "A photon and an electron have the same de-Broglie wavelength $\\lambda$. The ratio of the energy of the photon to the kinetic energy of the electron is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{2m\\lambda c}{h^2}$",
+      "$\\frac{2mc\\lambda}{h}$",
+      "$\\frac{mc\\lambda}{2h}$",
+      "$\\frac{h^2}{2m\\lambda^2}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Energy of the photon is $E_{\\text{photon}} = \\frac{hc}{\\lambda}$. Kinetic energy of the electron is $E_e = \\frac{p^2}{2m} = \\frac{(h/\\lambda)^2}{2m} = \\frac{h^2}{2m\\lambda^2}$. The ratio is $\\frac{E_{\\text{photon}}}{E_e} = \\frac{hc/\\lambda}{h^2/(2m\\lambda^2)} = \\frac{2mc\\lambda}{h}$."
+  },
+  {
+    "question_number": 36,
+    "question_type": "single_choice",
+    "question_text": "Radiations of frequency $\\nu$ are incident on a photosensitive metal. The maximum kinetic energy of the emitted photoelectrons is $E$. When the frequency of the incident radiation is doubled, the maximum kinetic energy of the emitted photoelectrons becomes:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2E$",
+      "$4E$",
+      "$E + h\\nu$",
+      "$E - h\\nu$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation, $E = h\\nu - \\phi$, which implies $\\phi = h\\nu - E$. When the frequency is doubled, the new maximum kinetic energy is $E' = h(2\\nu) - \\phi = 2h\\nu - (h\\nu - E) = E + h\\nu$."
+  }
+]

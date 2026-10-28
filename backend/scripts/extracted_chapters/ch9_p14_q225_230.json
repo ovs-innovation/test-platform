@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 225,
+    "question_type": "single_choice",
+    "question_text": "A plane mirror is placed on the $x\\text{-}z$ plane and is free to rotate about the $z$-axis. A fixed object is on the $x\\text{-}y$ plane at a point $O(5\\text{ m}, 5\\text{ m})$. When the mirror starts rotating anticlockwise with an angular speed of $5\\text{ rad/s}$ about the $z$-axis, the initial linear speed of the image is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$25\\text{ m/s}$",
+      "$25\\sqrt{2}\\text{ m/s}$",
+      "$50\\text{ m/s}$",
+      "$50\\sqrt{2}\\text{ m/s}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "A 3D coordinate frame showing the x, y, and z axes, with the mirror lying initially in the x-z plane and a fixed point object O located at coordinates (5 m, 5 m) in the x-y plane.",
+    "solution": "Distance of the image from the rotation axis is $r = \\sqrt{5^2 + 5^2} = 5\\sqrt{2}\\text{ m}$. When the mirror rotates at $\\omega$, the image rotates at $2\\omega = 10\\text{ rad/s}$, giving $v = (2\\omega)r = 10 \\times 5\\sqrt{2} = 50\\sqrt{2}\\text{ m/s}$."
+  },
+  {
+    "question_number": 226,
+    "question_type": "single_choice",
+    "question_text": "A light ray is incident at an angle of $60^\\circ$ on one face of a prism of refractive angle $90^\\circ$. If the light ray grazes the second face, then the refractive index of the material of the prism is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{\\frac{3}{2}}$",
+      "$\\sqrt{2}$",
+      "$\\sqrt{\\frac{5}{2}}$",
+      "$\\frac{\\sqrt{7}}{2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "At the grazing face, $r_2 = C$ where $\\sin C = \\frac{1}{\\mu}$. Since $r_1 = 90^\\circ - C$, Snell's law at first face gives $\\sin 60^\\circ = \\mu \\cos C = \\sqrt{\\mu^2 - 1}$. Thus, $\\frac{3}{4} = \\mu^2 - 1 \\implies \\mu = \\frac{\\sqrt{7}}{2}$."
+  },
+  {
+    "question_number": 227,
+    "question_type": "single_choice",
+    "question_text": "A boy with defective eyesight cannot see things beyond $50\\text{ cm}$. The corrective lens required has the power",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$+1\\text{ D}$",
+      "$+2\\text{ D}$",
+      "$-1\\text{ D}$",
+      "$-2\\text{ D}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For myopia, to see an object at infinity, $f = -d = -50\\text{ cm} = -0.5\\text{ m}$. Hence, the power is $P = \\frac{1}{f} = \\frac{1}{-0.5\\text{ m}} = -2\\text{ D}$."
+  },
+  {
+    "question_number": 228,
+    "question_type": "single_choice",
+    "question_text": "The focal lengths of a thin convex lens for red and blue light are $0.5\\text{ m}$ and $0.484\\text{ m}$, respectively. The dispersive power of the lens is nearly",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.984$",
+      "$0.032$",
+      "$0.484$",
+      "$0.434$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The dispersive power is $\\omega = \\frac{f_R - f_B}{f_\\text{mean}} \\approx \\frac{0.5 - 0.484}{\\frac{0.5 + 0.484}{2}} = \\frac{0.016}{0.492} \\approx 0.032$."
+  },
+  {
+    "question_number": 229,
+    "question_type": "single_choice",
+    "question_text": "Two thin convex lenses of focal lengths $20\\text{ cm}$ and $5\\text{ cm}$ are placed $10\\text{ cm}$ apart. The power of the combination of lenses is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ D}$",
+      "$15\\text{ D}$",
+      "$20\\text{ D}$",
+      "$25\\text{ D}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Powers are $P_1 = \\frac{100}{20} = 5\\text{ D}$ and $P_2 = \\frac{100}{5} = 20\\text{ D}$. The net power is $P = P_1 + P_2 - d P_1 P_2 = 5 + 20 - (0.10)(5)(20) = 15\\text{ D}$."
+  },
+  {
+    "question_number": 230,
+    "question_type": "single_choice",
+    "question_text": "The refractive index of the material of an equilateral prism for yellow light is $1.5$. The angle of minimum deviation of the prism for yellow light is (given: $\\sin 49^\\circ = 0.75$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$38^\\circ$",
+      "$30^\\circ$",
+      "$52^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using $\\mu = \\frac{\\sin\\left(\\frac{A + \\delta_m}{2}\\right)}{\\sin(A/2)}$, we have $1.5 = \\frac{\\sin\\left(\\frac{60^\\circ + \\delta_m}{2}\\right)}{\\sin 30^\\circ} \\implies \\sin\\left(\\frac{60^\\circ + \\delta_m}{2}\\right) = 0.75 = \\sin 49^\\circ$, giving $\\delta_m = 98^\\circ - 60^\\circ = 38^\\circ$."
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 105,
+    "question_type": "single_choice",
+    "question_text": "An optical fibre has an inner core of refractive index $n_1$ and a cladding of refractive index $n_2$. For total internal reflection to occur within the optical fibre, the relation between the refractive indices must be:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$n_1 = n_2$",
+      "$n_1 \\le n_2$",
+      "$n_1 < n_2$",
+      "$n_1 > n_2$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For total internal reflection to occur, light must travel from an optically denser medium to an optically rarer medium. Therefore, the refractive index of the core ($n_1$) must be greater than that of the cladding ($n_2$), i.e., $n_1 > n_2$."
+  },
+  {
+    "question_number": 106,
+    "question_type": "single_choice",
+    "question_text": "A prism $ABC$ of refractive index $1.5$ is immersed in water of refractive index $\\frac{4}{3}$ as shown in the figure. A ray of light incident normally on face $AB$ is totally reflected at face $AC$ if:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sin\\theta > \\frac{8}{9}$",
+      "$\\sin\\theta > \\frac{2}{3}$",
+      "$\\sin\\theta = \\frac{\\sqrt{3}}{2}$",
+      "$\\frac{2}{3} < \\sin\\theta < \\frac{8}{9}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A right-angled prism ABC with angle BAC equal to theta. A light ray is incident normally on face AB, propagating straight to face AC. The prism is immersed in water.",
+    "solution": "Since the light ray is incident normally on face $AB$, it passes undeviated. At face $AC$, the angle of incidence is equal to the prism angle $\\theta$. For total internal reflection at face $AC$, the angle of incidence must exceed the critical angle $\\theta_c$:\n$$\\sin\\theta > \\sin\\theta_c = \\frac{\\mu_w}{\\mu_p} = \\frac{4/3}{3/2} = \\frac{8}{9}$$\nThus, $\\sin\\theta > \\frac{8}{9}$."
+  },
+  {
+    "question_number": 107,
+    "question_type": "single_choice",
+    "question_text": "A car is moving on a straight road at a speed of $50\\text{ km/h}$, and a truck is ahead of the car having a large plane mirror fixed vertically on the back of the truck. The truck is running at a speed of $70\\text{ km/h}$. For a stationary observer standing between the car and the truck, what is the speed of the image of the car in the mirror?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$40\\text{ km/h}$",
+      "$70\\text{ km/h}$",
+      "$20\\text{ km/h}$",
+      "$90\\text{ km/h}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Taking the direction of motion as positive:\nVelocity of object (car), $v_O = +50\\text{ km/h}$\nVelocity of mirror (truck), $v_M = +70\\text{ km/h}$\nUsing the velocity relation for a plane mirror:\n$$v_I - v_M = -(v_O - v_M) \\implies v_I = 2v_M - v_O$$\n$$v_I = 2(70) - 50 = 140 - 50 = 90\\text{ km/h}$$\nWith respect to a stationary observer, the speed of the image is $90\\text{ km/h}$."
+  },
+  {
+    "question_number": 108,
+    "question_type": "single_choice",
+    "question_text": "Two plane mirrors should be placed at what angle so that the incident ray and the final reflected ray become antiparallel after reflection from both mirrors?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$90^\\circ$",
+      "$60^\\circ$",
+      "$45^\\circ$",
+      "$30^\\circ$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The total deviation produced after reflection from two plane mirrors inclined at an angle $\\theta$ is $\\delta = 360^\\circ - 2\\theta$. For the final ray to be antiparallel to the incident ray, the deviation must be $\\delta = 180^\\circ$:\n$$180^\\circ = 360^\\circ - 2\\theta \\implies 2\\theta = 180^\\circ \\implies \\theta = 90^\\circ$$"
+  },
+  {
+    "question_number": 109,
+    "question_type": "single_choice",
+    "question_text": "The field of view is maximum for which of the following mirrors?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Concave mirror",
+      "Convex mirror",
+      "Plane mirror",
+      "Parabolic concave mirror"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "A convex mirror diverges light rays incident on it and always forms a virtual, erect, and diminished image, covering a significantly wider area. Hence, it provides the maximum field of view."
+  },
+  {
+    "question_number": 110,
+    "question_type": "single_choice",
+    "question_text": "An object is placed in front of a concave mirror. The distance of the object from the focus is $10\\text{ cm}$ and the distance of the image from the focus is $40\\text{ cm}$. The focal length of the mirror is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$40\\text{ cm}$",
+      "$30\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Newton's formula for spherical mirrors:\n$$f^2 = x_1 \\cdot x_2$$\nwhere $x_1$ and $x_2$ are the distances of the object and the image from the principal focus, respectively.\n$$f = \\sqrt{x_1 x_2} = \\sqrt{10 \\times 40} = \\sqrt{400} = 20\\text{ cm}$$"
+  }
+]

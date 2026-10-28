@@ -1,0 +1,62 @@
+[
+  {
+    "question_number": 171,
+    "question_type": "MCQ",
+    "question_text": "The refractive index of material of prism is $\\sqrt{2}$. Angle of prism $A$ is equal to",
+    "options": [
+      "30°",
+      "40°",
+      "60°",
+      "90°"
+    ],
+    "correct_index": 2,
+    "difficulty": "Medium",
+    "topic": "Ray Optics and Optical Instruments",
+    "solution": "For a prism in the minimum deviation position, the refracted ray is parallel to the base so $r = A/2$. With symmetric incidence at $i = 45^\\circ$, $\\sin r = \\frac{\\sin 45^\\circ}{\\sqrt{2}} = \\frac{1}{2} \\implies r = 30^\\circ$, giving $A = 2r = 60^\\circ$."
+  },
+  {
+    "question_number": 172,
+    "question_type": "MCQ",
+    "question_text": "A convex lens forms the image of an object of same magnification when the object is placed at $10\\text{ cm}$ and $20\\text{ cm}$ from the lens. The focal length of the lens is",
+    "options": [
+      "5 cm",
+      "15 cm",
+      "25 cm",
+      "30 cm"
+    ],
+    "correct_index": 1,
+    "difficulty": "Easy",
+    "topic": "Ray Optics and Optical Instruments",
+    "solution": "Since the magnifications are equal in magnitude but opposite in sign (one real, one virtual), $\\frac{f}{f - u_1} = -\\frac{f}{f - u_2}$, which gives $f = \\frac{u_1 + u_2}{2} = \\frac{10 + 20}{2} = 15\\text{ cm}$."
+  },
+  {
+    "question_number": 173,
+    "question_type": "MCQ",
+    "question_text": "A small source of light is $2\\text{ m}$ below the surface of a liquid of refractive index $\\frac{5}{3}$. In order to block all the light coming out of the liquid surface, the minimum diameter of the disc placed on the surface of the liquid is",
+    "options": [
+      "3 m",
+      "4 m",
+      "6 m",
+      "1.5 m"
+    ],
+    "correct_index": 0,
+    "difficulty": "Medium",
+    "topic": "Ray Optics and Optical Instruments",
+    "solution": "Critical angle satisfies $\\sin C = \\frac{1}{\\mu} = \\frac{3}{5}$, so $\\tan C = \\frac{3}{4}$. The radius is $r = h\\tan C = 2 \\times \\frac{3}{4} = 1.5\\text{ m}$, giving a minimum diameter of $d = 2r = 3\\text{ m}$."
+  },
+  {
+    "question_number": 174,
+    "question_type": "MCQ",
+    "question_text": "A glass slab is placed with the right angle prism as shown in the figure. The possible value of $\\theta$ such that light incident normally on the prism does not pass through the glass slab is",
+    "options": [
+      "30°",
+      "37°",
+      "45°",
+      "Both (1) & (2)"
+    ],
+    "correct_index": 3,
+    "difficulty": "Medium",
+    "topic": "Ray Optics and Optical Instruments",
+    "solution": "For total internal reflection at the prism-slab interface, $i = 90^\\circ - \\theta \\ge C$. Here, $\\sin C = \\frac{1.2}{1.5} = \\frac{4}{5} \\implies C = 53^\\circ$. Thus, $90^\\circ - \\theta \\ge 53^\\circ \\implies \\theta \\le 37^\\circ$, which is satisfied by both $30^\\circ$ and $37^\\circ$."
+  }
+]

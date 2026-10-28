@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 37,
+    "question_type": "single_choice",
+    "question_text": "The speed of an electromagnetic wave in a medium which has relative permittivity and relative permeability of $4.5$ and $2$ respectively, is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.5 \\times 10^7\\text{ m/s}$",
+      "$1.0 \\times 10^8\\text{ m/s}$",
+      "$2.2 \\times 10^8\\text{ m/s}$",
+      "$6.5 \\times 10^7\\text{ m/s}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The speed of an electromagnetic wave in a material medium is given by $v = \\frac{c}{\\sqrt{\\mu_r \\varepsilon_r}}$. Substituting the given values, $v = \\frac{3 \\times 10^8\\text{ m/s}}{\\sqrt{2 \\times 4.5}} = \\frac{3 \\times 10^8}{\\sqrt{9}} = 1.0 \\times 10^8\\text{ m/s}$."
+  },
+  {
+    "question_number": 38,
+    "question_type": "single_choice",
+    "question_text": "Which of the following pairs of space and time varying electric field and magnetic field would generate a plane electromagnetic wave travelling in the $z$-direction?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$E\\hat{i}$, $B\\hat{j}$",
+      "$E\\hat{i}$, $B\\hat{i}$",
+      "$E\\hat{i}$, $B\\hat{k}$",
+      "$E\\hat{k}$, $B\\hat{i}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Electromagnetic Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The direction of propagation of an electromagnetic wave is given by the cross product of the electric field vector and the magnetic field vector, i.e., along $\\hat{E} \\times \\hat{B}$. For $\\vec{E}$ along $\\hat{i}$ and $\\vec{B}$ along $\\hat{j}$, we have $\\hat{i} \\times \\hat{j} = \\hat{k}$, which corresponds to the positive $z$-direction."
+  },
+  {
+    "question_number": 39,
+    "question_type": "single_choice",
+    "question_text": "The direction of the Poynting vector is along (symbols have their usual meaning):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\vec{E} \\times \\vec{B}$",
+      "$\\vec{B} \\times \\vec{E}$",
+      "$\\vec{E}$",
+      "$\\vec{B}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Poynting vector is defined as $\\vec{S} = \\frac{1}{\\mu_0}(\\vec{E} \\times \\vec{B})$, representing the directional energy flux density of an electromagnetic field. Thus, its direction is along $\\vec{E} \\times \\vec{B}$."
+  },
+  {
+    "question_number": 40,
+    "question_type": "single_choice",
+    "question_text": "The average magnetic energy density in a plane electromagnetic wave is $x$. The average electric energy density is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$x$",
+      "$2x$",
+      "$\\frac{x}{2}$",
+      "$\\sqrt{x}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In an electromagnetic wave, the total energy is divided equally between the electric field and the magnetic field. Therefore, the average electric energy density equals the average magnetic energy density, so $u_E = u_B = x$."
+  },
+  {
+    "question_number": 41,
+    "question_type": "single_choice",
+    "question_text": "The frequency of oscillation of the energy density of an electromagnetic wave is equal to:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Frequency of wave",
+      "Half the frequency of wave",
+      "Double the frequency of wave",
+      "Zero"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The instantaneous electric energy density is proportional to $E^2 = E_0^2 \\sin^2(\\omega t - kx) = \\frac{E_0^2}{2}[1 - \\cos(2\\omega t - 2kx)]$. The term oscillates with angular frequency $2\\omega$, which means the frequency of oscillation of energy density is $2\\nu$, i.e., double the frequency of the wave."
+  },
+  {
+    "question_number": 42,
+    "question_type": "single_choice",
+    "question_text": "X-rays cannot be deflected by:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "An electric field",
+      "A magnetic field",
+      "A gravitational field",
+      "Any of these"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "X-rays are neutral electromagnetic waves consisting of photons that have no electric charge. Consequently, they experience no deflection in electric or magnetic fields. In the classical domain, having zero rest mass, they are considered undeflected by any of these fields."
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 71,
+    "question_type": "single_choice",
+    "question_text": "The given figure shows the variation of photoelectric current ($i$) with voltage ($V$) between the electrodes in a photocell for two different incident radiations. If $I_a$ and $I_b$ are the intensities of the incident radiations and $\\nu_a$ and $\\nu_b$ are their respective frequencies, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I_a > I_b,\\; \\nu_b < \\nu_a$",
+      "$I_a < I_b,\\; \\nu_b > \\nu_a$",
+      "$I_a > I_b,\\; \\nu_a = \\nu_b$",
+      "$I_a < I_b,\\; \\nu_b < \\nu_a$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": true,
+    "diagram_description": "A graph showing photoelectric current $i$ plotted against applied voltage $V$ for two radiations $a$ and $b$. Curve $b$ reaches a higher saturation current than curve $a$. On the negative voltage axis, the stopping potential for curve $b$ is located further to the left (more negative) than that for curve $a$.",
+    "solution": "Saturation current is directly proportional to the intensity of incident radiation. Since curve $b$ has a higher saturation current than curve $a$, we have $I_b > I_a$ (or $I_a < I_b$). The stopping potential is more negative for curve $b$ than curve $a$ ($|V_{0b}| > |V_{0a}|$), and since stopping potential is directly related to frequency via $e V_0 = h\\nu - \\phi_0$, it implies $\\nu_b > \\nu_a$."
+  },
+  {
+    "question_number": 72,
+    "question_type": "single_choice",
+    "question_text": "The ratio of de-Broglie wavelengths of a proton and an $\\alpha$-particle having the same kinetic energy is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1 : 4$",
+      "$4 : 1$",
+      "$2 : 1$",
+      "$1 : 2$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength is given by $\\lambda = \\frac{h}{\\sqrt{2mK}}$. For the same kinetic energy $K$, $\\lambda \\propto \\frac{1}{\\sqrt{m}}$. Therefore, $\\frac{\\lambda_p}{\\lambda_\\alpha} = \\sqrt{\\frac{m_\\alpha}{m_p}} = \\sqrt{\\frac{4m_p}{m_p}} = \\frac{2}{1} = 2 : 1$."
+  },
+  {
+    "question_number": 73,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength associated with an electron accelerated through a potential difference of $900\\text{ V}$ is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$0.31\\text{ \\AA}$",
+      "$0.41\\text{ \\AA}$",
+      "$0.5\\text{ \\AA}$",
+      "$0.61\\text{ \\AA}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength of an electron accelerated through a potential difference $V$ is given by $\\lambda = \\frac{12.27}{\\sqrt{V}}\\text{ \\AA}$. Substituting $V = 900\\text{ V}$ gives $\\lambda = \\frac{12.27}{\\sqrt{900}} = \\frac{12.27}{30} \\approx 0.409\\text{ \\AA} \\approx 0.41\\text{ \\AA}$."
+  },
+  {
+    "question_number": 74,
+    "question_type": "single_choice",
+    "question_text": "The wavelength of the de-Broglie wave associated with a thermal neutron of mass $m$ at absolute temperature $T$ is given by ($k$ is Boltzmann's constant):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{h}{\\sqrt{4mkT}}$",
+      "$\\frac{h}{\\sqrt{3mkT}}$",
+      "$\\frac{h}{\\sqrt{2mkT}}$",
+      "$\\frac{h}{\\sqrt{mkT}}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The average kinetic energy of a thermal neutron in thermal equilibrium at temperature $T$ is $K = \\frac{3}{2}kT$. Substituting this into the de-Broglie relation $\\lambda = \\frac{h}{\\sqrt{2mK}}$ gives $\\lambda = \\frac{h}{\\sqrt{2m \\left(\\frac{3}{2}kT\\right)}} = \\frac{h}{\\sqrt{3mkT}}$."
+  },
+  {
+    "question_number": 75,
+    "question_type": "single_choice",
+    "question_text": "The de-Broglie wavelength of a neutron is $\\lambda$ when its kinetic energy is $E$. If its kinetic energy is made four times, then the de-Broglie wavelength becomes:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\lambda$",
+      "$2\\lambda$",
+      "$\\frac{\\lambda}{4}$",
+      "$\\frac{\\lambda}{2}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The de-Broglie wavelength is inversely proportional to the square root of kinetic energy: $\\lambda \\propto \\frac{1}{\\sqrt{E}}$. When kinetic energy becomes $E' = 4E$, the new wavelength becomes $\\lambda' = \\frac{\\lambda}{\\sqrt{4}} = \\frac{\\lambda}{2}$."
+  },
+  {
+    "question_number": 76,
+    "question_type": "single_choice",
+    "question_text": "When a monochromatic point source of light is at a distance of $0.2\\text{ m}$ from a photoelectric cell, the cutoff voltage and the saturation current are $0.6\\text{ V}$ and $18.0\\text{ mA}$ respectively. If the same source is placed $0.6\\text{ m}$ away from the photoelectric cell, then the:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Stopping potential will be $0.2\\text{ volt}$",
+      "Saturation current will be $6.0\\text{ mA}$",
+      "Stopping potential will be $0.067\\text{ volt}$",
+      "Saturation current will be $2.0\\text{ mA}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a point source, the intensity of light varies inversely as the square of the distance: $I \\propto \\frac{1}{r^2}$. Since saturation current $i_{\\text{sat}} \\propto I$, we have $\\frac{i_{\\text{sat}}'}{i_{\\text{sat}}} = \\left(\\frac{r_1}{r_2}\\right)^2 = \\left(\\frac{0.2}{0.6}\\right)^2 = \\frac{1}{9}$. Thus, $i_{\\text{sat}}' = \\frac{18.0\\text{ mA}}{9} = 2.0\\text{ mA}$. The stopping potential depends only on the frequency of the monochromatic light, so it remains unchanged at $0.6\\text{ V}$."
+  }
+]

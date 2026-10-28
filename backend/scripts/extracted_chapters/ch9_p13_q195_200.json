@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 195,
+    "question_type": "single_choice",
+    "question_text": "A thin equiconvex lens of power $P$ is cut into three parts $A$, $B$, and $C$ as shown in the figure. If $P_1$, $P_2$, and $P_3$ are the powers of the three parts respectively, then:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$P_1 = P_2 = P_3$",
+      "$P_1 > P_2 = P_3$",
+      "$P_1 < P_2 = P_3$",
+      "$P_2 = P_3 = 2P_1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "An equiconvex lens is cut horizontally along its principal axis into two halves. The upper half is part A. The lower half is cut vertically into two equal plano-convex lenses, parts B and C.",
+    "solution": "Cutting the lens horizontally does not change the focal length, so $P_1 = P$. Cutting vertically splits the power in half, so $P_2 = P_3 = P/2$. Hence, $P_1 > P_2 = P_3$."
+  },
+  {
+    "question_number": 196,
+    "question_type": "single_choice",
+    "question_text": "A light beam containing red, yellow, and blue colours falls on the interface of glass and air as shown. If yellow light is just totally internally reflected, then the emergent ray in air contains:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Both red and blue colour",
+      "Only red colour",
+      "Only blue colour",
+      "No colour"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A light ray in glass is incident on the glass-air interface such that the yellow component grazes along the interface (critical angle incidence).",
+    "solution": "Since $\\mu_{\\text{red}} < \\mu_{\\text{yellow}} < \\mu_{\\text{blue}}$, the critical angle $\\theta_c$ is greatest for red light. Thus, the angle of incidence is less than $\\theta_{c,\\text{red}}$, allowing only red light to refract into the air."
+  },
+  {
+    "question_number": 197,
+    "question_type": "single_choice",
+    "question_text": "The angle of a distant object formed at the objective of a telescope is $2'$. If the focal lengths of the objective and eyepiece of the telescope are $200\\text{ cm}$ and $20\\text{ cm}$ respectively, then the size of the image formed by the objective is approximately:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$",
+      "$0.12\\text{ cm}$",
+      "$0.4\\text{ cm}$",
+      "$12\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Size of image $h_i = f_o \\cdot \\alpha = 200 \\times \\left(2 \\times \\frac{1}{60} \\times \\frac{\\pi}{180}\\right) = \\frac{2\\pi}{54} \\approx 0.12\\text{ cm}$."
+  },
+  {
+    "question_number": 198,
+    "question_type": "single_choice",
+    "question_text": "The focal lengths of the objective and eyepiece of a compound microscope are $2\\text{ cm}$ and $6.25\\text{ cm}$ respectively. An object $AB$ is placed at a distance of $2.5\\text{ cm}$ from the objective which forms the image $A'B'$ as shown in the figure. The maximum magnifying power in this case is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10$",
+      "$20$",
+      "$5$",
+      "$25$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Optical Instruments (Microscope, Telescope, Eye)",
+    "has_diagram": true,
+    "diagram_description": "Ray diagram of a compound microscope showing object AB at $2.5\\text{ cm}$ from the objective lens with focal length $2\\text{ cm}$, producing an intermediate real inverted image $A'B'$ before the eyepiece lens.",
+    "solution": "For the objective lens, $\\frac{1}{v_o} - \\frac{1}{-2.5} = \\frac{1}{2} \\implies v_o = 10\\text{ cm}$, giving $m_o = \\frac{10}{2.5} = 4$. For maximum magnification, $m_e = 1 + \\frac{D}{f_e} = 1 + \\frac{25}{6.25} = 5$. Thus, $M = m_o \\times m_e = 4 \\times 5 = 20$."
+  },
+  {
+    "question_number": 199,
+    "question_type": "single_choice",
+    "question_text": "A plane mirror is placed at $x = 0$ along the $y$-axis and an object starts moving with velocity $(2\\hat{i} + 2\\hat{j})\\text{ m/s}$ from $x = 3$. The relative velocity of the image in the mirror with respect to the object is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4\\text{ m/s}$ along the $-x\\text{ axis}$",
+      "$4\\text{ m/s}$ along the $+x\\text{ axis}$",
+      "$2\\sqrt{2}\\text{ m/s}$ making an angle of $45^\\circ$ with the $+x\\text{ axis}$",
+      "$2\\sqrt{2}\\text{ m/s}$ making an angle of $135^\\circ$ with the $+x\\text{ axis}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "A vertical plane mirror aligned along the $y$-axis at $x = 0$. An object at $x = 3$ moves with velocity vector $\\vec{v} = (2\\hat{i} + 2\\hat{j})\\text{ m/s}$.",
+    "solution": "Velocity of object is $\\vec{v}_O = 2\\hat{i} + 2\\hat{j}$. The mirror reverses the normal component: $\\vec{v}_I = -2\\hat{i} + 2\\hat{j}$. Relative velocity $\\vec{v}_{I/O} = \\vec{v}_I - \\vec{v}_O = -4\\hat{i}\\text{ m/s}$."
+  },
+  {
+    "question_number": 200,
+    "question_type": "single_choice",
+    "question_text": "The angle of minimum deviation for a glass prism of refractive index $\\mu = \\sqrt{3}$ equals the refracting angle of the prism. The angle of the prism is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30^\\circ$",
+      "$60^\\circ$",
+      "$90^\\circ$",
+      "$45^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using $\\mu = \\frac{\\sin((A + \\delta_m)/2)}{\\sin(A/2)}$ with $\\delta_m = A$ gives $\\mu = 2\\cos(A/2)$. Thus, $2\\cos(A/2) = \\sqrt{3} \\implies A/2 = 30^\\circ \\implies A = 60^\\circ$."
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "question_number": 175,
+    "question_type": "single_choice",
+    "question_text": "In front of a mirror, a ball is projected at acute angle θ with horizontal toward the mirror as shown. The motion of the image of the ball w.r.t. the ball",
+    "options": [
+      "Must be straight line and horizontal",
+      "May be a straight line depending on the value of θ",
+      "Is parabolic",
+      "Is a straight line and vertical"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Ray Optics",
+    "solution": "The vertical positions and velocities of the ball and its image are identical at all times, making relative vertical velocity and acceleration zero. Thus, relative motion has only a horizontal component with zero acceleration, which is a horizontal straight line."
+  },
+  {
+    "question_number": 176,
+    "question_type": "single_choice",
+    "question_text": "Two positions of convex lens for which image of the object is formed on the same screen are 40 cm and 80 cm from the object. The focal length of lens is",
+    "options": [
+      "80/3 cm",
+      "40/3 cm",
+      "40 cm",
+      "80 cm"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Ray Optics",
+    "solution": "Due to conjugate foci, when the object distance is u = -40 cm, the image distance is v = 80 cm. Using 1/f = 1/v - 1/u = 1/80 - (-1/40) = 3/80, we get f = 80/3 cm."
+  },
+  {
+    "question_number": 177,
+    "question_type": "single_choice",
+    "question_text": "A graph is plotted between angle of deviation δ in a triangular prism and angle of incidence as shown in the figure. Refracting angle of the prism is",
+    "options": [
+      "28°",
+      "48°",
+      "36°",
+      "46°"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Ray Optics",
+    "solution": "From the graph, for deviation δ = 40°, the two angles of incidence are i = 28° and e = 48°. Using δ = i + e - A, we get 40° = 28° + 48° - A, which gives A = 36°."
+  }
+]

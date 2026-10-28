@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 8,
+    "question_type": "single_choice",
+    "question_text": "The ratio of dispersive powers of lenses $\\frac{\\omega_1}{\\omega_2}$ for an achromatic combination of two thin lenses in contact is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{f_1}{f_2}$",
+      "$-\\frac{f_1}{f_2}$",
+      "$\\frac{f_2}{f_1}$",
+      "$-\\frac{f_2}{f_1}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an achromatic combination of two thin lenses in contact, the condition of achromatism is $\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0$, which yields $\\frac{\\omega_1}{\\omega_2} = -\\frac{f_1}{f_2}$."
+  },
+  {
+    "question_number": 9,
+    "question_type": "single_choice",
+    "question_text": "A point object '$O$' is placed at a distance of $15\\text{ cm}$ from a concave mirror, between the concave mirror and a plane mirror separated by $25\\text{ cm}$. Considering the $1^{\\text{st}}$ reflection occurs at the concave mirror, the position of the image after the $3^{\\text{rd}}$ reflection will be (Radius of curvature of the concave mirror is $20\\text{ cm}$):",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "At $20\\text{ cm}$ from $P$",
+      "At $30\\text{ cm}$ from $P$",
+      "At $25\\text{ cm}$ from $P$",
+      "At $40\\text{ cm}$ from $P$"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "A concave mirror with pole P on the left and a vertical plane mirror on the right, separated by 25 cm. Point object O lies on the principal axis at 15 cm from P and 10 cm from the plane mirror.",
+    "solution": "For $1^{\\text{st}}$ reflection at the concave mirror ($f = -10\\text{ cm}$, $u = -15\\text{ cm}$): $\\frac{1}{v_1} + \\frac{1}{-15} = -\\frac{1}{10} \\implies v_1 = -30\\text{ cm}$ (to the right of $P$). Since the plane mirror is at $25\\text{ cm}$ from $P$, the converging rays are intercepted by the plane mirror at a virtual object distance of $5\\text{ cm}$ behind it. The $2^{\\text{nd}}$ reflection from the plane mirror produces a real image $5\\text{ cm}$ in front of it, which is at a distance of $25 - 5 = 20\\text{ cm}$ from $P$. For the $3^{\\text{rd}}$ reflection at the concave mirror, $u_3 = -20\\text{ cm}$ (at the centre of curvature): $\\frac{1}{v_3} + \\frac{1}{-20} = -\\frac{1}{10} \\implies v_3 = -20\\text{ cm}$. Thus, the final image is formed at $20\\text{ cm}$ from $P$."
+  },
+  {
+    "question_number": 10,
+    "question_type": "single_choice",
+    "question_text": "Find the deviation caused by a thin prism having a refracting angle of $4^\\circ$ and refractive index $\\mu = \\frac{3}{2}$.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4^\\circ$",
+      "$3^\\circ$",
+      "$2^\\circ$",
+      "$1^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a thin prism, the angle of deviation is given by $\\delta = (\\mu - 1)A$. Substituting the given values: $\\delta = \\left(\\frac{3}{2} - 1\\right) \\times 4^\\circ = 0.5 \\times 4^\\circ = 2^\\circ$."
+  },
+  {
+    "question_number": 11,
+    "question_type": "single_choice",
+    "question_text": "From the graph of angle of deviation $\\delta$ versus angle of incidence $i$ shown below, find the prism angle $A$.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30^\\circ$",
+      "$70^\\circ$",
+      "$60^\\circ$",
+      "$75^\\circ$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": true,
+    "diagram_description": "A U-shaped curve showing deviation angle delta versus angle of incidence i. A horizontal dashed line at delta = 30 degrees corresponds to two angles of incidence: i = 30 degrees and i = 60 degrees.",
+    "solution": "For a prism, the deviation is related to the angles of incidence and emergence by $\\delta = i + e - A$. From the graph, for $\\delta = 30^\\circ$, the two corresponding angles are $i = 30^\\circ$ and $e = 60^\\circ$. Therefore, $30^\\circ = 30^\\circ + 60^\\circ - A \\implies A = 60^\\circ$."
+  },
+  {
+    "question_number": 12,
+    "question_type": "single_choice",
+    "question_text": "What should be the value of refractive index $n$ of a glass rod placed in air, so that the light entering through the flat surface of the rod does not cross the curved surface of the rod irrespective of the angle of incidence $i$?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$n < \\sqrt{2}$",
+      "$n = \\sqrt{2}$",
+      "$n > \\sqrt{2}$",
+      "$n > \\sqrt{5}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A cylindrical glass rod showing a ray entering the flat face at angle of incidence i, refracting at angle r, and undergoing total internal reflection at the curved lateral surface.",
+    "solution": "At the flat surface, $\\sin i = n\\sin r$. At the curved surface, the angle of incidence is $\\theta = 90^\\circ - r$. For TIR, $\\sin\\theta \\ge \\frac{1}{n} \\implies \\cos r \\ge \\frac{1}{n}$. The minimum value of $\\cos r$ occurs at maximum $i = 90^\\circ$, where $\\sin r = \\frac{1}{n}$, giving $\\cos r = \\sqrt{1 - \\frac{1}{n^2}}$. Thus, $\\sqrt{1 - \\frac{1}{n^2}} > \\frac{1}{n} \\implies 1 - \\frac{1}{n^2} > \\frac{1}{n^2} \\implies n^2 > 2 \\implies n > \\sqrt{2}$."
+  },
+  {
+    "question_number": 13,
+    "question_type": "single_choice",
+    "question_text": "A thin glass slab of thickness $t$ and refractive index $\\mu_2$ is inserted between an object '$O$' and an observer, both of which are in a medium of refractive index $\\mu_1$. Calculate the shift produced by the glass slab.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$t\\left(1 - \\frac{\\mu_1}{\\mu_2}\\right)$",
+      "$t\\left(1 - \\frac{\\mu_2}{\\mu_1}\\right)$",
+      "$t(1 - \\mu_2)$",
+      "$t(1 - \\mu_1)$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "An object O at distance u from a glass slab of thickness t and refractive index mu_2 placed in a surrounding medium of refractive index mu_1, with an observer's eye looking at the object through the slab.",
+    "solution": "The apparent shift produced by a slab of thickness $t$ and relative refractive index $\\mu_{\\text{rel}} = \\frac{\\mu_2}{\\mu_1}$ is given by $\\Delta s = t\\left(1 - \\frac{1}{\\mu_{\\text{rel}}}\\right) = t\\left(1 - \\frac{\\mu_1}{\\mu_2}\\right)$."
+  },
+  {
+    "question_number": 14,
+    "question_type": "single_choice",
+    "question_text": "A convex lens forms a real image on a screen with magnification $m_1$. If the lens is moved a distance $x$, again a real image is formed on the same screen with magnification $m_2$. Then the focal length of the lens is:",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{x}{|m_1 m_2|}$",
+      "$\\frac{x}{\\sqrt{m_1 m_2}}$",
+      "$x |m_1 - m_2|$",
+      "$\\frac{x}{|m_1 - m_2|}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In the displacement method, for two positions of the lens giving real images on a fixed screen, $m_1 = \\frac{D+x}{D-x}$ and $m_2 = \\frac{D-x}{D+x}$. Their difference is $|m_1 - m_2| = \\frac{4Dx}{D^2 - x^2}$. Since focal length $f = \\frac{D^2 - x^2}{4D}$, it directly follows that $|m_1 - m_2| = \\frac{x}{f}$, so $f = \\frac{x}{|m_1 - m_2|}$."
+  }
+]

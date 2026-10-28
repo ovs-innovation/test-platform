@@ -1,0 +1,78 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** The maximum intensity in YDSE is four times the intensity due to each slit when slits are identical.\n**Reason (R):** The phase difference between the interfering waves is $2n\\pi$ at the position of minima where $n = 0, 1, 2, \\dots$\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "The maximum intensity in YDSE is four times the intensity due to each slit when slits are identical.",
+    "reason_text": "The phase difference between the interfering waves is $2n\\pi$ at the position of minima where $n = 0, 1, 2, \\dots$",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When two identical slits each produce intensity $I_0$, the maximum intensity is given by $I_{\\max} = (\\sqrt{I_0} + \\sqrt{I_0})^2 = 4I_0$, making the Assertion true. For minima (destructive interference), the phase difference must be an odd multiple of $\\pi$, i.e., $\\Delta\\phi = (2n+1)\\pi$ (where $n = 0, 1, 2, \\dots$), not $2n\\pi$ (which corresponds to maxima). Hence, Reason is false."
+  },
+  {
+    "question_number": 2,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** No sustained interference pattern is obtained when two electric bulbs of same power are taken.\n**Reason (R):** Phase difference between waves coming out of electric bulbs is not constant.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "No sustained interference pattern is obtained when two electric bulbs of same power are taken.",
+    "reason_text": "Phase difference between waves coming out of electric bulbs is not constant.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Two independent light sources such as electric bulbs cannot act as coherent sources because light is emitted by millions of independent atoms undergoing random transitions. Consequently, the phase difference between the two waves varies rapidly and randomly with time, preventing any sustained interference pattern from forming. Thus, both statements are true and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 3,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** When a thin transparent sheet is placed in front of one of the slits in YDSE, the fringe of zero order shifts to some other position.\n**Reason (R):** On placing thin transparent sheet in front of a slit, the position of zero path difference on the screen changes.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "When a thin transparent sheet is placed in front of one of the slits in YDSE, the fringe of zero order shifts to some other position.",
+    "reason_text": "On placing thin transparent sheet in front of a slit, the position of zero path difference on the screen changes.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Introducing a transparent sheet of thickness $t$ and refractive index $\\mu$ in front of one slit introduces an additional optical path difference of $(\\mu - 1)t$. The zero-order fringe corresponds to the point where the net path difference is zero. To compensate for this extra optical path, the geometrical path difference must become non-zero, shifting the point of zero path difference by $\\Delta y = \\frac{D}{d}(\\mu - 1)t$. Therefore, both Assertion and Reason are true, and Reason is the correct explanation."
+  },
+  {
+    "question_number": 4,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\n**Assertion (A):** Light of different colours travel with different speeds in vacuum.\n**Reason (R):** Speed of light depends on mechanical properties of the medium.\n\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "assertion_text": "Light of different colours travel with different speeds in vacuum.",
+    "reason_text": "Speed of light depends on mechanical properties of the medium.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In vacuum, all electromagnetic waves regardless of their wavelength or colour travel at the exact same constant speed $c = 3 \\times 10^8\\text{ m/s}$, so Assertion is false. Furthermore, light is an electromagnetic wave, not a mechanical wave, so its propagation speed depends on electromagnetic properties (permittivity $\\varepsilon$ and permeability $\\mu$) rather than mechanical properties of the medium, making Reason false as well."
+  }
+]

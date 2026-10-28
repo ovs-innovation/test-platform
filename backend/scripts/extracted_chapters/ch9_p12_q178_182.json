@@ -1,0 +1,97 @@
+[
+  {
+    "question_number": 178,
+    "question_type": "single_choice",
+    "question_text": "Three identical thin convex lenses are kept as shown in the figure. A ray passing through the lenses is shown. The focal length of each lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$20\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "Three identical convex lenses are arranged coaxially with equal separations of $10\\text{ cm}$ between each adjacent pair. An incident ray parallel to the principal axis enters the first lens, refracts, passes undeflected through the optical center of the second lens, and after passing through the third lens emerges parallel to the principal axis.",
+    "solution": "The ray incident parallel to the principal axis converges at the optical center of the second lens, which is at a distance of $10\\text{ cm}$ from the first lens. Therefore, the focal length of the first lens (and each identical lens) is $f = 10\\text{ cm}$."
+  },
+  {
+    "question_number": 179,
+    "question_type": "single_choice",
+    "question_text": "To a diver inside water, the setting sun will appear at an angle (with the horizontal) of $\\left[\\mu_w = \\frac{5}{4}\\right]$",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$53^\\circ$",
+      "$37^\\circ$",
+      "$45^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For the setting sun, the angle of incidence in air is $i \\approx 90^\\circ$. Using Snell's law, $1 \\cdot \\sin 90^\\circ = \\mu_w \\sin r \\implies \\sin r = \\frac{1}{5/4} = \\frac{4}{5} \\implies r = 53^\\circ$ with the vertical normal. Hence, the angle with the horizontal is $90^\\circ - 53^\\circ = 37^\\circ$."
+  },
+  {
+    "question_number": 180,
+    "question_type": "single_choice",
+    "question_text": "The following diagram shows a glass sphere of radius $10\\text{ cm}$ with a paraxial incident ray. The refractive index of material of the glass is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2$",
+      "$1.5$",
+      "$1.75$",
+      "$1.3$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A glass sphere of radius $10\\text{ cm}$ showing a paraxial incident ray parallel to the principal axis. The ray refracts at the first spherical surface and focuses exactly at the opposite pole of the sphere.",
+    "solution": "Refraction at the first surface satisfies $\\frac{\\mu}{v} - \\frac{1}{u} = \\frac{\\mu - 1}{R}$. Since $u = -\\infty$ and $v = 2R$, we have $\\frac{\\mu}{2R} = \\frac{\\mu - 1}{R} \\implies \\mu = 2$."
+  },
+  {
+    "question_number": 181,
+    "question_type": "single_choice",
+    "question_text": "A spherical fish bowl of radius $15\\text{ cm}$ is filled with water of refractive index $\\frac{4}{3}$. A cat standing outside in air at a distance of $30\\text{ cm}$ from the centre of the fish bowl is looking at the fish. At what distance from the centre would the cat appear to the fish situated at the centre?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$45\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$25\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "hard",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For refraction at the spherical surface, $u = -(30 - 15) = -15\\text{ cm}$, $R = +15\\text{ cm}$, $\\mu_1 = 1$, $\\mu_2 = 4/3$. Using $\\frac{\\mu_2}{v} - \\frac{\\mu_1}{u} = \\frac{\\mu_2 - \\mu_1}{R}$, we find $v = -30\\text{ cm}$ from the surface. Thus, the apparent distance from the centre is $30\\text{ cm} + 15\\text{ cm} = 45\\text{ cm}$."
+  },
+  {
+    "question_number": 182,
+    "question_type": "single_choice",
+    "question_text": "Two convex lenses of focal length $X$ and $Y$ are placed parallel to each other. Rays from an object at infinity pass through the first lens and form its image at infinity after passing through the second lens. The separation between the two lenses should be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$X + Y$",
+      "$\\frac{X + Y}{2}$",
+      "$X - Y$",
+      "$\\frac{X - Y}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The first lens forms an image at its focal point at a distance $X$. For the rays to emerge parallel to infinity from the second lens, this image must be located at the front focus of the second lens at a distance $Y$. Thus, the total separation is $d = X + Y$."
+  }
+]

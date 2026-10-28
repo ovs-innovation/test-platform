@@ -1,0 +1,135 @@
+[
+  {
+    "question_number": 45,
+    "question_type": "single_choice",
+    "question_text": "A tank contains a transparent liquid of refractive index $\\mu$. The bottom of the tank is a plane mirror as shown. A person at $P$ looks at an object $O$ and its image in the mirror. The distance between the object and its image in the mirror as perceived by the person is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2\\mu d$",
+      "$\\frac{2d}{\\mu}$",
+      "$\\frac{2(\\mu - d)}{\\mu}$",
+      "$\\frac{\\mu + d}{\\mu}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A tank filled with liquid of refractive index $\\mu$ to a height $H$ with a plane mirror at the bottom. An object $O$ is at a height $d$ above the bottom mirror. An observer $P$ is viewing vertically from the air above.",
+    "solution": "The object is at a distance $d$ above the plane mirror, so its mirror image is formed at a distance $d$ below the mirror. The actual separation between the object and its image inside the medium is $\\Delta x = 2d$. When viewed normally from air, the apparent distance between two points in a medium of refractive index $\\mu$ is $\\Delta x' = \\frac{\\Delta x}{\\mu} = \\frac{2d}{\\mu}$."
+  },
+  {
+    "question_number": 46,
+    "question_type": "single_choice",
+    "question_text": "Minimum distance between object and screen in lens displacement method to form the real image on screen is ('$f$' is the focal length of lens)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$2f$",
+      "$3f$",
+      "$4f$",
+      "$5f$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In the displacement method, for a real image to be formed on a screen by a convex lens, the roots of the lens equation are real only if $D^2 - 4Df \\ge 0$, which gives $D \\ge 4f$. Hence, the minimum distance between the object and the screen is $4f$."
+  },
+  {
+    "question_number": 47,
+    "question_type": "single_choice",
+    "question_text": "A thin rod of length $10\\text{ cm}$ lies along the principal axis of a concave mirror of radius of curvature $20\\text{ cm}$ in such a way that the end closer to the pole of mirror is at distance $20\\text{ cm}$ away from it. The length of the image of the rod will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$8\\text{ cm}$",
+      "$15\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Focal length of the concave mirror is $f = -10\\text{ cm}$. The nearer end of the rod is at $u_1 = -20\\text{ cm} = 2f$ (center of curvature), so its image is at $v_1 = -20\\text{ cm}$. The farther end is at $u_2 = -(20 + 10) = -30\\text{ cm}$. Using the mirror formula, $\\frac{1}{v_2} + \\frac{1}{-30} = \\frac{1}{-10} \\implies v_2 = -15\\text{ cm}$. The length of the image is $|v_1 - v_2| = |-20 - (-15)| = 5\\text{ cm}$."
+  },
+  {
+    "question_number": 48,
+    "question_type": "single_choice",
+    "question_text": "An object is placed at a distance $x$ from the focus of a concave mirror of focal length $f$. Find the distance of image formed from the focus of mirror.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{f^2}{x}$",
+      "$\\frac{x^2}{f}$",
+      "$\\sqrt{fx}$",
+      "$\\frac{fx}{x-f}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "According to Newton's formula for spherical mirrors, $x_1 x_2 = f^2$, where $x_1$ and $x_2$ are the distances of the object and image from the principal focus respectively. Here, $x_1 = x$, so the distance of the image from the focus is $x_2 = \\frac{f^2}{x}$."
+  },
+  {
+    "question_number": 49,
+    "question_type": "single_choice",
+    "question_text": "An object and a screen are kept at a distance of $120\\text{ cm}$. A lens is kept between them so that a real image is formed on the screen for two different positions of the lens. Difference between the positions of the lens is $60\\text{ cm}$. The focal length of the lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$22.5\\text{ cm}$",
+      "$45\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$20.5\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Using the displacement method formula, $f = \\frac{D^2 - d^2}{4D}$. Substituting $D = 120\\text{ cm}$ and $d = 60\\text{ cm}$: $f = \\frac{120^2 - 60^2}{4 \\times 120} = \\frac{(120 - 60)(120 + 60)}{480} = \\frac{60 \\times 180}{480} = 22.5\\text{ cm}$."
+  },
+  {
+    "question_number": 50,
+    "question_type": "single_choice",
+    "question_text": "White light is incident on the interface of glass and air as shown in the figure. If green light just undergoes total internal reflection, then the emerging ray in air contains",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Yellow, orange, red",
+      "Violet, indigo, blue",
+      "All colours",
+      "All colours except green"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A ray of white light travels through glass and strikes the glass-air boundary. The green light component grazes the surface along the interface, undergoing critical refraction.",
+    "solution": "The critical angle is given by $\\sin \\theta_c = \\frac{1}{\\mu}$. Since $\\mu_V > \\mu_I > \\mu_B > \\mu_G > \\mu_Y > \\mu_O > \\mu_R$, the critical angles satisfy $\\theta_{c,V} < \\theta_{c,I} < \\theta_{c,B} < \\theta_{c,G} < \\theta_{c,Y} < \\theta_{c,O} < \\theta_{c,R}$. Since the angle of incidence equals $\\theta_{c,G}$, for violet, indigo, and blue, the angle of incidence exceeds their critical angles, so they undergo total internal reflection. For yellow, orange, and red, the angle of incidence is less than their critical angles, so they refract into the air."
+  },
+  {
+    "question_number": 51,
+    "question_type": "single_choice",
+    "question_text": "In a vessel two insoluble liquids are filled as shown in the figure. The effective refractive index of the combination for normal view is nearly",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$1.33$",
+      "$1.26$",
+      "$1.45$",
+      "$1.58$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A cylindrical vessel contains two immiscible liquid layers: an upper layer of thickness $10\\text{ cm}$ with refractive index $\\mu = \\frac{9}{7}$, and a lower layer of thickness $10\\text{ cm}$ with refractive index $\\mu = \\frac{5}{4}$.",
+    "solution": "The effective refractive index is given by $\\mu_{\\text{eff}} = \\frac{t_1 + t_2}{\\frac{t_1}{\\mu_1} + \\frac{t_2}{\\mu_2}}$. Substituting the given values: $\\mu_{\\text{eff}} = \\frac{10 + 10}{\\frac{10}{9/7} + \\frac{10}{5/4}} = \\frac{20}{\\frac{70}{9} + 8} = \\frac{20}{\\frac{142}{9}} = \\frac{180}{142} \\approx 1.2676 \\approx 1.26$."
+  }
+]

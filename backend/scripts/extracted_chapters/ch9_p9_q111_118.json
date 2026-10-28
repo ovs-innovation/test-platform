@@ -1,0 +1,154 @@
+[
+  {
+    "question_number": 111,
+    "question_type": "single_choice",
+    "question_text": "A fish at a depth $y$ inside the water is seeing a bird. The bird is at a height $x$ above the water level. Refractive index of water is $\\mu$, then the apparent distance of the bird as seen by the fish is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$x + \\mu y$",
+      "$y + \\mu x$",
+      "$x + \\frac{y}{\\mu}$",
+      "$y + \\frac{x}{\\mu}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The fish is in a denser medium (water of refractive index $\\mu$), and the bird is in a rarer medium (air of refractive index $1$). Due to refraction from rarer to denser medium, the apparent height of the bird from the water surface is $\\mu x$. Therefore, the total apparent distance of the bird as seen by the fish is $y + \\mu x$."
+  },
+  {
+    "question_number": 112,
+    "question_type": "single_choice",
+    "question_text": "A jar of height $H$ is half filled with a liquid of refractive index $\\mu_1$ and the remaining half with a liquid of refractive index $\\mu_2$. The apparent depth of a coin placed at the bottom of the jar when seen from vertically upward direction is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\left(\\frac{\\mu_1 \\mu_2}{\\mu_1 + \\mu_2}\\right)H$",
+      "$\\left(\\frac{\\mu_1 + \\mu_2}{\\mu_1 \\mu_2}\\right)H$",
+      "$\\left(\\frac{\\mu_1 + \\mu_2}{2\\mu_1 \\mu_2}\\right)H$",
+      "$\\left(\\frac{\\mu_1 + \\mu_2}{2}\\right)H$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The apparent depth is the sum of the apparent depths of the two layers: $d' = \\frac{d_1}{\\mu_1} + \\frac{d_2}{\\mu_2} = \\frac{H/2}{\\mu_1} + \\frac{H/2}{\\mu_2} = \\frac{H}{2}\\left(\\frac{1}{\\mu_1} + \\frac{1}{\\mu_2}\\right) = \\left(\\frac{\\mu_1 + \\mu_2}{2\\mu_1 \\mu_2}\\right)H$."
+  },
+  {
+    "question_number": 113,
+    "question_type": "single_choice",
+    "question_text": "A cylindrical solid rod made up of material of refractive index $\\frac{2}{\\sqrt{3}}$ is given. A light beam enters from one circular end of the cylinder, and comes out just brushing the outer surface along the length. What should be the angle of incidence on the circular face?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sin^{-1}\\left(\\frac{1}{2}\\right)$",
+      "$\\sin^{-1}\\left(\\frac{1}{\\sqrt{3}}\\right)$",
+      "$\\sin^{-1}\\left(\\frac{\\sqrt{3}}{2}\\right)$",
+      "$\\sin^{-1}\\left(\\frac{2}{\\sqrt{3}}\\right)$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A light ray enters the left circular face of a cylindrical rod at an angle of incidence $i$, refracts at angle $r$, and strikes the curved surface at the critical angle $\\theta_c$, emerging tangentially along the length of the cylinder.",
+    "solution": "For the ray to just graze the cylindrical surface, the angle of incidence on the curved surface is the critical angle $\\theta_c$, where $\\sin\\theta_c = \\frac{1}{\\mu} = \\frac{\\sqrt{3}}{2} \\implies \\theta_c = 60^\\circ$. From geometry, the angle of refraction at the flat face is $r = 90^\\circ - \\theta_c = 30^\\circ$. Applying Snell's law at the flat entrance face: $1 \\cdot \\sin i = \\mu \\sin r = \\frac{2}{\\sqrt{3}} \\sin 30^\\circ = \\frac{2}{\\sqrt{3}} \\times \\frac{1}{2} = \\frac{1}{\\sqrt{3}}$, which gives $i = \\sin^{-1}\\left(\\frac{1}{\\sqrt{3}}\\right)$."
+  },
+  {
+    "question_number": 114,
+    "question_type": "single_choice",
+    "question_text": "If the critical angle for a liquid $A$ is $60^\\circ$ and the critical angle for a liquid $B$ is $45^\\circ$, then the critical angle for a ray travelling from $A$ to $B$ will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Less than $45^\\circ$",
+      "More than $60^\\circ$",
+      "Between $45^\\circ$ and $60^\\circ$",
+      "Does not exist"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The refractive indices of the liquids are $\\mu_A = \\frac{1}{\\sin 60^\\circ} = \\frac{2}{\\sqrt{3}} \\approx 1.155$ and $\\mu_B = \\frac{1}{\\sin 45^\\circ} = \\sqrt{2} \\approx 1.414$. Total internal reflection only occurs when light travels from a denser medium to a rarer medium. Since $\\mu_A < \\mu_B$, liquid $A$ is optically rarer than liquid $B$. Thus, total internal reflection is not possible, and the critical angle does not exist."
+  },
+  {
+    "question_number": 115,
+    "question_type": "single_choice",
+    "question_text": "A convex lens made of 5 different transparent materials is used to make an image of an object placed in front of it. The number of images formed will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A biconvex lens divided into horizontal layers made of five different refractive indices: $\\mu_1, \\mu_2, \\mu_3, \\mu_4$ in the upper half, $\\mu_5$ in the middle, and symmetric layers $\\mu_4, \\mu_3, \\mu_2, \\mu_1$ in the lower half.",
+    "solution": "The focal length of a lens depends on its refractive index: $\\frac{1}{f} = (\\mu - 1)\\left(\\frac{1}{R_1} - \\frac{1}{R_2}\\right)$. Since there are 5 different materials with distinct refractive indices $\\mu_1, \\mu_2, \\mu_3, \\mu_4, \\mu_5$, the lens will have 5 distinct focal lengths, resulting in 5 separate images of the object."
+  },
+  {
+    "question_number": 116,
+    "question_type": "single_choice",
+    "question_text": "If the plane surface of a plano-convex lens is silvered, then it will behave as a",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Converging mirror",
+      "Diverging mirror",
+      "Plane mirror",
+      "May behave as (1) or (2)"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The effective power of the silvered lens system is $P = 2P_L + P_M$. For a plane silvered surface, $P_M = 0$. Since the lens is plano-convex, its power is positive ($P_L > 0$). Thus, the total power is $P = 2P_L > 0$. An optical system behaving as a mirror with positive power corresponds to a concave or converging mirror ($f = -\\frac{1}{P} < 0$)."
+  },
+  {
+    "question_number": 117,
+    "question_type": "single_choice",
+    "question_text": "Chromatic aberration of a lens can be corrected by",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Reducing its aperture",
+      "Proper polishing of its surfaces",
+      "Suitably combining it with another lens",
+      "Providing different suitable curvature to its surfaces"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Chromatic aberration arises from the dispersion of light (variation of refractive index with wavelength). It cannot be removed using a single lens regardless of aperture or surface curvature. It is minimized or eliminated by combining two lenses of different materials and opposite natures (an achromatic doublet satisfying $\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0$)."
+  },
+  {
+    "question_number": 118,
+    "question_type": "single_choice",
+    "question_text": "A small air bubble is at the centre of a glass sphere of radius $5\\text{ cm}$. When it is viewed from outside, what will be the position of the image? (Refractive index of glass is $1.5$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "At the same place as that of object",
+      "$\\frac{10}{3}\\text{ cm}$ from the surface near the eye",
+      "$7.5\\text{ cm}$ from the surface of sphere near the eye",
+      "At infinity"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Rays originating from the center of the sphere strike the spherical refracting surface normally (along the radius), meaning the angle of incidence is $i = 0^\\circ$. The rays emerge undeviated ($r = 0^\\circ$). Using $\\frac{\\mu_2}{v} - \\frac{\\mu_1}{u} = \\frac{\\mu_2 - \\mu_1}{R}$ with $u = -R$, $\\mu_1 = 1.5$, and $\\mu_2 = 1.0$: $\\frac{1}{v} - \\frac{1.5}{-R} = \\frac{1 - 1.5}{-R} \\implies \\frac{1}{v} = -\\frac{1}{R} \\implies v = -R$. Thus, the image is formed at the center itself, at the same place as the object."
+  }
+]

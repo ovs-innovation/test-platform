@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 89,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{1}{9}\\text{ times}$",
+      "$\\frac{1}{3}\\text{ times}$",
+      "$9\\text{ times}$",
+      "$3\\text{ times}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "In Young's double slit experiment, the slit separation is made $3$-fold. The fringe width becomes",
+    "solution": "The fringe width is given by $\\beta = \\frac{\\lambda D}{d}$. When the slit separation $d$ is made $3$-fold, i.e., $d' = 3d$, the new fringe width becomes $\\beta' = \\frac{\\lambda D}{3d} = \\frac{\\beta}{3}$. Hence, the fringe width becomes $\\frac{1}{3}\\text{ times}$."
+  },
+  {
+    "question_number": 90,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Elliptical",
+      "Spherical",
+      "Planar",
+      "Cylindrical"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "The condition of observing Fraunhofer's diffraction from a single slit is that the light wavefront incident on the slit should be",
+    "solution": "In Fraunhofer diffraction, the source and the screen are effectively at infinite distances from the diffracting aperture, which means that the incident wavefront is planar."
+  },
+  {
+    "question_number": 91,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Wavelength of the wave",
+      "Velocity of the wave",
+      "Amplitude of the wave",
+      "Propagation of wavefronts"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Huygens' Principle & Wavefronts",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "Huygens' wave theory allows us to know the",
+    "solution": "Huygens' principle is a geometrical construction that allows us to determine the position of a new wavefront at a later time from the knowledge of the shape and position of the wavefront at an earlier time (i.e., propagation of wavefronts)."
+  },
+  {
+    "question_number": 92,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "No interference pattern will be observed",
+      "Distance between two consecutive fringes remains same",
+      "Distance between two consecutive fringes will decrease",
+      "Distance between two consecutive fringes will increase"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "In YDSE, an electron beam is used to obtain interference pattern. If speed of electrons is increased",
+    "solution": "The de Broglie wavelength of electrons is $\\lambda = \\frac{h}{p} = \\frac{h}{mv}$. As speed $v$ increases, the wavelength $\\lambda$ decreases. The distance between two consecutive fringes (fringe width) is $\\beta = \\frac{\\lambda D}{d}$. Since $\\lambda$ decreases, $\\beta$ will decrease."
+  },
+  {
+    "question_number": 93,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Downward",
+      "Upward",
+      "By $t(\\mu - 1)\\frac{\\beta}{\\lambda}$",
+      "Both (2) & (3)"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "In a YDSE, let $X$ and $Y$ be the upper and lower slits. A thin film of thickness $t$ and refractive index $\\mu$ is placed in front of $X$. Let $\\beta = \\text{fringe width}$. The central maximum will shift",
+    "solution": "When a thin film is introduced in the path of the upper slit $X$, the entire fringe pattern shifts toward the slit having the film, which is upward. The magnitude of this shift is $\\Delta y = \\frac{D}{d}(\\mu - 1)t$. Since $\\beta = \\frac{\\lambda D}{d}$, we have $\\frac{D}{d} = \\frac{\\beta}{\\lambda}$, giving $\\Delta y = (\\mu - 1)t \\frac{\\beta}{\\lambda}$. Thus, both (2) and (3) are correct."
+  },
+  {
+    "question_number": 94,
+    "question_type": "single_choice",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$I_0$",
+      "$\\frac{I_0}{2}$",
+      "$\\frac{I_0}{4}$",
+      "$\\frac{I_0}{8}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "question_text": "A beam of unpolarised light of intensity $I_0$ is passed first through a tourmaline crystal $A$ and then through another tourmaline crystal $B$ oriented so that its principal plane is parallel to that of $A$. The intensity of final emergent light is $I$. The value of $I$ is",
+    "solution": "When unpolarised light of intensity $I_0$ passes through the first polariser $A$, its intensity becomes $I_1 = \\frac{I_0}{2}$. Since crystal $B$ has its transmission axis parallel to that of $A$ (i.e., $\\theta = 0^\\circ$), by Malus' law the final intensity is $I = I_1 \\cos^2 0^\\circ = \\frac{I_0}{2}$."
+  }
+]

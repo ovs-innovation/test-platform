@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 1,
+    "question_type": "single_choice",
+    "question_text": "A perfectly reflecting mirror of mass $m$ and surface area $A$ is exposed to electromagnetic radiation of intensity $I$ on a rough horizontal surface with coefficient of friction $\\mu = \\frac{1}{3}$ as shown. The minimum value of pulling force required to move the mirror is $\\frac{mg}{2}$. The value of $\\frac{mgc}{IA}$ (where $c$ is speed of light) is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4$",
+      "$\\frac{1}{4}$",
+      "$\\frac{2}{3}$",
+      "$\\frac{3}{2}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Poynting Vector & Radiation Pressure",
+    "has_diagram": true,
+    "diagram_description": "A block of mass m rests on a rough horizontal surface. Radiation of intensity I is incident vertically downward onto its upper surface of area A. A horizontal pulling force F acts on the block.",
+    "solution": "The radiation pressure exerted on a perfectly reflecting mirror is $P_{\\text{rad}} = \\frac{2I}{c}$, giving a downward force $F_{\\text{rad}} = \\frac{2IA}{c}$. The normal reaction is $N = mg + \\frac{2IA}{c}$. The minimum force required to move the mirror is $F = \\mu N = \\frac{1}{3}\\left(mg + \\frac{2IA}{c}\\right)$. Equating this to $\\frac{mg}{2}$, we get $mg + \\frac{2IA}{c} = \\frac{3}{2}mg \\implies \\frac{2IA}{c} = \\frac{mg}{2} \\implies \\frac{mgc}{IA} = 4$."
+  },
+  {
+    "question_number": 2,
+    "question_type": "single_choice",
+    "question_text": "If in a region, there is a time varying electric field, then which of the following Maxwell's equation will be most suitable?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0 i$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\left[ \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$",
+      "$\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Maxwell's Equations",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The Ampere-Maxwell law incorporates displacement current due to a time-varying electric field and is given by $\\oint \\vec{B}\\cdot d\\vec{l} = \\mu_0\\left(i_c + i_d\\right) = \\mu_0\\left[ i + \\varepsilon_0 \\frac{d\\Phi_E}{dt} \\right]$."
+  },
+  {
+    "question_number": 3,
+    "question_type": "single_choice",
+    "question_text": "The amplitude of electric field in an electromagnetic wave at a distance $r$ from a point source of power $P$ is (taking efficiency $100\\%$)",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{\\frac{P}{2\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\sqrt{\\frac{P}{4\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\sqrt{\\frac{P}{8\\pi r^2 \\varepsilon_0 c}}$",
+      "$\\frac{P}{2\\pi r^2 \\varepsilon_0 c}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity at distance $r$ from an isotropic source is $I = \\frac{P}{4\\pi r^2}$. The intensity in terms of the electric field amplitude $E_0$ is $I = \\frac{1}{2}\\varepsilon_0 E_0^2 c$. Equating the two expressions gives $\\frac{1}{2}\\varepsilon_0 E_0^2 c = \\frac{P}{4\\pi r^2} \\implies E_0 = \\sqrt{\\frac{P}{2\\pi r^2 \\varepsilon_0 c}}$."
+  },
+  {
+    "question_number": 4,
+    "question_type": "single_choice",
+    "question_text": "In an electromagnetic wave, the effective value of electric field is $100\\text{ V/m}$. The intensity of the wave is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$26.5\\text{ W/m}^2$",
+      "$36.5\\text{ W/m}^2$",
+      "$46.7\\text{ W/m}^2$",
+      "$76.5\\text{ W/m}^2$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Energy Density & Intensity",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The intensity of an electromagnetic wave is given by $I = \\varepsilon_0 E_{\\text{rms}}^2 c$. Substituting the values: $I = 8.854 \\times 10^{-12} \\times (100)^2 \\times 3 \\times 10^8 \\approx 26.55\\text{ W/m}^2 \\approx 26.5\\text{ W/m}^2$."
+  },
+  {
+    "question_number": 5,
+    "question_type": "single_choice",
+    "question_text": "A parallel plate capacitor consists of two circular plates each of radius $2\\text{ cm}$ separated by distance of $0.1\\text{ m}$. If voltage across the plates is varying at a rate of $5 \\times 10^{13}\\text{ V/s}$, then value of displacement current is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$7.60\\text{ A}$",
+      "$5.56 \\times 10^2\\text{ A}$",
+      "$5.56\\text{ A}$",
+      "$2.28 \\times 10^4\\text{ A}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Displacement Current",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Displacement current is $I_d = C \\frac{dV}{dt} = \\frac{\\varepsilon_0 A}{d} \\frac{dV}{dt}$. Here, $A = \\pi r^2 = \\pi (0.02)^2 = 4\\pi \\times 10^{-4}\\text{ m}^2$, $d = 0.1\\text{ m}$, and $\\frac{dV}{dt} = 5 \\times 10^{13}\\text{ V/s}$. Thus, $I_d = \\frac{8.854 \\times 10^{-12} \\times 4\\pi \\times 10^{-4}}{0.1} \\times 5 \\times 10^{13} \\approx 5.56\\text{ A}$."
+  },
+  {
+    "question_number": 6,
+    "question_type": "single_choice",
+    "question_text": "The energy of a photon of EM radiation is of the order of $15\\text{ keV}$. To which part of spectrum does it belong?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\gamma\\text{-ray}$",
+      "$\\text{X-ray}$",
+      "$\\text{Infra-red rays}$",
+      "$\\text{U-V rays}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "EM Spectrum",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The wavelength is $\\lambda = \\frac{hc}{E} = \\frac{12400\\text{ eV}\\cdot\\text{\\AA}}{15000\\text{ eV}} \\approx 0.83\\text{ \\AA} = 0.083\\text{ nm}$. This wavelength corresponds to the X-ray region of the electromagnetic spectrum (typically $0.01\\text{ nm}$ to $10\\text{ nm}$)."
+  }
+]

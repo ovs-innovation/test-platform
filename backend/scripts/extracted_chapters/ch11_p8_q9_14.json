@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 9,
+    "question_type": "single_choice",
+    "question_text": "A photon and an electron have equal energy $E$. The ratio $\\frac{\\lambda_{\\text{photon}}}{\\lambda_{\\text{electron}}}$ is proportional to",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\sqrt{E}$",
+      "$\\frac{1}{\\sqrt{E}}$",
+      "$\\frac{1}{E}$",
+      "Does not depend upon $E$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a photon, $E = \\frac{hc}{\\lambda_{\\text{photon}}} \\implies \\lambda_{\\text{photon}} = \\frac{hc}{E}$. For an electron, the de Broglie wavelength is $\\lambda_{\\text{electron}} = \\frac{h}{\\sqrt{2mE}}$. Thus, $\\frac{\\lambda_{\\text{photon}}}{\\lambda_{\\text{electron}}} = \\frac{hc/E}{h/\\sqrt{2mE}} = c\\sqrt{\\frac{2m}{E}} \\propto \\frac{1}{\\sqrt{E}}$."
+  },
+  {
+    "question_number": 10,
+    "question_type": "single_choice",
+    "question_text": "The cut off wavelength for a metal is $5000\\text{ \\AA}$. When light of wavelength $3000\\text{ \\AA}$ falls on it, the maximum kinetic energy of the ejected photoelectron is $E$. When light of wavelength $2000\\text{ \\AA}$ falls on it, the maximum kinetic energy of the photoelectrons will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4E$",
+      "$3E$",
+      "$2.5E$",
+      "$2.25E$"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "From Einstein's photoelectric equation, $K_{\\text{max}} = hc\\left(\\frac{1}{\\lambda} - \\frac{1}{\\lambda_0}\\right)$. In the first case, $E = hc\\left(\\frac{1}{3000} - \\frac{1}{5000}\\right) = \\frac{2hc}{15000} = \\frac{hc}{7500}$. In the second case, $E' = hc\\left(\\frac{1}{2000} - \\frac{1}{5000}\\right) = \\frac{3hc}{10000}$. Taking the ratio, $\\frac{E'}{E} = \\frac{3/10000}{1/7500} = 2.25$, so $E' = 2.25E$."
+  },
+  {
+    "question_number": 11,
+    "question_type": "single_choice",
+    "question_text": "Monochromatic light of wavelength $3000\\text{ \\AA}$ is emitted from a point source and falls on a photoelectric cell perpendicular to its surface $0.75\\text{ metres}$ away from the source. The photocurrent is stopped by applying a suitable negative potential to the anode with respect to the cathode. The point source is now moved to a distance of $1.5\\text{ m}$ from the photoelectric cell (light from source continues to fall on the photoelectric cell perpendicular to its surface). Then",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "The photocurrent will be stopped again by the same stopping potential applied earlier",
+      "If the stopping potential is made to be $0$ in both cases (before and after displacing the point source) the photocurrent is halved",
+      "The photocurrent will be stopped again by half the stopping potential applied earlier",
+      "If the stopping potential is made to be $0$ in both cases (before and after displacing the point source) the photocurrent remains the same"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Stopping potential depends solely on the frequency (or wavelength) of the incident radiation and the work function of the cathode material ($eV_0 = \\frac{hc}{\\lambda} - \\phi$). Since the wavelength remains $3000\\text{ \\AA}$, the stopping potential remains completely unchanged."
+  },
+  {
+    "question_number": 12,
+    "question_type": "single_choice",
+    "question_text": "The ratio of kinetic energy of an electron and the energy of a photon, both having the same wavelength is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Proportional to the wavelength of the photon",
+      "Proportional to the energy of the photon",
+      "Proportional to the kinetic energy of the electron",
+      "Proportional to the magnitude of velocity of the electron"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "de Broglie Wavelength & Matter Waves",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an electron of velocity $v$, its momentum is $p = mv = \\frac{h}{\\lambda}$, so its kinetic energy is $K_e = \\frac{p^2}{2m} = \\frac{pv}{2} = \\frac{hv}{2\\lambda}$. The energy of the photon of wavelength $\\lambda$ is $E_p = \\frac{hc}{\\lambda}$. The ratio is $\\frac{K_e}{E_p} = \\frac{hv/(2\\lambda)}{hc/\\lambda} = \\frac{v}{2c}$, which is directly proportional to the magnitude of the velocity of the electron."
+  },
+  {
+    "question_number": 13,
+    "question_type": "single_choice",
+    "question_text": "Maximum kinetic energy of a photoelectron is $E$ when the wavelength of incident light is $\\lambda$. The energy becomes four times when wavelength is reduced to one third, then work function of the metal is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\frac{3hc}{\\lambda}$",
+      "$\\frac{hc}{3\\lambda}$",
+      "$\\frac{hc}{2\\lambda}$",
+      "$\\frac{hc}{4\\lambda}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Photoelectric Effect & Einstein's Equation",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Given $E = \\frac{hc}{\\lambda} - \\phi \\implies \\frac{hc}{\\lambda} = E + \\phi$. When the wavelength is reduced to $\\lambda/3$, the maximum kinetic energy becomes $4E$: $4E = \\frac{hc}{\\lambda/3} - \\phi = 3\\left(\\frac{hc}{\\lambda}\\right) - \\phi = 3(E + \\phi) - \\phi = 3E + 2\\phi$. This gives $E = 2\\phi$. Substituting into the first equation: $\\frac{hc}{\\lambda} = 2\\phi + \\phi = 3\\phi \\implies \\phi = \\frac{hc}{3\\lambda}$."
+  },
+  {
+    "question_number": 14,
+    "question_type": "single_choice",
+    "question_text": "If the frequency of light in photoelectric experiment is doubled and intensity reduced to half of initial value, the stopping potential will",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Be doubled",
+      "Be halved",
+      "Become more than double",
+      "Become less than double"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Cut-off Potential & Stopping Potential",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Einstein's photoelectric equation states $eV_0 = h\\nu - \\phi$. When the frequency is doubled, $eV_0' = h(2\\nu) - \\phi = 2(h\\nu - \\phi) + \\phi = 2eV_0 + \\phi$. Since the work function $\\phi > 0$, $eV_0' > 2eV_0$, meaning the new stopping potential becomes more than double."
+  }
+]

@@ -1,0 +1,117 @@
+[
+  {
+    "question_number": 183,
+    "question_type": "single_choice",
+    "question_text": "Two plane mirrors are placed perpendicular to each other as shown in the figure. An object $O$ is kept at the angular bisector of the two mirrors. The number of images of object $O$ formed will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$4$",
+      "$3$",
+      "$2$",
+      "$1$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "Two perpendicular plane mirrors oriented along the coordinate axes with an object O positioned on the angle bisector between them.",
+    "solution": "Here, $\\theta = 90^\\circ$. Since $\\frac{360^\\circ}{\\theta} = \\frac{360^\\circ}{90^\\circ} = 4$ is an even integer, the number of images is $n = \\frac{360^\\circ}{\\theta} - 1 = 4 - 1 = 3$."
+  },
+  {
+    "question_number": 184,
+    "question_type": "single_choice",
+    "question_text": "A plane mirror is placed at the bottom of a fish tank filled with water of refractive index $\\frac{4}{3}$. The fish is at a height $10\\text{ cm}$ above the plane mirror. An observer $O$, vertically above the fish outside the water, sees the fish and its image in the mirror. The apparent distance between the fish and its image is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15\\text{ cm}$",
+      "$30\\text{ cm}$",
+      "$35\\text{ cm}$",
+      "$45\\text{ cm}$",
+      "$45\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Plane Surfaces",
+    "has_diagram": true,
+    "diagram_description": "A fish tank containing water with a horizontal plane mirror at the bottom. A fish is at a height of 10 cm above the mirror, and an observer is situated vertically above the fish outside the tank.",
+    "solution": "The actual distance between the fish and its image in the mirror is $d = 10\\text{ cm} + 10\\text{ cm} = 20\\text{ cm}$. When viewed from air, the apparent distance is $d' = \\frac{d}{\\mu} = \\frac{20}{4/3} = 15\\text{ cm}$."
+  },
+  {
+    "question_number": 185,
+    "question_type": "single_choice",
+    "question_text": "A beam of light consisting of red, green and blue colours is incident normally on a right-angled prism as shown. The refractive indices of the material of the prism for red, green and blue wavelengths are $1.39$, $1.44$ and $1.47$ respectively. Which of the three colours will come out of the right face of the prism?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Green",
+      "Red",
+      "Blue",
+      "No colour will be separated"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Total Internal Reflection & Critical Angle",
+    "has_diagram": true,
+    "diagram_description": "A right-angled isosceles prism with base angle 45 degrees. A horizontal ray containing red, green, and blue light enters normally through the vertical face and strikes the hypotenuse (right face) at an angle of incidence of 45 degrees.",
+    "solution": "The angle of incidence at the hypotenuse face is $i = 45^\\circ$. Total internal reflection occurs if $\\mu > \\frac{1}{\\sin 45^\\circ} = \\sqrt{2} \\approx 1.414$. Since $\\mu_{\\text{red}} = 1.39 < 1.414$, red will refract out, while green and blue undergo TIR."
+  },
+  {
+    "question_number": 186,
+    "question_type": "single_choice",
+    "question_text": "A light ray is incident on a prism of refracting angle $30^\\circ$. One face of the prism is silvered as shown in the figure. If the refractive index of the prism is $\\sqrt{2}$, then for what value of angle of incidence will the ray retrace its path?",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$30^\\circ$",
+      "$45^\\circ$",
+      "$37^\\circ$",
+      "$60^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": true,
+    "diagram_description": "A triangular prism with apex angle 30 degrees having its second face silvered. A ray incidents at angle i on the first face and strikes the silvered face normally.",
+    "solution": "For the ray to retrace its path, it must hit the silvered face normally, so $r_2 = 0^\\circ$. Thus, $r_1 = A - r_2 = 30^\\circ$. Using Snell's law: $\\sin i = \\mu \\sin r_1 = \\sqrt{2} \\sin 30^\\circ = \\frac{1}{\\sqrt{2}} \\implies i = 45^\\circ$."
+  },
+  {
+    "question_number": 187,
+    "question_type": "single_choice",
+    "question_text": "A plane mirror is fixed in the $yz$-plane at $x = 0$. The velocity of a moving object is $\\vec{v}_o = -3\\hat{i} + 6\\hat{j} + 4\\hat{k}$. The velocity of the image relative to a stationary observer will be",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$3\\hat{i} - 6\\hat{j} - 4\\hat{k}$",
+      "$3\\hat{i} - 6\\hat{j} + 4\\hat{k}$",
+      "$3\\hat{i} + 6\\hat{j} + 4\\hat{k}$",
+      "$-3\\hat{i} - 6\\hat{j} - 4\\hat{k}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": true,
+    "diagram_description": "A coordinate system showing the y-axis, with the plane mirror located along x = 0 (yz-plane), and an object vector v_o moving in the second quadrant toward the y-axis.",
+    "solution": "For a mirror lying in the $yz$-plane, reflection reverses only the component of velocity perpendicular to the mirror (the $x$-component): $v_{ix} = -v_{ox} = 3\\hat{i}$, while parallel components remain unchanged ($6\\hat{j} + 4\\hat{k}$)."
+  },
+  {
+    "question_number": 188,
+    "question_type": "single_choice",
+    "question_text": "If the space between two convex lenses of glass in the combination shown in the figure below is filled with water, then the",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "Focal length of the system will decrease",
+      "Focal length of the system will increase",
+      "Power of system will increase",
+      "Power of system will become infinite"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "Two convex lenses placed facing each other with an enclosed space in between them that forms a biconcave water lens when filled.",
+    "solution": "The water layer forms a diverging (concave) lens of negative power ($P_w < 0$). The net power of the system decreases ($P_{\\text{net}} = P_1 + P_2 + P_w$), which causes the equivalent focal length ($F = 1/P_{\\text{net}}$) to increase."
+  }
+]

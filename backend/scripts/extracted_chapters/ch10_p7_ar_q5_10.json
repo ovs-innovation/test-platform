@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 5,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} Nicol prism is used to produce and analyse plane polarised light.\n\\textbf{Reason (R):} Nicol prism reduces the intensity of light to zero.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Nicol prism is used to produce and analyse plane polarised light.",
+    "reason_text": "Nicol prism reduces the intensity of light to zero.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 2,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Assertion is true because a Nicol prism is an optical device made of calcite crystal used to produce and analyze linearly (plane) polarised light. Reason is false because a Nicol prism transmits the extraordinary ray whose intensity is non-zero (ideally half the intensity of unpolarised incident light)."
+  },
+  {
+    "question_number": 6,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} On increasing the phase difference from $\\frac{\\pi}{3}$ to $\\frac{\\pi}{2}$ in YDSE, the intensity decreases by $\\frac{1}{3}\\text{rd}$.\n\\textbf{Reason (R):} Resultant intensity in YDSE is given by $I = 4I_0 \\cos^2 \\frac{\\theta}{2}$ with usual symbol meanings.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "On increasing the phase difference from $\\frac{\\pi}{3}$ to $\\frac{\\pi}{2}$ in YDSE, the intensity decreases by $\\frac{1}{3}\\text{rd}$.",
+    "reason_text": "Resultant intensity in YDSE is given by $I = 4I_0 \\cos^2 \\frac{\\theta}{2}$ with usual symbol meanings.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "At $\\theta_1 = \\frac{\\pi}{3}$, $I_1 = 4I_0 \\cos^2\\left(\\frac{\\pi}{6}\\right) = 4I_0 \\left(\\frac{\\sqrt{3}}{2}\\right)^2 = 3I_0$.\nAt $\\theta_2 = \\frac{\\pi}{2}$, $I_2 = 4I_0 \\cos^2\\left(\\frac{\\pi}{4}\\right) = 4I_0 \\left(\\frac{1}{\\sqrt{2}}\\right)^2 = 2I_0$.\nThe fractional decrease in intensity is $\\frac{I_1 - I_2}{I_1} = \\frac{3I_0 - 2I_0}{3I_0} = \\frac{1}{3}$.\nThus, both Assertion and Reason are true, and Reason is the correct explanation."
+  },
+  {
+    "question_number": 7,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} If complete YDSE is dipped in liquid from air then fringe width decreases.\n\\textbf{Reason (R):} Wavelength of light decreases, when we move from air to liquid.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "If complete YDSE is dipped in liquid from air then fringe width decreases.",
+    "reason_text": "Wavelength of light decreases, when we move from air to liquid.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Interference of Light & YDSE",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Fringe width in YDSE is $\\beta = \\frac{\\lambda D}{d}$. When the entire apparatus is immersed in a liquid of refractive index $\\mu > 1$, the wavelength decreases to $\\lambda' = \\frac{\\lambda}{\\mu}$. Consequently, the fringe width decreases to $\\beta' = \\frac{\\beta}{\\mu}$. Thus, both Assertion and Reason are true, and Reason correctly explains Assertion."
+  },
+  {
+    "question_number": 8,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} Light waves can be polarised.\n\\textbf{Reason (R):} Light waves are transverse.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "Light waves can be polarised.",
+    "reason_text": "Light waves are transverse.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Polarisation of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Polarisation is a characteristic phenomenon exhibited exclusively by transverse waves because their vibrations occur perpendicular to the direction of wave propagation. Light waves are transverse electromagnetic waves, hence they can be polarised. Thus, Reason is the correct explanation of Assertion."
+  },
+  {
+    "question_number": 9,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} We do not encounter diffraction effect of light in everyday observations.\n\\textbf{Reason (R):} The wavelength of light is much smaller than the dimensions of most of obstacles.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "We do not encounter diffraction effect of light in everyday observations.",
+    "reason_text": "The wavelength of light is much smaller than the dimensions of most of obstacles.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Diffraction of a wave is prominent only when the size of the obstacle or aperture is comparable to the wavelength of the wave ($a \\sim \\lambda$). Since visible light has a very small wavelength ($400\\text{ nm} - 700\\text{ nm}$) compared to the macroscopic dimensions of common obstacles, diffraction is not noticeably observed in everyday life."
+  },
+  {
+    "question_number": 10,
+    "question_type": "assertion_reason",
+    "question_text": "Given below are two statements: one is labelled as Assertion (A) and the other is labelled as Reason (R).\n\\textbf{Assertion (A):} In diffraction pattern intensity of every maxima will be same.\n\\textbf{Reason (R):} The width of all maxima in diffraction pattern will be same.\nIn the light of the above statements, choose the most appropriate answer from the options given below:",
+    "assertion_text": "In diffraction pattern intensity of every maxima will be same.",
+    "reason_text": "The width of all maxima in diffraction pattern will be same.",
+    "options": [
+      "Both Assertion and Reason are true and Reason is the correct explanation of Assertion",
+      "Both Assertion and Reason are true but Reason is not the correct explanation of Assertion",
+      "Assertion is true but Reason is false",
+      "Both Assertion and Reason are false"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Diffraction of Light",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "In a single-slit diffraction pattern, the intensity of maxima decreases sharply with increasing order from the central maximum. Furthermore, the width of the central maximum is $\\frac{2\\lambda D}{a}$, which is twice the width of secondary maxima $\\left(\\frac{\\lambda D}{a}\\right)$. Therefore, both Assertion and Reason are false."
+  }
+]

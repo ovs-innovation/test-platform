@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 219,
+    "question_type": "single_choice",
+    "question_text": "If the total deviation produced by two plane mirrors is $300^\\circ$, then the number of images formed of an object placed symmetrically between them is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "5",
+      "11",
+      "2",
+      "7"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The deviation produced by two plane mirrors inclined at an angle $\\theta$ is $\\delta = 360^\\circ - 2\\theta$. Given $\\delta = 300^\\circ$, we have $2\\theta = 60^\\circ \\implies \\theta = 30^\\circ$. The number of images is $n = \\frac{360^\\circ}{\\theta} - 1 = \\frac{360^\\circ}{30^\\circ} - 1 = 11$."
+  },
+  {
+    "question_number": 220,
+    "question_type": "single_choice",
+    "question_text": "A man runs towards a stationary plane mirror with a velocity of $15\\text{ m/s}$. The magnitude of the velocity of the man relative to his image is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15\\text{ m/s}$",
+      "$30\\text{ m/s}$",
+      "$45\\text{ m/s}$",
+      "$\\text{Zero}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "Taking the direction towards the mirror as positive, $\\vec{v}_m = 15\\hat{i}\\text{ m/s}$ and the image moves with $\\vec{v}_i = -15\\hat{i}\\text{ m/s}$. The relative velocity is $\\vec{v}_{m/i} = \\vec{v}_m - \\vec{v}_i = 15 - (-15) = 30\\text{ m/s}$."
+  },
+  {
+    "question_number": 221,
+    "question_type": "single_choice",
+    "question_text": "The size of the image formed by a convex lens is one-fourth the size of a real object. If the focal length of the lens is $30\\text{ cm}$, then the distance of the object from the lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$150\\text{ cm}$",
+      "$120\\text{ cm}$",
+      "$90\\text{ cm}$",
+      "$60\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "easy",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For a real object, a diminished image by a convex lens is real and inverted, so $m = -\\frac{1}{4}$. Using $m = \\frac{f}{f+u} \\implies -\\frac{1}{4} = \\frac{30}{30+u} \\implies 30+u = -120 \\implies u = -150\\text{ cm}$, giving an object distance of $150\\text{ cm}$."
+  },
+  {
+    "question_number": 222,
+    "question_type": "single_choice",
+    "question_text": "The refractive index of the material of an equilateral prism is $\\sqrt{2}$. The angle of incidence for minimum deviation is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$60^\\circ$",
+      "$45^\\circ$",
+      "$30^\\circ$",
+      "$15^\\circ$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "For an equilateral prism, $A = 60^\\circ$. At minimum deviation, $r = \\frac{A}{2} = 30^\\circ$. By Snell's law, $\\mu = \\frac{\\sin i}{\\sin r} \\implies \\sqrt{2} = \\frac{\\sin i}{\\sin 30^\\circ} \\implies \\sin i = \\frac{1}{\\sqrt{2}} \\implies i = 45^\\circ$."
+  },
+  {
+    "question_number": 223,
+    "question_type": "single_choice",
+    "question_text": "A concave lens is made of three layers of glass of three different materials as shown in the figure. A point object is placed on its axis. The number of images of the object formed is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "2",
+      "3",
+      "4",
+      "1"
+    ],
+    "correct_index": 3,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A biconcave lens sliced vertically into three sections along its thickness, each section composed of a different transparent material.",
+    "solution": "Because the layers are arranged sequentially along the principal axis, every incident ray from the object traverses all three media in series. The combination acts as a single composite lens with one effective focal length, forming only 1 image."
+  },
+  {
+    "question_number": 224,
+    "question_type": "single_choice",
+    "question_text": "A point object $O$ is placed on the principal axis of a convex lens of focal length $f = 20\\text{ cm}$ at a distance of $40\\text{ cm}$ to the left of it. The diameter of the lens is $10\\text{ cm}$. An eye is placed $60\\text{ cm}$ to the right of the lens and at a distance $h$ below the principal axis. The maximum value of $h$ to see the image is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$\\text{Zero}$",
+      "$2.5\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$10\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "With $u = -40\\text{ cm}$ and $f = 20\\text{ cm}$, the image is formed at $v = +40\\text{ cm}$ on the axis. The eye is at $x = 60\\text{ cm}$, which is $20\\text{ cm}$ past the real image. By similar triangles from the aperture radius $R = 5\\text{ cm}$ to the image: $\\frac{h_{\\max}}{60 - 40} = \\frac{R}{40} \\implies h_{\\max} = 5 \\times \\frac{20}{40} = 2.5\\text{ cm}$."
+  }
+]

@@ -1,0 +1,116 @@
+[
+  {
+    "question_number": 27,
+    "question_type": "single_choice",
+    "question_text": "An object $P$ is placed at a distance of $15\\text{ cm}$ from a convex lens of focal length $10\\text{ cm}$. On the other side of the lens, a convex mirror is placed at a distance of $10\\text{ cm}$ from the lens such that the final image formed by the combination coincides with the object itself. The focal length of the convex mirror is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$20\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$30\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A point object P is placed 15 cm in front of a convex lens. A convex mirror is placed 10 cm behind the convex lens. Light rays from P pass through the lens, strike the mirror, and reflect back along their original path.",
+    "solution": "Using the lens formula $\\frac{1}{v} - \\frac{1}{u} = \\frac{1}{f}$ with $u = -15\\text{ cm}$ and $f = +10\\text{ cm}$:\n$$\\frac{1}{v} - \\frac{1}{-15} = \\frac{1}{10} \\implies \\frac{1}{v} = \\frac{1}{10} - \\frac{1}{15} = \\frac{1}{30} \\implies v = +30\\text{ cm}$$\nThe rays converge towards a point $30\\text{ cm}$ behind the lens. Since the convex mirror is placed $10\\text{ cm}$ behind the lens, the rays would converge at a distance of $30 - 10 = 20\\text{ cm}$ behind the mirror. For the rays to retrace their path and form the final image coincident with the object, they must fall normally on the mirror, meaning this convergence point is the mirror's center of curvature ($R = 20\\text{ cm}$). Thus, the focal length of the convex mirror is $f_m = \\frac{R}{2} = \\frac{20}{2} = 10\\text{ cm}$."
+  },
+  {
+    "question_number": 28,
+    "question_type": "single_choice",
+    "question_text": "A plano-convex lens of focal length $10\\text{ cm}$ and refractive index $\\mu = \\frac{3}{2}$ is silvered at its plane face. The distance $d$ at which an object $O$ must be placed in order to get its image on itself is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$5\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$2.5\\text{ cm}$"
+    ],
+    "correct_index": 2,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A plano-convex lens has its curved face facing left and its flat plane face silvered. An object O is situated at a distance d on the principal axis in front of the curved surface.",
+    "solution": "The equivalent power of the silvered lens system is $P = 2P_L + P_M$. Since the plane surface is silvered, $P_M = 0$, so $P = 2P_L = \\frac{2}{f_L} = \\frac{2}{10} = \\frac{1}{5}\\text{ cm}^{-1}$. The system behaves as a concave mirror of equivalent focal length $F = -\\frac{1}{P} = -5\\text{ cm}$. To form the image on the object itself, the object must be placed at the center of curvature of this equivalent mirror: $d = 2|F| = 2 \\times 5\\text{ cm} = 10\\text{ cm}$."
+  },
+  {
+    "question_number": 29,
+    "question_type": "single_choice",
+    "question_text": "Two plano-convex lenses, each of focal length $10\\text{ cm}$ and refractive index $\\frac{3}{2}$, are placed with their curved surfaces facing each other. Water $\\left(\\mu = \\frac{4}{3}\\right)$ is filled in the space between the two lenses. The whole arrangement is in air. The optical power of the system in diopters is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$6.67$",
+      "$-6.67$",
+      "$33.3$",
+      "$20$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "Two identical plano-convex lenses are placed with flat sides outward and curved faces inward. The enclosed space between the curved surfaces is filled with water, forming a biconcave water lens.",
+    "solution": "For each plano-convex lens, $\\frac{1}{f} = (\\mu_g - 1)\\frac{1}{R} \\implies \\frac{1}{10} = (1.5 - 1)\\frac{1}{R} \\implies R = 5\\text{ cm}$.\nPower of each glass lens is $P_1 = P_3 = \\frac{100}{10} = +10\\text{ D}$.\nThe water forms a biconcave lens with $R_1 = -5\\text{ cm}$ and $R_2 = +5\\text{ cm}$:\n$$\\frac{1}{f_w} = (\\mu_w - 1)\\left(-\\frac{1}{R} - \\frac{1}{R}\\right) = \\left(\\frac{4}{3} - 1\\right)\\left(-\\frac{2}{5}\\right) = -\\frac{2}{15}\\text{ cm}^{-1}$$\n$$P_w = 100 \\times \\left(-\\frac{2}{15}\\right) = -\\frac{40}{3}\\text{ D} \\approx -13.33\\text{ D}$$\nTotal optical power $P = P_1 + P_w + P_3 = 10 - 13.33 + 10 = +6.67\\text{ D}$."
+  },
+  {
+    "question_number": 30,
+    "question_type": "single_choice",
+    "question_text": "A mark $M$ placed on the surface of a glass sphere is viewed through glass from the diametrically opposite end. If the diameter of the sphere is $10\\text{ cm}$ and the refractive index of glass is $1.5$, find the position of the image from the centre of the sphere.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$15\\text{ cm}$",
+      "$20\\text{ cm}$",
+      "$10\\text{ cm}$",
+      "$25\\text{ cm}$"
+    ],
+    "correct_index": 0,
+    "difficulty": "medium",
+    "topic": "Refraction at Spherical Surfaces & Lenses",
+    "has_diagram": true,
+    "diagram_description": "A glass sphere of diameter 10 cm with mark M on one side and an observer looking into the sphere from the diametrically opposite point.",
+    "solution": "Refraction occurs at the spherical surface of radius $R = -5\\text{ cm}$ as light goes from glass ($\\mu_1 = 1.5$) to air ($\\mu_2 = 1.0$). The object distance from this refracting surface is $u = -10\\text{ cm}$.\nUsing the spherical surface refraction formula:\n$$\\frac{\\mu_2}{v} - \\frac{\\mu_1}{u} = \\frac{\\mu_2 - \\mu_1}{R}$$\n$$\\frac{1}{v} - \\frac{1.5}{-10} = \\frac{1 - 1.5}{-5} \\implies \\frac{1}{v} + 0.15 = 0.10 \\implies \\frac{1}{v} = -0.05 = -\\frac{1}{20}$$\nThus, $v = -20\\text{ cm}$ from the refracting surface (on the same side as the object).\nSince the center of the sphere is $5\\text{ cm}$ from the refracting surface, the distance of the image from the centre of the sphere is $20 - 5 = 15\\text{ cm}$."
+  },
+  {
+    "question_number": 31,
+    "question_type": "single_choice",
+    "question_text": "To produce an achromatic combination, a convex lens of focal length $42\\text{ cm}$ and dispersive power $0.14$ is placed in contact with a concave lens of dispersive power $0.21$. The focal length of the concave lens is",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$60\\text{ cm}$",
+      "$63\\text{ cm}$",
+      "$50\\text{ cm}$",
+      "$80\\text{ cm}$"
+    ],
+    "correct_index": 1,
+    "difficulty": "easy",
+    "topic": "Prism Formula & Dispersion",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "The condition for achromatism of two lenses in contact is:\n$$\\frac{\\omega_1}{f_1} + \\frac{\\omega_2}{f_2} = 0$$\nGiven $\\omega_1 = 0.14$, $f_1 = +42\\text{ cm}$, and $\\omega_2 = 0.21$:\n$$\\frac{0.14}{42} + \\frac{0.21}{f_2} = 0 \\implies \\frac{0.21}{f_2} = -\\frac{1}{300} \\implies f_2 = -63\\text{ cm}$$\nHence, the magnitude of the focal length of the concave lens is $63\\text{ cm}$."
+  },
+  {
+    "question_number": 32,
+    "question_type": "single_choice",
+    "question_text": "There is a point object placed in front of a plane mirror. If the mirror is displaced by $10\\text{ cm}$ away from the object, find the distance by which the image will get displaced.",
+    "assertion_text": null,
+    "reason_text": null,
+    "options": [
+      "$10\\text{ cm}$",
+      "$5\\text{ cm}$",
+      "$15\\text{ cm}$",
+      "$20\\text{ cm}$"
+    ],
+    "correct_index": 3,
+    "difficulty": "easy",
+    "topic": "Reflection & Mirrors",
+    "has_diagram": false,
+    "diagram_description": null,
+    "solution": "When a plane mirror is displaced by a distance $x$ away from a fixed object, the image moves in the same direction by a distance $2x$.\nHere $x = 10\\text{ cm}$, so the image displacement is:\n$$\\Delta x = 2 \\times 10\\text{ cm} = 20\\text{ cm}$$"
+  }
+]
