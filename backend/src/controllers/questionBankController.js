@@ -22,7 +22,10 @@ const asJson = (value, fallback) => {
  * GET /api/question-bank/categories
  */
 export const listCategories = asyncHandler(async (_req, res) => {
-  const payload = await rememberCache('cache:qb:categories', 120, async () => {
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
+  const payload = await rememberCache('cache:qb:categories', 60, async () => {
     const result = await query(
       `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
     );
@@ -39,46 +42,37 @@ export const listCategories = asyncHandler(async (_req, res) => {
  * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
-  const { category, skip_cache } = req.query;
-  const shouldSkipCache = skip_cache === 'true' || req.headers['cache-control'] === 'no-cache';
-  const cacheKey = `cache:qb:questions:${category || 'all'}`;
+  const { category } = req.query;
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.set('Pragma', 'no-cache');
+  res.set('Expires', '0');
 
-  const fetchQuestions = async () => {
-    let sql = `
-      SELECT qb.*, COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, c.name AS chapter_name, s.name AS subject_name
-      FROM question_bank qb
-      LEFT JOIN chapters c ON qb.chapter_id = c.id
-      LEFT JOIN subjects s ON qb.subject_id = s.id
-    `;
-    const params = [];
-    if (category) {
-      sql += ' WHERE qb.category = $1';
-      params.push(category);
-    }
-    sql += ' ORDER BY qb.category, qb.id ASC';
-    const result = await query(sql, params);
-    const questions = (result.rows || []).map((row) => {
-      const standardChapter = resolveStandardChapter(
-        row.category || row.subject_name || '',
-        row.topic || '',
-        row.question_text || '',
-        row.chapter || row.chapter_name || ''
-      );
-      return {
-        ...row,
-        chapter: standardChapter,
-      };
-    });
-    return { questions };
-  };
-
-  if (shouldSkipCache) {
-    const payload = await fetchQuestions();
-    return res.json(payload);
+  let sql = `
+    SELECT qb.*, COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, c.name AS chapter_name, s.name AS subject_name
+    FROM question_bank qb
+    LEFT JOIN chapters c ON qb.chapter_id = c.id
+    LEFT JOIN subjects s ON qb.subject_id = s.id
+  `;
+  const params = [];
+  if (category && category !== 'All') {
+    sql += ' WHERE qb.category = $1';
+    params.push(category);
   }
-
-  const payload = await rememberCache(cacheKey, 60, fetchQuestions);
-  res.json(payload);
+  sql += ' ORDER BY qb.category, qb.id ASC';
+  const result = await query(sql, params);
+  const questions = (result.rows || []).map((row) => {
+    const standardChapter = resolveStandardChapter(
+      row.category || row.subject_name || '',
+      row.topic || '',
+      row.question_text || '',
+      row.chapter || row.chapter_name || ''
+    );
+    return {
+      ...row,
+      chapter: standardChapter,
+    };
+  });
+  res.json({ questions });
 });
 
 /**
@@ -127,12 +121,13 @@ export const importToAssessment = asyncHandler(async (req, res) => {
     if (cRes.rows.length > 0) chapter_id = cRes.rows[0].id;
   }
 
+  const allMedia = b.image_url ? [{ type: 'question', url: b.image_url, id: 'q-diagram' }] : [];
   const result = await query(
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
      RETURNING *`,
     [
       assessmentId,
@@ -160,6 +155,7 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       b.difficulty || 'medium',
       subject,
       topic,
+      JSON.stringify(allMedia),
     ]
   );
   res.status(201).json({ question: result.rows[0] });
@@ -238,6 +234,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const payload = normalizeQuestionBankPayload(req.body);
   const {
+    category,
     question_type,
     question_text,
     options,
@@ -266,6 +263,8 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   let effectiveChapterId = chapter_id !== undefined ? (chapter_id || null) : q.chapter_id;
   const effectiveSubjectId = subject_id !== undefined ? (subject_id || null) : q.subject_id;
   const effectiveChapter = chapter !== undefined ? chapter : q.chapter;
+  const effectiveCategory = category !== undefined ? (category || q.category) : (subject || q.subject || q.category);
+
   if (!effectiveChapterId && effectiveSubjectId && effectiveChapter) {
     const chMatch = await query(
       'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2) LIMIT 1',
@@ -296,8 +295,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        solution_image_url = $16,
        chapter = $17,
        topic = $18,
-       subject = $19
-     WHERE id = $20 RETURNING *`,
+       subject = $19,
+       category = $20
+     WHERE id = $21 RETURNING *`,
     [
       question_type || q.question_type || 'mcq',
       question_text ?? q.question_text,
@@ -318,11 +318,23 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       effectiveChapter,
       topic !== undefined ? topic : q.topic,
       subject !== undefined ? subject : q.subject,
+      effectiveCategory,
       id
     ]
   );
   await delCache('cache:qb:*');
-  res.json({ question: result.rows[0] });
+  const standardChapter = resolveStandardChapter(
+    result.rows[0].category || result.rows[0].subject || '',
+    result.rows[0].topic || '',
+    result.rows[0].question_text || '',
+    result.rows[0].chapter || ''
+  );
+  const updatedQuestion = {
+    ...result.rows[0],
+    chapter: standardChapter,
+  };
+  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+  res.json({ question: updatedQuestion });
 });
 
 export const deleteBankQuestion = asyncHandler(async (req, res) => {
@@ -523,12 +535,13 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
       }
     }
 
+    const allMedia = b.image_url ? [{ type: 'question', url: b.image_url, id: 'q-diagram' }] : [];
     const result = await query(
       `INSERT INTO questions
          (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
           numeric_answer, numerical_tolerance, assertion_text, reason_text,
-          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25)
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
        RETURNING id, question_text`,
       [
         assessmentId,
@@ -556,6 +569,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         b.difficulty || 'medium',
         subject,
         topic,
+        JSON.stringify(allMedia),
       ]
     );
     imported.push(result.rows[0]);

@@ -13,10 +13,20 @@ import MathRenderer from '../../components/common/MathRenderer.jsx';
 
 const tryParseArray = (val) => {
   if (Array.isArray(val)) return val;
-  try {
-    const parsed = JSON.parse(val);
-    if (Array.isArray(parsed)) return parsed;
-  } catch { /* ignore */ }
+  if (!val) return [];
+  if (typeof val === 'string') {
+    const trimmed = val.trim();
+    if (trimmed.startsWith('[')) {
+      try {
+        const parsed = JSON.parse(trimmed);
+        if (Array.isArray(parsed)) return parsed;
+      } catch { /* ignore */ }
+    }
+    if (trimmed.includes('|')) {
+      return trimmed.split(/\s*\|\s*/).map((s) => s.trim()).filter(Boolean);
+    }
+    return [trimmed];
+  }
   return [];
 };
 
@@ -550,13 +560,21 @@ export default function AdminQuestionBank() {
     setEditing(null);
     setCustomChapterMode(false);
     setForm({
-      question_type: 'mcq',
+      question_type: 'single_choice',
       question_text: '',
-      options: 'A|B|C|D',
+      options: [
+        { key: 'A', text: '', image_url: '' },
+        { key: 'B', text: '', image_url: '' },
+        { key: 'C', text: '', image_url: '' },
+        { key: 'D', text: '', image_url: '' },
+      ],
       correct_index: 0,
-      correct_indices_str: '',
+      correct_indices: [0],
+      correct_indices_str: '0',
       numeric_answer: '',
       numerical_tolerance: 0.01,
+      assertion_text: '',
+      reason_text: '',
       solution: '',
       explanation_url: '',
       image_url: '',
@@ -575,20 +593,42 @@ export default function AdminQuestionBank() {
   const openEdit = (q) => {
     setEditing(q);
     setCustomChapterMode(false);
-    const opts = tryParseArray(q.options);
-    const correctIndex = q.correct_index ?? q.correct_option ?? 0;
-    const correctIndices = Array.isArray(q.correct_indices) ? q.correct_indices : (q.correct_index !== undefined && q.correct_index !== null ? [q.correct_index] : []);
+    const rawOpts = tryParseArray(q.options);
+    const isIntOrNum = q.question_type === 'integer' || q.question_type === 'numerical';
+    const fallbackList = ['Option A', 'Option B', 'Option C', 'Option D'];
+    const baseOpts = (Array.isArray(rawOpts) && rawOpts.length > 0) ? rawOpts : (isIntOrNum ? [] : fallbackList);
+    const formattedOpts = baseOpts.map((opt, idx) => {
+      const key = ['A', 'B', 'C', 'D', 'E', 'F', 'G'][idx] || String.fromCharCode(65 + idx);
+      if (typeof opt === 'object' && opt !== null) {
+        return {
+          key: opt.key || key,
+          text: typeof opt.text === 'string' ? opt.text : (typeof opt.label === 'string' ? opt.label : ''),
+          image_url: typeof opt.image_url === 'string' ? opt.image_url : (typeof opt.image === 'string' ? opt.image : (typeof opt.url === 'string' ? opt.url : '')),
+        };
+      }
+      return {
+        key,
+        text: String(opt ?? ''),
+        image_url: '',
+      };
+    });
+
+    const correctIndex = (q.correct_index !== null && q.correct_index !== undefined && q.correct_index !== '') ? Number(q.correct_index) : 0;
+    const correctIndices = Array.isArray(q.correct_indices) ? q.correct_indices : [correctIndex];
     const chapterName = q.chapter || q.chapter_name || '';
     const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
-    const isIntOrNum = q.question_type === 'integer' || q.question_type === 'numerical';
+
     setForm({
-      question_type: q.question_type || 'mcq',
+      question_type: q.question_type || 'single_choice',
       question_text: q.question_text || '',
-      options: opts.length ? opts.join('|') : (typeof q.options === 'string' ? q.options : (isIntOrNum ? '' : 'A|B|C|D')),
+      options: isIntOrNum ? [] : formattedOpts,
       correct_index: correctIndex,
-      correct_indices_str: correctIndices.length ? correctIndices.join(',') : '',
+      correct_indices: correctIndices,
+      correct_indices_str: correctIndices.join(','),
       numeric_answer: q.numeric_answer !== undefined && q.numeric_answer !== null ? q.numeric_answer : '',
       numerical_tolerance: q.numerical_tolerance !== undefined && q.numerical_tolerance !== null ? q.numerical_tolerance : 0.01,
+      assertion_text: q.assertion_text || '',
+      reason_text: q.reason_text || '',
       solution: q.solution || q.solution_text || '',
       explanation_url: q.explanation_url || '',
       image_url: q.image_url || '',
@@ -614,7 +654,6 @@ export default function AdminQuestionBank() {
     setDeleting(true);
     try {
       await questionBankService.remove(targetId);
-      // Immediately remove from local state so UI updates without waiting
       setQuestions((prev) => prev.filter((q) => q.id !== targetId));
       toast.success('Question deleted from bank');
       setDeleteQuestionId(null);
@@ -650,19 +689,30 @@ export default function AdminQuestionBank() {
     setSaving(true);
     try {
       const isIntegerType = form.question_type === 'integer' || form.question_type === 'numerical';
-      const safeOptions = isIntegerType
+      const cleanOptions = isIntegerType
         ? []
-        : String(form.options ?? '')
-            .split('|')
-            .map((opt) => opt.trim())
-            .filter(Boolean);
+        : (Array.isArray(form.options) ? form.options : []).map((opt, idx) => {
+            const key = ['A', 'B', 'C', 'D', 'E', 'F', 'G'][idx] || String.fromCharCode(65 + idx);
+            if (typeof opt === 'object' && opt !== null) {
+              return {
+                key: opt.key || key,
+                text: (opt.text || '').trim(),
+                image_url: (opt.image_url || '').trim(),
+              };
+            }
+            return {
+              key,
+              text: String(opt || '').trim(),
+              image_url: '',
+            };
+          }).filter((opt) => opt.text || opt.image_url);
 
       const correctIndex = isIntegerType ? null : Number(form.correct_index ?? 0);
-      const correctIndices = form.question_type === 'multi_select'
-        ? String(form.correct_indices_str ?? '')
-          .split(/[\s,]+/)
-          .map((value) => Number(value))
-          .filter((value) => Number.isInteger(value) && value >= 0)
+      const isMulti = form.question_type === 'multi_select';
+      const correctIndices = isMulti
+        ? (Array.isArray(form.correct_indices) && form.correct_indices.length
+            ? form.correct_indices
+            : String(form.correct_indices_str ?? '').split(/[\s,]+/).map(Number).filter(n => Number.isInteger(n) && n >= 0))
         : (isIntegerType ? [] : [correctIndex]);
 
       const numericVal = isIntegerType
@@ -673,14 +723,16 @@ export default function AdminQuestionBank() {
 
       const payload = {
         ...form,
-        category,
+        category: form.subject || category,
         question_type: form.question_type,
         question_text: form.question_text?.trim(),
-        options: isIntegerType ? [] : (safeOptions.length ? safeOptions : ['Option A', 'Option B']),
+        options: cleanOptions,
         correct_index: correctIndex,
         correct_indices: correctIndices,
         numeric_answer: numericVal,
         numerical_tolerance: form.question_type === 'numerical' ? Number(form.numerical_tolerance ?? 0.01) : 0,
+        assertion_text: form.assertion_text || null,
+        reason_text: form.reason_text || null,
         marks: Number(form.marks ?? 1),
         solution: form.solution ?? '',
         image_url: form.image_url || '',
@@ -694,15 +746,23 @@ export default function AdminQuestionBank() {
       };
 
       if (editing) {
-        await questionBankService.update(editing.id, payload);
-        toast.success('Question updated');
+        const res = await questionBankService.update(editing.id, payload);
+        const updated = res?.question || res;
+        toast.success('Question updated in bank');
+        if (updated?.id) {
+          setQuestions((prev) => prev.map((item) => (item.id === updated.id ? { ...item, ...updated } : item)));
+        }
       } else {
-        await questionBankService.create(payload);
-        toast.success('Question created');
+        const res = await questionBankService.create(payload);
+        const created = res?.question || res;
+        toast.success('Question created in bank');
+        if (created?.id) {
+          setQuestions((prev) => [created, ...prev]);
+        }
       }
       setModalOpen(false);
       setEditing(null);
-      load();
+      await load();
     } catch (err) {
       toast.error(err.message || 'Save failed');
     } finally {
@@ -760,11 +820,14 @@ export default function AdminQuestionBank() {
         )
       );
       await questionBankService.update(q.id, {
+        category: q.category || category,
         question_type: q.question_type || 'mcq',
         question_text: q.question_text,
         options: updatedOpts,
         correct_index: optionIndex,
         correct_indices: [optionIndex],
+        image_url: q.image_url || '',
+        solution_image_url: q.solution_image_url || '',
         marks: Number(q.marks ?? 4),
         solution: q.solution ?? '',
         subject_id: q.subject_id || null,
@@ -1035,9 +1098,10 @@ export default function AdminQuestionBank() {
 
                       {/* Options A/B/C/D */}
                       {!isInteger && opts.length > 0 && (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1 mt-0.5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-0.5">
                           {opts.map((opt, i) => {
                             const optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
+                            const optImg = typeof opt === 'object' ? (opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '') : '';
                             const isCorrect = hasAnswerKey && i === correctIdx;
                             return (
                               <button
@@ -1057,7 +1121,20 @@ export default function AdminQuestionBank() {
                                 <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'}`}>
                                   {OPTION_KEYS[i] || (i + 1)}.
                                 </span>
-                                <MathRenderer text={optText} className="flex-1 min-w-0" />
+                                <div className="flex-1 min-w-0 flex flex-col gap-1">
+                                  {optText && <MathRenderer text={optText} className="min-w-0" />}
+                                  {optImg && (
+                                    <div className="flex items-center gap-1 mt-0.5">
+                                      <img
+                                        src={optImg}
+                                        alt={`Option ${OPTION_KEYS[i]} diagram`}
+                                        className="h-10 max-w-[120px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+                                        onError={(e) => { e.target.style.display = 'none'; }}
+                                      />
+                                      <span className="text-[9px] text-slate-400 font-medium">diagram</span>
+                                    </div>
+                                  )}
+                                </div>
                                 {isCorrect ? (
                                   <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />
                                 ) : (
@@ -1088,16 +1165,33 @@ export default function AdminQuestionBank() {
                         </div>
                       )}
 
-                      {/* Diagram thumbnail */}
-                      {q.image_url && (
-                        <div className="flex items-center gap-1.5 mt-0.5">
-                          <Image className="h-3 w-3 text-slate-400" />
-                          <img
-                            src={q.image_url}
-                            alt="Question diagram"
-                            className="h-12 max-w-[120px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
-                            onError={(e) => { e.target.style.display = 'none'; }}
-                          />
+                      {/* Diagrams preview (Question diagram & Solution diagram) */}
+                      {(q.image_url || q.solution_image_url) && (
+                        <div className="flex flex-wrap items-center gap-3 mt-1 pt-1 border-t border-slate-100 dark:border-slate-800/60">
+                          {q.image_url && (
+                            <div className="flex items-center gap-1.5">
+                              <Image className="h-3.5 w-3.5 text-blue-500 shrink-0" />
+                              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Diagram:</span>
+                              <img
+                                src={q.image_url}
+                                alt="Question diagram"
+                                className="h-12 max-w-[130px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
+                            </div>
+                          )}
+                          {q.solution_image_url && (
+                            <div className="flex items-center gap-1.5">
+                              <Image className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
+                              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Solution Diagram:</span>
+                              <img
+                                src={q.solution_image_url}
+                                alt="Solution diagram"
+                                className="h-12 max-w-[130px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+                                onError={(e) => { e.target.style.display = 'none'; }}
+                              />
+                            </div>
+                          )}
                         </div>
                       )}
 
@@ -1313,65 +1407,155 @@ export default function AdminQuestionBank() {
             </div>
           )}
 
-          {(form.question_type === 'mcq' || form.question_type === 'single_choice' || form.question_type === 'multi_select' || form.question_type === 'assertion_reason') && (
-            <>
-              <div>
-                <label className="label">Options (pipe-separated e.g. Option A|Option B|Option C|Option D)</label>
-                <input className="input" required value={form.options} onChange={(e) => setForm((f) => ({ ...f, options: e.target.value }))} />
-                {/* Live Options Preview */}
-                {form.options && (() => {
-                  const previewOpts = String(form.options).split('|').map(o => o.trim()).filter(Boolean);
-                  const KEYS = ['A', 'B', 'C', 'D', 'E'];
-                  const correctIdx = Number(form.correct_index ?? 0);
-                  const correctIndices = form.question_type === 'multi_select'
-                    ? String(form.correct_indices_str || '').split(/[\s,]+/).map(Number).filter(n => !isNaN(n) && n >= 0)
-                    : [correctIdx];
-                  if (previewOpts.length < 2) return null;
-                  return (
-                    <div className="mt-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/60 p-2.5 space-y-1.5">
-                      <p className="text-[10px] font-black uppercase tracking-wider text-slate-400 dark:text-slate-500 mb-1">Options Preview</p>
-                      {previewOpts.map((opt, i) => {
-                        const isCorrect = correctIndices.includes(i);
-                        return (
-                          <div
-                            key={i}
-                            className={`flex items-start gap-2 rounded-lg px-2.5 py-1.5 text-xs ${
-                              isCorrect
-                                ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-700/50 text-emerald-900 dark:text-emerald-200'
-                                : 'bg-white dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300'
-                            }`}
-                          >
-                            <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500'}`}>
-                              {KEYS[i] || (i + 1)}.
+          {(form.question_type === 'mcq' || form.question_type === 'single_choice' || form.question_type === 'multi_select' || form.question_type === 'assertion_reason') && (() => {
+            const isMulti = form.question_type === 'multi_select';
+            const optsList = Array.isArray(form.options) ? form.options : [];
+            const OPT_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+            return (
+              <div className="space-y-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 p-3.5">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                    {isMulti
+                      ? 'Answer Options (check all correct; diagram/graph upload available per option)'
+                      : 'Answer Options (select one correct; diagram/graph upload available per option)'}
+                  </label>
+                  <button
+                    type="button"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 hover:underline cursor-pointer"
+                    onClick={() => {
+                      const nextKey = OPT_LETTERS[optsList.length] || String.fromCharCode(65 + optsList.length);
+                      setForm((f) => ({
+                        ...f,
+                        options: [...(Array.isArray(f.options) ? f.options : []), { key: nextKey, text: '', image_url: '' }],
+                      }));
+                    }}
+                  >
+                    <Plus className="h-3.5 w-3.5" />
+                    <span>Add Option</span>
+                  </button>
+                </div>
+
+                <div className="space-y-3">
+                  {optsList.map((opt, i) => {
+                    const optKey = (typeof opt === 'object' && opt?.key) ? opt.key : (OPT_LETTERS[i] || String.fromCharCode(65 + i));
+                    const optText = typeof opt === 'object' ? (opt.text || opt.label || '') : String(opt || '');
+                    const optImg = typeof opt === 'object' ? (opt.image_url || opt.image || opt.url || '') : '';
+                    const isCorrect = isMulti
+                      ? (Array.isArray(form.correct_indices) && form.correct_indices.includes(i))
+                      : Number(form.correct_index) === i;
+
+                    return (
+                      <div
+                        key={i}
+                        className={`rounded-xl border p-3 space-y-2.5 transition-all ${
+                          isCorrect
+                            ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30 shadow-xs'
+                            : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/60 pb-2">
+                          <div className="flex items-center gap-2">
+                            {isMulti ? (
+                              <input
+                                type="checkbox"
+                                className="h-4 w-4 rounded text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                                checked={isCorrect}
+                                onChange={(e) => {
+                                  const cur = Array.isArray(form.correct_indices) ? [...form.correct_indices] : [];
+                                  const next = e.target.checked
+                                    ? Array.from(new Set([...cur, i]))
+                                    : cur.filter((x) => x !== i);
+                                  setForm((f) => ({ ...f, correct_indices: next, correct_indices_str: next.join(',') }));
+                                }}
+                              />
+                            ) : (
+                              <input
+                                type="radio"
+                                name="correct_bank_opt"
+                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 cursor-pointer shrink-0"
+                                checked={isCorrect}
+                                onChange={() => setForm((f) => ({ ...f, correct_index: i, correct_indices: [i] }))}
+                              />
+                            )}
+                            <span className={`text-xs font-black ${isCorrect ? 'text-emerald-700 dark:text-emerald-300' : 'text-slate-700 dark:text-slate-300'}`}>
+                              Option ({optKey}) {isCorrect && '✓ Correct Answer'}
                             </span>
-                            <MathRenderer text={opt} className="flex-1" />
-                            {isCorrect && <Check className="h-3.5 w-3.5 shrink-0 text-emerald-500 mt-0.5" />}
                           </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })()}
+
+                          {optsList.length > 2 && (
+                            <button
+                              type="button"
+                              className="text-[11px] font-bold text-rose-500 hover:text-rose-700 hover:underline cursor-pointer"
+                              onClick={() => {
+                                setForm((f) => {
+                                  const curOpts = Array.isArray(f.options) ? f.options : [];
+                                  const nextOpts = curOpts.filter((_, idx) => idx !== i);
+                                  const nextIdx = Number(f.correct_index) === i ? 0 : (Number(f.correct_index) > i ? Number(f.correct_index) - 1 : Number(f.correct_index));
+                                  const nextIndices = (f.correct_indices || []).filter((x) => x !== i).map((x) => (x > i ? x - 1 : x));
+                                  return {
+                                    ...f,
+                                    options: nextOpts,
+                                    correct_index: nextIdx,
+                                    correct_indices: nextIndices,
+                                    correct_indices_str: nextIndices.join(','),
+                                  };
+                                });
+                              }}
+                            >
+                              Remove
+                            </button>
+                          )}
+                        </div>
+
+                        <textarea
+                          rows={2}
+                          className="input text-xs"
+                          placeholder={`Enter Option (${optKey}) text, values, formulas...`}
+                          value={optText}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setForm((f) => {
+                              const cur = Array.isArray(f.options) ? [...f.options] : [];
+                              cur[i] = {
+                                ...(typeof cur[i] === 'object' ? cur[i] : { key: optKey }),
+                                key: optKey,
+                                text: val,
+                              };
+                              return { ...f, options: cur };
+                            });
+                          }}
+                        />
+
+                        {optText && (
+                          <div className="p-2 rounded-lg bg-slate-50 dark:bg-slate-800/40 border border-slate-200/80 dark:border-slate-700/60 text-xs">
+                            <span className="text-[10px] font-bold text-slate-400 block mb-0.5">Live Math Preview:</span>
+                            <MathRenderer text={optText} />
+                          </div>
+                        )}
+
+                        <QuestionImageUploader
+                          label={`Option (${optKey}) Diagram / Graph / Circuit Image (Optional)`}
+                          value={optImg}
+                          onChange={(url) => {
+                            setForm((f) => {
+                              const cur = Array.isArray(f.options) ? [...f.options] : [];
+                              cur[i] = {
+                                ...(typeof cur[i] === 'object' ? cur[i] : { key: optKey, text: '' }),
+                                key: optKey,
+                                image_url: url,
+                              };
+                              return { ...f, options: cur };
+                            });
+                          }}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              {form.question_type === 'multi_select' ? (
-                <div>
-                  <label className="label">Correct Option Indices (0-based, comma-separated e.g. 0,2 for A and C)</label>
-                  <input
-                    className="input"
-                    placeholder="e.g. 0,2"
-                    required
-                    value={form.correct_indices_str || ''}
-                    onChange={(e) => setForm((f) => ({ ...f, correct_indices_str: e.target.value }))}
-                  />
-                </div>
-              ) : (
-                <div>
-                  <label className="label">Correct Option Index (0-based, e.g. 0 for A, 1 for B)</label>
-                  <input className="input" type="number" min={0} required value={form.correct_index} onChange={(e) => setForm((f) => ({ ...f, correct_index: Number(e.target.value) }))} />
-                </div>
-              )}
-            </>
-          )}
+            );
+          })()}
 
           {form.question_type === 'integer' && (
             <div className="rounded-xl border border-indigo-200 dark:border-indigo-800/60 bg-indigo-50/50 dark:bg-indigo-950/20 p-4 space-y-2">

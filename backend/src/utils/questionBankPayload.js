@@ -16,11 +16,55 @@ const parseNumberList = (value) => {
     return [];
 };
 
+const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E', 'F', 'G'];
+
+const normalizeOptionItem = (item, idx) => {
+    if (item == null) return null;
+    const defaultKey = OPTION_KEYS[idx] || String.fromCharCode(65 + idx);
+
+    if (typeof item === 'object') {
+        const text = typeof item.text === 'string'
+            ? item.text.trim()
+            : (typeof item.label === 'string' ? item.label.trim() : (typeof item.value === 'string' ? item.value.trim() : ''));
+        const imageUrl = typeof item.image_url === 'string'
+            ? item.image_url.trim()
+            : (typeof item.image === 'string' ? item.image.trim() : (typeof item.url === 'string' ? item.url.trim() : ''));
+        const key = typeof item.key === 'string' && item.key.trim() ? item.key.trim().toUpperCase() : defaultKey;
+
+        if (imageUrl || text) {
+            return {
+                key,
+                text,
+                image_url: imageUrl,
+                media: Array.isArray(item.media) && item.media.length ? item.media : (imageUrl ? [{ url: imageUrl }] : [])
+            };
+        }
+        return null;
+    }
+
+    const str = String(item).trim();
+    if (!str) return null;
+
+    if (str.startsWith('{') && str.endsWith('}')) {
+        try {
+            const parsed = JSON.parse(str);
+            if (typeof parsed === 'object' && parsed !== null) {
+                return normalizeOptionItem(parsed, idx);
+            }
+        } catch (_) {}
+    }
+
+    return {
+        key: defaultKey,
+        text: str,
+        image_url: '',
+        media: []
+    };
+};
+
 const parseOptions = (value) => {
     if (Array.isArray(value)) {
-        return value
-            .map((item) => String(item ?? '').trim())
-            .filter((item) => item.length > 0);
+        return value.map((item, idx) => normalizeOptionItem(item, idx)).filter(Boolean);
     }
 
     if (typeof value === 'string') {
@@ -31,7 +75,7 @@ const parseOptions = (value) => {
             try {
                 const parsed = JSON.parse(trimmed);
                 if (Array.isArray(parsed)) {
-                    return parsed.map((item) => String(item ?? '').trim()).filter((item) => item.length > 0);
+                    return parsed.map((item, idx) => normalizeOptionItem(item, idx)).filter(Boolean);
                 }
             } catch {
                 // fall through to string splitting
@@ -40,8 +84,8 @@ const parseOptions = (value) => {
 
         return trimmed
             .split(/\s*\|\s*/)
-            .map((item) => item.trim())
-            .filter((item) => item.length > 0);
+            .map((item, idx) => normalizeOptionItem(item, idx))
+            .filter(Boolean);
     }
 
     return [];
@@ -54,8 +98,8 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
     const isIntegerType = questionType === 'integer' || questionType === 'numerical';
     const singleValue = payload.correct_index ?? payload.correct_option ?? payload.correctOption ?? null;
 
-    // For integer/numerical questions, options are typically empty unless explicit option objects exist
-    const rawOptions = parseOptions(payload.options ?? payload.option_list ?? []);
+    const optionsProvided = payload.options !== undefined || payload.option_list !== undefined;
+    const rawOptions = optionsProvided ? parseOptions(payload.options ?? payload.option_list ?? []) : undefined;
     const options = isIntegerType ? (Array.isArray(payload.options) && payload.options.length ? rawOptions : []) : rawOptions;
 
     const correctIndices = isIntegerType ? [] : parseNumberList(
@@ -78,7 +122,7 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         ...payload,
         category,
         question_type: questionType,
-        options,
+        ...(options !== undefined ? { options } : {}),
         marks: Number(payload.marks ?? 1),
         correct_index: normalizedIndex,
         correct_indices: questionType === 'multi_select' ? correctIndices : (correctIndices.length ? correctIndices : (normalizedIndex !== null ? [normalizedIndex] : [])),
@@ -88,11 +132,12 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         subject_id: payload.subject_id ?? null,
         chapter_id: payload.chapter_id ?? null,
         difficulty: payload.difficulty || 'medium',
-        image_url: payload.image_url || '',
-        solution_image_url: payload.solution_image_url || '',
+        image_url: payload.image_url !== undefined ? payload.image_url : undefined,
+        solution_image_url: payload.solution_image_url !== undefined ? payload.solution_image_url : undefined,
         chapter: resolvedChapter,
         topic: finalTopic,
         subject: payload.subject || category,
     };
 };
+
 

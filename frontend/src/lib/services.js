@@ -283,9 +283,9 @@ export const assessmentService = {
 };
 
 export const questionBankService = {
-  categories: () => api.get('/question-bank/categories', { params: { _t: Date.now() } }).then((r) => r.data.categories),
-  list: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' } }).then((r) => r.data.questions),
-  byCategory: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' } }).then((r) => r.data.questions),
+  categories: () => api.get('/question-bank/categories', { params: { _t: Date.now() }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.categories),
+  list: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.questions),
+  byCategory: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.questions),
   create: (data) => {
     clearCache();
     return api.post('/question-bank', data).then((r) => r.data.question);
