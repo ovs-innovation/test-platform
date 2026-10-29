@@ -567,6 +567,7 @@ export const DIAGRAMS = {
   ${SVG_HEADER(560, 260)}
     <!-- Table -->
     <line x1="120" y1="120" x2="440" y2="120" class="surface" />
+
     <line x1="150" y1="120" x2="150" y2="210" class="surface" />
     <line x1="410" y1="120" x2="410" y2="210" class="surface" />
 

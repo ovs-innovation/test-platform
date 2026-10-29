@@ -137,6 +137,7 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         chapter: resolvedChapter,
         topic: finalTopic,
         subject: payload.subject || category,
+        ...(payload.status !== undefined ? { status: payload.status } : {}),
     };
 };
 

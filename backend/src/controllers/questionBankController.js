@@ -48,10 +48,45 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
   res.set('Expires', '0');
 
   let sql = `
-    SELECT qb.*, COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, c.name AS chapter_name, s.name AS subject_name
+    WITH test_usage AS (
+      SELECT 
+        q.bank_question_id,
+        COUNT(DISTINCT q.assessment_id)::int AS test_count,
+        json_agg(
+          DISTINCT jsonb_build_object(
+            'assessment_id', q.assessment_id,
+            'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
+          )
+        ) AS used_in_tests
+      FROM questions q
+      LEFT JOIN assessments a ON q.assessment_id = a.id
+      LEFT JOIN tests t ON a.id = t.id
+      WHERE q.bank_question_id IS NOT NULL
+      GROUP BY q.bank_question_id
+    )
+    SELECT 
+      qb.*,
+      COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, 
+      c.name AS chapter_name, 
+      s.name AS subject_name,
+      CASE 
+        WHEN qb.status = 'normal' THEN '[]'::json 
+        ELSE COALESCE(tu.used_in_tests, '[]'::json) 
+      END AS used_in_tests,
+      CASE 
+        WHEN qb.status = 'normal' THEN 0 
+        ELSE COALESCE(tu.test_count, 0) 
+      END AS test_count,
+      CASE 
+        WHEN qb.status = 'normal' THEN 'normal'
+        WHEN qb.status = 'already_chosen' THEN 'already_chosen'
+        WHEN COALESCE(tu.test_count, 0) > 0 THEN 'already_chosen'
+        ELSE 'normal' 
+      END AS computed_status
     FROM question_bank qb
     LEFT JOIN chapters c ON qb.chapter_id = c.id
     LEFT JOIN subjects s ON qb.subject_id = s.id
+    LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
   `;
   const params = [];
   if (category && category !== 'All') {
@@ -70,6 +105,9 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     return {
       ...row,
       chapter: standardChapter,
+      status: row.computed_status || row.status || 'normal',
+      used_in_tests: row.used_in_tests || [],
+      test_count: row.test_count || 0,
     };
   });
   res.json({ questions });
@@ -126,8 +164,8 @@ export const importToAssessment = asyncHandler(async (req, res) => {
     `INSERT INTO questions
        (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
         numeric_answer, numerical_tolerance, assertion_text, reason_text,
-        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
-     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
+        marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, bank_question_id)
+     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)
      RETURNING *`,
     [
       assessmentId,
@@ -156,8 +194,11 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       subject,
       topic,
       JSON.stringify(allMedia),
+      b.id,
     ]
   );
+  await query("UPDATE question_bank SET status = 'already_chosen' WHERE id = $1", [id]).catch(() => {});
+  await delCache('cache:qb:*');
   res.status(201).json({ question: result.rows[0] });
 });
 
@@ -184,6 +225,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     chapter,
     topic,
     subject,
+    status,
   } = payload;
 
   let effectiveChapterId = chapter_id || null;
@@ -201,8 +243,8 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
     `INSERT INTO question_bank (
        category, question_type, question_text, options, correct_index, correct_indices,
        numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution,
-       subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject
-     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20) RETURNING *`,
+       subject_id, chapter_id, difficulty, image_url, solution_image_url, chapter, topic, subject, status
+     ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21) RETURNING *`,
     [
       category,
       question_type || 'mcq',
@@ -224,6 +266,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       chapter || '',
       topic || '',
       subject || category,
+      status || 'normal',
     ]
   );
   await delCache('cache:qb:*');
@@ -254,6 +297,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     chapter,
     topic,
     subject,
+    status,
   } = payload;
 
   const existing = await query('SELECT * FROM question_bank WHERE id = $1', [id]);
@@ -264,6 +308,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   const effectiveSubjectId = subject_id !== undefined ? (subject_id || null) : q.subject_id;
   const effectiveChapter = chapter !== undefined ? chapter : q.chapter;
   const effectiveCategory = category !== undefined ? (category || q.category) : (subject || q.subject || q.category);
+  const effectiveStatus = status !== undefined ? status : (q.status || 'normal');
 
   if (!effectiveChapterId && effectiveSubjectId && effectiveChapter) {
     const chMatch = await query(
@@ -296,8 +341,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
        chapter = $17,
        topic = $18,
        subject = $19,
-       category = $20
-     WHERE id = $21 RETURNING *`,
+       category = $20,
+       status = $21
+     WHERE id = $22 RETURNING *`,
     [
       question_type || q.question_type || 'mcq',
       question_text ?? q.question_text,
@@ -319,10 +365,16 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       topic !== undefined ? topic : q.topic,
       subject !== undefined ? subject : q.subject,
       effectiveCategory,
+      effectiveStatus,
       id
     ]
   );
+  if (effectiveStatus === 'normal') {
+    await query('UPDATE questions SET bank_question_id = NULL WHERE bank_question_id = $1', [id]);
+  }
   await delCache('cache:qb:*');
+  if (effectiveCategory) await delCache(`cache:qb:questions:${effectiveCategory}`);
+  await delCache('cache:qb:questions:all');
   const standardChapter = resolveStandardChapter(
     result.rows[0].category || result.rows[0].subject || '',
     result.rows[0].topic || '',
@@ -332,9 +384,52 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
   const updatedQuestion = {
     ...result.rows[0],
     chapter: standardChapter,
+    test_count: effectiveStatus === 'normal' ? 0 : undefined,
+    used_in_tests: effectiveStatus === 'normal' ? [] : undefined,
   };
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.json({ question: updatedQuestion });
+});
+
+/**
+ * PATCH /api/question-bank/:id/status
+ * Body: { status: 'already_chosen' | 'normal' }
+ */
+export const toggleBankQuestionStatus = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body || {};
+
+  const existing = await query('SELECT id, status FROM question_bank WHERE id = $1', [id]);
+  if (existing.rowCount === 0) throw ApiError.notFound('Question not found');
+
+  const current = existing.rows[0];
+  let nextStatus = status;
+  if (!nextStatus) {
+    nextStatus = current.status === 'already_chosen' ? 'normal' : 'already_chosen';
+  }
+
+  if (nextStatus === 'normal') {
+    await query('UPDATE questions SET bank_question_id = NULL WHERE bank_question_id = $1', [id]);
+  }
+
+  const result = await query(
+    'UPDATE question_bank SET status = $1 WHERE id = $2 RETURNING *',
+    [nextStatus, id]
+  );
+  await delCache('cache:qb:*');
+  const cat = result.rows[0]?.category;
+  if (cat) await delCache(`cache:qb:questions:${cat}`);
+  await delCache('cache:qb:questions:all');
+
+  res.json({
+    success: true,
+    question: {
+      ...result.rows[0],
+      test_count: nextStatus === 'normal' ? 0 : undefined,
+      used_in_tests: nextStatus === 'normal' ? [] : undefined,
+    },
+    message: `Question status updated to ${nextStatus === 'already_chosen' ? 'Selected for Test' : 'Available'}`,
+  });
 });
 
 export const deleteBankQuestion = asyncHandler(async (req, res) => {
@@ -540,8 +635,8 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
       `INSERT INTO questions
          (assessment_id, section_id, question_type, question_text, options, correct_index, correct_indices,
           numeric_answer, numerical_tolerance, assertion_text, reason_text,
-          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26)
+          marks, position, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, bank_question_id)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25,$26,$27)
        RETURNING id, question_text`,
       [
         assessmentId,
@@ -570,10 +665,17 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         subject,
         topic,
         JSON.stringify(allMedia),
+        b.id,
       ]
     );
     imported.push(result.rows[0]);
   }
+
+  const bankIds = bankRows.map((b) => b.id).filter(Boolean);
+  if (bankIds.length > 0) {
+    await query("UPDATE question_bank SET status = 'already_chosen' WHERE id = ANY($1::int[])", [bankIds]).catch(() => {});
+  }
+  await delCache('cache:qb:*');
 
   await query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});
   await query('UPDATE tests SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});

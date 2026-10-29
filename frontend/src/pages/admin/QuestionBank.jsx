@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -145,6 +145,8 @@ export default function AdminQuestionBank() {
   const [loadingExistingTests, setLoadingExistingTests] = useState(false);
   const [existingTestSearch, setExistingTestSearch] = useState('');
   const [selectedExistingTestId, setSelectedExistingTestId] = useState(null);
+  const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'available' | 'already_chosen'
+  const [testsModalQuestion, setTestsModalQuestion] = useState(null);
   const [testForm, setTestForm] = useState({
     test_name: '',
     test_type: 'AIETS',
@@ -174,6 +176,33 @@ export default function AdminQuestionBank() {
     return Object.entries(counts).map(([cat, count]) => ({ cat, count }));
   }, [selectedQuestionsList]);
 
+  const statusCounts = useMemo(() => {
+    let total = (questions || []).length;
+    let chosen = 0;
+    let available = 0;
+    (questions || []).forEach((q) => {
+      const isChosen = q.status === 'already_chosen';
+      if (isChosen) chosen++;
+      else available++;
+    });
+    return { total, chosen, available };
+  }, [questions]);
+
+  const filteredQuestions = useMemo(() => {
+    if (statusFilter === 'all') return questions;
+    if (statusFilter === 'already_chosen') {
+      return (questions || []).filter((q) => q.status === 'already_chosen');
+    }
+    if (statusFilter === 'available') {
+      return (questions || []).filter((q) => q.status !== 'already_chosen');
+    }
+    return questions;
+  }, [questions, statusFilter]);
+
+  const selectedAlreadyChosenCount = useMemo(() => {
+    return selectedQuestionsList.filter((q) => q.status === 'already_chosen').length;
+  }, [selectedQuestionsList]);
+
   const toggleSelectQuestion = (q) => {
     setSelectedQuestionIds((prev) => {
       const exists = prev.includes(q.id);
@@ -195,7 +224,7 @@ export default function AdminQuestionBank() {
   };
 
   const handleSelectAllVisible = () => {
-    const visibleIds = questions.map((q) => q.id);
+    const visibleIds = (filteredQuestions || []).map((q) => q.id);
     const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
     if (allSelected) {
       setSelectedQuestionIds((prev) => prev.filter((id) => !visibleIds.includes(id)));
@@ -209,7 +238,7 @@ export default function AdminQuestionBank() {
       setSelectedQuestionIds(Array.from(newIdsSet));
       setSelectedQuestionsMap((prev) => {
         const next = { ...prev };
-        questions.forEach((q) => { next[q.id] = q; });
+        (filteredQuestions || []).forEach((q) => { next[q.id] = q; });
         return next;
       });
     }
@@ -283,6 +312,22 @@ export default function AdminQuestionBank() {
         ids: selectedQuestionIds,
       });
 
+      setQuestions((prev) =>
+        prev.map((q) =>
+          selectedQuestionIds.includes(q.id)
+            ? {
+                ...q,
+                status: 'already_chosen',
+                test_count: (q.test_count || 0) + 1,
+                used_in_tests: [
+                  ...(q.used_in_tests || []),
+                  { assessment_id: testId, test_name: testForm.test_name }
+                ]
+              }
+            : q
+        )
+      );
+
       toast.success(`Test "${testForm.test_name}" created with ${selectedQuestionIds.length} questions!`);
       setCreateTestModalOpen(false);
       handleClearSelection();
@@ -327,6 +372,21 @@ export default function AdminQuestionBank() {
         ids: selectedQuestionIds,
       });
       const targetTest = existingTestsList.find((t) => t.id === Number(selectedExistingTestId));
+      setQuestions((prev) =>
+        prev.map((q) =>
+          selectedQuestionIds.includes(q.id)
+            ? {
+                ...q,
+                status: 'already_chosen',
+                test_count: (q.test_count || 0) + 1,
+                used_in_tests: [
+                  ...(q.used_in_tests || []),
+                  { assessment_id: selectedExistingTestId, test_name: targetTest?.test_name || 'Test' }
+                ]
+              }
+            : q
+        )
+      );
       toast.success(`Imported ${selectedQuestionIds.length} question(s) into "${targetTest?.test_name || 'Test'}"!`);
       setAddToTestModalOpen(false);
       handleClearSelection();
@@ -550,17 +610,18 @@ export default function AdminQuestionBank() {
   }, [form.subject_id, form.subject, subjectsList]);
 
   const questionsWithSerial = useMemo(() => {
-    return (questions || []).map((q, idx) => ({
+    return (filteredQuestions || []).map((q, idx) => ({
       ...q,
       serialNumber: idx + 1,
     }));
-  }, [questions]);
+  }, [filteredQuestions]);
 
   const openAdd = () => {
     setEditing(null);
     setCustomChapterMode(false);
     setForm({
       question_type: 'single_choice',
+      status: 'normal',
       question_text: '',
       options: [
         { key: 'A', text: '', image_url: '' },
@@ -620,6 +681,7 @@ export default function AdminQuestionBank() {
 
     setForm({
       question_type: q.question_type || 'single_choice',
+      status: q.status || 'normal',
       question_text: q.question_text || '',
       options: isIntOrNum ? [] : formattedOpts,
       correct_index: correctIndex,
@@ -724,6 +786,7 @@ export default function AdminQuestionBank() {
       const payload = {
         ...form,
         category: form.subject || category,
+        status: form.status || 'normal',
         question_type: form.question_type,
         question_text: form.question_text?.trim(),
         options: cleanOptions,
@@ -750,7 +813,19 @@ export default function AdminQuestionBank() {
         const updated = res?.question || res;
         toast.success('Question updated in bank');
         if (updated?.id) {
-          setQuestions((prev) => prev.map((item) => (item.id === updated.id ? { ...item, ...updated } : item)));
+          setQuestions((prev) =>
+            prev.map((item) =>
+              item.id === updated.id
+                ? {
+                    ...item,
+                    ...updated,
+                    status: updated.status || payload.status || item.status,
+                    test_count: (updated.status || payload.status) === 'normal' ? 0 : (updated.test_count ?? item.test_count),
+                    used_in_tests: (updated.status || payload.status) === 'normal' ? [] : (updated.used_in_tests ?? item.used_in_tests),
+                  }
+                : item
+            )
+          );
         }
       } else {
         const res = await questionBankService.create(payload);
@@ -767,6 +842,74 @@ export default function AdminQuestionBank() {
       toast.error(err.message || 'Save failed');
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleToggleStatus = async (q, targetStatus) => {
+    const isCurrentChosen = q.status === 'already_chosen';
+    const newStatus = targetStatus || (isCurrentChosen ? 'normal' : 'already_chosen');
+    const prevStatus = q.status;
+    const prevTestCount = q.test_count;
+    const prevUsedInTests = q.used_in_tests;
+
+    setQuestions((prev) =>
+      prev.map((item) =>
+        item.id === q.id
+          ? {
+              ...item,
+              status: newStatus,
+              test_count: newStatus === 'normal' ? 0 : item.test_count,
+              used_in_tests: newStatus === 'normal' ? [] : item.used_in_tests,
+            }
+          : item
+      )
+    );
+    if (testsModalQuestion && testsModalQuestion.id === q.id) {
+      setTestsModalQuestion((prev) =>
+        prev
+          ? {
+              ...prev,
+              status: newStatus,
+              test_count: newStatus === 'normal' ? 0 : prev.test_count,
+              used_in_tests: newStatus === 'normal' ? [] : prev.used_in_tests,
+            }
+          : null
+      );
+    }
+
+    try {
+      await questionBankService.updateStatus(q.id, newStatus);
+      toast.success(
+        newStatus === 'already_chosen'
+          ? `Question #${q.serialNumber || q.id} marked as Selected for Test`
+          : `Question #${q.serialNumber || q.id} marked as Available (Unused)`
+      );
+    } catch (err) {
+      setQuestions((prev) =>
+        prev.map((item) =>
+          item.id === q.id
+            ? {
+                ...item,
+                status: prevStatus,
+                test_count: prevTestCount,
+                used_in_tests: prevUsedInTests,
+              }
+            : item
+        )
+      );
+      if (testsModalQuestion && testsModalQuestion.id === q.id) {
+        setTestsModalQuestion((prev) =>
+          prev
+            ? {
+                ...prev,
+                status: prevStatus,
+                test_count: prevTestCount,
+                used_in_tests: prevUsedInTests,
+              }
+            : null
+        );
+      }
+      toast.error(err?.response?.data?.message || err?.message || 'Failed to update question status');
     }
   };
 
@@ -922,6 +1065,12 @@ export default function AdminQuestionBank() {
                 </span>
               ))}
             </div>
+            {selectedAlreadyChosenCount > 0 && (
+              <span className="text-[10px] font-bold px-2.5 py-1 rounded-md bg-amber-500/20 text-amber-300 border border-amber-500/35 flex items-center gap-1.5 shadow-2xs">
+                <AlertTriangle className="h-3.5 w-3.5 text-amber-400 shrink-0" />
+                <span>{selectedAlreadyChosenCount} question(s) already chosen in previous test(s)</span>
+              </span>
+            )}
           </div>
           <div className="flex items-center gap-2 flex-wrap">
             <button
@@ -951,20 +1100,62 @@ export default function AdminQuestionBank() {
         </div>
       )}
 
-      <div className="mb-4 flex flex-wrap gap-2">
-        {categoriesList.map((c) => (
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap gap-2">
+          {categoriesList.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${category === c
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
+                }`}
+              onClick={() => setCategory(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Status Filter Tabs */}
+        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold">
+          <span className="text-[11px] text-slate-400 dark:text-slate-500 px-2 font-semibold">Status:</span>
           <button
-            key={c}
             type="button"
-            className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${category === c
-              ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
-              : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
-              }`}
-            onClick={() => setCategory(c)}
+            onClick={() => setStatusFilter('all')}
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
+              statusFilter === 'all'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+            }`}
           >
-            {c}
+            All ({statusCounts.total})
           </button>
-        ))}
+          <button
+            type="button"
+            onClick={() => setStatusFilter('available')}
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
+              statusFilter === 'available'
+                ? 'bg-emerald-600 text-white shadow-2xs font-black'
+                : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+            }`}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
+            <span>Available ({statusCounts.available})</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setStatusFilter('already_chosen')}
+            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
+              statusFilter === 'already_chosen'
+                ? 'bg-violet-600 text-white shadow-2xs font-black'
+                : 'text-violet-700 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30'
+            }`}
+          >
+            <CheckCircle2 className="h-3.5 w-3.5" />
+            <span>In Test ({statusCounts.chosen})</span>
+          </button>
+        </div>
       </div>
 
       {loading ? <LoadingScreen /> : (
@@ -1073,6 +1264,25 @@ export default function AdminQuestionBank() {
                           <Hash className="h-3 w-3" />
                           Question #{sNo}
                         </span>
+                        {q.status === 'already_chosen' ? (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setTestsModalQuestion(q);
+                            }}
+                            className="inline-flex items-center gap-1 text-[10px] font-bold text-violet-700 dark:text-violet-300 bg-violet-100/90 dark:bg-violet-950/60 px-2 py-0.5 rounded-md border border-violet-300 dark:border-violet-700/60 hover:bg-violet-200/80 dark:hover:bg-violet-900/60 transition-colors cursor-pointer shadow-2xs"
+                            title={Array.isArray(q.used_in_tests) && q.used_in_tests.length > 0 ? `Selected in ${q.used_in_tests.length} test(s): Click to view details` : 'Already selected in test'}
+                          >
+                            <BookmarkCheck className="h-3 w-3 text-violet-600 dark:text-violet-400 shrink-0" />
+                            <span>In Test{Array.isArray(q.used_in_tests) && q.used_in_tests.length > 0 ? ` (${q.used_in_tests.length})` : ''}</span>
+                          </button>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-800/50">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span>Available</span>
+                          </span>
+                        )}
                         {chapterName && (
                           <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800/50 truncate max-w-xs" title={`Overall Chapter: ${chapterName}`}>
                             <BookOpen className="h-3 w-3 shrink-0" />
@@ -1240,6 +1450,35 @@ export default function AdminQuestionBank() {
                   </Badge>
                 )
               },
+              {
+                key: 'status',
+                label: 'Status',
+                render: (q) => {
+                  const isUsed = q.status === 'already_chosen';
+                  const testCount = Array.isArray(q.used_in_tests) ? q.used_in_tests.length : (q.test_count || 0);
+                  return isUsed ? (
+                    <button
+                      type="button"
+                      onClick={() => setTestsModalQuestion(q)}
+                      className="group inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-violet-500/15 border border-violet-500/30 text-violet-700 dark:text-violet-300 hover:bg-violet-500/25 transition-all cursor-pointer shadow-2xs"
+                      title="Click to view tests using this question"
+                    >
+                      <BookmarkCheck className="h-3.5 w-3.5 text-violet-600 dark:text-violet-400 shrink-0" />
+                      <span>In Test</span>
+                      {testCount > 0 && (
+                        <span className="px-1.5 py-0.2 rounded-full bg-violet-600 text-white text-[9px] font-black group-hover:scale-105 transition-transform">
+                          {testCount}
+                        </span>
+                      )}
+                    </button>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                      <span>Available</span>
+                    </span>
+                  );
+                }
+              },
               { key: 'marks', label: 'Marks', render: (q) => <span className="font-black text-slate-900 dark:text-white text-xs">{q.marks}</span> },
               {
                 key: 'actions', label: '', render: (q) => (
@@ -1251,6 +1490,20 @@ export default function AdminQuestionBank() {
                           icon: Pencil,
                           onClick: () => openEdit(q),
                           color: 'text-blue-600 dark:text-blue-400',
+                        },
+                        ...(Array.isArray(q.used_in_tests) && q.used_in_tests.length > 0 ? [
+                          {
+                            label: `View In Tests (${q.used_in_tests.length})`,
+                            icon: ExternalLink,
+                            onClick: () => setTestsModalQuestion(q),
+                            color: 'text-violet-600 dark:text-violet-400',
+                          }
+                        ] : []),
+                        {
+                          label: q.status === 'already_chosen' ? 'Mark as Available' : 'Mark as Selected in Test',
+                          icon: BookmarkCheck,
+                          onClick: () => handleToggleStatus(q),
+                          color: q.status === 'already_chosen' ? 'text-emerald-600 dark:text-emerald-400' : 'text-violet-600 dark:text-violet-400',
                         },
                         {
                           label: 'Delete Question',
@@ -1273,7 +1526,7 @@ export default function AdminQuestionBank() {
       {/* Add / Edit Question Modal */}
       <Modal open={modalOpen} onClose={() => setModalOpen(false)} title={editing ? 'Edit question' : 'Add question'} size="lg">
         <form onSubmit={saveQuestion} className="space-y-4">
-          <div className="grid grid-cols-2 gap-3 relative z-30">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 relative z-30">
             <div>
               <label className="label">Question type</label>
               <CustomSelectDropdown
@@ -1303,6 +1556,17 @@ export default function AdminQuestionBank() {
             <div>
               <label className="label">Marks</label>
               <input type="number" min={1} className="input" value={form.marks} onChange={(e) => setForm((f) => ({ ...f, marks: Number(e.target.value) }))} />
+            </div>
+            <div>
+              <label className="label">Test Status</label>
+              <CustomSelectDropdown
+                value={form.status || 'normal'}
+                options={[
+                  { value: 'normal', label: '🟢 Available (Unused)' },
+                  { value: 'already_chosen', label: '🟣 Selected in Test' },
+                ]}
+                onChange={(val) => setForm((f) => ({ ...f, status: val }))}
+              />
             </div>
           </div>
 
@@ -2397,6 +2661,113 @@ export default function AdminQuestionBank() {
             </button>
           </div>
         </form>
+      </Modal>
+
+      {/* Test Usage Details Modal */}
+      <Modal
+        open={Boolean(testsModalQuestion)}
+        onClose={() => setTestsModalQuestion(null)}
+        title="Question Test Usage & Status"
+        size="md"
+      >
+        {testsModalQuestion && (
+          <div className="space-y-4">
+            {/* Question Summary Banner */}
+            <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3 space-y-2">
+              <div className="flex items-center justify-between gap-2">
+                <span className="inline-flex items-center gap-1 text-[11px] font-black text-blue-700 dark:text-blue-300 bg-blue-100/70 dark:bg-blue-900/40 px-2 py-0.5 rounded-md border border-blue-200 dark:border-blue-800/50">
+                  <Hash className="h-3 w-3" />
+                  Question #{testsModalQuestion.serialNumber || testsModalQuestion.id}
+                </span>
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                  testsModalQuestion.status === 'already_chosen'
+                    ? 'bg-violet-500/15 border border-violet-500/30 text-violet-700 dark:text-violet-300'
+                    : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${testsModalQuestion.status === 'already_chosen' ? 'bg-violet-500' : 'bg-emerald-500'}`}></span>
+                  <span>{testsModalQuestion.status === 'already_chosen' ? 'Selected in Test' : 'Available (Unused)'}</span>
+                </span>
+              </div>
+              <div className="text-xs text-slate-800 dark:text-slate-200 font-medium line-clamp-3">
+                <MathRenderer text={testsModalQuestion.question_text} />
+              </div>
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-[10px] text-slate-500">
+                {testsModalQuestion.subject && <span className="font-bold text-slate-600 dark:text-slate-400">Subject: {testsModalQuestion.subject}</span>}
+                {testsModalQuestion.chapter && <span>· Chapter: {testsModalQuestion.chapter}</span>}
+                {testsModalQuestion.difficulty && <span>· Difficulty: {testsModalQuestion.difficulty}</span>}
+              </div>
+            </div>
+
+            {/* Test Usage List */}
+            <div>
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="text-xs font-black text-slate-800 dark:text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
+                  <BookmarkCheck className="h-4 w-4 text-violet-500" />
+                  <span>Tests Using This Question ({Array.isArray(testsModalQuestion.used_in_tests) ? testsModalQuestion.used_in_tests.length : 0})</span>
+                </h4>
+              </div>
+
+              {Array.isArray(testsModalQuestion.used_in_tests) && testsModalQuestion.used_in_tests.length > 0 ? (
+                <div className="max-h-56 overflow-y-auto rounded-xl border border-slate-200 dark:border-slate-800 divide-y divide-slate-100 dark:divide-slate-800/60 p-1">
+                  {testsModalQuestion.used_in_tests.map((t, idx) => (
+                    <div
+                      key={idx}
+                      className="p-2.5 rounded-lg text-xs flex items-center justify-between gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                    >
+                      <div className="min-w-0 flex-1">
+                        <p className="font-bold text-slate-800 dark:text-slate-100 truncate">{t.test_name}</p>
+                        <p className="text-[10px] text-slate-400 font-mono mt-0.5">Test Assessment #{t.assessment_id}</p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setTestsModalQuestion(null);
+                          navigate(`/admin/assessments/${t.assessment_id}`);
+                        }}
+                        className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-950/40 hover:bg-blue-100 dark:hover:bg-blue-900/60 border border-blue-200 dark:border-blue-800/60 px-2.5 py-1 rounded-lg transition-colors cursor-pointer shrink-0"
+                      >
+                        <span>Open Test</span>
+                        <ExternalLink className="h-3 w-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="rounded-xl border border-dashed border-slate-200 dark:border-slate-800 p-4 text-center">
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    {testsModalQuestion.status === 'already_chosen'
+                      ? 'Marked as selected in tests, but no active assessment linkage records were found.'
+                      : 'This question is currently fresh and has not been selected in any test yet.'}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* Status Quick Toggle & Actions */}
+            <div className="flex items-center justify-between gap-2 pt-3 border-t border-slate-200 dark:border-slate-800">
+              <button
+                type="button"
+                onClick={() => handleToggleStatus(testsModalQuestion)}
+                className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer transition-all ${
+                  testsModalQuestion.status === 'already_chosen'
+                    ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100'
+                    : 'bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700 hover:bg-violet-100'
+                }`}
+              >
+                <BookmarkCheck className="h-3.5 w-3.5" />
+                <span>{testsModalQuestion.status === 'already_chosen' ? 'Mark as Available (Unused)' : 'Mark as Selected in Test'}</span>
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-secondary text-xs"
+                onClick={() => setTestsModalQuestion(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
       </Modal>
     </div>
   );

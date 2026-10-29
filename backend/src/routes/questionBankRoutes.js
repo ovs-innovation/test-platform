@@ -11,6 +11,7 @@ import {
   bulkUploadBankQuestions,
   bulkImportToAssessment,
   uploadPdfToQuestionBank,
+  toggleBankQuestionStatus,
 } from '../controllers/questionBankController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
@@ -29,6 +30,7 @@ router.post('/upload-pdf', questionBankPdfUpload, uploadPdfToQuestionBank);
 router.post('/bulk', validate(bulkUploadSchema), bulkUploadBankQuestions);
 router.post('/bulk-import/:assessmentId', validate(bankBulkImportSchema), bulkImportToAssessment);
 router.post('/', createBankQuestion);
+router.patch('/:id/status', toggleBankQuestionStatus);
 router.put('/:id', updateBankQuestion);
 router.delete('/all', deleteAllBankQuestions);
 router.delete('/:id', deleteBankQuestion);

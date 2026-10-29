@@ -1060,7 +1060,7 @@ const CHAPTER_RULES = [
     ],
   },
   {
-    chapter: 'Redox Reactions & Electrochemistry',
+    chapter: 'Electrochemistry',
     subjects: ['chemistry'],
     patterns: [
       /\belectrochemistry\b/i,
@@ -1068,8 +1068,14 @@ const CHAPTER_RULES = [
       /\bnernst equation\b|\bemf of cell\b/i,
       /\bkohlrausch's law\b|\bmolar conductivity\b/i,
       /\bfaraday's laws of electrolysis\b/i,
-      /\bredox reactions?\b|\boxidation number\b/i,
       /\bbatteries\b|\blead storage\b|\bfuel cell\b|\bcorrosion\b/i,
+    ],
+  },
+  {
+    chapter: 'Redox Reactions & Electrochemistry',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bredox reactions?\b|\boxidation number\b/i,
     ],
   },
   {

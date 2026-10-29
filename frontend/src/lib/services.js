@@ -294,6 +294,10 @@ export const questionBankService = {
     clearCache();
     return api.put(`/question-bank/${id}`, data).then((r) => r.data.question);
   },
+  updateStatus: (id, status) => {
+    clearCache();
+    return api.patch(`/question-bank/${id}/status`, { status }).then((r) => r.data);
+  },
   remove: (id) => {
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
