@@ -24,10 +24,10 @@ async function run() {
   const withDiagrams = osc.filter(q => q.image_url);
   console.log('Oscillations questions with diagram:', withDiagrams.length);
 
-  if (osc.length === 89) {
-    console.log('SUCCESS: All 89 Oscillations questions are served properly by the API!');
+  if (osc.length === 201) {
+    console.log('SUCCESS: All 201 Oscillations questions are served properly by the API!');
   } else {
-    console.warn(`WARNING: Expected 89 Oscillations questions but found ${osc.length}`);
+    console.warn(`WARNING: Expected 201 Oscillations questions but found ${osc.length}`);
   }
 
   process.exit(0);
