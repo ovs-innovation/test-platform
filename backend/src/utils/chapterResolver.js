@@ -1009,11 +1009,20 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'Oscillations',
+    subjects: ['physics'],
+    patterns: [
+      /\boscillat/i,
+      /\bshm\b/i,
+      /\bsimple harmonic motion\b/i,
+      /\bsimple pendulum\b/i,
+      /\bspring[- ]block\b|\bspring[- ]mass\b/i,
+    ],
+  },
+  {
     chapter: 'Simple Harmonic Motion & Waves',
     subjects: ['physics'],
     patterns: [
-      /\boscillations?\b|\bshm\b|\bsimple harmonic\b/i,
-      /\bsimple pendulum\b|\bspring-block system\b/i,
       /\bwaves\b|\btransverse wave\b|\blongitudinal wave\b/i,
       /\bspeed of sound\b|\blaplace correction\b/i,
       /\bstanding waves?\b|\bstationary waves?\b|\borgan pipes?\b|\bstrings?\b/i,
