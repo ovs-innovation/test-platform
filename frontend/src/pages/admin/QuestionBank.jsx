@@ -309,12 +309,15 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
-    if (
-      Number(q.chapter_id) === 221 ||
-      /living world/i.test(q.chapter_name || '') ||
-      /living world/i.test(q.chapter || '') ||
-      /living world/i.test(q.topic || '')
-    ) {
+    // 1. Strict chapter_id check: Live is 221, Local DB is 129
+    if (Number(q.chapter_id) === 221 || Number(q.chapter_id) === 129) {
+      return 'The Living World';
+    }
+    // 2. Strict chapter name check
+    if (q.chapter_name && /^\s*the living world\s*$/i.test(q.chapter_name)) {
+      return 'The Living World';
+    }
+    if (q.chapter && /^\s*the living world\s*$/i.test(q.chapter)) {
       return 'The Living World';
     }
     const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';

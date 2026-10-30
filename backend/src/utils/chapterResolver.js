@@ -1393,18 +1393,7 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
 
-  // 1. Direct match for The Living World
-  if (
-    norm(rawChapter) === 'thelivingworld' || 
-    norm(rawTopic) === 'thelivingworld' || 
-    /living world/i.test(rawChapter) || 
-    /living world/i.test(rawTopic) ||
-    /herbarium|botanical garden|binomial nomenclature|tautonym|systematics|taxonom|species plantarum|systema naturae/i.test(combined)
-  ) {
-    return 'The Living World';
-  }
-
-  // 2. Direct match on standard Botany chapters
+  // 1. Direct match on standard Botany chapters (by rawChapter or strict rawTopic)
   for (const chap of BOTANY_STANDARD) {
     if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
       return chap;
@@ -1419,6 +1408,12 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   if (questionId && ((questionId >= 6601 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
   if (questionId && questionId >= 6701 && questionId <= 6775) return 'Ecosystem';
   if (questionId && questionId >= 6776 && questionId <= 6869) return 'Biodiversity and Conservation (Sacred groves)';
+  if (questionId && questionId >= 13712 && questionId <= 14000) return 'The Living World';
+
+  // 3. Explicit Living World chapter match
+  if (/^\s*the living world\s*$/i.test(rawChapter) || /^\s*the living world\s*$/i.test(rawTopic)) {
+    return 'The Living World';
+  }
 
   // 3. Keyword-based matching
   if (/sacred grove|biodiversity|conservation|iucn|red data|hotspot|endangered|extinct|dodo|quagga|thylacine|stellar|rivet popper|species-area|alien species|ex[- ]situ|in[- ]situ|national park|sanctuary|biosphere reserve|cryopreservation/i.test(combined)) {
