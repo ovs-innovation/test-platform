@@ -860,12 +860,15 @@ const CHAPTER_RULES = [
     chapter: 'Alternating Current',
     subjects: ['physics'],
     patterns: [
-      /\balternating current\b|\bac circuit\b/i,
-      /\brlc circuit\b|\blcr circuit\b|\bresonance in lcr\b/i,
+      /\balternating current\b|\bac circuit\b|\ba\.c\.\b|\ba\.c source\b/i,
+      /\brlc circuit\b|\blcr (?:series )?circuit\b|\blcr\b|\bresonance in lcr\b/i,
+      /\bseries l-?c-?r\b|\bl-?c-?r circuit\b/i,
       /\btransformer\b/i,
       /\bpower factor\b|\bwattless current\b/i,
-      /\bchoke coil\b|\bac generator\b/i,
-      /\bphasor\b|\broot mean square current\b|\brms value\b/i,
+      /\bchoke coil\b|\bac generator\b|\ba\.?c\.? voltmeter\b|\ba\.?c\.? ammeter\b/i,
+      /\bphasor\b|\broot mean square (?:current|voltage)\b|\brms (?:value|current|voltage)\b/i,
+      /\binstantaneous current\b|\bpeak value of current\b|\bpeak voltage\b/i,
+      /\binductive reactance\b|\bcapacitive reactance\b|\bimpedance\b|\bquality factor\b/i,
     ],
   },
   {
@@ -879,15 +882,22 @@ const CHAPTER_RULES = [
     ],
   },
   {
-    chapter: 'Ray & Wave Optics',
+    chapter: 'Ray Optics and Optical Instruments',
     subjects: ['physics'],
     patterns: [
       /\bray optics\b|\bgeometrical optics\b/i,
+      /\boptical instruments?\b/i,
       /\breflection of light\b|\bmirror formula\b|\bspherical mirror\b/i,
       /\brefraction of light\b|\bsnell's law\b|\btotal internal reflection\b|\btir\b/i,
       /\blens maker's formula\b|\bthin lens\b|\blens formula\b/i,
       /\bprism\b|\bdispersion of light\b/i,
       /\bmicroscope\b|\btelescope\b/i,
+    ],
+  },
+  {
+    chapter: 'Wave Optics',
+    subjects: ['physics'],
+    patterns: [
       /\bwave optics\b/i,
       /\bhuygens'? principle\b|\bwavefront\b/i,
       /\binterference of light\b|\byoung's double slit\b|\bydse\b/i,
@@ -924,17 +934,6 @@ const CHAPTER_RULES = [
       /\bnuclei\b|\bmass defect\b|\bbinding energy\b|\bnuclear fission\b|\bnuclear fusion\b/i,
       /\bradioactivity\b|\bhalf[- ]life\b|\bdecay constant\b|\bmean life\b|\balpha decay\b|\bbeta decay\b|\bgamma decay\b/i,
       /\bnuclear radius\b|\bnuclear density\b|\bnuclear force\b/i,
-    ],
-  },
-  {
-    chapter: 'Modern Physics & Nuclear Physics',
-    subjects: ['physics'],
-    patterns: [
-      /\bdual nature of radiation\b|\bphotoelectric effect\b|\bwork function\b|\bstopping potential\b/i,
-      /\bde broglie\b|\bmatter waves?\b/i,
-      /\batoms\b|\bbohr's model\b|\brydberg constant\b|\blyman\b|\bbalmer\b|\bpaschen\b/i,
-      /\bnuclei\b|\bmass defect\b|\bbinding energy\b|\bnuclear fission\b|\bnuclear fusion\b/i,
-      /\bradioactiv/i,
     ],
   },
   {
@@ -1205,6 +1204,41 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   const rawText = (questionText || '').trim();
 
   const normalizeChap = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/s\b/g, '').replace(/[^a-z0-9]/g, '');
+
+  const lowerChapter = rawChapter.toLowerCase();
+  const lowerTopic = rawTopic.toLowerCase();
+
+  // 0. Explicit normalization for legacy or composite chapter names
+  if (lowerChapter === 'alternating current & em waves' || lowerChapter === 'alternating current and em waves') {
+    if (/em wave|electromagnetic wave|displacement current|radiation pressure|maxwell/i.test(rawTopic + ' ' + rawText)) {
+      return 'Electromagnetic Waves';
+    }
+    return 'Alternating Current';
+  }
+
+  if (lowerChapter === 'ray & wave optics' || lowerChapter === 'ray and wave optics') {
+    if (/wave optics|huygens|interference|ydse|diffraction|polariz|brewster/i.test(rawTopic + ' ' + rawText)) {
+      return 'Wave Optics';
+    }
+    return 'Ray Optics and Optical Instruments';
+  }
+
+  if (lowerChapter === 'modern physics & nuclear physics' || lowerChapter === 'modern physics and nuclear physics' || lowerChapter === 'modern physics & dual nature') {
+    if (lowerTopic === 'nuclei' || /nuclei|nuclear|radioactiv|mass defect|binding energy|fission|fusion|half[- ]life|alpha decay|beta decay/i.test(rawTopic + ' ' + rawText)) {
+      return 'Nuclei';
+    }
+    if (lowerTopic === 'atoms' || /atoms?|bohr|rydberg|lyman|balmer|paschen|hydrogen atom/i.test(rawTopic + ' ' + rawText)) {
+      return 'Atoms';
+    }
+    if (lowerTopic.includes('semiconductor') || /semiconductor|diode|transistor|logic gate/i.test(rawTopic + ' ' + rawText)) {
+      return 'Semiconductors';
+    }
+    if (lowerTopic.includes('dual nature') || /dual nature|photoelectric|de broglie|work function|matter wave/i.test(rawTopic + ' ' + rawText)) {
+      return 'Dual Nature of Radiation & Matter';
+    }
+    if (rawTopic && lowerTopic !== 'modern physics & nuclear physics') return rawTopic;
+    return 'Atoms';
+  }
 
   // 1. If rawChapter is already set and not a generic placeholder
   if (rawChapter && rawChapter.toLowerCase() !== 'general' && rawChapter.toLowerCase() !== 'unknown') {

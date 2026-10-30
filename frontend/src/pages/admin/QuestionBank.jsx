@@ -1478,6 +1478,7 @@ export default function AdminQuestionBank() {
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
+            key={`${category}-${selectedChapter}-${statusFilter}`}
             rowClassName={(q) => (selectedQuestionIds.includes(q.id) ? 'bg-blue-50/60 dark:bg-blue-950/30' : '')}
             columns={[
               {
