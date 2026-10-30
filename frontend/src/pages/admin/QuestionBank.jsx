@@ -36,7 +36,23 @@ const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zo
 export const isAssertionReason = (q) => {
   if (!q) return false;
   const t = String(q.question_type || '').toLowerCase().trim();
-  return t === 'assertion_reason' || t === 'assertion-reason' || Boolean(q.assertion_text && q.reason_text);
+  if (t === 'assertion_reason' || t === 'assertion-reason') return true;
+  if (Boolean(q.assertion_text && q.reason_text)) return true;
+  const text = String(q.question_text || '');
+  if (/assertion/i.test(text) && /reason/i.test(text)) return true;
+  let opts = q.options;
+  if (typeof opts === 'string') {
+    try { opts = JSON.parse(opts); } catch (e) { /* ignore */ }
+  }
+  if (Array.isArray(opts)) {
+    for (const opt of opts) {
+      const optStr = typeof opt === 'object' && opt !== null ? (opt.text || '') : String(opt);
+      if (/both\s+assertion\s*(&|and)\s*reason/i.test(optStr) || (/assertion\s+is\s+true/i.test(optStr) && /reason\s+is\s+false/i.test(optStr))) {
+        return true;
+      }
+    }
+  }
+  return false;
 };
 
 export const isNumerical = (q) => {
