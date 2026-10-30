@@ -121,97 +121,91 @@ const run = async () => {
       console.warn('[migrate] Sequence sync warning:', seqErr.message);
     }
 
-    try {
-      await reorderNeet180Assessments(pool);
-    } catch (reorderErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] NEET 180 reorder warning:', reorderErr.message);
-    }
+    // Helper to run seeder once and record in schema_migrations
+    // This prevents re-triggering seed scripts on every server boot / idle spin-up,
+    // ensuring admin modifications and option edits in Question Bank persist permanently.
+    const runSeedOnce = async (seedKey, fn) => {
+      if (appliedFiles.has(seedKey)) return;
+      try {
+        await fn();
+        await pool.query(
+          'INSERT INTO schema_migrations (filename) VALUES ($1) ON CONFLICT (filename) DO NOTHING',
+          [seedKey]
+        );
+        appliedFiles.add(seedKey);
+      } catch (seedErr) {
+        // eslint-disable-next-line no-console
+        console.warn(`[migrate] Seed "${seedKey}" warning:`, seedErr.message);
+      }
+    };
 
-    try {
+    await runSeedOnce('seed_reorder_neet_180', async () => {
+      await reorderNeet180Assessments(pool);
+    });
+
+    await runSeedOnce('seed_assessment_43', async () => {
       const qCheck = await pool.query('SELECT count(*)::int FROM questions WHERE assessment_id = 43');
       if (qCheck.rows[0].count < 180) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Assessment 43 has ${qCheck.rows[0].count} questions (<180). Uploading 180 questions...`);
         await uploadAssessment43(pool);
       }
-    } catch (upload43Err) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Assessment 43 sync warning:', upload43Err.message);
-    }
+    });
 
-    try {
-      const qbCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND chapter = 'Biomolecules'");
+    await runSeedOnce('seed_biomolecules_questions', async () => {
+      const qbCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND (chapter = 'Biomolecules' OR lower(chapter) = 'biomolecules')");
       if (qbCheck.rows[0].count < 45) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Biomolecules questions count is ${qbCheck.rows[0].count} (<45). Uploading 45 Biomolecules questions...`);
         await uploadBiomoleculesQuestions(pool);
       }
-    } catch (biomolErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Biomolecules sync warning:', biomolErr.message);
-    }
+    });
 
-    try {
-      const aminesCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND chapter = 'Amines'");
+    await runSeedOnce('seed_amines_questions', async () => {
+      const aminesCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Chemistry' AND (chapter = 'Amines' OR lower(chapter) = 'amines')");
       if (aminesCheck.rows[0].count < 55) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Amines questions count is ${aminesCheck.rows[0].count} (<55). Uploading 55 Amines questions...`);
         await uploadAminesQuestions(pool);
       }
-    } catch (aminesErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Amines sync warning:', aminesErr.message);
-    }
+    });
 
-    try {
-      const unitsCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'Unit and Measurement'");
+    await runSeedOnce('seed_units_measurements_questions', async () => {
+      const unitsCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND (lower(chapter) = 'unit and measurement' OR chapter_id = 24)");
       if (unitsCheck.rows[0].count < 117) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Unit and Measurement questions count is ${unitsCheck.rows[0].count} (<117). Uploading 117 Physics questions...`);
         await uploadUnitsMeasurementsQuestions(pool);
       }
-    } catch (unitsErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Unit and Measurement sync warning:', unitsErr.message);
-    }
+    });
 
-    try {
-      const motionCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'Motion in straight line'");
+    await runSeedOnce('seed_motion_straight_line_questions', async () => {
+      const motionCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND (lower(chapter) = 'motion in straight line' OR lower(chapter) = 'motion in a straight line' OR chapter_id = 26)");
       if (motionCheck.rows[0].count < 88) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Motion in straight line questions count is ${motionCheck.rows[0].count} (<88). Uploading 88 Physics questions...`);
         await uploadMotionStraightLineQuestions(pool);
       }
-    } catch (motionErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Motion in straight line sync warning:', motionErr.message);
-    }
+    });
 
-    try {
-      const planeCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND chapter = 'motion in a plane'");
+    await runSeedOnce('seed_motion_in_plane_questions', async () => {
+      const planeCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND (lower(chapter) = 'motion in a plane' OR chapter_id = 27)");
       if (planeCheck.rows[0].count < 133) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] motion in a plane questions count is ${planeCheck.rows[0].count} (<133). Uploading 133 Physics questions...`);
         await uploadMotionInPlaneQuestions(pool);
         await uploadMotionInPlanePart2Questions(pool);
       }
-    } catch (planeErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] motion in a plane sync warning:', planeErr.message);
-    }
+    });
 
-    try {
+    await runSeedOnce('seed_laws_of_motion_questions', async () => {
       const lawsCheck = await pool.query("SELECT count(*)::int FROM question_bank WHERE category = 'Physics' AND (lower(chapter) = 'laws of motion' OR chapter_id = 25)");
       if (lawsCheck.rows[0].count < 76) {
         // eslint-disable-next-line no-console
         console.log(`[migrate] Laws of Motion questions count is ${lawsCheck.rows[0].count} (<76). Uploading 76 Physics questions...`);
         await uploadLawsOfMotionQuestions(pool);
       }
-    } catch (lawsErr) {
-      // eslint-disable-next-line no-console
-      console.warn('[migrate] Laws of Motion sync warning:', lawsErr.message);
-    }
+    });
 
     // eslint-disable-next-line no-console
     console.log('[migrate] Database migration check completed.');

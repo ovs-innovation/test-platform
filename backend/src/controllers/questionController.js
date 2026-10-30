@@ -4,6 +4,7 @@ import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
 import { autoClassifyQuestion } from '../utils/questionClassifier.js';
 import { invalidateExamPaperCache, invalidateQuestionMeta } from '../services/examCacheService.js';
+import { delCache } from '../config/redis.js';
 
 const ensureAssessment = async (assessmentId) => {
   const a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
@@ -402,6 +403,18 @@ export const updateQuestion = asyncHandler(async (req, res) => {
       numeric_answer, numerical_tolerance, assertion_text, reason_text,
       marks, position, section_id, starter_code, test_cases, language, bank_category, solution, image_url, solution_image_url, subject_id, chapter_id, difficulty, subject, topic, media, id, JSON.stringify(hasAnswerKey)]
   );
+  if (q.bank_question_id) {
+    await query(
+      `UPDATE question_bank SET
+         question_text = $1, question_type = $2, options = $3, correct_index = $4, correct_indices = $5,
+         numeric_answer = $6, numerical_tolerance = $7, assertion_text = $8, reason_text = $9,
+         marks = $10, solution = $11, image_url = $12, solution_image_url = $13, difficulty = $14
+       WHERE id = $15`,
+      [question_text, question_type, options, correct_index, correct_indices, numeric_answer, numerical_tolerance, assertion_text, reason_text, marks, solution, image_url, solution_image_url, difficulty, q.bank_question_id]
+    ).catch(() => {});
+    await delCache('cache:qb:*').catch(() => {});
+  }
+
   await invalidateExamPaperCache(q.assessment_id);
   await invalidateQuestionMeta(id);
   res.json({ question: result.rows[0] });

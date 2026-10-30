@@ -777,43 +777,8 @@ export async function uploadBiomoleculesQuestions(clientOrPool = pool) {
     );
 
     if (existing.rows.length > 0) {
-      const qId = existing.rows[0].id;
-      await clientOrPool.query(
-        `UPDATE question_bank SET
-           subject_id = $1,
-           chapter_id = $2,
-           chapter = $3,
-           topic = $4,
-           subject = $5,
-           question_type = $6,
-           options = $7,
-           correct_index = $8,
-           marks = $9,
-           difficulty = $10,
-           solution = $11,
-           image_url = $12,
-           assertion_text = $13,
-           reason_text = $14
-         WHERE id = $15`,
-        [
-          chemistrySubjectId,
-          biomoleculesChapterId,
-          'Biomolecules',
-          q.topic || 'Biomolecules',
-          'Chemistry',
-          q.question_type,
-          JSON.stringify(q.options || []),
-          q.correct_index,
-          q.marks || 4,
-          q.difficulty || 'medium',
-          q.solution || '',
-          q.image_url || '',
-          q.assertion_text || null,
-          q.reason_text || null,
-          qId,
-        ]
-      );
-      updatedCount++;
+      // Question already exists in bank - preserve any admin edits, do not overwrite!
+      continue;
     } else {
       await clientOrPool.query(
         `INSERT INTO question_bank (

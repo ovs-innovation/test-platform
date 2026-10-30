@@ -124,47 +124,8 @@ export async function uploadUnitsMeasurementsQuestions(clientOrPool = pool) {
     );
 
     if (existRes.rows.length > 0) {
-      const qId = existRes.rows[0].id;
-      await clientOrPool.query(
-        `UPDATE question_bank SET
-           category = $1,
-           question_type = $2,
-           question_text = $3,
-           options = $4,
-           correct_index = $5,
-           marks = $6,
-           difficulty = $7,
-           solution = $8,
-           image_url = $9,
-           assertion_text = $10,
-           reason_text = $11,
-           chapter = $12,
-           topic = $13,
-           subject = $14,
-           subject_id = $15,
-           chapter_id = $16
-         WHERE id = $17`,
-        [
-          'Physics',
-          questionType,
-          q.question_text,
-          JSON.stringify(options),
-          correctIndex,
-          marks,
-          difficulty,
-          solution,
-          imageUrl,
-          assertionText,
-          reasonText,
-          'Unit and Measurement',
-          topic,
-          'Physics',
-          physicsSubjectId,
-          chapterId,
-          qId,
-        ]
-      );
-      updatedCount++;
+      // Question already exists in bank - preserve any admin edits, do not overwrite!
+      continue;
     } else {
       await clientOrPool.query(
         `INSERT INTO question_bank (

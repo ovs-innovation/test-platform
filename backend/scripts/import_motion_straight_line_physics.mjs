@@ -118,49 +118,8 @@ export async function uploadMotionStraightLineQuestions(clientOrPool = pool) {
     );
 
     if (existRes.rows.length > 0) {
-      const qId = existRes.rows[0].id;
-      await clientOrPool.query(
-        `UPDATE question_bank SET
-           category = $1,
-           question_type = $2,
-           question_text = $3,
-           options = $4,
-           correct_index = $5,
-           correct_indices = $6,
-           marks = $7,
-           difficulty = $8,
-           solution = $9,
-           image_url = $10,
-           assertion_text = $11,
-           reason_text = $12,
-           chapter = $13,
-           topic = $14,
-           subject = $15,
-           subject_id = $16,
-           chapter_id = $17
-         WHERE id = $18`,
-        [
-          'Physics',
-          questionType,
-          trimmedText,
-          JSON.stringify(options),
-          correctIndex,
-          correctIndices,
-          marks,
-          difficulty,
-          solution,
-          imageUrl,
-          assertionText,
-          reasonText,
-          'Motion in straight line',
-          topic,
-          'Physics',
-          physicsSubjectId,
-          chapterId,
-          qId,
-        ]
-      );
-      updatedCount++;
+      // Question already exists in bank - preserve any admin edits, do not overwrite!
+      continue;
     } else {
       await clientOrPool.query(
         `INSERT INTO question_bank (

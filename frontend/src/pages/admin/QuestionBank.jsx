@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2, ChevronDown, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -10,6 +10,7 @@ import Modal from '../../components/Modal.jsx';
 import { BANK_CSV_TEMPLATE, readFileAsText } from '../../lib/csv.js';
 import QuestionImageUploader from '../../components/common/QuestionImageUploader.jsx';
 import MathRenderer from '../../components/common/MathRenderer.jsx';
+import { getMediaUrl } from '../../lib/media.js';
 
 const tryParseArray = (val) => {
   if (Array.isArray(val)) return val;
@@ -146,7 +147,13 @@ export default function AdminQuestionBank() {
   const [existingTestSearch, setExistingTestSearch] = useState('');
   const [selectedExistingTestId, setSelectedExistingTestId] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'available' | 'already_chosen'
+  const [selectedChapter, setSelectedChapter] = useState('all'); // 'all' | '<chapter_name>'
+  const [chapterSearch, setChapterSearch] = useState('');
+  const chapterSliderRef = useRef(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(false);
   const [testsModalQuestion, setTestsModalQuestion] = useState(null);
+  const [previewImageModal, setPreviewImageModal] = useState(null); // { url, title }
   const [testForm, setTestForm] = useState({
     test_name: '',
     test_type: 'AIETS',
@@ -176,19 +183,103 @@ export default function AdminQuestionBank() {
     return Object.entries(counts).map(([cat, count]) => ({ cat, count }));
   }, [selectedQuestionsList]);
 
+  const formatChapterName = (str) => {
+    if (!str) return 'General';
+    const trimmed = String(str).trim();
+    if (!trimmed) return 'General';
+    if (trimmed === trimmed.toLowerCase()) {
+      return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
+    }
+    return trimmed;
+  };
+
+  const chaptersWithCounts = useMemo(() => {
+    const map = new Map();
+    (questions || []).forEach((q) => {
+      const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';
+      const formatted = formatChapterName(raw);
+      const key = formatted.toLowerCase();
+      if (!map.has(key)) {
+        map.set(key, { name: formatted, count: 0 });
+      }
+      map.get(key).count += 1;
+    });
+
+    return Array.from(map.values()).sort((a, b) => {
+      if (a.name.toLowerCase() === 'general') return 1;
+      if (b.name.toLowerCase() === 'general') return -1;
+      return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
+    });
+  }, [questions]);
+
+  const displayedChapters = useMemo(() => {
+    if (!chapterSearch.trim()) return chaptersWithCounts;
+    const query = chapterSearch.toLowerCase().trim();
+    return chaptersWithCounts.filter((c) => c.name.toLowerCase().includes(query));
+  }, [chaptersWithCounts, chapterSearch]);
+
+  const handleSelectChapter = (chapterName) => {
+    if (!chapterName) return;
+    setSelectedChapter((prev) => (prev.toLowerCase() === chapterName.toLowerCase() ? 'all' : chapterName));
+  };
+
+  const checkSliderScroll = () => {
+    const el = chapterSliderRef.current;
+    if (!el) return;
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollLeft(scrollLeft > 6);
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 6);
+  };
+
+  const slideChapters = (direction) => {
+    const el = chapterSliderRef.current;
+    if (!el) return;
+    const scrollDistance = Math.max(260, Math.floor(el.clientWidth * 0.65));
+    el.scrollBy({
+      left: direction === 'left' ? -scrollDistance : scrollDistance,
+      behavior: 'smooth',
+    });
+    setTimeout(checkSliderScroll, 350);
+  };
+
   const statusCounts = useMemo(() => {
-    let total = (questions || []).length;
+    let baseList = questions || [];
+    if (selectedChapter && selectedChapter !== 'all') {
+      const target = selectedChapter.toLowerCase().trim();
+      baseList = baseList.filter((q) => {
+        const ch = (q.chapter || q.chapter_name || 'General').trim().toLowerCase();
+        return ch === target;
+      });
+    }
+    let total = baseList.length;
     let chosen = 0;
     let available = 0;
-    (questions || []).forEach((q) => {
+    baseList.forEach((q) => {
       const isChosen = q.status === 'already_chosen';
       if (isChosen) chosen++;
       else available++;
     });
     return { total, chosen, available };
-  }, [questions]);
+  }, [questions, selectedChapter]);
 
   const filteredQuestions = useMemo(() => {
+    let list = questions || [];
+    if (statusFilter === 'already_chosen') {
+      list = list.filter((q) => q.status === 'already_chosen');
+    } else if (statusFilter === 'available') {
+      list = list.filter((q) => q.status !== 'already_chosen');
+    }
+    if (selectedChapter && selectedChapter !== 'all') {
+      const target = selectedChapter.toLowerCase().trim();
+      list = list.filter((q) => {
+        const ch = (q.chapter || q.chapter_name || 'General').trim().toLowerCase();
+        return ch === target;
+      });
+    }
+    return list;
+  }, [questions, statusFilter, selectedChapter]);
+
+  const _unusedFiltered = () => {}; /*
     if (statusFilter === 'all') return questions;
     if (statusFilter === 'already_chosen') {
       return (questions || []).filter((q) => q.status === 'already_chosen');
@@ -197,7 +288,7 @@ export default function AdminQuestionBank() {
       return (questions || []).filter((q) => q.status !== 'already_chosen');
     }
     return questions;
-  }, [questions, statusFilter]);
+  */
 
   const selectedAlreadyChosenCount = useMemo(() => {
     return selectedQuestionsList.filter((q) => q.status === 'already_chosen').length;
@@ -251,9 +342,9 @@ export default function AdminQuestionBank() {
 
   const openCreateTestModal = () => {
     if (selectedQuestionIds.length === 0) {
-      if (questions.length > 0) {
+      if (filteredQuestions.length > 0) {
         handleSelectAllVisible();
-        toast.info(`Selected all ${questions.length} questions in ${category}. Click 'Create Test' again to proceed.`);
+        toast.info(selectedChapter !== 'all' ? `Selected all ${filteredQuestions.length} questions in ${selectedChapter}. Click 'Create Test' again to proceed.` : `Selected all ${questions.length} questions in ${category}. Click 'Create Test' again to proceed.`);
       } else {
         toast.error('Please select at least one question from the bank');
       }
@@ -587,7 +678,34 @@ export default function AdminQuestionBank() {
 
   useEffect(() => {
     load();
+    setSelectedChapter('all');
+    setChapterSearch('');
+    if (chapterSliderRef.current) {
+      chapterSliderRef.current.scrollLeft = 0;
+    }
   }, [category]);
+
+  useEffect(() => {
+    checkSliderScroll();
+    const el = chapterSliderRef.current;
+    if (el) {
+      el.addEventListener('scroll', checkSliderScroll, { passive: true });
+    }
+    window.addEventListener('resize', checkSliderScroll);
+    return () => {
+      if (el) el.removeEventListener('scroll', checkSliderScroll);
+      window.removeEventListener('resize', checkSliderScroll);
+    };
+  }, [displayedChapters]);
+
+  useEffect(() => {
+    if (selectedChapter && selectedChapter !== 'all' && chapterSliderRef.current) {
+      const activeEl = chapterSliderRef.current.querySelector('[data-active-chapter="true"]');
+      if (activeEl) {
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+    }
+  }, [selectedChapter]);
 
   useEffect(() => {
     const targetSubjId = form.subject_id;
@@ -720,6 +838,11 @@ export default function AdminQuestionBank() {
       toast.success('Question deleted from bank');
       setDeleteQuestionId(null);
       load();
+    setSelectedChapter('all');
+    setChapterSearch('');
+    if (chapterSliderRef.current) {
+      chapterSliderRef.current.scrollLeft = 0;
+    }
     } catch (err) {
       toast.error(err.message || 'Delete failed');
     } finally {
@@ -739,6 +862,11 @@ export default function AdminQuestionBank() {
       );
       setDeleteAllModalOpen(false);
       load();
+    setSelectedChapter('all');
+    setChapterSearch('');
+    if (chapterSliderRef.current) {
+      chapterSliderRef.current.scrollLeft = 0;
+    }
     } catch (err) {
       toast.error(err.message || 'Failed to delete questions');
     } finally {
@@ -920,6 +1048,11 @@ export default function AdminQuestionBank() {
       toast.success(`Imported ${res.created} questions${res.errors?.length ? ` (${res.errors.length} errors)` : ''}`);
       setCsvOpen(false);
       load();
+    setSelectedChapter('all');
+    setChapterSearch('');
+    if (chapterSliderRef.current) {
+      chapterSliderRef.current.scrollLeft = 0;
+    }
     } catch (err) {
       toast.error(err.message || 'Import failed');
     } finally {
@@ -985,6 +1118,11 @@ export default function AdminQuestionBank() {
     } catch {
       toast.error('Failed to update answer key');
       load();
+    setSelectedChapter('all');
+    setChapterSearch('');
+    if (chapterSliderRef.current) {
+      chapterSliderRef.current.scrollLeft = 0;
+    }
     }
   };
 
@@ -1158,6 +1296,185 @@ export default function AdminQuestionBank() {
         </div>
       </div>
 
+      
+      {/* Chapter Name Badges Slider View */}
+      {chaptersWithCounts.length > 0 && (
+        <div className="card p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white/95 dark:bg-[#111827]/95 shadow-xs backdrop-blur-xs space-y-2.5">
+          {/* Top header row: Title, active filter chip, search input, slider prev/next controls */}
+          <div className="flex flex-wrap items-center justify-between gap-2.5">
+            <div className="flex items-center gap-2 flex-wrap">
+              <div className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-slate-700 dark:text-slate-300">
+                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-indigo-500/10 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400">
+                  <BookOpen className="h-3.5 w-3.5" />
+                </span>
+                <span>Chapters</span>
+                <span className="inline-flex items-center justify-center px-2 py-0.5 rounded-full text-[11px] font-black bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700/60">
+                  {chaptersWithCounts.length}
+                </span>
+              </div>
+
+              {selectedChapter !== 'all' && (
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/15 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 animate-in fade-in zoom-in-95 duration-150">
+                  <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                  <span className="truncate max-w-[200px]">Active: <strong>{selectedChapter}</strong></span>
+                  <span className="text-[10px] opacity-75 font-mono">({filteredQuestions.length} Qs)</span>
+                  <button
+                    type="button"
+                    onClick={() => setSelectedChapter('all')}
+                    className="ml-1 p-0.5 rounded-full hover:bg-indigo-500/30 text-indigo-600 dark:text-indigo-300 transition cursor-pointer"
+                    title="Clear chapter filter (show all)"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="flex items-center gap-2">
+              {/* Quick Chapter Search Filter */}
+              {chaptersWithCounts.length > 5 && (
+                <div className="relative w-36 sm:w-44">
+                  <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400 pointer-events-none" />
+                  <input
+                    type="text"
+                    value={chapterSearch}
+                    onChange={(e) => setChapterSearch(e.target.value)}
+                    placeholder="Find chapter..."
+                    className="w-full pl-8 pr-7 py-1 text-xs rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition"
+                  />
+                  {chapterSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setChapterSearch('')}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-0.5"
+                      title="Clear search"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  )}
+                </div>
+              )}
+
+              {/* Slider Prev / Next Controls */}
+              <div className="inline-flex items-center gap-1 bg-slate-100 dark:bg-slate-900 p-1 rounded-xl border border-slate-200 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => slideChapters('left')}
+                  disabled={!canScrollLeft}
+                  className={`p-1 rounded-lg transition-all ${
+                    canScrollLeft
+                      ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
+                      : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                  }`}
+                  title="Slide left"
+                  aria-label="Previous chapters"
+                >
+                  <ChevronLeft className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => slideChapters('right')}
+                  disabled={!canScrollRight}
+                  className={`p-1 rounded-lg transition-all ${
+                    canScrollRight
+                      ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
+                      : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                  }`}
+                  title="Slide right"
+                  aria-label="Next chapters"
+                >
+                  <ChevronRight className="h-4 w-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Slider View Track */}
+          <div className="relative group">
+            {/* Left Edge Fade */}
+            {canScrollLeft && (
+              <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-white dark:from-[#111827] to-transparent z-10 pointer-events-none transition-opacity duration-200" />
+            )}
+
+            {/* Right Edge Fade */}
+            {canScrollRight && (
+              <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-white dark:from-[#111827] to-transparent z-10 pointer-events-none transition-opacity duration-200" />
+            )}
+
+            {/* Scrollable Badges Strip */}
+            <div
+              ref={chapterSliderRef}
+              className="flex items-center gap-2 overflow-x-auto scrollbar-none scroll-smooth py-1 px-0.5 select-none touch-pan-x"
+            >
+              {/* "All Chapters" Badge */}
+              <button
+                type="button"
+                data-active-chapter={selectedChapter === 'all'}
+                onClick={() => setSelectedChapter('all')}
+                className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-200 cursor-pointer ${
+                  selectedChapter === 'all'
+                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
+                    : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
+                }`}
+                title={`Show all questions in ${category} (${questions.length})`}
+              >
+                <span>All Chapters</span>
+                <span
+                  className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${
+                    selectedChapter === 'all'
+                      ? 'bg-white/25 text-white'
+                      : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                  }`}
+                >
+                  {questions.length}
+                </span>
+              </button>
+
+              {/* Individual Chapter Name Badges */}
+              {displayedChapters.map(({ name, count }) => {
+                const isSelected = selectedChapter.toLowerCase() === name.toLowerCase();
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    data-active-chapter={isSelected}
+                    onClick={() => handleSelectChapter(name)}
+                    className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap group/badge ${
+                      isSelected
+                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
+                        : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
+                    }`}
+                    title={`Click to filter by ${name} (${count} questions)`}
+                  >
+                    <BookOpen
+                      className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/badge:scale-110 ${
+                        isSelected ? 'text-white' : 'text-indigo-500 dark:text-indigo-400'
+                      }`}
+                    />
+                    <span className="font-extrabold">{name}</span>
+                    <span
+                      className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-black transition-colors ${
+                        isSelected
+                          ? 'bg-white/25 text-white'
+                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover/badge:bg-indigo-100 dark:group-hover/badge:bg-indigo-900/60 group-hover/badge:text-indigo-700 dark:group-hover/badge:text-indigo-300'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+
+              {displayedChapters.length === 0 && chapterSearch && (
+                <div className="py-1 px-3 text-xs text-slate-400 italic">
+                  No chapters matching &ldquo;{chapterSearch}&rdquo;
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
@@ -1167,7 +1484,7 @@ export default function AdminQuestionBank() {
                 key: 'select',
                 sortable: false,
                 headerRender: () => {
-                  const visibleIds = questions.map((q) => q.id);
+                  const visibleIds = (filteredQuestions || []).map((q) => q.id);
                   const allSelected = visibleIds.length > 0 && visibleIds.every((id) => selectedQuestionIds.includes(id));
                   const someSelected = visibleIds.some((id) => selectedQuestionIds.includes(id));
                   return (
@@ -1225,10 +1542,22 @@ export default function AdminQuestionBank() {
                   return (
                     <div className="flex flex-col gap-1 max-w-[200px]">
                       {chapterName ? (
-                        <div className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-lg px-2.5 py-1">
-                          <BookOpen className="h-3.5 w-3.5 text-indigo-500 dark:text-indigo-400 shrink-0" />
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleSelectChapter(chapterName);
+                          }}
+                          className={`inline-flex items-center gap-1.5 text-xs font-bold rounded-lg px-2.5 py-1 text-left transition-all cursor-pointer ${
+                            selectedChapter.toLowerCase() === chapterName.toLowerCase()
+                              ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-400'
+                              : 'text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300'
+                          }`}
+                          title={`Click to filter by chapter: ${chapterName}`}
+                        >
+                          <BookOpen className={`h-3.5 w-3.5 shrink-0 ${selectedChapter.toLowerCase() === chapterName.toLowerCase() ? 'text-white' : 'text-indigo-500 dark:text-indigo-400'}`} />
                           <span className="truncate" title={chapterName}>{chapterName}</span>
-                        </div>
+                        </button>
                       ) : (
                         <span className="text-[11px] text-slate-400 dark:text-slate-500 italic flex items-center gap-1">
                           <Bookmark className="h-3 w-3 opacity-40" />
@@ -1283,11 +1612,29 @@ export default function AdminQuestionBank() {
                             <span>Available</span>
                           </span>
                         )}
-                        {chapterName && (
-                          <span className="inline-flex items-center gap-1 text-[11px] font-bold text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 px-2 py-0.5 rounded-md border border-indigo-200 dark:border-indigo-800/50 truncate max-w-xs" title={`Overall Chapter: ${chapterName}`}>
-                            <BookOpen className="h-3 w-3 shrink-0" />
-                            {chapterName}
+                        {q.image_url && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-black text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-md border border-cyan-300 dark:border-cyan-800/60 shadow-2xs" title="This question has an attached reaction/chemical structure diagram">
+                            <Image className="h-3 w-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                            <span>Diagram</span>
                           </span>
+                        )}
+                        {chapterName && (
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleSelectChapter(chapterName);
+                            }}
+                            className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md border transition-all cursor-pointer truncate max-w-xs ${
+                              selectedChapter.toLowerCase() === chapterName.toLowerCase()
+                                ? 'bg-indigo-600 text-white border-indigo-500 shadow-xs ring-1 ring-indigo-400'
+                                : 'text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 hover:scale-102'
+                            }`}
+                            title={`Filter Question Bank by Chapter: ${chapterName}`}
+                          >
+                            <BookOpen className="h-3 w-3 shrink-0" />
+                            <span className="truncate">{chapterName}</span>
+                          </button>
                         )}
                         {hasTopic && (
                           <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 px-1.5 py-0.5 rounded border border-slate-200 dark:border-slate-700/50 truncate max-w-[170px]" title={`Specific Topic: ${q.topic}`}>
@@ -1305,6 +1652,56 @@ export default function AdminQuestionBank() {
                       <div className="text-slate-900 dark:text-slate-100 font-bold leading-snug text-xs">
                         <MathRenderer text={q.question_text} />
                       </div>
+
+                      {/* Prominent Question Diagram (Directly beneath question text, before options) */}
+                      {q.image_url && (
+                        <div className="my-2 rounded-xl border border-blue-200/90 dark:border-blue-900/60 bg-blue-50/40 dark:bg-blue-950/25 p-2.5 max-w-xl transition-all shadow-xs hover:shadow-md">
+                          <div className="flex items-center justify-between mb-1.5 pb-1 border-b border-blue-100 dark:border-blue-900/40 select-none">
+                            <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-blue-800 dark:text-blue-300">
+                              <Image className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                              <span>Reaction & Structure Diagram</span>
+                            </span>
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setPreviewImageModal({
+                                  url: getMediaUrl(q.image_url),
+                                  title: `Question #${sNo} - ${q.topic || 'Chemical Reaction Diagram'}`
+                                });
+                              }}
+                              className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 hover:underline cursor-pointer"
+                              title="Click to view full-resolution diagram"
+                            >
+                              <ZoomIn className="h-3.5 w-3.5" />
+                              <span>Enlarge Diagram</span>
+                            </button>
+                          </div>
+                          <div 
+                            className="flex items-center justify-center bg-white dark:bg-slate-900 rounded-lg p-2.5 border border-slate-200 dark:border-slate-800 cursor-zoom-in group overflow-hidden"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setPreviewImageModal({
+                                url: getMediaUrl(q.image_url),
+                                title: `Question #${sNo} - ${q.topic || 'Chemical Reaction Diagram'}`
+                              });
+                            }}
+                            title="Click to zoom in full resolution"
+                          >
+                            <img
+                              src={getMediaUrl(q.image_url)}
+                              alt={`Question #${sNo} diagram`}
+                              className="max-h-64 sm:max-h-72 w-auto max-w-full object-contain rounded transition-transform duration-200 group-hover:scale-[1.02]"
+                              onError={(e) => {
+                                if (!e.target.dataset.triedFallback && !q.image_url.startsWith('http')) {
+                                  e.target.dataset.triedFallback = 'true';
+                                  e.target.src = `http://127.0.0.1:5000${q.image_url.startsWith('/') ? '' : '/'}${q.image_url}`;
+                                }
+                              }}
+                            />
+                          </div>
+                        </div>
+                      )}
 
                       {/* Options A/B/C/D */}
                       {!isInteger && opts.length > 0 && (
@@ -1336,10 +1733,15 @@ export default function AdminQuestionBank() {
                                   {optImg && (
                                     <div className="flex items-center gap-1 mt-0.5">
                                       <img
-                                        src={optImg}
+                                        src={getMediaUrl(optImg)}
                                         alt={`Option ${OPTION_KEYS[i]} diagram`}
-                                        className="h-10 max-w-[120px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
-                                        onError={(e) => { e.target.style.display = 'none'; }}
+                                        className="h-14 max-w-[140px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-0.5"
+                                        onError={(e) => {
+                                          if (!e.target.dataset.triedFallback && !optImg.startsWith('http')) {
+                                            e.target.dataset.triedFallback = 'true';
+                                            e.target.src = `http://127.0.0.1:5000${optImg.startsWith('/') ? '' : '/'}${optImg}`;
+                                          }
+                                        }}
                                       />
                                       <span className="text-[9px] text-slate-400 font-medium">diagram</span>
                                     </div>
@@ -1375,41 +1777,35 @@ export default function AdminQuestionBank() {
                         </div>
                       )}
 
-                      {/* Diagrams preview (Question diagram & Solution diagram) */}
-                      {(q.image_url || q.solution_image_url) && (
-                        <div className="flex flex-wrap items-center gap-3 mt-1 pt-1 border-t border-slate-100 dark:border-slate-800/60">
-                          {q.image_url && (
-                            <div className="flex items-center gap-1.5">
-                              <Image className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-                              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Diagram:</span>
-                              <img
-                                src={q.image_url}
-                                alt="Question diagram"
-                                className="h-12 max-w-[130px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
-                                onError={(e) => { e.target.style.display = 'none'; }}
-                              />
+                      {/* Solution preview with optional solution diagram */}
+                      {(q.solution || q.solution_image_url) && (
+                        <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 italic border-t border-slate-100 dark:border-slate-800 pt-1 space-y-1">
+                          {q.solution && (
+                            <div>
+                              <span className="font-semibold not-italic text-slate-400 dark:text-slate-500">Sol: </span>
+                              <MathRenderer text={q.solution} className="inline" />
                             </div>
                           )}
                           {q.solution_image_url && (
-                            <div className="flex items-center gap-1.5">
-                              <Image className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                              <span className="text-[10px] font-semibold text-slate-500 dark:text-slate-400">Solution Diagram:</span>
+                            <div className="flex items-center gap-2 not-italic pt-1">
+                              <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                                <Image className="h-3 w-3" />
+                                Solution Diagram:
+                              </span>
                               <img
-                                src={q.solution_image_url}
+                                src={getMediaUrl(q.solution_image_url)}
                                 alt="Solution diagram"
-                                className="h-12 max-w-[130px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
-                                onError={(e) => { e.target.style.display = 'none'; }}
+                                className="h-16 max-w-[180px] object-contain rounded border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-0.5 cursor-pointer"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setPreviewImageModal({
+                                    url: getMediaUrl(q.solution_image_url),
+                                    title: `Question #${sNo} - Solution Diagram`
+                                  });
+                                }}
                               />
                             </div>
                           )}
-                        </div>
-                      )}
-
-                      {/* Solution preview */}
-                      {q.solution && (
-                        <div className="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 line-clamp-2 italic border-t border-slate-100 dark:border-slate-800 pt-1">
-                          <span className="font-semibold not-italic text-slate-400 dark:text-slate-500">Sol: </span>
-                          <MathRenderer text={q.solution} className="inline" />
                         </div>
                       )}
                     </div>
@@ -1518,7 +1914,7 @@ export default function AdminQuestionBank() {
               },
             ]}
             rows={questionsWithSerial}
-            emptyMessage={`No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
+            emptyMessage={selectedChapter !== 'all' ? `No questions found for chapter "${selectedChapter}".` : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
           />
         </div>
       )}
@@ -2765,6 +3161,53 @@ export default function AdminQuestionBank() {
               >
                 Close
               </button>
+            </div>
+          </div>
+        )}
+      </Modal>
+
+      {/* High-Resolution Diagram Preview Lightbox Modal */}
+      <Modal
+        open={Boolean(previewImageModal)}
+        onClose={() => setPreviewImageModal(null)}
+        title={previewImageModal?.title || 'Reaction & Structure Diagram Preview'}
+        size="lg"
+      >
+        {previewImageModal && (
+          <div className="flex flex-col items-center justify-center p-2 sm:p-4 space-y-4">
+            <div className="w-full flex items-center justify-center bg-white dark:bg-slate-950 rounded-2xl p-4 border border-slate-200 dark:border-slate-800 shadow-inner overflow-auto max-h-[75vh]">
+              <img
+                src={previewImageModal.url}
+                alt={previewImageModal.title || 'Diagram'}
+                className="max-w-full max-h-[68vh] object-contain rounded-lg transition-transform"
+                onError={(e) => {
+                  if (!e.target.dataset.triedFallback && !previewImageModal.url.startsWith('http')) {
+                    e.target.dataset.triedFallback = 'true';
+                    e.target.src = `http://127.0.0.1:5000${previewImageModal.url.startsWith('/') ? '' : '/'}${previewImageModal.url}`;
+                  }
+                }}
+              />
+            </div>
+            <div className="w-full flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+              <span className="font-semibold truncate max-w-md">{previewImageModal.title}</span>
+              <div className="flex items-center gap-2">
+                <a
+                  href={previewImageModal.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn btn-secondary text-xs inline-flex items-center gap-1.5"
+                >
+                  <ExternalLink className="h-3.5 w-3.5" />
+                  <span>Open Full Size</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setPreviewImageModal(null)}
+                  className="btn btn-primary text-xs"
+                >
+                  Close
+                </button>
+              </div>
             </div>
           </div>
         )}

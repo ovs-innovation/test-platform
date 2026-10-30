@@ -320,6 +320,18 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     }
   }
 
+  const safeOptionsJson = options !== undefined
+    ? asJson(options, [])
+    : (typeof q.options === 'string' ? q.options : JSON.stringify(q.options || []));
+
+  const safeCorrectIndex = correct_index !== undefined
+    ? (correct_index === null || correct_index === '' ? null : Number(correct_index))
+    : q.correct_index;
+
+  const safeIndicesJson = correct_indices !== undefined
+    ? asJson(correct_indices, [])
+    : (typeof q.correct_indices === 'string' ? q.correct_indices : JSON.stringify(q.correct_indices || []));
+
   const result = await query(
     `UPDATE question_bank SET 
        question_type = $1,
@@ -347,9 +359,9 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     [
       question_type || q.question_type || 'mcq',
       question_text ?? q.question_text,
-      options !== undefined ? asJson(options, []) : q.options,
-      correct_index !== undefined ? Number(correct_index) : q.correct_index,
-      correct_indices !== undefined ? asJson(correct_indices, []) : q.correct_indices,
+      safeOptionsJson,
+      safeCorrectIndex,
+      safeIndicesJson,
       numeric_answer !== undefined ? numeric_answer : q.numeric_answer,
       numerical_tolerance !== undefined ? numerical_tolerance : q.numerical_tolerance,
       assertion_text !== undefined ? assertion_text : q.assertion_text,
@@ -369,12 +381,62 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       id
     ]
   );
+
+  // Sync edits to any assessment questions linked to this question bank item
+  await query(
+    `UPDATE questions SET 
+       question_type = $1,
+       question_text = $2, 
+       options = $3, 
+       correct_index = $4, 
+       correct_indices = $5,
+       numeric_answer = $6,
+       numerical_tolerance = $7,
+       assertion_text = $8,
+       reason_text = $9,
+       marks = $10, 
+       solution = $11,
+       difficulty = $12,
+       image_url = $13,
+       solution_image_url = $14,
+       chapter = $15,
+       topic = $16,
+       subject = $17,
+       bank_category = $18
+     WHERE bank_question_id = $19`,
+    [
+      question_type || q.question_type || 'mcq',
+      question_text ?? q.question_text,
+      safeOptionsJson,
+      safeCorrectIndex,
+      safeIndicesJson,
+      numeric_answer !== undefined ? numeric_answer : q.numeric_answer,
+      numerical_tolerance !== undefined ? numerical_tolerance : q.numerical_tolerance,
+      assertion_text !== undefined ? assertion_text : q.assertion_text,
+      reason_text !== undefined ? reason_text : q.reason_text,
+      Number(marks ?? q.marks ?? 1),
+      solution ?? q.solution,
+      difficulty ?? q.difficulty,
+      image_url !== undefined ? image_url : q.image_url,
+      solution_image_url !== undefined ? solution_image_url : q.solution_image_url,
+      effectiveChapter,
+      topic !== undefined ? topic : q.topic,
+      subject !== undefined ? subject : q.subject,
+      effectiveCategory,
+      id
+    ]
+  ).catch((syncErr) => {
+    // eslint-disable-next-line no-console
+    console.warn(`[updateBankQuestion] Warning syncing linked questions for bank #${id}:`, syncErr.message);
+  });
+
   if (effectiveStatus === 'normal') {
     await query('UPDATE questions SET bank_question_id = NULL WHERE bank_question_id = $1', [id]);
   }
   await delCache('cache:qb:*');
   if (effectiveCategory) await delCache(`cache:qb:questions:${effectiveCategory}`);
   await delCache('cache:qb:questions:all');
+  await delCache('cache:qb:categories');
   const standardChapter = resolveStandardChapter(
     result.rows[0].category || result.rows[0].subject || '',
     result.rows[0].topic || '',

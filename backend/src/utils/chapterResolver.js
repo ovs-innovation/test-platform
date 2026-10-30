@@ -709,6 +709,27 @@ const CHAPTER_RULES = [
       /\bbiopiracy\b|\bgeac\b|\bpatents?\b/i,
     ],
   },
+  {
+    chapter: 'Organisms and Populations',
+    subjects: ['botany', 'biology', 'zoology'],
+    patterns: [
+      /\borganisms? and populations?\b/i,
+      /\borganisms? & populations?\b/i,
+      /\bpopulation attributes?\b/i,
+      /\bpopulation growth\b/i,
+      /\bpopulation density\b/i,
+      /\bpopulation interactions?\b/i,
+      /\bage pyramid\b/i,
+      /\bexponential growth\b|\blogistic growth\b|\bverhulst-pearl\b/i,
+      /\bcarrying capacity\b|\bbiotic potential\b/i,
+      /\bmutualism\b|\bcommensalism\b|\bamensalism\b|\bparasitism\b|\bpredation\b|\bcompetition\b/i,
+      /\bgause'?s? (competitive exclusion)? principle\b/i,
+      /\bmacarthur\b|\bwarblers?\b/i,
+      /\bconformer\b|\bregulator\b|\bdiapause\b|\baestivation\b|\bhibernation\b/i,
+      /\babiotic factors?\b|\bstenothermal\b|\beurythermal\b|\bstenohaline\b|\beuryhaline\b/i,
+      /\baltitude sickness\b|\bhomeostasis\b|\bAllen'?s rule\b/i,
+    ],
+  },
 
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
@@ -1135,6 +1156,33 @@ const CHAPTER_RULES = [
       /\bamines?\b|\bdiazonium salt/i,
       /\bhofmann bromamide\b|\bgabriel phthalimide\b|\bhinsberg test\b/i,
       /\bcarbylamine test\b/i,
+    ],
+  },
+  {
+    chapter: 'The p-Block Elements',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bthe p[- ]block elements?\b/i,
+      /\bp[- ]block elements?\b/i,
+      /\bp[- ]block\b/i,
+      /\bxenon\b|\bxef2\b|\bxef4\b|\bxef6\b|\bxeo3\b|\bxeof4\b/i,
+      /\bphosphine\b|\bph3\b|\bp4o10\b|\bp4o6\b/i,
+      /\bperchloric acid\b|\bhclo4\b|\bhclo3\b|\bhclo2\b|\bhclo\b/i,
+      /\boxoacids of (phosphorus|sulphur|halogens)\b/i,
+      /\binterhalogen(s)?\b/i,
+      /\bdinitrogen\b|\bnitric acid\b|\bostwald process\b|\bcontact process\b/i,
+    ],
+  },
+  {
+    chapter: 'Chemical Kinetics',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bchemical kinetics\b/i,
+      /\brate of (the )?reaction\b|\brate law\b|\brate constant\b/i,
+      /\border of (a |the )?reaction\b|\bzero order\b|\bfirst order\b|\bsecond order\b|\bpseudo first order\b/i,
+      /\bhalf[- ]?life\b|\bt_\{?1\/2\}?/i,
+      /\barrhenius equation\b|\bactivation energy\b|\bpre[- ]exponential factor\b/i,
+      /\bmolecularity\b|\bcollision theory\b/i,
     ],
   },
 ];
