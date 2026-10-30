@@ -183,10 +183,44 @@ export default function AdminQuestionBank() {
     return Object.entries(counts).map(([cat, count]) => ({ cat, count }));
   }, [selectedQuestionsList]);
 
+  const CHEMISTRY_STANDARD_11 = useMemo(() => [
+    'Solutions',
+    'Electrochemistry',
+    'Chemical Kinetics',
+    'The p-Block Elements',
+    'The d- and f-Block Elements',
+    'Coordination Compounds',
+    'Haloalkanes and Haloarenes',
+    'Alcohols, Phenols and Ethers',
+    'Aldehydes, Ketones and Carboxylic Acids',
+    'Amines',
+    'Biomolecules'
+  ], []);
+
+  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
+
   const formatChapterName = (str) => {
     if (!str) return 'General';
     const trimmed = String(str).trim();
     if (!trimmed) return 'General';
+
+    if (category?.toLowerCase() === 'chemistry') {
+      const normalized = normChapterKey(trimmed);
+      const matched = CHEMISTRY_STANDARD_11.find((ch) => normChapterKey(ch) === normalized);
+      if (matched) return matched;
+      if (/p[- ]block/i.test(trimmed)) return 'The p-Block Elements';
+      if (/d[- ]?(and|&)?[- ]?f[- ]block/i.test(trimmed)) return 'The d- and f-Block Elements';
+      if (/coordination/i.test(trimmed)) return 'Coordination Compounds';
+      if (/haloalkane/i.test(trimmed)) return 'Haloalkanes and Haloarenes';
+      if (/alcohol/i.test(trimmed)) return 'Alcohols, Phenols and Ethers';
+      if (/aldehyde|ketone|carboxylic/i.test(trimmed)) return 'Aldehydes, Ketones and Carboxylic Acids';
+      if (/amine/i.test(trimmed)) return 'Amines';
+      if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
+      if (/solution/i.test(trimmed)) return 'Solutions';
+      if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
+      if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -194,7 +228,15 @@ export default function AdminQuestionBank() {
   };
 
   const chaptersWithCounts = useMemo(() => {
+    const isChemistry = category?.toLowerCase() === 'chemistry';
     const map = new Map();
+
+    if (isChemistry) {
+      CHEMISTRY_STANDARD_11.forEach((ch) => {
+        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+      });
+    }
+
     (questions || []).forEach((q) => {
       const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';
       const formatted = formatChapterName(raw);
@@ -205,12 +247,19 @@ export default function AdminQuestionBank() {
       map.get(key).count += 1;
     });
 
+    if (isChemistry) {
+      return CHEMISTRY_STANDARD_11.map((ch) => {
+        const item = map.get(ch.toLowerCase());
+        return item || { name: ch, count: 0 };
+      });
+    }
+
     return Array.from(map.values()).sort((a, b) => {
       if (a.name.toLowerCase() === 'general') return 1;
       if (b.name.toLowerCase() === 'general') return -1;
       return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
     });
-  }, [questions]);
+  }, [questions, category, CHEMISTRY_STANDARD_11]);
 
   const displayedChapters = useMemo(() => {
     if (!chapterSearch.trim()) return chaptersWithCounts;
@@ -245,10 +294,10 @@ export default function AdminQuestionBank() {
   const statusCounts = useMemo(() => {
     let baseList = questions || [];
     if (selectedChapter && selectedChapter !== 'all') {
-      const target = selectedChapter.toLowerCase().trim();
+      const targetNorm = normChapterKey(selectedChapter);
       baseList = baseList.filter((q) => {
-        const ch = (q.chapter || q.chapter_name || 'General').trim().toLowerCase();
-        return ch === target;
+        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        return normChapterKey(ch) === targetNorm;
       });
     }
     let total = baseList.length;
@@ -270,10 +319,10 @@ export default function AdminQuestionBank() {
       list = list.filter((q) => q.status !== 'already_chosen');
     }
     if (selectedChapter && selectedChapter !== 'all') {
-      const target = selectedChapter.toLowerCase().trim();
+      const targetNorm = normChapterKey(selectedChapter);
       list = list.filter((q) => {
-        const ch = (q.chapter || q.chapter_name || 'General').trim().toLowerCase();
-        return ch === target;
+        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        return normChapterKey(ch) === targetNorm;
       });
     }
     return list;
@@ -1432,7 +1481,7 @@ export default function AdminQuestionBank() {
 
               {/* Individual Chapter Name Badges */}
               {displayedChapters.map(({ name, count }) => {
-                const isSelected = selectedChapter.toLowerCase() === name.toLowerCase();
+                const isSelected = selectedChapter !== 'all' && normChapterKey(selectedChapter) === normChapterKey(name);
                 return (
                   <button
                     key={name}
@@ -1538,7 +1587,7 @@ export default function AdminQuestionBank() {
                 key: 'chapter',
                 label: 'Chapter',
                 render: (q) => {
-                  const chapterName = q.chapter || q.chapter_name;
+                  const chapterName = formatChapterName(q.chapter || q.chapter_name);
                   const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
                   return (
                     <div className="flex flex-col gap-1 max-w-[200px]">
@@ -1579,7 +1628,7 @@ export default function AdminQuestionBank() {
                 label: 'Question',
                 render: (q, idx) => {
                   const sNo = q.serialNumber || (idx != null ? idx + 1 : q.id);
-                  const chapterName = q.chapter || q.chapter_name;
+                  const chapterName = formatChapterName(q.chapter || q.chapter_name);
                   const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
                   const opts = tryParseArray(q.options);
                   const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E'];

@@ -100,7 +100,8 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       row.category || row.subject_name || '',
       row.topic || '',
       row.question_text || '',
-      row.chapter || row.chapter_name || ''
+      row.chapter || row.chapter_name || '',
+      row.id
     );
     return {
       ...row,

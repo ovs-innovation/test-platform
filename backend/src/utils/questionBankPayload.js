@@ -108,10 +108,11 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
     const fallbackIndex = Number.isFinite(Number(singleValue)) ? Number(singleValue) : (correctIndices[0] ?? 0);
     const normalizedIndex = isIntegerType ? null : (Number.isFinite(Number(fallbackIndex)) ? Number(fallbackIndex) : 0);
 
-    const category = payload.category || payload.subject || 'Physics';
+    const category = (payload.category !== undefined || payload.subject !== undefined) ? (payload.category || payload.subject) : undefined;
+    const effectiveCategoryForChapter = category || 'Physics';
     const rawChapter = (payload.chapter || '').trim();
     const rawTopic = (payload.topic || '').trim();
-    const resolvedChapter = resolveStandardChapter(category, rawTopic, payload.question_text || '', rawChapter);
+    const resolvedChapter = resolveStandardChapter(effectiveCategoryForChapter, rawTopic, payload.question_text || '', rawChapter);
     const finalTopic = rawTopic && rawTopic.toLowerCase() !== resolvedChapter.toLowerCase() ? rawTopic : '';
 
     const numericAnswer = payload.numeric_answer !== undefined && payload.numeric_answer !== null && payload.numeric_answer !== '' && !isNaN(Number(payload.numeric_answer))
@@ -120,7 +121,7 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
 
     return {
         ...payload,
-        category,
+        ...(category !== undefined ? { category } : {}),
         question_type: questionType,
         ...(options !== undefined ? { options } : {}),
         marks: Number(payload.marks ?? 1),
@@ -136,7 +137,7 @@ export const normalizeQuestionBankPayload = (payload = {}) => {
         solution_image_url: payload.solution_image_url !== undefined ? payload.solution_image_url : undefined,
         chapter: resolvedChapter,
         topic: finalTopic,
-        subject: payload.subject || category,
+        ...(category !== undefined ? { subject: payload.subject || category } : {}),
         ...(payload.status !== undefined ? { status: payload.status } : {}),
     };
 };

@@ -1051,41 +1051,25 @@ const CHAPTER_RULES = [
   },
 
   // ═══════════════════════════════════════════════════════════════════════════
-  // CHEMISTRY
+  // CHEMISTRY - STRICT 11 SYLLABUS CHAPTERS
   // ═══════════════════════════════════════════════════════════════════════════
   {
-    chapter: 'Chemical Bonding & Molecular Structure',
+    chapter: 'Solutions',
     subjects: ['chemistry'],
     patterns: [
-      /\bchemical bonding\b/i,
-      /\bvsepr\b|\bhybridisation\b|\bhybridization\b|\bsp3\b|\bsp2\b|\bsp\b/i,
-      /\bmolecular orbital theory\b|\bmot\b|\bbond order\b/i,
-      /\bdipole moment\b|\bhydrogen bond\b/i,
-      /\blattice energy\b|\bfajan's rule\b/i,
-    ],
-  },
-  {
-    chapter: 'Coordination Compounds',
-    subjects: ['chemistry'],
-    patterns: [
-      /\bcoordination compound/i,
-      /\bligand/i,
-      /\bwerner's theory\b/i,
-      /\bcrystal field theory\b|\bcft\b|\bcrystal field splitting\b|\bcfse\b/i,
-      /\bvalence bond theory in coordination\b/i,
-      /\biupac nomenclature of coordination\b/i,
-      /\bisomerism in coordination\b/i,
-    ],
-  },
-  {
-    chapter: 'Chemical Kinetics',
-    subjects: ['chemistry'],
-    patterns: [
-      /\bchemical kinetics\b/i,
-      /\brate of reaction\b|\brate law\b|\border of reaction\b|\bmolecularity\b/i,
-      /\bzero order\b|\bfirst order\b|\bhalf-life\b/i,
-      /\barrhenius equation\b|\bactivation energy\b/i,
-      /\bcollision theory\b/i,
+      /\bsolutions?\b/i,
+      /\bcolligative\b/i,
+      /\braoult'?s? law\b/i,
+      /\bhenry'?s? law\b/i,
+      /\bfreezing point\b|\bdepression in freezing\b/i,
+      /\bboiling point\b|\belevation in boiling\b/i,
+      /\bosmotic pressure\b|\bosmosis\b|\breverse osmosis\b/i,
+      /\bvan'?t hoff\b/i,
+      /\bazeotrope\b|\bazeotropic\b/i,
+      /\bideal solution\b|\bnon[- ]ideal solution\b/i,
+      /\bvapour pressure\b|\bvapor pressure\b/i,
+      /\babnormal molar mass\b/i,
+      /\bmolality\b|\bmolarity\b|\bmolal\b/i,
     ],
   },
   {
@@ -1093,68 +1077,29 @@ const CHAPTER_RULES = [
     subjects: ['chemistry'],
     patterns: [
       /\belectrochemistry\b/i,
+      /\belectrode potential\b|\bstandard electrode\b|\breduction potential\b|\boxidation potential\b/i,
+      /\bemf of (the )?cell\b|\bcell potential\b|\be_\{?cell\}?\b|\be\^\\circ\b/i,
       /\bgalvanic cell\b|\bdaniell cell\b|\belectrolytic cell\b/i,
-      /\bnernst equation\b|\bemf of cell\b/i,
-      /\bkohlrausch's law\b|\bmolar conductivity\b/i,
-      /\bfaraday's laws of electrolysis\b/i,
-      /\bbatteries\b|\blead storage\b|\bfuel cell\b|\bcorrosion\b/i,
-    ],
-  },
-  {
-    chapter: 'Redox Reactions & Electrochemistry',
-    subjects: ['chemistry'],
-    patterns: [
+      /\bnernst equation\b/i,
+      /\bkohlrausch'?s? law\b|\bmolar conductivity\b|\bequivalent conductance\b|\bspecific conductance\b|\bconductivity\b/i,
+      /\bfaraday'?s? laws? of electrolysis\b|\belectrolysis\b/i,
+      /\bconcentration cells?\b/i,
+      /\bbatteries\b|\blead storage\b|\bfuel cell\b|\bdry cell\b|\bmercury cell\b/i,
+      /\bcorrosion\b|\brusting of iron\b/i,
       /\bredox reactions?\b|\boxidation number\b/i,
     ],
   },
   {
-    chapter: 'Chemical & Ionic Equilibrium',
+    chapter: 'Chemical Kinetics',
     subjects: ['chemistry'],
     patterns: [
-      /\bequilibrium\b/i,
-      /\ble chatelier\b/i,
-      /\bkp\b|\bkc\b|\blaw of mass action\b/i,
-      /\bionic equilibrium\b|\bph of solution\b|\bbuffer solution\b/i,
-      /\bsolubility product\b|\bksp\b|\bcommon ion effect\b/i,
-      /\bacid-base\b|\bostwald's dilution law\b/i,
-    ],
-  },
-  {
-    chapter: 'Thermodynamics',
-    subjects: ['chemistry'],
-    patterns: [
-      /\bchemical thermodynamics\b|\bfirst law of thermodynamics in chemistry\b/i,
-      /\benthalpy\b|\bentropy\b|\bgibbs free energy\b|\bspontaneity\b/i,
-      /\bhess's law\b|\bbond enthalpy\b|\blattice enthalpy\b/i,
-    ],
-  },
-  {
-    chapter: 'Organic Chemistry Fundamentals',
-    subjects: ['chemistry'],
-    patterns: [
-      /\borganic chemistry fundamentals\b|\biupac\b/i,
-      /\binductive effect\b|\belectromeric\b|\bresonance effect\b|\bhyperconjugation\b/i,
-      /\bcarbocation\b|\bcarbanion\b|\bfree radical\b/i,
-      /\bisomerism in organic\b|\bstructural isomerism\b|\bgeometrical isomerism\b|\boptical isomerism\b/i,
-      /\bhydrocarbons?\b|\balkanes?\b|\balkenes?\b|\balkynes?\b|\baromaticity\b|\bhuckel's rule\b/i,
-    ],
-  },
-  {
-    chapter: 'Aldehydes Ketones and Carboxylic Acids',
-    subjects: ['chemistry'],
-    patterns: [
-      /\baldehydes?\b|\bketones?\b|\bcarboxylic acids?\b/i,
-      /\bnucleophilic addition\b|\baldol condensation\b|\bcannizzaro\b|\bclemmensen\b|\bwolff-kishner\b/i,
-      /\btollens'? test\b|\bfehling's test\b|\bhaloform reaction\b/i,
-    ],
-  },
-  {
-    chapter: 'Amines',
-    subjects: ['chemistry'],
-    patterns: [
-      /\bamines?\b|\bdiazonium salt/i,
-      /\bhofmann bromamide\b|\bgabriel phthalimide\b|\bhinsberg test\b/i,
-      /\bcarbylamine test\b/i,
+      /\bchemical kinetics\b/i,
+      /\brate of (the )?reaction\b|\brate law\b|\brate constant\b/i,
+      /\border of (a |the )?reaction\b|\bzero order\b|\bfirst order\b|\bsecond order\b|\bpseudo first order\b/i,
+      /\bhalf[- ]?life\b|\bt_\{?1\/2\}?/i,
+      /\barrhenius equation\b|\bactivation energy\b|\bpre[- ]exponential factor\b/i,
+      /\bmolecularity\b|\bcollision theory\b/i,
+      /\breaction coordinate diagram\b|\benergy profile\b/i,
     ],
   },
   {
@@ -1169,22 +1114,205 @@ const CHAPTER_RULES = [
       /\bperchloric acid\b|\bhclo4\b|\bhclo3\b|\bhclo2\b|\bhclo\b/i,
       /\boxoacids of (phosphorus|sulphur|halogens)\b/i,
       /\binterhalogen(s)?\b/i,
-      /\bdinitrogen\b|\bnitric acid\b|\bostwald process\b|\bcontact process\b/i,
+      /\bdinitrogen\b|\bnitric acid\b|\bostwald process\b|\bcontact process\b|\bhaber process\b/i,
+      /\bgroup 15\b|\bgroup 16\b|\bgroup 17\b|\bgroup 18\b/i,
+      /\ballotropes of (phosphorus|sulphur|carbon)\b/i,
     ],
   },
   {
-    chapter: 'Chemical Kinetics',
+    chapter: 'The d- and f-Block Elements',
     subjects: ['chemistry'],
     patterns: [
-      /\bchemical kinetics\b/i,
-      /\brate of (the )?reaction\b|\brate law\b|\brate constant\b/i,
-      /\border of (a |the )?reaction\b|\bzero order\b|\bfirst order\b|\bsecond order\b|\bpseudo first order\b/i,
-      /\bhalf[- ]?life\b|\bt_\{?1\/2\}?/i,
-      /\barrhenius equation\b|\bactivation energy\b|\bpre[- ]exponential factor\b/i,
-      /\bmolecularity\b|\bcollision theory\b/i,
+      /\bthe d[- ] and f[- ]block elements?\b/i,
+      /\bd[- ] and f[- ]block elements?\b/i,
+      /\bd[- ]block\b|\bf[- ]block\b/i,
+      /\btransition elements?\b|\btransition metals?\b/i,
+      /\blanthanoid(s)?\b|\blanthanide(s)?\b|\blanthanoid contraction\b/i,
+      /\bactinoid(s)?\b|\bactinide(s)?\b/i,
+      /\bpotassium dichromate\b|\bk2cr2o7\b|\bdichromate\b/i,
+      /\bpotassium permanganate\b|\bkmno4\b|\bpermanganate\b/i,
+      /\binterstitial compounds?\b|\bmischmetall\b/i,
+      /\bchromyl chloride\b|\bcalomel\b/i,
+    ],
+  },
+  {
+    chapter: 'Coordination Compounds',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bcoordination compound/i,
+      /\bligand(s)?\b/i,
+      /\bwerner'?s? theory\b/i,
+      /\bcrystal field theory\b|\bcft\b|\bcrystal field splitting\b|\bcfse\b/i,
+      /\bvalence bond theory in coordination\b/i,
+      /\biupac nomenclature of coordination\b/i,
+      /\bisomerism in coordination\b|\blinkage isomer/i,
+      /\bmetal carbonyl(s)?\b|\bzeise'?s? salt\b/i,
+      /\bchelate\b|\bchelating\b|\bedta\b/i,
+      /\beffective atomic number\b|\bean\b/i,
+      /\binner orbital\b|\bouter orbital\b/i,
+      /\bsynergic bonding\b/i,
+      /\borganometallic\b|\borgano-metallic\b/i,
+    ],
+  },
+  {
+    chapter: 'Haloalkanes and Haloarenes',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bhaloalkanes?\b|\bhaloarenes?\b/i,
+      /\balkyl halides?\b|\baryl halides?\b/i,
+      /\bchlorobenzene\b|\bbromobenzene\b|\bbenzyl halide\b|\ballyl halide\b/i,
+      /\bs_?n1\b|\bs_?n2\b|\bs_?ni\b|\be1cb\b|\bdehydrohalogenation\b/i,
+      /\bfinkelstein\b|\bswarts reaction\b|\bhunsdiecker\b|\bdarzen/i,
+      /\bgrignard reagent\b/i,
+      /\bchloroform\b|\bphosgene\b|\bfreon(s)?\b|\bddt\b|\bpolyhalogen/i,
+      /\bvicinal dihalide\b|\bgeminal dihalide\b/i,
+    ],
+  },
+  {
+    chapter: 'Alcohols, Phenols and Ethers',
+    subjects: ['chemistry'],
+    patterns: [
+      /\balcohols?, phenols? and ethers?\b/i,
+      /\balcohols?\b|\bphenols?\b|\bethers?\b/i,
+      /\bwilliamson(?:'s)? (?:ether )?synthesis\b/i,
+      /\bkolbe(?:'s)? reaction\b|\breimer[- ]tiemann\b/i,
+      /\bhydroboration[- ]oxidation\b|\boxymercuration\b/i,
+      /\blucas test\b|\bpicric acid\b|\bcumene\b/i,
+      /\bvictor meyer/i,
+      /\bdehydration of alcohols?\b/i,
+      /\bepoxide(s)?\b|\boxirane(s)?\b/i,
+    ],
+  },
+  {
+    chapter: 'Aldehydes, Ketones and Carboxylic Acids',
+    subjects: ['chemistry'],
+    patterns: [
+      /\baldehydes?, ketones? and carboxylic acids?\b/i,
+      /\baldehydes?\b|\bketones?\b|\bcarboxylic acids?\b/i,
+      /\bnucleophilic addition\b|\baldol condensation\b|\bcannizzaro\b|\bclemmensen\b|\bwolff[- ]kishner\b/i,
+      /\btollens'? test\b|\bfehling'?s? test\b|\bhaloform reaction\b/i,
+      /\bhell[- ]volhard[- ]zelinsky\b|\bhvz reaction\b/i,
+      /\brosenmund reduction\b|\bstephen reaction\b|\betard reaction\b/i,
+      /\bdecarboxylation\b/i,
+    ],
+  },
+  {
+    chapter: 'Amines',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bamines?\b|\bdiazonium salt(s)?\b/i,
+      /\baniline\b|\bsubstituted anilines?\b/i,
+      /\bhofmann bromamide\b|\bgabriel phthalimide\b|\bhinsberg test\b/i,
+      /\bcarbylamine test\b|\bazo dye(s)?\b|\bdiazotiz/i,
+      /\bbasicity of amines\b/i,
+    ],
+  },
+  {
+    chapter: 'Biomolecules',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bbiomolecules?\b/i,
+      /\bcarbohydrate(s)?\b|\bglucose\b|\bfructose\b|\bsucrose\b|\bmaltose\b|\blactose\b/i,
+      /\bmonosaccharide(s)?\b|\bdisaccharide(s)?\b|\bpolysaccharide(s)?\b/i,
+      /\banomers?\b|\bepimers?\b|\bosazone\b|\breducing sugar/i,
+      /\bamino acids?\b|\bpeptide bond\b|\bproteins?\b|\bdenaturation\b|\bzwitterion\b/i,
+      /\bnucleic acids?\b|\bdna\b|\brna\b|\bnucleotide(s)?\b|\bnucleoside(s)?\b/i,
+      /\bvitamins?\b|\benzymes?\b/i,
     ],
   },
 ];
+
+export const CHEMISTRY_STANDARD_11 = [
+  'Solutions',
+  'Electrochemistry',
+  'Chemical Kinetics',
+  'The p-Block Elements',
+  'The d- and f-Block Elements',
+  'Coordination Compounds',
+  'Haloalkanes and Haloarenes',
+  'Alcohols, Phenols and Ethers',
+  'Aldehydes, Ketones and Carboxylic Acids',
+  'Amines',
+  'Biomolecules'
+];
+
+/**
+ * Resolve standard Class 12 Chapter for Chemistry questions.
+ * Enforces strictly and exclusively one of the 11 syllabus chapters.
+ */
+export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
+  const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
+  const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 1. Direct match on standard 11
+  for (const chap of CHEMISTRY_STANDARD_11) {
+    if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
+      return chap;
+    }
+  }
+
+  // 2. Electrochemistry
+  if (/electrochem|electrode potential|standard electrode|reduction potential|oxidation potential|emf|cell potential|e\^\\circ|e_cell|thermodynamics of cells|gibbs free energy and cell|nernst|kohlrausch|faraday|conductance|conductivity|electroly|galvanic|daniell|battery|lead storage|fuel cell|corrosion|redox reaction|concentration cell|activity of metals|storage cell/i.test(combined)) {
+    return 'Electrochemistry';
+  }
+
+  // 3. Solutions
+  if (/solution|colligative|raoult|henry'?s law|freezing point|boiling point|osmotic|van'?t hoff|azeotrope|ideal solution|vapour pressure|abnormal molar mass|molal|molar mass of non-volatile/i.test(combined)) {
+    return 'Solutions';
+  }
+
+  // 4. Chemical Kinetics
+  if (/kinetics|rate of reaction|rate law|order of reaction|molecularity|zero order|first order|arrhenius|activation energy|collision theory|pseudo first order|half[- ]life|reaction mechanism|reaction coordinate diagram/i.test(combined)) {
+    return 'Chemical Kinetics';
+  }
+
+  // 5. Coordination Compounds
+  if (/coordination|complex|ligand|werner|crystal field|cfse|spectrochemical|chelate|isomerism in coordination|metal carbonyl|zeise|outer orbital|inner orbital|synergic|coordination number|effective atomic number|ean|organometallic|organo-metallic|ferrocene|square planar|homoleptic|heteroleptic|bidentate|polydentate|hexadentate|edta|\bambidentate\b/i.test(combined) || (questionId && questionId >= 8191 && questionId <= 8381)) {
+    return 'Coordination Compounds';
+  }
+
+  // 6. Biomolecules
+  if (/biomolecule|glucose|fructose|carbohydrate|amino acid|protein|peptide|nucleic acid|dna|rna|vitamin|enzyme|monosaccharide|disaccharide|polysaccharide|sucrose|maltose|lactose|reducing sugar|denaturation|zwitterion/i.test(combined)) {
+    return 'Biomolecules';
+  }
+
+  // 7. Amines
+  if (/amine|diazonium|aniline|gabriel phthalimide|hoff?mann bromamide|carbylamine|hinsberg|azo dye|diazotiz|basicity of substituted aniline/i.test(combined)) {
+    return 'Amines';
+  }
+
+  // 8. Aldehydes, Ketones and Carboxylic Acids
+  if (/aldehyde|ketone|carboxylic acid|aldol|cannizzaro|clemmensen|wolff[- ]kishner|tollens|fehling|haloform|hvz|hell[- ]volhard|decarboxylation|rosenmund|stephen|etard|esterification|cyclohexanone|acetophenone|benzophenone|formalin|acetaldehyde|benzaldehyde|benzoic acid|acetic acid/i.test(combined)) {
+    return 'Aldehydes, Ketones and Carboxylic Acids';
+  }
+
+  // 9. Alcohols, Phenols and Ethers
+  if (/alcohol|phenol|ether|williamson|kolbe|reimer[- ]tiemann|hydroboration|lucas|picric acid|cumene|esterification|dehydration of alcohol|hydration of alkene|victor meyer|fecl_?3|resorcinol|carbinol|epoxide|oxirane|anisole|cresol|salicyl|phthalic|glycol|glycerol/i.test(combined) || (questionId && questionId >= 8507 && questionId <= 8639)) {
+    return 'Alcohols, Phenols and Ethers';
+  }
+
+  // 10. Haloalkanes and Haloarenes
+  if (/haloalkane|haloarene|alkyl halide|aryl halide|chlorobenzene|bromobenzene|freon|chloroform|polyhalogen|swarts|finkelstein|hunsdiecker|darzen|sn1|sn2|sni|e1cb|elimination|grignard|monochloro|3-bromo|nucleophilic substitution|nucleophilic aromatic|alkyl benzene/i.test(combined) || (questionId && ((questionId >= 8382 && questionId <= 8506) || (questionId >= 8630 && questionId <= 8645)))) {
+    return 'Haloalkanes and Haloarenes';
+  }
+
+  // 11. The p-Block Elements
+  if (/p[- ]block|nitrogen|phosphorus|oxygen|sulphur|sulfur|halogen|noble gas|xenon|phosphine|interhalogen|contact process|ostwald process|haber|oxoacids of|hydrides of group|group 15|group 16|group 17|group 18|non-linear shape/i.test(combined)) {
+    return 'The p-Block Elements';
+  }
+
+  // 12. The d- and f-Block Elements
+  if (/d[- ] and f[- ]block|d-block|f-block|transition element|lanthanoid|actinoid|dichromate|permanganate|kmno4|k2cr2o7|interstitial compound|mischmetall|group 12|calomel|mercury|chromium|chromyl chloride|hydrides/i.test(combined)) {
+    return 'The d- and f-Block Elements';
+  }
+
+  // Fallbacks by ID ranges if present
+  if (questionId && questionId >= 8191 && questionId <= 8381) return 'Coordination Compounds';
+  if (questionId && questionId >= 8382 && questionId <= 8506) return 'Haloalkanes and Haloarenes';
+  if (questionId && questionId >= 8507 && questionId <= 8639) return 'Alcohols, Phenols and Ethers';
+
+  return 'Coordination Compounds';
+}
 
 /**
  * Standard Chapter Resolver function.
@@ -1197,11 +1325,16 @@ const CHAPTER_RULES = [
  * @param {string} [currentChapter] - Existing chapter field if present
  * @returns {string} Standard Overarching Chapter Name
  */
-export function resolveStandardChapter(category = '', topic = '', questionText = '', currentChapter = '') {
+export function resolveStandardChapter(category = '', topic = '', questionText = '', currentChapter = '', questionId = null) {
   const normCategory = (category || '').trim().toLowerCase();
   const rawChapter = (currentChapter || '').trim();
   const rawTopic = (topic || '').trim();
   const rawText = (questionText || '').trim();
+
+  // 0. Strict 11 Syllabus Chapters for Chemistry
+  if (normCategory === 'chemistry') {
+    return resolveChemistryStandardChapter(rawChapter, rawTopic, rawText, questionId);
+  }
 
   const normalizeChap = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/s\b/g, '').replace(/[^a-z0-9]/g, '');
 
