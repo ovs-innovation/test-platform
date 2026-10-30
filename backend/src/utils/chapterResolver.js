@@ -1314,6 +1314,66 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
   return 'Coordination Compounds';
 }
 
+export const ZOOLOGY_STANDARD_6 = [
+  'Human Reproduction',
+  'Reproductive Health',
+  'Human Health & Disease',
+  'Evolution',
+  'Biotechnology - Principles and Processes',
+  'Biotechnology and its Applications'
+];
+
+/**
+ * Resolve standard Class 12 Chapter for Zoology questions.
+ * Enforces strictly and exclusively one of the 6 syllabus chapters.
+ */
+export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
+  const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
+  const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 1. Direct match on standard 6
+  for (const chap of ZOOLOGY_STANDARD_6) {
+    if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
+      return chap;
+    }
+  }
+
+  // 2. ID-based ranges (exact block partitions from NEET curriculum batch)
+  if (questionId && questionId >= 6870 && questionId <= 7159) return 'Human Reproduction';
+  if (questionId && questionId >= 7160 && questionId <= 7276) return 'Reproductive Health';
+  if (questionId && questionId >= 7277 && questionId <= 7470) return 'Human Health & Disease';
+  if (questionId && ((questionId >= 7471 && questionId <= 7634) || [7638, 7640, 7641, 7642, 7644, 7645, 7646, 7648].includes(questionId))) return 'Evolution';
+  if (questionId && ([7635, 7636, 7639, 7643].includes(questionId) || (questionId >= 7649 && questionId <= 7780))) return 'Biotechnology - Principles and Processes';
+  if (questionId && questionId >= 7781 && questionId <= 7900) return 'Biotechnology and its Applications';
+
+  // 3. Keyword-based matching
+  if (/humulin|gene therapy|ada deficiency|transgenic|bt[- ]|cry|biopiracy|geac|tracy|rosie|rnaj|rnai|rna interference|pest resistant|meloidogyne/i.test(combined)) {
+    return 'Biotechnology and its Applications';
+  }
+
+  if (/recombinant|r-?dna|restriction enzyme|restriction endonuclease|palindromic|pbr322|ecori|dna ligase|cloning vector|agarose|gel electrophoresis|polymerase chain reaction|\bpcr\b|bioreactor|downstream processing|competent host|biolistic|gene gun|chilled ethanol|insertional inactivation|selectable marker|\bori\b|taq polymerase/i.test(combined)) {
+    return 'Biotechnology - Principles and Processes';
+  }
+
+  if (/evolution|natural selection|darwin|lamarck|malthus|hardy[- ]weinberg|genetic drift|adaptive radiation|homologous|analogous|divergent evolution|convergent evolution|vestigial|fossils?|paleontol|archaeopteryx|homo erectus|homo habilis|neanderthal|australopithecus|origin of life|urey|oparin|haldane|speciation|industrial melanism/i.test(combined)) {
+    return 'Evolution';
+  }
+
+  if (/health|disease|immunity|immune|antibody|antibodies|antigen|innate immunity|acquired immunity|lymphocyte|malt|thymus|spleen|interferon|allergy|aids|hiv|cancer|carcinogen|oncogene|metastasis|chemotherapy|typhoid|widal|pneumonia|malaria|plasmodium|sporozoite|amoebiasis|entamoeba|ascariasis|filariasis|elephantiasis|ringworm|morphine|heroin|smack|cannabinoid|cocaine|hallucinogen|tobacco|nicotine/i.test(combined)) {
+    return 'Human Health & Disease';
+  }
+
+  if (/contracept|barrier method|condom|nirodh|femidom|diaphragm|cervical cap|vault|iud|intrauterine device|cu-?t|multiload|lippes loop|lng[- ]20|progestasert|oral pill|saheli|mala[- ]d|sterilisation|sterilization|vasectomy|tubectomy|coitus interruptus|lactational amenorrh|amniocentesis|mtp|induced abortion|sti\b|stds?\b|syphilis|gonorrhoea|chlamydia|trichomoniasis|infertility|assisted reproductive|art\b|ivf|zift|gift|icsi|iui|artificial insemination/i.test(combined)) {
+    return 'Reproductive Health';
+  }
+
+  if (/reproduction|testis|testes|scrotum|seminiferous|sertoli|leydig|epididymis|vas deferens|vasa efferentia|rete testis|seminal vesicle|prostate|bulbourethral|cowper|sperm|semen|acrosome|ovary|ovaries|fallopian|oviduct|uterus|endometrium|myometrium|cervix|vagina|clitoris|mammary|oogenesis|oogonia|primary oocyte|secondary oocyte|follicle|graafian|antrum|zona pellucida|polar body|menstrual|menstruation|menarche|menopause|luteal phase|corpus luteum|fertilisation|fertilization|cleavage|morula|blastocyst|trophoblast|inner cell mass|implantation|placenta|umbilical cord|amnion|embryo|foetus|fetus|gestation|parturition|lactation|colostrum/i.test(combined)) {
+    return 'Human Reproduction';
+  }
+
+  return 'Human Reproduction';
+}
+
 /**
  * Standard Chapter Resolver function.
  * Given a subject/category, topic, and question context, returns the overarching
@@ -1334,6 +1394,11 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   // 0. Strict 11 Syllabus Chapters for Chemistry
   if (normCategory === 'chemistry') {
     return resolveChemistryStandardChapter(rawChapter, rawTopic, rawText, questionId);
+  }
+
+  // 0. Strict 6 Syllabus Chapters for Zoology
+  if (normCategory === 'zoology') {
+    return resolveZoologyStandardChapter(rawChapter, rawTopic, rawText, questionId);
   }
 
   const normalizeChap = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/s\b/g, '').replace(/[^a-z0-9]/g, '');

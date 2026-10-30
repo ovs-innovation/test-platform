@@ -197,7 +197,16 @@ export default function AdminQuestionBank() {
     'Biomolecules'
   ], []);
 
-  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
+  const ZOOLOGY_STANDARD_6 = useMemo(() => [
+    'Human Reproduction',
+    'Reproductive Health',
+    'Human Health & Disease',
+    'Evolution',
+    'Biotechnology - Principles and Processes',
+    'Biotechnology and its Applications'
+  ], []);
+
+  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
 
   const formatChapterName = (str) => {
     if (!str) return 'General';
@@ -221,6 +230,18 @@ export default function AdminQuestionBank() {
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
     }
 
+    if (category?.toLowerCase() === 'zoology') {
+      const normalized = normChapterKey(trimmed);
+      const matched = ZOOLOGY_STANDARD_6.find((ch) => normChapterKey(ch) === normalized);
+      if (matched) return matched;
+      if (/human reproduction/i.test(trimmed)) return 'Human Reproduction';
+      if (/reproductive health/i.test(trimmed)) return 'Reproductive Health';
+      if (/health.*disease/i.test(trimmed)) return 'Human Health & Disease';
+      if (/evolution/i.test(trimmed)) return 'Evolution';
+      if (/biotechnology.*principles/i.test(trimmed)) return 'Biotechnology - Principles and Processes';
+      if (/biotechnology.*applications/i.test(trimmed)) return 'Biotechnology and its Applications';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -229,10 +250,15 @@ export default function AdminQuestionBank() {
 
   const chaptersWithCounts = useMemo(() => {
     const isChemistry = category?.toLowerCase() === 'chemistry';
+    const isZoology = category?.toLowerCase() === 'zoology';
     const map = new Map();
 
     if (isChemistry) {
       CHEMISTRY_STANDARD_11.forEach((ch) => {
+        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+      });
+    } else if (isZoology) {
+      ZOOLOGY_STANDARD_6.forEach((ch) => {
         map.set(ch.toLowerCase(), { name: ch, count: 0 });
       });
     }
@@ -254,12 +280,19 @@ export default function AdminQuestionBank() {
       });
     }
 
+    if (isZoology) {
+      return ZOOLOGY_STANDARD_6.map((ch) => {
+        const item = map.get(ch.toLowerCase());
+        return item || { name: ch, count: 0 };
+      });
+    }
+
     return Array.from(map.values()).sort((a, b) => {
       if (a.name.toLowerCase() === 'general') return 1;
       if (b.name.toLowerCase() === 'general') return -1;
       return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
     });
-  }, [questions, category, CHEMISTRY_STANDARD_11]);
+  }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6]);
 
   const displayedChapters = useMemo(() => {
     if (!chapterSearch.trim()) return chaptersWithCounts;
