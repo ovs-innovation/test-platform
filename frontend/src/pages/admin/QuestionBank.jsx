@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal } from 'lucide-react';
+import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal, AlertCircle, CheckSquare, Layers, HelpCircle } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -32,6 +32,23 @@ const tryParseArray = (val) => {
 };
 
 const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
+
+export const isAssertionReason = (q) => {
+  if (!q) return false;
+  const t = String(q.question_type || '').toLowerCase().trim();
+  return t === 'assertion_reason' || t === 'assertion-reason' || Boolean(q.assertion_text && q.reason_text);
+};
+
+export const isNumerical = (q) => {
+  if (!q) return false;
+  const t = String(q.question_type || '').toLowerCase().trim();
+  return t === 'numerical' || t === 'integer';
+};
+
+export const isMCQ = (q) => {
+  if (!q) return false;
+  return !isAssertionReason(q) && !isNumerical(q);
+};
 
 function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select option', disabled = false, className = '' }) {
   const [open, setOpen] = useState(false);
@@ -147,6 +164,7 @@ export default function AdminQuestionBank() {
   const [existingTestSearch, setExistingTestSearch] = useState('');
   const [selectedExistingTestId, setSelectedExistingTestId] = useState(null);
   const [statusFilter, setStatusFilter] = useState('all'); // 'all' | 'available' | 'already_chosen'
+  const [typeFilter, setTypeFilter] = useState('all'); // 'all' | 'mcq' | 'assertion_reason' | 'numerical'
   const [selectedChapter, setSelectedChapter] = useState('all'); // 'all' | '<chapter_name>'
   const [chapterSearch, setChapterSearch] = useState('');
   const chapterSliderRef = useRef(null);
@@ -279,15 +297,15 @@ export default function AdminQuestionBank() {
 
     if (isChemistry) {
       CHEMISTRY_STANDARD_11.forEach((ch) => {
-        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+        map.set(ch.toLowerCase(), { name: ch, count: 0, arCount: 0 });
       });
     } else if (isZoology) {
       ZOOLOGY_STANDARD_6.forEach((ch) => {
-        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+        map.set(ch.toLowerCase(), { name: ch, count: 0, arCount: 0 });
       });
     } else if (isBotany) {
       BOTANY_STANDARD_7.forEach((ch) => {
-        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+        map.set(ch.toLowerCase(), { name: ch, count: 0, arCount: 0 });
       });
     }
 
@@ -296,29 +314,33 @@ export default function AdminQuestionBank() {
       const formatted = formatChapterName(raw);
       const key = formatted.toLowerCase();
       if (!map.has(key)) {
-        map.set(key, { name: formatted, count: 0 });
+        map.set(key, { name: formatted, count: 0, arCount: 0 });
       }
-      map.get(key).count += 1;
+      const entry = map.get(key);
+      entry.count += 1;
+      if (isAssertionReason(q)) {
+        entry.arCount = (entry.arCount || 0) + 1;
+      }
     });
 
     if (isChemistry) {
       return CHEMISTRY_STANDARD_11.map((ch) => {
         const item = map.get(ch.toLowerCase());
-        return item || { name: ch, count: 0 };
+        return item || { name: ch, count: 0, arCount: 0 };
       });
     }
 
     if (isZoology) {
       return ZOOLOGY_STANDARD_6.map((ch) => {
         const item = map.get(ch.toLowerCase());
-        return item || { name: ch, count: 0 };
+        return item || { name: ch, count: 0, arCount: 0 };
       });
     }
 
     if (isBotany) {
       return BOTANY_STANDARD_7.map((ch) => {
         const item = map.get(ch.toLowerCase());
-        return item || { name: ch, count: 0 };
+        return item || { name: ch, count: 0, arCount: 0 };
       });
     }
 
@@ -328,6 +350,10 @@ export default function AdminQuestionBank() {
       return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
     });
   }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6, BOTANY_STANDARD_7]);
+
+  const totalArInSubject = useMemo(() => {
+    return (questions || []).filter(isAssertionReason).length;
+  }, [questions]);
 
   const displayedChapters = useMemo(() => {
     if (!chapterSearch.trim()) return chaptersWithCounts;
@@ -368,6 +394,13 @@ export default function AdminQuestionBank() {
         return normChapterKey(ch) === targetNorm;
       });
     }
+    if (typeFilter === 'assertion_reason') {
+      baseList = baseList.filter(isAssertionReason);
+    } else if (typeFilter === 'mcq') {
+      baseList = baseList.filter(isMCQ);
+    } else if (typeFilter === 'numerical') {
+      baseList = baseList.filter(isNumerical);
+    }
     let total = baseList.length;
     let chosen = 0;
     let available = 0;
@@ -377,7 +410,36 @@ export default function AdminQuestionBank() {
       else available++;
     });
     return { total, chosen, available };
-  }, [questions, selectedChapter]);
+  }, [questions, selectedChapter, typeFilter]);
+
+  const typeCounts = useMemo(() => {
+    let baseList = questions || [];
+    if (selectedChapter && selectedChapter !== 'all') {
+      const targetNorm = normChapterKey(selectedChapter);
+      baseList = baseList.filter((q) => {
+        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        return normChapterKey(ch) === targetNorm;
+      });
+    }
+    if (statusFilter === 'already_chosen') {
+      baseList = baseList.filter((q) => q.status === 'already_chosen');
+    } else if (statusFilter === 'available') {
+      baseList = baseList.filter((q) => q.status !== 'already_chosen');
+    }
+
+    let total = baseList.length;
+    let arCount = 0;
+    let mcqCount = 0;
+    let numCount = 0;
+
+    baseList.forEach((q) => {
+      if (isAssertionReason(q)) arCount++;
+      else if (isNumerical(q)) numCount++;
+      else mcqCount++;
+    });
+
+    return { total, arCount, mcqCount, numCount };
+  }, [questions, selectedChapter, statusFilter]);
 
   const filteredQuestions = useMemo(() => {
     let list = questions || [];
@@ -393,8 +455,66 @@ export default function AdminQuestionBank() {
         return normChapterKey(ch) === targetNorm;
       });
     }
+    if (typeFilter === 'assertion_reason') {
+      list = list.filter(isAssertionReason);
+    } else if (typeFilter === 'mcq') {
+      list = list.filter(isMCQ);
+    } else if (typeFilter === 'numerical') {
+      list = list.filter(isNumerical);
+    }
     return list;
-  }, [questions, statusFilter, selectedChapter]);
+  }, [questions, statusFilter, selectedChapter, typeFilter]);
+
+  const isAllArSelected = useMemo(() => {
+    let baseList = questions || [];
+    if (selectedChapter && selectedChapter !== 'all') {
+      const targetNorm = normChapterKey(selectedChapter);
+      baseList = baseList.filter((q) => {
+        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        return normChapterKey(ch) === targetNorm;
+      });
+    }
+    const arQuestions = baseList.filter(isAssertionReason);
+    if (arQuestions.length === 0) return false;
+    return arQuestions.every((q) => selectedQuestionIds.includes(q.id));
+  }, [questions, selectedChapter, selectedQuestionIds]);
+
+  const handleSelectAllAR = () => {
+    let baseList = questions || [];
+    if (selectedChapter && selectedChapter !== 'all') {
+      const targetNorm = normChapterKey(selectedChapter);
+      baseList = baseList.filter((q) => {
+        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        return normChapterKey(ch) === targetNorm;
+      });
+    }
+    const arQuestions = baseList.filter(isAssertionReason);
+    if (arQuestions.length === 0) {
+      toast.info('No Assertion-Reason questions found in this chapter.');
+      return;
+    }
+    const arIds = arQuestions.map((q) => q.id);
+    const allSelected = arIds.every((id) => selectedQuestionIds.includes(id));
+
+    if (allSelected) {
+      setSelectedQuestionIds((prev) => prev.filter((id) => !arIds.includes(id)));
+      setSelectedQuestionsMap((prev) => {
+        const next = { ...prev };
+        arIds.forEach((id) => delete next[id]);
+        return next;
+      });
+      toast.info(`Deselected ${arIds.length} Assertion-Reason questions.`);
+    } else {
+      setSelectedQuestionIds((prev) => Array.from(new Set([...prev, ...arIds])));
+      setSelectedQuestionsMap((prev) => {
+        const next = { ...prev };
+        arQuestions.forEach((q) => { next[q.id] = q; });
+        return next;
+      });
+      const chapterLabel = selectedChapter !== 'all' ? selectedChapter : category;
+      toast.success(`Selected all ${arQuestions.length} Assertion-Reason questions from ${chapterLabel}!`);
+    }
+  };
 
   const _unusedFiltered = () => {}; /*
     if (statusFilter === 'all') return questions;
@@ -1365,51 +1485,109 @@ export default function AdminQuestionBank() {
                 ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
                 : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
                 }`}
-              onClick={() => setCategory(c)}
+              onClick={() => {
+                setCategory(c);
+                setSelectedChapter('all');
+                setTypeFilter('all');
+              }}
             >
               {c}
             </button>
           ))}
         </div>
 
-        {/* Status Filter Tabs */}
-        <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold">
-          <span className="text-[11px] text-slate-400 dark:text-slate-500 px-2 font-semibold">Status:</span>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('all')}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
-              statusFilter === 'all'
-                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
-                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-            }`}
-          >
-            All ({statusCounts.total})
-          </button>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('available')}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
-              statusFilter === 'available'
-                ? 'bg-emerald-600 text-white shadow-2xs font-black'
-                : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
-            <span>Available ({statusCounts.available})</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => setStatusFilter('already_chosen')}
-            className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
-              statusFilter === 'already_chosen'
-                ? 'bg-violet-600 text-white shadow-2xs font-black'
-                : 'text-violet-700 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30'
-            }`}
-          >
-            <CheckCircle2 className="h-3.5 w-3.5" />
-            <span>In Test ({statusCounts.chosen})</span>
-          </button>
+        <div className="flex flex-wrap items-center gap-2">
+          {/* Status Filter Tabs */}
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 px-2 font-semibold">Status:</span>
+            <button
+              type="button"
+              onClick={() => setStatusFilter('all')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
+                statusFilter === 'all'
+                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              All ({statusCounts.total})
+            </button>
+            <button
+              type="button"
+              onClick={() => setStatusFilter('available')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
+                statusFilter === 'available'
+                  ? 'bg-emerald-600 text-white shadow-2xs font-black'
+                  : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+              }`}
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
+              <span>Available ({statusCounts.available})</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setStatusFilter('already_chosen')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
+                statusFilter === 'already_chosen'
+                  ? 'bg-violet-600 text-white shadow-2xs font-black'
+                  : 'text-violet-700 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30'
+              }`}
+            >
+              <CheckCircle2 className="h-3.5 w-3.5" />
+              <span>In Test ({statusCounts.chosen})</span>
+            </button>
+          </div>
+
+          {/* Question Type Filter Tabs */}
+          <div className="flex items-center gap-1.5 bg-slate-100 dark:bg-slate-900/90 p-1 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 px-2 font-semibold">Type:</span>
+            <button
+              type="button"
+              onClick={() => setTypeFilter('all')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
+                typeFilter === 'all'
+                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+              }`}
+            >
+              All ({typeCounts.total})
+            </button>
+            <button
+              type="button"
+              onClick={() => setTypeFilter('mcq')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
+                typeFilter === 'mcq'
+                  ? 'bg-blue-600 text-white shadow-2xs font-black'
+                  : 'text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30'
+              }`}
+            >
+              MCQs ({typeCounts.mcqCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setTypeFilter('assertion_reason')}
+              className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${
+                typeFilter === 'assertion_reason'
+                  ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
+                  : 'text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30'
+              }`}
+            >
+              <AlertCircle className="h-3.5 w-3.5" />
+              <span>Assertion-Reason ({typeCounts.arCount})</span>
+            </button>
+            {typeCounts.numCount > 0 && (
+              <button
+                type="button"
+                onClick={() => setTypeFilter('numerical')}
+                className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${
+                  typeFilter === 'numerical'
+                    ? 'bg-purple-600 text-white shadow-2xs font-black'
+                    : 'text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30'
+                }`}
+              >
+                Numerical ({typeCounts.numCount})
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
@@ -1431,18 +1609,78 @@ export default function AdminQuestionBank() {
               </div>
 
               {selectedChapter !== 'all' && (
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/15 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 animate-in fade-in zoom-in-95 duration-150">
-                  <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                  <span className="truncate max-w-[200px]">Active: <strong>{selectedChapter}</strong></span>
-                  <span className="text-[10px] opacity-75 font-mono">({filteredQuestions.length} Qs)</span>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedChapter('all')}
-                    className="ml-1 p-0.5 rounded-full hover:bg-indigo-500/30 text-indigo-600 dark:text-indigo-300 transition cursor-pointer"
-                    title="Clear chapter filter (show all)"
-                  >
-                    <X className="h-3 w-3" />
-                  </button>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-indigo-500/15 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 border border-indigo-500/30 animate-in fade-in zoom-in-95 duration-150">
+                    <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                    <span className="truncate max-w-[200px]">Active: <strong>{selectedChapter}</strong></span>
+                    <span className="text-[10px] opacity-75 font-mono">({filteredQuestions.length} Qs)</span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedChapter('all')}
+                      className="ml-1 p-0.5 rounded-full hover:bg-indigo-500/30 text-indigo-600 dark:text-indigo-300 transition cursor-pointer"
+                      title="Clear chapter filter (show all)"
+                    >
+                      <X className="h-3 w-3" />
+                    </button>
+                  </div>
+
+                  {/* Inline Type Toggles for Active Chapter */}
+                  <div className="inline-flex items-center gap-1 p-0.5 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold">
+                    <button
+                      type="button"
+                      onClick={() => setTypeFilter('all')}
+                      className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer ${
+                        typeFilter === 'all'
+                          ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                      }`}
+                      title="View all questions in this chapter"
+                    >
+                      All ({typeCounts.total})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTypeFilter('mcq')}
+                      className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer ${
+                        typeFilter === 'mcq'
+                          ? 'bg-blue-600 text-white shadow-2xs font-black'
+                          : 'text-blue-700 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300'
+                      }`}
+                      title="View only MCQs in this chapter"
+                    >
+                      MCQ ({typeCounts.mcqCount})
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setTypeFilter('assertion_reason')}
+                      className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer flex items-center gap-1 ${
+                        typeFilter === 'assertion_reason'
+                          ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
+                          : 'text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300'
+                      }`}
+                      title="View only Assertion-Reason questions in this chapter"
+                    >
+                      <AlertCircle className="h-3 w-3" />
+                      <span>AR ({typeCounts.arCount})</span>
+                    </button>
+                  </div>
+
+                  {/* Quick Select All AR Button for this Chapter */}
+                  {typeCounts.arCount > 0 && (
+                    <button
+                      type="button"
+                      onClick={handleSelectAllAR}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer shadow-2xs active:scale-95 ${
+                        isAllArSelected
+                          ? 'bg-amber-500 text-slate-950 hover:bg-amber-400 ring-2 ring-amber-400/50'
+                          : 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/30'
+                      }`}
+                      title={isAllArSelected ? `Deselect all ${typeCounts.arCount} Assertion-Reason questions in ${selectedChapter}` : `Select all ${typeCounts.arCount} Assertion-Reason questions in ${selectedChapter} for test creation`}
+                    >
+                      {isAllArSelected ? <CheckSquare className="h-3.5 w-3.5" /> : <Sparkles className="h-3.5 w-3.5 text-amber-500" />}
+                      <span>{isAllArSelected ? 'Deselect All AR' : 'Select All AR'} ({typeCounts.arCount})</span>
+                    </button>
+                  )}
                 </div>
               )}
             </div>
@@ -1545,10 +1783,22 @@ export default function AdminQuestionBank() {
                 >
                   {questions.length}
                 </span>
+                {totalArInSubject > 0 && (
+                  <span
+                    className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-black transition-colors ${
+                      selectedChapter === 'all'
+                        ? 'bg-amber-400 text-slate-950 shadow-2xs'
+                        : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30'
+                    }`}
+                    title={`${totalArInSubject} Assertion-Reason questions in ${category}`}
+                  >
+                    {totalArInSubject} AR
+                  </span>
+                )}
               </button>
 
               {/* Individual Chapter Name Badges */}
-              {displayedChapters.map(({ name, count }) => {
+              {displayedChapters.map(({ name, count, arCount }) => {
                 const isSelected = selectedChapter !== 'all' && normChapterKey(selectedChapter) === normChapterKey(name);
                 return (
                   <button
@@ -1561,7 +1811,7 @@ export default function AdminQuestionBank() {
                         ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
                         : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
                     }`}
-                    title={`Click to filter by ${name} (${count} questions)`}
+                    title={`Click to filter by ${name} (${count} questions${arCount ? `, ${arCount} Assertion-Reason` : ''})`}
                   >
                     <BookOpen
                       className={`h-3.5 w-3.5 shrink-0 transition-transform duration-200 group-hover/badge:scale-110 ${
@@ -1578,6 +1828,18 @@ export default function AdminQuestionBank() {
                     >
                       {count}
                     </span>
+                    {arCount > 0 && (
+                      <span
+                        className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-black transition-colors ${
+                          isSelected
+                            ? 'bg-amber-400 text-slate-950 shadow-2xs'
+                            : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 group-hover/badge:bg-amber-500/25'
+                        }`}
+                        title={`${arCount} Assertion-Reason questions in ${name}`}
+                      >
+                        {arCount} AR
+                      </span>
+                    )}
                   </button>
                 );
               })}
@@ -1592,10 +1854,51 @@ export default function AdminQuestionBank() {
         </div>
       )}
 
+      {/* Active Assertion-Reason Filter Banner */}
+      {typeFilter === 'assertion_reason' && (
+        <div className="mb-3 px-4 py-3 rounded-2xl bg-amber-500/10 border border-amber-500/30 dark:bg-amber-950/20 flex flex-wrap items-center justify-between gap-3 text-xs shadow-2xs">
+          <div className="flex items-center gap-2.5 text-amber-900 dark:text-amber-200 font-bold">
+            <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-amber-500/20 text-amber-600 dark:text-amber-400">
+              <AlertCircle className="h-4 w-4" />
+            </span>
+            <div>
+              <span>
+                Filtering by <strong>Assertion-Reason Type</strong>: Showing{' '}
+                <strong className="text-amber-600 dark:text-amber-400">{filteredQuestions.length}</strong> questions
+                {selectedChapter !== 'all' ? (
+                  <> in chapter <strong>&ldquo;{selectedChapter}&rdquo;</strong></>
+                ) : (
+                  <> across all <strong>{category}</strong> chapters</>
+                )}.
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            {filteredQuestions.length > 0 && (
+              <button
+                type="button"
+                onClick={handleSelectAllVisible}
+                className="px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold transition cursor-pointer text-xs flex items-center gap-1.5 shadow-xs"
+              >
+                <Check className="h-3.5 w-3.5" />
+                <span>Select All {filteredQuestions.length} AR Questions</span>
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setTypeFilter('all')}
+              className="px-2.5 py-1.5 rounded-xl border border-amber-500/30 text-amber-800 dark:text-amber-300 hover:bg-amber-500/20 transition cursor-pointer font-semibold text-xs"
+            >
+              Show All Types
+            </button>
+          </div>
+        </div>
+      )}
+
       {loading ? <LoadingScreen /> : (
         <div className="card overflow-hidden p-0 border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827]">
           <DataTable
-            key={`${category}-${selectedChapter}-${statusFilter}`}
+            key={`${category}-${selectedChapter}-${statusFilter}-${typeFilter}`}
             rowClassName={(q) => (selectedQuestionIds.includes(q.id) ? 'bg-blue-50/60 dark:bg-blue-950/30' : '')}
             columns={[
               {
@@ -1734,6 +2037,12 @@ export default function AdminQuestionBank() {
                           <span className="inline-flex items-center gap-1 text-[10px] font-black text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-md border border-cyan-300 dark:border-cyan-800/60 shadow-2xs" title="This question has an attached reaction/chemical structure diagram">
                             <Image className="h-3 w-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
                             <span>Diagram</span>
+                          </span>
+                        )}
+                        {isAssertionReason(q) && (
+                          <span className="inline-flex items-center gap-1 text-[10px] font-black text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-800/60 shadow-2xs" title="Assertion-Reason question">
+                            <AlertCircle className="h-3 w-3 text-amber-600 dark:text-amber-400 shrink-0" />
+                            <span>Assertion-Reason</span>
                           </span>
                         )}
                         {chapterName && (
@@ -1940,9 +2249,12 @@ export default function AdminQuestionBank() {
                     coding: 'text-emerald-700 dark:text-emerald-300 bg-emerald-500/15 border-emerald-500/30',
                     subjective: 'text-rose-700 dark:text-rose-300 bg-rose-500/15 border-rose-500/30',
                   };
-                  const colorClass = typeColors[q.question_type] || 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20';
+                  const isAR = isAssertionReason(q);
+                  const effectiveType = isAR ? 'assertion_reason' : q.question_type;
+                  const colorClass = typeColors[effectiveType] || 'text-blue-600 dark:text-blue-400 bg-blue-500/10 border-blue-500/20';
                   const labelMap = {
                     mcq: 'Single MCQ',
+                    single_choice: 'Single MCQ',
                     multi_select: 'Multi MCQ',
                     integer: 'Integer',
                     numerical: 'Numerical',
@@ -1952,7 +2264,7 @@ export default function AdminQuestionBank() {
                   };
                   return (
                     <span className={`uppercase text-[10px] font-black tracking-wider px-2.5 py-0.5 rounded-full border ${colorClass}`}>
-                      {labelMap[q.question_type] || q.question_type}
+                      {labelMap[effectiveType] || effectiveType}
                     </span>
                   );
                 }
@@ -2032,7 +2344,15 @@ export default function AdminQuestionBank() {
               },
             ]}
             rows={questionsWithSerial}
-            emptyMessage={selectedChapter !== 'all' ? `No questions found for chapter "${selectedChapter}".` : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`}
+            emptyMessage={
+              typeFilter === 'assertion_reason'
+                ? selectedChapter !== 'all'
+                  ? `No Assertion-Reason questions found in chapter "${selectedChapter}".`
+                  : `No Assertion-Reason questions found in ${category}.`
+                : selectedChapter !== 'all'
+                  ? `No questions found for chapter "${selectedChapter}".`
+                  : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`
+            }
           />
         </div>
       )}
