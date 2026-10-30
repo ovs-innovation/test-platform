@@ -475,3 +475,4 @@ export const ALDEHYDES_ADDITIONAL_29 = [
     solution: "Assertion is true: acetic acid contains a $-\\text{COOH}$ group rather than a ketone/aldehyde carbonyl; base removes the acidic proton from $-\\text{COOH}$ to form an unreactive carboxylate anion which does not undergo the haloform reaction. Reason is false: acetic acid ($\\text{CH}_3\\text{COOH}$) has 3 $\\alpha$-hydrogens on its methyl carbon. Hence, Assertion is true but Reason is false."
   }
 ];
+

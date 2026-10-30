@@ -530,3 +530,4 @@ export const ALDEHYDES_PART1 = [
     solution: "Formic acid contains both an aldehyde-like group ($-\\text{CHO}$) and a carboxylic group ($-\\text{COOH}$). Because of the aldehydic hydrogen, it reduces Tollen's and Fehling's reagents. As an acid, it reacts with sodium metal with evolution of $\\text{H}_2$ gas. However, it does not undergo nucleophilic addition with $\\text{HCN}$ like standard aldehydes/ketones because the carbonyl carbon has significant resonance stabilization with the $-\\text{OH}$ group."
   }
 ];
+

@@ -240,7 +240,8 @@ export default function AdminQuestionBank() {
     'Biotechnology and its Applications'
   ], []);
 
-  const BOTANY_STANDARD_7 = useMemo(() => [
+  const BOTANY_STANDARD = useMemo(() => [
+    'The Living World',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
     'Molecular Basis of Inheritance',
@@ -288,8 +289,9 @@ export default function AdminQuestionBank() {
 
     if (category?.toLowerCase() === 'botany') {
       const normalized = normChapterKey(trimmed);
-      const matched = BOTANY_STANDARD_7.find((ch) => normChapterKey(ch) === normalized);
+      const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/living world/i.test(trimmed)) return 'The Living World';
       if (/sexual reproduction/i.test(trimmed)) return 'Sexual Reproduction in Flowering Plants';
       if (/principles.*inheritance/i.test(trimmed)) return 'Principles of Inheritance and Variation';
       if (/molecular.*inheritance/i.test(trimmed)) return 'Molecular Basis of Inheritance';
@@ -303,6 +305,20 @@ export default function AdminQuestionBank() {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
     return trimmed;
+  };
+
+  const getQuestionChapter = (q) => {
+    if (!q) return 'General';
+    if (
+      Number(q.chapter_id) === 221 ||
+      /living world/i.test(q.chapter_name || '') ||
+      /living world/i.test(q.chapter || '') ||
+      /living world/i.test(q.topic || '')
+    ) {
+      return 'The Living World';
+    }
+    const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';
+    return formatChapterName(raw);
   };
 
   const chaptersWithCounts = useMemo(() => {
@@ -320,14 +336,13 @@ export default function AdminQuestionBank() {
         map.set(ch.toLowerCase(), { name: ch, count: 0, arCount: 0 });
       });
     } else if (isBotany) {
-      BOTANY_STANDARD_7.forEach((ch) => {
+      BOTANY_STANDARD.forEach((ch) => {
         map.set(ch.toLowerCase(), { name: ch, count: 0, arCount: 0 });
       });
     }
 
     (questions || []).forEach((q) => {
-      const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';
-      const formatted = formatChapterName(raw);
+      const formatted = getQuestionChapter(q);
       const key = formatted.toLowerCase();
       if (!map.has(key)) {
         map.set(key, { name: formatted, count: 0, arCount: 0 });
@@ -354,7 +369,7 @@ export default function AdminQuestionBank() {
     }
 
     if (isBotany) {
-      return BOTANY_STANDARD_7.map((ch) => {
+      return BOTANY_STANDARD.map((ch) => {
         const item = map.get(ch.toLowerCase());
         return item || { name: ch, count: 0, arCount: 0 };
       });
@@ -365,7 +380,7 @@ export default function AdminQuestionBank() {
       if (b.name.toLowerCase() === 'general') return -1;
       return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
     });
-  }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6, BOTANY_STANDARD_7]);
+  }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6, BOTANY_STANDARD]);
 
   const totalArInSubject = useMemo(() => {
     return (questions || []).filter(isAssertionReason).length;
@@ -406,7 +421,7 @@ export default function AdminQuestionBank() {
     if (selectedChapter && selectedChapter !== 'all') {
       const targetNorm = normChapterKey(selectedChapter);
       baseList = baseList.filter((q) => {
-        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        const ch = getQuestionChapter(q);
         return normChapterKey(ch) === targetNorm;
       });
     }
@@ -433,7 +448,7 @@ export default function AdminQuestionBank() {
     if (selectedChapter && selectedChapter !== 'all') {
       const targetNorm = normChapterKey(selectedChapter);
       baseList = baseList.filter((q) => {
-        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        const ch = getQuestionChapter(q);
         return normChapterKey(ch) === targetNorm;
       });
     }
@@ -467,7 +482,7 @@ export default function AdminQuestionBank() {
     if (selectedChapter && selectedChapter !== 'all') {
       const targetNorm = normChapterKey(selectedChapter);
       list = list.filter((q) => {
-        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        const ch = getQuestionChapter(q);
         return normChapterKey(ch) === targetNorm;
       });
     }
@@ -486,7 +501,7 @@ export default function AdminQuestionBank() {
     if (selectedChapter && selectedChapter !== 'all') {
       const targetNorm = normChapterKey(selectedChapter);
       baseList = baseList.filter((q) => {
-        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        const ch = getQuestionChapter(q);
         return normChapterKey(ch) === targetNorm;
       });
     }
@@ -500,7 +515,7 @@ export default function AdminQuestionBank() {
     if (selectedChapter && selectedChapter !== 'all') {
       const targetNorm = normChapterKey(selectedChapter);
       baseList = baseList.filter((q) => {
-        const ch = formatChapterName(q.chapter || q.chapter_name || 'General');
+        const ch = getQuestionChapter(q);
         return normChapterKey(ch) === targetNorm;
       });
     }
@@ -1974,7 +1989,7 @@ export default function AdminQuestionBank() {
                 key: 'chapter',
                 label: 'Chapter',
                 render: (q) => {
-                  const chapterName = formatChapterName(q.chapter || q.chapter_name);
+                  const chapterName = getQuestionChapter(q);
                   const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
                   return (
                     <div className="flex flex-col gap-1 max-w-[200px]">
@@ -2015,7 +2030,7 @@ export default function AdminQuestionBank() {
                 label: 'Question',
                 render: (q, idx) => {
                   const sNo = q.serialNumber || (idx != null ? idx + 1 : q.id);
-                  const chapterName = formatChapterName(q.chapter || q.chapter_name);
+                  const chapterName = getQuestionChapter(q);
                   const hasTopic = q.topic && chapterName && q.topic.toLowerCase() !== chapterName.toLowerCase();
                   const opts = tryParseArray(q.options);
                   const OPTION_KEYS = ['A', 'B', 'C', 'D', 'E'];

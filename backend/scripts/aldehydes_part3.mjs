@@ -530,3 +530,4 @@ export const ALDEHYDES_PART3 = [
     solution: "The haloform (iodoform) reaction is given specifically by compounds having a methyl ketone group ($-\\text{COCH}_3$) or a secondary alcohol with $-\\text{CH(OH)CH}_3$. Acetophenone contains the $-\\text{COCH}_3$ group and yields a bright yellow precipitate of iodoform ($\\text{CHI}_3$). Benzophenone, 3-pentanone, and benzaldehyde lack a methyl group directly bonded to the carbonyl and give a negative test."
   }
 ];
+

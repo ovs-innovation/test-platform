@@ -83,3 +83,4 @@ export async function cropAndUploadAdditionalDiagrams() {
 if (process.argv[1].endsWith('crop_and_upload_additional_diagrams.mjs')) {
   cropAndUploadAdditionalDiagrams().catch(console.error);
 }
+

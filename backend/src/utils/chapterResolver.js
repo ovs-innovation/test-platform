@@ -1374,7 +1374,8 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
   return 'Human Reproduction';
 }
 
-export const BOTANY_STANDARD_7 = [
+export const BOTANY_STANDARD = [
+  'The Living World',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
   'Molecular Basis of Inheritance',
@@ -1383,17 +1384,28 @@ export const BOTANY_STANDARD_7 = [
   'Ecosystem',
   'Biodiversity and Conservation (Sacred groves)'
 ];
+export const BOTANY_STANDARD_7 = BOTANY_STANDARD;
 
 /**
- * Resolve standard Class 12 Chapter for Botany questions.
- * Enforces strictly and exclusively one of the 7 syllabus chapters.
+ * Resolve standard Class 11/12 Chapter for Botany questions.
  */
 export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
 
-  // 1. Direct match on standard 7 (ignoring parenthetical text like "(Sacred groves)")
-  for (const chap of BOTANY_STANDARD_7) {
+  // 1. Direct match for The Living World
+  if (
+    norm(rawChapter) === 'thelivingworld' || 
+    norm(rawTopic) === 'thelivingworld' || 
+    /living world/i.test(rawChapter) || 
+    /living world/i.test(rawTopic) ||
+    /herbarium|botanical garden|binomial nomenclature|tautonym|systematics|taxonom|species plantarum|systema naturae/i.test(combined)
+  ) {
+    return 'The Living World';
+  }
+
+  // 2. Direct match on standard Botany chapters
+  for (const chap of BOTANY_STANDARD) {
     if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
       return chap;
     }

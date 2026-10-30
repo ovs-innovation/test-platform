@@ -102,3 +102,4 @@ export async function cropAndUploadDiagrams() {
 if (process.argv[1].endsWith('crop_and_upload_aldehydes_diagrams.mjs')) {
   cropAndUploadDiagrams().catch(console.error);
 }
+

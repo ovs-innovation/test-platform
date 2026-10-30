@@ -590,3 +590,4 @@ export const ALDEHYDES_PART4 = [
     solution: "The condensation of an aromatic aldehyde with an aliphatic acid anhydride in the presence of the corresponding sodium carboxylate to yield an $\\alpha,\\beta$-unsaturated carboxylic acid is the Perkin reaction:\n$$\\text{C}_6\\text{H}_5\\text{CHO} + (\\text{CH}_3\\text{CO})_2\\text{O} \\xrightarrow{\\text{CH}_3\\text{COONa}, \\Delta} \\text{C}_6\\text{H}_5-\\text{CH}=\\text{CH}-\\text{COOH} + \\text{CH}_3\\text{COOH}$$"
   }
 ];
+
