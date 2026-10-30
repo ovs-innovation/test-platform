@@ -301,6 +301,14 @@ export default function AdminQuestionBank() {
       if (/biodiversity/i.test(trimmed)) return 'Biodiversity and Conservation (Sacred groves)';
     }
 
+    if (category?.toLowerCase() === 'physics') {
+      if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
+      if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
+      if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
+      if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
+      if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -320,7 +328,55 @@ export default function AdminQuestionBank() {
     if (q.chapter && /^\s*the living world\s*$/i.test(q.chapter)) {
       return 'The Living World';
     }
-    const raw = (q.chapter || q.chapter_name || 'General').trim() || 'General';
+
+    // Moving Charges and Magnetism: Live chapter_id is 193, Local DB is 143, or question ID range 11162-11339
+    if (
+      (q.id >= 11162 && q.id <= 11339) ||
+      Number(q.chapter_id) === 193 ||
+      Number(q.chapter_id) === 143 ||
+      (q.chapter_name && /moving charges/i.test(q.chapter_name)) ||
+      (q.topic && /moving charges/i.test(q.topic))
+    ) {
+      return 'Moving Charges and Magnetism';
+    }
+
+    // Magnetism and Matter: Live chapter_id is 194, Local DB is 106
+    if (
+      Number(q.chapter_id) === 194 ||
+      Number(q.chapter_id) === 106 ||
+      (q.chapter_name && /magnetism and matter/i.test(q.chapter_name))
+    ) {
+      return 'Magnetism and Matter';
+    }
+
+    // Electromagnetic Induction: Live chapter_id is 195, Local DB is 144
+    if (
+      Number(q.chapter_id) === 195 ||
+      Number(q.chapter_id) === 144 ||
+      (q.chapter_name && /electromagnetic induction/i.test(q.chapter_name))
+    ) {
+      return 'Electromagnetic Induction';
+    }
+
+    // Partition legacy composite "Magnetism & Electromagnetic Induction"
+    if (
+      (q.chapter && /magnetism\s*(&|and)\s*electromagnetic induction/i.test(q.chapter)) ||
+      (q.chapter_name && /magnetism\s*(&|and)\s*electromagnetic induction/i.test(q.chapter_name))
+    ) {
+      const text = `${q.topic || ''} ${q.question_text || ''}`;
+      if (/biot|savart|lorentz|cyclotron|solenoid|toroid|galvanometer|ampere|magnetic field|moving charge/i.test(text)) {
+        return 'Moving Charges and Magnetism';
+      }
+      if (/faraday|lenz|induct|eddy/i.test(text)) {
+        return 'Electromagnetic Induction';
+      }
+      if (/bar magnet|magnetic dipole|earth.*magnetism|dia|para|ferro|hysteresis|curie/i.test(text)) {
+        return 'Magnetism and Matter';
+      }
+      return 'Moving Charges and Magnetism';
+    }
+
+    const raw = (q.chapter_name || q.chapter || 'General').trim() || 'General';
     return formatChapterName(raw);
   };
 

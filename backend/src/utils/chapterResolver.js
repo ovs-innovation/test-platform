@@ -1484,6 +1484,13 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   const lowerChapter = rawChapter.toLowerCase();
   const lowerTopic = rawTopic.toLowerCase();
 
+  // Physics ID Range: 11162 - 11339 are strictly "Moving Charges and Magnetism"
+  if (normCategory === 'physics' || !normCategory) {
+    if (questionId && Number(questionId) >= 11162 && Number(questionId) <= 11339) {
+      return 'Moving Charges and Magnetism';
+    }
+  }
+
   // 0. Explicit normalization for legacy or composite chapter names
   if (lowerChapter === 'alternating current & em waves' || lowerChapter === 'alternating current and em waves') {
     if (/em wave|electromagnetic wave|displacement current|radiation pressure|maxwell/i.test(rawTopic + ' ' + rawText)) {
@@ -1517,6 +1524,31 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     }
     if (rawTopic && lowerTopic !== 'modern physics & nuclear physics') return rawTopic;
     return 'Atoms';
+  }
+
+  if (lowerChapter === 'magnetism & electromagnetic induction' || lowerChapter === 'magnetism and electromagnetic induction') {
+    if (/moving charges|biot[- ]savart|lorentz|cyclotron|solenoid|toroid|galvanometer|ampere'?s circuital|magnetic field due to current|force on a moving charge|force between two parallel currents/i.test(rawTopic + ' ' + rawText)) {
+      return 'Moving Charges and Magnetism';
+    }
+    if (/electromagnetic induction|faraday|lenz|induct(ance|or)|eddy current|mutual induct|self induct/i.test(rawTopic + ' ' + rawText)) {
+      return 'Electromagnetic Induction';
+    }
+    if (/magnetism and matter|bar magnet|magnetic dipole|earth'?s magnetism|magnetic properties|dia(magnetic)?|para(magnetic)?|ferro(magnetic)?|hysteresis|curie/i.test(rawTopic + ' ' + rawText)) {
+      return 'Magnetism and Matter';
+    }
+    return 'Moving Charges and Magnetism';
+  }
+
+  if (normCategory === 'physics' || !normCategory) {
+    if (/moving charges/i.test(rawChapter) || /moving charges/i.test(rawTopic)) {
+      return 'Moving Charges and Magnetism';
+    }
+    if (/magnetism and matter/i.test(rawChapter) || /magnetism and matter/i.test(rawTopic)) {
+      return 'Magnetism and Matter';
+    }
+    if (/electromagnetic induction/i.test(rawChapter) || /electromagnetic induction/i.test(rawTopic)) {
+      return 'Electromagnetic Induction';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

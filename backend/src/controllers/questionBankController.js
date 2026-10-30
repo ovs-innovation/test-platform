@@ -66,7 +66,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     )
     SELECT 
       qb.*,
-      COALESCE(NULLIF(qb.chapter, ''), c.name) AS chapter, 
+      COALESCE(c.name, NULLIF(qb.chapter, '')) AS chapter,
       c.name AS chapter_name, 
       s.name AS subject_name,
       CASE 
@@ -100,7 +100,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       row.category || row.subject_name || '',
       row.topic || '',
       row.question_text || '',
-      row.chapter || row.chapter_name || '',
+      row.chapter_name || row.chapter || '',
       row.id
     );
     return {
@@ -442,7 +442,8 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
     result.rows[0].category || result.rows[0].subject || '',
     result.rows[0].topic || '',
     result.rows[0].question_text || '',
-    result.rows[0].chapter || ''
+    result.rows[0].chapter_name || result.rows[0].chapter || '',
+    result.rows[0].id
   );
   const updatedQuestion = {
     ...result.rows[0],
