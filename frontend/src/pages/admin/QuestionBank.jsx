@@ -206,7 +206,17 @@ export default function AdminQuestionBank() {
     'Biotechnology and its Applications'
   ], []);
 
-  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
+  const BOTANY_STANDARD_7 = useMemo(() => [
+    'Sexual Reproduction in Flowering Plants',
+    'Principles of Inheritance and Variation',
+    'Molecular Basis of Inheritance',
+    'Microbes in Human Welfare',
+    'Organisms and Populations',
+    'Ecosystem',
+    'Biodiversity and Conservation (Sacred groves)'
+  ], []);
+
+  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
 
   const formatChapterName = (str) => {
     if (!str) return 'General';
@@ -242,6 +252,19 @@ export default function AdminQuestionBank() {
       if (/biotechnology.*applications/i.test(trimmed)) return 'Biotechnology and its Applications';
     }
 
+    if (category?.toLowerCase() === 'botany') {
+      const normalized = normChapterKey(trimmed);
+      const matched = BOTANY_STANDARD_7.find((ch) => normChapterKey(ch) === normalized);
+      if (matched) return matched;
+      if (/sexual reproduction/i.test(trimmed)) return 'Sexual Reproduction in Flowering Plants';
+      if (/principles.*inheritance/i.test(trimmed)) return 'Principles of Inheritance and Variation';
+      if (/molecular.*inheritance/i.test(trimmed)) return 'Molecular Basis of Inheritance';
+      if (/microbes/i.test(trimmed)) return 'Microbes in Human Welfare';
+      if (/organism.*population/i.test(trimmed)) return 'Organisms and Populations';
+      if (/ecosystem/i.test(trimmed)) return 'Ecosystem';
+      if (/biodiversity/i.test(trimmed)) return 'Biodiversity and Conservation (Sacred groves)';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -251,6 +274,7 @@ export default function AdminQuestionBank() {
   const chaptersWithCounts = useMemo(() => {
     const isChemistry = category?.toLowerCase() === 'chemistry';
     const isZoology = category?.toLowerCase() === 'zoology';
+    const isBotany = category?.toLowerCase() === 'botany';
     const map = new Map();
 
     if (isChemistry) {
@@ -259,6 +283,10 @@ export default function AdminQuestionBank() {
       });
     } else if (isZoology) {
       ZOOLOGY_STANDARD_6.forEach((ch) => {
+        map.set(ch.toLowerCase(), { name: ch, count: 0 });
+      });
+    } else if (isBotany) {
+      BOTANY_STANDARD_7.forEach((ch) => {
         map.set(ch.toLowerCase(), { name: ch, count: 0 });
       });
     }
@@ -287,12 +315,19 @@ export default function AdminQuestionBank() {
       });
     }
 
+    if (isBotany) {
+      return BOTANY_STANDARD_7.map((ch) => {
+        const item = map.get(ch.toLowerCase());
+        return item || { name: ch, count: 0 };
+      });
+    }
+
     return Array.from(map.values()).sort((a, b) => {
       if (a.name.toLowerCase() === 'general') return 1;
       if (b.name.toLowerCase() === 'general') return -1;
       return a.name.localeCompare(b.name, undefined, { sensitivity: 'base' });
     });
-  }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6]);
+  }, [questions, category, CHEMISTRY_STANDARD_11, ZOOLOGY_STANDARD_6, BOTANY_STANDARD_7]);
 
   const displayedChapters = useMemo(() => {
     if (!chapterSearch.trim()) return chaptersWithCounts;

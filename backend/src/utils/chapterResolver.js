@@ -1374,6 +1374,72 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
   return 'Human Reproduction';
 }
 
+export const BOTANY_STANDARD_7 = [
+  'Sexual Reproduction in Flowering Plants',
+  'Principles of Inheritance and Variation',
+  'Molecular Basis of Inheritance',
+  'Microbes in Human Welfare',
+  'Organisms and Populations',
+  'Ecosystem',
+  'Biodiversity and Conservation (Sacred groves)'
+];
+
+/**
+ * Resolve standard Class 12 Chapter for Botany questions.
+ * Enforces strictly and exclusively one of the 7 syllabus chapters.
+ */
+export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
+  const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
+  const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 1. Direct match on standard 7 (ignoring parenthetical text like "(Sacred groves)")
+  for (const chap of BOTANY_STANDARD_7) {
+    if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
+      return chap;
+    }
+  }
+
+  // 2. ID-based ranges (exact batch partitions from NEET Botany syllabus import)
+  if (questionId && questionId >= 5733 && questionId <= 5943) return 'Sexual Reproduction in Flowering Plants';
+  if (questionId && questionId >= 5944 && questionId <= 6150) return 'Principles of Inheritance and Variation';
+  if (questionId && questionId >= 6151 && questionId <= 6499) return 'Molecular Basis of Inheritance';
+  if (questionId && ((questionId >= 6500 && questionId <= 6600) || (questionId >= 12546 && questionId <= 12641))) return 'Microbes in Human Welfare';
+  if (questionId && ((questionId >= 6601 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
+  if (questionId && questionId >= 6701 && questionId <= 6775) return 'Ecosystem';
+  if (questionId && questionId >= 6776 && questionId <= 6869) return 'Biodiversity and Conservation (Sacred groves)';
+
+  // 3. Keyword-based matching
+  if (/sacred grove|biodiversity|conservation|iucn|red data|hotspot|endangered|extinct|dodo|quagga|thylacine|stellar|rivet popper|species-area|alien species|ex[- ]situ|in[- ]situ|national park|sanctuary|biosphere reserve|cryopreservation/i.test(combined)) {
+    return 'Biodiversity and Conservation (Sacred groves)';
+  }
+
+  if (/ecosystem|productivity|gpp|npp|decomposition|trophic level|food chain|food web|ecological pyramid|pyramid of|standing crop|standing state|stratification|ecological succession|pioneer species|climax community|hydrarch|xerarch|nutrient cycling|carbon cycle|phosphorus cycle/i.test(combined)) {
+    return 'Ecosystem';
+  }
+
+  if (/organism|population|adaptation|altitude sickness|allen'?s rule|bergmann|gause|competitive exclusion|resource partitioning|carrying capacity|\bbiotic potential\b|logistic growth|exponential growth|verhulst|commensalism|mutualism|parasitism|predation|amensalism|mycorrhiza|lichen|diapause|hibernation|aestivation|osmoconformer|conformer|regulator|stenohaline|euryhaline|biome/i.test(combined)) {
+    return 'Organisms and Populations';
+  }
+
+  if (/microbe|ferment|baker'?s yeast|saccharomyces|curd|lactobacillus|lab\b|swiss cheese|propionic|roquefort|penicillium|penicillin|fleming|streptokinase|clot buster|cyclosporin|trichoderma|statin|monascus|sewage treatment|primary treatment|secondary treatment|flocs|biological oxygen demand|\bbod\b|activated sludge|anaerobic sludge digester|biogas|methanogen|methanobacterium|gobargas|biocontrol|bacillus thuringiensis|baculovirus|npv|nucleopolyhedrovirus|biofertilizer|rhizobium|azospirillum|azotobacter|anabaena|nostoc|oscillatoria|mycorrhiza|glomus/i.test(combined)) {
+    return 'Microbes in Human Welfare';
+  }
+
+  if (/dna replication|transcription|translation|genetic code|codon|anticodon|rna world|mrna|trna|rrna|hnrna|spliceosome|splicing|capping|tailing|lac operon|operon|promoter|operator|repressor|inducer|permease|beta-galactosidase|transacetylase|human genome project|\bhgp\b|dna fingerprinting|southern blot|satellite dna|vntr|chargaff|meselson|stahl|hershey|chase|griffith|transforming principle|central dogma|reverse transcription|polynucleotide|nucleosome|histone|euchromatin|heterochromatin/i.test(combined)) {
+    return 'Molecular Basis of Inheritance';
+  }
+
+  if (/mendel|inheritance|variation|monohybrid|dihybrid|law of segregation|independent assortment|test cross|back cross|incomplete dominance|co-dominance|multiple alleles|abo blood|pleiotrop|polygenic|chromosomal theory|sutton|boveri|morgan|linkage|recombination|linkage map|sturtevant|sex determination|drosophila|honey bee|grasshopper|mutation|frameshift|point mutation|pedigree|autosomal dominant|autosomal recessive|sickle cell|phenylketonuria|thalassemia|cystic fibrosis|colour blindness|color blindness|haemophilia|hemophilia|aneuploidy|polyploidy|down'?s syndrome|turner'?s syndrome|klinefelter'?s syndrome/i.test(combined)) {
+    return 'Principles of Inheritance and Variation';
+  }
+
+  if (/flower|stamen|anther|microsporan|microsporo|pollen|tapetum|pollen grain|exine|intine|sporopollenin|germ pore|pollinium|pistil|carpel|megasporan|megasporo|ovule|integument|micropyle|chalaza|nucellus|embryo sac|egg apparatus|synergid|filiform|antipodal|polar nuclei|pollination|autogamy|geitonogamy|xenogamy|cleistogam|chasmogam|anemophil|hydrophil|entomophil|ornithophil|chiropt|inbreeding depression|outbreeding|emasculation|bagging|pollen-pistil|pollen tube|syngamy|triple fusion|double fertilization|pen\b|endosperm|embryo\b|suspensor|scutellum|coleoptile|coleorhiza|perisperm|apomixis|polyembryony|parthenocarp/i.test(combined)) {
+    return 'Sexual Reproduction in Flowering Plants';
+  }
+
+  return 'Sexual Reproduction in Flowering Plants';
+}
+
 /**
  * Standard Chapter Resolver function.
  * Given a subject/category, topic, and question context, returns the overarching
@@ -1399,6 +1465,11 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   // 0. Strict 6 Syllabus Chapters for Zoology
   if (normCategory === 'zoology') {
     return resolveZoologyStandardChapter(rawChapter, rawTopic, rawText, questionId);
+  }
+
+  // 0. Strict 7 Syllabus Chapters for Botany
+  if (normCategory === 'botany') {
+    return resolveBotanyStandardChapter(rawChapter, rawTopic, rawText, questionId);
   }
 
   const normalizeChap = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/s\b/g, '').replace(/[^a-z0-9]/g, '');
