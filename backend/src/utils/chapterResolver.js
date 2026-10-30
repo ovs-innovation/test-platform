@@ -1224,17 +1224,20 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   }
 
   if (lowerChapter === 'modern physics & nuclear physics' || lowerChapter === 'modern physics and nuclear physics' || lowerChapter === 'modern physics & dual nature') {
-    if (lowerTopic === 'nuclei' || /nuclei|nuclear|radioactiv|mass defect|binding energy|fission|fusion|half[- ]life|alpha decay|beta decay/i.test(rawTopic + ' ' + rawText)) {
-      return 'Nuclei';
-    }
-    if (lowerTopic === 'atoms' || /atoms?|bohr|rydberg|lyman|balmer|paschen|hydrogen atom/i.test(rawTopic + ' ' + rawText)) {
-      return 'Atoms';
-    }
-    if (lowerTopic.includes('semiconductor') || /semiconductor|diode|transistor|logic gate/i.test(rawTopic + ' ' + rawText)) {
+    if (lowerTopic.includes('semiconductor') || /semiconductor|diode|transistor|logic gate|p-type|n-type|doping|intrinsic concentration/i.test(rawTopic + ' ' + rawText)) {
       return 'Semiconductors';
     }
     if (lowerTopic.includes('dual nature') || /dual nature|photoelectric|de broglie|work function|matter wave/i.test(rawTopic + ' ' + rawText)) {
       return 'Dual Nature of Radiation & Matter';
+    }
+    if (/binding energy of electron|ground state of he|hydrogen atom|bohr|rydberg|lyman|balmer|paschen/i.test(rawTopic + ' ' + rawText)) {
+      return 'Atoms';
+    }
+    if (lowerTopic === 'nuclei' || /nuclei|nuclear|radioactiv|mass defect|binding energy|fission|fusion|half[- ]life|alpha decay|beta decay|q-value|uranium|decay/i.test(rawTopic + ' ' + rawText)) {
+      return 'Nuclei';
+    }
+    if (lowerTopic === 'atoms' || /atoms?/i.test(rawTopic + ' ' + rawText)) {
+      return 'Atoms';
     }
     if (rawTopic && lowerTopic !== 'modern physics & nuclear physics') return rawTopic;
     return 'Atoms';
