@@ -1096,6 +1096,26 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'Equilibrium',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bequilibrium\b/i,
+      /\bchemical equilibrium\b/i,
+      /\bionic equilibrium\b/i,
+      /\ble chatelier('s)?\b/i,
+      /\bdegree of dissociation\b/i,
+      /\blaw of mass action\b/i,
+      /\breaction quotient\b/i,
+      /\bsolubility product\b|\bk_?\{?sp\}?\b/i,
+      /\bcommon ion effect\b/i,
+      /\bbuffer solution(s)?\b/i,
+      /\bhenderson[- ]hasselbalch\b/i,
+      /\bsalt hydrolysis\b/i,
+      /\bvan '?t hoff (isochore|equation)\b/i,
+      /\bostwald('s)? dilution\b/i,
+    ],
+  },
+  {
     chapter: 'Solutions',
     subjects: ['chemistry'],
     patterns: [
@@ -1267,6 +1287,7 @@ const CHAPTER_RULES = [
 export const CHEMISTRY_STANDARD_11 = [
   'Some Basic Concepts of Chemistry',
   'Structure of Atom',
+  'Equilibrium',
   'Solutions',
   'Electrochemistry',
   'Chemical Kinetics',
@@ -1315,7 +1336,17 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Structure of Atom';
   }
 
-  // 4. Explicit name match for Some Basic Concepts of Chemistry
+  // 4. Exact ID match for "Equilibrium" (Local IDs 5797-6030, Live IDs >= 14327)
+  if (
+    questionId && (
+      (Number(questionId) >= 5797 && Number(questionId) <= 6030) ||
+      (Number(questionId) >= 14327 && Number(questionId) <= 14600)
+    )
+  ) {
+    return 'Equilibrium';
+  }
+
+  // 5. Explicit name match for Some Basic Concepts of Chemistry
   if (
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawChapter) ||
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawTopic)
@@ -1323,12 +1354,20 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Some Basic Concepts of Chemistry';
   }
 
-  // 5. Explicit name match for Structure of Atom
+  // 6. Explicit name match for Structure of Atom
   if (
     /structure of atom(s)?|atomic structure/i.test(rawChapter) ||
     /structure of atom(s)?|atomic structure/i.test(rawTopic)
   ) {
     return 'Structure of Atom';
+  }
+
+  // 7. Explicit name match for Equilibrium
+  if (
+    /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(rawChapter) ||
+    /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(rawTopic)
+  ) {
+    return 'Equilibrium';
   }
 
   // 2. Electrochemistry

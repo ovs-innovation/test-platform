@@ -220,6 +220,7 @@ export default function AdminQuestionBank() {
   const CHEMISTRY_STANDARD_11 = useMemo(() => [
     'Some Basic Concepts of Chemistry',
     'Structure of Atom',
+    'Equilibrium',
     'Solutions',
     'Electrochemistry',
     'Chemical Kinetics',
@@ -276,6 +277,7 @@ export default function AdminQuestionBank() {
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
       if (/structure of atom/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
+      if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
     }
 
     if (category?.toLowerCase() === 'zoology') {
@@ -428,6 +430,17 @@ export default function AdminQuestionBank() {
       /^\s*structure of atom(s)?\s*$/i.test(q.chapter || '')
     ) {
       return 'Structure of Atom';
+    }
+
+    // Chemistry: Equilibrium (234 questions)
+    if (
+      (Number(q.id) >= 14327 && Number(q.id) <= 14600) ||
+      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6030) ||
+      Number(q.chapter_id) === 146 ||
+      /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter_name || '') ||
+      /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Equilibrium';
     }
 
     // Physics: Electrostatic Potential and Capacitance
