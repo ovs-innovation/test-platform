@@ -329,6 +329,14 @@ export default function AdminQuestionBank() {
       return 'The Living World';
     }
 
+    // Botany: Molecular Basis of Inheritance batch range & leak fix
+    if (
+      (q.id >= 6151 && q.id <= 6553) ||
+      [6503, 6504, 6507, 6508, 6509, 6511, 6513, 6514, 6516, 6519].includes(Number(q.id))
+    ) {
+      return 'Molecular Basis of Inheritance';
+    }
+
     // Moving Charges and Magnetism: Live chapter_id is 193, Local DB is 143, or question ID range 11162-11339
     if (
       (q.id >= 11162 && q.id <= 11339) ||

@@ -1401,11 +1401,14 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   }
 
   // 2. ID-based ranges (exact batch partitions from NEET Botany syllabus import)
+  const MOLECULAR_LEAK_IDS = new Set([6503, 6504, 6507, 6508, 6509, 6511, 6513, 6514, 6516, 6519]);
+  if (questionId && MOLECULAR_LEAK_IDS.has(Number(questionId))) return 'Molecular Basis of Inheritance';
+
   if (questionId && questionId >= 5733 && questionId <= 5943) return 'Sexual Reproduction in Flowering Plants';
   if (questionId && questionId >= 5944 && questionId <= 6150) return 'Principles of Inheritance and Variation';
-  if (questionId && questionId >= 6151 && questionId <= 6499) return 'Molecular Basis of Inheritance';
-  if (questionId && ((questionId >= 6500 && questionId <= 6600) || (questionId >= 12546 && questionId <= 12641))) return 'Microbes in Human Welfare';
-  if (questionId && ((questionId >= 6601 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
+  if (questionId && questionId >= 6151 && questionId <= 6553) return 'Molecular Basis of Inheritance';
+  if (questionId && ((questionId >= 6554 && questionId <= 6603) || (questionId >= 12546 && questionId <= 12641))) return 'Microbes in Human Welfare';
+  if (questionId && ((questionId >= 6604 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
   if (questionId && questionId >= 6701 && questionId <= 6775) return 'Ecosystem';
   if (questionId && questionId >= 6776 && questionId <= 6869) return 'Biodiversity and Conservation (Sacred groves)';
   if (questionId && questionId >= 13712 && questionId <= 14000) return 'The Living World';
