@@ -1336,11 +1336,11 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Structure of Atom';
   }
 
-  // 4. Exact ID match for "Equilibrium" (Local IDs 5797-6030, Live IDs >= 14327)
+  // 4. Exact ID match for "Equilibrium" (Local IDs 5797-6100, Live IDs >= 14327)
   if (
     questionId && (
-      (Number(questionId) >= 5797 && Number(questionId) <= 6030) ||
-      (Number(questionId) >= 14327 && Number(questionId) <= 14600)
+      (Number(questionId) >= 5797 && Number(questionId) <= 6100) ||
+      (Number(questionId) >= 14327 && Number(questionId) <= 14700)
     )
   ) {
     return 'Equilibrium';

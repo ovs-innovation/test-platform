@@ -432,10 +432,10 @@ export default function AdminQuestionBank() {
       return 'Structure of Atom';
     }
 
-    // Chemistry: Equilibrium (234 questions)
+    // Chemistry: Equilibrium (264 questions: 239 MCQ + 25 AR)
     if (
-      (Number(q.id) >= 14327 && Number(q.id) <= 14600) ||
-      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6030) ||
+      (Number(q.id) >= 14327 && Number(q.id) <= 14700) ||
+      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6100) ||
       Number(q.chapter_id) === 146 ||
       /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter_name || '') ||
       /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter || '')
