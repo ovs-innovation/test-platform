@@ -1494,13 +1494,13 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
 
-  // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15344)
+  // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15414)
   if (
     /structural\s*organi[sz]ation/i.test(rawChapter) ||
     /structural\s*organi[sz]ation/i.test(rawTopic) ||
     /animal\s*tissue/i.test(rawChapter) ||
     /animal\s*tissue/i.test(rawTopic) ||
-    (questionId && Number(questionId) >= 15213 && Number(questionId) <= 15344)
+    (questionId && Number(questionId) >= 15213 && Number(questionId) <= 15414)
   ) {
     return 'Structural Organisation in Animals';
   }
