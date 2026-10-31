@@ -241,7 +241,8 @@ export default function AdminQuestionBank() {
     'Human Health & Disease',
     'Evolution',
     'Biotechnology - Principles and Processes',
-    'Biotechnology and its Applications'
+    'Biotechnology and its Applications',
+    'Structural Organisation in Animals'
   ], []);
 
   const BOTANY_STANDARD = useMemo(() => [
@@ -294,6 +295,7 @@ export default function AdminQuestionBank() {
       if (/evolution/i.test(trimmed)) return 'Evolution';
       if (/biotechnology.*principles/i.test(trimmed)) return 'Biotechnology - Principles and Processes';
       if (/biotechnology.*applications/i.test(trimmed)) return 'Biotechnology and its Applications';
+      if (/structural.*organi/i.test(trimmed) || /animal.*tissue/i.test(trimmed)) return 'Structural Organisation in Animals';
     }
 
     if (category?.toLowerCase() === 'botany') {
@@ -333,6 +335,17 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15344)
+    if (
+      Number(q.chapter_id) === 229 ||
+      Number(q.chapter_id) === 158 ||
+      (Number(q.id) >= 15213 && Number(q.id) <= 15344) ||
+      (q.chapter_name && /structural\s*organi[sz]ation/i.test(q.chapter_name)) ||
+      (q.chapter && /structural\s*organi[sz]ation/i.test(q.chapter))
+    ) {
+      return 'Structural Organisation in Animals';
+    }
+
     // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212)
     if (
       Number(q.chapter_id) === 227 ||
