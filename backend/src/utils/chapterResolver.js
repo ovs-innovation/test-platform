@@ -1057,6 +1057,25 @@ const CHAPTER_RULES = [
   // CHEMISTRY - STRICT 11 SYLLABUS CHAPTERS
   // ═══════════════════════════════════════════════════════════════════════════
   {
+    chapter: 'Some Basic Concepts of Chemistry',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bsome basic concepts of chemistry\b/i,
+      /\bbasic concepts of chemistry\b/i,
+      /\bmole concept\b/i,
+      /\bstoichiometry\b/i,
+      /\blaw of (constant|multiple|reciprocal) proportion(s)?\b/i,
+      /\blaw of conservation of mass\b/i,
+      /\bavogadro'?s? (law|number|hypothesis)\b/i,
+      /\bsignificant figures?\b/i,
+      /\bempirical formula\b|\bmolecular formula\b/i,
+      /\bequivalent weight\b|\bequivalent concept\b/i,
+      /\bnormality\b|\bmolality\b|\bmole fraction\b/i,
+      /\blimiting reagent\b|\blimiting reactant\b/i,
+      /\bpercentage composition\b/i,
+    ],
+  },
+  {
     chapter: 'Solutions',
     subjects: ['chemistry'],
     patterns: [
@@ -1226,6 +1245,7 @@ const CHAPTER_RULES = [
 ];
 
 export const CHEMISTRY_STANDARD_11 = [
+  'Some Basic Concepts of Chemistry',
   'Solutions',
   'Electrochemistry',
   'Chemical Kinetics',
@@ -1241,11 +1261,22 @@ export const CHEMISTRY_STANDARD_11 = [
 
 /**
  * Resolve standard Class 12 Chapter for Chemistry questions.
- * Enforces strictly and exclusively one of the 11 syllabus chapters.
+ * Enforces strictly and exclusively one of the syllabus chapters.
  */
 export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 0. Some Basic Concepts of Chemistry (Live IDs 14041-14067, Local IDs 5504-5537, or text)
+  if (
+    (questionId && (
+      (Number(questionId) >= 14041 && Number(questionId) <= 14067) ||
+      (Number(questionId) >= 5504 && Number(questionId) <= 5537)
+    )) ||
+    /some basic concepts of chemistry|basic concepts of chemistry|mole concept|stoichiometry|limiting reagent|law of (constant|multiple|reciprocal) proportion|avogadro|significant figure|empirical formula|normality|molality|molarity of a solution obtained by mixing|amount of mg left unreacted|number of significant figures|mass of oxygen that combines with fixed mass of carbon/i.test(combined)
+  ) {
+    return 'Some Basic Concepts of Chemistry';
+  }
 
   // 1. Direct match on standard 11
   for (const chap of CHEMISTRY_STANDARD_11) {

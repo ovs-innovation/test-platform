@@ -218,6 +218,7 @@ export default function AdminQuestionBank() {
   }, [selectedQuestionsList]);
 
   const CHEMISTRY_STANDARD_11 = useMemo(() => [
+    'Some Basic Concepts of Chemistry',
     'Solutions',
     'Electrochemistry',
     'Chemical Kinetics',
@@ -310,6 +311,10 @@ export default function AdminQuestionBank() {
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
     }
 
+    if (category?.toLowerCase() === 'chemistry') {
+      if (/some basic concepts of chemistry/i.test(trimmed) || /basic concepts of chemistry/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -345,6 +350,17 @@ export default function AdminQuestionBank() {
       (q.chapter_name && /biotechnology.*principles/i.test(q.chapter_name))
     ) {
       return 'Biotechnology - Principles and Processes';
+    }
+
+    // Chemistry: Some Basic Concepts of Chemistry
+    if (
+      (q.id >= 14041 && q.id <= 14067) ||
+      (q.id >= 5504 && q.id <= 5537) ||
+      Number(q.chapter_id) === 127 ||
+      (q.chapter_name && /basic concepts/i.test(q.chapter_name)) ||
+      (q.chapter && /basic concepts/i.test(q.chapter))
+    ) {
+      return 'Some Basic Concepts of Chemistry';
     }
 
     // Physics: Electrostatic Potential and Capacitance
@@ -444,10 +460,17 @@ export default function AdminQuestionBank() {
     });
 
     if (isChemistry) {
-      return CHEMISTRY_STANDARD_11.map((ch) => {
+      const list = CHEMISTRY_STANDARD_11.map((ch) => {
         const item = map.get(ch.toLowerCase());
         return item || { name: ch, count: 0, arCount: 0 };
       });
+      const standardKeys = new Set(CHEMISTRY_STANDARD_11.map((c) => c.toLowerCase()));
+      for (const [key, val] of map.entries()) {
+        if (!standardKeys.has(key) && val.count > 0 && val.name.toLowerCase() !== 'general') {
+          list.push(val);
+        }
+      }
+      return list;
     }
 
     if (isZoology) {
