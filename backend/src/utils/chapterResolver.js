@@ -1343,7 +1343,7 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
   if (questionId && questionId >= 7160 && questionId <= 7276) return 'Reproductive Health';
   if (questionId && questionId >= 7277 && questionId <= 7470) return 'Human Health & Disease';
   if (questionId && ((questionId >= 7471 && questionId <= 7634) || [7638, 7640, 7641, 7642, 7644, 7645, 7646, 7648].includes(questionId))) return 'Evolution';
-  if (questionId && ([7635, 7636, 7639, 7643].includes(questionId) || (questionId >= 7649 && questionId <= 7780))) return 'Biotechnology - Principles and Processes';
+  if (questionId && ([7635, 7636, 7639, 7643].includes(questionId) || (questionId >= 7649 && questionId <= 7780) || (questionId >= 13997 && questionId <= 14032))) return 'Biotechnology - Principles and Processes';
   if (questionId && questionId >= 7781 && questionId <= 7900) return 'Biotechnology and its Applications';
 
   // 3. Keyword-based matching

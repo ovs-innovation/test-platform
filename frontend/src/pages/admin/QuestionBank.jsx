@@ -337,6 +337,15 @@ export default function AdminQuestionBank() {
       return 'Molecular Basis of Inheritance';
     }
 
+    // Zoology: Biotechnology - Principles and Processes
+    if (
+      (q.id >= 13997 && q.id <= 14032) ||
+      Number(q.chapter_id) === 213 ||
+      (q.chapter_name && /biotechnology.*principles/i.test(q.chapter_name))
+    ) {
+      return 'Biotechnology - Principles and Processes';
+    }
+
     // Moving Charges and Magnetism: Live chapter_id is 193, Local DB is 143, or question ID range 11162-11339
     if (
       (q.id >= 11162 && q.id <= 11339) ||
