@@ -251,6 +251,7 @@ export default function AdminQuestionBank() {
     'The Living World',
     'Biological Classification',
     'Plant Kingdom',
+    'Morphology of Flowering Plants',
     'Anatomy of Flowering Plants',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
@@ -307,6 +308,7 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/morphology\s*of\s*flowering/i.test(trimmed)) return 'Morphology of Flowering Plants';
       if (/anatomy\s*of\s*flowering/i.test(trimmed)) return 'Anatomy of Flowering Plants';
       if (/plant\s*kingdom/i.test(trimmed)) return 'Plant Kingdom';
       if (/biological\s*classification/i.test(trimmed)) return 'Biological Classification';
@@ -341,6 +343,18 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Botany: Morphology of Flowering Plants (Live chapter_id: 237, Local DB: 162, Live IDs: 15894-16021, Local IDs: 7364-7491)
+    if (
+      Number(q.chapter_id) === 237 ||
+      Number(q.chapter_id) === 162 ||
+      (Number(q.id) >= 15894 && Number(q.id) <= 16021) ||
+      (Number(q.id) >= 7364 && Number(q.id) <= 7491) ||
+      (q.chapter_name && /morphology\s*of\s*flowering/i.test(q.chapter_name)) ||
+      (q.chapter && /morphology\s*of\s*flowering/i.test(q.chapter))
+    ) {
+      return 'Morphology of Flowering Plants';
+    }
+
     // 0. Botany: Anatomy of Flowering Plants (Live chapter_id: 235, Local DB: 161, Live IDs: 15694-15893, Local IDs: 7164-7363)
     if (
       Number(q.chapter_id) === 235 ||
