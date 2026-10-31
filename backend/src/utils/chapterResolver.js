@@ -1538,6 +1538,7 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
 
 export const BOTANY_STANDARD = [
   'The Living World',
+  'Biological Classification',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
   'Molecular Basis of Inheritance',
@@ -1554,6 +1555,15 @@ export const BOTANY_STANDARD_7 = BOTANY_STANDARD;
 export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
+  if (
+    /biological\s*classification/i.test(rawChapter) ||
+    /biological\s*classification/i.test(rawTopic) ||
+    (questionId && Number(questionId) >= 14778 && Number(questionId) <= 15037)
+  ) {
+    return 'Biological Classification';
+  }
 
   // 1. Direct match on standard Botany chapters (by rawChapter or strict rawTopic)
   for (const chap of BOTANY_STANDARD) {
