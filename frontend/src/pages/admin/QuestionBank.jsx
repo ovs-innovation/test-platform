@@ -251,6 +251,7 @@ export default function AdminQuestionBank() {
     'The Living World',
     'Biological Classification',
     'Plant Kingdom',
+    'Anatomy of Flowering Plants',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
     'Molecular Basis of Inheritance',
@@ -306,6 +307,7 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/anatomy\s*of\s*flowering/i.test(trimmed)) return 'Anatomy of Flowering Plants';
       if (/plant\s*kingdom/i.test(trimmed)) return 'Plant Kingdom';
       if (/biological\s*classification/i.test(trimmed)) return 'Biological Classification';
       if (/living world/i.test(trimmed)) return 'The Living World';
@@ -339,6 +341,18 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Botany: Anatomy of Flowering Plants (Live chapter_id: 235, Local DB: 161, Live IDs: 15694-15893, Local IDs: 7164-7363)
+    if (
+      Number(q.chapter_id) === 235 ||
+      Number(q.chapter_id) === 161 ||
+      (Number(q.id) >= 15694 && Number(q.id) <= 15893) ||
+      (Number(q.id) >= 7164 && Number(q.id) <= 7363) ||
+      (q.chapter_name && /anatomy\s*of\s*flowering/i.test(q.chapter_name)) ||
+      (q.chapter && /anatomy\s*of\s*flowering/i.test(q.chapter))
+    ) {
+      return 'Anatomy of Flowering Plants';
+    }
+
     // 0. Zoology: Body Fluids and Circulation (Live chapter_id: 233, Local DB: 160, Live IDs: 15549-15693)
     if (
       Number(q.chapter_id) === 233 ||
