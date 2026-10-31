@@ -219,6 +219,7 @@ export default function AdminQuestionBank() {
 
   const CHEMISTRY_STANDARD_11 = useMemo(() => [
     'Some Basic Concepts of Chemistry',
+    'Structure of Atom',
     'Solutions',
     'Electrochemistry',
     'Chemical Kinetics',
@@ -274,6 +275,7 @@ export default function AdminQuestionBank() {
       if (/solution/i.test(trimmed)) return 'Solutions';
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
+      if (/structure of atom/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
     }
 
     if (category?.toLowerCase() === 'zoology') {
@@ -415,6 +417,17 @@ export default function AdminQuestionBank() {
       Number(q.chapter_id) === 95
     ) {
       return 'Some Basic Concepts of Chemistry';
+    }
+
+    // Chemistry: Structure of Atom (156 questions: 140 MCQs + 16 AR)
+    if (
+      (Number(q.id) >= 14171 && Number(q.id) <= 14326) ||
+      (Number(q.chapter_id) === 77 && Number(q.id) >= 5641 && Number(q.id) <= 5796) ||
+      Number(q.chapter_id) === 96 ||
+      /^\s*structure of atom(s)?\s*$/i.test(q.chapter_name || '') ||
+      /^\s*structure of atom(s)?\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Structure of Atom';
     }
 
     // Physics: Electrostatic Potential and Capacitance

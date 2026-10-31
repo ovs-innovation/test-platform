@@ -1072,6 +1072,30 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'Structure of Atom',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bstructure of atom(s)?\b/i,
+      /\batomic structure\b/i,
+      /\bbohr'?s? (atomic )?model\b/i,
+      /\bbohr radius\b/i,
+      /\bphotoelectric effect\b/i,
+      /\bde broglie\b/i,
+      /\bheisenberg'?s? uncertainty\b/i,
+      /\bquantum number(s)?\b/i,
+      /\bhund'?s? rule\b/i,
+      /\bpauf?li'?s? exclusion\b/i,
+      /\baufbau principle\b/i,
+      /\bwave[- ]particle duality\b/i,
+      /\bplanck'?s? (quantum )?theory\b/i,
+      /\bradius of (\w+ )?orbit\b/i,
+      /\blyman series\b|\bbalmer series\b|\bpaschen series\b|\bbrackett series\b|\bpfund series\b/i,
+      /\brydberg constant\b/i,
+      /\bradial (distribution|wave function|probability)\b/i,
+      /\bnodal (plane|surface)s?\b/i,
+    ],
+  },
+  {
     chapter: 'Solutions',
     subjects: ['chemistry'],
     patterns: [
@@ -1242,6 +1266,7 @@ const CHAPTER_RULES = [
 
 export const CHEMISTRY_STANDARD_11 = [
   'Some Basic Concepts of Chemistry',
+  'Structure of Atom',
   'Solutions',
   'Electrochemistry',
   'Chemical Kinetics',
@@ -1280,12 +1305,30 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Some Basic Concepts of Chemistry';
   }
 
-  // 3. Explicit name match for Some Basic Concepts of Chemistry
+  // 3. Exact ID match for "Structure of Atom" (Live IDs 14171-14326, Local IDs 5641-5796)
+  if (
+    questionId && (
+      (Number(questionId) >= 14171 && Number(questionId) <= 14326) ||
+      (Number(questionId) >= 5641 && Number(questionId) <= 5796)
+    )
+  ) {
+    return 'Structure of Atom';
+  }
+
+  // 4. Explicit name match for Some Basic Concepts of Chemistry
   if (
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawChapter) ||
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawTopic)
   ) {
     return 'Some Basic Concepts of Chemistry';
+  }
+
+  // 5. Explicit name match for Structure of Atom
+  if (
+    /structure of atom(s)?|atomic structure/i.test(rawChapter) ||
+    /structure of atom(s)?|atomic structure/i.test(rawTopic)
+  ) {
+    return 'Structure of Atom';
   }
 
   // 2. Electrochemistry
