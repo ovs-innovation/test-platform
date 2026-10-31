@@ -242,7 +242,8 @@ export default function AdminQuestionBank() {
     'Evolution',
     'Biotechnology - Principles and Processes',
     'Biotechnology and its Applications',
-    'Structural Organisation in Animals'
+    'Structural Organisation in Animals',
+    'Breathing and Exchange of Gases'
   ], []);
 
   const BOTANY_STANDARD = useMemo(() => [
@@ -296,6 +297,7 @@ export default function AdminQuestionBank() {
       if (/biotechnology.*principles/i.test(trimmed)) return 'Biotechnology - Principles and Processes';
       if (/biotechnology.*applications/i.test(trimmed)) return 'Biotechnology and its Applications';
       if (/structural.*organi/i.test(trimmed) || /animal.*tissue/i.test(trimmed)) return 'Structural Organisation in Animals';
+      if (/breathing/i.test(trimmed) || /respiratory/i.test(trimmed)) return 'Breathing and Exchange of Gases';
     }
 
     if (category?.toLowerCase() === 'botany') {
@@ -335,6 +337,17 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Zoology: Breathing and Exchange of Gases (Live chapter_id: 231, Local DB: 159, Live IDs: 15415-15548)
+    if (
+      Number(q.chapter_id) === 231 ||
+      Number(q.chapter_id) === 159 ||
+      (Number(q.id) >= 15415 && Number(q.id) <= 15548) ||
+      (q.chapter_name && /breathing/i.test(q.chapter_name)) ||
+      (q.chapter && /breathing/i.test(q.chapter))
+    ) {
+      return 'Breathing and Exchange of Gases';
+    }
+
     // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15414)
     if (
       Number(q.chapter_id) === 229 ||

@@ -1483,7 +1483,8 @@ export const ZOOLOGY_STANDARD_6 = [
   'Evolution',
   'Biotechnology - Principles and Processes',
   'Biotechnology and its Applications',
-  'Structural Organisation in Animals'
+  'Structural Organisation in Animals',
+  'Breathing and Exchange of Gases'
 ];
 
 /**
@@ -1493,6 +1494,18 @@ export const ZOOLOGY_STANDARD_6 = [
 export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 0. Zoology: Breathing and Exchange of Gases (Live chapter_id: 231, Local DB: 159, Live IDs: 15415-15548)
+  if (
+    /breathing\s*and\s*exchange\s*of\s*gases/i.test(rawChapter) ||
+    /breathing\s*and\s*exchange\s*of\s*gases/i.test(rawTopic) ||
+    /breathing/i.test(rawChapter) ||
+    /respiratory/i.test(rawChapter) ||
+    /respiratory/i.test(rawTopic) ||
+    (questionId && Number(questionId) >= 15415 && Number(questionId) <= 15548)
+  ) {
+    return 'Breathing and Exchange of Gases';
+  }
 
   // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15414)
   if (
