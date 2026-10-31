@@ -243,7 +243,8 @@ export default function AdminQuestionBank() {
     'Biotechnology - Principles and Processes',
     'Biotechnology and its Applications',
     'Structural Organisation in Animals',
-    'Breathing and Exchange of Gases'
+    'Breathing and Exchange of Gases',
+    'Body Fluids and Circulation'
   ], []);
 
   const BOTANY_STANDARD = useMemo(() => [
@@ -298,6 +299,7 @@ export default function AdminQuestionBank() {
       if (/biotechnology.*applications/i.test(trimmed)) return 'Biotechnology and its Applications';
       if (/structural.*organi/i.test(trimmed) || /animal.*tissue/i.test(trimmed)) return 'Structural Organisation in Animals';
       if (/breathing/i.test(trimmed) || /respiratory/i.test(trimmed)) return 'Breathing and Exchange of Gases';
+      if (/body\s*fluids?/i.test(trimmed) || /circulation/i.test(trimmed)) return 'Body Fluids and Circulation';
     }
 
     if (category?.toLowerCase() === 'botany') {
@@ -337,6 +339,17 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Zoology: Body Fluids and Circulation (Live chapter_id: 233, Local DB: 160, Live IDs: 15549-15693)
+    if (
+      Number(q.chapter_id) === 233 ||
+      Number(q.chapter_id) === 160 ||
+      (Number(q.id) >= 15549 && Number(q.id) <= 15693) ||
+      (q.chapter_name && /body\s*fluids?/i.test(q.chapter_name)) ||
+      (q.chapter && /body\s*fluids?/i.test(q.chapter))
+    ) {
+      return 'Body Fluids and Circulation';
+    }
+
     // 0. Zoology: Breathing and Exchange of Gases (Live chapter_id: 231, Local DB: 159, Live IDs: 15415-15548)
     if (
       Number(q.chapter_id) === 231 ||
