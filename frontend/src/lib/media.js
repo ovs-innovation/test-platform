@@ -155,6 +155,17 @@ export function getQuestionDiagrams(q) {
     }
   }
 
+  // Fallback to embedded <img src="..."> in question_text if present
+  if (typeof q.question_text === 'string' && q.question_text.includes('<img')) {
+    const match = q.question_text.match(/<img[^>]+src=["']([^"']+)["']/i);
+    if (match && match[1]) {
+      const u = match[1].trim();
+      if (u && !optUrls.has(u) && u !== solUrl) {
+        return [{ url: u }];
+      }
+    }
+  }
+
   return [];
 }
 

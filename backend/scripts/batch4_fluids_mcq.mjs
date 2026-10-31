@@ -186,7 +186,8 @@ export const batch4Questions = [
   },
   {
     question_number: 109,
-    question_text: `Following is the diagrammatic representation of formed elements in the blood. Which of the following is the function of WBC labelled as 'A'?\n<img src="${diagrams.q109_wbc}" alt="Formed Elements Diagram" style="max-width:320px; display:block; margin:10px 0;" />`,
+    question_text: "Following is the diagrammatic representation of formed elements in the blood. Which of the following is the function of WBC labelled as 'A'?",
+    image_url: diagrams.q109_wbc,
     options: [
       "They are phagocytic cells which destroy foreign organisms entering the body.",
       "They secrete histamine, serotonin, heparin and are involved in inflammatory reactions.",
@@ -312,7 +313,8 @@ export const batch4Questions = [
   },
   {
     question_number: 118,
-    question_text: `Select the state of ECG which appears when heart does not pump sufficient amount of oxygen to its own muscles due to partial blockage of coronary artery.\n<img src="${diagrams.q118_ecg_traces}" alt="ECG Traces" style="max-width:280px; display:block; margin:10px 0;" />`,
+    question_text: "Select the state of ECG which appears when heart does not pump sufficient amount of oxygen to its own muscles due to partial blockage of coronary artery.",
+    image_url: diagrams.q118_ecg_traces,
     options: [
       "(1) Normal trace",
       "(2) Multiple P waves",

@@ -256,7 +256,8 @@ export const batch2Questions = [
   },
   {
     question_number: 48,
-    question_text: `Study the given diagrammatic representation of a standard ECG and select the correct option accordingly.\n<img src="${diagrams.q48_ecg}" alt="Standard ECG Waveform" style="max-width:320px; display:block; margin:10px 0;" />`,
+    question_text: "Study the given diagrammatic representation of a standard ECG and select the correct option accordingly.",
+    image_url: diagrams.q48_ecg,
     options: [
       "Enlargement of P-wave indicates the enlargement of ventricles.",
       "Contraction of ventricle starts shortly after Q and marks the beginning of ventricular systole.",

@@ -2334,12 +2334,16 @@ export default function AdminQuestionBank() {
                             <span>Available</span>
                           </span>
                         )}
-                        {q.image_url && (
-                          <span className="inline-flex items-center gap-1 text-[10px] font-black text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-md border border-cyan-300 dark:border-cyan-800/60 shadow-2xs" title="This question has an attached reaction/chemical structure diagram">
-                            <Image className="h-3 w-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
-                            <span>Diagram</span>
-                          </span>
-                        )}
+                        {(() => {
+                          const rawHtmlImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*\/?>/i) : null;
+                          const effectiveImageUrl = q.image_url || (rawHtmlImgMatch ? rawHtmlImgMatch[1] : null);
+                          return effectiveImageUrl ? (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-black text-cyan-700 dark:text-cyan-300 bg-cyan-50 dark:bg-cyan-950/40 px-2 py-0.5 rounded-md border border-cyan-300 dark:border-cyan-800/60 shadow-2xs" title="This question has an attached diagram">
+                              <Image className="h-3 w-3 text-cyan-600 dark:text-cyan-400 shrink-0" />
+                              <span>Diagram</span>
+                            </span>
+                          ) : null;
+                        })()}
                         {isAssertionReason(q) && (
                           <span className="inline-flex items-center gap-1 text-[10px] font-black text-amber-700 dark:text-amber-300 bg-amber-50 dark:bg-amber-950/40 px-2 py-0.5 rounded-md border border-amber-300 dark:border-amber-800/60 shadow-2xs" title="Assertion-Reason question">
                             <AlertCircle className="h-3 w-3 text-amber-600 dark:text-amber-400 shrink-0" />
@@ -2376,60 +2380,70 @@ export default function AdminQuestionBank() {
                         )}
                       </div>
 
-                      {/* Question Text with LaTeX */}
-                      <div className="text-slate-900 dark:text-slate-100 font-bold leading-snug text-xs">
-                        <MathRenderer text={q.question_text} />
-                      </div>
+                      {(() => {
+                        const rawHtmlImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*\/?>/i) : null;
+                        const effectiveImageUrl = q.image_url || (rawHtmlImgMatch ? rawHtmlImgMatch[1] : null);
+                        const cleanQuestionText = rawHtmlImgMatch ? q.question_text.replace(/<img[^>]+src=["'][^"']+["'][^>]*\/?>/gi, '').trim() : q.question_text;
 
-                      {/* Prominent Question Diagram (Directly beneath question text, before options) */}
-                      {q.image_url && (
-                        <div className="my-2 rounded-xl border border-blue-200/90 dark:border-blue-900/60 bg-blue-50/40 dark:bg-blue-950/25 p-2.5 max-w-xl transition-all shadow-xs hover:shadow-md">
-                          <div className="flex items-center justify-between mb-1.5 pb-1 border-b border-blue-100 dark:border-blue-900/40 select-none">
-                            <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-blue-800 dark:text-blue-300">
-                              <Image className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
-                              <span>Reaction & Structure Diagram</span>
-                            </span>
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setPreviewImageModal({
-                                  url: getMediaUrl(q.image_url),
-                                  title: `Question #${sNo} - ${q.topic || 'Chemical Reaction Diagram'}`
-                                });
-                              }}
-                              className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 hover:underline cursor-pointer"
-                              title="Click to view full-resolution diagram"
-                            >
-                              <ZoomIn className="h-3.5 w-3.5" />
-                              <span>Enlarge Diagram</span>
-                            </button>
-                          </div>
-                          <div 
-                            className="flex items-center justify-center bg-white dark:bg-slate-900 rounded-lg p-2.5 border border-slate-200 dark:border-slate-800 cursor-zoom-in group overflow-hidden"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setPreviewImageModal({
-                                url: getMediaUrl(q.image_url),
-                                title: `Question #${sNo} - ${q.topic || 'Chemical Reaction Diagram'}`
-                              });
-                            }}
-                            title="Click to zoom in full resolution"
-                          >
-                            <img
-                              src={getMediaUrl(q.image_url)}
-                              alt={`Question #${sNo} diagram`}
-                              className="max-h-64 sm:max-h-72 w-auto max-w-full object-contain rounded transition-transform duration-200 group-hover:scale-[1.02]"
-                              onError={(e) => {
-                                if (!e.target.dataset.triedFallback && !q.image_url.startsWith('http')) {
-                                  e.target.dataset.triedFallback = 'true';
-                                  e.target.src = `http://127.0.0.1:5000${q.image_url.startsWith('/') ? '' : '/'}${q.image_url}`;
-                                }
-                              }}
-                            />
-                          </div>
-                        </div>
-                      )}
+                        return (
+                          <>
+                            {/* Question Text with LaTeX */}
+                            <div className="text-slate-900 dark:text-slate-100 font-bold leading-snug text-xs">
+                              <MathRenderer text={cleanQuestionText} />
+                            </div>
+
+                            {/* Prominent Question Diagram (Directly beneath question text, before options) */}
+                            {effectiveImageUrl && (
+                              <div className="my-2 rounded-xl border border-blue-200/90 dark:border-blue-900/60 bg-blue-50/40 dark:bg-blue-950/25 p-2.5 max-w-xl transition-all shadow-xs hover:shadow-md">
+                                <div className="flex items-center justify-between mb-1.5 pb-1 border-b border-blue-100 dark:border-blue-900/40 select-none">
+                                  <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-blue-800 dark:text-blue-300">
+                                    <Image className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400 shrink-0" />
+                                    <span>{q.topic ? `${q.topic} Diagram` : 'Question Diagram'}</span>
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setPreviewImageModal({
+                                        url: getMediaUrl(effectiveImageUrl),
+                                        title: `Question #${sNo} - ${q.topic || 'Question Diagram'}`
+                                      });
+                                    }}
+                                    className="inline-flex items-center gap-1 text-[11px] font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 hover:underline cursor-pointer"
+                                    title="Click to view full-resolution diagram"
+                                  >
+                                    <ZoomIn className="h-3.5 w-3.5" />
+                                    <span>Enlarge Diagram</span>
+                                  </button>
+                                </div>
+                                <div 
+                                  className="flex items-center justify-center bg-white dark:bg-slate-900 rounded-lg p-2.5 border border-slate-200 dark:border-slate-800 cursor-zoom-in group overflow-hidden"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setPreviewImageModal({
+                                      url: getMediaUrl(effectiveImageUrl),
+                                      title: `Question #${sNo} - ${q.topic || 'Question Diagram'}`
+                                    });
+                                  }}
+                                  title="Click to zoom in full resolution"
+                                >
+                                  <img
+                                    src={getMediaUrl(effectiveImageUrl)}
+                                    alt={`Question #${sNo} diagram`}
+                                    className="max-h-64 sm:max-h-72 w-auto max-w-full object-contain rounded transition-transform duration-200 group-hover:scale-[1.02]"
+                                    onError={(e) => {
+                                      if (!e.target.dataset.triedFallback && !effectiveImageUrl.startsWith('http')) {
+                                        e.target.dataset.triedFallback = 'true';
+                                        e.target.src = `http://127.0.0.1:5000${effectiveImageUrl.startsWith('/') ? '' : '/'}${effectiveImageUrl}`;
+                                      }
+                                    }}
+                                  />
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        );
+                      })()}
 
                       {/* Options A/B/C/D */}
                       {!isInteger && opts.length > 0 && (

@@ -298,7 +298,8 @@ export const batch1Questions = [
   },
   {
     question_number: 22,
-    question_text: `The diagram given here is the standard ECG of a normal person. The P-wave represents the\n<img src="${diagrams.q22_ecg}" alt="ECG Diagram" style="max-width:320px; display:block; margin:10px 0;" />`,
+    question_text: "The diagram given here is the standard ECG of a normal person. The P-wave represents the",
+    image_url: diagrams.q22_ecg,
     options: [
       "End of atrial systole",
       "Beginning of ventricular diastole",
@@ -340,7 +341,8 @@ export const batch1Questions = [
   },
   {
     question_number: 25,
-    question_text: `Figure shows schematic plan of blood circulation in humans with labels A to D. Identify the label and its correct functions.\n<img src="${diagrams.q25_circulation}" alt="Circulation Plan Diagram" style="max-width:280px; display:block; margin:10px 0;" />`,
+    question_text: "Figure shows schematic plan of blood circulation in humans with labels A to D. Identify the label and its correct functions.",
+    image_url: diagrams.q25_circulation,
     options: [
       "B = Pulmonary artery - Takes blood from heart to lungs, pO2 = 90 mm Hg",
       "C = Vena Cava - Carries blood from the body parts to right auricle, pCO2 = 45 mm Hg",
@@ -396,7 +398,8 @@ export const batch1Questions = [
   },
   {
     question_number: 29,
-    question_text: `The given diagram shows how things get to and from the liver. They are labelled as A, B, C, D, E, F. Which one of the following labelling is the correct one?\n<img src="${diagrams.q29_portal_system}" alt="Hepatic Portal System Diagram" style="max-width:320px; display:block; margin:10px 0;" />`,
+    question_text: "The given diagram shows how things get to and from the liver. They are labelled as A, B, C, D, E, F. Which one of the following labelling is the correct one?",
+    image_url: diagrams.q29_portal_system,
     options: [
       "A is the hepatic portal vein and E is the hepatic vein",
       "C is the intestine and F is the hepatic portal vein",
