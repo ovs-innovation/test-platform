@@ -1062,15 +1062,11 @@ const CHAPTER_RULES = [
     patterns: [
       /\bsome basic concepts of chemistry\b/i,
       /\bbasic concepts of chemistry\b/i,
-      /\bmole concept\b/i,
-      /\bstoichiometry\b/i,
       /\blaw of (constant|multiple|reciprocal) proportion(s)?\b/i,
       /\blaw of conservation of mass\b/i,
       /\bavogadro'?s? (law|number|hypothesis)\b/i,
       /\bsignificant figures?\b/i,
       /\bempirical formula\b|\bmolecular formula\b/i,
-      /\bequivalent weight\b|\bequivalent concept\b/i,
-      /\bnormality\b|\bmolality\b|\bmole fraction\b/i,
       /\blimiting reagent\b|\blimiting reactant\b/i,
       /\bpercentage composition\b/i,
     ],
@@ -1267,22 +1263,29 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
 
-  // 0. Some Basic Concepts of Chemistry (Live IDs 14041-14067, Local IDs 5504-5537, or text)
-  if (
-    (questionId && (
-      (Number(questionId) >= 14041 && Number(questionId) <= 14067) ||
-      (Number(questionId) >= 5504 && Number(questionId) <= 5537)
-    )) ||
-    /some basic concepts of chemistry|basic concepts of chemistry|mole concept|stoichiometry|limiting reagent|law of (constant|multiple|reciprocal) proportion|avogadro|significant figure|empirical formula|normality|molality|molarity of a solution obtained by mixing|amount of mg left unreacted|number of significant figures|mass of oxygen that combines with fixed mass of carbon/i.test(combined)
-  ) {
-    return 'Some Basic Concepts of Chemistry';
-  }
-
-  // 1. Direct match on standard 11
+  // 1. Direct match on standard chapters: If rawChapter or rawTopic already names a valid chapter, respect it!
   for (const chap of CHEMISTRY_STANDARD_11) {
     if (norm(rawChapter) === norm(chap) || norm(rawTopic) === norm(chap)) {
       return chap;
     }
+  }
+
+  // 2. Exact ID match for "Some Basic Concepts of Chemistry" (Live IDs 14041-14170, Local IDs 5504-5640)
+  if (
+    questionId && (
+      (Number(questionId) >= 14041 && Number(questionId) <= 14170) ||
+      (Number(questionId) >= 5504 && Number(questionId) <= 5640)
+    )
+  ) {
+    return 'Some Basic Concepts of Chemistry';
+  }
+
+  // 3. Explicit name match for Some Basic Concepts of Chemistry
+  if (
+    /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawChapter) ||
+    /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawTopic)
+  ) {
+    return 'Some Basic Concepts of Chemistry';
   }
 
   // 2. Electrochemistry

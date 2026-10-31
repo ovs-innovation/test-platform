@@ -352,13 +352,67 @@ export default function AdminQuestionBank() {
       return 'Biotechnology - Principles and Processes';
     }
 
-    // Chemistry: Some Basic Concepts of Chemistry
+    // Chemistry: Solutions
     if (
-      (q.id >= 14041 && q.id <= 14067) ||
-      (q.id >= 5504 && q.id <= 5537) ||
-      Number(q.chapter_id) === 127 ||
-      (q.chapter_name && /basic concepts/i.test(q.chapter_name)) ||
-      (q.chapter && /basic concepts/i.test(q.chapter))
+      Number(q.chapter_id) === 37 ||
+      Number(q.chapter_id) === 150 ||
+      /^\s*solutions?\s*$/i.test(q.chapter_name || '') ||
+      /^\s*solutions?\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Solutions';
+    }
+
+    // Chemistry: Biomolecules
+    if (
+      Number(q.chapter_id) === 36 ||
+      Number(q.chapter_id) === 133 ||
+      /^\s*biomolecules?\s*$/i.test(q.chapter_name || '') ||
+      /^\s*biomolecules?\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Biomolecules';
+    }
+
+    // Chemistry: Electrochemistry
+    if (
+      Number(q.chapter_id) === 15 ||
+      /^\s*electrochemistry\s*$/i.test(q.chapter_name || '') ||
+      /^\s*electrochemistry\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Electrochemistry';
+    }
+
+    // Chemistry: Chemical Kinetics
+    if (
+      Number(q.chapter_id) === 14 ||
+      /^\s*chemical kinetics\s*$/i.test(q.chapter_name || '') ||
+      /^\s*chemical kinetics\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Chemical Kinetics';
+    }
+
+    // Chemistry: Haloalkanes and Haloarenes
+    if (
+      Number(q.chapter_id) === 34 ||
+      /^\s*haloalkanes and haloarenes\s*$/i.test(q.chapter_name || '') ||
+      /^\s*haloalkanes and haloarenes\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Haloalkanes and Haloarenes';
+    }
+
+    // Chemistry: The d- and f-Block Elements
+    if (
+      Number(q.chapter_id) === 204 ||
+      /^\s*the d- and f-block elements\s*$/i.test(q.chapter_name || '') ||
+      /^\s*the d- and f-block elements\s*$/i.test(q.chapter || '')
+    ) {
+      return 'The d- and f-Block Elements';
+    }
+
+    // Chemistry: Some Basic Concepts of Chemistry (130 questions only)
+    if (
+      (Number(q.id) >= 14041 && Number(q.id) <= 14170) ||
+      (Number(q.chapter_id) === 127 && Number(q.id) >= 5504 && Number(q.id) <= 5640) ||
+      Number(q.chapter_id) === 95
     ) {
       return 'Some Basic Concepts of Chemistry';
     }
