@@ -1557,11 +1557,11 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
 
-  // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Local IDs: 6508-6682)
+  // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212)
   if (
     /plant\s*kingdom/i.test(rawChapter) ||
     /plant\s*kingdom/i.test(rawTopic) ||
-    (questionId && Number(questionId) >= 6508 && Number(questionId) <= 6682)
+    (questionId && Number(questionId) >= 15038 && Number(questionId) <= 15212)
   ) {
     return 'Plant Kingdom';
   }

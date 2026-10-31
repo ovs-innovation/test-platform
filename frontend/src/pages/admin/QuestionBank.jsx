@@ -333,12 +333,11 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
-    // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212, Local IDs: 6508-6682)
+    // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212)
     if (
       Number(q.chapter_id) === 227 ||
       Number(q.chapter_id) === 157 ||
       (Number(q.id) >= 15038 && Number(q.id) <= 15212) ||
-      (Number(q.id) >= 6508 && Number(q.id) <= 6682) ||
       (q.chapter_name && /plant\s*kingdom/i.test(q.chapter_name)) ||
       (q.chapter && /plant\s*kingdom/i.test(q.chapter))
     ) {
