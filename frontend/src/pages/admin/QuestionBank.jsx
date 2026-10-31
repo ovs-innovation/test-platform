@@ -247,6 +247,7 @@ export default function AdminQuestionBank() {
   const BOTANY_STANDARD = useMemo(() => [
     'The Living World',
     'Biological Classification',
+    'Plant Kingdom',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
     'Molecular Basis of Inheritance',
@@ -299,6 +300,7 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/plant\s*kingdom/i.test(trimmed)) return 'Plant Kingdom';
       if (/biological\s*classification/i.test(trimmed)) return 'Biological Classification';
       if (/living world/i.test(trimmed)) return 'The Living World';
       if (/sexual reproduction/i.test(trimmed)) return 'Sexual Reproduction in Flowering Plants';
@@ -331,6 +333,18 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
+    // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212, Local IDs: 6508-6682)
+    if (
+      Number(q.chapter_id) === 227 ||
+      Number(q.chapter_id) === 157 ||
+      (Number(q.id) >= 15038 && Number(q.id) <= 15212) ||
+      (Number(q.id) >= 6508 && Number(q.id) <= 6682) ||
+      (q.chapter_name && /plant\s*kingdom/i.test(q.chapter_name)) ||
+      (q.chapter && /plant\s*kingdom/i.test(q.chapter))
+    ) {
+      return 'Plant Kingdom';
+    }
+
     // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
     if (
       Number(q.chapter_id) === 225 ||

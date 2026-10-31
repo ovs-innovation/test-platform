@@ -1539,6 +1539,7 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
 export const BOTANY_STANDARD = [
   'The Living World',
   'Biological Classification',
+  'Plant Kingdom',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
   'Molecular Basis of Inheritance',
@@ -1555,6 +1556,15 @@ export const BOTANY_STANDARD_7 = BOTANY_STANDARD;
 export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Local IDs: 6508-6682)
+  if (
+    /plant\s*kingdom/i.test(rawChapter) ||
+    /plant\s*kingdom/i.test(rawTopic) ||
+    (questionId && Number(questionId) >= 6508 && Number(questionId) <= 6682)
+  ) {
+    return 'Plant Kingdom';
+  }
 
   // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
   if (
