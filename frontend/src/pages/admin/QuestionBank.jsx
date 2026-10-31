@@ -302,6 +302,7 @@ export default function AdminQuestionBank() {
     }
 
     if (category?.toLowerCase() === 'physics') {
+      if (/electrostatic/i.test(trimmed) || /capacitan/i.test(trimmed)) return 'Electrostatic Potential and Capacitance';
       if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
       if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
       if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
@@ -344,6 +345,17 @@ export default function AdminQuestionBank() {
       (q.chapter_name && /biotechnology.*principles/i.test(q.chapter_name))
     ) {
       return 'Biotechnology - Principles and Processes';
+    }
+
+    // Physics: Electrostatic Potential and Capacitance
+    if (
+      Number(q.chapter_id) === 142 ||
+      Number(q.chapter_id) === 67 ||
+      [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503].includes(Number(q.id)) ||
+      (q.chapter_name && /electrostatic potential|capacitance/i.test(q.chapter_name)) ||
+      (q.chapter && /electrostatic potential|capacitance/i.test(q.chapter))
+    ) {
+      return 'Electrostatic Potential and Capacitance';
     }
 
     // Moving Charges and Magnetism: Live chapter_id is 193, Local DB is 143, or question ID range 11162-11339

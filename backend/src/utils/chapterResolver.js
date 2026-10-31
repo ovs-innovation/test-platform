@@ -785,9 +785,12 @@ const CHAPTER_RULES = [
     ],
   },
   {
-    chapter: 'Electrostatics & Capacitance',
+    chapter: 'Electrostatic Potential and Capacitance',
     subjects: ['physics'],
     patterns: [
+      /\belectrostatic potential and capacitance\b/i,
+      /\belectrostatics? & capacitance\b/i,
+      /\belectrostatics? and capacitance\b/i,
       /\belectrostatic/i,
       /\bcoulomb/i,
       /\belectric charge/i,
@@ -1543,6 +1546,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   }
 
   if (normCategory === 'physics' || !normCategory) {
+    if (/electrostatic/i.test(rawChapter) || /capacitan/i.test(rawChapter) || /electrostatic/i.test(rawTopic) || /capacitan/i.test(rawTopic)) {
+      return 'Electrostatic Potential and Capacitance';
+    }
     if (/moving charges/i.test(rawChapter) || /moving charges/i.test(rawTopic)) {
       return 'Moving Charges and Magnetism';
     }
