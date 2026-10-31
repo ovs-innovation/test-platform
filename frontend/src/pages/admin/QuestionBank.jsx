@@ -351,7 +351,8 @@ export default function AdminQuestionBank() {
     if (
       Number(q.chapter_id) === 142 ||
       Number(q.chapter_id) === 67 ||
-      [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503].includes(Number(q.id)) ||
+      (q.id >= 14033 && q.id <= 14040) ||
+      [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 10812, 10987, 10988].includes(Number(q.id)) ||
       (q.chapter_name && /electrostatic potential|capacitance/i.test(q.chapter_name)) ||
       (q.chapter && /electrostatic potential|capacitance/i.test(q.chapter))
     ) {

@@ -1492,6 +1492,12 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
 
   // Physics ID Range: 11162 - 11339 are strictly "Moving Charges and Magnetism"
   if (normCategory === 'physics' || !normCategory) {
+    if (questionId && (
+      (Number(questionId) >= 14033 && Number(questionId) <= 14040) ||
+      [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 10812, 10987, 10988].includes(Number(questionId))
+    )) {
+      return 'Electrostatic Potential and Capacitance';
+    }
     if (questionId && Number(questionId) >= 11162 && Number(questionId) <= 11339) {
       return 'Moving Charges and Magnetism';
     }
