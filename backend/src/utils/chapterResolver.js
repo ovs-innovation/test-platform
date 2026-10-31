@@ -1116,6 +1116,25 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'Periodic Table',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bperiodic table\b/i,
+      /\bclassification of elements\b/i,
+      /\bperiodicity in properties\b/i,
+      /\bperiodicity\b/i,
+      /\belectron affinity\b/i,
+      /\belectron gain enthalpy\b/i,
+      /\bionisation (energy|enthalpy|potential)\b/i,
+      /\bionization (energy|enthalpy|potential)\b/i,
+      /\belectronegativity\b/i,
+      /\beffective nuclear charge\b|\bz_?\{?eff\}?\b/i,
+      /\bmoseley('s)? (law|equation)\b/i,
+      /\bpauling('s)? scale\b|\ballred[- ]rochow\b/i,
+      /\bisoelectronic species\b/i,
+    ],
+  },
+  {
     chapter: 'Solutions',
     subjects: ['chemistry'],
     patterns: [
@@ -1287,6 +1306,7 @@ const CHAPTER_RULES = [
 export const CHEMISTRY_STANDARD_11 = [
   'Some Basic Concepts of Chemistry',
   'Structure of Atom',
+  'Periodic Table',
   'Equilibrium',
   'Solutions',
   'Electrochemistry',
@@ -1336,17 +1356,27 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Structure of Atom';
   }
 
-  // 4. Exact ID match for "Equilibrium" (Local IDs 5797-6100, Live IDs >= 14327)
+  // 4. Exact ID match for "Equilibrium" (Local IDs 5797-6060, Live IDs 14327-14590)
   if (
     questionId && (
-      (Number(questionId) >= 5797 && Number(questionId) <= 6100) ||
-      (Number(questionId) >= 14327 && Number(questionId) <= 14700)
+      (Number(questionId) >= 5797 && Number(questionId) <= 6060) ||
+      (Number(questionId) >= 14327 && Number(questionId) <= 14590)
     )
   ) {
     return 'Equilibrium';
   }
 
-  // 5. Explicit name match for Some Basic Concepts of Chemistry
+  // 5. Exact ID match for "Periodic Table" (Local IDs 6061-6300, Live IDs 14591-14800)
+  if (
+    questionId && (
+      (Number(questionId) >= 6061 && Number(questionId) <= 6300) ||
+      (Number(questionId) >= 14591 && Number(questionId) <= 14800)
+    )
+  ) {
+    return 'Periodic Table';
+  }
+
+  // 6. Explicit name match for Some Basic Concepts of Chemistry
   if (
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawChapter) ||
     /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawTopic)
@@ -1354,7 +1384,7 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Some Basic Concepts of Chemistry';
   }
 
-  // 6. Explicit name match for Structure of Atom
+  // 7. Explicit name match for Structure of Atom
   if (
     /structure of atom(s)?|atomic structure/i.test(rawChapter) ||
     /structure of atom(s)?|atomic structure/i.test(rawTopic)
@@ -1362,12 +1392,25 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Structure of Atom';
   }
 
-  // 7. Explicit name match for Equilibrium
+  // 8. Explicit name match for Periodic Table
+  if (
+    /periodic table|classification of elements|periodicity/i.test(rawChapter) ||
+    /periodic table|classification of elements|periodicity/i.test(rawTopic)
+  ) {
+    return 'Periodic Table';
+  }
+
+  // 9. Explicit name match for Equilibrium
   if (
     /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(rawChapter) ||
     /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(rawTopic)
   ) {
     return 'Equilibrium';
+  }
+
+  // Periodic Table pattern match
+  if (/moseley|mendeleev|periodicity in properties|periodic table|allred[- ]rochow/i.test(combined)) {
+    return 'Periodic Table';
   }
 
   // 2. Electrochemistry

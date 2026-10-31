@@ -220,6 +220,7 @@ export default function AdminQuestionBank() {
   const CHEMISTRY_STANDARD_11 = useMemo(() => [
     'Some Basic Concepts of Chemistry',
     'Structure of Atom',
+    'Periodic Table',
     'Equilibrium',
     'Solutions',
     'Electrochemistry',
@@ -277,6 +278,7 @@ export default function AdminQuestionBank() {
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
       if (/structure of atom/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
+      if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
     }
 
@@ -432,10 +434,21 @@ export default function AdminQuestionBank() {
       return 'Structure of Atom';
     }
 
+    // Chemistry: Periodic Table (187 questions: 171 MCQ + 16 AR)
+    if (
+      (Number(q.id) >= 14591 && Number(q.id) <= 14777) ||
+      Number(q.chapter_id) === 155 ||
+      (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
+      /^\s*(classification of elements(\s*and\s*periodicity\s*in\s*properties)?|periodic\s*table|periodicity)\s*$/i.test(q.chapter_name || '') ||
+      /^\s*(classification of elements(\s*and\s*periodicity\s*in\s*properties)?|periodic\s*table|periodicity)\s*$/i.test(q.chapter || '')
+    ) {
+      return 'Periodic Table';
+    }
+
     // Chemistry: Equilibrium (264 questions: 239 MCQ + 25 AR)
     if (
-      (Number(q.id) >= 14327 && Number(q.id) <= 14700) ||
-      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6100) ||
+      (Number(q.id) >= 14327 && Number(q.id) <= 14590) ||
+      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6060) ||
       Number(q.chapter_id) === 146 ||
       /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter_name || '') ||
       /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter || '')
