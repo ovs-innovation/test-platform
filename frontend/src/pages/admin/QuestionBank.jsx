@@ -265,12 +265,13 @@ export default function AdminQuestionBank() {
 
   const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
 
-  const formatChapterName = (str) => {
+  const formatChapterName = (str, subjectHint) => {
     if (!str) return 'General';
     const trimmed = String(str).trim();
     if (!trimmed) return 'General';
+    const activeSubj = String(subjectHint || category || '').trim().toLowerCase();
 
-    if (category?.toLowerCase() === 'chemistry') {
+    if (activeSubj === 'chemistry') {
       const normalized = normChapterKey(trimmed);
       const matched = CHEMISTRY_STANDARD_11.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
@@ -289,9 +290,10 @@ export default function AdminQuestionBank() {
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
       if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
+      if (/some basic concepts of chemistry/i.test(trimmed) || /basic concepts of chemistry/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
     }
 
-    if (category?.toLowerCase() === 'zoology') {
+    if (activeSubj === 'zoology') {
       const normalized = normChapterKey(trimmed);
       const matched = ZOOLOGY_STANDARD_6.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
@@ -306,7 +308,7 @@ export default function AdminQuestionBank() {
       if (/body\s*fluids?/i.test(trimmed) || /circulation/i.test(trimmed)) return 'Body Fluids and Circulation';
     }
 
-    if (category?.toLowerCase() === 'botany') {
+    if (activeSubj === 'botany') {
       const normalized = normChapterKey(trimmed);
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
@@ -324,17 +326,13 @@ export default function AdminQuestionBank() {
       if (/biodiversity/i.test(trimmed)) return 'Biodiversity and Conservation (Sacred groves)';
     }
 
-    if (category?.toLowerCase() === 'physics') {
+    if (activeSubj === 'physics') {
       if (/electrostatic/i.test(trimmed) || /capacitan/i.test(trimmed)) return 'Electrostatic Potential and Capacitance';
       if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
       if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
       if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
-    }
-
-    if (category?.toLowerCase() === 'chemistry') {
-      if (/some basic concepts of chemistry/i.test(trimmed) || /basic concepts of chemistry/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -345,273 +343,191 @@ export default function AdminQuestionBank() {
 
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
-    // 0. Botany: Morphology of Flowering Plants (Live chapter_id: 237, Local DB: 162, Live IDs: 15894-16021, Local IDs: 7364-7491)
-    if (
-      Number(q.chapter_id) === 237 ||
-      Number(q.chapter_id) === 162 ||
-      (Number(q.id) >= 15894 && Number(q.id) <= 16021) ||
-      (Number(q.id) >= 7364 && Number(q.id) <= 7491) ||
-      (q.chapter_name && /morphology\s*of\s*flowering/i.test(q.chapter_name)) ||
-      (q.chapter && /morphology\s*of\s*flowering/i.test(q.chapter))
-    ) {
-      return 'Morphology of Flowering Plants';
+    const activeSubj = String(
+      (category && category.toLowerCase() !== 'all' ? category : '') ||
+      q.category ||
+      q.subject ||
+      q.subject_name ||
+      ''
+    ).trim().toLowerCase();
+
+    // 1. ZOOLOGY SCOPED RESOLUTION
+    if (activeSubj === 'zoology') {
+      const raw = (q.chapter_name || q.chapter || '').trim();
+      const matched = ZOOLOGY_STANDARD_6.find((z) => normChapterKey(z) === normChapterKey(raw));
+      if (matched) return matched;
+
+      if (/reproductive\s*health/i.test(raw) || /reproductive\s*health/i.test(q.topic || '')) return 'Reproductive Health';
+      if (/human\s*health|disease/i.test(raw) || /human\s*health|disease/i.test(q.topic || '')) return 'Human Health & Disease';
+      if (/human\s*reproduction/i.test(raw) || /human\s*reproduction/i.test(q.topic || '')) return 'Human Reproduction';
+      if (/evolution/i.test(raw) || /evolution/i.test(q.topic || '')) return 'Evolution';
+      if (
+        (Number(q.id) >= 13997 && Number(q.id) <= 14032) ||
+        Number(q.chapter_id) === 213 ||
+        /biotechnology.*principles/i.test(raw) ||
+        /biotechnology.*principles/i.test(q.topic || '')
+      ) return 'Biotechnology - Principles and Processes';
+      if (/biotechnology.*applications/i.test(raw) || /biotechnology.*applications/i.test(q.topic || '')) return 'Biotechnology and its Applications';
+      if (
+        Number(q.chapter_id) === 229 ||
+        Number(q.chapter_id) === 158 ||
+        (Number(q.id) >= 15213 && Number(q.id) <= 15414) ||
+        /structural\s*organi/i.test(raw) ||
+        /animal\s*tissue/i.test(raw)
+      ) return 'Structural Organisation in Animals';
+      if (
+        Number(q.chapter_id) === 231 ||
+        Number(q.chapter_id) === 159 ||
+        (Number(q.id) >= 15415 && Number(q.id) <= 15548) ||
+        /breathing|respirat/i.test(raw)
+      ) return 'Breathing and Exchange of Gases';
+      if (
+        Number(q.chapter_id) === 233 ||
+        Number(q.chapter_id) === 160 ||
+        (Number(q.id) >= 15549 && Number(q.id) <= 15693) ||
+        /body\s*fluids?|circulation/i.test(raw)
+      ) return 'Body Fluids and Circulation';
+
+      return formatChapterName(raw, 'zoology');
     }
 
-    // 0. Botany: Anatomy of Flowering Plants (Live chapter_id: 235, Local DB: 161, Live IDs: 15694-15893, Local IDs: 7164-7363)
-    if (
-      Number(q.chapter_id) === 235 ||
-      Number(q.chapter_id) === 161 ||
-      (Number(q.id) >= 15694 && Number(q.id) <= 15893) ||
-      (Number(q.id) >= 7164 && Number(q.id) <= 7363) ||
-      (q.chapter_name && /anatomy\s*of\s*flowering/i.test(q.chapter_name)) ||
-      (q.chapter && /anatomy\s*of\s*flowering/i.test(q.chapter))
-    ) {
-      return 'Anatomy of Flowering Plants';
+    // 2. BOTANY SCOPED RESOLUTION
+    if (activeSubj === 'botany') {
+      const raw = (q.chapter_name || q.chapter || '').trim();
+      if (
+        Number(q.chapter_id) === 237 ||
+        Number(q.chapter_id) === 162 ||
+        (Number(q.id) >= 15894 && Number(q.id) <= 16021) ||
+        (Number(q.id) >= 7364 && Number(q.id) <= 7491) ||
+        /morphology\s*of\s*flowering/i.test(raw) ||
+        (q.chapter_name && /morphology\s*of\s*flowering/i.test(q.chapter_name)) ||
+        (q.chapter && /morphology\s*of\s*flowering/i.test(q.chapter))
+      ) return 'Morphology of Flowering Plants';
+
+      if (
+        Number(q.chapter_id) === 235 ||
+        Number(q.chapter_id) === 161 ||
+        (Number(q.id) >= 15694 && Number(q.id) <= 15893) ||
+        (Number(q.id) >= 7164 && Number(q.id) <= 7363) ||
+        /anatomy\s*of\s*flowering/i.test(raw) ||
+        (q.chapter_name && /anatomy\s*of\s*flowering/i.test(q.chapter_name)) ||
+        (q.chapter && /anatomy\s*of\s*flowering/i.test(q.chapter))
+      ) return 'Anatomy of Flowering Plants';
+
+      if (
+        Number(q.chapter_id) === 227 ||
+        Number(q.chapter_id) === 157 ||
+        (Number(q.id) >= 15038 && Number(q.id) <= 15212) ||
+        /plant\s*kingdom/i.test(raw)
+      ) return 'Plant Kingdom';
+
+      if (
+        Number(q.chapter_id) === 225 ||
+        Number(q.chapter_id) === 156 ||
+        (Number(q.id) >= 14778 && Number(q.id) <= 15037) ||
+        /biological\s*classification/i.test(raw)
+      ) return 'Biological Classification';
+
+      if (
+        Number(q.chapter_id) === 221 ||
+        Number(q.chapter_id) === 129 ||
+        /^\s*the living world\s*$/i.test(raw)
+      ) return 'The Living World';
+
+      if (
+        (Number(q.id) >= 6151 && Number(q.id) <= 6553) ||
+        [6503, 6504, 6507, 6508, 6509, 6511, 6513, 6514, 6516, 6519].includes(Number(q.id)) ||
+        /molecular.*inheritance/i.test(raw)
+      ) return 'Molecular Basis of Inheritance';
+
+      return formatChapterName(raw, 'botany');
     }
 
-    // 0. Zoology: Body Fluids and Circulation (Live chapter_id: 233, Local DB: 160, Live IDs: 15549-15693)
-    if (
-      Number(q.chapter_id) === 233 ||
-      Number(q.chapter_id) === 160 ||
-      (Number(q.id) >= 15549 && Number(q.id) <= 15693) ||
-      (q.chapter_name && /body\s*fluids?/i.test(q.chapter_name)) ||
-      (q.chapter && /body\s*fluids?/i.test(q.chapter))
-    ) {
-      return 'Body Fluids and Circulation';
+    // 3. CHEMISTRY SCOPED RESOLUTION
+    if (activeSubj === 'chemistry') {
+      const raw = (q.chapter_name || q.chapter || '').trim();
+      if (
+        (Number(q.id) >= 14041 && Number(q.id) <= 14170) ||
+        (Number(q.chapter_id) === 127 && Number(q.id) >= 5504 && Number(q.id) <= 5640) ||
+        Number(q.chapter_id) === 95 ||
+        /some basic concepts of chemistry/i.test(raw)
+      ) return 'Some Basic Concepts of Chemistry';
+
+      if (
+        (Number(q.id) >= 14171 && Number(q.id) <= 14326) ||
+        (Number(q.chapter_id) === 77 && Number(q.id) >= 5641 && Number(q.id) <= 5796) ||
+        Number(q.chapter_id) === 96 ||
+        /structure of atom/i.test(raw)
+      ) return 'Structure of Atom';
+
+      if (
+        (Number(q.id) >= 14591 && Number(q.id) <= 14777) ||
+        Number(q.chapter_id) === 155 ||
+        (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
+        /classification of elements|periodic\s*table|periodicity/i.test(raw)
+      ) return 'Periodic Table';
+
+      if (
+        (Number(q.id) >= 14327 && Number(q.id) <= 14590) ||
+        (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6060) ||
+        Number(q.chapter_id) === 146 ||
+        /equilibrium/i.test(raw)
+      ) return 'Equilibrium';
+
+      if (
+        Number(q.chapter_id) === 37 ||
+        Number(q.chapter_id) === 150 ||
+        /^\s*solutions?\s*$/i.test(raw)
+      ) return 'Solutions';
+
+      if (
+        Number(q.chapter_id) === 36 ||
+        Number(q.chapter_id) === 133 ||
+        /^\s*biomolecules?\s*$/i.test(raw)
+      ) return 'Biomolecules';
+
+      if (Number(q.chapter_id) === 15 || /^\s*electrochemistry\s*$/i.test(raw)) return 'Electrochemistry';
+      if (Number(q.chapter_id) === 14 || /^\s*chemical kinetics\s*$/i.test(raw)) return 'Chemical Kinetics';
+      if (Number(q.chapter_id) === 34 || /^\s*haloalkanes and haloarenes\s*$/i.test(raw)) return 'Haloalkanes and Haloarenes';
+      if (Number(q.chapter_id) === 204 || /^\s*the d- and f-block elements\s*$/i.test(raw)) return 'The d- and f-Block Elements';
+
+      return formatChapterName(raw, 'chemistry');
     }
 
-    // 0. Zoology: Breathing and Exchange of Gases (Live chapter_id: 231, Local DB: 159, Live IDs: 15415-15548)
-    if (
-      Number(q.chapter_id) === 231 ||
-      Number(q.chapter_id) === 159 ||
-      (Number(q.id) >= 15415 && Number(q.id) <= 15548) ||
-      (q.chapter_name && /breathing/i.test(q.chapter_name)) ||
-      (q.chapter && /breathing/i.test(q.chapter))
-    ) {
-      return 'Breathing and Exchange of Gases';
-    }
+    // 4. PHYSICS SCOPED RESOLUTION
+    if (activeSubj === 'physics') {
+      const raw = (q.chapter_name || q.chapter || '').trim();
+      if (
+        Number(q.chapter_id) === 142 ||
+        Number(q.chapter_id) === 67 ||
+        (Number(q.id) >= 14033 && Number(q.id) <= 14040) ||
+        [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 10812, 10987, 10988].includes(Number(q.id)) ||
+        /electrostatic potential|capacitance/i.test(raw)
+      ) return 'Electrostatic Potential and Capacitance';
 
-    // 0. Zoology: Structural Organisation in Animals (Live chapter_id: 229, Local DB: 158, Live IDs: 15213-15414)
-    if (
-      Number(q.chapter_id) === 229 ||
-      Number(q.chapter_id) === 158 ||
-      (Number(q.id) >= 15213 && Number(q.id) <= 15414) ||
-      (q.chapter_name && /structural\s*organi[sz]ation/i.test(q.chapter_name)) ||
-      (q.chapter && /structural\s*organi[sz]ation/i.test(q.chapter))
-    ) {
-      return 'Structural Organisation in Animals';
-    }
+      if (
+        (Number(q.id) >= 11162 && Number(q.id) <= 11339) ||
+        Number(q.chapter_id) === 193 ||
+        Number(q.chapter_id) === 143 ||
+        /moving charges/i.test(raw)
+      ) return 'Moving Charges and Magnetism';
 
-    // 0. Botany: Plant Kingdom (Live chapter_id: 227, Local DB: 157, Live IDs: 15038-15212)
-    if (
-      Number(q.chapter_id) === 227 ||
-      Number(q.chapter_id) === 157 ||
-      (Number(q.id) >= 15038 && Number(q.id) <= 15212) ||
-      (q.chapter_name && /plant\s*kingdom/i.test(q.chapter_name)) ||
-      (q.chapter && /plant\s*kingdom/i.test(q.chapter))
-    ) {
-      return 'Plant Kingdom';
-    }
+      if (Number(q.chapter_id) === 194 || Number(q.chapter_id) === 106 || /magnetism and matter/i.test(raw)) return 'Magnetism and Matter';
+      if (Number(q.chapter_id) === 195 || Number(q.chapter_id) === 144 || /electromagnetic induction/i.test(raw)) return 'Electromagnetic Induction';
 
-    // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
-    if (
-      Number(q.chapter_id) === 225 ||
-      Number(q.chapter_id) === 156 ||
-      (Number(q.id) >= 14778 && Number(q.id) <= 15037) ||
-      (q.chapter_name && /biological\s*classification/i.test(q.chapter_name)) ||
-      (q.chapter && /biological\s*classification/i.test(q.chapter))
-    ) {
-      return 'Biological Classification';
-    }
-
-    // 1. Strict chapter_id check: Live is 221, Local DB is 129
-    if (Number(q.chapter_id) === 221 || Number(q.chapter_id) === 129) {
-      return 'The Living World';
-    }
-    // 2. Strict chapter name check
-    if (q.chapter_name && /^\s*the living world\s*$/i.test(q.chapter_name)) {
-      return 'The Living World';
-    }
-    if (q.chapter && /^\s*the living world\s*$/i.test(q.chapter)) {
-      return 'The Living World';
-    }
-
-    // Botany: Molecular Basis of Inheritance batch range & leak fix
-    if (
-      (q.id >= 6151 && q.id <= 6553) ||
-      [6503, 6504, 6507, 6508, 6509, 6511, 6513, 6514, 6516, 6519].includes(Number(q.id))
-    ) {
-      return 'Molecular Basis of Inheritance';
-    }
-
-    // Zoology: Biotechnology - Principles and Processes
-    if (
-      (q.id >= 13997 && q.id <= 14032) ||
-      Number(q.chapter_id) === 213 ||
-      (q.chapter_name && /biotechnology.*principles/i.test(q.chapter_name))
-    ) {
-      return 'Biotechnology - Principles and Processes';
-    }
-
-    // Chemistry: Solutions
-    if (
-      Number(q.chapter_id) === 37 ||
-      Number(q.chapter_id) === 150 ||
-      /^\s*solutions?\s*$/i.test(q.chapter_name || '') ||
-      /^\s*solutions?\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Solutions';
-    }
-
-    // Chemistry: Biomolecules
-    if (
-      Number(q.chapter_id) === 36 ||
-      Number(q.chapter_id) === 133 ||
-      /^\s*biomolecules?\s*$/i.test(q.chapter_name || '') ||
-      /^\s*biomolecules?\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Biomolecules';
-    }
-
-    // Chemistry: Electrochemistry
-    if (
-      Number(q.chapter_id) === 15 ||
-      /^\s*electrochemistry\s*$/i.test(q.chapter_name || '') ||
-      /^\s*electrochemistry\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Electrochemistry';
-    }
-
-    // Chemistry: Chemical Kinetics
-    if (
-      Number(q.chapter_id) === 14 ||
-      /^\s*chemical kinetics\s*$/i.test(q.chapter_name || '') ||
-      /^\s*chemical kinetics\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Chemical Kinetics';
-    }
-
-    // Chemistry: Haloalkanes and Haloarenes
-    if (
-      Number(q.chapter_id) === 34 ||
-      /^\s*haloalkanes and haloarenes\s*$/i.test(q.chapter_name || '') ||
-      /^\s*haloalkanes and haloarenes\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Haloalkanes and Haloarenes';
-    }
-
-    // Chemistry: The d- and f-Block Elements
-    if (
-      Number(q.chapter_id) === 204 ||
-      /^\s*the d- and f-block elements\s*$/i.test(q.chapter_name || '') ||
-      /^\s*the d- and f-block elements\s*$/i.test(q.chapter || '')
-    ) {
-      return 'The d- and f-Block Elements';
-    }
-
-    // Chemistry: Some Basic Concepts of Chemistry (130 questions only)
-    if (
-      (Number(q.id) >= 14041 && Number(q.id) <= 14170) ||
-      (Number(q.chapter_id) === 127 && Number(q.id) >= 5504 && Number(q.id) <= 5640) ||
-      Number(q.chapter_id) === 95
-    ) {
-      return 'Some Basic Concepts of Chemistry';
-    }
-
-    // Chemistry: Structure of Atom (156 questions: 140 MCQs + 16 AR)
-    if (
-      (Number(q.id) >= 14171 && Number(q.id) <= 14326) ||
-      (Number(q.chapter_id) === 77 && Number(q.id) >= 5641 && Number(q.id) <= 5796) ||
-      Number(q.chapter_id) === 96 ||
-      /^\s*structure of atom(s)?\s*$/i.test(q.chapter_name || '') ||
-      /^\s*structure of atom(s)?\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Structure of Atom';
-    }
-
-    // Chemistry: Periodic Table (187 questions: 171 MCQ + 16 AR)
-    if (
-      (Number(q.id) >= 14591 && Number(q.id) <= 14777) ||
-      Number(q.chapter_id) === 155 ||
-      (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
-      /^\s*(classification of elements(\s*and\s*periodicity\s*in\s*properties)?|periodic\s*table|periodicity)\s*$/i.test(q.chapter_name || '') ||
-      /^\s*(classification of elements(\s*and\s*periodicity\s*in\s*properties)?|periodic\s*table|periodicity)\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Periodic Table';
-    }
-
-    // Chemistry: Equilibrium (264 questions: 239 MCQ + 25 AR)
-    if (
-      (Number(q.id) >= 14327 && Number(q.id) <= 14590) ||
-      (Number(q.chapter_id) === 73 && Number(q.id) >= 5797 && Number(q.id) <= 6060) ||
-      Number(q.chapter_id) === 146 ||
-      /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter_name || '') ||
-      /^\s*(chemical\s*(&|and)?\s*ionic\s*)?equilibrium\s*$/i.test(q.chapter || '')
-    ) {
-      return 'Equilibrium';
-    }
-
-    // Physics: Electrostatic Potential and Capacitance
-    if (
-      Number(q.chapter_id) === 142 ||
-      Number(q.chapter_id) === 67 ||
-      (q.id >= 14033 && q.id <= 14040) ||
-      [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 10812, 10987, 10988].includes(Number(q.id)) ||
-      (q.chapter_name && /electrostatic potential|capacitance/i.test(q.chapter_name)) ||
-      (q.chapter && /electrostatic potential|capacitance/i.test(q.chapter))
-    ) {
-      return 'Electrostatic Potential and Capacitance';
-    }
-
-    // Moving Charges and Magnetism: Live chapter_id is 193, Local DB is 143, or question ID range 11162-11339
-    if (
-      (q.id >= 11162 && q.id <= 11339) ||
-      Number(q.chapter_id) === 193 ||
-      Number(q.chapter_id) === 143 ||
-      (q.chapter_name && /moving charges/i.test(q.chapter_name)) ||
-      (q.topic && /moving charges/i.test(q.topic))
-    ) {
-      return 'Moving Charges and Magnetism';
-    }
-
-    // Magnetism and Matter: Live chapter_id is 194, Local DB is 106
-    if (
-      Number(q.chapter_id) === 194 ||
-      Number(q.chapter_id) === 106 ||
-      (q.chapter_name && /magnetism and matter/i.test(q.chapter_name))
-    ) {
-      return 'Magnetism and Matter';
-    }
-
-    // Electromagnetic Induction: Live chapter_id is 195, Local DB is 144
-    if (
-      Number(q.chapter_id) === 195 ||
-      Number(q.chapter_id) === 144 ||
-      (q.chapter_name && /electromagnetic induction/i.test(q.chapter_name))
-    ) {
-      return 'Electromagnetic Induction';
-    }
-
-    // Partition legacy composite "Magnetism & Electromagnetic Induction"
-    if (
-      (q.chapter && /magnetism\s*(&|and)\s*electromagnetic induction/i.test(q.chapter)) ||
-      (q.chapter_name && /magnetism\s*(&|and)\s*electromagnetic induction/i.test(q.chapter_name))
-    ) {
-      const text = `${q.topic || ''} ${q.question_text || ''}`;
-      if (/biot|savart|lorentz|cyclotron|solenoid|toroid|galvanometer|ampere|magnetic field|moving charge/i.test(text)) {
+      if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
+        const text = `${q.topic || ''} ${q.question_text || ''}`;
+        if (/biot|savart|lorentz|cyclotron|solenoid|toroid|galvanometer|ampere|magnetic field|moving charge/i.test(text)) return 'Moving Charges and Magnetism';
+        if (/faraday|lenz|induct|eddy/i.test(text)) return 'Electromagnetic Induction';
+        if (/bar magnet|magnetic dipole|earth.*magnetism|dia|para|ferro|hysteresis|curie/i.test(text)) return 'Magnetism and Matter';
         return 'Moving Charges and Magnetism';
       }
-      if (/faraday|lenz|induct|eddy/i.test(text)) {
-        return 'Electromagnetic Induction';
-      }
-      if (/bar magnet|magnetic dipole|earth.*magnetism|dia|para|ferro|hysteresis|curie/i.test(text)) {
-        return 'Magnetism and Matter';
-      }
-      return 'Moving Charges and Magnetism';
+
+      return formatChapterName(raw, 'physics');
     }
 
     const raw = (q.chapter_name || q.chapter || 'General').trim() || 'General';
-    return formatChapterName(raw);
+    return formatChapterName(raw, activeSubj);
   };
 
   const chaptersWithCounts = useMemo(() => {
