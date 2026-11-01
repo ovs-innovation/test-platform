@@ -848,7 +848,7 @@ export default function AdminQuestionBank() {
       return;
     }
     const list = selectedQuestionIds.map((id) => selectedQuestionsMap[id]).filter(Boolean);
-    const sumMarks = list.reduce((s, q) => s + (Number(q.marks) || 4), 0);
+    const sumMarks = list.reduce((s, q) => s + (Number(q.marks && q.marks > 1 ? q.marks : 4)), 0);
     const cats = Array.from(new Set(list.map((q) => q.category || q.subject).filter(Boolean)));
     const chapters = Array.from(new Set(list.map((q) => q.chapter || q.topic).filter(Boolean)));
 
@@ -860,14 +860,17 @@ export default function AdminQuestionBank() {
       ? chapters.slice(0, 8).join(', ')
       : (cats.join(', ') || 'Comprehensive Syllabus');
 
+    const isNeet = list.length === 180 || defaultTitle.toUpperCase().includes('NEET');
+    const calculatedMarks = isNeet && list.length === 180 ? 720 : (sumMarks || (list.length * 4));
+
     setTestForm({
       test_name: defaultTitle,
-      test_type: 'AIETS',
+      test_type: isNeet ? 'NEET' : 'AIETS',
       test_date: new Date().toISOString().slice(0, 10),
       start_time: '09:00:00',
       end_time: '12:00:00',
       duration_minutes: 180,
-      max_marks: sumMarks || 100,
+      max_marks: calculatedMarks,
       syllabus: defaultSyllabus,
       is_published: true,
     });
@@ -882,9 +885,11 @@ export default function AdminQuestionBank() {
     }
     setCreatingTest(true);
     try {
+      const isNeet = selectedQuestionIds.length === 180 || testForm.test_name.toUpperCase().includes('NEET') || testForm.test_type.toUpperCase().includes('NEET');
+      const enforcedMaxMarks = isNeet && selectedQuestionIds.length === 180 ? 720 : (Number(testForm.max_marks) || (selectedQuestionIds.length * 4));
       const payload = {
         ...testForm,
-        max_marks: Number(testForm.max_marks) || totalSelectedMarks || 100,
+        max_marks: enforcedMaxMarks,
         start_time: testForm.start_time.length === 5 ? `${testForm.start_time}:00` : testForm.start_time,
         end_time: testForm.end_time.length === 5 ? `${testForm.end_time}:00` : testForm.end_time,
       };

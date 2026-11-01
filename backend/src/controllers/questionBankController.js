@@ -180,7 +180,7 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
       b.assertion_text || null,
       b.reason_text || null,
-      b.marks,
+      Number(b.marks && b.marks > 1 ? b.marks : 4),
       maxRes.rows[0].next,
       b.starter_code || '',
       asJson(b.test_cases, []),
@@ -257,7 +257,7 @@ export const createBankQuestion = asyncHandler(async (req, res) => {
       numerical_tolerance !== undefined ? numerical_tolerance : 0,
       assertion_text || null,
       reason_text || null,
-      Number(marks ?? 1),
+      Number(marks ?? 4),
       solution || '',
       subject_id || null,
       effectiveChapterId,
@@ -367,7 +367,7 @@ export const updateBankQuestion = asyncHandler(async (req, res) => {
       numerical_tolerance !== undefined ? numerical_tolerance : q.numerical_tolerance,
       assertion_text !== undefined ? assertion_text : q.assertion_text,
       reason_text !== undefined ? reason_text : q.reason_text,
-      Number(marks ?? q.marks ?? 1),
+      Number(marks ?? q.marks ?? 4),
       solution ?? q.solution,
       effectiveSubjectId,
       effectiveChapterId,
@@ -704,6 +704,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   );
   let position = maxRes.rows[0].max;
   const imported = [];
+  const isNeetAssessment = testRow.test_type?.toUpperCase().includes('NEET') || testRow.title?.toUpperCase().includes('NEET') || testRow.test_name?.toUpperCase().includes('NEET') || bankRows.length === 180;
 
   for (const b of bankRows) {
     position += 1;
@@ -777,7 +778,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
         b.assertion_text || null,
         b.reason_text || null,
-        b.marks,
+        isNeetAssessment ? 4 : Number(b.marks && b.marks > 1 ? b.marks : 4),
         position,
         b.starter_code || '',
         asJson(b.test_cases, []),
@@ -870,9 +871,10 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     [assessmentId]
   );
   const totalQ = countRes.rows[0]?.count || 0;
-  const totalM = countRes.rows[0]?.total_marks || 0;
+  const isNeet = isNeetAssessment || totalQ === 180;
+  const totalM = (isNeet && totalQ === 180) ? 720 : (countRes.rows[0]?.total_marks || (totalQ * 4));
   await query(
-    'UPDATE tests SET total_questions = $1, max_marks = GREATEST(max_marks, $2), updated_at = NOW() WHERE id = $3',
+    'UPDATE tests SET total_questions = $1, max_marks = $2, updated_at = NOW() WHERE id = $3',
     [totalQ, totalM, assessmentId]
   ).catch(() => {});
   await query(
