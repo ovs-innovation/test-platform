@@ -272,18 +272,6 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
     return { questions: normQs, sections: normSecs };
   }
 
-  // Match existing section IDs if available
-  const secMap = {};
-  if (Array.isArray(sections)) {
-    for (const s of sections) {
-      const name = String(s.name || '').toLowerCase();
-      if (name.includes('phys')) secMap.Physics = s.id;
-      else if (name.includes('chem')) secMap.Chemistry = s.id;
-      else if (name.includes('botan')) secMap.Botany = s.id;
-      else if (name.includes('zool')) secMap.Zoology = s.id;
-    }
-  }
-
   const normalizedSections = [
     { id: secMap.Physics || 'sec-phy', assessment_id: assessment.id, name: 'Section-A: Physics', position: 1, section_type: 'technical_mcq', total_questions: 45 },
     { id: secMap.Chemistry || 'sec-chem', assessment_id: assessment.id, name: 'Section-B: Chemistry', position: 2, section_type: 'technical_mcq', total_questions: 45 },
