@@ -615,38 +615,88 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     );
   }
 
+  const CANONICAL_NEET_ORDER = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
+  const getSubjectRank = (name) => {
+    if (!name || typeof name !== 'string') return 999;
+    const s = name.trim().toLowerCase();
+    if (s.includes('phys')) return 1;
+    if (s.includes('chem')) return 2;
+    if (s.includes('botan')) return 3;
+    if (s.includes('zool')) return 4;
+    if (s.includes('math')) return 5;
+    if (s.includes('bio')) return 6;
+    return 999;
+  };
+
+  const normalizeCanonicalSubject = (name) => {
+    if (!name || typeof name !== 'string') return null;
+    const s = name.trim().toLowerCase();
+    if (s.includes('phys')) return 'Physics';
+    if (s.includes('chem')) return 'Chemistry';
+    if (s.includes('botan')) return 'Botany';
+    if (s.includes('zool')) return 'Zoology';
+    if (s.includes('math')) return 'Mathematics';
+    if (s.includes('bio')) return 'Biology';
+    return name.trim();
+  };
+
   // Load existing sections to auto-match section by question category/subject
-  const secRes = await query('SELECT id, name FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC', [assessmentId]);
+  const secRes = await query('SELECT id, name, position FROM assessment_sections WHERE assessment_id = $1 ORDER BY position ASC', [assessmentId]);
   let existingSections = secRes.rows;
+  const defaultSections = [
+    { name: 'Physics', section_type: 'technical_mcq', position: 1 },
+    { name: 'Chemistry', section_type: 'technical_mcq', position: 2 },
+    { name: 'Botany', section_type: 'technical_mcq', position: 3 },
+    { name: 'Zoology', section_type: 'technical_mcq', position: 4 },
+    { name: 'Mathematics', section_type: 'technical_mcq', position: 5 },
+  ];
+
   if (existingSections.length === 0) {
-    const defaultSections = [
-      { name: 'Physics', section_type: 'technical_mcq', position: 1 },
-      { name: 'Chemistry', section_type: 'technical_mcq', position: 2 },
-      { name: 'Botany', section_type: 'technical_mcq', position: 3 },
-      { name: 'Zoology', section_type: 'technical_mcq', position: 4 },
-      { name: 'Mathematics', section_type: 'technical_mcq', position: 5 },
-    ];
     for (const s of defaultSections) {
       const insSec = await query(
-        `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,$3,$4) RETURNING id, name`,
+        `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,$3,$4) RETURNING id, name, position`,
         [assessmentId, s.name, s.section_type, s.position]
       );
       if (insSec.rows.length) existingSections.push(insSec.rows[0]);
     }
+  } else {
+    // Ensure existing sections with canonical names have correct canonical positions
+    for (const s of existingSections) {
+      const rank = getSubjectRank(s.name);
+      if (rank <= 5 && s.position !== rank) {
+        await query('UPDATE assessment_sections SET position = $1 WHERE id = $2', [rank, s.id]).catch(() => {});
+        s.position = rank;
+      }
+    }
+    existingSections.sort((a, b) => (a.position || 0) - (b.position || 0));
   }
 
   let bankRows;
   if (Array.isArray(ids) && ids.length) {
-    const result = await query('SELECT * FROM question_bank WHERE id = ANY($1::int[]) ORDER BY id', [ids]);
+    const result = await query('SELECT * FROM question_bank WHERE id = ANY($1::int[])', [ids]);
     bankRows = result.rows;
   } else if (category) {
-    const result = await query('SELECT * FROM question_bank WHERE category = $1 ORDER BY id', [category]);
+    const result = await query('SELECT * FROM question_bank WHERE category = $1', [category]);
     bankRows = result.rows;
   } else {
     throw ApiError.badRequest('Provide category or ids array');
   }
 
   if (!bankRows.length) throw ApiError.notFound('No bank questions found');
+
+  // Strictly sort bankRows by canonical NEET subject sequence: Physics -> Chemistry -> Botany -> Zoology -> Mathematics -> Biology
+  bankRows.sort((a, b) => {
+    const subjA = a.subject || a.category || '';
+    const subjB = b.subject || b.category || '';
+    const rankA = getSubjectRank(subjA);
+    const rankB = getSubjectRank(subjB);
+    if (rankA !== rankB) return rankA - rankB;
+    const chapA = String(a.topic || a.chapter_id || '');
+    const chapB = String(b.topic || b.chapter_id || '');
+    const cComp = chapA.localeCompare(chapB);
+    if (cComp !== 0) return cComp;
+    return a.id - b.id;
+  });
 
   const maxRes = await query(
     'SELECT COALESCE(MAX(position), 0) AS max FROM questions WHERE assessment_id = $1',
@@ -688,9 +738,22 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     let targetSectionId = section_id || null;
     if (!targetSectionId && existingSections.length > 0) {
       const catKey = (b.category || subject || '').trim().toLowerCase();
-      const matched = existingSections.find((s) => s.name && s.name.trim().toLowerCase() === catKey);
+      const matched = existingSections.find((s) => s.name && (s.name.trim().toLowerCase() === catKey || catKey.includes(s.name.trim().toLowerCase()) || s.name.trim().toLowerCase().includes(catKey)));
       if (matched) {
         targetSectionId = matched.id;
+      } else {
+        const normSubj = normalizeCanonicalSubject(b.category || subject);
+        if (normSubj) {
+          const rank = getSubjectRank(normSubj);
+          const insSec = await query(
+            `INSERT INTO assessment_sections (assessment_id, name, section_type, position) VALUES ($1,$2,'technical_mcq',$3) RETURNING id, name, position`,
+            [assessmentId, normSubj, rank]
+          );
+          if (insSec.rows.length) {
+            existingSections.push(insSec.rows[0]);
+            targetSectionId = insSec.rows[0].id;
+          }
+        }
       }
     }
 
@@ -735,10 +798,63 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     imported.push(result.rows[0]);
   }
 
+  // Re-sequence all questions in this assessment so they strictly follow canonical NEET order:
+  // 1. Physics, 2. Chemistry, 3. Botany, 4. Zoology, 5. Mathematics, 6. Biology, 7. Others
+  const allQsRes = await query(
+    `SELECT q.id, q.section_id, q.subject, q.bank_category, q.position, s.name as section_name
+     FROM questions q
+     LEFT JOIN assessment_sections s ON s.id = q.section_id
+     WHERE q.assessment_id = $1
+     ORDER BY q.position ASC, q.id ASC`,
+    [assessmentId]
+  );
+  const allQs = allQsRes.rows;
+
+  allQs.sort((a, b) => {
+    const subjA = a.subject || a.bank_category || a.section_name || '';
+    const subjB = b.subject || b.bank_category || b.section_name || '';
+    const rankA = getSubjectRank(subjA);
+    const rankB = getSubjectRank(subjB);
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.position || 0) - (b.position || 0) || a.id - b.id;
+  });
+
+  for (let idx = 0; idx < allQs.length; idx++) {
+    const qItem = allQs[idx];
+    const newPos = idx + 1;
+    const canonicalSubj = normalizeCanonicalSubject(qItem.subject || qItem.bank_category || qItem.section_name);
+    let secId = qItem.section_id;
+    if (canonicalSubj) {
+      const matchSec = existingSections.find((s) => normalizeCanonicalSubject(s.name) === canonicalSubj);
+      if (matchSec) secId = matchSec.id;
+    }
+    await query(
+      'UPDATE questions SET position = $1, section_id = COALESCE($2, section_id) WHERE id = $3',
+      [newPos, secId, qItem.id]
+    );
+  }
+
+  const countRes = await query(
+    'SELECT COUNT(*)::int as count, COALESCE(SUM(marks), 0)::int as total_marks FROM questions WHERE assessment_id = $1',
+    [assessmentId]
+  );
+  const totalQ = countRes.rows[0]?.count || 0;
+  const totalM = countRes.rows[0]?.total_marks || 0;
+  await query(
+    'UPDATE tests SET total_questions = $1, max_marks = GREATEST(max_marks, $2), updated_at = NOW() WHERE id = $3',
+    [totalQ, totalM, assessmentId]
+  ).catch(() => {});
+  await query(
+    'UPDATE assessments SET passing_marks = GREATEST(passing_marks, $1), updated_at = NOW() WHERE id = $2',
+    [Math.round(totalM * 0.4), assessmentId]
+  ).catch(() => {});
+
   const bankIds = bankRows.map((b) => b.id).filter(Boolean);
   if (bankIds.length > 0) {
     await query("UPDATE question_bank SET status = 'already_chosen' WHERE id = ANY($1::int[])", [bankIds]).catch(() => {});
   }
+  await delCache(`cache:exam:${assessmentId}`);
+  await delCache('cache:exam:*');
   await delCache('cache:qb:*');
 
   await query('UPDATE assessments SET updated_at = NOW() WHERE id = $1', [assessmentId]).catch(() => {});

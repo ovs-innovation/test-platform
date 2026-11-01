@@ -134,7 +134,11 @@ export async function getOrSetCachedExamPaper(assessmentId) {
 
   let finalQuestions = sanitizedQuestions;
   let finalSections = sectionsRes.rows;
-  if (isNeet) {
+  const hasCanonicalSubj = questionsRes.rows.some((q) => {
+    const s = String(q.subject || q.bank_category || '').toLowerCase();
+    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool');
+  });
+  if (isNeet || hasCanonicalSubj) {
     const normalized = normalizeNeetAssessmentPayload(assessmentObj, sanitizedQuestions, sectionsRes.rows);
     finalQuestions = normalized.questions;
     finalSections = normalized.sections;

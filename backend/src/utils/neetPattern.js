@@ -20,6 +20,15 @@ export function isNeetTest(assessment = {}, questions = []) {
     return true;
   }
 
+  // If questions contain NEET-specific subjects (Botany or Zoology), or both Physics & Chemistry, it follows NEET sequence
+  if (Array.isArray(questions) && questions.length > 0) {
+    const hasBotOrZoo = questions.some((q) => {
+      const s = String(q.subject || q.bank_category || '').toLowerCase();
+      return s.includes('botan') || s.includes('zool');
+    });
+    if (hasBotOrZoo) return true;
+  }
+
   return false;
 }
 
@@ -125,12 +134,18 @@ const BOTANY_REGEX = /plant|botan|algae|riccia|bryophyte|pteridophyte|selaginell
  * - Section-D: Zoology (Questions 136 to 180)
  */
 export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], sections = []) {
-  if (!Array.isArray(questions) || questions.length !== 180) {
+  if (!Array.isArray(questions) || questions.length === 0) {
     return { questions, sections };
   }
 
   const isNeet = isNeetTest(assessment, questions);
-  if (!isNeet) {
+  // Also check if questions have canonical subjects (Physics, Chemistry, Botany, Zoology)
+  const hasCanonicalSubj = questions.some((q) => {
+    const s = String(q.subject || q.bank_category || '').toLowerCase();
+    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool');
+  });
+
+  if (!isNeet && !hasCanonicalSubj) {
     return { questions, sections };
   }
 
@@ -209,9 +224,52 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
   while (physics.length < 45 && unassigned.length > 0) physics.push(unassigned.shift());
   while (chemistry.length < 45 && unassigned.length > 0) chemistry.push(unassigned.shift());
 
-  // Only apply standard sequence if all 4 subjects have 45 questions each
-  if (physics.length !== 45 || chemistry.length !== 45 || finalBotany.length !== 45 || finalZoology.length !== 45) {
-    return { questions, sections };
+  // Match existing section IDs if available
+  const secMap = {};
+  if (Array.isArray(sections)) {
+    for (const s of sections) {
+      const name = String(s.name || '').toLowerCase();
+      if (name.includes('phys')) secMap.Physics = s.id;
+      else if (name.includes('chem')) secMap.Chemistry = s.id;
+      else if (name.includes('botan')) secMap.Botany = s.id;
+      else if (name.includes('zool')) secMap.Zoology = s.id;
+    }
+  }
+
+  // If questions are NOT exactly 180 (45 in each), arrange any available questions in strict NEET order:
+  // 1. Physics, 2. Chemistry, 3. Botany, 4. Zoology
+  if (questions.length !== 180 || physics.length !== 45 || chemistry.length !== 45 || finalBotany.length !== 45 || finalZoology.length !== 45) {
+    const customOrdered = [
+      ...physics.map((q) => ({ ...q, subject: 'Physics', bank_category: 'Physics', section_id: secMap.Physics || q.section_id })),
+      ...chemistry.map((q) => ({ ...q, subject: 'Chemistry', bank_category: 'Chemistry', section_id: secMap.Chemistry || q.section_id })),
+      ...finalBotany.map((q) => ({ ...q, subject: 'Botany', bank_category: 'Botany', section_id: secMap.Botany || q.section_id })),
+      ...finalZoology.map((q) => ({ ...q, subject: 'Zoology', bank_category: 'Zoology', section_id: secMap.Zoology || q.section_id })),
+      ...unassigned,
+    ];
+
+    const subjectCounts = {};
+    const normQs = customOrdered.map((q, idx) => {
+      const subj = q.subject || 'General';
+      subjectCounts[subj] = (subjectCounts[subj] || 0) + 1;
+      return {
+        ...q,
+        position: idx + 1,
+        questionNumber: subjectCounts[subj],
+        overallQuestionNumber: idx + 1,
+      };
+    });
+
+    const CANONICAL_ORDER = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
+    const normSecs = Array.isArray(sections) ? [...sections].sort((a, b) => {
+      const idxA = CANONICAL_ORDER.findIndex((sub) => String(a.name || '').toLowerCase().includes(sub.toLowerCase()));
+      const idxB = CANONICAL_ORDER.findIndex((sub) => String(b.name || '').toLowerCase().includes(sub.toLowerCase()));
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return (a.position || 0) - (b.position || 0);
+    }) : sections;
+
+    return { questions: normQs, sections: normSecs };
   }
 
   // Match existing section IDs if available

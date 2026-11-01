@@ -526,110 +526,74 @@ export default function ExamScreen({ isSimulator = false }) {
 
   const activeQuestions = useMemo(() => {
     if (Array.isArray(questions) && questions.length > 0) {
-      const isNeet = meta?.is_neet || String(meta?.title || '').toUpperCase().includes('NEET') || questions.length === 180;
-      if (isNeet && questions.length === 180) {
-        // Group into standard NEET subjects: Physics (45), Chemistry (45), Botany (45), Zoology (45)
-        const physics = [];
-        const chemistry = [];
-        const botany = [];
-        const zoology = [];
-        const biology = [];
-        const other = [];
+      const BOTANY_REGEX = /plant|botan|algae|riccia|bryophyte|pteridophyte|selaginella|salvinia|gymnosperm|angiosperm|homosporous|flower|stomata|guard cell|leaves|mesophyll|cambium|vascular bundle|stem|dicot|monocot|morphology|androecium|mustard|vexillary|aestivation|solanaceae|potato|cereal|china rose|family|apocarpous|biological classification|archaebacteria|eubacteria|fungus|fungi|deuteromycetes|virus|viroid|prion|lichen|dinoflagellate|protist|living world|taxonomic|taxonomy|binomial|chloroplast|cell wall|photosynthesis/i;
 
-        const BOTANY_REGEX = /plant|botan|algae|riccia|bryophyte|pteridophyte|selaginella|salvinia|gymnosperm|angiosperm|homosporous|flower|stomata|guard cell|leaves|mesophyll|cambium|vascular bundle|stem|dicot|monocot|morphology|androecium|mustard|vexillary|aestivation|solanaceae|potato|cereal|china rose|family|apocarpous|biological classification|archaebacteria|eubacteria|fungus|fungi|deuteromycetes|virus|viroid|prion|lichen|dinoflagellate|protist|living world|taxonomic|taxonomy|binomial|chloroplast|cell wall|photosynthesis/i;
-
-        questions.forEach((q, idx) => {
-          const raw = String(q.subject || q.bank_category || '').toLowerCase();
-          const orig = Number(q.original_question_number || (q.extraction_meta && q.extraction_meta.original_question_number) || q.position || (idx + 1));
-
-          if (raw.includes('phys') || (orig >= 91 && orig <= 135 && !raw.includes('chem') && !raw.includes('bio') && !raw.includes('bot') && !raw.includes('zoo'))) {
-            physics.push(q);
-          } else if (raw.includes('chem') || (orig >= 136 && orig <= 180 && !raw.includes('phys') && !raw.includes('bio') && !raw.includes('bot') && !raw.includes('zoo'))) {
-            chemistry.push(q);
-          } else if (raw.includes('botan')) {
-            botany.push(q);
-          } else if (raw.includes('zool')) {
-            zoology.push(q);
-          } else if (raw.includes('bio') || (orig >= 1 && orig <= 90)) {
-            biology.push(q);
-          } else {
-            other.push(q);
-          }
-        });
-
-        const allBio = [...botany, ...zoology, ...biology];
-        let finalBotany = [];
-        let finalZoology = [];
-
-        if (allBio.length === 90) {
-          const bList = [];
-          const zList = [];
-          for (const q of allBio) {
-            const text = `${q.topic || ''} ${q.chapter || ''} ${q.question_text || ''}`;
-            const isBot = String(q.subject || '').toLowerCase().includes('botan') || BOTANY_REGEX.test(text);
-            if (isBot) {
-              if (bList.length < 45) bList.push(q);
-              else zList.push(q);
-            } else {
-              zList.push(q);
-            }
-          }
-          while (bList.length < 45 && zList.length > 45) {
-            bList.push(zList.shift());
-          }
-          finalBotany = bList;
-          finalZoology = zList;
-        } else {
-          finalBotany = botany;
-          finalZoology = zoology;
-          for (const q of biology) {
-            if (finalBotany.length < 45) finalBotany.push(q);
-            else finalZoology.push(q);
-          }
+      const getCanonicalSubj = (q) => {
+        const raw = String(q.subject || q.bank_category || (q.section_id && sectionMap.get(q.section_id)?.name) || '').toLowerCase().trim();
+        if (raw.includes('phys')) return 'Physics';
+        if (raw.includes('chem')) return 'Chemistry';
+        if (raw.includes('botan')) return 'Botany';
+        if (raw.includes('zool')) return 'Zoology';
+        if (raw.includes('math')) return 'Mathematics';
+        if (raw.includes('bio')) {
+          const text = `${q.topic || ''} ${q.chapter || ''} ${q.question_text || ''}`;
+          return BOTANY_REGEX.test(text) ? 'Botany' : 'Zoology';
         }
+        return null;
+      };
 
-        while (physics.length < 45 && other.length > 0) physics.push(other.shift());
-        while (chemistry.length < 45 && other.length > 0) chemistry.push(other.shift());
+      const physics = [];
+      const chemistry = [];
+      const botany = [];
+      const zoology = [];
+      const mathematics = [];
+      const other = [];
 
-        if (physics.length === 45 && chemistry.length === 45 && finalBotany.length === 45 && finalZoology.length === 45) {
-          const secPhy = sections.find((s) => String(s.name || '').toLowerCase().includes('phys'))?.id;
-          const secChem = sections.find((s) => String(s.name || '').toLowerCase().includes('chem'))?.id;
-          const secBot = sections.find((s) => String(s.name || '').toLowerCase().includes('botan'))?.id;
-          const secZoo = sections.find((s) => String(s.name || '').toLowerCase().includes('zool'))?.id;
+      questions.forEach((q) => {
+        const s = getCanonicalSubj(q);
+        if (s === 'Physics') physics.push({ ...q, subject: 'Physics' });
+        else if (s === 'Chemistry') chemistry.push({ ...q, subject: 'Chemistry' });
+        else if (s === 'Botany') botany.push({ ...q, subject: 'Botany' });
+        else if (s === 'Zoology') zoology.push({ ...q, subject: 'Zoology' });
+        else if (s === 'Mathematics') mathematics.push({ ...q, subject: 'Mathematics' });
+        else other.push(q);
+      });
 
-          return [
-            ...physics.map((q, i) => ({
-              ...q,
-              subject: 'Physics',
-              bank_category: 'Physics',
-              section_id: secPhy || q.section_id,
-              position: i + 1,
-            })),
-            ...chemistry.map((q, i) => ({
-              ...q,
-              subject: 'Chemistry',
-              bank_category: 'Chemistry',
-              section_id: secChem || q.section_id,
-              position: 46 + i,
-            })),
-            ...finalBotany.map((q, i) => ({
-              ...q,
-              subject: 'Botany',
-              bank_category: 'Botany',
-              section_id: secBot || q.section_id,
-              position: 91 + i,
-            })),
-            ...finalZoology.map((q, i) => ({
-              ...q,
-              subject: 'Zoology',
-              bank_category: 'Zoology',
-              section_id: secZoo || q.section_id,
-              position: 136 + i,
-            })),
-          ];
-        }
+      const hasCanonicalSubj =
+        physics.length > 0 ||
+        chemistry.length > 0 ||
+        botany.length > 0 ||
+        zoology.length > 0 ||
+        mathematics.length > 0;
+
+      if (hasCanonicalSubj) {
+        // Enforce strict NEET canonical sequence:
+        // 1. Physics, 2. Chemistry, 3. Botany, 4. Zoology, 5. Mathematics, 6. Other
+        const secPhy = sections.find((s) => String(s.name || '').toLowerCase().includes('phys'))?.id;
+        const secChem = sections.find((s) => String(s.name || '').toLowerCase().includes('chem'))?.id;
+        const secBot = sections.find((s) => String(s.name || '').toLowerCase().includes('botan'))?.id;
+        const secZoo = sections.find((s) => String(s.name || '').toLowerCase().includes('zool'))?.id;
+        const secMath = sections.find((s) => String(s.name || '').toLowerCase().includes('math'))?.id;
+
+        const ordered = [
+          ...physics.map((q) => ({ ...q, section_id: secPhy || q.section_id })),
+          ...chemistry.map((q) => ({ ...q, section_id: secChem || q.section_id })),
+          ...botany.map((q) => ({ ...q, section_id: secBot || q.section_id })),
+          ...zoology.map((q) => ({ ...q, section_id: secZoo || q.section_id })),
+          ...mathematics.map((q) => ({ ...q, section_id: secMath || q.section_id })),
+          ...other,
+        ];
+
+        return ordered.map((q, idx) => ({
+          ...q,
+          position: idx + 1,
+        }));
       }
-      return questions;
+
+      return questions.map((q, idx) => ({
+        ...q,
+        position: q.position || idx + 1,
+      }));
     }
     const pdfUrl = meta?.question_paper_url || meta?.solution_pdf_url;
     if (pdfUrl || (meta?.id && !questions?.length)) {

@@ -967,8 +967,23 @@ export default function AdminQuestionBank() {
         throw new Error('Test creation failed: missing test ID');
       }
 
+      const CANONICAL_ORDER = ['physics', 'chemistry', 'botany', 'zoology', 'mathematics', 'biology'];
+      const getSubjRank = (s) => {
+        const lower = String(s || '').toLowerCase();
+        const idx = CANONICAL_ORDER.findIndex((subj) => lower.includes(subj));
+        return idx !== -1 ? idx : 999;
+      };
+      const sortedSelectedIds = [...selectedQuestionIds].sort((a, b) => {
+        const qA = selectedQuestionsMap[a];
+        const qB = selectedQuestionsMap[b];
+        const rankA = getSubjRank(qA?.subject || qA?.category);
+        const rankB = getSubjRank(qB?.subject || qB?.category);
+        if (rankA !== rankB) return rankA - rankB;
+        return a - b;
+      });
+
       await questionBankService.bulkImportToAssessment(testId, {
-        ids: selectedQuestionIds,
+        ids: sortedSelectedIds,
       });
 
       setQuestions((prev) =>
@@ -1027,8 +1042,23 @@ export default function AdminQuestionBank() {
     }
     setAddingToTest(true);
     try {
+      const CANONICAL_ORDER = ['physics', 'chemistry', 'botany', 'zoology', 'mathematics', 'biology'];
+      const getSubjRank = (s) => {
+        const lower = String(s || '').toLowerCase();
+        const idx = CANONICAL_ORDER.findIndex((subj) => lower.includes(subj));
+        return idx !== -1 ? idx : 999;
+      };
+      const sortedSelectedIds = [...selectedQuestionIds].sort((a, b) => {
+        const qA = selectedQuestionsMap[a];
+        const qB = selectedQuestionsMap[b];
+        const rankA = getSubjRank(qA?.subject || qA?.category);
+        const rankB = getSubjRank(qB?.subject || qB?.category);
+        if (rankA !== rankB) return rankA - rankB;
+        return a - b;
+      });
+
       await questionBankService.bulkImportToAssessment(selectedExistingTestId, {
-        ids: selectedQuestionIds,
+        ids: sortedSelectedIds,
       });
       const targetTest = existingTestsList.find((t) => t.id === Number(selectedExistingTestId));
       setQuestions((prev) =>
