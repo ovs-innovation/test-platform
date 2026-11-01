@@ -2278,7 +2278,7 @@ export const getTestSimulator = asyncHandler(async (req, res) => {
   let finalSections = sectionsRes.rows;
   const hasCanonicalSubj = questionsRes.rows.some((q) => {
     const s = String(q.subject || q.bank_category || '').toLowerCase();
-    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool');
+    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool') || s.includes('math');
   });
   if (isNeet || hasCanonicalSubj) {
     const normalized = normalizeNeetAssessmentPayload(testObj, sanitizedQuestions, sectionsRes.rows);

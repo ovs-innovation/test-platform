@@ -10,6 +10,17 @@ export function isNeetTest(assessment = {}, questions = []) {
   const title = String(assessment.title || assessment.test_name || '').toUpperCase();
   const syllabus = String(assessment.syllabus || '').toUpperCase();
 
+  // If explicitly JEE or has Mathematics, it is NOT a NEET test
+  if (type.includes('JEE') || title.includes('JEE') || syllabus.includes('JEE')) {
+    return false;
+  }
+  if (Array.isArray(questions) && questions.some((q) => {
+    const s = String(q.subject || q.bank_category || '').toLowerCase();
+    return s.includes('math');
+  })) {
+    return false;
+  }
+
   if (type.includes('NEET') || title.includes('NEET') || syllabus.includes('NEET')) {
     return true;
   }
@@ -43,6 +54,7 @@ export function normalizeNeetSubject(name = '') {
   if (lower.includes('chem')) return 'Chemistry';
   if (lower.includes('botan')) return 'Botany';
   if (lower.includes('zool')) return 'Zoology';
+  if (lower.includes('math')) return 'Mathematics';
   if (lower.includes('bio')) {
     return 'Biology';
   }
@@ -139,10 +151,10 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
   }
 
   const isNeet = isNeetTest(assessment, questions);
-  // Also check if questions have canonical subjects (Physics, Chemistry, Botany, Zoology)
+  // Also check if questions have canonical subjects (Physics, Chemistry, Botany, Zoology, Mathematics)
   const hasCanonicalSubj = questions.some((q) => {
     const s = String(q.subject || q.bank_category || '').toLowerCase();
-    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool');
+    return s.includes('phys') || s.includes('chem') || s.includes('botan') || s.includes('zool') || s.includes('math');
   });
 
   if (!isNeet && !hasCanonicalSubj) {
@@ -153,6 +165,7 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
   const chemistry = [];
   const botany = [];
   const zoology = [];
+  const mathematics = [];
   const biology = [];
   const unassigned = [];
 
@@ -163,15 +176,17 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
     const origNum = Number(q.original_question_number || (q.extraction_meta && q.extraction_meta.original_question_number) || 0);
     const pos = Number(q.position || idx + 1);
 
-    if (norm === 'Physics' || (origNum >= 91 && origNum <= 135 && !norm) || (pos >= 91 && pos <= 135 && !norm && idx >= 90 && idx <= 134)) {
+    if (norm === 'Physics' || (isNeet && questions.length === 180 && ((origNum >= 91 && origNum <= 135 && !norm) || (pos >= 91 && pos <= 135 && !norm && idx >= 90 && idx <= 134)))) {
       physics.push(q);
-    } else if (norm === 'Chemistry' || (origNum >= 136 && origNum <= 180 && !norm) || (pos >= 136 && pos <= 180 && !norm && idx >= 135 && idx <= 179)) {
+    } else if (norm === 'Chemistry' || (isNeet && questions.length === 180 && ((origNum >= 136 && origNum <= 180 && !norm) || (pos >= 136 && pos <= 180 && !norm && idx >= 135 && idx <= 179)))) {
       chemistry.push(q);
     } else if (norm === 'Botany') {
       botany.push(q);
     } else if (norm === 'Zoology') {
       zoology.push(q);
-    } else if (norm === 'Biology' || (origNum >= 1 && origNum <= 90)) {
+    } else if (norm === 'Mathematics') {
+      mathematics.push(q);
+    } else if (norm === 'Biology' || (isNeet && questions.length === 180 && origNum >= 1 && origNum <= 90)) {
       biology.push(q);
     } else {
       unassigned.push(q);
@@ -184,7 +199,7 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
   let finalBotany = [];
   let finalZoology = [];
 
-  if (allBio.length === 90) {
+  if (allBio.length === 90 && isNeet) {
     const botList = [];
     const zooList = [];
 
@@ -220,9 +235,11 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
     }
   }
 
-  // Fill physics and chemistry from unassigned if necessary
-  while (physics.length < 45 && unassigned.length > 0) physics.push(unassigned.shift());
-  while (chemistry.length < 45 && unassigned.length > 0) chemistry.push(unassigned.shift());
+  // Fill physics and chemistry from unassigned ONLY for full NEET 180 papers
+  if (isNeet && questions.length === 180) {
+    while (physics.length < 45 && unassigned.length > 0) physics.push(unassigned.shift());
+    while (chemistry.length < 45 && unassigned.length > 0) chemistry.push(unassigned.shift());
+  }
 
   // Match existing section IDs if available
   const secMap = {};
@@ -233,19 +250,32 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
       else if (name.includes('chem')) secMap.Chemistry = s.id;
       else if (name.includes('botan')) secMap.Botany = s.id;
       else if (name.includes('zool')) secMap.Zoology = s.id;
+      else if (name.includes('math')) secMap.Mathematics = s.id;
     }
   }
 
-  // If questions are NOT exactly 180 (45 in each), arrange any available questions in strict NEET order:
-  // 1. Physics, 2. Chemistry, 3. Botany, 4. Zoology
-  if (questions.length !== 180 || physics.length !== 45 || chemistry.length !== 45 || finalBotany.length !== 45 || finalZoology.length !== 45) {
-    const customOrdered = [
-      ...physics.map((q) => ({ ...q, subject: 'Physics', bank_category: 'Physics', section_id: secMap.Physics || q.section_id })),
-      ...chemistry.map((q) => ({ ...q, subject: 'Chemistry', bank_category: 'Chemistry', section_id: secMap.Chemistry || q.section_id })),
-      ...finalBotany.map((q) => ({ ...q, subject: 'Botany', bank_category: 'Botany', section_id: secMap.Botany || q.section_id })),
-      ...finalZoology.map((q) => ({ ...q, subject: 'Zoology', bank_category: 'Zoology', section_id: secMap.Zoology || q.section_id })),
-      ...unassigned,
-    ];
+  // If questions are NOT exactly 180 (45 in each), arrange any available questions in strict canonical order:
+  // For tests with Mathematics: 1. Physics, 2. Chemistry, 3. Mathematics (then Botany, Zoology if any)
+  // For NEET tests without Mathematics: 1. Physics, 2. Chemistry, 3. Botany, 4. Zoology
+  if (!isNeet || questions.length !== 180 || physics.length !== 45 || chemistry.length !== 45 || finalBotany.length !== 45 || finalZoology.length !== 45) {
+    const hasMath = mathematics.length > 0;
+    const customOrdered = hasMath
+      ? [
+          ...physics.map((q) => ({ ...q, subject: 'Physics', bank_category: 'Physics', section_id: secMap.Physics || q.section_id })),
+          ...chemistry.map((q) => ({ ...q, subject: 'Chemistry', bank_category: 'Chemistry', section_id: secMap.Chemistry || q.section_id })),
+          ...mathematics.map((q) => ({ ...q, subject: 'Mathematics', bank_category: 'Mathematics', section_id: secMap.Mathematics || q.section_id })),
+          ...finalBotany.map((q) => ({ ...q, subject: 'Botany', bank_category: 'Botany', section_id: secMap.Botany || q.section_id })),
+          ...finalZoology.map((q) => ({ ...q, subject: 'Zoology', bank_category: 'Zoology', section_id: secMap.Zoology || q.section_id })),
+          ...unassigned,
+        ]
+      : [
+          ...physics.map((q) => ({ ...q, subject: 'Physics', bank_category: 'Physics', section_id: secMap.Physics || q.section_id })),
+          ...chemistry.map((q) => ({ ...q, subject: 'Chemistry', bank_category: 'Chemistry', section_id: secMap.Chemistry || q.section_id })),
+          ...finalBotany.map((q) => ({ ...q, subject: 'Botany', bank_category: 'Botany', section_id: secMap.Botany || q.section_id })),
+          ...finalZoology.map((q) => ({ ...q, subject: 'Zoology', bank_category: 'Zoology', section_id: secMap.Zoology || q.section_id })),
+          ...mathematics.map((q) => ({ ...q, subject: 'Mathematics', bank_category: 'Mathematics', section_id: secMap.Mathematics || q.section_id })),
+          ...unassigned,
+        ];
 
     const subjectCounts = {};
     const normQs = customOrdered.map((q, idx) => {
@@ -259,15 +289,51 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
       };
     });
 
-    const CANONICAL_ORDER = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
-    const normSecs = Array.isArray(sections) ? [...sections].sort((a, b) => {
+    const CANONICAL_ORDER = hasMath
+      ? ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology']
+      : ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
+
+    const activeSectionIds = new Set(normQs.map((q) => q.section_id).filter(Boolean));
+    const activeSubjects = new Set(normQs.map((q) => (q.subject || '').toLowerCase()).filter(Boolean));
+
+    let normSecs = Array.isArray(sections) ? [...sections] : [];
+    normSecs.sort((a, b) => {
       const idxA = CANONICAL_ORDER.findIndex((sub) => String(a.name || '').toLowerCase().includes(sub.toLowerCase()));
       const idxB = CANONICAL_ORDER.findIndex((sub) => String(b.name || '').toLowerCase().includes(sub.toLowerCase()));
       if (idxA !== -1 && idxB !== -1) return idxA - idxB;
       if (idxA !== -1) return -1;
       if (idxB !== -1) return 1;
       return (a.position || 0) - (b.position || 0);
-    }) : sections;
+    });
+
+    normSecs = normSecs.filter((s) => {
+      if (!s) return false;
+      if (activeSectionIds.has(s.id)) return true;
+      const sName = String(s.name || '').toLowerCase();
+      return Array.from(activeSubjects).some((subj) => sName.includes(subj));
+    });
+
+    if (normSecs.length === 0 && normQs.length > 0) {
+      const distinctSubjs = [];
+      for (const orderSubj of CANONICAL_ORDER) {
+        if (activeSubjects.has(orderSubj.toLowerCase())) {
+          distinctSubjs.push(orderSubj);
+        }
+      }
+      normSecs = distinctSubjs.map((subj, idx) => ({
+        id: `sec-${subj.toLowerCase()}`,
+        assessment_id: assessment.id,
+        name: subj,
+        position: idx + 1,
+        section_type: 'technical_mcq',
+        total_questions: subjectCounts[subj] || 0,
+      }));
+    } else {
+      normSecs = normSecs.map((s, idx) => ({
+        ...s,
+        position: idx + 1,
+      }));
+    }
 
     return { questions: normQs, sections: normSecs };
   }

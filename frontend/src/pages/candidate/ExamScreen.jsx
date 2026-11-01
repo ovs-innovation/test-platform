@@ -575,14 +575,24 @@ export default function ExamScreen({ isSimulator = false }) {
         const secZoo = sections.find((s) => String(s.name || '').toLowerCase().includes('zool'))?.id;
         const secMath = sections.find((s) => String(s.name || '').toLowerCase().includes('math'))?.id;
 
-        const ordered = [
-          ...physics.map((q) => ({ ...q, section_id: secPhy || q.section_id })),
-          ...chemistry.map((q) => ({ ...q, section_id: secChem || q.section_id })),
-          ...botany.map((q) => ({ ...q, section_id: secBot || q.section_id })),
-          ...zoology.map((q) => ({ ...q, section_id: secZoo || q.section_id })),
-          ...mathematics.map((q) => ({ ...q, section_id: secMath || q.section_id })),
-          ...other,
-        ];
+        const hasMath = mathematics.length > 0;
+        const ordered = hasMath
+          ? [
+              ...physics.map((q) => ({ ...q, section_id: secPhy || q.section_id })),
+              ...chemistry.map((q) => ({ ...q, section_id: secChem || q.section_id })),
+              ...mathematics.map((q) => ({ ...q, section_id: secMath || q.section_id })),
+              ...botany.map((q) => ({ ...q, section_id: secBot || q.section_id })),
+              ...zoology.map((q) => ({ ...q, section_id: secZoo || q.section_id })),
+              ...other,
+            ]
+          : [
+              ...physics.map((q) => ({ ...q, section_id: secPhy || q.section_id })),
+              ...chemistry.map((q) => ({ ...q, section_id: secChem || q.section_id })),
+              ...botany.map((q) => ({ ...q, section_id: secBot || q.section_id })),
+              ...zoology.map((q) => ({ ...q, section_id: secZoo || q.section_id })),
+              ...mathematics.map((q) => ({ ...q, section_id: secMath || q.section_id })),
+              ...other,
+            ];
 
         return ordered.map((q, idx) => ({
           ...q,
@@ -893,7 +903,13 @@ export default function ExamScreen({ isSimulator = false }) {
 
   // Compute subject-based sections dynamically from activeQuestions
   const effectiveSections = useMemo(() => {
-    const canonicalOrder = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
+    const hasMath = activeQuestions.some((q) => {
+      const s = String(q.subject || q.bank_category || '').toLowerCase();
+      return s.includes('math');
+    });
+    const canonicalOrder = hasMath
+      ? ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology']
+      : ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
     const subjectCountMap = new Map();
     const firstIndexMap = new Map();
 

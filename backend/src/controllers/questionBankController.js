@@ -834,6 +834,37 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     );
   }
 
+  // Remove unused empty sections created during import so test only has active sections
+  await query(
+    `DELETE FROM assessment_sections 
+     WHERE assessment_id = $1 
+       AND id NOT IN (SELECT DISTINCT section_id FROM questions WHERE assessment_id = $1 AND section_id IS NOT NULL)`,
+    [assessmentId]
+  ).catch(() => {});
+
+  // Re-sequence remaining sections by canonical order: Physics -> Chemistry -> Mathematics -> Botany -> Zoology -> Biology
+  const remSecsRes = await query(
+    'SELECT id, name FROM assessment_sections WHERE assessment_id = $1',
+    [assessmentId]
+  );
+  const remSecs = remSecsRes.rows;
+  const CANONICAL_SEC_ORDER = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
+  const getCanonicalSecRank = (name) => {
+    if (!name || typeof name !== 'string') return 999;
+    const s = name.trim().toLowerCase();
+    const idx = CANONICAL_SEC_ORDER.findIndex((sub) => s.includes(sub.toLowerCase()));
+    return idx !== -1 ? idx + 1 : 999;
+  };
+  remSecs.sort((a, b) => {
+    const rankA = getCanonicalSecRank(a.name);
+    const rankB = getCanonicalSecRank(b.name);
+    if (rankA !== rankB) return rankA - rankB;
+    return a.id - b.id;
+  });
+  for (let sIdx = 0; sIdx < remSecs.length; sIdx++) {
+    await query('UPDATE assessment_sections SET position = $1 WHERE id = $2', [sIdx + 1, remSecs[sIdx].id]).catch(() => {});
+  }
+
   const countRes = await query(
     'SELECT COUNT(*)::int as count, COALESCE(SUM(marks), 0)::int as total_marks FROM questions WHERE assessment_id = $1',
     [assessmentId]
