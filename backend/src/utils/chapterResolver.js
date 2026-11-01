@@ -1184,6 +1184,17 @@ const CHAPTER_RULES = [
     ],
   },
   {
+    chapter: 'The p-Block Elements (Gr. 13 & 14)',
+    subjects: ['chemistry'],
+    patterns: [
+      /\bthe p[- ]block elements?\s*\((gr|group)\.?\s*(13|14)/i,
+      /\bp[- ]block.*?(13|14)\b/i,
+      /\bgroup\s*(13|14)\b/i,
+      /\bdiborane\b|\bborazine\b|\bborazole\b|\binorganic benzene\b|\bborax\b|\bboric acid\b|\borthoboric acid\b/i,
+      /\bsilicones?\b|\bsilicates?\b|\bpyrosilicates?\b|\borthosilicates?\b|\bcarborundum\b/i,
+    ],
+  },
+  {
     chapter: 'The p-Block Elements',
     subjects: ['chemistry'],
     patterns: [
@@ -1307,7 +1318,11 @@ export const CHEMISTRY_STANDARD_11 = [
   'Some Basic Concepts of Chemistry',
   'Structure of Atom',
   'Periodic Table',
+  'Chemical Bonding and Molecular Structure',
+  'Thermodynamics',
   'Equilibrium',
+  'Redox Reactions',
+  'The p-Block Elements (Gr. 13 & 14)',
   'Solutions',
   'Electrochemistry',
   'Chemical Kinetics',
@@ -1408,6 +1423,16 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Equilibrium';
   }
 
+  // 10. Explicit name match for The p-Block Elements (Gr. 13 & 14)
+  if (
+    /p[- ]?block.*?(13|14|gr.*13|group.*13)/i.test(rawChapter) ||
+    /p[- ]?block.*?(13|14|gr.*13|group.*13)/i.test(rawTopic) ||
+    /group\s*(13|14)/i.test(rawChapter) ||
+    /group\s*(13|14)/i.test(rawTopic)
+  ) {
+    return 'The p-Block Elements (Gr. 13 & 14)';
+  }
+
   // Periodic Table pattern match
   if (/moseley|mendeleev|periodicity in properties|periodic table|allred[- ]rochow/i.test(combined)) {
     return 'Periodic Table';
@@ -1458,7 +1483,12 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
     return 'Haloalkanes and Haloarenes';
   }
 
-  // 11. The p-Block Elements
+  // 11a. The p-Block Elements (Gr. 13 & 14) - Class 11
+  if (/p[- ]?block.*?(13|14|gr.*13|group.*13)|group\s*(13|14)|diborane|borazine|borax|silicone|boric acid|orthoboric/i.test(combined)) {
+    return 'The p-Block Elements (Gr. 13 & 14)';
+  }
+
+  // 11b. The p-Block Elements - Class 12
   if (/p[- ]block|nitrogen|phosphorus|oxygen|sulphur|sulfur|halogen|noble gas|xenon|phosphine|interhalogen|contact process|ostwald process|haber|oxoacids of|hydrides of group|group 15|group 16|group 17|group 18|non-linear shape/i.test(combined)) {
     return 'The p-Block Elements';
   }

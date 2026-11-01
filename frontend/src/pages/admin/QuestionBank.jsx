@@ -222,7 +222,10 @@ export default function AdminQuestionBank() {
     'Structure of Atom',
     'Periodic Table',
     'Chemical Bonding and Molecular Structure',
+    'Thermodynamics',
     'Equilibrium',
+    'Redox Reactions',
+    'The p-Block Elements (Gr. 13 & 14)',
     'Solutions',
     'Electrochemistry',
     'Chemical Kinetics',
@@ -263,7 +266,13 @@ export default function AdminQuestionBank() {
     'Biodiversity and Conservation (Sacred groves)'
   ], []);
 
-  const normChapterKey = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/\(.*?\)/g, '').replace(/[^a-z0-9]/g, '');
+  const normChapterKey = (s) => {
+    if (!s) return '';
+    let str = String(s).toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ');
+    // Only strip parenthesized content if it does not contain digits (preserves Gr. 13 & 14 while matching topics like Sacred groves)
+    str = str.replace(/\((?![^)]*\d)[^)]*\)/g, '');
+    return str.replace(/[^a-z0-9]/g, '');
+  };
 
   const formatChapterName = (str, subjectHint) => {
     if (!str) return 'General';
@@ -275,7 +284,10 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = CHEMISTRY_STANDARD_11.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/p[- ]?block.*?(13|14|gr.*13|group.*13)/i.test(trimmed) || /group\s*(13|14)/i.test(trimmed)) return 'The p-Block Elements (Gr. 13 & 14)';
       if (/p[- ]block/i.test(trimmed)) return 'The p-Block Elements';
+      if (/thermodynamics/i.test(trimmed)) return 'Thermodynamics';
+      if (/redox/i.test(trimmed)) return 'Redox Reactions';
       if (/d[- ]?(and|&)?[- ]?f[- ]block/i.test(trimmed)) return 'The d- and f-Block Elements';
       if (/coordination/i.test(trimmed)) return 'Coordination Compounds';
       if (/haloalkane/i.test(trimmed)) return 'Haloalkanes and Haloarenes';
@@ -451,6 +463,25 @@ export default function AdminQuestionBank() {
     if (activeSubj === 'chemistry') {
       const raw = (q.chapter_name || q.chapter || '').trim();
       if (
+        Number(q.chapter_id) === 166 ||
+        Number(q.chapter_id) === 247 ||
+        /p[- ]?block.*?(13|14|gr.*13|group.*13)/i.test(raw) ||
+        /p[- ]?block.*?(13|14|gr.*13|group.*13)/i.test(q.topic || '')
+      ) return 'The p-Block Elements (Gr. 13 & 14)';
+
+      if (
+        Number(q.chapter_id) === 22 ||
+        Number(q.chapter_id) === 184 ||
+        /^\s*thermodynamics\s*$/i.test(raw)
+      ) return 'Thermodynamics';
+
+      if (
+        Number(q.chapter_id) === 128 ||
+        Number(q.chapter_id) === 185 ||
+        /^\s*redox\s*reactions?\s*$/i.test(raw)
+      ) return 'Redox Reactions';
+
+      if (
         (Number(q.id) >= 14041 && Number(q.id) <= 14170) ||
         (Number(q.chapter_id) === 127 && Number(q.id) >= 5504 && Number(q.id) <= 5640) ||
         Number(q.chapter_id) === 95 ||
@@ -494,6 +525,7 @@ export default function AdminQuestionBank() {
       if (Number(q.chapter_id) === 14 || /^\s*chemical kinetics\s*$/i.test(raw)) return 'Chemical Kinetics';
       if (Number(q.chapter_id) === 34 || /^\s*haloalkanes and haloarenes\s*$/i.test(raw)) return 'Haloalkanes and Haloarenes';
       if (Number(q.chapter_id) === 204 || /^\s*the d- and f-block elements\s*$/i.test(raw)) return 'The d- and f-Block Elements';
+      if (Number(q.chapter_id) === 23 || Number(q.chapter_id) === 107 || /^\s*the p-block elements\s*$/i.test(raw)) return 'The p-Block Elements';
 
       return formatChapterName(raw, 'chemistry');
     }
