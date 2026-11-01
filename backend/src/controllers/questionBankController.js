@@ -180,7 +180,7 @@ export const importToAssessment = asyncHandler(async (req, res) => {
       b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
       b.assertion_text || null,
       b.reason_text || null,
-      Number(b.marks && b.marks > 1 ? b.marks : 4),
+      4,
       maxRes.rows[0].next,
       b.starter_code || '',
       asJson(b.test_cases, []),
@@ -778,7 +778,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         b.numerical_tolerance !== undefined ? b.numerical_tolerance : 0,
         b.assertion_text || null,
         b.reason_text || null,
-        isNeetAssessment ? 4 : Number(b.marks && b.marks > 1 ? b.marks : 4),
+        4,
         position,
         b.starter_code || '',
         asJson(b.test_cases, []),
@@ -867,12 +867,11 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   }
 
   const countRes = await query(
-    'SELECT COUNT(*)::int as count, COALESCE(SUM(marks), 0)::int as total_marks FROM questions WHERE assessment_id = $1',
+    'SELECT COUNT(*)::int as count FROM questions WHERE assessment_id = $1',
     [assessmentId]
   );
   const totalQ = countRes.rows[0]?.count || 0;
-  const isNeet = isNeetAssessment || totalQ === 180;
-  const totalM = (isNeet && totalQ === 180) ? 720 : (countRes.rows[0]?.total_marks || (totalQ * 4));
+  const totalM = totalQ * 4;
   await query(
     'UPDATE tests SET total_questions = $1, max_marks = $2, updated_at = NOW() WHERE id = $3',
     [totalQ, totalM, assessmentId]

@@ -117,6 +117,11 @@ const start = async () => {
     initScheduler();
     // Initialize background payment reconciliation cron
     startPaymentReconciliationCron();
+    // Enforce 4 marks for all questions in question_bank and test questions
+    pool.query(`
+      UPDATE question_bank SET marks = 4 WHERE marks != 4 OR marks IS NULL;
+      UPDATE questions SET marks = 4 WHERE marks != 4 OR marks IS NULL;
+    `).catch(() => {});
   }
 
   // Asynchronously verify SMTP connection without blocking server startup

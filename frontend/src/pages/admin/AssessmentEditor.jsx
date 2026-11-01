@@ -176,8 +176,7 @@ export default function AssessmentEditor() {
 
   useEffect(() => { load(); }, [load]);
 
-  const isNeetAssessment = assessment.title?.toUpperCase().includes('NEET') || assessment.test_type?.toUpperCase().includes('NEET') || questions.length === 180;
-  const totalMarks = (isNeetAssessment && questions.length === 180) ? 720 : questions.reduce((s, q) => s + (Number(q.marks) || 4), 0);
+  const totalMarks = questions.reduce((s, q) => s + (Number(q.marks) || 4), 0) || (questions.length * 4);
   const canPublish = questions.length > 0;
 
   const handlePublish = async () => {

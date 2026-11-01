@@ -283,7 +283,7 @@ export function normalizeNeetAssessmentPayload(assessment = {}, questions = [], 
       subjectCounts[subj] = (subjectCounts[subj] || 0) + 1;
       return {
         ...q,
-        marks: (isNeet || q.marks === 1 || !q.marks) ? 4 : Number(q.marks),
+        marks: 4,
         position: idx + 1,
         questionNumber: subjectCounts[subj],
         overallQuestionNumber: idx + 1,
