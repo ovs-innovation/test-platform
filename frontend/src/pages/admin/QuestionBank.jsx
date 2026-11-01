@@ -221,6 +221,7 @@ export default function AdminQuestionBank() {
     'Some Basic Concepts of Chemistry',
     'Structure of Atom',
     'Periodic Table',
+    'Chemical Bonding and Molecular Structure',
     'Equilibrium',
     'Solutions',
     'Electrochemistry',
@@ -286,6 +287,7 @@ export default function AdminQuestionBank() {
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
       if (/structure of atom/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
+      if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
     }
 
