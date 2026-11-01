@@ -335,6 +335,10 @@ export default function AdminQuestionBank() {
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
     }
 
+    if (activeSubj === 'mathematics') {
+      if (/complex\s*numbers?/i.test(trimmed)) return 'Complex Number';
+    }
+
     if (trimmed === trimmed.toLowerCase()) {
       return trimmed.replace(/\b\w/g, (c) => c.toUpperCase());
     }
@@ -524,6 +528,15 @@ export default function AdminQuestionBank() {
       }
 
       return formatChapterName(raw, 'physics');
+    }
+
+    // 5. MATHEMATICS SCOPED RESOLUTION
+    if (activeSubj === 'mathematics') {
+      const raw = (q.chapter_name || q.chapter || '').trim();
+      if (/complex\s*numbers?/i.test(raw) || Number(q.chapter_id) === 80 || Number(q.chapter_id) === 111) {
+        return 'Complex Number';
+      }
+      return formatChapterName(raw, 'mathematics');
     }
 
     const raw = (q.chapter_name || q.chapter || 'General').trim() || 'General';
