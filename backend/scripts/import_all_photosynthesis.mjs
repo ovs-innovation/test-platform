@@ -1,0 +1,260 @@
+import { query } from '../src/config/db.js';
+import { batch1 } from './data/photosynthesis_batch1.mjs';
+import { batch2 } from './data/photosynthesis_batch2.mjs';
+import { batch3 } from './data/photosynthesis_batch3.mjs';
+import { batchAR } from './data/photosynthesis_batch_ar.mjs';
+
+const LIVE_API = 'https://edvedum.com/api';
+
+const LOCAL_SUBJECT_ID = 15;  // Botany
+const LOCAL_CHAPTER_ID = 172; // Photosynthesis in Higher Plants
+
+const LIVE_SUBJECT_ID = 10;   // Botany
+const LIVE_CHAPTER_ID = 261;  // Photosynthesis in Higher Plants
+
+const CHAPTER_NAME = 'Photosynthesis in Higher Plants';
+const CATEGORY_NAME = 'Botany';
+
+const ALL_MCQS = [
+  ...batch1,
+  ...batch2,
+  ...batch3
+].map(q => ({
+  question_text: q.question_text,
+  options: q.options,
+  correct_index: q.correct_option,
+  solution: q.explanation || '',
+  image_url: q.diagram_url || null,
+  category: CATEGORY_NAME,
+  subject: CATEGORY_NAME,
+  chapter: CHAPTER_NAME,
+  topic: CHAPTER_NAME,
+  question_type: 'mcq',
+  marks: q.marks || 4,
+  difficulty: 'medium',
+  status: 'available'
+}));
+
+const ALL_ARS = batchAR.map(q => ({
+  question_text: q.question_text,
+  assertion_text: q.assertion_text,
+  reason_text: q.reason_text,
+  options: q.options,
+  correct_index: q.correct_option,
+  solution: q.explanation || '',
+  image_url: null,
+  category: CATEGORY_NAME,
+  subject: CATEGORY_NAME,
+  chapter: CHAPTER_NAME,
+  topic: CHAPTER_NAME,
+  question_type: 'assertion_reason',
+  marks: q.marks || 4,
+  difficulty: 'medium',
+  status: 'available'
+}));
+
+const ALL_QUESTIONS = [
+  ...ALL_MCQS,
+  ...ALL_ARS
+];
+
+function normalizeText(text) {
+  if (!text) return '';
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .replace(/[^\w\s]/g, '')
+    .trim();
+}
+
+async function getLiveToken() {
+  const res = await fetch(`${LIVE_API}/auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
+  });
+  const data = await res.json();
+  return data.token || data.data?.token || data.accessToken;
+}
+
+async function run() {
+  console.log(`\n==================================================`);
+  console.log(`🚀 IMPORTING QUESTIONS FOR "${CHAPTER_NAME}"`);
+  console.log(`MCQs: ${ALL_MCQS.length} (Q1 to Q108)`);
+  console.log(`Assertion-Reason: ${ALL_ARS.length} (AR 1 to AR 19)`);
+  console.log(`Total Questions: ${ALL_QUESTIONS.length}`);
+  console.log(`==================================================\n`);
+
+  // --- 1. LOCAL NEON DB IMPORT ---
+  console.log('--- Step 1: Importing to Local Neon Database ---');
+
+  const existingLocalRes = await query(
+    "SELECT id, question_text, question_type FROM question_bank WHERE category = $1 AND (chapter = $2 OR chapter_id = $3)",
+    [CATEGORY_NAME, CHAPTER_NAME, LOCAL_CHAPTER_ID]
+  );
+  const existingLocalQuestions = existingLocalRes.rows;
+  console.log(`Found ${existingLocalQuestions.length} existing questions in Local Neon DB for "${CHAPTER_NAME}".`);
+
+  let localInserted = 0;
+  let localSkipped = 0;
+
+  for (let i = 0; i < ALL_QUESTIONS.length; i++) {
+    const q = ALL_QUESTIONS[i];
+    const qNorm = normalizeText(q.question_text);
+    const exists = existingLocalQuestions.some(row => normalizeText(row.question_text) === qNorm);
+
+    if (exists) {
+      localSkipped++;
+      continue;
+    }
+
+    await query(
+      `INSERT INTO question_bank (
+        category, subject, chapter, topic, question_text, question_type,
+        options, correct_index, solution, marks, difficulty, image_url, status,
+        subject_id, chapter_id
+      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)`,
+      [
+        q.category,
+        q.subject,
+        q.chapter,
+        q.topic,
+        q.question_text,
+        q.question_type,
+        JSON.stringify(q.options),
+        q.correct_index,
+        q.solution,
+        q.marks,
+        q.difficulty,
+        q.image_url,
+        q.status,
+        LOCAL_SUBJECT_ID,
+        LOCAL_CHAPTER_ID
+      ]
+    );
+    localInserted++;
+  }
+
+  console.log(`Local Neon DB: Inserted ${localInserted}, Skipped ${localSkipped}. Total: ${existingLocalQuestions.length + localInserted}`);
+
+  const localTypeBreakdown = await query(
+    "SELECT question_type, count(*) as count FROM question_bank WHERE category = $1 AND (chapter = $2 OR chapter_id = $3) GROUP BY question_type",
+    [CATEGORY_NAME, CHAPTER_NAME, LOCAL_CHAPTER_ID]
+  );
+  console.log('Local DB Breakdown:', localTypeBreakdown.rows);
+
+  // --- 2. LIVE PRODUCTION IMPORT ---
+  console.log('\n--- Step 2: Importing to Live Production API ---');
+  let token;
+  try {
+    token = await getLiveToken();
+  } catch (err) {
+    console.error('Failed to get live token:', err.message);
+    return;
+  }
+
+  if (!token) {
+    console.error('No token received from Live API!');
+    return;
+  }
+  console.log('Successfully authenticated with Live API.');
+
+  const existingLiveRes = await fetch(`${LIVE_API}/question-bank?category=Botany`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const existingLiveData = await existingLiveRes.json();
+  const allLiveBotanyQuestions = existingLiveData.questions || existingLiveData.data || [];
+  const existingLivePhotosynthesis = allLiveBotanyQuestions.filter(
+    q => (q.chapter_id === LIVE_CHAPTER_ID) || (q.chapter && q.chapter.toLowerCase().includes('photosynthesis'))
+  );
+  console.log(`Found ${existingLivePhotosynthesis.length} existing "${CHAPTER_NAME}" questions on Live Production.`);
+
+  let liveInserted = 0;
+  let liveSkipped = 0;
+  let liveFailed = 0;
+
+  for (let i = 0; i < ALL_QUESTIONS.length; i++) {
+    const q = ALL_QUESTIONS[i];
+    const qNorm = normalizeText(q.question_text);
+    const exists = existingLivePhotosynthesis.some(row => normalizeText(row.question_text) === qNorm);
+
+    if (exists) {
+      liveSkipped++;
+      continue;
+    }
+
+    const payload = {
+      category: q.category,
+      subject: q.subject,
+      chapter: q.chapter,
+      topic: q.topic,
+      question_text: q.question_text,
+      question_type: q.question_type,
+      options: q.options,
+      correct_index: q.correct_index,
+      solution: q.solution,
+      marks: q.marks,
+      difficulty: q.difficulty,
+      image_url: q.image_url,
+      status: q.status,
+      subject_id: LIVE_SUBJECT_ID,
+      chapter_id: LIVE_CHAPTER_ID
+    };
+
+    try {
+      const res = await fetch(`${LIVE_API}/question-bank`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        liveInserted++;
+        if ((i + 1) % 15 === 0 || i === ALL_QUESTIONS.length - 1) {
+          console.log(`Live Progress: ${i + 1}/${ALL_QUESTIONS.length} processed (${liveInserted} inserted)`);
+        }
+      } else {
+        const errText = await res.text();
+        console.error(`Failed to insert question ${i + 1} (${q.question_type}) on Live: ${res.status} ${errText}`);
+        liveFailed++;
+      }
+    } catch (err) {
+      console.error(`Network error on question ${i + 1}: ${err.message}`);
+      liveFailed++;
+    }
+  }
+
+  console.log(`\nLive Production: Inserted ${liveInserted}, Skipped ${liveSkipped}, Failed ${liveFailed}.`);
+
+  // --- 3. FINAL LIVE VERIFICATION ---
+  const verifyRes = await fetch(`${LIVE_API}/question-bank?category=Botany`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const verifyData = await verifyRes.json();
+  const verifyQuestions = verifyData.questions || verifyData.data || [];
+  const finalLive = verifyQuestions.filter(
+    q => (q.chapter_id === LIVE_CHAPTER_ID) || (q.chapter && q.chapter.toLowerCase().includes('photosynthesis'))
+  );
+
+  const mcqLive = finalLive.filter(q => q.question_type === 'mcq' || !q.question_type);
+  const arLive = finalLive.filter(q => q.question_type === 'assertion_reason');
+  const imagesLive = finalLive.filter(q => q.image_url && q.image_url.trim() !== '');
+
+  console.log(`\n🎉 Final Verification on Live Production:`);
+  console.log(`Total "${CHAPTER_NAME}" questions on Live: ${finalLive.length}`);
+  console.log(`MCQs: ${mcqLive.length}`);
+  console.log(`Assertion-Reason: ${arLive.length}`);
+  console.log(`Questions with diagram images: ${imagesLive.length}`);
+  imagesLive.forEach(q => {
+    console.log(`  - ID: ${q.id}, Type: ${q.question_type}, Image: ${q.image_url}`);
+  });
+}
+
+run().catch(err => {
+  console.error('Fatal execution error:', err);
+  process.exit(1);
+});
+
