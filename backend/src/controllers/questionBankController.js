@@ -597,14 +597,14 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
 
   let testRow = null;
   const t = await query(
-    'SELECT id, test_name, title, test_type, duration_minutes, syllabus, passing_marks, is_published FROM tests WHERE id = $1',
+    'SELECT id, test_name, title, test_type, duration_minutes, syllabus, max_marks, is_published FROM tests WHERE id = $1',
     [assessmentId]
   );
   if (t.rowCount > 0) {
     testRow = t.rows[0];
   }
 
-  let a = await query('SELECT id, title, description, duration_minutes FROM assessments WHERE id = $1', [assessmentId]);
+  let a = await query('SELECT id, title, description, duration_minutes, test_type FROM assessments WHERE id = $1', [assessmentId]);
   if (a.rowCount === 0) {
     if (!testRow) throw ApiError.notFound('Assessment or Test not found');
     await query(
@@ -616,7 +616,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         testRow.test_name || testRow.title || 'Assessment',
         testRow.syllabus || '',
         testRow.duration_minutes || 180,
-        testRow.passing_marks || 0,
+        Math.round((testRow.max_marks || 0) * 0.4) || 0,
         Boolean(testRow.is_published),
       ]
     );
