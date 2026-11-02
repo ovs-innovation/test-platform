@@ -595,11 +595,18 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   const { assessmentId } = req.params;
   const { category, ids, section_id } = req.body || {};
 
-  let a = await query('SELECT id FROM assessments WHERE id = $1', [assessmentId]);
+  let testRow = null;
+  const t = await query(
+    'SELECT id, test_name, title, test_type, duration_minutes, syllabus, passing_marks, is_published FROM tests WHERE id = $1',
+    [assessmentId]
+  );
+  if (t.rowCount > 0) {
+    testRow = t.rows[0];
+  }
+
+  let a = await query('SELECT id, title, description, duration_minutes FROM assessments WHERE id = $1', [assessmentId]);
   if (a.rowCount === 0) {
-    const t = await query('SELECT id, test_name, title, duration_minutes, syllabus, passing_marks, is_published FROM tests WHERE id = $1', [assessmentId]);
-    if (t.rowCount === 0) throw ApiError.notFound('Assessment or Test not found');
-    const testRow = t.rows[0];
+    if (!testRow) throw ApiError.notFound('Assessment or Test not found');
     await query(
       `INSERT INTO assessments (id, title, description, instructions, duration_minutes, passing_marks, max_violations, result_visible, is_published)
        VALUES ($1, $2, $3, 'Standard CBT Instructions', $4, $5, 3, true, $6)
@@ -613,6 +620,8 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
         Boolean(testRow.is_published),
       ]
     );
+  } else if (!testRow) {
+    testRow = a.rows[0];
   }
 
   const CANONICAL_NEET_ORDER = ['Physics', 'Chemistry', 'Botany', 'Zoology', 'Mathematics', 'Biology'];
@@ -704,7 +713,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   );
   let position = maxRes.rows[0].max;
   const imported = [];
-  const isNeetAssessment = testRow.test_type?.toUpperCase().includes('NEET') || testRow.title?.toUpperCase().includes('NEET') || testRow.test_name?.toUpperCase().includes('NEET') || bankRows.length === 180;
+  const isNeetAssessment = (testRow?.test_type || testRow?.title || testRow?.test_name || '').toUpperCase().includes('NEET') || (Array.isArray(bankRows) && bankRows.length === 180);
 
   for (const b of bankRows) {
     position += 1;
@@ -873,8 +882,8 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
   const totalQ = countRes.rows[0]?.count || 0;
   const totalM = totalQ * 4;
   await query(
-    'UPDATE tests SET total_questions = $1, max_marks = $2, updated_at = NOW() WHERE id = $3',
-    [totalQ, totalM, assessmentId]
+    'UPDATE tests SET max_marks = $1, updated_at = NOW() WHERE id = $2',
+    [totalM, assessmentId]
   ).catch(() => {});
   await query(
     'UPDATE assessments SET passing_marks = GREATEST(passing_marks, $1), updated_at = NOW() WHERE id = $2',
