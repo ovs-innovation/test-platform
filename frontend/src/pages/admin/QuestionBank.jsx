@@ -258,6 +258,7 @@ export default function AdminQuestionBank() {
     'Morphology of Flowering Plants',
     'Anatomy of Flowering Plants',
     'Cell: The Unit of Life',
+    'Cell Cycle and Cell Division',
     'Plant Growth and Development',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
@@ -327,6 +328,7 @@ export default function AdminQuestionBank() {
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
       if (/cell\s*:\s*the\s*unit\s*of\s*life/i.test(trimmed) || /cell\s+the\s+unit\s+of\s+life/i.test(trimmed)) return 'Cell: The Unit of Life';
+      if (/cell\s*cycle/i.test(trimmed) || /cell\s*division/i.test(trimmed)) return 'Cell Cycle and Cell Division';
       if (/plant\s*growth/i.test(trimmed) || /growth.*development/i.test(trimmed)) return 'Plant Growth and Development';
       if (/morphology\s*of\s*flowering/i.test(trimmed)) return 'Morphology of Flowering Plants';
       if (/anatomy\s*of\s*flowering/i.test(trimmed)) return 'Anatomy of Flowering Plants';

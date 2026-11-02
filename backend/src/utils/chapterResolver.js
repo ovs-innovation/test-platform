@@ -1600,6 +1600,7 @@ export const BOTANY_STANDARD = [
   'Morphology of Flowering Plants',
   'Anatomy of Flowering Plants',
   'Cell: The Unit of Life',
+  'Cell Cycle and Cell Division',
   'Plant Growth and Development',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
@@ -1644,9 +1645,19 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
     /cell\s*:\s*the\s*unit\s*of\s*life/i.test(rawTopic) ||
     /cell\s+the\s+unit\s+of\s+life/i.test(rawChapter) ||
     /cell\s+the\s+unit\s+of\s+life/i.test(rawTopic) ||
-    (questionId && Number(questionId) >= 17393 && Number(questionId) <= 17539)
+    (questionId && Number(questionId) >= 17393 && Number(questionId) <= 17619)
   ) {
     return 'Cell: The Unit of Life';
+  }
+
+  // 0. Botany: Cell Cycle and Cell Division (Live chapter_id: 259, Local DB: 171)
+  if (
+    /cell\s*cycle/i.test(rawChapter) ||
+    /cell\s*cycle/i.test(rawTopic) ||
+    /cell\s*division/i.test(rawChapter) ||
+    /cell\s*division/i.test(rawTopic)
+  ) {
+    return 'Cell Cycle and Cell Division';
   }
 
   // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
