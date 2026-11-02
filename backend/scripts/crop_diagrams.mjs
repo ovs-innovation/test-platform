@@ -1,24 +1,19 @@
 import sharp from 'sharp';
 
-async function main() {
-  const crops = [
-    { id: 'q30', page: 13, left: 30, top: 250, width: 500, height: 180 },
-    { id: 'q40', page: 22, left: 0, top: 190, width: 780, height: 260 },
-    { id: 'q48', page: 29, left: 30, top: 200, width: 620, height: 340 },
-    { id: 'q57', page: 35, left: 170, top: 215, width: 615, height: 575 },
-    { id: 'q61', page: 37, left: 100, top: 650, width: 620, height: 320 },
-    { id: 'q64', page: 39, left: 35, top: 165, width: 560, height: 320 },
-    { id: 'q71', page: 44, left: 30, top: 220, width: 750, height: 430 },
-  ];
+const img = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793611065799_72e05dc5.jpg';
 
-  for (const c of crops) {
-    const inputPath = `scripts/complex_pages/page_${c.page}.png`;
-    const outputPath = `scripts/complex_pages/diagram_${c.id}.png`;
-    await sharp(inputPath)
-      .extract({ left: c.left, top: c.top, width: c.width, height: c.height })
-      .toFile(outputPath);
-    console.log(`Cropped ${c.id}`);
-  }
+async function crop() {
+  // Q175 chloroplast diagram
+  await sharp(img)
+    .extract({ left: 35, top: 148, width: 120, height: 60 })
+    .toFile('backend/scripts/cell_q175_chloroplast.png');
+
+  // Q189 mitochondrion diagram
+  await sharp(img)
+    .extract({ left: 355, top: 205, width: 160, height: 95 })
+    .toFile('backend/scripts/cell_q189_mitochondrion.png');
+
+  console.log('Successfully cropped Q175 and Q189 diagrams');
 }
 
-main().catch(console.error);
+crop().catch(console.error);
