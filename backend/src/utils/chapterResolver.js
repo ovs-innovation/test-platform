@@ -1597,6 +1597,9 @@ export const BOTANY_STANDARD = [
   'The Living World',
   'Biological Classification',
   'Plant Kingdom',
+  'Morphology of Flowering Plants',
+  'Anatomy of Flowering Plants',
+  'Plant Growth and Development',
   'Sexual Reproduction in Flowering Plants',
   'Principles of Inheritance and Variation',
   'Molecular Basis of Inheritance',
@@ -1621,6 +1624,17 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
     (questionId && Number(questionId) >= 15038 && Number(questionId) <= 15212)
   ) {
     return 'Plant Kingdom';
+  }
+
+  // 0. Botany: Plant Growth and Development (Live chapter_id: 255, Local DB: 169)
+  if (
+    /plant\s*growth/i.test(rawChapter) ||
+    /plant\s*growth/i.test(rawTopic) ||
+    /growth\s*and\s*development/i.test(rawChapter) ||
+    /growth\s*and\s*development/i.test(rawTopic) ||
+    (questionId && Number(questionId) >= 17335 && Number(questionId) <= 17400)
+  ) {
+    return 'Plant Growth and Development';
   }
 
   // 0. Botany: Biological Classification (Live chapter_id: 225, Local DB: 156, Live IDs: 14778-15037, Local IDs: 6248-6507)
@@ -1680,6 +1694,10 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
 
   if (/mendel|inheritance|variation|monohybrid|dihybrid|law of segregation|independent assortment|test cross|back cross|incomplete dominance|co-dominance|multiple alleles|abo blood|pleiotrop|polygenic|chromosomal theory|sutton|boveri|morgan|linkage|recombination|linkage map|sturtevant|sex determination|drosophila|honey bee|grasshopper|mutation|frameshift|point mutation|pedigree|autosomal dominant|autosomal recessive|sickle cell|phenylketonuria|thalassemia|cystic fibrosis|colour blindness|color blindness|haemophilia|hemophilia|aneuploidy|polyploidy|down'?s syndrome|turner'?s syndrome|klinefelter'?s syndrome/i.test(combined)) {
     return 'Principles of Inheritance and Variation';
+  }
+
+  if (/growth\s*regulator|\bpgr\b|auxin|gibberell|\bga3\b|cytokinin|kinetin|zeatin|abscisic|dormin|2,\s*4[- ]d|ethylene|ethephon|bolting|apical dominance|richmond[- ]lang|photoperiod|florigen|vernalization|heterophylly|plasticity|dormancy|quiescence|vivipary|senescence|abscission|arithmetic growth|geometric growth|sigmoid growth|grand period|auxanometer|redifferentiation|dedifferentiation/i.test(combined)) {
+    return 'Plant Growth and Development';
   }
 
   if (/flower|stamen|anther|microsporan|microsporo|pollen|tapetum|pollen grain|exine|intine|sporopollenin|germ pore|pollinium|pistil|carpel|megasporan|megasporo|ovule|integument|micropyle|chalaza|nucellus|embryo sac|egg apparatus|synergid|filiform|antipodal|polar nuclei|pollination|autogamy|geitonogamy|xenogamy|cleistogam|chasmogam|anemophil|hydrophil|entomophil|ornithophil|chiropt|inbreeding depression|outbreeding|emasculation|bagging|pollen-pistil|pollen tube|syngamy|triple fusion|double fertilization|pen\b|endosperm|embryo\b|suspensor|scutellum|coleoptile|coleorhiza|perisperm|apomixis|polyembryony|parthenocarp/i.test(combined)) {

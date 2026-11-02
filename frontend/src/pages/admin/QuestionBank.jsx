@@ -257,6 +257,7 @@ export default function AdminQuestionBank() {
     'Plant Kingdom',
     'Morphology of Flowering Plants',
     'Anatomy of Flowering Plants',
+    'Plant Growth and Development',
     'Sexual Reproduction in Flowering Plants',
     'Principles of Inheritance and Variation',
     'Molecular Basis of Inheritance',
@@ -324,6 +325,7 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = BOTANY_STANDARD.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/plant\s*growth/i.test(trimmed) || /growth.*development/i.test(trimmed)) return 'Plant Growth and Development';
       if (/morphology\s*of\s*flowering/i.test(trimmed)) return 'Morphology of Flowering Plants';
       if (/anatomy\s*of\s*flowering/i.test(trimmed)) return 'Anatomy of Flowering Plants';
       if (/plant\s*kingdom/i.test(trimmed)) return 'Plant Kingdom';
@@ -623,17 +625,31 @@ export default function AdminQuestionBank() {
     }
 
     if (isZoology) {
-      return ZOOLOGY_STANDARD_6.map((ch) => {
+      const list = ZOOLOGY_STANDARD_6.map((ch) => {
         const item = map.get(ch.toLowerCase());
         return item || { name: ch, count: 0, arCount: 0 };
       });
+      const standardKeys = new Set(ZOOLOGY_STANDARD_6.map((c) => c.toLowerCase()));
+      for (const [key, val] of map.entries()) {
+        if (!standardKeys.has(key) && val.count > 0 && val.name.toLowerCase() !== 'general') {
+          list.push(val);
+        }
+      }
+      return list;
     }
 
     if (isBotany) {
-      return BOTANY_STANDARD.map((ch) => {
+      const list = BOTANY_STANDARD.map((ch) => {
         const item = map.get(ch.toLowerCase());
         return item || { name: ch, count: 0, arCount: 0 };
       });
+      const standardKeys = new Set(BOTANY_STANDARD.map((c) => c.toLowerCase()));
+      for (const [key, val] of map.entries()) {
+        if (!standardKeys.has(key) && val.count > 0 && val.name.toLowerCase() !== 'general') {
+          list.push(val);
+        }
+      }
+      return list;
     }
 
     return Array.from(map.values()).sort((a, b) => {
