@@ -47,3 +47,4 @@ verifyQuestions('Batch 6 (MCQs)', batch6Questions, 'single_choice');
 verifyQuestions('Batch 7 (ARs)', batch7Questions, 'assertion_reason');
 
 console.log(`\nALL 3 BATCHES VERIFIED: ${batch5Questions.length + batch6Questions.length + batch7Questions.length} TOTAL QUESTIONS!`);
+

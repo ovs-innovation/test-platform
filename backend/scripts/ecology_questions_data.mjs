@@ -1,0 +1,97 @@
+import { ecologyPart1 } from './ecology_data_part1.mjs';
+import { ecologyPart2 } from './ecology_data_part2.mjs';
+import { ecologyPart3 } from './ecology_data_part3.mjs';
+import { ecologyPart4 } from './ecology_data_part4.mjs';
+
+export const allEcologyQuestions = [
+  ...ecologyPart1.map((q, idx) => ({
+    booklet_number: idx + 1,
+    booklet_qno: idx + 1,
+    section: 'A',
+    question_type: 'mcq',
+    question_text: q.question_text,
+    question: q.question_text,
+    options: q.options,
+    correct_index: q.correct_index,
+    correct_indices: [q.correct_index],
+    marks: q.marks || 4,
+    difficulty: q.difficulty || 'medium',
+    solution: q.solution || '',
+    subject: 'Botany',
+    category: 'Botany',
+    chapter: 'Organisms and Populations',
+    topic: q.topic || 'Organisms and Populations',
+    assertion_text: null,
+    reason_text: null,
+    image_url: q.image_url || null,
+    status: 'normal'
+  })),
+  ...ecologyPart2.map((q, idx) => ({
+    booklet_number: idx + 47,
+    booklet_qno: idx + 47,
+    section: 'A',
+    question_type: 'mcq',
+    question_text: q.question_text,
+    question: q.question_text,
+    options: q.options,
+    correct_index: q.correct_index,
+    correct_indices: [q.correct_index],
+    marks: q.marks || 4,
+    difficulty: q.difficulty || 'medium',
+    solution: q.solution || '',
+    subject: 'Botany',
+    category: 'Botany',
+    chapter: 'Organisms and Populations',
+    topic: q.topic || 'Organisms and Populations',
+    assertion_text: null,
+    reason_text: null,
+    image_url: q.image_url || null,
+    status: 'normal'
+  })),
+  ...ecologyPart3.map((q, idx) => ({
+    booklet_number: idx + 91,
+    booklet_qno: idx + 91,
+    section: 'A',
+    question_type: 'mcq',
+    question_text: q.question_text,
+    question: q.question_text,
+    options: q.options,
+    correct_index: q.correct_index,
+    correct_indices: [q.correct_index],
+    marks: q.marks || 4,
+    difficulty: q.difficulty || 'medium',
+    solution: q.solution || '',
+    subject: 'Botany',
+    category: 'Botany',
+    chapter: 'Organisms and Populations',
+    topic: q.topic || 'Organisms and Populations',
+    assertion_text: null,
+    reason_text: null,
+    image_url: q.image_url || null,
+    status: 'normal'
+  })),
+  ...ecologyPart4.map((q, idx) => ({
+    booklet_number: idx + 1,
+    booklet_qno: idx + 1,
+    section: 'B',
+    question_type: 'assertion_reason',
+    question_text: q.question,
+    question: q.question,
+    options: q.options,
+    correct_index: q.correct_index,
+    correct_indices: [q.correct_index],
+    marks: 4,
+    difficulty: q.difficulty || 'medium',
+    solution: q.solution || '',
+    subject: 'Botany',
+    category: 'Botany',
+    chapter: 'Organisms and Populations',
+    topic: 'Organisms and Populations - Assertion and Reason',
+    assertion_text: q.assertion,
+    reason_text: q.reason,
+    image_url: null,
+    status: 'normal'
+  }))
+];
+
+export default allEcologyQuestions;

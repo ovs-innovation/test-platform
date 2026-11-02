@@ -1,0 +1,162 @@
+[
+  {
+    "num": 41,
+    "question": "If the surface area of a sphere of radius   r   is increasing uniformly at the rate 8 cm 2 /s, then the rate of change of its volume is:   [JEE Main 2013]",
+    "a": "constant",
+    "b": "proportional to √r",
+    "c": "proportional to   r 2",
+    "d": "proportional to r"
+  },
+  {
+    "num": 42,
+    "question": "Statement 1:   The function   x 2 (e x + e -x )   is increasing for all   x > 0 . Statement 2:   The functions   x 2 e x and   x 2 e -x are increasing for all   x > 0   and the sum of two increasing functions in any interval   (a, b)   is an increasing function in   (a, b) .   [JEE Main 2013]",
+    "a": "Statement 1 is false; Statement 2 is true.",
+    "b": "Statement 1 is true; Statement 2 is true; Statement 2 is not a correct explanation for Statement 1.",
+    "c": "Statement 1 is true; Statement 2 is false.",
+    "d": "Statement 1 is true; Statement 2 is true; Statement 2 is a correct explanation for Statement 1."
+  },
+  {
+    "num": 43,
+    "question": "The maximum area of a right angled triangle with hypotenuse   h   is:   [JEE Main 2013]",
+    "a": "h 2 / (2√2)",
+    "b": "h 2 / 2",
+    "c": "h 2 / √2",
+    "d": "h 2 / 4"
+  },
+  {
+    "num": 44,
+    "question": "The cost of running a bus from A to B is   (av + b/v) , where   v   km/h is the average speed of the bus. When the bus travels at 30 km/h, the cost comes out to be ₹ 75 while at 40 km/h it is ₹ 65. Then the most economical speed (in km/h) of the bus is:   [JEE Main 2013]",
+    "a": "45",
+    "b": "50",
+    "c": "60",
+    "d": "40"
+  },
+  {
+    "num": 45,
+    "question": "If a curve passes through the point   (2, 7/2)   and has slope   (1 - 1/x 2 )   at any point   (x, y)   on it, then the ordinate of the point on the curve whose abscissa is -2 is:   [JEE Main 2013]",
+    "a": "-3/2",
+    "b": "3/2",
+    "c": "5/2",
+    "d": "-5/2"
+  },
+  {
+    "num": 46,
+    "question": "If the curves   x 2 /α + y 2 /4 = 1   and   y 3 = 16x   intersect at right angles, then a value of   α   is:   [JEE Main 2013]",
+    "a": "2",
+    "b": "4/3",
+    "c": "1/2",
+    "d": "3/4"
+  },
+  {
+    "num": 47,
+    "question": "Let   f(1) = -2   and   f'(x) ≥ 4.2   for   1 ≤ x ≤ 6 . The possible value of   f(6)   lies in the interval:   [JEE Main 2013]",
+    "a": "[15, 19)",
+    "b": "(-∞, 12)",
+    "c": "[12, 15)",
+    "d": "[19, ∞)"
+  },
+  {
+    "num": 48,
+    "question": "A spherical balloon is being inflated at the rate of 35 cc/min. The rate of increase in the surface area (in cm 2 /min) of the balloon when its diameter is 14 cm, is:   [JEE Main 2013]",
+    "a": "10",
+    "b": "√10",
+    "c": "100",
+    "d": "10√10"
+  },
+  {
+    "num": 49,
+    "question": "If an equation of a tangent to the curve   y = cos(x + y) ,   -1 - π ≤ x ≤ 1 + π , is   x + 2y = k , then   k   is equal to: [JEE Main 2013]",
+    "a": "1",
+    "b": "2",
+    "c": "π/4",
+    "d": "π/2"
+  },
+  {
+    "num": 50,
+    "question": "If   x = -1   and   x = 2   are extreme points of   f(x) = α log|x| + βx 2 + x , then:   [JEE Main 2014]",
+    "a": "α = 2, β = -1/2",
+    "b": "α = -6, β = -1/2",
+    "c": "α = -6, β = 1/2",
+    "d": "α = 2, β = 1/2"
+  },
+  {
+    "num": 51,
+    "question": "The slope of the line touching both the parabolas   y 2 = 4x   and   x 2 = -32y   is:   [JEE Main 2014]",
+    "a": "1/8",
+    "b": "2/3",
+    "c": "1/2",
+    "d": "3/2"
+  },
+  {
+    "num": 52,
+    "question": "If   f   and   g   are differentiable functions in [0, 1] satisfying   f(0) = 2 = g(1) ,   g(0) = 0   and   f(1) = 6 , then for some c ∈   (0, 1) :   [JEE Main 2014]",
+    "a": "f'(c) = g'(c)",
+    "b": "f'(c) = 2g'(c)",
+    "c": "2f'(c) = g'(c)",
+    "d": "2f'(c) = 3g'(c)"
+  },
+  {
+    "num": 53,
+    "question": "If   f(x) = (3/5) x + (4/5) x - 1 ,   x ∈   ℝ , then the equation   f(x) = 0   has:   [JEE Main 2014]",
+    "a": "no solution",
+    "b": "more than two solutions",
+    "c": "one solution",
+    "d": "two solutions"
+  },
+  {
+    "num": 54,
+    "question": "If Rolle's theorem holds for the function   f(x) = 2x 3 + ax 2 + bx   in the interval [-1, 1] for the point   c = 1/2 , then the value of   2a + b   is:   [JEE Main 2014]",
+    "a": "-1",
+    "b": "2",
+    "c": "1",
+    "d": "-2"
+  },
+  {
+    "num": 55,
+    "question": "The volume of the largest possible right circular cylinder that can be inscribed in a sphere of radius   = √3   is: [JEE Main 2014]",
+    "a": "(4/3)√3 π",
+    "b": "(8/3)√3 π",
+    "c": "4π",
+    "d": "2π"
+  },
+  {
+    "num": 56,
+    "question": "Two ships A and B are sailing straight away from a fixed point O along routes such that ∠ AOB   is always 120°. At a certain instance,   OA = 8   km,   OB = 6   km and the ship A is sailing at the rate of 20 km/hr while the ship B is sailing at the rate of 30 km/hr. Then the distance between A and B is changing at the rate (in km/hr):   [JEE Main 2014]",
+    "a": "260 / √37",
+    "b": "260 / 37",
+    "c": "80 / √37",
+    "d": "80 / 37"
+  },
+  {
+    "num": 57,
+    "question": "For the curve   y = 3 sin θ cos θ ,   x = e θ sin θ   ( 0 ≤ θ ≤ π ), the tangent is parallel to the x-axis when   θ   is:   [JEE Main 2014]",
+    "a": "3π/4",
+    "b": "π/2",
+    "c": "π/4",
+    "d": "π/6"
+  },
+  {
+    "num": 58,
+    "question": "Let   f   and   g   be two differentiable functions on   ℝ   such that   f'(x) > 0   and   g'(x) < 0   for all   x ∈   ℝ . Then for all   x : [JEE Main 2014]",
+    "a": "f(g(x)) > f(g(x - 1))",
+    "b": "f(g(x)) > f(g(x + 1))",
+    "c": "g(f(x)) > g(f(x - 1))",
+    "d": "g(f(x)) < g(f(x + 1))"
+  },
+  {
+    "num": 59,
+    "question": "If non-zero real numbers   b   and   c   are such that   min f(x) > max g(x) , where   f(x) = x 2 + 2bx + 2c 2 and   g(x) = - x 2 - 2cx + b 2 ( x ∈   ℝ ); then   |c/b|   lies in the interval:   [JEE Main 2014]",
+    "a": "(√2, ∞)",
+    "b": "[1/2, 1/√2)",
+    "c": "(0, 1/2)",
+    "d": "[1/√2, √2]"
+  },
+  {
+    "num": 60,
+    "question": "If the volume of a spherical ball is increasing at the rate of   4π   cc/sec, then the rate of increase of its radius (in cm/sec), when the volume is   288π   cc, is:   [JEE Main 2014]",
+    "a": "1/9",
+    "b": "1/6",
+    "c": "1/24",
+    "d": "1/36"
+  }
+]

@@ -708,3 +708,4 @@ export const batch6Questions = [
     solution: 'Compared to many other organisms, which are mostly either photosynthetic or holozoic/absorptive, bacteria (Kingdom Monera) as a group show the most extensive metabolic diversity.'
   }
 ];
+

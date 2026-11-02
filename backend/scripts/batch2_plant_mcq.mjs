@@ -521,3 +521,4 @@ export const batch2Questions = [
     solution: "In brown algae (Phaeophyceae), the plant body is usually attached to the substratum by a holdfast, and has a stalk called stipe and a leaf-like photosynthetic organ called frond."
   }
 ];
+

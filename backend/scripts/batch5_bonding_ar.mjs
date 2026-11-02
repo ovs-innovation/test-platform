@@ -228,3 +228,4 @@ export const batch5_bonding_ar = [
     image_url: null
   }
 ];
+

@@ -12,3 +12,4 @@ async function run() {
   await ocr(path.resolve('backend/uploads/bio/pages_hires/page81.png'));
 }
 run();
+

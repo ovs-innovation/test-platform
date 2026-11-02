@@ -239,3 +239,4 @@ export const batch7Questions = [
     solution: "Bacteria are the sole members of Kingdom Monera. They are the most abundant microorganisms and occur almost everywhere. Nearly all bacteria have a rigid cell wall (made of peptidoglycan). They show complex behaviour and extensive metabolic diversity."
   }
 ];
+

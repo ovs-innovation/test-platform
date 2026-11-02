@@ -670,3 +670,4 @@ export const batch1Questions = [
     solution: 'Lichens are extremely sensitive to sulfur dioxide (SO2) pollution and do not grow in areas polluted with SO2, making them excellent pollution bio-indicators.'
   }
 ];
+

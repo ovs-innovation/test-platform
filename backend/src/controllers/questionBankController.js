@@ -922,6 +922,9 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       difficulty = 'medium',
       page_range,
       pageRange,
+      chapter: bodyChapter,
+      chapter_id: bodyChapterId,
+      subject_id: bodySubjectId,
     } = req.body;
 
     const maxBytes = env.maxPdfUploadBytes || 100 * 1024 * 1024;
@@ -1185,6 +1188,58 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
     return { categoryName: 'Physics', subjectId: subjectMap.get('physics')?.id || null };
   };
 
+  // Resolve target subject and target chapter if specified by admin
+  let targetSubjectId = bodySubjectId ? Number(bodySubjectId) : null;
+  let targetChapterId = bodyChapterId && bodyChapterId !== 'auto' ? Number(bodyChapterId) : null;
+  let targetChapterName = bodyChapter && bodyChapter !== 'auto' && bodyChapter !== 'auto-detect' ? String(bodyChapter).trim() : null;
+
+  if (targetChapterId && !targetChapterName) {
+    try {
+      const chRow = await query('SELECT id, name, subject_id FROM chapters WHERE id = $1', [targetChapterId]);
+      if (chRow.rows.length > 0) {
+        targetChapterName = chRow.rows[0].name;
+        if (!targetSubjectId && chRow.rows[0].subject_id) {
+          targetSubjectId = chRow.rows[0].subject_id;
+        }
+      }
+    } catch (err) {
+      console.warn('[uploadPdfToQuestionBank] Error fetching chapter by ID:', err.message);
+    }
+  }
+
+  if (!targetSubjectId && category && category.toLowerCase() !== 'auto' && category.toLowerCase() !== 'auto-detect') {
+    const match = subjectMap.get(category.toLowerCase().trim());
+    if (match?.id) targetSubjectId = match.id;
+  }
+
+  if (targetChapterName && targetSubjectId && !targetChapterId) {
+    try {
+      const chRow = await query(
+        'SELECT id, name FROM chapters WHERE subject_id = $1 AND LOWER(TRIM(name)) = LOWER(TRIM($2)) LIMIT 1',
+        [targetSubjectId, targetChapterName]
+      );
+      if (chRow.rows.length > 0) {
+        targetChapterId = chRow.rows[0].id;
+        targetChapterName = chRow.rows[0].name;
+      } else {
+        const maxPos = await query(
+          'SELECT COALESCE(MAX(position), 0) + 1 AS next_pos FROM chapters WHERE subject_id = $1',
+          [targetSubjectId]
+        );
+        const ins = await query(
+          'INSERT INTO chapters (subject_id, name, position) VALUES ($1, $2, $3) RETURNING id, name',
+          [targetSubjectId, targetChapterName, maxPos.rows[0]?.next_pos || 1]
+        );
+        if (ins.rows.length > 0) {
+          targetChapterId = ins.rows[0].id;
+          targetChapterName = ins.rows[0].name;
+        }
+      }
+    } catch (err) {
+      console.warn('[uploadPdfToQuestionBank] Error finding or creating chapter:', err.message);
+    }
+  }
+
   const createdQuestions = [];
   const affectedCategories = new Set();
   const errors = [];
@@ -1219,19 +1274,32 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
           
           const rawChapter = (q.chapter || '').trim();
           const rawTopic = (q.topic || '').trim();
-          const resolvedChapter = resolveStandardChapter(categoryName, rawTopic, qText, rawChapter);
-          const finalTopic = rawTopic && rawTopic.toLowerCase() !== resolvedChapter.toLowerCase() ? rawTopic : '';
 
-          let resolvedChapterId = null;
-          if (subjectId && resolvedChapter) {
+          let resolvedChapter = targetChapterName || null;
+          let resolvedChapterId = targetChapterId || null;
+
+          if (!resolvedChapter || resolvedChapter.toLowerCase() === 'auto' || resolvedChapter.toLowerCase() === 'auto-detect') {
+            resolvedChapter = resolveStandardChapter(categoryName, rawTopic, qText, rawChapter);
+            if (subjectId && resolvedChapter) {
+              const chMatch = await query(
+                'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(TRIM(name)) = LOWER(TRIM($2)) LIMIT 1',
+                [subjectId, resolvedChapter]
+              );
+              if (chMatch.rows.length > 0) {
+                resolvedChapterId = chMatch.rows[0].id;
+              }
+            }
+          } else if (!resolvedChapterId && subjectId) {
             const chMatch = await query(
-              'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(name) = LOWER($2) LIMIT 1',
+              'SELECT id FROM chapters WHERE subject_id = $1 AND LOWER(TRIM(name)) = LOWER(TRIM($2)) LIMIT 1',
               [subjectId, resolvedChapter]
             );
             if (chMatch.rows.length > 0) {
               resolvedChapterId = chMatch.rows[0].id;
             }
           }
+
+          const finalTopic = rawTopic && rawTopic.toLowerCase() !== (resolvedChapter || '').toLowerCase() ? rawTopic : (resolvedChapter || '');
 
           const result = await query(
             `INSERT INTO question_bank (
@@ -1285,6 +1353,8 @@ export const uploadPdfToQuestionBank = asyncHandler(async (req, res) => {
       created: createdQuestions.length,
       questions: createdQuestions,
       categories: Array.from(affectedCategories),
+      chapter: targetChapterName || null,
+      chapter_id: targetChapterId || null,
       warnings: pdfExtraction.warnings || [],
       errors,
       file_url: savedFileUrl || null,

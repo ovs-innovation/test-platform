@@ -92,3 +92,4 @@ export const batch6Questions = [
     topic: "Assertion-Reason - Breathing and Exchange of Gases"
   }
 ];
+

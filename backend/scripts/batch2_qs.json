@@ -1,0 +1,162 @@
+[
+  {
+    "num": 21,
+    "question": "A value of   c   for which the conclusion of Mean Value Theorem holds for the function   f(x) = log e x   on the interval [1, 3] is:   [JEE 2007]",
+    "a": "2 log 3 e",
+    "b": "(1/2) log e 3",
+    "c": "log 3 e",
+    "d": "log e 3"
+  },
+  {
+    "num": 22,
+    "question": "The normal to a curve at   P(x, y)   meets the x-axis at G. If the distance of G from the origin is twice the abscissa of P, then the curve is a:   [JEE 2007]",
+    "a": "ellipse",
+    "b": "parabola",
+    "c": "circle",
+    "d": "pair of straight lines"
+  },
+  {
+    "num": 23,
+    "question": "How many real solutions does the equation   x 7 + 14x 5 + 16x 3 + 30x - 560 = 0   have?   [JEE 2008]",
+    "a": "7",
+    "b": "1",
+    "c": "3",
+    "d": "5"
+  },
+  {
+    "num": 24,
+    "question": "Suppose the cubic   x 3 - px + q   has three distinct real roots where   p > 0   and   q > 0 . Then which one of the following holds?   [JEE 2008]",
+    "a": "The cubic has minima at   √(p/3)   and maxima at   -√(p/3)",
+    "b": "The cubic has minima at   -√(p/3)   and maxima at   √(p/3)",
+    "c": "The cubic has minima at both   √(p/3)   and   -√(p/3)",
+    "d": "The cubic has maxima at both   √(p/3)   and   -√(p/3)"
+  },
+  {
+    "num": 25,
+    "question": "The shortest distance between the line   y - x = 1   and the curve   x = y 2 is:   [JEE 2009]",
+    "a": "3√2 / 8",
+    "b": "2√3 / 8",
+    "c": "3√2 / 5",
+    "d": "√3 / 4"
+  },
+  {
+    "num": 26,
+    "question": "Given   P(x) = x 4 + ax 3 + bx 2 + cx + d   such that   x = 0   is the only real root of   P'(x) = 0 . If   P(-1) < P(1) , then in the interval [-1, 1]:   [JEE 2009]",
+    "a": "P(-1)   is the minimum and   P(1)   is the maximum of P",
+    "b": "P(-1)   is not minimum but   P(1)   is the maximum of P",
+    "c": "P(-1)   is the minimum and   P(1)   is not the maximum of P",
+    "d": "neither   P(-1)   is the minimum nor   P(1)   is the maximum of P"
+  },
+  {
+    "num": 27,
+    "question": "Let   f : ℝ   → ℝ   be defined by   f(x) = k - 2x   if   x ≤ -1   and   f(x) = 2x + 3   if   x > -1 . If   f   has a local minimum at   x = -1 , then a possible value of   k   is:   [JEE 2010]",
+    "a": "0",
+    "b": "-1/2",
+    "c": "-1",
+    "d": "1"
+  },
+  {
+    "num": 28,
+    "question": "The equation of the tangent to the curve   y = x + 4/x 2 that is parallel to the x-axis, is:   [JEE 2010]",
+    "a": "y = 1",
+    "b": "y = 2",
+    "c": "y = 3",
+    "d": "y = 0"
+  },
+  {
+    "num": 29,
+    "question": "The shortest distance between line   y - x = 1   and curve   x = y 2 is:   [JEE 2011]",
+    "a": "3√2 / 8",
+    "b": "8 / (3√2)",
+    "c": "4 / √3",
+    "d": "√3 / 4"
+  },
+  {
+    "num": 30,
+    "question": "Let   a, b ∈   ℝ   be such that the function   f   given by   f(x) = ln|x| + bx 2 + ax   ( x ≠ 0 ) has extreme values at   x = -1 and   x = 2 . Statement 1:   f   has local maximum at   x = -1   and at   x = 2 . Statement 2:   a = 1/2   and   b = -1/4 .   [JEE 2012 O ffl ine]",
+    "a": "Statement 1 is false, statement 2 is true.",
+    "b": "Statement 1 is true, statement 2 is true; statement 2 is a correct explanation for statement 1.",
+    "c": "Statement 1 is true, statement 2 is true; statement 2 is not a correct explanation for statement 1.",
+    "d": "Statement 1 is true, statement 2 is false."
+  },
+  {
+    "num": 31,
+    "question": "A spherical balloon is filled with   4500π   m 3 of helium gas. If a leak in the balloon causes the gas to escape at the rate of   72π   m 3 /min, then the rate (in m/min) at which the radius of the balloon decreases 49 minutes after the leakage began is:   [JEE 2012 O ffl ine]",
+    "a": "9/7",
+    "b": "7/9",
+    "c": "2/9",
+    "d": "9/2"
+  },
+  {
+    "num": 32,
+    "question": "If a circular iron sheet of radius 30 cm is heated such that its area increases at the uniform rate of   6π   cm 2 /hr, then the rate (in mm/hr) at which the radius of the circular sheet increases is:   [JEE Main 2012]",
+    "a": "1.0",
+    "b": "0.1",
+    "c": "1.1",
+    "d": "2.0"
+  },
+  {
+    "num": 33,
+    "question": "If   f(x) = x e x(1-x) ,   x ∈   ℝ , then   f(x)   is:   [JEE Main 2012]",
+    "a": "decreasing on [-1/2, 1]",
+    "b": "decreasing on   ℝ",
+    "c": "increasing on [-1/2, 1]",
+    "d": "increasing on   ℝ"
+  },
+  {
+    "num": 34,
+    "question": "Consider a rectangle whose length is increasing at the uniform rate of 2 m/sec, breadth is decreasing at the uniform rate of 3 m/sec and the area is decreasing at the uniform rate of 5 m 2 /sec. If after some time the breadth of the rectangle is 2 m, then the length of the rectangle is:   [JEE Main 2012]",
+    "a": "2 m",
+    "b": "4 m",
+    "c": "1 m",
+    "d": "3 m"
+  },
+  {
+    "num": 35,
+    "question": "The weight   W   of a certain stock of fish is given by   W = nw   where   n   is the size of stock and   w   is the average weight of a fish. If   n   and   w   change with time   t   as   n = 2t 2 + 3   and   w = t 2 - t + 2 , then the rate of change of   W   with respect to   t   at   t = 1   is:   [JEE Main 2012]",
+    "a": "1",
+    "b": "8",
+    "c": "13",
+    "d": "5"
+  },
+  {
+    "num": 36,
+    "question": "If a metallic circular plate of radius 50 cm is heated so that its radius increases at the rate of 1 mm per hour, then the rate at which the area of the plate increases (in cm 2 /hour) is:   [JEE Main 2012]",
+    "a": "5π",
+    "b": "10π",
+    "c": "100π",
+    "d": "50π"
+  },
+  {
+    "num": 37,
+    "question": "Let   f : (-∞, ∞) → (-∞, ∞)   be defined by   f(x) = x 3 + 1 . Statement 1:   The function   f   has a local extremum at   x = 0 . Statement 2:   The function   f   is continuous and differentiable on   (-∞, ∞)   and   f'(0) = 0 .   [JEE Main 2012]",
+    "a": "Statement 1 is true, Statement 2 is false.",
+    "b": "Statement 1 is true, Statement 2 is true, Statement 2 is a correct explanation for Statement 1.",
+    "c": "Statement 1 is true, Statement 2 is true, Statement 2 is not the correct explanation for Statement 1.",
+    "d": "Statement 1 is false, Statement 2 is true."
+  },
+  {
+    "num": 38,
+    "question": "The real number   k   for which the equation   2x 3 + 3x + k = 0   has two distinct real roots in [0, 1]:   [JEE Main 2013]",
+    "a": "lies between -1 and 0",
+    "b": "does not exist",
+    "c": "lies between 1 and 2",
+    "d": "lies between 2 and 3"
+  },
+  {
+    "num": 39,
+    "question": "The intercepts on the x-axis made by tangents to the curve,   y = ∫ 0 x |t| dt ,   x ∈   ℝ , which are parallel to the line y = 2x , are equal to:   [JEE Main 2013]",
+    "a": "±3",
+    "b": "±4",
+    "c": "±1",
+    "d": "±2"
+  },
+  {
+    "num": 40,
+    "question": "Statement 1:   The equation   x log x = 2 - x   is satisfied by at least one value of   x   lying between 1 and 2. Statement 2:   The function   f(x) = x log x   is an increasing function in [1, 2] and   g(x) = 2 - x   is a decreasing function in [1, 2] and the graphs represented by these functions intersect at a point in [1, 2].   [JEE Main 2013]",
+    "a": "Statement 1 is true; Statement 2 is true; Statement 2 is a correct explanation for Statement 1.",
+    "b": "Statement 1 is true; Statement 2 is true; Statement 2 is not correct explanation for Statement 1.",
+    "c": "Statement 1 is false, Statement 2 is true.",
+    "d": "Statement 1 is true, Statement 2 is false."
+  }
+]

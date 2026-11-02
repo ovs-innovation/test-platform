@@ -40,3 +40,4 @@ async function cropBioDiagrams() {
 }
 
 cropBioDiagrams().catch(console.error);
+

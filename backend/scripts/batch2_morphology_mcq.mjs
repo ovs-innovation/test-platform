@@ -427,3 +427,4 @@ export const batch2Questions = [
     image_url: diagramsMap["diagram_q52_table"]
   }
 ];
+

@@ -765,3 +765,4 @@ export const batch4Questions = [
     solution: 'In approximately 98% of lichen associations (ascolichens), the fungal partner (mycobiont) is an ascomycete.'
   }
 ];
+

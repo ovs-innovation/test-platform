@@ -16,3 +16,4 @@ async function inspectImages() {
 }
 
 inspectImages().catch(console.error);
+

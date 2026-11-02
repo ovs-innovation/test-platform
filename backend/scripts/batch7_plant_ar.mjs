@@ -206,3 +206,4 @@ export const batch7Questions = [
     solution: "In gymnosperms, gametophytes have no independent free-living existence because they complete their development and remain enclosed within the sporangia (microsporangia and megasporangia) on the parent sporophyte."
   }
 ];
+

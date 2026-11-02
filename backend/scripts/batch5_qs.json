@@ -1,0 +1,162 @@
+[
+  {
+    "num": 81,
+    "question": "Let   f(x)   be a polynomial of degree 4 having extreme values at   x = 1   and   x = 2 . If   lim x → 0   [f(x)/x 2 + 1] = 3 , then   f(-1)   is equal to:   [JEE Main 2018 (Shift 2)]",
+    "a": "1/2",
+    "b": "3/2",
+    "c": "5/2",
+    "d": "9/2"
+  },
+  {
+    "num": 82,
+    "question": "Let   M   and   m   be respectively the absolute maximum and the absolute minimum values of the function   f(x) = 2x 3 - 9x 2 + 12x + 5   in the interval [0, 3]. Then   M - m   is equal to:   [JEE Main 2018]",
+    "a": "9",
+    "b": "4",
+    "c": "1",
+    "d": "5"
+  },
+  {
+    "num": 83,
+    "question": "The maximum volume (in cu. m) of the right circular cone having slant height 3 m is:   [JEE Main 2019 (09 Jan, Shift 1)]",
+    "a": "2√3 π",
+    "b": "3√3 π",
+    "c": "6π",
+    "d": "(4/3)π"
+  },
+  {
+    "num": 84,
+    "question": "If   θ   denotes the acute angle between the curves   y = 10 - x 2 and   y = 2 + x 2 at a point of their intersection, then |tan θ|   is equal to:   [JEE Main 2019 (09 Jan, Shift 1)]",
+    "a": "4/9",
+    "b": "8/17",
+    "c": "7/17",
+    "d": "8/15"
+  },
+  {
+    "num": 85,
+    "question": "Let   A(4, -4)   and   B(9, 6)   be points on the parabola   y 2 = 4x . Let C be chosen on the arc AOB of the parabola, where O is the origin, such that the area of   ΔACB   is maximum. Then, the area (in sq. units) of   ΔACB   is:   [JEE Main 2019 (09 Jan, Shift 2)]",
+    "a": "32",
+    "b": "31 3/4",
+    "c": "30 1/2",
+    "d": "31 1/4"
+  },
+  {
+    "num": 86,
+    "question": "The shortest distance between the point   (3/2, 0)   and the curve   y = √x   ( x > 0 ) is:   [JEE Main 2019 (10 Jan, Shift 1)]",
+    "a": "√3 / 2",
+    "b": "5/4",
+    "c": "3/2",
+    "d": "√5 / 2"
+  },
+  {
+    "num": 87,
+    "question": "A helicopter is flying along the curve given by   y - x 3/2 = 7   ( x ≥ 0 ). A soldier positioned at the point   (1/2, 7) wants to shoot down the helicopter when it is nearest to him. Then this nearest distance is:   [JEE Main 2019 (10 Jan, Shift 2)]",
+    "a": "(1/6)√(7/3)",
+    "b": "1/2",
+    "c": "(1/3)√(7/3)",
+    "d": "√5 / 6"
+  },
+  {
+    "num": 88,
+    "question": "The maximum value of the function   f(x) = 3x 3 - 18x 2 + 27x - 40   on the set   S = {x ∈   ℝ   : x 2 + 30 ≤ 11x}   is: [JEE Main 2019 (11 Jan, Shift 1)]",
+    "a": "-122",
+    "b": "-222",
+    "c": "122",
+    "d": "222"
+  },
+  {
+    "num": 89,
+    "question": "Let   f(x) = x / √(a 2 + x 2 ) - (d - x) / √(b 2 + (d - x) 2 ) ,   x ∈   ℝ , where   a, b   and   d   are non-zero real constants. Then: [JEE Main 2019 (11 Jan, Shift 2)]",
+    "a": "f   is an increasing function of   x",
+    "b": "f   is a decreasing function of   x",
+    "c": "f'   is not a continuous function of   x",
+    "d": "f   is neither increasing nor decreasing function of   x"
+  },
+  {
+    "num": 90,
+    "question": "Let   x, y   be positive real numbers and   m, n   positive integers. The maximum value of the expression   x m y n / [(1 + x 2m )(1 + y 2n )]   is:   [JEE Main 2019 (11 Jan, Shift 2)]",
+    "a": "1",
+    "b": "1/2",
+    "c": "1/4",
+    "d": "(m + n) / (6mn)"
+  },
+  {
+    "num": 91,
+    "question": "The maximum area (in sq. units) of a rectangle having its base on the x-axis and its other two vertices on the parabola   y = 12 - x 2 such that the rectangle lies inside the parabola, is:   [JEE Main 2019 (12 Jan, Shift 1)]",
+    "a": "20√2",
+    "b": "32",
+    "c": "36",
+    "d": "18√3"
+  },
+  {
+    "num": 92,
+    "question": "Let   P(4, -4)   and   Q(9, 6)   be two points on the parabola   y 2 = 4x   and let X be any point on the arc POQ of this parabola, where O is the vertex of this parabola, such that the area of   ΔPXQ   is maximum. Then this maximum area (in sq. units) is:   [JEE Main 2019 (12 Jan, Shift 1)]",
+    "a": "625/4",
+    "b": "75/2",
+    "c": "125/4",
+    "d": "125/2"
+  },
+  {
+    "num": 93,
+    "question": "If the function   f   given by   f(x) = x 3 - 3(a - 2)x 2 + 3ax + 7   for some   a ∈   ℝ   is increasing in (0, 1) and decreasing in [1, 5), then a root of the equation   [f(x) - 14] / (x - 1) 2 = 0   ( x ≠ 1 ) is:   [JEE Main 2019 (12 Jan, Shift 2)]",
+    "a": "7",
+    "b": "-7",
+    "c": "6",
+    "d": "5"
+  },
+  {
+    "num": 94,
+    "question": "Let   f : [0, 2] → ℝ   be a twice differentiable function such that   f''(x) > 0 , for all   x ∈   [0, 2] . If   φ(x) = f(x) + f(2 - x) , then   φ   is:   [JEE Main 2019 (08 Apr, Shift 1)]",
+    "a": "decreasing on (0, 2)",
+    "b": "increasing on (0, 2)",
+    "c": "increasing on (0, 1) and decreasing on (1, 2)",
+    "d": "decreasing on (0, 1) and increasing on (1, 2)"
+  },
+  {
+    "num": 95,
+    "question": "If   S 1 and   S 2 are respectively the sets of local minimum and local maximum points of the function   f(x) = 9x 4 + 12x 3 - 36x 2 + 25   ( x ∈   ℝ ), then:   [JEE Main 2019 (08 Apr, Shift 1)]",
+    "a": "S 1   = {-2} ;   S 2   = {0, 1}",
+    "b": "S 1   = {-1} ;   S 2   = {0, 2}",
+    "c": "S 1   = {-2, 0} ;   S 2   = {1}",
+    "d": "S 1   = {-2, 1} ;   S 2   = {0}"
+  },
+  {
+    "num": 96,
+    "question": "The height of a right circular cylinder of maximum volume inscribed in a sphere of radius 3 is:   [JEE Main 2019 (08 Apr, Shift 2)]",
+    "a": "√3",
+    "b": "(2/3)√3",
+    "c": "√6",
+    "d": "2√3"
+  },
+  {
+    "num": 97,
+    "question": "If   f(x)   is a non-zero polynomial of degree four, having local extreme points at   x = -1, 0, 1 ; then the set   S = {x ∈   ℝ   : f(x) = f(0)}   contains exactly:   [JEE Main 2019 (09 Apr, Shift 1)]",
+    "a": "two irrational and two rational numbers",
+    "b": "four rational numbers",
+    "c": "two irrational and one rational number",
+    "d": "four irrational numbers"
+  },
+  {
+    "num": 98,
+    "question": "Let S be the set of all values of   x   for which the tangent to the curve   y = f(x) = x 3 - x 2 - 2x   at   (x, y)   is parallel to the line segment joining the points   (1, f(1))   and   (-1, f(-1)) , then S is equal to:   [JEE Main 2019 (09 Apr, Shift 1)]",
+    "a": "{-1/3, -1}",
+    "b": "{-1/3, 1}",
+    "c": "{1/3, 1}",
+    "d": "{1/3, -1}"
+  },
+  {
+    "num": 99,
+    "question": "If the tangent to the curve   y = x 3 + ax - b   at the point (1, -5) is perpendicular to the line   -x + y + 4 = 0 , then which one of the following points lies on the curve?   [JEE Main 2019 (09 Apr, Shift 1)]",
+    "a": "(2, -2)",
+    "b": "(2, -1)",
+    "c": "(-2, 1)",
+    "d": "(-2, 2)"
+  },
+  {
+    "num": 100,
+    "question": "A water tank has the shape of an inverted right circular cone, whose semi-vertical angle is   tan -1 (1/2) . Water is poured into it at a constant rate of 5 m 3 /min. Then the rate (in m/min) at which the level of water is rising at the instant when the depth of water in the tank is 10 m is:   [JEE Main 2019 (09 Apr, Shift 2)]",
+    "a": "1 / (10π)",
+    "b": "1 / (15π)",
+    "c": "1 / (5π)",
+    "d": "2 / π"
+  }
+]

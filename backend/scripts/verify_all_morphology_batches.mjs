@@ -70,3 +70,4 @@ if (errors === 0) {
   console.error(`\nFAILED: Found ${errors} errors!`);
   process.exit(1);
 }
+

@@ -93,3 +93,4 @@ syncPart2ToLive().catch(async (err) => {
   await pool.end();
   process.exit(1);
 });
+

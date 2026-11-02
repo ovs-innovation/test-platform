@@ -493,3 +493,4 @@ export const batch1Questions = [
     solution: "Volvox exhibits oogamous sexual reproduction (large non-motile female gamete and small motile male gamete), not isogamy."
   }
 ];
+

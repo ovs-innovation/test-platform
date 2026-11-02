@@ -37,3 +37,4 @@ initPlantChapter().catch(async (e) => {
   console.error(e);
   await pool.end();
 });
+

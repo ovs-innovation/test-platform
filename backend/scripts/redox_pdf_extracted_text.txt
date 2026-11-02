@@ -1,0 +1,1689 @@
+
+
+REDOX REACTIONS
+SECTION - A : Objective Type Questions
+Questions: Section A (Q1–Q109) & Section B
+(Assertion–Reason)
+Topics: Oxidation States, Balancing, Equivalent Weight, n-
+Factor & Disproportionation
+Single Choice
+Correct
+1.
+ 
+C
+6
+H
+4
+(CHO)
+2
+ (Phthalaldehyde) + Conc. OH
+−
+ → C
+6
+H
+4
+(COO
+−
+)(CH
+2
+OH)
+The above reaction is an example of:
+(1) Acid base reaction(2) Disproportionation reaction
+(3) Oxidation reaction only(4) Decomposition reaction
+2. As + x HNO
+3
+ → H
+3
+AsO
+4
+ + y NO
+2
+ + H
+2
+O
+x, y can be:
+(1) 6, 6(2) 2, 2(3) 4, 4(4) 5, 5
+3.
+ Equivalent mass of 
+FeC
+2
+O
+4
+ in the reaction 
+FeC
+2
+O
+4
+ —
+H
++
+→ Fe
+3+
+ + CO
+2
+, if Molar Mass of 
+FeC
+2
+O
+4
+ is M:
+(1) M / 1(2) M / 3(3) M / 2(4) M / 5
+4. The average oxidation state of N atom in HN
+3
+ is:
+(1) +1/3(2) -1/3(3) 0(4) -3
+5. The half cell reactions are:
+Pb
+2+
+(aq) + 2e
+−
+ → Pb(s)
+     E° = −0.13 V
+Ag(s) → Ag
++
+(aq) + e
+−
+             E° = −0.80 V
+Calculate standard EMF:
+(1) 0.67 V(2) 0.93 V(3) −0.93 V(4) 1.47 V
+6.
+ 
+x BrO
+3
+−
+ + y I
+−
+ + z H
++
+ → Br
+−
+ + a I
+2
+ + b H
+2
+O
+The values of y and b are respectively:
+(1) 6, 6(2) 3, 6(3) 6, 3(4) 3, 3
+7. Equivalent mass of Fe
+2
+S
+3
+ in the below reaction is, if its Molar Mass is 'M':
+Fe
+2
+S
+3
+ + O
+2
+ → Fe
+2
+O
+3
+ + SO
+3
+(1) M / 2(2) M / 20(3) M / 22(4) M / 24
+8. The number of moles of ferrous oxalate oxidised by one mole of KMnO
+4
+ in acidic medium is:
+(1) 5/3(2) 3/5(3) 6/5(4) 1/5
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 1 of 12
+
+9.
+ 
+Cl
+2
+ + OH
+−
+ → Cl
+−
+ + ClO
+3
+−
+ + H
+2
+O
+Coefficients of 
+Cl
+2
+, 
+Cl
+−
+ and 
+ClO
+3
+−
+ are respectively:
+(1) 4, 5 and 6(2) 3, 5 and 6
+(3) 3, 5 and 1(4) 3, 5 and 2
+10. The n-factor of SO
+2
+ in the following reaction is:
+K
+2
+Cr
+2
+O
+7
+ + SO
+2
+ + H
+2
+SO
+4
+ → K
+2
+SO
+4
+ + Cr
+2
+(SO
+4
+)
+3
+ + H
+2
+O
+(1) 1(2) 3/2(3) 2(4) 6/4
+11.
+ The oxidation number of S in 
+S
+2
+O
+7
+2−
+ and Mg in 
+Mg
+3
+N
+2
+ respectively are:
+(1) +5, +2(2) +6, +2(3) +3, +3(4) +2, +1
+12. The equivalent mass of K
+2
+Cr
+2
+O
+7
+ in the given reaction is: [K = 39, Cr = 52, O = 16]
+K
+2
+Cr
+2
+O
+7
+ → Cr
+2
+(SO
+4
+)
+3
+(1) 49(2) 31.6(3) 68(4) 152
+13. In the following reaction: 4P + 3KOH + 3H
+2
+O → 3KH
+2
+PO
+2
+ + PH
+3
+(1) 'P' is oxidised only(2) 'P' is reduced only
+(3) 'P' is oxidised as well as reduced(4) 'P' is neither oxidised nor reduced
+14.
+ Number of moles of 
+K
+2
+Cr
+2
+O
+7
+ reduced by one mole of 
+Sn
+2+
+ ions is:
+(1) 1/3(2) 3(3) 1/6(4) 6
+15.
+ 
+Cu
+2
+S + x NO
+3
+−
+ + y H
++
+ → a Cu
+2+
+ + b SO
+4
+2−
+ + c NO
+2
+ + d H
+2
+O
+For balanced equation:
+(1) x = 2, y = 5(2) x = 1, y = 2
+(3) x = 5, y = 3(4) x = 1, y = 5
+16. Equivalent weight of Mohr's salt in the titration with KMnO
+4
+ is (M = Mol. wt.):
+(1) M / 4(2) M(3) M / 2(4) M / 5
+17. (NH
+4
+)
+2
+Cr
+2
+O
+7
+(s) → N
+2
+(g) + Cr
+2
+O
+3
+(s) + 4H
+2
+O(l)
+The above reaction is known as:
+(1) Intermolecular redox reaction(2) Disproportionation reaction
+(3) Comproportionation reaction(4) Non redox reaction
+18. The oxidation states of S atoms in Caro's and Marshall's acid are respectively:
+(1) +5, +6(2) +6, +6(3) +6, +4(4) +6, -6
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 2 of 12
+
+19. K
+2
+Cr
+2
+O
+7
+ + 14HCl → 2KCl + 2CrCl
+3
+ + 7H
+2
+O + 3Cl
+2
+In the reaction, equivalent weight of HCl is:
+(1) 36.5(2) 71(3) 53(4) 10.5
+20. The oxidation number of boron in NaBH
+4
+ is:
+(1) -4(2) +3(3) -3(4) -2
+21. Oxidation state of oxygen in KO
+2
+ is:
+(1) 0(2) -1(3) -1/2(4) -2
+22. The number of moles of Potassium dichromate required to oxidise 12 moles Ferrous oxalate in acidic
+medium will be:
+(1) 6(2) 4(3) 2(4) 12
+23. The oxidation number of N in N
+3
+H is:
+(1) -3(2) +3(3) -1/3(4) -1
+24.
+ 
+2MnO
+4
+−
+ + 5NO
+2
+−
+ + 6H
++
+ → 2Z + 5NO
+3
+−
+ + 3H
+2
+O
+In this reaction Z is:
+(1)
+ Mn
+2+
+(2)
+ Mn
+4+
+(3) Mn
+(4)
+ MnO
+4
+2−
+25.
+ For the reaction: 
+M
+n+
+ + MnO
+4
+−
+ → MO
+3
+−
+ + Mn
+2+
+ + 1/2 O
+2
+.
+If one mole of 
+MnO
+4
+−
+ oxidises 1.67 moles of 
+M
+n+
+ to 
+MO
+3
+−
+, then the value of n in the reaction is:
+(1) 5(2) 3(3) 2(4) 1
+26. The ratio of equivalent weight of KMnO
+4
+ in acidic and neutral medium is:
+(1) 5 : 3(2) 3 : 5(3) 1 : 1(4) 1 : 5
+27. Oxidation states of 'Cr' in CrO
+5
+ are respectively:
+(1) +2, +3(2) +6 for all the 'Cr'
+(3) +6, -1, -2(4) +6, -2, -1
+28.
+ 
+a I
+2
+ + y NO
+3
+−
+ + z H
++
+ → x IO
+3
+−
+ + y NO
+2
+ + z/2 H
+2
+O
+The values of x, y and z will be respectively:
+(1) 2, 10, 8(2) 4, 1, 7(3) 2, 8, 4(4) 2, 2, 7
+29. 10 g of a mixture of FeSO
+4
+·7H
+2
+O and Fe
+2
+(SO
+4
+)
+3
+·9H
+2
+O required 400 mL 0.04 M KMnO
+4
+ for complete
+oxidation in acidic medium. Then % of moles of Fe
+2
+(SO
+4
+)
+3
+ in the mixture is:
+(1) 20%(2) 40%(3) 60%(4) 80%
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 3 of 12
+
+30. Which of the following are the examples of disproportionation reactions?
+(1)
+ 
+Cu
+2
+O + 2H
++
+ → Cu + Cu
+2+
+ + H
+2
+O
+(2)
+ 
+Cl
+2
+ + 2OH
+−
+ → Cl
+−
+ + ClO
+−
+ + H
+2
+O
+(3) NH
+4
+NO
+3
+ → N
+2
+O + 2H
+2
+O
+(4) SnCl
+2
+ + 2HgCl
+2
+ → SnCl
+4
+ + Hg
+2
+Cl
+2
+31. The equivalent mass of As
+2
+S
+3
+ in the following reaction is: (Assuming molar mass of As
+2
+S
+3
+ is M)
+As
+2
+S
+3
+ + Na
+2
+CO
+3
+ + NaOH → Na
+3
+AsO
+4
+ + Na
+2
+SO
+4
+ + H
+2
+O
+(1) M / 4(2) M / 24(3) M / 28(4) M / 22
+32. The oxidation number of 'S' in H
+2
+SO
+5
+ is:
+(1) 0(2) 8(3) 6(4) 4
+33.
+ 'M' is the molar mass of 
+P
+4
+ in the following reaction: 
+P
+4
+ + 3OH
+−
+ + 3H
+2
+O → 3H
+2
+PO
+2
+−
+ + PH
+3
+.
+The equivalent mass of P
+4
+ is:
+(1) M / 3(2) M / 4(3) M / 2(4) M
+34.
+ Possible oxidation states of sulphur in 
+S
+4
+O
+6
+2−
+ ion are:
+(1) +5, 0(2) +6, 0(3) +4, 0(4) +2, 0
+35. The mass of FeSO
+4
+ required to oxidise by 50 mL of M/2 Na
+2
+Cr
+2
+O
+7
+ solution in acidic medium is:
+(1) 2.28 g(2) 4.56 g(3) 1.52 g(4) 3.04 g
+36. The oxidation state of Fe in Fe
+0.94
+O is:
+(1) +2(2) +200/94(3) +94/200(4) +3
+37. Molarity of 200 mL KMnO
+4
+ in acidic medium, which can oxidise 50 mL of 20 volume H
+2
+O
+2
+ completely is:
+(1) 1.0 M(2) 0.11 M(3) 0.2 M(4) 2.0 M
+38. Number of peroxide linkages in CrO
+5
+ and H
+2
+SO
+5
+ are respectively:
+(1) 1, 2(2) 2, 2(3) 2, 1(4) 1, 1
+39. Cu
+2
+O + KI + H
+2
+SO
+4
+ → Cu
+2
+I
+2
+ + I
+2
+ + K
+2
+SO
+4
+Equivalent weight of underlined compound in this reaction is:
+(1) M(2) M / 2(3) M / 3(4) M / 4
+40. How many moles of KMnO
+4
+ would be required for the complete reaction with one mole of sulphite ion in
+acidic solution?
+(1) 2/5(2) 3/5(3) 4/5(4) 1
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 4 of 12
+
+41. Correct option for oxidation number of carbon in hydrogen cyanide and hydrogen isocyanide is:
+(1) HCN > HNC(2) HNC > HCN
+(3) HCN = HNC(4) No fixed
+42. If M is the molar mass of K
+2
+Cr
+2
+O
+7
+, the equivalent mass of K
+2
+Cr
+2
+O
+7
+ in the following reaction:
+K
+2
+Cr
+2
+O
+7
+ + H
+2
+SO
+4
+ + C
+2
+H
+5
+OH → Cr
+2
+(SO
+4
+)
+3
+ + CH
+3
+COOH + K
+2
+SO
+4
+ + H
+2
+O is:
+(1) M / 3(2) M / 6(3) M / 12(4) M / 4
+43. Which of the following can act as both oxidising as well as reducing agent?
+(1) H
+2
+O
+2
+(2) SO
+2
+(3) HNO
+2
+(4) All of these
+44. Which of the following is correct about bleaching powder?
+(1) It has both ionic and covalent bonds
+(2) The oxidation number of one chlorine is −1
+(3) The oxidation number of another chlorine is +1
+(4) All of these
+45. Which of the following is an intermolecular redox reaction?
+(1) HNO
+3
+ + H
+2
+S → S + NO + H
+2
+O
+(2) 2KClO
+3
+ → 2KCl + 3O
+2
+(3) (NH
+4
+)
+2
+Cr
+2
+O
+7
+ → N
+2
+ + Cr
+2
+O
+3
+ + 4H
+2
+O
+(4) Cl
+2
+ + NaOH → NaCl + NaClO + H
+2
+O
+46. Number of peroxide linkages in K
+2
+S
+2
+O
+8
+ and Na
+2
+S
+2
+O
+8
+ is:
+(1) 2, 1(2) 2, 0(3) 0, 1(4) 1, 1
+47. Oxidation state of Ni in [Ni(CO)
+4
+] is:
+(1) +3(2) +2(3) 0(4) +4
+48. Value of coefficient p and q respectively in balanced reaction: p FeS
+2
+ + q O
+2
+ → a Fe
+2
+O
+3
+ + b SO
+2
+(1) 4, 11(2) 2, 5(3) 1, 4(4) 3, 8
+49. 12 g pure sample of ferrous oxalate is oxidised completely by 100 mL of 1 M KMnO
+4
+ in acidic medium.
+Percentage purity of sample is approximately:
+(1) 18(2) 24(3) 48(4) 76
+50. What can act as both oxidant and reductant?
+(1) H
+2
+O
+2
+(2) SO
+2
+(3) O
+3
+(4) Both (1) and (2)
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 5 of 12
+
+51. Oxidation number of iron present within square bracket in [Fe(H
+2
+O)
+5
+(NO)]SO
+4
+ is:
+(1) +1(2) +2(3) +3(4) 0
+52. Which of the following is not a disproportionation reaction?
+(1) P
+4
+ + 3NaOH + 3H
+2
+O → 3NaH
+2
+PO
+2
+ + PH
+3
+(2) 3Cl
+2
+ + 6NaOH → 5NaCl + NaClO
+3
+ + 3H
+2
+O
+(3) 2HNO
+2
+ → NO + NO
+2
+ + H
+2
+O
+(4) 2NO
+2
+ + 2KOH → KNO
+2
+ + KNO
+3
+ + H
+2
+O
+53. The n-factor of Mn
+3
+O
+4
+ in the reaction Mn
+3
+O
+4
+ → MnO
+2
+ is:
+(1) 1.6(2) 4.6(3) 2.6(4) 3.6
+54. How much volume of 0.05 M KMnO
+4
+ is needed to completely oxidize 1.8 g of anhydrous oxalic acid?
+(1) 320.00 mL(2) 200 mL
+(3) 400 mL(4) 160 mL
+55. In the reaction: I
+2
+ + 2Na
+2
+S
+2
+O
+3
+ → Na
+2
+S
+4
+O
+6
+ + 2NaI, the equivalent weight of oxidant is:
+(1) M(2) M / 2(3) M / 4(4) 2M
+56. The oxidation state of central bromine atom in Br
+3
+O
+8
+ is:
+(1) Zero(2) +4(3) +6(4) +2
+57. The number of moles of HCl taking part in redox change when reacted with 2 mol KMnO
+4
+ to give Cl
+2
+ is:
+(1) 16(2) 10(3) 8(4) 5
+58. What is the coefficient of oxalate ion in the following reaction?
+MnO
+4
+−
+ + C
+2
+O
+4
+2−
+ + H
++
+ → Mn
+2+
+ + CO
+2
+ + H
+2
+O
+(1) 2(2) 5(3) 16(4) 10
+59. When SO
+2
+ is passed through the solution of potassium iodate, the oxidation state of iodine changes from:
+(1) +5 to 0(2) +6 to −1(3) +5 to −1(4) +7 to −1
+60. In the reaction between SO
+2
+ and H
+2
+O
+2
+, the equivalent weight of sulphur dioxide is:
+(1) Same as its molecular weight(2) Half of its molecular weight
+(3) 1/3 of its molecular weight(4) 1/4 of its molecular weight
+61. Which substance is serving as a reducing agent in the following reaction?
+14H
++
+ + Cr
+2
+O
+7
+2−
+ + 3Ni → 2Cr
+3+
+ + 7H
+2
+O + 3Ni
+2+
+(1)
+ H
++
+(2)
+ Cr
+2
+O
+7
+2−
+(3) H
+2
+O(4) Ni
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 6 of 12
+
+62. The oxidation state shown by silicon when it combines with strongly electropositive metals is:
+(1) +4(2) −4(3) +2(4) −2
+63.
+ In alkaline medium 
+ClO
+2
+ oxidizes 
+H
+2
+O
+2
+ to 
+O
+2
+ and reduces itself to 
+Cl
+−
+. How many moles of 
+H
+2
+O
+2
+ will be
+oxidized by one mole of ClO
+2
+?
+(1) 1.0(2) 1.5(3) 2.5(4) 3.0
+64.
+ Equivalent weight of 
+FeC
+2
+O
+4
+ in the change 
+FeC
+2
+O
+4
+ → Fe
+3+
+ + CO
+2
+ is:
+(1) M / 3(2) M / 6(3) M / 2(4) M / 1
+65.
+ Equivalent mass of oxidizing agent in the reaction: 
+ClO
+2
+ + 2H
+2
+S → 2S + 2H
+2
+O + Cl
+−
+ is:
+(1) M / 5(2) M / 4(3) M / 2(4) M / 1
+66. A, B and C are three elements forming part of a compound in oxidation state +2, +5 and −2 respectively.
+What could be the compound?
+(1) A
+2
+(BC
+4
+)
+3
+(2) A
+3
+(BC
+4
+)
+2
+(3) A
+3
+(BC
+3
+)
+2
+(4) ABC
+67. Oxidation state of Cr atom in CrO(O
+2
+)
+2
+ is:
+(1) +6(2) +4(3) +3(4) +10
+68.
+ For the oxidation of 
+As
+2
+S
+3
+ into 
+AsO
+4
+3−
+ and S by 
+HNO
+3
+, the equivalent weight of 
+As
+2
+S
+3
+ will be: (Molar
+mass of As
+2
+S
+3
+ is M)
+(1) M / 4(2) M / 28(3) M / 10(4) M / 24
+69. In a reaction, 5 mol of electrons are gained by 1 mole of HNO
+3
+ and assuming no change in oxidation state of
+hydrogen, the possible product obtained due to reduction will be:
+(1) 1 mol of NO(2) 0.5 mol of N
+2
+O
+(3) 1 mol of NO
+2
+(4) 0.5 mol of N
+2
+70. The equivalent mass of HCl in the reaction 2KMnO
+4
+ + 16HCl → 2KCl + 2MnCl
+2
+ + 5Cl
+2
+ + 8H
+2
+O is:
+(1) (5/8) M(2) (8/5) M(3) (5/16) M(4) (1/8) M
+71. In which of the following processes, nitrogen is oxidised?
+(1)
+ NH
+4
++
+ → N
+2
+(2)
+ NO
+3
+−
+ → NO
+(3)
+ NO
+2
+ → NO
+3
+−
+(4) NO
+2
+ → N
+2
+O
+72. The oxidation number and covalency of sulphur in S
+8
+ is:
+(1) 0, 0(2) 0, 2(3) 0, 4(4) 0, 6
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 7 of 12
+
+73. Which is a disproportionation reaction?
+(1) 2H
+2
+O
+2
+ → 2H
+2
+O + O
+2
+(2) 4Zn + 10HNO
+3
+ → 4Zn(NO
+3
+)
+2
+ + NH
+4
+NO
+3
+ + 3H
+2
+O
+(3)
+ 
+Cl
+2
+ + I
+2
+O
+5
+ + 2OH
+−
+ → IO
+4
+−
+ + 2Cl
+−
+ + H
+2
+O
+(4) PbS + 4H
+2
+O
+2
+ → PbSO
+4
+ + 4H
+2
+O
+74. Cu + a HNO
+3
+ → Cu(NO
+3
+)
+2
+ + b NO
+2
+ + H
+2
+O
+The values of a and b are:
+(1) 3, 2(2) 4, 2(3) 2, 4(4) 2, 3
+75.
+ Number of electrons transferred in each case when 
+KMnO
+4
+ acts as an oxidising agent to give 
+MnO
+2
+, 
+Mn
+2+
+,
+Mn(OH)
+3
+ and 
+MnO
+4
+2−
+ are respectively:
+(1) 3, 5, 4 and 1(2) 4, 3, 1 and 5
+(3) 1, 3, 4 and 5(4) 5, 4, 3 and 1
+76. KI can be oxidised by KMnO
+4
+ in acidic medium and alkaline medium; the products formed are respectively:
+(1) I
+2
+, I
+2
+(2)
+ I
+−
+, IO
+3
+−
+(3)
+ I
+2
+, IO
+3
+−
+(4)
+ IO
+4
+−
+, IO
+3
+−
+77.
+ Number of moles of 
+K
+2
+Cr
+2
+O
+7
+ reduced by one mole of 
+Sn
+2+
+ ion in acidic medium is:
+(1) 1/3(2) 3(3) 1/6(4) 6
+78. When Cl
+2
+ is passed through hot conc. NaOH solution, oxidation number of Cl changes from:
+(1) 0 to +5 and 0 to −1(2) 0 to +7 and 0 to −1
+(3) 0 to −1 and 0 to +3(4) 0 to +5 and 0 to −2
+79.
+ The reaction 
+3ClO
+−
+(aq) → ClO
+3
+−
+(aq) + 2Cl
+−
+(aq)
+ is an example of:
+(1) Oxidation reaction(2) Reduction reaction
+(3) Disproportionation reaction(4) Non-redox reaction
+80.
+ 9 × 10
+−3
+ mole 
+X
+n+
+ reacts completely with 6 × 10
+−3
+ mole 
+K
+2
+Cr
+2
+O
+7
+ to give 
+XO
+3
+−
+ and 
+Cr
+3+
+. The value of n is:
+(1) 6(2) 2(3) 4(4) 1
+81. Choose the correct statement:
+(1) Oxidation number of Cr in CrO
+5
+ is +10
+(2) Oxidation number of S in S
+8
+ is −2
+(3) Formal charge on the central oxygen in ozone is +1
+(4)
+ Formal charge on C in 
+CO
+3
+2−
+ is +2
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 8 of 12
+
+82. Equivalent mass of reducing agent in the reaction Fe
+2
+O
+3
+ + KMnO
+4
+ → Fe
+2
+O
+3
+ + MnO
+2
+ is:
+(1) M / 3(2) M(3) M / 2(4) M / 4
+83. Calculate the oxidation number of underlined atoms for the compounds K
+2
+Cr
+2
+O
+7
+ and (CH
+3
+)
+2
+SO
+respectively:
+(1) +1, 0(2) +2, 0(3) +1, 2(4) +6, 0
+84.
+ 
+a C
+6
+H
+5
+CHO + b Cr
+2
+O
+7
+2−
+ + H
++
+ → c C
+6
+H
+5
+COOH + Cr
+3+
+ + H
+2
+O
+Then what are the values of stoichiometric coefficients a and b respectively?
+(1) 3, 1(2) 2, 1(3) 3, 2(4) 1, 3
+85. In the reaction C
+2
+H
+5
+OH + O
+2
+ → CO
+2
+ + H
+2
+O. What will be the change in oxidation state for underlined 'C'
+atom?
+(1) 0(2) +2(3) 1(4) 3
+86. Out of hypochlorite ion, chlorite ion, chlorate ion and perchlorate ion which can undergo disproportionation
+reaction?
+(1) Only hypochlorite ion
+(2) Only hypochlorite and chlorite ions
+(3) All mentioned ions
+(4) All ions except perchlorate ion
+87. For the reactions:
+A. [Ag(NH
+3
+)
+2
+]
++
+ + 2H
++
+ → Ag
++
+ + 2NH
+4
++
+B. Cl
+2
+ + 2OH
+−
+ → Cl
+−
+ + ClO
+−
+ + H
+2
+O
+C. 2CrO
+4
+2−
+ + 2H
++
+ → Cr
+2
+O
+7
+2−
+ + H
+2
+O
+Which of the following is correct?
+(1) Reaction A is a redox reaction
+(2) Reaction B and C are redox reactions
+(3) A and C are not redox reactions
+(4) Reaction B is a disproportionation non-redox reaction
+88. Which of the following cannot act as both oxidising as well as reducing agent?
+(1) Nitrous acid(2) Hydrogen sulphide
+(3) Sulphur dioxide(4) Hydrogen peroxide
+89. If 'M' represents molecular weight, then what will be the equivalent weight of oxidant and reductant
+respectively for the following redox reaction?
+K
+2
+MnO
+4
+ + Cl
+2
+ → KCl + KMnO
+4
+(1) M, M/2(2) M/2, M
+(3) M, M(4) M/2, M/2
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 9 of 12
+
+90.
+ 
+2Na(s) + 2H
+2
+O(l) → 2Na
++
+(aq) + 2OH
+−
+(aq) + H
+2
+(g)
+Which of the following options is correct for above reaction?
+(1) Disproportionation redox reaction
+(2) Redox reaction in which H
+2
+O acts as a reducing agent
+(3) Redox reaction in which Na gets reduced
+(4) Redox reaction in which Na acts as a reducing agent
+91. The oxidation state of H in alkali metal hydrides is:
+(1) +1(2) −1(3) Not defined(4) Both (1) & (2)
+92. What is the oxidation number of N-atom in pernitric acid (HNO
+4
+)?
+(1) +5(2) +4(3) +3(4) −3
+93. Which of the following sets of oxidation states is not known for oxygen?
+(1) −2, −1, 0(2) −2, −1/2, −1
+(3) +2, +1, 0(4) −2, +4, 0
+94. H
+3
+PO
+2
+ → H
+3
+PO
+4
+ + PH
+3
+For the above disproportionation reaction, n-factor for H
+3
+PO
+2
+ is:
+(1) 2(2) 3/2(3) 3(4) 4
+95. Oxidation number of 'I' in KI
+3
+ is:
+(1) −3(2) +1/3(3) −1/3(4) +1
+96. In the standardisation of Na
+2
+S
+2
+O
+3
+ using K
+2
+Cr
+2
+O
+7
+ by iodometry, the equivalent mass of Na
+2
+S
+2
+O
+3
+ is: (where
+M is molecular mass of Na
+2
+S
+2
+O
+3
+)
+(1) M(2) M / 2(3) M / 6(4) M / 3
+97. The number of peroxide linkages in H
+2
+S
+2
+O
+8
+ is:
+(1) 4(2) 2(3) 3(4) 1
+98. In the reaction H
+3
+PO
+2
+ → PH
+3
+ + H
+3
+PO
+3
+, the equivalent mass of H
+3
+PO
+2
+ will be:
+(1) (3/4) M(2) (5/6) M(3) (4/3) M(4) (6/5) M
+99. 2H
+2
+O → 2H
+2
+ + O
+2
+In this reaction, equivalent mass of H
+2
+O is:
+(1) 18(2) 9(3) 36(4) 27
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 10 of 12
+
+100. Oxidation states of N in ammonium nitrate (NH
+4
+NO
+3
+) are:
+(1) +3, +5(2) −3, +5
+(3) −3, +3(4) −3, −5
+101. How many moles of KMnO
+4
+ is required for the oxidation of 2 mol ferrous oxalate in acidic medium?
+(1) 6/5(2) 5/6(3) 3/2(4) 2/3
+102. Oxidation number of sodium in sodium amalgam is:
+(1) +1(2) −1(3) +2(4) 0
+103. KMnO
+4
+ reacts with ferrous ammonium sulphate in acidic medium. 10 ml of 0.1 M KMnO
+4
+ is equivalent to:
+(1) 20 ml of 0.1 M FeSO
+4
+·(NH
+4
+)
+2
+SO
+4
+·6H
+2
+O
+(2) 30 ml of 0.1 M FeSO
+4
+·(NH
+4
+)
+2
+SO
+4
+·6H
+2
+O
+(3) 40 ml of 0.1 M FeSO
+4
+·(NH
+4
+)
+2
+SO
+4
+·6H
+2
+O
+(4) 50 ml of 0.1 M FeSO
+4
+·(NH
+4
+)
+2
+SO
+4
+·6H
+2
+O
+104. The brown ring complex compound is formulated as [Fe(H
+2
+O)
+5
+(NO)]SO
+4
+. The oxidation state of iron is:
+(1) 1(2) 2(3) 3(4) 0
+105. In CrO
+5
+, how many oxygen atoms have −1 oxidation number?
+(1) 4(2) 2(3) 3(4) 5
+106. 60 ml of an aqueous solution of H
+2
+O
+2
+ was treated with an excess of KI solution in dil. H
+2
+SO
+4
+, the liberated
+iodine required 50 ml of 0.1 N Na
+2
+S
+2
+O
+3
+ solution for complete reaction. The strength of H
+2
+O
+2
+ in g/l is:
+(1) 0.68(2) 1.42(3) 2.84(4) 1.3
+107. Strongest oxidising agent is:
+(1) KMnO
+4
+(2) F
+2
+(3) K
+2
+Cr
+2
+O
+7
+(4) O
+3
+108.
+ Oxalate ions are oxidised by 
+Cr
+2
+O
+7
+2−
+ ion to form a gas and that is:
+(1) O
+2
+(2) CO
+2
+(3) CO(4) H
+2
+109. When the following redox reaction is balanced, the stoichiometric coefficient of H
+2
+O will be:
+Cr(OH)
+3
+ + IO
+3
+−
+ + OH
+−
+ → I
+−
+ + CrO
+4
+2−
+ + H
+2
+O
+(1) 2(2) 3(3) 5(4) 10
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 11 of 12
+
+SECTION - B : ASSERTION - REASON TYPE QUESTIONS
+Directions: In the following questions, a statement of assertion (A) is followed by a statement of reason (R).
+(1) If both Assertion & Reason are true and the reason is the correct explanation of the assertion, then mark (1).
+(2) If both Assertion & Reason are true but the reason is not the correct explanation of the assertion, then mark (2).
+(3) If Assertion is true statement but Reason is false, then mark (3).
+(4) If both Assertion and Reason are false statements, then mark (4).
+1.
+ A: The reaction 
+Br
+2
+ → Br
+−
+ + BrO
+3
+−
+ is a disproportionation reaction.
+R: Br
+2
+ is getting oxidized and reduced.
+2. A: If highly electronegative element is in its highest oxidation state in a compound, then that compound will
+act as an oxidizing agent.
+R: KClO
+4
+ is an oxidizing agent.
+3. A: Very less reactive metals such as Ag and Au react with dilute HCl.
+R: Ag and Au do not liberate H
+2
+ gas when react with dilute acids.
+4. A: The equivalent weight of KMnO
+4
+ in neutral medium is M / 3.
+R: In neutral medium, 
+KMnO
+4
+ (
+Mn
+7+
+) gets converted to 
+MnO
+2
+ (
+Mn
+4+
+).
+5. A: Zn rod placed in copper nitrate solution, intensity of blue colour of solution is reduced.
+R: Zn rod placed in copper nitrate solution, 
+Cu
+2+
+ ion is deposited as Cu on Zn rod.
+6. A: In permanganate titrations, KMnO
+4
+ acts as a reducing agent in acidic medium.
+R: KMnO
+4
+ is a self indicator.
+7. A: Galvanic cell is an electrolytic cell.
+R: Galvanic cell converts chemical energy into electrical energy.
+8. A: For measuring standard electrode potential, concentration of solution should be 1 M, P = 1 atm and T =
+273 K.
+R: E°
+cell
+ for hydrogen electrode is 0.00 V.
+9. A: Each hydrogen atom in H
+2
+ molecule has zero oxidation state.
+R: In elements, in the free or the uncombined states, each atom bears an oxidation number of zero.
+10.
+ A: A positive value of 
+E°
+M
+n+
+/M
+ means that the redox couple is a stronger reducing agent than 
+H
++
+/H
+2
+ couple.
+R: For measuring E°
+M
+n+
+/M
+, standard hydrogen electrode is taken as 0.00 V.
+Redox Reactions • Complete Practice Bank (Section A: Q1–Q109 & Section B: Q1–Q10)Page 12 of 12

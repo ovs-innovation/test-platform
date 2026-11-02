@@ -595,3 +595,4 @@ export const batch2_bonding_mcq = [
     image_url: null
   }
 ];
+

@@ -28,3 +28,13 @@ backend/pdf_rendered_pages/
 backend/test_fixed_diag*.png
 
 
+
+# OCR and scratch files
+eng.traineddata
+/scripts/
+backend/scripts/*.png
+backend/scripts/thermo_ocr/
+backend/scripts/thermo_ocr_cols/
+backend/scripts/live_token.json
+check_live_subjects.mjs
+check_schema.mjs

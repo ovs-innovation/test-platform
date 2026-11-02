@@ -310,3 +310,4 @@ export const batch3Questions = [
     solution: "With respect to green algae: Statement A is correct. Statement B is incorrect (zoospores are flagellated). Statement C is incorrect (algin is produced by brown algae). Statement D is incorrect (oosphere is non-motile). Therefore, 3 statements are incorrect."
   }
 ];
+

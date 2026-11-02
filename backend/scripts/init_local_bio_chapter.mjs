@@ -16,3 +16,4 @@ async function initChapter() {
 }
 
 initChapter().catch(console.error).finally(() => pool.end());
+

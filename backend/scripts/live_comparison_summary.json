@@ -1,0 +1,113 @@
+{
+  "haloMatches": 0,
+  "haloMissing": 121,
+  "pblockMatches": 32,
+  "pblockMissing": 130,
+  "sampleHaloLive": [],
+  "sampleHaloMissing": [
+    {
+      "idx": 1,
+      "text": "In the following reaction:\n\n$$\\text{o-Bromoanisole} \\xrighta"
+    },
+    {
+      "idx": 2,
+      "text": "Select the correct statement(s) among the following:\n\n(1) Th"
+    },
+    {
+      "idx": 3,
+      "text": "The correct order of increasing reactivity of aryl halides t"
+    },
+    {
+      "idx": 4,
+      "text": "Which of the following is/are correct comparison of physical"
+    },
+    {
+      "idx": 5,
+      "text": "The correct reactivity order of the following halides toward"
+    }
+  ],
+  "samplePblockLive": [
+    {
+      "localIdx": 34,
+      "liveId": 5196,
+      "text": "Which of the following statements is correct?",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 74,
+      "liveId": 12878,
+      "text": "Find the correct statement:",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 76,
+      "liveId": 8517,
+      "text": "Select the correct statement:",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 92,
+      "liveId": 5430,
+      "text": "Which of the following is formed when phosphoric acid is hea",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 93,
+      "liveId": 5435,
+      "text": "The halogen having five vacant orbitals in the outermost she",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 94,
+      "liveId": 5438,
+      "text": "Which halogen acid has highest percentage ionic character?",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 95,
+      "liveId": 5437,
+      "text": "Which of the following is correct structure of \\(\\text{S}_2\\",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 96,
+      "liveId": 5436,
+      "text": "The number of P-O-H links in orthophosphoric acid is:",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 97,
+      "liveId": 5440,
+      "text": "Which of the following hydride is best reducing hydride?",
+      "liveImage": ""
+    },
+    {
+      "localIdx": 98,
+      "liveId": 5439,
+      "text": "\\(\\text{XeF}_6\\) on partial hydrolysis gives:",
+      "liveImage": ""
+    }
+  ],
+  "samplePblockMissing": [
+    {
+      "idx": 1,
+      "text": "Structure of perchloric acid (\\(\\text{HClO}_4\\)) is:"
+    },
+    {
+      "idx": 2,
+      "text": "The number of lone pairs in \\(\\text{XeF}_2\\), \\(\\text{XeO}_3"
+    },
+    {
+      "idx": 3,
+      "text": "Oxidation number of nitrogen in sesquioxide of nitrogen is:"
+    },
+    {
+      "idx": 4,
+      "text": "When Zn reacts with conc. \\(\\text{HNO}_3\\), it gives:"
+    },
+    {
+      "idx": 5,
+      "text": "In this reaction: \\(\\text{P}_4 + 3\\text{NaOH} + 3\\text{H}_2\\"
+    }
+  ]
+}

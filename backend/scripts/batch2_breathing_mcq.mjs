@@ -357,3 +357,4 @@ export const batch2Questions = [
     topic: "Emphysema and Smoking"
   }
 ];
+

@@ -585,3 +585,4 @@ export const batch3_bonding_mcq = [
     image_url: "https://res.cloudinary.com/fyxpnmdh/image/upload/v1793507572/edvedum_chemistry/bonding/q120_diagram.png"
   }
 ];
+

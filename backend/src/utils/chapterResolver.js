@@ -1323,6 +1323,8 @@ export const CHEMISTRY_STANDARD_11 = [
   'Equilibrium',
   'Redox Reactions',
   'The p-Block Elements (Gr. 13 & 14)',
+  'Organic Chemistry - Some Basic Principles and Techniques',
+  'Hydrocarbons',
   'Solutions',
   'Electrochemistry',
   'Chemical Kinetics',

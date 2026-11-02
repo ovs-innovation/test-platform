@@ -427,3 +427,4 @@ export const batch1Questions = [
     topic: "Simple Squamous Locations"
   }
 ];
+

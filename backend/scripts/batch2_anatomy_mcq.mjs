@@ -564,3 +564,4 @@ export const batch2Questions = [
     topic: "Epidermal Tissue System - Secretory Trichomes"
   }
 ];
+

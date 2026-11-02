@@ -1087,6 +1087,13 @@ export default function AdminQuestionBank() {
   const [pdfFile, setPdfFile] = useState(null);
   const [answerKeyFile, setAnswerKeyFile] = useState(null);
   const [pdfCategory, setPdfCategory] = useState('auto');
+  const [pdfSubjectId, setPdfSubjectId] = useState('');
+  const [pdfChapter, setPdfChapter] = useState('auto');
+  const [pdfChapterId, setPdfChapterId] = useState('');
+  const [pdfChaptersList, setPdfChaptersList] = useState([]);
+  const [pdfChaptersLoading, setPdfChaptersLoading] = useState(false);
+  const [pdfCustomChapterMode, setPdfCustomChapterMode] = useState(false);
+  const [pdfCustomChapter, setPdfCustomChapter] = useState('');
   const [pdfMarks, setPdfMarks] = useState(4);
   const [pdfDifficulty, setPdfDifficulty] = useState('medium');
   const [pdfIncludeAnswers, setPdfIncludeAnswers] = useState(true);
@@ -1100,14 +1107,96 @@ export default function AdminQuestionBank() {
   const openPdfModal = () => {
     setPdfFile(null);
     setAnswerKeyFile(null);
-    setPdfCategory(category || 'auto');
+    const initialCat = (category && category !== 'All') ? category : 'auto';
+    setPdfCategory(initialCat);
+    setPdfCustomChapterMode(false);
+    setPdfCustomChapter('');
     setPdfMarks(4);
     setPdfDifficulty('medium');
     setPdfIncludeAnswers(true);
     setPdfPageRange('');
     setPdfProgressStatus('');
     setPdfSuccessData(null);
+
+    if (initialCat !== 'auto') {
+      const matchSubj = subjectsList.find(s => s.name?.toLowerCase() === initialCat.toLowerCase());
+      const targetSubId = matchSubj?.id || '';
+      setPdfSubjectId(targetSubId);
+      if (targetSubId) {
+        setPdfChaptersLoading(true);
+        adminService.chapters(targetSubId).then((data) => {
+          setPdfChaptersList(data || []);
+        }).catch(() => setPdfChaptersList([])).finally(() => setPdfChaptersLoading(false));
+      } else {
+        setPdfChaptersList([]);
+      }
+      if (selectedChapter && selectedChapter !== 'all') {
+        setPdfChapter(selectedChapter);
+      } else {
+        setPdfChapter('auto');
+      }
+    } else {
+      setPdfSubjectId('');
+      setPdfChapter('auto');
+      setPdfChapterId('');
+      setPdfChaptersList([]);
+    }
+
     setPdfOpen(true);
+  };
+
+  const handlePdfSubjectChange = (val, opt) => {
+    setPdfCategory(val);
+    setPdfChapter('auto');
+    setPdfChapterId('');
+    setPdfCustomChapterMode(false);
+    setPdfCustomChapter('');
+
+    if (val === 'auto') {
+      setPdfSubjectId('');
+      setPdfChaptersList([]);
+      return;
+    }
+
+    const match = opt?.id
+      ? opt
+      : subjectsList.find(
+          (s) =>
+            (s.id && String(s.id) === String(val)) ||
+            (s.name && s.name.toLowerCase() === String(val).toLowerCase())
+        );
+
+    const targetSubjId = match?.id || '';
+    setPdfSubjectId(targetSubjId);
+
+    if (targetSubjId) {
+      setPdfChaptersLoading(true);
+      adminService.chapters(targetSubjId).then((data) => {
+        setPdfChaptersList(data || []);
+      }).catch(() => {
+        setPdfChaptersList([]);
+      }).finally(() => {
+        setPdfChaptersLoading(false);
+      });
+    } else {
+      setPdfChaptersList([]);
+    }
+  };
+
+  const handlePdfChapterChange = (val, opt) => {
+    if (val === '__custom__') {
+      setPdfCustomChapterMode(true);
+      setPdfChapter('__custom__');
+      setPdfChapterId('');
+      return;
+    }
+    setPdfCustomChapterMode(false);
+    setPdfChapter(val);
+    if (val === 'auto') {
+      setPdfChapterId('');
+    } else {
+      setPdfChapterId(opt?.id || '');
+    }
   };
 
   const formatBytes = (bytes) => {
@@ -1162,12 +1251,25 @@ export default function AdminQuestionBank() {
     setPdfProgressStatus('Uploading PDF document to server...');
 
     try {
+      const effectiveChapter = pdfCustomChapterMode && pdfCustomChapter.trim()
+        ? pdfCustomChapter.trim()
+        : pdfChapter;
+
       const formData = new FormData();
       formData.append('file', pdfFile);
       if (answerKeyFile) {
         formData.append('answer_key', answerKeyFile);
       }
       formData.append('category', pdfCategory);
+      if (pdfSubjectId) {
+        formData.append('subject_id', pdfSubjectId);
+      }
+      if (effectiveChapter && effectiveChapter !== 'auto' && effectiveChapter !== '__custom__') {
+        formData.append('chapter', effectiveChapter);
+        if (pdfChapterId) {
+          formData.append('chapter_id', pdfChapterId);
+        }
+      }
       formData.append('default_marks', Number(pdfMarks) || 4);
       formData.append('difficulty', pdfDifficulty);
       formData.append('include_answers', Boolean(pdfIncludeAnswers));
@@ -3143,8 +3245,11 @@ export default function AdminQuestionBank() {
               <button
                 type="button"
                 onClick={() => {
-                  if (pdfSuccessData.categories?.[0] && !categoriesList.includes(category)) {
+                  if (pdfSuccessData.categories?.[0]) {
                     setCategory(pdfSuccessData.categories[0]);
+                  }
+                  if (pdfSuccessData.chapter) {
+                    setSelectedChapter(pdfSuccessData.chapter);
                   }
                   setPdfOpen(false);
                 }}
@@ -3173,22 +3278,102 @@ export default function AdminQuestionBank() {
             {/* Target Subject Selector */}
             <div>
               <div className="flex items-center justify-between mb-1.5">
-                <label className="text-xs font-bold text-slate-800 dark:text-slate-200">
-                  Target Subject / Category
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <BookOpen className="h-3.5 w-3.5 text-indigo-500" /> Target Subject / Category
                 </label>
                 <span className="text-[11px] text-slate-500 dark:text-slate-400">
-                  Auto-detect separates questions into Physics, Chemistry, Biology, etc.
+                  Choose a subject or auto-detect
                 </span>
               </div>
               <CustomSelectDropdown
                 value={pdfCategory}
                 options={[
                   { value: 'auto', label: '✨ Auto-Detect by Subject (Multi-Subject paper)' },
-                  ...categoriesList.map((c) => ({ value: c, label: `${c}` })),
+                  ...categoriesList.map((c) => ({ value: c, label: c })),
                 ]}
-                onChange={(val) => setPdfCategory(val)}
+                onChange={handlePdfSubjectChange}
                 disabled={pdfUploading}
               />
+            </div>
+
+            {/* Target Chapter Selector */}
+            <div>
+              <div className="flex items-center justify-between mb-1.5">
+                <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                  <Bookmark className="h-3.5 w-3.5 text-indigo-500" /> Target Chapter
+                </label>
+                {pdfCategory !== 'auto' && !pdfCustomChapterMode && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPdfCustomChapterMode(true);
+                      setPdfChapter('__custom__');
+                    }}
+                    className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-bold cursor-pointer"
+                  >
+                    + Enter New Chapter Name
+                  </button>
+                )}
+                {pdfCustomChapterMode && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setPdfCustomChapterMode(false);
+                      setPdfChapter('auto');
+                    }}
+                    className="text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline font-bold cursor-pointer"
+                  >
+                    ← Choose from Existing Chapters
+                  </button>
+                )}
+              </div>
+
+              {pdfCustomChapterMode ? (
+                <div className="relative">
+                  <input
+                    type="text"
+                    value={pdfCustomChapter}
+                    onChange={(e) => setPdfCustomChapter(e.target.value)}
+                    placeholder="Enter chapter name (e.g., Hydrocarbons, Thermodynamics)..."
+                    disabled={pdfUploading}
+                    className="w-full rounded-2xl border border-indigo-300 dark:border-indigo-800 bg-white dark:bg-slate-900/90 px-3.5 py-2.5 text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                  <p className="text-[11px] text-indigo-600/90 dark:text-indigo-400/90 mt-1">
+                    All extracted questions from this PDF will be assigned to this chapter under {pdfCategory}.
+                  </p>
+                </div>
+              ) : (
+                <CustomSelectDropdown
+                  value={pdfChapter}
+                  placeholder={pdfChaptersLoading ? 'Loading chapters...' : 'Select chapter'}
+                  options={
+                    pdfCategory === 'auto'
+                      ? [{ value: 'auto', label: '✨ Auto-Detect Chapter (from question text & syllabus)' }]
+                      : [
+                          { value: 'auto', label: '✨ Auto-Detect Chapter (from question text & syllabus)' },
+                          ...pdfChaptersList.map((ch) => ({
+                            id: ch.id,
+                            value: ch.name,
+                            label: ch.name
+                          })),
+                          { value: '__custom__', label: '+ Enter Custom Chapter Name...' }
+                        ]
+                  }
+                  onChange={handlePdfChapterChange}
+                  disabled={pdfUploading || pdfCategory === 'auto' || pdfChaptersLoading}
+                />
+              )}
+
+              {pdfCategory === 'auto' && (
+                <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1 italic">
+                  Select a specific subject above to filter and assign a target chapter.
+                </p>
+              )}
+              {pdfCategory !== 'auto' && !pdfCustomChapterMode && pdfChaptersList.length === 0 && !pdfChaptersLoading && (
+                <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-1">
+                  No existing chapters listed for {pdfCategory}. Choose "+ Enter New Chapter Name" to assign a custom chapter or keep Auto-Detect.
+                </p>
+              )}
             </div>
 
             {/* Question Paper PDF */}

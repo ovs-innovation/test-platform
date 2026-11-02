@@ -765,3 +765,4 @@ export const batch5Questions = [
     solution: 'All fungi are heterotrophs, so type of nutrition is not a basis for classifying kingdom Fungi into classes. Classification is based on mycelial morphology, mode of spore formation, and fruiting body type.'
   }
 ];
+

@@ -44,3 +44,4 @@ async function identifyPages() {
 }
 
 identifyPages().catch(console.error);
+

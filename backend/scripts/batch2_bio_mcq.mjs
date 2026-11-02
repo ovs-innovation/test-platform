@@ -671,3 +671,4 @@ export const batch2Questions = [
     solution: 'Kingdom Protista connects primitive prokaryotic Monerans with the other three multicellular eukaryotic kingdoms: Plantae, Animalia, and Fungi.'
   }
 ];
+
