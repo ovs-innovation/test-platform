@@ -1,0 +1,313 @@
+// Zoology: Chemical Coordination and Integration - Section B: Assertion - Reason Questions (Q1 to Q25)
+// Extracted from Pages 335 and 336 of Aakash Momentum Booster for NEET
+
+const AR_OPTIONS = [
+  "Both Assertion & Reason are true and Reason is the correct explanation of Assertion.",
+  "Both Assertion & Reason are true but Reason is not the correct explanation of Assertion.",
+  "Assertion is true statement but Reason is false.",
+  "Both Assertion and Reason are false statements."
+];
+
+export const chemicalBatchAR = [
+  {
+    assertion_text: "Excess of growth hormone can have diabetogenic action.",
+    reason_text: "Growth hormone acts through insulin-like growth factors (IGFs).",
+    question_text: "Assertion (A): Excess of growth hormone can have diabetogenic action.\nReason (R): Growth hormone acts through insulin-like growth factors (IGFs).",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both statements are true. Growth hormone increases blood glucose levels by suppressing tissue glucose uptake and promoting lipolysis and hepatic glucose output (diabetogenic effect). GH also acts via IGFs (somatomedins) to stimulate bone and muscle growth. However, acting through IGFs is not the explanation of its diabetogenic effect.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Absence of iodine-containing food in a previously normal animal will induce goitre after a prolonged period of time.",
+    reason_text: "Thyroid gland stores its secretions.",
+    question_text: "Assertion (A): Absence of iodine-containing food in a previously normal animal will induce goitre after a prolonged period of time.\nReason (R): Thyroid gland stores its secretions.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. The thyroid gland is unique in storing large amounts of thyroid hormones (in the form of thyroglobulin in follicular colloid) which can supply body requirements for several weeks/months. Hence, dietary deficiency of iodine induces goitre only after a prolonged period.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "The effect of insulin on glucose level of blood is very rapid but transient in nature.",
+    reason_text: "Insulin acts on membrane-bound receptors of the target cell.",
+    question_text: "Assertion (A): The effect of insulin on glucose level of blood is very rapid but transient in nature.\nReason (R): Insulin acts on membrane-bound receptors of the target cell.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Insulin is a peptide hormone that binds to membrane-bound tyrosine kinase receptors on target cells (hepatocytes, adipocytes, myocytes), initiating a rapid phosphorylation cascade (GLUT-4 translocation) without requiring slow nuclear transcription.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Tumour of adrenal medulla may lead to extreme systolic hypertension.",
+    reason_text: "Catecholamines are sympathomimetic.",
+    question_text: "Assertion (A): Tumour of adrenal medulla may lead to extreme systolic hypertension.\nReason (R): Catecholamines are sympathomimetic.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Tumours of the adrenal medulla (pheochromocytoma) lead to hypersecretion of catecholamines (adrenaline and noradrenaline). Catecholamines mimic sympathetic stimulation, causing peripheral vasoconstriction and increased cardiac output, resulting in severe hypertension.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Hormones oxytocin and vasopressin are synthesised by supraoptic and paraventricular nuclei of hypothalamus.",
+    reason_text: "They are stored in axon terminals inside the posterior lobe of pituitary called Herring bodies.",
+    question_text: "Assertion (A): Hormones oxytocin and vasopressin are synthesised by supraoptic and paraventricular nuclei of hypothalamus.\nReason (R): They are stored in axon terminals inside the posterior lobe of pituitary called Herring bodies.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true, but Reason is not the correct explanation of Assertion. Oxytocin and vasopressin are synthesized in the hypothalamic nuclei and travel down unmyelinated axons to be stored in dilated axon terminals (Herring bodies) in the neurohypophysis.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "In frog's tadpole, if thyroid gland is removed surgically, metamorphosis stops.",
+    reason_text: "TSH is not secreted.",
+    question_text: "Assertion (A): In frog's tadpole, if thyroid gland is removed surgically, metamorphosis stops.\nReason (R): TSH is not secreted.",
+    options: AR_OPTIONS,
+    correct_index: 2,
+    explanation: "Assertion is true statement, but Reason is false. Thyroid hormones (thyroxine) are essential for tadpole metamorphosis into adult frogs. Removal of the thyroid gland stops metamorphosis. However, TSH is secreted by the pituitary gland, not the thyroid; in fact, removal of the thyroid removes negative feedback, causing elevated TSH secretion.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Diabetes is characterised by hyperglycemia, glycosuria, polyuria, polydipsia, dehydration etc.",
+    reason_text: "Type-II diabetes occurs due to deficiency of insulin hormone as beta cells of pancreas are destroyed.",
+    question_text: "Assertion (A): Diabetes is characterised by hyperglycemia, glycosuria, polyuria, polydipsia, dehydration etc.\nReason (R): Type-II diabetes occurs due to deficiency of insulin hormone as beta cells of pancreas are destroyed.",
+    options: AR_OPTIONS,
+    correct_index: 2,
+    explanation: "Assertion is true, but Reason is false. Type-I diabetes mellitus (IDDM) is caused by autoimmune destruction of pancreatic beta cells leading to absolute insulin deficiency. Type-II diabetes is primarily characterized by insulin resistance in target tissues with relative insulin deficiency.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Prolactin is called maternity hormone.",
+    reason_text: "It stimulates development of mammary glands during pregnancy and lactation after birth.",
+    question_text: "Assertion (A): Prolactin is called maternity hormone.\nReason (R): It stimulates development of mammary glands during pregnancy and lactation after birth.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Prolactin stimulates the growth and development of mammary glands during pregnancy and promotes milk synthesis and lactation after childbirth, hence it is known as the maternity hormone.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Insulin-dependent diabetes is characterised by appearance of ketone bodies in urine.",
+    reason_text: "Ketone bodies are formed due to breakdown of fats.",
+    question_text: "Assertion (A): Insulin-dependent diabetes is characterised by appearance of ketone bodies in urine.\nReason (R): Ketone bodies are formed due to breakdown of fats.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. In insulin-dependent diabetes mellitus (Type-1), glucose cannot enter cells for energy. As a consequence, cells oxidize fatty acids, producing excess acetyl-CoA which the liver converts into ketone bodies (ketosis and ketonuria).",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Cortisol, testosterone, estradiol and progesterone bind to cytoplasmic receptors.",
+    reason_text: "Cortisol, testosterone, estradiol and progesterone are steroid hormones.",
+    question_text: "Assertion (A): Cortisol, testosterone, estradiol and progesterone bind to cytoplasmic receptors.\nReason (R): Cortisol, testosterone, estradiol and progesterone are steroid hormones.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Because steroid hormones are lipophilic (lipid-soluble), they freely diffuse across the target cell plasma membrane and bind to intracellular (cytoplasmic or nuclear) receptors.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Low secretion of parathyroid hormone leads to hypocalcemic tetany.",
+    reason_text: "Low Ca2+ conc. in the extracellular medium of muscle fibres makes them more excitable.",
+    question_text: "Assertion (A): Low secretion of parathyroid hormone leads to hypocalcemic tetany.\nReason (R): Low Ca2+ conc. in the extracellular medium of muscle fibres makes them more excitable.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Hypoparathyroidism lowers blood Ca2+ levels. Low extracellular Ca2+ increases neuronal and muscle membrane permeability to sodium ions, resulting in sustained involuntary spasms and twitches known as hypocalcemic tetany.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Growth hormone and thyroxine are synergistic hormones.",
+    reason_text: "Both growth hormone and thyroxine increase blood glucose level.",
+    question_text: "Assertion (A): Growth hormone and thyroxine are synergistic hormones.\nReason (R): Both growth hormone and thyroxine increase blood glucose level.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements, but Reason is not the correct explanation of Assertion. Growth hormone and thyroxine act synergistically to promote skeletal and physical growth and protein synthesis. While both also exert hyperglycemic effects, this does not explain their growth synergy.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Calcitonin hormone increases the blood calcium level by stimulating the process of bone resorption.",
+    reason_text: "Calcitonin hormone is a hypercalcemic hormone.",
+    question_text: "Assertion (A): Calcitonin hormone increases the blood calcium level by stimulating the process of bone resorption.\nReason (R): Calcitonin hormone is a hypercalcemic hormone.",
+    options: AR_OPTIONS,
+    correct_index: 3,
+    explanation: "Both Assertion and Reason are false statements. Calcitonin (thyrocalcitonin, TCT) is a hypocalcemic hormone that decreases blood calcium levels by inhibiting osteoclastic bone resorption and promoting calcium deposition in bones.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Catecholamines refer to dopamine, epinephrine and norepinephrine.",
+    reason_text: "The secretion of epinephrine is under the control of pituitary hormones.",
+    question_text: "Assertion (A): Catecholamines refer to dopamine, epinephrine and norepinephrine.\nReason (R): The secretion of epinephrine is under the control of pituitary hormones.",
+    options: AR_OPTIONS,
+    correct_index: 2,
+    explanation: "Assertion is true statement, but Reason is false. Catecholamines include dopamine, adrenaline, and noradrenaline. The adrenal medulla is directly innervated by preganglionic sympathetic nerves and is NOT controlled by pituitary hormones (the pituitary hormone ACTH controls the adrenal cortex).",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "The Leydig cells which are present in inter-tubular spaces produce a group of hormones called androgens.",
+    reason_text: "Testosterone hormone does not influence libido.",
+    question_text: "Assertion (A): The Leydig cells which are present in inter-tubular spaces produce a group of hormones called androgens.\nReason (R): Testosterone hormone does not influence libido.",
+    options: AR_OPTIONS,
+    correct_index: 2,
+    explanation: "Assertion is true, but Reason is false. Leydig cells located in the intertubular spaces of the testes produce androgens (mainly testosterone). Testosterone directly influences and stimulates male sexual behavior (libido).",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Castration changes an aggressive bull into a docile ox.",
+    reason_text: "This is due to deficiency of testosterone.",
+    question_text: "Assertion (A): Castration changes an aggressive bull into a docile ox.\nReason (R): This is due to deficiency of testosterone.",
+    options: AR_OPTIONS,
+    correct_index: 0,
+    explanation: "Both Assertion and Reason are true, and Reason is the correct explanation. Surgical removal of the testes (castration) eliminates testosterone production, which is responsible for male aggressive behavior, transforming the aggressive bull into a docile work animal (ox).",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Thyroid gland regulates basal metabolic rate.",
+    reason_text: "Thyroid initiates, regulates and plays a key role in metamorphosis of frog's tadpole.",
+    question_text: "Assertion (A): Thyroid gland regulates basal metabolic rate.\nReason (R): Thyroid initiates, regulates and plays a key role in metamorphosis of frog's tadpole.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true facts, but Reason is not the correct explanation of Assertion. Thyroxine controls cellular oxidative metabolism and BMR in mammals, and also triggers tadpole metamorphosis into an adult frog in amphibians.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Melatonin influences menstrual cycle, pigmentation and defense capability.",
+    reason_text: "Melatonin plays a very important role in the regulation of diurnal rhythm of our body.",
+    question_text: "Assertion (A): Melatonin influences menstrual cycle, pigmentation and defense capability.\nReason (R): Melatonin plays a very important role in the regulation of diurnal rhythm of our body.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements from NCERT, but Reason is not the correct explanation of Assertion. In addition to regulating the 24-hour sleep-wake rhythm, melatonin also independently influences metabolism, skin pigmentation, menstrual cycle, and immune defense capability.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Cortisol is main mineralocorticoid in our body.",
+    reason_text: "Cortisol stimulates WBC production.",
+    question_text: "Assertion (A): Cortisol is main mineralocorticoid in our body.\nReason (R): Cortisol stimulates WBC production.",
+    options: AR_OPTIONS,
+    correct_index: 3,
+    explanation: "Both Assertion and Reason are false statements. Cortisol is the principal glucocorticoid in humans (aldosterone is the main mineralocorticoid). Cortisol suppresses the immune response and suppresses circulating lymphocytes and eosinophils rather than stimulating WBC production.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Prolonged hyperglycemia leads to diabetes mellitus.",
+    reason_text: "Insulin is a hyperglycemic hormone.",
+    question_text: "Assertion (A): Prolonged hyperglycemia leads to diabetes mellitus.\nReason (R): Insulin is a hyperglycemic hormone.",
+    options: AR_OPTIONS,
+    correct_index: 2,
+    explanation: "Assertion is true, but Reason is false. Prolonged hyperglycemia is a hallmark of diabetes mellitus. Insulin is a hypoglycemic hormone that lowers blood glucose levels by promoting cellular glucose uptake and glycogenesis.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "easy",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "In heart cells, cAMP serves as second messenger to adrenaline.",
+    reason_text: "Sympathetic system has stimulatory effect on heart beat.",
+    question_text: "Assertion (A): In heart cells, cAMP serves as second messenger to adrenaline.\nReason (R): Sympathetic system has stimulatory effect on heart beat.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements, but Reason is not the correct explanation of Assertion. Adrenaline interacts with beta-adrenergic receptors on cardiac myocytes to activate adenylyl cyclase and generate cAMP as a second messenger. The sympathetic nervous system stimulates cardiac output via catecholamines.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Pars distalis region of pituitary is commonly known as anterior pituitary.",
+    reason_text: "Pars distalis produces six trophic hormones.",
+    question_text: "Assertion (A): Pars distalis region of pituitary is commonly known as anterior pituitary.\nReason (R): Pars distalis produces six trophic hormones.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements, but Reason is not the correct explanation of Assertion. Pars distalis forms the major part of the anterior pituitary due to its anatomical location. It synthesizes six peptide hormones: GH, PRL, TSH, ACTH, LH, and FSH.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "Thymosin influences both cell-mediated immunity and humoral immunity.",
+    reason_text: "Aged individuals have reduced immunity.",
+    question_text: "Assertion (A): Thymosin influences both cell-mediated immunity and humoral immunity.\nReason (R): Aged individuals have reduced immunity.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true facts, but Reason is not the correct explanation of Assertion. Thymosin plays a major role in the differentiation of T-lymphocytes (cell-mediated immunity) and promotes antibody production (humoral immunity). Degeneration of the thymus in elderly individuals causes decreased thymosin and weakened immunity.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "The ovary secretes estrogen and progesterone.",
+    reason_text: "Progesterone plays a major role in maintenance of pregnancy.",
+    question_text: "Assertion (A): The ovary secretes estrogen and progesterone.\nReason (R): Progesterone plays a major role in maintenance of pregnancy.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements, but Reason is not the correct explanation of Assertion. The ovaries secrete estrogens (from growing ovarian follicles) and progesterone (from the corpus luteum). Progesterone supports the secretory endometrium and maintains pregnancy.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  },
+  {
+    assertion_text: "The atrial wall of heart secretes ANF.",
+    reason_text: "ANF acts as anti-RAAS.",
+    question_text: "Assertion (A): The atrial wall of heart secretes ANF.\nReason (R): ANF acts as anti-RAAS.",
+    options: AR_OPTIONS,
+    correct_index: 1,
+    explanation: "Both Assertion and Reason are true statements, but Reason is not the correct explanation of Assertion. When blood pressure or volume increases, atrial myocytes secrete Atrial Natriuretic Factor (ANF). ANF acts as an antagonist to RAAS (anti-RAAS) by causing vasodilation and natriuresis.",
+    marks: 4,
+    negative_marks: 1,
+    difficulty: "medium",
+    question_type: "assertion_reason"
+  }
+];
+
