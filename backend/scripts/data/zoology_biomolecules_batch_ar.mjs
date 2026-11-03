@@ -187,3 +187,4 @@ export const batchAR = [
     explanation: "Both Assertion and Reason are true and Reason is the correct explanation. Inulin (a homopolymer of fructose) is freely filtered at the glomerulus, neither reabsorbed nor secreted by renal tubules, and not metabolized by human tissues. Consequently, its renal clearance rate exactly equals the glomerular filtration rate (GFR)."
   }
 ];
+

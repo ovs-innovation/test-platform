@@ -143,3 +143,4 @@ export const batch4 = [
     explanation: "Fibrin (formed during blood clotting) has a predominantly globular/multidomain rod structure formed by end-to-end and lateral polymerization, not an antiparallel β-pleated sheet. Fibroin of silk is the classic example of an antiparallel β-pleated sheet structure."
   }
 ];
+

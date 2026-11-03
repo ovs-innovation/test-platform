@@ -485,3 +485,4 @@ export const batch2 = [
     explanation: "Class 4 Lyases catalyze the cleavage of bonds by non-hydrolytic mechanisms, leaving double bonds or adding groups to double bonds."
   }
 ];
+

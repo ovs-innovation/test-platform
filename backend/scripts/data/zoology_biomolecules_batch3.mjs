@@ -525,3 +525,4 @@ export const batch3 = [
     explanation: "Curve b demonstrates competitive inhibition, characterized by an increased apparent Km while Vmax remains unchanged. Malonate inhibition of succinic dehydrogenase is the classic textbook example of competitive inhibition."
   }
 ];
+

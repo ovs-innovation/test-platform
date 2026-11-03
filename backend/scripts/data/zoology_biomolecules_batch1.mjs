@@ -615,3 +615,4 @@ export const batch1 = [
     explanation: "Compound A is Lecithin (a phospholipid containing choline), which is a key structural component of cell membranes. Compound B is Adenine (a purine nitrogenous base, not a nucleotide)."
   }
 ];
+
