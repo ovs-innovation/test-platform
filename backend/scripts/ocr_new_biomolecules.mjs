@@ -48,3 +48,4 @@ async function runOCR() {
 }
 
 runOCR().catch(console.error);
+

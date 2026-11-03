@@ -170,3 +170,4 @@ export const batchAR2 = [
     explanation: "Assertion is true, but Reason is false. Glycine has only a hydrogen atom as its R-group (simplest amino acid), whereas tryptophan contains an indole ring (most complex amino acid). While all natural protein-forming amino acids (except glycine which is achiral) have the L-configuration, they can be either dextrorotatory (+) or levorotatory (-) in their optical rotation."
   }
 ];
+
