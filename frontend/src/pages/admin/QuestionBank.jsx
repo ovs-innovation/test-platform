@@ -241,6 +241,7 @@ export default function AdminQuestionBank() {
   ], []);
 
   const ZOOLOGY_STANDARD_6 = useMemo(() => [
+    'Animal Kingdom and Non-Chordates',
     'Biomolecules',
     'Neural Control and Coordination',
     'Chemical Coordination and Integration',
@@ -302,6 +303,7 @@ export default function AdminQuestionBank() {
       if (/alcohol/i.test(trimmed)) return 'Alcohols, Phenols and Ethers';
       if (/aldehyde|ketone|carboxylic/i.test(trimmed)) return 'Aldehydes, Ketones and Carboxylic Acids';
       if (/amine/i.test(trimmed)) return 'Amines';
+      if (/animal\s*kingdom.*non.*chordate|non.*chordate/i.test(trimmed)) return 'Animal Kingdom and Non-Chordates';
       if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
       if (/solution/i.test(trimmed)) return 'Solutions';
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
@@ -317,6 +319,7 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = ZOOLOGY_STANDARD_6.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
+      if (/animal\s*kingdom.*non.*chordate|non.*chordate/i.test(trimmed)) return 'Animal Kingdom and Non-Chordates';
       if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
       if (/neural/i.test(trimmed)) return 'Neural Control and Coordination';
       if (/chemical\s*coordination/i.test(trimmed)) return 'Chemical Coordination and Integration';
@@ -388,6 +391,12 @@ export default function AdminQuestionBank() {
       const matched = ZOOLOGY_STANDARD_6.find((z) => normChapterKey(z) === normChapterKey(raw));
       if (matched) return matched;
 
+      if (
+        Number(q.chapter_id) === 273 ||
+        Number(q.chapter_id) === 176 ||
+        /animal\s*kingdom.*non.*chordate|non.*chordate/i.test(raw) ||
+        /animal\s*kingdom.*non.*chordate|non.*chordate/i.test(q.topic || '')
+      ) return 'Animal Kingdom and Non-Chordates';
       if (/biomolecule/i.test(raw) || /biomolecule/i.test(q.topic || '')) return 'Biomolecules';
       if (
         Number(q.chapter_id) === 4 ||
