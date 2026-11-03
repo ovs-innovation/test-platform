@@ -66,3 +66,4 @@ runOCR().catch(err => {
   console.error('OCR failed:', err);
   process.exit(1);
 });
+

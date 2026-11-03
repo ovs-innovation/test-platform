@@ -97,3 +97,4 @@ cropAndUpload().catch(err => {
   console.error('Crop & Upload failed:', err);
   process.exit(1);
 });
+

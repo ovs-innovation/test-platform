@@ -190,3 +190,4 @@ export const neuralBatchAR = [
     explanation: "Assertion is true, but Reason is false. A canal called the cerebral aqueduct passes longitudinally through the midbrain. However, the four rounded swellings of corpora quadrigemina are located on the DORSAL portion of the midbrain (the ventral portion consists of the cerebral peduncles / crura cerebri)."
   }
 ];
+
