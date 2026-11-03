@@ -243,6 +243,7 @@ export default function AdminQuestionBank() {
   const ZOOLOGY_STANDARD_6 = useMemo(() => [
     'Biomolecules',
     'Neural Control and Coordination',
+    'Chemical Coordination and Integration',
     'Human Reproduction',
     'Reproductive Health',
     'Human Health & Disease',
@@ -318,6 +319,7 @@ export default function AdminQuestionBank() {
       if (matched) return matched;
       if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
       if (/neural/i.test(trimmed)) return 'Neural Control and Coordination';
+      if (/chemical\s*coordination/i.test(trimmed)) return 'Chemical Coordination and Integration';
       if (/human reproduction/i.test(trimmed)) return 'Human Reproduction';
       if (/reproductive health/i.test(trimmed)) return 'Reproductive Health';
       if (/health.*disease/i.test(trimmed)) return 'Human Health & Disease';
@@ -393,6 +395,12 @@ export default function AdminQuestionBank() {
         /neural/i.test(raw) ||
         /neural/i.test(q.topic || '')
       ) return 'Neural Control and Coordination';
+      if (
+        Number(q.chapter_id) === 271 ||
+        Number(q.chapter_id) === 175 ||
+        /chemical\s*coordination/i.test(raw) ||
+        /chemical\s*coordination/i.test(q.topic || '')
+      ) return 'Chemical Coordination and Integration';
       if (/reproductive\s*health/i.test(raw) || /reproductive\s*health/i.test(q.topic || '')) return 'Reproductive Health';
       if (/human\s*health|disease/i.test(raw) || /human\s*health|disease/i.test(q.topic || '')) return 'Human Health & Disease';
       if (/human\s*reproduction/i.test(raw) || /human\s*reproduction/i.test(q.topic || '')) return 'Human Reproduction';
