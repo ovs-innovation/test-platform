@@ -9,3 +9,4 @@ for (let p = 1; p <= 53; p++) {
 
 fs.writeFileSync('backend/scripts/trig_concat.txt', combined);
 console.log('Concatenated all 53 pages! Total length:', combined.length);
+

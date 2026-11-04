@@ -292,3 +292,4 @@ export const trigBatch2 = [
     difficulty: "medium"
   }
 ];
+

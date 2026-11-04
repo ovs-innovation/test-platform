@@ -304,3 +304,4 @@ export const heightsBatch2 = [
     difficulty: "easy"
   }
 ];
+

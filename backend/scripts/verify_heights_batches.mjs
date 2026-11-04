@@ -105,3 +105,4 @@ if (errors === 0) {
   console.error(`Validation finished with ${errors} error(s).`);
   process.exit(1);
 }
+

@@ -35,3 +35,4 @@ for (let pageNum = 1; pageNum <= pdfDoc.numPages; pageNum++) {
   }
 }
 console.log('Finished extracting all pages!');
+

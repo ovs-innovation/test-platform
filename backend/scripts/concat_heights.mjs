@@ -8,3 +8,4 @@ for (let p = 1; p <= 51; p++) {
 
 fs.writeFileSync('backend/scripts/heights_concat.txt', fullText);
 console.log('Concatenated all 51 content pages. Length:', fullText.length);
+

@@ -1,14 +1,11 @@
 import { createWorker } from 'tesseract.js';
 
-async function testOCR() {
-  console.log('Initializing Tesseract worker...');
+async function testOcr() {
   const worker = await createWorker('eng');
-  console.log('Worker initialized, recognizing page74.png...');
-  const ret = await worker.recognize('backend/uploads/equilibrium/page74.png');
-  console.log('--- OCR Result Sample (first 500 chars) ---');
-  console.log(ret.data.text.slice(0, 500));
+  const ret = await worker.recognize('backend/scripts/page_1.png');
+  console.log('OCR text:');
+  console.log(ret.data.text);
   await worker.terminate();
 }
 
-testOCR().catch(console.error);
-
+testOcr().catch(console.error);

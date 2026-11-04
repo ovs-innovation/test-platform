@@ -296,3 +296,4 @@ export const trigBatch3 = [
     difficulty: "medium"
   }
 ];
+

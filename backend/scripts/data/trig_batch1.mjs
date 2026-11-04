@@ -308,3 +308,4 @@ export const trigBatch1 = [
     difficulty: "easy"
   }
 ];
+
