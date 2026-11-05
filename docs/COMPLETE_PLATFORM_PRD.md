@@ -137,7 +137,7 @@ The platform is designed with an **API-First, Service-Oriented Architecture** al
 * **Upcoming Exam Feed:** Chronological schedule of scheduled live tests synchronized with institutional test series.
 
 ### 5.2 AIETS Exam Calendar (`/aiets-calendar`)
-* Comprehensive All India Exam Test Series interactive calendar.
+* Comprehensive All India Edvedum Test Series interactive calendar.
 * Monthly and list views displaying test release dates, registration windows, and countdown timers.
 * Target filter by exam stream (JEE Main, JEE Advanced, NEET-UG).
 

@@ -3874,7 +3874,7 @@ export default function AdminQuestionBank() {
               <CustomSelectDropdown
                 value={testForm.test_type}
                 options={[
-                  { value: 'AIETS', label: 'AIETS (All India Exam Test Series)' },
+                  { value: 'AIETS', label: 'AIETS (All India Edvedum Test Series)' },
                   { value: 'Unit Test', label: 'Unit Test' },
                   { value: 'Part Test', label: 'Part Test' },
                   { value: 'Cumulative Test', label: 'Cumulative Test' },
