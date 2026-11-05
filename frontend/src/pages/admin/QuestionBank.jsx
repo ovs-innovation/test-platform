@@ -32,7 +32,7 @@ const tryParseArray = (val) => {
   return [];
 };
 
-const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
+const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology',];
 
 export const isAssertionReason = (q) => {
   if (!q) return false;
@@ -1878,8 +1878,8 @@ export default function AdminQuestionBank() {
             <button
               type="button"
               className={`btn font-extrabold flex items-center gap-1.5 shadow-sm transition cursor-pointer ${selectedQuestionIds.length > 0
-                  ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/25 ring-2 ring-emerald-400/50'
-                  : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100'
+                ? 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-500/25 ring-2 ring-emerald-400/50'
+                : 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 hover:bg-emerald-100'
                 }`}
               onClick={openCreateTestModal}
               title="Create a test using selected questions from the bank"
@@ -2007,8 +2007,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setStatusFilter('all')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${statusFilter === 'all'
-                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
             >
               All ({statusCounts.total})
@@ -2017,8 +2017,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setStatusFilter('available')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${statusFilter === 'available'
-                  ? 'bg-emerald-600 text-white shadow-2xs font-black'
-                  : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
+                ? 'bg-emerald-600 text-white shadow-2xs font-black'
+                : 'text-emerald-700 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/30'
                 }`}
             >
               <span className="h-1.5 w-1.5 rounded-full bg-current"></span>
@@ -2028,8 +2028,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setStatusFilter('already_chosen')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${statusFilter === 'already_chosen'
-                  ? 'bg-violet-600 text-white shadow-2xs font-black'
-                  : 'text-violet-700 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30'
+                ? 'bg-violet-600 text-white shadow-2xs font-black'
+                : 'text-violet-700 dark:text-violet-300 hover:bg-violet-50 dark:hover:bg-violet-950/30'
                 }`}
             >
               <CheckCircle2 className="h-3.5 w-3.5" />
@@ -2044,8 +2044,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setTypeFilter('all')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${typeFilter === 'all'
-                  ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
-                  : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
             >
               All ({typeCounts.total})
@@ -2054,8 +2054,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setTypeFilter('mcq')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${typeFilter === 'mcq'
-                  ? 'bg-blue-600 text-white shadow-2xs font-black'
-                  : 'text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30'
+                ? 'bg-blue-600 text-white shadow-2xs font-black'
+                : 'text-blue-700 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-950/30'
                 }`}
             >
               MCQs ({typeCounts.mcqCount})
@@ -2064,8 +2064,8 @@ export default function AdminQuestionBank() {
               type="button"
               onClick={() => setTypeFilter('assertion_reason')}
               className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs flex items-center gap-1.5 ${typeFilter === 'assertion_reason'
-                  ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
-                  : 'text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30'
+                ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
+                : 'text-amber-700 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-950/30'
                 }`}
             >
               <AlertCircle className="h-3.5 w-3.5" />
@@ -2076,8 +2076,8 @@ export default function AdminQuestionBank() {
                 type="button"
                 onClick={() => setTypeFilter('numerical')}
                 className={`px-3 py-1.5 rounded-lg transition cursor-pointer text-xs ${typeFilter === 'numerical'
-                    ? 'bg-purple-600 text-white shadow-2xs font-black'
-                    : 'text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30'
+                  ? 'bg-purple-600 text-white shadow-2xs font-black'
+                  : 'text-purple-700 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-950/30'
                   }`}
               >
                 Numerical ({typeCounts.numCount})
@@ -2126,8 +2126,8 @@ export default function AdminQuestionBank() {
                       type="button"
                       onClick={() => setTypeFilter('all')}
                       className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer ${typeFilter === 'all'
-                          ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-2xs font-black'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                         }`}
                       title="View all questions in this chapter"
                     >
@@ -2137,8 +2137,8 @@ export default function AdminQuestionBank() {
                       type="button"
                       onClick={() => setTypeFilter('mcq')}
                       className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer ${typeFilter === 'mcq'
-                          ? 'bg-blue-600 text-white shadow-2xs font-black'
-                          : 'text-blue-700 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300'
+                        ? 'bg-blue-600 text-white shadow-2xs font-black'
+                        : 'text-blue-700 dark:text-blue-400 hover:text-blue-900 dark:hover:text-blue-300'
                         }`}
                       title="View only MCQs in this chapter"
                     >
@@ -2148,8 +2148,8 @@ export default function AdminQuestionBank() {
                       type="button"
                       onClick={() => setTypeFilter('assertion_reason')}
                       className={`px-2.5 py-1 rounded-lg transition text-[11px] cursor-pointer flex items-center gap-1 ${typeFilter === 'assertion_reason'
-                          ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
-                          : 'text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300'
+                        ? 'bg-amber-600 text-white shadow-2xs font-black ring-1 ring-amber-400/50'
+                        : 'text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-300'
                         }`}
                       title="View only Assertion-Reason questions in this chapter"
                     >
@@ -2164,8 +2164,8 @@ export default function AdminQuestionBank() {
                       type="button"
                       onClick={handleSelectAllAR}
                       className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black transition-all cursor-pointer shadow-2xs active:scale-95 ${isAllArSelected
-                          ? 'bg-amber-500 text-slate-950 hover:bg-amber-400 ring-2 ring-amber-400/50'
-                          : 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/30'
+                        ? 'bg-amber-500 text-slate-950 hover:bg-amber-400 ring-2 ring-amber-400/50'
+                        : 'bg-amber-500/15 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-500/40 hover:bg-amber-500/30'
                         }`}
                       title={isAllArSelected ? `Deselect all ${typeCounts.arCount} Assertion-Reason questions in ${selectedChapter}` : `Select all ${typeCounts.arCount} Assertion-Reason questions in ${selectedChapter} for test creation`}
                     >
@@ -2209,8 +2209,8 @@ export default function AdminQuestionBank() {
                   onClick={() => slideChapters('left')}
                   disabled={!canScrollLeft}
                   className={`p-1 rounded-lg transition-all ${canScrollLeft
-                      ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
-                      : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
+                    : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
                     }`}
                   title="Slide left"
                   aria-label="Previous chapters"
@@ -2222,8 +2222,8 @@ export default function AdminQuestionBank() {
                   onClick={() => slideChapters('right')}
                   disabled={!canScrollRight}
                   className={`p-1 rounded-lg transition-all ${canScrollRight
-                      ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
-                      : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
+                    ? 'bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:bg-slate-200 dark:hover:bg-slate-700 shadow-2xs cursor-pointer active:scale-95'
+                    : 'text-slate-300 dark:text-slate-600 cursor-not-allowed opacity-40'
                     }`}
                   title="Slide right"
                   aria-label="Next chapters"
@@ -2257,16 +2257,16 @@ export default function AdminQuestionBank() {
                 data-active-chapter={selectedChapter === 'all'}
                 onClick={() => setSelectedChapter('all')}
                 className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-black transition-all duration-200 cursor-pointer ${selectedChapter === 'all'
-                    ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
-                    : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
+                  : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
                   }`}
                 title={`Show all questions in ${category} (${questions.length})`}
               >
                 <span>All Chapters</span>
                 <span
                   className={`px-1.5 py-0.5 rounded-md text-[10px] font-black ${selectedChapter === 'all'
-                      ? 'bg-white/25 text-white'
-                      : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
+                    ? 'bg-white/25 text-white'
+                    : 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400'
                     }`}
                 >
                   {questions.length}
@@ -2274,8 +2274,8 @@ export default function AdminQuestionBank() {
                 {totalArInSubject > 0 && (
                   <span
                     className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-black transition-colors ${selectedChapter === 'all'
-                        ? 'bg-amber-400 text-slate-950 shadow-2xs'
-                        : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30'
+                      ? 'bg-amber-400 text-slate-950 shadow-2xs'
+                      : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30'
                       }`}
                     title={`${totalArInSubject} Assertion-Reason questions in ${category}`}
                   >
@@ -2294,8 +2294,8 @@ export default function AdminQuestionBank() {
                     data-active-chapter={isSelected}
                     onClick={() => handleSelectChapter(name)}
                     className={`shrink-0 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all duration-200 cursor-pointer whitespace-nowrap group/badge ${isSelected
-                        ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
-                        : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
+                      ? 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-md shadow-indigo-600/30 ring-2 ring-indigo-400/50 scale-[1.02]'
+                      : 'border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/90 text-slate-700 dark:text-slate-300 hover:border-indigo-400 dark:hover:border-indigo-600 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/40 hover:text-indigo-600 dark:hover:text-indigo-300'
                       }`}
                     title={`Click to filter by ${name} (${count} questions${arCount ? `, ${arCount} Assertion-Reason` : ''})`}
                   >
@@ -2306,8 +2306,8 @@ export default function AdminQuestionBank() {
                     <span className="font-extrabold">{name}</span>
                     <span
                       className={`px-2 py-0.5 rounded-lg text-[10px] font-mono font-black transition-colors ${isSelected
-                          ? 'bg-white/25 text-white'
-                          : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover/badge:bg-indigo-100 dark:group-hover/badge:bg-indigo-900/60 group-hover/badge:text-indigo-700 dark:group-hover/badge:text-indigo-300'
+                        ? 'bg-white/25 text-white'
+                        : 'bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 group-hover/badge:bg-indigo-100 dark:group-hover/badge:bg-indigo-900/60 group-hover/badge:text-indigo-700 dark:group-hover/badge:text-indigo-300'
                         }`}
                     >
                       {count}
@@ -2315,8 +2315,8 @@ export default function AdminQuestionBank() {
                     {arCount > 0 && (
                       <span
                         className={`px-1.5 py-0.5 rounded-md text-[9px] font-mono font-black transition-colors ${isSelected
-                            ? 'bg-amber-400 text-slate-950 shadow-2xs'
-                            : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 group-hover/badge:bg-amber-500/25'
+                          ? 'bg-amber-400 text-slate-950 shadow-2xs'
+                          : 'bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 group-hover/badge:bg-amber-500/25'
                           }`}
                         title={`${arCount} Assertion-Reason questions in ${name}`}
                       >
@@ -2453,8 +2453,8 @@ export default function AdminQuestionBank() {
                             handleSelectChapter(chapterName);
                           }}
                           className={`inline-flex items-center gap-1.5 text-xs font-bold rounded-lg px-2.5 py-1 text-left transition-all cursor-pointer ${selectedChapter.toLowerCase() === chapterName.toLowerCase()
-                              ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-400'
-                              : 'text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300'
+                            ? 'bg-indigo-600 text-white shadow-xs ring-1 ring-indigo-400'
+                            : 'text-slate-800 dark:text-slate-200 bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 hover:border-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300'
                             }`}
                           title={`Click to filter by chapter: ${chapterName}`}
                         >
@@ -2539,8 +2539,8 @@ export default function AdminQuestionBank() {
                               handleSelectChapter(chapterName);
                             }}
                             className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md border transition-all cursor-pointer truncate max-w-xs ${selectedChapter.toLowerCase() === chapterName.toLowerCase()
-                                ? 'bg-indigo-600 text-white border-indigo-500 shadow-xs ring-1 ring-indigo-400'
-                                : 'text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 hover:scale-102'
+                              ? 'bg-indigo-600 text-white border-indigo-500 shadow-xs ring-1 ring-indigo-400'
+                              : 'text-indigo-700 dark:text-indigo-300 bg-indigo-50 dark:bg-indigo-950/40 border-indigo-200 dark:border-indigo-800/50 hover:bg-indigo-100 dark:hover:bg-indigo-900/60 hover:scale-102'
                               }`}
                             title={`Filter Question Bank by Chapter: ${chapterName}`}
                           >
@@ -2642,8 +2642,8 @@ export default function AdminQuestionBank() {
                                   handleQuickSetAnswerKey(q, i);
                                 }}
                                 className={`group flex items-start gap-1.5 rounded-lg px-2 py-1 text-[11px] leading-snug text-left transition-all cursor-pointer select-none ${isCorrect
-                                    ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-400 dark:border-emerald-600/70 text-emerald-900 dark:text-emerald-200 font-bold ring-1 ring-emerald-500/30 shadow-xs'
-                                    : 'bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
+                                  ? 'bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-400 dark:border-emerald-600/70 text-emerald-900 dark:text-emerald-200 font-bold ring-1 ring-emerald-500/30 shadow-xs'
+                                  : 'bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/40 text-slate-700 dark:text-slate-300 hover:border-emerald-400 hover:bg-emerald-50/50 dark:hover:bg-emerald-950/20'
                                   }`}
                               >
                                 <span className={`font-black shrink-0 ${isCorrect ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400 group-hover:text-emerald-600 dark:group-hover:text-emerald-400'}`}>
@@ -3041,8 +3041,8 @@ export default function AdminQuestionBank() {
                       <div
                         key={i}
                         className={`rounded-xl border p-3 space-y-2.5 transition-all ${isCorrect
-                            ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30 shadow-xs'
-                            : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60'
+                          ? 'border-emerald-300 dark:border-emerald-800 bg-emerald-50/60 dark:bg-emerald-950/30 shadow-xs'
+                          : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/60'
                           }`}
                       >
                         <div className="flex items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800/60 pb-2">
@@ -4033,8 +4033,8 @@ export default function AdminQuestionBank() {
                         key={t.id}
                         onClick={() => setSelectedExistingTestId(t.id)}
                         className={`p-2.5 rounded-lg text-xs cursor-pointer transition flex items-center justify-between gap-2 ${isSelected
-                            ? 'bg-blue-600 text-white font-extrabold shadow-sm'
-                            : 'hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-800 dark:text-slate-200'
+                          ? 'bg-blue-600 text-white font-extrabold shadow-sm'
+                          : 'hover:bg-slate-100 dark:hover:bg-slate-800/80 text-slate-800 dark:text-slate-200'
                           }`}
                       >
                         <div className="min-w-0 flex-1">
@@ -4089,8 +4089,8 @@ export default function AdminQuestionBank() {
                   Question #{testsModalQuestion.serialNumber || testsModalQuestion.id}
                 </span>
                 <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${testsModalQuestion.status === 'already_chosen'
-                    ? 'bg-violet-500/15 border border-violet-500/30 text-violet-700 dark:text-violet-300'
-                    : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
+                  ? 'bg-violet-500/15 border border-violet-500/30 text-violet-700 dark:text-violet-300'
+                  : 'bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400'
                   }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${testsModalQuestion.status === 'already_chosen' ? 'bg-violet-500' : 'bg-emerald-500'}`}></span>
                   <span>{testsModalQuestion.status === 'already_chosen' ? 'Selected in Test' : 'Available (Unused)'}</span>
@@ -4157,8 +4157,8 @@ export default function AdminQuestionBank() {
                 type="button"
                 onClick={() => handleToggleStatus(testsModalQuestion)}
                 className={`inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border cursor-pointer transition-all ${testsModalQuestion.status === 'already_chosen'
-                    ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100'
-                    : 'bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700 hover:bg-violet-100'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-300 dark:border-emerald-700 hover:bg-emerald-100'
+                  : 'bg-violet-50 dark:bg-violet-950/30 text-violet-700 dark:text-violet-300 border-violet-300 dark:border-violet-700 hover:bg-violet-100'
                   }`}
               >
                 <BookmarkCheck className="h-3.5 w-3.5" />
