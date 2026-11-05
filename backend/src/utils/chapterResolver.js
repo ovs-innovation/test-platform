@@ -1579,27 +1579,100 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
   if (questionId && questionId >= 8382 && questionId <= 8506) return 'Haloalkanes and Haloarenes';
   if (questionId && questionId >= 8507 && questionId <= 8639) return 'Alcohols, Phenols and Ethers';
 
-  return 'Coordination Compounds';
+  return rawChapter || rawTopic || 'General';
 }
 
 export const ZOOLOGY_STANDARD_6 = [
+  'Animal Kingdom and Non-Chordates',
+  'Animal kingdom and Chordates',
+  'Locomotion and Movement',
+  'Neural Control and Coordination',
+  'Chemical Coordination and Integration',
+  'Excretory Products and their Elimination',
+  'Biomolecules',
+  'Body Fluids and Circulation',
+  'Breathing and Exchange of Gases',
+  'Structural Organisation in Animals',
   'Human Reproduction',
   'Reproductive Health',
   'Human Health & Disease',
   'Evolution',
   'Biotechnology - Principles and Processes',
-  'Biotechnology and its Applications',
-  'Structural Organisation in Animals',
-  'Breathing and Exchange of Gases'
+  'Biotechnology and its Applications'
 ];
 
 /**
- * Resolve standard Class 12 Chapter for Zoology questions.
- * Enforces strictly and exclusively one of the syllabus chapters.
+ * Resolve standard Class 11 & 12 Chapter for Zoology questions.
  */
 export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
   const norm = (s) => (s || '').toLowerCase().replace(/&/g, 'and').replace(/[-:]/g, ' ').replace(/[^a-z0-9]/g, '');
   const combined = `${rawChapter} ${rawTopic} ${rawText}`.toLowerCase();
+
+  // 0. Zoology: Animal Kingdom and Non-Chordates
+  if (
+    /animal\s*kingdom.*non[- ]?chordate|non[- ]?chordate/i.test(rawChapter) ||
+    /animal\s*kingdom.*non[- ]?chordate|non[- ]?chordate/i.test(rawTopic)
+  ) {
+    return 'Animal Kingdom and Non-Chordates';
+  }
+
+  // 0. Zoology: Animal kingdom and Chordates (excluding non-chordates)
+  if (
+    (!/non[- ]?chordate/i.test(rawChapter) && (/animal\s*kingdom.*chordate/i.test(rawChapter) || /phylum\s*chordata/i.test(rawChapter))) ||
+    (!/non[- ]?chordate/i.test(rawTopic) && /animal\s*kingdom.*chordate/i.test(rawTopic))
+  ) {
+    return 'Animal kingdom and Chordates';
+  }
+
+  // 0. Zoology: Locomotion and Movement
+  if (
+    /locomotion/i.test(rawChapter) ||
+    /locomotion/i.test(rawTopic) ||
+    /skeletal\s*system/i.test(rawChapter)
+  ) {
+    return 'Locomotion and Movement';
+  }
+
+  // 0. Zoology: Neural Control and Coordination
+  if (
+    /neural/i.test(rawChapter) ||
+    /neural/i.test(rawTopic)
+  ) {
+    return 'Neural Control and Coordination';
+  }
+
+  // 0. Zoology: Chemical Coordination and Integration
+  if (
+    /chemical\s*coordination/i.test(rawChapter) ||
+    /chemical\s*coordination/i.test(rawTopic) ||
+    /endocrine/i.test(rawChapter)
+  ) {
+    return 'Chemical Coordination and Integration';
+  }
+
+  // 0. Zoology: Excretory Products and their Elimination
+  if (
+    /excretory/i.test(rawChapter) ||
+    /excretory/i.test(rawTopic)
+  ) {
+    return 'Excretory Products and their Elimination';
+  }
+
+  // 0. Zoology: Biomolecules
+  if (
+    /biomolecule/i.test(rawChapter) ||
+    /biomolecule/i.test(rawTopic)
+  ) {
+    return 'Biomolecules';
+  }
+
+  // 0. Zoology: Body Fluids and Circulation
+  if (
+    /body\s*fluids?|circulation/i.test(rawChapter) ||
+    /body\s*fluids?|circulation/i.test(rawTopic)
+  ) {
+    return 'Body Fluids and Circulation';
+  }
 
   // 0. Zoology: Breathing and Exchange of Gases (Live chapter_id: 231, Local DB: 159, Live IDs: 15415-15548)
   if (
@@ -1664,7 +1737,7 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
     return 'Human Reproduction';
   }
 
-  return 'Human Reproduction';
+  return rawChapter || rawTopic || 'General';
 }
 
 export const BOTANY_STANDARD = [
@@ -1801,7 +1874,7 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
     return 'Sexual Reproduction in Flowering Plants';
   }
 
-  return 'Sexual Reproduction in Flowering Plants';
+  return rawChapter || rawTopic || 'General';
 }
 
 /**

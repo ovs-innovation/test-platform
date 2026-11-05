@@ -29,11 +29,33 @@ export const listCategories = asyncHandler(async (_req, res) => {
     const result = await query(
       `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
     );
-    const counts = Object.fromEntries(result.rows.map((r) => [r.category, r.count]));
-    const allCategoryNames = Array.from(new Set([...CATEGORIES, ...result.rows.map((r) => r.category)]));
-    return {
-      categories: allCategoryNames.map((c) => ({ name: c, count: counts[c] || 0 })),
-    };
+    const countsMap = new Map();
+    for (const r of result.rows) {
+      if (!r.category) continue;
+      const lower = r.category.trim().toLowerCase();
+      countsMap.set(lower, (countsMap.get(lower) || 0) + Number(r.count));
+    }
+
+    const seenLower = new Set();
+    const categoriesList = [];
+
+    for (const c of CATEGORIES) {
+      const lower = c.toLowerCase();
+      seenLower.add(lower);
+      categoriesList.push({ name: c, count: countsMap.get(lower) || 0 });
+    }
+
+    for (const r of result.rows) {
+      if (!r.category) continue;
+      const lower = r.category.trim().toLowerCase();
+      if (!seenLower.has(lower)) {
+        seenLower.add(lower);
+        const displayName = r.category.trim().replace(/\b\w/g, (ch) => ch.toUpperCase());
+        categoriesList.push({ name: displayName, count: countsMap.get(lower) || 0 });
+      }
+    }
+
+    return { categories: categoriesList };
   });
   res.json(payload);
 });
@@ -89,8 +111,8 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
   `;
   const params = [];
-  if (category && category !== 'All') {
-    sql += ' WHERE qb.category = $1';
+  if (category && category !== 'All' && category !== 'all') {
+    sql += ' WHERE LOWER(qb.category) = LOWER($1)';
     params.push(category);
   }
   sql += ' ORDER BY qb.category, qb.id ASC';
@@ -106,7 +128,7 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     return {
       ...row,
       chapter: standardChapter,
-      status: row.computed_status || row.status || 'normal',
+      status: row.computed_status || row.status || 'available',
       used_in_tests: row.used_in_tests || [],
       test_count: row.test_count || 0,
     };
@@ -512,7 +534,7 @@ export const deleteAllBankQuestions = asyncHandler(async (req, res) => {
   let sql = 'DELETE FROM question_bank';
   const params = [];
   if (scope !== 'all' && category && category !== 'all' && category !== 'All') {
-    sql += ' WHERE category = $1';
+    sql += ' WHERE LOWER(category) = LOWER($1)';
     params.push(category);
   }
   const result = await query(sql, params);
@@ -530,8 +552,8 @@ export const exportBankQuestions = asyncHandler(async (req, res) => {
   const { category } = req.query;
   let sql = 'SELECT * FROM question_bank';
   const params = [];
-  if (category) {
-    sql += ' WHERE category = $1';
+  if (category && category !== 'all' && category !== 'All') {
+    sql += ' WHERE LOWER(category) = LOWER($1)';
     params.push(category);
   }
   sql += ' ORDER BY category, id ASC';
@@ -685,7 +707,7 @@ export const bulkImportToAssessment = asyncHandler(async (req, res) => {
     const result = await query('SELECT * FROM question_bank WHERE id = ANY($1::int[])', [ids]);
     bankRows = result.rows;
   } else if (category) {
-    const result = await query('SELECT * FROM question_bank WHERE category = $1', [category]);
+    const result = await query('SELECT * FROM question_bank WHERE LOWER(category) = LOWER($1)', [category]);
     bankRows = result.rows;
   } else {
     throw ApiError.badRequest('Provide category or ids array');

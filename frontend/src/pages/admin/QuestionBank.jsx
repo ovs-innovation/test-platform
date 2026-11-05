@@ -242,9 +242,12 @@ export default function AdminQuestionBank() {
 
   const ZOOLOGY_STANDARD_6 = useMemo(() => [
     'Animal Kingdom and Non-Chordates',
-    'Biomolecules',
+    'Animal kingdom and Chordates',
+    'Locomotion and Movement',
     'Neural Control and Coordination',
     'Chemical Coordination and Integration',
+    'Excretory Products and their Elimination',
+    'Biomolecules',
     'Human Reproduction',
     'Reproductive Health',
     'Human Health & Disease',
@@ -319,7 +322,10 @@ export default function AdminQuestionBank() {
       const normalized = normChapterKey(trimmed);
       const matched = ZOOLOGY_STANDARD_6.find((ch) => normChapterKey(ch) === normalized);
       if (matched) return matched;
-      if (/animal\s*kingdom.*non.*chordate|non.*chordate/i.test(trimmed)) return 'Animal Kingdom and Non-Chordates';
+      if (/non[- ]?chordate/i.test(trimmed)) return 'Animal Kingdom and Non-Chordates';
+      if (/chordat/i.test(trimmed)) return 'Animal kingdom and Chordates';
+      if (/locomotion/i.test(trimmed)) return 'Locomotion and Movement';
+      if (/excretory/i.test(trimmed)) return 'Excretory Products and their Elimination';
       if (/biomolecule/i.test(trimmed)) return 'Biomolecules';
       if (/neural/i.test(trimmed)) return 'Neural Control and Coordination';
       if (/chemical\s*coordination/i.test(trimmed)) return 'Chemical Coordination and Integration';
@@ -394,9 +400,28 @@ export default function AdminQuestionBank() {
       if (
         Number(q.chapter_id) === 273 ||
         Number(q.chapter_id) === 176 ||
-        /animal\s*kingdom.*non.*chordate|non.*chordate/i.test(raw) ||
-        /animal\s*kingdom.*non.*chordate|non.*chordate/i.test(q.topic || '')
+        /non[- ]?chordate/i.test(raw) ||
+        /non[- ]?chordate/i.test(q.topic || '')
       ) return 'Animal Kingdom and Non-Chordates';
+
+      if (
+        Number(q.chapter_id) === 275 ||
+        (!/non[- ]?chordate/i.test(raw) && /chordat/i.test(raw)) ||
+        (!/non[- ]?chordate/i.test(q.topic || '') && /chordat/i.test(q.topic || ''))
+      ) return 'Animal kingdom and Chordates';
+
+      if (
+        Number(q.chapter_id) === 3 ||
+        /locomotion/i.test(raw) ||
+        /locomotion/i.test(q.topic || '')
+      ) return 'Locomotion and Movement';
+
+      if (
+        Number(q.chapter_id) === 265 ||
+        /excretory/i.test(raw) ||
+        /excretory/i.test(q.topic || '')
+      ) return 'Excretory Products and their Elimination';
+
       if (/biomolecule/i.test(raw) || /biomolecule/i.test(q.topic || '')) return 'Biomolecules';
       if (
         Number(q.chapter_id) === 4 ||

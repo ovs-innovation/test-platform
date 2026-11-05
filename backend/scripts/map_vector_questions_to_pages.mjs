@@ -38,3 +38,4 @@ fs.writeFileSync('./backend/scripts/page_to_qs_map.json', JSON.stringify(pageToQ
 for (let p = 1; p <= 10; p++) {
   console.log(`Page ${p} has questions:`, pageToQs[p]);
 }
+
