@@ -1,0 +1,1832 @@
+[
+  {
+    "qNum": 1,
+    "expectedAns": "A",
+    "page": 1,
+    "ansLineIdx": 14
+  },
+  {
+    "qNum": 2,
+    "expectedAns": "C",
+    "page": 1,
+    "ansLineIdx": 34
+  },
+  {
+    "qNum": 3,
+    "expectedAns": "B",
+    "page": 2,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 4,
+    "expectedAns": "B",
+    "page": 2,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 5,
+    "expectedAns": "A",
+    "page": 2,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 6,
+    "expectedAns": "A",
+    "page": 3,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 7,
+    "expectedAns": "B",
+    "page": 3,
+    "ansLineIdx": 19
+  },
+  {
+    "qNum": 8,
+    "expectedAns": "A",
+    "page": 3,
+    "ansLineIdx": 27
+  },
+  {
+    "qNum": 9,
+    "expectedAns": "C",
+    "page": 4,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 10,
+    "expectedAns": "C",
+    "page": 4,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 11,
+    "expectedAns": "C",
+    "page": 5,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 12,
+    "expectedAns": "C",
+    "page": 5,
+    "ansLineIdx": 26
+  },
+  {
+    "qNum": 13,
+    "expectedAns": "A",
+    "page": 6,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 14,
+    "expectedAns": "C",
+    "page": 6,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 15,
+    "expectedAns": "D",
+    "page": 6,
+    "ansLineIdx": 32
+  },
+  {
+    "qNum": 16,
+    "expectedAns": "B",
+    "page": 7,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 17,
+    "expectedAns": "D",
+    "page": 7,
+    "ansLineIdx": 18
+  },
+  {
+    "qNum": 18,
+    "expectedAns": "B",
+    "page": 8,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 19,
+    "expectedAns": "D",
+    "page": 8,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 20,
+    "expectedAns": "A",
+    "page": 9,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 21,
+    "expectedAns": "C",
+    "page": 9,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 22,
+    "expectedAns": "D",
+    "page": 10,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 23,
+    "expectedAns": "C",
+    "page": 10,
+    "ansLineIdx": 21
+  },
+  {
+    "qNum": 24,
+    "expectedAns": "D",
+    "page": 11,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 25,
+    "expectedAns": "C",
+    "page": 11,
+    "ansLineIdx": 15
+  },
+  {
+    "qNum": 26,
+    "expectedAns": "A",
+    "page": 11,
+    "ansLineIdx": 24
+  },
+  {
+    "qNum": 27,
+    "expectedAns": "C",
+    "page": 12,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 28,
+    "expectedAns": "D",
+    "page": 12,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 29,
+    "expectedAns": "B",
+    "page": 13,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 30,
+    "expectedAns": "A",
+    "page": 13,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 31,
+    "expectedAns": "C",
+    "page": 14,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 32,
+    "expectedAns": "D",
+    "page": 14,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 33,
+    "expectedAns": "A",
+    "page": 15,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 34,
+    "expectedAns": "B",
+    "page": 15,
+    "ansLineIdx": 24
+  },
+  {
+    "qNum": 35,
+    "expectedAns": "D",
+    "page": 16,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 36,
+    "expectedAns": "A",
+    "page": 16,
+    "ansLineIdx": 23
+  },
+  {
+    "qNum": 37,
+    "expectedAns": "D",
+    "page": 17,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 38,
+    "expectedAns": "A",
+    "page": 17,
+    "ansLineIdx": 17
+  },
+  {
+    "qNum": 39,
+    "expectedAns": "D",
+    "page": 18,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 40,
+    "expectedAns": "D",
+    "page": 18,
+    "ansLineIdx": 25
+  },
+  {
+    "qNum": 41,
+    "expectedAns": "D",
+    "page": 19,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 42,
+    "expectedAns": "D",
+    "page": 19,
+    "ansLineIdx": 19
+  },
+  {
+    "qNum": 43,
+    "expectedAns": "A",
+    "page": 20,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 44,
+    "expectedAns": "D",
+    "page": 20,
+    "ansLineIdx": 24
+  },
+  {
+    "qNum": 45,
+    "expectedAns": "D",
+    "page": 21,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 46,
+    "expectedAns": "C",
+    "page": 21,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 47,
+    "expectedAns": "D",
+    "page": 22,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 48,
+    "expectedAns": "B",
+    "page": 22,
+    "ansLineIdx": 14
+  },
+  {
+    "qNum": 49,
+    "expectedAns": "C",
+    "page": 23,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 50,
+    "expectedAns": "A",
+    "page": 23,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 51,
+    "expectedAns": "D",
+    "page": 24,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 52,
+    "expectedAns": "A",
+    "page": 25,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 53,
+    "expectedAns": "B",
+    "page": 25,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 54,
+    "expectedAns": "A",
+    "page": 26,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 55,
+    "expectedAns": "C",
+    "page": 26,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 56,
+    "expectedAns": "A",
+    "page": 27,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 57,
+    "expectedAns": "B",
+    "page": 28,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 58,
+    "expectedAns": "C",
+    "page": 29,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 59,
+    "expectedAns": "B",
+    "page": 29,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 60,
+    "expectedAns": "B",
+    "page": 30,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 61,
+    "expectedAns": "D",
+    "page": 31,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 62,
+    "expectedAns": "B",
+    "page": 32,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 63,
+    "expectedAns": "A",
+    "page": 33,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 64,
+    "expectedAns": "D",
+    "page": 34,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 65,
+    "expectedAns": "B",
+    "page": 35,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 66,
+    "expectedAns": "A",
+    "page": 35,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 67,
+    "expectedAns": "B",
+    "page": 36,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 68,
+    "expectedAns": "D",
+    "page": 37,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 69,
+    "expectedAns": "D",
+    "page": 38,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 70,
+    "expectedAns": "B",
+    "page": 39,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 71,
+    "expectedAns": "D",
+    "page": 40,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 72,
+    "expectedAns": "C",
+    "page": 41,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 73,
+    "expectedAns": "B",
+    "page": 42,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 74,
+    "expectedAns": "B",
+    "page": 43,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 75,
+    "expectedAns": "A",
+    "page": 44,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 76,
+    "expectedAns": "B",
+    "page": 45,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 77,
+    "expectedAns": "C",
+    "page": 46,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 78,
+    "expectedAns": "B",
+    "page": 46,
+    "ansLineIdx": 28
+  },
+  {
+    "qNum": 79,
+    "expectedAns": "B",
+    "page": 47,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 80,
+    "expectedAns": "C",
+    "page": 48,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 81,
+    "expectedAns": "A",
+    "page": 49,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 82,
+    "expectedAns": "C",
+    "page": 50,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 83,
+    "expectedAns": "A",
+    "page": 51,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 84,
+    "expectedAns": "A",
+    "page": 51,
+    "ansLineIdx": 23
+  },
+  {
+    "qNum": 85,
+    "expectedAns": "D",
+    "page": 52,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 86,
+    "expectedAns": "D",
+    "page": 53,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 87,
+    "expectedAns": "B",
+    "page": 54,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 88,
+    "expectedAns": "D",
+    "page": 54,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 89,
+    "expectedAns": "B",
+    "page": 55,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 90,
+    "expectedAns": "B",
+    "page": 55,
+    "ansLineIdx": 30
+  },
+  {
+    "qNum": 91,
+    "expectedAns": "A",
+    "page": 56,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 92,
+    "expectedAns": "D",
+    "page": 57,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 93,
+    "expectedAns": "C",
+    "page": 58,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 94,
+    "expectedAns": "B",
+    "page": 59,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 95,
+    "expectedAns": "D",
+    "page": 59,
+    "ansLineIdx": 26
+  },
+  {
+    "qNum": 96,
+    "expectedAns": "C",
+    "page": 60,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 97,
+    "expectedAns": "C",
+    "page": 61,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 98,
+    "expectedAns": "D",
+    "page": 62,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 99,
+    "expectedAns": "B",
+    "page": 62,
+    "ansLineIdx": 25
+  },
+  {
+    "qNum": 100,
+    "expectedAns": "C",
+    "page": 63,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 101,
+    "expectedAns": 1,
+    "page": 64,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 102,
+    "expectedAns": 30,
+    "page": 64,
+    "ansLineIdx": 29
+  },
+  {
+    "qNum": 103,
+    "expectedAns": 2,
+    "page": 65,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 104,
+    "expectedAns": 0.8,
+    "page": 65,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 105,
+    "expectedAns": "C",
+    "page": 66,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 106,
+    "expectedAns": "D",
+    "page": 67,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 107,
+    "expectedAns": 18,
+    "page": 67,
+    "ansLineIdx": 27
+  },
+  {
+    "qNum": 108,
+    "expectedAns": "B",
+    "page": 68,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 109,
+    "expectedAns": 6,
+    "page": 68,
+    "ansLineIdx": 23
+  },
+  {
+    "qNum": 110,
+    "expectedAns": 4,
+    "page": 69,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 111,
+    "expectedAns": 1,
+    "page": 69,
+    "ansLineIdx": 19
+  },
+  {
+    "qNum": 112,
+    "expectedAns": 75,
+    "page": 70,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 113,
+    "expectedAns": 12,
+    "page": 70,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 114,
+    "expectedAns": 2,
+    "page": 71,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 115,
+    "expectedAns": "A",
+    "page": 72,
+    "ansLineIdx": 14
+  },
+  {
+    "qNum": 116,
+    "expectedAns": "A",
+    "page": 72,
+    "ansLineIdx": 36
+  },
+  {
+    "qNum": 117,
+    "expectedAns": "D",
+    "page": 73,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 118,
+    "expectedAns": "A",
+    "page": 73,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 119,
+    "expectedAns": 28,
+    "page": 74,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 120,
+    "expectedAns": "B",
+    "page": 75,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 121,
+    "expectedAns": "A",
+    "page": 76,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 122,
+    "expectedAns": 2,
+    "page": 77,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 123,
+    "expectedAns": "B",
+    "page": 78,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 124,
+    "expectedAns": 486,
+    "page": 79,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 125,
+    "expectedAns": "D",
+    "page": 80,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 126,
+    "expectedAns": "B",
+    "page": 81,
+    "ansLineIdx": 15
+  },
+  {
+    "qNum": 127,
+    "expectedAns": "B",
+    "page": 81,
+    "ansLineIdx": 39
+  },
+  {
+    "qNum": 128,
+    "expectedAns": 4,
+    "page": 82,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 129,
+    "expectedAns": "D",
+    "page": 83,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 130,
+    "expectedAns": 6,
+    "page": 84,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 131,
+    "expectedAns": "C",
+    "page": 85,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 132,
+    "expectedAns": "D",
+    "page": 86,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 133,
+    "expectedAns": "A",
+    "page": 88,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 134,
+    "expectedAns": 3,
+    "page": 89,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 135,
+    "expectedAns": "D",
+    "page": 90,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 136,
+    "expectedAns": 60,
+    "page": 90,
+    "ansLineIdx": 21
+  },
+  {
+    "qNum": 137,
+    "expectedAns": "A",
+    "page": 91,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 138,
+    "expectedAns": 2,
+    "page": 91,
+    "ansLineIdx": 24
+  },
+  {
+    "qNum": 139,
+    "expectedAns": "B",
+    "page": 92,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 140,
+    "expectedAns": 9,
+    "page": 93,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 141,
+    "expectedAns": 5,
+    "page": 94,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 142,
+    "expectedAns": "A",
+    "page": 95,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 143,
+    "expectedAns": 90,
+    "page": 96,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 144,
+    "expectedAns": "D",
+    "page": 97,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 145,
+    "expectedAns": "C",
+    "page": 98,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 146,
+    "expectedAns": 1494,
+    "page": 99,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 147,
+    "expectedAns": "B",
+    "page": 100,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 148,
+    "expectedAns": "C",
+    "page": 101,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 149,
+    "expectedAns": 576,
+    "page": 102,
+    "ansLineIdx": 16
+  },
+  {
+    "qNum": 150,
+    "expectedAns": "B",
+    "page": 103,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 151,
+    "expectedAns": 14,
+    "page": 104,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 152,
+    "expectedAns": "A",
+    "page": 104,
+    "ansLineIdx": 30
+  },
+  {
+    "qNum": 153,
+    "expectedAns": "D",
+    "page": 105,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 154,
+    "expectedAns": "A",
+    "page": 105,
+    "ansLineIdx": 27
+  },
+  {
+    "qNum": 155,
+    "expectedAns": "D",
+    "page": 106,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 156,
+    "expectedAns": 150,
+    "page": 107,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 157,
+    "expectedAns": "C",
+    "page": 108,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 158,
+    "expectedAns": "D",
+    "page": 109,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 159,
+    "expectedAns": "A",
+    "page": 110,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 160,
+    "expectedAns": "A",
+    "page": 111,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 161,
+    "expectedAns": 29,
+    "page": 112,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 162,
+    "expectedAns": "C",
+    "page": 113,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 163,
+    "expectedAns": "C",
+    "page": 114,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 164,
+    "expectedAns": "A",
+    "page": 115,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 165,
+    "expectedAns": "D",
+    "page": 116,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 166,
+    "expectedAns": "D",
+    "page": 117,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 167,
+    "expectedAns": "B",
+    "page": 118,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 168,
+    "expectedAns": 36,
+    "page": 119,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 169,
+    "expectedAns": "C",
+    "page": 120,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 170,
+    "expectedAns": "B",
+    "page": 121,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 171,
+    "expectedAns": "B",
+    "page": 122,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 172,
+    "expectedAns": "A",
+    "page": 123,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 173,
+    "expectedAns": 14,
+    "page": 126,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 174,
+    "expectedAns": "C",
+    "page": 127,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 175,
+    "expectedAns": "D",
+    "page": 128,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 176,
+    "expectedAns": "A",
+    "page": 129,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 177,
+    "expectedAns": "B",
+    "page": 130,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 178,
+    "expectedAns": 8,
+    "page": 131,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 179,
+    "expectedAns": "C",
+    "page": 132,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 180,
+    "expectedAns": "A",
+    "page": 133,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 181,
+    "expectedAns": "B",
+    "page": 134,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 182,
+    "expectedAns": 2,
+    "page": 135,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 183,
+    "expectedAns": "C",
+    "page": 136,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 184,
+    "expectedAns": "A",
+    "page": 137,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 185,
+    "expectedAns": "A",
+    "page": 138,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 186,
+    "expectedAns": "C",
+    "page": 139,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 187,
+    "expectedAns": "B",
+    "page": 140,
+    "ansLineIdx": 16
+  },
+  {
+    "qNum": 188,
+    "expectedAns": "A",
+    "page": 141,
+    "ansLineIdx": 15
+  },
+  {
+    "qNum": 189,
+    "expectedAns": 36,
+    "page": 142,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 190,
+    "expectedAns": "C",
+    "page": 142,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 191,
+    "expectedAns": 3,
+    "page": 143,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 192,
+    "expectedAns": "B",
+    "page": 144,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 193,
+    "expectedAns": 11,
+    "page": 145,
+    "ansLineIdx": 3
+  },
+  {
+    "qNum": 194,
+    "expectedAns": 3501,
+    "page": 146,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 195,
+    "expectedAns": "A",
+    "page": 147,
+    "ansLineIdx": 14
+  },
+  {
+    "qNum": 196,
+    "expectedAns": "A",
+    "page": 148,
+    "ansLineIdx": 26
+  },
+  {
+    "qNum": 197,
+    "expectedAns": "D",
+    "page": 149,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 198,
+    "expectedAns": "C",
+    "page": 150,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 199,
+    "expectedAns": "B",
+    "page": 151,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 200,
+    "expectedAns": "C",
+    "page": 152,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 201,
+    "expectedAns": "A",
+    "page": 153,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 202,
+    "expectedAns": 11,
+    "page": 154,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 203,
+    "expectedAns": "C",
+    "page": 155,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 204,
+    "expectedAns": "B",
+    "page": 156,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 205,
+    "expectedAns": "A",
+    "page": 157,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 206,
+    "expectedAns": "B",
+    "page": 158,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 207,
+    "expectedAns": "B",
+    "page": 159,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 208,
+    "expectedAns": "C",
+    "page": 160,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 209,
+    "expectedAns": "C",
+    "page": 161,
+    "ansLineIdx": 14
+  },
+  {
+    "qNum": 210,
+    "expectedAns": 285,
+    "page": 162,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 211,
+    "expectedAns": "C",
+    "page": 163,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 212,
+    "expectedAns": "D",
+    "page": 164,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 213,
+    "expectedAns": "A",
+    "page": 165,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 214,
+    "expectedAns": 288,
+    "page": 166,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 215,
+    "expectedAns": "A",
+    "page": 168,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 216,
+    "expectedAns": 66,
+    "page": 169,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 217,
+    "expectedAns": "D",
+    "page": 170,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 218,
+    "expectedAns": "D",
+    "page": 170,
+    "ansLineIdx": 32
+  },
+  {
+    "qNum": 219,
+    "expectedAns": "A",
+    "page": 171,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 220,
+    "expectedAns": "D",
+    "page": 172,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 221,
+    "expectedAns": "C",
+    "page": 173,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 222,
+    "expectedAns": 5,
+    "page": 174,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 223,
+    "expectedAns": "B",
+    "page": 175,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 224,
+    "expectedAns": "D",
+    "page": 176,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 225,
+    "expectedAns": "B",
+    "page": 177,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 226,
+    "expectedAns": "A",
+    "page": 178,
+    "ansLineIdx": 24
+  },
+  {
+    "qNum": 227,
+    "expectedAns": "B",
+    "page": 179,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 228,
+    "expectedAns": "B",
+    "page": 180,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 229,
+    "expectedAns": "D",
+    "page": 181,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 230,
+    "expectedAns": "C",
+    "page": 182,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 231,
+    "expectedAns": "B",
+    "page": 183,
+    "ansLineIdx": 11
+  },
+  {
+    "qNum": 232,
+    "expectedAns": "B",
+    "page": 184,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 233,
+    "expectedAns": "A",
+    "page": 185,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 234,
+    "expectedAns": 48,
+    "page": 186,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 235,
+    "expectedAns": "D",
+    "page": 187,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 236,
+    "expectedAns": 38,
+    "page": 188,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 237,
+    "expectedAns": "A",
+    "page": 189,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 238,
+    "expectedAns": 38,
+    "page": 190,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 239,
+    "expectedAns": "A",
+    "page": 191,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 240,
+    "expectedAns": 54,
+    "page": 192,
+    "ansLineIdx": 16
+  },
+  {
+    "qNum": 241,
+    "expectedAns": "A",
+    "page": 193,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 242,
+    "expectedAns": "C",
+    "page": 193,
+    "ansLineIdx": 16
+  },
+  {
+    "qNum": 243,
+    "expectedAns": "A",
+    "page": 194,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 244,
+    "expectedAns": 30,
+    "page": 195,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 245,
+    "expectedAns": "B",
+    "page": 195,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 246,
+    "expectedAns": "D",
+    "page": 196,
+    "ansLineIdx": 8
+  },
+  {
+    "qNum": 247,
+    "expectedAns": "B",
+    "page": 196,
+    "ansLineIdx": 23
+  },
+  {
+    "qNum": 248,
+    "expectedAns": 46,
+    "page": 197,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 249,
+    "expectedAns": "D",
+    "page": 197,
+    "ansLineIdx": 27
+  },
+  {
+    "qNum": 250,
+    "expectedAns": "C",
+    "page": 198,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 251,
+    "expectedAns": "C",
+    "page": 199,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 252,
+    "expectedAns": 569,
+    "page": 199,
+    "ansLineIdx": 18
+  },
+  {
+    "qNum": 253,
+    "expectedAns": "C",
+    "page": 200,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 254,
+    "expectedAns": "C",
+    "page": 201,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 255,
+    "expectedAns": "B",
+    "page": 201,
+    "ansLineIdx": 25
+  },
+  {
+    "qNum": 256,
+    "expectedAns": "D",
+    "page": 202,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 257,
+    "expectedAns": "B",
+    "page": 203,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 258,
+    "expectedAns": "A",
+    "page": 204,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 259,
+    "expectedAns": "A",
+    "page": 205,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 260,
+    "expectedAns": 16,
+    "page": 205,
+    "ansLineIdx": 34
+  },
+  {
+    "qNum": 261,
+    "expectedAns": "C",
+    "page": 206,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 262,
+    "expectedAns": "D",
+    "page": 207,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 263,
+    "expectedAns": "D",
+    "page": 208,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 264,
+    "expectedAns": "A",
+    "page": 209,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 265,
+    "expectedAns": "A",
+    "page": 209,
+    "ansLineIdx": 27
+  },
+  {
+    "qNum": 266,
+    "expectedAns": "A",
+    "page": 210,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 267,
+    "expectedAns": 6,
+    "page": 211,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 268,
+    "expectedAns": "C",
+    "page": 211,
+    "ansLineIdx": 28
+  },
+  {
+    "qNum": 269,
+    "expectedAns": "A",
+    "page": 212,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 270,
+    "expectedAns": "D",
+    "page": 213,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 271,
+    "expectedAns": "B",
+    "page": 214,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 272,
+    "expectedAns": "C",
+    "page": 215,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 273,
+    "expectedAns": "C",
+    "page": 215,
+    "ansLineIdx": 16
+  },
+  {
+    "qNum": 274,
+    "expectedAns": "D",
+    "page": 216,
+    "ansLineIdx": 15
+  },
+  {
+    "qNum": 275,
+    "expectedAns": 5,
+    "page": 217,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 276,
+    "expectedAns": 128,
+    "page": 217,
+    "ansLineIdx": 13
+  },
+  {
+    "qNum": 277,
+    "expectedAns": "B",
+    "page": 218,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 278,
+    "expectedAns": 164,
+    "page": 219,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 279,
+    "expectedAns": "C",
+    "page": 220,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 280,
+    "expectedAns": "C",
+    "page": 221,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 281,
+    "expectedAns": "D",
+    "page": 222,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 282,
+    "expectedAns": "A",
+    "page": 223,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 283,
+    "expectedAns": "C",
+    "page": 223,
+    "ansLineIdx": 22
+  },
+  {
+    "qNum": 284,
+    "expectedAns": "A",
+    "page": 224,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 285,
+    "expectedAns": 5,
+    "page": 225,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 286,
+    "expectedAns": "C",
+    "page": 226,
+    "ansLineIdx": 6
+  },
+  {
+    "qNum": 287,
+    "expectedAns": "D",
+    "page": 226,
+    "ansLineIdx": 17
+  },
+  {
+    "qNum": 288,
+    "expectedAns": "A",
+    "page": 227,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 289,
+    "expectedAns": "A",
+    "page": 227,
+    "ansLineIdx": 19
+  },
+  {
+    "qNum": 290,
+    "expectedAns": "C",
+    "page": 228,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 291,
+    "expectedAns": "B",
+    "page": 228,
+    "ansLineIdx": 21
+  },
+  {
+    "qNum": 292,
+    "expectedAns": "B",
+    "page": 229,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 293,
+    "expectedAns": 37,
+    "page": 229,
+    "ansLineIdx": 28
+  },
+  {
+    "qNum": 294,
+    "expectedAns": "C",
+    "page": 230,
+    "ansLineIdx": 5
+  },
+  {
+    "qNum": 295,
+    "expectedAns": "B",
+    "page": 230,
+    "ansLineIdx": 20
+  },
+  {
+    "qNum": 296,
+    "expectedAns": "C",
+    "page": 231,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 297,
+    "expectedAns": "B",
+    "page": 232,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 298,
+    "expectedAns": "B",
+    "page": 234,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 299,
+    "expectedAns": 3,
+    "page": 236,
+    "ansLineIdx": 10
+  },
+  {
+    "qNum": 300,
+    "expectedAns": "A",
+    "page": 238,
+    "ansLineIdx": 7
+  },
+  {
+    "qNum": 301,
+    "expectedAns": "A",
+    "page": 240,
+    "ansLineIdx": 9
+  },
+  {
+    "qNum": 302,
+    "expectedAns": "B",
+    "page": 242,
+    "ansLineIdx": 15
+  },
+  {
+    "qNum": 303,
+    "expectedAns": 3,
+    "page": 243,
+    "ansLineIdx": 4
+  },
+  {
+    "qNum": 304,
+    "expectedAns": "C",
+    "page": 244,
+    "ansLineIdx": 12
+  },
+  {
+    "qNum": 305,
+    "expectedAns": "B",
+    "page": 246,
+    "ansLineIdx": 9
+  }
+]

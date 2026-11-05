@@ -9,6 +9,52 @@
  */
 
 const CHAPTER_RULES = [
+  // -------------------------------------------------------------------------
+  // MATHEMATICS
+  // -------------------------------------------------------------------------
+  {
+    chapter: 'Binomial Theorem',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bbinomial theorem\b/i,
+      /\bbinomail theorem\b/i,
+      /\bbinomial expansion\b/i,
+      /\bbinomial coefficient\b/i,
+      /\bgeneral term\b/i,
+      /\bmultinomial theorem\b/i,
+    ]
+  },
+  {
+    chapter: 'Straight Lines',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bstraight lines?\b/i,
+      /\bpair of straight lines?\b/i,
+      /\bintercept form\b/i,
+      /\borthocenter\b|\borthocentre\b/i,
+      /\bcircumcenter\b|\bcircumcentre\b/i,
+    ]
+  },
+  {
+    chapter: 'Statistics',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bstatistics\b/i,
+      /\bvariance\b/i,
+      /\bstandard deviation\b/i,
+      /\bmean deviation\b/i,
+    ]
+  },
+  {
+    chapter: 'Vector-Algebra',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bvector[- ]algebra\b/i,
+      /\bvector algebra\b/i,
+      /\bscalar triple product\b/i,
+      /\bvector triple product\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
@@ -495,6 +541,14 @@ const CHAPTER_RULES = [
   // ZOOLOGY
   // ═══════════════════════════════════════════════════════════════════════════
   {
+    chapter: 'Animal kingdom and Chordates',
+    subjects: ['zoology', 'biology'],
+    patterns: [
+      /\banimal kingdom and chordates\b/i,
+      /\banimal kingdom & chordates\b/i,
+    ],
+  },
+  {
     chapter: 'Animal Kingdom',
     subjects: ['zoology', 'biology'],
     patterns: [
@@ -772,6 +826,26 @@ const CHAPTER_RULES = [
       /\bmotion in straight line\b|\bmotion in a straight line\b|\brectilinear motion\b/i,
       /\bstopping distance\b|\breaction time\b|\bfreely falling\b|\bacceleration due to gravity\b/i,
       /\bvelocity-time graph\b|\bdisplacement-time graph\b|\binstantaneous acceleration\b/i,
+    ],
+  },
+    {
+    chapter: 'Basic Maths',
+    subjects: ['physics'],
+    patterns: [
+      /\bbasic math(s|ematics)?\b/i,
+      /\bcalculus\b/i,
+      /\bdifferentiation\b|\bintegration\b/i,
+      /\bmaxima and minima\b/i,
+      /\blogarithm\b/i,
+    ],
+  },
+{
+    chapter: 'Vector',
+    subjects: ['physics'],
+    patterns: [
+      /\bvector\b|\bvectors\b/i,
+      /\bcross product\b|\bdot product\b|\bscalar product\b|\bunit vector\b/i,
+      /\blami['']s theorem\b|\bparallelogram law\b|\btriangle law of vector\b/i,
     ],
   },
   {

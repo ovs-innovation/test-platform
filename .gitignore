@@ -27,6 +27,20 @@ backend/scripts/laws_of_motion/
 backend/pdf_rendered_pages/
 backend/test_fixed_diag*.png
 
+# Intermediate OCR dumps, scrapes, test renders & PDFs
+backend/scripts/*_all_pages_ocr.json
+backend/scripts/*_ocr.json
+backend/scripts/*.pdf
+backend/scripts/*.html
+backend/scripts/*.txt
+backend/scripts/p128_*.png
+backend/scripts/p169_*.png
+backend/scripts/q142_*.png
+backend/scripts/sample_ocr_*.json
+backend/scripts/page_128_words.json
+backend/test_renders/
+
+
 
 
 # OCR and scratch files
