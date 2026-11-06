@@ -3,9 +3,11 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { PARABOLA_PART1 } from './data/parabola_part1.mjs';
-import { PARABOLA_PART2 } from './data/parabola_part2.mjs';
-import { PARABOLA_PART3 } from './data/parabola_part3.mjs';
+import { PROBABILITY_PART1 } from './data/prob_part1.mjs';
+import { PROBABILITY_PART2 } from './data/prob_part2.mjs';
+import { PROBABILITY_PART3 } from './data/prob_part3.mjs';
+import { PROBABILITY_PART4 } from './data/prob_part4.mjs';
+import { PROBABILITY_PART5 } from './data/prob_part5.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -34,13 +36,15 @@ async function connectWithRetry(maxRetries = 15) {
 }
 
 const ALL_QUESTIONS = [
-  ...PARABOLA_PART1,
-  ...PARABOLA_PART2,
-  ...PARABOLA_PART3
+  ...PROBABILITY_PART1,
+  ...PROBABILITY_PART2,
+  ...PROBABILITY_PART3,
+  ...PROBABILITY_PART4,
+  ...PROBABILITY_PART5
 ];
 
 async function seed() {
-  console.log('=== SEEDING MATHEMATICS: PROBABILITY (143 QUESTIONS) ===\n');
+  console.log('=== SEEDING MATHEMATICS: PROBABILITY (251 QUESTIONS) ===\n');
   console.log(`Total questions to insert: ${ALL_QUESTIONS.length}`);
 
   const client = await connectWithRetry();
