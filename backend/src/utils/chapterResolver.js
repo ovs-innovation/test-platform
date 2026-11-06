@@ -1775,7 +1775,8 @@ export function resolveZoologyStandardChapter(rawChapter = '', rawTopic = '', ra
     /breathing/i.test(rawChapter) ||
     /respiratory/i.test(rawChapter) ||
     /respiratory/i.test(rawTopic) ||
-    (questionId && Number(questionId) >= 15415 && Number(questionId) <= 15548)
+    ((questionId && Number(questionId) >= 15415 && Number(questionId) <= 15548) ||
+     (questionId && ((Number(questionId) >= 7012 && Number(questionId) <= 7018) || (Number(questionId) >= 12715 && Number(questionId) <= 12727))))
   ) {
     return 'Breathing and Exchange of Gases';
   }
