@@ -36,3 +36,4 @@ for qs in page_to_qs.values():
 missing = sorted(set(range(1, 179)) - all_found)
 print(f"Detected {len(all_found)} / 178 questions.")
 print(f"Missing question headers from regex: {missing}")
+

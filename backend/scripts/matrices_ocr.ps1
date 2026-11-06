@@ -55,3 +55,4 @@ for ($i = 1; $i -le 153; $i++) {
 $json = $results | ConvertTo-Json -Depth 5
 [System.IO.File]::WriteAllText("backend/scripts/matrices_all_pages_ocr.json", $json, [System.Text.Encoding]::UTF8)
 Write-Host "Finished all 153 pages! Saved to backend/scripts/matrices_all_pages_ocr.json"
+

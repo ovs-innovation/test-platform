@@ -78,3 +78,4 @@ console.log(`- Total Questions: ${allQuestions.length}`);
 console.log(`- MCQs: ${mcqCount}`);
 console.log(`- Numerical: ${numCount}`);
 console.log(`- 100% matched official answer key for Q1 - Q178.`);
+

@@ -716,3 +716,4 @@ with open('backend/scripts/data/matrices_part1.mjs', 'w', encoding='utf-8') as f
     f.write("export const MATRICES_PART1 = " + json.dumps(PART1, indent=2) + ";\n")
 
 print("Saved backend/scripts/data/matrices_part1.mjs successfully!")
+
