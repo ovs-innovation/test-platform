@@ -377,15 +377,39 @@ export default function AdminQuestionBank() {
     }
 
     if (activeSubj === 'mathematics') {
-      if (/complex\s*numbers?/i.test(trimmed)) return 'Complex Number';
-      if (/sequences?\s*and\s*series/i.test(trimmed) || /sequence|series/i.test(trimmed)) return 'Sequences and Series';
-      if (/binomial\s*theorem/i.test(trimmed)) return 'Binomial Theorem';
-      if (/vector\s*algebra/i.test(trimmed)) return 'Vector-Algebra';
-      if (/straight\s*lines?/i.test(trimmed)) return 'Straight Lines';
+      if (/permutation/i.test(trimmed)) return 'Permutations and Combinations';
+      if (/trig[o]?nometric\s*equations?/i.test(trimmed)) return 'Trigonometric Equations';
+      if (/trig[o]?nometric\s*ratios?/i.test(trimmed) || /trigonometr(y|ic)/i.test(trimmed)) return 'Trigonometric Ratios and Identities';
+      if (/inverse\s*trig/i.test(trimmed)) return 'Inverse Trigonometric Functions';
+      if (/area\s*(under|bounded|between|enclosed)\s*(by\s*)?(two\s*)?curves?/i.test(trimmed)) return 'Area Under Curves';
+      if (/circles?/i.test(trimmed)) return 'Circles';
+      if (/complex\s*numbers?/i.test(trimmed)) return 'Complex Numbers';
+      if (/straight\s*lines?/i.test(trimmed) || /locus\s*of\s*a\s*moving\s*line/i.test(trimmed)) return 'Straight Lines';
+      if (/(three|3)\s*dimensional\s*geometry/i.test(trimmed) || /3d\s*geometry/i.test(trimmed) || /lines?\s*in\s*3d/i.test(trimmed)) return 'Three Dimensional Geometry';
+      if (/co[- ]?ordinate\s*geometry/i.test(trimmed)) return 'Coordinate Geometry';
+      if (/determinants?/i.test(trimmed) || /system\s*of\s*linear\s*equations/i.test(trimmed)) return 'Determinants';
+      if (/matrices|matrix/i.test(trimmed)) return 'Matrices';
+      if (/continuity\s*(and|&)?\s*differentiability/i.test(trimmed) || /differentiability/i.test(trimmed)) return 'Continuity and Differentiability';
+      if (/applications?\s*of\s*derivatives?/i.test(trimmed) || /tangents?\s*(and|&)?\s*normals?/i.test(trimmed) || /maxima\s*(and|&)?\s*minima/i.test(trimmed)) return 'Application of Derivatives';
+      if (/indefinite\s*integrat/i.test(trimmed)) return 'Indefinite Integration';
+      if (/definite\s*integrat/i.test(trimmed)) return 'Definite Integration';
+      if (/differential\s*equations?/i.test(trimmed)) return 'Differential Equations';
+      if (/functions?/i.test(trimmed) || /polynomial\s*functions?/i.test(trimmed)) return 'Functions';
+      if (/quadratic\s*equations?/i.test(trimmed)) return 'Quadratic Equations';
+      if (/sets?\s*(and|&)?\s*relations?/i.test(trimmed) || /^\s*sets?\s*$/i.test(trimmed) || /^\s*relations?\s*$/i.test(trimmed)) return 'Sets and Relations';
+      if (/limits?/i.test(trimmed)) return 'Limits';
+      if (/mathematical\s*reasoning/i.test(trimmed)) return 'Mathematical Reasoning';
+      if (/mathematical\s*induction/i.test(trimmed) || /principle\s*of\s*mathematical\s*induction/i.test(trimmed)) return 'Mathematical Induction';
+      if (/heights?\s*(and|&)?\s*distances?/i.test(trimmed)) return 'Heights and Distances';
+      if (/properties\s*of\s*triangles?/i.test(trimmed) || /ex[- ]radii/i.test(trimmed) || /solution\s*of\s*triangles?/i.test(trimmed)) return 'Properties of Triangles';
+      if (/binom[i]?al\s*theorems?/i.test(trimmed)) return 'Binomial Theorem';
+      if (/sequences?\s*(and|&)?\s*series/i.test(trimmed) || /arithmetico[- ]geometric/i.test(trimmed) || /progressions?/i.test(trimmed)) return 'Sequences and Series';
+      if (/vectors?([- ]algebra)?/i.test(trimmed) || /dot\s*product/i.test(trimmed) || /cross\s*product/i.test(trimmed) || /section\s*formula\s*&\s*vectors/i.test(trimmed)) return 'Vector-Algebra';
+      if (/probability/i.test(trimmed)) return 'Probability';
       if (/statistics/i.test(trimmed)) return 'Statistics';
       if (/parabolas?/i.test(trimmed)) return 'Parabola';
-      if (/probability/i.test(trimmed)) return 'Probability';
-      if (/matrices|matrix/i.test(trimmed)) return 'Matrices';
+      if (/ellipses?/i.test(trimmed)) return 'Ellipse';
+      if (/hyperbolas?/i.test(trimmed)) return 'Hyperbola';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -639,38 +663,14 @@ export default function AdminQuestionBank() {
 
     // 5. MATHEMATICS SCOPED RESOLUTION
     if (activeSubj === 'mathematics') {
-      const raw = (q.chapter_name || q.chapter || '').trim();
-      if (/complex\s*numbers?/i.test(raw) || Number(q.chapter_id) === 80 || Number(q.chapter_id) === 111) {
-        return 'Complex Number';
+      let raw = (q.chapter_name || q.chapter || '').trim();
+      const tp = (q.topic || '').trim();
+
+      // Guard against foreign names from other subjects (Zoology, Chemistry, Physics, Botany)
+      if (/neural|breathing|photosynthesis|solutions|work,\s*power|kinematics|simple\s*harmonic/i.test(raw)) {
+        raw = tp || '';
       }
-      if (/sequences?\s*and\s*series/i.test(raw) || /sequence|series/i.test(raw) || Number(q.chapter_id) === 105) {
-        return 'Sequences and Series';
-      }
-      if (/binomial\s*theorem/i.test(raw)) {
-        return 'Binomial Theorem';
-      }
-      if (/vector\s*algebra/i.test(raw)) {
-        return 'Vector-Algebra';
-      }
-      if (/straight\s*lines?/i.test(raw)) {
-        return 'Straight Lines';
-      }
-      if (/statistics/i.test(raw)) {
-        return 'Statistics';
-      }
-      if (/parabolas?/i.test(raw) || Number(q.chapter_id) === 244) {
-        return 'Parabola';
-      }
-      if (/probability/i.test(raw) || Number(q.chapter_id) === 301) {
-        return 'Probability';
-      }
-      if (/matrices|matrix/i.test(raw)) {
-        return 'Matrices';
-      }
-      if (/differential\s*equations?/i.test(raw) || Number(q.chapter_id) === 99) {
-        return 'Differential Equations';
-      }
-      return formatChapterName(raw, 'mathematics');
+      return formatChapterName(raw || tp, 'mathematics');
     }
 
     const raw = (q.chapter_name || q.chapter || 'General').trim() || 'General';

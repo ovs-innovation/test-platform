@@ -1959,6 +1959,287 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
 }
 
 /**
+ * Standard Mathematics Chapter definitions and patterns.
+ */
+export const MATHEMATICS_STANDARD_RULES = [
+  {
+    standard: 'Permutations and Combinations',
+    patterns: [
+      /permutations?\s*(and|&)?\s*combinations?/i,
+      /\bpermutations?\b/i,
+      /\bcombinations?\b/i
+    ]
+  },
+  {
+    standard: 'Trigonometric Equations',
+    patterns: [
+      /trig[o]?nometric\s*equations?/i
+    ]
+  },
+  {
+    standard: 'Trigonometric Ratios and Identities',
+    patterns: [
+      /trig[o]?nometric\s*ratios?\s*(and|&)?\s*identities/i,
+      /\btrigonometr(y|ic)\b/i
+    ]
+  },
+  {
+    standard: 'Inverse Trigonometric Functions',
+    patterns: [
+      /inverse\s*trig[o]?nometr(y|ic\s*functions?)/i
+    ]
+  },
+  {
+    standard: 'Circles',
+    patterns: [
+      /^\s*circles?\s*$/i
+    ]
+  },
+  {
+    standard: 'Complex Numbers',
+    patterns: [
+      /complex\s*numbers?/i
+    ]
+  },
+  {
+    standard: 'Area Under Curves',
+    patterns: [
+      /area\s*(under|bounded|between|enclosed)\s*(by\s*)?(two\s*)?curves?/i
+    ]
+  },
+  {
+    standard: 'Parabola',
+    patterns: [
+      /^\s*parabolas?\s*$/i
+    ]
+  },
+  {
+    standard: 'Ellipse',
+    patterns: [
+      /^\s*ellipses?\s*$/i
+    ]
+  },
+  {
+    standard: 'Hyperbola',
+    patterns: [
+      /^\s*hyperbolas?\s*$/i
+    ]
+  },
+  {
+    standard: 'Straight Lines',
+    patterns: [
+      /straight\s*lines?/i,
+      /pair\s*of\s*straight\s*lines?/i,
+      /locus\s*of\s*a\s*moving\s*line/i
+    ]
+  },
+  {
+    standard: 'Three Dimensional Geometry',
+    patterns: [
+      /(three|3)\s*dimensional\s*geometry/i,
+      /3d\s*geometry/i,
+      /lines?\s*in\s*3d/i,
+      /planes?\s*in\s*3d/i
+    ]
+  },
+  {
+    standard: 'Coordinate Geometry',
+    patterns: [
+      /co[- ]?ordinate\s*geometry/i
+    ]
+  },
+  {
+    standard: 'Determinants',
+    patterns: [
+      /^\s*determinants?\s*$/i,
+      /system\s*of\s*linear\s*equations/i
+    ]
+  },
+  {
+    standard: 'Matrices',
+    patterns: [
+      /^\s*matrices\s*$/i,
+      /^\s*matrix\s*$/i,
+      /matrices\s*(and|&)\s*determinants/i,
+      /adjoint\s*and\s*inverse\s*of\s*matrix/i
+    ]
+  },
+  {
+    standard: 'Continuity and Differentiability',
+    patterns: [
+      /continuity\s*(and|&)?\s*differentiability/i,
+      /^\s*differentiability\s*$/i
+    ]
+  },
+  {
+    standard: 'Application of Derivatives',
+    patterns: [
+      /applications?\s*of\s*derivatives?/i,
+      /tangents?\s*(and|&)?\s*normals?/i,
+      /maxima\s*(and|&)?\s*minima/i
+    ]
+  },
+  {
+    standard: 'Indefinite Integration',
+    patterns: [
+      /indefinite\s*integrat/i
+    ]
+  },
+  {
+    standard: 'Definite Integration',
+    patterns: [
+      /definite\s*integrat/i
+    ]
+  },
+  {
+    standard: 'Differential Equations',
+    patterns: [
+      /differential\s*equations?/i
+    ]
+  },
+  {
+    standard: 'Functions',
+    patterns: [
+      /^\s*functions?\s*$/i,
+      /polynomial\s*functions?/i,
+      /number\s*of\s*functions/i
+    ]
+  },
+  {
+    standard: 'Quadratic Equations',
+    patterns: [
+      /quadratic\s*equations?/i
+    ]
+  },
+  {
+    standard: 'Sets and Relations',
+    patterns: [
+      /sets?\s*(and|&)?\s*relations?/i,
+      /^\s*sets?\s*$/i,
+      /^\s*relations?\s*$/i
+    ]
+  },
+  {
+    standard: 'Limits',
+    patterns: [
+      /^\s*limits?\s*$/i
+    ]
+  },
+  {
+    standard: 'Mathematical Reasoning',
+    patterns: [
+      /mathematical\s*reasoning/i
+    ]
+  },
+  {
+    standard: 'Mathematical Induction',
+    patterns: [
+      /mathematical\s*induction/i,
+      /principle\s*of\s*mathematical\s*induction/i
+    ]
+  },
+  {
+    standard: 'Heights and Distances',
+    patterns: [
+      /heights?\s*(and|&)?\s*distances?/i
+    ]
+  },
+  {
+    standard: 'Properties of Triangles',
+    patterns: [
+      /properties\s*of\s*triangles?/i,
+      /ex[- ]radii/i,
+      /solution\s*of\s*triangles?/i
+    ]
+  },
+  {
+    standard: 'Binomial Theorem',
+    patterns: [
+      /binom[i]?al\s*theorems?/i
+    ]
+  },
+  {
+    standard: 'Sequences and Series',
+    patterns: [
+      /sequences?\s*(and|&)?\s*series/i,
+      /arithmetico[- ]geometric/i,
+      /progressions?/i
+    ]
+  },
+  {
+    standard: 'Vector-Algebra',
+    patterns: [
+      /vectors?([- ]algebra)?/i,
+      /dot\s*product/i,
+      /cross\s*product/i,
+      /section\s*formula\s*&\s*vectors/i
+    ]
+  },
+  {
+    standard: 'Probability',
+    patterns: [
+      /^\s*probability\s*$/i
+    ]
+  },
+  {
+    standard: 'Statistics',
+    patterns: [
+      /^\s*statistics\s*$/i
+    ]
+  }
+];
+
+/**
+ * Resolve standard Class 11 & 12 Chapter for Mathematics questions.
+ */
+export function resolveMathStandardChapter(rawChapter = '', rawTopic = '', rawText = '', questionId = null) {
+  const norm = (s) => (s || '').trim();
+  const ch = norm(rawChapter);
+  const tp = norm(rawTopic);
+
+  // If rawChapter has known foreign names from previous corruptions (e.g. "Neural Control...", "Solutions", etc.), ignore rawChapter
+  const isForeign = /neural|breathing|photosynthesis|solutions|work,\s*power|kinematics|simple\s*harmonic/i.test(ch);
+  const effectiveChapter = isForeign ? '' : ch;
+
+  // 1. Direct match on standard chapter names from rawChapter
+  if (effectiveChapter && effectiveChapter.toLowerCase() !== 'general' && effectiveChapter.toLowerCase() !== 'unknown') {
+    for (const item of MATHEMATICS_STANDARD_RULES) {
+      for (const pat of item.patterns) {
+        if (pat.test(effectiveChapter)) return item.standard;
+      }
+    }
+  }
+
+  // 2. Direct match on standard chapter names from rawTopic
+  if (tp && tp.toLowerCase() !== 'general' && tp.toLowerCase() !== 'unknown') {
+    for (const item of MATHEMATICS_STANDARD_RULES) {
+      for (const pat of item.patterns) {
+        if (pat.test(tp)) return item.standard;
+      }
+    }
+  }
+
+  // 3. Match from combined chapter & topic against MATH patterns ONLY
+  for (const item of MATHEMATICS_STANDARD_RULES) {
+    for (const pat of item.patterns) {
+      if (pat.test(effectiveChapter + ' ' + tp)) return item.standard;
+    }
+  }
+
+  // 4. Match from questionText against MATH patterns ONLY
+  for (const item of MATHEMATICS_STANDARD_RULES) {
+    for (const pat of item.patterns) {
+      if (pat.test(rawText)) return item.standard;
+    }
+  }
+
+  // 5. Default
+  if (effectiveChapter && effectiveChapter.toLowerCase() !== 'general') return effectiveChapter;
+  if (tp && tp.toLowerCase() !== 'general') return tp;
+  return 'General Mathematics';
+}
+
+/**
  * Standard Chapter Resolver function.
  * Given a subject/category, topic, and question context, returns the overarching
  * standard curriculum Chapter name.
@@ -1974,6 +2255,11 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   const rawChapter = (currentChapter || '').trim();
   const rawTopic = (topic || '').trim();
   const rawText = (questionText || '').trim();
+
+  // 0. Strict Syllabus Chapters for Mathematics
+  if (['mathematics', 'maths', 'math'].includes(normCategory)) {
+    return resolveMathStandardChapter(rawChapter, rawTopic, rawText, questionId);
+  }
 
   // 0. Strict 11 Syllabus Chapters for Chemistry
   if (normCategory === 'chemistry') {
@@ -2129,11 +2415,13 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     }
   }
 
-  // 4. Cross-subject fallback pattern matching
-  for (const rule of CHAPTER_RULES) {
-    for (const pattern of rule.patterns) {
-      if (pattern.test(combined)) {
-        return rule.chapter;
+  // 4. Cross-subject fallback pattern matching (strictly for untagged / general questions)
+  if (!normCategory || normCategory === 'general' || normCategory === 'all' || normCategory === 'unknown') {
+    for (const rule of CHAPTER_RULES) {
+      for (const pattern of rule.patterns) {
+        if (pattern.test(combined)) {
+          return rule.chapter;
+        }
       }
     }
   }
