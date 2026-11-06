@@ -280,7 +280,7 @@ export default function AdminQuestionBank() {
     'Microbes in Human Welfare',
     'Organisms and Populations',
     'Ecosystem',
-    'Biodiversity and Conservation (Sacred groves)'
+    'Biodiversity and Conservation'
   ], []);
 
   const normChapterKey = (s) => {
@@ -364,7 +364,7 @@ export default function AdminQuestionBank() {
       if (/microbes/i.test(trimmed)) return 'Microbes in Human Welfare';
       if (/organism.*population/i.test(trimmed)) return 'Organisms and Populations';
       if (/ecosystem/i.test(trimmed)) return 'Ecosystem';
-      if (/biodiversity/i.test(trimmed)) return 'Biodiversity and Conservation (Sacred groves)';
+      if (/biodiversity/i.test(trimmed)) return 'Biodiversity and Conservation';
     }
 
     if (activeSubj === 'physics') {

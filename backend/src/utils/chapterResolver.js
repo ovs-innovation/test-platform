@@ -1849,7 +1849,7 @@ export const BOTANY_STANDARD = [
   'Microbes in Human Welfare',
   'Organisms and Populations',
   'Ecosystem',
-  'Biodiversity and Conservation (Sacred groves)'
+  'Biodiversity and Conservation'
 ];
 export const BOTANY_STANDARD_7 = BOTANY_STANDARD;
 
@@ -1922,12 +1922,12 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   if (questionId && MOLECULAR_LEAK_IDS.has(Number(questionId))) return 'Molecular Basis of Inheritance';
 
   if (questionId && questionId >= 5733 && questionId <= 5943) return 'Sexual Reproduction in Flowering Plants';
-  if (questionId && questionId >= 5944 && questionId <= 6150) return 'Principles of Inheritance and Variation';
+  if (questionId && ((questionId >= 5944 && questionId <= 6150) || (questionId >= 12693 && questionId <= 12714))) return 'Principles of Inheritance and Variation';
   if (questionId && questionId >= 6151 && questionId <= 6553) return 'Molecular Basis of Inheritance';
   if (questionId && ((questionId >= 6554 && questionId <= 6603) || (questionId >= 12546 && questionId <= 12641))) return 'Microbes in Human Welfare';
   if (questionId && ((questionId >= 6604 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
   if (questionId && questionId >= 6701 && questionId <= 6775) return 'Ecosystem';
-  if (questionId && questionId >= 6776 && questionId <= 6869) return 'Biodiversity and Conservation (Sacred groves)';
+  if (questionId && ((questionId >= 6776 && questionId <= 6869) || (questionId >= 12677 && questionId <= 12692))) return 'Biodiversity and Conservation';
   if (questionId && questionId >= 13712 && questionId <= 14000) return 'The Living World';
 
   // 3. Explicit Living World chapter match
@@ -1937,7 +1937,7 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
 
   // 3. Keyword-based matching
   if (/sacred grove|biodiversity|conservation|iucn|red data|hotspot|endangered|extinct|dodo|quagga|thylacine|stellar|rivet popper|species-area|alien species|ex[- ]situ|in[- ]situ|national park|sanctuary|biosphere reserve|cryopreservation/i.test(combined)) {
-    return 'Biodiversity and Conservation (Sacred groves)';
+    return 'Biodiversity and Conservation';
   }
 
   if (/ecosystem|productivity|gpp|npp|decomposition|trophic level|food chain|food web|ecological pyramid|pyramid of|standing crop|standing state|stratification|ecological succession|pioneer species|climax community|hydrarch|xerarch|nutrient cycling|carbon cycle|phosphorus cycle/i.test(combined)) {
