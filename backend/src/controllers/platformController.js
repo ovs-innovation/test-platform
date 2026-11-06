@@ -404,7 +404,9 @@ export const deleteFaculty = asyncHandler(async (req, res) => {
 export const adminListSubjects = asyncHandler(async (_req, res) => {
   const result = await query(
     `SELECT s.*, COUNT(c.id)::int AS chapter_count FROM subjects s
-     LEFT JOIN chapters c ON c.subject_id = s.id GROUP BY s.id ORDER BY s.name`
+     LEFT JOIN chapters c ON c.subject_id = s.id 
+     WHERE s.active = true AND LOWER(s.name) != 'biology'
+     GROUP BY s.id ORDER BY s.name`
   );
   res.json({ subjects: result.rows });
 });

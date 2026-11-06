@@ -10,7 +10,7 @@ import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUplo
 import { stripHeadersAndFooters } from '../utils/questionFormatter.js';
 import { resolveStandardChapter } from '../utils/chapterResolver.js';
 
-const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'Biology'];
+const CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'PYQ'];
 
 const asJson = (value, fallback) => {
   if (value == null) return JSON.stringify(fallback);
@@ -42,12 +42,14 @@ export const listCategories = asyncHandler(async (_req, res) => {
     for (const c of CATEGORIES) {
       const lower = c.toLowerCase();
       seenLower.add(lower);
-      categoriesList.push({ name: c, count: countsMap.get(lower) || 0 });
+      const count = countsMap.get(lower) || 0;
+      categoriesList.push({ name: c, count });
     }
 
     for (const r of result.rows) {
       if (!r.category) continue;
       const lower = r.category.trim().toLowerCase();
+      if (lower === 'biology') continue; // Exclude legacy biology category
       if (!seenLower.has(lower)) {
         seenLower.add(lower);
         const displayName = r.category.trim().replace(/\b\w/g, (ch) => ch.toUpperCase());
@@ -64,7 +66,7 @@ export const listCategories = asyncHandler(async (_req, res) => {
  * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
-  const { category } = req.query;
+  const { category, chapter, subject } = req.query;
   res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
   res.set('Pragma', 'no-cache');
   res.set('Expires', '0');
@@ -110,14 +112,25 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
     LEFT JOIN subjects s ON qb.subject_id = s.id
     LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
   `;
+  const conditions = [];
   const params = [];
   if (category && category !== 'All' && category !== 'all') {
-    sql += ' WHERE LOWER(qb.category) = LOWER($1)';
     params.push(category);
+    conditions.push(`LOWER(qb.category) = LOWER($${params.length})`);
+  }
+
+  // If specific subject is requested (e.g. while in PYQ mode)
+  if (subject && subject !== 'All' && subject !== 'all') {
+    params.push(subject);
+    conditions.push(`LOWER(COALESCE(NULLIF(qb.subject, ''), s.name, '')) = LOWER($${params.length})`);
+  }
+
+  if (conditions.length > 0) {
+    sql += ' WHERE ' + conditions.join(' AND ');
   }
   sql += ' ORDER BY qb.category, qb.id ASC';
   const result = await query(sql, params);
-  const questions = (result.rows || []).map((row) => {
+  let questions = (result.rows || []).map((row) => {
     const standardChapter = resolveStandardChapter(
       row.category || row.subject_name || '',
       row.topic || '',
@@ -133,6 +146,16 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
       test_count: row.test_count || 0,
     };
   });
+
+  if (chapter && chapter !== 'All' && chapter !== 'all') {
+    const chapLower = chapter.trim().toLowerCase();
+    questions = questions.filter(
+      (q) => (q.chapter && q.chapter.toLowerCase() === chapLower) ||
+             (q.chapter_name && q.chapter_name.toLowerCase() === chapLower) ||
+             (q.topic && q.topic.toLowerCase() === chapLower)
+    );
+  }
+
   res.json({ questions });
 });
 

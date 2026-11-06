@@ -398,7 +398,7 @@ export const listSubjects = asyncHandler(async (_req, res) => {
     `SELECT s.*, COUNT(c.id)::int AS chapter_count
      FROM subjects s
      LEFT JOIN chapters c ON c.subject_id = s.id
-     WHERE s.active = true
+     WHERE s.active = true AND LOWER(s.name) != 'biology'
      GROUP BY s.id ORDER BY s.name`
   );
   res.json({ subjects: result.rows });

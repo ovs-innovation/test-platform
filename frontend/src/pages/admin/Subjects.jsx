@@ -92,10 +92,11 @@ export default function AdminSubjects() {
   const loadSubjects = async () => {
     try {
       const data = await adminService.subjects();
-      setSubjects(data || []);
-      if (data && data.length > 0 && !selected) {
-        setSelected(data[0].id);
-        loadChapters(data[0].id);
+      const filtered = (data || []).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
+      setSubjects(filtered);
+      if (filtered && filtered.length > 0 && !selected) {
+        setSelected(filtered[0].id);
+        loadChapters(filtered[0].id);
       }
     } catch (err) {
       toast.error('Failed to load subjects');

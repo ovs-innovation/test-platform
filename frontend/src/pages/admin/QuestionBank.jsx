@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal, AlertCircle, CheckSquare, Layers, HelpCircle } from 'lucide-react';
+import { useNavigate, Link } from 'react-router-dom';
+import { Pencil, Trash2, ChevronDown, ChevronLeft, ChevronRight, Check, AlertTriangle, FileUp, FileText, Sparkles, UploadCloud, CheckCircle2, X, Image, BookOpen, Hash, Bookmark, Search, Plus, ExternalLink, BookmarkCheck, RotateCcw, ZoomIn, SlidersHorizontal, AlertCircle, CheckSquare, Layers, HelpCircle, Eye } from 'lucide-react';
 import { questionBankService, adminService } from '../../lib/services.js';
 import { LoadingScreen, Spinner, DataTable, Badge } from '../../components/ui.jsx';
 import { AdminHeader } from '../../components/admin/AdminUI.jsx';
@@ -32,7 +32,7 @@ const tryParseArray = (val) => {
   return [];
 };
 
-const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology',];
+const DEFAULT_CATEGORIES = ['Physics', 'Chemistry', 'Mathematics', 'Botany', 'Zoology', 'PYQ'];
 
 export const isAssertionReason = (q) => {
   if (!q) return false;
@@ -162,8 +162,13 @@ function CustomSelectDropdown({ value, onChange, options, placeholder = 'Select 
 
 export default function AdminQuestionBank() {
   const toast = useToast();
-  const [category, setCategory] = useState('Physics');
+  const [category, setCategory] = useState(() => {
+    const param = new URLSearchParams(window.location.search).get('category');
+    if (param && param.toLowerCase() !== 'biology') return param;
+    return 'Mathematics';
+  });
   const [categoriesList, setCategoriesList] = useState(DEFAULT_CATEGORIES);
+  const [pyqSubject, setPyqSubject] = useState('All');
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -1414,13 +1419,14 @@ export default function AdminQuestionBank() {
   const load = async () => {
     setLoading(true);
     try {
+      const extraParams = category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {};
       const [data, subjects] = await Promise.all([
-        questionBankService.byCategory(category),
+        questionBankService.byCategory(category, extraParams),
         adminService.subjects().catch(() => []),
       ]);
       setQuestions(data || []);
 
-      const fetched = subjects || [];
+      const fetched = (subjects || []).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
       const defaultSubjects = [
         { name: 'Physics' },
         { name: 'Chemistry' },
@@ -1431,7 +1437,7 @@ export default function AdminQuestionBank() {
 
       const map = new Map();
       fetched.forEach(s => {
-        if (s && s.name) map.set(s.name.toLowerCase(), s);
+        if (s && s.name && s.name.toLowerCase() !== 'biology') map.set(s.name.toLowerCase(), s);
       });
       defaultSubjects.forEach((ds, idx) => {
         if (!map.has(ds.name.toLowerCase())) {
@@ -1439,11 +1445,11 @@ export default function AdminQuestionBank() {
         }
       });
 
-      const unifiedSubjects = Array.from(map.values());
+      const unifiedSubjects = Array.from(map.values()).filter((s) => s && s.name && s.name.toLowerCase() !== 'biology');
       setSubjectsList(unifiedSubjects);
 
-      const subNames = unifiedSubjects.map((s) => s.name).filter(Boolean);
-      const combined = Array.from(new Set([...DEFAULT_CATEGORIES, ...subNames]));
+      const subNames = unifiedSubjects.map((s) => s.name).filter((name) => Boolean(name) && name.toLowerCase() !== 'biology');
+      const combined = Array.from(new Set([...DEFAULT_CATEGORIES, ...subNames])).filter((c) => c && c.toLowerCase() !== 'biology');
       setCategoriesList(combined);
     } catch {
       toast.error('Could not load questions');
@@ -1459,7 +1465,7 @@ export default function AdminQuestionBank() {
     if (chapterSliderRef.current) {
       chapterSliderRef.current.scrollLeft = 0;
     }
-  }, [category]);
+  }, [category, pyqSubject]);
 
   useEffect(() => {
     checkSliderScroll();
@@ -1906,7 +1912,7 @@ export default function AdminQuestionBank() {
     <div className="w-full max-w-full space-y-6">
       <AdminHeader
         title="Question Repository & Bank"
-        subtitle={`Managing reusable exam questions — bulk import, export, and subject organization (${questions.length} in ${category}).`}
+        subtitle={`Managing reusable exam questions — bulk import, export, and subject organization (${questions.length} in ${category}${category === 'PYQ' && pyqSubject !== 'All' ? ` - ${pyqSubject}` : ''}).`}
         breadcrumbs={['Question Repository']}
         actions={(
           <>
@@ -2015,13 +2021,17 @@ export default function AdminQuestionBank() {
 
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex flex-wrap gap-2">
-          {categoriesList.map((c) => (
+          {categoriesList.filter((c) => c && c.toLowerCase() !== 'biology').map((c) => (
             <button
               key={c}
               type="button"
               className={`rounded-xl px-4 py-2 text-xs sm:text-sm font-extrabold transition-all duration-200 cursor-pointer ${category === c
-                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
-                : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
+                ? c === 'PYQ'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-md shadow-amber-500/25 ring-2 ring-amber-400/40'
+                  : 'bg-blue-600 text-white shadow-md shadow-blue-500/20'
+                : c === 'PYQ'
+                  ? 'border border-amber-300/80 bg-amber-50/60 text-amber-700 hover:bg-amber-100/70 hover:text-amber-900 dark:border-amber-700/50 dark:bg-amber-950/20 dark:text-amber-300 dark:hover:bg-amber-900/40'
+                  : 'border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
                 }`}
               onClick={() => {
                 setCategory(c);
@@ -2029,7 +2039,14 @@ export default function AdminQuestionBank() {
                 setTypeFilter('all');
               }}
             >
-              {c}
+              {c === 'PYQ' ? (
+                <span className="flex items-center gap-1.5">
+                  <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                  <span>PYQ</span>
+                </span>
+              ) : (
+                <span>{c}</span>
+              )}
             </button>
           ))}
         </div>
@@ -2122,6 +2139,47 @@ export default function AdminQuestionBank() {
         </div>
       </div>
 
+      {/* PYQ Chapter & Subject Navigation Banner */}
+      {category === 'PYQ' && (
+        <div className="mb-4 p-4 rounded-2xl border border-amber-300/70 dark:border-amber-800/60 bg-gradient-to-r from-amber-50/90 via-orange-50/60 to-amber-50/40 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-slate-900/40 flex flex-wrap items-center justify-between gap-3 shadow-2xs">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 text-white font-black text-sm shadow-md shadow-amber-500/30">
+              <Sparkles className="h-5 w-5" />
+            </span>
+            <div>
+              <p className="text-sm font-black text-slate-900 dark:text-white flex items-center gap-2">
+                <span>PYQ Sections (Chapter &amp; Subject-Wise)</span>
+                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-100 dark:bg-amber-900/60 text-amber-800 dark:text-amber-300">
+                  {questions.length} Questions
+                </span>
+              </p>
+              <p className="text-xs text-slate-600 dark:text-slate-400">
+                Official JEE Main &amp; NEET past year question repository with KaTeX verified solutions.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-xs font-black uppercase tracking-wider text-slate-500 dark:text-slate-400 mr-1">Subject:</span>
+            {['All', 'Mathematics', 'Physics', 'Chemistry', 'Botany', 'Zoology'].map((s) => (
+              <button
+                key={s}
+                type="button"
+                onClick={() => {
+                  setPyqSubject(s);
+                  setSelectedChapter('all');
+                }}
+                className={`px-3.5 py-1.5 rounded-xl text-xs font-black transition cursor-pointer ${
+                  pyqSubject === s
+                    ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-xs'
+                    : 'bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/80'
+                }`}
+              >
+                {s === 'All' ? 'All Subjects' : s}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Chapter Name Badges Slider View */}
       {chaptersWithCounts.length > 0 && (
@@ -2878,9 +2936,11 @@ export default function AdminQuestionBank() {
                 ? selectedChapter !== 'all'
                   ? `No Assertion-Reason questions found in chapter "${selectedChapter}".`
                   : `No Assertion-Reason questions found in ${category}.`
-                : selectedChapter !== 'all'
-                  ? `No questions found for chapter "${selectedChapter}".`
-                  : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`
+                : category === 'PYQ'
+                  ? 'No questions in the PYQ section yet. Questions will be added to this section soon.'
+                  : selectedChapter !== 'all'
+                    ? `No questions found for chapter "${selectedChapter}".`
+                    : `No questions in ${category}. Upload a PDF, import via CSV, or add manually.`
             }
           />
         </div>

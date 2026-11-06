@@ -21,11 +21,14 @@ import { questionBankPdfUpload } from '../middleware/pdfUpload.js';
 
 const router = Router();
 
+// Read-only category & question listing accessible to authenticated users (admin, candidate, faculty)
+router.get('/categories', authenticate, listCategories);
+router.get('/', authenticate, listBankQuestions);
+router.get('/export', authenticate, authorize('admin'), exportBankQuestions);
+
+// All question bank management & mutation routes strictly require admin
 router.use(authenticate, authorize('admin'));
 
-router.get('/export', exportBankQuestions);
-router.get('/categories', listCategories);
-router.get('/', listBankQuestions);
 router.post('/upload-pdf', questionBankPdfUpload, uploadPdfToQuestionBank);
 router.post('/bulk', validate(bulkUploadSchema), bulkUploadBankQuestions);
 router.post('/bulk-import/:assessmentId', validate(bankBulkImportSchema), bulkImportToAssessment);

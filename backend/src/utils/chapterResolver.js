@@ -89,12 +89,32 @@ const CHAPTER_RULES = [
     ]
   },
   {
+    chapter: 'Determinants',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bdeterminants?\b/i,
+      /\bcramer'?s rule\b/i,
+      /\bdeterminant value\b/i,
+      /\bdet\s*\(/i,
+    ]
+  },
+  {
+    chapter: 'Circles',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bcircles?\b/i,
+      /\btangent to.*circle\b/i,
+      /\bradius of.*circle\b/i,
+      /\bchord of contact\b/i,
+      /\bconcentric circles?\b/i,
+    ]
+  },
+  {
     chapter: 'Matrices',
     subjects: ['mathematics', 'maths', 'math'],
     patterns: [
       /\bmatrices\b/i,
       /\bmatrix\b/i,
-      /\bdeterminants?\b/i,
       /\badjoint\b/i,
       /\binverse of matrix\b/i,
       /\beigenvalues?\b/i,
