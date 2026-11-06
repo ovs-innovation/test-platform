@@ -130,7 +130,8 @@ async function verifyAll() {
       'Binomial Theorem',
       'Statistics',
       'Straight Lines',
-      'Vector-Algebra'
+      'Vector-Algebra',
+      'Sequences and Series'
     ]);
 
     // Verify Zoology

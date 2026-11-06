@@ -67,6 +67,16 @@ const CHAPTER_RULES = [
       /\bharmonic progression\b/i,
     ]
   },
+  {
+    chapter: 'Parabola',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bparabolas?\b/i,
+      /\bfocal chord\b/i,
+      /\blatus rectum\b/i,
+      /\bdirectrix\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════

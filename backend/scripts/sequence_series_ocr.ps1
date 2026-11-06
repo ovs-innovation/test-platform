@@ -55,3 +55,4 @@ for ($i = 1; $i -le 167; $i++) {
 $json = $results | ConvertTo-Json -Depth 5
 [System.IO.File]::WriteAllText("backend/scripts/sequence_series_all_pages_ocr.json", $json, [System.Text.Encoding]::UTF8)
 Write-Host "Finished all 167 pages! Saved to backend/scripts/sequence_series_all_pages_ocr.json"
+

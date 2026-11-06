@@ -378,6 +378,7 @@ export default function AdminQuestionBank() {
       if (/vector\s*algebra/i.test(trimmed)) return 'Vector-Algebra';
       if (/straight\s*lines?/i.test(trimmed)) return 'Straight Lines';
       if (/statistics/i.test(trimmed)) return 'Statistics';
+      if (/parabolas?/i.test(trimmed)) return 'Parabola';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -649,6 +650,9 @@ export default function AdminQuestionBank() {
       }
       if (/statistics/i.test(raw)) {
         return 'Statistics';
+      }
+      if (/parabolas?/i.test(raw) || Number(q.chapter_id) === 244) {
+        return 'Parabola';
       }
       return formatChapterName(raw, 'mathematics');
     }
