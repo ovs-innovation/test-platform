@@ -136,6 +136,19 @@ const CHAPTER_RULES = [
       /\bseparable\s*variable\b/i,
     ]
   },
+  {
+    chapter: 'Three Dimensional Geometry',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bthree\s*dimensional\b/i,
+      /\b3d\s*geometry\b/i,
+      /\bdirection\s*cosines?\b/i,
+      /\bdirection\s*ratios?\b/i,
+      /\bplane\s*and\s*line\b/i,
+      /\bshortest\s*distance\b/i,
+      /\bcoplanar\s*lines?\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════

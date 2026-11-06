@@ -410,6 +410,10 @@ export default function AdminQuestionBank() {
       if (/parabolas?/i.test(trimmed)) return 'Parabola';
       if (/ellipses?/i.test(trimmed)) return 'Ellipse';
       if (/hyperbolas?/i.test(trimmed)) return 'Hyperbola';
+      if (/probability/i.test(trimmed)) return 'Probability';
+      if (/matrices|matrix/i.test(trimmed)) return 'Matrices';
+      if (/differential\s*equations?/i.test(trimmed)) return 'Differential Equations';
+      if (/three\s*dimensional/i.test(trimmed) || /3d\s*geometry/i.test(trimmed)) return 'Three Dimensional Geometry';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -669,6 +673,36 @@ export default function AdminQuestionBank() {
       // Guard against foreign names from other subjects (Zoology, Chemistry, Physics, Botany)
       if (/neural|breathing|photosynthesis|solutions|work,\s*power|kinematics|simple\s*harmonic/i.test(raw)) {
         raw = tp || '';
+      }
+      if (/three\s*dimensional/i.test(raw) || /3d\s*geometry/i.test(raw) || Number(q.chapter_id) === 98) {
+        return 'Three Dimensional Geometry';
+      }
+      if (/probability/i.test(raw) || Number(q.chapter_id) === 301) {
+        return 'Probability';
+      }
+      if (/differential\s*equations?/i.test(raw) || Number(q.chapter_id) === 99) {
+        return 'Differential Equations';
+      }
+      if (/matrices|matrix/i.test(raw) || Number(q.chapter_id) === 299) {
+        return 'Matrices';
+      }
+      if (/sequences?\s*and\s*series/i.test(raw) || /sequence|series/i.test(raw) || Number(q.chapter_id) === 105) {
+        return 'Sequences and Series';
+      }
+      if (/binomial\s*theorem/i.test(raw) || Number(q.chapter_id) === 181) {
+        return 'Binomial Theorem';
+      }
+      if (/vector\s*algebra/i.test(raw) || Number(q.chapter_id) === 282) {
+        return 'Vector-Algebra';
+      }
+      if (/straight\s*lines?/i.test(raw) || Number(q.chapter_id) === 79) {
+        return 'Straight Lines';
+      }
+      if (/statistics/i.test(raw) || Number(q.chapter_id) === 292) {
+        return 'Statistics';
+      }
+      if (/parabolas?/i.test(raw) || Number(q.chapter_id) === 244) {
+        return 'Parabola';
       }
       return formatChapterName(raw || tp, 'mathematics');
     }

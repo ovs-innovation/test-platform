@@ -1,17 +1,31 @@
+import dns from 'node:dns';
+dns.setServers(['8.8.8.8', '1.1.1.1']);
+
+import pg from 'pg';
 import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
+dotenv.config({ path: 'backend/.env' });
+const { Pool } = pg;
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-dotenv.config({ path: path.join(__dirname, '../.env') });
-
-import { query } from '../src/config/db.js';
-
-async function run() {
-  const res = await query("SELECT id, question, question_type, options, correct_option FROM question_bank WHERE chapter_id = 79");
-  console.log("Existing questions under chapter 79:", res.rows);
-  process.exit(0);
+async function check() {
+  try {
+    const res = await pool.query(`
+      SELECT 
+        qb.chapter_id,
+        c.name AS chapter_name,
+        qb.chapter AS qb_chapter,
+        count(*) as count
+      FROM question_bank qb
+      LEFT JOIN chapters c ON qb.chapter_id = c.id
+      WHERE LOWER(qb.category) = 'mathematics'
+      GROUP BY qb.chapter_id, c.name, qb.chapter
+      ORDER BY count DESC
+    `);
+    console.table(res.rows);
+  } catch (err) {
+    console.error('Error:', err);
+  } finally {
+    await pool.end();
+  }
 }
-
-run().catch(console.error);
+check();
