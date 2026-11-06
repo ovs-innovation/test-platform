@@ -373,6 +373,11 @@ export default function AdminQuestionBank() {
 
     if (activeSubj === 'mathematics') {
       if (/complex\s*numbers?/i.test(trimmed)) return 'Complex Number';
+      if (/sequences?\s*and\s*series/i.test(trimmed) || /sequence|series/i.test(trimmed)) return 'Sequences and Series';
+      if (/binomial\s*theorem/i.test(trimmed)) return 'Binomial Theorem';
+      if (/vector\s*algebra/i.test(trimmed)) return 'Vector-Algebra';
+      if (/straight\s*lines?/i.test(trimmed)) return 'Straight Lines';
+      if (/statistics/i.test(trimmed)) return 'Statistics';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -629,6 +634,21 @@ export default function AdminQuestionBank() {
       const raw = (q.chapter_name || q.chapter || '').trim();
       if (/complex\s*numbers?/i.test(raw) || Number(q.chapter_id) === 80 || Number(q.chapter_id) === 111) {
         return 'Complex Number';
+      }
+      if (/sequences?\s*and\s*series/i.test(raw) || /sequence|series/i.test(raw) || Number(q.chapter_id) === 105) {
+        return 'Sequences and Series';
+      }
+      if (/binomial\s*theorem/i.test(raw)) {
+        return 'Binomial Theorem';
+      }
+      if (/vector\s*algebra/i.test(raw)) {
+        return 'Vector-Algebra';
+      }
+      if (/straight\s*lines?/i.test(raw)) {
+        return 'Straight Lines';
+      }
+      if (/statistics/i.test(raw)) {
+        return 'Statistics';
       }
       return formatChapterName(raw, 'mathematics');
     }

@@ -55,6 +55,18 @@ const CHAPTER_RULES = [
       /\bvector triple product\b/i,
     ]
   },
+  {
+    chapter: 'Sequences and Series',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bsequences? and series\b/i,
+      /\bsequence and series\b/i,
+      /\bprogressions?\b/i,
+      /\barithmetic progression\b/i,
+      /\bgeometric progression\b/i,
+      /\bharmonic progression\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
