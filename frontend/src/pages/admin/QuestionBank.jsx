@@ -379,6 +379,8 @@ export default function AdminQuestionBank() {
       if (/straight\s*lines?/i.test(trimmed)) return 'Straight Lines';
       if (/statistics/i.test(trimmed)) return 'Statistics';
       if (/parabolas?/i.test(trimmed)) return 'Parabola';
+      if (/probability/i.test(trimmed)) return 'Probability';
+      if (/matrices|matrix/i.test(trimmed)) return 'Matrices';
     }
 
     if (trimmed === trimmed.toLowerCase()) {
@@ -653,6 +655,12 @@ export default function AdminQuestionBank() {
       }
       if (/parabolas?/i.test(raw) || Number(q.chapter_id) === 244) {
         return 'Parabola';
+      }
+      if (/probability/i.test(raw)) {
+        return 'Probability';
+      }
+      if (/matrices|matrix/i.test(raw)) {
+        return 'Matrices';
       }
       return formatChapterName(raw, 'mathematics');
     }

@@ -77,6 +77,33 @@ const CHAPTER_RULES = [
       /\bdirectrix\b/i,
     ]
   },
+  {
+    chapter: 'Probability',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bprobability\b/i,
+      /\bconditional probability\b/i,
+      /\bbayes'? theorem\b/i,
+      /\brandom variable\b/i,
+      /\bbinomial distribution\b/i,
+    ]
+  },
+  {
+    chapter: 'Matrices',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bmatrices\b/i,
+      /\bmatrix\b/i,
+      /\bdeterminants?\b/i,
+      /\badjoint\b/i,
+      /\binverse of matrix\b/i,
+      /\beigenvalues?\b/i,
+      /\bcharacteristic equation\b/i,
+      /\bsymmetric matrix\b/i,
+      /\bskew[- ]symmetric\b/i,
+      /\border of matrix\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
