@@ -1929,7 +1929,7 @@ export function resolveBotanyStandardChapter(rawChapter = '', rawTopic = '', raw
   if (questionId && ((questionId >= 6604 && questionId <= 6700) || (questionId >= 13438 && questionId <= 13544))) return 'Organisms and Populations';
   if (questionId && questionId >= 6701 && questionId <= 6775) return 'Ecosystem';
   if (questionId && ((questionId >= 6776 && questionId <= 6869) || (questionId >= 12677 && questionId <= 12692))) return 'Biodiversity and Conservation';
-  if (questionId && questionId >= 13712 && questionId <= 14000) return 'The Living World';
+  if (questionId && ((questionId >= 13712 && questionId <= 14000) || (questionId >= 25320 && questionId <= 25328))) return 'The Living World';
 
   // 3. Explicit Living World chapter match
   if (/^\s*the living world\s*$/i.test(rawChapter) || /^\s*the living world\s*$/i.test(rawTopic)) {
