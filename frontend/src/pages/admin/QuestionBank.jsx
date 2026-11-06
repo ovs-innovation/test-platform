@@ -662,6 +662,9 @@ export default function AdminQuestionBank() {
       if (/matrices|matrix/i.test(raw)) {
         return 'Matrices';
       }
+      if (/differential\s*equations?/i.test(raw) || Number(q.chapter_id) === 99) {
+        return 'Differential Equations';
+      }
       return formatChapterName(raw, 'mathematics');
     }
 

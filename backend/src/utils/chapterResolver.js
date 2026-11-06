@@ -104,6 +104,18 @@ const CHAPTER_RULES = [
       /\border of matrix\b/i,
     ]
   },
+  {
+    chapter: 'Differential Equations',
+    subjects: ['mathematics', 'maths', 'math'],
+    patterns: [
+      /\bdifferential\s*equations?\b/i,
+      /\border\s*and\s*degree\b/i,
+      /\bintegrating\s*factor\b/i,
+      /\bhomogeneous\s*differential\b/i,
+      /\blinear\s*differential\b/i,
+      /\bseparable\s*variable\b/i,
+    ]
+  },
   // ═══════════════════════════════════════════════════════════════════════════
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
