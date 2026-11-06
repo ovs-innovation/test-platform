@@ -656,7 +656,7 @@ export default function AdminQuestionBank() {
       if (/parabolas?/i.test(raw) || Number(q.chapter_id) === 244) {
         return 'Parabola';
       }
-      if (/probability/i.test(raw)) {
+      if (/probability/i.test(raw) || Number(q.chapter_id) === 301) {
         return 'Probability';
       }
       if (/matrices|matrix/i.test(raw)) {
