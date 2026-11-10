@@ -5,31 +5,41 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new pg.Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
-async function check() {
-  const neonChaps = await pool.query(
-    "SELECT id, name FROM chapters WHERE subject_id = 11 AND name ILIKE '%wave%'"
-  );
-  console.log('Neon DB wave chapters:', neonChaps.rows);
+const LIVE_API = 'https://edvedum.com/api';
 
-  const loginRes = await fetch('https://edvedum.com/api/auth/login', {
+async function getToken() {
+  const res = await fetch(`${LIVE_API}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
   });
-  const token = (await loginRes.json()).token;
-
-  const liveChapsRes = await fetch('https://edvedum.com/api/admin/subjects/5/chapters', {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
-  const liveChaps = (await liveChapsRes.json()).chapters || [];
-  console.log('Live edvedum wave chapters:', liveChaps.filter(c => c.name.toLowerCase().includes('wave')));
-  
-  await pool.end();
+  const data = await res.json();
+  return data.token || data.accessToken || data.data?.token;
 }
 
-check().catch(console.error);
+async function main() {
+  const client = await pool.connect();
+  const localRes = await client.query(
+    "SELECT id, subject_id, name FROM chapters WHERE subject_id = 11 AND LOWER(name) LIKE '%wave%'"
+  );
+  console.log('Local Waves chapters:', localRes.rows);
+  client.release();
+  await pool.end();
+
+  const token = await getToken();
+  const liveChRes = await fetch(`${LIVE_API}/admin/subjects/5/chapters`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+  const chData = await liveChRes.json();
+  const liveList = (chData.chapters || []).filter(c => (c.name || '').toLowerCase().includes('wave'));
+  console.log('Live Waves chapters in Physics (subject_id 5):', liveList);
+}
+
+main().catch(console.error);
