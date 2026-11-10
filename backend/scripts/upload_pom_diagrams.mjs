@@ -47,3 +47,4 @@ async function uploadAll() {
 }
 
 uploadAll().catch(console.error);
+

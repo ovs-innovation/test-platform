@@ -42,11 +42,17 @@ function KaTeXFormula({ math, displayMode = false }) {
 function RenderInlineMathText({ text, className = '' }) {
   const tokens = useMemo(() => {
     if (!text) return [];
-    if (!text.includes('$') && !text.includes('\\(') && !text.includes('\\[')) {
+    if (
+      !text.includes('$') &&
+      !text.includes('\\(') &&
+      !text.includes('\\[') &&
+      !text.includes('![') &&
+      !text.includes('<img')
+    ) {
       return [{ type: 'text', value: text }];
     }
 
-    const regex = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\$[^\$\n]+?\$|\\\(.+?\\\))/g;
+    const regex = /(\$\$[\s\S]+?\$\$|\\\[[\s\S]+?\\\]|\$[^\$\n]+?\$|\\\(.+?\\\)|\!\[(.*?)\]\(((?:https?:\/\/|\/)[^\s)]+)\)|<img[^>]+src=["']([^"']+)["'][^>]*\/?>)/gi;
     const parts = [];
     let lastIndex = 0;
     let match;
@@ -65,6 +71,10 @@ function RenderInlineMathText({ text, className = '' }) {
         parts.push({ type: 'math-inline', value: raw.slice(1, -1) });
       } else if (raw.startsWith('\\(') && raw.endsWith('\\)') && raw.length >= 4) {
         parts.push({ type: 'math-inline', value: raw.slice(2, -2) });
+      } else if (raw.startsWith('![') && raw.endsWith(')')) {
+        parts.push({ type: 'image', alt: match[2] || 'Diagram', src: match[3] });
+      } else if (raw.toLowerCase().startsWith('<img')) {
+        parts.push({ type: 'image', alt: 'Diagram', src: match[4] });
       } else {
         parts.push({ type: 'text', value: raw });
       }
@@ -89,6 +99,22 @@ function RenderInlineMathText({ text, className = '' }) {
         }
         if (token.type === 'math-inline') {
           return <KaTeXFormula key={idx} math={token.value} displayMode={false} />;
+        }
+        if (token.type === 'image') {
+          return (
+            <span key={idx} className="block my-2 text-center">
+              <img
+                src={token.src}
+                alt={token.alt || 'Diagram'}
+                className="max-h-64 sm:max-h-72 w-auto max-w-full inline-block object-contain rounded-lg border border-slate-200 dark:border-slate-800 shadow-xs cursor-zoom-in bg-white dark:bg-slate-900 p-1"
+                loading="lazy"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(token.src, '_blank');
+                }}
+              />
+            </span>
+          );
         }
         return <React.Fragment key={idx}>{token.value}</React.Fragment>;
       })}

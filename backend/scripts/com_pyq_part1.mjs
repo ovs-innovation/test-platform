@@ -692,3 +692,4 @@ $$x_{cm} = \\frac{300(0) + 500(40) + 400(70)}{300 + 500 + 400} = \\frac{0 + 2000
 Hence, the correct option is (A).`
   }
 ];
+

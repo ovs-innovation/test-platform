@@ -377,6 +377,7 @@ export default function AdminQuestionBank() {
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
       if (/oscillat/i.test(trimmed)) return 'Oscillations';
+      if (/heat\s*and\s*thermo/i.test(trimmed) || /thermodyna/i.test(trimmed)) return 'Heat and Thermodynamics';
     }
 
     if (activeSubj === 'mathematics') {
@@ -657,6 +658,12 @@ export default function AdminQuestionBank() {
         Number(q.chapter_id) === 152 ||
         Number(q.chapter_id) === 22
       ) return 'Oscillations';
+
+      if (
+        /heat\s*and\s*thermo/i.test(raw) ||
+        Number(q.chapter_id) === 195 ||
+        Number(q.chapter_id) === 309
+      ) return 'Heat and Thermodynamics';
 
       if (
         Number(q.chapter_id) === 142 ||
@@ -2711,8 +2718,15 @@ export default function AdminQuestionBank() {
 
                       {(() => {
                         const rawHtmlImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/<img[^>]+src=["']([^"']+)["'][^>]*\/?>/i) : null;
-                        const effectiveImageUrl = q.image_url || (rawHtmlImgMatch ? rawHtmlImgMatch[1] : null);
-                        const cleanQuestionText = rawHtmlImgMatch ? q.question_text.replace(/<img[^>]+src=["'][^"']+["'][^>]*\/?>/gi, '').trim() : q.question_text;
+                        const rawMdImgMatch = typeof q.question_text === 'string' ? q.question_text.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i) : null;
+                        const effectiveImageUrl = q.image_url || (rawHtmlImgMatch ? rawHtmlImgMatch[1] : (rawMdImgMatch ? rawMdImgMatch[1] : null));
+                        let cleanQuestionText = q.question_text;
+                        if (typeof cleanQuestionText === 'string') {
+                          cleanQuestionText = cleanQuestionText
+                            .replace(/<img[^>]+src=["'][^"']+["'][^>]*\/?>/gi, '')
+                            .replace(/!\[.*?\]\((?:https?:\/\/|\/)[^)]+\)/gi, '')
+                            .trim();
+                        }
 
                         return (
                           <>
@@ -2778,8 +2792,18 @@ export default function AdminQuestionBank() {
                       {!isInteger && opts.length > 0 && (
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 mt-0.5">
                           {opts.map((opt, i) => {
-                            const optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
-                            const optImg = typeof opt === 'object' ? (opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '') : '';
+                            let optText = typeof opt === 'object' ? (opt.text || '') : String(opt);
+                            let optImg = typeof opt === 'object' ? (opt.image_url || (Array.isArray(opt.media) && opt.media[0]?.url) || '') : '';
+                            if (!optImg && typeof optText === 'string') {
+                              const optMd = optText.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i);
+                              if (optMd) {
+                                optImg = optMd[1];
+                                optText = optText.replace(/!\[.*?\]\((?:https?:\/\/|\/)[^)]+\)/gi, '').trim();
+                              } else if (optText.startsWith('http://') || optText.startsWith('https://')) {
+                                optImg = optText.trim();
+                                optText = '';
+                              }
+                            }
                             const isCorrect = hasAnswerKey && i === correctIdx;
                             return (
                               <button

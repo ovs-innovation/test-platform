@@ -1,0 +1,43 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { loadImage, createCanvas } from '@napi-rs/canvas';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const pagesDir = path.resolve(__dirname, 'com_pages');
+
+async function findGraphBBox(pageNum, minX, minY, maxX, maxY, label) {
+  const pagePath = path.join(pagesDir, `page_${pageNum}.png`);
+  const img = await loadImage(pagePath);
+  const canvas = createCanvas(img.width, img.height);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0);
+  
+  const imgData = ctx.getImageData(minX, minY, maxX - minX, maxY - minY);
+  const data = imgData.data;
+  let count = 0;
+  let boxMinX = maxX - minX, boxMaxX = 0, boxMinY = maxY - minY, boxMaxY = 0;
+  for (let y = 0; y < maxY - minY; y++) {
+    for (let x = 0; x < maxX - minX; x++) {
+      const idx = (y * (maxX - minX) + x) * 4;
+      if (data[idx] < 210) {
+        if (x < boxMinX) boxMinX = x;
+        if (x > boxMaxX) boxMaxX = x;
+        if (y < boxMinY) boxMinY = y;
+        if (y > boxMaxY) boxMaxY = y;
+        count++;
+      }
+    }
+  }
+  console.log(`${label}: x=${minX + boxMinX}, y=${minY + boxMinY}, w=${boxMaxX - boxMinX + 1}, h=${boxMaxY - boxMinY + 1}`);
+}
+
+async function run() {
+  await findGraphBBox(3, 105, 730, 400, 950, 'Q2 Opt A graph');
+  await findGraphBBox(3, 105, 950, 400, 1170, 'Q2 Opt B graph');
+  await findGraphBBox(3, 105, 1170, 400, 1400, 'Q2 Opt C graph');
+  await findGraphBBox(4, 105, 145, 400, 395, 'Q2 Opt D graph');
+}
+
+run().catch(console.error);
+

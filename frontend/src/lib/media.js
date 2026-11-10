@@ -86,6 +86,14 @@ export function getOptionMediaUrls(q) {
         const u = opt.image.trim();
         if (u) urls.add(u);
       }
+      if (typeof opt.text === 'string' && opt.text.includes('![')) {
+        const md = opt.text.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i);
+        if (md && md[1]) urls.add(md[1].trim());
+      }
+      if (typeof opt === 'string' && opt.includes('![')) {
+        const md = opt.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i);
+        if (md && md[1]) urls.add(md[1].trim());
+      }
       if (Array.isArray(opt.media)) {
         opt.media.forEach((m) => {
           const u = typeof m === 'string' ? m : m?.url;
@@ -155,13 +163,24 @@ export function getQuestionDiagrams(q) {
     }
   }
 
-  // Fallback to embedded <img src="..."> in question_text if present
-  if (typeof q.question_text === 'string' && q.question_text.includes('<img')) {
-    const match = q.question_text.match(/<img[^>]+src=["']([^"']+)["']/i);
-    if (match && match[1]) {
-      const u = match[1].trim();
-      if (u && !optUrls.has(u) && u !== solUrl) {
-        return [{ url: u }];
+  // Fallback to embedded <img src="..."> or ![...](url) in question_text if present
+  if (typeof q.question_text === 'string') {
+    if (q.question_text.includes('<img')) {
+      const match = q.question_text.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if (match && match[1]) {
+        const u = match[1].trim();
+        if (u && !optUrls.has(u) && u !== solUrl) {
+          return [{ url: u }];
+        }
+      }
+    }
+    if (q.question_text.includes('![')) {
+      const mdMatch = q.question_text.match(/!\[.*?\]\(((?:https?:\/\/|\/)[^)]+)\)/i);
+      if (mdMatch && mdMatch[1]) {
+        const u = mdMatch[1].trim();
+        if (u && !optUrls.has(u) && u !== solUrl) {
+          return [{ url: u }];
+        }
       }
     }
   }

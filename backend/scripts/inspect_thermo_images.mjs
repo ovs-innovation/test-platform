@@ -1,18 +1,30 @@
-import sharp from 'sharp';
+import fs from 'fs';
+import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf.mjs';
 
-const images = [
-  'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793542152309_e4ebb8aa.png',
-  'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793542167860_218abfb4.jpg',
-  'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793542182358_09b5143b.jpg',
-  'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793542234690_b6e3c88c.jpg',
-  'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1793542263492_dc72b56f.jpg'
-];
+const pdfPath = 'C:/Users/rs004/.gemini/antigravity/brain/ea114050-c04d-40cb-bb53-743bed972f43/.user_uploaded/media_1794314927151_0fe43097.pdf';
 
-async function run() {
-  for (let i = 0; i < images.length; i++) {
-    const meta = await sharp(images[i]).metadata();
-    console.log(`Image ${i+1}: ${meta.width} x ${meta.height}, format: ${meta.format}`);
+async function findImages() {
+  const data = new Uint8Array(fs.readFileSync(pdfPath));
+  const doc = await pdfjsLib.getDocument({ data }).promise;
+
+  for (let p = 1; p <= doc.numPages; p++) {
+    const page = await doc.getPage(p);
+    const ops = await page.getOperatorList();
+    const imgOps = [];
+    for (let i = 0; i < ops.fnArray.length; i++) {
+      const fn = ops.fnArray[i];
+      if (
+        fn === pdfjsLib.OPS.paintImageXObject ||
+        fn === pdfjsLib.OPS.paintInlineImageXObject ||
+        fn === pdfjsLib.OPS.paintImageXObjectRepeat
+      ) {
+        imgOps.push({ idx: i, fn, arg: ops.argsArray[i][0] });
+      }
+    }
+    if (imgOps.length > 0) {
+      console.log(`Page ${p} has ${imgOps.length} images:`, imgOps.map(o => o.arg));
+    }
   }
 }
-run();
 
+findImages().catch(console.error);

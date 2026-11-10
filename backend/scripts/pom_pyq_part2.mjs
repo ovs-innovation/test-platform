@@ -571,3 +571,4 @@ $$2T_0 = 90 \\implies T_0 = 45^{\\circ}\\text{C}$$
 Hence, the correct option is (A).`
   }
 ];
+

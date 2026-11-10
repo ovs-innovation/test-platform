@@ -578,3 +578,4 @@ $$e = \\frac{|v_2 - v_1|}{|u_1 - u_2|}$$
 Hence, the correct option is (A).`
   }
 ];
+

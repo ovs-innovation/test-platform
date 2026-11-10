@@ -1,46 +1,64 @@
-import sharp from 'sharp';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 import fs from 'fs';
+import path from 'path';
 
-const diagDir = 'backend/uploads/thermodynamics_chem';
-if (!fs.existsSync(diagDir)) fs.mkdirSync(diagDir, { recursive: true });
+const outDir = 'backend/scripts/thermo_diagrams';
+const publicDir = 'frontend/public/uploads/heat_thermodynamics';
 
-async function cropDiagrams() {
-  // Q5 on page_55.png (472 x 548)
-  // Let's inspect where Q5 diagram is on page_55
-  // Left column bottom: x: 140..320, y: 390..520
-  await sharp('backend/scripts/thermo_pages/page_55.png')
-    .extract({ left: 140, top: 390, width: 170, height: 125 })
-    .toFile(`${diagDir}/thermo_chem_q5.png`);
-  console.log('Cropped thermo_chem_q5.png');
+if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
+if (!fs.existsSync(publicDir)) fs.mkdirSync(publicDir, { recursive: true });
 
-  // Q15 on page_56.png (243 x 340)
-  // Left column middle: x: 70..170, y: 160..215
-  await sharp('backend/scripts/thermo_pages/page_56.png')
-    .extract({ left: 70, top: 160, width: 100, height: 55 })
-    .toFile(`${diagDir}/thermo_chem_q15.png`);
-  console.log('Cropped thermo_chem_q15.png');
+const diagrams = [
+  { id: 'thermo_q5_diagram', page: 3, box: { minX: 68, maxX: 653, minY: 261, maxY: 639 } },
+  { id: 'thermo_q8_diagram', page: 4, box: { minX: 67, maxX: 767, minY: 303, maxY: 558 } },
+  { id: 'thermo_q15_diagram', page: 6, box: { minX: 68, maxX: 653, minY: 236, maxY: 639 } },
+  { id: 'thermo_q16_diagram', page: 6, box: { minX: 68, maxX: 653, minY: 828, maxY: 1244 } },
+  { id: 'thermo_q17_diagram', page: 7, box: { minX: 68, maxX: 653, minY: 236, maxY: 605 } },
+  { id: 'thermo_q23_diagram', page: 8, box: { minX: 68, maxX: 653, minY: 577, maxY: 959 } },
+  { id: 'thermo_q28_diagram', page: 10, box: { minX: 68, maxX: 669, minY: 261, maxY: 622 } },
+  { id: 'thermo_q44_diagram', page: 13, box: { minX: 92, maxX: 653, minY: 292, maxY: 650 } },
+  { id: 'thermo_q46_diagram', page: 13, box: { minX: 68, maxX: 653, minY: 1144, maxY: 1430 } },
+  { id: 'thermo_q48_diagram', page: 14, box: { minX: 90, maxX: 653, minY: 435, maxY: 793 } },
+  { id: 'thermo_q65_diagram', page: 17, box: { minX: 88, maxX: 669, minY: 986, maxY: 1345 } },
+  { id: 'thermo_q66_diagram', page: 18, box: { minX: 94, maxX: 653, minY: 259, maxY: 639 } },
+  { id: 'thermo_q68_diagram', page: 19, box: { minX: 108, maxX: 653, minY: 292, maxY: 655 } },
+  { id: 'thermo_q71_diagram', page: 20, box: { minX: 108, maxX: 653, minY: 337, maxY: 723 } },
+  { id: 'thermo_q76_diagram', page: 21, box: { minX: 68, maxX: 653, minY: 471, maxY: 874 } },
+  { id: 'thermo_q77_diagram', page: 21, box: { minX: 68, maxX: 653, minY: 1111, maxY: 1480 } },
+  { id: 'thermo_q81_diagram', page: 23, box: { minX: 108, maxX: 653, minY: 292, maxY: 639 } },
+  { id: 'thermo_q82_opt_a', page: 24, box: { minX: 130, maxX: 415, minY: 298, maxY: 521 } },
+  { id: 'thermo_q82_opt_b', page: 24, box: { minX: 130, maxX: 415, minY: 539, maxY: 756 } },
+  { id: 'thermo_q82_opt_c', page: 24, box: { minX: 130, maxX: 385, minY: 774, maxY: 992 } },
+  { id: 'thermo_q82_opt_d', page: 24, box: { minX: 130, maxX: 415, minY: 1010, maxY: 1220 } },
+  { id: 'thermo_q83_diagram', page: 25, box: { minX: 96, maxX: 653, minY: 320, maxY: 650 } },
+  { id: 'thermo_q129_diagram', page: 32, box: { minX: 68, maxX: 653, minY: 1027, maxY: 1367 } },
+  { id: 'thermo_q133_diagram', page: 33, box: { minX: 68, maxX: 653, minY: 1094, maxY: 1446 } }
+];
 
-  // Q26 on page_57.png (244 x 340)
-  // Left column middle: x: 50..160, y: 135..175
-  await sharp('backend/scripts/thermo_pages/page_57.png')
-    .extract({ left: 60, top: 135, width: 100, height: 45 })
-    .toFile(`${diagDir}/thermo_chem_q26.png`);
-  console.log('Cropped thermo_chem_q26.png');
+async function cropAll() {
+  console.log(`Cropping ${diagrams.length} diagrams...`);
+  const pad = 12;
 
-  // Q29 on page_57.png (244 x 340)
-  // Right column top: x: 180..240, y: 20..60
-  await sharp('backend/scripts/thermo_pages/page_57.png')
-    .extract({ left: 185, top: 20, width: 55, height: 42 })
-    .toFile(`${diagDir}/thermo_chem_q29.png`);
-  console.log('Cropped thermo_chem_q29.png');
+  for (const d of diagrams) {
+    const pageImg = await loadImage(`backend/scripts/thermo_pages/page_${d.page}.png`);
+    const x = Math.max(0, d.box.minX - pad);
+    const y = Math.max(0, d.box.minY - pad);
+    const w = Math.min(pageImg.width - x, d.box.maxX - d.box.minX + 2 * pad);
+    const h = Math.min(pageImg.height - y, d.box.maxY - d.box.minY + 2 * pad);
 
-  // Q69 on page_60.png (241 x 341)
-  // Right column middle: x: 155..225, y: 95..145
-  await sharp('backend/scripts/thermo_pages/page_60.png')
-    .extract({ left: 150, top: 95, width: 80, height: 55 })
-    .toFile(`${diagDir}/thermo_chem_q69.png`);
-  console.log('Cropped thermo_chem_q69.png');
+    const canvas = createCanvas(w, h);
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(pageImg, x, y, w, h, 0, 0, w, h);
+
+    const buf = canvas.toBuffer('image/png');
+    const outPath = path.join(outDir, `${d.id}.png`);
+    const pubPath = path.join(publicDir, `${d.id}.png`);
+
+    fs.writeFileSync(outPath, buf);
+    fs.writeFileSync(pubPath, buf);
+    console.log(`Cropped and saved: ${d.id} (${w}x${h})`);
+  }
+  console.log(`All ${diagrams.length} diagrams cropped and saved locally!`);
 }
 
-cropDiagrams().catch(console.error);
-
+cropAll().catch(console.error);

@@ -26,3 +26,4 @@ async function extractText() {
 }
 
 extractText().catch(console.error);
+

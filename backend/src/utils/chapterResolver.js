@@ -2375,6 +2375,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/oscillat/i.test(rawChapter) || /oscillat/i.test(rawTopic)) {
       return 'Oscillations';
     }
+    if (/heat\s*and\s*thermo/i.test(rawChapter) || /heat\s*and\s*thermo/i.test(rawTopic)) {
+      return 'Heat and Thermodynamics';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

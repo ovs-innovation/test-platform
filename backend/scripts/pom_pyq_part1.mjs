@@ -547,3 +547,4 @@ $$m_2 = 2 \\times m_1 = 2 \\times 5\\text{ g} = 10.0\\text{ g}$$
 Hence, the correct option is (B).`
   }
 ];
+

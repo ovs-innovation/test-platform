@@ -1,37 +1,35 @@
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 const LIVE_API = 'https://edvedum.com/api';
 
-async function getToken() {
-  const res = await fetch(`${LIVE_API}/auth/login`, {
+async function check() {
+  const loginRes = await fetch(`${LIVE_API}/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email: 'admin@edvedum.com', password: 'Admin@12345' })
   });
-  const data = await res.json();
-  return data.token || data.data?.token || data.accessToken;
-}
+  const data = await loginRes.json();
+  const token = data.token || data.accessToken || data.data?.token;
 
-async function check() {
-  const token = await getToken();
-  console.log('Got live token.');
-
-  // Fetch chapters for Chemistry
-  const chRes = await fetch(`${LIVE_API}/chapters`, {
+  const res = await fetch(`${LIVE_API}/question-bank?chapter_id=309&limit=200`, {
     headers: { Authorization: `Bearer ${token}` }
   });
-  const chData = await chRes.json();
-  const chList = chData.data?.chapters || chData.chapters || chData.data || [];
-  const thermoChaps = chList.filter(c => (c.name || '').toLowerCase().includes('thermo'));
-  console.log('Live chapters matching thermo:');
-  console.log(thermoChaps);
-
-  // Fetch question bank counts for Chemistry Thermodynamics
-  const qRes = await fetch(`${LIVE_API}/question-bank?category=Chemistry&chapter=Thermodynamics&limit=100`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-  const qData = await qRes.json();
-  const qList = qData.data?.questions || qData.questions || [];
-  console.log(`Live Chemistry Thermodynamics count: ${qList.length}`);
+  const listData = await res.json();
+  const items = listData.questions || listData.data || listData;
+  console.log(`Live items count: ${items.length}`);
+  if (items.length > 0) {
+    console.log('Sample item:', {
+      id: items[0].id,
+      qText: items[0].question_text?.substring(0, 80),
+      image_url: items[0].image_url
+    });
+  }
 }
 
 check().catch(console.error);
-

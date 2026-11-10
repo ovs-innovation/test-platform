@@ -5,3 +5,4 @@ export const ALL_COM_PYQ_QUESTIONS = [
   ...COM_PYQ_PART1,
   ...COM_PYQ_PART2
 ];
+
