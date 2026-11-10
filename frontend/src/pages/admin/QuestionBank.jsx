@@ -376,6 +376,7 @@ export default function AdminQuestionBank() {
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
+      if (/oscillat/i.test(trimmed)) return 'Oscillations';
     }
 
     if (activeSubj === 'mathematics') {
@@ -650,6 +651,12 @@ export default function AdminQuestionBank() {
         Number(q.chapter_id) === 194 ||
         Number(q.chapter_id) === 307
       ) return 'Properties of Matter';
+
+      if (
+        /oscillat/i.test(raw) ||
+        Number(q.chapter_id) === 152 ||
+        Number(q.chapter_id) === 22
+      ) return 'Oscillations';
 
       if (
         Number(q.chapter_id) === 142 ||

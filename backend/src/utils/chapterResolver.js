@@ -2372,6 +2372,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/properties\s*of\s*matter/i.test(rawChapter) || /properties\s*of\s*matter/i.test(rawTopic)) {
       return 'Properties of Matter';
     }
+    if (/oscillat/i.test(rawChapter) || /oscillat/i.test(rawTopic)) {
+      return 'Oscillations';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder
