@@ -131,8 +131,11 @@ export const listBankQuestions = asyncHandler(async (req, res) => {
   sql += ' ORDER BY qb.category, qb.id ASC';
   const result = await query(sql, params);
   let questions = (result.rows || []).map((row) => {
+    const catOrSubj = (row.category && row.category.toLowerCase() !== 'pyq')
+      ? (row.category || row.subject_name || '')
+      : (row.subject || row.subject_name || row.category || '');
     const standardChapter = resolveStandardChapter(
-      row.category || row.subject_name || '',
+      catOrSubj,
       row.topic || '',
       row.question_text || '',
       row.chapter_name || row.chapter || '',

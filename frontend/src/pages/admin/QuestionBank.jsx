@@ -368,6 +368,7 @@ export default function AdminQuestionBank() {
     }
 
     if (activeSubj === 'physics') {
+      if (/unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(trimmed)) return 'Units and Measurement';
       if (/electrostatic/i.test(trimmed) || /capacitan/i.test(trimmed)) return 'Electrostatic Potential and Capacitance';
       if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
       if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
@@ -425,10 +426,11 @@ export default function AdminQuestionBank() {
   const getQuestionChapter = (q) => {
     if (!q) return 'General';
     const activeSubj = String(
-      (category && category.toLowerCase() !== 'all' ? category : '') ||
-      q.category ||
+      (category && category.toLowerCase() !== 'all' && category.toLowerCase() !== 'pyq' ? category : '') ||
+      (category === 'PYQ' && pyqSubject && pyqSubject.toLowerCase() !== 'all' ? pyqSubject : '') ||
       q.subject ||
       q.subject_name ||
+      q.category ||
       ''
     ).trim().toLowerCase();
 
@@ -636,6 +638,12 @@ export default function AdminQuestionBank() {
     // 4. PHYSICS SCOPED RESOLUTION
     if (activeSubj === 'physics') {
       const raw = (q.chapter_name || q.chapter || '').trim();
+      if (
+        /unit(s)?\s*(and|&)?\s*measurement(s)?/i.test(raw) ||
+        Number(q.chapter_id) === 124 ||
+        Number(q.chapter_id) === 74
+      ) return 'Units and Measurement';
+
       if (
         Number(q.chapter_id) === 142 ||
         Number(q.chapter_id) === 67 ||

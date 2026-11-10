@@ -883,7 +883,7 @@ const CHAPTER_RULES = [
   // PHYSICS
   // ═══════════════════════════════════════════════════════════════════════════
   {
-    chapter: 'Unit and Measurement',
+    chapter: 'Units and Measurement',
     subjects: ['physics'],
     patterns: [
       /\bunits? and measurements?\b/i,
