@@ -15,6 +15,31 @@ const pool = new pg.Pool({
   ssl: { rejectUnauthorized: false }
 });
 
+function formatOption(opt) {
+  if (typeof opt !== 'string') return opt;
+  let trimmed = opt.trim();
+  if (trimmed.includes('$') || trimmed.includes('\\(')) return trimmed;
+  if (
+    trimmed.includes('\\text') ||
+    trimmed.includes('\\frac') ||
+    trimmed.includes('\\times') ||
+    trimmed.includes('\\alpha') ||
+    trimmed.includes('\\beta') ||
+    trimmed.includes('\\gamma') ||
+    trimmed.includes('\\delta') ||
+    trimmed.includes('\\pm') ||
+    trimmed.includes('\\Omega') ||
+    trimmed.includes('\\mu') ||
+    trimmed.includes('\\varepsilon') ||
+    trimmed.includes('\\left') ||
+    trimmed.includes('^') ||
+    (trimmed.startsWith('[') && trimmed.endsWith(']'))
+  ) {
+    return `$${trimmed}$`;
+  }
+  return trimmed;
+}
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 async function getToken() {
@@ -65,10 +90,10 @@ async function main() {
     let localUpdated = 0;
 
     for (const q of ALL_UNITS_PYQ_QUESTIONS) {
-      const questionText = `[${q.exam}] ${q.question}`;
+      const questionText = q.question.trim();
       const optionsArray = q.options.map((optText, oIdx) => ({
         key: String.fromCharCode(65 + oIdx),
-        text: optText
+        text: formatOption(optText)
       }));
 
       const existing = await client.query(
@@ -152,10 +177,10 @@ async function main() {
   let liveUpdated = 0;
 
   for (const q of ALL_UNITS_PYQ_QUESTIONS) {
-    const questionText = `[${q.exam}] ${q.question}`;
+    const questionText = q.question.trim();
     const optionsArray = q.options.map((optText, oIdx) => ({
       key: String.fromCharCode(65 + oIdx),
-      text: optText
+      text: formatOption(optText)
     }));
 
     const payload = {
