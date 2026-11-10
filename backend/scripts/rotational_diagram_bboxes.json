@@ -1,0 +1,359 @@
+[
+  {
+    "id": "rot_q1_diagram",
+    "page": 2,
+    "minY": 0.22,
+    "maxY": 0.44,
+    "maxX": 0.6,
+    "bbox": {
+      "minX": 69,
+      "maxX": 640,
+      "minY": 387,
+      "maxY": 740,
+      "count": 12074,
+      "w": 571,
+      "h": 353
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q1_diagram.png"
+  },
+  {
+    "id": "rot_q2_diagram",
+    "page": 2,
+    "minY": 0.58,
+    "maxY": 0.79,
+    "maxX": 0.62,
+    "bbox": {
+      "minX": 69,
+      "maxX": 732,
+      "minY": 976,
+      "maxY": 1329,
+      "count": 10880,
+      "w": 663,
+      "h": 353
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q2_diagram.png"
+  },
+  {
+    "id": "rot_q4_diagram",
+    "page": 3,
+    "minY": 0.25,
+    "maxY": 0.48,
+    "maxX": 0.55,
+    "bbox": {
+      "minX": 72,
+      "maxX": 653,
+      "minY": 421,
+      "maxY": 807,
+      "count": 9096,
+      "w": 581,
+      "h": 386
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q4_diagram.png"
+  },
+  {
+    "id": "rot_q7_diagram",
+    "page": 4,
+    "minY": 0.16,
+    "maxY": 0.39,
+    "maxX": 0.5,
+    "bbox": {
+      "minX": 70,
+      "maxX": 417,
+      "minY": 269,
+      "maxY": 634,
+      "count": 12358,
+      "w": 347,
+      "h": 365
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q7_diagram.png"
+  },
+  {
+    "id": "rot_q8_diagram",
+    "page": 4,
+    "minY": 0.5,
+    "maxY": 0.72,
+    "maxX": 0.35,
+    "bbox": {
+      "minX": 69,
+      "maxX": 371,
+      "minY": 842,
+      "maxY": 1211,
+      "count": 4045,
+      "w": 302,
+      "h": 369
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q8_diagram.png"
+  },
+  {
+    "id": "rot_q10_diagram",
+    "page": 5,
+    "minY": 0.17,
+    "maxY": 0.39,
+    "maxX": 0.58,
+    "bbox": {
+      "minX": 71,
+      "maxX": 590,
+      "minY": 296,
+      "maxY": 636,
+      "count": 7607,
+      "w": 519,
+      "h": 340
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q10_diagram.png"
+  },
+  {
+    "id": "rot_q18_diagram",
+    "page": 6,
+    "minY": 0.66,
+    "maxY": 0.89,
+    "maxX": 0.65,
+    "bbox": {
+      "minX": 69,
+      "maxX": 620,
+      "minY": 1146,
+      "maxY": 1497,
+      "count": 11678,
+      "w": 551,
+      "h": 351
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q18_diagram.png"
+  },
+  {
+    "id": "rot_q37_diagram",
+    "page": 10,
+    "minY": 0.21,
+    "maxY": 0.42,
+    "maxX": 0.6,
+    "bbox": {
+      "minX": 117,
+      "maxX": 563,
+      "minY": 363,
+      "maxY": 688,
+      "count": 5647,
+      "w": 446,
+      "h": 325
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q37_diagram.png"
+  },
+  {
+    "id": "rot_q41_diagram",
+    "page": 11,
+    "minY": 0.23,
+    "maxY": 0.4,
+    "maxX": 0.55,
+    "bbox": {
+      "minX": 71,
+      "maxX": 619,
+      "minY": 407,
+      "maxY": 672,
+      "count": 9815,
+      "w": 548,
+      "h": 265
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q41_diagram.png"
+  },
+  {
+    "id": "rot_q42_diagram",
+    "page": 11,
+    "minY": 0.53,
+    "maxY": 0.76,
+    "maxX": 0.35,
+    "bbox": {
+      "minX": 69,
+      "maxX": 389,
+      "minY": 905,
+      "maxY": 1278,
+      "count": 7909,
+      "w": 320,
+      "h": 373
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q42_diagram.png"
+  },
+  {
+    "id": "rot_q47_diagram",
+    "page": 12,
+    "minY": 0.69,
+    "maxY": 0.85,
+    "maxX": 0.62,
+    "bbox": {
+      "minX": 69,
+      "maxX": 616,
+      "minY": 1161,
+      "maxY": 1430,
+      "count": 15162,
+      "w": 547,
+      "h": 269
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q47_diagram.png"
+  },
+  {
+    "id": "rot_q50_diagram",
+    "page": 13,
+    "minY": 0.43,
+    "maxY": 0.65,
+    "maxX": 0.48,
+    "bbox": {
+      "minX": 69,
+      "maxX": 570,
+      "minY": 724,
+      "maxY": 1093,
+      "count": 10320,
+      "w": 501,
+      "h": 369
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q50_diagram.png"
+  },
+  {
+    "id": "rot_q53_diagram",
+    "page": 14,
+    "minY": 0.34,
+    "maxY": 0.54,
+    "maxX": 0.5,
+    "bbox": {
+      "minX": 73,
+      "maxX": 594,
+      "minY": 572,
+      "maxY": 908,
+      "count": 4377,
+      "w": 521,
+      "h": 336
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q53_diagram.png"
+  },
+  {
+    "id": "rot_q54_diagram",
+    "page": 15,
+    "minY": 0.18,
+    "maxY": 0.38,
+    "maxX": 0.6,
+    "bbox": {
+      "minX": 82,
+      "maxX": 648,
+      "minY": 320,
+      "maxY": 639,
+      "count": 11327,
+      "w": 566,
+      "h": 319
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q54_diagram.png"
+  },
+  {
+    "id": "rot_q66_diagram",
+    "page": 18,
+    "minY": 0.18,
+    "maxY": 0.33,
+    "maxX": 0.48,
+    "bbox": {
+      "minX": 73,
+      "maxX": 424,
+      "minY": 315,
+      "maxY": 554,
+      "count": 2160,
+      "w": 351,
+      "h": 239
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q66_diagram.png"
+  },
+  {
+    "id": "rot_q67_diagram",
+    "page": 18,
+    "minY": 0.56,
+    "maxY": 0.73,
+    "maxX": 0.58,
+    "bbox": {
+      "minX": 89,
+      "maxX": 596,
+      "minY": 945,
+      "maxY": 1228,
+      "count": 8889,
+      "w": 507,
+      "h": 283
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q67_diagram.png"
+  },
+  {
+    "id": "rot_q75_diagram",
+    "page": 20,
+    "minY": 0.19,
+    "maxY": 0.37,
+    "maxX": 0.48,
+    "bbox": {
+      "minX": 72,
+      "maxX": 570,
+      "minY": 343,
+      "maxY": 622,
+      "count": 4086,
+      "w": 498,
+      "h": 279
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q75_diagram.png"
+  },
+  {
+    "id": "rot_q88_diagram",
+    "page": 22,
+    "minY": 0.61,
+    "maxY": 0.83,
+    "maxX": 0.48,
+    "bbox": {
+      "minX": 70,
+      "maxX": 570,
+      "minY": 1030,
+      "maxY": 1396,
+      "count": 4262,
+      "w": 500,
+      "h": 366
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q88_diagram.png"
+  },
+  {
+    "id": "rot_q90_diagram",
+    "page": 23,
+    "minY": 0.27,
+    "maxY": 0.49,
+    "maxX": 0.55,
+    "bbox": {
+      "minX": 81,
+      "maxX": 574,
+      "minY": 478,
+      "maxY": 797,
+      "count": 4903,
+      "w": 493,
+      "h": 319
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q90_diagram.png"
+  },
+  {
+    "id": "rot_q95_diagram",
+    "page": 24,
+    "minY": 0.3,
+    "maxY": 0.5,
+    "maxX": 0.52,
+    "bbox": {
+      "minX": 72,
+      "maxX": 527,
+      "minY": 505,
+      "maxY": 811,
+      "count": 7664,
+      "w": 455,
+      "h": 306
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q95_diagram.png"
+  },
+  {
+    "id": "rot_q98_diagram",
+    "page": 25,
+    "minY": 0.14,
+    "maxY": 0.35,
+    "maxX": 0.6,
+    "bbox": {
+      "minX": 84,
+      "maxX": 646,
+      "minY": 241,
+      "maxY": 577,
+      "count": 9461,
+      "w": 562,
+      "h": 336
+    },
+    "outPath": "C:\\Users\\rs004\\OneDrive\\Desktop\\test-platform\\backend\\scripts\\rotational_diagrams\\rot_q98_diagram.png"
+  }
+]

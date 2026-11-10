@@ -55,3 +55,4 @@ export const VECTOR_PYQ_QUESTIONS = [
 ];
 
 export default VECTOR_PYQ_QUESTIONS;
+

@@ -63,3 +63,4 @@ if (hasError) {
   console.log(' - All 4 match official answer key on Page 3 (D, D, B, B)');
   console.log(' - All options and solutions formatted with KaTeX');
 }
+
