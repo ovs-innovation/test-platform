@@ -813,3 +813,4 @@ $$135 = 15 \\times t \\implies t = \\frac{135}{15} = 9\\text{ s}$$
 Hence, the correct option is (B).`
   }
 ];
+

@@ -5,3 +5,4 @@ export const ALL_MOTION_PYQ_QUESTIONS = [
   ...MOTION_PYQ_PART1,
   ...MOTION_PYQ_PART2
 ];
+

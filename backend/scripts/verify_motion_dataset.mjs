@@ -60,3 +60,4 @@ if (mismatches === 0 && formatErrors === 0) {
   console.error(`FAILED: ${mismatches} mismatches, ${formatErrors} format errors.`);
   process.exit(1);
 }
+
