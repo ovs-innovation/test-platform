@@ -375,6 +375,7 @@ export default function AdminQuestionBank() {
       if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
+      if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
     }
 
     if (activeSubj === 'mathematics') {
@@ -643,6 +644,12 @@ export default function AdminQuestionBank() {
         Number(q.chapter_id) === 124 ||
         Number(q.chapter_id) === 74
       ) return 'Units and Measurement';
+
+      if (
+        /properties\s*of\s*matter/i.test(raw) ||
+        Number(q.chapter_id) === 194 ||
+        Number(q.chapter_id) === 307
+      ) return 'Properties of Matter';
 
       if (
         Number(q.chapter_id) === 142 ||

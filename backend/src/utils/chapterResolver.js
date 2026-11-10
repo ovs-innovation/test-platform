@@ -2369,6 +2369,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/electromagnetic induction/i.test(rawChapter) || /electromagnetic induction/i.test(rawTopic)) {
       return 'Electromagnetic Induction';
     }
+    if (/properties\s*of\s*matter/i.test(rawChapter) || /properties\s*of\s*matter/i.test(rawTopic)) {
+      return 'Properties of Matter';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder
