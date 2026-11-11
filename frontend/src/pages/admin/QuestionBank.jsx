@@ -235,6 +235,7 @@ export default function AdminQuestionBank() {
     'Redox Reactions',
     'The p-Block Elements (Gr. 13 & 14)',
     'Organic Chemistry - Some Basic Principles and Techniques',
+    'Hydrocarbons',
     'Solutions',
     'Electrochemistry',
     'Chemical Kinetics',
@@ -326,6 +327,7 @@ export default function AdminQuestionBank() {
       if (/ionic\s*equilibrium/i.test(trimmed)) return 'Ionic Equilibrium';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
       if (/organic chemistry.*basic|some basic concepts? of organic|principles and techniques|basic principles.*organic/i.test(trimmed)) return 'Organic Chemistry - Some Basic Principles and Techniques';
+      if (/hydrocarbons?/i.test(trimmed)) return 'Hydrocarbons';
       if (/some basic concepts? of chemistry/i.test(trimmed) || /basic concepts? of chemistry/i.test(trimmed) || /mole concept/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
     }
 
@@ -695,6 +697,11 @@ export default function AdminQuestionBank() {
         Number(q.chapter_id) === 249 ||
         /organic chemistry.*basic|some basic concepts? of organic|principles and techniques|basic principles.*organic/i.test(raw)
       ) return 'Organic Chemistry - Some Basic Principles and Techniques';
+      if (
+        Number(q.chapter_id) === 168 ||
+        Number(q.chapter_id) === 164 ||
+        /^\s*hydrocarbons?\s*$/i.test(raw)
+      ) return 'Hydrocarbons';
 
       return formatChapterName(raw, 'chemistry');
     }
