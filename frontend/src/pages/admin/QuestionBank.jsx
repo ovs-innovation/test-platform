@@ -230,6 +230,7 @@ export default function AdminQuestionBank() {
     'Chemical Bonding and Molecular Structure',
     'Thermodynamics',
     'Chemical Equilibrium',
+    'Ionic Equilibrium',
     'Equilibrium',
     'Redox Reactions',
     'The p-Block Elements (Gr. 13 & 14)',
@@ -634,6 +635,7 @@ export default function AdminQuestionBank() {
 
       if (
         Number(q.chapter_id) === 13 ||
+        Number(q.chapter_id) === 205 ||
         /ionic\s*equilibrium/i.test(raw)
       ) return 'Ionic Equilibrium';
 
