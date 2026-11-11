@@ -683,7 +683,11 @@ export default function AdminQuestionBank() {
         Number(q.chapter_id) === 209 ||
         /coordination\s*compounds?/i.test(raw)
       ) return 'Coordination Compounds';
-      if (Number(q.chapter_id) === 23 || Number(q.chapter_id) === 107 || /^\s*the p-block elements\s*$/i.test(raw)) return 'The p-Block Elements';
+      if (
+        Number(q.chapter_id) === 23 ||
+        Number(q.chapter_id) === 107 ||
+        /^\s*(the\s*)?p[- ]?block(\s*elements?)?\s*$/i.test(raw)
+      ) return 'The p-Block Elements';
 
       return formatChapterName(raw, 'chemistry');
     }
