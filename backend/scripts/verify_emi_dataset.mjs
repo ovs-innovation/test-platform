@@ -70,3 +70,4 @@ if (errors === 0) {
   console.error(`\n>>> FAILED: Encountered ${errors} verification errors! <<<`);
   process.exit(1);
 }
+
