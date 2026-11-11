@@ -226,7 +226,7 @@ export default function AdminQuestionBank() {
   const CHEMISTRY_STANDARD_11 = useMemo(() => [
     'Some Basic Concepts of Chemistry',
     'Structure of Atom',
-    'Periodic Table',
+    'Periodic Table and Periodicity',
     'Chemical Bonding and Molecular Structure',
     'Thermodynamics',
     'Chemical Equilibrium',
@@ -319,7 +319,7 @@ export default function AdminQuestionBank() {
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
       if (/structure of atoms?/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
-      if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
+      if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table and Periodicity';
       if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
       if (/chemical\s*equilibrium/i.test(trimmed)) return 'Chemical Equilibrium';
       if (/ionic\s*equilibrium/i.test(trimmed)) return 'Ionic Equilibrium';
@@ -620,11 +620,14 @@ export default function AdminQuestionBank() {
       ) return 'Structure of Atom';
 
       if (
-        (Number(q.id) >= 14591 && Number(q.id) <= 14777) ||
+        Number(q.chapter_id) === 10 ||
         Number(q.chapter_id) === 155 ||
+        Number(q.chapter_id) === 83 ||
+        Number(q.chapter_id) === 68 ||
+        (Number(q.id) >= 14591 && Number(q.id) <= 14777) ||
         (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
         /classification of elements|periodic\s*table|periodicity/i.test(raw)
-      ) return 'Periodic Table';
+      ) return 'Periodic Table and Periodicity';
 
       if (
         Number(q.chapter_id) === 11 ||
