@@ -1,71 +1,70 @@
-import sharp from 'sharp';
-import path from 'path';
 import fs from 'fs';
+import path from 'path';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 
-const inputDir = 'C:/Users/rs004/.gemini/antigravity-ide/brain/17e84f12-f0f0-467e-9e84-3e64c8f2e457/.user_uploaded';
-const outDir = 'public/uploads/kinetics';
-const frontDir = '../frontend/public/uploads/kinetics';
+const pagesDir = './backend/scripts/kinetics_pages';
+const diagDir = './backend/scripts/kinetics_diagrams';
+if (!fs.existsSync(diagDir)) fs.mkdirSync(diagDir, { recursive: true });
 
-async function crop(srcName, rect, outName) {
-  const srcPath = path.join(inputDir, srcName);
-  const outPath = path.join(outDir, outName);
-  const frontPath = path.join(frontDir, outName);
-
-  await sharp(srcPath)
-    .extract(rect)
-    .png({ quality: 95 })
-    .toFile(outPath);
-
-  fs.copyFileSync(outPath, frontPath);
-  console.log(`Cropped: ${outName} (${rect.width}x${rect.height})`);
+function crop(img, x, y, w, h, outName) {
+  const canvas = createCanvas(w, h);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
+  fs.writeFileSync(path.join(diagDir, outName), canvas.toBuffer('image/png'));
+  console.log(`Saved ${outName} (${w}x${h})`);
 }
 
 async function run() {
-  console.log('--- Generating Clean Crops for Chemical Kinetics ---');
+  // Page 2: Q1 Arrhenius plot
+  // Looking at page 2 screenshot:
+  // Ink on y-axis, 1/T on x-axis
+  // x: ~60 to 550, y: ~300 to 650
+  const p2 = await loadImage(path.join(pagesDir, 'page_2.png'));
+  crop(p2, 60, 310, 500, 340, 'kinetics_q1_diagram.png');
 
-  // 1. Q13: [A] vs t zero order plots (media_1793271723796.png)
-  await crop('media_1793271723796.png', { left: 10, top: 475, width: 110, height: 55 }, 'kinetics_q13_zero_order_plots.png');
+  // Page 3: Q4 [R] concentration vs time
+  // x: ~60 to 520, y: ~260 to 600
+  const p3 = await loadImage(path.join(pagesDir, 'page_3.png'));
+  crop(p3, 60, 260, 460, 340, 'kinetics_q4_diagram.png');
 
-  // 2. Q19: Endothermic two-step PE plots (media_1793271723796.png)
-  await crop('media_1793271723796.png', { left: 125, top: 535, width: 120, height: 58 }, 'kinetics_q19_endothermic_two_step.png');
+  // Page 5: Q9 Options (A), (B), (C), (D)
+  // Looking at page 5 screenshot:
+  // (A): y: 260 to 470, x: 70 to 360
+  // (B): y: 470 to 680, x: 70 to 360
+  // (C): y: 690 to 900, x: 70 to 360
+  // (D): y: 910 to 1120, x: 70 to 360
+  const p5 = await loadImage(path.join(pagesDir, 'page_5.png'));
+  crop(p5, 80, 270, 280, 205, 'kinetics_q9_opt_a.png');
+  crop(p5, 80, 485, 280, 205, 'kinetics_q9_opt_b.png');
+  crop(p5, 80, 705, 280, 205, 'kinetics_q9_opt_c.png');
+  crop(p5, 80, 920, 280, 205, 'kinetics_q9_opt_d.png');
 
-  // 3. Q21: Zero order t1/2 and rate plots (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 15, top: 25, width: 100, height: 180 }, 'kinetics_q21_zero_order_plots.png');
+  // Page 6: Q12 Options (A), (B), (C), (D)
+  // (A): y: 485 to 690, x: 80 to 380
+  // (B): y: 720 to 930, x: 80 to 380
+  // (C): y: 935 to 1145, x: 80 to 380
+  // (D): y: 1150 to 1360, x: 80 to 380
+  const p6 = await loadImage(path.join(pagesDir, 'page_6.png'));
+  crop(p6, 80, 485, 300, 215, 'kinetics_q12_opt_a.png');
+  crop(p6, 80, 720, 300, 215, 'kinetics_q12_opt_b.png');
+  crop(p6, 80, 935, 300, 215, 'kinetics_q12_opt_c.png');
+  crop(p6, 80, 1150, 300, 215, 'kinetics_q12_opt_d.png');
 
-  // 4. Q23: Energy plot A -> B -> C (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 28, top: 185, width: 85, height: 42 }, 'kinetics_q23_energy_plot_abc.png');
+  // Page 8: Q20 Graph
+  // y: 780 to 1150, x: 60 to 450
+  const p8 = await loadImage(path.join(pagesDir, 'page_8.png'));
+  crop(p8, 60, 780, 380, 370, 'kinetics_q20_diagram.png');
 
-  // 5. Q33: Zero order kinetics plots (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 10, top: 480, width: 105, height: 58 }, 'kinetics_q33_zero_order_kinetics.png');
-
-  // 6. Q34: Reaction scheme X -> Y, Z (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 15, top: 560, width: 75, height: 35 }, 'kinetics_q34_parallel_reaction_xyz.png');
-
-  // 7. Q35: Energy plot P -> Q (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 30, top: 620, width: 80, height: 50 }, 'kinetics_q35_energy_plot_pq.png');
-
-  // 8. Q38: Energy profile with peaks A, C, intermediate B (media_1793271737016.png)
-  await crop('media_1793271737016.png', { left: 135, top: 485, width: 100, height: 55 }, 'kinetics_q38_two_step_energy_abc.png');
-
-  // 9. Q42: Rate vs t, [A] vs t, 1/[A] vs t plots (media_1793271753493.png)
-  await crop('media_1793271753493.png', { left: 10, top: 85, width: 110, height: 45 }, 'kinetics_q42_rate_plots.png');
-
-  // 10. Q44: Exothermic reaction graphs (media_1793271753493.png)
-  await crop('media_1793271753493.png', { left: 10, top: 275, width: 115, height: 110 }, 'kinetics_q44_exothermic_two_step.png');
-
-  // 11. Q46: Rate vs conc curves I, II, III (media_1793271753493.png)
-  await crop('media_1793271753493.png', { left: 130, top: 75, width: 110, height: 45 }, 'kinetics_q46_rate_vs_conc_curves.png');
-
-  // 12. Q73: t1/2 vs 1/a^2 graph (media_1793271771218.png)
-  await crop('media_1793271771218.png', { left: 25, top: 90, width: 75, height: 50 }, 'kinetics_q73_t_half_vs_conc.png');
-
-  // 13. Q83: Phenol nitration reaction scheme (media_1793271771218.png)
-  await crop('media_1793271771218.png', { left: 15, top: 368, width: 105, height: 45 }, 'kinetics_q83_phenol_nitration.png');
-
-  // 14. Q89: First order graphs I, II, III, IV (media_1793271771218.png)
-  await crop('media_1793271771218.png', { left: 135, top: 375, width: 90, height: 85 }, 'kinetics_q89_first_order_graphs.png');
-
-  console.log('--- All 14 diagrams cropped and saved! ---');
+  // Page 9: Q22 Options (A), (B), (C), (D)
+  // (A): y: 450 to 650, x: 80 to 360
+  // (B): y: 660 to 860, x: 80 to 360
+  // (C): y: 880 to 1080, x: 80 to 360
+  // (D): y: 1140 to 1340, x: 80 to 360
+  const p9 = await loadImage(path.join(pagesDir, 'page_9.png'));
+  crop(p9, 80, 440, 280, 195, 'kinetics_q22_opt_a.png');
+  crop(p9, 80, 665, 280, 195, 'kinetics_q22_opt_b.png');
+  crop(p9, 80, 890, 280, 195, 'kinetics_q22_opt_c.png');
+  crop(p9, 80, 1150, 280, 195, 'kinetics_q22_opt_d.png');
 }
 
 run().catch(console.error);

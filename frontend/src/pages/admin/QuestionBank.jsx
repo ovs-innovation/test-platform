@@ -669,7 +669,11 @@ export default function AdminQuestionBank() {
       ) return 'Biomolecules';
 
       if (Number(q.chapter_id) === 15 || Number(q.chapter_id) === 126 || /^\s*electrochemistry\s*$/i.test(raw)) return 'Electrochemistry';
-      if (Number(q.chapter_id) === 14 || /^\s*chemical kinetics\s*$/i.test(raw)) return 'Chemical Kinetics';
+      if (
+        Number(q.chapter_id) === 14 ||
+        Number(q.chapter_id) === 21 ||
+        /chemical\s*kinetics|kinetics/i.test(raw)
+      ) return 'Chemical Kinetics';
       if (Number(q.chapter_id) === 34 || /^\s*haloalkanes and haloarenes\s*$/i.test(raw)) return 'Haloalkanes and Haloarenes';
       if (Number(q.chapter_id) === 204 || /^\s*the d- and f-block elements\s*$/i.test(raw)) return 'The d- and f-Block Elements';
       if (Number(q.chapter_id) === 23 || Number(q.chapter_id) === 107 || /^\s*the p-block elements\s*$/i.test(raw)) return 'The p-Block Elements';
