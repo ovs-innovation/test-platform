@@ -375,6 +375,7 @@ export default function AdminQuestionBank() {
       if (/moving charges/i.test(trimmed)) return 'Moving Charges and Magnetism';
       if (/magnetism and matter/i.test(trimmed)) return 'Magnetism and Matter';
       if (/electromagnetic induction/i.test(trimmed)) return 'Electromagnetic Induction';
+      if (/alternating current/i.test(trimmed)) return 'Alternating Current';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
@@ -758,6 +759,12 @@ export default function AdminQuestionBank() {
         chId === 19 ||
         /electromagnetic waves/i.test(raw)
       ) return 'Electromagnetic Waves';
+
+      if (
+        chId === 197 ||
+        chId === 145 ||
+        /alternating current/i.test(raw)
+      ) return 'Alternating Current';
 
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;

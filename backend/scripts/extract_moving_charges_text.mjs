@@ -10,3 +10,4 @@ pdf(dataBuffer).then(function(data) {
   console.log('PDF text extracted! Number of pages:', data.numpages);
   console.log('Text length:', data.text.length);
 }).catch(console.error);
+
