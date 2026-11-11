@@ -2357,6 +2357,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
   }
 
   if (normCategory === 'physics' || !normCategory) {
+    if (/^\s*electrostatics?\s*$/i.test(rawChapter) || /^\s*electrostatics?\s*$/i.test(rawTopic)) {
+      return 'Electrostatics';
+    }
     if (/electrostatic/i.test(rawChapter) || /capacitan/i.test(rawChapter) || /electrostatic/i.test(rawTopic) || /capacitan/i.test(rawTopic)) {
       return 'Electrostatic Potential and Capacitance';
     }
