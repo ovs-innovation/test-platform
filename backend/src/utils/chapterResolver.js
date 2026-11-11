@@ -2390,6 +2390,9 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/dual\s*nature/i.test(rawChapter) || /dual\s*nature/i.test(rawTopic)) {
       return 'Dual Nature of Matter';
     }
+    if (/semiconductor/i.test(rawChapter) || /semiconductor/i.test(rawTopic)) {
+      return 'Semiconductor';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

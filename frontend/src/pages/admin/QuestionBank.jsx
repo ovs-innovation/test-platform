@@ -379,6 +379,7 @@ export default function AdminQuestionBank() {
       if (/wave optics/i.test(trimmed)) return 'Wave Optics';
       if (/ray\s*optics/i.test(trimmed) || /geometrical\s*optics/i.test(trimmed)) return 'Ray Optics';
       if (/dual\s*nature/i.test(trimmed)) return 'Dual Nature of Matter';
+      if (/semiconductor/i.test(trimmed)) return 'Semiconductor';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
@@ -790,6 +791,12 @@ export default function AdminQuestionBank() {
         chId === 203 ||
         /dual\s*nature/i.test(raw)
       ) return 'Dual Nature of Matter';
+
+      if (
+        chId === 77 ||
+        chId === 114 ||
+        /semiconductor/i.test(raw)
+      ) return 'Semiconductor';
 
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;
