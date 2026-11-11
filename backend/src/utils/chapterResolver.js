@@ -1563,8 +1563,8 @@ export function resolveChemistryStandardChapter(rawChapter = '', rawTopic = '', 
 
   // 6. Explicit name match for Some Basic Concepts of Chemistry
   if (
-    /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawChapter) ||
-    /some basic concepts of chemistry|basic concepts of chemistry/i.test(rawTopic)
+    /some basic concepts? of chemistry|basic concepts? of chemistry|mole concept/i.test(rawChapter) ||
+    /some basic concepts? of chemistry|basic concepts? of chemistry|mole concept/i.test(rawTopic)
   ) {
     return 'Some Basic Concepts of Chemistry';
   }

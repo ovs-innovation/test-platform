@@ -320,7 +320,7 @@ export default function AdminQuestionBank() {
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
       if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
-      if (/some basic concepts of chemistry/i.test(trimmed) || /basic concepts of chemistry/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
+      if (/some basic concepts? of chemistry/i.test(trimmed) || /basic concepts? of chemistry/i.test(trimmed) || /mole concept/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
     }
 
     if (activeSubj === 'zoology') {
@@ -598,9 +598,11 @@ export default function AdminQuestionBank() {
 
       if (
         (Number(q.id) >= 14041 && Number(q.id) <= 14170) ||
-        (Number(q.chapter_id) === 127 && Number(q.id) >= 5504 && Number(q.id) <= 5640) ||
+        Number(q.chapter_id) === 127 ||
         Number(q.chapter_id) === 95 ||
-        /some basic concepts of chemistry/i.test(raw)
+        Number(q.chapter_id) === 223 ||
+        /some basic concepts? of chemistry/i.test(raw) ||
+        /mole concept/i.test(raw)
       ) return 'Some Basic Concepts of Chemistry';
 
       if (
