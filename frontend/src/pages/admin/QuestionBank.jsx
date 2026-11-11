@@ -754,6 +754,11 @@ export default function AdminQuestionBank() {
         /current electricity/i.test(raw)
       ) return 'Current Electricity';
 
+      if (
+        chId === 19 ||
+        /electromagnetic waves/i.test(raw)
+      ) return 'Electromagnetic Waves';
+
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;
         if (/biot|savart|lorentz|cyclotron|solenoid|toroid|galvanometer|ampere|magnetic field|moving charge/i.test(text)) return 'Moving Charges and Magnetism';
