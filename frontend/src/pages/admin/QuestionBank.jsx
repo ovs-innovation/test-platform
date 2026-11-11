@@ -593,7 +593,8 @@ export default function AdminQuestionBank() {
       if (
         Number(q.chapter_id) === 128 ||
         Number(q.chapter_id) === 185 ||
-        /^\s*redox\s*reactions?\s*$/i.test(raw)
+        Number(q.chapter_id) === 40 ||
+        /redox\s*reactions?/i.test(raw)
       ) return 'Redox Reactions';
 
       if (
