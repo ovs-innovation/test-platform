@@ -227,7 +227,7 @@ export default function AdminQuestionBank() {
     'Some Basic Concepts of Chemistry',
     'Structure of Atom',
     'Periodic Table and Periodicity',
-    'Chemical Bonding and Molecular Structure',
+    'Chemical Bonding',
     'Thermodynamics',
     'Chemical Equilibrium',
     'Ionic Equilibrium',
@@ -320,7 +320,7 @@ export default function AdminQuestionBank() {
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
       if (/structure of atoms?/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table and Periodicity';
-      if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
+      if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding';
       if (/chemical\s*equilibrium/i.test(trimmed)) return 'Chemical Equilibrium';
       if (/ionic\s*equilibrium/i.test(trimmed)) return 'Ionic Equilibrium';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
@@ -628,6 +628,13 @@ export default function AdminQuestionBank() {
         (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
         /classification of elements|periodic\s*table|periodicity/i.test(raw)
       ) return 'Periodic Table and Periodicity';
+
+      if (
+        Number(q.chapter_id) === 12 ||
+        Number(q.chapter_id) === 38 ||
+        Number(q.chapter_id) === 60 ||
+        /chemical\s*bonding|bonding/i.test(raw)
+      ) return 'Chemical Bonding';
 
       if (
         Number(q.chapter_id) === 11 ||
