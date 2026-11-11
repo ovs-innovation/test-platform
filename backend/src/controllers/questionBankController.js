@@ -3,7 +3,7 @@ import { query } from '../config/db.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { ApiError } from '../utils/ApiError.js';
 import { parseQuestionCsv, questionsToCsv } from '../utils/csvQuestions.js';
-import { rememberCache, delCache } from '../config/redis.js';
+import { rememberCache, delCache, setCache } from '../config/redis.js';
 import { normalizeQuestionBankPayload } from '../utils/questionBankPayload.js';
 import { env } from '../config/env.js';
 import { verifyPdfMagicBytes, cleanupUploadedFiles } from '../middleware/pdfUpload.js';
@@ -21,11 +21,12 @@ const asJson = (value, fallback) => {
 /**
  * GET /api/question-bank/categories
  */
-export const listCategories = asyncHandler(async (_req, res) => {
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
-  const payload = await rememberCache('cache:qb:categories', 60, async () => {
+export const listCategories = asyncHandler(async (req, res) => {
+  const { skip_cache, refresh } = req.query;
+  const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
+  const cacheKey = 'cache:qb:categories';
+
+  const fetchCategories = async () => {
     const result = await query(
       `SELECT category, COUNT(*)::int AS count FROM question_bank GROUP BY category ORDER BY category`
     );
@@ -58,7 +59,15 @@ export const listCategories = asyncHandler(async (_req, res) => {
     }
 
     return { categories: categoriesList };
-  });
+  };
+
+  if (isBypass) {
+    const payload = await fetchCategories();
+    await setCache(cacheKey, payload, 300);
+    return res.json(payload);
+  }
+
+  const payload = await rememberCache(cacheKey, 300, fetchCategories);
   res.json(payload);
 });
 
@@ -66,100 +75,110 @@ export const listCategories = asyncHandler(async (_req, res) => {
  * GET /api/question-bank?category=Physics
  */
 export const listBankQuestions = asyncHandler(async (req, res) => {
-  const { category, chapter, subject } = req.query;
-  res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
-  res.set('Pragma', 'no-cache');
-  res.set('Expires', '0');
+  const { category, chapter, subject, skip_cache, refresh } = req.query;
+  const isBypass = skip_cache === 'true' || refresh === 'true' || req.headers['cache-control'] === 'no-cache';
+  const cacheKey = `cache:qb:list:${(category || 'all').toLowerCase()}:${(subject || 'all').toLowerCase()}:${(chapter || 'all').toLowerCase()}`;
 
-  let sql = `
-    WITH test_usage AS (
+  const fetchQuestions = async () => {
+    let sql = `
+      WITH test_usage AS (
+        SELECT 
+          q.bank_question_id,
+          COUNT(DISTINCT q.assessment_id)::int AS test_count,
+          json_agg(
+            DISTINCT jsonb_build_object(
+              'assessment_id', q.assessment_id,
+              'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
+            )
+          ) AS used_in_tests
+        FROM questions q
+        LEFT JOIN assessments a ON q.assessment_id = a.id
+        LEFT JOIN tests t ON a.id = t.id
+        WHERE q.bank_question_id IS NOT NULL
+        GROUP BY q.bank_question_id
+      )
       SELECT 
-        q.bank_question_id,
-        COUNT(DISTINCT q.assessment_id)::int AS test_count,
-        json_agg(
-          DISTINCT jsonb_build_object(
-            'assessment_id', q.assessment_id,
-            'test_name', COALESCE(t.test_name, a.title, 'Test #' || q.assessment_id)
-          )
-        ) AS used_in_tests
-      FROM questions q
-      LEFT JOIN assessments a ON q.assessment_id = a.id
-      LEFT JOIN tests t ON a.id = t.id
-      WHERE q.bank_question_id IS NOT NULL
-      GROUP BY q.bank_question_id
-    )
-    SELECT 
-      qb.*,
-      COALESCE(c.name, NULLIF(qb.chapter, '')) AS chapter,
-      c.name AS chapter_name, 
-      s.name AS subject_name,
-      CASE 
-        WHEN qb.status = 'normal' THEN '[]'::json 
-        ELSE COALESCE(tu.used_in_tests, '[]'::json) 
-      END AS used_in_tests,
-      CASE 
-        WHEN qb.status = 'normal' THEN 0 
-        ELSE COALESCE(tu.test_count, 0) 
-      END AS test_count,
-      CASE 
-        WHEN qb.status = 'normal' THEN 'normal'
-        WHEN qb.status = 'already_chosen' THEN 'already_chosen'
-        WHEN COALESCE(tu.test_count, 0) > 0 THEN 'already_chosen'
-        ELSE 'normal' 
-      END AS computed_status
-    FROM question_bank qb
-    LEFT JOIN chapters c ON qb.chapter_id = c.id
-    LEFT JOIN subjects s ON qb.subject_id = s.id
-    LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
-  `;
-  const conditions = [];
-  const params = [];
-  if (category && category !== 'All' && category !== 'all') {
-    params.push(category);
-    conditions.push(`LOWER(qb.category) = LOWER($${params.length})`);
+        qb.*,
+        COALESCE(c.name, NULLIF(qb.chapter, '')) AS chapter,
+        c.name AS chapter_name, 
+        s.name AS subject_name,
+        CASE 
+          WHEN qb.status = 'normal' THEN '[]'::json 
+          ELSE COALESCE(tu.used_in_tests, '[]'::json) 
+        END AS used_in_tests,
+        CASE 
+          WHEN qb.status = 'normal' THEN 0 
+          ELSE COALESCE(tu.test_count, 0) 
+        END AS test_count,
+        CASE 
+          WHEN qb.status = 'normal' THEN 'normal'
+          WHEN qb.status = 'already_chosen' THEN 'already_chosen'
+          WHEN COALESCE(tu.test_count, 0) > 0 THEN 'already_chosen'
+          ELSE 'normal' 
+        END AS computed_status
+      FROM question_bank qb
+      LEFT JOIN chapters c ON qb.chapter_id = c.id
+      LEFT JOIN subjects s ON qb.subject_id = s.id
+      LEFT JOIN test_usage tu ON tu.bank_question_id = qb.id
+    `;
+    const conditions = [];
+    const params = [];
+    if (category && category !== 'All' && category !== 'all') {
+      params.push(category);
+      conditions.push(`LOWER(qb.category) = LOWER($${params.length})`);
+    }
+
+    // If specific subject is requested (e.g. while in PYQ mode)
+    if (subject && subject !== 'All' && subject !== 'all') {
+      params.push(subject);
+      conditions.push(`LOWER(COALESCE(NULLIF(qb.subject, ''), s.name, '')) = LOWER($${params.length})`);
+    }
+
+    if (conditions.length > 0) {
+      sql += ' WHERE ' + conditions.join(' AND ');
+    }
+    sql += ' ORDER BY qb.category, qb.id ASC';
+    const result = await query(sql, params);
+    let questions = (result.rows || []).map((row) => {
+      const catOrSubj = (row.category && row.category.toLowerCase() !== 'pyq')
+        ? (row.category || row.subject_name || '')
+        : (row.subject || row.subject_name || row.category || '');
+      const standardChapter = resolveStandardChapter(
+        catOrSubj,
+        row.topic || '',
+        row.question_text || '',
+        row.chapter_name || row.chapter || '',
+        row.id
+      );
+      return {
+        ...row,
+        chapter: standardChapter,
+        status: row.computed_status || row.status || 'available',
+        used_in_tests: row.used_in_tests || [],
+        test_count: row.test_count || 0,
+      };
+    });
+
+    if (chapter && chapter !== 'All' && chapter !== 'all') {
+      const chapLower = chapter.trim().toLowerCase();
+      questions = questions.filter(
+        (q) => (q.chapter && q.chapter.toLowerCase() === chapLower) ||
+               (q.chapter_name && q.chapter_name.toLowerCase() === chapLower) ||
+               (q.topic && q.topic.toLowerCase() === chapLower)
+      );
+    }
+
+    return { questions };
+  };
+
+  if (isBypass) {
+    const payload = await fetchQuestions();
+    await setCache(cacheKey, payload, 300);
+    return res.json(payload);
   }
 
-  // If specific subject is requested (e.g. while in PYQ mode)
-  if (subject && subject !== 'All' && subject !== 'all') {
-    params.push(subject);
-    conditions.push(`LOWER(COALESCE(NULLIF(qb.subject, ''), s.name, '')) = LOWER($${params.length})`);
-  }
-
-  if (conditions.length > 0) {
-    sql += ' WHERE ' + conditions.join(' AND ');
-  }
-  sql += ' ORDER BY qb.category, qb.id ASC';
-  const result = await query(sql, params);
-  let questions = (result.rows || []).map((row) => {
-    const catOrSubj = (row.category && row.category.toLowerCase() !== 'pyq')
-      ? (row.category || row.subject_name || '')
-      : (row.subject || row.subject_name || row.category || '');
-    const standardChapter = resolveStandardChapter(
-      catOrSubj,
-      row.topic || '',
-      row.question_text || '',
-      row.chapter_name || row.chapter || '',
-      row.id
-    );
-    return {
-      ...row,
-      chapter: standardChapter,
-      status: row.computed_status || row.status || 'available',
-      used_in_tests: row.used_in_tests || [],
-      test_count: row.test_count || 0,
-    };
-  });
-
-  if (chapter && chapter !== 'All' && chapter !== 'all') {
-    const chapLower = chapter.trim().toLowerCase();
-    questions = questions.filter(
-      (q) => (q.chapter && q.chapter.toLowerCase() === chapLower) ||
-             (q.chapter_name && q.chapter_name.toLowerCase() === chapLower) ||
-             (q.topic && q.topic.toLowerCase() === chapLower)
-    );
-  }
-
-  res.json({ questions });
+  const payload = await rememberCache(cacheKey, 300, fetchQuestions);
+  res.json(payload);
 });
 
 /**

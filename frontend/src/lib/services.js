@@ -8,7 +8,13 @@ export const clearCache = (key) => {
     cache.delete(key);
     inFlight.delete(key);
     for (const k of cache.keys()) {
-      if (k.endsWith(`:${key}`) || k === key) {
+      if (
+        k.endsWith(`:${key}`) ||
+        k === key ||
+        k.startsWith(key) ||
+        (key === 'qb' && (k.startsWith('qb_') || k.includes('qb'))) ||
+        (key.startsWith('qb_') && k.startsWith('qb_'))
+      ) {
         cache.delete(k);
         inFlight.delete(k);
       }
@@ -32,12 +38,12 @@ export const getActiveUserScope = () => {
   return 'u_anon';
 };
 
-export const withCache = (key, fetcher, ttlMs = 60000) => {
+export const withCache = (key, fetcher, ttlMs = 60000, staleTimeMs = 5000) => {
   const cached = cache.get(key);
   const now = Date.now();
 
   if (cached && (now - cached.timestamp < ttlMs)) {
-    if (now - cached.timestamp > 5000 && !inFlight.has(key)) {
+    if (now - cached.timestamp > staleTimeMs && !inFlight.has(key)) {
       const bgPromise = Promise.resolve()
         .then(() => fetcher())
         .then((data) => {
@@ -283,30 +289,70 @@ export const assessmentService = {
 };
 
 export const questionBankService = {
-  categories: () => api.get('/question-bank/categories', { params: { _t: Date.now() }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.categories),
-  list: (category) => api.get('/question-bank', { params: { ...(category ? { category } : {}), _t: Date.now(), skip_cache: 'true' }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.questions),
-  byCategory: (category, extraParams = {}) => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...extraParams, _t: Date.now(), skip_cache: 'true' }, headers: { 'Cache-Control': 'no-cache', 'Pragma': 'no-cache' } }).then((r) => r.data.questions),
+  hasCache: (category, extraParams = {}) => {
+    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    const cached = cache.get(key);
+    return Boolean(cached && (Date.now() - cached.timestamp < 300000));
+  },
+  categories: (forceRefresh = false) => {
+    if (forceRefresh) clearCache('qb_categories');
+    return withCache(
+      'qb_categories',
+      () => api.get('/question-bank/categories', forceRefresh ? { params: { refresh: 'true' } } : {}).then((r) => r.data.categories),
+      300000,
+      60000
+    );
+  },
+  list: (category, forceRefresh = false) => {
+    const key = `qb_list_${(category || 'all').toLowerCase()}`;
+    if (forceRefresh) clearCache(key);
+    return withCache(
+      key,
+      () => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...(forceRefresh ? { refresh: 'true' } : {}) } }).then((r) => r.data.questions),
+      300000,
+      60000
+    );
+  },
+  byCategory: (category, extraParams = {}, forceRefresh = false) => {
+    const key = `qb_by_cat_${(category || 'all').toLowerCase()}_${JSON.stringify(extraParams)}`;
+    if (forceRefresh) clearCache(key);
+    return withCache(
+      key,
+      () => api.get('/question-bank', { params: { ...(category ? { category } : {}), ...extraParams, ...(forceRefresh ? { refresh: 'true' } : {}) } }).then((r) => r.data.questions),
+      300000,
+      60000
+    );
+  },
+  clearQuestionBankCache: () => {
+    clearCache('qb');
+  },
   create: (data) => {
+    clearCache('qb');
     clearCache();
     return api.post('/question-bank', data).then((r) => r.data.question);
   },
   update: (id, data) => {
+    clearCache('qb');
     clearCache();
     return api.put(`/question-bank/${id}`, data).then((r) => r.data.question);
   },
   updateStatus: (id, status) => {
+    clearCache('qb');
     clearCache();
     return api.patch(`/question-bank/${id}/status`, { status }).then((r) => r.data);
   },
   remove: (id) => {
+    clearCache('qb');
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
   },
   delete: (id) => {
+    clearCache('qb');
     clearCache();
     return api.delete(`/question-bank/${id}`).then((r) => r.data);
   },
   deleteAll: (category, scope = 'category') => {
+    clearCache('qb');
     clearCache();
     const params = scope === 'all' ? { scope: 'all' } : { category };
     return api.delete('/question-bank/all', { params }).then((r) => r.data);
@@ -314,10 +360,12 @@ export const questionBankService = {
   import: (bankId, assessmentId, section_id) =>
     api.post(`/question-bank/${bankId}/import/${assessmentId}`, { section_id }).then((r) => r.data.question),
   uploadPdf: (data, config = {}) => {
+    clearCache('qb');
     clearCache();
     return api.post('/question-bank/upload-pdf', data, { timeout: 900000, ...config }).then((r) => r.data);
   },
   bulkUpload: (csv, default_category) => {
+    clearCache('qb');
     clearCache();
     return api.post('/question-bank/bulk', { csv, default_category }).then((r) => r.data);
   },
@@ -697,7 +745,16 @@ export const adminService = {
     clearCache();
     return api.delete(`/admin/subjects/${id}`).then((r) => r.data);
   },
-  chapters: (subjectId) => api.get(`/admin/subjects/${subjectId}/chapters`).then((r) => r.data.chapters),
+  chapters: (subjectId, forceRefresh = false) => {
+    const key = `admin_chapters_${subjectId}`;
+    if (forceRefresh) clearCache(key);
+    return withCache(
+      key,
+      () => api.get(`/admin/subjects/${subjectId}/chapters`).then((r) => r.data.chapters),
+      300000,
+      60000
+    );
+  },
   createChapter: (data) => {
     clearCache();
     return api.post('/admin/chapters', data).then((r) => r.data.chapter);

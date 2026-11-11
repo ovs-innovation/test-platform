@@ -1628,7 +1628,7 @@ export default function AdminQuestionBank() {
       }
       setPdfSuccessData(res);
       toast.success(`Imported ${res.created} question(s) successfully!`);
-      await load();
+      await load(true);
     } catch (err) {
       let msg = err?.response?.data?.message || err?.response?.data?.error || err?.message || 'PDF extraction failed. Please check the file.';
       if (typeof msg === 'string' && /<html|<!DOCTYPE/i.test(msg)) {
@@ -1641,12 +1641,15 @@ export default function AdminQuestionBank() {
     }
   };
 
-  const load = async () => {
-    setLoading(true);
+  const load = async (forceRefresh = false) => {
+    const extraParams = category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {};
+    const hasCached = questionBankService.hasCache(category, extraParams);
+    if (!hasCached || forceRefresh || questions.length === 0) {
+      setLoading(true);
+    }
     try {
-      const extraParams = category === 'PYQ' && pyqSubject !== 'All' ? { subject: pyqSubject } : {};
       const [data, subjects] = await Promise.all([
-        questionBankService.byCategory(category, extraParams),
+        questionBankService.byCategory(category, extraParams, forceRefresh),
         adminService.subjects().catch(() => []),
       ]);
       setQuestions(data || []);
@@ -1684,7 +1687,7 @@ export default function AdminQuestionBank() {
   };
 
   useEffect(() => {
-    load();
+    load(false);
     setSelectedChapter('all');
     setChapterSearch('');
     if (chapterSliderRef.current) {
@@ -1844,7 +1847,7 @@ export default function AdminQuestionBank() {
       setQuestions((prev) => prev.filter((q) => q.id !== targetId));
       toast.success('Question deleted from bank');
       setDeleteQuestionId(null);
-      load();
+      load(true);
       setSelectedChapter('all');
       setChapterSearch('');
       if (chapterSliderRef.current) {
@@ -1868,7 +1871,7 @@ export default function AdminQuestionBank() {
           : `Deleted all questions in ${category} (${res.count ?? 0} removed)`
       );
       setDeleteAllModalOpen(false);
-      load();
+      load(true);
       setSelectedChapter('all');
       setChapterSearch('');
       if (chapterSliderRef.current) {
@@ -1972,7 +1975,7 @@ export default function AdminQuestionBank() {
       }
       setModalOpen(false);
       setEditing(null);
-      await load();
+      await load(true);
     } catch (err) {
       toast.error(err.message || 'Save failed');
     } finally {
@@ -2054,7 +2057,7 @@ export default function AdminQuestionBank() {
       const res = await questionBankService.bulkUpload(csvText, category);
       toast.success(`Imported ${res.created} questions${res.errors?.length ? ` (${res.errors.length} errors)` : ''}`);
       setCsvOpen(false);
-      load();
+      load(true);
       setSelectedChapter('all');
       setChapterSearch('');
       if (chapterSliderRef.current) {
@@ -2124,7 +2127,7 @@ export default function AdminQuestionBank() {
       toast.success(`Option ${letter} set as correct answer key for Question #${q.serialNumber || q.id}`);
     } catch {
       toast.error('Failed to update answer key');
-      load();
+      load(true);
       setSelectedChapter('all');
       setChapterSearch('');
       if (chapterSliderRef.current) {
@@ -2158,6 +2161,19 @@ export default function AdminQuestionBank() {
               </span>
             </button>
             <button type="button" className="btn btn-primary" onClick={openAdd}>+ Add Question</button>
+            <button
+              type="button"
+              className="btn btn-secondary flex items-center gap-1.5 cursor-pointer"
+              onClick={() => {
+                load(true);
+                toast.success('Question bank refreshed from server');
+              }}
+              disabled={loading}
+              title="Refresh questions from server (bypass cache)"
+            >
+              <RotateCcw className={`h-4 w-4 ${loading ? 'animate-spin text-blue-600 dark:text-blue-400' : ''}`} />
+              <span className="hidden sm:inline">Refresh</span>
+            </button>
             <button
               type="button"
               className="btn bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold flex items-center gap-1.5 shadow-sm transition cursor-pointer"
