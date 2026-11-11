@@ -1,0 +1,272 @@
+[
+  {
+    "num": 1,
+    "pageNum": 2,
+    "y": 128,
+    "text": "Q1."
+  },
+  {
+    "num": 2,
+    "pageNum": 2,
+    "y": 257,
+    "text": "Q2."
+  },
+  {
+    "num": 3,
+    "pageNum": 2,
+    "y": 385,
+    "text": "Q3."
+  },
+  {
+    "num": 4,
+    "pageNum": 2,
+    "y": 574,
+    "text": "Q4."
+  },
+  {
+    "num": 5,
+    "pageNum": 3,
+    "y": 87,
+    "text": "Q5."
+  },
+  {
+    "num": 6,
+    "pageNum": 3,
+    "y": 255,
+    "text": "Q6."
+  },
+  {
+    "num": 7,
+    "pageNum": 3,
+    "y": 384,
+    "text": "Q7."
+  },
+  {
+    "num": 8,
+    "pageNum": 3,
+    "y": 529,
+    "text": "Q8."
+  },
+  {
+    "num": 9,
+    "pageNum": 4,
+    "y": 87,
+    "text": "Q9."
+  },
+  {
+    "num": 10,
+    "pageNum": 4,
+    "y": 230,
+    "text": "Q10."
+  },
+  {
+    "num": 11,
+    "pageNum": 4,
+    "y": 349,
+    "text": "Q11."
+  },
+  {
+    "num": 12,
+    "pageNum": 4,
+    "y": 460,
+    "text": "Q12."
+  },
+  {
+    "num": 13,
+    "pageNum": 5,
+    "y": 87,
+    "text": "Q13."
+  },
+  {
+    "num": 14,
+    "pageNum": 5,
+    "y": 244,
+    "text": "Q14."
+  },
+  {
+    "num": 15,
+    "pageNum": 5,
+    "y": 367,
+    "text": "Q15."
+  },
+  {
+    "num": 16,
+    "pageNum": 5,
+    "y": 538,
+    "text": "Q16."
+  },
+  {
+    "num": 17,
+    "pageNum": 6,
+    "y": 87,
+    "text": "Q17."
+  },
+  {
+    "num": 18,
+    "pageNum": 6,
+    "y": 233,
+    "text": "Q18."
+  },
+  {
+    "num": 19,
+    "pageNum": 6,
+    "y": 415,
+    "text": "Q19."
+  },
+  {
+    "num": 20,
+    "pageNum": 6,
+    "y": 529,
+    "text": "Q20."
+  },
+  {
+    "num": 21,
+    "pageNum": 7,
+    "y": 87,
+    "text": "Q21."
+  },
+  {
+    "num": 22,
+    "pageNum": 7,
+    "y": 265,
+    "text": "Q22."
+  },
+  {
+    "num": 23,
+    "pageNum": 7,
+    "y": 393,
+    "text": "Q23."
+  },
+  {
+    "num": 24,
+    "pageNum": 7,
+    "y": 564,
+    "text": "Q24."
+  },
+  {
+    "num": 25,
+    "pageNum": 8,
+    "y": 87,
+    "text": "Q25."
+  },
+  {
+    "num": 26,
+    "pageNum": 8,
+    "y": 229,
+    "text": "Q26."
+  },
+  {
+    "num": 27,
+    "pageNum": 8,
+    "y": 341,
+    "text": "Q27."
+  },
+  {
+    "num": 28,
+    "pageNum": 8,
+    "y": 472,
+    "text": "Q28."
+  },
+  {
+    "num": 29,
+    "pageNum": 8,
+    "y": 596,
+    "text": "Q29."
+  },
+  {
+    "num": 30,
+    "pageNum": 9,
+    "y": 87,
+    "text": "Q30."
+  },
+  {
+    "num": 31,
+    "pageNum": 9,
+    "y": 327,
+    "text": "Q31."
+  },
+  {
+    "num": 32,
+    "pageNum": 9,
+    "y": 517,
+    "text": "Q32."
+  },
+  {
+    "num": 33,
+    "pageNum": 10,
+    "y": 87,
+    "text": "Q33."
+  },
+  {
+    "num": 34,
+    "pageNum": 10,
+    "y": 327,
+    "text": "Q34."
+  },
+  {
+    "num": 35,
+    "pageNum": 10,
+    "y": 502,
+    "text": "Q35."
+  },
+  {
+    "num": 36,
+    "pageNum": 10,
+    "y": 601,
+    "text": "Q36."
+  },
+  {
+    "num": 37,
+    "pageNum": 11,
+    "y": 87,
+    "text": "Q37."
+  },
+  {
+    "num": 38,
+    "pageNum": 11,
+    "y": 251,
+    "text": "Q38."
+  },
+  {
+    "num": 39,
+    "pageNum": 11,
+    "y": 394,
+    "text": "Q39."
+  },
+  {
+    "num": 40,
+    "pageNum": 11,
+    "y": 493,
+    "text": "Q40."
+  },
+  {
+    "num": 41,
+    "pageNum": 11,
+    "y": 577,
+    "text": "Q41."
+  },
+  {
+    "num": 42,
+    "pageNum": 12,
+    "y": 87,
+    "text": "Q42."
+  },
+  {
+    "num": 43,
+    "pageNum": 12,
+    "y": 178,
+    "text": "Q43."
+  },
+  {
+    "num": 44,
+    "pageNum": 12,
+    "y": 271,
+    "text": "Q44."
+  },
+  {
+    "num": 45,
+    "pageNum": 12,
+    "y": 400,
+    "text": "Q45."
+  }
+]

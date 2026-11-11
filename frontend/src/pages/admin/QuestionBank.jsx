@@ -229,6 +229,7 @@ export default function AdminQuestionBank() {
     'Periodic Table',
     'Chemical Bonding and Molecular Structure',
     'Thermodynamics',
+    'Chemical Equilibrium',
     'Equilibrium',
     'Redox Reactions',
     'The p-Block Elements (Gr. 13 & 14)',
@@ -319,6 +320,8 @@ export default function AdminQuestionBank() {
       if (/structure of atoms?/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
       if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
+      if (/chemical\s*equilibrium/i.test(trimmed)) return 'Chemical Equilibrium';
+      if (/ionic\s*equilibrium/i.test(trimmed)) return 'Ionic Equilibrium';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
       if (/some basic concepts? of chemistry/i.test(trimmed) || /basic concepts? of chemistry/i.test(trimmed) || /mole concept/i.test(trimmed)) return 'Some Basic Concepts of Chemistry';
     }
@@ -621,6 +624,18 @@ export default function AdminQuestionBank() {
         (Number(q.id) >= 6061 && Number(q.id) <= 6247 && (Number(q.chapter_id) === 155 || /periodic/i.test(q.chapter || ''))) ||
         /classification of elements|periodic\s*table|periodicity/i.test(raw)
       ) return 'Periodic Table';
+
+      if (
+        Number(q.chapter_id) === 11 ||
+        Number(q.chapter_id) === 139 ||
+        Number(q.chapter_id) === 204 ||
+        /chemical\s*equilibrium/i.test(raw)
+      ) return 'Chemical Equilibrium';
+
+      if (
+        Number(q.chapter_id) === 13 ||
+        /ionic\s*equilibrium/i.test(raw)
+      ) return 'Ionic Equilibrium';
 
       if (
         (Number(q.id) >= 14327 && Number(q.id) <= 14590) ||
