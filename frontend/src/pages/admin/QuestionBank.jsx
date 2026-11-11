@@ -378,6 +378,7 @@ export default function AdminQuestionBank() {
       if (/alternating current/i.test(trimmed)) return 'Alternating Current';
       if (/wave optics/i.test(trimmed)) return 'Wave Optics';
       if (/ray\s*optics/i.test(trimmed) || /geometrical\s*optics/i.test(trimmed)) return 'Ray Optics';
+      if (/dual\s*nature/i.test(trimmed)) return 'Dual Nature of Matter';
       if (/motion in straight line/i.test(trimmed)) return 'Motion in straight line';
       if (/motion in a plane/i.test(trimmed)) return 'motion in a plane';
       if (/properties\s*of\s*matter/i.test(trimmed)) return 'Properties of Matter';
@@ -725,18 +726,19 @@ export default function AdminQuestionBank() {
       ) return 'Capacitor';
 
       if (
-        chId === 106 ||
+        chId === 194 ||
+        /magnetism and matter/i.test(raw) ||
+        (chId === 106 && /magnet/i.test(raw))
+      ) return 'Magnetism and Matter';
+
+      if (
+        (chId === 106 && !/magnet/i.test(raw)) ||
         chId === 142 ||
         chId === 67 ||
         (Number(q.id) >= 14033 && Number(q.id) <= 14040) ||
         [2555, 2556, 5496, 5497, 5498, 5499, 5500, 5501, 5502, 5503, 10812, 10987, 10988].includes(Number(q.id)) ||
         /electrostatic/i.test(raw)
       ) return 'Electrostatics';
-
-      if (
-        chId === 194 ||
-        /magnetism and matter/i.test(raw)
-      ) return 'Magnetism and Matter';
 
       if (
         chId === 195 ||
@@ -780,6 +782,14 @@ export default function AdminQuestionBank() {
         /ray\s*optics/i.test(raw) ||
         /geometrical\s*optics/i.test(raw)
       ) return 'Ray Optics';
+
+      if (
+        chId === 196 ||
+        chId === 30 ||
+        chId === 38 ||
+        chId === 203 ||
+        /dual\s*nature/i.test(raw)
+      ) return 'Dual Nature of Matter';
 
       if (/magnetism\s*(&|and)\s*electromagnetic induction/i.test(raw)) {
         const text = `${q.topic || ''} ${q.question_text || ''}`;
