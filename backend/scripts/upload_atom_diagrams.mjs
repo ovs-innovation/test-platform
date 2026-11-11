@@ -2,60 +2,50 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
-import { uploadImageToCloudinary } from '../src/services/cloudinaryService.js';
+import { v2 as cloudinary } from 'cloudinary';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 
-const atomDir = path.resolve(__dirname, '../uploads/structure_of_atom');
-const mapFile = path.resolve(__dirname, './cloudinary_atom_diagrams_map.json');
-
-async function main() {
-  console.log('=== Uploading Structure of Atom Diagrams to Cloudinary ===');
-
-  let diagramMap = {};
-  if (fs.existsSync(mapFile)) {
-    try {
-      diagramMap = JSON.parse(fs.readFileSync(mapFile, 'utf8'));
-    } catch {
-      diagramMap = {};
-    }
-  }
-
-  const files = fs.readdirSync(atomDir).filter(f => f.startsWith('atom_q') && f.endsWith('.png'));
-  console.log(`Found ${files.length} diagram files to upload.`);
-
-  for (let i = 0; i < files.length; i++) {
-    const file = files[i];
-    const key = file.replace(/\.png$/, '');
-    if (diagramMap[key]) {
-      console.log(`[Already Uploaded] ${file} -> ${diagramMap[key]}`);
-      continue;
-    }
-
-    const filePath = path.join(atomDir, file);
-    console.log(`[${i + 1}/${files.length}] Uploading ${file} to Cloudinary...`);
-    try {
-      const res = await uploadImageToCloudinary(filePath, {
-        folder: 'edvedum_chemistry/structure_of_atom',
-        public_id: key,
-        overwrite: true
-      });
-      diagramMap[key] = res.secure_url;
-      fs.writeFileSync(mapFile, JSON.stringify(diagramMap, null, 2));
-      console.log(`  Uploaded -> ${res.secure_url}`);
-    } catch (err) {
-      console.error(`  Failed to upload ${file}:`, err.message);
-    }
-  }
-
-  console.log('Finished uploading atom diagrams.');
-  process.exit(0);
-}
-
-main().catch(err => {
-  console.error(err);
-  process.exit(1);
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
+const srcDir = path.resolve(__dirname, 'atom_diagrams');
+const targetLocalDir = path.resolve(__dirname, '../../frontend/public/uploads/structure_of_atom');
+if (!fs.existsSync(targetLocalDir)) {
+  fs.mkdirSync(targetLocalDir, { recursive: true });
+}
+
+async function uploadAll() {
+  const files = fs.readdirSync(srcDir).filter(f => f.endsWith('.png'));
+  const urlMap = {};
+
+  for (const file of files) {
+    const localSrc = path.join(srcDir, file);
+    const localDest = path.join(targetLocalDir, file);
+    fs.copyFileSync(localSrc, localDest);
+
+    console.log(`Uploading ${file} to Cloudinary...`);
+    try {
+      const res = await cloudinary.uploader.upload(localSrc, {
+        folder: 'edvedum/structure_of_atom',
+        public_id: path.basename(file, '.png'),
+        overwrite: true
+      });
+      urlMap[file] = res.secure_url;
+      console.log(`Uploaded ${file} -> ${res.secure_url}`);
+    } catch (err) {
+      console.error(`Failed to upload ${file}:`, err.message);
+      urlMap[file] = `/uploads/structure_of_atom/${file}`;
+    }
+  }
+
+  fs.writeFileSync('backend/scripts/atom_diagram_urls.json', JSON.stringify(urlMap, null, 2), 'utf8');
+  console.log('Saved diagram URLs to atom_diagram_urls.json');
+}
+
+uploadAll().catch(console.error);

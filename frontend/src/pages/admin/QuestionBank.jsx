@@ -316,7 +316,7 @@ export default function AdminQuestionBank() {
       if (/solution/i.test(trimmed)) return 'Solutions';
       if (/electrochem/i.test(trimmed)) return 'Electrochemistry';
       if (/kinetic/i.test(trimmed)) return 'Chemical Kinetics';
-      if (/structure of atom/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
+      if (/structure of atoms?/i.test(trimmed) || /atomic structure/i.test(trimmed)) return 'Structure of Atom';
       if (/periodic|classification of elements/i.test(trimmed)) return 'Periodic Table';
       if (/bonding|chemical bonding/i.test(trimmed)) return 'Chemical Bonding and Molecular Structure';
       if (/equilibrium/i.test(trimmed)) return 'Equilibrium';
@@ -607,9 +607,11 @@ export default function AdminQuestionBank() {
 
       if (
         (Number(q.id) >= 14171 && Number(q.id) <= 14326) ||
-        (Number(q.chapter_id) === 77 && Number(q.id) >= 5641 && Number(q.id) <= 5796) ||
+        Number(q.chapter_id) === 77 ||
         Number(q.chapter_id) === 96 ||
-        /structure of atom/i.test(raw)
+        Number(q.chapter_id) === 16 ||
+        /structure of atoms?/i.test(raw) ||
+        /atomic structure/i.test(raw)
       ) return 'Structure of Atom';
 
       if (

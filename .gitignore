@@ -22,6 +22,8 @@ omr_transcribed.txt
 backend/scripts/*_pages/
 backend/scripts/*_pages_batch*/
 backend/scripts/*_batch*_pages/
+backend/scripts/*_q_slices/
+backend/scripts/*_diagrams/
 backend/scripts/fluids_batch*/
 backend/scripts/laws_of_motion/
 backend/pdf_rendered_pages/
