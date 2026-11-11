@@ -2381,6 +2381,12 @@ export function resolveStandardChapter(category = '', topic = '', questionText =
     if (/heat\s*and\s*thermo/i.test(rawChapter) || /heat\s*and\s*thermo/i.test(rawTopic)) {
       return 'Heat and Thermodynamics';
     }
+    if (/ray\s*optics/i.test(rawChapter) || /geometrical\s*optics/i.test(rawChapter) || /ray\s*optics/i.test(rawTopic) || /geometrical\s*optics/i.test(rawTopic)) {
+      return 'Ray Optics';
+    }
+    if (/wave\s*optics/i.test(rawChapter) || /wave\s*optics/i.test(rawTopic)) {
+      return 'Wave Optics';
+    }
   }
 
   // 1. If rawChapter is already set and not a generic placeholder

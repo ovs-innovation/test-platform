@@ -1,0 +1,137 @@
+[
+  {
+    "q": 1,
+    "id": "ro_q1_diagram",
+    "page": 2,
+    "yMin": 429,
+    "yMax": 809,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 2,
+    "id": "ro_q2_diagram",
+    "page": 2,
+    "yMin": 966,
+    "yMax": 1346,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 4,
+    "id": "ro_q4_diagram",
+    "page": 3,
+    "yMin": 543,
+    "yMax": 923,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 9,
+    "id": "ro_q9_diagram",
+    "page": 4,
+    "yMin": 928,
+    "yMax": 1308,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 11,
+    "id": "ro_q11_diagram",
+    "page": 5,
+    "yMin": 432,
+    "yMax": 812,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 12,
+    "id": "ro_q12_diagram",
+    "page": 5,
+    "yMin": 1006,
+    "yMax": 1386,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 13,
+    "id": "ro_q13_diagram",
+    "page": 6,
+    "yMin": 585,
+    "yMax": 603,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 16,
+    "id": "ro_q16_diagram",
+    "page": 7,
+    "yMin": 255,
+    "yMax": 539,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 22,
+    "id": "ro_q22_diagram",
+    "page": 8,
+    "yMin": 616,
+    "yMax": 1026,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 25,
+    "id": "ro_q25_diagram",
+    "page": 9,
+    "yMin": 574,
+    "yMax": 984,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 47,
+    "id": "ro_q47_diagram",
+    "page": 14,
+    "yMin": 745,
+    "yMax": 765,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 73,
+    "id": "ro_q73_diagram",
+    "page": 19,
+    "yMin": 712,
+    "yMax": 695,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 79,
+    "id": "ro_q79_diagram",
+    "page": 20,
+    "yMin": 912,
+    "yMax": 1322,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 83,
+    "id": "ro_q83_diagram",
+    "page": 21,
+    "yMin": 895,
+    "yMax": 1305,
+    "xMin": 60,
+    "xMax": 980
+  },
+  {
+    "q": 99,
+    "id": "ro_q99_diagram",
+    "page": 24,
+    "yMin": 630,
+    "yMax": 1010,
+    "xMin": 60,
+    "xMax": 980
+  }
+]
