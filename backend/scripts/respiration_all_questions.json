@@ -1,0 +1,2338 @@
+[
+  {
+    "q_num": 1,
+    "text": "**[RE-NEET 2026]**\n\nHow many molecules of pyruvic acid are produced at the end of glycolysis from 206 molecules of\nglucose?",
+    "options": [
+      {
+        "key": "A",
+        "text": "412"
+      },
+      {
+        "key": "B",
+        "text": "206"
+      },
+      {
+        "key": "C",
+        "text": "309"
+      },
+      {
+        "key": "D",
+        "text": "103"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) 412**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 2,
+    "text": "**[NEET 2026]**\n\n$$2(\\text{C}_{51}\\text{H}_{98}\\text{O}_6) + 145\\text{O}_2 \\rightarrow 102\\text{CO}_2 + 98\\text{H}_2\\text{O} + \\text{energy}$$\n\nThe Respiratory Quotient (RQ) of a biomolecule used for respiration, as per the above equation would be :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Between 0.5 and 0.95"
+      },
+      {
+        "key": "B",
+        "text": "Less than 0.5"
+      },
+      {
+        "key": "C",
+        "text": "1.0"
+      },
+      {
+        "key": "D",
+        "text": "Between 1.25 and 2"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Between 0.5 and 0.95**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 3,
+    "text": "**[NEET 2026]**\n\nMatch List-I with List-II:\n\n| List-I (Process) | List-II (Location) |\n| :--- | :--- |\n| **A.** Glycolysis | **I.** Inner mitochondrial membrane |\n| **B.** ETS | **II.** Mitochondrial matrix |\n| **C.** Accumulation of protons | **III.** Cytoplasm |\n| **D.** Krebs' cycle | **IV.** Intermembrane space |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-II, C-I, D-III"
+      },
+      {
+        "key": "B",
+        "text": "A-II, B-III, C-IV, D-I"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "key": "D",
+        "text": "A-I, B-IV, C-III, D-II"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) A-III, B-I, C-IV, D-II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 4,
+    "text": "**[NEET 2025]**\n\nThe complex II of mitochondrial electron transport chain is also known as :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cytochrome c oxidase"
+      },
+      {
+        "key": "B",
+        "text": "NADH dehydrogenase"
+      },
+      {
+        "key": "C",
+        "text": "Cytochrome $bc_1$"
+      },
+      {
+        "key": "D",
+        "text": "Succinate dehydrogenase"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Succinate dehydrogenase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 5,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nMatch List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| **(A)** ETS Complex I | **(I)** NADH Dehydrogenase |\n| **(B)** ETS Complex II | **(II)** Cytochrome $bc_1$ |\n| **(C)** ETS Complex III | **(III)** Cytochrome c oxidase |\n| **(D)** ETS Complex IV | **(IV)** Succinate Dehydrogenase |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-I, C-III, D-II"
+      },
+      {
+        "key": "B",
+        "text": "A-I, B-IV, C-II, D-III"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "key": "D",
+        "text": "A-I, B-II, C-IV, D-III"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) A-I, B-IV, C-II, D-III**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 6,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nWhich of the following are correct about cellular respiration?\n\nA. Cellular respiration is the breaking of C-C bonds of complex organic molecules by oxidation.\nB. The entire cellular respiration takes place in Mitochondria.\nC. Fermentation takes place under anaerobic condition in germinating seeds.\nD. The fate of pyruvate formed during glycolysis depends on the type of organism also.\nE. Water is formed during respiration as a result of $\\text{O}_2$ accepting electrons and getting reduced.\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A, C, D, E only"
+      },
+      {
+        "key": "B",
+        "text": "A, B, E only"
+      },
+      {
+        "key": "C",
+        "text": "A, B, C, E only"
+      },
+      {
+        "key": "D",
+        "text": "B, C, D, E only"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) A, C, D, E only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 7,
+    "text": "**[NEET 2024]**\n\nMatch List I with List II\n\n| List-I | List-II |\n| :--- | :--- |\n| **A.** Citric acid cycle | **I.** Cytoplasm |\n| **B.** Glycolysis | **II.** Mitochondrial matrix |\n| **C.** Electron transport system | **III.** Intermembrane space of mitochondria |\n| **D.** Proton gradient | **IV.** Inner mitochondrial membrane |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "key": "B",
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "key": "D",
+        "text": "A-IV, B-III, C-II, D-I Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) A-II, B-I, C-IV, D-III**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 8,
+    "text": "**[NEET 2024]**\n\nIdentify the step in tricarboxylic acid cycle, which does not involve oxidation of substrate.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Malic acid $\\rightarrow$ Oxaloacetic acid"
+      },
+      {
+        "key": "B",
+        "text": "Succinic acid $\\rightarrow$ Malic acid"
+      },
+      {
+        "key": "C",
+        "text": "Succinyl-CoA $\\rightarrow$ Succinic acid"
+      },
+      {
+        "key": "D",
+        "text": "Isocitrate $\\rightarrow$ $\\alpha$-ketoglutaric acid"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Succinyl-CoA $\\rightarrow$ Succinic acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 9,
+    "text": "**[NEET 2023 Manipur]**\n\nHow many times decarboxylation occurs during each TCA cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Thrice"
+      },
+      {
+        "key": "B",
+        "text": "Many"
+      },
+      {
+        "key": "C",
+        "text": "Once"
+      },
+      {
+        "key": "D",
+        "text": "Twice"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Twice**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 10,
+    "text": "**[NEET 2023 Manipur]**\n\nFatty acids are connected with the respiratory pathway through :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Acetyl CoA"
+      },
+      {
+        "key": "B",
+        "text": "$\\alpha$-Ketoglutaric acid"
+      },
+      {
+        "key": "C",
+        "text": "Dihydroxy acetone phosphate"
+      },
+      {
+        "key": "D",
+        "text": "Pyruvic acid"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 11,
+    "text": "**[NEET 2023]**\n\nGiven below are two statements : One is labelled as Assertion A and the other is labelled as Reason R :\n\n**Assertion A :** ATP is used at two steps in glycolysis.\n**Reason R :** First ATP is used in converting glucose into glucose-6-phosphate and second ATP is used in conversion of fructose-6-phosphate into fructose-1, 6-diphosphate.\n\nIn the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Both A and R are true but R is NOT the correct explanation of A."
+      },
+      {
+        "key": "B",
+        "text": "A is true but R is false."
+      },
+      {
+        "key": "C",
+        "text": "A is false but R is true."
+      },
+      {
+        "key": "D",
+        "text": "Both A and R are true and R is the correct explanation of A."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Both A and R are true and R is the correct explanation of A.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 12,
+    "text": "**[NEET 2023]**\n\nMatch List I with List II:\n\n| List I | List II |\n| :--- | :--- |\n| **(A)** Oxidative decarboxylation | **(I)** Citrate synthase |\n| **(B)** Glycolysis | **(II)** Pyruvate dehydrogenase |\n| **(C)** Oxidative phosphorylation | **(III)** Electron transport system |\n| **(D)** Tricarboxylic acid cycle | **(IV)** EMP pathway |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A – II, B – IV, C – I, D – III"
+      },
+      {
+        "key": "B",
+        "text": "A – III, B – I, C – II, D – IV"
+      },
+      {
+        "key": "C",
+        "text": "A – II, B – IV, C – III, D – I"
+      },
+      {
+        "key": "D",
+        "text": "A – III, B – IV, C – II, D – I"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) A – II, B – IV, C – III, D – I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 13,
+    "text": "**[NEET 2022 Phase 2]**\n\nThe 5-C compound formed during TCA cycle is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Fumaric acid"
+      },
+      {
+        "key": "B",
+        "text": "$\\alpha$-ketoglutaric acid"
+      },
+      {
+        "key": "C",
+        "text": "Oxalo succinic acid"
+      },
+      {
+        "key": "D",
+        "text": "Succinic acid"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) $\\alpha$-ketoglutaric acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 14,
+    "text": "**[NEET 2022 Phase 2]**\n\nThe number of time(s) decarboxylation of isocitrate occurs during single TCA cycle is",
+    "options": [
+      {
+        "key": "A",
+        "text": "Four"
+      },
+      {
+        "key": "B",
+        "text": "One"
+      },
+      {
+        "key": "C",
+        "text": "Two"
+      },
+      {
+        "key": "D",
+        "text": "Three"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Two**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 15,
+    "text": "**[NEET 2022 Phase 1]**\n\nWhat is the net gain of ATP when each molecule of glucose is converted to two molecules of\npyruvic acid?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Four"
+      },
+      {
+        "key": "B",
+        "text": "Six"
+      },
+      {
+        "key": "C",
+        "text": "Two"
+      },
+      {
+        "key": "D",
+        "text": "Eight"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Two**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 16,
+    "text": "**[NEET 2022 Phase 1]**\n\nWhat amount of energy is released from glucose during lactic acid fermentation?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Approximately 15%"
+      },
+      {
+        "key": "B",
+        "text": "More than 18%"
+      },
+      {
+        "key": "C",
+        "text": "About 10%"
+      },
+      {
+        "key": "D",
+        "text": "Less than 7% Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Less than 7% Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 17,
+    "text": "**[NEET 2021]**\n\nWhich of the following statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Oxidation-reduction reactions produce proton gradient in respiration"
+      },
+      {
+        "key": "B",
+        "text": "During aerobic respiration, role of oxygen is limited to the terminal stage."
+      },
+      {
+        "key": "C",
+        "text": "In ETC (Electron Transport Chain), one molecule of $\\text{NADH} + \\text{H}^+$ gives rise to 2 ATP molecules, and one $\\text{FADH}_2$ gives rise to 3 ATP molecules"
+      },
+      {
+        "key": "D",
+        "text": "ATP is synthesized through complex V"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) In ETC (Electron Transport Chain), one molecule of $\\text{NADH} + \\text{H}^+$ gives rise to 2 ATP molecules, and one $\\text{FADH}_2$ gives rise to 3 ATP molecules**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 18,
+    "text": "**[NEET 2020 Phase 2]**\n\nPyruvate dehydrogenase activity during aerobic respiration requires :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Magnesium"
+      },
+      {
+        "key": "B",
+        "text": "Calcium"
+      },
+      {
+        "key": "C",
+        "text": "Iron"
+      },
+      {
+        "key": "D",
+        "text": "Cobalt"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Magnesium**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 19,
+    "text": "**[NEET 2020 Phase 1]**\n\nThe number of substrate level phosphorylations in one turn of citric acid cycle is",
+    "options": [
+      {
+        "key": "A",
+        "text": "Zero"
+      },
+      {
+        "key": "B",
+        "text": "One"
+      },
+      {
+        "key": "C",
+        "text": "Three"
+      },
+      {
+        "key": "D",
+        "text": "Two"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) One**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 20,
+    "text": "**[NEET 2019 (Odisha)]**\n\nWhere is the respiratory electron transport system (ETS) located in plants?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Intermembrane space"
+      },
+      {
+        "key": "B",
+        "text": "Mitochondrial matrix"
+      },
+      {
+        "key": "C",
+        "text": "Outer mitochondrial membrane"
+      },
+      {
+        "key": "D",
+        "text": "Inner mitochondrial membrane"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Inner mitochondrial membrane**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 21,
+    "text": "**[NEET 2019]**\n\nConversion of glucose to glucose-6 phosphate, the first irreversible reaction of glycolysis, is\ncatalyzed by",
+    "options": [
+      {
+        "key": "A",
+        "text": "Enolase"
+      },
+      {
+        "key": "B",
+        "text": "Phosphofructokinase"
+      },
+      {
+        "key": "C",
+        "text": "Aldolase"
+      },
+      {
+        "key": "D",
+        "text": "Hexokinase"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Hexokinase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 22,
+    "text": "**[NEET 2019]**\n\nRespiratory Quotient (RQ) value of tripalmitin is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "0.07"
+      },
+      {
+        "key": "B",
+        "text": "0.09"
+      },
+      {
+        "key": "C",
+        "text": "0.9"
+      },
+      {
+        "key": "D",
+        "text": "0.7 Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 0.7 Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 23,
+    "text": "**[NEET 2018]**\n\nWhat is the role of $\\text{NAD}^+$ in cellular respiration?",
+    "options": [
+      {
+        "key": "A",
+        "text": "It is the final electron acceptor for anaerobic respiration."
+      },
+      {
+        "key": "B",
+        "text": "It functions as an enzyme."
+      },
+      {
+        "key": "C",
+        "text": "It functions as an electron carrier."
+      },
+      {
+        "key": "D",
+        "text": "It is a nucleotide source for ATP synthesis."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) It functions as an electron carrier.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 24,
+    "text": "**[NEET 2018]**\n\nWhich of these statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Glycolysis operates as long as it is supplied with NAD that can pick up hydrogen atoms."
+      },
+      {
+        "key": "B",
+        "text": "Enzymes of TCA cycle are present in mitochondrial matrix."
+      },
+      {
+        "key": "C",
+        "text": "Oxidative phosphorylation takes place in outer mitochondrial membrane."
+      },
+      {
+        "key": "D",
+        "text": "Glycolysis occurs in cytosol."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Oxidative phosphorylation takes place in outer mitochondrial membrane.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 25,
+    "text": "**[NEET 2017]**\n\nWhich statement is wrong for Krebs' cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "There is one point in the cycle where $\\text{FAD}^+$ is reduced to $\\text{FADH}_2$."
+      },
+      {
+        "key": "B",
+        "text": "During conversion of succinyl CoA to succinic acid, a molecule of GTP is synthesised."
+      },
+      {
+        "key": "C",
+        "text": "The cycle starts with condensation of acetyl group (acetyl CoA) with pyruvic acid to yield citric acid."
+      },
+      {
+        "key": "D",
+        "text": "There are three points in the cycle where $\\text{NAD}^+$ is reduced to $\\text{NADH} + \\text{H}^+$."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) The cycle starts with condensation of acetyl group (acetyl CoA) with pyruvic acid to yield citric acid.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 26,
+    "text": "**[NEET 2016 Phase 2]**\n\nWhich of the following biomolecules is common to respiration-mediated breakdown of fats,\ncarbohydrates and proteins?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Glucose-6-phosphate"
+      },
+      {
+        "key": "B",
+        "text": "Fructose 1, 6-bisphosphate"
+      },
+      {
+        "key": "C",
+        "text": "Pyruvic acid"
+      },
+      {
+        "key": "D",
+        "text": "Acetyl CoA"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 27,
+    "text": "**[NEET 2016 Phase 2]**\n\nOxidative phosphorylation is",
+    "options": [
+      {
+        "key": "A",
+        "text": "formation of ATP by transfer of phosphate group from a substrate to ADP"
+      },
+      {
+        "key": "B",
+        "text": "oxidation of phosphate group in ATP"
+      },
+      {
+        "key": "C",
+        "text": "addition of phosphate group to ATP"
+      },
+      {
+        "key": "D",
+        "text": "formation of ATP by energy released from electrons removed during substrate oxidation. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) formation of ATP by energy released from electrons removed during substrate oxidation. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 28,
+    "text": "**[AIPMT 2015 Cancelled Paper]**\n\nCytochromes are found in",
+    "options": [
+      {
+        "key": "A",
+        "text": "cristae of mitochondria"
+      },
+      {
+        "key": "B",
+        "text": "lysosomes"
+      },
+      {
+        "key": "C",
+        "text": "matrix of mitochondria"
+      },
+      {
+        "key": "D",
+        "text": "outer wall of mitochondria."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) cristae of mitochondria**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 29,
+    "text": "**[AIPMT 2014]**\n\nIn which one of the following processes CO 2   is not released?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Aerobic respiration in plants"
+      },
+      {
+        "key": "B",
+        "text": "Aerobic respiration in animals"
+      },
+      {
+        "key": "C",
+        "text": "Alcoholic fermentation"
+      },
+      {
+        "key": "D",
+        "text": "Lactic fermentation"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Lactic fermentation**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 30,
+    "text": "**[NEET 2013]**\n\nWhich of the metabolites is common to respiration-mediated breakdown of fats, carbohydrates and\nproteins?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pyruvic acid"
+      },
+      {
+        "key": "B",
+        "text": "Acetyl CoA"
+      },
+      {
+        "key": "C",
+        "text": "Glucose- 6 - phosphate"
+      },
+      {
+        "key": "D",
+        "text": "Fructose 1, 6 - bisphosphate"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 31,
+    "text": "**[NEET 2013]**\n\nThe three boxes in this diagram represent the three major biosynthetic pathways in aerobic respiration. Arrows represent net reactants or products.\n\n![Aerobic Respiration Pathways Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469396/edvedum/questions/respiration_in_plants/respiration_q_31.png)\n\nArrows numbered 4, 8 and 12 can all be :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{H}_2\\text{O}$"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{FAD}^+$ or $\\text{FADH}_2$"
+      },
+      {
+        "key": "C",
+        "text": "NADH"
+      },
+      {
+        "key": "D",
+        "text": "ATP"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794469396/edvedum/questions/respiration_in_plants/respiration_q_31.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 32,
+    "text": "**[AIPMT 2011 Mains]**\n\nIn mitochondria, protons accumulate in the",
+    "options": [
+      {
+        "key": "A",
+        "text": "outer membrane"
+      },
+      {
+        "key": "B",
+        "text": "inner membrane"
+      },
+      {
+        "key": "C",
+        "text": "intermembrane space"
+      },
+      {
+        "key": "D",
+        "text": "matrix Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) intermembrane space**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 33,
+    "text": "**[AIPMT 2010 Prelims]**\n\nThe energy-releasing metabolic process in which substrate is oxidised without an external electron\nacceptor is called",
+    "options": [
+      {
+        "key": "A",
+        "text": "glycolysis"
+      },
+      {
+        "key": "B",
+        "text": "fermentation"
+      },
+      {
+        "key": "C",
+        "text": "aerobic respiration"
+      },
+      {
+        "key": "D",
+        "text": "photorespiration."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) fermentation**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 34,
+    "text": "**[AIPMT 2009]**\n\nAerobic respiratory pathway is appropriately termed",
+    "options": [
+      {
+        "key": "A",
+        "text": "parabolic"
+      },
+      {
+        "key": "B",
+        "text": "amphibolic"
+      },
+      {
+        "key": "C",
+        "text": "anabolic"
+      },
+      {
+        "key": "D",
+        "text": "catabolic."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) amphibolic**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 35,
+    "text": "**[AIPMT 2008]**\n\nThe energy-releasing metabolic process in which substrate is oxidised without an external electron\nacceptor is called",
+    "options": [
+      {
+        "key": "A",
+        "text": "glycolysis"
+      },
+      {
+        "key": "B",
+        "text": "fermentation"
+      },
+      {
+        "key": "C",
+        "text": "aerobic respiration"
+      },
+      {
+        "key": "D",
+        "text": "photorespiration"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) fermentation**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 36,
+    "text": "**[AIPMT 2008]**\n\nThe chemiosmotic coupling hypothesis of oxidative phosphorylation proposes that adenosine\ntriphosphate (ATP) is formed because",
+    "options": [
+      {
+        "key": "A",
+        "text": "a proton gradient forms across the inner membrane"
+      },
+      {
+        "key": "B",
+        "text": "there is a change in the permeability of the inner mitochondrial membrane toward adenosine diphosphate (ADP)"
+      },
+      {
+        "key": "C",
+        "text": "high energy bonds are formed in mitochondrial proteins"
+      },
+      {
+        "key": "D",
+        "text": "ADP is pumped out of the matrix into the intermembrane space."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) a proton gradient forms across the inner membrane**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 37,
+    "text": "**[AIPMT 2007]**\n\nThe overall goal of glycolysis, Krebs' cycle and the electron transport system is the formation of",
+    "options": [
+      {
+        "key": "A",
+        "text": "ATP in one large oxidation reaction"
+      },
+      {
+        "key": "B",
+        "text": "sugars"
+      },
+      {
+        "key": "C",
+        "text": "nucleic acids"
+      },
+      {
+        "key": "D",
+        "text": "ATP in small stepwise units."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) ATP in small stepwise units.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 38,
+    "text": "**[AIPMT 2007]**\n\nAll enzymes of TCA cycle are located in the mitochondrial matrix except one which is located in\ninner mitochondrial membranes in eukaryotes and in cytosol in prokaryotes. This enzyme is",
+    "options": [
+      {
+        "key": "A",
+        "text": "isocitrate dehydrogenase"
+      },
+      {
+        "key": "B",
+        "text": "malate dehydrogenase"
+      },
+      {
+        "key": "C",
+        "text": "succinate dehydrogenase"
+      },
+      {
+        "key": "D",
+        "text": "lactate dehydrogenase. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) succinate dehydrogenase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 39,
+    "text": "**[AIPMT 2006]**\n\nHow many ATP molecules could maximally be generated from one molecule of glucose, if the\ncomplete oxidation of one mole of glucose to CO 2   and H 2 O yields 686 kcal and the useful chemical\nenergy available in the high energy phosphate bond of one mole of ATP is 12 kcal?",
+    "options": [
+      {
+        "key": "A",
+        "text": "1"
+      },
+      {
+        "key": "B",
+        "text": "2"
+      },
+      {
+        "key": "C",
+        "text": "30"
+      },
+      {
+        "key": "D",
+        "text": "57"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) 57**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 40,
+    "text": "**[AIPMT 2005]**\n\nDuring which stage in the complete oxidation of glucose are the greatest number of ATP molecules\nformed from ADP?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Glycolysis"
+      },
+      {
+        "key": "B",
+        "text": "Krebs' cycle"
+      },
+      {
+        "key": "C",
+        "text": "Conversion of pyruvic acid to acetyl CoA"
+      },
+      {
+        "key": "D",
+        "text": "Electron transport chain"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Electron transport chain**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 41,
+    "text": "**[AIPMT 2004]**\n\nIn glycolysis, during oxidation electrons are removed by",
+    "options": [
+      {
+        "key": "A",
+        "text": "ATP"
+      },
+      {
+        "key": "B",
+        "text": "glyceraldehyde-3-phosphate"
+      },
+      {
+        "key": "C",
+        "text": "+ NAD"
+      },
+      {
+        "key": "D",
+        "text": "molecular oxygen."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) + NAD**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 42,
+    "text": "**[AIPMT 2003]**\n\nIn alcohol fermentation",
+    "options": [
+      {
+        "key": "A",
+        "text": "triose phosphate is the electron donor while acetaldehyde is the electron acceptor"
+      },
+      {
+        "key": "B",
+        "text": "triose phosphate is the electron donor while pyruvic acid is the electron acceptor"
+      },
+      {
+        "key": "C",
+        "text": "there is no electron donor"
+      },
+      {
+        "key": "D",
+        "text": "oxygen is the electron acceptor."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) triose phosphate is the electron donor while acetaldehyde is the electron acceptor**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 43,
+    "text": "**[AIPMT 2003]**\n\nIn which one of the following do the two names refer to one and same thing?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Krebs' cycle and Calvin cycle"
+      },
+      {
+        "key": "B",
+        "text": "Tricarboxylic acid cycle and citric acid cycle"
+      },
+      {
+        "key": "C",
+        "text": "Citric acid cycle and Calvin cycle"
+      },
+      {
+        "key": "D",
+        "text": "Tricarboxylic acid cycle and urea cycle"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Tricarboxylic acid cycle and citric acid cycle**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 44,
+    "text": "**[AIPMT 2002]**\n\nHow many ATP molecules are produced by aerobic oxidation of one molecule of glucose?",
+    "options": [
+      {
+        "key": "A",
+        "text": "2"
+      },
+      {
+        "key": "B",
+        "text": "4"
+      },
+      {
+        "key": "C",
+        "text": "38"
+      },
+      {
+        "key": "D",
+        "text": "34 Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 38**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 45,
+    "text": "**[AIPMT 2001]**\n\nCytochrome is",
+    "options": [
+      {
+        "key": "A",
+        "text": "metallo flavo protein"
+      },
+      {
+        "key": "B",
+        "text": "Fe containing porphyrin pigment"
+      },
+      {
+        "key": "C",
+        "text": "glycoprotein"
+      },
+      {
+        "key": "D",
+        "text": "lipid."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Fe containing porphyrin pigment**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 46,
+    "text": "**[AIPMT 1999]**\n\nNet gain of ATP molecules during aerobic respiration is",
+    "options": [
+      {
+        "key": "A",
+        "text": "36 molecules"
+      },
+      {
+        "key": "B",
+        "text": "60 molecules"
+      },
+      {
+        "key": "C",
+        "text": "38 molecules"
+      },
+      {
+        "key": "D",
+        "text": "48 molecules"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 38 molecules**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 47,
+    "text": "**[AIPMT 1997]**\n\nWhich of the following is the key intermediate compound linking glycolysis to the Krebs' cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Malic acid"
+      },
+      {
+        "key": "B",
+        "text": "Acetyl CoA"
+      },
+      {
+        "key": "C",
+        "text": "NADH"
+      },
+      {
+        "key": "D",
+        "text": "ATP"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 48,
+    "text": "**[AIPMT 1997]**\n\nIn Krebs' cycle, the FAD precipitates as electron acceptor during the conversion of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "fumaric acid to malic acid"
+      },
+      {
+        "key": "B",
+        "text": "succinic acid to fumaric acid"
+      },
+      {
+        "key": "C",
+        "text": "succinyl CoA to succinic acid"
+      },
+      {
+        "key": "D",
+        "text": "$\\alpha$-ketoglutarate to succinyl CoA"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) succinic acid to fumaric acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 49,
+    "text": "**[AIPMT 1997]**\n\nThe end product of fermentation are :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{O}_2$ and $\\text{C}_2\\text{H}_5\\text{OH}$"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{CO}_2$ and acetaldehyde"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{CO}_2$ and $\\text{O}_2$"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{CO}_2$ and $\\text{C}_2\\text{H}_5\\text{OH}$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) $\\text{CO}_2$ and $\\text{C}_2\\text{H}_5\\text{OH}$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 50,
+    "text": "**[AIPMT 1997]**\n\nThe correct sequence of electron acceptor in ATP synthesis is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cyt. $b, c, a_3, a$"
+      },
+      {
+        "key": "B",
+        "text": "Cyt. $c, b, a, a_3$"
+      },
+      {
+        "key": "C",
+        "text": "Cyt. $a, a, b, c$"
+      },
+      {
+        "key": "D",
+        "text": "Cyt. $b, c, a, a_3$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Cyt. $b, c, a, a_3$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 51,
+    "text": "**[AIPMT 1996]**\n\nWhich of the following products are obtained by anaerobic respiration from yeast?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Beer and wine"
+      },
+      {
+        "key": "B",
+        "text": "Alcohols"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{CO}_2$"
+      },
+      {
+        "key": "D",
+        "text": "All of these"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) All of these**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 52,
+    "text": "**[AIPMT 1996]**\n\nAt the end of glycolysis, six carbon compound ultimately changes into",
+    "options": [
+      {
+        "key": "A",
+        "text": "ethyl alcohol"
+      },
+      {
+        "key": "B",
+        "text": "acetyl Co-A"
+      },
+      {
+        "key": "C",
+        "text": "pyruvic acid"
+      },
+      {
+        "key": "D",
+        "text": "ATP"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) pyruvic acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 53,
+    "text": "**[AIPMT 1996]**\n\nWhen one molecule of ATP is disintegrated, what amount of energy is liberated?",
+    "options": [
+      {
+        "key": "A",
+        "text": "8 kcal"
+      },
+      {
+        "key": "B",
+        "text": "38 kcal"
+      },
+      {
+        "key": "C",
+        "text": "7 kcal"
+      },
+      {
+        "key": "D",
+        "text": "4.5 kcal"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 7 kcal**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 54,
+    "text": "**[AIPMT 1994]**\n\nThe ultimate respiratory substrate, yielding maximum number of ATP molecules, is",
+    "options": [
+      {
+        "key": "A",
+        "text": "glycogen"
+      },
+      {
+        "key": "B",
+        "text": "ketogenic amino acid"
+      },
+      {
+        "key": "C",
+        "text": "glucose"
+      },
+      {
+        "key": "D",
+        "text": "amylose"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) glucose**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 55,
+    "text": "**[AIPMT 1994]**\n\nWhen yeast ferments glucose, the products obtained are :",
+    "options": [
+      {
+        "key": "A",
+        "text": "ethanol and $\\text{CO}_2$"
+      },
+      {
+        "key": "B",
+        "text": "methanol and $\\text{CO}_2$"
+      },
+      {
+        "key": "C",
+        "text": "ethanol and water"
+      },
+      {
+        "key": "D",
+        "text": "water and $\\text{CO}_2$"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) ethanol and $\\text{CO}_2$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 56,
+    "text": "**[AIPMT 1994]**\n\nThe first phase in the breakdown of glucose, in animal cell, is",
+    "options": [
+      {
+        "key": "A",
+        "text": "fermentation"
+      },
+      {
+        "key": "B",
+        "text": "Krebs' cycle"
+      },
+      {
+        "key": "C",
+        "text": "glycolysis"
+      },
+      {
+        "key": "D",
+        "text": "E.T.S."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) glycolysis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 57,
+    "text": "**[AIPMT 1994]**\n\nPlants, but not animals, can convert fatty acids to sugars by a series of reactions called",
+    "options": [
+      {
+        "key": "A",
+        "text": "photosynthesis"
+      },
+      {
+        "key": "B",
+        "text": "Kreb's cycle"
+      },
+      {
+        "key": "C",
+        "text": "glycolysis"
+      },
+      {
+        "key": "D",
+        "text": "glyoxylate cycle"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) glyoxylate cycle**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 58,
+    "text": "**[AIPMT 1993]**\n\nLife without air would be",
+    "options": [
+      {
+        "key": "A",
+        "text": "reductional"
+      },
+      {
+        "key": "B",
+        "text": "free from oxidative damage"
+      },
+      {
+        "key": "C",
+        "text": "impossible"
+      },
+      {
+        "key": "D",
+        "text": "anaerobic Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) anaerobic Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 59,
+    "text": "**[AIPMT 1993]**\n\nOut of 38 ATP molecules produced per glucose, 32 ATP molecules are formed from   NADH/\nin",
+    "options": [
+      {
+        "key": "A",
+        "text": "respiratory chain"
+      },
+      {
+        "key": "B",
+        "text": "Krebs' cycle"
+      },
+      {
+        "key": "C",
+        "text": "oxidative decarboxylation"
+      },
+      {
+        "key": "D",
+        "text": "EMP"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) respiratory chain**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 60,
+    "text": "**[AIPMT 1993]**\n\nEnd product of citric acid cycle/Krebs' cycle is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "citric acid"
+      },
+      {
+        "key": "B",
+        "text": "lactic acid"
+      },
+      {
+        "key": "C",
+        "text": "pyruvic acid"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{CO}_2 + \\text{H}_2\\text{O}$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) $\\text{CO}_2 + \\text{H}_2\\text{O}$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 61,
+    "text": "**[AIPMT 1992]**\n\nApparatus to measure rate of respiration and R.Q. is",
+    "options": [
+      {
+        "key": "A",
+        "text": "auxanometer"
+      },
+      {
+        "key": "B",
+        "text": "potometer"
+      },
+      {
+        "key": "C",
+        "text": "respirometer"
+      },
+      {
+        "key": "D",
+        "text": "manometer"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) respirometer**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 62,
+    "text": "**[AIPMT 1992]**\n\nWhen one glucose molecule is completely oxidised, it changes",
+    "options": [
+      {
+        "key": "A",
+        "text": "36 ADP molecules into 36 ATP molecules"
+      },
+      {
+        "key": "B",
+        "text": "38 ADP molecules into 38 ATP molecules"
+      },
+      {
+        "key": "C",
+        "text": "30 ADP molecules into 30 ATP molecules"
+      },
+      {
+        "key": "D",
+        "text": "32 ADP molecules into 32 ATP molecules"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) 38 ADP molecules into 38 ATP molecules**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 63,
+    "text": "**[AIPMT 1992]**\n\nOxidative phosphorylation is production of",
+    "options": [
+      {
+        "key": "A",
+        "text": "ATP in photosynthesis"
+      },
+      {
+        "key": "B",
+        "text": "NADPH in photosynthesis"
+      },
+      {
+        "key": "C",
+        "text": "ATP in respiration"
+      },
+      {
+        "key": "D",
+        "text": "NADH in respiration"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) ATP in respiration**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 64,
+    "text": "**[AIPMT 1992]**\n\nEnd products of aerobic respiration are",
+    "options": [
+      {
+        "key": "A",
+        "text": "sugar and oxygen"
+      },
+      {
+        "key": "B",
+        "text": "water and energy"
+      },
+      {
+        "key": "C",
+        "text": "carbon dioxide, water and energy"
+      },
+      {
+        "key": "D",
+        "text": "carbon dioxide and energy"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) carbon dioxide, water and energy**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 65,
+    "text": "**[AIPMT 1992]**\n\nLink between glycolysis, Krebs' cycle and $\\beta$-oxidation of fatty acid or carbohydrate and fat metabolism is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "oxaloacetic acid"
+      },
+      {
+        "key": "B",
+        "text": "succinic acid"
+      },
+      {
+        "key": "C",
+        "text": "citric acid"
+      },
+      {
+        "key": "D",
+        "text": "acetyl CoA"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 66,
+    "text": "**[AIPMT 1992]**\n\nOut of 36 ATP molecules produced per glucose molecule during respiration",
+    "options": [
+      {
+        "key": "A",
+        "text": "2 are produced outside glycolysis and 34 during respiratory chain"
+      },
+      {
+        "key": "B",
+        "text": "2 are produced outside mitochondria and 34 inside mitochondria"
+      },
+      {
+        "key": "C",
+        "text": "2 during glycolysis and 34 during Krebs cycle"
+      },
+      {
+        "key": "D",
+        "text": "all are formed inside mitochondria"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) 2 are produced outside mitochondria and 34 inside mitochondria**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 67,
+    "text": "**[AIPMT 1992]**\n\nTerminal cytochrome of respiratory chain which donates electrons to oxygen is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cyt $b$"
+      },
+      {
+        "key": "B",
+        "text": "Cyt $c$"
+      },
+      {
+        "key": "C",
+        "text": "Cyt $a_1$"
+      },
+      {
+        "key": "D",
+        "text": "Cyt $a_3$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Cyt $a_3$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 68,
+    "text": "**[AIPMT 1990]**\n\nConnecting link between glycolysis and Krebs' cycle before pyruvate entering Krebs' cycle is\nchanged to",
+    "options": [
+      {
+        "key": "A",
+        "text": "oxaloacetate"
+      },
+      {
+        "key": "B",
+        "text": "PEP"
+      },
+      {
+        "key": "C",
+        "text": "pyruvate"
+      },
+      {
+        "key": "D",
+        "text": "acetyl CoA"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) acetyl CoA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (D) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 69,
+    "text": "**[AIPMT 1990]**\n\nEMP can produce a total of",
+    "options": [
+      {
+        "key": "A",
+        "text": "6 ATP"
+      },
+      {
+        "key": "B",
+        "text": "8 ATP"
+      },
+      {
+        "key": "C",
+        "text": "24 ATP"
+      },
+      {
+        "key": "D",
+        "text": "38 ATP"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) 8 ATP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 70,
+    "text": "**[AIPMT 1990]**\n\nR.Q. is ratio of :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{CO}_2$ produced to substrate consumed"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{CO}_2$ produced to $\\text{O}_2$ consumed"
+      },
+      {
+        "key": "C",
+        "text": "oxygen consumed to water produced"
+      },
+      {
+        "key": "D",
+        "text": "oxygen consumed to $\\text{CO}_2$ produced"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) $\\text{CO}_2$ produced to $\\text{O}_2$ consumed**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 71,
+    "text": "**[AIPMT 1990]**\n\nEnd product of glycolysis is",
+    "options": [
+      {
+        "key": "A",
+        "text": "acetyl CoA"
+      },
+      {
+        "key": "B",
+        "text": "pyruvic acid"
+      },
+      {
+        "key": "C",
+        "text": "glucose 1-phosphate"
+      },
+      {
+        "key": "D",
+        "text": "fructose 1-phosphate"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) pyruvic acid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (B) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 72,
+    "text": "**[AIPMT 1988]**\n\nR.Q. is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$\\text{C}/\\text{N}$"
+      },
+      {
+        "key": "B",
+        "text": "$\\text{N}/\\text{C}$"
+      },
+      {
+        "key": "C",
+        "text": "$\\text{CO}_2 / \\text{O}_2$"
+      },
+      {
+        "key": "D",
+        "text": "$\\text{O}_2 / \\text{CO}_2$"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) $\\text{CO}_2 / \\text{O}_2$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (C) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  },
+  {
+    "q_num": 73,
+    "text": "**[AIPMT 1988]**\n\n$\\text{NADP}^+$ is reduced to NADPH in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "HMP"
+      },
+      {
+        "key": "B",
+        "text": "Calvin Cycle"
+      },
+      {
+        "key": "C",
+        "text": "glycolysis"
+      },
+      {
+        "key": "D",
+        "text": "EMP"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) HMP**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Respiration in Plants), cellular respiration involves the breakdown of respiratory substrates through Glycolysis (cytoplasm), Link Reaction, Krebs' Cycle (mitochondrial matrix), and ETS / Oxidative Phosphorylation (inner mitochondrial membrane).\n- **Analysis of Options:** Option (A) is scientifically accurate and consistent with NCERT guidelines.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Respiration in Plants"
+  }
+]
