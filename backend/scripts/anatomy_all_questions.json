@@ -1,0 +1,2670 @@
+[
+  {
+    "q_num": 1,
+    "exam": "NEET 2026",
+    "text": "The main function of bulliform cells in grasses is :",
+    "options": [
+      "to make the leaf impermeable to fungal spores.",
+      "to transport water.",
+      "to perform photosynthesis.",
+      "to minimize water loss during water stress."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - to minimize water loss during water stress.. Bulliform cells are large, bubble-shaped epidermal cells present on the adaxial surface of grass leaves. During water stress, they lose water and become flaccid, causing the leaves to curl inward to minimize water loss.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 2,
+    "exam": "NEET 2026",
+    "text": "Match List-I with List-II :\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Conjunctive tissue | I. Specialised cells in the vicinity of guard cells |\n| B. Casparian strips | II. Endodermal cells rich in starch |\n| C. Subsidiary cells | III. Tissue between xylem and phloem |\n| D. Starch sheath | IV. Endodermal cells with suberin deposition |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-IV, B-III, C-I, D-II",
+      "A-III, B-IV, C-II, D-I",
+      "A-III, B-IV, C-I, D-II",
+      "A-IV, B-III, C-II, D-I"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - A-III, B-IV, C-I, D-II. Conjunctive tissue is parenchymatous tissue situated between xylem and phloem in root (A-III); Casparian strips are suberin depositions on radial/tangential walls of endodermal cells (B-IV); Subsidiary cells are specialized epidermal cells neighboring guard cells (C-I); Starch sheath refers to the endodermis of dicot stems rich in starch grains (D-II).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 3,
+    "exam": "NEET 2025",
+    "text": "Find the statement that is NOT correct with regard to the structure of monocot stem.",
+    "options": [
+      "Vascular bundles are conjoint and closed.",
+      "Phloem parenchyma is absent.",
+      "Hypodermis is parenchymatous.",
+      "Vascular bundles are scattered."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Hypodermis is parenchymatous.. In monocot stems, the hypodermis is sclerenchymatous (providing mechanical support), not parenchymatous. Vascular bundles are conjoint, closed, and scattered in ground tissue; phloem parenchyma is absent.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 4,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Which of the following simple tissues are commonly found in the fruit walls of nuts and pulp of pear?",
+    "options": [
+      "Sclereids",
+      "Fibres",
+      "Parenchyma",
+      "Collenchyma"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sclereids. Sclereids (brachysclereids / stone cells) are extremely thick-walled, lignified, dead cells providing gritty texture in the pulp of pear, sapota, guava, and hard seed coats and fruit walls of nuts.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 5,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Which of the following helps in maintenance of the pressure gradient in sieve tubes?",
+    "options": [
+      "Albuminous cells",
+      "Sieve cells",
+      "Phloem parenchyma",
+      "Companion cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Companion cells. Companion cells are specialized parenchymatous cells closely associated with sieve tube elements. They help maintain the pressure gradient in the sieve tubes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 6,
+    "exam": "NEET 2024 (Re-Examination)",
+    "text": "Given below are two statements: Statement I: In a dicotyledonous leaf, the adaxial epidermis generally bears more stomata than the abaxial epidermis. Statement II: In a dicotyledonous leaf, the adaxially placed palisade parenchyma is made up of elongated cells, which are arranged vertically and parallel to each other. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Statement I is true but Statement II is false",
+      "Statement I is false but Statement II is true",
+      "Both Statement I and Statement II are true",
+      "Both Statement I and Statement II are false"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Statement I is false but Statement II is true. In a dorsiventral (dicot) leaf, the abaxial (lower) epidermis generally bears more stomata than the adaxial (upper) epidermis. Statement I is false. Palisade parenchyma consists of vertically elongated parallel cells placed towards the adaxial side. Statement II is true.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 7,
+    "exam": "NEET 2024",
+    "text": "In the given figure, which component has thin outer walls and highly thickened inner walls?",
+    "options": [
+      "C",
+      "D",
+      "A",
+      "B"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - C. In the stomatal apparatus, guard cells (labeled C/inner wall) have a thin, elastic outer wall and a highly thickened, inelastic inner wall facing the stomatal aperture.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794466581/edvedum/questions/anatomy_flowering_plants/q7_diag.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 8,
+    "exam": "NEET 2024",
+    "text": "Given below are two statements: Statement I : Parenchyma is living but collenchyma is dead tissue. Statement II : Gymnosperms lack xylem vessels but presence of xylem vessels is the characteristic of angiosperms. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Both Statement I and Statement II are true",
+      "Both Statement I and Statement II are false",
+      "Statement I is true but Statement II is false",
+      "Statement I is false but Statement II is true"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Statement I is false but Statement II is true. Collenchyma is a living mechanical tissue composed of living cells with pectin thickenings at cell corners. Hence Statement I is false. Gymnosperms lack true xylem vessels (characteristic of angiosperms). Statement II is true.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 9,
+    "exam": "NEET 2024",
+    "text": "Bulliform cells are responsible for",
+    "options": [
+      "Inward curling of leaves in monocots.",
+      "Protecting the plant from salt stress.",
+      "Increased photosynthesis in monocots.",
+      "Providing large spaces for storage of sugars."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Inward curling of leaves in monocots.. Bulliform cells on the adaxial epidermis of grass leaves become flaccid during water stress, leading to inward curling of leaves to reduce transpiration.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 10,
+    "exam": "NEET 2023 Manipur",
+    "text": "The transverse section of a plant part showed polyarch, radial and exarch xylem, with endodermis and pericycle. The plant part is identified as :",
+    "options": [
+      "Monocot root",
+      "Dicot root",
+      "Dicot stem",
+      "Monocot stem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Monocot root. In monocot roots, the xylem bundles are polyarch (more than six), radial in arrangement, and exarch (protoxylem towards periphery).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 11,
+    "exam": "NEET 2023 Manipur",
+    "text": "Consider the following plant tissues :\n\n(A) Axillary buds\n(B) Fascicular vascular cambium\n(C) Interfascicular cambium\n(D) Cork cambium\n(E) Intercalary meristem\n\nIdentify the lateral meristems among the above.",
+    "options": [
+      "(A), (C) and (D) only",
+      "(B), (C) and (D) only",
+      "(A), (B), (C) and (E) only",
+      "(A), (B), (D) and (E) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (B), (C) and (D) only. Lateral meristems include fascicular vascular cambium (B), interfascicular cambium (C), and cork cambium/phellogen (D). Axillary buds and intercalary meristems are primary/apical derivatives.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 12,
+    "exam": "NEET 2023",
+    "text": "Given below are two statements : Statement I : Endarch and exarch are the terms often used for describing the position of secondary xylem in the plant body. Statement II : Exarch condition is the most common feature of the root system. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      "Both Statement I and Statement II are false",
+      "Statement I is correct but Statement II is false",
+      "Statement I is incorrect but Statement II is true",
+      "Both Statement I and Statement II are true"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Statement I is incorrect but Statement II is true. Endarch and exarch describe the relative position of protoxylem in primary xylem (not secondary xylem). Endarch occurs in stems and exarch occurs in roots. Statement I is false; Statement II is true.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 13,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Interfascicular cambium is present between",
+    "options": [
+      "Secondary xylem and secondary phloem",
+      "Primary xylem and primary phloem",
+      "Pericycle and endodermis",
+      "Two vascular bundles"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Two vascular bundles. Interfascicular cambium develops from cells of medullary rays situated between two adjacent vascular bundles in dicot stems.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 14,
+    "exam": "NEET 2022 Phase 2",
+    "text": "The type of tissue commonly found in the fruit wall of nuts is :",
+    "options": [
+      "Sclereid",
+      "Parenchyma",
+      "Collenchyma",
+      "Sclerenchyma"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sclereid. Sclereids are found in the fruit walls of nuts, giving them mechanical strength.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 15,
+    "exam": "NEET 2022 Phase 2",
+    "text": "Initiation of lateral roots and vascular cambium during secondary growth takes place in cells of",
+    "options": [
+      "Pericycle",
+      "Epiblema",
+      "Cortex",
+      "Endodermis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Pericycle. In dicot roots, both lateral roots and portions of the vascular cambium originate from cells of the pericycle.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 16,
+    "exam": "NEET 2022 Phase 1",
+    "text": "Read the following statements about the vascular bundles: (a) In roots, xylem and phloem in a vascular bundle are arranged in an alternate manner along the different radii. (b) Conjoint closed vascular bundles do not possess cambium (c) In open vascular bundles, cambium is present in between xylem and phloem (d) The vascular bundles of dicotyledonous stem possess endarch protoxylem (e) In monocotyledonous root, usually there are more than six xylem bundles present Choose the correct answer from the options given below :",
+    "options": [
+      "(a), (b) and (d) only",
+      "(a), (b), (c), (d) and (e) only",
+      "(a), (b), (c) and (d) only",
+      "(a), (c), (d) and (e) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a), (b), (c), (d) and (e) only. All statements (a), (b), (c), (d), and (e) are correct descriptions of vascular bundles and plant anatomy.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 17,
+    "exam": "NEET 2021",
+    "text": "Match List-I with List-II :\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Cells with active cell division capacity | (i) Vascular tissues |\n| (b) Tissue having all cells similar in structure and function | (ii) Meristematic tissue |\n| (c) Tissue having different types of cells | (iii) Sclereids |\n| (d) Dead cells with highly thickened walls and narrow lumen | (iv) Simple tissue |\n\nSelect the correct answer from the options given below :",
+    "options": [
+      "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)",
+      "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)",
+      "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)",
+      "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a)-(ii), (b)-(iv), (c)-(i), (d)-(iii). (a) Active cell division capacity: Meristematic tissue (ii); (b) Similar cells in structure and function: Simple tissue (iv); (c) Different types of cells: Complex/Vascular tissues (i); (d) Dead cells with narrow lumen: Sclereids (iii).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 18,
+    "exam": "NEET 2021",
+    "text": "Select the correct pair.",
+    "options": [
+      "Loose parenchyma cells rupturing the epidermis and forming a lens shaped opening in bark - Spongy parenchyma",
+      "Large colorless empty cells in the epidermis of grass leaves - Subsidiary cells",
+      "In dicot leaves, vascular bundles are surrounded by large thick-walled cells - Conjunctive tissue",
+      "Cells of medullary rays that form part of cambial ring - Interfascicular cambium"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Cells of medullary rays that form part of cambial ring - Interfascicular cambium. Cells of medullary rays bordering intra-fascicular cambium become meristematic and form interfascicular cambium, completing the cambial ring.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 19,
+    "exam": "NEET 2020 Phase 2",
+    "text": "Large, empty colourless cells of the adaxial epidermis along the veins of grass leaves are",
+    "options": [
+      "Bulliform cells",
+      "Lenticels",
+      "Guard cells",
+      "Bundle sheath cells"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Bulliform cells.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 20,
+    "exam": "NEET 2020 Phase 1",
+    "text": "The transverse section of a plant shows following anatomical features : (i) Large number of scattered vascular bundles surrounded by bundle sheath (ii) Large conspicuous parenchymatous ground tissue (iii) Vascular bundles conjoint and closed (iv) Phloem parenchyma absent Identify the category of plant and its part:",
+    "options": [
+      "Monocotyledonous root",
+      "Dicotyledonous stem",
+      "Dicotyledonous root",
+      "Monocotyledonous stem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Monocotyledonous stem. Scattered vascular bundles surrounded by bundle sheath, conjoint and closed vascular bundles, absence of phloem parenchyma, and parenchymatous ground tissue characterize monocotyledonous stem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 21,
+    "exam": "NEET 2019 (Odisha)",
+    "text": "Regeneration of damaged growing grass following grazing is largely due to :",
+    "options": [
+      "Secondary meristem",
+      "Lateral meristem",
+      "Apical meristem",
+      "Intercalary meristem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Intercalary meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 22,
+    "exam": "NEET 2019",
+    "text": "Grass leaves curl inward during very dry weather. Select the most appropriate reason from the following :",
+    "options": [
+      "Shrinkage of air spaces in spongy mesophyll",
+      "Tyloses in vessels",
+      "Closure of stomata",
+      "Flaccidity of bulliform cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Flaccidity of bulliform cells.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 23,
+    "exam": "NEET 2019",
+    "text": "Phloem in gymnosperms lacks :",
+    "options": [
+      "Companion cells only",
+      "Both sieve tubes and companion cells",
+      "Albuminous cells and sieve cells",
+      "Sieve tubes only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Both sieve tubes and companion cells.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 24,
+    "exam": "NEET 2019",
+    "text": "What is the direction of movement of sugars in phloem?",
+    "options": [
+      "Downward",
+      "Bi-directional",
+      "Non-multidirectional",
+      "Upward"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Bi-directional.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 25,
+    "exam": "NEET 2018",
+    "text": "Stomata in grass leaf are",
+    "options": [
+      "kidney-shaped",
+      "barrel-shaped",
+      "dumb-bell shaped",
+      "rectangular"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - dumb-bell shaped.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 26,
+    "exam": "NEET 2018",
+    "text": "Casparian strips occur in",
+    "options": [
+      "pericycle",
+      "epidermis",
+      "endodermis.",
+      "cortex"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - endodermis..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 27,
+    "exam": "NEET 2017",
+    "text": "Which of the following is made up of dead cells ?",
+    "options": [
+      "Collenchyma",
+      "Xylem parenchyma",
+      "Phellem",
+      "Phloem"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Phellem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 28,
+    "exam": "NEET 2016 Phase 2",
+    "text": "Cortex is the region found between -",
+    "options": [
+      "endodermis and pith",
+      "endodermis and vascular bundle",
+      "epidermis and stele",
+      "pericycle and endodermis"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - epidermis and stele.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 29,
+    "exam": "NEET 2016 Phase 1",
+    "text": "Specialised epidermal cells surrounding the guard cells are called -",
+    "options": [
+      "Lenticels",
+      "Complementary cells",
+      "Bulliform cells",
+      "Subsidiary cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Subsidiary cells.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 30,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "A major characteristic of the monocot root is the presence of :",
+    "options": [
+      "Vasculature without cambium",
+      "Cambium sandwiched between phloem and xylem along the radius",
+      "Open vascular bundles",
+      "Scattered vascular bundles"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Vasculature without cambium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 31,
+    "exam": "AIPMT 2015 Cancelled Paper",
+    "text": "Vascular bundles in monocotyledons are considered closed because",
+    "options": [
+      "There are no vessels with perforations",
+      "Xylem is surrounded all around by phloem",
+      "A bundle sheath surrounds each bundle",
+      "Cambium is absent"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Cambium is absent.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 32,
+    "exam": "AIPMT 2014",
+    "text": "You are given a fairly old piece of dicot stem and a dicot root. Which of the following anatomical structures will you use to distinguish between the two?",
+    "options": [
+      "Secondary xylem",
+      "Protoxylem",
+      "Secondary phloem",
+      "Cortical cells"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Protoxylem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 33,
+    "exam": "AIPMT 2014",
+    "text": "Tracheids differ from other tracheary elements in :",
+    "options": [
+      "being imperforate",
+      "having casparian strips",
+      "lacking nucleus",
+      "being lignified"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - being imperforate.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 34,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Meristematic tissue responsible for increase in girth of tree trunk is :",
+    "options": [
+      "Phellogen",
+      "Intercalary meristem",
+      "Apical meristem",
+      "Lateral meristem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Lateral meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 35,
+    "exam": "NEET 2013 (Karnataka)",
+    "text": "Which of the following statements is not true for stomatal apparatus ?",
+    "options": [
+      "Stomata are involved in gaseous exchange",
+      "Inner walls of guard cells are thick",
+      "Guard cells invariably possess chloroplasts and mitochondria",
+      "Guard cells are always surrounded by subsidiary cells"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Guard cells are always surrounded by subsidiary cells.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 36,
+    "exam": "AIPMT 2012 Mains",
+    "text": "As compared to a dicot root, a monocot root has",
+    "options": [
+      "More abundant secondary xylem",
+      "Relatively thicker periderm",
+      "Many xylem bundles",
+      "Inconspicuous annual rings"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Many xylem bundles.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 37,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Gymnosperms are also called soft wood spermatophytes because they lack",
+    "options": [
+      "Cambium",
+      "Thick - walled tracheids",
+      "Phloem fibres",
+      "Xylem fibres"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Xylem fibres.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 38,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Water containing cavities in vascular bundles are found in",
+    "options": [
+      "Maize",
+      "Cycas",
+      "Sunflower",
+      "Pinus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Maize.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 39,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Closed vascular bundles lack",
+    "options": [
+      "Ground tissue",
+      "Conjunctive tissue",
+      "Cambium",
+      "Pith"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Cambium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 40,
+    "exam": "AIPMT 2012 Prelims",
+    "text": "Companion cells are closely associated with",
+    "options": [
+      "Sieve elements",
+      "Trichomes",
+      "Vessel elements",
+      "Guard cells"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sieve elements.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 41,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Some vascular bundles are described as open because these :",
+    "options": [
+      "are capable of producing secondary xylem and phloem",
+      "are not surrounded by pericycle",
+      "possess conjunctive tissue between xylem and phloem",
+      "are surrounded by pericycle but no endodermis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - are capable of producing secondary xylem and phloem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 42,
+    "exam": "AIPMT 2011 Mains",
+    "text": "Function of companion cells is :",
+    "options": [
+      "Providing water to phloem",
+      "Loading of sucrose into sieve elements",
+      "Loading of sucrose into sieve elements by passive transport",
+      "Providing energy to sieve elements for active transport"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Loading of sucrose into sieve elements.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 43,
+    "exam": "AIPMT 2011 Prelims",
+    "text": "Ground tissue includes :",
+    "options": [
+      "All tissues external to endodermis",
+      "Epidermis and cortex",
+      "All tissues internal to endodermis",
+      "All tissues except epidermis and vascular bundles"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - All tissues except epidermis and vascular bundles.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 44,
+    "exam": "AIPMT 2010 Mains",
+    "text": "Transport of food material in higher plants takes place through -",
+    "options": [
+      "Sieve elements",
+      "Transfusion tissue",
+      "Companion cells",
+      "Tracheids"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sieve elements.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 45,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Heartwood differs from sapwood in –",
+    "options": [
+      "Having dead and non-conducting elements",
+      "Being susceptible to pests and pathogens",
+      "Presence of rays and fibres",
+      "Abscence of vessels and parenchyma"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Having dead and non-conducting elements.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 46,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "Which one of the folliwng is not a lateral meristem ?",
+    "options": [
+      "Interfascicular cambium",
+      "Intercalary meristem",
+      "Intrafascicular cambium",
+      "Phellogen"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Intercalary meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 47,
+    "exam": "AIPMT 2010 Prelims",
+    "text": "The chief water conducting elements of xylem in gymnosperms are :",
+    "options": [
+      "Fibres",
+      "Transfusion tissue",
+      "Vessels",
+      "Tracheids"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Tracheids.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 48,
+    "exam": "AIPMT 2009",
+    "text": "In barley stem vascular bundles are -",
+    "options": [
+      "Closed and scattered",
+      "Closed and radial",
+      "Open and in a ring",
+      "Open and scattered"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Closed and scattered.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 49,
+    "exam": "AIPMT 2009",
+    "text": "Palisade parenchyma is absent in leaves of -",
+    "options": [
+      "Mustard",
+      "Sorghum",
+      "Soybean",
+      "Gram"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Sorghum.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 50,
+    "exam": "AIPMT 2009",
+    "text": "Anatomically fairly old dicotyledonous root is distinguished from the dicotyledonous stem by :",
+    "options": [
+      "Absence of secondary phloem",
+      "Presence of cortex",
+      "Position of protoxylem",
+      "Absence of secondary xylem"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Position of protoxylem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 51,
+    "exam": "AIPMT 2008",
+    "text": "Vascular tissues in flowering plants develop from:",
+    "options": [
+      "plerome",
+      "periblem",
+      "phellogen",
+      "dermatogen"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - plerome.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 52,
+    "exam": "AIPMT 2008",
+    "text": "The length of different internodes in a culm of sugarcane is variable because of:",
+    "options": [
+      "shoot apical meristem",
+      "position of axillary buds",
+      "size of leaf lamina at the node below each internode",
+      "intercalary meristem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - intercalary meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 53,
+    "exam": "AIPMT 2007",
+    "text": "Passage cells are thin-walled cells found in:-",
+    "options": [
+      "Endodermis of roots facilitating rapid transport of water from cortex to pericycle",
+      "Testa of seeds to enable emergence of growing embryonic axis during seed germination.",
+      "Phloem elements that serve as entry points for substances for transport to other plant parts",
+      "Central region of style through which the pollen tube grows towards the ovary."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Endodermis of roots facilitating rapid transport of water from cortex to pericycle.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 54,
+    "exam": "AIPMT 2006",
+    "text": "A common structural feature of vessel elements and sieve tube elements is-",
+    "options": [
+      "Enucleate condition",
+      "Presence of p-protein",
+      "Thick secondary walls",
+      "Pores on lateral wall"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Enucleate condition.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 55,
+    "exam": "AIPMT 2003",
+    "text": "The apical meristem of the root is present",
+    "options": [
+      "In all the roots",
+      "Only in tap roots",
+      "Only in adventitious roots",
+      "Only in radicals"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - In all the roots.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 56,
+    "exam": "AIPMT 2003",
+    "text": "In which one of the following nitrogen is not a constituent ?",
+    "options": [
+      "Pepsin",
+      "Invertase",
+      "Idioblast",
+      "Bacteriochlorophyll"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Idioblast.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 57,
+    "exam": "AIPMT 2003",
+    "text": "The aleurone layer in maize grain is specially rich in :-",
+    "options": [
+      "Lipids",
+      "Proteins",
+      "Auxins",
+      "Starch"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Proteins.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 58,
+    "exam": "AIPMT 2003",
+    "text": "Chlorenchyma is known to develop in the : -",
+    "options": [
+      "Mycelium of a green mould such as Aspergillus",
+      "Pollen tube of Pinus",
+      "Cytoplasm of Chlorella",
+      "Spore capsule of a moss"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Spore capsule of a moss.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 59,
+    "exam": "AIPMT 2003",
+    "text": "Diffuse porous wood is characteristic of those plants which are growing in : -",
+    "options": [
+      "Tropics",
+      "Temperate climate",
+      "Alpine region",
+      "Cold winter regions"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Tropics.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 60,
+    "exam": "AIPMT 2003",
+    "text": "The cells of the quiescent centre are characterised by : -",
+    "options": [
+      "Having light cytoplasm and small nuclei",
+      "Dividing regularly to add to tunica",
+      "Having dense cytoplasm and prominent nuclei",
+      "Dividing regularly to add to the corpus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Having light cytoplasm and small nuclei.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 61,
+    "exam": "AIPMT 2002",
+    "text": "Which of the following statement is true ?",
+    "options": [
+      "Tracheids are unicellular and with wide lumen",
+      "Tracheids are multicellular and with narrow lumen",
+      "Vessels are multicellular and with wide lumen",
+      "Vessels are unicellular and with narrow lumen"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Vessels are multicellular and with wide lumen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 62,
+    "exam": "AIPMT 2002",
+    "text": "Axillary bud and terminal bud derived from the activity of : -",
+    "options": [
+      "Apical meristem",
+      "Parenchyma",
+      "Lateral meristem",
+      "Intercalary meristem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Apical meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 63,
+    "exam": "AIPMT 2002",
+    "text": "Four radial vascular bundle are found in : -",
+    "options": [
+      "Monocot stem",
+      "Dicot stem",
+      "Dicot root",
+      "Monocot root"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Dicot root.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 64,
+    "exam": "AIPMT 2002",
+    "text": "Vessels are found in : -",
+    "options": [
+      "Most of the angiosperm and few gymnosperms",
+      "All angiosperms and some gymnosperm",
+      "All pteridophyta",
+      "All angiosperms, all gymnosperms and some pteridophyta"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Most of the angiosperm and few gymnosperms.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 65,
+    "exam": "AIPMT 2001",
+    "text": "In which of the following plant sunken stomata are found?",
+    "options": [
+      "Nerium",
+      "Hydilla",
+      "Mango",
+      "Guava"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Nerium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 66,
+    "exam": "AIPMT 2001",
+    "text": "In plants inulin and pectin are",
+    "options": [
+      "Excretory material",
+      "Reserved material",
+      "Insect attracting material",
+      "Wastes"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Reserved material.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 67,
+    "exam": "AIPMT 2000",
+    "text": "What happens in plants during vascularisation ?",
+    "options": [
+      "Formation of procambium, primary phloem and xylem simultaneousl",
+      "Differentiation of procambium followed by the formation of secondary xylem",
+      "Differentiation of procambium, formation of primary phloem followed by formation of primary xylem",
+      "Differentiation of procambium followed by the formation of primary phloem and xylem simultaneously"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Differentiation of procambium followed by the formation of primary phloem and xylem simultaneously.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 68,
+    "exam": "AIPMT 1999",
+    "text": "Casparian strips are found in :",
+    "options": [
+      "hypodermis",
+      "endodermis",
+      "periderm",
+      "epidermis"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - endodermis.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 69,
+    "exam": "AIPMT 1997",
+    "text": "At maturity, which of the following is non-nucleated?",
+    "options": [
+      "Palisade cell",
+      "Cortical cell",
+      "Sieve cell",
+      "Companion cell"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Sieve cell.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 70,
+    "exam": "AIPMT 1996",
+    "text": "Which of the following is not true about 'sclereids'?",
+    "options": [
+      "These are groups of living cells.",
+      "These are found in nut shells, guava pulp, pear.",
+      "These are also called stone cells.",
+      "These are form of sclerenchyma with fibres."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - These are groups of living cells..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 71,
+    "exam": "AIPMT 1994",
+    "text": "Casparian strip occurs in a",
+    "options": [
+      "endodermis",
+      "exodermis",
+      "pericycle",
+      "epidermis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - endodermis.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 72,
+    "exam": "AIPMT 1994",
+    "text": "Where do the casparian bands occur?",
+    "options": [
+      "Epidermis",
+      "Endodermis",
+      "Pericycle",
+      "Phloem"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Endodermis.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 73,
+    "exam": "AIPMT 1993",
+    "text": "Which of the following plant cells will show totipotency?",
+    "options": [
+      "Sieve tubes",
+      "Xylem vessels",
+      "Meristem",
+      "Cork cells"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 74,
+    "exam": "AIPMT 1993",
+    "text": "Bordered pits are found in",
+    "options": [
+      "sieve cells",
+      "vessel wall",
+      "companion cells",
+      "sieve tube wall"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - vessel wall.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 75,
+    "exam": "AIPMT 1992",
+    "text": "A bicollateral vascular bundle is characterised by",
+    "options": [
+      "phloem being sandwiched between xylem",
+      "transverse splitting of vascular bundle",
+      "longitudinal splitting of vascular bundle",
+      "xylem being sandwiched between phloem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - xylem being sandwiched between phloem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 76,
+    "exam": "AIPMT 1992",
+    "text": "What is true about a monocot leaf?",
+    "options": [
+      "Reticulate venation",
+      "Absence of bulliform cells from epidermis",
+      "Mesophyll not differentiated into palisade and spongy tissues",
+      "Well differentiated mesophyll"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Mesophyll not differentiated into palisade and spongy tissues.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 77,
+    "exam": "AIPMT 1991",
+    "text": "An organised and differentiated cellular structure having cytoplasm but no nucleus is",
+    "options": [
+      "vessels",
+      "xylem parenchyma",
+      "sieve tubes",
+      "tracheids"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - sieve tubes.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 78,
+    "exam": "AIPMT 1991",
+    "text": "Angular collenchyma occurs in",
+    "options": [
+      "Cucurbita",
+      "Helianthus",
+      "Althaea",
+      "Salvia"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Cucurbita.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 79,
+    "exam": "AIPMT 1990",
+    "text": "Where do the casparian bands occur?",
+    "options": [
+      "Epidermis",
+      "Endodermis",
+      "Pericycle",
+      "Phloem"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Endodermis.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 80,
+    "exam": "AIPMT 1990",
+    "text": "What is true about a monocot leaf?",
+    "options": [
+      "Reticulate venation",
+      "Absence of bulliform cells from epidermis",
+      "Mesophyll not differentiated into palisade and spongy tissues",
+      "Well differentiated mesophyll"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Mesophyll not differentiated into palisade and spongy tissues.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 81,
+    "exam": "AIPMT 1990",
+    "text": "For union between stock and scion in grafting which one is the first to occur",
+    "options": [
+      "formation of callus",
+      "production of plasmodesmata",
+      "differentiation of new vascular tissues",
+      "regeneration of cortex and epidermis"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - formation of callus.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 82,
+    "exam": "AIPMT 1990",
+    "text": "Pericycle of roots produces",
+    "options": [
+      "mechanical support",
+      "lateral roots",
+      "vascular bundles",
+      "adventitious buds"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - lateral roots.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 83,
+    "exam": "AIPMT 1990",
+    "text": "Collenchyma occurs in",
+    "options": [
+      "herbaceous climbers",
+      "woody climbers",
+      "climbing stems",
+      "water plants"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - climbing stems.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 84,
+    "exam": "AIPMT 1990",
+    "text": "Collenchyma occurs in the stem and petioles of",
+    "options": [
+      "xerophytes",
+      "monocots",
+      "dicot herbs",
+      "hydrophytes"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - dicot herbs.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 85,
+    "exam": "AIPMT 1990",
+    "text": "Monocot leaves possess",
+    "options": [
+      "intercalary meristem",
+      "lateral meristem",
+      "apical meristem",
+      "mass meristem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - intercalary meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 86,
+    "exam": "AIPMT 1990",
+    "text": "Cork cambium and vascular cambium are",
+    "options": [
+      "parts of secondary xylem and phloem",
+      "parts of pericycle",
+      "lateral meristem",
+      "apical meristem"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - lateral meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 87,
+    "exam": "AIPMT 1989",
+    "text": "Sieve tubes are suited for translocation of food because they possess",
+    "options": [
+      "bordered pits",
+      "no end walls",
+      "broader lumen and perforated cross walls",
+      "no protoplasm"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - broader lumen and perforated cross walls.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 88,
+    "exam": "AIPMT 1989",
+    "text": "Death of protoplasm is a pre-requisite for a vital function like",
+    "options": [
+      "transport of sap",
+      "transport of food",
+      "absorption of water",
+      "gaseous exchange"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - transport of sap.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 89,
+    "exam": "AIPMT 1988",
+    "text": "Organisation of stem apex into corpus and tunica is determined mainly by",
+    "options": [
+      "planes of cell division",
+      "regions of meristematic activity",
+      "rate of cell growth",
+      "rate of shoot tip growth"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - planes of cell division.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 90,
+    "exam": "AIPMT 1988",
+    "text": "Pith and cortex do not differentiate in",
+    "options": [
+      "monocot stem",
+      "dicot stem",
+      "monocot root",
+      "dicot root"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - monocot stem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 91,
+    "exam": "AIPMT 1988",
+    "text": "Which meristem helps in increasing girth?",
+    "options": [
+      "Lateral meristem",
+      "Intercalary meristem",
+      "Primary meristem",
+      "Apical meristem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Lateral meristem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 92,
+    "exam": "AIPMT 1988",
+    "text": "Tunica corpus theory is connected with",
+    "options": [
+      "root apex",
+      "root cap",
+      "shoot apex",
+      "secondary growth"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - shoot apex.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 93,
+    "exam": "AIPMT 2009",
+    "text": "The annular and spirally thickened conducting elements generally develop in the protoxylem when the root or stem is -",
+    "options": [
+      "Maturing",
+      "Widening",
+      "Elongating",
+      "Differentiating"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2,
+      3
+    ],
+    "solution": "Correct Answer: Options (C) and (D) - Elongating, Differentiating. Annular and spirally thickened protoxylem vessels differentiate early during the elongation and differentiation phases of root or stem development.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 94,
+    "exam": "NEET 2023 Manipur · MCQ (Single Correct Answer)",
+    "text": "Consider the following tissues in the stelar region of a stem showing secondary growth :\n\n(A) Primary xylem\n(B) Secondary xylem\n(C) Primary phloem\n(D) Secondary phloem\n\nArrange these in the correct sequence of their position from pith towards cortex.",
+    "options": [
+      "(A), (B), (D), (C)",
+      "(B), (A), (C), (D)",
+      "(A), (B), (C), (D)",
+      "(B), (A), (D), (C)"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - (A), (B), (D), (C). From pith towards cortex in a woody stem: Pith -> Primary xylem (A) -> Secondary xylem (B) -> Vascular cambium -> Secondary phloem (D) -> Primary phloem (C) -> Pericycle -> Endodermis -> Cortex.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 95,
+    "exam": "NEET 2023 · MCQ (Single Correct Answer)",
+    "text": "Given below are two statements : One is labelled as Assertion A and the other is labelled as Reason R : Assertion A : Late wood has fewer xylary elements with narrow vessels. Reason R : Cambium is less active in winters. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both A and R are true but R is NOT the correct explanation of A",
+      "A is true but R is false",
+      "A is false but R is true",
+      "Both A and R are true and R is the correct explanation of A"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Both A and R are true and R is the correct explanation of A.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 96,
+    "exam": "NEET 2023 · MCQ (Single Correct Answer)",
+    "text": "Identify the correct statements: A. Lenticels are the lens-shaped openings permitting the exchange of gases. B. Bark formed early in the season is called hard bark. C. Bark is a technical term that refers to all tissues exterior to vascular cambium. D. Bark refers to periderm and secondary phloem. E. Phellogen is single-layered in thickness. Choose the correct answer from the options given below:",
+    "options": [
+      "A and D only",
+      "A, B and D only",
+      "B and C only",
+      "B, C and E only"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - A and D only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 97,
+    "exam": "NEET 2022 Phase 1 · MCQ (Single Correct Answer)",
+    "text": "In old trees the greater part of secondary xylem is dark brown and resistant to insect attack due to : (a) secretion of secondary metabolities and their deposition in the lumen of vessels. (b) deposition of organic compounds like tannins and resins in the central layers of stem. (c) deposition of suberin and aromatic substances in the outer layer of stem. (d) deposition of tannins, gum, resin and aromatic substances in the peripheral layers of stem. (e) presence of parenchyma cells, functionally active xylem elements and essential oils. Choose the correct answer from the options given below :",
+    "options": [
+      "(a) and (b) only",
+      "(c) and (d) only",
+      "(d) and (e) only",
+      "(b) and (d) only"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - (a) and (b) only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 98,
+    "exam": "NEET 2022 Phase 1 · MCQ (Single Correct Answer)",
+    "text": "The anatomy of springwood shows some peculiar features. Identify the correct set of statements about springwood. (a) It is also called as the earlywood (b) In spring season cambium produces xylem elements with narrow vessels (c) It is lighter in colour (d) The springwood along with autumn wood shows alternate concentric rings forming annual rings (e) It has lower density Choose the correct answer from the options given below:",
+    "options": [
+      "(a), (b), (d) and (e) only",
+      "(a), (c), (d) and (e) only",
+      "(a), (b) and (d) only",
+      "(c), (d) and (e) only"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (a), (c), (d) and (e) only.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 99,
+    "exam": "NEET 2021 · MCQ (Single Correct Answer)",
+    "text": "Match List-I with List-II :\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Lenticels | (i) Phellogen |\n| (b) Cork cambium | (ii) Suberin deposition |\n| (c) Secondary cortex | (iii) Exchange of gases |\n| (d) Cork | (iv) Phelloderm |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)",
+      "(a)-(iv), (b)-(i), (c)-(iii), (d)-(ii)",
+      "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - (a)-(iii), (b)-(i), (c)-(iv), (d)-(ii). Lenticels function in exchange of gases (a-iii); Cork cambium is phellogen (b-i); Secondary cortex is phelloderm (c-iv); Cork is phellem having suberin deposition (d-ii).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 100,
+    "exam": "NEET 2020 Phase 2 · MCQ (Single Correct Answer)",
+    "text": "Which of the following statements about cork cambium is incorrect ?",
+    "options": [
+      "It is a couple of layers thick",
+      "It forms secondary cortex on its outerside",
+      "It forms a part of periderm",
+      "It is responsible for the formation of lenticels"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - It forms secondary cortex on its outerside.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 101,
+    "exam": "NEET 2020 Phase 1 · MCQ (Single Correct Answer)",
+    "text": "Identify the incorrect statement.",
+    "options": [
+      "Sapwood is involved in conduction of water and minerals from root to leaf",
+      "Sapwood is the innermost secondary xylem and is lighter in colour",
+      "Due to deposition of tannins, resins, oils etc., heart wood is dark in colour",
+      "Heart wood does not conduct water but gives mechanical support"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Sapwood is the innermost secondary xylem and is lighter in colour.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 102,
+    "exam": "NEET 2019 (Odisha) · MCQ (Single Correct Answer)",
+    "text": "In the dicot root the vascular cambium originates from :",
+    "options": [
+      "Intrafascicular and interfascicular tissue in a ring",
+      "Tissue located below the phloem bundles and a portion of pericycle tissue above protoxylem.",
+      "Cortical region",
+      "Parenchyma between endodermis and pericycle"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Tissue located below the phloem bundles and a portion of pericycle tissue above protoxylem..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 103,
+    "exam": "NEET 2019 · MCQ (Single Correct Answer)",
+    "text": "Which of the statements given below is not true about formation of Annual Rings in trees?",
+    "options": [
+      "Activity of cambium depends upon variation in climate.",
+      "Annula ring are not prominent in trees of temperate region.",
+      "Annula ring is a combination of spring wood and autumn wood produced in a year.",
+      "Differential activity of cambium causes light and dark bands of tissue-early and late wood respectively"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Annula ring are not prominent in trees of temperate region..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 104,
+    "exam": "NEET 2018 · MCQ (Single Correct Answer)",
+    "text": "Secondary xylem and phloem in dicot stem are produced by",
+    "options": [
+      "vascular cambium",
+      "axillary meristems",
+      "apical meristems",
+      "phellogen"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - vascular cambium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 105,
+    "exam": "NEET 2018 · MCQ (Single Correct Answer)",
+    "text": "Plants having little or no secondary growth are",
+    "options": [
+      "deciduous angiosperms",
+      "grasses",
+      "cycads",
+      "conifers"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - grasses.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 106,
+    "exam": "NEET 2017 · MCQ (Single Correct Answer)",
+    "text": "The vascular cambium normally gives rise to :",
+    "options": [
+      "Primary phloem",
+      "Secondary xylem",
+      "Periderm",
+      "Phelloderm"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Secondary xylem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 107,
+    "exam": "NEET 2017 · MCQ (Single Correct Answer)",
+    "text": "Identify the wrong statement in context of heartwood :",
+    "options": [
+      "It is highly durable.",
+      "It comprises dead elements with highly lignified walls",
+      "It conducts water and minerals efficiently",
+      "Organic compounds are deposited in it"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - It conducts water and minerals efficiently.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 108,
+    "exam": "NEET 2016 Phase 2 · MCQ (Single Correct Answer)",
+    "text": "The balloon-shaped structures called tyloses",
+    "options": [
+      "are extensions of xylem parenchyma cells into vessels",
+      "originate in the lumen of vessels",
+      "are linked to the ascent of sap through xylem vessels",
+      "characterize the sapwood"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - are extensions of xylem parenchyma cells into vessels.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 109,
+    "exam": "AIPMT 2015 · MCQ (Single Correct Answer)",
+    "text": "Read the different components from (1) to (4) in the list given below and tell the correct order of the components with reference to their arrangement from outer side to inner side in a woody dicot stem : (1) Secondary cortex (2) Wood (3) Secondary phloem (4) Phellem The correct order is :",
+    "options": [
+      "(3), (4), (2), (1)",
+      "(4), (1), (3), (2)",
+      "(4), (3), (1), (2)",
+      "(1), (2), (4), (3)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - (4), (1), (3), (2).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 110,
+    "exam": "NEET 2013 · MCQ (Single Correct Answer)",
+    "text": "Lenticels are involved in",
+    "options": [
+      "Food transport",
+      "Photosynthesis",
+      "Transpiration",
+      "Gaseous exchange"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Gaseous exchange.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 111,
+    "exam": "NEET 2013 · MCQ (Single Correct Answer)",
+    "text": "Age of a tree can be estimated by :",
+    "options": [
+      "Diameter of its heartwood",
+      "Number of annual rings",
+      "Its height and girth",
+      "Biomass"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Number of annual rings.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 112,
+    "exam": "NEET 2013 · MCQ (Single Correct Answer)",
+    "text": "Interfascicular cambium develops from the cells of :",
+    "options": [
+      "Endodermis",
+      "Pericycle",
+      "Medullary rays",
+      "Xylem parenchyma"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Medullary rays.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 113,
+    "exam": "AIPMT 2012 Prelims · MCQ (Single Correct Answer)",
+    "text": "The common bottle cork is a product of",
+    "options": [
+      "Phellogen",
+      "Xylem",
+      "Vascular Cambium",
+      "Dermatogen"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Phellogen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 114,
+    "exam": "AIPMT 2011 Prelims · MCQ (Single Correct Answer)",
+    "text": "The cork cambium, cork and secondary cortex are collectively called :",
+    "options": [
+      "Periderm",
+      "Phellem",
+      "Phellogen",
+      "Phelloderm"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Periderm.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 115,
+    "exam": "AIPMT 2007 · MCQ (Single Correct Answer)",
+    "text": "For a critical study of secondary growth in plants, which one of the following pairs is suitable ?",
+    "options": [
+      "Deodar and fern",
+      "Wheat and maiden hair fern",
+      "Sugarcane and sunflower",
+      "Teak and pine"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - Teak and pine.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 116,
+    "exam": "AIPMT 2005 · MCQ (Single Correct Answer)",
+    "text": "In a woody dicotyledonous tree, which of the following parts will mainly consist of primary tissues ?",
+    "options": [
+      "Shoot tips and root tips",
+      "Flowers, fruit and leaves",
+      "Stem and root",
+      "All parts"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - Flowers, fruit and leaves.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 117,
+    "exam": "AIPMT 1998 · MCQ (Single Correct Answer)",
+    "text": "Which of the following meristems is responsible for extrastelar secondary growth in dicotyledonous stem?",
+    "options": [
+      "Phellogen",
+      "Intra-fascicular cambium",
+      "Inter-fascicular cambium",
+      "Inter-calary meristem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Phellogen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 118,
+    "exam": "AIPMT 1998 · MCQ (Single Correct Answer)",
+    "text": "The periderm includes",
+    "options": [
+      "cork",
+      "cambium",
+      "secondary phloem",
+      "all of these"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "Correct Answer: Option (D) - all of these.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 119,
+    "exam": "AIPMT 1994 · MCQ (Single Correct Answer)",
+    "text": "As a tree grows older, which of the following increases more rapidly in thickness?",
+    "options": [
+      "Heart wood",
+      "Sapwood",
+      "Phloem",
+      "Cortex"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Heart wood.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 120,
+    "exam": "AIPMT 1993 · MCQ (Single Correct Answer)",
+    "text": "Periderm is produced by",
+    "options": [
+      "vascular cambium",
+      "fascicular cambium",
+      "phellogen",
+      "intrafascicular cambium"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - phellogen.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 121,
+    "exam": "AIPMT 1993 · MCQ (Single Correct Answer)",
+    "text": "A narrow layer of thin walled cells found between phloem/bark and wood of a dicot is",
+    "options": [
+      "cork cambium",
+      "vascular cambium",
+      "endodermis",
+      "pericycle"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - vascular cambium.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 122,
+    "exam": "AIPMT 1993 · MCQ (Single Correct Answer)",
+    "text": "Which exposed wood will decay faster?",
+    "options": [
+      "Sapwood",
+      "Softwood",
+      "Wood with lot of fibres",
+      "Heartwood"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Sapwood.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 123,
+    "exam": "AIPMT 1993 · MCQ (Single Correct Answer)",
+    "text": "Abnormal/anomalous secondary growth occurs in",
+    "options": [
+      "Dracaena",
+      "ginger",
+      "wheat",
+      "sunflower"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - Dracaena.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 124,
+    "exam": "AIPMT 1992 · MCQ (Single Correct Answer)",
+    "text": "Vascular cambium produces",
+    "options": [
+      "primary xylem and primary phloem",
+      "secondary xylem and secondary phloem",
+      "primary xylem and secondary phloem",
+      "secondary xylem and primary phloem"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - secondary xylem and secondary phloem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 125,
+    "exam": "AIPMT 1990 · MCQ (Single Correct Answer)",
+    "text": "Vascular cambium produces",
+    "options": [
+      "primary xylem and primary phloem",
+      "secondary xylem and secondary phloem",
+      "primary xylem and secondary phloem",
+      "secondary xylem and primary phloem"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "Correct Answer: Option (B) - secondary xylem and secondary phloem.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 126,
+    "exam": "AIPMT 1989 · MCQ (Single Correct Answer)",
+    "text": "Out of diffuse porous and ring porous woods, which is correct?",
+    "options": [
+      "Ring porous wood carries more water for short period.",
+      "Diffuse porous wood carries more water.",
+      "Ring porous wood carries more water when need is higher.",
+      "Diffuse porous wood is less specialised but conducts water rapidly throughout."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "Correct Answer: Option (C) - Ring porous wood carries more water when need is higher..",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  },
+  {
+    "q_num": 127,
+    "exam": "AIPMT 1988 · MCQ (Single Correct Answer)",
+    "text": "Cork is formed from",
+    "options": [
+      "cork cambium (phellogen)",
+      "vascular cambium",
+      "phloem",
+      "xylem"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "Correct Answer: Option (A) - cork cambium (phellogen).",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "status": "normal",
+    "topic": "Anatomy of Flowering Plants"
+  }
+]
