@@ -1,0 +1,2666 @@
+[
+  {
+    "_source_num": 1,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following are primary consumers in a food chain?",
+    "options": [
+      "Carnivores",
+      "Parasites",
+      "Predators",
+      "Herbivores"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Herbivores**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 2,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements are Correct? (a) Energy flow from producers to consumers is unidirectional (b) Energy pyramid can never be inverted (c) Transfer of energy follows the law Choose the correct answer from the options given below :",
+    "options": [
+      "(b) and (c) only",
+      "(a), (b) and (c)",
+      "(a) and (b) only",
+      "(a) and (c) only"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **(a) and (b) only**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 3,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match List I with List II :\n\n| List-I | List-II |\n| :--- | :--- |\n| A. Productivity | I. Gross primary productivity minus respiration losses |\n| B. Net primary productivity | II. Rate of formation of new organic matter by consumers |\n| C. Gross primary productivity | III. Rate of biomass production |\n| D. Secondary productivity | IV. Rate of production of organic matter during photosynthesis |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "A-III, B-I, C-IV, D-II",
+      "A-I, B-II, C-III, D-IV",
+      "A-I, B-III, C-IV, D-II",
+      "A-III, B-I, C-II, D-IV"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• **Productivity**: Rate of biomass production (A-III).\n• **Net primary productivity (NPP)**: Gross primary productivity minus respiration losses ($NPP = GPP - R$) (B-I).\n• **Gross primary productivity (GPP)**: Rate of production of organic matter during photosynthesis (C-IV).\n• **Secondary productivity**: Rate of formation of new organic matter by consumers (D-II).\nHence, the correct match is **A-III, B-I, C-IV, D-II**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 4,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match List I with List II:\n\n| List-I | List-II (Activity) |\n| :--- | :--- |\n| A. Decomposition | III. Breaking down of complex organic matter into inorganic substances. |\n| B. Detritus | IV. Dead remains of plants and animals including fecal matter |\n| C. Mineralisation | II. Release of inorganic nutrients by the activity of microbes in soil |\n| D. Humification | I. Accumulation of dark coloured amorphous colloidal substance |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-IV, B-III, C-I, D-II",
+      "A-III, B-IV, C-II, D-I",
+      "A-I, B-II, C-III, D-IV",
+      "A-III, B-II, C-I, D-IV"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• **Decomposition**: Breaking down of complex organic matter into inorganic substances like $\\text{CO}_2$, water, and nutrients (A-III).\n• **Detritus**: Raw material for decomposition comprising dead plant and animal remains including fecal matter (B-IV).\n• **Mineralisation**: Release of inorganic nutrients by microbial activity in soil (C-II).\n• **Humification**: Accumulation of dark coloured amorphous colloidal substance called humus (D-I).\nHence, the correct match is **A-III, B-IV, C-II, D-I**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 5,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Ecological pyramids represent the relationship between the organisms at different trophic levels and they are generally inverted for:",
+    "options": [
+      "Pyramid of number in grassland",
+      "Pyramid of energy in pond ecosystem",
+      "Pyramid of biomass in grassland",
+      "Pyramid of biomass in sea"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Pyramid of biomass in sea**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 6,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements: Statement I: The primary source of energy in an ecosystem is solar energy. Statement II : The rate of production of organic matter during photosynthesis in an ecosystem is called net primary productivity (NPP). In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      "Statement I is correct but statement II is incorrect",
+      "Statement I is incorrect but statement II is correct",
+      "Both statement I and statement II are correct",
+      "Both statement I and statement II are incorrect"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Statement I is correct but statement II is incorrect**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 7,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Who is known as the father of Ecology in India?",
+    "options": [
+      "Ram Udar",
+      "Birbal Sahni",
+      "S.R. Kashyap",
+      "Ramdeo Misra Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Ramdeo Misra Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 8,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements: Statement I: In ecosystem, there is unidirectional flow of energy of sun from producers to consumers. Statement II: Ecosystems are exempted from 2nd law of thermodynamics. In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      "Statement I is correct but statement II is incorrect",
+      "Statement I is incorrect but statement II is correct",
+      "Both statement I and statement II are correct",
+      "Both statement I and statement II are incorrect"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Statement I is correct but statement II is incorrect**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 9,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following is the unit of productivity of an Ecosystem?",
+    "options": [
+      "$\\text{Kcal m}^{-3}$",
+      "$(\\text{Kcal m}^{-2})\\text{yr}^{-1}$",
+      "$\\text{gm}^{-2}$",
+      "$\\text{Kcal m}^{-2}$"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "Productivity is defined as the rate of biomass or energy produced per unit area over a given time period. It is expressed in units of mass ($(\\text{g m}^{-2})\\text{yr}^{-1}$) or energy ($(\\text{Kcal m}^{-2})\\text{yr}^{-1}$).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 10,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Consider the pyramid of energy of an ecosystem given below:\n\nIf $T_4$ is equivalent to $1000\\text{ J}$, what is the value at $T_1$ ?",
+    "options": [
+      "$\\frac{10000}{10}\\text{ J}$",
+      "$\\frac{10000}{10} \\times 4\\text{ J}$",
+      "$10,000\\text{ J}$",
+      "$10,00,000\\text{ J}$"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to Lindeman's 10% law of energy transfer:\n• Energy at $T_4 = 1,000\\text{ J}$\n• Energy at $T_3 = 1,000 / 0.1 = 10,000\\text{ J}$\n• Energy at $T_2 = 10,000 / 0.1 = 100,000\\text{ J}$\n• Energy at $T_1 = 100,000 / 0.1 = 1,000,000\\text{ J} = 10,00,000\\text{ J}$.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794481258/edvedum/questions/ecosystem/ecosystem_q_10.png"
+  },
+  {
+    "_source_num": 11,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not a limitation of ecological pyramids?",
+    "options": [
+      "Saprophytes are not given any place in ecological pyramids",
+      "It assumes a simple food chain, that almost never exists in nature",
+      "It accommodates a food web",
+      "It does not take into account the same species belonging to two or more trophic levels"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **It accommodates a food web**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 12,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In an ecosystem if the Net Primary Productivity (NPP) of first trophic level is $100x\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$, what would be the GPP (Gross Primary Productivity) of the third trophic level of the same ecosystem?",
+    "options": [
+      "$\\frac{x}{10}\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$",
+      "$x\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$",
+      "$10x\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$",
+      "$\\frac{100x}{3x}\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "By Lindeman's 10% rule, 10% of energy available at the first trophic level ($100x$) is transferred to the second trophic level, providing an intake/gross productivity of $10x\\ (\\text{kcal m}^{-2})\\text{yr}^{-1}$.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 13,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Identify the correct statements : A. Detritivores perform fragmentation. B. The humus is further degraded by some microbes during mineralization. C. Water soluble inorganic nutrients go down into the soil and get precipitated by a process called leaching. D. The detritus food chain begins with living organisms. E. Earthworms break down detritus into smaller particles by a process called catabolism. Choose the correct answer from the options given below :",
+    "options": [
+      "B, C, D only",
+      "C, D, E only",
+      "D, E, A only",
+      "A, B, C only"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **A, B, C only**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 14,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In the equation GPP - R = NPP\nGPP is Gross Primary Productivity\nNPP is Net Primary Productivity\nR here is __________.",
+    "options": [
+      "Respiratory quotient",
+      "Respiratory loss",
+      "Reproductive allocation",
+      "Photosynthetically active radiation"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "In the equation $\\text{GPP} - R = \\text{NPP}$, $\\text{GPP}$ is Gross Primary Productivity, $\\text{NPP}$ is Net Primary Productivity, and $R$ represents **respiratory losses** (energy utilized during plant respiration).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 15,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The amount of biomass or organic matter produced per unit area over a time period by plants during photosynthesis is called",
+    "options": [
+      "Net primary production",
+      "Secondary production",
+      "Primary production",
+      "Gross primary production"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Primary production**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 16,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Given below are two statements: Statement I : Decomposition is a process in which the detritus is degraded into simpler substances by microbes. Statement II : Decomposition is faster if the detritus is rich in lignin and chitin. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      "Both Statement I and Statement II are correct",
+      "Both Statement I and Statement II are incorrect",
+      "Statement I is correct but Statement II is incorrect",
+      "Statement I is incorrect but Statement II is correct"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Statement I is correct but Statement II is incorrect**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 17,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Detritivores breakdown detritus into smaller particles. This process is called :",
+    "options": [
+      "Catabolism",
+      "Fragmentation",
+      "Humification",
+      "Decomposition"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Fragmentation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 18,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is not correct?",
+    "options": [
+      "Pyramid of numbers in a grassland ecosystem is upright",
+      "Pyramid of biomass in sea is generally inverted.",
+      "Pyramid of biomass in sea is generally upright.",
+      "Pyramid of energy is always upright."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Pyramid of biomass in sea is generally upright.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 19,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In the equation GPP - R = NPP\nR represents :",
+    "options": [
+      "Respiration losses",
+      "Radiant energy",
+      "Retardation factor",
+      "Environmental factor"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In the ecological productivity equation $\\text{GPP} - R = \\text{NPP}$, $R$ represents **respiration losses** incurred by plants.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 20,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is incorrect ?",
+    "options": [
+      "Energy content gradually decreases from first to fourth trophic level",
+      "Biomass decreases from first to fourth trophic level",
+      "Energy content gradually increases from first to fourth trophic level",
+      "Number of individuals decreases from first trophic level to fourth trophic level"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Energy content gradually increases from first to fourth trophic level**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 21,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The rate of decomposition is faster in the ecosystem due to following factors EXCEPT :",
+    "options": [
+      "Detritus richer in lignin and chitin",
+      "Detritus rich in sugars",
+      "Warm and moist environment",
+      "Presence of aerobic soil microbes"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Detritus richer in lignin and chitin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 22,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In relation to Gross primary productivity and Net primary productivity of an ecosystem, which one of the following statements is correct?",
+    "options": [
+      "There is no relationship between Gross primary productivity and Net primary productivity",
+      "Gross primary productivity is always more than net primary productivity",
+      "Gross primary productivity is always less than net primary productivity",
+      "Gross primary productivity and Net primary productivity are one and same"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Gross primary productivity is always more than net primary productivity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 23,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match the trophic levels with their correct species examples in grassland ecosystem :\n\n(A) Fourth trophic level — (ii) Vulture\n(B) Second trophic level — (iii) Rabbit\n(C) First trophic level — (iv) Grass\n(D) Third trophic level — (i) Crow\n\nSelect the correct option :",
+    "options": [
+      "(A) $\\rightarrow$ (iv), (B) $\\rightarrow$ (iii), (C) $\\rightarrow$ (ii), (D) $\\rightarrow$ (i)",
+      "(A) $\\rightarrow$ (ii), (B) $\\rightarrow$ (iii), (C) $\\rightarrow$ (iv), (D) $\\rightarrow$ (i)",
+      "(A) $\\rightarrow$ (i), (B) $\\rightarrow$ (ii), (C) $\\rightarrow$ (iii), (D) $\\rightarrow$ (iv)",
+      "(A) $\\rightarrow$ (iii), (B) $\\rightarrow$ (ii), (C) $\\rightarrow$ (i), (D) $\\rightarrow$ (iv)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• Fourth trophic level ($T_4$): Vulture (A $\\rightarrow$ ii)\n• Second trophic level ($T_2$): Rabbit (B $\\rightarrow$ iii)\n• First trophic level ($T_1$): Grass (C $\\rightarrow$ iv)\n• Third trophic level ($T_3$): Crow (D $\\rightarrow$ i)\nHence, the correct option is (B).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 24,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following ecological pyramids is generally inverted?",
+    "options": [
+      "Pyramid of biomass in a forest",
+      "Pyramid of biomass in a sea",
+      "Pyramid of numbers in grassland",
+      "Pyramid of energy"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Pyramid of biomass in a sea**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 25,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "What type of ecological pyramid would be obtained with the following data? Secondary consumer : 120 g Primary consumer : 60 g Primary producer : 10 g",
+    "options": [
+      "Inverted pyramid of biomass",
+      "Pyramid of energy",
+      "Upright pyramid of numbers",
+      "Upright pyramid of biomass"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Inverted pyramid of biomass**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 26,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Presence of plants arranged into well defined vertical layers depending on their height can be seen best in :",
+    "options": [
+      "Grassland",
+      "Tropical Savannah",
+      "Temperate Forest",
+      "Tropical Rain Forest"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Tropical Rain Forest**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 27,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which ecosystem has the maximum biomass ?",
+    "options": [
+      "Pond ecosystem",
+      "Lake ecosystem",
+      "Grassland ecosystem",
+      "Forest ecosystem"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Forest ecosystem**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 28,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The primary producers of the deep-sea hydrothermal vent ecosystem are",
+    "options": [
+      "chemosynthetic bacteria",
+      "coral reefs",
+      "green algae",
+      "blue-green algae"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **chemosynthetic bacteria**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 29,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is a characteristic feature of cropland ecosystem ?",
+    "options": [
+      "Absence of weeds",
+      "Absence of soil organisms",
+      "Ecological succession",
+      "Least genetic diversity Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Least genetic diversity Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 30,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The term ecosystem was coined by :",
+    "options": [
+      "E.P. Odum",
+      "E. Haeckel",
+      "E. Warming",
+      "A.G. Tansley"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **A.G. Tansley**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 31,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Most animals that live in deep oceanic waters are -",
+    "options": [
+      "primary consumers",
+      "detritivores",
+      "tertiary consumers",
+      "secondary consumers"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **detritivores**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 32,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The mass of living material at a trophic level at a particular time is called :",
+    "options": [
+      "Net primary productivity",
+      "Standing state",
+      "Standing crop",
+      "Gross primary productivity"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Standing crop**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 33,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Vertical distribution of different species occupying different levels in a biotic community is known as :",
+    "options": [
+      "Stratification",
+      "Pyramid",
+      "Divergence",
+      "Zonation"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Stratification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 34,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Most animals are tree dwellers in a:",
+    "options": [
+      "temperate deciduous forest",
+      "tropical rain forest",
+      "coniferous forest",
+      "thorn woodland"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **tropical rain forest**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 35,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In an ecosystem the rate of production of organic matter during photosynthesis is termed as :",
+    "options": [
+      "Secondary productivity",
+      "Net Productivity",
+      "Net primary productivity",
+      "Gross primary productivity Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Gross primary productivity Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 36,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match the following and select the correct option :\n\n(a) Earthworm — (ii) Detritivore\n(b) Succession — (i) Pioneer species\n(c) Ecosystem service — (iv) Pollination\n(d) Population growth — (iii) Natality",
+    "options": [
+      "(a) $\\rightarrow$ (i), (b) $\\rightarrow$ (ii), (c) $\\rightarrow$ (iii), (d) $\\rightarrow$ (iv)",
+      "(a) $\\rightarrow$ (iii), (b) $\\rightarrow$ (ii), (c) $\\rightarrow$ (iv), (d) $\\rightarrow$ (i)",
+      "(a) $\\rightarrow$ (iv), (b) $\\rightarrow$ (i), (c) $\\rightarrow$ (iii), (d) $\\rightarrow$ (ii)",
+      "(a) $\\rightarrow$ (ii), (b) $\\rightarrow$ (i), (c) $\\rightarrow$ (iv), (d) $\\rightarrow$ (iii)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• Earthworm is a detritivore: (a) $\\rightarrow$ (ii)\n• Succession involves pioneer species initiating colonization: (b) $\\rightarrow$ (i)\n• Ecosystem service includes pollination: (c) $\\rightarrow$ (iv)\n• Population growth includes natality (birth rate): (d) $\\rightarrow$ (iii)\nHence, the correct option is (D).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 37,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "If 20 J of energy is trapped at producer level, then how much energy will be available to peacock as food in the following chain? Plant $\\rightarrow$ mice → snake $\\rightarrow$ peacock",
+    "options": [
+      "0.0002 J",
+      "0.002 J",
+      "0.2 J",
+      "0.02 J"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **0.02 J**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 38,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is a primary consumer in maize field ecosystem ?",
+    "options": [
+      "Phytoplankton",
+      "Lion",
+      "Grasshopper",
+      "Wolf"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Grasshopper**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 39,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "When man eats fish which feeds on zooplankton which have eaten small plants, the producer in the chain is :",
+    "options": [
+      "Zooplankton",
+      "Fish",
+      "Small plants",
+      "Man"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Small plants**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 40,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Secondary productivity is rate of formation of new organic matter by :",
+    "options": [
+      "Parasite",
+      "Decomposer",
+      "Producer",
+      "Consumers Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Consumers Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 41,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following processes during decomposition is correctly described ?",
+    "options": [
+      "Catabolism – Last step in the decomposition under fully anaerobic condition",
+      "Leaching – Water soluble inorganic nutrients rise to the top layers of soil",
+      "Fragmentation –Carried out by organisms such as earthworm",
+      "Humification – Leads to the accumulation of a dark coloured substance humus which undergoes microbial action at a very fast rate"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Fragmentation –Carried out by organisms such as earthworm**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 42,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The rate of formation of new organic matter by rabbit in a grassland, is called :",
+    "options": [
+      "Net productivity",
+      "Gross primary productivity",
+      "Secondary productivity",
+      "Net primary productivity"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Secondary productivity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 43,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Identify the likely organisms (a), (b), (c) and (d) in the food web shown below :",
+    "options": [
+      "(a) $\\rightarrow$ deer , (b) $\\rightarrow$ rabbit , (c) $\\rightarrow$ frog, (d) $\\rightarrow$ rat",
+      "(a) $\\rightarrow$ squirrel , (b) $\\rightarrow$ cat, (c) $\\rightarrow$ rat , (d) $\\rightarrow$ pigeon",
+      "(a) $\\rightarrow$ dog, (b) $\\rightarrow$ squirrel , (c) $\\rightarrow$ bat , (d) $\\rightarrow$ deer",
+      "(a) $\\rightarrow$ rat , (b) $\\rightarrow$ dog , (c) $\\rightarrow$ tortoise, (d) $\\rightarrow$ crow"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In the given food web:\n• Organism (a) eats vegetation and is eaten by lion $\\rightarrow$ deer\n• Organism (b) eats vegetation and is eaten by foxes $\\rightarrow$ rabbit\n• Organism (c) eats grasshopper and is eaten by snakes $\\rightarrow$ frog\n• Organism (d) eats vegetation/seeds and is eaten by hawks $\\rightarrow$ rat\nTherefore, option (A) is the correct answer.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794481262/edvedum/questions/ecosystem/ecosystem_q_43.png"
+  },
+  {
+    "_source_num": 44,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Identify the possible link \"A\" in the following food chain : Plant $\\rightarrow$ insect → frog → \"A\" → Eagle",
+    "options": [
+      "Wolf",
+      "Rabbit",
+      "Cobra",
+      "Parrot Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Cobra**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 45,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Given below is an imaginary pyramid of numbers. What could be one of the possibilities about certain organisms at some of the different levels ?",
+    "options": [
+      "Level PC is \"rats\" and level SC is \"cats\"",
+      "Level PP is \"phytoplanktons\" in sea and \"Whale\" on top level TC",
+      "Level one PP is \"pipal trees\" and the level SC is \"sheep\"",
+      "Level PC is \"insects\" and level SC is \"small insectivorous birds\""
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "The pyramid shows a spindle-shaped pyramid of numbers in a parasitic or tree ecosystem:\n• PP = 1 (single large tree)\n• PC = 500 (numerous herbivorous insects feeding on tree)\n• SC = 50 (insectivorous birds feeding on insects)\n• TC = 10 (top carnivores/birds of prey)\nHence, Level PC is \"insects\" and level SC is \"small insectivorous birds\" (D).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794481263/edvedum/questions/ecosystem/ecosystem_q_45.png"
+  },
+  {
+    "_source_num": 46,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not a functional unit of an ecosystem?",
+    "options": [
+      "Energy flow",
+      "Decomposition",
+      "Productivity",
+      "Stratification"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Stratification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 47,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The upright pyramid of number is absent in",
+    "options": [
+      "Pond",
+      "Grassland",
+      "Lake",
+      "Forest"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Forest**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 48,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following animals may occupy more than one trophic levels in the same ecosystem at the same time ?",
+    "options": [
+      "Lion",
+      "Frog",
+      "Goat",
+      "Sparrow"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Sparrow**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 49,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The breakdown of detritus into smaller particles by earthworm is a process called",
+    "options": [
+      "Fragmentation",
+      "Catabolism",
+      "Mineralisation",
+      "Humification Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Fragmentation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 50,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Mass of living matter at a trophic level in an area at any time is called :",
+    "options": [
+      "Humus",
+      "Detritus",
+      "Standing state",
+      "Standing crop"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Standing crop**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 51,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Of the total incident solar radiation the proportion of PAR is",
+    "options": [
+      "About 60%",
+      "More than 80%",
+      "Less than 50%",
+      "About 70%"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Less than 50%**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 52,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements for pyramid of energy is incorrect, whereas the remaining three are correct?",
+    "options": [
+      "It shows energy content of different trophic level organisms",
+      "It is upright in shape",
+      "It is inverted in shape",
+      "Its base is broad"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **It is inverted in shape**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 53,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following representations shows the pyramid of numbers in a forest ecosystem ?",
+    "options": [
+      "B",
+      "A",
+      "D",
+      "C"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In a forest ecosystem, the pyramid of numbers is spindle-shaped (represented by figure B): a single huge tree (producer) supports a large number of herbivores (birds/insects), which are preyed upon by fewer carnivores.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794481265/edvedum/questions/ecosystem/ecosystem_q_53.png"
+  },
+  {
+    "_source_num": 54,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is one of the characteristics of a biological community?",
+    "options": [
+      "Mortality",
+      "Sex-ratio",
+      "Stratification",
+      "Natality Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Stratification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 55,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The biomass available for consumption by the herbivores and the decomposers is called –",
+    "options": [
+      "Standing crop",
+      "Net primary productivity",
+      "Gross primary productivity",
+      "Secondary productivity"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Net primary productivity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 56,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following types of organisms occupy more than one trophic level in a pond ecosystem ?",
+    "options": [
+      "Phytoplankton",
+      "Zooplankton",
+      "Frog",
+      "Fish"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Fish**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 57,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Consider the following statements concerning food chains: (i) Removal of 80% tigers from an area resulted in greatly increased growth of vegetation (ii) Removal of most of the carnivores resulted in an increased population of deers (iii) The length of food chains is generally limited to 3-4 trophic levels due to energy loss (iv) The length of food chains may vary from 2 to 8 trophic levels Which two of the above statements are correct ?",
+    "options": [
+      "(iii), (iv)",
+      "(ii), (iii)",
+      "(i), (iv)",
+      "(i), (ii)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **(ii), (iii)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 58,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The slow rate of decomposition of fallen logs in nature is due to their:",
+    "options": [
+      "low moisture content",
+      "poor nitrogen content",
+      "anaerobic environment around them",
+      "low cellulose content"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **low moisture content**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 59,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "About 70% of total global carbon is found in:",
+    "options": [
+      "Grasslands",
+      "Agroecosystems",
+      "Oceans",
+      "Forests"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Oceans**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 60,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following ecosystem types has the highest annual net primary productivity ?",
+    "options": [
+      "Temperate evergreen forest",
+      "Temperate deciduous forest",
+      "Tropical rain forest",
+      "Tropical deciduous forest"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Tropical rain forest**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 61,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not used for construction of ecological pyramids ?",
+    "options": [
+      "Rate of energy flow",
+      "Dry weight",
+      "Fresh weight",
+      "Number of individuals Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Fresh weight**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 62,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "2 Which of the following is expected to have the highest value (gm/m /yr) in a grassland ecosystem ?",
+    "options": [
+      "Net production (NP)",
+      "Secondary production",
+      "Tertiary production",
+      "Gross production (GP)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Gross production (GP)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 63,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "An ecosystem which can be easily damaged but can recover after some time if damaging effect stops will be having -",
+    "options": [
+      "High stability and high resilience",
+      "Low stability and high resilience",
+      "High stability and low resilience",
+      "Low stability and low resilience"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Low stability and high resilience**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 64,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Bamboo plant is growing in a far forest then what will be the trophic level of it ?",
+    "options": [
+      "Second trophic level (T 2 )",
+      "First trophic level (T 1 )",
+      "Fourth trophic level (T 4 )",
+      "Third trophic level (T 3 )"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **First trophic level (T 1 )**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 65,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Plant Decomposers are : -",
+    "options": [
+      "Protista and Animalia",
+      "Animalia and Monera",
+      "Monera and fungi",
+      "Fungi and plants"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Monera and fungi**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 66,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which is the reason for highest biomass in aquatic ecosystem ?",
+    "options": [
+      "Benthonic and brown algae",
+      "Nano plankton, blue green algae, green algae",
+      "Diatoms",
+      "Sea grass, and slime molds"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Benthonic and brown algae**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 67,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Energy transfer from one trophic level to other in a food chain is",
+    "options": [
+      "20%",
+      "10%",
+      "2%",
+      "1% Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **10%**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 68,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The rate at which light energy is converted into chemical energy of organic molecules is the ecosystem's",
+    "options": [
+      "net primary productivity",
+      "gross secondary productivity",
+      "net secondary productivity",
+      "gross primary productivity"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **gross primary productivity**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 69,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In a terrestrial ecosystem such as forest, maximum energy is in which trophic level?",
+    "options": [
+      "$T_1$",
+      "$T_2$",
+      "$T_3$",
+      "$T_4$"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In any ecosystem, primary producers occupy the first trophic level ($T_1$) and fix solar radiant energy into chemical energy. Since energy decreases at each successive trophic level according to the 10% law, maximum energy is always present at the producer level ($T_1$).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 70,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following ecosystem has the highest gross primary productivity?",
+    "options": [
+      "Mangroves",
+      "Rainforest",
+      "Grassland",
+      "Coral reef"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Rainforest**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 71,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following acts as “nature’s scavengers”?",
+    "options": [
+      "Insects",
+      "Microorganisms",
+      "Man",
+      "Animals"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Microorganisms**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 72,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The 10% energy transfer law of food chain was given by",
+    "options": [
+      "Lindemann",
+      "Tansley",
+      "Stanley",
+      "Weismann"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Lindemann**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 73,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "If we completely remove the decomposers from an ecosystem, its functioning will be adversely affected, because",
+    "options": [
+      "mineral movement will be blocked",
+      "the rate of decomposition will be very high",
+      "energy flow will be blocked",
+      "herbivores will not receive solar energy"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **mineral movement will be blocked**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 74,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In a biotic community, the primary consumers are",
+    "options": [
+      "detritivores",
+      "herbivores",
+      "carnivores",
+      "omnivores Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **herbivores**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 75,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following is the most stable ecosystem?",
+    "options": [
+      "Mountain",
+      "Ocean",
+      "Forest",
+      "Desert"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Ocean**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 76,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The dominant second trophic level, in a lake ecosystem, is",
+    "options": [
+      "phytoplankton",
+      "zooplankton",
+      "benthos",
+      "plankton"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **zooplankton**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 77,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Pyramid of numbers deals with number of",
+    "options": [
+      "species in an area",
+      "individuals in a community",
+      "individuals in a trophic-level",
+      "subspecies in a community"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **individuals in a trophic-level**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 78,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Pyramid of numbers in a pond ecosystem is",
+    "options": [
+      "irregular",
+      "inverted",
+      "upright",
+      "spindle shaped"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **upright**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 79,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Food chain in which microorganisms breakdown the food formed by primary producers is",
+    "options": [
+      "parasitic food chain",
+      "detritus food chain",
+      "consumer food chain",
+      "predator food chain"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **detritus food chain**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 80,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Pick up the correct food chain.",
+    "options": [
+      "Grass Chameleon Insect Bird",
+      "Grass Fox Rabbit Bird",
+      "Phytoplankton Zooplankton Fish",
+      "Fallen leaves Bacteria Insect larvae"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Phytoplankton Zooplankton Fish**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 81,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Pyramid of numbers in a grassland/tree ecosystem is",
+    "options": [
+      "always inverted",
+      "always upright",
+      "both (1) and (2)",
+      "spindle-shaped Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **always upright**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 82,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Pyramid of numbers in a grassland/tree ecosystem is",
+    "options": [
+      "always inverted",
+      "always upright",
+      "both (1) and (2)",
+      "spindle-shaped"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **always upright**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 83,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Upper part of sea/aquatic ecosystem contains",
+    "options": [
+      "plankton",
+      "nekton",
+      "plankton and nekton",
+      "benthos"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **plankton**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 84,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "What is true of ecosystem?",
+    "options": [
+      "Primary consumers are least dependent upon producers.",
+      "Primary consumers out-number producers.",
+      "Producers are more than primary consumers.",
+      "Secondary consumers are the largest and most powerful."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Producers are more than primary consumers.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 85,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In an ecosystem, which one shows one-way passage?",
+    "options": [
+      "Free energy",
+      "Carbon",
+      "Nitrogen",
+      "Potassium"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Free energy**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 86,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match List - I with List - II\n\n| List - I | List - II |\n| :--- | :--- |\n| (A) Hydrarch succession | (IV) Phytoplankton to mesic conditions |\n| (B) Xerarch succession | (III) Lichens to mesic conditions |\n| (C) Ecological succession | (I) Gradual change in the species composition |\n| (D) Secondary succession | (II) Faster and climax reached quickly |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      "(A)-(IV), (B)-(II), (C)-(III), (D)-(I)",
+      "(A)-(III), (B)-(I), (C)-(IV), (D)-(II)",
+      "(A)-(I), (B)-(IV), (C)-(II), (D)-(III)",
+      "(A)-(IV), (B)-(III), (C)-(I), (D)-(II)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• **Hydrarch succession**: Takes place in wet areas from phytoplankton to climax mesic condition: (A)-(IV)\n• **Xerarch succession**: Takes place in dry areas starting with crustose lichens to mesic conditions: (B)-(III)\n• **Ecological succession**: Gradual and predictable change in species composition: (C)-(I)\n• **Secondary succession**: Begins in areas where natural vegetation was destroyed, progressing much faster to climax: (D)-(II)\nHence, the correct match is **(A)-(IV), (B)-(III), (C)-(I), (D)-(II)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 87,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The amount of nutrients such as carbon, nitrogen, potassium and calcium present in the soil at any given time is referred to as :",
+    "options": [
+      "Standing state",
+      "Standing crop",
+      "Humus",
+      "Detritus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Standing state**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 88,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "All successions irrespective of the habitat proceed to which type of climax community?",
+    "options": [
+      "Edaphic",
+      "Xeric",
+      "Mesic",
+      "Hydrophytic"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Mesic**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 89,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The pioneer species in a hydrarch succession are",
+    "options": [
+      "Filamentous algae",
+      "Free-floating angiosperms",
+      "Submerged rooted plants",
+      "Phytoplanktons"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Phytoplanktons**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 90,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The species that come to appear in bare area are called",
+    "options": [
+      "Species of seral community",
+      "Pioneer species",
+      "Invasive species",
+      "Competitive species"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Pioneer species**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 91,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Match List - I with List - II :\n\n| List - I | List - II |\n| :--- | :--- |\n| (a) Carbon dissolved in oceans | (ii) 71% |\n| (b) Annual fixation of carbon through photosynthesis | (iii) $4 \\times 10^{13}\\text{ kg}$ |\n| (c) PAR captured by plants | (iv) 2 to 10% |\n| (d) Productivity of oceans | (i) 55 billion tons |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "(a)-(iii), (b)-(ii), (c)-(i), (d)-(iv)",
+      "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(i)",
+      "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• Carbon dissolved in oceans: 71% of total global carbon reservoir (a)-(ii)\n• Annual carbon fixation by photosynthesis: $4 \\times 10^{13}\\text{ kg}$ (b)-(iii)\n• PAR captured by plants: 2 to 10% of incident PAR (c)-(iv)\n• Annual productivity of oceans: 55 billion tons (out of 170 billion tons) (d)-(i)\nHence, the correct match is **(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 92,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following will accelerate phosphorus cycle?",
+    "options": [
+      "Burning of fossil fuels",
+      "Volcanic activity",
+      "Weathering of rocks",
+      "Rain fall and storms Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Weathering of rocks**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 93,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The amount of nutrients, such as carbon, nitrogen, phosphorus and calcium present in the soil at any given time, is referred as :",
+    "options": [
+      "Standing crop",
+      "Climax",
+      "Climax community",
+      "Standing state"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Standing state**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 94,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements is incorrect regarding the phosphorus cycle ?",
+    "options": [
+      "It is sedimentary cycle",
+      "Phosphates are the major form of phosphorus reservoir",
+      "Phosphorus solubilising bacteria facilitate the release of phosphorus from organic remains",
+      "There is appreciable respiratory release of phosphorus into atmosphere"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **There is appreciable respiratory release of phosphorus into atmosphere**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 95,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Thiobacillus is a group of bacteria helpful in carrying out :",
+    "options": [
+      "Nitrification",
+      "Denitrification",
+      "Nitrogen fixation",
+      "Chemoautotrophic fixation"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Denitrification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 96,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following would appear as the pioneer organisms on bare rocks?",
+    "options": [
+      "Lichens",
+      "Green algae",
+      "Liverworts",
+      "Mosses"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Lichens**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 97,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "During ecological succession :",
+    "options": [
+      "the establishment of a new biotic community is very fast in its primary phase.",
+      "the numbers and types of animals remain constant.",
+      "the changes lead to a community that is in near equilibrium with the environment and is called pioneer community",
+      "the gradual and predictable change in species composition occurs in a given area Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **the gradual and predictable change in species composition occurs in a given area Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 98,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "In which of the following both pairs have correct combination?\n\n| Option | Gaseous nutrient cycle | Sedimentary nutrient cycle |\n| :--- | :--- | :--- |\n| (A) | Carbon and Sulphur | Nitrogen and Phosphorus |\n| (B) | Sulphur and Phosphorus | Carbon and Nitrogen |\n| (C) | Nitrogen and Sulphur | Carbon and Phosphorus |\n| (D) | Carbon and Nitrogen | Sulphur and Phosphorus |",
+    "options": [
+      "Gaseous: Carbon & Sulphur; Sedimentary: Nitrogen & Phosphorus",
+      "Gaseous: Sulphur & Phosphorus; Sedimentary: Carbon & Nitrogen",
+      "Gaseous: Nitrogen & Sulphur; Sedimentary: Carbon & Phosphorus",
+      "Gaseous: Carbon & Nitrogen; Sedimentary: Sulphur & Phosphorus"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• **Gaseous nutrient cycles**: The reservoir pool is the atmosphere or hydrosphere (e.g., **Carbon**, **Nitrogen**).\n• **Sedimentary nutrient cycles**: The reservoir pool is Earth's crust (lithosphere) (e.g., **Phosphorus**, **Sulphur**).\nTherefore, option (D) is the correct combination.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 99,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Secondary Succession takes place on/in :",
+    "options": [
+      "Newly created pond",
+      "Newly cooled lava",
+      "Bare rock",
+      "Degraded forest Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Degraded forest Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 100,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Given below is a simplified model of phosphorus cycling in a terrestrial ecosystem with four blanks (A-D). Identify the blanks.",
+    "options": [
+      "A $\\rightarrow$ Detritus, B $\\rightarrow$ Rock minerals, C $\\rightarrow$ Producers, D $\\rightarrow$ Litter fall",
+      "A $\\rightarrow$ Litter fall, B $\\rightarrow$ Producers, C $\\rightarrow$ Rock minerals, D $\\rightarrow$ Detritus",
+      "A $\\rightarrow$ Rock Minerals, B $\\rightarrow$ Detritus, C $\\rightarrow$ Litter fall, D $\\rightarrow$ Producers",
+      "A $\\rightarrow$ Producers, B $\\rightarrow$ Litter fall, C $\\rightarrow$ Rock minerals, D $\\rightarrow$ Detritus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "In the phosphorus cycle model:\n• C represents Producers (which take up dissolved phosphate from soil solution).\n• D represents plant litter fall adding organic matter.\n• A represents Detritus (dead organic matter from producers and consumers).\n• B represents Rock minerals (which undergo weathering and release phosphate into soil solution).\nHence, option (A) is correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794481266/edvedum/questions/ecosystem/ecosystem_q_100.png"
+  },
+  {
+    "_source_num": 101,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which two distinct microbial processes are responsible for the release of fixed nitrogen as dinitrogen gas (N 2 ) to the atmosphere ?",
+    "options": [
+      "Anaerobic ammonium oxidation, and denitrification",
+      "Aerobic nitrate oxidation, and nitrite reduction",
+      "Enteric fermentation in cattle, and nitrogen fixation by Rhizobium in root nodules of legumes",
+      "Decomposition of organic nitrogen, and conversion of dinitrogen to ammonium compounds"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Anaerobic ammonium oxidation, and denitrification**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 102,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Natural reservoir of phosphorus is :",
+    "options": [
+      "Fossils",
+      "Rock",
+      "Sea water",
+      "Animal bones"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Rock**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 103,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The second stage of hydrosere is occupied by plants like",
+    "options": [
+      "Vallisneria",
+      "Typha",
+      "Azolla",
+      "Salix Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Vallisneria**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 104,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not a gaseous biogeochemical cycle in ecosystem ?",
+    "options": [
+      "Sulphur Cycle",
+      "Nitrogen Cycle",
+      "Phosphorus Cycle",
+      "Carbon Cycle"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (C): **Phosphorus Cycle**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 105,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Both, hydrarch and xerarch successions lead to :",
+    "options": [
+      "Xeric conditions",
+      "Excessive wet conditions",
+      "Highly dry conditions",
+      "Medium water conditions"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Medium water conditions**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 106,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which one of the following statements is correct for secondary succession?",
+    "options": [
+      "It follows primary succession",
+      "It occurs on deforested site",
+      "It is similar to primary succession except that it has a relatively fast pace.",
+      "It begins on a bare rock."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **It occurs on deforested site**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 107,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The correct sequence of plants in hydrosere is :",
+    "options": [
+      "Volvox $\\rightarrow$ Hydrilla → Pistia $\\rightarrow$ Scirpus → Lantana $\\rightarrow$ Oak",
+      "Pistia $\\rightarrow$ Volvox → Scirpus $\\rightarrow$ Hydrilla → Oak $\\rightarrow$ Lantana",
+      "Oak $\\rightarrow$ Lantana → Volvox $\\rightarrow$ Hydrilla → Pistia $\\rightarrow$ Scirpus",
+      "Oak $\\rightarrow$ Lantana → Scirpus $\\rightarrow$ Pistia → Hydrilla $\\rightarrow$ Volvox"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (A): **Volvox $\\rightarrow$ Hydrilla → Pistia $\\rightarrow$ Scirpus → Lantana $\\rightarrow$ Oak**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 108,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following plants are used as green manure in crop fields and in sandy soils ?",
+    "options": [
+      "Calotropis procera and Phyllanthus niruri",
+      "Dichanthium annulatum and Azolla nilotica",
+      "Saccharum munja and Lantana camara",
+      "Crotalaria juncea and Alhagi camelorum"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **Crotalaria juncea and Alhagi camelorum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 109,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The main role of bacteria in the carbon cycle involves",
+    "options": [
+      "photosynthesis",
+      "assimilation of nitrogenous compounds",
+      "chemosynthesis",
+      "digestion or breakdown of organic compounds Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (D): **digestion or breakdown of organic compounds Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 110,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "Which of the following pairs is a sedimentary type of biogeochemical cycle?",
+    "options": [
+      "Phosphorus and nitrogen",
+      "Phosphorus and sulphur",
+      "Oxygen and nitrogen",
+      "Phosphorus and carbon dioxide"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **Phosphorus and sulphur**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 111,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Ecosystem",
+    "topic": "Ecosystem",
+    "question_type": "mcq",
+    "question_text": "The primary succession refers to the development of communities on a",
+    "options": [
+      "forest clearing after devastating fire",
+      "newly-exposed habitat with no record of earlier vegetation",
+      "freshly cleared crop field",
+      "pond, freshly filled with water after a dry phase"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Ecosystem, the correct answer is option (B): **newly-exposed habitat with no record of earlier vegetation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  }
+]
