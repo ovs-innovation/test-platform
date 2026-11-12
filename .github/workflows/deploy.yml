@@ -64,6 +64,18 @@ jobs:
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
 
+            echo "=== VPS Disk Status Before Cleanup ==="
+            df -h / || true
+
+            # Emergency cleanup of old backups, caches, and docker build cache to resolve 'No space left on device'
+            rm -rf /tmp/edvedum_prod_backup_* /tmp/npm-* /tmp/v8-compile-cache-* /tmp/*.tar.gz 2>/dev/null || true
+            docker builder prune -af --filter "until=2h" 2>/dev/null || docker builder prune -af 2>/dev/null || true
+            docker image prune -f 2>/dev/null || true
+            journalctl --vacuum-size=50M 2>/dev/null || true
+
+            echo "=== VPS Disk Status After Cleanup ==="
+            df -h / || true
+
             if [ ! -d "$PROJECT_DIR" ]; then
               echo "Deployment directory $PROJECT_DIR does not exist on VPS. Creating directory..."
               mkdir -p "$PROJECT_DIR"
@@ -98,9 +110,6 @@ jobs:
               mkdir -p "$BACKUP_DIR/backend"
               cp "backend/.env" "$BACKUP_DIR/backend/.env" || true
             fi
-            if [ -d "frontend/dist" ]; then
-              cp -r frontend/dist "$BACKUP_DIR/frontend_dist_backup" || true
-            fi
 
             # Configure git safe directory & remote URL with token authentication
             git config --global --add safe.directory "$PROJECT_DIR" 2>/dev/null || true
@@ -122,8 +131,8 @@ jobs:
             if [ -f "$BACKUP_DIR/backend/.env" ]; then
               cp "$BACKUP_DIR/backend/.env" "backend/.env" || true
             fi
-            # Do not copy local development backend/.env to production root .env
 
+            rm -rf "$BACKUP_DIR" 2>/dev/null || true
             echo "VPS git reset completed successfully to commit ${{ github.sha }}."
 
       - name: Retry Prepare VPS Git State (if first attempt timed out)
@@ -142,6 +151,18 @@ jobs:
             export GIT_TERMINAL_PROMPT=0
             PROJECT_DIR="/var/www/test-platform"
             BACKUP_DIR="/tmp/edvedum_prod_backup_$(date +%s)"
+
+            echo "=== VPS Retry Disk Cleanup & Git Reset ==="
+            df -h / || true
+
+            # Aggressive cleanup on retry to recover from disk exhaustion
+            rm -rf /tmp/edvedum_prod_backup_* /tmp/npm-* /tmp/v8-compile-cache-* /tmp/*.tar.gz 2>/dev/null || true
+            docker builder prune -af 2>/dev/null || true
+            docker image prune -af --filter "until=24h" 2>/dev/null || docker image prune -f 2>/dev/null || true
+            journalctl --vacuum-size=50M 2>/dev/null || true
+
+            echo "=== VPS Disk Status After Retry Cleanup ==="
+            df -h / || true
 
             if [ ! -d "$PROJECT_DIR" ]; then
               mkdir -p "$PROJECT_DIR"
@@ -168,7 +189,9 @@ jobs:
             git fetch --prune origin main || git fetch origin "${{ github.sha }}" || git fetch --all --tags || true
             git reset --hard "${{ github.sha }}" || git reset --hard FETCH_HEAD || git reset --hard origin/main || git reset --hard HEAD
             git remote set-url origin "$CLEAN_URL" 2>/dev/null || true
+            rm -rf "$BACKUP_DIR" 2>/dev/null || true
             echo "VPS git reset completed successfully on retry."
+            df -h / || true
 
       - name: Upload Frontend Bundle to VPS
         uses: appleboy/scp-action@v0.1.7
@@ -529,9 +552,10 @@ jobs:
             log "Local HTTPS readiness check PASSED!"
 
             # Post-deployment cleanup
-            log "Pruning dangling Docker build cache layers..."
-            docker image prune -f --filter "until=24h" || true
-            rm -rf "$BACKUP_DIR" || true
+            log "Pruning dangling Docker build cache layers and old backups..."
+            docker builder prune -af --filter "until=2h" 2>/dev/null || docker builder prune -af 2>/dev/null || true
+            docker image prune -f --filter "until=24h" 2>/dev/null || true
+            rm -rf /tmp/edvedum_prod_backup_* "$BACKUP_DIR" 2>/dev/null || true
 
             log "=================================================="
             log " EDVEDUM VPS Local Deployment Successful!"
