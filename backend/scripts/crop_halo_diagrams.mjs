@@ -1,144 +1,169 @@
-import sharp from 'sharp';
 import fs from 'fs';
 import path from 'path';
+import { createCanvas, loadImage } from '@napi-rs/canvas';
 
-const outDirs = [
-  path.resolve('../frontend/public/uploads/haloalkanes'),
-  path.resolve('uploads/haloalkanes')
-];
+const OUTPUT_DIR = './backend/scripts/halo_diagrams';
+if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
-for (const d of outDirs) {
-  if (!fs.existsSync(d)) fs.mkdirSync(d, { recursive: true });
-}
+function autoCrop(canvas) {
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const imgData = ctx.getImageData(0, 0, w, h);
+  const data = imgData.data;
 
-async function cropDiagram(srcPath, rect, outFileName) {
-  if (!fs.existsSync(srcPath)) {
-    console.error(`Source not found: ${srcPath}`);
-    return;
+  let minX = w, minY = h, maxX = 0, maxY = 0;
+
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const idx = (y * w + x) * 4;
+      const r = data[idx];
+      const g = data[idx + 1];
+      const b = data[idx + 2];
+      const a = data[idx + 3];
+
+      // If non-white and non-watermark
+      if (a > 50 && (r < 235 || g < 235 || b < 235)) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
   }
-  const meta = await sharp(srcPath).metadata();
-  const left = Math.max(0, Math.min(rect.left, meta.width - 1));
-  const top = Math.max(0, Math.min(rect.top, meta.height - 1));
-  const width = Math.min(rect.width, meta.width - left);
-  const height = Math.min(rect.height, meta.height - top);
 
-  // Extract, resize 2x, sharpen, and ensure clean background
-  const buf = await sharp(srcPath)
-    .extract({ left, top, width, height })
-    .resize({ width: width * 2, kernel: 'lanczos3' })
-    .sharpen()
-    .png()
-    .toBuffer();
+  if (minX >= maxX || minY >= maxY) return canvas;
 
-  for (const d of outDirs) {
-    fs.writeFileSync(path.join(d, outFileName), buf);
-  }
-  console.log(`Saved ${outFileName} (${width * 2}x${height * 2})`);
+  const pad = 10;
+  minX = Math.max(0, minX - pad);
+  minY = Math.max(0, minY - pad);
+  maxX = Math.min(w, maxX + pad);
+  maxY = Math.min(h, maxY + pad);
+
+  const cropW = maxX - minX;
+  const cropH = maxY - minY;
+
+  const cropped = createCanvas(cropW, cropH);
+  const cCtx = cropped.getContext('2d');
+  cCtx.drawImage(canvas, minX, minY, cropW, cropH, 0, 0, cropW, cropH);
+  return cropped;
 }
 
-async function run() {
-  const p74 = 'scripts/halo_pages/page_74.png';
-  const p75 = 'scripts/halo_pages/page_75.png';
-  const p76 = 'scripts/halo_pages/page_76.png';
-  const p77 = 'scripts/halo_pages/page_77.png';
-  const p78 = 'scripts/halo_pages/page_78.png';
-  const p79 = 'scripts/halo_pages/page_79.png';
-  const p80 = 'scripts/halo_pages/page_80.png';
-  const p81 = 'scripts/halo_pages/page_81.png';
-  const p82 = 'scripts/halo_pages/page_82.png';
-  const p83 = 'scripts/halo_pages/page_83.png';
-  const p84 = 'scripts/halo_pages/page_84.png';
-  const p85 = 'scripts/halo_pages/page_85.png';
-  const p87 = 'scripts/halo_pages/statement_questions_page87.png';
-  const p89 = 'scripts/halo_pages/page_89.png';
+async function crop(pageNum, x, y, w, h, outName) {
+  const pagePath = `./backend/scripts/halo_pages/page_${pageNum}.png`;
+  const img = await loadImage(pagePath);
+  const canvas = createCanvas(w, h);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, x, y, w, h, 0, 0, w, h);
 
-  console.log('Cropping Page 74 diagrams...');
-  await cropDiagram(p74, { left: 15, top: 58, width: 110, height: 185 }, 'halo_q1_cine_substitution.png');
-  await cropDiagram(p74, { left: 135, top: 48, width: 112, height: 98 }, 'halo_q3_aryl_halides.png');
-  await cropDiagram(p74, { left: 130, top: 200, width: 118, height: 92 }, 'halo_q5_e2_halides.png');
-
-  console.log('Cropping Page 75 diagrams...');
-  await cropDiagram(p75, { left: 8, top: 8, width: 118, height: 42 }, 'halo_q6_compounds.png');
-  await cropDiagram(p75, { left: 12, top: 68, width: 100, height: 138 }, 'halo_q7_newman_meso.png');
-  await cropDiagram(p75, { left: 8, top: 250, width: 118, height: 55 }, 'halo_q9_fischer_reaction.png');
-  await cropDiagram(p75, { left: 125, top: 12, width: 122, height: 80 }, 'halo_q9_fischer_options.png');
-  await cropDiagram(p75, { left: 122, top: 100, width: 125, height: 45 }, 'halo_q10_cyclohexene_structures.png');
-  await cropDiagram(p75, { left: 122, top: 195, width: 125, height: 92 }, 'halo_q12_alkane_elimination.png');
-
-  console.log('Cropping Page 76 diagrams...');
-  await cropDiagram(p76, { left: 10, top: 110, width: 115, height: 68 }, 'halo_q16_structures.png');
-  await cropDiagram(p76, { left: 130, top: 40, width: 118, height: 95 }, 'halo_q20_dows_process.png');
-  await cropDiagram(p76, { left: 130, top: 135, width: 118, height: 115 }, 'halo_q21_neopentyl_reaction.png');
-
-  console.log('Cropping Page 77 diagrams...');
-  await cropDiagram(p77, { left: 0, top: 38, width: 128, height: 75 }, 'halo_q24_ullmann_options.png');
-  await cropDiagram(p77, { left: 0, top: 200, width: 128, height: 98 }, 'halo_q26_carbocations.png');
-  await cropDiagram(p77, { left: 120, top: 22, width: 128, height: 38 }, 'halo_q27_benzyne_reaction.png');
-  await cropDiagram(p77, { left: 120, top: 200, width: 128, height: 48 }, 'halo_q32_solvolysis_structures.png');
-  await cropDiagram(p77, { left: 120, top: 242, width: 128, height: 90 }, 'halo_q33_dibromocyclohexane.png');
-
-  console.log('Cropping Page 78 diagrams...');
-  await cropDiagram(p78, { left: 8, top: 8, width: 115, height: 58 }, 'halo_q34_diene_bromination.png');
-  await cropDiagram(p78, { left: 8, top: 70, width: 115, height: 85 }, 'halo_q35_optical_structures.png');
-  await cropDiagram(p78, { left: 8, top: 155, width: 115, height: 30 }, 'halo_q36_cyclohexanol_reaction.png');
-  await cropDiagram(p78, { left: 115, top: 8, width: 115, height: 130 }, 'halo_q40_halonitrobenzenes.png');
-
-  console.log('Cropping Page 79 diagrams...');
-  await cropDiagram(p79, { left: 0, top: 4, width: 125, height: 110 }, 'halo_q44_cyclohexene_sn2.png');
-  await cropDiagram(p79, { left: 8, top: 235, width: 118, height: 85 }, 'halo_q47_allylbenzene_reaction.png');
-  await cropDiagram(p79, { left: 120, top: 8, width: 110, height: 58 }, 'halo_q48_bromonium_intermediate.png');
-  await cropDiagram(p79, { left: 120, top: 68, width: 110, height: 58 }, 'halo_q49_dibromo_hydrolysis.png');
-  await cropDiagram(p79, { left: 120, top: 130, width: 110, height: 80 }, 'halo_q50_aryl_halides.png');
-  await cropDiagram(p79, { left: 120, top: 215, width: 110, height: 95 }, 'halo_q51_trans_dibromocyclohexane.png');
-
-  console.log('Cropping Page 80 diagrams...');
-  await cropDiagram(p80, { left: 15, top: 32, width: 110, height: 130 }, 'halo_q52_toluidine_cine.png');
-  await cropDiagram(p80, { left: 15, top: 270, width: 110, height: 40 }, 'halo_q55_darzens_reaction.png');
-  await cropDiagram(p80, { left: 120, top: 25, width: 110, height: 35 }, 'halo_q56_halide_compounds.png');
-  await cropDiagram(p80, { left: 120, top: 120, width: 110, height: 45 }, 'halo_q58_e2_compounds.png');
-  await cropDiagram(p80, { left: 120, top: 235, width: 110, height: 75 }, 'halo_q60_sn1_structures.png');
-
-  console.log('Cropping Page 81 diagrams...');
-  await cropDiagram(p81, { left: 5, top: 180, width: 118, height: 60 }, 'halo_q64_dehydrohalogenation_structures.png');
-  await cropDiagram(p81, { left: 0, top: 240, width: 125, height: 80 }, 'halo_q65_ethylbenzene_bromination.png');
-  await cropDiagram(p81, { left: 120, top: 40, width: 110, height: 75 }, 'halo_q66_chloronitrobenzenes.png');
-
-  console.log('Cropping Page 82 diagrams...');
-  await cropDiagram(p82, { left: 5, top: 270, width: 118, height: 50 }, 'halo_q79_cycloalkane_reaction.png');
-  await cropDiagram(p82, { left: 120, top: 4, width: 112, height: 70 }, 'halo_q79_cycloalkene_options.png');
-  await cropDiagram(p82, { left: 120, top: 72, width: 112, height: 110 }, 'halo_q80_friedel_crafts.png');
-  await cropDiagram(p82, { left: 120, top: 195, width: 112, height: 60 }, 'halo_q81_conjugated_chlorides.png');
-
-  console.log('Cropping Page 83 diagrams...');
-  await cropDiagram(p83, { left: 5, top: 215, width: 118, height: 38 }, 'halo_q88_reaction.png');
-  await cropDiagram(p83, { left: 5, top: 248, width: 118, height: 75 }, 'halo_q88_options_left.png');
-  await cropDiagram(p83, { left: 120, top: 4, width: 112, height: 70 }, 'halo_q88_options_right.png');
-  await cropDiagram(p83, { left: 120, top: 80, width: 112, height: 60 }, 'halo_q89_benzyne_substrates.png');
-  await cropDiagram(p83, { left: 120, top: 220, width: 112, height: 85 }, 'halo_q91_benzylic_bromides.png');
-
-  console.log('Cropping Page 84 diagrams...');
-  await cropDiagram(p84, { left: 5, top: 40, width: 118, height: 70 }, 'halo_q92_cumene_options.png');
-  await cropDiagram(p84, { left: 5, top: 110, width: 118, height: 105 }, 'halo_q93_toluidine_options.png');
-  await cropDiagram(p84, { left: 5, top: 215, width: 118, height: 38 }, 'halo_q94_grignard_reaction.png');
-  await cropDiagram(p84, { left: 5, top: 248, width: 118, height: 55 }, 'halo_q94_grignard_options.png');
-  await cropDiagram(p84, { left: 5, top: 298, width: 118, height: 30 }, 'halo_q95_dicyclohexyl_reaction.png');
-  await cropDiagram(p84, { left: 120, top: 230, width: 112, height: 75 }, 'halo_q99_deuterated_anilines.png');
-
-  console.log('Cropping Page 85 diagrams...');
-  await cropDiagram(p85, { left: 0, top: 85, width: 125, height: 35 }, 'halo_q101_allylic_structures.png');
-  await cropDiagram(p85, { left: 0, top: 175, width: 125, height: 50 }, 'halo_q102_isobutyl_reaction.png');
-  await cropDiagram(p85, { left: 120, top: 40, width: 112, height: 60 }, 'halo_q105_dancing_resonance_structures.png');
-  await cropDiagram(p85, { left: 120, top: 190, width: 112, height: 125 }, 'halo_q109_multistep_synthesis.png');
-
-  console.log('Cropping Page 87 diagrams...');
-  await cropDiagram(p87, { left: 25, top: 210, width: 360, height: 70 }, 'halo_q127_tetralin_reaction.png');
-
-  console.log('Cropping Page 89 diagrams...');
-  await cropDiagram(p89, { left: 0, top: 0, width: 210, height: 42 }, 'halo_ar_q12_reaction.png');
-  await cropDiagram(p89, { left: 210, top: 0, width: 195, height: 55 }, 'halo_ar_q17_structures.png');
-  await cropDiagram(p89, { left: 245, top: 175, width: 160, height: 45 }, 'halo_ar_q20_geminal_diol.png');
-
-  console.log('All diagrams successfully cropped and saved!');
+  const trimmed = autoCrop(canvas);
+  const buf = trimmed.toBuffer('image/png');
+  fs.writeFileSync(path.join(OUTPUT_DIR, outName), buf);
+  console.log(`Saved ${outName} (${trimmed.width}x${trimmed.height})`);
 }
 
-run().catch(console.error);
+async function main() {
+  // Page 2
+  await crop(2, 60, 310, 850, 240, 'q1_rxn.png');
+  await crop(2, 60, 540, 950, 150, 'q1_opt_a.png');
+  await crop(2, 60, 720, 950, 150, 'q1_opt_c.png');
+  await crop(2, 60, 1080, 500, 110, 'q2_rxn.png');
+
+  // Page 3
+  await crop(3, 60, 210, 680, 110, 'q3_rxn.png');
+  await crop(3, 80, 580, 500, 200, 'q4_opt_a.png');
+  await crop(3, 80, 810, 500, 200, 'q4_opt_b.png');
+  await crop(3, 80, 1030, 400, 200, 'q4_opt_c.png');
+  await crop(3, 80, 1270, 400, 200, 'q4_opt_d.png');
+
+  // Page 4
+  await crop(4, 60, 580, 650, 280, 'q6_diag.png');
+
+  // Page 5
+  await crop(5, 60, 210, 650, 130, 'q7_rxn.png');
+  await crop(5, 80, 390, 550, 200, 'q7_opt_a.png');
+  await crop(5, 80, 620, 550, 200, 'q7_opt_b.png');
+  await crop(5, 80, 860, 550, 200, 'q7_opt_c.png');
+  await crop(5, 80, 1080, 550, 200, 'q7_opt_d.png');
+
+  // Page 6
+  await crop(6, 60, 220, 650, 320, 'q8_diag.png');
+
+  // Page 7
+  await crop(7, 60, 230, 600, 120, 'q10_rxn.png');
+  await crop(7, 80, 360, 800, 180, 'q10_opt_a.png');
+  await crop(7, 80, 570, 850, 170, 'q10_opt_b.png');
+  await crop(7, 80, 770, 800, 180, 'q10_opt_c.png');
+  await crop(7, 80, 990, 800, 180, 'q10_opt_d.png');
+
+  // Page 8
+  await crop(8, 80, 220, 300, 190, 'q12_opt_a.png');
+  await crop(8, 80, 510, 350, 200, 'q12_opt_d.png');
+
+  // Page 9
+  await crop(9, 80, 220, 850, 130, 'q15_opt_a.png');
+  await crop(9, 80, 370, 850, 160, 'q15_opt_b.png');
+  await crop(9, 80, 560, 550, 80, 'q15_opt_c.png');
+  await crop(9, 80, 640, 550, 80, 'q15_opt_d.png');
+  await crop(9, 60, 810, 620, 110, 'q16_rxn.png');
+
+  // Page 10
+  await crop(10, 60, 210, 650, 280, 'q17_rxn.png');
+  await crop(10, 80, 530, 500, 190, 'q17_opt_a.png');
+  await crop(10, 80, 760, 500, 190, 'q17_opt_b.png');
+  await crop(10, 80, 990, 500, 190, 'q17_opt_c.png');
+  await crop(10, 80, 1230, 500, 190, 'q17_opt_d.png');
+
+  // Page 12
+  await crop(12, 80, 240, 650, 90, 'q20_opt_a.png');
+  await crop(12, 80, 380, 400, 200, 'q20_opt_b.png');
+  await crop(12, 80, 600, 500, 150, 'q20_opt_c.png');
+  await crop(12, 80, 800, 500, 150, 'q20_opt_d.png');
+
+  // Page 13
+  await crop(13, 60, 210, 650, 270, 'q21_diag.png');
+  await crop(13, 60, 670, 600, 110, 'q22_rxn.png');
+
+  // Page 14
+  await crop(14, 80, 220, 400, 180, 'q23_opt_a.png');
+  await crop(14, 80, 440, 400, 180, 'q23_opt_b.png');
+  await crop(14, 80, 660, 400, 180, 'q23_opt_c.png');
+  await crop(14, 80, 890, 400, 180, 'q23_opt_d.png');
+  await crop(14, 60, 1220, 650, 120, 'q24_rxn.png');
+
+  // Page 15
+  await crop(15, 60, 210, 600, 110, 'q25_rxn.png');
+  await crop(15, 60, 820, 650, 230, 'q27_diag.png');
+
+  // Page 16
+  await crop(16, 80, 300, 400, 180, 'q29_opt_a.png');
+  await crop(16, 80, 560, 400, 180, 'q29_opt_d.png');
+
+  // Page 17
+  await crop(17, 80, 240, 300, 180, 'q30_opt_a.png');
+  await crop(17, 80, 470, 300, 180, 'q30_opt_b.png');
+  await crop(17, 80, 710, 300, 180, 'q30_opt_c.png');
+  await crop(17, 80, 950, 300, 180, 'q30_opt_d.png');
+
+  // Page 18
+  await crop(18, 60, 740, 650, 80, 'q35_rxn.png');
+
+  // Page 19
+  await crop(19, 60, 210, 650, 180, 'q37_diag.png');
+  await crop(19, 60, 830, 650, 150, 'q39_rxn.png');
+
+  // Page 21
+  await crop(21, 80, 230, 400, 180, 'q47_opt_a.png');
+  await crop(21, 80, 460, 600, 180, 'q47_opt_b.png');
+  await crop(21, 80, 680, 600, 180, 'q47_opt_c.png');
+
+  // Page 22
+  await crop(22, 60, 320, 650, 280, 'q49_diag.png');
+
+  console.log('All crops completed!');
+}
+
+main().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
