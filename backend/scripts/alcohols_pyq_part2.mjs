@@ -1,0 +1,307 @@
+import fs from 'fs';
+
+const urls = JSON.parse(fs.readFileSync('./backend/scripts/alcohols_diagram_urls.json', 'utf8'));
+
+export const alcoholsPart2 = [
+  {
+    question_number: 27,
+    exam_tag: "NEET 2017",
+    question_text: "Which one is the most acidic compound?",
+    image_url: urls.q27_diag || "",
+    option_a: "Phenol",
+    option_b: "p-nitrophenol",
+    option_c: "Picric acid (2,4,6-trinitrophenol)",
+    option_d: "p-cresol",
+    correct_option: "C",
+    solution: "2,4,6-trinitrophenol (picric acid) has three strongly electron-withdrawing nitro groups ($-\\text{NO}_2$) at ortho and para positions. These disperse the negative charge of the phenoxide ion through powerful $-M$ and $-I$ effects, making picric acid even stronger than many carboxylic acids ($pK_a \\approx 0.38$)."
+  },
+  {
+    question_number: 28,
+    exam_tag: "NEET 2016 Phase 1",
+    question_text: "The reaction:\n$$\\text{CH}_3-\\text{ONa} + \\text{CH}_3-\\text{I} \\to \\text{CH}_3-\\text{O}-\\text{CH}_3 + \\text{NaI}$$\ncan be classified as",
+    image_url: urls.q28_diag || "",
+    option_a: "dehydration reaction",
+    option_b: "Williamson alcohol synthesis reaction",
+    option_c: "Williamson ether synthesis reaction",
+    option_d: "alcohol formation reaction",
+    correct_option: "C",
+    solution: "The reaction of an alkoxide ion (or phenoxide) with an alkyl halide to produce an ether via an $S_N2$ nucleophilic substitution is known as Williamson ether synthesis."
+  },
+  {
+    question_number: 29,
+    exam_tag: "AIPMT 2015",
+    question_text: "Reaction of phenol with chloroform in presence of dilute sodium hydroxide finally introduces which one of the following functional group?",
+    option_a: "$-\\text{COOH}$",
+    option_b: "$-\\text{CHCl}_2$",
+    option_c: "$-\\text{CHO}$",
+    option_d: "$-\\text{CH}_2\\text{Cl}$",
+    correct_option: "C",
+    solution: "In the Reimer-Tiemann reaction, treatment of phenol with chloroform ($\\text{CHCl}_3$) in the presence of dilute sodium hydroxide introduces a formyl group ($-\\text{CHO}$) primarily at the ortho-position, forming salicylaldehyde."
+  },
+  {
+    question_number: 30,
+    exam_tag: "AIPMT 2015",
+    question_text: "Which of the following reaction(s) can be used for the preparation of alkyl halides?\n(I) $\\text{CH}_3\\text{CH}_2\\text{OH} + \\text{HCl} \\xrightarrow{\\text{Anh. ZnCl}_2}$\n(II) $\\text{CH}_3\\text{CH}_2\\text{OH} + \\text{HCl} \\to$\n(III) $(\\text{CH}_3)_3\\text{COH} + \\text{HCl} \\to$\n(IV) $(\\text{CH}_3)_2\\text{CHOH} + \\text{HCl} \\xrightarrow{\\text{Anh. ZnCl}_2}$",
+    option_a: "(I) and (II) only",
+    option_b: "(IV) only",
+    option_c: "(III) and (IV) only",
+    option_d: "(I), (III) and (IV) only",
+    correct_option: "D",
+    solution: "Primary and secondary alcohols require a catalyst like anhydrous $\\text{ZnCl}_2$ (Grooves process) to coordinate with oxygen and facilitate cleavage of the $\\text{C}-\\text{O}$ bond. Therefore, reactions (I) and (IV) succeed. Tertiary alcohols are sufficiently reactive to react with concentrated $\\text{HCl}$ even in the absence of $\\text{ZnCl}_2$ at room temperature, so (III) also gives alkyl halide. Reaction (II) without catalyst is ineffective. Thus (I), (III), and (IV) can be used."
+  },
+  {
+    question_number: 31,
+    exam_tag: "AIPMT 2015 Cancelled Paper",
+    question_text: "The reaction:\n$$\\text{CH}_3-\\text{C}(\\text{CH}_3)_2-\\text{ONa} + \\text{CH}_3\\text{CH}_2\\text{Cl} \\to \\text{CH}_3-\\text{C}(\\text{CH}_3)_2-\\text{O}-\\text{CH}_2\\text{CH}_3 + \\text{NaCl}$$\nis called",
+    image_url: urls.q31_diag || "",
+    option_a: "Etard reaction",
+    option_b: "Gattermann-Koch reaction",
+    option_c: "Williamson synthesis",
+    option_d: "Williamson continuous etherification process",
+    correct_option: "C",
+    solution: "The reaction between sodium tert-butoxide (a sterically hindered alkoxide) and ethyl chloride (a primary alkyl halide) proceeds smoothly via an $S_N2$ mechanism to yield tert-butyl ethyl ether. This reaction is Williamson synthesis."
+  },
+  {
+    question_number: 32,
+    exam_tag: "AIPMT 2014",
+    question_text: "Among the following sets of reactants which one produces anisole?",
+    option_a: "$\\text{CH}_3\\text{CHO} ; \\text{RMgX}$",
+    option_b: "$\\text{C}_6\\text{H}_5\\text{OH} ; \\text{NaOH} ; \\text{CH}_3\\text{I}$",
+    option_c: "$\\text{C}_6\\text{H}_5\\text{OH} ; \\text{neutral FeCl}_3$",
+    option_d: "$\\text{C}_6\\text{H}_5\\text{CH}_3 ; \\text{CH}_3\\text{COCl} ; \\text{AlCl}_3$",
+    correct_option: "B",
+    solution: "Reaction of phenol with $\\text{NaOH}$ forms sodium phenoxide ($\\text{C}_6\\text{H}_5\\text{ONa}$), which then undergoes nucleophilic substitution with methyl iodide ($\\text{CH}_3\\text{I}$) via Williamson ether synthesis to yield anisole (methoxybenzene, $\\text{C}_6\\text{H}_5\\text{OCH}_3$)."
+  },
+  {
+    question_number: 33,
+    exam_tag: "AIPMT 2014",
+    question_text: "Which of the following will not be soluble in sodium hydrogen carbonate?",
+    option_a: "2, 4, 6 - Trinitrophenol",
+    option_b: "Benzoic acid",
+    option_c: "o-Nitrophenol",
+    option_d: "Benzenesulphonic acid",
+    correct_option: "C",
+    solution: "Only acids stronger than carbonic acid ($\\text{H}_2\\text{CO}_3, pK_a \\approx 6.35$) can decompose $\\text{NaHCO}_3$ to liberate $\\text{CO}_2$ and dissolve. \n- Benzenesulphonic acid, benzoic acid, and 2,4,6-trinitrophenol (picric acid, $pK_a \\approx 0.38$) are all stronger than $\\text{H}_2\\text{CO}_3$.\n- o-Nitrophenol ($pK_a \\approx 7.2$) is weaker than carbonic acid, so it cannot decompose $\\text{NaHCO}_3$ and remains insoluble."
+  },
+  {
+    question_number: 34,
+    exam_tag: "NEET 2013 (Karnataka)",
+    question_text: "Number of isomeric alcohols of molecular formula $\\text{C}_6\\text{H}_{14}\\text{O}$ which give positive iodoform test is",
+    option_a: "three",
+    option_b: "four",
+    option_c: "five",
+    option_d: "two",
+    correct_option: "B",
+    solution: "Alcohols giving positive iodoform test must possess the methyl carbinol group: $\\text{CH}_3-\\text{CH(OH)}-\\text{R}$. For molecular formula $\\text{C}_6\\text{H}_{14}\\text{O}$, the $\\text{R}$ group is a butyl group ($\\text{C}_4\\text{H}_9$). The four isomeric butyl groups are:\n1. n-butyl: $\\text{CH}_3-\\text{CH(OH)}-\\text{CH}_2\\text{CH}_2\\text{CH}_2\\text{CH}_3$ (hexan-2-ol)\n2. sec-butyl: $\\text{CH}_3-\\text{CH(OH)}-\\text{CH(CH}_3)\\text{CH}_2\\text{CH}_3$ (3-methylpentan-2-ol)\n3. isobutyl: $\\text{CH}_3-\\text{CH(OH)}-\\text{CH}_2\\text{CH(CH}_3)_2$ (4-methylpentan-2-ol)\n4. tert-butyl: $\\text{CH}_3-\\text{CH(OH)}-\\text{C(CH}_3)_3$ (3,3-dimethylbutan-2-ol)\nHence, there are 4 such isomeric alcohols."
+  },
+  {
+    question_number: 35,
+    exam_tag: "NEET 2013 (Karnataka)",
+    question_text: "Phenol is distilled with Zn dust followed by Friedel-Crafts alkylation with propyl chloride in the presence of $\\text{AlCl}_3$ to give a compound (B). (B) is oxidised in the presence of air to form the compound (C). The structural formula of (C) is",
+    image_url: urls.q35_diag || "",
+    option_a: "Benzoic acid",
+    option_b: "Cumene hydroperoxide",
+    option_c: "Phenol",
+    option_d: "Acetophenone",
+    correct_option: "B",
+    solution: "1. Distillation of phenol with Zn dust reduces it to benzene.\n2. Friedel-Crafts alkylation with 1-chloropropane involves rearrangement of the primary carbocation to the more stable secondary carbocation, giving isopropylbenzene (cumene, B).\n3. Oxidation of cumene in the presence of air yields cumene hydroperoxide (C), $\\text{C}_6\\text{H}_5-\\text{C}(\\text{CH}_3)_2-\\text{O}-\\text{O}-\\text{H}$."
+  },
+  {
+    question_number: 36,
+    exam_tag: "NEET 2013",
+    question_text: "Among the following ethers, which one will produce methyl alcohol on treatment with hot concentrated HI?",
+    image_url: urls.q36_diag || "",
+    option_a: "$(\\text{CH}_3)_3\\text{C}-\\text{O}-\\text{CH}_3$",
+    option_b: "$(\\text{CH}_3)_2\\text{CH}-\\text{CH}_2-\\text{O}-\\text{CH}_3$",
+    option_c: "$\\text{CH}_3\\text{CH}_2\\text{CH}_2-\\text{O}-\\text{CH}_3$",
+    option_d: "$\\text{CH}_3\\text{CH}_2-\\text{CH(CH}_3)-\\text{O}-\\text{CH}_3$",
+    correct_option: "A",
+    solution: "When tert-butyl methyl ether, $(\\text{CH}_3)_3\\text{C}-\\text{O}-\\text{CH}_3$, is treated with concentrated $\\text{HI}$, reaction proceeds via an $S_N1$ mechanism because protonation of oxygen is followed by departure of methanol to generate a highly stable tertiary carbocation ($(\\text{CH}_3)_3\\overset{+}{\\text{C}}$). Attack of iodide ion on the tertiary carbocation produces tert-butyl iodide, and methyl alcohol ($\\text{CH}_3\\text{OH}$) is liberated."
+  },
+  {
+    question_number: 37,
+    exam_tag: "AIPMT 2012 Mains",
+    question_text: "Which of the following compounds can be used as antifreeze in automobile radiators?",
+    option_a: "Methyl alcohol",
+    option_b: "Glycol",
+    option_c: "Nitrophenol",
+    option_d: "Ethyl alcohol",
+    correct_option: "B",
+    solution: "Ethylene glycol (ethane-1,2-diol) is miscible with water in all proportions and depresses the freezing point of water while raising its boiling point. It is widely used as an antifreeze coolant in automobile radiators."
+  },
+  {
+    question_number: 38,
+    exam_tag: "AIPMT 2012 Prelims",
+    question_text: "In the following sequence of reactions:\n$$\\text{CH}_3-\\text{Br} \\xrightarrow{\\text{KCN}} A \\xrightarrow{\\text{H}_3\\text{O}^+} B \\xrightarrow{\\text{LiAlH}_4} C$$\nthe end product (C) is",
+    image_url: urls.q38_diag || "",
+    option_a: "acetone",
+    option_b: "methane",
+    option_c: "acetaldehyde",
+    option_d: "ethyl alcohol",
+    correct_option: "D",
+    solution: "1. $\\text{CH}_3\\text{Br} + \\text{KCN} \\to \\text{CH}_3\\text{CN} + \\text{KBr}$ ($A = \\text{ethanenitrile}$).\n2. Acidic hydrolysis: $\\text{CH}_3\\text{CN} \\xrightarrow{\\text{H}_3\\text{O}^+} \\text{CH}_3\\text{COOH}$ ($B = \\text{ethanoic acid}$).\n3. Reduction with $\\text{LiAlH}_4$: $\\text{CH}_3\\text{COOH} \\xrightarrow{\\text{LiAlH}_4} \\text{CH}_3\\text{CH}_2\\text{OH}$ ($C = \\text{ethyl alcohol}$)."
+  },
+  {
+    question_number: 39,
+    exam_tag: "AIPMT 2011 Prelims",
+    question_text: "In the following reactions, the major products (A) and (C) are respectively:",
+    image_url: urls.q39_diag || "",
+    option_a: "Alkene with terminal double bond and rearranged alkyl halide",
+    option_b: "$\\text{CH}_3-\\text{C(CH}_3)=\\text{CH}-\\text{CH}_3$ and 2-bromo-2-methylbutane derivative",
+    option_c: "Primary halide and secondary alcohol",
+    option_d: "Diene and alkyl halide",
+    correct_option: "B",
+    solution: "Acid-catalyzed dehydration of 2-methylbutan-2-ol gives 2-methylbut-2-ene as the major Saytzeff product (A). Subsequent addition of $\\text{HBr}$ in the absence of peroxide follows Markovnikov's rule via a tertiary carbocation intermediate to give 2-bromo-2-methylbutane as major product (C)."
+  },
+  {
+    question_number: 40,
+    exam_tag: "AIPMT 2010 Mains",
+    question_text: "Among the following four compounds:\n(i) Phenol\n(ii) Methyl phenol (p-cresol)\n(iii) Meta-nitrophenol\n(iv) Para-nitrophenol\n\nThe acidity order is",
+    option_a: "(iv) > (iii) > (i) > (ii)",
+    option_b: "(iii) > (iv) > (i) > (ii)",
+    option_c: "(i) > (iv) > (iii) > (ii)",
+    option_d: "(ii) > (i) > (iii) > (iv)",
+    correct_option: "A",
+    solution: "- Electron-withdrawing groups ($-\\text{NO}_2$) increase the acidity of phenols, and the effect is stronger at the para-position ($-M$ and $-I$) than at the meta-position ($-I$ only). Therefore: (iv) > (iii).\n- Electron-donating groups ($-\\text{CH}_3$) decrease acidity due to $+I$ and hyperconjugation: (ii) is less acidic than phenol (i).\nHence, the correct acidity order is: (iv) > (iii) > (i) > (ii)."
+  },
+  {
+    question_number: 41,
+    exam_tag: "AIPMT 2010 Mains",
+    question_text: "When glycerol is treated with excess of HI, it produces",
+    option_a: "2-iodopropane",
+    option_b: "allyl iodide",
+    option_c: "propene",
+    option_d: "glycerol triiodide",
+    correct_option: "A",
+    solution: "Glycerol reacts initially with $\\text{HI}$ to form 1,2,3-triiodopropane, which is unstable and immediately loses a molecule of $\\text{I}_2$ to yield allyl iodide. Allyl iodide adds another molecule of $\\text{HI}$ to form 1,2-diiodopropane, which again loses $\\text{I}_2$ to give propene. Finally, propene adds $\\text{HI}$ according to Markovnikov's rule to produce the stable end product 2-iodopropane (isopropyl iodide)."
+  },
+  {
+    question_number: 42,
+    exam_tag: "AIPMT 2010 Mains",
+    question_text: "Following compounds are given:\n(i) $\\text{CH}_3\\text{CH}_2\\text{OH}$\n(ii) $\\text{CH}_3\\text{COCH}_3$\n(iii) $\\text{CH}_3\\text{CH(OH)}\\text{CH}_3$\n(iv) $\\text{CH}_3\\text{OH}$\n\nWhich of the above compound(s), on being warmed with iodine solution and NaOH, will give iodoform?",
+    image_url: urls.q42_diag || "",
+    option_a: "(i), (iii) and (iv)",
+    option_b: "Only (ii)",
+    option_c: "(i), (ii) and (iii)",
+    option_d: "(i) and (ii)",
+    correct_option: "C",
+    solution: "The iodoform test is given by compounds containing either the methyl carbonyl group ($\\text{CH}_3-\\text{C}=\\text{O}$) or the methyl carbinol group ($\\text{CH}_3-\\text{CH(OH)}-$). \n- Ethanol (i) and propan-2-ol (iii) contain $\\text{CH}_3-\\text{CH(OH)}-$ and are oxidized by hypoiodite to acetaldehyde and acetone respectively.\n- Acetone (ii) contains $\\text{CH}_3-\\text{CO}-$.\n- Methanol (iv) lacks this group and does not give the test.\nHence, (i), (ii), and (iii) give iodoform."
+  },
+  {
+    question_number: 43,
+    exam_tag: "AIPMT 2010 Mains",
+    question_text: "Match the compounds given in List I with their characteristic reactions given in List II. Select the correct option.\n\n**List I (Compounds)**\nA. $\\text{CH}_3(\\text{CH}_2)_3\\text{NH}_2$\nB. $\\text{CH}_3\\text{C}\\equiv\\text{CH}$\nC. $\\text{CH}_3\\text{CH}_2\\text{COOCH}_3$\nD. $\\text{CH}_3\\text{CH(OH)}\\text{CH}_3$\n\n**List II (Reactions)**\n(i) Alkaline hydrolysis\n(ii) With KOH (alcohol) and $\\text{CHCl}_3$ produces bad smell\n(iii) Gives white ppt. with ammoniacal $\\text{AgNO}_3$\n(iv) With Lucas reagent cloudiness appears after 5 minutes",
+    image_url: urls.q43_diag || "",
+    option_a: "A-(ii), B-(i), C-(iv), D-(iii)",
+    option_b: "A-(iii), B-(ii), C-(i), D-(iv)",
+    option_c: "A-(ii), B-(iii), C-(i), D-(iv)",
+    option_d: "A-(iv), B-(ii), C-(iii), D-(i)",
+    correct_option: "C",
+    solution: "A. Butan-1-amine ($1^\\circ$ amine) undergoes carbylamine reaction with $\\text{CHCl}_3$ and alcoholic $\\text{KOH}$ to give an offensive smell of isocyanide (ii).\nB. Propyne (terminal alkyne) forms a white precipitate of silver acetylide with ammoniacal $\\text{AgNO}_3$ (iii).\nC. Methyl propanoate (ester) undergoes alkaline hydrolysis (saponification) (i).\nD. Propan-2-ol ($2^\\circ$ alcohol) reacts with Lucas reagent producing turbidity in about 5 minutes (iv).\nCorrect match: A-(ii), B-(iii), C-(i), D-(iv)."
+  },
+  {
+    question_number: 44,
+    exam_tag: "AIPMT 2010 Prelims",
+    question_text: "Given are cyclohexanol (I), acetic acid (II), 2, 4, 6-trinitrophenol (III) and phenol (IV). In these the order of decreasing acidic character will be",
+    option_a: "$\\text{III} > \\text{II} > \\text{IV} > \\text{I}$",
+    option_b: "$\\text{II} > \\text{III} > \\text{I} > \\text{IV}$",
+    option_c: "$\\text{II} > \\text{III} > \\text{IV} > \\text{I}$",
+    option_d: "$\\text{III} > \\text{IV} > \\text{II} > \\text{I}$",
+    correct_option: "A",
+    solution: "- 2,4,6-trinitrophenol (picric acid, III) has $pK_a \\approx 0.38$ due to three strongly electron-withdrawing nitro groups, making it the most acidic.\n- Acetic acid (II) has $pK_a \\approx 4.76$.\n- Phenol (IV) has $pK_a \\approx 10.0$ (resonance stabilization of phenoxide ion).\n- Cyclohexanol (I) is an aliphatic alcohol with $pK_a \\approx 16$.\nDecreasing acidic character order: $\\text{III} > \\text{II} > \\text{IV} > \\text{I}$."
+  },
+  {
+    question_number: 45,
+    exam_tag: "AIPMT 2010 Prelims",
+    question_text: "Which of the following compounds has the most acidic nature?",
+    image_url: urls.q45_diag || "",
+    option_a: "Benzyl alcohol",
+    option_b: "Phenol",
+    option_c: "Cyclohexanol",
+    option_d: "2-methylcyclohexanol",
+    correct_option: "B",
+    solution: "Phenol is significantly more acidic ($pK_a \\approx 10$) than aliphatic alcohols and benzyl alcohol ($pK_a \\approx 15-18$). The phenoxide ion formed upon deprotonation of phenol is stabilized by resonance delocalization of the negative charge over the aromatic ring."
+  },
+  {
+    question_number: 46,
+    exam_tag: "AIPMT 2009",
+    question_text: "Consider the following reaction :\n$$\\text{Phenol} \\xrightarrow{\\text{Zn dust}} X \\xrightarrow{\\text{CH}_3\\text{Cl}/\\text{anh. AlCl}_3} Y \\xrightarrow{\\text{Alkaline KMnO}_4} Z$$\nthe product Z is",
+    image_url: urls.q46_diag || "",
+    option_a: "benzaldehyde",
+    option_b: "benzoic acid",
+    option_c: "benzene",
+    option_d: "toluene",
+    correct_option: "B",
+    solution: "1. Distillation of phenol with Zn dust reduces it to benzene ($X = \\text{C}_6\\text{H}_6$).\n2. Friedel-Crafts alkylation of benzene with $\\text{CH}_3\\text{Cl}$ and anhydrous $\\text{AlCl}_3$ gives toluene ($Y = \\text{C}_6\\text{H}_5\\text{CH}_3$).\n3. Vigorous oxidation of toluene with alkaline $\\text{KMnO}_4$ oxidizes the benzylic methyl group to give benzoic acid ($Z = \\text{C}_6\\text{H}_5\\text{COOH}$)."
+  },
+  {
+    question_number: 47,
+    exam_tag: "AIPMT 2009",
+    question_text: "$\\text{HOCH}_2\\text{CH}_2\\text{OH}$ on heating with periodic acid gives",
+    image_url: urls.q47_diag || "",
+    option_a: "$2\\text{HCOOH}$",
+    option_b: "$\\text{CHO}-\\text{CHO}$ (glyoxal)",
+    option_c: "$2\\text{HCHO}$ (formaldehyde)",
+    option_d: "$2\\text{CO}_2$",
+    correct_option: "C",
+    solution: "Periodic acid ($\\text{HIO}_4$) selectively cleaves 1,2-diols (vicinal glycols). Ethylene glycol (ethane-1,2-diol) undergoes carbon-carbon bond cleavage to yield two molecules of formaldehyde:\n$$\\text{HO}-\\text{CH}_2-\\text{CH}_2-\\text{OH} + \\text{HIO}_4 \\to 2\\text{HCHO} + \\text{HIO}_3 + \\text{H}_2\\text{O}$$"
+  },
+  {
+    question_number: 48,
+    exam_tag: "AIPMT 2009",
+    question_text: "Consider the following reaction :\n$$\\text{Ethanol} \\xrightarrow{\\text{PBr}_3} X \\xrightarrow{\\text{alc. KOH}} Y \\xrightarrow[\\text{(ii) } \\text{H}_2\\text{O}, \\text{heat}]{\\text{(i) } \\text{H}_2\\text{SO}_4, \\text{room temp.}} Z$$\nthe product Z is",
+    image_url: urls.q48_diag || "",
+    option_a: "$\\text{CH}_3\\text{CH}_2-\\text{O}-\\text{CH}_2\\text{CH}_3$",
+    option_b: "$\\text{CH}_3-\\text{CH}_2-\\text{O}-\\text{SO}_3\\text{H}$",
+    option_c: "$\\text{CH}_3\\text{CH}_2\\text{OH}$",
+    option_d: "$\\text{CH}_2=\\text{CH}_2$",
+    correct_option: "C",
+    solution: "1. Reaction of ethanol with $\\text{PBr}_3$ gives ethyl bromide ($X = \\text{CH}_3\\text{CH}_2\\text{Br}$).\n2. Dehydrohalogenation with alcoholic $\\text{KOH}$ gives ethene ($Y = \\text{CH}_2=\\text{CH}_2$).\n3. Hydration of ethene with concentrated $\\text{H}_2\\text{SO}_4$ followed by boiling with water regenerates ethanol ($Z = \\text{CH}_3\\text{CH}_2\\text{OH}$)."
+  },
+  {
+    question_number: 49,
+    exam_tag: "AIPMT 2007",
+    question_text: "In the reaction :\n$$\\text{CH}_3-\\text{CH(CH}_3)-\\text{CH}_2-\\text{O}-\\text{CH}_2-\\text{CH}_3 + \\text{HI} \\xrightarrow{\\text{heat}} \\text{products}$$\nWhich of the following compounds will be formed?",
+    image_url: urls.q49_diag || "",
+    option_a: "$\\text{CH}_3-\\text{C(I)(CH}_3)-\\text{CH}_3 + \\text{CH}_3\\text{CH}_2\\text{OH}$",
+    option_b: "$\\text{CH}_3-\\text{CH(CH}_3)-\\text{CH}_2\\text{OH} + \\text{CH}_3\\text{CH}_3$",
+    option_c: "$\\text{CH}_3-\\text{CH(CH}_3)-\\text{CH}_2\\text{OH} + \\text{CH}_3\\text{CH}_2\\text{I}$",
+    option_d: "$\\text{CH}_3-\\text{CH(CH}_3)-\\text{CH}_2\\text{I} + \\text{CH}_3\\text{CH}_2\\text{OH}$",
+    correct_option: "C",
+    solution: "In this unsymmetrical ether, both alkyl groups attached to oxygen are primary (isobutyl and ethyl). Cleavage proceeds via an $S_N2$ mechanism where the iodide nucleophile attacks the sterically less hindered carbon atom (ethyl carbon rather than the bulkier isobutyl carbon). Hence, ethyl iodide ($\\text{CH}_3\\text{CH}_2\\text{I}$) and isobutyl alcohol ($(\\text{CH}_3)_2\\text{CHCH}_2\\text{OH}$) are formed."
+  },
+  {
+    question_number: 50,
+    exam_tag: "AIPMT 2006",
+    question_text: "The general molecular formula, which represents the homologous series of alkanols is",
+    option_a: "$\\text{C}_n\\text{H}_{2n+2}\\text{O}$",
+    option_b: "$\\text{C}_n\\text{H}_{2n}\\text{O}_2$",
+    option_c: "$\\text{C}_n\\text{H}_{2n}\\text{O}$",
+    option_d: "$\\text{C}_n\\text{H}_{2n+1}\\text{O}$",
+    correct_option: "A",
+    solution: "Alkanols (monohydric saturated aliphatic alcohols) have the general formula $\\text{C}_n\\text{H}_{2n+1}\\text{OH}$, which can be rewritten as $\\text{C}_n\\text{H}_{2n+2}\\text{O}$ (e.g., methanol $\\text{CH}_4\\text{O}$, ethanol $\\text{C}_2\\text{H}_6\\text{O}$)."
+  },
+  {
+    question_number: 51,
+    exam_tag: "AIPMT 2006",
+    question_text: "Ethylene oxide when treated with Grignard reagent yields",
+    option_a: "primary alcohol",
+    option_b: "secondary alcohol",
+    option_c: "tertiary alcohol",
+    option_d: "cyclopropyl alcohol",
+    correct_option: "A",
+    solution: "Ethylene oxide (oxirane) is a strained three-membered ring. Nucleophilic attack by a Grignard reagent ($\\text{RMgX}$) opens the ring to give an alkoxide with two additional carbon atoms: $\\text{R}-\\text{CH}_2\\text{CH}_2\\text{OMgX}$. Upon acidic hydrolysis, it yields a primary alcohol: $\\text{R}-\\text{CH}_2\\text{CH}_2\\text{OH}$."
+  },
+  {
+    question_number: 52,
+    exam_tag: "AIPMT 2006",
+    question_text: "The major organic product in the reaction is:\n$$\\text{CH}_3-\\text{O}-\\text{CH(CH}_3)_2 + \\text{HI} \\to \\text{products}$$",
+    option_a: "$\\text{CH}_3\\text{I} + (\\text{CH}_3)_2\\text{CHOH}$",
+    option_b: "$\\text{CH}_3\\text{OH} + (\\text{CH}_3)_2\\text{CHI}$",
+    option_c: "$\\text{ICH}_2\\text{OCH(CH}_3)_2$",
+    option_d: "$\\text{CH}_3\\text{OC(I)(CH}_3)_2$",
+    correct_option: "A",
+    solution: "Methyl isopropyl ether is cleaved by $\\text{HI}$ via an $S_N2$ mechanism. The iodide ion preferentially attacks the sterically less crowded methyl carbon rather than the secondary isopropyl carbon, producing methyl iodide ($\\text{CH}_3\\text{I}$) and isopropyl alcohol ($(\\text{CH}_3)_2\\text{CHOH}$)."
+  }
+];
+
