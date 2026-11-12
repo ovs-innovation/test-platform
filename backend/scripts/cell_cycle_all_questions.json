@@ -1,0 +1,3266 @@
+[
+  {
+    "q_num": 1,
+    "text": "**[RE-NEET 2026]**\n\nGiven below are two statements :\nStatement I : Chromosomes are fully condensed at the end of prophase I.\nStatement II : Meiosis I resembles mitosis.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Statement I is incorrect, but Statement II is true"
+      },
+      {
+        "key": "B",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "key": "C",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "key": "D",
+        "text": "Statement I is correct, but Statement II is false"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Statement I is correct, but Statement II is false**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 2,
+    "text": "**[RE-NEET 2026]**\n\nThe correct sequence of adult cell cycle phases is   .",
+    "options": [
+      {
+        "key": "A",
+        "text": "S-M-G2-G1"
+      },
+      {
+        "key": "B",
+        "text": "G1-G2-S-M"
+      },
+      {
+        "key": "C",
+        "text": "G1-M-G2-S"
+      },
+      {
+        "key": "D",
+        "text": "G1-S-G2-M"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) G1-S-G2-M**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 3,
+    "text": "**[NEET 2026]**\n\nMatch List I with List II :\n\n| List-I (Phase of cell cycle) | List-II (Activity) |\n| :--- | :--- |\n| **A.** $G_1$ phase | **I.** Actual cell division occurs |\n| **B.** S phase | **II.** Cell is metabolically active and continuously grows but does not replicate its DNA |\n| **C.** $G_2$ phase | **III.** Synthesis of DNA occurs and the amount of DNA per cell doubles |\n| **D.** M phase | **IV.** Proteins are synthesized while cell growth continues |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "key": "B",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "key": "D",
+        "text": "A-II, B-III, C-IV, D-I"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A-II, B-III, C-IV, D-I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 4,
+    "text": "**[NEET 2025]**\n\nWhat is the main function of the spindle fibers during mitosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "To repair damaged DNA"
+      },
+      {
+        "key": "B",
+        "text": "To regulate cell growth"
+      },
+      {
+        "key": "C",
+        "text": "To separate the chromosomes"
+      },
+      {
+        "key": "D",
+        "text": "To synthesize new DNA Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) To separate the chromosomes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 5,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nRecombination between homologous chromosomes is completed by the end of",
+    "options": [
+      {
+        "key": "A",
+        "text": "Diakinesis"
+      },
+      {
+        "key": "B",
+        "text": "Zygotene"
+      },
+      {
+        "key": "C",
+        "text": "Diplotene"
+      },
+      {
+        "key": "D",
+        "text": "Pachytene"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Pachytene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 6,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nMatch List-I with List-II.\n\n| List-I (Event) | List-II (Stage of Prophase-I) |\n| :--- | :--- |\n| **A.** Chiasmata formation | **I.** Pachytene |\n| **B.** Crossing over | **II.** Diakinesis |\n| **C.** Synaptonemal complex formation | **III.** Diplotene |\n| **D.** Terminalisation of chiasmata | **IV.** Zygotene |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "key": "B",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "key": "C",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "key": "D",
+        "text": "A-II, B-III, C-IV, D-I"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) A-III, B-I, C-IV, D-II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 7,
+    "text": "**[NEET 2024 (Re-Examination)]**\n\nMatch List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| **A.** Cells are metabolically active and proliferate | **I.** $G_2$ phase |\n| **B.** DNA replication takes place | **II.** $G_1$ phase |\n| **C.** Proteins are synthesised | **III.** $G_0$ phase |\n| **D.** Quiescent stage with metabolically active cells | **IV.** S phase |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "key": "B",
+        "text": "A-I, B-III, C-IV, D-II"
+      },
+      {
+        "key": "C",
+        "text": "A-I, B-I, C-III, D-IV"
+      },
+      {
+        "key": "D",
+        "text": "A-II, B-IV, C-I, D-III"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A-II, B-IV, C-I, D-III**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 8,
+    "text": "**[NEET 2024]**\n\nSpindle fibers attach to kinetochores of chromosomes during",
+    "options": [
+      {
+        "key": "A",
+        "text": "Prophase"
+      },
+      {
+        "key": "B",
+        "text": "Metaphase"
+      },
+      {
+        "key": "C",
+        "text": "Anaphase"
+      },
+      {
+        "key": "D",
+        "text": "Telophase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Metaphase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 9,
+    "text": "**[NEET 2024]**\n\nGiven below are two statements:\nStatement I : Chromosomes become gradually visible under light microscope during leptotene\nstage.\nStatement II : The beginning of diplotene stage is recognized by dissolution of synaptonemal\ncomplex.\nIn the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "key": "B",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "key": "C",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "key": "D",
+        "text": "Statement I is false but Statement II is true"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Both Statement I and Statement II are true**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 10,
+    "text": "**[NEET 2024]**\n\nFollowing are the stages of cell division :\nA. Gap 2 phase\nB. Cytokinesis\nC. Synthesis phase\nD. Karyokinesis\nE. Gap 1 phase\nChoose the correct sequence of stages from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "C-E-D-A-B"
+      },
+      {
+        "key": "B",
+        "text": "E-B-D-A-C"
+      },
+      {
+        "key": "C",
+        "text": "B-D-E-A-C"
+      },
+      {
+        "key": "D",
+        "text": "E-C-A-D-B"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) E-C-A-D-B**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 11,
+    "text": "**[NEET 2024]**\n\nMatch List I with List II :\n\n| List-I (Sub Phases of Prophase I) | List-II (Specific Characters) |\n| :--- | :--- |\n| **A.** Diakinesis | **I.** Synaptonemal complex formation |\n| **B.** Pachytene | **II.** Completion of terminalisation of chiasmata |\n| **C.** Zygotene | **III.** Chromosomes look like thin threads |\n| **D.** Leptotene | **IV.** Appearance of recombination nodules |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "key": "B",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "key": "C",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "key": "D",
+        "text": "A-IV, B-III, C-II, D-I Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) A-II, B-IV, C-I, D-III**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 12,
+    "text": "**[NEET 2023 Manipur]**\n\nThe dissolution of synaptonemal complex occurs during :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pachytene"
+      },
+      {
+        "key": "B",
+        "text": "Diplotene"
+      },
+      {
+        "key": "C",
+        "text": "Diakinesis"
+      },
+      {
+        "key": "D",
+        "text": "Leptotene"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Diplotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 13,
+    "text": "**[NEET 2023 Manipur]**\n\nDoubling of the number of chromosomes can be achieved by disrupting mitotic cell division soon\nafter :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Anaphase"
+      },
+      {
+        "key": "B",
+        "text": "Telophase"
+      },
+      {
+        "key": "C",
+        "text": "Prophase"
+      },
+      {
+        "key": "D",
+        "text": "Metaphase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Anaphase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 14,
+    "text": "**[NEET 2023 Manipur]**\n\nDuring which stages of mitosis and meiosis, respectively does the centromere of each chromosome\nsplit ?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Metaphase, Metaphase II"
+      },
+      {
+        "key": "B",
+        "text": "Prophase, Telophase I"
+      },
+      {
+        "key": "C",
+        "text": "Telophase, Anaphase I"
+      },
+      {
+        "key": "D",
+        "text": "Anaphase, Anaphase II"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Anaphase, Anaphase II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 15,
+    "text": "**[NEET 2023 Manipur]**\n\nWhich one of the following is the quiescent stage of cell cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "M"
+      },
+      {
+        "key": "B",
+        "text": "$G_1$"
+      },
+      {
+        "key": "C",
+        "text": "$G_2$"
+      },
+      {
+        "key": "D",
+        "text": "$G_0$"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) $G_0$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 16,
+    "text": "**[NEET 2023 Manipur]**\n\nSelect correct sequence of substages of Prophase-I of Meiotic division :\n\n(A) Zygotene\n(B) Pachytene\n(C) Diakinesis\n(D) Leptotene\n(E) Diplotene\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(D), (B), (A), (E), (C)"
+      },
+      {
+        "key": "B",
+        "text": "(A), (B), (D), (E), (C)"
+      },
+      {
+        "key": "C",
+        "text": "(D), (A), (B), (E), (C)"
+      },
+      {
+        "key": "D",
+        "text": "(A), (D), (B), (C), (E)"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) (D), (A), (B), (E), (C)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 17,
+    "text": "**[NEET 2023]**\n\nThe process of appearance of recombination nodules occurs at which sub stage of prophase I in\nmeiosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pachytene"
+      },
+      {
+        "key": "B",
+        "text": "Diplotene"
+      },
+      {
+        "key": "C",
+        "text": "Diakinesis"
+      },
+      {
+        "key": "D",
+        "text": "Zygotene Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Pachytene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 18,
+    "text": "**[NEET 2023]**\n\nWhich of the following stages of meiosis involves division of centromere?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Metaphase II"
+      },
+      {
+        "key": "B",
+        "text": "Anaphase II"
+      },
+      {
+        "key": "C",
+        "text": "Telophase"
+      },
+      {
+        "key": "D",
+        "text": "Metaphase I"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Anaphase II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 19,
+    "text": "**[NEET 2023]**\n\nAmong eukaryotes, replication of DNA takes place in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "S phase"
+      },
+      {
+        "key": "B",
+        "text": "G 1 phase"
+      },
+      {
+        "key": "C",
+        "text": "G 2 phase"
+      },
+      {
+        "key": "D",
+        "text": "M phase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) S phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 20,
+    "text": "**[NEET 2023]**\n\nMatch List I with List II:\n\n| List I | List II |\n| :--- | :--- |\n| **A.** M Phase | **I.** Proteins are synthesized |\n| **B.** $G_2$ Phase | **II.** Inactive phase |\n| **C.** Quiescent stage | **III.** Interval between mitosis and initiation of DNA replication |\n| **D.** $G_1$ Phase | **IV.** Equational division |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "A-IV, B-II, C-I, D-III"
+      },
+      {
+        "key": "B",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "key": "C",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "key": "D",
+        "text": "A-III, B-II, C-IV, D-I"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) A-IV, B-I, C-II, D-III**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 21,
+    "text": "**[NEET 2023]**\n\nSelect the correct statements.\nA. Tetrad formation is seen during Leptotene.\nB. During Anaphase, the centromeres split and chromatids separate.\nC. Terminalization takes place during Pachytene.\nD. Nucleolus, Golgi complex and ER are reformed during Telophase.\nE. Crossing over takes place between sister chromatids of homologous chromosome.\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "key": "A",
+        "text": "B and D only"
+      },
+      {
+        "key": "B",
+        "text": "A, C and E only"
+      },
+      {
+        "key": "C",
+        "text": "B and E only"
+      },
+      {
+        "key": "D",
+        "text": "A and C only Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) B and D only**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 22,
+    "text": "**[NEET 2023]**\n\nGiven below are two statements:\nStatement I : During G 0   phase of cell cycle, the cell is metabolically inactive.\nStatement II : The centrosome undergoes duplication during S phase of interphase.\nIn the light of the above statements, choose the most appropriate answer from the options given\nbelow:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Both Statement I and Statement II are incorrect."
+      },
+      {
+        "key": "B",
+        "text": "Statement I is correct but Statement II is incorrect."
+      },
+      {
+        "key": "C",
+        "text": "Statement I is incorrect but Statement II is correct."
+      },
+      {
+        "key": "D",
+        "text": "Both Statement I and Statement II are correct."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Statement I is incorrect but Statement II is correct.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 23,
+    "text": "**[NEET 2022 Phase 2]**\n\nWhich stage of meiosis can last for months or years in the oocytes of some vertebrates?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Diakinesis"
+      },
+      {
+        "key": "B",
+        "text": "Leptotene"
+      },
+      {
+        "key": "C",
+        "text": "Pachytene"
+      },
+      {
+        "key": "D",
+        "text": "Diplotene"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Diplotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 24,
+    "text": "**[NEET 2022 Phase 2]**\n\nIdentify the correct sequence of events during Prophase I of meiosis:\n(a) Synapsis of homologous chromosomes\n(b) Chromosomes become gradually visible under microscope\n(c) Crossing over between non-sister chromatids of homologous chromosomes\n(d) Terminalisation of chiasmata\n(e) Dissolution of synaptonemal complex\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "key": "A",
+        "text": "(a), (c), (d), (e), (b)"
+      },
+      {
+        "key": "B",
+        "text": "(a), (b), (c), (d), (e)"
+      },
+      {
+        "key": "C",
+        "text": "(b), (c), (d), (e), (a)"
+      },
+      {
+        "key": "D",
+        "text": "(b), (a), (c), (e), (d)"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) (b), (a), (c), (e), (d)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 25,
+    "text": "**[NEET 2022 Phase 2]**\n\nBivalent or Tetrad formation is a characteristic feature observed during",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chiasmata in zygotene stage"
+      },
+      {
+        "key": "B",
+        "text": "Synaptonemal complex in zygotene stage"
+      },
+      {
+        "key": "C",
+        "text": "Chiasmata in Diplotene stage"
+      },
+      {
+        "key": "D",
+        "text": "Synaptonemal complex in Pachytene stage Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Synaptonemal complex in zygotene stage**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 26,
+    "text": "**[NEET 2022 Phase 2]**\n\nWith respect to metaphase, which of the following statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chromosomes lie at the equator of the cell"
+      },
+      {
+        "key": "B",
+        "text": "Complete disintegration of nuclear envelope takes place"
+      },
+      {
+        "key": "C",
+        "text": "Chromosomes are highly condensed"
+      },
+      {
+        "key": "D",
+        "text": "Metaphase chromosomes are made up of four sister chromatids held together by centromere"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Metaphase chromosomes are made up of four sister chromatids held together by centromere**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 27,
+    "text": "**[NEET 2022 Phase 1]**\n\nWhich one of the following never occurs during mitotic cell division?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Spindle fibres attach to kinetochores of chromosomes"
+      },
+      {
+        "key": "B",
+        "text": "Movement of centrioles towards opposite poles"
+      },
+      {
+        "key": "C",
+        "text": "Pairing of homologous chromosomes"
+      },
+      {
+        "key": "D",
+        "text": "Coiling and condensation of the chromatids"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Pairing of homologous chromosomes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 28,
+    "text": "**[NEET 2022 Phase 1]**\n\nThe appearance of recombination nodules on homologous chromosomes during meiosis\ncharacterizes:",
+    "options": [
+      {
+        "key": "A",
+        "text": "Synaptonemal complex"
+      },
+      {
+        "key": "B",
+        "text": "Bivalent"
+      },
+      {
+        "key": "C",
+        "text": "Sites at which crossing over occurs"
+      },
+      {
+        "key": "D",
+        "text": "Terminalization"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Sites at which crossing over occurs**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 29,
+    "text": "**[NEET 2022 Phase 1]**\n\nRegarding Meiosis, which of the statements is incorrect?",
+    "options": [
+      {
+        "key": "A",
+        "text": "There are two stages in Meiosis, Meiosis-I and II"
+      },
+      {
+        "key": "B",
+        "text": "DNA replication occurs in S phase of Meiosis-II"
+      },
+      {
+        "key": "C",
+        "text": "Pairing of homologous chromosomes and recombination occurs in Meiosis-I"
+      },
+      {
+        "key": "D",
+        "text": "Four haploid cells are formed at the end of Meiosis-II"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) DNA replication occurs in S phase of Meiosis-II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 30,
+    "text": "**[NEET 2022 Phase 1]**\n\nSelect the incorrect statement with reference to mitosis :",
+    "options": [
+      {
+        "key": "A",
+        "text": "All the chromosomes lie at the equator at metaphase"
+      },
+      {
+        "key": "B",
+        "text": "Spindle fibres attach to centromere of chromosomes"
+      },
+      {
+        "key": "C",
+        "text": "Chromosomes decondense at telophase"
+      },
+      {
+        "key": "D",
+        "text": "Splitting of centromere occurs at anaphase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Spindle fibres attach to centromere of chromosomes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 31,
+    "text": "**[NEET 2021]**\n\nWhich of the following stages of meiosis involves division of centromere?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Telophase II"
+      },
+      {
+        "key": "B",
+        "text": "Metaphase I"
+      },
+      {
+        "key": "C",
+        "text": "Metaphase II"
+      },
+      {
+        "key": "D",
+        "text": "Anaphase II"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Anaphase II**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 32,
+    "text": "**[NEET 2021]**\n\nMatch List-I with List-II.\n\n| List-I | List-II |\n| :--- | :--- |\n| **(a)** S phase | **(i)** Proteins are synthesized |\n| **(b)** $G_2$ phase | **(ii)** Inactive phase |\n| **(c)** Quiescent stage | **(iii)** Interval between mitosis and initiation of DNA replication |\n| **(d)** $G_1$ phase | **(iv)** DNA replication |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(a) (b) (c) (d) (ii) (iv) (iii) (i)"
+      },
+      {
+        "key": "B",
+        "text": "(a) (b) (c) (d) (iii) (ii) (i) (iv)"
+      },
+      {
+        "key": "C",
+        "text": "(a) (b) (c) (d) (iv) (ii) (iii) (i)"
+      },
+      {
+        "key": "D",
+        "text": "(a) (b) (c) (d) (iv) (i) (ii) (iii)"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) (a) (b) (c) (d) (iv) (i) (ii) (iii)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 33,
+    "text": "**[NEET 2021]**\n\nThe fruit fly has 8 chromosomes (2n) in each cell. During interphase of Mitosis if the number of\nchromosomes at G 1   phase is 8, what would be the number of chromosomes after S phase?",
+    "options": [
+      {
+        "key": "A",
+        "text": "32"
+      },
+      {
+        "key": "B",
+        "text": "8"
+      },
+      {
+        "key": "C",
+        "text": "16"
+      },
+      {
+        "key": "D",
+        "text": "4"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) 8**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 34,
+    "text": "**[NEET 2021]**\n\nWhich stage of meiotic prophase shows terminalisation of chiasmata as its distinctive feature?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pachytene"
+      },
+      {
+        "key": "B",
+        "text": "Leptotene"
+      },
+      {
+        "key": "C",
+        "text": "Zygotene"
+      },
+      {
+        "key": "D",
+        "text": "Diakinesis Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Diakinesis Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 35,
+    "text": "**[NEET 2021]**\n\nThe centriole undergoes duplication during :",
+    "options": [
+      {
+        "key": "A",
+        "text": "G 2 phase"
+      },
+      {
+        "key": "B",
+        "text": "S-phase"
+      },
+      {
+        "key": "C",
+        "text": "Prophase"
+      },
+      {
+        "key": "D",
+        "text": "Metaphase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 36,
+    "text": "**[NEET 2020 Phase 2]**\n\nIn a mitotic cycle, the correct sequence of phases is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$G_1, G_2, S, M$"
+      },
+      {
+        "key": "B",
+        "text": "$S, G_1, G_2, M$"
+      },
+      {
+        "key": "C",
+        "text": "$G_1, S, G_2, M$"
+      },
+      {
+        "key": "D",
+        "text": "$M, G_1, G_2, S$"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) $G_1, S, G_2, M$**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 37,
+    "text": "**[NEET 2020 Phase 2]**\n\nAttachment of spindle fibers to kinetochores of chromosomes becomes evident in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "Metaphase"
+      },
+      {
+        "key": "B",
+        "text": "Anaphase"
+      },
+      {
+        "key": "C",
+        "text": "Telophase"
+      },
+      {
+        "key": "D",
+        "text": "Prophase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Metaphase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 38,
+    "text": "**[NEET 2020 Phase 2]**\n\nDuring Meiosis I, in which stage synapsis takes place ?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Leptotene"
+      },
+      {
+        "key": "B",
+        "text": "Pachytene"
+      },
+      {
+        "key": "C",
+        "text": "Zygotene"
+      },
+      {
+        "key": "D",
+        "text": "Diplotene"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Zygotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 39,
+    "text": "**[NEET 2020 Phase 2]**\n\nMatch the following events that occur in their respective phases of cell cycle and select the correct option :\n\n| Events | Respective Phases of Cell Cycle |\n| :--- | :--- |\n| **(a)** $G_1$ phase | **(i)** Cell grows and organelle duplication |\n| **(b)** S phase | **(ii)** DNA replication and chromosome duplication |\n| **(c)** $G_2$ phase | **(iii)** Cytoplasmic growth |\n| **(d)** Metaphase in M-phase | **(iv)** Alignment of chromosomes |\n\nSelect the correct option :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "key": "B",
+        "text": "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "key": "C",
+        "text": "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+      },
+      {
+        "key": "D",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) (a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 40,
+    "text": "**[NEET 2020 Phase 1]**\n\nSome dividing cells exit the cell cycle and enter vegetative inactive stage. This is called quiescent\nstage (G 0 ). This process occurs at the end of",
+    "options": [
+      {
+        "key": "A",
+        "text": "G 1 phase"
+      },
+      {
+        "key": "B",
+        "text": "S phase"
+      },
+      {
+        "key": "C",
+        "text": "G 2 phase"
+      },
+      {
+        "key": "D",
+        "text": "M phase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) G 1 phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 41,
+    "text": "**[NEET 2020 Phase 1]**\n\nMatch the following with respect to meiosis\n\n| Meiosis Stage | Characteristic Event |\n| :--- | :--- |\n| **(A)** Zygotene | **(i)** Terminalization |\n| **(B)** Pachytene | **(ii)** Chiasmata |\n| **(C)** Diplotene | **(iii)** Crossing over |\n| **(D)** Diakinesis | **(iv)** Synapsis |\n\nSelect the correct option from the following :",
+    "options": [
+      {
+        "key": "A",
+        "text": "(ii),"
+      },
+      {
+        "key": "B",
+        "text": "(iv),"
+      },
+      {
+        "key": "C",
+        "text": "(iii),"
+      },
+      {
+        "key": "D",
+        "text": "(i)"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) (ii),**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 42,
+    "text": "**[NEET 2020 Phase 1]**\n\nDissolution of the synaptonemal complex occurs during",
+    "options": [
+      {
+        "key": "A",
+        "text": "Diplotene"
+      },
+      {
+        "key": "B",
+        "text": "Zygotene"
+      },
+      {
+        "key": "C",
+        "text": "Pachytene"
+      },
+      {
+        "key": "D",
+        "text": "Leptotene"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Diplotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 43,
+    "text": "**[NEET 2020 Phase 1]**\n\nIdentify the correct statement with regard to G 1   phase (Gap 1) of interphase",
+    "options": [
+      {
+        "key": "A",
+        "text": "Cell is metabolically active, grows but does not replicate its DNA."
+      },
+      {
+        "key": "B",
+        "text": "DNA synthesis or replication takes place."
+      },
+      {
+        "key": "C",
+        "text": "Nuclear Division takes place."
+      },
+      {
+        "key": "D",
+        "text": "Reorganisation of all cell components takes place."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Cell is metabolically active, grows but does not replicate its DNA.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 44,
+    "text": "**[NEET 2019 (Odisha)]**\n\nCrossing over takes place between which chromatids and in which stage of the cell cycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Non-sister chromatids of non-homologous chromosomes at Pachytene stage of prophase I"
+      },
+      {
+        "key": "B",
+        "text": "Non-sister chromatids of non-homologous chromosomes at Zygotene stage of prophase I"
+      },
+      {
+        "key": "C",
+        "text": "Non-sister chromatids of homologous chromosomes at Pachytene stage of prophase I"
+      },
+      {
+        "key": "D",
+        "text": "Non-sister chromatids of homologous chromosomes at Zygotene stage of prophase I Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Non-sister chromatids of homologous chromosomes at Pachytene stage of prophase I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 45,
+    "text": "**[NEET 2019 (Odisha)]**\n\nAfter meiosis I, the resultant daughter cells have",
+    "options": [
+      {
+        "key": "A",
+        "text": "four times the amount of DNA in comparison to haploid gamete."
+      },
+      {
+        "key": "B",
+        "text": "same amount of DNA as in the parent cell in S phase."
+      },
+      {
+        "key": "C",
+        "text": "twice the amount of DNA in comparison to haploid gamete."
+      },
+      {
+        "key": "D",
+        "text": "same amount of DNA in comparison to haploid gamete."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) twice the amount of DNA in comparison to haploid gamete.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 46,
+    "text": "**[NEET 2019]**\n\nCells in G 0   phase :",
+    "options": [
+      {
+        "key": "A",
+        "text": "suspend the cell cycle"
+      },
+      {
+        "key": "B",
+        "text": "terminate the cell cycle"
+      },
+      {
+        "key": "C",
+        "text": "exit the cell cycle"
+      },
+      {
+        "key": "D",
+        "text": "enter the cell cycle"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) suspend the cell cycle**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 47,
+    "text": "**[NEET 2019]**\n\nThe correct sequence of phases of cell cycle is :",
+    "options": [
+      {
+        "key": "A",
+        "text": "S G 1 G 2 M"
+      },
+      {
+        "key": "B",
+        "text": "G 1 S G 2 M"
+      },
+      {
+        "key": "C",
+        "text": "M G 1 G 2 S"
+      },
+      {
+        "key": "D",
+        "text": "G 1 G 2 S M"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) G 1 S G 2 M**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 48,
+    "text": "**[NEET 2018]**\n\nThe stage during which separation of the paired homologous chromosomes begins is",
+    "options": [
+      {
+        "key": "A",
+        "text": "zygotene."
+      },
+      {
+        "key": "B",
+        "text": "pachytene"
+      },
+      {
+        "key": "C",
+        "text": "diplotene"
+      },
+      {
+        "key": "D",
+        "text": "diakinesis"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) diplotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 49,
+    "text": "**[NEET 2017]**\n\nWhich of the following options gives the correct sequence of events during mitosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Condensation Nuclear membrane disassembly Arrangement at equator Centromere division Segregation Telophase"
+      },
+      {
+        "key": "B",
+        "text": "Condensation Crossing over Nuclear membrane disassembly Segregation Telophase"
+      },
+      {
+        "key": "C",
+        "text": "Condensation Arrangement at equator Centromere division Segregation Telophase"
+      },
+      {
+        "key": "D",
+        "text": "Condensation Nuclear membrane disassembly Crossing over Segregation Telophase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Condensation Nuclear membrane disassembly Arrangement at equator Centromere division Segregation Telophase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 50,
+    "text": "**[NEET 2017]**\n\nAnaphase Promoting Complex (APC) is a protein degradation machinery necessary for proper\nmitosis of animal cell. If APC is defective in a human cell, which of the following is expected to\noccur?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chromosomes will be fragmented."
+      },
+      {
+        "key": "B",
+        "text": "Chromosomes will not segregate."
+      },
+      {
+        "key": "C",
+        "text": "Recombination of chromosome arms will occur."
+      },
+      {
+        "key": "D",
+        "text": "Chromosomes will not condense."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Chromosomes will not segregate.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 51,
+    "text": "**[NEET 2016 Phase 2]**\n\nDuring cell growth, DNA synthesis takes place on",
+    "options": [
+      {
+        "key": "A",
+        "text": "S-phase"
+      },
+      {
+        "key": "B",
+        "text": "G 1 -phase"
+      },
+      {
+        "key": "C",
+        "text": "G 2 -phase"
+      },
+      {
+        "key": "D",
+        "text": "M phase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 52,
+    "text": "**[NEET 2016 Phase 2]**\n\nWhen cell has stalled DNA replication fork, which checkpoint should be predominantly activated?",
+    "options": [
+      {
+        "key": "A",
+        "text": "G 1 /S"
+      },
+      {
+        "key": "B",
+        "text": "G 2 /M"
+      },
+      {
+        "key": "C",
+        "text": "M"
+      },
+      {
+        "key": "D",
+        "text": "Both G 2 /M and M"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) G 2 /M**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 53,
+    "text": "**[NEET 2016 Phase 2]**\n\nMatch the stages of meiosis in column I to their characteristic features in column II and select the correct option using the codes given below.\n\n| Column I (Stages of Meiosis) | Column II (Characteristic Features) |\n| :--- | :--- |\n| **A.** Pachytene | **(i)** Pairing of homologous chromosomes |\n| **B.** Metaphase I | **(ii)** Terminalisation of chiasmata |\n| **C.** Diakinesis | **(iii)** Crossing-over takes place |\n| **D.** Zygotene | **(iv)** Chromosomes align at equatorial plate |\n\nSelect the correct option using the codes given below :",
+    "options": [
+      {
+        "key": "A",
+        "text": "- (iv);"
+      },
+      {
+        "key": "B",
+        "text": "- (iii);"
+      },
+      {
+        "key": "C",
+        "text": "- (ii);"
+      },
+      {
+        "key": "D",
+        "text": "- (i) Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) - (iv);**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 54,
+    "text": "**[NEET 2016 Phase 1]**\n\nSpindle fibres attach on to",
+    "options": [
+      {
+        "key": "A",
+        "text": "centromere of the chromosome"
+      },
+      {
+        "key": "B",
+        "text": "kinetosome of the chromosome"
+      },
+      {
+        "key": "C",
+        "text": "telomere of the chromosome"
+      },
+      {
+        "key": "D",
+        "text": "kinetochore of the chromosome."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) kinetochore of the chromosome.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 55,
+    "text": "**[NEET 2016 Phase 1]**\n\nWhich of the following is not a characteristic feature during mitosis in somatic cells?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chromosome movement"
+      },
+      {
+        "key": "B",
+        "text": "Synapsis"
+      },
+      {
+        "key": "C",
+        "text": "Spindle fibres"
+      },
+      {
+        "key": "D",
+        "text": "Disappearance of nucleolus"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Synapsis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 56,
+    "text": "**[NEET 2016 Phase 1]**\n\nIn meiosis crossing over is initiated at",
+    "options": [
+      {
+        "key": "A",
+        "text": "zygotene"
+      },
+      {
+        "key": "B",
+        "text": "diplotene"
+      },
+      {
+        "key": "C",
+        "text": "pachytene"
+      },
+      {
+        "key": "D",
+        "text": "leptotene."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) pachytene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 57,
+    "text": "**[AIPMT 2015]**\n\nArrange the following events of meiosis in correct sequence\n(i) Crossing over\n(ii) Synapsis\n(iii) Terminalisation of chiasmata\n(iv) Disappearance of nucleolus",
+    "options": [
+      {
+        "key": "A",
+        "text": "(i), (ii), (iii), (iv)"
+      },
+      {
+        "key": "B",
+        "text": "(ii), (iii), (iv), (i)"
+      },
+      {
+        "key": "C",
+        "text": "(ii), (i), (iv), (iii)"
+      },
+      {
+        "key": "D",
+        "text": "(ii), (i), (iii), (iv)"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) (ii), (i), (iii), (iv)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 58,
+    "text": "**[AIPMT 2015 Cancelled Paper]**\n\nA somatic cell that has just completed the S phase of its cell cycle, as compared to gamete of the\nsame species, has",
+    "options": [
+      {
+        "key": "A",
+        "text": "twice the number of chromosomes and four times the amount of DNA"
+      },
+      {
+        "key": "B",
+        "text": "four times the number of chromosomes and twice the amount of DNA"
+      },
+      {
+        "key": "C",
+        "text": "twice the number of chromosomes and twice the amount of DNA"
+      },
+      {
+        "key": "D",
+        "text": "same number of chromosomes but twice the amount of DNA. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) twice the number of chromosomes and four times the amount of DNA**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 59,
+    "text": "**[AIPMT 2015 Cancelled Paper]**\n\nSelect the correct option.\n\n| Column I | Column II |\n| :--- | :--- |\n| **A.** Synapsis aligns homologous chromosomes | **(i)** Anaphase II |\n| **B.** Synthesis of RNA and protein | **(ii)** Zygotene |\n| **C.** Action of enzyme recombinase | **(iii)** $G_2$-phase |\n| **D.** Centromeres do not separate but chromatids move towards opposite poles | **(iv)** Anaphase I |\n| | **(v)** Pachytene |\n\nSelect the correct option :",
+    "options": [
+      {
+        "key": "A",
+        "text": "- (ii);"
+      },
+      {
+        "key": "B",
+        "text": "- (iii);"
+      },
+      {
+        "key": "C",
+        "text": "- (v);"
+      },
+      {
+        "key": "D",
+        "text": "- (iv)"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) - (iv)**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 60,
+    "text": "**[AIPMT 2014]**\n\nDuring which phase(s) of cell cycle, amount of DNA in a cell remains at 4C level if the initial amount\nis denoted as 2C?",
+    "options": [
+      {
+        "key": "A",
+        "text": "G 0 and G 1"
+      },
+      {
+        "key": "B",
+        "text": "G 1 and S"
+      },
+      {
+        "key": "C",
+        "text": "Only G 2"
+      },
+      {
+        "key": "D",
+        "text": "G 2 and M"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) G 2 and M**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 61,
+    "text": "**[AIPMT 2014]**\n\nIn 'S' phase of the cell cycle",
+    "options": [
+      {
+        "key": "A",
+        "text": "amount of DNA doubles in each cell"
+      },
+      {
+        "key": "B",
+        "text": "amount of DNA remains same in each cell"
+      },
+      {
+        "key": "C",
+        "text": "chromosomes number is increased"
+      },
+      {
+        "key": "D",
+        "text": "amount of DNA is reduced to half in each cell."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) amount of DNA doubles in each cell**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 62,
+    "text": "**[AIPMT 2014]**\n\nThe enzyme recombinase is required at which stage of meiosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Pachytene"
+      },
+      {
+        "key": "B",
+        "text": "Zygotene"
+      },
+      {
+        "key": "C",
+        "text": "Diplotene"
+      },
+      {
+        "key": "D",
+        "text": "Diakinesis"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Pachytene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 63,
+    "text": "**[NEET 2013 (Karnataka)]**\n\nDuring meiosis I, the chromosomes start pairing at",
+    "options": [
+      {
+        "key": "A",
+        "text": "zygotene"
+      },
+      {
+        "key": "B",
+        "text": "pachytene"
+      },
+      {
+        "key": "C",
+        "text": "diplotene"
+      },
+      {
+        "key": "D",
+        "text": "leptotene. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) zygotene**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 64,
+    "text": "**[NEET 2013 (Karnataka)]**\n\nDuring the metaphase stage of mitosis, spindle fibres attach to chromosomes at",
+    "options": [
+      {
+        "key": "A",
+        "text": "kinetochore"
+      },
+      {
+        "key": "B",
+        "text": "both centromere and kinetochore"
+      },
+      {
+        "key": "C",
+        "text": "centromere, kinetochore and areas adjoining centromere"
+      },
+      {
+        "key": "D",
+        "text": "centromere."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) kinetochore**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 65,
+    "text": "**[NEET 2013 (Karnataka)]**\n\nA stage of mitosis is shown in the diagram.\nWhich stage is it and what are its characteristics?\n\n![Mitosis Stage Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468389/edvedum/questions/cell_cycle_division/cell_cycle_q_65.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "Anaphase - Centromeres split and chromatids separate and start moving away."
+      },
+      {
+        "key": "B",
+        "text": "Late prophase - Chromosomes move to spindle equator."
+      },
+      {
+        "key": "C",
+        "text": "Metaphase - Spindle fibers attached to kinetochores, centromeres split and chromatids separate."
+      },
+      {
+        "key": "D",
+        "text": "Metaphase - Chromosomes moved to spindle equator, chromosomes made up of two sister chromatids."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Metaphase - Chromosomes moved to spindle equator, chromosomes made up of two sister chromatids.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468389/edvedum/questions/cell_cycle_division/cell_cycle_q_65.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 66,
+    "text": "**[NEET 2013]**\n\nThe complex formed by a pair of synapsed homologous chromosomes is called",
+    "options": [
+      {
+        "key": "A",
+        "text": "bivalent"
+      },
+      {
+        "key": "B",
+        "text": "axoneme"
+      },
+      {
+        "key": "C",
+        "text": "equatorial plate"
+      },
+      {
+        "key": "D",
+        "text": "kinetochore. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) bivalent**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 67,
+    "text": "**[NEET 2013]**\n\nA stage in cell division is shown in the figure. Select the answer which gives correct identification of\nthe stage with its characteristics.\n\n![Cell Division Stage Figure](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468390/edvedum/questions/cell_cycle_division/cell_cycle_q_67.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "Telophase Endoplasmic reticulum and nucleolus not reformed yet."
+      },
+      {
+        "key": "B",
+        "text": "Telophase Nuclear envelope reforms,Golgi complex reforms."
+      },
+      {
+        "key": "C",
+        "text": "Late anaphase Chromosomes move away from equatorial plate, Golgi complex not present."
+      },
+      {
+        "key": "D",
+        "text": "Cytokinesis Cell plate formed, mitochondria distributed between two daughter cells."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Telophase Nuclear envelope reforms,Golgi complex reforms.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468390/edvedum/questions/cell_cycle_division/cell_cycle_q_67.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 68,
+    "text": "**[AIPMT 2012 Mains]**\n\nIdentify the meiotic stage in which the homologous chromosomes separate while the sister\nchromatids remain associated at their centromeres.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Metaphase I"
+      },
+      {
+        "key": "B",
+        "text": "Metaphase II"
+      },
+      {
+        "key": "C",
+        "text": "Anaphase I"
+      },
+      {
+        "key": "D",
+        "text": "Anaphase II"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Anaphase I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 69,
+    "text": "**[AIPMT 2012 Prelims]**\n\nDuring gamete formation, the enzyme recombinase participates during",
+    "options": [
+      {
+        "key": "A",
+        "text": "metaphase I"
+      },
+      {
+        "key": "B",
+        "text": "anaphase II"
+      },
+      {
+        "key": "C",
+        "text": "prophase I"
+      },
+      {
+        "key": "D",
+        "text": "prophase II. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) prophase I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 70,
+    "text": "**[AIPMT 2012 Prelims]**\n\nGiven below is the representation of a certain event at a particular stage of a type of cell division.\nWhich is this stage?\n\n![Crossing Over Chromosome Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468391/edvedum/questions/cell_cycle_division/cell_cycle_q_70.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "Prophase of Mitosis"
+      },
+      {
+        "key": "B",
+        "text": "Both prophase and metaphase of mitosis"
+      },
+      {
+        "key": "C",
+        "text": "Prophase I during meiosis"
+      },
+      {
+        "key": "D",
+        "text": "Prophase -II during meiosis"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Prophase I during meiosis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468391/edvedum/questions/cell_cycle_division/cell_cycle_q_70.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 71,
+    "text": "**[AIPMT 2011 Mains]**\n\nAt metaphase, chromosomes are attached to the spindle fibres by their",
+    "options": [
+      {
+        "key": "A",
+        "text": "satellites"
+      },
+      {
+        "key": "B",
+        "text": "secondary constrictions"
+      },
+      {
+        "key": "C",
+        "text": "kinetochores"
+      },
+      {
+        "key": "D",
+        "text": "centromeres."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) kinetochores**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 72,
+    "text": "**[AIPMT 2011 Prelims]**\n\nSelect the correct option with respect to mitosis.",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chromatids separate but remain in the centre of the cell in anaphase"
+      },
+      {
+        "key": "B",
+        "text": "Chromatids start moving towards opposite poles in telophase"
+      },
+      {
+        "key": "C",
+        "text": "Golgi complex and endoplasmic reticulum are still visible at the end of prophase."
+      },
+      {
+        "key": "D",
+        "text": "Chromosomes move to the spindle equator and get aligned along equatorial plate in metaphase."
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) Chromosomes move to the spindle equator and get aligned along equatorial plate in metaphase.**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 73,
+    "text": "**[AIPMT 2010 Prelims]**\n\nDuring mitosis, ER and nucleolus begin to disappear at",
+    "options": [
+      {
+        "key": "A",
+        "text": "late prophase"
+      },
+      {
+        "key": "B",
+        "text": "early metaphase"
+      },
+      {
+        "key": "C",
+        "text": "late metaphase"
+      },
+      {
+        "key": "D",
+        "text": "early prophase. Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) late prophase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 74,
+    "text": "**[AIPMT 2010 Prelims]**\n\nWhich stages of cell division do the following figures A and B represent respectively?\n\n![Figures A and B Stages](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468393/edvedum/questions/cell_cycle_division/cell_cycle_q_74.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "A Prophase, B Anaphase"
+      },
+      {
+        "key": "B",
+        "text": "A Metaphase, B Telophase"
+      },
+      {
+        "key": "C",
+        "text": "A Telophase, B Metaphase"
+      },
+      {
+        "key": "D",
+        "text": "A Late anaphase, B Prophase"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) A Late anaphase, B Prophase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468393/edvedum/questions/cell_cycle_division/cell_cycle_q_74.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 75,
+    "text": "**[AIPMT 2009]**\n\nSynapsis occurs between",
+    "options": [
+      {
+        "key": "A",
+        "text": "m RNA and ribosomes"
+      },
+      {
+        "key": "B",
+        "text": "spindle fibres and centromere"
+      },
+      {
+        "key": "C",
+        "text": "two homologous chromosomes"
+      },
+      {
+        "key": "D",
+        "text": "a male and a female gamete."
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) two homologous chromosomes**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 76,
+    "text": "**[AIPMT 2009]**\n\nGiven below is a schematic break-up of the phases/stages of cell cycle. Which one of the following\nis the correct indication of the stage/phase in the cell cycle?\n\n![Schematic Cell Cycle Diagram](https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468394/edvedum/questions/cell_cycle_division/cell_cycle_q_76.png)",
+    "options": [
+      {
+        "key": "A",
+        "text": "C - karyokinesis"
+      },
+      {
+        "key": "B",
+        "text": "D - synthetic phase"
+      },
+      {
+        "key": "C",
+        "text": "A - cytokinesis"
+      },
+      {
+        "key": "D",
+        "text": "B - metaphase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) D - synthetic phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "https://res.cloudinary.com/fyxpnmdh/image/upload/v1794468394/edvedum/questions/cell_cycle_division/cell_cycle_q_76.png",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 77,
+    "text": "**[AIPMT 2005]**\n\nAt what stage of the cell cycle are histone proteins synthesized in a eukaryotic cell?",
+    "options": [
+      {
+        "key": "A",
+        "text": "During G 2 stage of prophase"
+      },
+      {
+        "key": "B",
+        "text": "During S-phase"
+      },
+      {
+        "key": "C",
+        "text": "During entire prophase"
+      },
+      {
+        "key": "D",
+        "text": "During telophase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) During S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 78,
+    "text": "**[AIPMT 2004]**\n\nIn the somatic cell cycle",
+    "options": [
+      {
+        "key": "A",
+        "text": "in G 1 phase DNA content is double the amount of DNA present in the original cell"
+      },
+      {
+        "key": "B",
+        "text": "DNA replication takes place in S phase"
+      },
+      {
+        "key": "C",
+        "text": "a short interphase is followed by a long mitotic phase"
+      },
+      {
+        "key": "D",
+        "text": "G 2 phase follows mitotic phase."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) DNA replication takes place in S phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 79,
+    "text": "**[AIPMT 2004]**\n\nIf you are provided with root-tips of onion in your class and are asked to count the chromosomes,\nwhich of the following stages can you most conveniently look into?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Metaphase"
+      },
+      {
+        "key": "B",
+        "text": "Telophase"
+      },
+      {
+        "key": "C",
+        "text": "Anaphase"
+      },
+      {
+        "key": "D",
+        "text": "Prophase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Metaphase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 80,
+    "text": "**[AIPMT 2004]**\n\nWhich one of the following precedes reformation of the nuclear envelope during M phase of the cell\ncycle?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Decondensation from chromosomes, and reassembly of the nuclear lamina"
+      },
+      {
+        "key": "B",
+        "text": "Transcription from chromosomes, and reassembly of the nuclear lamina"
+      },
+      {
+        "key": "C",
+        "text": "Formation of the contractile ring, and formation of the phragmoplast"
+      },
+      {
+        "key": "D",
+        "text": "Formation of the contractile ring, and transcription from chromosomes."
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Decondensation from chromosomes, and reassembly of the nuclear lamina**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 81,
+    "text": "**[AIPMT 2004]**\n\nCrossing over that results in genetic recombination in higher organisms occurs between",
+    "options": [
+      {
+        "key": "A",
+        "text": "sister chromatids of bivalent"
+      },
+      {
+        "key": "B",
+        "text": "non-sister chromatids of a bivalent"
+      },
+      {
+        "key": "C",
+        "text": "two daughter nuclei"
+      },
+      {
+        "key": "D",
+        "text": "two different bivalents"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) non-sister chromatids of a bivalent**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 82,
+    "text": "**[AIPMT 2002]**\n\nMitotic spindle is mainly composed of which protein?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Actin"
+      },
+      {
+        "key": "B",
+        "text": "Myosin"
+      },
+      {
+        "key": "C",
+        "text": "Tubulin"
+      },
+      {
+        "key": "D",
+        "text": "Myoglobin Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Tubulin**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 83,
+    "text": "**[AIPMT 2002]**\n\nBest material for the study of mitosis in laboratory is",
+    "options": [
+      {
+        "key": "A",
+        "text": "anther"
+      },
+      {
+        "key": "B",
+        "text": "root tip"
+      },
+      {
+        "key": "C",
+        "text": "leaf tip"
+      },
+      {
+        "key": "D",
+        "text": "ovary."
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) root tip**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 84,
+    "text": "**[AIPMT 2002]**\n\nIf a diploid cell is treated with colchicine then it becomes : -",
+    "options": [
+      {
+        "key": "A",
+        "text": "Tetraploid"
+      },
+      {
+        "key": "B",
+        "text": "Monoploid"
+      },
+      {
+        "key": "C",
+        "text": "Diploid"
+      },
+      {
+        "key": "D",
+        "text": "Triploid"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) Tetraploid**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 85,
+    "text": "**[AIPMT 2000]**\n\nSpindle fibre unite with which structure of chromosomes?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Chromocentre"
+      },
+      {
+        "key": "B",
+        "text": "Chromomere"
+      },
+      {
+        "key": "C",
+        "text": "kinetochore"
+      },
+      {
+        "key": "D",
+        "text": "Centriole"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) kinetochore**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 86,
+    "text": "**[AIPMT 2000]**\n\nIn which stage of cell cycle, DNA replication occurs?",
+    "options": [
+      {
+        "key": "A",
+        "text": "G 1 -phase"
+      },
+      {
+        "key": "B",
+        "text": "S-phase"
+      },
+      {
+        "key": "C",
+        "text": "G 2 -phase"
+      },
+      {
+        "key": "D",
+        "text": "M-phase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 87,
+    "text": "**[AIPMT 1998]**\n\nRadioactive thymidine when added to the medium surrounding living mammalian cells gets\nincorporated into the newly synthesised DNA. Which of the following types of chromatin is expected\nto become radioactive if cells are exposed to radioactive thymidine as soon as they enter the S\nphase?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Neither heterochromatin nor euchromatin but only the nucleolus"
+      },
+      {
+        "key": "B",
+        "text": "Heterochromatin"
+      },
+      {
+        "key": "C",
+        "text": "Euchromatin"
+      },
+      {
+        "key": "D",
+        "text": "Both (b) and (c)"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) Euchromatin**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 88,
+    "text": "**[AIPMT 1997]**\n\nHow many mitotic divisions are needed for a single cell to make 128 cells?",
+    "options": [
+      {
+        "key": "A",
+        "text": "28"
+      },
+      {
+        "key": "B",
+        "text": "32"
+      },
+      {
+        "key": "C",
+        "text": "7"
+      },
+      {
+        "key": "D",
+        "text": "14"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) 7**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 89,
+    "text": "**[AIPMT 1997]**\n\nDuring cell division in apical meristem, the nuclear membrane appears in",
+    "options": [
+      {
+        "key": "A",
+        "text": "telophase"
+      },
+      {
+        "key": "B",
+        "text": "cytokinesis"
+      },
+      {
+        "key": "C",
+        "text": "metaphase"
+      },
+      {
+        "key": "D",
+        "text": "anaphase Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) telophase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 90,
+    "text": "**[AIPMT 1996]**\n\nWhen paternal and maternal chromosomes change their materials with each other in cell division\nthis event is called",
+    "options": [
+      {
+        "key": "A",
+        "text": "bivalent-forming"
+      },
+      {
+        "key": "B",
+        "text": "dyad-forming"
+      },
+      {
+        "key": "C",
+        "text": "synapsis"
+      },
+      {
+        "key": "D",
+        "text": "crossing-over"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) crossing-over**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 91,
+    "text": "**[AIPMT 1996]**\n\nWhich typical stage is known for DNA replication?",
+    "options": [
+      {
+        "key": "A",
+        "text": "S-phase"
+      },
+      {
+        "key": "B",
+        "text": "-phase"
+      },
+      {
+        "key": "C",
+        "text": "metaphase"
+      },
+      {
+        "key": "D",
+        "text": "-phase"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 92,
+    "text": "**[AIPMT 1996]**\n\nColchicine is an inhibitory chemical, which",
+    "options": [
+      {
+        "key": "A",
+        "text": "stops the functioning of centriole"
+      },
+      {
+        "key": "B",
+        "text": "prevents attaching of centromeres with rays"
+      },
+      {
+        "key": "C",
+        "text": "prevents the spindle formation in mitosis"
+      },
+      {
+        "key": "D",
+        "text": "prevents the formation of equatorial plane"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) prevents the spindle formation in mitosis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 93,
+    "text": "**[AIPMT 1994]**\n\nIn a somatic cell cycle, DNA synthesis takes place in :",
+    "options": [
+      {
+        "key": "A",
+        "text": "$G_1$ phase"
+      },
+      {
+        "key": "B",
+        "text": "Prophase of mitosis"
+      },
+      {
+        "key": "C",
+        "text": "S-phase"
+      },
+      {
+        "key": "D",
+        "text": "$G_2$ phase"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) S-phase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 94,
+    "text": "**[AIPMT 1994]**\n\nWhich of the following represents the best stage to view the shape, size and number of\nchromosomes?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Prophase"
+      },
+      {
+        "key": "B",
+        "text": "Metaphase"
+      },
+      {
+        "key": "C",
+        "text": "Interphase"
+      },
+      {
+        "key": "D",
+        "text": "Telophase"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Metaphase**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 95,
+    "text": "**[AIPMT 1994]**\n\nWhich statement best explains the evolutionary advantage of meiosis?",
+    "options": [
+      {
+        "key": "A",
+        "text": "Meiosis is necessary for sexual reproduction"
+      },
+      {
+        "key": "B",
+        "text": "Genetic recombinations are possible from generation to generation"
+      },
+      {
+        "key": "C",
+        "text": "Meiosis alternates with mitosis from generation to generation"
+      },
+      {
+        "key": "D",
+        "text": "The same genetic system is passed on from generation to generation Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) Genetic recombinations are possible from generation to generation**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 96,
+    "text": "**[AIPMT 1993]**\n\nMeiosis II performs",
+    "options": [
+      {
+        "key": "A",
+        "text": "separation of sex chromosomes"
+      },
+      {
+        "key": "B",
+        "text": "synthesis of DNA and centromere"
+      },
+      {
+        "key": "C",
+        "text": "separation of homologous chromosomes"
+      },
+      {
+        "key": "D",
+        "text": "separation of chromatids"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) separation of chromatids**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 97,
+    "text": "**[AIPMT 1992]**\n\nNumber of chromatids at metaphase is",
+    "options": [
+      {
+        "key": "A",
+        "text": "two each in mitosis and meiosis"
+      },
+      {
+        "key": "B",
+        "text": "two in mitosis and one in meiosis"
+      },
+      {
+        "key": "C",
+        "text": "two in mitosis and four in meiosis"
+      },
+      {
+        "key": "D",
+        "text": "one in mitosis and two in meiosis"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) two each in mitosis and meiosis**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 98,
+    "text": "**[AIPMT 1991]**\n\nMitotic anaphase differs from metaphase in possessing",
+    "options": [
+      {
+        "key": "A",
+        "text": "same number of chromosomes and same number of chromatids"
+      },
+      {
+        "key": "B",
+        "text": "half number of chromosomes and half number of chromatids"
+      },
+      {
+        "key": "C",
+        "text": "half number of chromosomes and same number of chromatids"
+      },
+      {
+        "key": "D",
+        "text": "same number of chromosomes and half number of chromatids"
+      }
+    ],
+    "correct_letter": "D",
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "solution": "**Correct Answer: (D) same number of chromosomes and half number of chromatids**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (D) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(D)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 99,
+    "text": "**[AIPMT 1991]**\n\nIn meiosis, the daughter cells differ from parent cell as well as amongst themselves due to",
+    "options": [
+      {
+        "key": "A",
+        "text": "segregation, independent assortment and crossing over"
+      },
+      {
+        "key": "B",
+        "text": "segregation and crossing over"
+      },
+      {
+        "key": "C",
+        "text": "independent assortment and crossing over"
+      },
+      {
+        "key": "D",
+        "text": "segregation and independent assortment"
+      }
+    ],
+    "correct_letter": "A",
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "solution": "**Correct Answer: (A) segregation, independent assortment and crossing over**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (A) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(A)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 100,
+    "text": "**[AIPMT 1990]**\n\nSegregation of Mendelian factor (Aa) occurs during",
+    "options": [
+      {
+        "key": "A",
+        "text": "diplotene"
+      },
+      {
+        "key": "B",
+        "text": "anaphase I"
+      },
+      {
+        "key": "C",
+        "text": "zygotene/pachytene"
+      },
+      {
+        "key": "D",
+        "text": "anaphase II"
+      }
+    ],
+    "correct_letter": "B",
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "solution": "**Correct Answer: (B) anaphase I**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (B) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(B)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 101,
+    "text": "**[AIPMT 1989]**\n\nA bivalent consists of",
+    "options": [
+      {
+        "key": "A",
+        "text": "two chromatids and one centromere"
+      },
+      {
+        "key": "B",
+        "text": "two chromatids and two centromeres"
+      },
+      {
+        "key": "C",
+        "text": "four chromatids and two centromeres"
+      },
+      {
+        "key": "D",
+        "text": "four chromatids and four centromeres Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play P Y Q P D F"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) four chromatids and two centromeres**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  },
+  {
+    "q_num": 102,
+    "text": "**[AIPMT 1988]**\n\nMeiosis I is reductional division. Meiosis II is equational division due to",
+    "options": [
+      {
+        "key": "A",
+        "text": "pairing of homologous chromosomes"
+      },
+      {
+        "key": "B",
+        "text": "crossing over"
+      },
+      {
+        "key": "C",
+        "text": "separation of chromatids"
+      },
+      {
+        "key": "D",
+        "text": "disjunction of homologous chromosomes Chapter-wise PYQs with solutions, full mock tests and analysis for JEE, NEET, GATE and more. Google Play"
+      }
+    ],
+    "correct_letter": "C",
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "solution": "**Correct Answer: (C) separation of chromatids**\n\n### Step-by-Step Explanation:\n- **Key Concept:** According to NCERT Biology (Cell Cycle and Cell Division), the events occurring during interphase ($G_1, S, G_2$) and M-phase (mitosis or meiosis) follow a strictly regulated sequence.\n- **Analysis of Options:** Option (C) correctly identifies the feature/sequence/stage described in the question.\n- **Conclusion:** Therefore, the correct option is **(C)**.",
+    "image_url": "",
+    "marks": 4,
+    "difficulty": "medium",
+    "topic": "Cell Cycle and Cell Division"
+  }
+]
