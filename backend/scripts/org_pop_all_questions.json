@@ -1,0 +1,3226 @@
+[
+  {
+    "num": 1,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason . Assertion A : Abingdon tortoise in Galapagos islands became extinct within a decade after goats were introduced. Reason R: Goats were more efficient at browsing than Abingdon tortoise. In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "is not correct but   is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both   and   are correct and   is the correct explanation of"
+      },
+      {
+        "id": "C",
+        "text": "Both   and   are correct but   is not the correct explanation of"
+      },
+      {
+        "id": "D",
+        "text": "is correct but   is not correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 2,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Consider a population of 10 million cells. Given the per-capita birth rate of 0.002 (per unit time) and the percapita death rate of 0.002 (per unit time), the expected number of cells after 10 generations is   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "100 million"
+      },
+      {
+        "id": "B",
+        "text": "1 million"
+      },
+      {
+        "id": "C",
+        "text": "5 million"
+      },
+      {
+        "id": "D",
+        "text": "10 million"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 3,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "Given below are two statements : one is labelled as Assertion A and the other is labelled as Reason R. Assertion A : The logistic growth model of populations is considered more realistic than the exponential growth model. Reason R: Resources are finite. In the light of the above statements, choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "is not correct but   is correct"
+      },
+      {
+        "id": "B",
+        "text": "Both   and   are correct and   is the correct explanation of"
+      },
+      {
+        "id": "C",
+        "text": "Both   and   are correct but   is not the correct explanation of"
+      },
+      {
+        "id": "D",
+        "text": "is correct but   is not correct Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 4,
+    "page": 3,
+    "year": "RE-NEET 2026",
+    "question": "Match List-I with List-II.\n\n| List-I (Interaction Type) | List-II (Ecological Description) |\n| :--- | :--- |\n| **A.** Both species are harmed | **I.** Predation |\n| **B.** One species is harmed and the other is benefited | **II.** Mutualism |\n| **C.** Both species are benefited | **III.** Competition |\n| **D.** One is benefited while the other has no effect | **IV.** Commensalism |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-IV, D-III"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Competition (Both harmed, -/-)**: A-III\n- **Predation / Parasitism (One benefited, one harmed, +/-)**: B-I\n- **Mutualism (Both benefited, +/+)**: C-II\n- **Commensalism (One benefited, other unaffected, +/0)**: D-IV\n\nHence, the correct matching is **A-III, B-I, C-II, D-IV**."
+  },
+  {
+    "num": 5,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Which of the following equations depicts Verhulst-Pearl logistic population growth?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\frac{dN}{dt} = \\frac{rN}{K - N}$"
+      },
+      {
+        "id": "B",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$"
+      },
+      {
+        "id": "C",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K}{K - N}\\right)$"
+      },
+      {
+        "id": "D",
+        "text": "$\\frac{dN}{dt} = rN$"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nThe Verhulst-Pearl logistic population growth equation is given by:\n$$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$$\nWhere:\n- $N$ = Population density at time $t$\n- $r$ = Intrinsic rate of natural increase\n- $K$ = Carrying capacity\n- $\\frac{K - N}{K}$ = Environmental resistance"
+  },
+  {
+    "num": 6,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Which one of the following is an appropriate example of sexual deceit?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Female wasp and fig"
+      },
+      {
+        "id": "B",
+        "text": "Ophrys and bumblebee"
+      },
+      {
+        "id": "C",
+        "text": "Sea anemone and clown fish"
+      },
+      {
+        "id": "D",
+        "text": "Cuckoo and crow"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 7,
+    "page": 3,
+    "year": "NEET 2026",
+    "question": "Choose the correct statements regarding population interactions between two species. A. In both parasitism and commensalism, only one species benefits and the other species is harmed. B. Both species benefit in mutualism. C. Both species benefit in commensalism. D. In parasitism, only one species benefits and the other species is harmed. E. In amensalism, one species is harmed and the other is unaffected. Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and E only"
+      },
+      {
+        "id": "B",
+        "text": "A and B only"
+      },
+      {
+        "id": "C",
+        "text": "B, D and E only"
+      },
+      {
+        "id": "D",
+        "text": "A and D only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 8,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Epiphytes that are growing on a mango branch is an example of which of the following?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Predation"
+      },
+      {
+        "id": "B",
+        "text": "Amensalism"
+      },
+      {
+        "id": "C",
+        "text": "Commensalism"
+      },
+      {
+        "id": "D",
+        "text": "Mutualism"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 9,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Given below are two statements : Statement I : Fig fruit is a non-vegetarian fruit as it has enclosed fig wasps in it. Statement II : Fig wasp and fig tree exhibit mutual relationship as fig wasp completes its life cycle in fig fruit and fig fruit gets pollinated by fig wasp. In the light of the above statements, choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but statement II is incorrect"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but statement II is correct"
+      },
+      {
+        "id": "C",
+        "text": "Both statement I and statement II are correct"
+      },
+      {
+        "id": "D",
+        "text": "Both statement I and statement II are incorrect"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 10,
+    "page": 4,
+    "year": "NEET 2025",
+    "question": "Which one of the following equations represents the Verhulst-Pearl Logistic Growth of population?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\frac{dN}{dt} = \\frac{rN}{K}$"
+      },
+      {
+        "id": "B",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K}{K + N}\\right)$"
+      },
+      {
+        "id": "C",
+        "text": "$\\frac{dN}{dt} = \\frac{N(K - N)}{K}$"
+      },
+      {
+        "id": "D",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nA population growing in a habitat with limited resources exhibits logistic growth described by the Verhulst-Pearl logistic growth equation:\n$$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$$"
+  },
+  {
+    "num": 11,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "When will the population density increase, under special conditions? When the number of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Deaths exceeds number of births and also number of emigrants equals number of immigrants."
+      },
+      {
+        "id": "B",
+        "text": "Births plus number of immigrants equals number of deaths plus number of emigrants."
+      },
+      {
+        "id": "C",
+        "text": "Births plus number of emigrants is more than the number of deaths plus number of immigrants."
+      },
+      {
+        "id": "D",
+        "text": "Births plus number of immigrants is more than the sum of number of deaths and number of emigrants. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 12,
+    "page": 5,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II:\n\n| List - I (Interaction / Phenomenon) | List - II (Example) |\n| :--- | :--- |\n| **(A)** Predator | **(I)** *Ophrys* |\n| **(B)** Mutualism | **(II)** *Pisaster* |\n| **(C)** Parasitism | **(III)** Female wasp and fig |\n| **(D)** Sexual deceit | **(IV)** *Plasmodium* |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-III, B-II, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-III, C-IV, D-I"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Predator**: *Pisaster* (starfish in American Pacific coast rocky intertidal communities) -> (II)\n- **Mutualism**: Female wasp and fig fruit (tight one-to-one co-evolution) -> (III)\n- **Parasitism**: *Plasmodium* (malarial parasite requiring human & mosquito hosts) -> (IV)\n- **Sexual deceit**: Mediterranean orchid *Ophrys* employs sexual deceit to get pollinated by male bees -> (I)\n\nTherefore, the matching is **A-II, B-III, C-IV, D-I**."
+  },
+  {
+    "num": 13,
+    "page": 5,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Match List-I with List-II.\n\n| List - I (Ecological Scenario) | List - II (Ecological Principle) |\n| :--- | :--- |\n| **(A)** Migratory flamingoes and resident fish in South American lakes | **(I)** Interference competition |\n| **(B)** Abingdon tortoise became extinct after introduction of goats in their habitat | **(II)** Competitive release |\n| **(C)** *Chthamalus* expands its distributional range in the absence of *Balanus* | **(III)** Resource Partitioning |\n| **(D)** Five closely related species of Warblers feeding in different locations on same tree | **(IV)** Interspecific competition |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-IV, C-III, D-II"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-IV, C-III, D-I"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Migratory flamingoes and resident fish**: Totally unrelated species competing for the same resource (zooplankton) -> Interspecific competition (IV)\n- **Abingdon tortoise & goats**: Greater browsing efficiency of goats led to tortoise extinction -> Interference competition (I)\n- ***Chthamalus* expanding range**: Superior *Balanus* removed allowing *Chthamalus* to expand -> Competitive release (II)\n- **Warblers on same tree**: MacArthur showed resource partitioning avoided competition -> Resource Partitioning (III)\n\nMatching: **A-IV, B-I, C-II, D-III**."
+  },
+  {
+    "num": 14,
+    "page": 6,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "What do 'a' and 'b' represent in the following population growth curve?\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794483173/edvedum/questions/organisms_and_populations/org_pop_q_14.png\" alt=\"Population Growth Curves\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "‘a’ represents exponential growth when resources are not limiting the growth; and ‘b’ represents logistic growth when resources are limiting the growth."
+      },
+      {
+        "id": "B",
+        "text": "‘a’ represents logistic growth when resources are not limiting the growth; ‘b’ represents exponential growth when resources are limiting the growth."
+      },
+      {
+        "id": "C",
+        "text": "‘a’ represents carrying capacity and ‘b’ shows logistic growth when resources are limiting the growth."
+      },
+      {
+        "id": "D",
+        "text": "‘a’ represents exponential growth when resources are not limiting the growth and ‘b’ shows carrying capacity."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nIn the graph:\n- Curve **'a'** is a J-shaped curve showing **exponential growth** ($\\frac{dN}{dt} = rN$) when resources are unlimited (not limiting).\n- Curve **'b'** is a sigmoid/S-shaped curve showing **logistic growth** ($\\frac{dN}{dt} = rN\\left(\\frac{K-N}{K}\\right)$) when resources are limited, leveling off at the carrying capacity ($K$)."
+  },
+  {
+    "num": 15,
+    "page": 6,
+    "year": "NEET 2024",
+    "question": "The equation of Verhulst-Pearl logistic growth is $\\frac{dN}{dt} = rN\\left[\\frac{K - N}{K}\\right]$. From this equation, $K$ indicates:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Intrinsic rate of natural increase"
+      },
+      {
+        "id": "B",
+        "text": "Biotic potential"
+      },
+      {
+        "id": "C",
+        "text": "Carrying capacity"
+      },
+      {
+        "id": "D",
+        "text": "Population density"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the logistic growth equation:\n$$\\frac{dN}{dt} = rN\\left[\\frac{K - N}{K}\\right]$$\n- $N$ = Population density at time $t$\n- $r$ = Intrinsic rate of natural increase (or biotic potential)\n- $K$ = **Carrying capacity** of the habitat (maximum population size that an environment can sustain indefinitely)."
+  },
+  {
+    "num": 16,
+    "page": 6,
+    "year": "NEET 2024",
+    "question": "Given below are two statements: Statement I: Gause's competitive exclusion principle states that two closely related species competing for different resources cannot exist indefinitely. Statement II: According to Gause's principle, during competition, the inferior will be eliminated. This may be true if resources are limiting. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are true."
+      },
+      {
+        "id": "B",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is true but Statement II is false."
+      },
+      {
+        "id": "D",
+        "text": "Statement I is false but Statement II is true. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 17,
+    "page": 7,
+    "year": "NEET 2023 Manipur",
+    "question": "Plants offer rewards to animals in the form of pollen and nectar and the animals facilitate the pollination process. This is an example of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Amensalism"
+      },
+      {
+        "id": "B",
+        "text": "Competition"
+      },
+      {
+        "id": "C",
+        "text": "Commensalism"
+      },
+      {
+        "id": "D",
+        "text": "Mutualism"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 18,
+    "page": 7,
+    "year": "NEET 2023 Manipur",
+    "question": "For chemical defence against herbivores, Calotropis has :",
+    "options": [
+      {
+        "id": "A",
+        "text": "cardiac glycosides"
+      },
+      {
+        "id": "B",
+        "text": "strychnine"
+      },
+      {
+        "id": "C",
+        "text": "toxic ricin"
+      },
+      {
+        "id": "D",
+        "text": "distasteful quinine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 19,
+    "page": 7,
+    "year": "NEET 2023 Manipur",
+    "question": "If there are 250 snails in a pond, and within a year their number increases to 2500 by reproduction. What should be their birth rate per snail per year ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "10"
+      },
+      {
+        "id": "B",
+        "text": "9"
+      },
+      {
+        "id": "C",
+        "text": "25"
+      },
+      {
+        "id": "D",
+        "text": "15"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 20,
+    "page": 7,
+    "year": "NEET 2023",
+    "question": "Given below are two statements: Statement I : Gause’s ‘Competitive Exclusion Principle’ states that two closely related species competing for the same resources cannot co-exist indefinitely and competitively inferior one will be eliminated eventually. Statement II : In general, carnivores are more adversely affected by competition than herbivores. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false."
+      },
+      {
+        "id": "B",
+        "text": "Statement I is correct but Statement II is false."
+      },
+      {
+        "id": "C",
+        "text": "Statement I is incorrect but Statement II is true."
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 21,
+    "page": 8,
+    "year": "NEET 2023",
+    "question": "Match List I with List II:\n\n| List I (Interaction) | List II (Species A, Species B Effect) |\n| :--- | :--- |\n| **(A)** Mutualism | **(I)** $+(A), 0(B)$ |\n| **(B)** Commensalism | **(II)** $-(A), 0(B)$ |\n| **(C)** Amensalism | **(III)** $+(A), -(B)$ |\n| **(D)** Parasitism | **(IV)** $+(A), +(B)$ |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-I, C-II, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-IV, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-IV, B-II, C-I, D-III"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Mutualism**: Both species benefit ($+/+$) -> **(IV)**\n- **Commensalism**: One species benefits, the other is unaffected ($+/0$) -> **(I)**\n- **Amensalism**: One species is harmed, the other is unaffected ($-/0$) -> **(II)**\n- **Parasitism**: One species benefits (parasite), the other is harmed (host) ($+/-$) -> **(III)**\n\nCorrect matching: **A-IV, B-I, C-II, D-III**."
+  },
+  {
+    "num": 22,
+    "page": 8,
+    "year": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I (Ecological Interaction) | List II (Category) |\n| :--- | :--- |\n| **(A)** A Leopard and a Lion in a forest/grassland | **(I)** Competition |\n| **(B)** A Cuckoo laying egg in a Crow's nest | **(II)** Brood parasitism |\n| **(C)** Fungi and root of a higher plant in Mycorrhizae | **(III)** Mutualism |\n| **(D)** A cattle egret and Cattle in a field | **(IV)** Commensalism |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-I, B-II, C-IV, D-III"
+      },
+      {
+        "id": "B",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-I, B-II, C-III, D-IV"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Leopard and Lion**: Compete for similar prey resources -> Competition (I)\n- **Cuckoo laying eggs in Crow nest**: Brood parasitism (II)\n- **Mycorrhizae (Fungi & higher plant roots)**: Mutualism (III)\n- **Cattle egret and Cattle**: Commensalism (IV)\n\nMatching: **A-I, B-II, C-III, D-IV**."
+  },
+  {
+    "num": 23,
+    "page": 9,
+    "year": "NEET 2023",
+    "question": "Match List I with List II.\n\n| List I (Population Characteristic) | List II (Description) |\n| :--- | :--- |\n| **(A)** Logistic growth | **(I)** Unlimited resource availability condition |\n| **(B)** Exponential growth | **(II)** Limited resource availability condition |\n| **(C)** Expanding age pyramid | **(III)** The percent individuals of pre-reproductive age is largest followed by reproductive and post-reproductive age groups |\n| **(D)** Stable age pyramid | **(IV)** The percent individuals of pre-reproductive and reproductive age groups are same |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-IV, C-I, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-II, B-IV, C-III, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-III, D-IV"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Logistic growth**: Limited resource condition -> (II)\n- **Exponential growth**: Unlimited resource condition -> (I)\n- **Expanding age pyramid**: Large pre-reproductive base -> (III)\n- **Stable age pyramid**: Equal pre-reproductive and reproductive groups -> (IV)\n\nMatching: **A-II, B-I, C-III, D-IV**."
+  },
+  {
+    "num": 24,
+    "page": 9,
+    "year": "NEET 2022 Phase 2",
+    "question": "Two butterfly species are competing for the same nectar of a flower in a garden. To survive and coexist together, they may avoid competition in the same garden by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Predating on each other"
+      },
+      {
+        "id": "B",
+        "text": "Feeding at the same time"
+      },
+      {
+        "id": "C",
+        "text": "Choosing different foraging patterns"
+      },
+      {
+        "id": "D",
+        "text": "Increasing time spent on attacking each other"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 25,
+    "page": 9,
+    "year": "NEET 2022 Phase 1",
+    "question": "Which one of the following statements cannot be connected to Predation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "It helps in maintaining species diversity in a community"
+      },
+      {
+        "id": "B",
+        "text": "It might lead to extinction of a species"
+      },
+      {
+        "id": "C",
+        "text": "Both the integrating species are negatively impacted"
+      },
+      {
+        "id": "D",
+        "text": "It is necessitated by nature to maintain the ecological balance"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 26,
+    "page": 9,
+    "year": "NEET 2022 Phase 1",
+    "question": "While explaining interspecific interaction of population, (+) sign is assigned for beneficial interaction,   (   )   sign is assigned for detrimental interaction and (0) for neutral interaction. Which of the following interactions can be assigned (+) for one species and   (   )   for another species involved in the interaction?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Predation"
+      },
+      {
+        "id": "B",
+        "text": "Amensalism"
+      },
+      {
+        "id": "C",
+        "text": "Commensalism"
+      },
+      {
+        "id": "D",
+        "text": "Competition Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 27,
+    "page": 10,
+    "year": "NEET 2022 Phase 1",
+    "question": "If '8' Drosophila in a laboratory population of '80' died during a week, the death rate in the population is ___________ individuals per Drosophila per week.",
+    "options": [
+      {
+        "id": "A",
+        "text": "0.1"
+      },
+      {
+        "id": "B",
+        "text": "10"
+      },
+      {
+        "id": "C",
+        "text": "1.0"
+      },
+      {
+        "id": "D",
+        "text": "zero"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 28,
+    "page": 10,
+    "year": "NEET 2021",
+    "question": "Inspite of interspecific competition in nature, which mechanism the competing species might have evolved for their survival?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Predation"
+      },
+      {
+        "id": "B",
+        "text": "Resource partitioning"
+      },
+      {
+        "id": "C",
+        "text": "Competitive release"
+      },
+      {
+        "id": "D",
+        "text": "Mutualism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 29,
+    "page": 10,
+    "year": "NEET 2021",
+    "question": "Amensalism can be represented as :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Species A (+) ; Species B (0)"
+      },
+      {
+        "id": "B",
+        "text": "Species A   (   );   Species B (0)"
+      },
+      {
+        "id": "C",
+        "text": "Species A (+); Species B (+)"
+      },
+      {
+        "id": "D",
+        "text": "Species A   (   );   Species B   (   )"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 30,
+    "page": 10,
+    "year": "NEET 2021",
+    "question": "In the exponential growth equation $N_t = N_0 e^{rt}$, $e$ represents:",
+    "options": [
+      {
+        "id": "A",
+        "text": "The base of geometric logarithms"
+      },
+      {
+        "id": "B",
+        "text": "The base of number logarithms"
+      },
+      {
+        "id": "C",
+        "text": "The base of exponential logarithms"
+      },
+      {
+        "id": "D",
+        "text": "The base of natural logarithms"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nIn the exponential growth equation $N_t = N_0 e^{rt}$:\n- $N_t$ = Population density after time $t$\n- $N_0$ = Population density at time zero\n- $r$ = Intrinsic rate of natural increase\n- $e$ = **The base of natural logarithms** (approx. 2.71828)."
+  },
+  {
+    "num": 31,
+    "page": 11,
+    "year": "NEET 2021",
+    "question": "Match List-I with List-II:\n\n| List-I (Adaptation) | List-II (Example) |\n| :--- | :--- |\n| **(a)** Allen's Rule | **(i)** Kangaroo rat |\n| **(b)** Physiological adaptation | **(ii)** Desert lizard |\n| **(c)** Behavioural adaptation | **(iii)** Marine fish at depth |\n| **(d)** Biochemical adaptation | **(iv)** Polar seal |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(iii), (c)-(ii), (d)-(i)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(ii), (c)-(iii), (d)-(i)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iv), (b)-(i), (c)-(iii), (d)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Allen's Rule**: Mammals from colder climates have shorter ears and limbs to minimize heat loss -> Polar seal (iv)\n- **Physiological adaptation**: Internal fat oxidation to satisfy water needs, concentrated urine -> Kangaroo rat (i)\n- **Behavioural adaptation**: Basking in sun when cold, moving to shade when hot -> Desert lizard (ii)\n- **Biochemical adaptation**: Surviving under crushing hydrostatic pressure -> Marine fish at ocean depths (iii)\n\nMatching: **(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)**."
+  },
+  {
+    "num": 32,
+    "page": 11,
+    "year": "NEET 2020 Phase 2",
+    "question": "The impact of immigration on population density is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Positive"
+      },
+      {
+        "id": "B",
+        "text": "Negative"
+      },
+      {
+        "id": "C",
+        "text": "Both positive and negative"
+      },
+      {
+        "id": "D",
+        "text": "Neutralized by natality Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 33,
+    "page": 12,
+    "year": "NEET 2020 Phase 2",
+    "question": "Match the items in Column I with those in Column II:\n\n| Column I (Interacting Pair) | Column II (Type of Interaction) |\n| :--- | :--- |\n| **(a)** Herbivores-Plants | **(i)** Commensalism |\n| **(b)** Mycorrhiza-Plants | **(ii)** Mutualism |\n| **(c)** Sheep-Cattle | **(iii)** Predation |\n| **(d)** Orchid-Tree | **(iv)** Competition |\n\nSelect the correct option from following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(iii), (c)-(iv), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Herbivores-Plants**: In broad ecological terms, herbivores grazing on plants are predators -> (iii)\n- **Mycorrhiza-Plants**: Mutualism between fungi and plant roots -> (ii)\n- **Sheep-Cattle**: Compete for pasture grass -> Competition (iv)\n- **Orchid-Tree**: Epiphytic orchid growing on tree branch -> Commensalism (i)\n\nMatching: **(a)-(iii), (b)-(ii), (c)-(iv), (d)-(i)**."
+  },
+  {
+    "num": 34,
+    "page": 12,
+    "year": "NEET 2020 Phase 1",
+    "question": "Secondary metabolites such as nicotine, strychnine and caffeine are produced by plants for their",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nutritive value"
+      },
+      {
+        "id": "B",
+        "text": "Growth response"
+      },
+      {
+        "id": "C",
+        "text": "Effect on reproduction"
+      },
+      {
+        "id": "D",
+        "text": "Defence action"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 35,
+    "page": 12,
+    "year": "NEET 2020 Phase 1",
+    "question": "Which of the following is not an attribute of a population?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Natality"
+      },
+      {
+        "id": "B",
+        "text": "Sex ratio"
+      },
+      {
+        "id": "C",
+        "text": "Mortality"
+      },
+      {
+        "id": "D",
+        "text": "Species interaction"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 36,
+    "page": 12,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Between which among the following, the relationship is   not   an example of commensalism?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Female wasp and fig species"
+      },
+      {
+        "id": "B",
+        "text": "Orchid and the tree on which it grows"
+      },
+      {
+        "id": "C",
+        "text": "Cattle Egret and grazing cattle"
+      },
+      {
+        "id": "D",
+        "text": "Sea Anemone and Clown fish"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 37,
+    "page": 12,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Carnivorous animals - lions and leopards, occupy the same niche but lions predate mostly larger animals and leopards take smaller ones. This mechanism of competition is referred to as–",
+    "options": [
+      {
+        "id": "A",
+        "text": "Competitive exclusion"
+      },
+      {
+        "id": "B",
+        "text": "Character displacement"
+      },
+      {
+        "id": "C",
+        "text": "Altruism"
+      },
+      {
+        "id": "D",
+        "text": "Resource partitioning Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 38,
+    "page": 13,
+    "year": "NEET 2019",
+    "question": "Match Column-I with Column-II:\n\n| Column - I (Organism / Association) | Column - II (Definition / Role) |\n| :--- | :--- |\n| **(a)** Saprophyte | **(i)** Symbiotic association of fungi with plant roots |\n| **(b)** Parasite | **(ii)** Decomposition of dead organic materials |\n| **(c)** Lichens | **(iii)** Living on living plants or animals |\n| **(d)** Mycorrhiza | **(iv)** Symbiotic association of algae and fungi |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(ii), (c)-(i), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Saprophyte**: Decomposes dead organic material -> (ii)\n- **Parasite**: Lives on or inside living host organisms -> (iii)\n- **Lichens**: Mutualistic symbiotic association between algae (phycobiont) and fungi (mycobiont) -> (iv)\n- **Mycorrhiza**: Symbiotic association between fungi and roots of higher plants -> (i)\n\nMatching: **(a)-(ii), (b)-(iii), (c)-(iv), (d)-(i)**."
+  },
+  {
+    "num": 39,
+    "page": 13,
+    "year": "NEET 2018",
+    "question": "Niche is",
+    "options": [
+      {
+        "id": "A",
+        "text": "all the biological factors in the organism’s environment"
+      },
+      {
+        "id": "B",
+        "text": "the physical space where an organism lives"
+      },
+      {
+        "id": "C",
+        "text": "the range of temperature that the organism needs to live"
+      },
+      {
+        "id": "D",
+        "text": "the functional role played by the organism where it lives"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 40,
+    "page": 13,
+    "year": "NEET 2018",
+    "question": "Which one of the following population interactions is widely used in medical science for the production of antibiotics?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Commensalism"
+      },
+      {
+        "id": "B",
+        "text": "Mutualism"
+      },
+      {
+        "id": "C",
+        "text": "Parasitism"
+      },
+      {
+        "id": "D",
+        "text": "Amensalism Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 41,
+    "page": 14,
+    "year": "NEET 2018",
+    "question": "Natality refers to",
+    "options": [
+      {
+        "id": "A",
+        "text": "death rate"
+      },
+      {
+        "id": "B",
+        "text": "birth rate"
+      },
+      {
+        "id": "C",
+        "text": "number of individuals leaving the habitat"
+      },
+      {
+        "id": "D",
+        "text": "number of individuals entering a habitat"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 42,
+    "page": 14,
+    "year": "NEET 2018",
+    "question": "Pneumatophores occur in",
+    "options": [
+      {
+        "id": "A",
+        "text": "halophytes"
+      },
+      {
+        "id": "B",
+        "text": "free-floating hydrophytes"
+      },
+      {
+        "id": "C",
+        "text": "carnivorous plants"
+      },
+      {
+        "id": "D",
+        "text": "submerged hydrophytes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 43,
+    "page": 14,
+    "year": "NEET 2018",
+    "question": "Which one of the following plants shows a very close relationship with a species of moth, where none of the two can complete its life cycle without the other?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hydrilla"
+      },
+      {
+        "id": "B",
+        "text": "Yucca"
+      },
+      {
+        "id": "C",
+        "text": "Banana"
+      },
+      {
+        "id": "D",
+        "text": "Viola"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 44,
+    "page": 14,
+    "year": "NEET 2018",
+    "question": "In a growing population of a country,",
+    "options": [
+      {
+        "id": "A",
+        "text": "pre-reproductive individuals are more than the reproductive individuals"
+      },
+      {
+        "id": "B",
+        "text": "reproductive individuals are less than the post-reproductive individuals"
+      },
+      {
+        "id": "C",
+        "text": "reproductive and pre-reproductive individuals are equal in number"
+      },
+      {
+        "id": "D",
+        "text": "pre-reproductive individuals are less than the reproductive individuals."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 45,
+    "page": 14,
+    "year": "NEET 2017",
+    "question": "Asymptote in a logistic growth curve is obtained when :",
+    "options": [
+      {
+        "id": "A",
+        "text": "K > N"
+      },
+      {
+        "id": "B",
+        "text": "The value of 'r' approaches zero"
+      },
+      {
+        "id": "C",
+        "text": "K< N"
+      },
+      {
+        "id": "D",
+        "text": "K = N"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 46,
+    "page": 14,
+    "year": "NEET 2017",
+    "question": "Plants which produce characteristic pneumatophores and show vivipary belong to :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Halophytes"
+      },
+      {
+        "id": "B",
+        "text": "Psammophytes"
+      },
+      {
+        "id": "C",
+        "text": "Hydrophytes"
+      },
+      {
+        "id": "D",
+        "text": "Mesophytes Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 47,
+    "page": 15,
+    "year": "NEET 2017",
+    "question": "Mycorrhizae are the example of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fungistasis"
+      },
+      {
+        "id": "B",
+        "text": "Antibiosis"
+      },
+      {
+        "id": "C",
+        "text": "Mutualism"
+      },
+      {
+        "id": "D",
+        "text": "Amensalism"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 48,
+    "page": 15,
+    "year": "NEET 2016 Phase 2",
+    "question": "Which of the following is correct for r-selected species ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Small number of progeny with small size"
+      },
+      {
+        "id": "B",
+        "text": "Small number of progeny with large size"
+      },
+      {
+        "id": "C",
+        "text": "Large number of progeny with small size"
+      },
+      {
+        "id": "D",
+        "text": "Large number of progeny with large size"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 49,
+    "page": 15,
+    "year": "NEET 2016 Phase 2",
+    "question": "If '+' sign is assigned to beneficial interaction, '–' sign to detrimental and '0' sign to neutral interaction, then the population interaction represented by '+' '–' refers to",
+    "options": [
+      {
+        "id": "A",
+        "text": "parasitism"
+      },
+      {
+        "id": "B",
+        "text": "commensalism"
+      },
+      {
+        "id": "C",
+        "text": "mutualism"
+      },
+      {
+        "id": "D",
+        "text": "amensalism"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 50,
+    "page": 15,
+    "year": "NEET 2016 Phase 2",
+    "question": "The principle of competitive exclusion was stated by",
+    "options": [
+      {
+        "id": "A",
+        "text": "MacArthur"
+      },
+      {
+        "id": "B",
+        "text": "G. F. Gause"
+      },
+      {
+        "id": "C",
+        "text": "Verhulst & Pearl"
+      },
+      {
+        "id": "D",
+        "text": "C. Darwin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 51,
+    "page": 15,
+    "year": "NEET 2016 Phase 1",
+    "question": "It is much easier for a small animal to run uphill than for a large animal, because -",
+    "options": [
+      {
+        "id": "A",
+        "text": "The efficiency of muscles in large animals is less than in the small animals"
+      },
+      {
+        "id": "B",
+        "text": "Smaller animals have a higher metabolic rate"
+      },
+      {
+        "id": "C",
+        "text": "It is easier to carry a small body weight"
+      },
+      {
+        "id": "D",
+        "text": "Small animals have a lower O 2   requirement"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 52,
+    "page": 15,
+    "year": "NEET 2016 Phase 1",
+    "question": "When does the growth rate of a population following the logistic model equal zero? The logistic model is given as dN/dt = rN(1-N/K)",
+    "options": [
+      {
+        "id": "A",
+        "text": "When death rate is greater than birth rate."
+      },
+      {
+        "id": "B",
+        "text": "When N/K equals zero."
+      },
+      {
+        "id": "C",
+        "text": "When N/K is exactly one."
+      },
+      {
+        "id": "D",
+        "text": "When N nears the carrying capacity of the habitat. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 53,
+    "page": 16,
+    "year": "NEET 2016 Phase 1",
+    "question": "Gause's principle of competitive exclusion states that -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Larger organisms exclude smaller ones through competition"
+      },
+      {
+        "id": "B",
+        "text": "More abundant species will exclude the less abundant species through competition"
+      },
+      {
+        "id": "C",
+        "text": "Competition for the same resources excludes species having different food preferences"
+      },
+      {
+        "id": "D",
+        "text": "No two species can occupy the same niche indefinitely for the same limiting resources"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 54,
+    "page": 16,
+    "year": "AIPMT 2015",
+    "question": "In which of the following interactions both partners are adversely affected?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Competition"
+      },
+      {
+        "id": "B",
+        "text": "Predation"
+      },
+      {
+        "id": "C",
+        "text": "Mutualism"
+      },
+      {
+        "id": "D",
+        "text": "Parasitism"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 55,
+    "page": 16,
+    "year": "AIPMT 2015",
+    "question": "An association of individuals of different species living in the same habitat and having functional interactions is -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ecological niche"
+      },
+      {
+        "id": "B",
+        "text": "Ecosystem"
+      },
+      {
+        "id": "C",
+        "text": "Population"
+      },
+      {
+        "id": "D",
+        "text": "Biotic community"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 56,
+    "page": 16,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "The following graph depicts changes in two populations (A and B) of herbivores in a grassy field. A possible reason for these changes is that:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794483174/edvedum/questions/organisms_and_populations/org_pop_q_56.png\" alt=\"Herbivore Populations Graph\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Population B competed more successfully for food than population A"
+      },
+      {
+        "id": "B",
+        "text": "Population A consumed the members of population B"
+      },
+      {
+        "id": "C",
+        "text": "Both plant populations in this habitat decreased"
+      },
+      {
+        "id": "D",
+        "text": "Population A produced more offspring than population B"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe graph shows population B increasing rapidly while population A declines steeply to extinction. Since both are herbivores competing for the same food resource (grass), competitive exclusion took place where population B competed more successfully for food than population A (Gause's Competitive Exclusion Principle)."
+  },
+  {
+    "num": 57,
+    "page": 17,
+    "year": "AIPMT 2014",
+    "question": "Just as a person moving from Delhi to Shimla to escape the heat for the duration of hot summer, thousands of migratory birds from Siberia and other extremely cold northern regions move to:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Keolado National Park"
+      },
+      {
+        "id": "B",
+        "text": "Meghalaya"
+      },
+      {
+        "id": "C",
+        "text": "Corbett National Park"
+      },
+      {
+        "id": "D",
+        "text": "Western Ghat"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 58,
+    "page": 17,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "The age pyramid with broad base indicates :",
+    "options": [
+      {
+        "id": "A",
+        "text": "high percentage of young individuals"
+      },
+      {
+        "id": "B",
+        "text": "high percentage of old individuals"
+      },
+      {
+        "id": "C",
+        "text": "a stable population"
+      },
+      {
+        "id": "D",
+        "text": "low percentage of young individuals"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 59,
+    "page": 17,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Which one of the following is not a parasitic adaptation ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Loss of digestive organs"
+      },
+      {
+        "id": "B",
+        "text": "Loss of unnecessary sense organs"
+      },
+      {
+        "id": "C",
+        "text": "Development of adhesive organs"
+      },
+      {
+        "id": "D",
+        "text": "Loss of reproductive capacity"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 60,
+    "page": 17,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Benthic organisms are affected most by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Surface turbulence of water"
+      },
+      {
+        "id": "B",
+        "text": "Water-holding capacity of soil"
+      },
+      {
+        "id": "C",
+        "text": "Light reaching the forest floor"
+      },
+      {
+        "id": "D",
+        "text": "Sediment characteristics of aquatic ecosystems"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 61,
+    "page": 17,
+    "year": "NEET 2013",
+    "question": "A sedentary sea anemone gets attached to the shell lining of hermit crab. The association is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Commensalism"
+      },
+      {
+        "id": "B",
+        "text": "Amensalism"
+      },
+      {
+        "id": "C",
+        "text": "Ectoparasitism"
+      },
+      {
+        "id": "D",
+        "text": "Symbiosis"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 62,
+    "page": 17,
+    "year": "NEET 2013",
+    "question": "A biologist studied the population of rats in a barn, He found that the average natality was 250, average mortality 240, immigration 20 and emigration 30. The net increase in population is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "15"
+      },
+      {
+        "id": "B",
+        "text": "05"
+      },
+      {
+        "id": "C",
+        "text": "10"
+      },
+      {
+        "id": "D",
+        "text": "zero"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 63,
+    "page": 17,
+    "year": "AIPMT 2012 Mains",
+    "question": "Cuscuta is an example of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ectoparasitism"
+      },
+      {
+        "id": "B",
+        "text": "Predation"
+      },
+      {
+        "id": "C",
+        "text": "Endoparasitism"
+      },
+      {
+        "id": "D",
+        "text": "Brood parasitism Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 64,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "The logistic population growth is expressed by the equation:",
+    "options": [
+      {
+        "id": "A",
+        "text": "$\\frac{dN}{dt} = rN$"
+      },
+      {
+        "id": "B",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$"
+      },
+      {
+        "id": "C",
+        "text": "$\\frac{dt}{dN} = Nr\\left(\\frac{K - N}{K}\\right)$"
+      },
+      {
+        "id": "D",
+        "text": "$\\frac{dN}{dt} = rN\\left(\\frac{K}{K - N}\\right)$"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nLogistic population growth occurs when resources are limited and is described by:\n$$\\frac{dN}{dt} = rN\\left(\\frac{K - N}{K}\\right)$$"
+  },
+  {
+    "num": 65,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "Consider the following statements (A)-(D) each with one or two blanks:\n**(A)** Bears go into _____(1)_____ during winter to _____(2)_____ cold weather.\n**(B)** A conical age pyramid with a broad base represents _____(3)_____ human population.\n**(C)** A wasp pollinating a fig flower is an example of _____(4)_____.\n**(D)** An area with high levels of species richness is known as _____(5)_____.\n\nWhich of the following options gives the correct fill ups for the respective blank numbers from (1) to (5) in the statements?",
+    "options": [
+      {
+        "id": "A",
+        "text": "(1) - aestivation, (2) - escape, (3) - stable, (4) - mutualism"
+      },
+      {
+        "id": "B",
+        "text": "(3) - expanding, (4) - commensalism, (5) - biodiversity park"
+      },
+      {
+        "id": "C",
+        "text": "(1) - hibernation, (2) - escape, (3) - expanding, (5) - hot spot"
+      },
+      {
+        "id": "D",
+        "text": "(3) - stable, (4) - commensalism, (5) - marsh"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- Bears enter **hibernation** (1) in winter to **escape** (2) freezing temperatures.\n- A broad-based triangular pyramid represents an **expanding** (3) population.\n- Fig-wasp interaction is **mutualism** (4).\n- High species richness areas are biodiversity **hot spots** (5).\nOption C correctly identifies: (1) hibernation, (2) escape, (3) expanding, (5) hot spot."
+  },
+  {
+    "num": 66,
+    "page": 18,
+    "year": "AIPMT 2011 Prelims",
+    "question": "What type of human population is represented by the following age pyramid?\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794483175/edvedum/questions/organisms_and_populations/org_pop_q_66.png\" alt=\"Human Age Pyramid\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Declining population"
+      },
+      {
+        "id": "B",
+        "text": "Vanishing population"
+      },
+      {
+        "id": "C",
+        "text": "Expanding population"
+      },
+      {
+        "id": "D",
+        "text": "Stable population"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nThe pyramid shown is urn-shaped: the pre-reproductive age group is smaller than the reproductive age group. As fewer individuals enter the reproductive pool, birth rate falls below death rate, indicating a **declining population** (negative growth)."
+  },
+  {
+    "num": 67,
+    "page": 19,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Large Woody Vines are more commonly found in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mangroves"
+      },
+      {
+        "id": "B",
+        "text": "Tropical rainforests"
+      },
+      {
+        "id": "C",
+        "text": "Alpine forests"
+      },
+      {
+        "id": "D",
+        "text": "Temperate forests"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 68,
+    "page": 19,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Consider the following four conditions (a – d) and select the correct pair of them as adaptation to environment in desert lizards. The conditions : (a) burrowing in soil to escape high temperature (b) losing heat rapidly from the body during high temperature (c) bask in sun when temperature is low (d) insulating body due to thick fatty dermis",
+    "options": [
+      {
+        "id": "A",
+        "text": "(c), (d)"
+      },
+      {
+        "id": "B",
+        "text": "(b), (d)"
+      },
+      {
+        "id": "C",
+        "text": "(a), (c)"
+      },
+      {
+        "id": "D",
+        "text": "(a), (b)"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 69,
+    "page": 19,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which one of the following is categorised as a parasite in true sense ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The female anopheles bites and sucks blood from humans"
+      },
+      {
+        "id": "B",
+        "text": "Head louse living on the human scalp as well as laying eggs on human hair"
+      },
+      {
+        "id": "C",
+        "text": "The cuckoo (koel) lays its eggs in crow's nest"
+      },
+      {
+        "id": "D",
+        "text": "Human foetus developing inside the uterus draws nourishment from the mother"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 70,
+    "page": 19,
+    "year": "AIPMT 2010 Mains",
+    "question": "Which one of the following is most appropriately defined ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Parasite is an organism which always lives inside the body of other organism and may kill it."
+      },
+      {
+        "id": "B",
+        "text": "Host is an organism which provides food to another organism."
+      },
+      {
+        "id": "C",
+        "text": "Amensalism is a relationship in which one species is benefited where as the other is unaffected"
+      },
+      {
+        "id": "D",
+        "text": "Predator is an organism that catches and kills other organism for food. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 71,
+    "page": 20,
+    "year": "AIPMT 2010 Prelims",
+    "question": "The figure given below is a diagrammatic representation of response of organisms to abiotic factors. What do a, b and c represent respectively?\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794483177/edvedum/questions/organisms_and_populations/org_pop_q_71.png\" alt=\"Organisms Response to Abiotic Factors\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) partial regulator, (b) regulator, (c) conformer"
+      },
+      {
+        "id": "B",
+        "text": "(a) conformer, (b) regulator, (c) partial regulator"
+      },
+      {
+        "id": "C",
+        "text": "(a) regulator, (b) conformer, (c) partial regulator"
+      },
+      {
+        "id": "D",
+        "text": "(a) regulator, (b) partial regulator, (c) conformer"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the diagram:\n- **(a)** is a straight horizontal line representing organisms maintaining constant internal body environment regardless of external changes -> **Regulator**\n- **(b)** is a diagonal line where internal environment changes directly with external environment -> **Conformer**\n- **(c)** regulates up to a threshold then conforms -> **Partial regulator**\n\nTherefore: **(a) regulator, (b) conformer, (c) partial regulator**."
+  },
+  {
+    "num": 72,
+    "page": 20,
+    "year": "AIPMT 2010 Prelims",
+    "question": "Study the four statements (a–d) given below and select the two correct ones out of them – (a) A lion eating a deer and a sparrow feeding on grain are ecologically similar in being consumers (b) Predator star fish Pisaster helps in maintaining species diversity of some invertebrates (c) Predators ultimately lead to the extinction of prey species (d) Production of chemicals such as nicotine, strychnine by the plants are metabolic disorders The two correct statements are-",
+    "options": [
+      {
+        "id": "A",
+        "text": "b and c"
+      },
+      {
+        "id": "B",
+        "text": "a and d"
+      },
+      {
+        "id": "C",
+        "text": "c and d"
+      },
+      {
+        "id": "D",
+        "text": "a and b Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 73,
+    "page": 21,
+    "year": "AIPMT 2009",
+    "question": "A country with a high rate of population growth took measures to reduce it. The figure below shows age-sex pyramids of populations A and B twenty years apart. Select the correct interpretation:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794483178/edvedum/questions/organisms_and_populations/org_pop_q_73.png\" alt=\"Age-Sex Pyramids\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "\"A\" is more recent shows slight reduction in the growth rate"
+      },
+      {
+        "id": "B",
+        "text": "\"B\" is more recent showing that population is very young"
+      },
+      {
+        "id": "C",
+        "text": "\"A\" is the earlier pyramid and no change has occurred in the growth rate"
+      },
+      {
+        "id": "D",
+        "text": "\"B\" is earlier pyramid and shows stabilized growth rate"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nPyramid \"B\" has a very wide base of young pre-reproductive individuals (high explosive growth). Pyramid \"A\" twenty years later shows narrowing of the youngest age cohort base, indicating successful implementation of population control measures and a reduction in the growth rate."
+  },
+  {
+    "num": 74,
+    "page": 21,
+    "year": "AIPMT 2009",
+    "question": "Reduction in vascular tissue, mechanical tissue and cuticle is characteristic of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Xerophytes"
+      },
+      {
+        "id": "B",
+        "text": "Epiphytes"
+      },
+      {
+        "id": "C",
+        "text": "Hydrophytes"
+      },
+      {
+        "id": "D",
+        "text": "Mesophytes"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 75,
+    "page": 21,
+    "year": "AIPMT 2008",
+    "question": "Consider the following four statements (1-4) about certain desert animals such as kangaroo-rat. (i) They have dark colour and high rate of reproduction and excrete solid urine (ii) They do not drink water, breathe at a slow rate to conserve water and have their body covered with thick hairs (iii) They feed on dry seeds and do not required drinking water (iv) They excrete very concentrated urine and do not use water to regulate body temperature Out of these four, which two are correct-",
+    "options": [
+      {
+        "id": "A",
+        "text": "(i) and (ii)"
+      },
+      {
+        "id": "B",
+        "text": "(ii) and (iii)"
+      },
+      {
+        "id": "C",
+        "text": "(iii) and (i)"
+      },
+      {
+        "id": "D",
+        "text": "(iii) and (iv)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 76,
+    "page": 21,
+    "year": "AIPMT 2008",
+    "question": "Quercus species are the dominant component in:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Temperate deciduous forests"
+      },
+      {
+        "id": "B",
+        "text": "Alpine forests"
+      },
+      {
+        "id": "C",
+        "text": "Scrub forests"
+      },
+      {
+        "id": "D",
+        "text": "Tropical rain forests Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 77,
+    "page": 22,
+    "year": "AIPMT 2007",
+    "question": "Geometric representation of age structure is a characteristic of :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Biotic community"
+      },
+      {
+        "id": "B",
+        "text": "Landscape"
+      },
+      {
+        "id": "C",
+        "text": "Ecosystem"
+      },
+      {
+        "id": "D",
+        "text": "Population"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 78,
+    "page": 22,
+    "year": "AIPMT 2007",
+    "question": "The population of an insect species shows an explosive increase in numbers during rainy season followed by its disappearance at the end of the season. What does this show ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "The food plants mature and die at the end of the rainy season"
+      },
+      {
+        "id": "B",
+        "text": "The population of its predators increases enormously"
+      },
+      {
+        "id": "C",
+        "text": "Its population growth curve is of J-type"
+      },
+      {
+        "id": "D",
+        "text": "S-shaped or sigmoid growth of this insect"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 79,
+    "page": 22,
+    "year": "AIPMT 2007",
+    "question": "If the mean and the median pertaining to a certain character of a population are of the same value, the following is most likely to occur:-",
+    "options": [
+      {
+        "id": "A",
+        "text": "A normal distribution"
+      },
+      {
+        "id": "B",
+        "text": "a T-shaped curve"
+      },
+      {
+        "id": "C",
+        "text": "A skewed curve"
+      },
+      {
+        "id": "D",
+        "text": "A bi-modal distribution"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 80,
+    "page": 22,
+    "year": "AIPMT 2007",
+    "question": "A high density of elephant population in an area can result in :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mutualism"
+      },
+      {
+        "id": "B",
+        "text": "Interspecific competition"
+      },
+      {
+        "id": "C",
+        "text": "Predation on one another"
+      },
+      {
+        "id": "D",
+        "text": "Intraspecific competition"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 81,
+    "page": 22,
+    "year": "AIPMT 2007",
+    "question": "Which of the following is an example of negative feedback loop in humans?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Secretion of tears after falling of sand particles into the eye"
+      },
+      {
+        "id": "B",
+        "text": "Salivation of mouth at the sight of delicious food"
+      },
+      {
+        "id": "C",
+        "text": "Secretion of sweat glands and constriction of skin blood vessels when it is too hot"
+      },
+      {
+        "id": "D",
+        "text": "Constriction of skin blood vessels and contraction of skeletal muscles when it is too cold"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 82,
+    "page": 22,
+    "year": "AIPMT 2006",
+    "question": "The formula for exponential population growth is-",
+    "options": [
+      {
+        "id": "A",
+        "text": "dN/dt = rN"
+      },
+      {
+        "id": "B",
+        "text": "dt/dN = rN"
+      },
+      {
+        "id": "C",
+        "text": "rN/dN = dt"
+      },
+      {
+        "id": "D",
+        "text": "dN/rN = dt Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 83,
+    "page": 23,
+    "year": "AIPMT 2006",
+    "question": "Niche overlap indicates-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sharing of one or more resources between the two species"
+      },
+      {
+        "id": "B",
+        "text": "Mutualism between two species"
+      },
+      {
+        "id": "C",
+        "text": "Active cooperation between two species"
+      },
+      {
+        "id": "D",
+        "text": "Two different parasites on the same host"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 84,
+    "page": 23,
+    "year": "AIPMT 2005",
+    "question": "More than 70% of world's fresh water is contained in –",
+    "options": [
+      {
+        "id": "A",
+        "text": "Polar ice"
+      },
+      {
+        "id": "B",
+        "text": "Greenland"
+      },
+      {
+        "id": "C",
+        "text": "Antarctica"
+      },
+      {
+        "id": "D",
+        "text": "Glaciers and Mountains"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 85,
+    "page": 23,
+    "year": "AIPMT 2005",
+    "question": "At which latitude, heat gain through insolation approximately equals heat loss through terrestrial radiation?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$40^\\circ\\text{ North and South}$"
+      },
+      {
+        "id": "B",
+        "text": "$42\\frac{1}{2}^\\circ\\text{ North and South}$"
+      },
+      {
+        "id": "C",
+        "text": "$66^\\circ\\text{ North and South}$"
+      },
+      {
+        "id": "D",
+        "text": "$22\\frac{1}{2}^\\circ\\text{ North and South}$"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAt approximately $40^\\circ\\text{ North and South}$ latitude, incoming solar radiation (insolation) is balanced by outgoing terrestrial radiation, creating radiative equilibrium."
+  },
+  {
+    "num": 86,
+    "page": 23,
+    "year": "AIPMT 2005",
+    "question": "Animals have the innate ability to escape from predation. Examples for the same are given below. Select the incorrect example",
+    "options": [
+      {
+        "id": "A",
+        "text": "Poison fangs in snakes"
+      },
+      {
+        "id": "B",
+        "text": "Enlargement of body size by swallowing air in puffer fish"
+      },
+      {
+        "id": "C",
+        "text": "Colour change in chameleon"
+      },
+      {
+        "id": "D",
+        "text": "Melanism in moths"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 87,
+    "page": 23,
+    "year": "AIPMT 2005",
+    "question": "Which one of the following pairs in mismatched ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tundra - permafrost"
+      },
+      {
+        "id": "B",
+        "text": "Savanna - acacia trees"
+      },
+      {
+        "id": "C",
+        "text": "Prairie - epiphytes"
+      },
+      {
+        "id": "D",
+        "text": "Coniferous forest - evergreen trees Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 88,
+    "page": 24,
+    "year": "AIPMT 2004",
+    "question": "Certain characteristic demographic features of developing countries are -",
+    "options": [
+      {
+        "id": "A",
+        "text": "High fertility, low or rapidly falling mortality rate, rapid population growth and a very young age distribution"
+      },
+      {
+        "id": "B",
+        "text": "High mortality high density, uneven population growth and a very old age distribution"
+      },
+      {
+        "id": "C",
+        "text": "High fertility, high density, rapidly rising mortality rate and very young age distribution"
+      },
+      {
+        "id": "D",
+        "text": "High infant mortality, low fertility, uneven population growth and a very young age distribution"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 89,
+    "page": 24,
+    "year": "AIPMT 2004",
+    "question": "What is a keystone species ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "A dominant species that constitutes a large proportion of the biomass and which affects many other species"
+      },
+      {
+        "id": "B",
+        "text": "A species which makes up only a small proportion of the total biomass of a community, yet has a huge impact on the community's organization and survival"
+      },
+      {
+        "id": "C",
+        "text": "A common species that has plenty of biomass, yet has a fairly low impact on the community's organization"
+      },
+      {
+        "id": "D",
+        "text": "A rare species that has minimal impact on the biomass and on other species in the community"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 90,
+    "page": 24,
+    "year": "AIPMT 2004",
+    "question": "In which of the following pairs is the specific characteristic of a soil not correctly matched ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Chernozems – Richest soil in the world"
+      },
+      {
+        "id": "B",
+        "text": "Laterite – Contains aluminium compound"
+      },
+      {
+        "id": "C",
+        "text": "Terra rossa – Most suitable for roses"
+      },
+      {
+        "id": "D",
+        "text": "Black soil – Rich in calcium carbonate"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 91,
+    "page": 24,
+    "year": "AIPMT 2004",
+    "question": "The maximum growth rate occurs in :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Exponential phase"
+      },
+      {
+        "id": "B",
+        "text": "Stationary phase"
+      },
+      {
+        "id": "C",
+        "text": "Senescent phase"
+      },
+      {
+        "id": "D",
+        "text": "Lag phase"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 92,
+    "page": 24,
+    "year": "AIPMT 2004",
+    "question": "In which one of the following habitats does the diurnal temperature of soil surface vary most ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Grassland"
+      },
+      {
+        "id": "B",
+        "text": "Desert"
+      },
+      {
+        "id": "C",
+        "text": "Shrub land"
+      },
+      {
+        "id": "D",
+        "text": "Forest Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 93,
+    "page": 25,
+    "year": "AIPMT 2003",
+    "question": "Two opposite forces operate in the growth and development of every population. One of them relates to the ability to reproduce at a given rate. The force opposing it is called : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Biotic potential"
+      },
+      {
+        "id": "B",
+        "text": "Environmental resistance"
+      },
+      {
+        "id": "C",
+        "text": "Morbidity"
+      },
+      {
+        "id": "D",
+        "text": "Fecundity"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 94,
+    "page": 25,
+    "year": "AIPMT 2003",
+    "question": "Mycorrhiza is an example of :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ectoparasitism"
+      },
+      {
+        "id": "B",
+        "text": "Decomposers"
+      },
+      {
+        "id": "C",
+        "text": "Endoparasitism"
+      },
+      {
+        "id": "D",
+        "text": "Symbiotic relationship"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 95,
+    "page": 25,
+    "year": "AIPMT 2002",
+    "question": "The growth curve of bacterial population in lab is plotted against time. What will be the shape of graph?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sigmoid"
+      },
+      {
+        "id": "B",
+        "text": "Hyperbolic"
+      },
+      {
+        "id": "C",
+        "text": "Ascending straight line"
+      },
+      {
+        "id": "D",
+        "text": "Descending straight line"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 96,
+    "page": 25,
+    "year": "AIPMT 2002",
+    "question": "In a population, unrestricted reproductive capacity is called as -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Biotic potential"
+      },
+      {
+        "id": "B",
+        "text": "Birth rate"
+      },
+      {
+        "id": "C",
+        "text": "Carrying capacity"
+      },
+      {
+        "id": "D",
+        "text": "Fertility"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 97,
+    "page": 25,
+    "year": "AIPMT 2002",
+    "question": "What is true for individuals of same species ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Live in same habitat"
+      },
+      {
+        "id": "B",
+        "text": "Live in different habitat"
+      },
+      {
+        "id": "C",
+        "text": "Interbreeding"
+      },
+      {
+        "id": "D",
+        "text": "Live in same niche"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 98,
+    "page": 25,
+    "year": "AIPMT 2002",
+    "question": "Which type of association is found in between entomophilous flower and pollinating agent ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cooperation"
+      },
+      {
+        "id": "B",
+        "text": "Co-evolution"
+      },
+      {
+        "id": "C",
+        "text": "Mutualism"
+      },
+      {
+        "id": "D",
+        "text": "Commensalism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 99,
+    "page": 25,
+    "year": "AIPMT 2002",
+    "question": "Two different species can not live for long duration in the same niche or habitat. This law is : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Competitive exclusion principle"
+      },
+      {
+        "id": "B",
+        "text": "Weiseman's theory"
+      },
+      {
+        "id": "C",
+        "text": "Allen's law"
+      },
+      {
+        "id": "D",
+        "text": "Gause's hypothesis Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 100,
+    "page": 26,
+    "year": "AIPMT 2002",
+    "question": "Which of the following is a correct pair?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cuscuta   - parasite"
+      },
+      {
+        "id": "B",
+        "text": "Dischidia   - insectivorous"
+      },
+      {
+        "id": "C",
+        "text": "Opuntia   - predator"
+      },
+      {
+        "id": "D",
+        "text": "Capsella   - hydrophyte"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 101,
+    "page": 26,
+    "year": "AIPMT 2001",
+    "question": "What is the best pH of the soil for cultivation of plants?",
+    "options": [
+      {
+        "id": "A",
+        "text": "$3.4 - 5.4$"
+      },
+      {
+        "id": "B",
+        "text": "$6.5 - 7.5$"
+      },
+      {
+        "id": "C",
+        "text": "$4.5 - 8.5$"
+      },
+      {
+        "id": "D",
+        "text": "$5.5 - 6.5$"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nMost agricultural crops grow best in near-neutral to slightly acidic soil with a pH range of **6.5 to 7.5**, where essential nutrients like nitrogen, phosphorus, and potassium are most readily available."
+  },
+  {
+    "num": 102,
+    "page": 26,
+    "year": "AIPMT 1999",
+    "question": "Temperature changes in the environment affect most of the animals which are",
+    "options": [
+      {
+        "id": "A",
+        "text": "homoeothermic"
+      },
+      {
+        "id": "B",
+        "text": "aquatic"
+      },
+      {
+        "id": "C",
+        "text": "poikilothermic"
+      },
+      {
+        "id": "D",
+        "text": "desert living"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 103,
+    "page": 26,
+    "year": "AIPMT 1999",
+    "question": "Angiosperm to which the largest flowers belong is",
+    "options": [
+      {
+        "id": "A",
+        "text": "partial stem parasite"
+      },
+      {
+        "id": "B",
+        "text": "total stem parasite"
+      },
+      {
+        "id": "C",
+        "text": "total root parasite"
+      },
+      {
+        "id": "D",
+        "text": "partial root parasite"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 104,
+    "page": 26,
+    "year": "AIPMT 1998",
+    "question": "Two opposite forces operate in the growth and development of every population. One of them is related to the ability to reproduce at a given rate. The force opposing to it is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "biotic control"
+      },
+      {
+        "id": "B",
+        "text": "mortality"
+      },
+      {
+        "id": "C",
+        "text": "fecundity"
+      },
+      {
+        "id": "D",
+        "text": "environmental resistance"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 105,
+    "page": 26,
+    "year": "AIPMT 1998",
+    "question": "Plants such as  Prosopis ,  Acacia   and  Capparis   represent examples of tropical",
+    "options": [
+      {
+        "id": "A",
+        "text": "grass lands"
+      },
+      {
+        "id": "B",
+        "text": "thorn forests"
+      },
+      {
+        "id": "C",
+        "text": "deciduous forests"
+      },
+      {
+        "id": "D",
+        "text": "evergreen forests"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 106,
+    "page": 26,
+    "year": "AIPMT 1998",
+    "question": "In desert grasslands, which type of animals are relatively more abundant?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Diurnal"
+      },
+      {
+        "id": "B",
+        "text": "Arboreal"
+      },
+      {
+        "id": "C",
+        "text": "Aquatic"
+      },
+      {
+        "id": "D",
+        "text": "Fossorial Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 107,
+    "page": 27,
+    "year": "AIPMT 1997",
+    "question": "During adverse season, therophytes survive by",
+    "options": [
+      {
+        "id": "A",
+        "text": "rhizomes"
+      },
+      {
+        "id": "B",
+        "text": "seeds"
+      },
+      {
+        "id": "C",
+        "text": "bulbs"
+      },
+      {
+        "id": "D",
+        "text": "corms"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 108,
+    "page": 27,
+    "year": "AIPMT 1996",
+    "question": "The animals of cold countries have relatively shorter and poorly developed ears, eyes, hairs and other phenotypic characters. This is known by which law?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cope’s Law"
+      },
+      {
+        "id": "B",
+        "text": "Dollo’s Law"
+      },
+      {
+        "id": "C",
+        "text": "Allen’s Law"
+      },
+      {
+        "id": "D",
+        "text": "Bergamann’s Law"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 109,
+    "page": 27,
+    "year": "AIPMT 1996",
+    "question": "Benthoic animals are those, which",
+    "options": [
+      {
+        "id": "A",
+        "text": "are submerged in area"
+      },
+      {
+        "id": "B",
+        "text": "float on the sea surface"
+      },
+      {
+        "id": "C",
+        "text": "are deep dweller in sea"
+      },
+      {
+        "id": "D",
+        "text": "are floating (free) organisms"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 110,
+    "page": 27,
+    "year": "AIPMT 1996",
+    "question": "The ‘niche’ of a species is meant for",
+    "options": [
+      {
+        "id": "A",
+        "text": "habitat and specific functions of a species"
+      },
+      {
+        "id": "B",
+        "text": "specific place where an organism lives"
+      },
+      {
+        "id": "C",
+        "text": "specific species function and its competitive power"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 111,
+    "page": 27,
+    "year": "AIPMT 1995",
+    "question": "In India, human population is heavily weighed towards the younger age groups as a result of",
+    "options": [
+      {
+        "id": "A",
+        "text": "short life span of many individuals and high birth rate"
+      },
+      {
+        "id": "B",
+        "text": "long life span of many individuals and high birth rate"
+      },
+      {
+        "id": "C",
+        "text": "short life span of many individuals and low birth rate"
+      },
+      {
+        "id": "D",
+        "text": "long life span of many individuals and low birth rate"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 112,
+    "page": 27,
+    "year": "AIPMT 1995",
+    "question": "The abundance of a species population, within its habitat, is called",
+    "options": [
+      {
+        "id": "A",
+        "text": "relative density"
+      },
+      {
+        "id": "B",
+        "text": "regional density"
+      },
+      {
+        "id": "C",
+        "text": "absolute density"
+      },
+      {
+        "id": "D",
+        "text": "niche density Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 113,
+    "page": 28,
+    "year": "AIPMT 1995",
+    "question": "Which one of the following pairs is correctly matched?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Parasitism - intraspecific relationship"
+      },
+      {
+        "id": "B",
+        "text": "Uricotelism - aquatic habitat"
+      },
+      {
+        "id": "C",
+        "text": "Excessive perspiration - xeric adaptation"
+      },
+      {
+        "id": "D",
+        "text": "Streamlined body - aquatic adaptation"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 114,
+    "page": 28,
+    "year": "AIPMT 1993",
+    "question": "Study of inter-relationships between organisms and their environment is",
+    "options": [
+      {
+        "id": "A",
+        "text": "ecology"
+      },
+      {
+        "id": "B",
+        "text": "ecosystem"
+      },
+      {
+        "id": "C",
+        "text": "phytogeography"
+      },
+      {
+        "id": "D",
+        "text": "ethology"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 115,
+    "page": 28,
+    "year": "AIPMT 1993",
+    "question": "The sum total of the populations of the same kind of organisms constitute",
+    "options": [
+      {
+        "id": "A",
+        "text": "colony"
+      },
+      {
+        "id": "B",
+        "text": "genus"
+      },
+      {
+        "id": "C",
+        "text": "community"
+      },
+      {
+        "id": "D",
+        "text": "species"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 116,
+    "page": 28,
+    "year": "AIPMT 1993",
+    "question": "Association of animals when both partners are benefitted",
+    "options": [
+      {
+        "id": "A",
+        "text": "colony"
+      },
+      {
+        "id": "B",
+        "text": "mutualism"
+      },
+      {
+        "id": "C",
+        "text": "commensalism"
+      },
+      {
+        "id": "D",
+        "text": "ammensalism"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 117,
+    "page": 28,
+    "year": "AIPMT 1992",
+    "question": "Fertility of soil is measured by its ability to",
+    "options": [
+      {
+        "id": "A",
+        "text": "retain nutrients"
+      },
+      {
+        "id": "B",
+        "text": "hold organic materials"
+      },
+      {
+        "id": "C",
+        "text": "hold water"
+      },
+      {
+        "id": "D",
+        "text": "support life"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 118,
+    "page": 28,
+    "year": "AIPMT 1992",
+    "question": "Soil particles determine its",
+    "options": [
+      {
+        "id": "A",
+        "text": "texture"
+      },
+      {
+        "id": "B",
+        "text": "field capacity"
+      },
+      {
+        "id": "C",
+        "text": "water holding capacity"
+      },
+      {
+        "id": "D",
+        "text": "soil flora Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 119,
+    "page": 29,
+    "year": "AIPMT 1991",
+    "question": "Homeostasis is",
+    "options": [
+      {
+        "id": "A",
+        "text": "tendency to charge with change in environment"
+      },
+      {
+        "id": "B",
+        "text": "tendency to resist change"
+      },
+      {
+        "id": "C",
+        "text": "disturbance in regulatory control"
+      },
+      {
+        "id": "D",
+        "text": "plants and animal extracts used in homeopathy"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 120,
+    "page": 29,
+    "year": "AIPMT 1991",
+    "question": "Deep black soil is productive due to high proportion of",
+    "options": [
+      {
+        "id": "A",
+        "text": "sand and zinc"
+      },
+      {
+        "id": "B",
+        "text": "gravel and calcium"
+      },
+      {
+        "id": "C",
+        "text": "clay and humus"
+      },
+      {
+        "id": "D",
+        "text": "silt and earthworm"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 121,
+    "page": 29,
+    "year": "AIPMT 1991",
+    "question": "Which one is true?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Commensalism when none of the interacting populations affect each other."
+      },
+      {
+        "id": "B",
+        "text": "Symbiosis when the interaction is useful to both the populations."
+      },
+      {
+        "id": "C",
+        "text": "Symbiosis when neither populations affects each other."
+      },
+      {
+        "id": "D",
+        "text": "Commensalism when the interaction is useful to both the populations."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 122,
+    "page": 29,
+    "year": "AIPMT 1989",
+    "question": "The relation between algae and fungi in a lichen is",
+    "options": [
+      {
+        "id": "A",
+        "text": "symbiosis"
+      },
+      {
+        "id": "B",
+        "text": "parasitism"
+      },
+      {
+        "id": "C",
+        "text": "commenalism"
+      },
+      {
+        "id": "D",
+        "text": "protocooperation"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 123,
+    "page": 29,
+    "year": "AIPMT 1988",
+    "question": "Competition for light, nutrients and space is most severe between",
+    "options": [
+      {
+        "id": "A",
+        "text": "closely related organism growing in different niches"
+      },
+      {
+        "id": "B",
+        "text": "closely related organisms growing in the same area/niche"
+      },
+      {
+        "id": "C",
+        "text": "distantly related organisms growing in the same habitat"
+      },
+      {
+        "id": "D",
+        "text": "distantly related organisms growing in different niches"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nOfficial NEET Answer Key verified."
+  },
+  {
+    "num": 124,
+    "page": 29,
+    "year": "AIPMT 1988",
+    "question": "A mutually beneficial association necessary for survival of both partners is",
+    "options": [
+      {
+        "id": "A",
+        "text": "mutualism/symbiosis"
+      },
+      {
+        "id": "B",
+        "text": "commensalism"
+      },
+      {
+        "id": "C",
+        "text": "amensalism"
+      },
+      {
+        "id": "D",
+        "text": "both (1) and (2)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nOfficial NEET Answer Key verified."
+  }
+]
