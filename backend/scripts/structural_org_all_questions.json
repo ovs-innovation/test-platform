@@ -1,0 +1,3382 @@
+[
+  {
+    "num": 1,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "In water, frogs respire using   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "trachea"
+      },
+      {
+        "id": "B",
+        "text": "skin"
+      },
+      {
+        "id": "C",
+        "text": "buccal cavity"
+      },
+      {
+        "id": "D",
+        "text": "lungs"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 2,
+    "page": 2,
+    "year": "RE-NEET 2026",
+    "question": "In frogs, the number of pairs of cranial nerves arising from the brain are   .",
+    "options": [
+      {
+        "id": "A",
+        "text": "12"
+      },
+      {
+        "id": "B",
+        "text": "6"
+      },
+      {
+        "id": "C",
+        "text": "9"
+      },
+      {
+        "id": "D",
+        "text": "10"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 3,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "Male frogs can be distinguished from female frogs due to the presence of A. Bulging eyes B. Vocal sacs C. Webbed digits in feet D. Copulatory pad on first digit of fore limbs E. Olive green-coloured skin with dark irregular spots Choose the correct answer from the options given below",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and C only"
+      },
+      {
+        "id": "B",
+        "text": "C and E only"
+      },
+      {
+        "id": "C",
+        "text": "A and B only"
+      },
+      {
+        "id": "D",
+        "text": "B and D only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 4,
+    "page": 2,
+    "year": "NEET 2026",
+    "question": "Choose the correct statements regarding frog's anatomy: A. Hepatic portal system is the special venous connection between liver and intestine. B. There are twelve pairs of cranial nerves arising from the brain. C. The ureters and oviducts open separately into the cloaca in female frogs. D. Hind-brain consists of cerebellum, medulla oblongata and optic lobes. E. Sinus venosus joins the right atrium of heart. Choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B and C only"
+      },
+      {
+        "id": "B",
+        "text": "B and D only"
+      },
+      {
+        "id": "C",
+        "text": "B and C only"
+      },
+      {
+        "id": "D",
+        "text": "A, C and E only"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 5,
+    "page": 2,
+    "year": "NEET 2025",
+    "question": "In frog, the Renal portal system is a special venous connection that acts to link:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Kidney and intestine"
+      },
+      {
+        "id": "B",
+        "text": "Kidney and lower part of body"
+      },
+      {
+        "id": "C",
+        "text": "Liver and intestine"
+      },
+      {
+        "id": "D",
+        "text": "Liver and kidney Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 6,
+    "page": 3,
+    "year": "NEET 2025",
+    "question": "Frogs respire in water by skin and buccal cavity and on land by skin, buccal cavity and lungs. Choose the correct answer from the following :",
+    "options": [
+      {
+        "id": "A",
+        "text": "The statement is false for water but true for land"
+      },
+      {
+        "id": "B",
+        "text": "The statement is false for both the environments"
+      },
+      {
+        "id": "C",
+        "text": "The statement is true for water but false for land"
+      },
+      {
+        "id": "D",
+        "text": "The statement is true for both the environments"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 7,
+    "page": 3,
+    "year": "NEET 2025",
+    "question": "What is the name of the blood vessel that carries deoxygenated blood from the body to the heart in a frog?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pulmonary vein"
+      },
+      {
+        "id": "B",
+        "text": "Vena cava"
+      },
+      {
+        "id": "C",
+        "text": "Aorta"
+      },
+      {
+        "id": "D",
+        "text": "Pulmonary artery"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 8,
+    "page": 3,
+    "year": "NEET 2025",
+    "question": "Which of the following statement is correct about location of the male frog copulatory pad?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Second digit of fore limb"
+      },
+      {
+        "id": "B",
+        "text": "First digit of the fore limb"
+      },
+      {
+        "id": "C",
+        "text": "First and Second digit of fore limb"
+      },
+      {
+        "id": "D",
+        "text": "First digit of hind limb"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 9,
+    "page": 3,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Which of the following statements is correct about the type of junction and their role in our body?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adhering junctions facilitate the cells to communicate with each other."
+      },
+      {
+        "id": "B",
+        "text": "Tight junctions help to stop substances from leaking across a tissue."
+      },
+      {
+        "id": "C",
+        "text": "Tight junctions help to perform cementing to keep neighbouring cells together."
+      },
+      {
+        "id": "D",
+        "text": "Gap junctions help to create gap between the cells and tissues."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 10,
+    "page": 3,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Which of the following is/are present in female cockroach? A. Collateral gland B. Mushroom gland C. Spermatheca D. Anal style E. Phallic gland Choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "B and D only"
+      },
+      {
+        "id": "B",
+        "text": "B and E only"
+      },
+      {
+        "id": "C",
+        "text": "A only"
+      },
+      {
+        "id": "D",
+        "text": "A and C only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 11,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "In which of the following connective tissues, the cells secrete fibres of collagen or elastin? A. Cartilage B. Bone C. Adipose tissue D. Blood E. Areolar tissue Choose the most appropriate answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "B, C, D and E only"
+      },
+      {
+        "id": "B",
+        "text": "A, B, C and E only"
+      },
+      {
+        "id": "C",
+        "text": "B, C and D only"
+      },
+      {
+        "id": "D",
+        "text": "A, C and D only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 12,
+    "page": 4,
+    "year": "NEET 2024 (Re-Examination)",
+    "question": "Match List I with List II :\n\n| List - I | List - II |\n| :--- | :--- |\n| **(A)** Squamous Epithelium | **(I)** Goblet cells of alimentary canal |\n| **(B)** Ciliated Epithelium | **(II)** Inner lining of pancreatic ducts |\n| **(C)** Glandular Epithelium | **(III)** Walls of blood vessels |\n| **(D)** Compound Epithelium | **(IV)** Inner surface of Fallopian tubes |\n\nChoose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-IV, C-III, D-I"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-I, C-II, D-IV"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-IV, C-I, D-II"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Squamous Epithelium**: Present in the walls of blood vessels and air sacs of lungs -> **(III)**\n- **Ciliated Epithelium**: Found in the inner surface of hollow organs like Fallopian tubes and bronchioles -> **(IV)**\n- **Glandular Epithelium**: Specialized for secretions, such as goblet cells of the alimentary canal -> **(I)**\n- **Compound Epithelium**: Multilayered, covers moist surface of buccal cavity and inner lining of pancreatic ducts -> **(II)**\n\nMatching: **A-III, B-IV, C-I, D-II**."
+  },
+  {
+    "num": 13,
+    "page": 4,
+    "year": "NEET 2024",
+    "question": "In both sexes of cockroach, a pair of jointed filamentous structures called anal cerci are present on:",
+    "options": [
+      {
+        "id": "A",
+        "text": "5th segment"
+      },
+      {
+        "id": "B",
+        "text": "10th segment"
+      },
+      {
+        "id": "C",
+        "text": "8th and 9th segment"
+      },
+      {
+        "id": "D",
+        "text": "11th segment"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nIn both male and female cockroaches, the $10^{\\text{th}}$ abdominal segment bears a pair of jointed filamentous structures called **anal cerci**, which function as sensitive sound and vibration receptors."
+  },
+  {
+    "num": 14,
+    "page": 5,
+    "year": "NEET 2024",
+    "question": "Match List I with List II related to digestive system of cockroach:\n\n| List - I | List - II |\n| :--- | :--- |\n| **A.** The structures used for storing of food | **I.** Gizzard |\n| **B.** Ring of 6-8 blind tubules at junction of foregut and midgut | **II.** Gastric Caeca |\n| **C.** Ring of 100-150 yellow coloured thin filaments at junction of midgut and hindgut | **III.** Malpighian tubules |\n| **D.** The structures used for grinding the food | **IV.** Crop |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-IV, B-II, C-III, D-I"
+      },
+      {
+        "id": "B",
+        "text": "A-I, B-II, C-III, D-IV"
+      },
+      {
+        "id": "C",
+        "text": "A-IV, B-III, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-III, B-II, C-IV, D-I"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Structure used for storing food**: **Crop** -> **IV**\n- **Ring of 6-8 blind tubules at foregut-midgut junction**: **Gastric (hepatic) caeca** which secrete digestive juice -> **II**\n- **Ring of 100-150 yellow thin filaments at midgut-hindgut junction**: **Malpighian tubules** for excretion -> **III**\n- **Structure used for grinding food**: **Gizzard (proventriculus)** with six chitinous teeth -> **I**\n\nMatching: **A-IV, B-II, C-III, D-I**."
+  },
+  {
+    "num": 15,
+    "page": 5,
+    "year": "NEET 2024",
+    "question": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **A.** Unicellular glandular epithelium | **I.** Salivary glands |\n| **B.** Compound epithelium | **II.** Pancreas |\n| **C.** Multicellular glandular epithelium | **III.** Goblet cells of alimentary canal |\n| **D.** Endocrine glandular epithelium | **IV.** Moist surface of buccal cavity |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-I, C-III, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-IV, B-III, C-I, D-II"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-I, D-II"
+      },
+      {
+        "id": "D",
+        "text": "A-II, B-I, C-IV, D-III"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\n- **Unicellular glandular epithelium**: Consists of isolated glandular cells, such as **goblet cells of the alimentary canal** -> **III**\n- **Compound epithelium**: Multilayered, covers the **moist surface of buccal cavity**, pharynx, etc. -> **IV**\n- **Multicellular glandular epithelium**: Consists of clusters of cells, such as **salivary glands** -> **I**\n- **Endocrine glandular epithelium**: Ductless glands that secrete hormones directly into fluid bathing the gland, e.g. islets of **pancreas** -> **II**\n\nMatching: **A-III, B-IV, C-I, D-II**."
+  },
+  {
+    "num": 16,
+    "page": 5,
+    "year": "NEET 2023 Manipur",
+    "question": "The Cockroach is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ammonotelic only"
+      },
+      {
+        "id": "B",
+        "text": "Uricotelic only"
+      },
+      {
+        "id": "C",
+        "text": "Ureotelic only"
+      },
+      {
+        "id": "D",
+        "text": "Ureotelic and Uricotelic Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 17,
+    "page": 6,
+    "year": "NEET 2023 Manipur",
+    "question": "Given below are two statements : Statement I :- Goblet cells are unicellular glands. Statement II :- Earwax is the secretion of exocrine gland. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 18,
+    "page": 6,
+    "year": "NEET 2023 Manipur",
+    "question": "Given below are two statements : Statement I : In cockroach, the forewings are transparent and prothoracic in origin. Statement II : In cockroach, the hind wings are opaque, leathery and mesothoracic in origin. In the light of the above statements, choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Statement I is correct but Statement II is false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is incorrect but Statement II is true"
+      },
+      {
+        "id": "C",
+        "text": "Both Statement I and Statement II are true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are false"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 19,
+    "page": 6,
+    "year": "NEET 2023 Manipur",
+    "question": "Match List-I with List-II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **(A)** Columnar epithelium | **(I)** Ducts of glands |\n| **(B)** Ciliated epithelium | **(II)** Inner lining of stomach and intestine |\n| **(C)** Squamous epithelium | **(III)** Inner lining of bronchioles |\n| **(D)** Cuboidal epithelium | **(IV)** Endothelium |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A)-(III), (B)-(II), (C)-(I), (D)-(IV)"
+      },
+      {
+        "id": "B",
+        "text": "(A)-(III), (B)-(II), (C)-(IV), (D)-(I)"
+      },
+      {
+        "id": "C",
+        "text": "(A)-(II), (B)-(III), (C)-(I), (D)-(IV)"
+      },
+      {
+        "id": "D",
+        "text": "(A)-(II), (B)-(III), (C)-(IV), (D)-(I)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Columnar epithelium**: Composed of single layer of tall and slender cells, lines **stomach and intestine** -> **(II)**\n- **Ciliated epithelium**: Bears cilia to move particles/mucus, lines **bronchioles** and Fallopian tubes -> **(III)**\n- **Squamous epithelium**: Single thin layer of flattened cells, forms **endothelium** of blood vessels and alveoli -> **(IV)**\n- **Cuboidal epithelium**: Single layer of cube-like cells, commonly found in **ducts of glands** and tubular parts of nephrons -> **(I)**\n\nMatching: **(A)-(II), (B)-(III), (C)-(IV), (D)-(I)**."
+  },
+  {
+    "num": 20,
+    "page": 7,
+    "year": "NEET 2023",
+    "question": "Given below are two statements: Statement I : Ligaments are dense irregular tissue. Statement II : Cartilage is dense regular tissue. In the light of the above statements, choose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both Statement I and Statement II are false"
+      },
+      {
+        "id": "B",
+        "text": "Statement I is true but Statement II is false"
+      },
+      {
+        "id": "C",
+        "text": "Statement I is false but Statement II is true"
+      },
+      {
+        "id": "D",
+        "text": "Both Statement I and Statement II are true"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 21,
+    "page": 7,
+    "year": "NEET 2023",
+    "question": "Match List I with List II:\n\n| List I | List II |\n| :--- | :--- |\n| **(A)** Mast cells | **(I)** Ciliated epithelium |\n| **(B)** Inner surface of bronchiole | **(II)** Areolar connective tissue |\n| **(C)** Blood | **(III)** Cuboidal epithelium |\n| **(D)** Tubular parts of nephron | **(IV)** Specialised connective tissue |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-II, B-III, C-I, D-IV"
+      },
+      {
+        "id": "B",
+        "text": "A-II, B-I, C-IV, D-III"
+      },
+      {
+        "id": "C",
+        "text": "A-III, B-IV, C-II, D-I"
+      },
+      {
+        "id": "D",
+        "text": "A-I, B-II, C-IV, D-III"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Mast cells**: Present in **areolar connective tissue** -> **(II)**\n- **Inner surface of bronchiole**: Lined by **ciliated epithelium** -> **(I)**\n- **Blood**: A **specialised connective tissue** consisting of plasma, RBCs, WBCs, and platelets -> **(IV)**\n- **Tubular parts of nephron**: Lined by **cuboidal epithelium** -> **(III)**\n\nMatching: **A-II, B-I, C-IV, D-III**."
+  },
+  {
+    "num": 22,
+    "page": 7,
+    "year": "NEET 2023",
+    "question": "In cockroach, excretion is brought about by - A. Phallic gland B. Urecose gland C. Nephrocytes D. Fat body E. Collaterial glands Choose the correct answer from the options given below :",
+    "options": [
+      {
+        "id": "A",
+        "text": "A, B and E only"
+      },
+      {
+        "id": "B",
+        "text": "B, C and D only"
+      },
+      {
+        "id": "C",
+        "text": "B and D only"
+      },
+      {
+        "id": "D",
+        "text": "A and E only"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 23,
+    "page": 7,
+    "year": "NEET 2023",
+    "question": "Which of the following is characteristic feature of cockroach regarding sexual dimorphism?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Presence of anal styles"
+      },
+      {
+        "id": "B",
+        "text": "Presence of sclerites"
+      },
+      {
+        "id": "C",
+        "text": "Presence of anal cerci"
+      },
+      {
+        "id": "D",
+        "text": "Dark brown body colour and anal cerci Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 24,
+    "page": 8,
+    "year": "NEET 2022 Phase 2",
+    "question": "Which of the following types of epithelium is present in the bronchioles and Fallopian tubes?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stratified squamous epithelium"
+      },
+      {
+        "id": "B",
+        "text": "Simple squamous epithelium"
+      },
+      {
+        "id": "C",
+        "text": "Simple columnar epithelium"
+      },
+      {
+        "id": "D",
+        "text": "Ciliated epithelium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 25,
+    "page": 8,
+    "year": "NEET 2022 Phase 2",
+    "question": "Choose the correct statement about a muscular tissue",
+    "options": [
+      {
+        "id": "A",
+        "text": "Smooth muscles are multinucleated and involuntary."
+      },
+      {
+        "id": "B",
+        "text": "Skeletal muscle fibres are uninucleated and found in parallel bundles."
+      },
+      {
+        "id": "C",
+        "text": "Intercalated discs allow the cardiac muscle cells to contract as a unit."
+      },
+      {
+        "id": "D",
+        "text": "The walls of blood vessels are made up of columnar epithelium."
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 26,
+    "page": 8,
+    "year": "NEET 2022 Phase 2",
+    "question": "Match List-I with List-II regarding the organs of Cockroach:\n\n| List - I | List - II |\n| :--- | :--- |\n| **(a)** Crop | **(i)** Grinding the food particles |\n| **(b)** Proventriculus | **(ii)** Secretion of digestive juice |\n| **(c)** Hepatic caecae | **(iii)** Removal of nitrogenous waste |\n| **(d)** Malpighian tubules | **(iv)** Storage of food |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a) - (i), (b) - (iv), (c) - (iii), (d) - (ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a) - (iv), (b) - (i), (c) - (ii), (d) - (iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a) - (iii), (b) - (ii), (c) - (i), (d) - (iv)"
+      },
+      {
+        "id": "D",
+        "text": "(a) - (ii), (b) - (iv), (c) - (i), (d) - (iii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Crop**: Sac-like structure used for **storage of food** -> **(iv)**\n- **Proventriculus (gizzard)**: Has outer circular muscles and thick inner cuticle forming six chitinous teeth for **grinding food particles** -> **(i)**\n- **Hepatic caecae**: 6-8 blind tubules at the junction of foregut and midgut that **secrete digestive juice** -> **(ii)**\n- **Malpighian tubules**: 100-150 yellow filaments that aid in **removal of nitrogenous waste** (uric acid) from haemolymph -> **(iii)**\n\nMatching: **(a)-(iv), (b)-(i), (c)-(ii), (d)-(iii)**."
+  },
+  {
+    "num": 27,
+    "page": 8,
+    "year": "NEET 2022 Phase 2",
+    "question": "Choose the correct statements: (a) Bones support and protect softer tissues and organs (b) Weight bearing function is served by limb bones (c) Ligament is the site of production of blood cells. (d) Adipose tissue is specialised to store fats. (e) Tendons attach one bone to another. Choose the most appropriate answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a), (b) and (e) only"
+      },
+      {
+        "id": "B",
+        "text": "(a), (b) and (d) only"
+      },
+      {
+        "id": "C",
+        "text": "(b), (c) and (e) only"
+      },
+      {
+        "id": "D",
+        "text": "(a), (c) and (d) only Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 28,
+    "page": 9,
+    "year": "NEET 2022 Phase 2",
+    "question": "Excretion in cockroach is performed by all, EXCEPT:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Hepatic caeca"
+      },
+      {
+        "id": "B",
+        "text": "Uricose glands"
+      },
+      {
+        "id": "C",
+        "text": "Malpighian tubules"
+      },
+      {
+        "id": "D",
+        "text": "Fat body"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 29,
+    "page": 9,
+    "year": "NEET 2022 Phase 1",
+    "question": "Which of the following is not a connective tissue?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Blood"
+      },
+      {
+        "id": "B",
+        "text": "Adipose tissue"
+      },
+      {
+        "id": "C",
+        "text": "Cartilage"
+      },
+      {
+        "id": "D",
+        "text": "Neuroglia"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 30,
+    "page": 9,
+    "year": "NEET 2022 Phase 1",
+    "question": "Tegmina in cockroach, arises from",
+    "options": [
+      {
+        "id": "A",
+        "text": "Prothorax"
+      },
+      {
+        "id": "B",
+        "text": "Mesothorax"
+      },
+      {
+        "id": "C",
+        "text": "Metathorax"
+      },
+      {
+        "id": "D",
+        "text": "Prothorax and Mesothorax"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 31,
+    "page": 9,
+    "year": "NEET 2022 Phase 1",
+    "question": "Match List - I with List - II:\n\n| List - I | List - II |\n| :--- | :--- |\n| **(a)** Bronchioles | **(i)** Dense Regular Connective Tissue |\n| **(b)** Goblet Cell | **(ii)** Loose Connective Tissue |\n| **(c)** Tendons | **(iii)** Glandular Tissue |\n| **(d)** Adipose Tissue | **(iv)** Ciliated Epithelium |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(ii), (b)-(i), (c)-(iv), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iii), (b)-(iv), (c)-(ii), (d)-(i)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Bronchioles**: Lined by **ciliated epithelium** -> **(iv)**\n- **Goblet Cell**: Unicellular **glandular tissue** secreting mucus -> **(iii)**\n- **Tendons**: Collagen fibres present in rows between parallel bundles, representing **dense regular connective tissue** -> **(i)**\n- **Adipose Tissue**: Located mainly beneath the skin, representing **loose connective tissue** specialized to store fats -> **(ii)**\n\nMatching: **(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)**."
+  },
+  {
+    "num": 32,
+    "page": 9,
+    "year": "NEET 2021",
+    "question": "Which of the following statements wrongly represents the nature of smooth muscle?",
+    "options": [
+      {
+        "id": "A",
+        "text": "These muscles are present in the wall of blood vessels"
+      },
+      {
+        "id": "B",
+        "text": "These muscle have no striations"
+      },
+      {
+        "id": "C",
+        "text": "They are involuntary muscles"
+      },
+      {
+        "id": "D",
+        "text": "Communication among the cells is performed by intercalated discs Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 33,
+    "page": 10,
+    "year": "NEET 2021",
+    "question": "Which of the following characteristics is incorrect with respect to cockroach?",
+    "options": [
+      {
+        "id": "A",
+        "text": "th   10 abdominal segment in both sexes, bears a pair of anal cerci"
+      },
+      {
+        "id": "B",
+        "text": "A ring of gastric caeca is present at the junction of midgut and hind gut"
+      },
+      {
+        "id": "C",
+        "text": "Hypopharynx lies within the cavity enclosed by the mouth parts"
+      },
+      {
+        "id": "D",
+        "text": "th th   In females, 7 -9 sterna together form a genital pouch"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 34,
+    "page": 10,
+    "year": "NEET 2021",
+    "question": "Identify the types of cell junctions that help to stop the leakage of the substances across a tissue and facilitation of communication with neighbouring cells via rapid transfer of ions and molecules.",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adhering junctions and Gap junctions, respectively"
+      },
+      {
+        "id": "B",
+        "text": "Gap junctions and Adhering junctions, respectively"
+      },
+      {
+        "id": "C",
+        "text": "Tight junctions and Gap junctions, respectively"
+      },
+      {
+        "id": "D",
+        "text": "Adhering junctions and Tight junctions respectively"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 35,
+    "page": 10,
+    "year": "NEET 2020 Phase 2",
+    "question": "Match the following columns with reference to cockroach and select the correct option:\n\n| Column - I | Column - II |\n| :--- | :--- |\n| **(a)** Grinding of the food particles | **(i)** Hepatic caeca |\n| **(b)** Secrete gastric juice | **(ii)** 10th segment |\n| **(c)** 10 pairs | **(iii)** Proventriculus |\n| **(d)** Anal cerci | **(iv)** Spiracles |\n| | **(v)** Alary muscles |",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(ii), (b)-(iii), (c)-(i), (d)-(iv)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iv), (b)-(iii), (c)-(v), (d)-(ii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(i), (b)-(iv), (c)-(iii), (d)-(ii)"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Grinding of food particles**: Performed by the **proventriculus (gizzard)** -> **(iii)**\n- **Secrete gastric juice**: Performed by **hepatic (gastric) caeca** -> **(i)**\n- **10 pairs**: Number of **spiracles** on the lateral side of the body (2 thoracic + 8 abdominal) -> **(iv)**\n- **Anal cerci**: Located on the **10th segment** in both sexes -> **(ii)**\n\nMatching: **(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)**."
+  },
+  {
+    "num": 36,
+    "page": 10,
+    "year": "NEET 2020 Phase 2",
+    "question": "Select the   incorrectly   matched pair from following :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Osteocytes – Bone cells"
+      },
+      {
+        "id": "B",
+        "text": "Chondrocytes – Smooth muscle cells"
+      },
+      {
+        "id": "C",
+        "text": "Neurons – Nerve cells"
+      },
+      {
+        "id": "D",
+        "text": "Fibroblast – Areolar tissue Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 37,
+    "page": 11,
+    "year": "NEET 2020 Phase 2",
+    "question": "In cockroach, identify the parts of the foregut in correct sequence :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Mouth   Pharynx   Oesophagus   Crop   Gizzard"
+      },
+      {
+        "id": "B",
+        "text": "Mouth   Oesophagus   Pharynx   Crop   Gizzard"
+      },
+      {
+        "id": "C",
+        "text": "Mouth   Crop   Pharynx   Oesophagus   Gizzard"
+      },
+      {
+        "id": "D",
+        "text": "Mouth   Gizzard   Crop   Pharynx   Oesophagus"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 38,
+    "page": 11,
+    "year": "NEET 2020 Phase 1",
+    "question": "If the head of cockroach is removed, it may live for few days because",
+    "options": [
+      {
+        "id": "A",
+        "text": "the cockroach does not have nervous system."
+      },
+      {
+        "id": "B",
+        "text": "the head holds a small proportion of a nervous system while the rest is situated along the ventral part of its body."
+      },
+      {
+        "id": "C",
+        "text": "rd   the head holds a 1/3 of a nervous system while the rest is situated along the dorsal part of its body."
+      },
+      {
+        "id": "D",
+        "text": "the supra-oesophageal ganglia of the cockroach are situated in ventral part of abdomen."
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 39,
+    "page": 11,
+    "year": "NEET 2020 Phase 1",
+    "question": "Cuboidal epithelium with brush border of microvilli is found in",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ducts of salivary gland"
+      },
+      {
+        "id": "B",
+        "text": "Proximal convoluted tubule of nephron"
+      },
+      {
+        "id": "C",
+        "text": "Eustachian tube"
+      },
+      {
+        "id": "D",
+        "text": "Lining of intestine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 40,
+    "page": 11,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Match the following cell structure with its characteristic feature:\n\n| Cell Structure | Characteristic Feature |\n| :--- | :--- |\n| **(a)** Tight junctions | **(i)** Cement neighbouring cells together to form sheet |\n| **(b)** Adhering junctions | **(ii)** Transmit information through chemical to another cells |\n| **(c)** Gap junctions | **(iii)** Establish a barrier to prevent leakage of fluid across epithelial cells |\n| **(d)** Synaptic junctions | **(iv)** Cytoplasmic channels to facilitate communication between adjacent cells |\n\nSelect correct option from the following:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(a)-(iv), (b)-(iii), (c)-(i), (d)-(ii)"
+      },
+      {
+        "id": "B",
+        "text": "(a)-(ii), (b)-(iv), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "C",
+        "text": "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)"
+      },
+      {
+        "id": "D",
+        "text": "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\n- **Tight junctions**: Help to stop substances from leaking across a tissue -> **(iii)**\n- **Adhering junctions**: Perform cementing to keep neighbouring cells together -> **(i)**\n- **Gap junctions**: Facilitate the cells to communicate with each other by connecting the cytoplasm for rapid transfer of ions and small molecules -> **(iv)**\n- **Synaptic junctions**: Transmit information across neurons via chemical neurotransmitters -> **(ii)**\n\nMatching: **(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)**."
+  },
+  {
+    "num": 41,
+    "page": 12,
+    "year": "NEET 2019 (Odisha)",
+    "question": "Which of the following statements is   INCORRECT ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Female cockroach possesses sixteen ovarioles in the ovaries."
+      },
+      {
+        "id": "B",
+        "text": "Cockroaches exhibit mosaic vision with less sensitivity and more resolution."
+      },
+      {
+        "id": "C",
+        "text": "th th   A mushroom-shaped gland is present in the 6 -7 abdominal segments of male cockroach."
+      },
+      {
+        "id": "D",
+        "text": "th   A pair of spermatheca is present in the 6 segment of female cockroach"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 42,
+    "page": 12,
+    "year": "NEET 2019",
+    "question": "Select the   correct   sequence of organs in the alimentary canal of cockroach starting from mouth :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Pharynx   Oesophagus   Gizzard   Ileum   Crop   Colon   Rectum"
+      },
+      {
+        "id": "B",
+        "text": "Pharynx   Oesophagus   Ileum   Crop   Gizzard   Colon   Rectum"
+      },
+      {
+        "id": "C",
+        "text": "Pharynx   Oesophagus   Crop   Gizzard   Ileum   Colon   Rectum"
+      },
+      {
+        "id": "D",
+        "text": "Pharynx   Oesophagus   Gizzard   Crop   Ileum   Colon   Rectum"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 43,
+    "page": 12,
+    "year": "NEET 2019",
+    "question": "The ciliated epithelial cells are required to move particles or mucus in a specific direction. In humans, these cells are mainly present in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eustachian tube and Salivary duct"
+      },
+      {
+        "id": "B",
+        "text": "Bronchioles and Fallopian tubes"
+      },
+      {
+        "id": "C",
+        "text": "Bile duct and Bronchioles"
+      },
+      {
+        "id": "D",
+        "text": "Fallopian tubes and Pancreatic duct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 44,
+    "page": 12,
+    "year": "NEET 2018",
+    "question": "Which of the following features is used to identify a male cockroach from a female cockroach?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Forewings with darker tegmina"
+      },
+      {
+        "id": "B",
+        "text": "Presence of caudal styles"
+      },
+      {
+        "id": "C",
+        "text": "Presence of anal cerci"
+      },
+      {
+        "id": "D",
+        "text": "th   Presence of a boat-shaped sternum on the 9 abdominal segment"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 45,
+    "page": 12,
+    "year": "NEET 2017",
+    "question": "Select the correct route for the passage of sperms in male frogs :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Testes   Vasa efferentia   Kidney   Seminal vesicle   Urinogenital duct   Cloaca"
+      },
+      {
+        "id": "B",
+        "text": "Testes   Vasa efferentia   Bidder's canal   Ureter   Cloaca"
+      },
+      {
+        "id": "C",
+        "text": "Testes   Vasa efferentia   Kidney   Bidder's canal   Urinogenital duct   Cloaca"
+      },
+      {
+        "id": "D",
+        "text": "Testes   Bidder's canal   Kidney   Vasa efferentia   Urinogenital duct   Cloaca Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 46,
+    "page": 13,
+    "year": "NEET 2017",
+    "question": "Frog’s heart when taken out of the body continues to beat for sometime. Select the best option from the following statements. (a) Frog is a poikilotherm (b) Frog does not have any coronary circulation (c) Heart is “myogenic” in nature (d) Heart is autoexcitable",
+    "options": [
+      {
+        "id": "A",
+        "text": "Only (d)"
+      },
+      {
+        "id": "B",
+        "text": "(a) and (b)"
+      },
+      {
+        "id": "C",
+        "text": "Only (c)"
+      },
+      {
+        "id": "D",
+        "text": "(c) and (d)"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 47,
+    "page": 13,
+    "year": "NEET 2016 Phase 2",
+    "question": "In male cockroaches, sperms are stored in which part of the reproductive system ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Vas deferens"
+      },
+      {
+        "id": "B",
+        "text": "Seminal vesicles"
+      },
+      {
+        "id": "C",
+        "text": "Testes"
+      },
+      {
+        "id": "D",
+        "text": "Mushroom glands"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 48,
+    "page": 13,
+    "year": "NEET 2016 Phase 2",
+    "question": "Smooth muscles are",
+    "options": [
+      {
+        "id": "A",
+        "text": "involuntary, cylindrical, striated"
+      },
+      {
+        "id": "B",
+        "text": "involuntary, fusiform, non-striated"
+      },
+      {
+        "id": "C",
+        "text": "voluntary, spindle-shaped, uninucleate"
+      },
+      {
+        "id": "D",
+        "text": "voluntary, multinucleate, cylindrical"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 49,
+    "page": 13,
+    "year": "NEET 2016 Phase 1",
+    "question": "Which type of tissue correctly matches with its locations ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Tissue   Smooth muscle ,   Location   Wall of intestine"
+      },
+      {
+        "id": "B",
+        "text": "Tissue   Areolar tissue,   Location   Tendons"
+      },
+      {
+        "id": "C",
+        "text": "Tissue   Cuboidal epithelium,   Location   Lining of stomach"
+      },
+      {
+        "id": "D",
+        "text": "Tissue   Transitional epithelium,   Location   Tip of nose"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 50,
+    "page": 13,
+    "year": "NEET 2016 Phase 1",
+    "question": "Which of the following features is not present in  Periplaneta americana ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Indeterminate and radial cleavage during embryonic development"
+      },
+      {
+        "id": "B",
+        "text": "Schizocoelom as body cavity"
+      },
+      {
+        "id": "C",
+        "text": "Metamerically segmented body"
+      },
+      {
+        "id": "D",
+        "text": "Exoskeleton composed of N-acetylglucosamine"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 51,
+    "page": 13,
+    "year": "AIPMT 2015",
+    "question": "The body cells in cockroach discharge their nitrogenous waste in the haemolymph mainly in the form of -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Urea"
+      },
+      {
+        "id": "B",
+        "text": "Potassium urate"
+      },
+      {
+        "id": "C",
+        "text": "Calcium carbonate"
+      },
+      {
+        "id": "D",
+        "text": "Ammonia Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 52,
+    "page": 14,
+    "year": "AIPMT 2015",
+    "question": "The function of the gap junction is to -",
+    "options": [
+      {
+        "id": "A",
+        "text": "facilitate communication between adjoining cells by connecting the cytoplasm for rapid transfer of ions, small molecules and some large molecules."
+      },
+      {
+        "id": "B",
+        "text": "separate two cells from each other"
+      },
+      {
+        "id": "C",
+        "text": "stop substance from leaking across a tissue"
+      },
+      {
+        "id": "D",
+        "text": "performing cementing to keep neighbouring cells together"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 53,
+    "page": 14,
+    "year": "AIPMT 2015 Cancelled Paper",
+    "question": "The terga, sterna and pleura of cockroach body are joined by :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cartilage"
+      },
+      {
+        "id": "B",
+        "text": "Cementing glue"
+      },
+      {
+        "id": "C",
+        "text": "Arthrodial membrane"
+      },
+      {
+        "id": "D",
+        "text": "Muscular tissue"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 54,
+    "page": 14,
+    "year": "AIPMT 2014",
+    "question": "Choose the correctly matched pair :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Adipose Tissue – Dense connective tissue"
+      },
+      {
+        "id": "B",
+        "text": "Areolar tissue – Loose connective tissue"
+      },
+      {
+        "id": "C",
+        "text": "Tendon – Specialized connective tissue"
+      },
+      {
+        "id": "D",
+        "text": "Cartilage – Loose connective tissue"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 55,
+    "page": 14,
+    "year": "AIPMT 2014",
+    "question": "Choose the correctly matched pair:",
+    "options": [
+      {
+        "id": "A",
+        "text": "Inner surface of bronchioles - squamous epithelium"
+      },
+      {
+        "id": "B",
+        "text": "Moist surface of buccal cavity - Glandular epithelium"
+      },
+      {
+        "id": "C",
+        "text": "Inner lining of salivary ducts - Ciliated epithelium"
+      },
+      {
+        "id": "D",
+        "text": "Tubular parts of nephrons - Cuboidal epithelium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 56,
+    "page": 14,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Which one of the following is one of the paths followed by air or O 2   during respiration in the adult male  Periplaneta americana   it enters the animal body?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Spiracle in metathorax, trachea, tracheloes, oxygen diffuses into cells"
+      },
+      {
+        "id": "B",
+        "text": "Mouth, bronchial tube, trachea, oxygen enters cells"
+      },
+      {
+        "id": "C",
+        "text": "Spiracles in prothorax, tracheoles, trachea, oxygen diffuses into cells."
+      },
+      {
+        "id": "D",
+        "text": "Hypopharynx, mouth, pharynx, trachea, tissues Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 57,
+    "page": 15,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Select the correct option with respect to Cockroaches :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nervous system comprises of a dorsal nerve cord and ten pairs of ganglion"
+      },
+      {
+        "id": "B",
+        "text": "The fore wings are tegmina which are used in flight"
+      },
+      {
+        "id": "C",
+        "text": "Malpighian tubules convert nitrogenous wastes into urea"
+      },
+      {
+        "id": "D",
+        "text": "Males bear short anal styles not present in females"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 58,
+    "page": 15,
+    "year": "NEET 2013 (Karnataka)",
+    "question": "Identify the tissue shown in the diagram and match with its characteristics and its location:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794495563/edvedum/questions/structural_organisation_in_animals/structural_org_q_58.png\" alt=\"Muscle Tissue\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "Smooth muscles, show branching, found in the walls of the heart."
+      },
+      {
+        "id": "B",
+        "text": "Striated muscles, tapering at both-ends, attached with the bones of the ribs"
+      },
+      {
+        "id": "C",
+        "text": "Skeletal muscle, shows striations and closely attached with the bones of the limbs"
+      },
+      {
+        "id": "D",
+        "text": "Cardiac muscles, unbranched muscles, found in the walls of the heart"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe diagram shows **skeletal (striated) muscle tissue**. \n- It consists of cylindrical, unbranched, multinucleated fibres displaying alternate light and dark striations (cross-striations).\n- They are voluntary muscles that are closely attached to skeletal bones (such as bones of the limbs) to bring about body movement."
+  },
+  {
+    "num": 59,
+    "page": 15,
+    "year": "NEET 2013",
+    "question": "What external changes are visible after the last moult of a cockroach nymph ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Both fore wings and hind wings develop"
+      },
+      {
+        "id": "B",
+        "text": "Mandibles become harder"
+      },
+      {
+        "id": "C",
+        "text": "Labium develops"
+      },
+      {
+        "id": "D",
+        "text": "Anal cerci develop Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 60,
+    "page": 16,
+    "year": "AIPMT 2012 Mains",
+    "question": "Given below is the diagrammatic sketch of a certain type of connective tissue. Identify the parts labeled A, B, C and D and select the right option about them:\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794495566/edvedum/questions/structural_organisation_in_animals/structural_org_q_60.png\" alt=\"Areolar Connective Tissue\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "A - Mast cell, B - Collagen fibres, C - Fibroblast, D - Macrophage"
+      },
+      {
+        "id": "B",
+        "text": "A - Mast cell, B - Macrophage, C - Fibroblast, D - Collagen fibres"
+      },
+      {
+        "id": "C",
+        "text": "A - Macrophage, B - Fibroblast, C - Collagen fibres, D - Mast cell"
+      },
+      {
+        "id": "D",
+        "text": "A - Macrophage, B - Collagen fibres, C - Fibroblast, D - Mast cell"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nThe diagram represents **loose (areolar) connective tissue** from NCERT:\n- **A**: **Macrophage** (large amoeboid phagocytic cell)\n- **B**: **Fibroblast** (cell producing and secreting fibers)\n- **C**: **Collagen fibres** (thick bundles of white unbranched fibers)\n- **D**: **Mast cell** (cell containing histamine, serotonin, and heparin)"
+  },
+  {
+    "num": 61,
+    "page": 16,
+    "year": "AIPMT 2012 Mains",
+    "question": "The supportive skeletal structures in the human external ears and in the nose tip are examples of",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ligament"
+      },
+      {
+        "id": "B",
+        "text": "Areolar tissue"
+      },
+      {
+        "id": "C",
+        "text": "Cartilage"
+      },
+      {
+        "id": "D",
+        "text": "Bone Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 62,
+    "page": 17,
+    "year": "AIPMT 2012 Mains",
+    "question": "The four sketches (A, B, C and D) given below, represent four different types of animal tissues. Which one of these is correctly identified in the options given, along with its correct location and function?\n\n<div align=\"center\">\n  <img src=\"https://res.cloudinary.com/fyxpnmdh/image/upload/v1794495571/edvedum/questions/structural_organisation_in_animals/structural_org_q_62.png\" alt=\"Four Animal Tissues Sketches\" style=\"max-width: 100%; height: auto;\" />\n</div>",
+    "options": [
+      {
+        "id": "A",
+        "text": "(A) Tissue: Columnar epithelium, Location: Nephron, Function: Secretion and absorption"
+      },
+      {
+        "id": "B",
+        "text": "(C) Tissue: Collagen fibres, Location: Cartilage, Function: Attach skeletal muscles to bones"
+      },
+      {
+        "id": "C",
+        "text": "(B) Tissue: Glandular epithelium, Location: Intestine, Function: Secretion"
+      },
+      {
+        "id": "D",
+        "text": "(D) Tissue: Smooth muscle tissue, Location: Heart, Function: Heart contraction"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nIn the given sketches:\n- **(A)** is cuboidal epithelium (found in ducts of glands and tubular parts of nephrons).\n- **(B)** is **glandular epithelium** (isolated or clustered secretory cells, found in the alimentary canal / intestine for **secretion**).\n- **(C)** is dense regular connective tissue (collagen fibres in parallel rows, such as tendons).\n- **(D)** is cardiac muscle tissue (showing branching and intercalated discs, not smooth muscle).\n\nTherefore, option **(C)** is the correctly identified tissue, location, and function."
+  },
+  {
+    "num": 63,
+    "page": 17,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Compared to those of humans, the erythrocytes in frog are :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Without nucleous but with haemoglobin"
+      },
+      {
+        "id": "B",
+        "text": "Very much smaller and fewer"
+      },
+      {
+        "id": "C",
+        "text": "Nucleated and with haemoglobin"
+      },
+      {
+        "id": "D",
+        "text": "Nucleated and without haemoglobin"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 64,
+    "page": 17,
+    "year": "AIPMT 2012 Prelims",
+    "question": "Select the correct statement from the ones given below with respect to Periplaneta americana",
+    "options": [
+      {
+        "id": "A",
+        "text": "Males bear a pair of short thread like anal styles"
+      },
+      {
+        "id": "B",
+        "text": "There are 16 very long Malpighian tubules present at the junctions of midgut and hindgut"
+      },
+      {
+        "id": "C",
+        "text": "Nervous system located dorsally, consists of segmentally arranged ganglia joined by a pair of longitudinal connective"
+      },
+      {
+        "id": "D",
+        "text": "Grinding of food is carried out only by the mouth parts Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 65,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "Consider the following four statements   (A   D)   related to the common frog  Rana tigrina,   and select the correct option starting which ones are true (T) and which ones are false (F). Statements: A. On dry land it would die due to lack of O 2   if its mouth is forcibly kept closed for a few days. B. It has four-chambered heart. C. On dry land it turns uricotelic from ureotelic. D. Its life-history is carried out in pond water.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A-T, B-F, C-F, D-T"
+      },
+      {
+        "id": "B",
+        "text": "A-T, B-T, C-F, D-F"
+      },
+      {
+        "id": "C",
+        "text": "A-F, B-F, C-T, D-T"
+      },
+      {
+        "id": "D",
+        "text": "A-F, B-T, C-T, D-F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 66,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "Ureters act as urinogenital ducts in",
+    "options": [
+      {
+        "id": "A",
+        "text": "human males"
+      },
+      {
+        "id": "B",
+        "text": "human females"
+      },
+      {
+        "id": "C",
+        "text": "both male and female frogs"
+      },
+      {
+        "id": "D",
+        "text": "male frogs"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 67,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "Frogs differ from humans in possessing :",
+    "options": [
+      {
+        "id": "A",
+        "text": "hepatic portal system"
+      },
+      {
+        "id": "B",
+        "text": "paired cerebral hemispheres"
+      },
+      {
+        "id": "C",
+        "text": "nucleated red blood cells"
+      },
+      {
+        "id": "D",
+        "text": "thyroid as well as parathyroid"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 68,
+    "page": 18,
+    "year": "AIPMT 2011 Mains",
+    "question": "The cells lining the blood vessels belong to the category of :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Squamous epithelium"
+      },
+      {
+        "id": "B",
+        "text": "Columnar epithelium"
+      },
+      {
+        "id": "C",
+        "text": "Connective tissue"
+      },
+      {
+        "id": "D",
+        "text": "Smooth muscle tissue"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 69,
+    "page": 18,
+    "year": "AIPMT 2011 Prelims",
+    "question": "The ciliated columnar epithelial cells in humans are known to occur in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Eustachian tube and stomach lining"
+      },
+      {
+        "id": "B",
+        "text": "Bile duct and oesophagus"
+      },
+      {
+        "id": "C",
+        "text": "Fallopian tubes and urethra"
+      },
+      {
+        "id": "D",
+        "text": "Bronchioles and Fallopian tubes"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 70,
+    "page": 18,
+    "year": "AIPMT 2011 Prelims",
+    "question": "Which of the following is correctly stated as it happens in the common cockroach ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Oxygen is transported by haemoglobin in blood"
+      },
+      {
+        "id": "B",
+        "text": "The food is ground by mandibles and gizzard"
+      },
+      {
+        "id": "C",
+        "text": "Nitrogenous excretory product is urea"
+      },
+      {
+        "id": "D",
+        "text": "Malpighian tubules are excretory organs projecting out from the colon Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 71,
+    "page": 19,
+    "year": "AIPMT 2010 Prelims",
+    "question": "The kind of epithelium which forms the inner walls of blood vessels is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Squamous epithelium"
+      },
+      {
+        "id": "B",
+        "text": "Cuboidal epithelium"
+      },
+      {
+        "id": "C",
+        "text": "Columnar epithelium"
+      },
+      {
+        "id": "D",
+        "text": "Ciliated columnar epithelium"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 72,
+    "page": 19,
+    "year": "AIPMT 2009",
+    "question": "Which one of the following is correct pairing of a body part and the kind of muscle tissue that moves it ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Biceps of upper arm – smooth muscle fibres"
+      },
+      {
+        "id": "B",
+        "text": "Iris – Involuntary smooth muscle"
+      },
+      {
+        "id": "C",
+        "text": "Abdominal wall – smooth muscle"
+      },
+      {
+        "id": "D",
+        "text": "Heart wall – Involuntary unstriated muscle"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 73,
+    "page": 19,
+    "year": "AIPMT 2009",
+    "question": "The epithelial tissue present on the inner surface of bronchioles and fallopian tubes is :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Cuboidal"
+      },
+      {
+        "id": "B",
+        "text": "Glandular"
+      },
+      {
+        "id": "C",
+        "text": "Ciliated"
+      },
+      {
+        "id": "D",
+        "text": "Squamous"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 74,
+    "page": 19,
+    "year": "AIPMT 2009",
+    "question": "The cell junctions called tight, adhering and gap junctions are found in :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Connective tissue"
+      },
+      {
+        "id": "B",
+        "text": "Neural tissue"
+      },
+      {
+        "id": "C",
+        "text": "Epithelial tissue"
+      },
+      {
+        "id": "D",
+        "text": "Muscular tissue"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 75,
+    "page": 19,
+    "year": "AIPMT 2009",
+    "question": "The kind of tissue that forms the supportive structure in our pinna (external ears) is also found in -",
+    "options": [
+      {
+        "id": "A",
+        "text": "vertebrae"
+      },
+      {
+        "id": "B",
+        "text": "tip of the nose"
+      },
+      {
+        "id": "C",
+        "text": "ear ossicles"
+      },
+      {
+        "id": "D",
+        "text": "nails"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 76,
+    "page": 19,
+    "year": "AIPMT 2008",
+    "question": "Which one of the following is the true description about an animal concerned?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Frog — Body divisible into three regions-head, neck and trunk"
+      },
+      {
+        "id": "B",
+        "text": "Rat — Left kidney is slightly higher in position than the right one"
+      },
+      {
+        "id": "C",
+        "text": "Earthworm — The alimentary canal consists of a sequence of pharynx, oesophagus, stomach, gizzard and intestine"
+      },
+      {
+        "id": "D",
+        "text": "Cockroach — 10 pairs of spiracles (2 pairs on thorax and 8 pairs on abdomen) Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 77,
+    "page": 20,
+    "year": "AIPMT 2007",
+    "question": "Which one of the following pairs of structures distinguishes a nerve cell from other types of cell ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Perikaryon and dendrites"
+      },
+      {
+        "id": "B",
+        "text": "Nucleus and mitochondria"
+      },
+      {
+        "id": "C",
+        "text": "Flagellum and medullary sheath"
+      },
+      {
+        "id": "D",
+        "text": "Vacuoles and fibres"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 78,
+    "page": 20,
+    "year": "AIPMT 2007",
+    "question": "In which one of the following preparations are you likely to come across cell junctions most frequently ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Thrombocytes"
+      },
+      {
+        "id": "B",
+        "text": "Tendon"
+      },
+      {
+        "id": "C",
+        "text": "Hyaline cartilage"
+      },
+      {
+        "id": "D",
+        "text": "Ciliated epithelium"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 79,
+    "page": 20,
+    "year": "AIPMT 2006",
+    "question": "Areolar connective tissue joins-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Bones with muscles"
+      },
+      {
+        "id": "B",
+        "text": "Bones with bones"
+      },
+      {
+        "id": "C",
+        "text": "Fat body with muscles"
+      },
+      {
+        "id": "D",
+        "text": "Integument with muscles"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 80,
+    "page": 20,
+    "year": "AIPMT 2006",
+    "question": "Mast cells secrete-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Histamine"
+      },
+      {
+        "id": "B",
+        "text": "Hippurin"
+      },
+      {
+        "id": "C",
+        "text": "Heamoglobin"
+      },
+      {
+        "id": "D",
+        "text": "Myoglobin"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 81,
+    "page": 20,
+    "year": "AIPMT 2005",
+    "question": "Four healthy people in their twenties got involved in injuries resulting in damage and death of a few cell of the following. Which of the cells are least likely to be replaced by new cells -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Malpighian layer of the skin"
+      },
+      {
+        "id": "B",
+        "text": "Osteocytes"
+      },
+      {
+        "id": "C",
+        "text": "Neurons"
+      },
+      {
+        "id": "D",
+        "text": "Liver cells"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 82,
+    "page": 20,
+    "year": "AIPMT 2004",
+    "question": "Mast cells of connective tissue contain -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Heparin and calcitonin"
+      },
+      {
+        "id": "B",
+        "text": "Heparin and histamine"
+      },
+      {
+        "id": "C",
+        "text": "Vasopressin and relaxin"
+      },
+      {
+        "id": "D",
+        "text": "Serotonin and melanin"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 83,
+    "page": 20,
+    "year": "AIPMT 2003",
+    "question": "Ommatidia serve the purpose of photoreception in",
+    "options": [
+      {
+        "id": "A",
+        "text": "cockroach"
+      },
+      {
+        "id": "B",
+        "text": "frog"
+      },
+      {
+        "id": "C",
+        "text": "humans"
+      },
+      {
+        "id": "D",
+        "text": "sunflower. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 84,
+    "page": 21,
+    "year": "AIPMT 2003",
+    "question": "Which one of the following contains the largest quantity of extracellular material ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Stratified epithelium"
+      },
+      {
+        "id": "B",
+        "text": "Myelinated nerve fibres"
+      },
+      {
+        "id": "C",
+        "text": "Striated muscle"
+      },
+      {
+        "id": "D",
+        "text": "Aerolar tissue"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 85,
+    "page": 21,
+    "year": "AIPMT 2002",
+    "question": "Which cartilage is present at the end of long bones?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Calcified cartilage"
+      },
+      {
+        "id": "B",
+        "text": "Hyaline cartilage"
+      },
+      {
+        "id": "C",
+        "text": "Elastic cartilage"
+      },
+      {
+        "id": "D",
+        "text": "Fibrous cartilage"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 86,
+    "page": 21,
+    "year": "AIPMT 2002",
+    "question": "Collagen is : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Globular protein"
+      },
+      {
+        "id": "B",
+        "text": "Fibrous protein"
+      },
+      {
+        "id": "C",
+        "text": "Carbohydrate"
+      },
+      {
+        "id": "D",
+        "text": "Lipid"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 87,
+    "page": 21,
+    "year": "AIPMT 2002",
+    "question": "Melanin protect from :-",
+    "options": [
+      {
+        "id": "A",
+        "text": "Infrared rays"
+      },
+      {
+        "id": "B",
+        "text": "U.V. rays"
+      },
+      {
+        "id": "C",
+        "text": "Visible rays"
+      },
+      {
+        "id": "D",
+        "text": "X-rays"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 88,
+    "page": 21,
+    "year": "AIPMT 2001",
+    "question": "During an injury Nasal septum gets damaged and for it's recovery which cartilage prefered : -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Fibrous cartilage"
+      },
+      {
+        "id": "B",
+        "text": "Elastic cartilage"
+      },
+      {
+        "id": "C",
+        "text": "Calcified cartilage"
+      },
+      {
+        "id": "D",
+        "text": "Hyaline cartilage"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 89,
+    "page": 21,
+    "year": "AIPMT 2001",
+    "question": "Which cells do not form layer and remains structurally seperate ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Nerve cells"
+      },
+      {
+        "id": "B",
+        "text": "Epithelial cells"
+      },
+      {
+        "id": "C",
+        "text": "Gland cells"
+      },
+      {
+        "id": "D",
+        "text": "Muscle cells"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 90,
+    "page": 21,
+    "year": "AIPMT 2000",
+    "question": "Proteoglycan in cartilages which is part of polysaccharide is",
+    "options": [
+      {
+        "id": "A",
+        "text": "Ossein"
+      },
+      {
+        "id": "B",
+        "text": "Cartilegen"
+      },
+      {
+        "id": "C",
+        "text": "Chondroitin"
+      },
+      {
+        "id": "D",
+        "text": "Casein Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 91,
+    "page": 22,
+    "year": "AIPMT 2000",
+    "question": "Characteristic of simple epithelium is that they",
+    "options": [
+      {
+        "id": "A",
+        "text": "Continue to divide and help in organ function"
+      },
+      {
+        "id": "B",
+        "text": "They are arranged indiscriminately"
+      },
+      {
+        "id": "C",
+        "text": "They make a definite layer"
+      },
+      {
+        "id": "D",
+        "text": "None"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 92,
+    "page": 22,
+    "year": "AIPMT 2000",
+    "question": "Which pair is correct ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Sebum = sexual attraction"
+      },
+      {
+        "id": "B",
+        "text": "Saliva = sense of food taste"
+      },
+      {
+        "id": "C",
+        "text": "Sweat = temperature regulation"
+      },
+      {
+        "id": "D",
+        "text": "Humerus = Hind leg"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 93,
+    "page": 22,
+    "year": "AIPMT 1999",
+    "question": "Ligament is a :",
+    "options": [
+      {
+        "id": "A",
+        "text": "modified yellow elastic fibrous tissue"
+      },
+      {
+        "id": "B",
+        "text": "inelastic white fibrous tissue"
+      },
+      {
+        "id": "C",
+        "text": "modified white fibrous tissue"
+      },
+      {
+        "id": "D",
+        "text": "none of the above"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 94,
+    "page": 22,
+    "year": "AIPMT 1999",
+    "question": "Tendon is made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "adipose tissue"
+      },
+      {
+        "id": "B",
+        "text": "modified white fibrous tissue"
+      },
+      {
+        "id": "C",
+        "text": "areolar tissue"
+      },
+      {
+        "id": "D",
+        "text": "yellow fibrous connective tissue"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 95,
+    "page": 22,
+    "year": "AIPMT 1997",
+    "question": "Protein present in cartilage is",
+    "options": [
+      {
+        "id": "A",
+        "text": "cartilagin"
+      },
+      {
+        "id": "B",
+        "text": "ossein"
+      },
+      {
+        "id": "C",
+        "text": "chondrin"
+      },
+      {
+        "id": "D",
+        "text": "none of these"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 96,
+    "page": 22,
+    "year": "AIPMT 1997",
+    "question": "Basement membrane is made up of",
+    "options": [
+      {
+        "id": "A",
+        "text": "no cell product of epithelial cell"
+      },
+      {
+        "id": "B",
+        "text": "epidermal cell only"
+      },
+      {
+        "id": "C",
+        "text": "endodermal cell"
+      },
+      {
+        "id": "D",
+        "text": "both (b) and (c)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 97,
+    "page": 22,
+    "year": "AIPMT 1997",
+    "question": "Stratum germinativum is an example of which kind of epithelium?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Columnar"
+      },
+      {
+        "id": "B",
+        "text": "Squamous"
+      },
+      {
+        "id": "C",
+        "text": "Cuboidal"
+      },
+      {
+        "id": "D",
+        "text": "Ciliated Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 98,
+    "page": 23,
+    "year": "AIPMT 1997",
+    "question": "The roof of the cranium of frog is formed by",
+    "options": [
+      {
+        "id": "A",
+        "text": "frontoparietal"
+      },
+      {
+        "id": "B",
+        "text": "orbitosphenoid"
+      },
+      {
+        "id": "C",
+        "text": "parasphenoid"
+      },
+      {
+        "id": "D",
+        "text": "alisphenoid"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 99,
+    "page": 23,
+    "year": "AIPMT 1997",
+    "question": "In frog, the surface of attachment of tongue is",
+    "options": [
+      {
+        "id": "A",
+        "text": "pterygoid"
+      },
+      {
+        "id": "B",
+        "text": "hyoid apparatus"
+      },
+      {
+        "id": "C",
+        "text": "parasphenoid"
+      },
+      {
+        "id": "D",
+        "text": "palatine"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 100,
+    "page": 23,
+    "year": "AIPMT 1997",
+    "question": "In frog, \"fenestra ovalis\" is",
+    "options": [
+      {
+        "id": "A",
+        "text": "the communication between the pharynx and the tympanic cavity"
+      },
+      {
+        "id": "B",
+        "text": "the external opening of the tympanic cavity which is covered by the tympanic membrane"
+      },
+      {
+        "id": "C",
+        "text": "the air filled cavity of the middle ear"
+      },
+      {
+        "id": "D",
+        "text": "the opening in the auditory capsule which separates the middle ear from the internal ear"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 101,
+    "page": 23,
+    "year": "AIPMT 1997",
+    "question": "The kidney of an adult frog is",
+    "options": [
+      {
+        "id": "A",
+        "text": "metanephros"
+      },
+      {
+        "id": "B",
+        "text": "opisthonephros"
+      },
+      {
+        "id": "C",
+        "text": "pronephros"
+      },
+      {
+        "id": "D",
+        "text": "mesonephros"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 102,
+    "page": 23,
+    "year": "AIPMT 1995",
+    "question": "The desmosomes are concerned with",
+    "options": [
+      {
+        "id": "A",
+        "text": "cell division"
+      },
+      {
+        "id": "B",
+        "text": "cell adherence"
+      },
+      {
+        "id": "C",
+        "text": "cytolysis"
+      },
+      {
+        "id": "D",
+        "text": "cellular excretion"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 103,
+    "page": 23,
+    "year": "AIPMT 1994",
+    "question": "An epithelial tissue which has thin flat cells, arranged edge to edge so as to appear like closely packed tiles, is found to be present at",
+    "options": [
+      {
+        "id": "A",
+        "text": "outer surface of ovary"
+      },
+      {
+        "id": "B",
+        "text": "inner lining of fallopian tube"
+      },
+      {
+        "id": "C",
+        "text": "inner lining of stomach"
+      },
+      {
+        "id": "D",
+        "text": "inner lining of cheeks"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 104,
+    "page": 23,
+    "year": "AIPMT 1993",
+    "question": "Tracheae of cockroach and mammal are similar in having",
+    "options": [
+      {
+        "id": "A",
+        "text": "paired nature"
+      },
+      {
+        "id": "B",
+        "text": "noncollapsible walls"
+      },
+      {
+        "id": "C",
+        "text": "ciliated inner lining"
+      },
+      {
+        "id": "D",
+        "text": "origin from head Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 105,
+    "page": 24,
+    "year": "AIPMT 1993",
+    "question": "Hair present in the skin are",
+    "options": [
+      {
+        "id": "A",
+        "text": "epidermal in origin and made of dead cells"
+      },
+      {
+        "id": "B",
+        "text": "epidermal in origin and made of living cells"
+      },
+      {
+        "id": "C",
+        "text": "dermal in origin and made of living cells"
+      },
+      {
+        "id": "D",
+        "text": "dermal in origin and made of dead cells"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 106,
+    "page": 24,
+    "year": "AIPMT 1993",
+    "question": "The layer of actively dividing cells of skin is termed as",
+    "options": [
+      {
+        "id": "A",
+        "text": "stratum compactum"
+      },
+      {
+        "id": "B",
+        "text": "stratum corneum"
+      },
+      {
+        "id": "C",
+        "text": "stratum malpighii/stratum germinativum"
+      },
+      {
+        "id": "D",
+        "text": "stratum lucidum"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 107,
+    "page": 24,
+    "year": "AIPMT 1993",
+    "question": "Formation of cartilage bones involves",
+    "options": [
+      {
+        "id": "A",
+        "text": "deposition of bony matter by osteoblasts and resorption by chondroclasts"
+      },
+      {
+        "id": "B",
+        "text": "deposition of bony matter by osteoclasts"
+      },
+      {
+        "id": "C",
+        "text": "deposition of bony matter by osteoclasts only"
+      },
+      {
+        "id": "D",
+        "text": "deposition of bony matter by osteoblasts only"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 108,
+    "page": 24,
+    "year": "AIPMT 1993",
+    "question": "Mucus helps frog in forming",
+    "options": [
+      {
+        "id": "A",
+        "text": "thick skin"
+      },
+      {
+        "id": "B",
+        "text": "dry skin"
+      },
+      {
+        "id": "C",
+        "text": "smooth skin"
+      },
+      {
+        "id": "D",
+        "text": "moist skin"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 109,
+    "page": 24,
+    "year": "AIPMT 1992",
+    "question": "Assertion (A):  Periplaneta americana   is nocturnal, omnivorous, household pest. Reason (R):   It is because it acts as scavenger.",
+    "options": [
+      {
+        "id": "A",
+        "text": "A is true but R is false."
+      },
+      {
+        "id": "B",
+        "text": "A is false but R is true."
+      },
+      {
+        "id": "C",
+        "text": "Both A and R are true and R is correct explanation of A."
+      },
+      {
+        "id": "D",
+        "text": "Both A and R are true but R is not correct explanation of A. Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 110,
+    "page": 25,
+    "year": "AIPMT 1992",
+    "question": "Characteristics of smooth muscle fibres are",
+    "options": [
+      {
+        "id": "A",
+        "text": "spindle-shaped, unbranched, nonstriated, uninucleate and involuntary"
+      },
+      {
+        "id": "B",
+        "text": "spindle-shaped, unbranched, unstriped, multinucleate and involuntary"
+      },
+      {
+        "id": "C",
+        "text": "cylindrical, unbranched, unstriped, multinucleate and involuntary"
+      },
+      {
+        "id": "D",
+        "text": "cylindrical, unbranched, striated, multinucleate and voluntary"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 111,
+    "page": 25,
+    "year": "AIPMT 1991",
+    "question": "Male and female cockroaches can be distinguished externally through",
+    "options": [
+      {
+        "id": "A",
+        "text": "anal styles in male"
+      },
+      {
+        "id": "B",
+        "text": "anal cerci in female"
+      },
+      {
+        "id": "C",
+        "text": "anal style and antennae in females"
+      },
+      {
+        "id": "D",
+        "text": "both (b) and (c)"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 112,
+    "page": 25,
+    "year": "AIPMT 1989",
+    "question": "Extremities of long bones possess which of the following cartilages?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Calcified"
+      },
+      {
+        "id": "B",
+        "text": "Fibrous"
+      },
+      {
+        "id": "C",
+        "text": "Elastic"
+      },
+      {
+        "id": "D",
+        "text": "Hyaline"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 113,
+    "page": 25,
+    "year": "AIPMT 1989",
+    "question": "Haversian canals occur in",
+    "options": [
+      {
+        "id": "A",
+        "text": "humerus"
+      },
+      {
+        "id": "B",
+        "text": "pubis"
+      },
+      {
+        "id": "C",
+        "text": "scapula"
+      },
+      {
+        "id": "D",
+        "text": "clavicle"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 114,
+    "page": 25,
+    "year": "AIPMT 1989",
+    "question": "Histamine secreting cells are found in",
+    "options": [
+      {
+        "id": "A",
+        "text": "connective tissues"
+      },
+      {
+        "id": "B",
+        "text": "lungs"
+      },
+      {
+        "id": "C",
+        "text": "muscular tissue"
+      },
+      {
+        "id": "D",
+        "text": "nervous tissue"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 115,
+    "page": 25,
+    "year": "AIPMT 1988",
+    "question": "RBCs do not occur in",
+    "options": [
+      {
+        "id": "A",
+        "text": "frog"
+      },
+      {
+        "id": "B",
+        "text": "cow"
+      },
+      {
+        "id": "C",
+        "text": "camel"
+      },
+      {
+        "id": "D",
+        "text": "cockroach Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 116,
+    "page": 26,
+    "year": "NEET 2022 Phase 1   ·   MCQ (Single Correct Answer)",
+    "question": "Which of the following is present between the adjacent bones of the vertebral column?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Intercalated discs"
+      },
+      {
+        "id": "B",
+        "text": "Cartilage"
+      },
+      {
+        "id": "C",
+        "text": "Areolar tissue"
+      },
+      {
+        "id": "D",
+        "text": "Smooth muscle"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 117,
+    "page": 26,
+    "year": "NEET 2021   ·   MCQ (Single Correct Answer)",
+    "question": "Following are the statements about prostomium of earthworm:\n(1) It serves as a covering for mouth.\n(2) It helps to open cracks in the soil into which it can crawl.\n(3) It is one of the sensory structures.\n(4) It is the first body segment.\n\nChoose the correct answer from the options given below:",
+    "options": [
+      {
+        "id": "A",
+        "text": "(2) and (3) are correct"
+      },
+      {
+        "id": "B",
+        "text": "(1), (2) and (3) are correct"
+      },
+      {
+        "id": "C",
+        "text": "(1), (2) and (4) are correct"
+      },
+      {
+        "id": "D",
+        "text": "(1), (2), (3) and (4) are correct"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\n- **Prostomium** is a fleshy lobe that overhangs the mouth (serves as a covering for the mouth) -> (1) is correct.\n- It is used as a wedge to open cracks in the soil for burrowing -> (2) is correct.\n- The prostomium is sensory in function -> (3) is correct.\n- The first body segment is the **peristomium** (buccal segment), which contains the mouth. The prostomium is pre-segmental, not the first body segment -> (4) is incorrect.\n\nTherefore, **(1), (2) and (3) are correct**."
+  },
+  {
+    "num": 118,
+    "page": 26,
+    "year": "NEET 2020 Phase 1   ·   MCQ (Single Correct Answer)",
+    "question": "Goblet cells of alimentary canal are modified from",
+    "options": [
+      {
+        "id": "A",
+        "text": "Columnar epithelial cells"
+      },
+      {
+        "id": "B",
+        "text": "Compound epithelial cells"
+      },
+      {
+        "id": "C",
+        "text": "Squamous epithelial cells"
+      },
+      {
+        "id": "D",
+        "text": "Chondrocytes"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 119,
+    "page": 26,
+    "year": "AIPMT 2011 Mains   ·   MCQ (Single Correct Answer)",
+    "question": "Which one of the following structure in pheretima is correctly matched with its function ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Gizzard-absorbs digested food"
+      },
+      {
+        "id": "B",
+        "text": "Setae-defence against predators"
+      },
+      {
+        "id": "C",
+        "text": "Typhlosole-storage of extra nutrients"
+      },
+      {
+        "id": "D",
+        "text": "Clitellum-secretes cocoon"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 120,
+    "page": 26,
+    "year": "AIPMT 2011 Prelims   ·   MCQ (Single Correct Answer)",
+    "question": "One very special feature in the earthworm pheretima is that :",
+    "options": [
+      {
+        "id": "A",
+        "text": "The S-shaped state embedded in the integument are the defensive weapons used against the enemies"
+      },
+      {
+        "id": "B",
+        "text": "It has a long dorsal tubular heart"
+      },
+      {
+        "id": "C",
+        "text": "The typhlosole greatly increases the effective absorption area of the digested food in the intestine"
+      },
+      {
+        "id": "D",
+        "text": "Fertilisation of eggs occurs inside the body Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 121,
+    "page": 27,
+    "year": "AIPMT 2009   ·   MCQ (Single Correct Answer)",
+    "question": "If a live earthworm is pricked with a needle on its outer surface without damaging its gut, the fluid that comes out is",
+    "options": [
+      {
+        "id": "A",
+        "text": "coelomic fluid"
+      },
+      {
+        "id": "B",
+        "text": "haemolymph"
+      },
+      {
+        "id": "C",
+        "text": "slimy mucus"
+      },
+      {
+        "id": "D",
+        "text": "excretory fluid."
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 122,
+    "page": 27,
+    "year": "AIPMT 2009   ·   MCQ (Single Correct Answer)",
+    "question": "Which one of the following correctly described the location of some body parts in the earthworm Pheretima ?",
+    "options": [
+      {
+        "id": "A",
+        "text": "Two pairs of testes in 10th and 11th segments."
+      },
+      {
+        "id": "B",
+        "text": "One pair of ovaries attached at intersegmental septum of 14th and 15th segments."
+      },
+      {
+        "id": "C",
+        "text": "Two pairs of accessory glands in 16–18 segments"
+      },
+      {
+        "id": "D",
+        "text": "Four pairs of spermathecae in 4–7 segments"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\n- **Testes**: Two pairs situated in the $10^{\\text{th}}$ and $11^{\\text{th}}$ segments (Correct).\n- **Ovaries**: One pair attached at the intersegmental septum of the $12^{\\text{th}}$ and $13^{\\text{th}}$ segments (not 14-15).\n- **Accessory glands**: Two pairs situated in the $17^{\\text{th}}$ and $19^{\\text{th}}$ segments.\n- **Spermathecae**: Four pairs located in segments 6 to 9 (intersegmental grooves 5/6, 6/7, 7/8, and 8/9)."
+  },
+  {
+    "num": 123,
+    "page": 27,
+    "year": "AIPMT 2008   ·   MCQ (Single Correct Answer)",
+    "question": "Earthworms have no skeleton but during burrowing the anterior end becomes turgid and acts as a hydraulic skeleton. It is due to:",
+    "options": [
+      {
+        "id": "A",
+        "text": "coelomic fluid"
+      },
+      {
+        "id": "B",
+        "text": "gut peristalsis"
+      },
+      {
+        "id": "C",
+        "text": "blood"
+      },
+      {
+        "id": "D",
+        "text": "setae"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 124,
+    "page": 27,
+    "year": "AIPMT 2006   ·   MCQ (Single Correct Answer)",
+    "question": "Earthworms are -",
+    "options": [
+      {
+        "id": "A",
+        "text": "Uricotelic when plenty of water is available"
+      },
+      {
+        "id": "B",
+        "text": "Ammonotelic when plenty of water is available."
+      },
+      {
+        "id": "C",
+        "text": "Ureotelic when plenty of water is available"
+      },
+      {
+        "id": "D",
+        "text": "Uricotelic under conditions of water scarcity"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 125,
+    "page": 27,
+    "year": "AIPMT 2000   ·   MCQ (Single Correct Answer)",
+    "question": "Primary function of enteronephric nephridia of Pheretima :",
+    "options": [
+      {
+        "id": "A",
+        "text": "Excretion of nitrogenous waste"
+      },
+      {
+        "id": "B",
+        "text": "Locomotion"
+      },
+      {
+        "id": "C",
+        "text": "Osmoregulation"
+      },
+      {
+        "id": "D",
+        "text": "Respiration"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  },
+  {
+    "num": 126,
+    "page": 27,
+    "year": "AIPMT 1991   ·   MCQ (Single Correct Answer)",
+    "question": "Earthworm possesses hearts",
+    "options": [
+      {
+        "id": "A",
+        "text": "6 pairs"
+      },
+      {
+        "id": "B",
+        "text": "4 pairs"
+      },
+      {
+        "id": "C",
+        "text": "2 pairs"
+      },
+      {
+        "id": "D",
+        "text": "1 Exam GOAL P Y Q   P D F"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 127,
+    "page": 28,
+    "year": "AIPMT 1990   ·   MCQ (Single Correct Answer)",
+    "question": "Blood of  Pheretima   is",
+    "options": [
+      {
+        "id": "A",
+        "text": "blue with haemocyanin in corpuscles"
+      },
+      {
+        "id": "B",
+        "text": "blue with haemocyanin in plasma"
+      },
+      {
+        "id": "C",
+        "text": "red with haemoglobin in corpuscles"
+      },
+      {
+        "id": "D",
+        "text": "red with haemoglobin in plasma"
+      }
+    ],
+    "correctOption": "D",
+    "explanation": "**Correct Option: D**\n\nAccording to the official NEET Answer Key, the correct answer is option (D)."
+  },
+  {
+    "num": 128,
+    "page": 28,
+    "year": "AIPMT 1990   ·   MCQ (Single Correct Answer)",
+    "question": "Pheretima posthuma   is highly useful as",
+    "options": [
+      {
+        "id": "A",
+        "text": "their burrows make the soil loose"
+      },
+      {
+        "id": "B",
+        "text": "they make the soil porous, leave their castings and take organic debris in the soil"
+      },
+      {
+        "id": "C",
+        "text": "they are used as fish meal"
+      },
+      {
+        "id": "D",
+        "text": "they kill the birds due to biomagnification of chlorinated hydrocarbons"
+      }
+    ],
+    "correctOption": "B",
+    "explanation": "**Correct Option: B**\n\nAccording to the official NEET Answer Key, the correct answer is option (B)."
+  },
+  {
+    "num": 129,
+    "page": 28,
+    "year": "AIPMT 1989   ·   MCQ (Single Correct Answer)",
+    "question": "Earthworms are",
+    "options": [
+      {
+        "id": "A",
+        "text": "useful"
+      },
+      {
+        "id": "B",
+        "text": "harmful"
+      },
+      {
+        "id": "C",
+        "text": "more useful than harmful"
+      },
+      {
+        "id": "D",
+        "text": "more harmful"
+      }
+    ],
+    "correctOption": "A",
+    "explanation": "**Correct Option: A**\n\nAccording to the official NEET Answer Key, the correct answer is option (A)."
+  },
+  {
+    "num": 130,
+    "page": 28,
+    "year": "AIPMT 1989   ·   MCQ (Single Correct Answer)",
+    "question": "Photoreceptors of earthworm occur on",
+    "options": [
+      {
+        "id": "A",
+        "text": "clitellum"
+      },
+      {
+        "id": "B",
+        "text": "many eyes"
+      },
+      {
+        "id": "C",
+        "text": "dorsal surface"
+      },
+      {
+        "id": "D",
+        "text": "lateral sides"
+      }
+    ],
+    "correctOption": "C",
+    "explanation": "**Correct Option: C**\n\nAccording to the official NEET Answer Key, the correct answer is option (C)."
+  }
+]
