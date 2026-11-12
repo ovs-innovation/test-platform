@@ -1,0 +1,2378 @@
+[
+  {
+    "_source_num": 1,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is used as a clot buster?",
+    "options": [
+      "Statins",
+      "Streptokinase",
+      "Penicillin",
+      "Cyclosporin A"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Streptokinase**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 2,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match List I with List II:\n\n| List I (Bioactive molecules) | List II (Importance) |\n| :--- | :--- |\n| A. Streptokinase | II. Removal of clots from the blood vessels |\n| B. Statins | III. Blood cholesterol-lowering agent |\n| C. Lipases | IV. Detergent formulations |\n| D. Cyclosporin A | I. Immunosuppressive agent |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-II, B-III, C-I, D-IV",
+      "A-IV, B-III, C-II, D-I",
+      "A-III, B-II, C-IV, D-I",
+      "A-II, B-III, C-IV, D-I"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• **Streptokinase** (produced by *Streptococcus*): Used as a 'clot buster' for removing clots from blood vessels of patients suffering myocardial infarction (A-II).\n• **Statins** (produced by *Monascus purpureus*): Blood cholesterol-lowering agent (B-III).\n• **Lipases**: Used in detergent formulations to remove oily stains (C-IV).\n• **Cyclosporin A** (produced by *Trichoderma polysporum*): Immunosuppressive agent in organ transplantation (D-I).\nHence, the correct match is **A-II, B-III, C-IV, D-I**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 3,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "What is the reason behind production of large holes in 'Swiss Cheese'?",
+    "options": [
+      "The production of large amount of by Propionibacterium sharmanii",
+      "The production of large amount of by Clostridium butylicum",
+      "The production of large amount of and by lactic acid bacteria called Lactobacillus",
+      "The production of large amount of and by Trichoderma polysporum"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **The production of large amount of by Propionibacterium sharmanii**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 4,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is an example of non-distilled alcoholic beverage produced by yeast?",
+    "options": [
+      "Beer",
+      "Rum",
+      "Whisky",
+      "Brandy Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Beer**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 5,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of following organisms cannot fix nitrogen? A. Azotobacter B. Oscillatoria C. Anabaena D. Volvox E. Nostoc Choose the correct answer from the options given below:",
+    "options": [
+      "B only",
+      "E only",
+      "A only",
+      "D only"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **D only**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 6,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Streptokinase produced by bacterium Streptococcus is used for",
+    "options": [
+      "Liver disease treatment",
+      "Removing clots from blood vessels",
+      "Curd production",
+      "Ethanol production"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Removing clots from blood vessels**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 7,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following microbes is NOT involved in the preparation of household products? A. Aspergillus niger B. Lactobacillus C. Trichoderma polysporum D. Saccharomyces cerevisiae E. Propionibacterium sharmanii Choose the correct answer from the options given below:",
+    "options": [
+      "C and D only",
+      "C and E only",
+      "A and B only",
+      "A and C only Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **A and C only Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 8,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match List-I with List-II relating to microbes and their products:\n\n| List - I (Microbes) | List - II (Products) |\n| :--- | :--- |\n| (A) Streptococcus | (II) Clot buster |\n| (B) Trichoderma polysporum | (III) Cyclosporin A |\n| (C) Monascus purpureus | (IV) Statins |\n| (D) Aspergillus niger | (I) Citric acid |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-II, B-III, C-IV, D-I",
+      "A-I, B-II, C-III, D-IV",
+      "A-I, B-III, C-II, D-IV",
+      "A-I, B-IV, C-II, D-III"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• *Streptococcus* produces streptokinase (Clot buster): (A)-(II)\n• *Trichoderma polysporum* produces Cyclosporin A: (B)-(III)\n• *Monascus purpureus* produces Statins: (C)-(IV)\n• *Aspergillus niger* produces Citric acid: (D)-(I)\nHence, the correct match is **A-II, B-III, C-IV, D-I**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 9,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match List I with List II:\n\n| List - I | List - II |\n| :--- | :--- |\n| A. Clostridium butylicum | III. Butyric acid |\n| B. Saccharomyces cerevisiae | I. Ethanol |\n| C. Trichoderma polysporum | IV. Cyclosporin-A |\n| D. Streptococcus sp. | II. Streptokinase |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "A-III, B-I, C-II, D-IV",
+      "A-II, B-IV, C-III, D-I",
+      "A-III, B-I, C-IV, D-II",
+      "A-IV, B-I, C-III, D-II"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "• *Clostridium butylicum* (bacterium) produces butyric acid: (A)-(III)\n• *Saccharomyces cerevisiae* (yeast) ferments sugars to ethanol: (B)-(I)\n• *Trichoderma polysporum* (fungus) produces cyclosporin-A: (C)-(IV)\n• *Streptococcus sp.* (bacterium) produces streptokinase: (D)-(II)\nHence, the correct match is **A-III, B-I, C-IV, D-II**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 10,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following pair represents free living nitrogen fixing aerobic bacteria?",
+    "options": [
+      "Pseudomonas and Thiobacillus",
+      "Rhizobium and Frankia",
+      "Azotobacter and Beijernickia",
+      "Anabaena and Rhodospirillum"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Azotobacter and Beijernickia**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 11,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Identify the microorganism which is responsible for the production of an immunosuppressive molecule cyclosporin A :",
+    "options": [
+      "Trichoderma polysporum",
+      "Clostridium butylicum",
+      "Aspergillus niger",
+      "Streptococcus cerevisiae Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Trichoderma polysporum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 12,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match List-I with List-II:\n\n| List-I | List-II |\n| :--- | :--- |\n| (a) Aspergillus niger | (iii) Citric Acid |\n| (b) Acetobacter aceti | (i) Acetic Acid |\n| (c) Clostridium butylicum | (iv) Butyric Acid |\n| (d) Lactobacillus | (ii) Lactic Acid |\n\nChoose the correct answer from the options given below:",
+    "options": [
+      "(a)-(iv), (b)-(ii), (c)-(i), (d)-(iii)",
+      "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)",
+      "(a)-(i), (b)-(ii), (c)-(iii), (d)-(iv)",
+      "(a)-(ii), (b)-(iii), (c)-(i), (d)-(iv)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• *Aspergillus niger* (fungus) $\\rightarrow$ Citric Acid: (a)-(iii)\n• *Acetobacter aceti* (bacterium) $\\rightarrow$ Acetic Acid: (b)-(i)\n• *Clostridium butylicum* (bacterium) $\\rightarrow$ Butyric Acid: (c)-(iv)\n• *Lactobacillus* (bacterium) $\\rightarrow$ Lactic Acid: (d)-(ii)\nHence, the correct match is **(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 13,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Cyclosporin A, used as immunosuppression agent, is produced from :",
+    "options": [
+      "Trichoderma polysporum",
+      "Monascus purpureus",
+      "Saccharomyces cerevisiae",
+      "Penicillium notatum"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Trichoderma polysporum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 14,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "For the commercial and industrial production of Citric Acid, which of the following microbes is used ?",
+    "options": [
+      "Clostridium butylicum",
+      "Aspergillus niger",
+      "Lactobacillus sp",
+      "Saccharomyces cerevisiae Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Aspergillus niger**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 15,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match the following columns and select the correct option :\n\n| Column - I | Column - II |\n| :--- | :--- |\n| (a) Dragonflies | (ii) Get rid of Aphids and mosquitoes |\n| (b) Bacillus thuringiensis | (iv) Biocontrol agents of lepidopteran plant pests |\n| (c) Glomus | (v) Absorb phosphorus from soil |\n| (d) Baculoviruses | (iii) Narrow spectrum insecticidal applications |\n\nSelect the correct option :",
+    "options": [
+      "(a)-(ii), (b)-(iv), (c)-(v), (d)-(iii)",
+      "(a)-(iii), (b)-(v), (c)-(iv), (d)-(i)",
+      "(a)-(ii), (b)-(i), (c)-(iii), (d)-(iv)",
+      "(a)-(ii), (b)-(iii), (c)-(iv), (d)-(v)"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "• Dragonflies are biocontrol agents used to get rid of mosquitoes: (a)-(ii)\n• *Bacillus thuringiensis* controls caterpillars and lepidopteran pests: (b)-(iv)\n• *Glomus* (mycorrhiza) absorbs phosphorus from soil for the host plant: (c)-(v)\n• Baculoviruses are narrow spectrum species-specific insecticidal viruses: (d)-(iii)\nHence, option (A) is correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 16,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is put into Anaerobic sludge digester for further sewage treatment?",
+    "options": [
+      "Effluents of primary treatment",
+      "Primary sludge",
+      "Floating debris",
+      "Activated sludge"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Activated sludge**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 17,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match the following columns and select the correct option :\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Clostridium butylicum | (ii) Butyric Acid |\n| (b) Trichoderma polysporum | (i) Cyclosporin-A |\n| (c) Monascus purpureus | (iv) Blood cholesterol lowering agent |\n| (d) Aspergillus niger | (iii) Citric Acid |\n\nChoose the correct option:",
+    "options": [
+      "(a) $\\rightarrow$ (iii), (b) $\\rightarrow$ (iv), (c) $\\rightarrow$ (ii), (d) $\\rightarrow$ (i)",
+      "(a) $\\rightarrow$ (i), (b) $\\rightarrow$ (ii), (c) $\\rightarrow$ (iv), (d) $\\rightarrow$ (iii)",
+      "(a) $\\rightarrow$ (iv), (b) $\\rightarrow$ (iii), (c) $\\rightarrow$ (ii), (d) $\\rightarrow$ (i)",
+      "(a) $\\rightarrow$ (ii), (b) $\\rightarrow$ (i), (c) $\\rightarrow$ (iv), (d) $\\rightarrow$ (iii)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• *Clostridium butylicum* produces Butyric Acid: (a) $\\rightarrow$ (ii)\n• *Trichoderma polysporum* produces Cyclosporin-A: (b) $\\rightarrow$ (i)\n• *Monascus purpureus* produces Statins (Blood cholesterol lowering agent): (c) $\\rightarrow$ (iv)\n• *Aspergillus niger* produces Citric Acid: (d) $\\rightarrow$ (iii)\nHence, the correct option is (D).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 18,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following statements about methanogens is not correct ?",
+    "options": [
+      "They produce methane gas",
+      "They can be used to produce biogas",
+      "They are found in the rumen of cattle and their excreta",
+      "They grow aerobically and breakdown cellulose-rich food Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **They grow aerobically and breakdown cellulose-rich food Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 19,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Among the following pairs of microbes, which pair has both the microbes that can be used as biofertilizers?",
+    "options": [
+      "Aspergillus and Cyanobacteria",
+      "Aspergillus and Rhizopus",
+      "Rhizobium and Rhizopus",
+      "Cyanobacteria and Rhizobium"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Cyanobacteria and Rhizobium**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 20,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A biocontrol agent to be a part of an integrated pest management should be",
+    "options": [
+      "Species-specific and inactive on non-target organisms",
+      "Species-specific and symbiotic",
+      "Free living and broad spectrum",
+      "Narrow spectrum and symbiotic"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Species-specific and inactive on non-target organisms**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 21,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Select the correct group of biocontrol agents.",
+    "options": [
+      "Oscillatoria , Rhizobium, Trichoderma",
+      "Nostoc, Azospirillium, Nucleopolyhedrovirus",
+      "Bacillus thuringiensis , Tobacco mosaic virus, Aphids",
+      "Trichoderma, Baculovirus, Bacillus thuringiensis Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Trichoderma, Baculovirus, Bacillus thuringiensis Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 22,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match the following organisms with the products they produce :\n\n| Organism | Product |\n| :--- | :--- |\n| (a) Lactobacillus | (ii) Curd |\n| (b) Saccharomyces cerevisiae | (iv) Bread |\n| (c) Aspergillus niger | (iii) Citric Acid |\n| (d) Acetobacter aceti | (v) Acetic Acid |\n\nSelect the correct option:",
+    "options": [
+      "(a)-(iii), (b)-(iv), (c)-(v), (d)-(i)",
+      "(a)-(ii), (b)-(i), (c)-(iii), (d)-(v)",
+      "(a)-(ii), (b)-(iv), (c)-(v), (d)-(iii)",
+      "(a)-(ii), (b)-(iv), (c)-(iii), (d)-(v)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "• *Lactobacillus* converts milk to curd: (a)-(ii)\n• *Saccharomyces cerevisiae* ferments dough in bread making: (b)-(iv)\n• *Aspergillus niger* produces citric acid: (c)-(iii)\n• *Acetobacter aceti* produces acetic acid (vinegar): (d)-(v)\nHence, the correct match is **(a)-(ii), (b)-(iv), (c)-(iii), (d)-(v)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 23,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following can be used as a biocontrol agent in the treatment of plant disease?",
+    "options": [
+      "Anabaena",
+      "Lactobacillus",
+      "Trichoderma",
+      "Chlorella"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Trichoderma**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 24,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is a commercial blood cholesterol lowering agent?",
+    "options": [
+      "Streptokinase",
+      "Lipases",
+      "Cyclosporin A",
+      "Statin"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Statin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 25,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Conversion of milk to curd improves its nutritional value by increasing the amount of",
+    "options": [
+      "vitamin D",
+      "vitamin A",
+      "vitamin B 12",
+      "vitamin E Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **vitamin B 12**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 26,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Select the mismatch :",
+    "options": [
+      "Rhodospirillum - Mycorrhiza",
+      "Anabaena - Nitrogen fixer",
+      "Rhizobium - Alfalfa",
+      "Frankia - Alnus"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Rhodospirillum - Mycorrhiza**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 27,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following in sewage treatment removes suspended solids ?",
+    "options": [
+      "Secondary treatment",
+      "Tertiary treatment",
+      "Primary treatment",
+      "Sludge treatment"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Primary treatment**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 28,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is correctly matched for the product produced by them ?",
+    "options": [
+      "Acetobacter aceti : Antibiotics",
+      "Penicillium notatum : Acetic acid",
+      "Methanobacterium : Lactic acid",
+      "Saccharomyces cerevisiae : Ethanol"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Saccharomyces cerevisiae : Ethanol**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 29,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match Column-I with Column-II and select the correct option using the codes given below :\n\n| Column-I | Column-II |\n| :--- | :--- |\n| (a) Citric acid | (iii) Aspergillus |\n| (b) Cyclosporin A | (i) Trichoderma |\n| (c) Statins | (iv) Monascus |\n| (d) Butyric acid | (ii) Clostridium |\n\nSelect the correct option :",
+    "options": [
+      "(a)-(iii), (b)-(i), (c)-(ii), (d)-(iv)",
+      "(a)-(iii), (b)-(i), (c)-(iv), (d)-(ii)",
+      "(a)-(i), (b)-(iv), (c)-(ii), (d)-(iii)",
+      "(a)-(iii), (b)-(iv), (c)-(i), (d)-(ii)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• Citric acid is produced by *Aspergillus niger*: (a)-(iii)\n• Cyclosporin A is produced by *Trichoderma polysporum*: (b)-(i)\n• Statins are produced by *Monascus purpureus*: (c)-(iv)\n• Butyric acid is produced by *Clostridium butylicum*: (d)-(ii)\nHence, option (B) is correct.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 30,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is wrongly matched in the given table?\n\n| Microbe | Product | Application |\n| :--- | :--- | :--- |\n| (A) Streptococcus | Streptokinase | Removal of clot from blood vessel |\n| (B) Trichoderma polysporum | Cyclosporin A | Immunosuppressive drug |\n| (C) Monascus purpureus | Statins | Lowering of blood cholesterol |\n| (D) Clostridium butylicum | Lipase | Removal of oil stains |",
+    "options": [
+      "Microbe - Streptococcus, Product - Streptokinase, Application - Removal of clot from blood vessel",
+      "Microbe - Trichoderma polysporum, Product - Cyclosporin A, Application - Immunosuppressive drug",
+      "Microbe - Monascus purpureus, Product - Statins, Application - Lowering of blood cholesterol",
+      "Microbe - Clostridium butylicum , Product - Lipase, Application - Removal of oil stains"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "*Clostridium butylicum* is a bacterium that produces **butyric acid**, not lipase. Lipases are enzymes produced by microbes like *Candida* and used in detergent formulations to remove oily stains.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 31,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Match the following list of microbes and their importance :\n\n| Column I | Column II |\n| :--- | :--- |\n| (a) Saccharomyces cerevisiae | (iii) Commercial production of ethanol |\n| (b) Monascus purpureus | (iv) Production of blood cholesterol lowering agents |\n| (c) Trichoderma polysporum | (i) Production of immunosuppressive agent |\n| (d) Propionibacterium sharmanii | (ii) Ripening of Swiss cheese |\n\nSelect the correct option :",
+    "options": [
+      "(a) - (iii), (b) - (i), (c) - (iv), (d) - (ii)",
+      "(a) - (iii), (b) - (iv), (c) - (i), (d) - (ii)",
+      "(a) - (iv), (b) - (ii), (c) - (i), (d) - (iii)",
+      "(a) - (iv), (b) - (iii), (c) - (ii), (d) - (i)"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "• *Saccharomyces cerevisiae* (yeast): Ethanol fermentation: (a)-(iii)\n• *Monascus purpureus*: Blood cholesterol lowering statins: (b)-(iv)\n• *Trichoderma polysporum*: Immunosuppressive cyclosporin A: (c)-(i)\n• *Propionibacterium sharmanii*: Production and ripening of Swiss cheese: (d)-(ii)\nHence, the correct option is (B).",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 32,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The guts of cow and buffalo possess",
+    "options": [
+      "Cyanobacteria",
+      "Fucus sp",
+      "Methanogens",
+      "Chlorella sp"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Methanogens**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 33,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "What gases are produced in anaerobic sludge digesters ?",
+    "options": [
+      "Methane and CO 2 only",
+      "Methane, Hydrogen Sulphide and O 2",
+      "Methane, Hydrogen Sulphide and CO 2",
+      "Hydrogen Sulphide and CO 2"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Methane, Hydrogen Sulphide and CO 2**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 34,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Microbe used for biocontrol of pest butterfly caterpillars is :",
+    "options": [
+      "Streptococcus sp",
+      "Trichoderma sp.",
+      "Saccharomyces cerevisiae",
+      "Bacillus thuringiensis"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Bacillus thuringiensis**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 35,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A good producer of citric acid is",
+    "options": [
+      "Clostridium",
+      "Saccharomyces",
+      "Aspergillus",
+      "Pseudomonas Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Aspergillus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 36,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "During sewage treatment, biogases are produced which include :",
+    "options": [
+      "methane, hydrogensulphide, carbon dioxide",
+      "methane, oxygen, hydrogensulphide",
+      "hydrogensulphide, methane, sulphur dioxide",
+      "hydrogensulphide, nitrogen, methane"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **methane, hydrogensulphide, carbon dioxide**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 37,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "In gobar gas, the maximum amount is that of :",
+    "options": [
+      "Propane",
+      "Butane",
+      "Methane",
+      "Carbon dioxide"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Methane**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 38,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The domestic sewage in large cities :",
+    "options": [
+      "has very high amounts of suspended solids and dissolved salts",
+      "has a high BOD as it contains both aerobic and anaerobic bacteria.",
+      "is processed by aerobic and then anaerobic bacteria in the secondary treatment in Sewage Treatment Plant (STPs)",
+      "When treated in STPs does not really require the aeration step as the sewage contains adequate oxygen"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **is processed by aerobic and then anaerobic bacteria in the secondary treatment in Sewage Treatment Plant (STPs)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 39,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Consider the following four statements (a-d) and select the option which includes all the correct ones only : (a) Single cell Spirulina can produce large quantities of food rich in protein, minerals, vitamins etc. (b) Body weight-wise the microorganisms Methylophilus methylotrophus may be able to produce several times more proteins than the cow per day (c) Common button mushrooms are a very rich source of vitamin C (d) A rice variety has been developed which is very rich in calcium",
+    "options": [
+      "Statements (b), (c) and (d)",
+      "Statements (c), (d)",
+      "Statements (a), (c) and (d)",
+      "Statements (a), (b)"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Statements (a), (b)**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 40,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Monascus purpureus is a yeast used commercially in the production of :",
+    "options": [
+      "Ethanol",
+      "Streptokinase for removing clots from the blood vessels",
+      "Citric acid",
+      "Blood cholesterol lowering statins Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Blood cholesterol lowering statins Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 41,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A patient brought to a hospital with myocardial infarction is normally immediately given",
+    "options": [
+      "Penicillin",
+      "Streptokinase",
+      "Cyclosporin - A",
+      "Statins"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Streptokinase**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 42,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A nitrogen - fixing microbe associated with Azolla in rice fields is",
+    "options": [
+      "Tolypothrix",
+      "Spirulina",
+      "Frankia",
+      "Anabaena"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Anabaena**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 43,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is an example of carrying out biological control of pests/diseases using microbes ?",
+    "options": [
+      "Trichoderms sp. against certain plant pathogens",
+      "Lady bird beetle against aphids in mustard",
+      "Nucleopoly hedrovirus against white rust in Brassica",
+      "Bt-cotton to increase cotton yield"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Trichoderms sp. against certain plant pathogens**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 44,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Yeast is used in the production of",
+    "options": [
+      "Citric acid and lactic acid",
+      "Lipase and pectinase",
+      "Bread and beer",
+      "Cheese and butter"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Bread and beer**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 45,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Read the following statement having two blanks (A and B) : ''A drug used for ______ (A)___ patients is obtained from a species of the organism ______ (B)___ ''. The one correct option for the two blanks is :",
+    "options": [
+      "A Organ-transplant , B Trichoderma",
+      "A AIDS, B Pseudomonas",
+      "A Swine flu, B Monascus",
+      "A Heart , B Penicillium Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **A Organ-transplant , B Trichoderma**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 46,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Consider the following statements (A-D) about organic farming :",
+    "options": [
+      "Utilizes genetically modified crops like Bt cotton",
+      "Uses only naturally produced inputs like compost",
+      "Does not use pesticides and urea",
+      "Produces vegetables rich in vitamins and minerals Which of the above statements are correct ? (A) (B) and (C) only (B) (B), (C) and (D) (C) (C) and (D) only (D) (A) and (B) only"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Utilizes genetically modified crops like Bt cotton**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 47,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is a wrong matching of a microbe and its industrial product, while the remaining three are correct ?",
+    "options": [
+      "Acetobacter aceti – acetic acid",
+      "Clostridium butylicum – lactic acid",
+      "Aspergillus niger – citric acid",
+      "Yeast – statins"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Clostridium butylicum – lactic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 48,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The most common substrate used in distilleries for the production of ethanol is :",
+    "options": [
+      "Ground gram",
+      "Molasses",
+      "Soyabean",
+      "Corn meal"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Molasses**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 49,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not a biofertilizer ?",
+    "options": [
+      "Agrobacterium",
+      "Nostoc",
+      "Rhizobium",
+      "Mycorrhiza"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Agrobacterium**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 50,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Secondary sewage treatment is mainly a :",
+    "options": [
+      "Mechanical process",
+      "Chemical process",
+      "Biological process",
+      "Physical process"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Biological process**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 51,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is mainly produced by the activity of anaerobic bacteria on sewage ?",
+    "options": [
+      "Propane",
+      "Mustard gas",
+      "Marsh gas",
+      "Laughing gas"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Marsh gas**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 52,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "An organism used as a Biofertilizer for raising soyabean crop is :",
+    "options": [
+      "Azotobacter",
+      "Azospirillum",
+      "Nostoc",
+      "Rhizobium Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Rhizobium Exam GOAL P Y Q P D F**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 53,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Ethanol is commercially produced through a particular species of :",
+    "options": [
+      "Clostridium",
+      "Trichoderma",
+      "Aspergillus",
+      "Saccharomyces"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Saccharomyces**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 54,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Organisms called Methanogens are most abundant in a :",
+    "options": [
+      "Polluted stream",
+      "Hot spring",
+      "Cattle yard",
+      "Sulphur rock"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Cattle yard**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 55,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "An example of endomycorrhiza is -",
+    "options": [
+      "Nostoc",
+      "Rhizobium",
+      "Glomus",
+      "Agaricus"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Glomus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 56,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Select the correct statement from the following:",
+    "options": [
+      "Methanobacterium is an aerobic bacterium found in rumen of cattle",
+      "Activated sludge-sediment in settlement tanks of sewage treatment plant is a rich source of aerobic bacteria",
+      "Biogas, commonly called gobar gas, is pure methane",
+      "Biogas is produced by the activity of aerobic bacteria on animal waste"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Activated sludge-sediment in settlement tanks of sewage treatment plant is a rich source of aerobic bacteria**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 57,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A common biocontrol agent for the control of plant diseases is –",
+    "options": [
+      "Bacillus thuringiensis",
+      "Trichoderma",
+      "Glomus",
+      "Baculovirus"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Trichoderma**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 58,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The common nitrogen-fixer in paddy fields is –",
+    "options": [
+      "Azospirillum",
+      "Frankia",
+      "Rhizobium",
+      "Oscillatoria"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Azospirillum**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 59,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following is not used in organic farming ?",
+    "options": [
+      "Earthworm",
+      "Oscillatoria",
+      "Snail",
+      "Glomus Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Snail**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 60,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pairs is wrongly matched ?",
+    "options": [
+      "Detergents – lipase",
+      "Fruit juice – pectinase",
+      "Alcohol – nitrogenase",
+      "Textile – amylase"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Alcohol – nitrogenase**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 61,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is not used as a biopesticide ?",
+    "options": [
+      "Bacillus thringiensis",
+      "Trichoderma harzianum",
+      "Nuclear Polyhedral Virus (NPV)",
+      "Xanthomonas Campestris"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Xanthomonas Campestris**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 62,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following plant species you would select for the production of bioethanol ?",
+    "options": [
+      "Zea mays",
+      "Pongamia",
+      "Jatropha",
+      "Brassica"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Zea mays**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 63,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Trichoderma harzianum has proved a useful microorganism for:",
+    "options": [
+      "biological control of soil-borne plant pathogens",
+      "reclamation of wastelands",
+      "gene transfer in higher plants",
+      "bioremediation of contaminated soils"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **biological control of soil-borne plant pathogens**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 64,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Nitrogen fixation in root nodules of Alnus is brought about by:",
+    "options": [
+      "Bradyrhizobium",
+      "Frankia",
+      "Clostridium",
+      "Azorhizobium"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Frankia**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 65,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following proved effective for biological control of nematodal disease in plants?",
+    "options": [
+      "Pisolithus tinctorius",
+      "Paecilomyces lilacinus",
+      "Pseudomonas cepacia",
+      "Gliocladium virens"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Paecilomyces lilacinus**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 66,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Probiotics are-",
+    "options": [
+      "Cancer inducting microbes",
+      "New kind of food allergens",
+      "Live microbial food supplement",
+      "Safe antibiotics Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Live microbial food supplement**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 67,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pairs is wrongly matched ?",
+    "options": [
+      "Methanogens – Gobar gas",
+      "Yeast – Ethanol",
+      "Streptomycetes – Antibiotic",
+      "Coliforms – Vinegar"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Coliforms – Vinegar**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 68,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "For retting of jute the fermenting microbe used is",
+    "options": [
+      "methanophilic bacteria",
+      "butyric acid bacteria",
+      "Helicobacter pylori",
+      "Streptococcus lactis."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **butyric acid bacteria**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 69,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Dough kept overnight in warm weather becomes soft and spongy because of :-",
+    "options": [
+      "Cohesion",
+      "Absorption of carbon dioxide from atmosphere",
+      "Osmosis",
+      "Fermentation"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Fermentation**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 70,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which one of the following pairs is not correctly matched ?",
+    "options": [
+      "Spirulina – Single cell protein",
+      "Streptomyces – Antibiotic",
+      "Rhizobium – Biofertilizer",
+      "Serratia – Drug addiction"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Serratia – Drug addiction**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 71,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The most thoroughly studied of the known bacteria-plant interactions is the :-",
+    "options": [
+      "Nodulation of Sesbania stems by nitrogen fixing bacteria",
+      "Cyanobacterial symbiosis with some aquatic ferns",
+      "Plant growth stimulation by phosphate– solubilising bacteria",
+      "Gall formation on certain angiosperms by Agrobacterium"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Gall formation on certain angiosperms by Agrobacterium**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 72,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A major component of gobar gas is",
+    "options": [
+      "ethane",
+      "methane",
+      "butane",
+      "ammonia Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **methane**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 73,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Maximum application of animal cell culture technology today is in the production of : -",
+    "options": [
+      "Interfereons",
+      "Vaccines",
+      "Edible proteins",
+      "Insulin"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Vaccines**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 74,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "During anaerobic digestion of organic waste, such as in producing biogas, which one of the following is left undegraded : -",
+    "options": [
+      "Lignin",
+      "Cellulose",
+      "Hemi-cellulose",
+      "Lipids"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Lignin**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 75,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The term \"antibiotic\" was coined by",
+    "options": [
+      "Selman Waksman",
+      "Alexander Flemming",
+      "Edward Jenner",
+      "Louis Pasteur"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Selman Waksman**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 76,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which bacteria is utilized in Gober gas plant ?",
+    "options": [
+      "Nitrifying bacteria",
+      "Methanogens",
+      "Ammonifying bacteria",
+      "Denitrifying bacteria"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Methanogens**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 77,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "During the formation of bread it becomes porous due to release of CO 2 by the action of : -",
+    "options": [
+      "Protozoans",
+      "Bacteria",
+      "Yeast",
+      "Virus"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Yeast**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 78,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is true pair of biofertilizers ?",
+    "options": [
+      "Nostoc and legume",
+      "Rhizobium and grasses",
+      "Salmonella & E. Coli",
+      "Azolla and BGA"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Azolla and BGA**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 79,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Spoilage of oil can be detected by which fatty acid : -",
+    "options": [
+      "Linolenic acid",
+      "Erucic acid",
+      "Linoleic acid",
+      "Oleic acid Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Erucic acid**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 80,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which aquatic fern is used to increase the yield in paddy crop ?",
+    "options": [
+      "Salvinia",
+      "Isoetes",
+      "Marsilea",
+      "Azolla"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **Azolla**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 81,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is used to manufacture ethanol from starch ?",
+    "options": [
+      "Saccharomyces",
+      "Lactobacillus",
+      "Azotobacter",
+      "Penicillium"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Saccharomyces**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 82,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Due to which of the following organism yield of rice has been increased?",
+    "options": [
+      "Anabaena",
+      "Bacillus polymyxa",
+      "Bacillus popilliae",
+      "Sesbania"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Anabaena**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 83,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The aquatic fern, which is an excellent biofertiliser, is",
+    "options": [
+      "Azolla",
+      "Pteridium",
+      "Salvinia",
+      "Marsilea"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Azolla**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 84,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the micro-organisms is used for production of citric acid in industries?",
+    "options": [
+      "Lactobacillus bulgaricus",
+      "Penicillium citrinum",
+      "Aspergillus niger",
+      "Rhizopus nigricans"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Aspergillus niger**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 85,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Yeast ( Saccharomyces cerevisiae ) is used in the industrial production of",
+    "options": [
+      "butanal",
+      "citric acid",
+      "tetracycline",
+      "ethanol"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **ethanol**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 86,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "A sewage treatment process in which a portion of the decomposer bacteria present in the waste is recycled into the beginning of the process, is called",
+    "options": [
+      "cyclic treatment",
+      "primary treatment",
+      "activated sludge treatment",
+      "tertiary treatment Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **activated sludge treatment**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 87,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Biological control component is central to advanced agricultural production. Which of the following is used as a third generation pesticide?",
+    "options": [
+      "Pathogens",
+      "Pheromones",
+      "Insect repellants",
+      "Insect hormone analogues"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Pheromones**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 88,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Farmers have reported over 50% higher yields of rice by using which of the following biofertilizer?",
+    "options": [
+      "Mycorrhiza",
+      "Azolla pinnata",
+      "Cyanobacteria",
+      "Legume- Rhizobium symbiosis"
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Azolla pinnata**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 89,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The biofertilizers are",
+    "options": [
+      "Anabaena and Azolla",
+      "cow dung, manure and farmyard waste",
+      "quick growing crop ploughed under soil",
+      "none of these."
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Anabaena and Azolla**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 90,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Gobar gas contains mainly",
+    "options": [
+      "$\\text{CO}_2 + \\text{H}_2$",
+      "$\\text{CO}_2 + \\text{H}_2\\text{O}$",
+      "$\\text{CH}_4\\text{ only}$",
+      "$\\text{CH}_4 + \\text{CO}_2$"
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "Gobar gas (biogas) is produced by the anaerobic digestion of dung by methanogens. It is a mixture composed predominantly of methane ($\\text{CH}_4$, 50–70%) and carbon dioxide ($\\text{CO}_2$, 30–40%), with small traces of other gases.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 91,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Which of the following is the false statement about antibiotics?",
+    "options": [
+      "Some persons have allergy from antibiotics.",
+      "Antibiotics are capable of curing any disease.",
+      "This term was given by Waksman in 1942.",
+      "Antibiotics is produced by micro-organisms."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Antibiotics are capable of curing any disease.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 92,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Cochineal insects have proved very useful for",
+    "options": [
+      "Cactus prevention",
+      "Eichhornia prevention",
+      "weeds control",
+      "Parthenium contol. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **Cactus prevention**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 93,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "When a natural predator (living being) is applied on the other pathogen organism to control them, this process is called",
+    "options": [
+      "artificial control",
+      "confusion technique",
+      "biological control",
+      "genetic engineering."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **biological control**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 94,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The citric acid is produced by",
+    "options": [
+      "Candida utilis",
+      "Azotobacter suboxydans",
+      "Aspergillus niger",
+      "Streptococcus lactis ."
+    ],
+    "correct_index": 2,
+    "correct_indices": [
+      2
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (C): **Aspergillus niger**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 95,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The rotenone is",
+    "options": [
+      "a natural herbicide",
+      "a natural insecticide",
+      "an insect hormone",
+      "a bioherbicide."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **a natural insecticide**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 96,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "The organism, used for alcohol fermentation, is",
+    "options": [
+      "Aspergillus",
+      "Saccharomyces",
+      "Pseudomonas",
+      "Penicillium ."
+    ],
+    "correct_index": 1,
+    "correct_indices": [
+      1
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (B): **Saccharomyces**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 97,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "One of the major difficulties in the biological control of insect pest is that",
+    "options": [
+      "the method is less effective as compared with the use of insecticides",
+      "the practical difficulty of introducing the predator to specific areas",
+      "the predator develops a preference to other diets and may itself become a pest",
+      "the predator does not always survive when transferred to a new environment."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **the predator does not always survive when transferred to a new environment.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 98,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "Biological control of agricultural pests, unlike chemical control, is",
+    "options": [
+      "self perpetuating",
+      "polluting",
+      "very expensive",
+      "toxic. Exam GOAL P Y Q P D F"
+    ],
+    "correct_index": 0,
+    "correct_indices": [
+      0
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (A): **self perpetuating**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  },
+  {
+    "_source_num": 99,
+    "category": "PYQ",
+    "subject": "Botany",
+    "subject_id": 15,
+    "chapter": "Microbes in Human Welfare",
+    "topic": "Microbes in Human Welfare",
+    "question_type": "mcq",
+    "question_text": "In cheese manufacture, the microorganisms are important for",
+    "options": [
+      "the ripening only",
+      "the souring of milk only",
+      "the development of resistance to spoilage only",
+      "both the souring and the ripening processes."
+    ],
+    "correct_index": 3,
+    "correct_indices": [
+      3
+    ],
+    "explanation": "According to NCERT Microbes in Human Welfare, the correct answer is option (D): **both the souring and the ripening processes.**.",
+    "difficulty": "medium",
+    "marks": 4,
+    "image_url": ""
+  }
+]
